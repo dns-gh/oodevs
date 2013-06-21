@@ -10,6 +10,11 @@
 #ifndef __TimelineToolBar_h_
 #define __TimelineToolBar_h_
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 // =============================================================================
 /** @class  TimelineToolBar
     @brief  TimelineToolBar
@@ -23,12 +28,8 @@ class TimelineToolBar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineToolBar( QWidget* parent, bool isMain, const QStringList& activeFilters );
+             TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain, const QStringList& activeFilters );
     virtual ~TimelineToolBar();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 signals:
@@ -37,6 +38,9 @@ signals:
     void FilterSelectionChanged( const QStringList& filters );
     void AddNewFilteredView( const QStringList& filters );
     void RemoveCurrentFilteredView();
+
+    void LoadOrderFileRequest( const tools::Path& path );
+    void SaveOrderFileRequest( const tools::Path& path );
     //@}
 
 public slots:
@@ -46,6 +50,8 @@ public slots:
     void OnFilterSelection();
     void OnAddNewFilteredView();
     void OnRemoveCurrentFilteredView();
+    void OnLoadOrderFile();
+    void OnSaveOrderFile();
     //@}
 
 private:
@@ -71,6 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const tools::ExerciseConfig& config_;
     std::vector< Filter > filters_;
     QMenu* filtersMenu_;
     //@}

@@ -12,6 +12,7 @@
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "timeline/api.h"
 
 namespace kernel
 {
@@ -25,13 +26,19 @@ namespace timeline
     struct Configuration;
     struct Error;
     struct Event;
+    //typedef std::vector< Event > Events;
     class Server_ABC;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
 }
 
 class Config;
 class Event;
 class EventDialog;
-class EventsModel;
+class Model;
 
 // =============================================================================
 /** @class  TimelineFilteredViewWidget
@@ -49,7 +56,7 @@ class TimelineFilteredViewWidget : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineFilteredViewWidget( QWidget* parent, kernel::ActionController& actionController, const kernel::Time_ABC& simulation, EventsModel& model, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
+             TimelineFilteredViewWidget( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController, const kernel::Time_ABC& simulation, Model& model, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
     virtual ~TimelineFilteredViewWidget();
     //@}
 
@@ -69,6 +76,9 @@ private:
 
     virtual void NotifyContextMenu( const timeline::Event& event, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
+
+    void ReadActions( xml::xistream& xis );
+    void ReadAction( xml::xistream& xis );
     //@}
 
 signals:
@@ -92,6 +102,7 @@ private slots:
     void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
     void OnEditedEvent( const timeline::Event& event, const timeline::Error& error );
     void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
+    void OnGetEvents( const timeline::Events& events, const timeline::Error& error );
 
     void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
     void OnActivatedEvent( const timeline::Event& event );
@@ -104,6 +115,9 @@ private slots:
     void OnDeleteClicked();
     void OnCreateClicked( int );
     void OnCreateDummyClicked( int );
+
+    void OnLoadOrderFileRequested( const tools::Path& filename );
+    void OnSaveOrderFileRequested( const tools::Path& filename );
     //@}
 
 private:
@@ -114,9 +128,10 @@ private:
     QToolBar* toolBar_;
     QWidget* timelineWidget_;
     QVBoxLayout* mainLayout_;
+    const tools::ExerciseConfig& config_;
     const kernel::Time_ABC& simulation_;
     kernel::ActionController& actionController_;
-    EventsModel& eventsModel_;
+    Model& model_;
 
     std::auto_ptr< timeline::Server_ABC > server_;
     std::auto_ptr< timeline::Configuration > cfg_;
@@ -125,6 +140,7 @@ private:
     QDateTime selectedDateTime_;
     QSignalMapper* creationSignalMapper_;
     QSignalMapper* dummySignalMapper_;
+    tools::Path currentOrderFile_;
 
     std::vector< std::string > creationRequestedEvents_;
     std::vector< std::string > editionRequestedEvents_;

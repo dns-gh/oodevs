@@ -34,6 +34,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     , simulation_( simulation )
     , isConnected_( false )
     , model_( model )
+    , config_( config )
     , eventDialog_( 0 )
 {
     // Init
@@ -108,7 +109,7 @@ void TimelineDockWidget::Disconnect()
 // -----------------------------------------------------------------------------
 void TimelineDockWidget::AddFilteredView( QStringList filters )
 {
-    TimelineFilteredViewWidget* filteredView = new TimelineFilteredViewWidget( tabWidget_, controllers_.actions_, simulation_, model_.events_, *eventDialog_, *cfg_, ++maxTabNumber_, filters );
+    TimelineFilteredViewWidget* filteredView = new TimelineFilteredViewWidget( tabWidget_, config_, controllers_.actions_, simulation_, model_, *eventDialog_, *cfg_, ++maxTabNumber_, filters );
     tabWidget_->addTab( filteredView, ( maxTabNumber_ == 0 ) ? mainTitle_ : tr( "View %1" ).arg( maxTabNumber_ ) );
     connect( filteredView, SIGNAL( AddNewFilteredView( const QStringList& ) ), this, SLOT( AddFilteredView( const QStringList& ) ) );
     connect( filteredView, SIGNAL( RemoveCurrentFilteredView() ), this, SLOT( RemoveCurrentFilteredView() ) );

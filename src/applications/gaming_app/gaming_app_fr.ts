@@ -3191,6 +3191,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Create an event</source>
         <translation>Créer un évenement</translation>
     </message>
+    <message>
+        <source>An error occurred during &apos;get all events&apos; request: %1</source>
+        <translation>Une erreur s&apos;est produite pendant la requete &apos;obtenir tous les evenements&apos;: %1</translation>
+    </message>
 </context>
 <context>
     <name>TimelineListView</name>
@@ -3263,6 +3267,18 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Supervisor actions</source>
         <translation>Actions de supervision</translation>
+    </message>
+    <message>
+        <source>Actions files (*.ord)</source>
+        <translation>Fichier d&apos;actions (*.ord)</translation>
+    </message>
+    <message>
+        <source>Load actions file</source>
+        <translation>Charger un fichier d&apos;actions</translation>
+    </message>
+    <message>
+        <source>Save actions in active timeline to file</source>
+        <translation>Enregistrer les actions de la vue courante dans un fichier</translation>
     </message>
 </context>
 <context>

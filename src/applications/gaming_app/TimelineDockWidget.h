@@ -94,6 +94,7 @@ private:
     boost::shared_ptr< timeline::Configuration > cfg_;
     const kernel::Time_ABC& simulation_;
     Model& model_;
+    const Config& config_;
     bool isConnected_;
     //@}
 

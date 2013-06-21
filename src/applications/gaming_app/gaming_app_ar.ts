@@ -3185,6 +3185,10 @@ This data can&apos;t be projected.</source>
         <source>Create an event</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>An error occurred during &apos;get all events&apos; request: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelineListView</name>
@@ -3257,6 +3261,18 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Center the view on the simulation time</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions files (*.ord)</source>
+        <translation type="unfinished">إجراءات الملفات (*.ord)</translation>
+    </message>
+    <message>
+        <source>Load actions file</source>
+        <translation type="unfinished">تحميل ملف الإجراءات</translation>
+    </message>
+    <message>
+        <source>Save actions in active timeline to file</source>
+        <translation type="unfinished">حفظ الإجراءات في جدول زمني نشط إلى ملف</translation>
     </message>
 </context>
 <context>

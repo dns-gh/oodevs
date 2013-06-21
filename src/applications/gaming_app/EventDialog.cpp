@@ -63,7 +63,7 @@ EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Mod
     topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
     bottomWidget_ = new EventBottomWidget();
 
-    connect( this, SIGNAL( BeginDateChanged() ), topWidget_, SLOT( OnBeginDateChanged()() ) );
+    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), topWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
     connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
     connect( bottomWidget_, SIGNAL( CreateReminder() ), this, SLOT( OnCreateReminder() ) );
     connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );

@@ -14,6 +14,8 @@
 #include "TimelineToolBar.h"
 
 #include "actions/Action_ABC.h"
+#include "actions/ActionFactory_ABC.h"
+#include "actions/ActionTiming.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/ContextMenu.h"
@@ -23,20 +25,28 @@
 #include "gaming/AgentsModel.h"
 #include "gaming/EventAction.h"
 #include "gaming/EventsModel.h"
+#include "gaming/Model.h"
+#include "gaming/TimelinePublisher.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 #include "timeline/api.h"
+#include "timeline/api.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter.h"
+#include <boost/bind.hpp>
 #include <tools/ProtobufSerialization.h>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineFilteredViewWidget constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, kernel::ActionController& actionController, const kernel::Time_ABC& simulation, EventsModel& eventsModel, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
+TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController, const kernel::Time_ABC& simulation, Model& model, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
     : QWidget( parent )
+    , config_( config )
     , actionController_( actionController )
     , simulation_( simulation )
-    , eventsModel_( eventsModel )
+    , model_( model )
     , eventDialog_( eventDialog )
     , toolBar_( 0 )
     , timelineWidget_( 0 )
@@ -50,11 +60,13 @@ TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, kernel:
     mainLayout_ = new QVBoxLayout( this );
     mainLayout_->setMargin( 0 );
     mainLayout_->setSpacing( 0 );
-    toolBar_ = new TimelineToolBar( 0, viewNumber == 0, filters );
+    toolBar_ = new TimelineToolBar( 0, config, viewNumber == 0, filters );
     setObjectName( QString( "timeline-filteredview-widget-%1" ).arg( viewNumber ) );
     connect( toolBar_, SIGNAL( FilterSelectionChanged( const QStringList& ) ), this, SLOT( OnFilterSelectionChanged( const QStringList& ) ) );
     connect( toolBar_, SIGNAL( AddNewFilteredView( const QStringList& ) ), this, SIGNAL( AddNewFilteredView( const QStringList& ) ) );
     connect( toolBar_, SIGNAL( RemoveCurrentFilteredView() ), this, SIGNAL( RemoveCurrentFilteredView() ) );
+    connect( toolBar_, SIGNAL( LoadOrderFileRequest( const tools::Path& ) ), this, SLOT( OnLoadOrderFileRequested( const tools::Path& ) ) );
+    connect( toolBar_, SIGNAL( SaveOrderFileRequest( const tools::Path& ) ), this, SLOT( OnSaveOrderFileRequested( const tools::Path& ) ) );
     actionController_.Register( *this );
 }
 
@@ -98,6 +110,8 @@ void TimelineFilteredViewWidget::Connect()
     connect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
+    connect( server_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
+
 
     connect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     connect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
@@ -120,6 +134,7 @@ void TimelineFilteredViewWidget::Disconnect()
         disconnect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
         disconnect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
         disconnect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
+        disconnect( server_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
 
         disconnect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
         disconnect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
@@ -140,9 +155,9 @@ void TimelineFilteredViewWidget::Disconnect()
 // -----------------------------------------------------------------------------
 Event& TimelineFilteredViewWidget::GetOrCreateEvent( const timeline::Event& event )
 {
-    Event* gamingEvent = eventsModel_.Find( event.uuid );
+    Event* gamingEvent = model_.events_.Find( event.uuid );
     if( !gamingEvent )
-        gamingEvent = eventsModel_.Create( event );
+        gamingEvent = model_.events_.Create( event );
     else
         gamingEvent->Update( event );
     return *gamingEvent;
@@ -192,7 +207,7 @@ void TimelineFilteredViewWidget::OnCreatedEvent( const timeline::Event& event, c
             MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
         creationRequestedEvents_.erase( it );
     }
-    eventsModel_.Create( event );
+    model_.events_.Create( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +223,7 @@ void TimelineFilteredViewWidget::OnEditedEvent( const timeline::Event& event, co
             MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
         editionRequestedEvents_.erase( it );
     }
-    eventsModel_.Update( event );
+    model_.events_.Update( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +239,7 @@ void TimelineFilteredViewWidget::OnDeletedEvent( const std::string& uuid, const 
             MT_LOG_ERROR_MSG( tr( "An error occurred during event deletion process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
         deletionRequestedEvents_.erase( it );
     }
-    eventsModel_.Destroy( uuid );
+    model_.events_.Destroy( uuid );
 }
 
 // -----------------------------------------------------------------------------
@@ -442,4 +457,112 @@ void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
     event.done = false;
     event.action = action;
     CreateEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::OnLoadOrderFileRequested
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::OnLoadOrderFileRequested( const tools::Path& filename )
+{
+    config_.GetLoader().LoadFile( filename, boost::bind( &TimelineFilteredViewWidget::ReadActions, this, _1 ) ); // $$$$ ABR 2013-06-19: ReadOnly if replay ? may be we can handle that directly with timeline_ui, or with profile
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::ReadActions
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::ReadActions( xml::xistream& xis )
+{
+    xis >> xml::start( "actions" )
+            >> xml::list( "action", *this, &TimelineFilteredViewWidget::ReadAction )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::ReadAction
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::ReadAction( xml::xistream& xis )
+{
+    std::auto_ptr< actions::Action_ABC > action;
+    // $$$$ ABR 2013-06-19: The dual try catch was in actionsModel, so i keep it for now but it's ugly and should be remove asap
+    try
+    {
+        action.reset( model_.actionFactory_.CreateAction( xis, false ) );
+    }
+    catch( const std::exception& )
+    {
+        try
+        {
+            action.reset( model_.actionFactory_.CreateStubAction( xis ) );
+        }
+        catch( const std::exception& )
+        {
+            // NOTHING
+        }
+    }
+
+    if( action.get() == 0 )
+        return;
+
+    action->Publish( model_.timelinePublisher_, 0 );
+    timeline::Event event;
+    event.action.payload = model_.timelinePublisher_.GetPayload();
+    event.action.apply = true;
+    event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+    event.name = action->GetName();
+
+    const actions::ActionTiming& timing = action->Get< actions::ActionTiming >();
+    event.begin = timing.GetTime().toString( EVENT_DATE_FORMAT ).toStdString();
+    //event.done = false;
+    emit CreateEventSignal( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::OnSaveOrderFileRequested
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::OnSaveOrderFileRequested( const tools::Path& filename )
+{
+    if( server_.get() )
+    {
+        currentOrderFile_ = filename;
+        server_->ReadEvents();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::OnGetEvents
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::OnGetEvents( const timeline::Events& events, const timeline::Error& error )
+{
+    if( currentOrderFile_.IsEmpty() )
+        return;
+
+    if( error.code != timeline::EC_OK )
+    {
+        MT_LOG_ERROR_MSG( tr( "An error occurred during 'get all events' request: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
+        return;
+    }
+
+    tools::Xofstream xos( currentOrderFile_ );
+    tools::SchemaWriter schemaWriter;
+    xos << xml::start( "actions" );
+    schemaWriter.WriteExerciseSchema( xos, "orders" );
+    for( auto it = events.begin(); it != events.end(); ++it )
+    {
+        Event& event = GetOrCreateEvent( *it );
+        if( event.GetType() == eEventTypes_Order )
+            if( const actions::Action_ABC* action = static_cast< EventAction& >( event ).GetAction() )
+            {
+                xos << xml::start( "action" );
+                action->Serialize( xos );
+                xos << xml::end; //! action
+            }
+    }
+    xos << xml::end; //! actions
+
+    currentOrderFile_.Clear();
 }

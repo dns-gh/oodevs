@@ -10,19 +10,25 @@
 #include "gaming_app_pch.h"
 #include "TimelineToolBar.h"
 #include "moc_TimelineToolBar.cpp"
+#include "clients_gui/FileDialog.h"
 #include "clients_gui/ImageWrapper.h"
-#include "tools/GeneralConfig.h"
+#include "tools/ExerciseConfig.h"
 
 // -----------------------------------------------------------------------------
 // Name: TimelineToolBar constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineToolBar::TimelineToolBar( QWidget* parent, bool isMain, const QStringList& activeFilters )
+TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain, const QStringList& activeFilters )
     : QToolBar( parent )
+    , config_( config )
 {
-    addAction( qApp->style()->standardIcon( QStyle::SP_DirHomeIcon ), tr( "Center the view on the simulation time" ), this, SLOT( OnCenterView() ) );
+    addAction( qApp->style()->standardIcon( QStyle::SP_BrowserReload ), tr( "Center the view on the simulation time" ), this, SLOT( OnCenterView() ) );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/eye.png" ) ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
-    addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Create a new view" ), this, SLOT( OnAddNewFilteredView() ) );
+    addSeparator();
+    addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load actions file" ), this, SLOT( OnLoadOrderFile() ) );
+    addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save actions in active timeline to file" ), this, SLOT( OnSaveOrderFile() ) );
+    addSeparator();
+    addAction( qApp->style()->standardIcon( QStyle::SP_DialogOkButton ), tr( "Create a new view" ), this, SLOT( OnAddNewFilteredView() ) );
     if( !isMain )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SLOT( OnRemoveCurrentFilteredView() ) );
 
@@ -126,4 +132,29 @@ void TimelineToolBar::OnAddNewFilteredView()
 void TimelineToolBar::OnRemoveCurrentFilteredView()
 {
     emit RemoveCurrentFilteredView();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnLoadOrderFile
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnLoadOrderFile()
+{
+    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load actions file" ), config_.BuildExerciseChildFile( "orders.ord" ), tr( "Actions files (*.ord)" ) );
+    if( !filename.IsEmpty() && filename.Exists() && filename.IsRegularFile() )
+        emit LoadOrderFileRequest( filename );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnSaveOrderFile
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnSaveOrderFile()
+{
+    tools::Path filename = gui::FileDialog::getSaveFileName( this, tr( "Save actions in active timeline to file" ), config_.BuildExerciseChildFile( "orders" ), tr( "Actions files (*.ord)" ) );
+    if( filename.IsEmpty() )
+        return;
+    if( filename.Extension() != ".ord" )
+        filename.ReplaceExtension( ".ord" );
+    emit SaveOrderFileRequest( filename );
 }
