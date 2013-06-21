@@ -149,8 +149,16 @@ void MIL_AffinitiesMap::OnReceiveMsgChangeAffinities( const sword::UnitMagicActi
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter,
             "invalid parameters count, one parameter expected" );
-
     const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list = msg.parameters().elem( 0 ).value();
+
+    for( int i = 0; i < list.size(); ++i )
+    {
+        float affinity = list.Get( i ).list( 1 ).areal();
+        if( affinity < -1.f || affinity > 1.f )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                "adhesion must be between -1 and 1" );
+    }
+
     affinities_.clear();
     for( int i = 0; i < list.size(); ++i )
     {
