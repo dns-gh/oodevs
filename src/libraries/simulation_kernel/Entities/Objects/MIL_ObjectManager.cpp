@@ -472,19 +472,24 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 // Name: MIL_ObjectManager::OnReceiveChangeResourceLinks
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx )
+void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     sword::MagicActionAck_ErrorCode nErrorCode = sword::MagicActionAck::no_error;
     const sword::MissionParameters& params = message.parameters();
-    unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
-    MIL_Object_ABC* object = Find( id );
-    if( object == 0 )
+    if( params.elem_size() > 1 )
+    {
+        unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
+        MIL_Object_ABC* object = Find( id );
+        if( object == 0 )
+            nErrorCode = sword::MagicActionAck::error_invalid_parameter;
+        else
+            nErrorCode = object->OnUpdateResourceLinks( params.elem( 1 ).value() );
+    }
+    else
         nErrorCode = sword::MagicActionAck::error_invalid_parameter;
-    else 
-        nErrorCode = object->OnUpdateResourceLinks( params.elem( 1 ).value() );
     client::MagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
-    asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

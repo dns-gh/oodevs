@@ -122,7 +122,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_diplomacy )
             workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_resource_network_properties )
-            workspace.GetEntityManager        ().OnReceiveChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx );
+            workspace.GetEntityManager        ().OnReceiveChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx, clientId );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::create_fire_order_on_location )
             workspace.GetEntityManager        ().OnReceiveCreateFireOrderOnLocation  ( wrapper.message().magic_action()                       , nCtx, clientId );
     // LTO BEGIN

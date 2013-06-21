@@ -323,7 +323,7 @@ void NodeProperties::Update( const google::protobuf::RepeatedPtrField< sword::Mi
     {
         sword::MissionParameter_Value node = list.Get( i );
         std::string resourceName = node.list( 0 ).acharstr();
-        unsigned int resourceId = tools_->GetResourceId( node.list( 0 ).acharstr() );
+        unsigned int resourceId = tools_->GetResourceId( resourceName );
         NodeElement* element = Find( resourceId );
         if( !element )
         {

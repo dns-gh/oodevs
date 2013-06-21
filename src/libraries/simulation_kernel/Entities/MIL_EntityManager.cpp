@@ -1581,9 +1581,9 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
 // Name: MIL_EntityManager::OnReceiveChangeResourceLinks
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    pObjectManager_->OnReceiveChangeResourceLinks( message, nCtx );
+    pObjectManager_->OnReceiveChangeResourceLinks( message, nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

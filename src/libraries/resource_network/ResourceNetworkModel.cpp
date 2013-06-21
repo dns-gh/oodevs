@@ -9,7 +9,6 @@
 
 #include "ResourceNetworkModel.h"
 #include <boost/bind.hpp>
-#include "MT_Tools/MT_Logger.h"
 
 using namespace resource;
 

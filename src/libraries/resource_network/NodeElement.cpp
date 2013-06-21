@@ -521,7 +521,8 @@ void NodeElement::Update( const sword::MissionParameter_Value& msg )
         for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )
         {
             const sword::MissionParameter_Value& link = msg.list( 6 ).list( i );
-            links_.push_back( new ResourceLink( link.list( 0 ).identifier(), ResourceLink::eTargetKindUrban, link.list( 1 ).quantity() ) );
+            if( link.list( 0 ).has_identifier() && link.list( 1 ).has_quantity() )
+                links_.push_back( new ResourceLink( link.list( 0 ).identifier(), ResourceLink::eTargetKindUrban, link.list( 1 ).quantity() ) );
         }
     }
     if( oldActivated != isActivated_ || oldProductionCapacity != productionCapacity_ || oldStockMaxCapacity != stockMaxCapacity_

@@ -94,7 +94,7 @@ public:
     void SendFullState();
     void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies,
                                      const propagation::FloodModel_ABC& floodModel );
-    void OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx );
+    void OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx, unsigned int clientId );
     //@}
 
 private:
