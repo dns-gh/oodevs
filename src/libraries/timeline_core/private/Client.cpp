@@ -71,7 +71,15 @@ int Client::Run()
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
         while( !quit_ )
             if( const size_t read = read_->TimedRead( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
-                controls::ParseClient( *this, &buffer[0], read );
+            {
+                if( read > buffer.size() )
+                    buffer.resize( read );
+                else
+                {
+                    controls::ParseClient( *this, &buffer[0], read );
+                    buffer.resize( ipc::DEFAULT_MAX_PACKET_SIZE );
+                }
+            }
         return 0;
     }
     catch( const std::exception& err )

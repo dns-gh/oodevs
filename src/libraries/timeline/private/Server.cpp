@@ -161,7 +161,15 @@ void Server::Run()
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
         while( !thread_->interruption_requested() )
             if( const size_t read = read_->TimedRead( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
-                controls::ParseServer( *this, &buffer[0], read );
+            {
+                if( read > buffer.size() )
+                    buffer.resize( read );
+                else
+                {
+                    controls::ParseServer( *this, &buffer[0], read );
+                    buffer.resize( ipc::DEFAULT_MAX_PACKET_SIZE );
+                }
+            }
     }
     catch( const boost::thread_interrupted& )
     {
