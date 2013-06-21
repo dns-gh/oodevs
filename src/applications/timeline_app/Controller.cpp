@@ -34,10 +34,13 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
     QObject::connect( ui_->actionTest, SIGNAL( triggered() ), this, SLOT( OnTestCrud() ) );
+    QObject::connect( ui_->actionReadEvents, SIGNAL( triggered() ), ctx_.get(), SLOT( ReadEvents() ) );
+
     QObject::connect( &url_, SIGNAL( editingFinished() ), this, SLOT( OnLoad() ) );
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyDown( int ) ), this, SLOT( OnKeyDown( int ) ) );
@@ -222,6 +225,24 @@ void Controller::OnKeyPress( int key )
 void Controller::OnKeyUp( int key )
 {
     ui_->statusBar->showMessage( QString( "key 0x%1 up" ).arg( key, 0, 16 ) );
+}
+
+void Controller::OnGetEvents( const timeline::Events& events, const timeline::Error& error )
+{
+    if( error.code != EC_OK )
+        ui_->statusBar->showMessage( QString( "An error occured during while receiving GetEvents: %1" ).arg( error.text.c_str() ) );
+
+    QDialog dialog( &main_ );
+    dialog.setMinimumSize( 300, 500 );
+    QVBoxLayout* layout = new QVBoxLayout( &dialog );
+    QListWidget* list = new QListWidget();
+    layout->addWidget( list );
+    int i = 0;
+    for( auto it = events.begin(); it != events.end(); ++it )
+    {
+        list->addItem( QString( "Event %1: %2" ).arg( i++ ).arg( it->uuid.c_str() ) );
+    }
+    dialog.exec();
 }
 
 void Controller::WaitReady() const

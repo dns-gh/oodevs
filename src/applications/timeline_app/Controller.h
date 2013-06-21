@@ -49,6 +49,7 @@ public slots:
     void OnKeyDown( int key );
     void OnKeyPress( int key );
     void OnKeyUp( int key );
+    void OnGetEvents( const timeline::Events& events, const timeline::Error& error );
 
 public:
     void WaitReady() const;

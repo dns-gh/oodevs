@@ -41,6 +41,7 @@
    <addaction name="actionCreate"/>
    <addaction name="actionDelete"/>
    <addaction name="actionTest"/>
+   <addaction name="actionReadEvents"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionReload">
@@ -66,6 +67,11 @@
     <string>Test</string>
    </property>
   </action>
+   <action name="actionReadEvents">
+     <property name="text">
+       <string>Read Events</string>
+     </property>
+   </action>
  </widget>
  <resources/>
  <connections/>
