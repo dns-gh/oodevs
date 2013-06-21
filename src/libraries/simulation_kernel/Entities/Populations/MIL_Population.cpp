@@ -1259,6 +1259,20 @@ namespace
     }
 }
 
+
+namespace
+{
+    unsigned int GetParameter( const std::string& parameter, const sword::MissionParameter& msg )
+    {
+        if( msg.value_size() != 1 || !msg.value().Get( 0 ).has_quantity() )
+            throw MASA_BADPARAM_UNIT( "parameters[" + parameter + "] must be a Quantity" );
+        int number = msg.value().Get( 0 ).quantity();
+        if( number < 0 )
+            throw MASA_BADPARAM_UNIT( "parameters[" + parameter + "] must be a positive number" );
+        return number;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgChangeHealthState
 // Created: JSR 2011-03-16
@@ -1267,27 +1281,11 @@ void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 4 )
         throw MASA_BADPARAM_UNIT( "invalid parameters count, 4 parameters expected" );
-    const sword::MissionParameter& healthyParam = msg.parameters().elem( 0 );
-    const sword::MissionParameter& woundedParam = msg.parameters().elem( 1 );
-    const sword::MissionParameter& contaminatedParam = msg.parameters().elem( 2 );
-    const sword::MissionParameter& deadParam = msg.parameters().elem( 3 );
 
-    if( healthyParam.value_size() != 1 || !healthyParam.value().Get( 0 ).has_quantity() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
-
-    if( woundedParam.value_size() != 1 || !woundedParam.value().Get( 0 ).has_quantity() )
-        throw MASA_BADPARAM_UNIT( "parameters[1] must be a Quantity" );
-
-    if( contaminatedParam.value_size() != 1 || !contaminatedParam.value().Get( 0 ).has_quantity() )
-        throw MASA_BADPARAM_UNIT( "parameters[2] must be a Quantity" );
-
-    if( deadParam.value_size() != 1 || !deadParam.value().Get( 0 ).has_quantity() )
-        throw MASA_BADPARAM_UNIT( "parameters[3] must be a Quantity" );
-
-    unsigned int healthy = healthyParam.value().Get( 0 ).quantity();
-    unsigned int wounded = woundedParam.value().Get( 0 ).quantity();
-    unsigned int contaminated = contaminatedParam.value().Get( 0 ).quantity();
-    unsigned int dead = deadParam.value().Get( 0 ).quantity();
+    unsigned int healthy = GetParameter( "0", msg.parameters().elem( 0 ) );
+    unsigned int wounded = GetParameter( "1", msg.parameters().elem( 1 ) );
+    unsigned int contaminated = GetParameter( "2", msg.parameters().elem( 2 ) );
+    unsigned int dead = GetParameter( "3", msg.parameters().elem( 3 ) );
 
     ChangeComposition( healthy, wounded, contaminated, dead );
 }
