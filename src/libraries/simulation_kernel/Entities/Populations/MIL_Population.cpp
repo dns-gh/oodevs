@@ -1377,6 +1377,10 @@ void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicA
     if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_quantity() )
         throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
 
+    const int quantity = parameter.value().Get( 0 ).quantity();
+    if( quantity < 0 || quantity > 100 )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a percentage between 0 and 100" );
+
     rArmedIndividuals_ = 0.01 * parameter.value().Get( 0 ).quantity();
     rNewArmedIndividuals_ = rArmedIndividuals_;
     armedIndividualsChanged_ = true;
