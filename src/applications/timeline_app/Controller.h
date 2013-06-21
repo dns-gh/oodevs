@@ -64,6 +64,7 @@ private:
     std::auto_ptr< timeline::Server_ABC > ctx_;
     std::string uuid_;
     QLineEdit url_;
+    std::string command_;
 };
 
 class OnSignal_ABC : public QObject
