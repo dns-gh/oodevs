@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "tools_test_pch.h"
-#include "tools/ProtobufSerialization.h"
+#include <tools/ProtobufSerialization.h>
 #include "protocol/Protocol.h"
 
 const std::string binary = "Hello World!!";

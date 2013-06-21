@@ -162,7 +162,6 @@
     <ClInclude Include="..\..\src\libraries\tools\IpcQueue.h" />
     <ClInclude Include="..\..\src\libraries\tools\IpcWatch.h" />
     <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\tools\ProtobufSerialization.h" />
     <ClInclude Include="..\..\src\libraries\tools\ThreadPool.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
     <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h" />

@@ -26,7 +26,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 #include "timeline/api.h"
-#include "tools/ProtobufSerialization.h"
+#include <tools/ProtobufSerialization.h>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineFilteredViewWidget constructor

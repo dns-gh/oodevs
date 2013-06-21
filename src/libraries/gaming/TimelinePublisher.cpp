@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "TimelinePublisher.h"
 #include "protocol/Protocol.h"
-#include "tools/ProtobufSerialization.h"
+#include <tools/ProtobufSerialization.h>
 
 // -----------------------------------------------------------------------------
 // Name: TimelinePublisher constructor

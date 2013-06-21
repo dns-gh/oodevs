@@ -12,7 +12,7 @@
 #include "gaming/Event.h"
 #include "protocol/Protocol.h"
 #include "timeline/api.h"
-#include "tools/ProtobufSerialization.h"
+#include <tools/ProtobufSerialization.h>
 #include <tools/Base64Converters.h>
 
 // -----------------------------------------------------------------------------

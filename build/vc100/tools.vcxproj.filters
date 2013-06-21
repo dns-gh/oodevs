@@ -356,9 +356,6 @@
     <ClInclude Include="..\..\src\libraries\tools\XmlStreamOperators.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\ProtobufSerialization.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h">
       <Filter>Source Files</Filter>
     </ClInclude>

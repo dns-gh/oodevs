@@ -16,7 +16,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/Protocol.h"
 #include "timeline/api.h"
-#include "tools/ProtobufSerialization.h"
+#include <tools/ProtobufSerialization.h>
 
 // -----------------------------------------------------------------------------
 // Name: EventAction constructor
