@@ -81,6 +81,9 @@ void DefaultSpeedComputer::AddModifier( double ratio, bool isMax )
 // -----------------------------------------------------------------------------
 void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component )
 {
-    speed_ = std::min( speed_, strategy_.ApplyOnComponent( component ) );
-    hasComponent_ = true;
+    if( component.CanMove() )
+    {
+        speed_ = std::min( speed_, strategy_.ApplyOnComponent( component ) );
+        hasComponent_ = true;
+    }
 }
