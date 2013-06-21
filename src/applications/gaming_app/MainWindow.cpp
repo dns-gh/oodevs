@@ -67,48 +67,50 @@
 #include "gaming/ColorController.h"
 #include "gaming/TeamsModel.h"
 #include "clients_gui/AddRasterDialog.h"
-#include "clients_gui/DisplayToolbar.h"
-#include "clients_gui/GlSelector.h"
-#include "clients_gui/Logger.h"
-#include "clients_gui/MiscLayer.h"
-#include "clients_gui/ParametersLayer.h"
-#include "clients_gui/ImageWrapper.h"
-#include "clients_gui/InhabitantLayer.h"
-#include "clients_gui/ResourceNetworksLayer.h"
-#include "clients_gui/PreferencesDialog.h"
-#include "clients_gui/RichItemFactory.h"
-#include "clients_gui/GlProxy.h"
+#include "clients_gui/CircularEventStrategy.h"
+#include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/ColorStrategy.h"
-#include "clients_gui/SelectionMenu.h"
-#include "clients_gui/SelectionColorModifier.h"
-#include "clients_gui/HighlightColorModifier.h"
+#include "clients_gui/DefaultLayer.h"
+#include "clients_gui/DisplayToolbar.h"
+#include "clients_gui/DrawerLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/Elevation3dLayer.h"
-#include "clients_gui/TerrainLayer.h"
-#include "clients_gui/RasterLayer.h"
-#include "clients_gui/RasterProcess.h"
-#include "clients_gui/MetricsLayer.h"
-#include "clients_gui/GridLayer.h"
-#include "clients_gui/CircularEventStrategy.h"
-#include "clients_gui/ExclusiveEventStrategy.h"
-#include "clients_gui/DefaultLayer.h"
-#include "clients_gui/DrawerLayer.h"
-#include "clients_gui/UrbanLayer.h"
-#include "clients_gui/LogoLayer.h"
-#include "clients_gui/SymbolIcons.h"
+#include "clients_gui/ElevationPainter.h"
 #include "clients_gui/EntitySymbols.h"
+#include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_gui/GisToolbar.h"
+#include "clients_gui/GlProxy.h"
+#include "clients_gui/GlSelector.h"
+#include "clients_gui/GridLayer.h"
+#include "clients_gui/HelpSystem.h"
+#include "clients_gui/HighlightColorModifier.h"
+#include "clients_gui/ImageWrapper.h"
+#include "clients_gui/InhabitantLayer.h"
+#include "clients_gui/Layer.h"
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
-#include "clients_gui/TooltipsLayer.h"
-#include "clients_gui/HelpSystem.h"
-#include "clients_gui/GisToolbar.h"
-#include "clients_gui/WatershedLayer.h"
-#include "clients_gui/ContourLinesLayer.h"
-#include "clients_gui/TerrainPicker.h"
-#include "clients_gui/TerrainProfilerLayer.h"
-#include "clients_gui/ElevationPainter.h"
+#include "clients_gui/Logger.h"
+#include "clients_gui/LogoLayer.h"
+#include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MiniViews.h"
+#include "clients_gui/MiscLayer.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_gui/PreferencesDialog.h"
+#include "clients_gui/RasterLayer.h"
+#include "clients_gui/RasterProcess.h"
+#include "clients_gui/ResourceNetworksLayer.h"
+#include "clients_gui/RichItemFactory.h"
+#include "clients_gui/SelectionColorModifier.h"
+#include "clients_gui/SelectionMenu.h"
+#include "clients_gui/SymbolIcons.h"
+#include "clients_gui/TerrainLayer.h"
+#include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfiler.h"
+#include "clients_gui/TerrainProfilerLayer.h"
+#include "clients_gui/TooltipsLayer.h"
+#include "clients_gui/TooltipsLayer_ABC.h"
+#include "clients_gui/UrbanLayer.h"
+#include "clients_gui/WatershedLayer.h"
 #include "geodata/ProjectionException.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
@@ -123,16 +125,6 @@ namespace
     {
         mainWindow.addToolBar( toolBar );
         toolBar->SetModes( hiddenModes, visibleModes, visibleByDefault );
-    }
-
-    template< typename Layer >
-    void AddLayer( gui::GlProxy& glProxy, gui::PreferencesDialog& preference, Layer& layer, const std::string& passes = "", const QString& text = "" )
-    {
-        glProxy.Register( layer );
-        if( !text.isEmpty() )
-            preference.AddLayer( text, layer );
-        if( !passes.empty() )
-            layer.SetPasses( passes );
     }
 }
 
@@ -319,41 +311,41 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
-    AddLayer( *glProxy_, *preferenceDialog_, defaultLayer );
-    AddLayer( *glProxy_, *preferenceDialog_, elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, raster, "main,composition,miniviews", tr( "Raster" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, contour, "main,composition,miniviews", tr( "Contour Lines" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, urbanLayer, "main,miniviews", tr( "Urban blocks" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, resourceNetworksLayer,"main", tr( "Resource networks" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, watershed, "main,composition,miniviews", tr( "Watershed" ) );
+    AddLayer( defaultLayer );
+    AddLayer( elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
+    AddLayer( raster, "main,composition,miniviews", tr( "Raster" ) );
+    AddLayer( terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
+    AddLayer( contour, "main,composition,miniviews", tr( "Contour Lines" ) );
+    AddLayer( urbanLayer, "main,miniviews", tr( "Urban blocks" ) );
+    AddLayer( resourceNetworksLayer,"main", tr( "Resource networks" ) );
+    AddLayer( watershed, "main,composition,miniviews", tr( "Watershed" ) );
     glProxy_->Register( elevation3d );
-    AddLayer( *glProxy_, *preferenceDialog_, grid, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, weather, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, limits, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, objectKnowledges, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, populationKnowledges, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, agentKnowledges, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, formationLayer, "main,miniviews", tr( "Formations" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, teamLayer, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, objectsLayer, "main,miniviews", tr( "Objects" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, populations, "main,miniviews", tr( "Crowds" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, inhabitants, "main,miniviews", tr( "Populations" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, agents, "main,miniviews", tr( "Units" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, automats, "main,miniviews", tr( "Automats" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, missionsLayer, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, actionsLayer, "main" );
-    AddLayer( *glProxy_, *preferenceDialog_, creationsLayer, "main" );
+    AddLayer( grid, "main,miniviews" );
+    AddLayer( weather, "main,miniviews" );
+    AddLayer( limits, "main,miniviews" );
+    AddLayer( objectKnowledges, "main,miniviews" );
+    AddLayer( populationKnowledges, "main,miniviews" );
+    AddLayer( agentKnowledges, "main,miniviews" );
+    AddLayer( formationLayer, "main,miniviews", tr( "Formations" ) );
+    AddLayer( teamLayer, "main,miniviews" );
+    AddLayer( objectsLayer, "main,miniviews", tr( "Objects" ) );
+    AddLayer( populations, "main,miniviews", tr( "Crowds" ) );
+    AddLayer( inhabitants, "main,miniviews", tr( "Populations" ) );
+    AddLayer( agents, "main,miniviews", tr( "Units" ) );
+    AddLayer( automats, "main,miniviews", tr( "Automats" ) );
+    AddLayer( missionsLayer, "main,miniviews" );
+    AddLayer( actionsLayer, "main" );
+    AddLayer( creationsLayer, "main" );
     if( timelineLayer )
-        AddLayer( *glProxy_, *preferenceDialog_, *timelineLayer, "main" );
-    AddLayer( *glProxy_, *preferenceDialog_, *parameters_, "main" );
-    AddLayer( *glProxy_, *preferenceDialog_, metrics, "main" );
-    AddLayer( *glProxy_, *preferenceDialog_, locationsLayer, "main" );
-    AddLayer( *glProxy_, *preferenceDialog_, profilerLayer, "main" );
-    AddLayer( *glProxy_, *preferenceDialog_, drawerLayer, "main,miniviews" );
-    AddLayer( *glProxy_, *preferenceDialog_, fogLayer, "fog" );
-    AddLayer( *glProxy_, *preferenceDialog_, tooltipLayer, "tooltip" );
-    AddLayer( *glProxy_, *preferenceDialog_, logoLayer, "main", tr( "Logo" ) );
+        AddLayer( *timelineLayer, "main" );
+    AddLayer( *parameters_, "main" );
+    AddLayer( metrics, "main" );
+    AddLayer( locationsLayer, "main" );
+    AddLayer( profilerLayer, "main" );
+    AddLayer( drawerLayer, "main,miniviews" );
+    AddLayer( fogLayer, "fog" );
+    AddLayer( tooltipLayer, "tooltip" );
+    AddLayer( logoLayer, "main", tr( "Logo" ) );
 
     // ordre des evenements
     forward_->Register( terrainLayer );
@@ -376,6 +368,29 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     forward_->Register( elevation3d );
     forward_->Register( weather );
     forward_->SetDefault( defaultLayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::AddLayer
+// Created: LDC 2013-06-21
+// -----------------------------------------------------------------------------
+void MainWindow::AddLayer( gui::Layer& layer, const std::string& passes /*= ""*/, const QString& text /*= ""*/ )
+{
+    glProxy_->Register( layer );
+    if( !text.isEmpty() )
+        preferenceDialog_->AddLayer( text, layer );
+    if( !passes.empty() )
+        layer.SetPasses( passes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::AddLayer
+// Created: LDC 2013-06-21
+// -----------------------------------------------------------------------------
+void MainWindow::AddLayer( gui::TooltipsLayer_ABC& layer )
+{
+    glProxy_->Register( layer );
+    layer.SetPasses( "tooltip" );
 }
 
 // -----------------------------------------------------------------------------

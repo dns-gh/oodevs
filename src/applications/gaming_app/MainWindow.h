@@ -28,6 +28,7 @@ namespace gui
     class AutomatsLayer;
     class CircularEventStrategy;
     class ColorStrategy;
+    class Elevation2dLayer;
     class EntitySymbols;
     class ExclusiveEventStrategy;
     class FormationLayer;
@@ -42,7 +43,7 @@ namespace gui
     class RichToolBar;
     class TerrainLayer;
     class TerrainPicker;
-    class Elevation2dLayer;
+    class TooltipsLayer_ABC;
 }
 
 namespace tools
@@ -128,6 +129,8 @@ private:
     void CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,
                        gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker,
                        gui::Elevation2dLayer& elevation2dLayer );
+    void AddLayer( gui::Layer& layer, const std::string& passes = "", const QString& text = "" );
+    void AddLayer( gui::TooltipsLayer_ABC& layer );
 
 private:
     //! @name Member data
