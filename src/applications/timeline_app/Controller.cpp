@@ -23,6 +23,7 @@ using namespace timeline;
 
 Controller::Controller( const Configuration& cfg )
     : ui_ ( new Ui::Main() )
+    , command_( "" )
 {
     ui_->setupUi( &main_ );
     ui_->toolBar->addWidget( &url_ );
@@ -229,6 +230,8 @@ void Controller::OnKeyUp( int key )
 
 void Controller::OnGetEvents( const timeline::Events& events, const timeline::Error& error )
 {
+    if( !command_.empty() )
+        return;
     if( error.code != EC_OK )
         ui_->statusBar->showMessage( QString( "An error occured during while receiving GetEvents: %1" ).arg( error.text.c_str() ) );
 
@@ -566,6 +569,7 @@ int Controller::Update( const std::vector< std::string >& args )
 
 int Controller::Execute( const std::string& command, const std::vector< std::string >& args )
 {
+    command_ = command;
     WaitReady();
     if( command == "ready" )
         return 0;
