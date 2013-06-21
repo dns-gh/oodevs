@@ -17,6 +17,7 @@ integration.bypassLevel = function( object )
 end
 
 integration.startBypassIt = function( object )
+    meKnowledge:RC( eRC_EnContournementObstacle )
     object[myself] = object[myself] or {}
     object[myself].actionBypass = DEC_StartCreerContournementObjet( object.source )
     actionCallbacks[ object[myself].actionBypass ] = function( arg ) object[myself].actionBypassState = arg end
