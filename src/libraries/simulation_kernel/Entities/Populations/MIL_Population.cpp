@@ -1286,6 +1286,9 @@ void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     unsigned int wounded = GetParameter( "1", msg.parameters().elem( 1 ) );
     unsigned int contaminated = GetParameter( "2", msg.parameters().elem( 2 ) );
     unsigned int dead = GetParameter( "3", msg.parameters().elem( 3 ) );
+    unsigned int total = healthy + wounded + contaminated + dead;
+    if( total == 0u )
+        throw MASA_BADPARAM_UNIT( "at least one parameter must be non-zero" );
 
     ChangeComposition( healthy, wounded, contaminated, dead );
 }
