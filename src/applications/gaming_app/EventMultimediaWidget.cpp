@@ -42,6 +42,7 @@ EventMultimediaWidget::EventMultimediaWidget()
     gridLayout->addWidget( profiles_, 2, 1, 1, 2 );
 
     mainLayout_->addLayout( gridLayout );
+    mainLayout_->addStretch( 1 );
 }
 
 // -----------------------------------------------------------------------------

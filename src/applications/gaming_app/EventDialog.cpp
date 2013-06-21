@@ -57,7 +57,7 @@ EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Mod
 {
     setObjectName( "event-dialog" );
     setModal( false );
-    setMinimumWidth( 600 );
+    setMinimumWidth( 800 );
     setMinimumHeight( 600 );
 
     topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
