@@ -29,6 +29,7 @@ namespace kernel
 
 class Model;
 class TeamFactory_ABC;
+class KnowledgeGroupsModel;
 
 // =============================================================================
 /** @class  TeamsModel
@@ -44,7 +45,7 @@ class TeamsModel : public tools::Resolver< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamsModel( kernel::Controllers& controllers, TeamFactory_ABC& factory );
+             TeamsModel( kernel::Controllers& controllers, TeamFactory_ABC& factory, KnowledgeGroupsModel& knowledgeGroupsModel );
     virtual ~TeamsModel();
     //@}
 
@@ -74,6 +75,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     TeamFactory_ABC& factory_;
+    KnowledgeGroupsModel& knowledgeGroupsModel_;
     //@}
 };
 

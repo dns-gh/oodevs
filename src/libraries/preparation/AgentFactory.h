@@ -62,7 +62,7 @@ public:
 public:
     //! @name Helpers
     //@{
-    static kernel::Entity_ABC* FindorCreateKnowledgeGroup( const kernel::Entity_ABC& parent, kernel::KnowledgeGroupFactory_ABC& knowledgeFactory );
+    static kernel::Entity_ABC* FindOrCreateKnowledgeGroup( const kernel::Entity_ABC& parent );
     //@}
 
 private:

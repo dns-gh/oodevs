@@ -148,8 +148,8 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
-    Entity_ABC* kg = FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
-    result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
+    kernel::Entity_ABC* kg = FindOrCreateKnowledgeGroup( parent );
+    result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
     result->Attach( *new LogisticLevelAttritube( controllers_, *result, isTC2, dico ) );
@@ -226,23 +226,18 @@ Inhabitant_ABC* AgentFactory::Create( Entity_ABC& parent, const InhabitantType& 
 // Name: AgentFactory::FindKnowledgeGroup
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
-Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const Entity_ABC& parent, kernel::KnowledgeGroupFactory_ABC& knowledgeFactory )
+Entity_ABC* AgentFactory::FindOrCreateKnowledgeGroup( const Entity_ABC& parent )
 {
     const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     const CommunicationHierarchies& teamHierarchy = team.Get< CommunicationHierarchies >();
     tools::Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
-        const Entity_ABC* entity = &it.NextElement();
-        if( dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
-            return const_cast< Entity_ABC* >( entity );
+        const kernel::Entity_ABC* entity = &it.NextElement();
+        if( dynamic_cast< const kernel::KnowledgeGroup_ABC* >( entity ) )
+            return const_cast< kernel::Entity_ABC* >( entity );
     }
-    // LTO begin
-    Team_ABC* teamtop = dynamic_cast< Team_ABC* >( const_cast< Entity_ABC* >(&team) );
-    if( teamtop )
-        return knowledgeFactory.Create( *teamtop );
-    // LTO end
-    return const_cast< Entity_ABC* >( &team );
+    return const_cast< kernel::Entity_ABC* >( &team );
 }
 
 // -----------------------------------------------------------------------------

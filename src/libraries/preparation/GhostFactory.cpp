@@ -83,7 +83,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     else
     {
         assert( prototype.ghostType_ == eGhostType_Automat );
-        Entity_ABC* kg = AgentFactory::FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
+        Entity_ABC* kg = AgentFactory::FindOrCreateKnowledgeGroup( parent );
         result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
         result->Attach( *new LogisticLevelAttritube( controllers_, *result, dico ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_, *result, staticModel_.objectTypes_, dico, false ) );

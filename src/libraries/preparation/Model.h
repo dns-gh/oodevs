@@ -152,9 +152,9 @@ public:
     //@{
     // $$$$ JSR 2011-06-28: TODO passer en private ce qui est possible et utiliser les méthodes de Model_ABC
     Exercise& exercise_;
+    KnowledgeGroupsModel& knowledgeGroups_;
     TeamsModel& teams_;
     ObjectsModel& objects_;
-    KnowledgeGroupsModel& knowledgeGroups_;
     AgentsModel& agents_;
     FormationModel& formations_;
     LimitsModel& limits_;
