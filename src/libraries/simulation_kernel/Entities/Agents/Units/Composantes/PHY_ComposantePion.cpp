@@ -1015,7 +1015,7 @@ bool PHY_ComposantePion::CanSortHumans() const
 bool PHY_ComposantePion::CanBePartOfConvoy() const
 {
     assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && bCanBePartOfConvoy_;
+    return pState_->IsUsable() && CanBeUsed() && CanMove() && bCanBePartOfConvoy_;
 }
 
 // -----------------------------------------------------------------------------
