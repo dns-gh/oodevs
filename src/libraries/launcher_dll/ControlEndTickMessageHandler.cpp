@@ -50,6 +50,8 @@ bool ControlEndTickMessageHandler::OnReceiveMessage( const sword::SimToClient& m
         timeFactor_ = message.message().control_change_time_factor_ack().time_factor();
     if( message.message().has_control_checkpoint_save_end() )
         checkpoint_ = tick_;
+    if( message.message().has_control_begin_tick() )
+        date_ = message.message().control_begin_tick().date_time().data();
     if( message.message().has_control_end_tick() )
     {
         const sword::ControlEndTick& control = message.message().control_end_tick();
