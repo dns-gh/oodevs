@@ -270,12 +270,11 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
         if( !len )
             throw std::runtime_error( "Unable to access temp directory" );
         std::string res( pTempDir );
+        free( pTempDir );
         std::replace( res.begin(), res.end(), '\\', '/' );
         std::stringstream stream;
         stream << res << _getpid() << "sword ot data.tmp/";
         szTempDir_ = stream.str();
-        free( pTempDir );
-        bfs::remove_all( bfs::path( szTempDir_.GetData() ) );
         bfs::create_directory( bfs::path( szTempDir_.GetData() ) );
     }
     else

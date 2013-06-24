@@ -351,6 +351,28 @@ namespace
             }
         }
     }
+    class TempDirectory : private boost::noncopyable
+    {
+    public:
+        TempDirectory( ADN_Project_Data::WorkDirInfos& dirInfos ) 
+            : dirInfos_( dirInfos )
+        { 
+            dirInfos_.UseTempDirectory( true );
+            directory_ = dirInfos_.GetTempDirectory().GetData();
+        }
+        ~TempDirectory() 
+        {
+            dirInfos_.UseTempDirectory( false );
+        }
+
+        const std::string& GetDirectory()
+        {
+            return directory_;
+        }
+    private:
+        ADN_Project_Data::WorkDirInfos& dirInfos_;
+        std::string directory_;
+    };
 }
 
 //-----------------------------------------------------------------------------
@@ -417,10 +439,10 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
 
     /////////////////////////////////////
     // Save Data files in temporary folder
+    TempDirectory tempDirectory( dirInfos );
     try
     {
         // saving in temporary files activated
-        dirInfos.UseTempDirectory( true );
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
         projectData_->SetFile( filename );
@@ -432,9 +454,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
         }
 
         for( T_StringList::iterator it = uncopiedFiles.begin(); it != uncopiedFiles.end(); ++it )
-            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, dirInfos.GetTempDirectory().GetData() + *it );
-
-        dirInfos.UseTempDirectory( false );
+            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, tempDirectory.GetDirectory() + *it );
     }
     catch( ADN_Exception_ABC& )
     {
@@ -446,7 +466,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
     for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
-        if( !ADN_Tools::CopyFileToFile( dirInfos.GetTempDirectory().GetData() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
+        if( !ADN_Tools::CopyFileToFile( tempDirectory.GetDirectory() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
         {
             dirInfos.SetWorkingDirectory( szOldWorkDir );
             ResetProgressIndicator();
