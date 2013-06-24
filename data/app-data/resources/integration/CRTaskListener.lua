@@ -200,11 +200,22 @@ end
 -- Brain debug functions
 -- Copied from directia plugin devtools
 
-local function formatdottable( t )
+local formatdottable
+
+local function formatTable( t )
+    if masalife.brain.core.class.isInstance( t ) then -- t is a masalife class
+        local str = t.tostring ~= nil and t:tostring() or ""
+        str = string.len( str ) == 0 and ( "}" ) or ( "|" .. str .. "}" )
+        return "{" .. tostring( masalife.brain.core.class.getType( t ) ) .. str
+    end
+    return ( "{" .. formatdottable( t ) .. "}" )
+end
+
+formatdottable = function( t )
     local keys, values = {}, {}
     for k, v in pairs( t ) do
-        keys  [ #keys + 1 ]   = type( k ) == 'table' and ( "{" .. formatdottable( k ) .. "}" ) or tostring( k )
-        values[ #values + 1 ] = type( v ) == 'table' and ( "{" .. formatdottable( v ) .. "}" ) or tostring( v )
+        keys  [ #keys + 1 ]   = type( k ) == 'table' and formatTable( k ) or tostring( k )
+        values[ #values + 1 ] = type( v ) == 'table' and formatTable( v ) or tostring( v )
     end
     return "{" .. table.concat( keys, "|" ) .. "}|{" .. table.concat( values, "|" ) ..  "}"
 end
