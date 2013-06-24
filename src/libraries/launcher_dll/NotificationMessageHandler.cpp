@@ -33,6 +33,19 @@ NotificationMessageHandler::~NotificationMessageHandler()
     // NOTHING
 }
 
+namespace
+{
+    std::string GetLongName( const sword::Extension& extension )
+    {
+        for( auto it = extension.entries().begin(); it != extension.entries().end(); ++it )
+        {
+            if( it->name() == "NomLong" )
+                return it->value();
+        }
+        return std::string();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: NotificationMessageHandler::OnReceiveMessage
 // Created: LGY 2011-05-18
@@ -43,7 +56,11 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& mes
     {
         SessionNotification response;
         sword::SessionNotification_UnitUpdate* unit = response().mutable_notification()->mutable_unit_update();
-        unit->mutable_unit()->set_id( message.message().unit_attributes().unit().id() );
+        unit->mutable_unit()->set_id( message.message().unit_creation().unit().id() );
+        sword::SessionNotification_EntityCreation* creation = response().mutable_notification()->mutable_entity_creation();
+        creation->set_long_name( "" );
+        creation->mutable_id()->mutable_unit()->set_id( message.message().unit_creation().unit().id() );
+        creation->mutable_superior()->mutable_automat()->set_id( message.message().unit_creation().automat().id() );
         Send( response );
     }
     if( message.message().has_automat_creation() )
@@ -63,21 +80,22 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& mes
         SessionNotification response;
         sword::SessionNotification_UnitUpdate* unit = response().mutable_notification()->mutable_unit_update();
         unit->mutable_unit()->set_id( message.message().unit_attributes().unit().id() );
-        *unit->mutable_extensions() = message.message().unit_attributes().extension();
+        const sword::Extension& extension = message.message().unit_attributes().extension();
+        *unit->mutable_extensions() = extension;
+        std::string longName = GetLongName( extension );
+        if( !longName.empty() )
+        {
+            sword::SessionNotification_EntityCreation* creation = response().mutable_notification()->mutable_entity_creation();
+            creation->set_long_name( longName );
+            creation->mutable_id()->mutable_unit()->set_id( message.message().unit_attributes().unit().id() );
+            creation->mutable_superior();
+        }
         Send( response );
     }
     if( message.message().has_automat_attributes() && message.message().automat_attributes().has_extension() )
     {
-        auto extension = message.message().automat_attributes().extension();
-        std::string longName;
-        for( auto it = extension.entries().begin(); it != extension.entries().end(); ++it )
-        {
-            if( it->name() == "NomLong" )
-            {
-                longName = it->value();
-                break;
-            }
-        }
+        const sword::Extension& extension = message.message().automat_attributes().extension();
+        std::string longName = GetLongName( extension );
         if( !longName.empty() )
         {
             SessionNotification response;
