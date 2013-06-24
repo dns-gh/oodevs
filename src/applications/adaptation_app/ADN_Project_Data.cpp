@@ -275,8 +275,11 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
         stream << res << _getpid() << "sword ot data.tmp/";
         szTempDir_ = stream.str();
         free( pTempDir );
+        bfs::remove_all( bfs::path( szTempDir_.GetData() ) );
+        bfs::create_directory( bfs::path( szTempDir_.GetData() ) );
     }
-    bfs::remove_all( bfs::path( szTempDir_.GetData() ) );
+    else
+        bfs::remove_all( bfs::path( szTempDir_.GetData() ) );
 }
 
 
