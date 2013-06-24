@@ -344,7 +344,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( profilerLayer, "main" );
     AddLayer( drawerLayer, "main,miniviews" );
     AddLayer( fogLayer, "fog" );
-    AddLayer( tooltipLayer, "tooltip" );
+    AddTooltipLayer( tooltipLayer );
     AddLayer( logoLayer, "main", tr( "Logo" ) );
 
     // ordre des evenements
@@ -384,10 +384,10 @@ void MainWindow::AddLayer( gui::Layer& layer, const std::string& passes /*= ""*/
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::AddLayer
+// Name: MainWindow::AddTooltipLayer
 // Created: LDC 2013-06-21
 // -----------------------------------------------------------------------------
-void MainWindow::AddLayer( gui::TooltipsLayer_ABC& layer )
+void MainWindow::AddTooltipLayer( gui::TooltipsLayer_ABC& layer )
 {
     glProxy_->Register( layer );
     layer.SetPasses( "tooltip" );

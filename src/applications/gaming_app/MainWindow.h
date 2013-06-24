@@ -130,7 +130,7 @@ private:
                        gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker,
                        gui::Elevation2dLayer& elevation2dLayer );
     void AddLayer( gui::Layer& layer, const std::string& passes = "", const QString& text = "" );
-    void AddLayer( gui::TooltipsLayer_ABC& layer );
+    void AddTooltipLayer( gui::TooltipsLayer_ABC& layer );
 
 private:
     //! @name Member data
