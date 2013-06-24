@@ -209,3 +209,12 @@ const dispatcher::Team_ABC& KnowledgeGroup::GetTeam() const
 {
     return team_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsJammed
+// Created: JSR 2013-06-20
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsJammed() const
+{
+    return jammed_;
+}

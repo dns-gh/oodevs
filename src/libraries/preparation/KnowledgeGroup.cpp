@@ -133,3 +133,12 @@ bool KnowledgeGroup::IsActivated() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsJammed
+// Created: JSR 2013-06-20
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsJammed() const
+{
+    return false;
+}

@@ -23,7 +23,9 @@
 #include "Entities/Objects/MIL_BurningCells.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include <spatialcontainer/TerrainData.h>
@@ -246,7 +248,15 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< 
         return true;
 
     T_KnowledgeObjectVector knowledgesObject;
-    pion_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+    if( !pion_.GetKnowledgeGroup()->IsJammed() )
+        pion_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+    auto bbKg = pion_.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectVector knowledgesObjectTmp;
+        bbKg->GetObjects( knowledgesObjectTmp );
+        knowledgesObject.insert( knowledgesObject.end(), knowledgesObjectTmp.begin(), knowledgesObjectTmp.end() );
+    }
     if( knowledgesObject.empty() )
         return true;
 

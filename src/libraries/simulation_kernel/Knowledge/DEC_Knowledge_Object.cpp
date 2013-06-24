@@ -485,8 +485,7 @@ void DEC_Knowledge_Object::UpdateRelevance()
     CleanObjectKnown();
 
     // Si plus d'objet réel associé est si l'emplacement de l'objet est vu
-    assert( pArmyKnowing_ );
-    if( !pObjectKnown_ && pArmyKnowing_->IsPerceived( *this ) )
+    if( !pObjectKnown_ && pArmyKnowing_ && pArmyKnowing_->IsPerceived( *this ) )
     {
         rRelevance_ = 0.;
         NotifyAttributeUpdated( eAttr_Relevance );
@@ -593,8 +592,7 @@ void DEC_Knowledge_Object::SendUpdateOnNetwork()
 {
     client::ObjectKnowledgeUpdate asn;
     asn().mutable_knowledge()->set_id( nID_ );
-    assert( pArmyKnowing_ );
-    asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
+    asn().mutable_party()->set_id( pArmyKnowing_ ? pArmyKnowing_->GetID() : 0 );
     if( pKnowledgeGroup_.get() )
         asn().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
 
@@ -613,12 +611,10 @@ void DEC_Knowledge_Object::SendUpdateOnNetwork()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
-    assert( pArmyKnowing_ );
-
     client::ObjectKnowledgeCreation asn;
     asn().mutable_knowledge()->set_id( nID_ );
     asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
-    asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
+    asn().mutable_party()->set_id( pArmyKnowing_ ? pArmyKnowing_->GetID() : 0 );
     if( pKnowledgeGroup_.get() )
         asn().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     asn().mutable_type()->set_id( pObjectType_->GetName().c_str() );
@@ -634,8 +630,7 @@ void DEC_Knowledge_Object::SendMsgDestruction() const
 {
     client::ObjectKnowledgeDestruction asn;
     asn().mutable_knowledge()->set_id( nID_ );
-    assert( pArmyKnowing_ );
-    asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
+    asn().mutable_party()->set_id( pArmyKnowing_ ? pArmyKnowing_->GetID() : 0 );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -668,6 +663,31 @@ double DEC_Knowledge_Object::GetMaxInteractionHeight() const
 const std::string& DEC_Knowledge_Object::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::CopyFrom
+// Created: JSR 2013-06-19
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::CopyFrom( const DEC_Knowledge_Object& object )
+{
+    pObjectType_ = object.pObjectType_;
+    pOwnerArmy_ = object.pOwnerArmy_;
+    localisation_ = object.localisation_;
+    avoidanceLocalisation_ = object.avoidanceLocalisation_;
+    pCurrentPerceptionLevel_ = object.pCurrentPerceptionLevel_;
+    pPreviousPerceptionLevel_ = object.pPreviousPerceptionLevel_;
+    pMaxPerceptionLevel_ = object.pMaxPerceptionLevel_;
+    perceptionPerAutomateSet_ = object.perceptionPerAutomateSet_;
+    previousPerceptionPerAutomateSet_ = object.previousPerceptionPerAutomateSet_;
+    perceptionLevelPerAgentMap_ = object.perceptionLevelPerAgentMap_;
+    nTimeLastUpdate_ = object.nTimeLastUpdate_;
+    rRelevance_ = object.rRelevance_;
+    bValid_ = object.bValid_;
+    bPerceptionDistanceHacked_ = object.bPerceptionDistanceHacked_;
+    bSkipPreparation_ = object.bSkipPreparation_;
+    reconByAgentTypes_ = object.reconByAgentTypes_;
+    nAttributesUpdated_ = eAttr_AllAttributes;
 }
 
 // -----------------------------------------------------------------------------

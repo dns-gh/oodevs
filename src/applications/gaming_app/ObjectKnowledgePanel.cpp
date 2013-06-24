@@ -36,7 +36,8 @@ using namespace gui;
 ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( parent, panel, tools::translate( "ObjectKnowledgePanel", "Object knowledges" ) )
     , controllers_ ( controllers )
-    , selected_    ( controllers )
+    , selectedForTeam_( controllers )
+    , selectedForKg_( controllers )
     , subSelected_ ( controllers )
 {
     QVBoxLayout* layout = new QVBoxLayout( this );
@@ -117,8 +118,10 @@ ObjectKnowledgePanel::~ObjectKnowledgePanel()
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::showEvent( QShowEvent* )
 {
-    if( selected_ )
-        NotifyUpdated( *selected_ );
+    if( selectedForKg_ )
+        NotifyUpdated( *selectedForKg_ );
+    else if( selectedForTeam_ )
+        NotifyUpdated( *selectedForTeam_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,8 +130,31 @@ void ObjectKnowledgePanel::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 {
-    if( selected_ && selected_ == &element )
-        pKnowledgeListView_->DeleteTail( pKnowledgeListView_->DisplayList( element.CreateIterator() ));
+    if( selectedForTeam_ == &element || selectedForKg_ == &element )
+    {
+        tools::Resolver< kernel::ObjectKnowledge_ABC > resolver;
+        if( selectedForTeam_ )
+        {
+            auto it = selectedForTeam_->CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::ObjectKnowledge_ABC& kn = it.NextElement();
+                if( resolver.Find( kn.GetId() ) == 0 )
+                    resolver.Register( kn.GetId(), const_cast< kernel::ObjectKnowledge_ABC& >( kn ) );
+            }
+        }
+        if( selectedForKg_ )
+        {
+            auto it = selectedForKg_->CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::ObjectKnowledge_ABC& kn = it.NextElement();
+                if( resolver.Find( kn.GetId() ) == 0 )
+                    resolver.Register( kn.GetId(), const_cast< kernel::ObjectKnowledge_ABC& >( kn ) );
+            }
+        }
+        pKnowledgeListView_->DeleteTail( pKnowledgeListView_->DisplayList( resolver.CreateIterator() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -273,23 +299,26 @@ void ObjectKnowledgePanel::NotifyUpdated( const MineAttribute_ABC& element )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::Select( const Team_ABC* team )
 {
+    selectedForKg_ = 0;
     const ObjectKnowledges* k = team ? team->Retrieve< ObjectKnowledges >() : 0;
-    if( ! k || k != selected_ )
-        Select( k );
+    if( ! k || k != selectedForTeam_ )
+    {
+        selectedForTeam_ = k;
+    }
+    DoShow();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgePanel::Select
+// Name: ObjectKnowledgePanel::DoShow
 // Created: LDC 2010-04-15
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Select( const ObjectKnowledges* k )
+void ObjectKnowledgePanel::DoShow()
 {
-    selected_ = k;
-    if( selected_ )
+    if( selectedForTeam_ || selectedForKg_ )
     {
         subSelected_ = 0;
         Show();
-        NotifyUpdated( *selected_ );
+        NotifyUpdated( selectedForTeam_ ? *selectedForTeam_ : *selectedForKg_ );
     }
     else
         Hide();
@@ -301,15 +330,24 @@ void ObjectKnowledgePanel::Select( const ObjectKnowledges* k )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::Select( const kernel::KnowledgeGroup_ABC* group )
 {
-    const ObjectKnowledges* k = group ? group->Retrieve< ObjectKnowledges >() : 0;
-    if( !k && group )
+    if( !group )
+    {
+        selectedForKg_ = 0;
+        selectedForTeam_ = 0;
+        DoShow();
+        return;
+    }
+
+    selectedForKg_ = group->Retrieve< ObjectKnowledges >();
+    selectedForTeam_ = 0;
+    if( !group->IsJammed() )
     {
         const Hierarchies* hierarchies = group->Retrieve< kernel::CommunicationHierarchies >();
         if( hierarchies )
-            Select( static_cast< const Team_ABC* >( & hierarchies->GetTop() ) );
+             if( const Team_ABC* team = static_cast< const Team_ABC* >( & hierarchies->GetTop() ) )
+                 selectedForTeam_ = team->Retrieve< ObjectKnowledges >();
     }
-    else if( k != selected_ )
-        Select( k );
+    DoShow();
 }
 
 // -----------------------------------------------------------------------------

@@ -17,6 +17,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
+#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -44,18 +45,28 @@ namespace
     struct ObjectKnowledgeSerializationFixture
     {
         ObjectKnowledgeSerializationFixture()
+            : group( "<knowledge-groups>"
+            "    <knowledge-group name='Standard' communication-delay='01m'>"
+            "        <unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000'/>"
+            "        <population-knowledge max-lifetime='2m'/>"
+            "    </knowledge-group>"
+            "</knowledge-groups>" )
         {
             WorldInitialize( "worldwide/Paris" );
             PHY_ConsumptionType::Initialize();
             MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
+            MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
+            MIL_KnowledgeGroupType::Initialize( group );
         }
         ~ObjectKnowledgeSerializationFixture()
         {
+            MIL_KnowledgeGroupType::Terminate();
             PHY_ConsumptionType::Terminate();
             TER_World::DestroyWorld();
             mock::verify();
         }
         MockMIL_Time_ABC time;
+        xml::xistringstream group;
     };
 }
 
@@ -79,6 +90,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
                                  "</objects>" );
         loader.Initialize( xis );
     }
+
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
 
     ArmySerializationProxy army;
@@ -95,9 +107,13 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
     MOCK_EXPECT( army, UnregisterObject ).with( mock::same( *pObject ) ).once();
 
     MockNET_Publisher_ABC publisher;
-    MOCK_EXPECT( publisher, Send ).once(); // object knowledge creation
+    MOCK_EXPECT( publisher, Send ).exactly( 2 ); // object knowledge creation / knowledge group creation
     MOCK_EXPECT( army, GetID ).returns( 42u );
-    DEC_Knowledge_Object knowledge( army, *pObject );
+    MOCK_EXPECT( army, RegisterKnowledgeGroup );
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup );
+    boost::shared_ptr< MIL_KnowledgeGroup > groupArmy( new MIL_KnowledgeGroup( *MIL_KnowledgeGroupType::FindType( "Standard" ), 30, army ) );
+    army.RegisterKnowledgeGroup( groupArmy );
+    DEC_Knowledge_Object knowledge( groupArmy, *pObject );
     knowledge.Update( PHY_PerceptionLevel::identified_ );
     std::stringstream s;
     {

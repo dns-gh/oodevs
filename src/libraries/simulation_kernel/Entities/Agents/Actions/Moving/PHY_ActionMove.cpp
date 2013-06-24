@@ -25,6 +25,8 @@
 #include "Decision/DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
@@ -65,7 +67,14 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     T_KnowledgeObjectVector knowledges;
     T_KnowledgeObjectVector newKnowledges;
     MIL_PathObjectFilter filter;
-    pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, pion_, filter );
+    if( !pion_.GetKnowledgeGroup()->IsJammed() )
+        pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, pion_, filter );
+    if( pion_.GetKnowledgeGroup() && pion_.GetKnowledgeGroup()->GetKnowledge() )
+    {
+        T_KnowledgeObjectVector knowledgesTmp;
+        pion_.GetKnowledgeGroup()->GetKnowledge()->GetObjectsAtInteractionHeight( knowledgesTmp, pion_, filter );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
     for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
     {
         double cost = pMainPath_->GetPathClass().GetObjectCost( (*it)->GetType() );

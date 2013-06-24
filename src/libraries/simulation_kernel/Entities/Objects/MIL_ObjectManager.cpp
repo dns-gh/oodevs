@@ -25,6 +25,8 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -168,7 +170,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
     if( pObject->IsUniversal() )
         universalObjects_.insert( pObject );
     pObject->SendCreation();
-    if( pObject->GetArmy() )
+    if( pObject->GetArmy() && !pObject->IsUniversal() )
         pObject->GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
 }
 
@@ -435,6 +437,12 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
             if( army )
             {
                 army->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
+                auto knowledges = army->GetKnowledgeGroups();
+                for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+                {
+                    if( auto bbKg = const_cast< DEC_KnowledgeBlackBoard_KnowledgeGroup* >( it->second->GetKnowledge() ) )
+                        bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
+                }
                 partyId = army->GetID();
             }
             ( *pObject )().Destroy();

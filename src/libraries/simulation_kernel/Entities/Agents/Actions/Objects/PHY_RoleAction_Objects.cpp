@@ -44,9 +44,12 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Objects )
@@ -107,6 +110,12 @@ MIL_Object_ABC* PHY_RoleAction_Objects::GetObject( const boost::shared_ptr< DEC_
     if( pObject )
         return pObject;
     pion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+    if( pion_->GetKnowledgeGroup() )
+    {
+        auto bbKg = const_cast< DEC_KnowledgeBlackBoard_KnowledgeGroup* >( pion_->GetKnowledgeGroup()->GetKnowledge() );
+        if( bbKg )
+            bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+    }
     return 0;
 }
 
@@ -172,7 +181,14 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
         pKnowledge.reset();
         return eImpossible;
     }
-    pKnowledge = pion_->GetArmy().GetKnowledge().GetKnowledgeObject( *pObject );
+    if( !pion_->GetKnowledgeGroup()->IsJammed() )
+        pKnowledge = pion_->GetArmy().GetKnowledge().GetKnowledgeObject( *pObject );
+    if( !pKnowledge.get() && pion_->GetKnowledgeGroup() )
+    {
+        auto bbKg = pion_->GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
+            pKnowledge = bbKg->GetKnowledgeObjectContainer().GetKnowledgeObject( *pObject );
+    }
     return Construct( *pObject );
 }
 
@@ -185,9 +201,12 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
     if( !pKnowledge || !pKnowledge->IsValid() )
         return eImpossible;
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+    auto bbKg = const_cast< DEC_KnowledgeBlackBoard_KnowledgeGroup* >( pion_->GetKnowledgeGroup()->GetKnowledge() );
     if( !pObject )
     {
         pion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+        if( bbKg )
+            bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
         return eImpossible;
     }
 
@@ -218,6 +237,8 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
     if( attribute.GetState() == 0. )
     {
         pion_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+        if( bbKg )
+            bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
         return eFinished;
     }
     pion_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );

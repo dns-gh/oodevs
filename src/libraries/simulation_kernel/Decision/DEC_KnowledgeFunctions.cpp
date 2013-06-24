@@ -23,7 +23,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/MT_Logger.h"
-#include <limits>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
@@ -247,7 +246,11 @@ void DEC_KnowledgeFunctions::GetObservableKnowledge( directia::brain::Brain& bra
 
     //Object
     T_KnowledgeObjectVector objectsKn;
-    pion.GetArmy().GetKnowledge().GetObjects( objectsKn );
+    if( !pion.GetKnowledgeGroup()->IsJammed() )
+        pion.GetArmy().GetKnowledge().GetObjects( objectsKn );
+    T_KnowledgeObjectVector objectsKnTmp;
+    bbKg->GetObjects( objectsKnTmp );
+    objectsKn.insert( objectsKn.end(), objectsKnTmp.begin(), objectsKnTmp.end() );
 
     knowledgeCreateFunction( table, brain[ "integration.ontology.types.object" ], objectsKn, true );
 
@@ -282,7 +285,7 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( boost::shared
     //Urban
     T_UrbanObjectVector result;
     std::vector< const urban::TerrainObject_ABC* > blocks;
-    geometry::Point2f centerPoint( center->rX_, center->rY_ );
+    geometry::Point2f centerPoint( static_cast< float >( center->rX_ ), static_cast< float >( center->rY_ ) );
     MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( centerPoint, radius, blocks );
     // retrieve UrbanObjectWrapper from block...
     result.reserve( blocks.size() );
@@ -423,7 +426,23 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestObje
     std::vector< std::string > typeList;
     typeList.push_back( type );
     const MIL_ObjectFilter filter( typeList );
-    return callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
+    const MT_Vector2D& pos = callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    boost::shared_ptr< DEC_Knowledge_Object > obj1;
+    if( !callerAgent.GetKnowledgeGroup()->IsJammed() )
+        obj1 = callerAgent.GetArmy().GetKnowledge().GetClosestObject( pos, filter );
+    boost::shared_ptr< DEC_Knowledge_Object > obj2;
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+
+    if( bbKg )
+        obj2 = bbKg->GetClosestObject( pos, filter );
+    if( !obj1.get() )
+        return obj2;
+    if( !obj2.get() )
+        return obj1;
+
+    if( obj1->GetLocalisation().ComputeBarycenter().Distance( pos ) < obj2->GetLocalisation().ComputeBarycenter().Distance( pos ) )
+        return obj1;
+    return obj2;
 }
 
 // -----------------------------------------------------------------------------
@@ -435,7 +454,22 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestFrie
     std::vector< std::string > typeList;
     typeList.push_back( type );
     const MIL_ObjectFilter filter( typeList );
-    return callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
+    const MT_Vector2D& pos = callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    boost::shared_ptr< DEC_Knowledge_Object > obj1;
+    if( !callerAgent.GetKnowledgeGroup()->IsJammed() )
+        obj1 = callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( pos, filter );
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    boost::shared_ptr< DEC_Knowledge_Object > obj2;
+    if( bbKg )
+        obj2 = bbKg->GetClosestFriendObject( pos, filter );
+    if( !obj1.get() )
+        return obj2;
+    if( !obj2.get() )
+        return obj1;
+
+    if( obj1->GetLocalisation().ComputeBarycenter().Distance( pos ) < obj2->GetLocalisation().ComputeBarycenter().Distance( pos ) )
+        return obj1;
+    return obj2;
 }
 
 // -----------------------------------------------------------------------------
@@ -481,7 +515,15 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsWithCapacityInZon
     if( !pLoc || !callerAgent )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     T_KnowledgeObjectDiaIDVector knowledges;
-    callerAgent->GetPion().GetArmy().GetKnowledge().GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
+    if( !callerAgent->GetPion().GetKnowledgeGroup()->IsJammed() )
+        callerAgent->GetPion().GetArmy().GetKnowledge().GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
+    auto bbKg = callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetObjectsWithCapacityInZone( knowledgesTmp, capacity, *pLoc );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
     return knowledges;
 }
 
@@ -493,6 +535,11 @@ bool DEC_KnowledgeFunctions::IsPositionInsideObjectOfType( const DEC_Decision_AB
 {
     if( !callerAgent || !pCenter )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    auto bbKg = callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg && bbKg->IsPositionInsideObjectOfType( capacity, *pCenter ) )
+        return true;
+    if( callerAgent->GetPion().GetKnowledgeGroup()->IsJammed() )
+        return false;
     return callerAgent->GetPion().GetArmy().GetKnowledge().IsPositionInsideObjectOfType( capacity, *pCenter );
 }
 

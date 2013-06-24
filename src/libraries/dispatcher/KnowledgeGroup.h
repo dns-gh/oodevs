@@ -59,6 +59,7 @@ public:
     //! @name Accessors
     //@{
     virtual const dispatcher::Team_ABC& GetTeam() const;
+    virtual bool IsJammed() const;
     //@}
 
 private:

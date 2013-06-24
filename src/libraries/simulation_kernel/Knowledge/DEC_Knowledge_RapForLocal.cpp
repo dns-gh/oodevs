@@ -95,7 +95,7 @@ void DEC_Knowledge_RapForLocal::Update()
     }
 
     // 2 - Compute the friend fight scores against the agent local enemies
-    int enemiesSize = dangerousEnemies_.size();
+    int enemiesSize = static_cast< int >( dangerousEnemies_.size() );
     if( enemiesSize )
     {
         for( CIT_KnowledgeAgentVector itFriend = friends.begin(); itFriend != friends.end(); ++itFriend )

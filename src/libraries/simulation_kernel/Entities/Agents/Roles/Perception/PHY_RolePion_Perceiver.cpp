@@ -42,6 +42,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -1141,7 +1142,12 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 {
-    return pion_->GetArmy().GetKnowledge().IsKnown( object );
+    if( !pion_->GetKnowledgeGroup()->IsJammed() && pion_->GetArmy().GetKnowledge().IsKnown( object ) )
+        return true;
+    auto bbKg = pion_->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->GetKnowledgeObjectContainer().HasKnowledgeObject( object );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

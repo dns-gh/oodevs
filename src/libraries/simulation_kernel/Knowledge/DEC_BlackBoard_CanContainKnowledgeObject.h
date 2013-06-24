@@ -33,7 +33,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_BlackBoard_CanContainKnowledgeObject();
-             DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~DEC_BlackBoard_CanContainKnowledgeObject();
     //@}
 
@@ -48,7 +47,9 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, boost::shared_ptr< MIL_KnowledgeGroup >& kg, MIL_Object_ABC& objectKnown );
+    void AppendArmyKnowledges( MIL_Army_ABC& army );
     void DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
     void NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;

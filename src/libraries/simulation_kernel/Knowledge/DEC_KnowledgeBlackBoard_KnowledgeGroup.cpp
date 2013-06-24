@@ -22,10 +22,17 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_KS_KnowledgeSynthetizer.h"
+#include "DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "DEC_KS_Sharing.h"
 #include "MIL_KnowledgeGroup.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/CapacityRetriever.h"
+#include "Entities/Objects/InteractWithSideCapacity.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 
@@ -39,11 +46,12 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( 
     : pKnowledgeGroup_              ( knowledgeGroup )
     , pKnowledgeAgentContainer_     ( new DEC_BlackBoard_CanContainKnowledgeAgent( knowledgeGroup ) )
     , pKnowledgePopulationContainer_( new DEC_BlackBoard_CanContainKnowledgePopulation() )
-    , pKnowledgeObjectContainer_    ( 0 )
+    , pKnowledgeObjectContainer_    ( new DEC_BlackBoard_CanContainKnowledgeObject() )
     , pKsKnowledgeSynthetizer_      ( new DEC_KS_KnowledgeSynthetizer( *this ) )
+    , pKsObjectKnowledgeSynthetizer_( new DEC_KS_ObjectKnowledgeSynthetizer( *this ) )
     , pKsSharing_                   ( new DEC_KS_Sharing( *this ) )
 {
-    // NOTHING
+    pKnowledgeObjectContainer_->SetKnowledgeGroup( knowledgeGroup );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,6 +64,7 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
     , pKnowledgePopulationContainer_    ( 0 )
     , pKnowledgeObjectContainer_        ( 0 )
     , pKsKnowledgeSynthetizer_          ( 0 )
+    , pKsObjectKnowledgeSynthetizer_    ( 0 )
     , pKsSharing_                       ( 0 )
 {
     // NOTHING
@@ -71,6 +80,7 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::~DEC_KnowledgeBlackBoard_KnowledgeGroup(
     delete pKnowledgePopulationContainer_;
     delete pKnowledgeObjectContainer_;
     delete pKsKnowledgeSynthetizer_;
+    delete pKsObjectKnowledgeSynthetizer_;
     delete pKsSharing_;
 }
 
@@ -86,6 +96,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
             & pKnowledgePopulationContainer_
             & pKnowledgeObjectContainer_
             & pKsKnowledgeSynthetizer_
+            & pKsObjectKnowledgeSynthetizer_
             & pKsSharing_;
 }
 
@@ -96,8 +107,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::SetKnowledgeGroup( MIL_KnowledgeGroup* group )
 {
     pKnowledgeGroup_ = group;
-    if( pKnowledgeObjectContainer_ )
-        pKnowledgeObjectContainer_->SetKnowledgeGroup( group );
+    pKnowledgeObjectContainer_->SetKnowledgeGroup( group );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,11 +120,8 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState( unsigned int /*nCtx*
     pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( agentFunctor );
     boost::function< void( DEC_Knowledge_Population& ) > populationFunctor = boost::bind( &DEC_Knowledge_Population::SendStateToNewClient, _1 );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( populationFunctor );
-    if( pKnowledgeObjectContainer_ )
-    {
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::SendStateToNewClient, _1 );
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( objectFunctor );
-    }
+    boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::SendStateToNewClient, _1 );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( objectFunctor );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,12 +130,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState( unsigned int /*nCtx*
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::Update( int currentTimeStep )
 {
-    if( pKnowledgeObjectContainer_ )
-    {
-        pKnowledgeObjectContainer_->Prepare();
-        std::mem_fun_ref_t< void, DEC_Knowledge_Object > objectFunctor = std::mem_fun_ref( &DEC_Knowledge_Object::Prepare );
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( objectFunctor );
-    }
+    pKnowledgeObjectContainer_->Prepare();
     DEC_KnowledgeBlackBoard_ABC::Update( currentTimeStep );
 }
 
@@ -150,11 +152,9 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendChangedState() const
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendObjectChangedState() const
 {
-    if( pKnowledgeObjectContainer_ )
-    {
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::UpdateOnNetwork, _1 );
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( objectFunctor );
-    }
+    // TODO pourquoi c'est pas fait au dessus?
+    boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::UpdateOnNetwork, _1 );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( objectFunctor );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +163,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendObjectChangedState() const
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateUniversalObjects()
 {
-    if( pKnowledgeGroup_ && pKnowledgeObjectContainer_ )
+    if( pKnowledgeGroup_ )
         pKnowledgeObjectContainer_->UpdateUniversalObjects( pKnowledgeGroup_->GetArmy() );
 }
 
@@ -498,6 +498,412 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetPopulations( T_KnowledgePopulati
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( functor );
 }
 
+namespace
+{
+    // TODO Clean : mettre tout ça dans un autre fichier
+    class sObjectKnowledgesInserter
+    {
+    public:
+        sObjectKnowledgesInserter( T_KnowledgeObjectVector& container )
+            : pContainer_( &container )
+        {
+            // NOTHING
+        }
+
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) && knowledge->IsValid() )
+                pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectVector* pContainer_;
+    };
+
+    class sObjectKnowledgesDiaIDInserter : boost::noncopyable
+    {
+    public:
+        sObjectKnowledgesDiaIDInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter )
+            : pContainer_( &container )
+            , filter_    ( filter )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( filter_.Test( knowledge->GetType() ) )
+                pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectDiaIDVector* pContainer_;
+        const MIL_ObjectFilter& filter_;
+    };
+
+    class sObjectKnowledgesInCircleFilteredInserter : boost::noncopyable
+    {
+    public:
+        sObjectKnowledgesInCircleFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles )
+            : pContainer_( &container )
+            , filter_    ( filter )
+            , pCenter_   ( &center )
+            , rRadius_   ( rRadius )
+            , nonActivatedObstacles_( nonActivatedObstacles )
+        {
+            // NOTHING
+        }
+
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( knowledge->IsValid()
+                && ( nonActivatedObstacles_ || ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) )
+                && filter_.Test( knowledge->GetType() ) 
+                && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
+                pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectDiaIDVector* pContainer_;
+        const MIL_ObjectFilter& filter_;
+        const MT_Vector2D* pCenter_;
+        double rRadius_;
+        bool nonActivatedObstacles_;
+    };
+
+    template< typename T >
+    class sObjectKnowledgesInZoneFilteredInserter
+    {
+    public:
+        sObjectKnowledgesInZoneFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const T& zone )
+            : pContainer_( &container )
+            , filter_    ( filter )
+            , pZone_     ( &zone )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( filter_.Test( knowledge->GetType() ) 
+                && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) 
+                && pZone_->IsInside( knowledge->GetLocalisation().ComputeBarycenter() ) 
+                && knowledge->IsValid() )
+                pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectDiaIDVector* pContainer_;
+        const MIL_ObjectFilter& filter_;
+        const T* pZone_;
+    };
+
+    template< typename T >
+    class sObjectKnowledgesIntersectingInZoneFilteredInserter
+    {
+    public:
+        sObjectKnowledgesIntersectingInZoneFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const T& zone )
+            : pContainer_( &container )
+            , filter_    ( filter )
+            , pZone_     ( &zone )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( filter_.Test( knowledge->GetType() ) 
+                && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) 
+                && pZone_->IsIntersecting( knowledge->GetLocalisation() )
+                && knowledge->IsValid() )
+                pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectDiaIDVector* pContainer_;
+        const MIL_ObjectFilter& filter_;
+        const T* pZone_;
+    };
+
+    class sObjectKnowledgesInZoneCapacityInserter
+    {
+    public:
+        sObjectKnowledgesInZoneCapacityInserter( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone )
+            : pContainer_( container )
+            , capacity_  ( capacity )
+            , pZone_     ( zone )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( knowledge && knowledge->IsValid() && CapacityRetriever::RetrieveCapacity( knowledge->GetType(), capacity_ ) != 0
+                && pZone_.IsInside( knowledge->GetLocalisation().ComputeBarycenter() ) )
+                pContainer_.push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectDiaIDVector& pContainer_;
+        const std::string& capacity_;
+        const TER_Localisation& pZone_;
+    };
+
+    class sObjectKnowledgesCapacityPositionInside
+    {
+    public:
+        sObjectKnowledgesCapacityPositionInside( const std::string& capacity, const MT_Vector2D& loc )
+            : capacity_( capacity )
+            , loc_     ( loc )
+            , result_  ( false )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( result_ )
+                return;
+            result_ = knowledge && knowledge->IsValid() && CapacityRetriever::RetrieveCapacity( knowledge->GetType(), capacity_ ) != 0
+                && knowledge->GetLocalisation().IsInside( loc_);
+        }
+
+        bool Result() const
+        {
+            return result_;
+        }
+
+    private:
+        const std::string& capacity_;
+        const MT_Vector2D& loc_;
+        bool result_;
+    };
+
+    class sObjectKnowledgesFilteredHeightInserter
+    {
+    public:
+        sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter, const MIL_Army_ABC& army )
+            : pContainer_( &container )
+            , agent_     ( agent )
+            , filter_    ( filter )
+            , army_      ( army )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( !knowledge->IsValid() )
+                return;
+            if( !knowledge->CanCollideWith( agent_ ) )
+                return;
+            const InteractWithSideCapacity* pSideInteraction = knowledge->GetType().GetCapacity< InteractWithSideCapacity >();
+            if( pSideInteraction && &knowledge->GetArmy() )
+            {
+                if( pSideInteraction->IsPossible( knowledge->GetArmy(), army_ ) )
+                    pContainer_->push_back( knowledge );
+                return;
+            }
+            if( filter_.Test( knowledge->GetType() ) )
+                pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectVector* pContainer_;
+        const MIL_Agent_ABC& agent_;
+        const MIL_ObjectFilter& filter_;
+        const MIL_Army_ABC& army_;
+    };
+
+    class sClosestObjectInserter : boost::noncopyable
+    {
+    public:
+        sClosestObjectInserter( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter )
+            : rClosestDist_( std::numeric_limits< double >::max() )
+            , pPos_        ( vPos )
+            , filter_      ( filter )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( !filter_.Test( knowledge->GetType() ) || !knowledge->IsValid() )
+                return;
+
+            const double rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pPos_ );
+            if( rDist > rClosestDist_ )
+                return;
+            rClosestDist_ = rDist;
+            pResult_ = knowledge;
+        }
+
+    public:
+        boost::shared_ptr< DEC_Knowledge_Object > pResult_;
+
+    private:
+        double rClosestDist_;
+        const MT_Vector2D& pPos_;
+        const MIL_ObjectFilter& filter_;
+    };
+
+    class sClosestObjectFriendInserter : boost::noncopyable
+    {
+    public:
+        sClosestObjectFriendInserter( const MT_Vector2D& vPos, const MIL_Army_ABC& army, const MIL_ObjectFilter& filter )
+            : pArmy_       ( &army )
+            , rClosestDist_( std::numeric_limits< double >::max() )
+            , pos_         ( vPos )
+            , filter_      ( filter )
+        {
+            // NOTHING
+        }
+
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( !knowledge->IsValid() )
+                return;
+
+            if( !filter_.Test( knowledge->GetType() ) )
+                return;
+
+            if( pArmy_->IsAFriend( knowledge->GetArmy() ) != eTristate_True )
+                return;
+
+            const double rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pos_ );
+            if( rDist > rClosestDist_ )
+                return;
+            rClosestDist_ = rDist;
+            pResult_ = knowledge;
+        }
+
+    public:
+        boost::shared_ptr< DEC_Knowledge_Object > pResult_;
+
+    private:
+        double rClosestDist_;
+        const MIL_Army_ABC* pArmy_;
+        const MT_Vector2D& pos_;
+        const MIL_ObjectFilter& filter_;
+    };
+}
+
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjects( T_KnowledgeObjectVector& container ) const
+{
+    sObjectKnowledgesInserter functor( container );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+}
+
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjects( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const
+{
+    sObjectKnowledgesDiaIDInserter functor( container, filter );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+}
+
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles ) const
+{
+    sObjectKnowledgesInCircleFilteredInserter functor( container, filter, center, rRadius, nonActivatedObstacles );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+}
+
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone ) const
+{
+    sObjectKnowledgesInZoneFilteredInserter< TER_Localisation > functor( container, filter, zone );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+}
+
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone )
+{
+    sObjectKnowledgesInZoneFilteredInserter< TER_Polygon > functor( container, filter, zone );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+}
+
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjectsIntersectingInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone ) const
+{
+    sObjectKnowledgesIntersectingInZoneFilteredInserter< TER_Localisation > functor( container, filter, zone );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjectsWithCapacityInZone
+// Created: JSR 2012-04-17
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjectsWithCapacityInZone( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone ) const
+{
+    sObjectKnowledgesInZoneCapacityInserter functor( container, capacity, zone );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::IsPositionInsideObjectOfType
+// Created: JSR 2012-08-01
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeBlackBoard_KnowledgeGroup::IsPositionInsideObjectOfType( const std::string& capacity, const MT_Vector2D& loc ) const
+{
+    sObjectKnowledgesCapacityPositionInside functor( capacity, loc );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+    return functor.Result();
+}
+
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter ) const
+{
+    bool useCache = ( dynamic_cast< const MIL_DangerousObjectFilter* >( &filter ) != 0 );
+    const double rHeight = agent.GetRole< PHY_RoleInterface_Location >().GetHeight();
+    if( useCache && pKnowledgeObjectContainer_->HasObjectsAtInteractionHeightCache( rHeight ) )
+    {
+        pKnowledgeObjectContainer_->GetCachedObjectsAtInteractionHeight( container, rHeight );
+        return ;
+    }
+    if( pKnowledgeGroup_ )
+    {
+        sObjectKnowledgesFilteredHeightInserter functor( container, agent, filter, pKnowledgeGroup_->GetArmy() );
+
+        assert( pKnowledgeObjectContainer_ );
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+        if( useCache )
+            pKnowledgeObjectContainer_->SetCachedObjectsAtInteractionHeight( container, rHeight );
+    }
+}
+
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const
+{
+    sClosestObjectInserter functor( vPos, filter );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+    return functor.pResult_;
+}
+
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter  ) const
+{
+    if( pKnowledgeGroup_ )
+    {
+        sClosestObjectFriendInserter functor( vPos, pKnowledgeGroup_->GetArmy(), filter );
+
+        assert( pKnowledgeObjectContainer_ );
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+        return functor.pResult_;
+    }
+    return boost::shared_ptr< DEC_Knowledge_Object >();
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::TranslateKnowledges
 // Created: NLD 2006-04-24
@@ -563,9 +969,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( unsigned int nID ) const
 {
-    if( pKnowledgeObjectContainer_ )
-        return pKnowledgeObjectContainer_->GetKnowledgeObjectFromID( nID );
-    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
+    return pKnowledgeObjectContainer_->GetKnowledgeObjectFromID( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -574,9 +978,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
 {
-    if( pKnowledgeObjectContainer_ )
-        return pKnowledgeObjectContainer_->GetKnowledgeObject( object );
-    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObject( object );
+    return pKnowledgeObjectContainer_->GetKnowledgeObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -585,9 +987,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObjectByObjectID( unsigned int nID ) const
 {
-    if( pKnowledgeObjectContainer_ )
-        return pKnowledgeObjectContainer_->GetKnowledgeObjectFromObjectID( nID );
-    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObjectFromObjectID( nID );
+    return pKnowledgeObjectContainer_->GetKnowledgeObjectFromObjectID( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -661,9 +1061,18 @@ DEC_BlackBoard_CanContainKnowledgePopulation& DEC_KnowledgeBlackBoard_KnowledgeG
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeObjectContainer
 // Created: JSR 2010-07-01
 // -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgeObject* DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeObjectContainer() const
+DEC_BlackBoard_CanContainKnowledgeObject& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKnowledgeObjectContainer() const
 {
-    return pKnowledgeObjectContainer_;
+    return *pKnowledgeObjectContainer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKsObjectKnowledgeSynthetizer
+// Created: JSR 2013-06-18
+// -----------------------------------------------------------------------------
+DEC_KS_ObjectKnowledgeSynthetizer& DEC_KnowledgeBlackBoard_KnowledgeGroup::GetKsObjectKnowledgeSynthetizer()
+{
+    return *pKsObjectKnowledgeSynthetizer_;
 }
 
 // -----------------------------------------------------------------------------
@@ -672,16 +1081,7 @@ DEC_BlackBoard_CanContainKnowledgeObject* DEC_KnowledgeBlackBoard_KnowledgeGroup
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::Jam()
 {
-    pKnowledgeObjectContainer_ = new DEC_BlackBoard_CanContainKnowledgeObject( pKnowledgeGroup_->GetArmy(), pKnowledgeGroup_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject
-// Created: LDC 2010-04-07
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
-{
-    return pKnowledgeObjectContainer_->CreateKnowledgeObject( teamKnowing, objectKnown );
+    pKnowledgeObjectContainer_->AppendArmyKnowledges( pKnowledgeGroup_->GetArmy() );
 }
 
 // -----------------------------------------------------------------------------
@@ -711,36 +1111,13 @@ DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledg
     return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );
 }
 
-namespace
-{
-    class UpdateRelevanceHelper
-    {
-    public:
-        UpdateRelevanceHelper( DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer )
-            : pKnowledgeObjectContainer_( pKnowledgeObjectContainer ) {}
-        void operator() ( boost::shared_ptr< DEC_Knowledge_Object > knowledge )
-        {
-            MIL_Object_ABC* knownObject = knowledge->GetObjectKnown();
-            knowledge->UpdateRelevance();
-            if( pKnowledgeObjectContainer_&& knownObject && !knowledge->GetObjectKnown() )
-                pKnowledgeObjectContainer_->NotifyKnowledgeObjectDissociatedFromRealObject( *knownObject, *knowledge );
-        }
-    private:
-        DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;
-    };
-}
-
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateKnowledgeObjectContainer
-// Created: SBO 2010-05-19
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject
+// Created: JSR 2013-06-19
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateKnowledgeObjectContainer()
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject( boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Object_ABC& perceived )
 {
-    if( pKnowledgeObjectContainer_ )
-    {
-        UpdateRelevanceHelper visitor( pKnowledgeObjectContainer_ );
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( visitor );
-    }
+    return GetKnowledgeObjectContainer().CreateKnowledgeObject( pKnowledgeGroup_->GetArmy(), knowledgeGroup, perceived );
 }
 
 // -----------------------------------------------------------------------------
@@ -751,6 +1128,5 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::Accept( KnowledgesVisitor_ABC& visi
 {
     pKnowledgeAgentContainer_->Accept( visitor );
     pKnowledgePopulationContainer_->Accept( visitor );
-    if( pKnowledgeObjectContainer_ )
-        pKnowledgeObjectContainer_->Accept( visitor );
+    pKnowledgeObjectContainer_->Accept( visitor );
 }

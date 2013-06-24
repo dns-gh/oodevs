@@ -29,6 +29,8 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/QueryValidity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/ClientSenders.h"
@@ -174,8 +176,23 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions
     if( !pZone )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter( parameters );
+
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges; //T_KnowledgeObjectDiaIDVector
     caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pZone );
+
+    auto knowledgeGroups = caller.GetArmy().GetKnowledgeGroups();
+    for( auto it = knowledgeGroups.begin(); it != knowledgeGroups.end(); ++it )
+    {
+        if( it->second->IsJammed() )
+            continue;
+        auto bbKg = it->second->GetKnowledge();
+        if( bbKg )
+        {
+            std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledgesTmp; //T_KnowledgeObjectDiaIDVector
+            bbKg->GetObjectsInZone( knowledgesTmp, filter, *pZone );
+            knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+        }
+    }
     for ( IT_KnowledgeObject it = knowledges.begin(); it != knowledges.end(); )
     {
         if( ! IsKnowledgeObjectValid( *it ) )

@@ -119,7 +119,7 @@ private:
     void UpdateExtension( const kernel::ObjectKnowledge_ABC& k );
     virtual void Select( const kernel::Team_ABC* );
     virtual void Select( const kernel::KnowledgeGroup_ABC* );
-    void Select( const ObjectKnowledges* );
+    void DoShow();
     //@}
 
 private:
@@ -127,7 +127,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
 
-    kernel::SafePointer< ObjectKnowledges > selected_;
+    kernel::SafePointer< ObjectKnowledges > selectedForTeam_;
+    kernel::SafePointer< ObjectKnowledges > selectedForKg_;
     gui::ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 
     kernel::SafePointer< kernel::ObjectKnowledge_ABC > subSelected_;

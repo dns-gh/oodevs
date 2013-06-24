@@ -247,7 +247,15 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     {
         T_KnowledgeObjectVector knowledgesObject;
         MIL_PathObjectFilter filter;
-        queryMaker_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );
+        if( !queryMaker_.GetKnowledgeGroup()->IsJammed() )
+            queryMaker_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );
+        auto bbKg = queryMaker_.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
+        {
+            T_KnowledgeObjectVector knowledgesObjectTmp;
+            bbKg->GetObjectsAtInteractionHeight( knowledgesObjectTmp, queryMaker_, filter );
+            knowledgesObject.insert( knowledgesObject.end(), knowledgesObjectTmp.begin(), knowledgesObjectTmp.end() );
+        }
 
         T_PointVector firstPointVector;
         if( !pathPoints.empty() )

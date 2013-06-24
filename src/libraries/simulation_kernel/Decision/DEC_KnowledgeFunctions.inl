@@ -87,7 +87,15 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter( filters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
+    if( !caller.GetKnowledgeGroup()->IsJammed() )
+        caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetObjectsInCircle( knowledgesTmp, filter, *pCenter, rRadius, nonActivatedObstacles );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
     return knowledges;
 }
 
@@ -102,7 +110,15 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& 
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pLoc );
+    if( !caller.GetKnowledgeGroup()->IsJammed() )
+        caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pLoc );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetObjectsInZone( knowledgesTmp, filter, *pLoc );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
     return knowledges;
 }
 
@@ -117,7 +133,15 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsIntersectingInZon
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsIntersectingInZone( knowledges, filter, *pLoc );
+    if( !caller.GetKnowledgeGroup()->IsJammed() )
+        caller.GetArmy().GetKnowledge().GetObjectsIntersectingInZone( knowledges, filter, *pLoc );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetObjectsIntersectingInZone( knowledgesTmp, filter, *pLoc );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
     return knowledges;
 }
 
@@ -131,9 +155,17 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInFuseau( const T
     std::vector< std::string > types;
     types.push_back( type );
     MIL_ObjectFilter filter( types );
-    T_KnowledgeObjectDiaIDVector results;
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( results, filter, caller.GetOrderManager().GetFuseau() );
-    return results;
+    T_KnowledgeObjectDiaIDVector knowledges;
+    if( !caller.GetKnowledgeGroup()->IsJammed() )
+        caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, caller.GetOrderManager().GetFuseau() );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetObjectsInZone( knowledgesTmp, filter, caller.GetOrderManager().GetFuseau() );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------

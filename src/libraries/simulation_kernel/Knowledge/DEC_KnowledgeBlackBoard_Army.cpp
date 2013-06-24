@@ -807,8 +807,6 @@ void DEC_KnowledgeBlackBoard_Army::Accept( KnowledgesVisitor_ABC& visitor ) cons
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::Update( int currentTimeStep )
 {
-    if( pArmy_ && pKnowledgeObjectContainer_ )
-        pKnowledgeObjectContainer_->UpdateUniversalObjects( *pArmy_ );
     DEC_KnowledgeBlackBoard_ABC::Update( currentTimeStep );
     if( pKnowledgeObjectContainer_ )
         pKnowledgeObjectContainer_->Prepare();

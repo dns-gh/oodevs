@@ -160,7 +160,7 @@ public:
     void ApplyOnKnowledgesPerception( int currentTimeStep );
     // LTO end
 
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( MIL_Object_ABC& perceived );
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_Agent_ABC& perceived );
     DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
     void UpdateKnowledgeFromTransported( const MIL_Agent_ABC& perceived );
@@ -178,6 +178,13 @@ public:
         if( knowledgeBlackBoard_ )
             knowledgeBlackBoard_->ApplyOnKnowledgesPopulation( fct );
     }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
+    {
+        if( knowledgeBlackBoard_ )
+            knowledgeBlackBoard_->ApplyOnKnowledgesObject( fct );
+    }
     //@}
 
 private:
@@ -190,6 +197,7 @@ private:
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );
+    void CreateKnowledgeFromObjectPerception( boost::shared_ptr< DEC_Knowledge_Object >& object );
 
     void ApplyOnKnowledgesPopulationPerception( int currentTimeStep );
     void ApplyOnKnowledgesAgentPerception( int currentTimeStep );
@@ -203,7 +211,6 @@ private:
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception );
     boost::shared_ptr< DEC_Knowledge_Object > GetObjectKnowledgeToUpdate( MIL_Object_ABC& objectKnown );
-    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
     void ApplyAgentPerception( const MIL_Agent_ABC& pion, int currentTimeStep );
     void ApplyPopulationPerception( const MIL_Agent_ABC& pion, int currentTimeStep );
     //@}

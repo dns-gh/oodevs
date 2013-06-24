@@ -13,6 +13,7 @@
 #include "DEC_KnowledgeBlackBoard_Automate.h"
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -103,7 +104,10 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::Resol
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn.id() );
+    boost::shared_ptr< DEC_Knowledge_Object > result = pAutomate_->GetKnowledgeGroup()->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn.id() );
+    if( !result.get() && pAutomate_->GetKnowledgeGroup()->GetKnowledge() )
+        result = pAutomate_->GetKnowledgeGroup()->GetKnowledge()->GetKnowledgeObjectContainer().GetKnowledgeObjectFromID( asn.id() );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +116,10 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetArmy().GetKnowledge().GetKnowledgeObject( object );
+    boost::shared_ptr< DEC_Knowledge_Object > result = pAutomate_->GetKnowledgeGroup()->GetArmy().GetKnowledge().GetKnowledgeObject( object );
+    if( !result.get() && pAutomate_->GetKnowledgeGroup()->GetKnowledge() )
+        result = pAutomate_->GetKnowledgeGroup()->GetKnowledge()->GetKnowledgeObjectContainer().GetKnowledgeObject( object );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +128,10 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( unsigned int nID ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
+    boost::shared_ptr< DEC_Knowledge_Object > result = pAutomate_->GetKnowledgeGroup()->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
+    if( !result.get() && pAutomate_->GetKnowledgeGroup()->GetKnowledge() )
+        result = pAutomate_->GetKnowledgeGroup()->GetKnowledge()->GetKnowledgeObjectContainer().GetKnowledgeObjectFromID( nID );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +140,10 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObjectByObjectID( unsigned int nID ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetArmy().GetKnowledge().GetKnowledgeObjectFromObjectID( nID );
+    boost::shared_ptr< DEC_Knowledge_Object > result = pAutomate_->GetKnowledgeGroup()->GetArmy().GetKnowledge().GetKnowledgeObjectFromObjectID( nID );
+    if( !result.get() && pAutomate_->GetKnowledgeGroup()->GetKnowledge() )
+        result = pAutomate_->GetKnowledgeGroup()->GetKnowledge()->GetKnowledgeObjectContainer().GetKnowledgeObjectFromObjectID( nID );
+    return result;
 }
 
 // -----------------------------------------------------------------------------

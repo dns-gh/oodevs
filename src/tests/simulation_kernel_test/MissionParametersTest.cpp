@@ -167,7 +167,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_ObjectKnowledgeParameter, KnowledgeFixture )
     StubMIL_Object_ABC object( &army, objectType, 56u );
     MOCK_EXPECT( objectType, GetName ).once().returns( "type" );
     MOCK_EXPECT( manager, FindObject ).once().returns( &object );
-    boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( army, object ) );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( groupArmy, object ) );
     MOCK_EXPECT( resolver, ResolveKnowledgeObject ).once().returns( knowledge );
     MIL_ObjectKnowledgeParameter param( in, resolver, manager );
     MissionParameter_Value out;

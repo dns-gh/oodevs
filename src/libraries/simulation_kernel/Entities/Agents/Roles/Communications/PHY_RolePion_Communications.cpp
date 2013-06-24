@@ -392,7 +392,7 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DE
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = bbKg->ResolveKnowledgeObject( object );
 
     if( !pKnowledge || !pKnowledge->IsValid() )
-        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_->GetArmy(), perception.GetObjectPerceived() );
+        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( perception.GetObjectPerceived() );
 
     if( pKnowledge ) // $$$$ LDC: idem fix SLG rev 10556 : objects for urban knowledges don't have knowledges...
         pKnowledge->Update( perception );
@@ -413,8 +413,9 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC
 
     if( collision.GetObject().IsMarkedForDestruction() )
         return;
+
     if( !pKnowledge || !pKnowledge->IsValid() )
-        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_->GetArmy(), collision.GetObject() );
+        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( collision.GetObject() );
 
     pKnowledge->Update( collision );
 }

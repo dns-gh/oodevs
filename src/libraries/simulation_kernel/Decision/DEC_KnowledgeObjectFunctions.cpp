@@ -34,8 +34,10 @@
 #include "Entities/Objects/UndergroundCapacity.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/CrossingSiteAttribute.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
@@ -136,7 +138,15 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     filter.Set( "nbc zone" );
     filter.Set( "nbc cloud" );
     T_KnowledgeObjectVector knownObjects;
-    callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
+    if( !callerAgent.GetKnowledgeGroup()->IsJammed() )
+        callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectVector knownObjectsTmp;
+        bbKg->GetObjects( knownObjectsTmp, filter );
+        knownObjects.insert( knownObjects.end(), knownObjectsTmp.begin(), knownObjectsTmp.end() );
+    }
     for( auto it = knownObjects.begin(); it != knownObjects.end(); ++it )
         if( *it && location->IsIntersecting( ( *it )->GetLocalisation() ) )
         {

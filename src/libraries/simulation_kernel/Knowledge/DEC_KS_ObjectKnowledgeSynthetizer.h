@@ -16,6 +16,8 @@
 #include "DEC_Knowledge_Def.h"
 
 class DEC_KnowledgeBlackBoard_Army;
+class DEC_KnowledgeBlackBoard_KnowledgeGroup;
+class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_Object;
@@ -36,6 +38,7 @@ class DEC_KS_ObjectKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard );
     explicit DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_Army& blackBoard );
              DEC_KS_ObjectKnowledgeSynthetizer();
     virtual ~DEC_KS_ObjectKnowledgeSynthetizer();
@@ -76,6 +79,8 @@ private:
     void ProcessEphemeralKnowledges      ();
     void ProcessObjectsToForget          ();
     void ProcessKnowledgesObjectToForget ();
+
+    DEC_BlackBoard_CanContainKnowledgeObject& GetContainKnowledgeObject() const;
     //@}
 
 private:
@@ -88,7 +93,8 @@ private:
 private:
     //! @name Members
     //@{
-    DEC_KnowledgeBlackBoard_Army* pBlackBoard_;
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoardKg_;
+    DEC_KnowledgeBlackBoard_Army* pBlackBoardArmy_;
     T_ObjectVector                ephemeralKnowledges_;
     T_ObjectVector                objectsToForget_;
     T_KnowledgeObjectVector       knowledgesObjectToForget_;
@@ -96,16 +102,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_KS_ObjectKnowledgeSynthetizer )
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_ObjectKnowledgeSynthetizer::serialize
-// Created: NLD 2006-04-12
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void DEC_KS_ObjectKnowledgeSynthetizer::serialize( Archive& archive, const unsigned int )
-{
-    archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
-            & pBlackBoard_;
-}
 
 #endif // __DEC_KS_ObjectKnowledgeSynthetizer_h_

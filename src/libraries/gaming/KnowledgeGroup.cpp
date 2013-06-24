@@ -28,11 +28,12 @@ namespace
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types, bool isJammed )
     : kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ) )
     , type_( type )
     , types_( types )
     , activated_( true ) // LTO
+    , isJammed_( isJammed )
 {
     RegisterSelf( *this );
     kernel::KnowledgeGroupType* pType = types.Find( type_ );
@@ -57,6 +58,15 @@ KnowledgeGroup::~KnowledgeGroup()
 bool KnowledgeGroup::IsActivated() const
 {
     return activated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsJammed
+// Created: JSR 2013-06-20
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsJammed() const
+{
+    return isJammed_;
 }
 
 // -----------------------------------------------------------------------------
