@@ -265,7 +265,7 @@ boost::shared_ptr< MIL_KnowledgeGroup > DEC_RolePion_Decision::GetKnowledgeGroup
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::RegisterSelf( sword::Brain& brain )
 {
-    brain.GetScriptRef( "myself" ) = (DEC_Decision_ABC*)this;
+    brain.GetScriptRef( "myself" ) = static_cast< DEC_Decision_ABC* >( this );
 }
 
 // -----------------------------------------------------------------------------

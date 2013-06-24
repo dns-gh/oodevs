@@ -54,8 +54,8 @@ class Brain : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    Brain( const std::string& config, DEC_Logger* logger );
-    Brain( Brain& parent, DEC_Logger* logger );
+     Brain( const std::string& config, DEC_Logger* logger );
+     Brain( Brain& parent, DEC_Logger* logger );
     ~Brain() {}
     //@}
 

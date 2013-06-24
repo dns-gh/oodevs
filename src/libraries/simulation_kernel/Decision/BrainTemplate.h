@@ -111,7 +111,7 @@
             , name_    ( name )
             , profiler_( &profiler )
             , f_       ( f )
-            , brain_( brain )
+            , brain_   ( brain )
         {}
         R operator()( BOOST_PP_ENUM_BINARY_PARAMS(BRAIN_NUM_ARGS, P, t) ) const
         {
