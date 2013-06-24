@@ -238,6 +238,7 @@ private:
     std::auto_ptr< Satisfaction >              statisfaction_;
     std::auto_ptr< HumanRepartition >          humanRepartition_;
     std::string                                decisionalModel_;
+    bool                                       brainDebug_;
     T_UnitDetection                            unitDetections_;
     T_ObjectDetection                          objectDetections_;
     T_CrowdConcentrationDetection              crowdConcentrationDetections_;

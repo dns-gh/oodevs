@@ -24,12 +24,13 @@
 // -----------------------------------------------------------------------------
 template< class T >
 DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
-    : pEntity_( &entity )
-    , gcPause_( gcPause)
-    , gcMult_ ( gcMult )
-    , nDIARef_( 0 )
-    , model_  ( 0 )
-    , logger_ ( logger )
+    : pEntity_   ( &entity )
+    , gcPause_   ( gcPause)
+    , gcMult_    ( gcMult )
+    , nDIARef_   ( 0 )
+    , model_     ( 0 )
+    , brainDebug_( false )
+    , logger_    ( logger )
 {
     // NOTHING
 }
@@ -1189,8 +1190,9 @@ bool DEC_Decision< T >::IsUsedByDIA() const
 // Created: SLI 2013-06-18
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::ActivateBrainDebug() const
+void DEC_Decision< T >::ActivateBrainDebug()
 {
+    brainDebug_ = true;
     pRefs_->activateBrainDebug_();
 }
 
@@ -1199,8 +1201,9 @@ void DEC_Decision< T >::ActivateBrainDebug() const
 // Created: SLI 2013-06-18
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::DeactivateBrainDebug() const
+void DEC_Decision< T >::DeactivateBrainDebug()
 {
+    brainDebug_ = false;
     pRefs_->deactivateBrainDebug_();
 }
 

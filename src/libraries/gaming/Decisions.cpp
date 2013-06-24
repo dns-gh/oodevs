@@ -29,12 +29,13 @@ using namespace kernel;
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 Decisions::Decisions( Controller& controller, const Agent_ABC& agent,
-        const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver)
-    : controller_( controller )
-    , agent_( agent )
-    , modelResolver_( modelResolver )
-    , current_( 0 )
+                      const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver)
+    : controller_     ( controller )
+    , agent_          ( agent )
+    , modelResolver_  ( modelResolver )
+    , current_        ( 0 )
     , decisionalModel_( &( agent.GetType().GetDecisionalModel() ) )
+    , brainDebug_     ( false )
 {
     // NOTHING
 }
@@ -57,6 +58,18 @@ void Decisions::DoUpdate( const sword::UnitOrder& message )
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.type().id() );
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Decisions::DoUpdate
+// Created: AHC 2012-01-11
+// -----------------------------------------------------------------------------
+void Decisions::DoUpdate( const sword::UnitAttributes& message )
+{
+    if( message.has_decisional_model() && message.decisional_model() != decisionalModel_->GetName() )
+        decisionalModel_ = &modelResolver_.Get( message.decisional_model() );
+    if( message.has_brain_debug() )
+        brainDebug_ = message.brain_debug();
 }
 
 // -----------------------------------------------------------------------------
@@ -136,22 +149,19 @@ const DecisionalModel& Decisions::GetDecisionalModel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Decisions::DoUpdate
-// Created: AHC 2012-01-11
-// -----------------------------------------------------------------------------
-void Decisions::DoUpdate( const sword::UnitAttributes& message )
-{
-    if( message.has_decisional_model() && message.decisional_model()!=decisionalModel_->GetName() )
-    {
-        decisionalModel_ = &modelResolver_.Get( message.decisional_model() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: Decisions::ModelName
 // Created: AHC 2012-01-23
 // -----------------------------------------------------------------------------
 std::string Decisions::ModelName() const
 {
     return GetDecisionalModel().GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Decisions::IsDebugActivated
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+bool Decisions::IsDebugActivated() const
+{
+    return brainDebug_;
 }

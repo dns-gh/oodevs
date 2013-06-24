@@ -42,10 +42,12 @@ enum E_RulesOfEngagementState;
 class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
                             , public network::NetworkUnitAttributesMessageSender_ABC
 {
-
 public:
+    //! @name Constructors/Destructor
+    //@{
              DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
     virtual ~DEC_RolePion_Decision();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -60,6 +62,9 @@ public:
     void Clean();
 
     virtual void Reload( bool doInitBrain );
+    virtual void ActivateBrainDebug();
+    virtual void DeactivateBrainDebug();
+
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );

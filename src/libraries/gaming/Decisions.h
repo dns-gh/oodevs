@@ -59,6 +59,7 @@ public:
     //! @name Operations
     //@{
     virtual bool CanBeOrdered() const;
+
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual tools::Iterator< const kernel::Mission& > GetMissions() const;
     virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const;
@@ -66,6 +67,7 @@ public:
     virtual const kernel::Entity_ABC& GetAgent() const;
 
     std::string ModelName() const;
+    bool IsDebugActivated() const;
     //@}
 
 private:
@@ -92,6 +94,7 @@ private:
     const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver_;
     const kernel::Mission* current_;
     const kernel::DecisionalModel* decisionalModel_;
+    bool brainDebug_;
     //@}
 };
 

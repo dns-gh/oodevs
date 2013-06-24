@@ -99,8 +99,11 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         AddSurrenderMenu( magicMenu, agent );
-        AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
-        AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
+        const Decisions* decisions = agent.Retrieve< Decisions >();
+        if( decisions->IsDebugActivated() )
+            AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
+        else
+            AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
         AddReloadBrainMenu( magicMenu, static_.types_.unitModels_,
             agent.Retrieve<Decisions>() ? agent.Retrieve<Decisions>()->ModelName() : "unknown",
             agent.GetType().GetDecisionalModel().GetName() );

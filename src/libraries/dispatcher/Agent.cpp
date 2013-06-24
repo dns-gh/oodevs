@@ -91,6 +91,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , statisfaction_              ( 0 )
     , humanRepartition_           ( 0 )
     , decisionalModel_            ( type_.GetDecisionalModel().GetName() )
+    , brainDebug_                 ( false )
     , app6Symbol_                 ( "" )
     , level_                      ( eNatureLevel_None )
 {
@@ -342,9 +343,9 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         bPC_ = message.headquarters();
 
     if( message.has_decisional_model() )
-    {
         decisionalModel_ = message.decisional_model();
-    }
+    if( message.has_brain_debug() )
+        brainDebug_ = message.brain_debug();
 
     Observable< sword::UnitAttributes >::Notify( message );
 }
@@ -633,6 +634,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             asn().mutable_satisfaction()->set_access_to_health_care ( statisfaction_->health_ );
         }
         asn().set_decisional_model( decisionalModel_ );
+        asn().set_brain_debug( brainDebug_ );
         asn().set_headquarters( bPC_ );
 
         asn.Send( publisher );

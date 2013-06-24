@@ -88,6 +88,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int 
 // -----------------------------------------------------------------------------
 DEC_RolePion_Decision::~DEC_RolePion_Decision()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -172,7 +173,6 @@ std::string DEC_RolePion_Decision::GetGroupName()
 void DEC_RolePion_Decision::StartMissionBehavior(const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     const std::string& strBehavior = mission->GetType().GetDIABehavior();
-
     ActivateOrder( strBehavior, mission );
 }
 
@@ -228,6 +228,7 @@ void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
     msg().set_roe                       ( sword::RulesOfEngagement::Value( nRulesOfEngagementState_ ) );
     msg().set_roe_crowd                 ( pRoePopulation_->GetAsnID() );
     msg().set_decisional_model          ( model_->GetName() );
+    msg().set_brain_debug               ( brainDebug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1155,4 +1156,24 @@ void DEC_RolePion_Decision::Reload( bool doInitBrain )
 std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetCommunicationPionsWithPC()
 {
     return DEC_AgentFunctions::GetCommunicationPionsWithPC( GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::ActivateBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::ActivateBrainDebug()
+{
+    DEC_Decision< MIL_AgentPion >::ActivateBrainDebug();
+    NotifyHasChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::DeactivateBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::DeactivateBrainDebug()
+{
+    DEC_Decision< MIL_AgentPion >::DeactivateBrainDebug();
+    NotifyHasChanged();
 }

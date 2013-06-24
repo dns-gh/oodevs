@@ -52,8 +52,8 @@ public:
     virtual void IncDIARef();
     virtual void DecDIARef();
     virtual bool IsUsedByDIA() const;
-    virtual void ActivateBrainDebug() const;
-    virtual void DeactivateBrainDebug() const;
+    virtual void ActivateBrainDebug();
+    virtual void DeactivateBrainDebug();
     void DeleteBrain();
 
     virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission );
@@ -209,6 +209,7 @@ protected:
     unsigned int                    gcMult_;
     unsigned int                    nDIARef_;
     const DEC_Model_ABC*            model_;
+    bool                            brainDebug_;
     sword::DEC_Logger*              logger_;
     //@}
 

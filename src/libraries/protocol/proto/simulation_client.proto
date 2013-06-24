@@ -1347,6 +1347,8 @@ message UnitAttributes {
     optional Heading                     sensors_direction          = 54;
     //! The unit ambiance safety mode
     optional bool                        ambiance_safety            = 55;
+    //! The brain debug activation
+    optional bool                        brain_debug                = 56;
 }
 
 /** @struct UnitPathFind
