@@ -73,6 +73,8 @@ private slots:
     void ChangeArmedIndividuals();
     void ChangePopulationAttitude( int index );
     void ReloadBrain(QAction*);
+    void ActivateBrainDebug();
+    void DeactivateBrainDebug();
     //@}
 
 private:

@@ -1164,6 +1164,9 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
     case sword::UnitMagicAction::reload_brain:
         OnReloadBrain( msg );
         break;
+    case sword::UnitMagicAction::change_brain_debug:
+        OnChangeBrainDebug( msg.parameters() );
+        break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
             sword::UnitActionAck::error_invalid_unit );
@@ -1842,6 +1845,24 @@ void MIL_Population::OnReloadBrain( const sword::UnitMagicAction& msg )
 
     GetDecision().Reload( !modelChanged );
     orderManager_.CancelMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnChangeBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void MIL_Population::OnChangeBrainDebug( const sword::MissionParameters& msg )
+{
+    if( msg.elem_size() != 1 )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                                 "invalid parameters count, 1 parameter expected" );
+    if( msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value().Get( 0 ).has_booleanvalue() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                                 "parameters[0] must be a boolean" );
+    if( msg.elem( 0 ).value( 0 ).booleanvalue() )
+        GetRole< DEC_PopulationDecision >().ActivateBrainDebug();
+    else
+        GetRole< DEC_PopulationDecision >().DeactivateBrainDebug();
 }
 
 // -----------------------------------------------------------------------------

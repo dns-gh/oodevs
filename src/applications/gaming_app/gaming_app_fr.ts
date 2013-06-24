@@ -2687,6 +2687,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Reload brain</source>
         <translation>Recharger le decisionnel</translation>
     </message>
+    <message>
+        <source>Deactivate brain debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate brain debug</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PopulationOptionChooser</name>
@@ -3376,11 +3384,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Activate brain debug</source>
-        <translation type="Activer le debug décisionnel"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Deactivate brain debug</source>
-        <translation type="Désactiver le debug décisionnel"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>

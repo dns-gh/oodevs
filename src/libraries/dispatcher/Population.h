@@ -119,6 +119,7 @@ private:
     std::string criticalIntelligence_;
     float armedIndividuals_;
     std::string decisionalModel_;
+    bool brainDebug_;
     //@}
 };
 

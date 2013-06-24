@@ -120,7 +120,17 @@ std::string PopulationDecisions::ModelName() const
 // Name: PopulationDecisions::DoUpdate
 // Created: AHC 2012-01-23
 // -----------------------------------------------------------------------------
-void PopulationDecisions::DoUpdate( const sword::CrowdUpdate& /*message*/ )
+void PopulationDecisions::DoUpdate( const sword::CrowdUpdate& message )
 {
-    // NOTHING
+    if( message.has_brain_debug() )
+        brainDebug_ = message.brain_debug();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationDecisions::IsDebugActivated
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+bool PopulationDecisions::IsDebugActivated() const
+{
+    return brainDebug_;
 }

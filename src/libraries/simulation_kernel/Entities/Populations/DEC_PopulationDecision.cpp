@@ -307,6 +307,7 @@ void DEC_PopulationDecision::SendFullState( client::CrowdUpdate& msg ) const
 {
     msg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
     msg().set_decisional_model( model_->GetName() );
+    msg().set_brain_debug( brainDebug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -423,5 +424,25 @@ void DEC_PopulationDecision::RegisterSpecific( sword::Brain& brain, bool isMasal
 void DEC_PopulationDecision::Reload( bool doInitBrain )
 {
     DEC_Decision< MIL_Population >::Reload( doInitBrain );
+    bStateHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::ActivateBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::ActivateBrainDebug()
+{
+    DEC_Decision< MIL_Population >::ActivateBrainDebug();
+    bStateHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::DeactivateBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::DeactivateBrainDebug()
+{
+    DEC_Decision< MIL_Population >::DeactivateBrainDebug();
     bStateHasChanged_ = true;
 }

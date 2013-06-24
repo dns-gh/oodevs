@@ -2669,6 +2669,8 @@ message CrowdUpdate {
     optional Extension      extension             = 10;
     //! The decisional model
     optional string         decisional_model      = 11;
+    //! The brain debug activation
+    optional bool           brain_debug           = 12;
 }
 
 /** @struct CrowdDestruction

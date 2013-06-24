@@ -16,6 +16,7 @@
 #include "actions/Point.h"
 #include "actions/Quantity.h"
 #include "actions/String.h"
+#include "actions/Bool.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/LocationCreator.h"
@@ -113,9 +114,14 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     selectedEntity_ = &entity;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ) );
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
-    AddReloadBrainMenu(magicMenu, static_.types_.populationModels_,
-            entity.Retrieve<PopulationDecisions>() ? entity.Retrieve<PopulationDecisions>()->ModelName() : "unknown",
-            entity.Get< gui::EntityType< kernel::PopulationType > >().GetType().GetDecisionalModel().GetName() );
+    const PopulationDecisions* decisions = static_cast< const PopulationDecisions* >( entity.Retrieve< PopulationDecisions >() );
+    if( decisions->IsDebugActivated() )
+        AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
+    else
+        AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
+    AddReloadBrainMenu( magicMenu, static_.types_.populationModels_,
+                        entity.Retrieve<PopulationDecisions>() ? entity.Retrieve<PopulationDecisions>()->ModelName() : "unknown",
+                        entity.Get< gui::EntityType< kernel::PopulationType > >().GetType().GetDecisionalModel().GetName() );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
     AddValuedMagic( magicMenu, menu, tr( "Change armed individuals:" ), SLOT( ChangeArmedIndividuals() ) );
     kernel::ContextMenu* choiceMenu = new kernel::ContextMenu( magicMenu );
@@ -298,4 +304,40 @@ void PopulationMagicOrdersInterface::AddReloadBrainMenu( QMenu* parent, const to
     }
     connect(menu, SIGNAL( triggered(QAction*) ), this, SLOT( ReloadBrain(QAction*) ) );
     parent->addMenu( menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationMagicOrdersInterface::ActivateBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void PopulationMagicOrdersInterface::ActivateBrainDebug()
+{
+        if( selectedEntity_ )
+    {
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Activate brain debug" ), true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new actions::parameters::Bool( it.NextElement(), true ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationMagicOrdersInterface::DeactivateBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void PopulationMagicOrdersInterface::DeactivateBrainDebug()
+{
+    if( selectedEntity_ )
+    {
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Deactivate brain debug" ), true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new actions::parameters::Bool( it.NextElement(), false ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
 }

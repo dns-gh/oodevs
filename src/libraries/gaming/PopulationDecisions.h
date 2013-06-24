@@ -55,6 +55,7 @@ public:
     virtual const kernel::Mission* GetCurrentMission() const;
     virtual const kernel::Entity_ABC& GetAgent() const;
     std::string ModelName() const;
+    bool IsDebugActivated() const;
     //@}
 
 private:
@@ -78,6 +79,7 @@ private:
     const kernel::Population_ABC& popu_;
     const kernel::Mission* current_;
     const kernel::DecisionalModel* decisionalModel_;
+    bool brainDebug_;
     //@}
 };
 

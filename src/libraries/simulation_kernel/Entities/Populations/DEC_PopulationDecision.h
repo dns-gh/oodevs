@@ -55,6 +55,8 @@ public:
     void SetModel( const DEC_Model_ABC& model );
     void Clean();
     virtual void Reload( bool doInitBrain );
+    virtual void ActivateBrainDebug();
+    virtual void DeactivateBrainDebug();
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );

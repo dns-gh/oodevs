@@ -223,6 +223,7 @@ private:
     void OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& asn );
     void OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& asn );
     void OnReloadBrain( const sword::UnitMagicAction& msg );
+    void OnChangeBrainDebug( const sword::MissionParameters& msg );
     //@}
 
     //! @name Helpers

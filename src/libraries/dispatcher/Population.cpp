@@ -41,6 +41,7 @@ Population::Population( Model_ABC& model, const sword::CrowdCreation& msg, const
     , decisionalInfos_ ( model )
     , armedIndividuals_( 0 )
     , decisionalModel_ ( decisionalModel )
+    , brainDebug_      ( false )
 {
     side_.Register( *this );
     AddExtension( *this );
@@ -87,6 +88,8 @@ void Population::DoUpdate( const sword::CrowdUpdate& msg )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.has_decisional_model() )
         decisionalModel_ = msg.decisional_model();
+    if( msg.has_brain_debug() )
+        brainDebug_ = msg.brain_debug();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,6 +229,7 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_contaminated( GetContaminatedHumans() );
     asn().set_dead( GetDeadHumans() );
     asn().set_decisional_model( decisionalModel_ );
+    asn().set_brain_debug( brainDebug_ );
 
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
