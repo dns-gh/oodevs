@@ -1957,23 +1957,33 @@ message UnitMagicAction {
         //! The tasker must be a crowd identifier
         //! No parameters
         crowd_total_destruction           = 14;
-        //! A crowd change health state magic action
+        //! Change crowd composition(healthy/wounded/contaminated/dead)
         //! The tasker must be a crowd identifier
         //! parameters[0], Quantity: healthy number.
         //! parameters[1], Quantity: wounded number.
         //! parameters[2], Quantity: contaminated number.
         //! parameters[3], Quantity: dead number.
+        //! all parameters must be positive integers 
+        //!     and non-zero.
         crowd_change_health_state         = 15;
-        //! A crowd change attitude magic action
-        //! The tasker must be a crowd identifier
-        //! parameters[0], EnumCrowdAttitude: peaceful, agitated,
-        //!    agitated, agressive
+        //! Change crowd attitude.
+        //! The tasker must be a crowd identifier.
+        //! parameters[0], EnumCrowdAttitude: peaceful,
+        //!     agitated, excited, agressive.
         crowd_change_attitude             = 16;
-        //! A crowd change affinities magic action
+        //! Change crowd affinities.
+        //! The tasker must be a crowd identifier.
+        //! parameters[0], List: a parameter value list:
+        //! value { list { identifier: 1 }
+        //!         list { aReal: -0.55  } }
+        //! Identifier, a party identifier
+        //! AReal, a real between -1 and 1.
+        //!    -1 is enemy affinity and.
+        //!     1 is friend affinity.
         crowd_change_affinities           = 17;
-        //! A crowd change armed individuals magic action
-        //! The tasker must be a crowd identifier
-        //! parameters[0], Quantity: armed individuals percentage
+        //! Change percentage of armed individuals.
+        //! parameters[0], Quantity: a number between
+        //!    0 and 100.
         crowd_change_armed_individuals    = 18;
         //! A change knowledge group magic action
         change_knowledge_group            = 19;
