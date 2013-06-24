@@ -3368,6 +3368,14 @@ This data can&apos;t be projected.</source>
         <source>Also recover the elements already managed by the logistic system?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Activate brain debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate brain debug</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

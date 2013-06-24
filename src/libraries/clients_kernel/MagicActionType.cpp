@@ -310,7 +310,7 @@ void MagicActionType::Initialize()
     else if( name == "create_breakdowns")
         CreateOrderParameter( "Breakdowns", "list" );
     else if( name == "reload_brain" )
-    {
         CreateOrderParameter( "Model", "string" );
-    }
+    else if( name == "change_brain_debug" )
+        CreateOrderParameter( "Enable", "bool" );
 }

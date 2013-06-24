@@ -3374,6 +3374,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Also recover the elements already managed by the logistic system?</source>
         <translation>Recompléter aussi les éléments gérés par la logistique?</translation>
     </message>
+    <message>
+        <source>Activate brain debug</source>
+        <translation type="Activer le debug décisionnel"></translation>
+    </message>
+    <message>
+        <source>Deactivate brain debug</source>
+        <translation type="Désactiver le debug décisionnel"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

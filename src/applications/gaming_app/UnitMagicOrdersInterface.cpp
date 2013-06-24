@@ -15,6 +15,7 @@
 #include "actions/Army.h"
 #include "actions/Point.h"
 #include "actions/String.h"
+#include "actions/Bool.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/LocationCreator.h"
@@ -59,14 +60,14 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ::gui::ParametersLayer& layer, const kernel::Profile_ABC& profile, gui::GlSelector& selector )
     : QObject( parent )
-    , controllers_( controllers )
-    , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , profile_( profile )
-    , selector_( selector )
+    , controllers_   ( controllers )
+    , actionsModel_  ( actionsModel )
+    , static_        ( staticModel )
+    , simulation_    ( simulation )
+    , profile_       ( profile )
+    , selector_      ( selector )
     , selectedEntity_( controllers )
-    , magicMove_( false )
+    , magicMove_     ( false )
 {
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
     magicMoveLocation_->Allow( false, false, false, false, false );
@@ -98,9 +99,11 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         AddSurrenderMenu( magicMenu, agent );
+        AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
+        AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
         AddReloadBrainMenu( magicMenu, static_.types_.unitModels_,
-        agent.Retrieve<Decisions>() ? agent.Retrieve<Decisions>()->ModelName() : "unknown",
-        agent.GetType().GetDecisionalModel().GetName() );
+            agent.Retrieve<Decisions>() ? agent.Retrieve<Decisions>()->ModelName() : "unknown",
+            agent.GetType().GetDecisionalModel().GetName() );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
         AddMagic( tr( "Destroy - Component" ), SLOT( DestroyComponent() ), magicMenu );
@@ -410,6 +413,42 @@ void UnitMagicOrdersInterface::ReloadBrain( QAction* action )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::ActivateBrainDebug
+// Created: SLI 2013-06-18
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::ActivateBrainDebug()
+{
+    if( selectedEntity_ )
+    {
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Activate brain debug" ), true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new actions::parameters::Bool( it.NextElement(), true ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::DeactivateBrainDebug
+// Created: SLI 2013-06-19
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::DeactivateBrainDebug()
+{
+    if( selectedEntity_ )
+    {
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Deactivate brain debug" ), true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new actions::parameters::Bool( it.NextElement(), false ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitMagicOrdersInterface::FinishLogisticHandlings
 // Created: NLD 2012-01-09
 // -----------------------------------------------------------------------------
@@ -555,7 +594,7 @@ void UnitMagicOrdersInterface::AddReloadBrainMenu( QMenu* parent, const tools::S
     menu->addAction( currentModel.c_str() ) ;
     if( defaultModel != currentModel )
         menu->addAction( defaultModel.c_str() ) ;
-    std::map<char, QMenu*> subMenus;
+    std::map< char, QMenu* > subMenus;
     while( it.HasMoreElements() )
     {
         const kernel::DecisionalModel& value = it.NextElement();

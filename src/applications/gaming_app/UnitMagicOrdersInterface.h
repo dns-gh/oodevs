@@ -87,6 +87,8 @@ private slots:
     void RecoverHumanTransporters();
     void SurrenderTo( int );
     void ReloadBrain( QAction* );
+    void ActivateBrainDebug();
+    void DeactivateBrainDebug();
     void FinishLogisticHandlings();
     //@}
 
@@ -101,7 +103,7 @@ private:
 
     void AddSurrenderMenu( kernel::ContextMenu* parent, const kernel::Entity_ABC& entity );
     void AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< kernel::DecisionalModel >& models,
-        const std::string& currentModel, const std::string& defaultModel);
+                             const std::string& currentModel, const std::string& defaultModel );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     //@}
