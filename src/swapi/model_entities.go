@@ -147,6 +147,7 @@ type Party struct {
 	Crowds          map[uint32]*Crowd
 	Populations     map[uint32]*Population
 	KnowledgeGroups map[uint32]*KnowledgeGroup
+	Diplomacies     map[uint32]sword.EnumDiplomacy
 }
 
 func NewParty(id uint32, name string) *Party {
@@ -157,6 +158,7 @@ func NewParty(id uint32, name string) *Party {
 		Crowds:          map[uint32]*Crowd{},
 		Populations:     map[uint32]*Population{},
 		KnowledgeGroups: map[uint32]*KnowledgeGroup{},
+		Diplomacies:     map[uint32]sword.EnumDiplomacy{},
 	}
 }
 

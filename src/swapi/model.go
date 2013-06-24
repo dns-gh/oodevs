@@ -353,6 +353,12 @@ func (model *Model) update(msg *SwordMessage) {
 			d.addLocalWeather(w)
 		} else if mm := m.GetControlLocalWeatherDestruction(); mm != nil {
 			d.removeLocalWeather(mm.GetWeather().GetId())
+		} else if mm := m.GetChangeDiplomacy(); mm != nil {
+			party1 := d.Parties[mm.GetParty1().GetId()]
+			party2 := d.Parties[mm.GetParty2().GetId()]
+			if party1 != nil && party2 != nil {
+				party1.Diplomacies[party2.Id] = mm.GetDiplomacy()
+			}
 		}
 	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()

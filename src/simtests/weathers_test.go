@@ -212,7 +212,7 @@ func (s *TestSuite) TestControlLocalWeatherDestruction(c *C) {
 	err = client.DestroyLocalWeather(12345)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
-		// Error: missing parameters
+	// Error: missing parameters
 	err = client.DestroyLocalWeather(1)
 	c.Assert(err, IsNil)
 

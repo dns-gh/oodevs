@@ -11,6 +11,7 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"swapi"
+	"sword"
 )
 
 const (
@@ -19,6 +20,48 @@ const (
 	// Resource type with indirect fire
 	ResourceTypeWithIndirectFire = uint32(8)
 )
+
+func (s *TestSuite) TestChangeDiplomacy(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	//check with no parameters
+	params := swapi.MakeParameters()
+	err := client.ChangeDiplomacyTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	//check with wrong party
+	err = client.ChangeDiplomacy(0, 2, sword.EnumDiplomacy_enemy)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	err = client.ChangeDiplomacy(2, 0, sword.EnumDiplomacy_enemy)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	//check with wrong param number
+	params = swapi.MakeParameters(
+		swapi.MakeIdentifier(1),
+		swapi.MakeIdentifier(2))
+	err = client.ChangeDiplomacyTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	//check with all parameters
+	model := client.Model.GetData()
+	parties := model.Parties
+	c.Assert(parties, HasLen, 2)
+
+	party1 := parties[1]
+	party2 := parties[2]
+	c.Assert(party1, NotNil)
+	c.Assert(party2, NotNil)
+	diplomacy := sword.EnumDiplomacy_enemy
+	err = client.ChangeDiplomacy(party1.Id, party2.Id, diplomacy)
+	c.Assert(err, IsNil)
+
+	parties = client.Model.GetData().Parties
+	party1 = parties[1]
+	party2 = parties[2]
+	c.Assert(party1.Diplomacies[party2.Id], Equals, sword.EnumDiplomacy_enemy)
+}
 
 func (s *TestSuite) TestFireOrderCreation(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)

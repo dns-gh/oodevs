@@ -766,6 +766,39 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 	return c.Model.GetLocalWeather(id), nil
 }
 
+func (c *Client) ChangeDiplomacyTest(params *sword.MissionParameters) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       sword.MagicAction_change_diplomacy.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.MagicActionAck_no_error {
+			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangeDiplomacy(party1Id uint32, party2Id uint32, diplomacy sword.EnumDiplomacy) error {
+	params := MakeParameters(
+		MakeIdentifier(party1Id),
+		MakeIdentifier(party2Id),
+		MakeEnumeration(int32(diplomacy)))
+	return c.ChangeDiplomacyTest(params)
+}
+
 func (c *Client) CreateFireOnLocationTest(params *sword.MissionParameters) error {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
