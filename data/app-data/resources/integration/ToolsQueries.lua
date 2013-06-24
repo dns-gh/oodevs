@@ -279,7 +279,16 @@ integration.getEntitiesFromAutomat = function ( automat, role, withPC)
     local nTemp = #temp
     for i = 1, nTemp do
         local pion = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( integration.ontology.types.agent, pion )
+        local knowledge = CreateKnowledge( integration.ontology.types.agent, pion )
+        local fun = function() return knowledge:isDestroyed() end
+        local ok, isDestroyed = pcall( fun )
+        if ok then
+            if not isDestroyed then
+                knowledges[ #knowledges + 1 ] = knowledge
+            end
+        else
+            knowledges[ #knowledges + 1 ] = knowledge
+        end
     end
 
     if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
