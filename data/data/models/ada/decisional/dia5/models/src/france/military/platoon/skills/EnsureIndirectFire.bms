@@ -43,38 +43,38 @@ rootnode
     activate = function( self )
         local Activate = Activate
         
-         if integration.isAgentNeutralized() then
+        if integration.isAgentNeutralized() then
             integration.sendfireAvailable(false)
             Activate( skill.nodes.CR, 1, {RC = eRC_AgentNeutralizedIndirectFireImpossible } )
-        else
-            if self.params.firePositions == NIL then
-                self.waitOrder = true
-            end
-
+        end
+         
+        if self.params.firePositions == NIL then
             self.waitOrder = true
-            Activate( skill.links.deploy, 1, { objective = self.params.firePositions[ self.nextTargetIndex ] } )
-            if self.waitOrder then
-                if not self.order then
-                    self.order = integration.query.getFirstFireOrder()
+        end
+
+        self.waitOrder = true
+        Activate( skill.links.deploy, 1, { objective = self.params.firePositions[ self.nextTargetIndex ] } )
+        if self.waitOrder then
+            if not self.order then
+                self.order = integration.query.getFirstFireOrder()
+            end
+            if meKnowledge:isDeployed() then
+                integration.sendfireAvailable(true)
+                Activate( skill.nodes.CR, 1, {RC = eRC_PretPourConduiteTir} )
+                if self.params.callByFragOrder then
+                      Feedback( self.feedbacks.done )
                 end
-                if meKnowledge:isDeployed() then
-                    integration.sendfireAvailable(true)
-                    Activate( skill.nodes.CR, 1, {RC = eRC_PretPourConduiteTir} )
-                    if self.params.callByFragOrder then
-                          Feedback( self.feedbacks.done )
-                    end
-                    if self.order then
-                        Activate( skill.nodes.CR, 1, {RC = eRC_ReceptionOrdreDeFeu} )
-                        Activate( skill.links.indirectFire, 1, self.order )
-                    end
-                else
-                    integration.sendfireAvailable(false)
-                    if self.order then
-                      Activate( skill.nodes.CR, 1, {RC = eRC_NotDeployedIndirectFireImpossible} )
-                    end
+                if self.order then
+                    Activate( skill.nodes.CR, 1, {RC = eRC_ReceptionOrdreDeFeu} )
+                    Activate( skill.links.indirectFire, 1, self.order )
+                end
+            else
+                integration.sendfireAvailable(false)
+                if self.order then
+                  Activate( skill.nodes.CR, 1, {RC = eRC_NotDeployedIndirectFireImpossible} )
                 end
             end
-         end
+        end
     end,
   
     destroy = function( self )
