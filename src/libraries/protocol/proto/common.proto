@@ -2075,6 +2075,11 @@ message UnitMagicAction {
         recover_equipments_except_log     = 54;
         //! A recover resources except log magic action
         recover_resources_except_log      = 55;
+        //! A change brain debug magic action
+        //! The tasker must be set to the parent automat.
+        //! parameters[0], BooleanValue: if true, enable brain debug,
+        //! otherwise disable it
+        change_brain_debug                = 56;
     }
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;

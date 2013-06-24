@@ -24,12 +24,12 @@
 // -----------------------------------------------------------------------------
 template< class T >
 DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
-    : pEntity_   ( &entity )
-    , gcPause_   ( gcPause)
-    , gcMult_    ( gcMult )
-    , nDIARef_   ( 0 )
-    , model_     ( 0 )
-    , logger_    ( logger )
+    : pEntity_( &entity )
+    , gcPause_( gcPause)
+    , gcMult_ ( gcMult )
+    , nDIARef_( 0 )
+    , model_  ( 0 )
+    , logger_ ( logger )
 {
     // NOTHING
 }
@@ -1185,10 +1185,30 @@ bool DEC_Decision< T >::IsUsedByDIA() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::ActivateBrainDebug
+// Created: SLI 2013-06-18
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::ActivateBrainDebug() const
+{
+    pRefs_->activateBrainDebug_();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::DeactivateBrainDebug
+// Created: SLI 2013-06-18
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::DeactivateBrainDebug() const
+{
+    pRefs_->deactivateBrainDebug_();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::GetModel
 // Created: AHC 2012-01-27
 // -----------------------------------------------------------------------------
-template <class T>
+template< class T >
 inline const DEC_Model_ABC& DEC_Decision< T >::GetModel() const
 {
     return *model_;

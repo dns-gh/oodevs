@@ -76,6 +76,8 @@ public:
     virtual void IncDIARef() = 0;
     virtual void DecDIARef() = 0;
     virtual bool IsUsedByDIA() const = 0;
+    virtual void ActivateBrainDebug() const = 0;
+    virtual void DeactivateBrainDebug() const = 0;
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;

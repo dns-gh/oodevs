@@ -22,6 +22,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "automat_log_supply_push_flow",       sword::UnitMagicAction::log_supply_push_flow },
     { "cancel_surrender",                   sword::UnitMagicAction::cancel_surrender },
     { "change_automat_superior",            sword::UnitMagicAction::change_automat_superior },
+    { "change_brain_debug",                 sword::UnitMagicAction::change_brain_debug },
     { "change_critical_intelligence",       sword::UnitMagicAction::change_critical_intelligence },
     { "change_dotation",                    sword::UnitMagicAction::change_dotation },
     { "change_equipment_human_size",        sword::UnitMagicAction::change_equipment_human_size },

@@ -52,6 +52,8 @@ public:
     virtual void IncDIARef();
     virtual void DecDIARef();
     virtual bool IsUsedByDIA() const;
+    virtual void ActivateBrainDebug() const;
+    virtual void DeactivateBrainDebug() const;
     void DeleteBrain();
 
     virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission );
@@ -233,6 +235,8 @@ public:
     directia::tools::binders::ScriptRef knowledgeCallbackAction_;
     directia::tools::binders::ScriptRef removeAction_;
     directia::tools::binders::ScriptRef initTaskParameter_;
+    directia::tools::binders::ScriptRef activateBrainDebug_;
+    directia::tools::binders::ScriptRef deactivateBrainDebug_;
 
 private:
     ScriptRefs();

@@ -52,15 +52,17 @@
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
 ScriptRefs::ScriptRefs( sword::Brain& brain  )
-    : startEvent_              ( brain.GetScriptRef( "StartEvent" ) )
-    , stopEvents_              ( brain.GetScriptRef( "StopEvents" ) )
-    , setStateVariable_        ( brain.GetScriptRef( "SetStateVariable" ) )
-    , collectgarbage_          ( brain.GetScriptRef( "collectgarbage" ) )
-    , step_                    ( brain.GetScriptRef( "step" ) )
-    , callbackPerception_      ( brain.GetScriptRef( "CallbackPerception" ) )
-    , knowledgeCallbackAction_ ( brain.GetScriptRef( "KnowledgeCallbackAction" ) )
-    , removeAction_            ( brain.GetScriptRef( "RemoveAction" ) )
-    , initTaskParameter_       ( brain.GetScriptRef( "InitTaskParameter" ) )
+    : startEvent_             ( brain.GetScriptRef( "StartEvent" ) )
+    , stopEvents_             ( brain.GetScriptRef( "StopEvents" ) )
+    , setStateVariable_       ( brain.GetScriptRef( "SetStateVariable" ) )
+    , collectgarbage_         ( brain.GetScriptRef( "collectgarbage" ) )
+    , step_                   ( brain.GetScriptRef( "step" ) )
+    , callbackPerception_     ( brain.GetScriptRef( "CallbackPerception" ) )
+    , knowledgeCallbackAction_( brain.GetScriptRef( "KnowledgeCallbackAction" ) )
+    , removeAction_           ( brain.GetScriptRef( "RemoveAction" ) )
+    , initTaskParameter_      ( brain.GetScriptRef( "InitTaskParameter" ) )
+    , activateBrainDebug_     ( brain.GetScriptRef( "ActivateBrainDebug" ) )
+    , deactivateBrainDebug_   ( brain.GetScriptRef( "DeactivateBrainDebug" ) )
 {
     // NOTHING
 }

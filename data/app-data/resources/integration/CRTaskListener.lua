@@ -196,3 +196,68 @@ end
 integration.RC_Stage = function( myself, typeMessage, id, list )
     DEC_RC_Stage( myself, typeMessage, id, list )
 end
+
+-- Brain debug functions
+-- Copied from directia plugin devtools
+
+local function formatdottable( t )
+    local keys, values = {}, {}
+    for k, v in pairs( t ) do
+        keys  [ #keys + 1 ]   = type( k ) == 'table' and ( "{" .. formatdottable( k ) .. "}" ) or tostring( k )
+        values[ #values + 1 ] = type( v ) == 'table' and ( "{" .. formatdottable( v ) .. "}" ) or tostring( v )
+    end
+    return "{" .. table.concat( keys, "|" ) .. "}|{" .. table.concat( values, "|" ) ..  "}"
+end
+
+local function formatInstanceData( inst )
+    return inst.idx .. ' [label="' .. inst.node:format( "%q" ) .. "|" .. formatdottable( inst.parameters ):format( "%q" ).. "|activity = " .. tostring( inst.activity ) .. '"]'
+end
+
+local function dottify( graph, res, mem )
+    local current = graph
+    if not current.idx then
+        current.idx, mem.idx = "N" .. mem.idx, mem.idx + 1
+        res.nodes[ #res.nodes + 1 ] = formatInstanceData( current )
+   end
+    
+    for _, parent in ipairs( graph.parents or {} ) do
+        dottify( parent, res, mem )
+        local edge = parent.idx .. "->" .. current.idx
+        res.edges[ #res.edges + 1 ], mem.edges[ edge ] = ( not mem.edges[ edge ] or nil ) and edge, edge
+    end
+end
+
+local function formattodot( graph, name )
+    local res = { nodes = {}, edges = {} }
+    dottify( graph, res, { edges = {}, idx = 0 } )
+    return "digraph ".. name .. " {\nnode [shape=record]\n" .. require"table".concat( res.nodes, "\n" ) .."\n" .. table.concat( res.edges, "\n" ) .. "\n}"
+end
+
+local enabledTraces = {}
+
+function ActivateBrainDebug()
+    if next( enabledTraces ) == nil then -- table is empty
+        masalife.brain.core.getModelData( -- list all skills
+            { 
+                NotifySkill = function( self, package, name )
+                    local function listener( calltree )
+                        if enabledTraces[myself] ~= nil then
+                            DEC_Trace( formattodot( calltree, name ) )
+                        end
+                    end
+                    masalife.brain.core.enableTrace( package, listener, "select", 2 )
+                end
+            } )
+    end
+    enabledTraces[myself] = true
+end
+
+function DeactivateBrainDebug()
+    enabledTraces[myself] = nil
+    if next( enabledTraces ) == nil then -- table is empty
+        masalife.brain.core.getModelData(
+            {
+                NotifySkill = function( self, package ) masalife.brain.core.disableTrace( package, listener, "select", 2 ) end
+            } )
+    end
+end

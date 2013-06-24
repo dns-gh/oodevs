@@ -217,6 +217,7 @@ private:
     void OnReceiveLoadUnit( const sword::MissionParameters& msg );
     void OnReceiveUnloadUnit( const sword::MissionParameters& msg );
     void OnReloadBrain( const sword::MissionParameters& msg );
+    void OnChangeBrainDebug( const sword::MissionParameters& msg );
     void OnReceiveFinishLogisticHandlings();
     //@}
 
