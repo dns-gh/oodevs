@@ -135,7 +135,13 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     bool bMoveAllowed = false;
     const AutomatDecisions* decisions = static_cast< const AutomatDecisions* >( agent.Retrieve< kernel::AutomatDecisions_ABC >() );
     if( decisions )
+    {
         bMoveAllowed = decisions->CanBeOrdered();
+        if( decisions->IsDebugActivated() )
+            AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
+        else
+            AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
+    }
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
     AddReloadBrainMenu( magicMenu, static_.types_.automatModels_, decisions ? decisions->ModelName() : "unknown",
         agent.Get< gui::EntityType< kernel::AutomatType > >().GetType().GetDecisionalModel().GetName() );

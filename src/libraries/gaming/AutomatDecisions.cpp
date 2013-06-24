@@ -28,13 +28,14 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Automat_ABC& agent,
             const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver, const AutomatType& type )
-    : controller_( controller )
-    , publisher_ ( publisher )
-    , agent_     ( agent )
-    , modelResolver_ ( modelResolver )
-    , model_     ( &type.GetDecisionalModel() )
-    , bEmbraye_  ( false )
-    , current_   ( 0 )
+    : controller_   ( controller )
+    , publisher_    ( publisher )
+    , agent_        ( agent )
+    , modelResolver_( modelResolver )
+    , model_        ( &type.GetDecisionalModel() )
+    , brainDebug_   ( false )
+    , bEmbraye_     ( false )
+    , current_      ( 0 )
 {
     // NOTHING
 }
@@ -56,8 +57,10 @@ void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
 {
     if( message.has_mode()  )
         bEmbraye_ = ( message.mode() == sword::engaged );
-    if( message.has_decisional_model() && message.decisional_model()!=model_->GetName() )
+    if( message.has_decisional_model() && message.decisional_model() != model_->GetName() )
         model_ = &modelResolver_.Get( message.decisional_model() );
+    if( message.has_brain_debug() )
+        brainDebug_ = message.brain_debug();
     controller_.Update( static_cast< kernel::AutomatDecisions_ABC& >( *this ) );
 }
 
@@ -182,4 +185,13 @@ const DecisionalModel& AutomatDecisions::GetDecisionalModel() const
 std::string AutomatDecisions::ModelName() const
 {
     return GetDecisionalModel().GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::IsDebugActivated
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+bool AutomatDecisions::IsDebugActivated() const
+{
+    return brainDebug_;
 }

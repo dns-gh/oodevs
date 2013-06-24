@@ -1035,6 +1035,9 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
     case sword::UnitMagicAction::reload_brain:
         OnReloadBrain( msg.parameters() );
         break;
+    case sword::UnitMagicAction::change_brain_debug:
+        OnChangeBrainDebug( msg.parameters() );
+        break;
     default:
         {
             if( !pPionPC_ )
@@ -1574,4 +1577,22 @@ void MIL_Automate::OnReloadBrain( const sword::MissionParameters& msg )
     }
     GetDecision().Reload( !modelChanged );
     pOrderManager_->CancelMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnChangeBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnChangeBrainDebug( const sword::MissionParameters& msg )
+{
+    if( msg.elem_size() != 1 )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                                 "invalid parameters count, 1 parameter expected" );
+    if( msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value().Get( 0 ).has_booleanvalue() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                                 "parameters[0] must be a boolean" );
+    if( msg.elem( 0 ).value( 0 ).booleanvalue() )
+        GetRole< DEC_AutomateDecision >().ActivateBrainDebug();
+    else
+        GetRole< DEC_AutomateDecision >().DeactivateBrainDebug();
 }

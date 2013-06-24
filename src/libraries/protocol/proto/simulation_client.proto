@@ -886,6 +886,8 @@ message AutomatAttributes {
     optional Extension                   extension             = 9;
     //! The decisional model
     optional string                      decisional_model      = 10;
+    //! The brain debug activation
+    optional bool                        brain_debug           = 11;
 }
 
 /** @struct AutomatDestruction

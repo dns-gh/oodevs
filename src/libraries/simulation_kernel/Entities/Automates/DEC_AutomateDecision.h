@@ -54,6 +54,9 @@ public:
     //@{
     void Clean();
     virtual void Reload( bool doInitBrain );
+    virtual void ActivateBrainDebug();
+    virtual void DeactivateBrainDebug();
+
     bool HasStateChanged() const;
 
     void StartMissionMrtBehavior     ( const boost::shared_ptr< MIL_Mission_ABC > mission );

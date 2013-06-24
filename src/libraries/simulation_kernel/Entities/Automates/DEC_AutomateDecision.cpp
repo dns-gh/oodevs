@@ -442,6 +442,7 @@ void DEC_AutomateDecision::SendFullState( client::AutomatAttributes& msg ) const
     msg().set_operational_state ( sword::EnumOperationalStatus( nOperationalState_ ) );
     msg().set_roe               ( sword::RulesOfEngagement::Value( nRulesOfEngagementState_ ) );
     msg().set_decisional_model  ( model_->GetName() );
+    msg().set_brain_debug       ( brainDebug_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -892,4 +893,24 @@ void DEC_AutomateDecision::Reload( bool doInitBrain )
 int DEC_AutomateDecision::GetRulesOfEngagementState() const
 {
     return nRulesOfEngagementState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::ActivateBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::ActivateBrainDebug()
+{
+    DEC_Decision< MIL_Automate >::ActivateBrainDebug();
+    bStateHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::DeactivateBrainDebug
+// Created: SLI 2013-06-21
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::DeactivateBrainDebug()
+{
+    DEC_Decision< MIL_Automate >::DeactivateBrainDebug();
+    bStateHasChanged_ = true;
 }

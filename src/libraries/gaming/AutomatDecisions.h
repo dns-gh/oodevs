@@ -64,6 +64,7 @@ public:
     virtual const kernel::Automat_ABC& GetAgent() const;
 
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14:
+    bool IsDebugActivated() const;
 
     std::string ModelName() const;
 
@@ -88,6 +89,7 @@ private:
     const kernel::Automat_ABC& agent_;
     const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver_;
     const kernel::DecisionalModel* model_;
+    bool brainDebug_;
     bool bEmbraye_;
     const kernel::Mission* current_;
     //@}

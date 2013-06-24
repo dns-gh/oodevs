@@ -146,6 +146,7 @@ private:
     std::map< std::string, std::string > extensions_;
     std::string app6symbol_;
     std::string decisionalModel_;
+    bool brainDebug_;
     //@}
 };
 

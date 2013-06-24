@@ -50,6 +50,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const too
     , order_            ( 0 )
     , app6symbol_       ( msg.app6symbol() )
     , decisionalModel_  ( type_.GetDecisionalModel().GetName() )
+    , brainDebug_       ( false )
 {
     if( ! parentFormation_ && ! parentAutomat_ )
         throw MASA_EXCEPTION( "invalid parent for automat " + msg.name() );
@@ -246,9 +247,9 @@ void Automat::DoUpdate( const sword::AutomatAttributes& msg )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.has_decisional_model() )
-    {
         decisionalModel_ = msg.decisional_model();
-    }
+    if( msg.has_brain_debug() )
+        brainDebug_ = msg.brain_debug();
 }
 
 // -----------------------------------------------------------------------------
@@ -325,6 +326,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             entry->set_value( it->second );
         }
         asn().set_decisional_model( decisionalModel_ );
+        asn().set_brain_debug( brainDebug_ );
         asn.Send( publisher );
     }
     if( order_.get() )
