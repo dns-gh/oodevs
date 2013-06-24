@@ -276,6 +276,7 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
         szTempDir_ = stream.str();
         free( pTempDir );
     }
+    bfs::remove_all( bfs::path( szTempDir_.GetData() ) );
 }
 
 
