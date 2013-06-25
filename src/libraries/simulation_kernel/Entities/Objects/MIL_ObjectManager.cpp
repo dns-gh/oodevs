@@ -476,8 +476,9 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
 {
     sword::MagicActionAck_ErrorCode nErrorCode = sword::MagicActionAck::no_error;
     const sword::MissionParameters& params = message.parameters();
-    if( params.elem_size() > 1 )
-    {
+    if( params.elem_size() > 1 && params.elem( 0 ).value_size() > 0 
+      && params.elem( 0 ).value().Get( 0 ).has_identifier() )
+    {        
         unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
         MIL_Object_ABC* object = Find( id );
         if( object == 0 )
