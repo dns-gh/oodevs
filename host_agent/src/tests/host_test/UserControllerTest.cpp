@@ -56,16 +56,22 @@ struct SubFixture
     UuidFactory uuids;
 };
 
-struct Fixture
+BOOST_FIXTURE_TEST_CASE( user_controller_has_no_user_by_default, SubFixture )
+{
+    Sql sql( db );
+    UserController users( log, crypt, uuids, sql );
+    BOOST_CHECK_EQUAL( 0u, users.CountUsers( boost::uuids::nil_uuid() ) );
+}
+
+struct Fixture : SubFixture
 {
     Fixture()
-        : sql  ( sub.db )
-        , users( sub.log, sub.crypt, sub.uuids, sql )
+        : sql  ( db )
+        , users( log, crypt, uuids, sql )
     {
-        // NOTHING
+        users.CreateUser( boost::uuids::nil_uuid(), "admin@masagroup.net", "Default", "admin", web::USER_TYPE_ADMINISTRATOR, false );
     }
 
-    SubFixture sub;
     Sql sql;
     UserController users;
 
@@ -90,11 +96,11 @@ void CheckAdmin( const Tree& user )
 }
 }
 
-BOOST_FIXTURE_TEST_CASE( user_controller_defaults, Fixture )
+BOOST_FIXTURE_TEST_CASE( user_controller_can_manipulate_users, Fixture )
 {
-    BOOST_CHECK_EQUAL( users.CountUsers( boost::uuids::nil_uuid() ), size_t( 1 ) );
+    BOOST_CHECK_EQUAL( users.CountUsers( boost::uuids::nil_uuid() ), 1u );
     std::vector< Tree > items = users.ListUsers( boost::uuids::nil_uuid(), 0, INT_MAX );
-    BOOST_CHECK_EQUAL( items.size(), size_t( 1 ) );
+    BOOST_CHECK_EQUAL( items.size(), 1u );
     items.push_back( LogAdmin() );
     BOOST_FOREACH( const Tree& src, items )
         CheckAdmin( src );
@@ -161,7 +167,7 @@ BOOST_FIXTURE_TEST_CASE( users_can_be_created_updated_deleted, Fixture )
 {
     std::vector< Tree > items;
     items.push_back( users.CreateUser( boost::uuids::nil_uuid(), "zorg", "Zorg", "zorg_pwd", web::USER_TYPE_ADMINISTRATOR, false ) );
-    BOOST_CHECK_EQUAL( users.CountUsers( boost::uuids::nil_uuid() ), size_t( 2 ) );
+    BOOST_CHECK_EQUAL( users.CountUsers( boost::uuids::nil_uuid() ), 2u );
     items.push_back( users.GetUser( boost::uuids::nil_uuid(), Get< int >( items[0], "id" ) ) );
     BOOST_FOREACH( const Tree& src, items )
         CheckUser( src, "zorg", "Zorg", "administrator", false, "eng" );
@@ -186,7 +192,7 @@ BOOST_FIXTURE_TEST_CASE( users_can_be_created_updated_deleted, Fixture )
     BOOST_CHECK_THROW( users.DeleteUser( boost::uuids::nil_uuid(), sid, id ), web::HttpException );
     src = users.DeleteUser( boost::uuids::nil_uuid(), admin, id );
     CheckUser( src, "zorg", "John Doe", "administrator", false, "eng" );
-    BOOST_CHECK_EQUAL( users.CountUsers( boost::uuids::nil_uuid() ), size_t( 1 ) );
+    BOOST_CHECK_EQUAL( users.CountUsers( boost::uuids::nil_uuid() ), 1u );
     BOOST_CHECK_THROW( users.IsAuthenticated( sid ), web::HttpException );
 }
 
