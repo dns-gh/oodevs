@@ -40,7 +40,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlDateTimeChangeAck               , control_date_time_change_ack              )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlEndTick                         , control_end_tick                          )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlGlobalWeather                   , control_global_weather                    )
-    GENERATE_MESSAGE( sword::SimToClient, sword, ControlGlobalWeatherAck                , control_global_weather_ack                )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ControlGlobalWeatherAck  , control_global_weather_ack                )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlInformation                     , control_information                       )
     GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ControlLocalWeatherAck   , control_local_weather_ack                 )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlLocalWeatherCreation            , control_local_weather_creation            )

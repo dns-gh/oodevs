@@ -173,7 +173,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
         assert( pGlobalMeteo_ );
         pGlobalMeteo_->Update( msg.parameters() );
         client::ControlGlobalWeatherAck reply;
-        reply.Send( NET_Publisher_ABC::Publisher(), context );
+        reply.Send( NET_Publisher_ABC::Publisher(), context, client );
     }
     else if( msg.type() == sword::MagicAction::local_weather )
     {
