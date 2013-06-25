@@ -257,7 +257,7 @@ namespace
 void Meteo::Update( const sword::MissionParameters& msg )
 {
     modified_ = true;
-    if( msg.elem_size() != 7 )
+    if( msg.elem_size() < 6u )
         throw MASA_BADPARAM( "invalid parameters count, 7 parameters expected" );
 
     // Temperature
