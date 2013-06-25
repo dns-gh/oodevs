@@ -27,7 +27,7 @@
 #include "Entities/MIL_Formation.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include <boost/serialization/set.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>

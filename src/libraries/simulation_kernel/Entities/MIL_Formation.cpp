@@ -17,7 +17,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"

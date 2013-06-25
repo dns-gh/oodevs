@@ -13,6 +13,7 @@
 #include "ReadDirections.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "Tools/NET_AsnException.h"
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -27,6 +28,9 @@ namespace
         return ( timeStep ) ? 1000. * timeStep / 3600. : 1.;
     }
 }
+
+#define MASA_BADPARAM( name ) MASA_BADPARAM_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter, name )
+
 
 // -----------------------------------------------------------------------------
 // Name: Meteo constructor
@@ -231,6 +235,21 @@ void Meteo::Serialize( xml::xostream& xos ) const
         << xml::end;
 }
 
+namespace
+{
+    void CheckRealParameter( const sword::MissionParameter& parameter, const std::string& text, bool positive = true )
+    {
+        if( parameter.null_value() || !parameter.value().Get( 0 ).has_areal() )
+            throw MASA_BADPARAM( "parameters[" + text + "] must be a Areal" );
+        if( positive )
+        {
+            float value = parameter.value().Get( 0 ).areal();
+            if( value < 0.f )
+                throw MASA_BADPARAM( "parameters[" + text + "] must be a positive number" );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Meteo::Update
 // Created: NLD 2004-08-31
@@ -238,50 +257,51 @@ void Meteo::Serialize( xml::xostream& xos ) const
 void Meteo::Update( const sword::MissionParameters& msg )
 {
     modified_ = true;
+    if( msg.elem_size() != 7 )
+        throw MASA_BADPARAM( "invalid parameters count, 7 parameters expected" );
 
     // Temperature
     const sword::MissionParameter& temperature = msg.elem( 0 );
-    if( temperature.null_value() || !temperature.value().Get(0).has_areal() )
-        throw MASA_EXCEPTION( "Meteo : bad attribute for temperature" );
-    temperature_ = static_cast< int >( temperature.value().Get(0).areal() );
-
+    CheckRealParameter( temperature, "0", false );
     // Vitesse du vent
     const sword::MissionParameter& windSpeed = msg.elem( 1 );
-    if( windSpeed.null_value() || !windSpeed.value().Get(0).has_areal() )
-        throw MASA_EXCEPTION( "Meteo : bad attribute for windSpeed" );
-    wind_.rSpeed_ = conversionFactor_ * windSpeed.value().Get(0).areal();
-
+    CheckRealParameter( windSpeed, "1" );
     // Direction du vent
     const sword::MissionParameter& windDirection = msg.elem( 2 );
-    if( windDirection.null_value() || !windDirection.value().Get(0).has_heading() )
-        throw MASA_EXCEPTION( "Meteo : bad attribute for windDirection" );
-    wind_.eAngle_ = windDirection.value().Get(0).heading().heading();
-    wind_.vDirection_ = weather::ReadDirection( wind_.eAngle_ );
+    if( windDirection.null_value() || !windDirection.value().Get( 0 ).has_heading() )
+        throw MASA_BADPARAM( "parameters[2] must be a Heading" );
+    int angle = windDirection.value().Get( 0 ).heading().heading();
+    if( angle < 0 || angle > 360 )
+        throw MASA_BADPARAM( "parameters[2] must be a number between 0 and 360" );
 
     // Plancher de couverture nuageuse
     const sword::MissionParameter& cloudFloor = msg.elem( 3 );
-    if( cloudFloor.null_value() || !cloudFloor.value().Get(0).has_areal() )
-        throw MASA_EXCEPTION( "Meteo : bad attribute for cloudFloor" );
-    cloud_.nFloor_ = (int) cloudFloor.value().Get(0).areal();
-
+    CheckRealParameter( cloudFloor, "3" );
     // Plafond de couverture nuageuse
     const sword::MissionParameter& cloudCeiling = msg.elem( 4 );
-    if( cloudCeiling.null_value() || !cloudCeiling.value().Get(0).has_areal() )
-        throw MASA_EXCEPTION( "Meteo : bad attribute for cloudCeiling" );
-    cloud_.nCeiling_ = (int) cloudCeiling.value().Get(0).areal();
-
+    CheckRealParameter( cloudCeiling, "4" );
     // Densite moyenne de couverture nuageuse
     const sword::MissionParameter& cloudDensity = msg.elem( 5 );
-    if( cloudDensity.null_value() || !cloudDensity.value().Get(0).has_areal() )
-        throw MASA_EXCEPTION( "Meteo : bad attribute for cloudDensity" );
-    cloud_.nDensityPercentage_ = std::min( std::max( (int) cloudDensity.value().Get(0).areal(), 0 ), 100 );
-    cloud_.rDensity_ = cloud_.nDensityPercentage_ / 100.;
-
+    CheckRealParameter( cloudDensity, "5" );
     // Précipitation
     const sword::MissionParameter& precipitation = msg.elem( 6 );
-    if( precipitation.null_value() || !precipitation.value().Get(0).has_enumeration() )
-        throw MASA_EXCEPTION( "Meteo : bad attribute for precipitation" );
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::WeatherAttributes::EnumPrecipitationType ) precipitation.value().Get(0).enumeration() );
+    if( precipitation.null_value() || !precipitation.value().Get( 0 ).has_enumeration() )
+        throw MASA_BADPARAM( "parameters[6] must be an Enumeration" );
+    const PHY_Precipitation* pPrecipitation = PHY_Precipitation::FindPrecipitation(
+        static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation.value().Get( 0 ).enumeration() ) );
+    if( !pPrecipitation )
+        throw MASA_BADPARAM( "parameters[6] must be a precipitation Enumeration" );
+
+    temperature_ = static_cast< int >( temperature.value().Get( 0 ).areal() );
+    wind_.rSpeed_ = conversionFactor_ * windSpeed.value().Get( 0 ).areal();
+    wind_.eAngle_ = angle;
+    wind_.vDirection_ = weather::ReadDirection( wind_.eAngle_ );
+    cloud_.nFloor_ = static_cast< int >( cloudFloor.value().Get( 0 ).areal() );
+    cloud_.nCeiling_ =  static_cast< int >( cloudCeiling.value().Get( 0 ).areal() );
+    cloud_.nDensityPercentage_ = std::min( std::max( static_cast< int >( cloudDensity.value().Get( 0 ).areal() ), 0 ), 100 );
+    cloud_.rDensity_ = cloud_.nDensityPercentage_ / 100.;
+
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::WeatherAttributes::EnumPrecipitationType ) precipitation.value().Get( 0 ).enumeration() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
 }

@@ -16,7 +16,7 @@
 #include "Decision/DEC_Representations.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------

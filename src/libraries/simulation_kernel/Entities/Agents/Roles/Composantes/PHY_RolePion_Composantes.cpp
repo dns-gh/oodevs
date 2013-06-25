@@ -37,7 +37,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
-#include "Network/NET_AsnException.h"
+#include "tools/NET_AsnException.h"
 #include "TransportCapacityComputer_ABC.h"
 #include "TransportWeightComputer_ABC.h"
 #include "HumanLoadingTimeComputer_ABC.h"

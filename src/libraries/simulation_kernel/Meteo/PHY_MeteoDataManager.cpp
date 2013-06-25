@@ -13,6 +13,7 @@
 #include "Meteo/PHY_LocalMeteo.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Tools/NET_AsnException.h"
 #include "Tools/MIL_Config.h"
 
 #include "MT_Tools/MT_Logger.h"
@@ -171,8 +172,16 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
     if( msg.type() == sword::MagicAction::global_weather )
     {
         assert( pGlobalMeteo_ );
-        pGlobalMeteo_->Update( msg.parameters() );
         client::ControlGlobalWeatherAck reply;
+        reply().set_error_code( sword::OrderAck::no_error );
+        try
+        {
+            pGlobalMeteo_->Update( msg.parameters() );
+        }
+        catch( const NET_AsnException< sword::OrderAck_ErrorCode >& e )
+        {
+            reply().set_error_code( e.GetErrorID() );
+        }
         reply.Send( NET_Publisher_ABC::Publisher(), context, client );
     }
     else if( msg.type() == sword::MagicAction::local_weather )

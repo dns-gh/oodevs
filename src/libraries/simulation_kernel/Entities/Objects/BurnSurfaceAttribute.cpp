@@ -16,7 +16,7 @@
 #include "MIL_BurningCells.h"
 #include "MIL_AgentServer.h"
 #include "protocol/Protocol.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "Tools/MIL_Tools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BurnSurfaceAttribute )

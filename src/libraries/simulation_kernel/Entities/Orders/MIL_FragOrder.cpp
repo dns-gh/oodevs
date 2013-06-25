@@ -23,7 +23,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "MIL_MissionParameter_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"

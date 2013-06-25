@@ -75,7 +75,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_Fire.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_DictionaryExtensions.h"

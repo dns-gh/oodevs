@@ -25,7 +25,7 @@
 #include "MIL_EntityManager.h"
 #include "MIL_Formation.h"
 #include "MT_Tools/MT_Logger.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Color.h"

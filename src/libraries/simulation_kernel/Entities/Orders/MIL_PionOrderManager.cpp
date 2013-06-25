@@ -24,7 +24,7 @@
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
 #define MASA_ORDER_EXCEPTION( ErrorId ) \

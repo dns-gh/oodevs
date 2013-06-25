@@ -359,5 +359,8 @@
     <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\NET_AsnException.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

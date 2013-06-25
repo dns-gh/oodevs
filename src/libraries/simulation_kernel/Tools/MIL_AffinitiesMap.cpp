@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AffinitiesMap.h"
 #include "protocol/ClientSenders.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AffinitiesMap )

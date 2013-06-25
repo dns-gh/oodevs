@@ -11,7 +11,7 @@
 #include "MIL_LimaOrder.h"
 #include "MIL_LimaFunction.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Line.h"
 #include "MIL.h"

@@ -25,7 +25,7 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_AffinitiesMap.h"

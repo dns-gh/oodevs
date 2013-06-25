@@ -13,7 +13,7 @@
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomatParameter )

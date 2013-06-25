@@ -11,7 +11,7 @@
 #include "MIL_UrbanBlockParameter.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_UrbanBlockParameter )

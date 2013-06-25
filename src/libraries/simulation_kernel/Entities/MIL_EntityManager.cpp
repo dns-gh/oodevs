@@ -81,7 +81,7 @@
 #include "Knowledge/KnowledgeGroupFactory.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_MedicalTreatmentType.h"

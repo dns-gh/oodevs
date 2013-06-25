@@ -1004,7 +1004,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_Publisher_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_Simulation_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_ASN_Tools.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\MIL_Entity_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\MIL_EntityManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\MIL_EntityManager_ABC.h" />

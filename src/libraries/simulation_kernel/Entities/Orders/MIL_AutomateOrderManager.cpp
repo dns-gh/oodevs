@@ -21,7 +21,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 #include <boost/make_shared.hpp>

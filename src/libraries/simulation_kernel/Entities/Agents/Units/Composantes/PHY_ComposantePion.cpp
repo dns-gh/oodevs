@@ -41,7 +41,7 @@
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 
 double PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
 

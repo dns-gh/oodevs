@@ -3294,6 +3294,12 @@ message KnowledgeGroupUpdateAck {
     @see MagicAction
 */
 message ControlGlobalWeatherAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the global weather operation
+    */
+    optional OrderAck.ErrorCode error_code = 1;
+    //! More detailed account of the returned error
+    optional string             error_msg  = 2;
 }
 
 /** @struct ControlLocalWeatherAck

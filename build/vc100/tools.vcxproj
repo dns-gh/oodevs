@@ -161,6 +161,7 @@
     <ClInclude Include="..\..\src\libraries\tools\IpcHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\IpcQueue.h" />
     <ClInclude Include="..\..\src\libraries\tools\IpcWatch.h" />
+    <ClInclude Include="..\..\src\libraries\tools\NET_AsnException.h" />
     <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\ThreadPool.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />

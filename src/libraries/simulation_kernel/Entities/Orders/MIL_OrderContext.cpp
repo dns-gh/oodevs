@@ -14,7 +14,7 @@
 #include "MIL_LimaFunction.h"
 #include "MIL_AgentServer.h"
 #include "CheckPoints/SerializationTools.h"
-#include "Network/NET_AsnException.h"
+#include "Tools/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 #include "meteo/ReadDirections.h"

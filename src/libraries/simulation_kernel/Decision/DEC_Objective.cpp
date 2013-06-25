@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Objective.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Network/NET_AsnException.h"
+#include "tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
