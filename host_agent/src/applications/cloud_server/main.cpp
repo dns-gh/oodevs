@@ -26,7 +26,6 @@
 #include <runtime/Pool.h>
 #include <runtime/PropertyTree.h>
 #include <runtime/Runtime_ABC.h>
-#include <runtime/Scoper.h>
 #include <runtime/Utf8.h>
 #include <web/Client.h>
 #include <web/Controller.h>
@@ -131,6 +130,9 @@ struct Configuration
     struct
     {
         std::string service;
+        std::string user;
+        std::string display;
+        std::string password;
         Path app;
     } proxy;
     struct
@@ -172,6 +174,9 @@ struct Configuration
             found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
             found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
             found |= ReadParameter( proxy.service, "--service", i, argc, argv );
+            found |= ReadParameter( proxy.user, "--user", i, argc, argv );
+            found |= ReadParameter( proxy.display, "--display", i, argc, argv );
+            found |= ReadParameter( proxy.password, "--password", i, argc, argv );
             found |= ReadParameter( proxy.app, "--proxy", i, argc, argv );
             found |= ReadParameter( node.app, "--node", i, argc, argv );
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
@@ -297,39 +302,71 @@ struct SessionFactory : public SessionFactory_ABC
     const SessionDependencies deps;
 };
 
-int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& fs, const Configuration& cfg, const Waiter& waiter )
+struct SqlFacade
 {
-    sqlite3_config( SQLITE_CONFIG_SINGLETHREAD );
-    sqlite3_initialize();
-    Scoper sqliteShutdown( &sqlite3_shutdown );
-    Pool pool( 32, 256 );
+    SqlFacade()
+    {
+        sqlite3_config( SQLITE_CONFIG_SINGLETHREAD );
+        sqlite3_initialize();
+    }
+    ~SqlFacade()
+    {
+        sqlite3_shutdown();
+    }
+};
+
+struct Facade : SqlFacade
+{
+    Facade( cpplog::BaseLogger& log, const Configuration& cfg )
+        : log  ( log )
+        , cfg  ( cfg )
+        , db   ( cfg.root / "host" / "host_agent.db" )
+        , users( log, crypt, uuids, db )
+    {
+        if( users.CountUsers( boost::uuids::nil_uuid() ) == 0 )
+        {
+            if( cfg.proxy.user.empty() )
+                throw std::runtime_error( "no administrator account, use --user to create one" );
+            if( cfg.proxy.display.empty() )
+                throw std::runtime_error( "user display name empty, use --display to set it" );
+            if( cfg.proxy.password.empty() )
+                throw std::runtime_error( "user password empty, use --password to set it" );
+            users.CreateUser( boost::uuids::nil_uuid(), cfg.proxy.user, cfg.proxy.display, cfg.proxy.password, web::USER_TYPE_ADMINISTRATOR, false );
+        }
+    }
+    int Start( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& fs, const Waiter& waiter )
+    {
+        Pool pool( 32, 256 );
+        web::Client client;
+        const proxy::Ssl ssl( cfg.ssl.enabled, cfg.ssl.certificate, cfg.ssl.key );
+        const proxy::Config proxyConfig( cfg.root / "host", cfg.proxy.app, cfg.ports.proxy, ssl );
+        Proxy proxy( log, runtime, fs, proxyConfig, client, pool );
+        PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
+        PackageFactory packages( pool, fs );
+        web::Plugins plugins( fs, Path( cfg.session.simulation ).remove_filename() / "plugins" );
+        NodeFactory fnodes( packages, fs, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
+        const Port host = ports.Create();
+        const Path client_root = cfg.root / "client";
+        NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, client_root, "node", host->Get(), pool, proxy );
+        fnodes.observer = &nodes;
+        NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), "cluster", host->Get(), pool, proxy );
+        SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
+        SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
+        Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
+        web::Controller controller( plugins, log, agent, users, true );
+        web::Server server( log, pool, controller, host->Get() );
+        server.Listen();
+        proxy.Register( "api", "localhost", host->Get() );
+        waiter();
+        return 0;
+    }
+    cpplog::BaseLogger& log;
+    const Configuration& cfg;
     UuidFactory uuids;
-    web::Client client;
-    const proxy::Ssl ssl( cfg.ssl.enabled, cfg.ssl.certificate, cfg.ssl.key );
-    const proxy::Config proxyConfig( cfg.root / "host", cfg.proxy.app, cfg.ports.proxy, ssl );
-    Proxy proxy( log, runtime, fs, proxyConfig, client, pool );
-    PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-    PackageFactory packages( pool, fs );
-    web::Plugins plugins( fs, Path( cfg.session.simulation ).remove_filename() / "plugins" );
-    NodeFactory fnodes( packages, fs, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
-    const Port host = ports.Create();
-    const Path client_root = cfg.root / "client";
-    NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, client_root, "node", host->Get(), pool, proxy );
-    fnodes.observer = &nodes;
-    NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), "cluster", host->Get(), pool, proxy );
-    SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
-    SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
-    Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     Crypt crypt;
-    Sql db( cfg.root / "host" / "host_agent.db" );
-    UserController users( log, crypt, uuids, db );
-    web::Controller controller( plugins, log, agent, users, true );
-    web::Server server( log, pool, controller, host->Get() );
-    server.Listen();
-    proxy.Register( "api", "localhost", host->Get() );
-    waiter();
-    return 0;
-}
+    Sql db;
+    UserController users;
+};
 
 template< typename T >
 T GetTree( Tree& tree, const std::string& key, const T& value )
@@ -440,12 +477,7 @@ bool IsCommand( const char* arg )
     return false;
 }
 
-void ConsoleWaiter()
-{
-    getc( stdin );
-}
-
-int StartServer( int argc, const char* argv[], const Waiter& waiter )
+int StartServer( int argc, const char* argv[] )
 {
     const Path root = GetRootDir( argc - 1, argv + 1 );
     boost::filesystem::create_directories( root / "host" );
@@ -463,6 +495,7 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
         Configuration cfg = ParseConfiguration( runtime, fs, root, log, argc-1, argv+1 );
         runtime::Daemon daemon( log, runtime );
         runtime::Daemon::T_Args args;
+        Facade facade( log, cfg );
         switch( cfg.command )
         {
         case CMD_REGISTER:
@@ -479,13 +512,13 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
 
         case CMD_DAEMON:
             PrintConfiguration( log, cfg );
-            daemon.Run( boost::bind( &Start, boost::ref( log ), boost::cref( runtime ), boost::cref( fs ), boost::cref( cfg ), _1 ) );
+            daemon.Run( boost::bind( &Facade::Start, boost::ref( facade ), boost::cref( runtime ), boost::cref( fs ), _1 ) );
             break;
 
-        default:
         case CMD_EXECUTE:
+        default:
             PrintConfiguration( log, cfg );
-            Start( log, runtime, fs, cfg, waiter );
+            facade.Start( runtime, fs, &std::getchar );
             break;
         }
     }
@@ -504,5 +537,5 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
 int main( int argc, const char* argv[] )
 {
     CrashHandlerInit();
-    return StartServer( argc, argv, &ConsoleWaiter );
+    return StartServer( argc, argv );
 }

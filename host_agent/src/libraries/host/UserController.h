@@ -68,7 +68,7 @@ struct UserController : public web::UserController_ABC
 private:
     //! @name Private methods
     //@{
-    void SetupDatabase();
+    void MigrateDatabase();
     //@}
 
 private:

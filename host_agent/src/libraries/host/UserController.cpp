@@ -30,36 +30,11 @@ using web::UserType;
 
 static const int expiration_limit_days = 15;
 
-// -----------------------------------------------------------------------------
-// Name: UserController::UserController
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-UserController::UserController( cpplog::BaseLogger& log,
-                                const Crypt_ABC& crypt,
-                                UuidFactory_ABC& uuids,
-                                Sql_ABC& db )
-    : log_  ( log )
-    , crypt_( crypt )
-    , uuids_( uuids )
-    , db_   ( db )
-{
-    SetupDatabase();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserController::UserController
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-UserController::~UserController()
-{
-    // NOTHING
-}
-
 namespace
 {
 // -----------------------------------------------------------------------------
 // Name: Execute
-// Created: BAX 2012-07-05
+// Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
 size_t Execute( Statement_ABC& st )
 {
@@ -71,7 +46,7 @@ size_t Execute( Statement_ABC& st )
 
 // -----------------------------------------------------------------------------
 // Name: MakeTables
-// Created: BAX 2012-06-28
+// Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
 void MakeTables( Sql_ABC& db )
 {
@@ -104,6 +79,33 @@ void MakeTables( Sql_ABC& db )
         ")" ) );
     db.Commit( *tr );
 }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::UserController
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+UserController::UserController( cpplog::BaseLogger& log,
+                                const Crypt_ABC& crypt,
+                                UuidFactory_ABC& uuids,
+                                Sql_ABC& db )
+    : log_  ( log )
+    , crypt_( crypt )
+    , uuids_( uuids )
+    , db_   ( db )
+{
+    MakeTables( db_ );
+    MigrateDatabase();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::UserController
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+UserController::~UserController()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: Bind
@@ -117,6 +119,8 @@ void Bind( Statement_ABC& st, const Uuid& id )
         st.Bind( boost::lexical_cast< std::string >( id ) );
 }
 
+namespace
+{
 // -----------------------------------------------------------------------------
 // Name: UserController::CreateUser
 // Created: BAX 2012-07-11
@@ -156,7 +160,7 @@ void CreateUser( Sql_ABC& db, Transaction& tr, const Crypt_ABC& crypt, Uuid node
 // Name: MakeDefaultDatabase
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-void MakeDefaultDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
+void MakeDefaultDatabase( Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin();
     Sql_ABC::T_Statement st = db.Prepare( *tr,
@@ -167,9 +171,6 @@ void MakeDefaultDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
             );
     st->Bind( 1 );
     Execute( *st );
-    st.reset();
-    CreateUser( db, *tr, crypt, boost::uuids::nil_uuid(), "admin@masagroup.net",
-                "Default", "admin", web::USER_TYPE_ADMINISTRATOR, false, "eng" );
     db.Commit( *tr );
 }
 
@@ -189,34 +190,24 @@ int GetRevision( Sql_ABC& db )
         rev = st->ReadInt();
     return rev;
 }
+}
 
 // -----------------------------------------------------------------------------
-// Name: MigrateDatabase
+// Name: UserController::MigrateDatabase
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-void MigrateDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
+void UserController::MigrateDatabase()
 {
-    int rev = GetRevision( db );
+    int rev = GetRevision( db_ );
     switch( rev )
     {
         case 0:
-            MakeDefaultDatabase( crypt, db );
+            MakeDefaultDatabase( db_ );
             break;
         case 1:
             break;
         // future revisions here
     }
-}
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserController::SetupDatabase
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-void UserController::SetupDatabase()
-{
-    MakeTables( db_ );
-    MigrateDatabase( crypt_, db_ );
 }
 
 namespace
