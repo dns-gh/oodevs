@@ -338,6 +338,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_AttributesCanBeChanged, Fixture )
         message.set_operational_state( sword::tactically_destroyed );
         message.set_roe( sword::RulesOfEngagement::retaliation_only );
         message.set_decisional_model( "brain" );
+        message.set_brain_debug( false );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         automats.Get( 1 ).Update( message );
 
