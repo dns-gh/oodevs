@@ -70,8 +70,6 @@ namespace
 typedef boost::filesystem::path Path;
 typedef boost::property_tree::ptree Tree;
 
-const std::string serviceName = "Sword Cloud";
-
 template< typename T >
 bool ReadSingle( T& cmd, const std::string& name, const char* argv, const T& value )
 {
@@ -132,6 +130,7 @@ struct Configuration
     } ports;
     struct
     {
+        std::string service;
         Path app;
     } proxy;
     struct
@@ -172,6 +171,7 @@ struct Configuration
             found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
             found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
             found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
+            found |= ReadParameter( proxy.service, "--service", i, argc, argv );
             found |= ReadParameter( proxy.app, "--proxy", i, argc, argv );
             found |= ReadParameter( node.app, "--node", i, argc, argv );
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
@@ -375,6 +375,7 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] ports.max "             << cfg.ports.max;
     LOG_INFO( log ) << "[cfg] ports.proxy "           << cfg.ports.proxy;
     LOG_INFO( log ) << "[cfg] cluster.enabled "       << ( cfg.cluster.enabled ? "true" : "false" );
+    LOG_INFO( log ) << "[cfg] proxy.service "         << cfg.proxy.service;
     LOG_INFO( log ) << "[cfg] proxy.app "             << cfg.proxy.app;
     LOG_INFO( log ) << "[cfg] node.app "              << cfg.node.app;
     LOG_INFO( log ) << "[cfg] node.root "             << cfg.node.root;
@@ -411,6 +412,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.ssl.enabled           = GetTree( tree, "ssl.enabled", false );
     cfg.ssl.certificate       = Utf8( GetTree( tree, "ssl.certificate", Utf8( bin / "certificate.pem" ) ) );
     cfg.ssl.key               = Utf8( GetTree( tree, "ssl.key", Utf8( bin / "key.pem" ) ) );
+    cfg.proxy.service         = GetTree( tree, "proxy.service", std::string( "Sword Cloud" ) );
     cfg.proxy.app             = Utf8( GetTree( tree, "proxy.app", Utf8( bin / "proxy.exe" ) ) );
     cfg.node.app              = Utf8( GetTree( tree, "node.app", Utf8( bin / "node.exe" ) ) );
     cfg.node.root             = Utf8( GetTree( tree, "node.root", Utf8( bin / ".." / "www" ) ) );
@@ -468,11 +470,11 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
             for( int i = 1; i < argc; ++i )
                 if( !IsCommand( argv[i] ) )
                     args.push_back( argv[i] );
-            daemon.Register( serviceName, args, std::string(), std::string() );
+            daemon.Register( cfg.proxy.service, args, std::string(), std::string() );
             break;
 
         case CMD_UNREGISTER:
-            daemon.Unregister( serviceName );
+            daemon.Unregister( cfg.proxy.service );
             break;
 
         case CMD_DAEMON:
