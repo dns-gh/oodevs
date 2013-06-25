@@ -67,8 +67,7 @@ void ResourceNetworksLayer::NotifyCreated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void ResourceNetworksLayer::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    if( entity.Retrieve< ResourceNetwork_ABC >() )
-        EntityLayer< kernel::Entity_ABC >::NotifyDeleted( entity );
+    EntityLayer< kernel::Entity_ABC >::NotifyDeleted( entity );
 }
 
 // -----------------------------------------------------------------------------
