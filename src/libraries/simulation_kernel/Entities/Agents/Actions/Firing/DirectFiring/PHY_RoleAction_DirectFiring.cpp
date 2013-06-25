@@ -114,7 +114,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
     // Pour toutes les armes non utilisées, choix de la meilleure cible
     const PHY_ComposantePion* pUnusedFirer       = 0;
     PHY_Weapon*               pUnusedFirerWeapon = 0;
-    while( firerWeapons.GetUnusedFirerWeapon( pUnusedFirer, pUnusedFirerWeapon ) && nNbrWeaponsUsed < compTargets.size() )
+    while( firerWeapons.GetUnusedFirerWeapon( pUnusedFirer, pUnusedFirerWeapon ) )
     {
         PHY_Composante_ABC* pBestCompTarget = 0;
         double rBestScore = 0.;
