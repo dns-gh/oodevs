@@ -335,7 +335,7 @@ template< typename T >
 T GetTree( Tree& tree, const std::string& key, const T& value )
 {
     const boost::optional< T > opt = tree.get_optional< T >( key );
-    if( opt != boost::none )
+    if( opt )
         return *opt;
     tree.put< T >( key, value );
     return value;
@@ -351,18 +351,18 @@ struct NullLogger : public cpplog::BaseLogger
 
 Path GetSinglePath( int argc, const char** argv, const std::string& name )
 {
-    Path reply;
+    Path path;
     for( int i = 0; i < argc; ++i )
-        if( ReadParameter( reply, name, i, argc, argv ) )
-            return reply;
-    return reply;
+        if( ReadParameter( path, name, i, argc, argv ) )
+            return path;
+    return path;
 }
 
 Path GetRootDir( int argc, const char* argv[] )
 {
-    Path reply = GetSinglePath( argc, argv, "--root" );
-    if( !reply.empty() )
-        return reply;
+    Path path = GetSinglePath( argc, argv, "--root" );
+    if( !path.empty() )
+        return path;
     NullLogger nil;
     return runtime::Factory( nil ).GetRuntime().GetModuleFilename().remove_filename().remove_filename();
 }
@@ -385,8 +385,8 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] ssl "                   << ( cfg.ssl.enabled ? "true" : "false" );
     if( cfg.ssl.enabled )
     {
-        LOG_INFO( log ) << "[cfg] ssl.certificate "       << cfg.ssl.certificate;
-        LOG_INFO( log ) << "[cfg] ssl.key "               << cfg.ssl.key;
+        LOG_INFO( log ) << "[cfg] ssl.certificate "   << cfg.ssl.certificate;
+        LOG_INFO( log ) << "[cfg] ssl.key "           << cfg.ssl.key;
     }
 }
 
@@ -411,10 +411,10 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.ssl.enabled           = GetTree( tree, "ssl.enabled", false );
     cfg.ssl.certificate       = Utf8( GetTree( tree, "ssl.certificate", Utf8( bin / "certificate.pem" ) ) );
     cfg.ssl.key               = Utf8( GetTree( tree, "ssl.key", Utf8( bin / "key.pem" ) ) );
-    cfg.proxy.app             = Utf8( GetTree( tree, "proxy.app",    Utf8( bin / "proxy.exe" ) ) );
-    cfg.node.app              = Utf8( GetTree( tree, "node.app",     Utf8( bin / "node.exe" ) ) );
-    cfg.node.root             = Utf8( GetTree( tree, "node.root",    Utf8( bin / ".." / "www" ) ) );
-    cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5*60 );
+    cfg.proxy.app             = Utf8( GetTree( tree, "proxy.app", Utf8( bin / "proxy.exe" ) ) );
+    cfg.node.app              = Utf8( GetTree( tree, "node.app", Utf8( bin / "node.exe" ) ) );
+    cfg.node.root             = Utf8( GetTree( tree, "node.root", Utf8( bin / ".." / "www" ) ) );
+    cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5 * 60 );
     cfg.session.simulation    = Utf8( GetTree( tree, "session.simulation", Utf8( bin / "simulation_app.exe" ) ) );
     cfg.session.replayer      = Utf8( GetTree( tree, "session.replayer", Utf8( bin / "replayer_app.exe" ) ) );
     cfg.session.timeline      = Utf8( GetTree( tree, "session.timeline", Utf8( bin / "timeline_server.exe" ) ) );
@@ -445,7 +445,7 @@ void ConsoleWaiter()
 
 int StartServer( int argc, const char* argv[], const Waiter& waiter )
 {
-    const Path root = GetRootDir( argc-1, argv+1 );
+    const Path root = GetRootDir( argc - 1, argv + 1 );
     boost::filesystem::create_directories( root / "host" );
     cpplog::TeeLogger tee(
         new cpplog::FileLogger( ( root / "host" / "host_agent.log" ).string(), true ), true,

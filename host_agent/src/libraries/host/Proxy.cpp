@@ -173,7 +173,7 @@ int Proxy::GetPort() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Proxy::ToXml
+// Name: Proxy::GetProperties
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
 Tree Proxy::GetProperties() const
@@ -295,9 +295,9 @@ void Proxy::HttpRegister( const std::string& prefix, const Link& link )
     const std::string scheme = config_.ssl.enabled ? "https" : "http";
     web::Client_ABC::T_Response response = client_.Get( scheme, "localhost", config_.port, "/register_proxy",
         boost::assign::map_list_of
-        ( "prefix", prefix )
-        ( "host", link.host )
-        ( "port", boost::lexical_cast< std::string >( link.port ) ) );
+            ( "prefix", prefix )
+            ( "host", link.host )
+            ( "port", boost::lexical_cast< std::string >( link.port ) ) );
     if( response->GetStatus() != 200 )
         return;
 
