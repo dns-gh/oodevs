@@ -64,6 +64,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers&                            controllers_;
     kernel::SafePointer< kernel::Entity_ABC >       currentTeam_;
     const tools::Resolver< kernel::Agent_ABC >&     agents_;
     const tools::Resolver< kernel::Formation_ABC >& formations_;

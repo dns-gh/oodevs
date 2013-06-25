@@ -12,6 +12,7 @@
 #include "moc_DiffusionListEditor.cpp"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AttributeType.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -47,13 +48,14 @@ namespace
 // -----------------------------------------------------------------------------
 DiffusionListEditor::DiffusionListEditor( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver< kernel::Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const kernel::ExtensionTypes& extensions )
     : QWidget( parent )
+    , controllers_  ( controllers )
+    , currentTeam_  ( controllers )
     , agents_       ( agents )
     , formations_   ( formations )
     , extensions_   ( extensions )
     , extensionName_( "" )
     , tableView_    ( this )
     , dataModel_    ( this )
-    , currentTeam_     ( controllers )
 {
     // TableView init
     tableView_.setModel( &dataModel_ );
@@ -277,4 +279,5 @@ void DiffusionListEditor::Commit()
             continue;
         dico->SetValue( extensionName_, diffusionList );
     }
+    controllers_.controller_.Update( 0 );
 }
