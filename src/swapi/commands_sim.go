@@ -621,6 +621,42 @@ func (c *Client) TeleportUnit(unitId uint32, location Point) error {
 	return <-c.postSimRequest(msg, handler)
 }
 
+func (c *Client) UpdateGlobalWeather(global *Weather) error {
+	params := MakeParameters()
+	if global != nil {
+		params = MakeParameters(
+			MakeFloat(global.Temperature),
+			MakeFloat(global.WindSpeed),
+			MakeHeading(global.WindDirection),
+			MakeFloat(global.CloudFloor),
+			MakeFloat(global.CloudCeil),
+			MakeFloat(global.CloudDensity),
+			MakeEnumeration(int32(global.Precipitation)))
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       sword.MagicAction_global_weather.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlGlobalWeatherAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.OrderAck_no_error {
+			return nameof(sword.OrderAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
 func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) {
 	// FIXME lighting is ignored because it's completely broken
 	msg := SwordMessage{
