@@ -162,7 +162,7 @@ node "BEH_Mot_Pion_ALAT_AffecterVariablesDEtat"
             SetStateVariable( "VE_Agressivite_Tir", 0 )
         end
 
-        if( not DEC_Agent_EstTransporte() ) then
+        if( not DEC_Agent_EstTransporte() and DEC_Agent_EtatOps() > 0 ) then
             do
                 local tempsPourAllerRecompleter = S_Misc_Pion_ALAT_TempsPourAllerRecompleter()
                 local autonomieEnVol = DEC_Agent_AutonomieEnDeplacement()

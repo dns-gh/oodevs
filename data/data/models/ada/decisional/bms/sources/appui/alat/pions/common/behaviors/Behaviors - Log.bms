@@ -46,7 +46,6 @@ include "bit.lua"
             do return end
         end
 
-         do
             local _continue = true
 --[[// si on a un changement de mission et qu'on est en cours de ravitaillement
 ]]--[[// relancer le calcul du chemin pour prendre en compte les nouvelles
@@ -62,97 +61,61 @@ include "bit.lua"
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
-                                                        do
-                                self.ePhase = eRecompleter
-                                                                do return end
-
-                            end
-
+                            self.ePhase = eRecompleter
+                            do return end
                         end
                     end
 
                     if( self.eEtat == eActionImpossible ) then
-                        do
-                                                        do
-                                DEC_Warning( eRC_MissionImpossible )
-                            end
-
-                                                        self:SendFeedback( eActionImpossible )
-                            Halt( self )
-                            do return end
-
-                        end
+                        DEC_Warning( eRC_MissionImpossible )
+                        self:SendFeedback( eActionImpossible )
+                        Halt( self )
+                        do return end
                     end
 
                     self.missionPrec = self.missionPrec or DEC_GetMission( myself )
                     if( DEC_GetMission( myself ) ~= self.missionPrec ) then
-                        do
-                            self.missionPrec = DEC_GetMission( myself )
-                                                        do return end
-
-                        end
+                        self.missionPrec = DEC_GetMission( myself )
+                        do return end
                     end
 
                     if( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) ) then
-                        do
                             DEC_Copie_Point( S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( myself.plotRavitaillementAssigne_ ) ), self.positionPlotRavitaillement )
                             if( DEC_Geometrie_Distance( self.positionPlotRavitaillement, myself:DEC_Agent_Position() ) <= 1000 ) then
-                                do
-                                    self.eEtat = eActionEffectuee
-                                                                        do return end
-
-                                end
+                                self.eEtat = eActionEffectuee
+                                do return end
                             end
 
                             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.positionPlotRavitaillement, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
-                        end
                     else
-do
                             if( pionTC2 == nil ) then
                                 do return end
                             end
 
                             if( DEC_Geometrie_Distance( pionTC2:DEC_Agent_Position(), myself:DEC_Agent_Position() ) <= 1000 ) then
-                                do
-                                    self.eEtat = eActionEffectuee
-                                                                        do return end
-
-                                end
+                                self.eEtat = eActionEffectuee
+                                do return end
                             end
 
                             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, { pionTC2, eProgressionDefaut, eTypeItiInfiltration, 6000, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePion = function( self, _, v ) self.eEtat = v[1] end
-                        end
                     end
-
                     _continue = false
                 elseif switch_1 == eRecompleter then
                     if( self.eEtat == eActionEffectuee ) then
-                        do
-                            self.eEtat = eActionEnCours
-                                                        do
-                                myself.bEnPhaseRavitaillement_ = false
-                                                                self:SendFeedback( eActionEffectuee )
-                                Halt( self )
-                                do return end
-
-                            end
-
-                        end
+                        self.eEtat = eActionEnCours
+                        myself.bEnPhaseRavitaillement_ = false
+                        self:SendFeedback( eActionEffectuee )
+                        Halt( self )
+                        do return end
                     end
 
                     if( self.eEtat == eActionImpossible ) then
-                        do
-                                                        do
-                                DEC_Warning( eRC_MissionImpossible )
-                            end
-
-                                                        self:SendFeedback( eActionImpossible )
-                            Halt( self )
-                            do return end
-
-                        end
+                        DEC_Warning( eRC_MissionImpossible )
+                        self:SendFeedback( eActionImpossible )
+                        Halt( self )
+                        do return end
                     end
 
                     if( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) ) then
@@ -165,9 +128,7 @@ self.done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2 = function( self, _, v ) self.eE
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     _continue = false
-                                end
-            end
-
+               end
     end,
 
 --[[// -----------------------------------------------------------------------------
