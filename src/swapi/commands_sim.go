@@ -621,6 +621,36 @@ func (c *Client) TeleportUnit(unitId uint32, location Point) error {
 	return <-c.postSimRequest(msg, handler)
 }
 
+func (c *Client) DestroyLocalWeather(id uint32) error {
+	params := MakeParameters()
+	if id != 0 {
+		params = MakeParameters(
+			MakeIdentifier(id))
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       sword.MagicAction_local_weather_destruction.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.MagicActionAck_no_error {
+			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
 func (c *Client) UpdateGlobalWeather(global *Weather) error {
 	params := MakeParameters()
 	if global != nil {

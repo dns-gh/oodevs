@@ -170,3 +170,52 @@ func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 
 	CheckWeather(weather, &local, c)
 }
+
+func (s *TestSuite) TestControlLocalWeatherDestruction(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return !data.Time.IsZero()
+	})
+	model := client.Model.GetData()
+	weathers := model.LocalWeathers
+	c.Assert(weathers, HasLen, 0)
+
+	local := swapi.LocalWeather{
+		Weather: swapi.Weather{
+			Temperature:   30,
+			WindSpeed:     10,
+			WindDirection: 90,
+			CloudFloor:    1000,
+			CloudCeil:     2000,
+			CloudDensity:  100,
+			Precipitation: sword.WeatherAttributes_rain,
+			Lightning:     sword.WeatherAttributes_full_moon_night,
+		},
+		StartTime:   model.Time.AddDate(0, 0, -1),
+		EndTime:     model.Time.AddDate(0, 0, +1),
+		TopLeft:     swapi.Point{X: 1, Y: 2},
+		BottomRight: swapi.Point{X: 3, Y: 4},
+	}
+
+	remote, err := client.CreateLocalWeather(&local)
+	c.Assert(err, IsNil)
+	c.Assert(remote, Not(IsNil))
+	local.Id = remote.Id
+
+	// Error: missing parameters
+	err = client.DestroyLocalWeather(0)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Error: invalid meteo identifier
+	err = client.DestroyLocalWeather(12345)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+		// Error: missing parameters
+	err = client.DestroyLocalWeather(1)
+	c.Assert(err, IsNil)
+
+	client.Model.WaitTicks(1)
+	c.Assert(client.Model.GetData().LocalWeathers, HasLen, 0)
+}
