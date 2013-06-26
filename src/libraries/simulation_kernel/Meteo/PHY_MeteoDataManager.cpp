@@ -172,17 +172,19 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
     if( msg.type() == sword::MagicAction::global_weather )
     {
         assert( pGlobalMeteo_ );
-        client::ControlGlobalWeatherAck reply;
-        reply().set_error_code( sword::OrderAck::no_error );
+        client::MagicActionAck ack;
+        ack().set_error_code( sword::MagicActionAck::no_error );
         try
         {
             pGlobalMeteo_->Update( msg.parameters() );
         }
-        catch( const NET_AsnException< sword::OrderAck_ErrorCode >& e )
+        catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
         {
-            reply().set_error_code( e.GetErrorID() );
+            ack().set_error_code( e.GetErrorID() );
         }
-        reply.Send( NET_Publisher_ABC::Publisher(), context, client );
+        auto& pub = NET_Publisher_ABC::Publisher();
+        ack.Send( pub, context, client );
+        client::ControlGlobalWeatherAck().Send( pub, context, client ); ///< deprecated
     }
     else if( msg.type() == sword::MagicAction::local_weather )
     {

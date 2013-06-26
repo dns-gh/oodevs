@@ -29,7 +29,7 @@ namespace
     }
 }
 
-#define MASA_BADPARAM( name ) MASA_BADPARAM_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter, name )
+#define MASA_BADPARAM( name ) MASA_BADPARAM_ASN( sword::MagicActionAck_ErrorCode, sword::MagicActionAck::error_invalid_parameter, name )
 
 
 // -----------------------------------------------------------------------------
