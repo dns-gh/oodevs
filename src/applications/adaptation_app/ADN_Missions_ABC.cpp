@@ -285,12 +285,12 @@ bool ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const t
         if( fileName == ADN_Missions_Data::missionSheetTemporaryFile_ )
         {
             tools::Path parameterValue = ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( type ).c_str() ) / namePath + "/";
-            xst.parameter( "imageDirectory", parameterValue.Normalize().ToBoost().string() );
+            xst.parameter( "imageDirectory", parameterValue.Normalize().ToUTF8() );
         }
         else
         {
             tools::Path parameterValue = tools::Path( "Images" ) / namePath + "/";
-            xst.parameter( "imageDirectory", parameterValue.Normalize().ToBoost().string() );
+            xst.parameter( "imageDirectory", parameterValue.Normalize().ToUTF8() );
         }
         xst << xisXML;
         tools::Ofstream fileStream( filePath + ".html", std::ios::out | std::ios::trunc );
