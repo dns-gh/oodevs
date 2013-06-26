@@ -97,6 +97,19 @@ func (s *TestSuite) TestControlGlobalWeather(c *C) {
 	c.Assert(expected, Equals, actual)
 }
 
+func CheckWeather(remote, local *swapi.LocalWeather, c *C) {
+	// overwrite lighting which is not supported yet
+	remote.Lightning = local.Lightning
+	// ignore precision issues when comparing points
+	if Nearby(remote.TopLeft, local.TopLeft) {
+		remote.TopLeft = local.TopLeft
+	}
+	if Nearby(remote.BottomRight, local.BottomRight) {
+		remote.BottomRight = local.BottomRight
+	}
+	c.Assert(remote, DeepEquals, local)
+}
+
 func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
@@ -104,10 +117,14 @@ func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return !data.Time.IsZero()
 	})
-
 	model := client.Model.GetData()
 	weathers := model.LocalWeathers
 	c.Assert(weathers, HasLen, 0)
+
+	// Error: missing parameters
+	remote, err := client.CreateLocalWeather(nil)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
 	local := swapi.LocalWeather{
 		Weather: swapi.Weather{
 			Temperature:   30,
@@ -124,22 +141,32 @@ func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 		TopLeft:     swapi.Point{X: 1, Y: 2},
 		BottomRight: swapi.Point{X: 3, Y: 4},
 	}
-	remote, err := client.CreateLocalWeather(&local)
+
+	remote, err = client.CreateLocalWeather(&local)
 	c.Assert(err, IsNil)
 	c.Assert(remote, Not(IsNil))
 	local.Id = remote.Id
 
-	// overwrite lighting which is not supported yet
-	remote.Lightning = local.Lightning
-	// ignore precision issues when comparing points
-	if Nearby(remote.TopLeft, local.TopLeft) {
-		remote.TopLeft = local.TopLeft
-	}
-	if Nearby(remote.BottomRight, local.BottomRight) {
-		remote.BottomRight = local.BottomRight
-	}
-	c.Assert(remote, DeepEquals, &local)
+	CheckWeather(remote, &local, c)
 
 	weathers = client.Model.GetData().LocalWeathers
 	c.Assert(weathers, HasLen, 1)
+
+	// Error: invalid meteo identifier
+	id := local.Id
+	local.Id = 1234
+	remote, err = client.CreateLocalWeather(&local)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Update local weather
+	local.Id = id
+	local.Temperature = -10
+	local.TopLeft = swapi.Point{X: 5, Y: 6}
+	_, err = client.CreateLocalWeather(&local)
+	c.Assert(err, IsNil)
+
+	client.Model.WaitTicks(2)
+	weather := client.Model.GetData().LocalWeathers[local.Id]
+
+	CheckWeather(weather, &local, c)
 }

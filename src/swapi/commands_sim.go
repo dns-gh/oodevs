@@ -644,13 +644,13 @@ func (c *Client) UpdateGlobalWeather(global *Weather) error {
 		},
 	}
 	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetControlGlobalWeatherAck()
+		reply := msg.GetMagicActionAck()
 		if reply == nil {
 			return unexpected(msg)
 		}
 		code := reply.GetErrorCode()
-		if code != sword.OrderAck_no_error {
-			return nameof(sword.OrderAck_ErrorCode_name, int32(code))
+		if code != sword.MagicActionAck_no_error {
+			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
 		}
 		return nil
 	}
@@ -658,25 +658,28 @@ func (c *Client) UpdateGlobalWeather(global *Weather) error {
 }
 
 func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) {
+	params := MakeParameters()
+	if local != nil {
+		params = MakeParameters(MakeFloat(local.Temperature),
+			MakeFloat(local.WindSpeed),
+			MakeHeading(local.WindDirection),
+			MakeFloat(local.CloudFloor),
+			MakeFloat(local.CloudCeil),
+			MakeFloat(local.CloudDensity),
+			MakeEnumeration(int32(local.Precipitation)),
+			MakeTime(local.StartTime),
+			MakeTime(local.EndTime),
+			MakeRectangleParam(local.TopLeft, local.BottomRight),
+			MakeIdentifier(local.Id),
+		)
+	}
 	// FIXME lighting is ignored because it's completely broken
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				MagicAction: &sword.MagicAction{
-					Type: sword.MagicAction_local_weather.Enum(),
-					Parameters: MakeParameters(
-						MakeFloat(local.Temperature),
-						MakeFloat(local.WindSpeed),
-						MakeHeading(local.WindDirection),
-						MakeFloat(local.CloudFloor),
-						MakeFloat(local.CloudCeil),
-						MakeFloat(local.CloudDensity),
-						MakeEnumeration(int32(local.Precipitation)),
-						MakeTime(local.StartTime),
-						MakeTime(local.EndTime),
-						MakeRectangleParam(local.TopLeft, local.BottomRight),
-						MakeIdentifier(local.Id),
-					),
+					Type:       sword.MagicAction_local_weather.Enum(),
+					Parameters: params,
 				},
 			},
 		},
