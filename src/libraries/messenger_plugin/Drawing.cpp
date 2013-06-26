@@ -225,7 +225,15 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
     if( geometry_ )
         message().mutable_shape()->set_geometry( *geometry_ );
     for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
-        *message().mutable_shape()->mutable_points()->add_elem() = *iter;
+        *message().mutable_shape()->mutable_points()->add_elem() = *iter; 
+    if( diffusion_ )
+        *message().mutable_shape()->mutable_diffusion() = *diffusion_;
+    if( text_ )
+        message().mutable_shape()->set_text( *text_ );
+    if( font_ )
+        message().mutable_shape()->set_font( *font_ );
+    if( fontSize_ )
+        message().mutable_shape()->set_font_size( *fontSize_ );
     message.Send( publisher );
 }
 
