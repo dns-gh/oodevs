@@ -143,25 +143,108 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
     AddMeteo( *new PHY_LocalMeteo( localCounter_++, xis, pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() ) );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::UpdateGlobalWeather
+// Created: LGY 2013-06-16
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::UpdateGlobalWeather( const sword::MagicAction& msg, unsigned context, unsigned client )
 {
-    void AckLocalWeather( uint32_t id, unsigned context, unsigned client, const std::string& msg = std::string() )
+    assert( pGlobalMeteo_ );
+    client::MagicActionAck ack;
+    ack().set_error_code( sword::MagicActionAck::no_error );
+    try
     {
-        if( !id && !msg.empty() )
-            MT_LOG_ERROR_MSG( msg );
-        client::MagicActionAck ack;
-        ack().set_error_code( id ? sword::MagicActionAck::no_error
-                                 : sword::MagicActionAck::error_invalid_parameter );
-        if( id )
-        {
-            ack().mutable_result()->add_elem()->add_value()->set_identifier( id );
-            // Published in 5.2, deprecated
-            ack().mutable_weather()->set_id( id );
-        }
-        auto& pub = NET_Publisher_ABC::Publisher();
-        ack.Send( pub, context, client );
-        client::ControlLocalWeatherAck().Send( pub, context, client ); ///< deprecated
+        pGlobalMeteo_->Update( msg.parameters() );
     }
+    catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    auto& pub = NET_Publisher_ABC::Publisher();
+    ack.Send( pub, context, client );
+    client::ControlGlobalWeatherAck().Send( pub, context, client ); ///< deprecated
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::ManageLocalWeather
+// Created: LGY 2013-06-16
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, unsigned context, unsigned client )
+{
+    client::MagicActionAck ack;
+    ack().set_error_code( sword::MagicActionAck::no_error );
+    unsigned int id = 0;
+    try
+    {
+        if( msg.parameters().elem_size() != 10 && msg.parameters().elem_size() != 11 )
+            throw MASA_BADPARAM( "invalid parameters count, 10 or 11 parameters expected" );
+
+        if( msg.parameters().elem_size() == 11 )
+        {
+            const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
+            if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
+                throw MASA_BADPARAM( "parameters[10] must be an Identifier" );
+            id = idParameter.value().Get( 0 ).identifier();
+        }
+        if( id == 0 )
+        {
+            auto meteo = new PHY_LocalMeteo( localCounter_++, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
+            id = meteo->GetId();
+            AddMeteo( *meteo );
+        }
+        else
+        {
+            auto meteo = Find( id );
+            if( !meteo )
+                throw MASA_BADPARAM( "unknown local weather id" );
+            static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
+        }
+    }
+    catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    if( id )
+    {
+        ack().mutable_result()->add_elem()->add_value()->set_identifier( id );
+        // Published in 5.2, deprecated
+        ack().mutable_weather()->set_id( id );
+    }
+    auto& pub = NET_Publisher_ABC::Publisher();
+    ack.Send( pub, context, client );
+    client::ControlLocalWeatherAck().Send( pub, context, client ); ///< deprecated
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::RemoveLocalWeather
+// Created: LGY 2013-06-16
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::RemoveLocalWeather( const sword::MagicAction& msg, unsigned context, unsigned client )
+{
+    client::MagicActionAck ack;
+    ack().set_error_code( sword::MagicActionAck::no_error );
+    try
+    {
+        if( msg.parameters().elem_size() != 1 )
+            throw MASA_BADPARAM( "invalid parameters count, one parameter expected" );
+        if(  msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
+            throw MASA_BADPARAM( "parameters[10] must be an Identifier" );
+
+        unsigned int id = msg.parameters().elem( 0 ).value().Get( 0 ).identifier();
+        weather::Meteo* meteo = Find( id );
+        if( !meteo )
+            throw MASA_BADPARAM( "parameters[10] must be a local weather identifier" );
+
+        meteo->SendDestruction();
+        Remove( id );
+    }
+    catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    auto& pub = NET_Publisher_ABC::Publisher();
+    ack.Send( pub, context, client );
+    client::ControlLocalWeatherAck().Send( pub, context, client ); ///< deprecated
 }
 
 // -----------------------------------------------------------------------------
@@ -172,79 +255,11 @@ namespace
 void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned context, unsigned client )
 {
     if( msg.type() == sword::MagicAction::global_weather )
-    {
-        assert( pGlobalMeteo_ );
-        client::MagicActionAck ack;
-        ack().set_error_code( sword::MagicActionAck::no_error );
-        try
-        {
-            pGlobalMeteo_->Update( msg.parameters() );
-        }
-        catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
-        {
-            ack().set_error_code( e.GetErrorID() );
-        }
-        auto& pub = NET_Publisher_ABC::Publisher();
-        ack.Send( pub, context, client );
-        client::ControlGlobalWeatherAck().Send( pub, context, client ); ///< deprecated
-    }
+        UpdateGlobalWeather( msg, context, client );
     else if( msg.type() == sword::MagicAction::local_weather )
-    {
-        client::MagicActionAck ack;
-        ack().set_error_code( sword::MagicActionAck::no_error );
-        unsigned int id = 0;
-        try
-        {
-            if( msg.parameters().elem_size() != 10 && msg.parameters().elem_size() != 11 )
-                throw MASA_BADPARAM( "invalid parameters count, 10 or 11 parameters expected" );
-
-            if( msg.parameters().elem_size() == 11 )
-            {
-                const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
-                if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
-                    throw MASA_BADPARAM( "parameters[10] must be an Identifier" );
-                id = idParameter.value().Get( 0 ).identifier();
-            }
-            if( id == 0 )
-            {
-                auto meteo = new PHY_LocalMeteo( localCounter_++, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
-                id = meteo->GetId();
-                AddMeteo( *meteo );
-            }
-            else
-            {
-                auto meteo = Find( id );
-                if( !meteo )
-                    throw MASA_BADPARAM( "unknown local weather id" );
-                static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
-            }
-        }
-        catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
-        {
-            ack().set_error_code( e.GetErrorID() );
-        }
-        if( id )
-        {
-            ack().mutable_result()->add_elem()->add_value()->set_identifier( id );
-            // Published in 5.2, deprecated
-            ack().mutable_weather()->set_id( id );
-        }
-        auto& pub = NET_Publisher_ABC::Publisher();
-        ack.Send( pub, context, client );
-        client::ControlLocalWeatherAck().Send( pub, context, client ); ///< deprecated
-    }
+        ManageLocalWeather( msg, context, client );
     else if( msg.type() == sword::MagicAction::local_weather_destruction )
-    {
-        if( msg.parameters().elem_size() != 1 || msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
-            return AckLocalWeather( 0, context, client, "invalid local weather id" );
-        unsigned int id = msg.parameters().elem( 0 ).value().Get( 0 ).identifier();
-        weather::Meteo* meteo = Find( id );
-        if( !meteo )
-            return AckLocalWeather( 0, context, client, "unknown local weather id" );
-        AckLocalWeather( id, context, client );
-        meteo->SendDestruction();
-        Remove( id );
-    }
+        RemoveLocalWeather( msg, context, client );
 }
 
 // -----------------------------------------------------------------------------

@@ -93,6 +93,9 @@ private:
     void ReadPatchLocal( xml::xistream& xis );
     void ReadPatchGlobal( xml::xistream& xis );
     void Load( xml::xistream& xis, MIL_Config& config );
+    void UpdateGlobalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
+    void ManageLocalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
+    void RemoveLocalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
     //@}
 
 private:
