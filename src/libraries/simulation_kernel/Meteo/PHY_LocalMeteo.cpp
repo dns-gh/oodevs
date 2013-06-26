@@ -141,17 +141,16 @@ void PHY_LocalMeteo::Update( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCreation /*= false*/ )
 {
-    if( isCreation )
-    {
-        const sword::MissionParameter& startTime = msg.elem( 7 );
-        if( startTime.value_size() != 1 || !startTime.value().Get(0).has_datetime() )
-            throw std::exception( "Meteo : bad attribute for StartTime" );
+    const sword::MissionParameter& startTime = msg.elem( 7 );
+    if( startTime.value_size() == 1 && startTime.value().Get(0).has_datetime() )
         startTime_ = ( bpt::from_iso_string( startTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-        const sword::MissionParameter& endTime = msg.elem( 8 );
-        if( endTime.value_size() != 1 || !endTime.value().Get(0).has_datetime() )
-            throw std::exception( "Meteo : bad attribute for EndTime" );
+    else if( isCreation )
+        throw std::exception( "Meteo : bad attribute for StartTime" );
+    const sword::MissionParameter& endTime = msg.elem( 8 );
+    if( endTime.value_size() == 1 && endTime.value().Get(0).has_datetime() )
         endTime_ = ( bpt::from_iso_string( endTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-    }
+    else if( isCreation )
+        throw std::exception( "Meteo : bad attribute for EndTime" );
     const sword::MissionParameter& location = msg.elem( 9 );
     if( location.value_size() != 1 || !location.value().Get(0).has_location() )
         throw std::exception( "Meteo : bad attribute for Location" );
