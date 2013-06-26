@@ -47,9 +47,9 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, boost::shared_ptr< MIL_KnowledgeGroup >& kg, MIL_Object_ABC& objectKnown );
-    void AppendArmyKnowledges( MIL_Army_ABC& army );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC* army, MIL_Object_ABC& objectKnown );
+
+
     void DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
     void NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
@@ -57,7 +57,7 @@ public:
     bool HasObjectsAtInteractionHeightCache( double rHeight ) const;
     void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight ) const;
     void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
-    void UpdateUniversalObjects( const MIL_Army_ABC& team );
+    void UpdateUniversalObjects();
     //@}
 
     //! @name Queries

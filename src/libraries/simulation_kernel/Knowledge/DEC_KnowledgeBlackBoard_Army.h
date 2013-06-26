@@ -12,26 +12,17 @@
 #ifndef __DEC_KnowledgeBlackBoard_Army_h_
 #define __DEC_KnowledgeBlackBoard_Army_h_
 
-#include "DEC_KnowledgeBlackBoard_ABC.h"
+#include "DEC_KnowledgeBlackBoardObjects_ABC.h"
 
 namespace sword
 {
-    class ObjectKnowledgeId;
     class CrowdKnowledgeId;
     class UnitKnowledgeId;
     class UrbanObjectKnowledgeId;
 }
 
-class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_BlackBoard_CanContainKnowledgeUrban;
-class DEC_KS_ObjectKnowledgeSynthetizer;
 class DEC_KS_UrbanKnowledgeSynthetizer;
-class MIL_Army_ABC;
-class MIL_Object_ABC;
-class MIL_ObjectFilter;
-class TER_Polygon;
-class TER_Localisation;
-class KnowledgesVisitor_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_Army
@@ -39,7 +30,7 @@ class KnowledgesVisitor_ABC;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_KnowledgeBlackBoard_Army : public DEC_KnowledgeBlackBoard_ABC
+class DEC_KnowledgeBlackBoard_Army : public DEC_KnowledgeBlackBoardObjects_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -54,17 +45,10 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
-    //! @name CheckPoints
-    //@{
-    virtual void Update( int currentTimeStep );
-    //@}
-
     //! @name Accessors
     //@{
-    MIL_Army_ABC& GetArmy() const;
-    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
+    virtual MIL_Army_ABC& GetArmy() const;
     DEC_BlackBoard_CanContainKnowledgeUrban& GetKnowledgeUrbanContainer() const;
-    DEC_KS_ObjectKnowledgeSynthetizer& GetKsObjectKnowledgeSynthetizer() const;
     DEC_KS_UrbanKnowledgeSynthetizer& GetKsUrbanKnowledgeSynthetizer() const;
     //@}
 
@@ -80,11 +64,6 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const;
 
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int nID ) const;
-
     virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const MIL_Population& population ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( unsigned int nID ) const;
@@ -93,34 +72,14 @@ public:
     //! @name Queries
     //@{
     void Finalize();
-    bool IsKnown( const MIL_Object_ABC& oject ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromObjectID( unsigned int nID ) const;
-    void GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& object ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const DEC_Knowledge_ObjectCollision& collision ) const;
-    void GetObjects( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const;
-    void GetObjects( T_KnowledgeObjectVector& container ) const;
-    void GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles );
-    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
-    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone );
-    void GetObjectsIntersectingInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
-    void GetObjectsWithCapacityInZone( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone );
-    bool IsPositionInsideObjectOfType( const std::string& capacity, const MT_Vector2D& loc );
-    void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
     void GetUrbanObjects( T_UrbanObjectVector& container ) const;
-    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
 private:
     MIL_Army_ABC* pArmy_;
     // Containers
-    DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;
     DEC_BlackBoard_CanContainKnowledgeUrban* pKnowledgeUrbanContainer_;
     // Knowledge sources
-    DEC_KS_ObjectKnowledgeSynthetizer* pKsObjectKnowledgeSynthetizer_;
     DEC_KS_UrbanKnowledgeSynthetizer* pKsUrbanKnowledgeSynthetizer_;
 };
 

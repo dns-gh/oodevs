@@ -157,8 +157,6 @@ void MIL_KnowledgeGroup::Clone( const MIL_KnowledgeGroup& source )
     source.ApplyOnKnowledgesPopulation( functorPopulation );
     boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromObjectPerception, this, _1 );
     source.ApplyOnKnowledgesObject( functorObject );
-    if( knowledgeBlackBoard_ )
-        knowledgeBlackBoard_->Jam();
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +266,6 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
          >> isActivated_ // LTO
          >> isJammed_;
     idManager_.Lock( id_ );
-//    ids_.insert( id_ );
     hasBeenUpdated_ = true;
     knowledgeBlackBoard_->SetKnowledgeGroup( this );
 }
@@ -315,7 +312,7 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
 // Name: MIL_KnowledgeGroup::UpdateKnowledges
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
+void MIL_KnowledgeGroup::UpdateKnowledges( int currentTimeStep )
 {
     for( auto it = automates_.begin(); it != automates_.end(); ++it )
         (**it).UpdateKnowledges( currentTimeStep );
@@ -337,7 +334,7 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 // Name: MIL_KnowledgeGroup::UpdateObjectKnowledges
 // Created: LDC 2011-08-12
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::UpdateObjectKnowledges(int currentTimeStep)
+void MIL_KnowledgeGroup::UpdateObjectKnowledges( int currentTimeStep )
 {
     if( knowledgeBlackBoard_ )
         knowledgeBlackBoard_->UpdateUniversalObjects();
@@ -1040,10 +1037,7 @@ bool MIL_KnowledgeGroup::IsJammed() const
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject( MIL_Object_ABC& objectKnown )
 {
     if( knowledgeBlackBoard_ )
-    {
-        boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-        return knowledgeBlackBoard_->CreateKnowledgeObject( shared, objectKnown );
-    }
+        return knowledgeBlackBoard_->GetKnowledgeObjectContainer().CreateKnowledgeObject( objectKnown.GetArmy(), objectKnown );
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
@@ -1283,10 +1277,8 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::GetObjectKnowledge
         boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = knowledgeBlackBoard_->GetKnowledgeObjectContainer().GetKnowledgeObject( objectKnown );
         if( knowledgeObject.get() )
             return knowledgeObject;
-        auto kg = shared_from_this();
-        return knowledgeBlackBoard_->GetKnowledgeObjectContainer().CreateKnowledgeObject( knowledgeBlackBoard_->GetKnowledgeGroup()->GetArmy(), kg, objectKnown );
     }
-    return boost::shared_ptr< DEC_Knowledge_Object >();
+    return CreateKnowledgeObject( objectKnown );
 }
 
 // -----------------------------------------------------------------------------

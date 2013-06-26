@@ -182,12 +182,12 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
         return eImpossible;
     }
     if( !pion_->GetKnowledgeGroup()->IsJammed() )
-        pKnowledge = pion_->GetArmy().GetKnowledge().GetKnowledgeObject( *pObject );
+        pKnowledge = pion_->GetArmy().GetKnowledge().ResolveKnowledgeObject( *pObject );
     if( !pKnowledge.get() && pion_->GetKnowledgeGroup() )
     {
         auto bbKg = pion_->GetKnowledgeGroup()->GetKnowledge();
         if( bbKg )
-            pKnowledge = bbKg->GetKnowledgeObjectContainer().GetKnowledgeObject( *pObject );
+            pKnowledge = bbKg->ResolveKnowledgeObject( *pObject );
     }
     return Construct( *pObject );
 }

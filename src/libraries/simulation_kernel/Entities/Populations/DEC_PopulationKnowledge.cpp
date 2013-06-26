@@ -211,12 +211,12 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
         auto bbKg = it->second->GetKnowledge();
         if( bbKg )
         {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->GetKnowledgeObjectContainer().GetKnowledgeObject( object );
+            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->ResolveKnowledgeObject( object );
             if( knowledge.get() )
                 return knowledge;
         }
     }
-    return population_.GetArmy().GetKnowledge().GetKnowledgeObject( object );
+    return population_.GetArmy().GetKnowledge().ResolveKnowledgeObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,12 +233,12 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
         auto bbKg = it->second->GetKnowledge();
         if( bbKg )
         {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->GetKnowledgeObjectContainer().GetKnowledgeObjectFromID( nID );
+            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->ResolveKnowledgeObject( nID );
             if( knowledge.get() )
                 return knowledge;
         }
     }
-    return population_.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
+    return population_.GetArmy().GetKnowledge().ResolveKnowledgeObject( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,12 +255,12 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
         auto bbKg = it->second->GetKnowledge();
         if( bbKg )
         {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->GetKnowledgeObjectContainer().GetKnowledgeObjectFromObjectID( nID );
+            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->ResolveKnowledgeObjectByObjectID( nID );
             if( knowledge.get() )
                 return knowledge;
         }
     }
-    return population_.GetArmy().GetKnowledge().GetKnowledgeObjectFromObjectID( nID );
+    return population_.GetArmy().GetKnowledge().ResolveKnowledgeObjectByObjectID( nID );
 }
 
 // -----------------------------------------------------------------------------

@@ -96,7 +96,7 @@ int DEC_MiscFunctions::GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAg
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const MIL_AgentPion& pion = pAgent->GetPion();
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    return reinforcements.size();
+    return static_cast< int >( reinforcements.size() );
 }
 
 //-----------------------------------------------------------------------------

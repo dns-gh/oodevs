@@ -15,9 +15,8 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Def.h"
 
-class DEC_KnowledgeBlackBoard_Army;
-class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_BlackBoard_CanContainKnowledgeObject;
+class DEC_KnowledgeBlackBoardObjects_ABC;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_Object;
@@ -38,8 +37,7 @@ class DEC_KS_ObjectKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard );
-    explicit DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_Army& blackBoard );
+    explicit DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoardObjects_ABC& blackBoard );
              DEC_KS_ObjectKnowledgeSynthetizer();
     virtual ~DEC_KS_ObjectKnowledgeSynthetizer();
     //@}
@@ -52,52 +50,48 @@ public:
     //! @name Events
     //@{
     void AddEphemeralObjectKnowledge( MIL_Object_ABC& objectKnown ); // The object will be perceived virtually only for one tick
-    void AddObjectKnowledgeToForget ( MIL_Object_ABC& objectKnown );
-    void AddObjectKnowledgeToForget ( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
+    void AddObjectKnowledgeToForget( MIL_Object_ABC& objectKnown );
+    void AddObjectKnowledgeToForget( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     //@}
 
     //! @name Operations
     //@{
     virtual void Prepare();
-    virtual void Talk   ( int currentTimeStep );
-    virtual void Clean  ();
+    virtual void Talk( int currentTimeStep );
+    virtual void Clean();
     //@}
 
 private:
     //! @name Update
     //@{
-    void                  UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
-    void                  UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeToUpdate                ( MIL_Object_ABC& objectKnown ) const;
-    void                  UpdateKnowledgeRelevance            ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
-    void                  CleanKnowledgeObject                ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
+    void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
+    void UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision );
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeToUpdate( MIL_Object_ABC& objectKnown ) const;
+    void UpdateKnowledgeRelevance( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
+    void CleanKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
     //@}
 
     //! @name Operations
     //@{
     void SynthetizeSubordinatesPerception();
-    void ProcessEphemeralKnowledges      ();
-    void ProcessObjectsToForget          ();
-    void ProcessKnowledgesObjectToForget ();
-
-    DEC_BlackBoard_CanContainKnowledgeObject& GetContainKnowledgeObject() const;
+    void ProcessEphemeralKnowledges();
+    void ProcessObjectsToForget();
+    void ProcessKnowledgesObjectToForget();
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_Object_ABC* >  T_ObjectVector;
-    typedef T_ObjectVector::const_iterator  CIT_ObjectVector;
+    typedef std::vector< MIL_Object_ABC* > T_ObjectVector;
     //@}
 
 private:
     //! @name Members
     //@{
-    DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoardKg_;
-    DEC_KnowledgeBlackBoard_Army* pBlackBoardArmy_;
-    T_ObjectVector                ephemeralKnowledges_;
-    T_ObjectVector                objectsToForget_;
-    T_KnowledgeObjectVector       knowledgesObjectToForget_;
+    DEC_KnowledgeBlackBoardObjects_ABC* pBlackBoard_;
+    T_ObjectVector ephemeralKnowledges_;
+    T_ObjectVector objectsToForget_;
+    T_KnowledgeObjectVector knowledgesObjectToForget_;
     //@}
 };
 
