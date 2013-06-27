@@ -14,12 +14,8 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/EntityHelpers.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/Attributes.h"
-#include "gaming/Dotation.h"
-#include "gaming/LogisticLinks.h"
 #include "gaming/SupplyStates.h"
 #include <boost/bind.hpp>
 
@@ -100,79 +96,5 @@ namespace logistic_helpers
             }
         }
         return false;
-    }
-
-    // -----------------------------------------------------------------------------
-    namespace
-    {
-        const kernel::Positions* GetPCPosition( const Automat_ABC& automat )
-        {
-            auto hierarchy = automat.Retrieve< TacticalHierarchies >();
-            if( hierarchy )
-            {
-                auto it = hierarchy->CreateSubordinateIterator();
-                while( it.HasMoreElements() )
-                {
-                    const Entity_ABC& child = it.NextElement();
-                    auto pAttributes = child.Retrieve< Attributes >();
-                    if( pAttributes && pAttributes->isPC_ )
-                        return child.Retrieve< kernel::Positions >();
-                }
-            }
-            return 0;
-        }
-
-        void AggregateLogisticAutomataPositions( const Entity_ABC& entity, geometry::Point2f& aggregatedPos, int& count, bool onlySupply )
-        {
-            if( const kernel::Automat_ABC* pRecientAutomat = dynamic_cast< const Automat_ABC* >( &entity ) )
-            {
-                if( ( onlySupply && pRecientAutomat->GetType().IsLogisticSupply() ) 
-                    || ( !onlySupply && pRecientAutomat->GetType().HasLogistics() ) )
-                {
-                    const kernel::Positions* pPos = GetPCPosition( *pRecientAutomat );
-                    if( pPos )
-                    {
-                        aggregatedPos += geometry::Vector2f( pPos->GetPosition().X(), pPos->GetPosition().Y() );
-                        ++count;
-                    }
-                }
-            }
-            else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-            {
-                auto hierarchy = entity.Retrieve< TacticalHierarchies >();
-                if( hierarchy )
-                {
-                    auto it = hierarchy->CreateSubordinateIterator();
-                    while( it.HasMoreElements() )
-                        AggregateLogisticAutomataPositions( it.NextElement(), aggregatedPos, count, onlySupply );
-                }
-            }
-        }
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: GetLogisticPosition
-    // Created: MMC 2013-01-29
-    // -----------------------------------------------------------------------------
-    geometry::Point2f GetLogisticPosition( const Entity_ABC& entity, bool onlySupply /*= false*/ )
-    {
-        const kernel::Automat_ABC* pAutomat = dynamic_cast< const Automat_ABC* >( &entity );
-        if( pAutomat && pAutomat->GetLogisticLevel() == LogisticLevel::logistic_base_ )
-        {
-            const kernel::Positions* pPos = GetPCPosition( *pAutomat );
-            if( pPos )
-                return pPos->GetPosition();
-        }
-        else if( const kernel::Formation_ABC* pFormation = dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        {
-            int count = 0;
-            geometry::Point2f aggregatedPos;
-            AggregateLogisticAutomataPositions( entity, aggregatedPos, count, onlySupply );
-            if( count > 0 )
-                return geometry::Point2f( aggregatedPos.X() / count, aggregatedPos.Y() / count );
-        }
-        if( const kernel::Positions* pPositions = entity.Retrieve< kernel::Positions >() )
-            return pPositions->GetPosition();
-        return geometry::Point2f();
     }
 }

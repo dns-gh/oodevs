@@ -45,7 +45,6 @@
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
-#include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "protocol/SimulationSenders.h"

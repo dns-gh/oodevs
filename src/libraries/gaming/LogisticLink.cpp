@@ -12,7 +12,7 @@
 #include "Tools.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "gaming/LogisticHelpers.h"
+#include "clients_gui/LogisticHelpers.h"
 
 using namespace kernel;
 

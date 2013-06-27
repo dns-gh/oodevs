@@ -35,8 +35,7 @@ namespace logistic_helpers
     void VisitBaseStocksDotations( const kernel::Entity_ABC& logisticBase, boost::function< void( const Dotation& ) > func );    
     void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< void( const kernel::Entity_ABC& ) > func );
     bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > func );
-    geometry::Point2f GetLogisticPosition( const kernel::Entity_ABC& entity, bool onlySupply = false );
-
+    
     template< typename Extension >
     struct RetrieveFunc
     {

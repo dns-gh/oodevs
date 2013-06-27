@@ -21,7 +21,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
-#include "gaming/LogisticHelpers.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "protocol/Protocol.h"
 #include <boost/smart_ptr/make_shared.hpp>
 #include <boost/foreach.hpp>

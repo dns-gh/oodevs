@@ -147,6 +147,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Layer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkItemDelegate.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\LogisticHelpers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\MergingTacticalHierarchies.cpp" />
@@ -770,6 +771,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\Layer.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\LogisticHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\MergingTacticalHierarchies.h" />

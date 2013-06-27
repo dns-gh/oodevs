@@ -14,6 +14,7 @@
 #include "DotationsItem.h"
 #include "LogisticLevelAttribute.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -69,7 +70,7 @@ void LogisticBaseStates::CreateDictionary( gui::PropertiesDictionary& dico, kern
 // Name: MaintenanceStates::Draw
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void LogisticBaseStates::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
     const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
@@ -79,7 +80,7 @@ void LogisticBaseStates::Draw( const geometry::Point2f& where, const gui::Viewpo
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
     glColor4f( COLOR_YELLOW );
-    DrawLink( where, tools, 0.5f, displayLinks, displayMissing );
+    DrawLink( logistic_helpers::GetLogisticPosition( entity_ ), tools, 0.5f, displayLinks, displayMissing );
     glPopAttrib();
 }
 
@@ -195,7 +196,10 @@ bool LogisticBaseStates::HasMissingLogisticLinks() const
 void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const gui::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
 {
     if( superior_ && displayLinks )
-        tools.DrawCurvedArrow( where, superior_->Get< kernel::Positions >().GetPosition(), curve );
+    {
+        const kernel::Entity_ABC* superior = superior_;
+        tools.DrawCurvedArrow( where, logistic_helpers::GetLogisticPosition( *superior ), curve );
+    }
     else if( HasMissingLogisticLinks() && displayMissings )
         tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
 }

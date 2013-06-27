@@ -156,7 +156,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\CommandPostAttributes.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\LogisticBaseStates.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\LogisticLevel.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\LogisticSuperior.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Dotation.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\DotationsItem.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Stocks.cpp" />
@@ -310,7 +309,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\CommandPostAttributes.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticBaseStates.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticLevel.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\LogisticSuperior.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Dotation.h" />
     <ClInclude Include="..\..\src\libraries\preparation\DotationsItem.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Stocks.h" />

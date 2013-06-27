@@ -208,9 +208,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\LogisticLevel.cpp">
       <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\LogisticSuperior.cpp">
-      <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\Dotation.cpp">
       <Filter>Source Files\Model\Agent\Extensions\Dotations</Filter>
     </ClCompile>
@@ -649,9 +646,6 @@
       <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\LogisticLevel.h">
-      <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\LogisticSuperior.h">
       <Filter>Source Files\Model\Agent\Extensions\Logistics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\Dotation.h">

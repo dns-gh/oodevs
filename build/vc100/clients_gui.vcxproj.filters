@@ -1000,6 +1000,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\LogisticHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1682,6 +1685,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget_ABC.h">
       <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LogisticHelpers.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
