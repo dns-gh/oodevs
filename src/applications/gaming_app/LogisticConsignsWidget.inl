@@ -180,20 +180,28 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget::UpdateConsign
+// Created: LDC 2013-06-27
+// -----------------------------------------------------------------------------
+template< typename Consign, typename Extension >
+void LogisticConsignsWidget< Consign, Extension >::UpdateConsign( const Consign& consign, QTreeWidgetItem* consignItem )
+{
+    if( consignItem )
+    {
+        DeleteChilds( *consignItem );
+        DisplayConsign( consign, consignItem );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticConsignsWidget::NotifyUpdated
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 template< typename Consign, typename Extension >
 void LogisticConsignsWidget< Consign, Extension >::NotifyUpdated( const Consign& consign )
 {
-    QTreeWidgetItem* consignItem = FindTreeWidgetItem( consign, pConsignTreeView_->invisibleRootItem() );
-    if( !consignItem )
-        consignItem = FindTreeWidgetItem( consign, pConsignHandledTreeView_->invisibleRootItem() );
-    if( consignItem )
-    {
-        DeleteChilds( *consignItem );
-        DisplayConsign( consign, consignItem );
-    }
+    UpdateConsign( consign, FindTreeWidgetItem( consign, pConsignTreeView_->invisibleRootItem() ) );
+    UpdateConsign( consign, FindTreeWidgetItem( consign, pConsignHandledTreeView_->invisibleRootItem() ) );
 }
 
 // -----------------------------------------------------------------------------
