@@ -1331,7 +1331,7 @@
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>Activée</translation>
     </message>
     <message>
         <source>Disabled</source>
