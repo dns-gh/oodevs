@@ -68,6 +68,7 @@ private:
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void DisplayConsigns( const std::set< const Consign* >& consigns, QTreeWidgetItem& rootItem );
     QTreeWidgetItem* FindTreeWidgetItem( const Consign& consign, QTreeWidgetItem* rootItem );
+    void UpdateConsign( const Consign& consign, QTreeWidgetItem* consignItem );
     void UpdateConsigns();
     //@}
 
