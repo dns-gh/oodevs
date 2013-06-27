@@ -175,8 +175,16 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
         tools::Iterator< const kernel::BreakdownOriginType& > itBreakdown = equipment.type_.CreateBreakdownsIterator();
         if( itBreakdown.HasMoreElements() )
             breakdowns << ( profile_.CanDoMagic( selected ) ? tools::translate( "UnitStateTableEquipment",  "Random" ) : tools::translate( "UnitStateTableEquipment", "Unknown" ) );
+        std::set< std::string > alreadyAddedBreakdowns;
         while( itBreakdown.HasMoreElements() )
-            breakdowns << itBreakdown.NextElement().GetName().c_str();
+        {
+            std::string name = itBreakdown.NextElement().GetName();
+            if( alreadyAddedBreakdowns.find( name ) == alreadyAddedBreakdowns.end() )
+            {
+                alreadyAddedBreakdowns.insert( name );
+                breakdowns << name.c_str();
+            }
+        }
         // States
         AddLines( name, equipment.available_,     eEquipmentState_Available,                breakdowns );
         AddLines( name, equipment.unavailable_,   eEquipmentState_Destroyed,                breakdowns );
