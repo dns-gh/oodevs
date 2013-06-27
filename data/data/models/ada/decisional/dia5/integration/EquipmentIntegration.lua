@@ -100,6 +100,16 @@ integration.switchEmitOnlyOffRadio = function( self )
     DEC_Agent_PasserEnSilenceRadioPartiel()
 end
 
+integration.switchEmitOnly = function( self )
+    F_Pion_SeteEtatRadio( self.source, eEtatRadio_Silence_Partiel )
+    DEC_Agent_PasserEnEmissionRestreinte()
+end
+
+integration.disableEmitOnly = function( self )
+    F_Pion_SeteEtatRadio( self.source, eEtatRadio_Ouverte )
+    DEC_Agent_ArreterSilenceRadio()
+end
+
 --- Switch on radio
 -- @author MGD
 -- @release 2010-04-27

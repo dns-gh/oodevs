@@ -616,6 +616,12 @@ return
     switchEmitOnlyOffRadio = function( self )
         integration.switchEmitOnlyOffRadio( self )
     end,
+    switchEmitOnly = function( self )
+        integration.switchEmitOnly( self )
+    end,
+    disableEmitOnly = function( self )
+        integration.disableEmitOnly( self )
+    end,
     equipProtectionNBC = function ( self )
         integration.equipNBCOutfit()
     end,

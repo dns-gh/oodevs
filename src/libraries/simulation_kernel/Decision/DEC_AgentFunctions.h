@@ -47,7 +47,7 @@ public:
     static float GetReconnoissanceDistance( MIL_Agent_ABC& callerAgent );
     static float GetDetectionDistance( MIL_Agent_ABC& callerAgent );
     static void ActivateBlackout( MIL_Agent_ABC& callerAgent );
-    static void ActivatePartialBlackout( MIL_Agent_ABC& callerAgent );
+    static void ActivatePartialBlackout( MIL_Agent_ABC& callerAgent, bool report );
     static void DeactivateBlackout( MIL_Agent_ABC& callerAgent );
     static int  GetPosture( const MIL_Agent_ABC& callerAgent );
     static bool IsInCity( const MIL_Agent_ABC& callerAgent );

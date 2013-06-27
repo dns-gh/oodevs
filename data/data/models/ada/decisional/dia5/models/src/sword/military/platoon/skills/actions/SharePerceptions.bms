@@ -9,7 +9,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         if not meKnowledge:isPartialRadioState() then
-            meKnowledge:switchEmitOnlyOffRadio()
+            meKnowledge:switchEmitOnly()
         end
         for _, supportUnit in pairs( self.params.unitsToSupport ) do
             supportUnit:enabledSharedPerception( )
@@ -31,7 +31,7 @@ rootnode
     destroy = function( self )
         integration.sendfireAvailable(false)
         if meKnowledge:isPartialRadioState() then -- fragorder could be change radio state if given during mission
-            meKnowledge:switchOnRadio()
+            meKnowledge:disableEmitOnly()
         end
         for _, supportUnit in pairs( self.params.unitsToSupport ) do
             supportUnit:disabledSharedPerception()

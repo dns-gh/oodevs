@@ -116,9 +116,9 @@ void DEC_AgentFunctions::ActivateBlackout( MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::ActivatePartialBlackout
 // Created: HBD 2010-06-16
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::ActivatePartialBlackout( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::ActivatePartialBlackout( MIL_Agent_ABC& callerAgent, bool report )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Communications >().ActivatePartialBlackout();
+    callerAgent.GetRole< PHY_RoleInterface_Communications >().ActivatePartialBlackout( report );
 }
 
 // -----------------------------------------------------------------------------

@@ -84,7 +84,7 @@ public:
     virtual void Unjam( const MIL_Object_ABC& jammer );
 
     virtual void ActivateBlackout();
-    virtual void ActivatePartialBlackout();
+    virtual void ActivatePartialBlackout( bool report = true );
     virtual void DeactivateBlackout();
     //@}
 
@@ -126,6 +126,7 @@ private:
     T_JammerSet jammers_;
     bool bBlackoutEmmittedActivated_;
     bool bBlackoutReceivedActivated_;
+    bool bBlackoutEmmittedReport_;
     bool bHasChanged_;
     bool bSilentBeforeCapture_;
     bool bIsAutonomous_;

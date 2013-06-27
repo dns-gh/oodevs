@@ -1550,6 +1550,12 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
 		<method name="switchEmitOnlyOffRadio">
 		    <description>Switch emit only off radio</description>
 		</method>
+		<method name="switchEmitOnly">
+		    <description>Switch emit only</description>
+		</method>
+		<method name="disableEmitOnly">
+		    <description>disable emit only</description>
+		</method>
 	    <method name="isPartialRadioState">
 		    <description>Returns 'true' if agent is in partial silent radio state</description>
 		    <return>

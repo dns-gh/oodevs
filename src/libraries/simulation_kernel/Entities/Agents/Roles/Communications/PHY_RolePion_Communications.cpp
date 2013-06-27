@@ -63,6 +63,7 @@ PHY_RolePion_Communications::PHY_RolePion_Communications()
     : entity_                    ( 0 )
     , bHasChanged_               ( true )
     , bBlackoutReceivedActivated_( false )
+    , bBlackoutEmmittedReport_   ( false )
     , bBlackoutEmmittedActivated_( false )
     , bSilentBeforeCapture_      ( false )
     , bIsAutonomous_             ( false )
@@ -79,6 +80,7 @@ PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity,
     , bHasChanged_               ( true )
     , bBlackoutReceivedActivated_( false )
     , bBlackoutEmmittedActivated_( false )
+    , bBlackoutEmmittedReport_   ( false )
     , bSilentBeforeCapture_      ( false )
     , bIsAutonomous_             ( bIsAutonomous )
 {
@@ -234,7 +236,7 @@ void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) c
     }
     msg().mutable_communications()->mutable_knowledge_group()->set_id( jammedKgId );
 
-    msg().set_radio_emitter_disabled( bBlackoutEmmittedActivated_ );
+    msg().set_radio_emitter_disabled( bBlackoutEmmittedActivated_ && bBlackoutEmmittedReport_ );
     msg().set_radio_receiver_disabled( bBlackoutReceivedActivated_ );
 }
 
@@ -278,6 +280,7 @@ void PHY_RolePion_Communications::ActivateBlackout()
     if( bBlackoutEmmittedActivated_ && bBlackoutReceivedActivated_ )
         return;
     CopyKnowledgeGroup();
+    bBlackoutEmmittedReport_ = true;
     bBlackoutEmmittedActivated_ = true;
     bBlackoutReceivedActivated_ = true;
     bHasChanged_ = true;
@@ -287,12 +290,13 @@ void PHY_RolePion_Communications::ActivateBlackout()
 // Name: PHY_RolePion_Communications::ActivatePartialBlackout
 // Created: HBD 2010-06-16
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Communications::ActivatePartialBlackout()
+void PHY_RolePion_Communications::ActivatePartialBlackout( bool report /*= true*/)
 {
    if( bBlackoutEmmittedActivated_ && !bBlackoutReceivedActivated_ )
        return;
     CopyKnowledgeGroupPartial();
     bBlackoutEmmittedActivated_ = true;
+    bBlackoutEmmittedReport_ = report;
     bBlackoutReceivedActivated_ = false;
     bHasChanged_ = true;
 }
@@ -306,6 +310,7 @@ void PHY_RolePion_Communications::DeactivateBlackout()
     if( !bBlackoutEmmittedActivated_ && !bBlackoutReceivedActivated_ )
         return;
     bBlackoutEmmittedActivated_ = false;
+    bBlackoutEmmittedReport_ = false;
     bBlackoutReceivedActivated_ = false;
     if( pJammingKnowledgeGroup_.get() && jammers_.empty() )
     {
