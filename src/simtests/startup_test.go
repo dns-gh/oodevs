@@ -96,7 +96,7 @@ func (s *TestSuite) TestDispatcherAddressCollision(c *C) {
 		c.Fatal("simulation with colliding dispatcher should have failed")
 	}
 	logData := ReadTextFile(c, sim2.Opts.GetDispatcherLogPath())
-	c.Assert(logData, Matches, "(?s).*Une seule utilisation de chaque.*")
+	c.Assert(logData, Matches, "(?s).*(Une seule utilisation de chaque)|(Only one usage of each socket address).*")
 }
 
 // Return true if any line of sim.log or dispatcher.log is eventually matched
