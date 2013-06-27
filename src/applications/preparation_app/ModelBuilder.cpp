@@ -11,28 +11,29 @@
 #include "ModelBuilder.h"
 #include "moc_ModelBuilder.cpp"
 #include "icons.h"
-#include "preparation/Model.h"
-#include "preparation/TeamsModel.h"
-#include "preparation/AgentsModel.h"
-#include "preparation/UrbanModel.h"
-#include "preparation/EntityCommunications.h"
-#include "preparation/FormationModel.h"
-#include "preparation/KnowledgeGroupsModel.h"
-#include "preparation/LimitsModel.h"
-#include "preparation/Team.h"
-#include "preparation/Formation.h"
-#include "preparation/KnowledgeGroup.h"
-#include "preparation/Automat.h"
-#include "preparation/AutomatPositions.h"
-#include "preparation/Agent.h"
-#include "preparation/Ghost.h"
-#include "preparation/Object.h"
 #include "clients_gui/UrbanObject.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_gui/DictionaryUpdated.h"
+#include "preparation/Agent.h"
+#include "preparation/AgentsModel.h"
+#include "preparation/Automat.h"
+#include "preparation/AutomatPositions.h"
+#include "preparation/EntityCommunications.h"
+#include "preparation/Formation.h"
+#include "preparation/FormationModel.h"
+#include "preparation/Ghost.h"
+#include "preparation/KnowledgeGroup.h"
+#include "preparation/KnowledgeGroupsModel.h"
+#include "preparation/LimitsModel.h"
+#include "preparation/Model.h"
+#include "preparation/Object.h"
+#include "preparation/Population.h"
+#include "preparation/Team.h"
+#include "preparation/TeamsModel.h"
+#include "preparation/UrbanModel.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -520,6 +521,7 @@ void ModelBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName 
     Rename< Ghost >( &entity, newName, controllers_, property_ );
     Rename< Object >( &entity, newName, controllers_, property_ );
     Rename< gui::UrbanObject >( &entity, newName, controllers_, property_ );
+    Rename< Population >( &entity, newName, controllers_, property_ );
 }
 
 // -----------------------------------------------------------------------------

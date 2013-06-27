@@ -70,7 +70,7 @@ void PopulationTreeView::dragMoveEvent( QDragMoveEvent* pEvent )
 // -----------------------------------------------------------------------------
 Qt::ItemFlags PopulationTreeView::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
 {
-    return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+    return Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 }
 
 // -----------------------------------------------------------------------------
