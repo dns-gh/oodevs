@@ -49,7 +49,8 @@ QWidget* ParamDotationTypeList::BuildInterface( const QString& objectName, QWidg
 {
     Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
-
+    
+    group_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     list_ = new QTreeView( parent );
     list_->setRootIsDecorated( true );
     list_->setEditTriggers( 0 );

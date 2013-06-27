@@ -43,6 +43,7 @@ namespace
         QVBoxLayout* layout = new QVBoxLayout( box );
         // Tab
         Q3VBox* tab = new Q3VBox( parent );
+        tab->layout()->setAlignment( Qt::AlignTop );
         tab->setMargin( 5 );
         tab->setSpacing( 5 );
         // Parent
@@ -50,7 +51,6 @@ namespace
         parent->addTab( scrollArea, title );
         parent->setTabEnabled( scrollArea, enabled );
         layout->addWidget( tab );
-        layout->addStretch( 10 );
         return tab;
     }
 

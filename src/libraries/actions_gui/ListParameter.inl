@@ -87,6 +87,7 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( const QString& object
 {
     Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
+    group_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     Q3VBox* vbox = new Q3VBox( parent );
 
     //list of parameters
@@ -95,7 +96,6 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( const QString& object
     list_->setContextMenuPolicy( Qt::CustomContextMenu );
     list_->setRootIsDecorated( false );
     list_->setEditTriggers( 0 );
-    list_->setMaximumHeight( 100 );
     list_->setHeaderHidden( true );
     model_.setColumnCount( 1 );
     list_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );

@@ -61,51 +61,53 @@ ParamEquipmentList::~ParamEquipmentList()
 QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget* parent )
 {
     Param_ABC::BuildInterface( objectName, parent );
-    QGridLayout* layout = new QGridLayout( group_ );
+    QHBoxLayout* layout = new QHBoxLayout( group_ );
+    group_->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+
+    baseList_ = new QListWidget( group_ );
+    baseList_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+    baseList_->setSortingEnabled( true );
+    baseList_->sortItems( Qt::AscendingOrder );
+    tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
+    while( it.HasMoreElements() )
     {
-        baseList_ = new QListWidget( parent );
-        baseList_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-        baseList_->setSortingEnabled( true );
-        baseList_->sortItems( Qt::AscendingOrder );
-        tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
-        while( it.HasMoreElements() )
-        {
-            const kernel::EquipmentType& type = it.NextElement();
-            QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
-            item->setData( EquipmentRole, QVariant::fromValue( &type ) );
-            baseList_->addItem( item );
-        }
-
-        ::gui::RichPushButton* addBtn = new ::gui::RichPushButton( "addBtn", MAKE_ICON( right_arrow ), QString::null, parent );
-        addBtn->setFixedSize( 32, 32 );
-        ::gui::RichPushButton* removeBtn = new ::gui::RichPushButton( "removeBtn", MAKE_ICON( left_arrow ), QString::null, parent );
-        removeBtn->setFixedSize( 32, 32 );
-
-        layout->addWidget( baseList_, 0, 0, 2, 1 );
-        layout->addWidget( addBtn, 0, 1 );
-        layout->addWidget( removeBtn, 1, 1 );
-
-        connect( addBtn, SIGNAL( clicked() ), SLOT( OnAdd() ) );
-        connect( baseList_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnAdd() ) );
-        connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
+        const kernel::EquipmentType& type = it.NextElement();
+        QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
+        item->setData( EquipmentRole, QVariant::fromValue( &type ) );
+        baseList_->addItem( item );
     }
-    {
-        list_ = new QListWidget( parent );
-        list_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+    layout->addWidget( baseList_ );
+    connect( baseList_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnAdd() ) );
 
-        ::gui::RichPushButton* upBtn = new ::gui::RichPushButton( "upBtn", MAKE_ICON( arrow_up ), QString::null, parent );
-        upBtn->setFixedSize( 32, 32 );
-        ::gui::RichPushButton* downBtn = new ::gui::RichPushButton( "downBtn", MAKE_ICON( arrow_down ), QString::null, parent );
-        downBtn->setFixedSize( 32, 32 );
+    QWidget* buttons = new QWidget( group_ );
+    QVBoxLayout* buttonsLayout = new QVBoxLayout( buttons );
+    ::gui::RichPushButton* addBtn = new ::gui::RichPushButton( "addBtn", MAKE_ICON( right_arrow ), QString::null, buttons );
+    addBtn->setFixedSize( 32, 32 );
+    ::gui::RichPushButton* removeBtn = new ::gui::RichPushButton( "removeBtn", MAKE_ICON( left_arrow ), QString::null, buttons );
+    removeBtn->setFixedSize( 32, 32 );
+    buttonsLayout->addWidget( addBtn, Qt::AlignTop );
+    buttonsLayout->addWidget( removeBtn, Qt::AlignBottom);
+    layout->addWidget( buttons );
+    connect( addBtn, SIGNAL( clicked() ), SLOT( OnAdd() ) );
+    connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
 
-        layout->addWidget( list_, 0, 2, 2, 1 );
-        layout->addWidget( upBtn, 0, 3 );
-        layout->addWidget( downBtn, 1, 3 );
+    list_ = new QListWidget( group_ );
+    list_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+    layout->addWidget( list_ );
+    connect( list_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnRemove() ) );
 
-        connect( list_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnRemove() ) );
-        connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
-        connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
-    }
+    QWidget* pushButtons = new QWidget( group_ );
+    QVBoxLayout* pushLayout = new QVBoxLayout( pushButtons );
+    ::gui::RichPushButton* upBtn = new ::gui::RichPushButton( "upBtn", MAKE_ICON( arrow_up ), QString::null, group_ );
+    upBtn->setFixedSize( 32, 32 );
+    ::gui::RichPushButton* downBtn = new ::gui::RichPushButton( "downBtn", MAKE_ICON( arrow_down ), QString::null, group_ );
+    downBtn->setFixedSize( 32, 32 );
+    pushLayout->addWidget( upBtn, Qt::AlignTop );
+    pushLayout->addWidget( downBtn, Qt::AlignBottom );
+    layout->addWidget( pushButtons );
+    connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
+    connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
+
     group_->setEnabled( false );
     return group_;
 }

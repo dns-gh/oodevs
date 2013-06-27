@@ -49,6 +49,7 @@ QWidget* ParamHumanWoundList::BuildInterface( const QString& objectName, QWidget
 {
     Param_ABC::BuildInterface( objectName, parent );
     QGridLayout* layout = new QGridLayout( group_ );
+    group_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
 
     list_ = new QTreeView( parent );
     list_->setRootIsDecorated( false );

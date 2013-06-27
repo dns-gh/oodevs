@@ -51,6 +51,7 @@ QWidget* ParamAtlasNature::BuildInterface( const QString& objectName, QWidget* p
 {
     Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
+    group_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     Q3ButtonGroup* buttonGroup = new Q3ButtonGroup( 2, Qt::Horizontal, parent );
     buttonGroup->setMargin( 0 );
     buttonGroup->setFlat( true );

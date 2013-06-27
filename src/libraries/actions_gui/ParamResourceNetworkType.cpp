@@ -46,6 +46,7 @@ QWidget* ParamResourceNetworkType::BuildInterface( const QString& objectName, QW
 {
     tools::Iterator< const kernel::ResourceNetworkType& > it = resolver_.CreateIterator();
     int i = 0;
+    group_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     while( it.HasMoreElements() )
     {
         const kernel::ResourceNetworkType& type = it.NextElement();
