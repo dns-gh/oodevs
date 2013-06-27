@@ -249,7 +249,11 @@ void ExerciseDialog::AddOrderFile( const tools::Path& file )
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnChangeLang()
 {
-    briefings_[ selectedLang_ ] = briefing_->text();
+    QString plainText = briefing_->toPlainText();
+    if( plainText.isEmpty() )
+        briefings_[ selectedLang_ ] = briefing_->toPlainText();
+    else
+        briefings_[ selectedLang_ ] = briefing_->toHtml();
     selectedLang_ = lang_->GetValue();
     briefing_->setText( briefings_[ selectedLang_ ] );
 }
