@@ -824,6 +824,24 @@ func (c *Client) ChangeResourceNetworkTest(params *sword.MissionParameters) erro
 	return <-c.postSimRequest(msg, handler)
 }
 
+func (c *Client) ChangeResourceNetwork(urban *Urban) error {
+	params := MakeParameters(MakeNullValue(), MakeNullValue())
+	params.Elem[0] = MakeIdentifier(urban.Id)
+	resources := []*sword.MissionParameter_Value{}
+	for _, r := range urban.ResourceNetworks {
+		resources = append(resources,
+			MakeList(
+				MakeString(r.Name),
+				MakeQuantity(int32(r.Consumption)),
+				MakeBoolean(r.Critical),
+				MakeBoolean(r.Activated),
+				MakeQuantity(int32(r.Production)),
+				MakeQuantity(int32(r.StockMax))))
+	}
+	params.Elem[1] = MakeParameter(resources...)
+	return c.ChangeResourceNetworkTest(params)
+}
+
 func (c *Client) SendTotalDestruction(crowdId uint32) error {
 	msg := createMagicActionMessage(MakeParameters(), makeCrowdTasker(crowdId),
 		sword.UnitMagicAction_crowd_total_destruction.Enum())

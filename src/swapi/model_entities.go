@@ -180,11 +180,58 @@ type LocalWeather struct {
 	Id          uint32
 }
 
+type ResourceNetwork struct {
+	Name        string
+	Consumption uint32
+	Critical    bool
+	Activated   bool
+	Production  uint32
+	StockMax    uint32
+}
+
+type Urban struct {
+	Id               uint32
+	Name             string
+	ResourceNetworks map[string]*ResourceNetwork
+}
+
+func NewResourceNetworks(attributes *sword.UrbanAttributes) map[string]*ResourceNetwork {
+	resources := make(map[string]*ResourceNetwork)
+	if attributes != nil {
+		infrastructructures := attributes.GetInfrastructures()
+		if infrastructructures != nil {
+			resourcesNetworks := infrastructructures.GetResourceNetwork()
+			for _, r := range resourcesNetworks {
+				resources[r.GetResource().GetName()] =
+					&ResourceNetwork{
+						Name:        r.GetResource().GetName(),
+						Consumption: r.GetConsumption(),
+						Critical:    r.GetCritical(),
+						Activated:   r.GetEnabled(),
+						Production:  r.GetProduction(),
+						StockMax:    r.GetMaxStock(),
+					}
+			}
+		}
+	}
+	return resources
+}
+
+func NewUrban(id uint32, name string,
+	resourceNetworks map[string]*ResourceNetwork) *Urban {
+	return &Urban{
+		Id:               id,
+		Name:             name,
+		ResourceNetworks: resourceNetworks,
+	}
+}
+
 type ModelData struct {
 	Parties       map[uint32]*Party
 	Profiles      map[string]*Profile
 	GlobalWeather Weather
 	LocalWeathers map[uint32]*LocalWeather
+	Urbans        map[uint32]*Urban
 	// Tick and time of the most recent started tick
 	Tick int32
 	Time time.Time
@@ -195,6 +242,7 @@ func NewModelData() *ModelData {
 		Parties:       map[uint32]*Party{},
 		Profiles:      map[string]*Profile{},
 		LocalWeathers: map[uint32]*LocalWeather{},
+		Urbans:        map[uint32]*Urban{},
 	}
 }
 
@@ -448,9 +496,20 @@ func (model *ModelData) FindLocalWeather(id uint32) *LocalWeather {
 }
 
 func (model *ModelData) removeLocalWeather(id uint32) bool {
-	_, ok := model.LocalWeathers[id]
-	if ok {
+	if _, ok := model.LocalWeathers[id]; ok {
 		delete(model.LocalWeathers, id)
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) addUrban(urban *Urban) {
+	model.Urbans[urban.Id] = urban
+}
+
+func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*ResourceNetwork) bool {
+	if urban, ok := model.Urbans[id]; ok {
+		urban.ResourceNetworks = resourceNetworks
 		return true
 	}
 	return false
