@@ -159,6 +159,7 @@ void PHY_MeteoDataManager::UpdateGlobalWeather( const sword::MagicAction& msg, u
     catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
     }
     auto& pub = NET_Publisher_ABC::Publisher();
     ack.Send( pub, context, client );
@@ -203,6 +204,7 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, un
     catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
     }
     if( id )
     {
@@ -241,6 +243,7 @@ void PHY_MeteoDataManager::RemoveLocalWeather( const sword::MagicAction& msg, un
     catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
     }
     auto& pub = NET_Publisher_ABC::Publisher();
     ack.Send( pub, context, client );

@@ -216,9 +216,11 @@ message MagicActionAck {
     //! @see ErrorCode
     required ErrorCode error_code     = 1;
     //! Deprecated attribute
-    optional WeatherId weather        = 2;    
+    optional WeatherId weather        = 2;
     //! Action results, depends on the action type and outcome.
     optional MissionParameters result = 3;
+    //! More detailed account of the returned error
+    optional string    error_msg      = 4;
 }
 
 /** @struct ObjectMagicActionAck
@@ -529,6 +531,8 @@ message ActionCreateFireOrderAck {
     //! Reason for the failure of the request @see ErrorCode @todo
     //! change field index to 1
     required ErrorCode error_code = 2;
+    //! More detailed account of the returned error
+    optional string    error_msg  = 3;
 }
 
 /** @struct BurningCellRequestAck

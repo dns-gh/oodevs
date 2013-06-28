@@ -2036,6 +2036,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     catch( const NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
