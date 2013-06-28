@@ -109,49 +109,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
 
     // Parameters
-    QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
-    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
-    vInfosConnectors[eParameters] = &paramList->GetConnector();
-
-    ADN_MissionParameter_GroupBox* pEnum = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), eMissionParameterTypeEnumeration );
-    ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
-    vInfosConnectors[eParameterValues] = &valueList->GetConnector();
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pEnum, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-
-    ADN_MissionParameter_GroupBox* pChoice = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeLocationComposite );
-    ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
-    vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pChoice, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-
-    ADN_MissionParameter_GroupBox* pLimit = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Limits" ), eMissionParameterTypeNumeric );
-    QWidget* pLimitHolder = builder.AddFieldHolder( pLimit );
-    builder.AddField< ADN_EditLine_Int >( pLimitHolder, tr( "Minimum" ), vInfosConnectors[ eMinValue ] );
-    builder.AddField< ADN_EditLine_Int >( pLimitHolder, tr( "Maximum" ), vInfosConnectors[ eMaxValue ] );
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pLimit, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-
-    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeObjectKnowledge );
-    QCheckBox* all = new QCheckBox( pKnowledgeObject );
-    all->setText( tr( "all" ) );
-    ADN_MissionGenObjectTypes_Table* knowledgeObjectList = new ADN_MissionGenObjectTypes_Table( all, strClassName_+ "MissionsKnowledgeObject", pKnowledgeObject );
-    vInfosConnectors[ eKnowledgeObjects ] = &knowledgeObjectList->GetConnector();
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pKnowledgeObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), knowledgeObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-
-    // Connect the gui to the data.
-    paramList->SetItemConnectors( vInfosConnectors );
-
-    // -------------------------------------------------------------------------
-    // Layouts
-    // -------------------------------------------------------------------------
-    // Parameters layout
-    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 5, 1 );
-    parameterLayout->setMargin( 10 );
-    parameterLayout->setSpacing( 10 );
-    parameterLayout->addWidget( paramList );
-    parameterLayout->addWidget( pLimit );
-    parameterLayout->addWidget( pEnum );
-    parameterLayout->addWidget( pChoice );
-    parameterLayout->addWidget( pKnowledgeObject );
+    QGroupBox* pParametersGroup = AddParameters( vInfosConnectors, builder );
 
     // Content layout
     pContent = new QWidget();
@@ -215,6 +173,32 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     QCheckBox* available = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
 
     // Parameters
+    QGroupBox* pParametersGroup = AddParameters( vInfosConnectors, builder );
+
+    // Content layout
+    pFragOrderWidget_ = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pFragOrderWidget_ );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pParametersGroup );
+
+    // List view
+    ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( this, data_.missionsVector_[ eMissionType_FragOrder ], data_.missionsVector_[ eMissionType_FragOrder ], vInfosConnectors, 3 );
+    connect( available, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
+    vListViews_.push_back( pSearchListView->GetListView() );
+
+    // Main page
+    return CreateScrollArea( *pFragOrderWidget_, pSearchListView );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::AddParameters
+// Created: LDC 2013-06-28
+// -----------------------------------------------------------------------------
+QGroupBox* ADN_Missions_GUI::AddParameters( T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder )
+{
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
     vInfosConnectors[eParameters] = &paramList->GetConnector();
@@ -259,22 +243,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     parameterLayout->addWidget( pChoice );
     parameterLayout->addWidget( pKnowledgeObject );
 
-    // Content layout
-    pFragOrderWidget_ = new QWidget();
-    QVBoxLayout* pContentLayout = new QVBoxLayout( pFragOrderWidget_ );
-    pContentLayout->setMargin( 10 );
-    pContentLayout->setSpacing( 10 );
-    pContentLayout->setAlignment( Qt::AlignTop );
-    pContentLayout->addWidget( pInfoHolder );
-    pContentLayout->addWidget( pParametersGroup );
-
-    // List view
-    ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( this, data_.missionsVector_[ eMissionType_FragOrder ], data_.missionsVector_[ eMissionType_FragOrder ], vInfosConnectors, 3 );
-    connect( available, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
-    vListViews_.push_back( pSearchListView->GetListView() );
-
-    // Main page
-    return CreateScrollArea( *pFragOrderWidget_, pSearchListView );
+    return pParametersGroup;
 }
 
 // -----------------------------------------------------------------------------

@@ -14,6 +14,8 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_Models_Data.h"
 
+class ADN_GuiBuilder;
+
 // =============================================================================
 /** @class  ADN_Missions_GUI
     @brief  ADN_Missions_GUI
@@ -81,6 +83,7 @@ private:
     QWidget* BuildPopulationMissions();
     QWidget* BuildFragOrders();
     QWidget* BuildSICActivities();
+    QGroupBox* AddParameters( T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder );
     //@}
 
 private:
