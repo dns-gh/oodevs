@@ -318,39 +318,38 @@
 
     <macrodef name="test-adaptation">
         <attribute name="input"/>
-        <attribute name="mission-sheet-path" default="Mission sheets"/>
+        <attribute name="sheets" default="Mission sheets"/>
+        <attribute name="dir" default="${out.dir}/test-adaptation"/>
+        <attribute name="checksums" default="@{dir}.checksums"/>
+        <attribute name="excludes" default="*/@{sheets}/*.html"/>
         <sequential>
             <echo>Testing models: @{input}</echo>
             <!-- HTML files are not versioned, there is no easy way to test for
                  non-regressions, this is someone else job.
             -->
-            <local name="excluded"/>
-            <property name="excluded" value="*/@{mission-sheet-path}/*.html"/>
-            <delete dir="${out.dir}/test-adaptation"/>
-            <tempfile property="@{input}.temp" destdir="${out.dir}" deleteonexit="true"/>
+            <delete dir="@{dir}"/>
             <python taskname="checksum">
                 <arg value="checksum.py"/>
                 <arg value="write"/>
                 <arg value="@{input}"/>
-                <arg value="${@{input}.temp}"/>
-                <arg value="--exclude=${excluded}"/>
+                <arg value="@{checksums}"/>
+                <arg value="--exclude=@{excludes}"/>
             </python>
-            <run-adaptation input="@{input}" output="${out.dir}/test-adaptation"/>
+            <run-adaptation input="@{input}" output="@{dir}"/>
             <python taskname="checksum">
                 <arg value="checksum.py"/>
                 <arg value="read"/>
                 <arg value="@{input}"/>
-                <arg value="${@{input}.temp}"/>
-                <arg value="--exclude=${excluded}"/>
+                <arg value="@{checksums}"/>
+                <arg value="--exclude=@{excludes}"/>
             </python>
             <python taskname="checksum">
                 <arg value="checksum.py"/>
                 <arg value="read"/>
                 <arg value="${out.dir}/test-adaptation"/>
-                <arg value="${@{input}.temp}"/>
-                <arg value="--exclude=${excluded}"/>
+                <arg value="@{checksums}"/>
+                <arg value="--exclude=@{excludes}"/>
             </python>
-            <delete dir="${out.dir}/test-adaptation"/>
         </sequential>
     </macrodef>
 
@@ -364,7 +363,7 @@
         <sequential>
             <delete dir="@{todir}"/>
             <unzip src="@{zipped-database}" dest="@{todir}"/>
-            <test-adaptation input="@{todir}" mission-sheet-path="Mission sheetsひらがな"/>
+            <test-adaptation input="@{todir}" sheets="Mission sheetsひらがな"/>
             <delete dir="@{todir}"/>
         </sequential>
     </macrodef>
