@@ -312,6 +312,9 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/get_user" )           return GetUser            ( rpy, request );
         if( uri == "/delete_user" )        return DeleteUser         ( rpy, request );
         if( uri == "/update_user" )        return UpdateUser         ( rpy, request );
+        //licences
+        if( uri == "/list_licenses" )      return ListLicenses       ( rpy, request );
+
     }
     catch( const HttpException& err )
     {
@@ -969,6 +972,16 @@ void Controller::UpdateUser( Reply_ABC& rpy, const Request_ABC& request )
     const std::string name = RequireParameter< std::string >( "name", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
     WriteHttpReply( rpy, users_.UpdateUser( node, request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::ListLicences
+// Created: NPT 2013-06-24
+// -----------------------------------------------------------------------------
+void Controller::ListLicenses( Reply_ABC& reply, const Request_ABC& request )
+{
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    WriteHttpReply( reply, agent_.ListLicenses( node ) );
 }
 
 namespace

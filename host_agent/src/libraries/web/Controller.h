@@ -143,6 +143,11 @@ private:
     void UpdateUser         ( Reply_ABC& reply, const Request_ABC& request );
     //@}
 
+    //! @name Licences Methods
+    //@{
+    void ListLicenses       ( Reply_ABC& reply, const Request_ABC& request );
+    //@}
+
     //! @name Helpers
     //@{
     void Authenticate    ( const Request_ABC& request, UserType required );

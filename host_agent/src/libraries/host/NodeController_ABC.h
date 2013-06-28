@@ -133,6 +133,11 @@ struct NodeController_ABC : public boost::noncopyable
     virtual Tree  LinkExercise  ( const Node_ABC& node, const std::string& name ) const = 0;
     virtual Tree  LinkExercise  ( const Node_ABC& node, const Tree& tree ) const = 0;
     //@}
+
+    //! @name Licenses Methods
+    //@{
+    virtual Tree ListLicenses ( const Uuid& id ) const = 0;
+    //@}
 };
 }
 

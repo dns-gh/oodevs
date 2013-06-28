@@ -132,6 +132,11 @@ struct Agent_ABC : public boost::noncopyable
     virtual std::vector< Path > ListPlugins ( int offset, int limit ) const = 0;
     virtual size_t              CountPlugins() const = 0;
     //@}
+
+    //! @name Licenses Methods
+    //@{
+    virtual Tree ListLicenses( const Uuid& node ) const = 0;
+    //@}
 };
 }
 

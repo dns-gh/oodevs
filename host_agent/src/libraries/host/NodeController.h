@@ -17,6 +17,7 @@
 #include "runtime/Async.h"
 #include "runtime/Timer_ABC.h"
 #include <boost/filesystem/path.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 namespace cpplog
 {
@@ -132,6 +133,11 @@ public:
     virtual Tree  LinkExercise  ( const Node_ABC& node, const Tree& tree ) const;
     //@}
 
+    //! @name Node Methods
+    //@{
+    virtual Tree ListLicenses ( const Uuid& id ) const;
+    //@}
+
     //! @name Typedef helpers
     //@{
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
@@ -149,6 +155,7 @@ private:
     void      Start          ( Node_ABC& node, bool force, bool weak ) const;
     void      Stop           ( Node_ABC& node, bool skip, bool weak ) const;
     bool      IsValid        ( const web::node::Config& config ) const;
+    void      GetAvailableLicences();
     //@}
 
 private:
@@ -169,6 +176,7 @@ private:
     runtime::Timer timer_;
     boost::shared_ptr< Package_ABC > client_;
     mutable runtime::Async async_;
+    Tree licenses_;
     //@}
 };
 }

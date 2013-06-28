@@ -20,10 +20,14 @@
 #include "web/HttpException.h"
 #include "web/Plugins.h"
 
+#include <tools/win32/FlexLmLicense.h>
+#include <tools/win32/FlexLm.h>
+
 #include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <boost/date_time/posix_time/time_parsers.hpp>
+#include <boost/assign/list_of.hpp>
 
 using namespace host;
 using namespace property_tree;
@@ -76,6 +80,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
         client_->Parse();
     }
     timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Refresh, this ) );
+    GetAvailableLicences();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +92,43 @@ NodeController::~NodeController()
     timer_->Stop();
     async_.Join();
     nodes_.ForeachRef( boost::bind( &NodeController::Stop, this, _1, false, true ) );
+}
+
+namespace
+{
+    const std::vector< std::string > licenses = boost::assign::list_of< std::string >
+        ( "sword" )
+        ( "sword-runtime" )
+        ( "sword-dispatcher" )
+        ( "sword-replayer" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::GetAvailableLicences
+// Created: NPT 2013-06-24
+// -----------------------------------------------------------------------------
+void NodeController::GetAvailableLicences()
+{
+    Tree tree;
+    for( auto it = ::licenses.begin(); it != ::licenses.end(); ++it )
+    {
+        Tree subTree;
+        try
+        {
+            FlexLmLicense license( *it );
+            subTree.put( "date", license.GetExpirationDate() );
+            subTree.put( "validity", "valid" );
+            if( *it == "sword-dispatcher" )
+                subTree.put( "connections", license.GetAuthorisedUsers() );
+        }
+        catch( const FlexLmLicense::LicenseError& )
+        {
+            subTree.put( "date", "" );
+            subTree.put( "validity", "none" );
+        }
+        tree.add_child( *it, subTree );
+    }
+    licenses_ = tree;
 }
 
 namespace
@@ -562,4 +604,14 @@ Tree NodeController::LinkExercise( const Node_ABC& node, const std::string& name
 Tree NodeController::LinkExercise( const Node_ABC& node, const Tree& tree ) const
 {
     return AppendClient( node.LinkExercise( tree ), GetClient() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::ListLicenses
+// Created: NPT 2013-06-24
+// For the moment license are global and are not dependent of the nodes
+// -----------------------------------------------------------------------------
+Tree NodeController::ListLicenses( const Uuid& /*id*/ ) const
+{
+    return licenses_;
 }

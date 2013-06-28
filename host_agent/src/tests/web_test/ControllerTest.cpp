@@ -103,6 +103,8 @@ namespace
         // plugins
         MOCK_METHOD( ListPlugins, 2 );
         MOCK_METHOD( CountPlugins, 0 );
+        // licenses
+        MOCK_METHOD( ListLicenses, 1 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )

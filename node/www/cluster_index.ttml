@@ -48,6 +48,6 @@
     <script src="js/users.js"></script>
     [[ end ]]
     [[ if eq .url.pg "about" ]]
-    <script src="js/utils.js"></script>
+    <script src="js/about.js"></script>
     [[ end ]]
 </html>

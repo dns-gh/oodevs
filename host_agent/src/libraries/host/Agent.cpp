@@ -493,3 +493,13 @@ size_t Agent::CountPlugins() const
 {
     return nodes_.CountPlugins();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ListLicences
+// Created: NPT 2013-06-26
+// -----------------------------------------------------------------------------
+Tree Agent::ListLicenses( const Uuid& node ) const
+{
+    return nodes_.ListLicenses( node );
+}
+

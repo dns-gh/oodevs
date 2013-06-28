@@ -48,6 +48,7 @@ namespace mocks
         MOCK_METHOD( CountPlugins, 0 );
         MOCK_METHOD_EXT( LinkExercise, 2, host::Tree( const host::Node_ABC& node, const std::string& ), LinkExerciseName );
         MOCK_METHOD_EXT( LinkExercise, 2, host::Tree( const host::Node_ABC& node, const host::Tree& ), LinkExerciseTree );
+        MOCK_METHOD( ListLicenses, 1 );
     };
 };
 

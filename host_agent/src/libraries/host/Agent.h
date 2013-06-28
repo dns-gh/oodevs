@@ -122,6 +122,11 @@ public:
     virtual size_t              CountPlugins() const;
     //@}
 
+    //! @name Licenses Methods
+    //@{
+    virtual Tree ListLicenses( const Uuid& node ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{
