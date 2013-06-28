@@ -346,7 +346,7 @@
             <python taskname="checksum">
                 <arg value="checksum.py"/>
                 <arg value="read"/>
-                <arg value="${out.dir}/test-adaptation"/>
+                <arg value="@{dir}"/>
                 <arg value="@{checksums}"/>
                 <arg value="--exclude=@{excludes}"/>
             </python>
