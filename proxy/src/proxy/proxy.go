@@ -15,7 +15,8 @@ import (
 )
 
 const (
-	timeout = 1 * time.Hour
+	ReadTimeout  = 1 * time.Hour
+	WriteTimeout = 1 * time.Minute
 )
 
 func main() {
@@ -40,8 +41,8 @@ func main() {
 	server := &http.Server{
 		Addr:           fmt.Sprintf(":%d", *port),
 		Handler:        ctx,
-		ReadTimeout:    timeout,
-		WriteTimeout:   timeout,
+		ReadTimeout:    ReadTimeout,
+		WriteTimeout:   WriteTimeout,
 		MaxHeaderBytes: http.DefaultMaxHeaderBytes,
 	}
 
