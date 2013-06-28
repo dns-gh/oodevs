@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports model-version="4.12.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
+<reports model-version="4.12.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
   <report category="operational" id="0" message="NTR"/>
   <report category="operational" id="1" message="blocked by obstacle %1">
     <parameter type="ObjectKnowledge"/>
@@ -712,4 +712,4 @@
   </report>
   <report category="operational" id="518" message="Military equipment plundered by the crowd"/>
 </reports>
-<!-- signature="3208507528" -->
+<!-- signature="3562582313" -->

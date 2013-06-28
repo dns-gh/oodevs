@@ -1826,6 +1826,7 @@ void SimulationToClient::Convert( const sword::CrowdCreation& from, MsgsSimToCli
     CONVERT_TO( name, nom );
     CONVERT_ID( party );
     CONVERT_CB( repartition, ConvertRepartition );
+    CONVERT_ID( knowledge_group );
 }
 
 // -----------------------------------------------------------------------------

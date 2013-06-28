@@ -82,6 +82,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlCheckPointSet
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlEnableVisionCones& from, sword::ControlEnableVisionCones* to )
 {
     CONVERT( vision_cones );
+    CONVERT_ID( unit );
 }
 
 // -----------------------------------------------------------------------------

@@ -91,14 +91,15 @@ message MsgControlCheckPointSetFrequency {
 }
 
 message MsgControlCheckPointDeleteRequest {
-   required string checkpoint = 1;
+    required string checkpoint = 1;
 }
 
 message MsgControlCheckPointListRequest {}
 
 
 message MsgControlEnableVisionCones {
-   required bool vision_cones = 1;
+    required bool vision_cones = 1;
+    optional Common.UnitId unit = 2;
 }
 
 message MsgOrderStream {

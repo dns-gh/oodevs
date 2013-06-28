@@ -178,6 +178,7 @@ message ControlExportRequest {
 */
 message ControlEnableVisionCones {
    required bool vision_cones = 1; //!< Whether to activate vision cones or not
+   optional UnitId unit = 2;
 }
 
 /** @struct ChangePopulationMagicAction

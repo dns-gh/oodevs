@@ -1298,7 +1298,8 @@ BOOST_FIXTURE_TEST_CASE( crowd_creation_to_client_is_converted, ContextFixture< 
     content.mutable_crowd_creation()->mutable_repartition()->set_male( 0.5f );
     content.mutable_crowd_creation()->mutable_repartition()->set_female( 0.3f );
     content.mutable_crowd_creation()->mutable_repartition()->set_children( 0.2f );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_creation { crowd { id: 7 } type { id: 8 } nom: \"name\" party { id: 9 } repartition { male: 0.5 female: 0.3 children: 0.2 } } }" ) );
+    content.mutable_crowd_creation()->mutable_knowledge_group()->set_id( 33 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_creation { crowd { id: 7 } type { id: 8 } nom: \"name\" party { id: 9 } repartition { male: 0.5 female: 0.3 children: 0.2 } knowledge_group { id: 33 } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 

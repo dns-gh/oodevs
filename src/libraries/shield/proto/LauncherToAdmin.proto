@@ -254,10 +254,10 @@ message MsgSessionNotification {
     message LogHistoryRequestForReplayAck {
     }
 
-    message EntityCreation {
-        required string long_name = 1;
-        required Common.Tasker id = 2;
-        required Common.Tasker superior = 3;
+    message EntityCreation {					// [17/05/2013 FT 45387]
+        required string long_name = 1;			// [17/05/2013 FT 45387]
+        required Common.Tasker id = 2;			// [17/05/2013 FT 45387]
+        required Common.Tasker superior = 3;	// [17/05/2013 FT 45387]
     }
 
     message Notification {
@@ -268,7 +268,7 @@ message MsgSessionNotification {
         optional ExportCreation                 export_creation      = 5;
         optional LogHistoryRequestForPlay          log_history_request_for_play       = 6; // FT 45373
         optional LogHistoryRequestForReplayAck     log_history_request_for_replay_ack = 7; // FT 45373
-        optional EntityCreation                 entity_creation = 8;
+        optional EntityCreation                 entity_creation = 8;		// [17/05/2013 FT 45387]
     }
     required string         exercise = 1; 
     required string         session  = 2; 

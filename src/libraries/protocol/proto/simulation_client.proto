@@ -1822,6 +1822,7 @@ message CrowdCreation {
    optional string           name        = 3; //!< The crowd name
    required PartyId          party       = 4; //!< The crowd party
    required HumanRepartition repartition = 5; //!< The crowd repartition @see HumanRepartition
+   optional KnowledgeGroupId knowledge_group = 6;
 }
 
 /** @struct CrowdUpdate

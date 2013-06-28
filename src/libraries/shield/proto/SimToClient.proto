@@ -1007,6 +1007,7 @@ message MsgCrowdCreation {
    optional string                  nom         = 3;
    required Common.PartyId          party       = 4; // Valeur 0 non possible [06/12/2011 FT45246]
    required Common.HumanRepartition repartition = 5;
+   optional Common.KnowledgeGroupId knowledge_group = 6;
 }
 
 message MsgCrowdUpdate {

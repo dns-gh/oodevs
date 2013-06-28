@@ -36,7 +36,8 @@ BOOST_FIXTURE_TEST_CASE( control_checkpoint_set_frequency_from_client_is_convert
 BOOST_FIXTURE_TEST_CASE( control_toggle_vision_cones_from_client_is_converted, ContextFixture< MsgsClientToSim::MsgClientToSim > )
 {
     content.mutable_control_toggle_vision_cones()->set_vision_cones( true );
-    MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { control_toggle_vision_cones { vision_cones: true } }" ) );
+    content.mutable_control_toggle_vision_cones()->mutable_unit()->set_id( 42 );
+    MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { control_toggle_vision_cones { vision_cones: true unit { id: 42 } } }" ) );
     converter.ReceiveClientToSim( msg );
 }
 

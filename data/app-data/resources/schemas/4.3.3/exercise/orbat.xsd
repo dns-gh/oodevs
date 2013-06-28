@@ -349,6 +349,12 @@
 							<xs:documentation xml:lang="fr">Définit le type de groupe de connaissance. Renvoie vers "Communications.xml".</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
+					<xs:attribute name="crowd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines whether this knowledge group is to be associated to crowds".</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit si ce groupe de connaissance est associé aux foules.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -525,6 +531,12 @@
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines the type of crowd. References an existing crowd type from "Populations.xml".</xs:documentation>
 							<xs:documentation xml:lang="fr">Définit le type de la foule. Renvoie vers "Populations.xml".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="knowledge-group" type="T_NonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines the knowledge group of the crowd.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit le groupe de connaissance de la foule.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:extension>
