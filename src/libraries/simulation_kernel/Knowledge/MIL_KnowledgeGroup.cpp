@@ -636,6 +636,8 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
     boost::shared_ptr< DEC_Knowledge_Object > result = knowledgeBlackBoard_->ResolveKnowledgeObject( id );
     if( !result && parent_ )
         result = parent_->ResolveKnowledgeObject( id );
+    if( !result && !isJammed_ && army_ )
+        result = army_->GetKnowledge().ResolveKnowledgeObject( id );
     return result;
 }
 
@@ -650,6 +652,8 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
     boost::shared_ptr< DEC_Knowledge_Object > result = knowledgeBlackBoard_->ResolveKnowledgeObject( object );
     if( !result && parent_ )
         result = parent_->ResolveKnowledgeObject( object );
+    if( !result && !isJammed_ && army_ )
+        result = army_->GetKnowledge().ResolveKnowledgeObject( object );
     return result;
 }
 
@@ -664,6 +668,8 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
     boost::shared_ptr< DEC_Knowledge_Object > result = knowledgeBlackBoard_->ResolveKnowledgeObjectByObjectID( id );
     if( !result && parent_ )
         result = parent_->ResolveKnowledgeObjectByObjectID( id );
+    if( !result && !isJammed_ && army_ )
+        result = army_->GetKnowledge().ResolveKnowledgeObjectByObjectID( id );
     return result;
 }
 
