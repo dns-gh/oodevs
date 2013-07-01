@@ -18,6 +18,7 @@ rootnode
     done = function( self, params, additionalParams )
         if self.nextTargetIndex + 1 > #self.params.entities then
           if not self.params.entities[ self.nextTargetIndex ]:isReached() then
+            if myself.isEscorted then return end
               self.notArrived = true
            else
                Feedback( self.feedbacks.done, { sender = "moveAlong", element = self.params.entities[ self.nextTargetIndex ] } )
