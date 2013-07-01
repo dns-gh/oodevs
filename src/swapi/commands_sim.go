@@ -643,26 +643,95 @@ func (c *Client) TeleportCrowd(crowdId uint32, location Point) error {
 	return <-c.postSimRequest(msg, handler)
 }
 
+func (c *Client) DestroyLocalWeather(id uint32) error {
+	params := MakeParameters()
+	if id != 0 {
+		params = MakeParameters(
+			MakeIdentifier(id))
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       sword.MagicAction_local_weather_destruction.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.MagicActionAck_no_error {
+			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) UpdateGlobalWeather(global *Weather) error {
+	params := MakeParameters()
+	if global != nil {
+		params = MakeParameters(
+			MakeFloat(global.Temperature),
+			MakeFloat(global.WindSpeed),
+			MakeHeading(global.WindDirection),
+			MakeFloat(global.CloudFloor),
+			MakeFloat(global.CloudCeil),
+			MakeFloat(global.CloudDensity),
+			MakeEnumeration(int32(global.Precipitation)))
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       sword.MagicAction_global_weather.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.MagicActionAck_no_error {
+			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
 func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) {
+	params := MakeParameters()
+	if local != nil {
+		params = MakeParameters(MakeFloat(local.Temperature),
+			MakeFloat(local.WindSpeed),
+			MakeHeading(local.WindDirection),
+			MakeFloat(local.CloudFloor),
+			MakeFloat(local.CloudCeil),
+			MakeFloat(local.CloudDensity),
+			MakeEnumeration(int32(local.Precipitation)),
+			MakeTime(local.StartTime),
+			MakeTime(local.EndTime),
+			MakeRectangleParam(local.TopLeft, local.BottomRight),
+			MakeIdentifier(local.Id),
+		)
+	}
 	// FIXME lighting is ignored because it's completely broken
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				MagicAction: &sword.MagicAction{
-					Type: sword.MagicAction_local_weather.Enum(),
-					Parameters: MakeParameters(
-						MakeFloat(local.Temperature),
-						MakeFloat(local.WindSpeed),
-						MakeHeading(local.WindDirection),
-						MakeFloat(local.CloudFloor),
-						MakeFloat(local.CloudCeil),
-						MakeFloat(local.CloudDensity),
-						MakeEnumeration(int32(local.Precipitation)),
-						MakeTime(local.StartTime),
-						MakeTime(local.EndTime),
-						MakeRectangleParam(local.TopLeft, local.BottomRight),
-						MakeIdentifier(local.Id),
-					),
+					Type:       sword.MagicAction_local_weather.Enum(),
+					Parameters: params,
 				},
 			},
 		},

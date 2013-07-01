@@ -309,6 +309,17 @@ func (model *Model) update(msg *SwordMessage) {
 			if !d.addKnowledgeGroup(group) {
 				// XXX report error here
 			}
+		} else if mm := m.GetControlGlobalWeather(); mm != nil {
+			attributes := mm.GetAttributes()
+			weather := &d.GlobalWeather
+			weather.Temperature = float32(attributes.GetTemperature())
+			weather.WindSpeed = float32(attributes.GetWindSpeed())
+			weather.WindDirection = attributes.GetWindDirection().GetHeading()
+			weather.CloudFloor = float32(attributes.GetCloudFloor())
+			weather.CloudCeil = float32(attributes.GetCloudCeiling())
+			weather.CloudDensity = float32(attributes.GetCloudDensity())
+			weather.Precipitation = attributes.GetPrecipitation()
+			weather.Lightning = attributes.GetLighting()
 		} else if mm := m.GetControlLocalWeatherCreation(); mm != nil {
 			start, err := GetTime(mm.GetStartDate())
 			if err != nil {
@@ -521,6 +532,16 @@ func (model *Model) GetLocalWeather(id uint32) *LocalWeather {
 			w = &LocalWeather{}
 			DeepCopy(w, weather)
 		}
+	})
+	return w
+}
+
+func (model *Model) GetGlobalWeather() *Weather {
+	var w *Weather
+	model.waitCommand(func(model *Model) {
+		weather := model.data.GlobalWeather
+		w = &Weather{}
+		DeepCopy(w, weather)
 	})
 	return w
 }
