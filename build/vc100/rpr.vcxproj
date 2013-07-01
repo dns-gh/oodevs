@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\rpr\BreachableSegmentStruct.h" />
     <ClInclude Include="..\..\src\libraries\rpr\Coordinates.h" />
+    <ClInclude Include="..\..\src\libraries\rpr\EntityAppearance.h" />
     <ClInclude Include="..\..\src\libraries\rpr\EntityIdentifier.h" />
     <ClInclude Include="..\..\src\libraries\rpr\EntityType.h" />
     <ClInclude Include="..\..\src\libraries\rpr\EntityTypeResolver.h" />

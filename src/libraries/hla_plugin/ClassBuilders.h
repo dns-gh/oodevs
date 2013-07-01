@@ -372,6 +372,27 @@ namespace hla
                                                                                   ( "SegmentRecords" ) ) )
         {}
     };
+    class RawDataHazardContourGroupBuilder : public ClassBuilder
+    {
+    public:
+        RawDataHazardContourGroupBuilder( bool isHla13 = false )
+            : ClassBuilder( "RawDataHazardContourGroup", true, true
+            , details::BuildAttributeList( isHla13, boost::assign::list_of( "Time" )
+                                                                          ( "Materiel" )
+                                                                          ( "HazardType" )
+                                                                          ( "Contours" ) ) )
+        {}
+    };
+    class ATP45HazardAreaBuilder : public ClassBuilder
+    {
+    public:
+        ATP45HazardAreaBuilder( bool isHla13 = false )
+            : ClassBuilder( "ATP45HazardArea", true, true
+            , details::BuildAttributeList( isHla13, boost::assign::list_of( "Locations" )
+                                                                          ( "ATP45HazardAreaType" )
+                                                                          ( "AgentClass" ) ) )
+        {}
+    };
 }
 }
 

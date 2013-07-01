@@ -105,6 +105,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\hla_plugin\AgentAdapter.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Aircraft.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ATP45HazardArea.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\OwnershipStrategy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\PlatformProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ProtocolTools.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RawDataHazardContourGroup.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteOrbatShaper.cpp" />
@@ -214,6 +216,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\AgentAdapter.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Aircraft.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ATP45HazardArea.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesDeserializer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AttributesUpdater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker.h" />
@@ -225,6 +228,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\BreachablePointObject.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\CBRNHazardArea.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ChildListener.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilders.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h" />
@@ -311,6 +315,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipStrategy_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\PlatformProxy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ProtocolTools.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RawDataHazardContourGroup.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h" />

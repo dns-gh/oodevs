@@ -358,6 +358,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\ProtocolTools.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ATP45HazardArea.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RawDataHazardContourGroup.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -848,6 +854,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ProtocolTools.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\CBRNHazardArea.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ATP45HazardArea.h">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RawDataHazardContourGroup.h">
+      <Filter>Source Files\Classes\netn</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

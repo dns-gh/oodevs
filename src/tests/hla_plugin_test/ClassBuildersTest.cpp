@@ -353,3 +353,24 @@ BOOST_FIXTURE_TEST_CASE( breachablelinearobject_builder_registers_attributes, Fi
                                         ( "SegmentRecords" );
     Check( builder, "EnvironmentObject.LinearObject.BreachableLinearObject", true, true );
 }
+
+BOOST_FIXTURE_TEST_CASE( rawdatahazardcontourgroup_builder_registers_attributes, Fixture )
+{
+    RawDataHazardContourGroupBuilder builder;
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "Time" )
+                                        ( "Materiel" )
+                                        ( "HazardType" )
+                                        ( "Contours" );
+    Check( builder, "RawDataHazardContourGroup", true, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( ATP45hazardarea_builder_registers_attributes, Fixture )
+{
+    ATP45HazardAreaBuilder builder;
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "Locations" )
+                                        ( "ATP45HazardAreaType" )
+                                        ( "AgentClass" );
+    Check( builder, "ATP45HazardArea", true, true );
+}
