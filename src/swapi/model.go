@@ -225,6 +225,7 @@ func (model *Model) update(msg *SwordMessage) {
 				crowd.ArmedIndividuals = *mm.ArmedIndividuals
 			}
 			if mm.Adhesions != nil {
+				crowd.Adhesions = map[uint32]float32{}
 				for _, value := range mm.Adhesions.Adhesion {
 					crowd.Adhesions[value.GetParty().GetId()] = value.GetValue()
 				}

@@ -10,6 +10,7 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"math"
 	"swapi"
 )
 
@@ -166,12 +167,9 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	adhesions = map[uint32]float32{0: 0.7, 1: -0.5}
 	err = client.ChangeAdhesions(crowd.Id, adhesions)
 	c.Assert(err, IsNil)
-
-	// Check new adhesions
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.FindCrowd(crowd.Id).Adhesions) != 0
 	})
-
 	newAdhesions := client.Model.GetData().FindCrowd(crowd.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
@@ -179,7 +177,17 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	err = client.ChangeAdhesions(crowd.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	newAdhesions = client.Model.GetData().FindCrowd(crowd.Id).Adhesions
+	c.Assert(adhesions, DeepEquals, newAdhesions)
 
+	// Partial change
+	adhesions = map[uint32]float32{0: 0.5}
+	err = client.ChangeAdhesions(crowd.Id, map[uint32]float32{0: 0.5})
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		updated := data.FindCrowd(crowd.Id)
+		return math.Abs(float64(updated.Adhesions[0]-0.5)) < 1e-5
+	})
 	newAdhesions = client.Model.GetData().FindCrowd(crowd.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 }
