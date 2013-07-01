@@ -51,12 +51,6 @@ type CrowdElement struct {
 	Attitude int32
 }
 
-func NewCrowdElement(id uint32) *CrowdElement {
-	return &CrowdElement{
-		Id: id,
-	}
-}
-
 type Crowd struct {
 	Id                   uint32
 	PartyId              uint32
