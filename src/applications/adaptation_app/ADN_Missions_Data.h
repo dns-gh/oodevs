@@ -60,6 +60,7 @@ public:
         virtual ~MissionType();
 
         std::string GetItemName();
+        const std::string& GetInputName() const;
         MissionType* CreateCopy();
 
         void WriteArchive( xml::xostream& output );

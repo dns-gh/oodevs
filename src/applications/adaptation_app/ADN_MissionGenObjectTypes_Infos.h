@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     std::string GetItemName();
+    const std::string& GetInputName() const;
     virtual void WriteArchive( xml::xostream& );
     ADN_MissionGenObjectTypes_Infos* CreateCopy();
     //@}
@@ -48,6 +49,7 @@ public:
     ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos > ptrObject_;
     ADN_Type_Bool isAllowed_;
     ADN_Type_String& name_;
+    ADN_Type_String& type_;
     //@}
 
 public:

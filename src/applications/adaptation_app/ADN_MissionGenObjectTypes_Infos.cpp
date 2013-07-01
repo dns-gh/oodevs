@@ -21,6 +21,7 @@ ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos( ADN_Objects_Da
     : ptrObject_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), ptr )
     , isAllowed_( false )
     , name_     ( ptrObject_.GetData()->strName_ )
+    , type_     ( ptrObject_.GetData()->strType_ )
 {
     BindExistenceTo( &ptrObject_ );
 }
@@ -32,7 +33,8 @@ ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos( ADN_Objects_Da
 ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos()
     : ptrObject_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 )
     , isAllowed_( false )
-    , name_     ( ptrObject_.GetData()->strName_ )
+    , name_     ( ptrObject_.GetData()->strType_ )
+    , type_     ( ptrObject_.GetData()->strType_ )
 {
     // NOTHING
 }
@@ -55,7 +57,7 @@ void ADN_MissionGenObjectTypes_Infos::WriteArchive( xml::xostream& output )
     if( isAllowed_.GetData() )
     {
         output << xml::start( "parameter" )
-                  << xml::attribute( "type", name_ )
+                  << xml::attribute( "type", type_ )
                << xml::end;
     }
 }
@@ -69,6 +71,7 @@ ADN_MissionGenObjectTypes_Infos* ADN_MissionGenObjectTypes_Infos::CreateCopy()
     ADN_MissionGenObjectTypes_Infos* infos = new ADN_MissionGenObjectTypes_Infos();
     infos->ptrObject_ = ptrObject_.GetData();
     infos->name_ = name_.GetData();
+    infos->type_ = type_.GetData();
     infos->isAllowed_ = isAllowed_.GetData();
     return infos;
 }
@@ -80,4 +83,13 @@ ADN_MissionGenObjectTypes_Infos* ADN_MissionGenObjectTypes_Infos::CreateCopy()
 std::string ADN_MissionGenObjectTypes_Infos::GetItemName()
 {
     return "GenObjectType";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionGenObjectTypes_Infos::GetInputName
+// Created: LDC 2013-07-01
+// -----------------------------------------------------------------------------
+const std::string& ADN_MissionGenObjectTypes_Infos::GetInputName() const
+{
+    return type_.GetData();
 }

@@ -254,7 +254,7 @@ void ADN_Missions_Data::MissionParameter::ReadChoice( xml::xistream& input, T& d
     input >> xml::attribute( "type", name );
     for( std::size_t i = 0; i < data.size(); ++i )
     {
-        if( data[i]->name_ == name )
+        if( data[i]->GetInputName() == name )
         {
             data[i]->isAllowed_ = true;
             return;
@@ -1033,6 +1033,15 @@ ADN_Missions_Data::MissionType::~MissionType()
 // Created: LDC 2010-08-19
 // -----------------------------------------------------------------------------
 std::string ADN_Missions_Data::MissionType::GetItemName()
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetInputName
+// Created: LDC 2013-07-01
+// -----------------------------------------------------------------------------
+const std::string& ADN_Missions_Data::MissionType::GetInputName() const
 {
     return name_;
 }
