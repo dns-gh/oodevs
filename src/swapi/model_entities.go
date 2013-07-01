@@ -326,7 +326,7 @@ func (model *ModelData) FindCrowd(crowdId uint32) *Crowd {
 func (model *ModelData) addCrowdElement(crowdId, elementId uint32) bool {
 	if crowd := model.FindCrowd(crowdId); crowd != nil {
 		if element := crowd.CrowdElements[elementId]; element == nil {
-			crowd.CrowdElements[ elementId ] = &CrowdElement{ elementId, 0 }
+			crowd.CrowdElements[elementId] = &CrowdElement{elementId, 0}
 			return true
 		}
 	}
