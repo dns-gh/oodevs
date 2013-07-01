@@ -54,6 +54,7 @@ public:
     virtual Path        MakeAnyPath( const Path& root ) const;
     virtual std::time_t GetLastWrite( const Path& file ) const;
     virtual size_t      GetDirectorySize( const Path& dir ) const;
+    virtual std::string ReadAll( io::Reader_ABC& input ) const;
     //@}
 
 private:

@@ -28,6 +28,7 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/date_time/posix_time/time_parsers.hpp>
 #include <boost/assign/list_of.hpp>
+#include <boost/filesystem/operations.hpp>
 
 using namespace host;
 using namespace property_tree;
@@ -49,23 +50,25 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const Path& app,
                                 const Path& web,
                                 const Path& client,
+                                const Path& licenses,
                                 const std::string& type,
                                 int host,
                                 Pool_ABC& pool,
                                 Proxy_ABC& proxy )
-    : log_     ( log )
-    , runtime_ ( runtime )
-    , fs_      ( fs )
-    , plugins_ ( plugins )
-    , factory_ ( nodes )
-    , root_    ( root / ( type == "cluster" ? type : "nodes" ) )
-    , app_     ( app )
-    , web_     ( web )
-    , type_    ( type )
-    , host_    ( host )
-    , proxy_   ( proxy )
-    , client_  ()
-    , async_   ( pool )
+    : log_        ( log )
+    , runtime_    ( runtime )
+    , fs_         ( fs )
+    , plugins_    ( plugins )
+    , factory_    ( nodes )
+    , root_       ( root / ( type == "cluster" ? type : "nodes" ) )
+    , app_        ( app )
+    , web_        ( web )
+    , licensesDir_( licenses )
+    , type_       ( type )
+    , host_       ( host )
+    , proxy_      ( proxy )
+    , client_     ()
+    , async_      ( pool )
 {
     fs.MakePaths( root_ );
     if( !fs_.IsFile( app_ ) )
@@ -79,6 +82,8 @@ NodeController::NodeController( cpplog::BaseLogger& log,
         client_ = boost::make_shared< Package >( pool, fs, client, true );
         client_->Parse();
     }
+    if( !fs_.IsDirectory( licensesDir_ ) )
+        throw std::runtime_error( "'" + runtime::Utf8( licensesDir_ ) + "' is not a directory" );
     timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Refresh, this ) );
     GetAvailableLicences();
 }
@@ -613,5 +618,32 @@ Tree NodeController::LinkExercise( const Node_ABC& node, const Tree& tree ) cons
 // -----------------------------------------------------------------------------
 Tree NodeController::ListLicenses( const Uuid& /*id*/ ) const
 {
+    return licenses_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::UploadLicenses
+// Created: NPT 2013-06-28
+// -----------------------------------------------------------------------------
+Tree NodeController::UploadLicenses( io::Reader_ABC& src )
+{
+    const Path output = licensesDir_ / "licenseTemp.lic";
+    std::string content = fs_.ReadAll( src );
+    fs_.WriteFile( output, content );
+    boost::shared_ptr< Package_ABC > next;
+    for( auto it = ::licenses.begin(); it != ::licenses.end(); ++it )
+    {
+        if( content.find( " " + *it + " " ) != content.npos )
+        {
+            try
+            {
+                FlexLmLicense license( *it );
+                boost::filesystem::copy_file( output, licensesDir_ / std::string( *it + ".lic" ), boost::filesystem::copy_option::overwrite_if_exists );
+            }
+            catch( const FlexLmLicense::LicenseError& ){}
+        }
+    }
+    boost::filesystem::remove( output );
+    GetAvailableLicences();
     return licenses_;
 }

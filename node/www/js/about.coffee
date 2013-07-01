@@ -66,3 +66,25 @@ class LicenseItemView extends Backbone.View
                 setTimeout @delta, 5000
 
 license_view = new LicenseItemView
+
+$("#upload_form").attr "action", (get_url "/api/upload_licenses")
+
+set_spinner $(".spin_btn")
+
+$("#upload_form input:file").change ->
+    ctl = $("#upload_form .upload")
+    ctl.toggleClass "disabled", !@value?
+    return
+
+toggle_upload = ->
+    $("#upload_form .upload").toggleClass "disabled"
+    $(".upload_alert").toggle()
+
+$("#upload_form .upload").click ->
+    return if $(@).hasClass "disabled"
+    $("#upload_form").submit()
+
+$("#upload_target").load ->
+    toggle_upload()
+    license_view.model.set jQuery.parseJSON $(@).contents().text()
+

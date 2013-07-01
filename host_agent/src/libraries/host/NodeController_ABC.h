@@ -136,7 +136,8 @@ struct NodeController_ABC : public boost::noncopyable
 
     //! @name Licenses Methods
     //@{
-    virtual Tree ListLicenses ( const Uuid& id ) const = 0;
+    virtual Tree ListLicenses  ( const Uuid& id ) const = 0;
+    virtual Tree UploadLicenses( io::Reader_ABC& src ) = 0;
     //@}
 };
 }

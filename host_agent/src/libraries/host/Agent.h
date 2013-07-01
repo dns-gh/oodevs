@@ -125,6 +125,7 @@ public:
     //! @name Licenses Methods
     //@{
     virtual Tree ListLicenses( const Uuid& node ) const;
+    virtual Tree UploadLicenses( io::Reader_ABC& src );
     //@}
 
 private:

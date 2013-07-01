@@ -347,9 +347,9 @@ struct Facade : SqlFacade
         NodeFactory fnodes( packages, fs, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
         const Port host = ports.Create();
         const Path client_root = cfg.root / "client";
-        NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, client_root, "node", host->Get(), pool, proxy );
+        NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, client_root, cfg.session.simulation.root_directory(), "node", host->Get(), pool, proxy );
         fnodes.observer = &nodes;
-        NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), "cluster", host->Get(), pool, proxy );
+        NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), cfg.session.simulation.root_directory(), "cluster", host->Get(), pool, proxy );
         SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
         SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
         Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );

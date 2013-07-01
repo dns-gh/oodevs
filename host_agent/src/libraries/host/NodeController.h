@@ -67,6 +67,7 @@ public:
                              const Path& app,
                              const Path& web,
                              const Path& client,
+                             const Path& licenses,
                              const std::string& type,
                              int host,
                              runtime::Pool_ABC& pool,
@@ -136,6 +137,7 @@ public:
     //! @name Node Methods
     //@{
     virtual Tree ListLicenses ( const Uuid& id ) const;
+    virtual Tree UploadLicenses( io::Reader_ABC& src );
     //@}
 
     //! @name Typedef helpers
@@ -169,6 +171,7 @@ private:
     const Path root_;
     const Path app_;
     const Path web_;
+    const Path licensesDir_;
     const std::string type_;
     const int host_;
     Proxy_ABC& proxy_;

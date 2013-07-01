@@ -146,6 +146,8 @@ private:
     //! @name Licences Methods
     //@{
     void ListLicenses       ( Reply_ABC& reply, const Request_ABC& request );
+    void UploadLicenses     ( Reply_ABC& reply, Request_ABC& request );
+
     //@}
 
     //! @name Helpers
