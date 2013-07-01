@@ -78,7 +78,7 @@
         <flexlm name="sword" feature="sword" vendor="bkmasa"/>
         <flexlm name="sword-gaming" feature="sword-gaming" vendor="bkmasa"/>
         <flexlm name="sword-dispatcher" feature="sword-dispatcher" vendor="bkmasa"
-            extension="VENDOR_STRING=2"/>
+            extension="VENDOR_STRING=16"/>
         <flexlm name="sword-authoring" feature="sword-authoring" vendor="bkmasa"/>
         <flexlm name="sword-preparation" feature="sword-preparation" vendor="bkmasa"/>
         <flexlm name="sword-workshop" feature="sword-workshop" vendor="bkmasa"/>
