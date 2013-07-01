@@ -103,6 +103,35 @@ func MakeCoords(points ...Point) *sword.CoordLatLongList {
 	}
 }
 
+func MakeAdhesions(adhesions map[uint32]float32) *sword.MissionParameter {
+	list := []*sword.MissionParameter_Value{}
+	for k, v := range adhesions {
+		party := []*sword.MissionParameter_Value{
+			{Identifier: proto.Uint32(k)},
+			{AReal: proto.Float32(v)},
+		}
+		list = append(list, &sword.MissionParameter_Value{
+			List: party,
+		})
+	}
+	return MakeParameter(list...)
+}
+
+func MakeExtensions(extensions *map[string]string) *sword.MissionParameter {
+	list := []*sword.Extension_Entry{}
+	for k, v := range *extensions {
+		extension := &sword.Extension_Entry{
+			Name:  proto.String(k),
+			Value: proto.String(v),
+		}
+		list = append(list, extension)
+	}
+	value := &sword.Extension{
+		Entries: list,
+	}
+	return MakeParameter(&sword.MissionParameter_Value{ExtensionList: value})
+}
+
 func ReadPoint(value *sword.CoordLatLong) Point {
 	if value == nil {
 		return Point{}

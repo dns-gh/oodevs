@@ -193,13 +193,91 @@ func (model *Model) update(msg *SwordMessage) {
 					formation.ParentId))
 			}
 		} else if mm := m.GetCrowdCreation(); mm != nil {
-			crowd := &Crowd{
+			crowd := NewCrowd(
 				mm.GetCrowd().GetId(),
 				mm.GetParty().GetId(),
-				mm.GetName()}
+				mm.GetName())
 			if !d.addCrowd(crowd) {
 				// XXX report error here
 			}
+		} else if mm := m.GetCrowdUpdate(); mm != nil {
+			crowd := d.FindCrowd(mm.GetCrowd().GetId())
+			if crowd == nil {
+				// XXX report error here
+				return
+			}
+			if mm.CriticalIntelligence != nil {
+				crowd.CriticalIntelligence = *mm.CriticalIntelligence
+			}
+			if mm.Healthy != nil {
+				crowd.Healthy = *mm.Healthy
+			}
+			if mm.Wounded != nil {
+				crowd.Wounded = *mm.Wounded
+			}
+			if mm.Dead != nil {
+				crowd.Dead = *mm.Dead
+			}
+			if mm.Contaminated != nil {
+				crowd.Contaminated = *mm.Contaminated
+			}
+			if mm.ArmedIndividuals != nil {
+				crowd.ArmedIndividuals = *mm.ArmedIndividuals
+			}
+			if mm.Adhesions != nil {
+				crowd.Adhesions = map[uint32]float32{}
+				for _, value := range mm.Adhesions.Adhesion {
+					crowd.Adhesions[value.GetParty().GetId()] = value.GetValue()
+				}
+			}
+			if mm.Extension != nil {
+				for i := 0; i < len(mm.Extension.Entries); i++ {
+					entry := mm.Extension.Entries[i]
+					crowd.Extensions[entry.GetName()] = entry.GetValue()
+				}
+			}
+		} else if mm := m.GetCrowdFlowCreation(); mm != nil {
+			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+				// XXX report error here
+				return
+			}
+		} else if mm := m.GetCrowdFlowDestruction(); mm != nil {
+			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+				return
+			}
+		} else if mm := m.GetCrowdFlowUpdate(); mm != nil {
+			crowd := d.FindCrowd(mm.GetCrowd().GetId())
+			if crowd == nil {
+				// XXX report error here
+				return
+			}
+			element := crowd.CrowdElements[mm.GetFlow().GetId()]
+			if element == nil {
+				// XXX report error here
+				return
+			}
+			element.Attitude = int32(mm.GetAttitude())
+		} else if mm := m.GetCrowdConcentrationCreation(); mm != nil {
+			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+				// XXX report error here
+				return
+			}
+		} else if mm := m.GetCrowdConcentrationDestruction(); mm != nil {
+			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+				return
+			}
+		} else if mm := m.GetCrowdConcentrationUpdate(); mm != nil {
+			crowd := d.FindCrowd(mm.GetCrowd().GetId())
+			if crowd == nil {
+				// XXX report error here
+				return
+			}
+			element := crowd.CrowdElements[mm.GetConcentration().GetId()]
+			if element == nil {
+				// XXX report error here
+				return
+			}
+			element.Attitude = int32(mm.GetAttitude())
 		} else if mm := m.GetPopulationCreation(); mm != nil {
 			population := &Population{
 				mm.GetId().GetId(),
