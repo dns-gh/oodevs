@@ -125,6 +125,9 @@ void DEC_BlackBoard_CanContainKnowledgeObject::SetKnowledgeGroup( MIL_KnowledgeG
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const MIL_Army_ABC* army, MIL_Object_ABC& objectKnown )
 {
+    auto it = objectMap_.find( &objectKnown );
+    if( it != objectMap_.end() )
+        return it->second;
     boost::shared_ptr< DEC_Knowledge_Object > knowledge;
     if( pKnowledgeGroup_ )
     {
@@ -136,10 +139,8 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 
     if( knowledge )
     {
-        if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
-        if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        objectMap_.insert( std::make_pair( &objectKnown, knowledge ) );
+        knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) );
     }
 
     return knowledge;
