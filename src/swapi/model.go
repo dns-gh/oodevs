@@ -359,6 +359,14 @@ func (model *Model) update(msg *SwordMessage) {
 			if party1 != nil && party2 != nil {
 				party1.Diplomacies[party2.Id] = mm.GetDiplomacy()
 			}
+		} else if mm := m.GetUrbanCreation(); mm != nil {
+			urban := NewUrban(
+				mm.GetObject().GetId(),
+				mm.GetName(),
+				NewResourceNetworks(mm.GetAttributes()))
+			d.addUrban(urban)
+		} else if mm := m.GetUrbanUpdate(); mm != nil {
+			d.updateUrban(mm.GetObject().GetId(), NewResourceNetworks(mm.GetAttributes()))
 		}
 	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()
@@ -550,6 +558,18 @@ func (model *Model) GetGlobalWeather() *Weather {
 		DeepCopy(w, weather)
 	})
 	return w
+}
+
+func (model *Model) GetUrban(id uint32) *Urban {
+	var u *Urban
+	model.waitCommand(func(model *Model) {
+		urban, ok := model.data.Urbans[id]
+		if ok {
+			u = &Urban{}
+			DeepCopy(u, urban)
+		}
+	})
+	return u
 }
 
 func (model *Model) GetTick() int32 {

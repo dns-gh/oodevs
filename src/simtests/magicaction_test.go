@@ -10,6 +10,7 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"reflect"
 	"swapi"
 	"sword"
 )
@@ -130,9 +131,7 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// error: first parameter must be a location or an identifier
-	params = swapi.MakeParameters(
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue())
+	params = swapi.MakeParameters(swapi.MakeNullValue(), swapi.MakeNullValue())
 	err = client.ChangeResourceNetworkTest(params)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
@@ -159,4 +158,37 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 		swapi.MakeList(swapi.MakeString("Natural Gas")))
 	err = client.ChangeResourceNetworkTest(params)
 	c.Assert(err, IsNil)
+
+	// update full parameters
+	urban := swapi.NewUrban(21, "Bloc urbain [21]",
+		map[string]*swapi.ResourceNetwork{
+			"Running Water": &swapi.ResourceNetwork{Name: "Running Water",
+				Consumption: 1, Critical: true, Activated: false, Production: 2,
+				StockMax: 3},
+			"Natural Gas": &swapi.ResourceNetwork{Name: "Natural Gas",
+				Consumption: 4, Critical: false, Activated: true, Production: 5,
+				StockMax: 6},
+		})
+	err = client.ChangeResourceNetwork(urban)
+	c.Assert(err, IsNil)
+
+	// model updated
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(urban, data.Urbans[21])
+	})
+
+	// the magic action changes resources network values totally
+	urban = swapi.NewUrban(21, "Bloc urbain [21]",
+		map[string]*swapi.ResourceNetwork{
+			"Electricity": &swapi.ResourceNetwork{Name: "Electricity",
+				Consumption: 7, Critical: true, Activated: true, Production: 8,
+				StockMax: 9},
+		})
+	err = client.ChangeResourceNetwork(urban)
+	c.Assert(err, IsNil)
+
+	// model updated
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(urban, data.Urbans[21])
+	})
 }
