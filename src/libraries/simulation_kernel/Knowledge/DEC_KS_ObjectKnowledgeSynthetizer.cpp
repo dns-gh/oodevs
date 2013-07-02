@@ -102,7 +102,10 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KS_ObjectKnowledgeSynthetizer::Get
 inline
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
 {
-    if( pBlackBoard_->GetKnowledgeGroup().get() == 0 && perception.GetObjectPerceived().IsUniversal() )
+    boost::shared_ptr< MIL_KnowledgeGroup > kg = pBlackBoard_->GetKnowledgeGroup();
+    if( kg.get() == 0 && perception.GetObjectPerceived().IsUniversal() )
+        return;
+    if( kg.get() && &kg.get()->GetArmy() == perception.GetObjectPerceived().GetArmy() )
         return;
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeToUpdate( perception.GetObjectPerceived() );
     if( pKnowledge )
@@ -116,6 +119,11 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( co
 inline
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision )
 {
+    boost::shared_ptr< MIL_KnowledgeGroup > kg = pBlackBoard_->GetKnowledgeGroup();
+    if( kg.get() == 0 && collision.GetObject().IsUniversal() )
+        return;
+    if( kg.get() && &kg.get()->GetArmy() == collision.GetObject().GetArmy() )
+        return;
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeToUpdate( collision.GetObject() );
     if( pKnowledge )
         pKnowledge->Update( collision );

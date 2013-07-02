@@ -471,7 +471,8 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::UpdateRelevance()
 {
-    assert( rRelevance_ > 0. );
+    if( rRelevance_ == 0. )
+        return;
     if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ && pObjectKnown_ && !pObjectKnown_->IsMarkedForDestruction() )
      {
         if( rRelevance_ != 1. )

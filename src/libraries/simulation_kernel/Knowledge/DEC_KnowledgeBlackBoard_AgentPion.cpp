@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
@@ -33,6 +34,7 @@
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "MIL_KnowledgeGroup.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
@@ -410,8 +412,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
     if( !pPion_ )
         return;
     auto bbKg = pPion_->GetKnowledgeGroup()->GetKnowledge();
-    if( !bbKg )
-        return;
 
     T_KnowledgeObjectCollisionVector objectsColliding;
     GetObjectsColliding( objectsColliding );
@@ -420,7 +420,11 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
     container.reserve( objectsColliding.size() );
     for ( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = bbKg->ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
+        if( bbKg )
+            pKnowledge = bbKg->ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
+        if( !pKnowledge || !pKnowledge->IsValid() )
+            pKnowledge = pPion_->GetArmy().GetKnowledge().ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
         if( !pKnowledge || !pKnowledge->IsValid() )
         {
             MT_LOG_ERROR_MSG( "Invalid knowledge on object collision: " << (**itObjectColliding).GetObject().GetID() << " for agent " << pPion_->GetID() );
