@@ -503,15 +503,15 @@ void NodeElement::Update( const sword::MissionParameter_Value& msg )
     unsigned int oldConsumptionAmount = consumptionAmount_;
     bool oldConsumptionCritical = consumptionCritical_;
     // fix JIRA 8223 : blindage de code pour éviter les crashs quand l'EDT ne respecte pas l'ICD et envoie n'importe quoi...
-    if( msg.list_size() > 1 && msg.list( 1 ).has_quantity() )
+    if( msg.list_size() > 1 && msg.list( 1 ).has_quantity() && msg.list( 1 ).quantity() >= 0 )
         consumptionAmount_ = msg.list( 1 ).quantity();
     if( msg.list_size() > 2 && msg.list( 2 ).has_booleanvalue() )
         consumptionCritical_ = msg.list( 2 ).booleanvalue();
     if( msg.list_size() > 3 && msg.list( 3 ).has_booleanvalue() )
         isActivated_ = msg.list( 3 ).booleanvalue();
-    if( msg.list_size() > 4 && msg.list( 4 ).has_quantity() )
+    if( msg.list_size() > 4 && msg.list( 4 ).has_quantity() && msg.list( 4 ).quantity() >= 0 )
         productionCapacity_ = msg.list( 4 ).quantity();
-    if( msg.list_size() > 5 && msg.list( 5 ).has_quantity() )
+    if( msg.list_size() > 5 && msg.list( 5 ).has_quantity() && msg.list( 5 ).quantity() >= 0 )
         stockMaxCapacity_ = msg.list( 5 ).quantity();
     if( msg.list_size() > 6 )
     {
@@ -521,7 +521,7 @@ void NodeElement::Update( const sword::MissionParameter_Value& msg )
         for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )
         {
             const sword::MissionParameter_Value& link = msg.list( 6 ).list( i );
-            if( link.list( 0 ).has_identifier() && link.list( 1 ).has_quantity() )
+            if( link.list( 0 ).has_identifier() && link.list( 1 ).has_quantity() && link.list( 1 ).quantity() >= 0 )
                 links_.push_back( new ResourceLink( link.list( 0 ).identifier(), ResourceLink::eTargetKindUrban, link.list( 1 ).quantity() ) );
         }
     }

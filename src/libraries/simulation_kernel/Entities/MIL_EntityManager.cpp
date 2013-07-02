@@ -1115,6 +1115,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     ack().mutable_tasker()->CopyFrom( message.tasker() );
     ack().set_type( message.type() );
     ack().set_name( message.name() );
+
     try
     {
         switch( message.type() )
@@ -1140,7 +1141,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             ProcessAutomateChangeKnowledgeGroup( message, nCtx );
             break;
         case UnitMagicAction::change_logistic_links:
-            ProcessChangeLogisticLinks( message, nCtx );
+            ProcessChangeLogisticLinks( message, nCtx, clientId );
             break;
         case UnitMagicAction::unit_change_superior:
             ProcessUnitChangeSuperior( message, nCtx );
@@ -1155,13 +1156,13 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                 throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::log_supply_push_flow:
-            ProcessLogSupplyPushFlow( message, nCtx );
+            ProcessLogSupplyPushFlow( message, nCtx, clientId );
             break;
         case UnitMagicAction::log_supply_pull_flow:
-            ProcessLogSupplyPullFlow( message, nCtx );
+            ProcessLogSupplyPullFlow( message, nCtx, clientId );
             break;
         case UnitMagicAction::log_supply_change_quotas:
-            ProcessLogSupplyChangeQuotas( message, nCtx );
+            ProcessLogSupplyChangeQuotas( message, nCtx, clientId );
             break;
         case UnitMagicAction::automat_creation:
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
@@ -1672,7 +1673,7 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
 // Name: MIL_EntityManager::ProcessChangeLogisticLinks
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::ChangeLogisticLinksAck ack;
     ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
@@ -1701,7 +1702,7 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
     {
         ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1770,7 +1771,7 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& messag
 // Name: MIL_EntityManager::ProcessLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::LogSupplyChangeQuotasAck ack;
     ack().set_error_code( LogSupplyChangeQuotasAck::no_error_quotas );
@@ -1812,14 +1813,14 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
     {
         ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessLogSupplyPushFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::LogSupplyPushFlowAck ack;
     ack().set_error_code( LogSupplyPushFlowAck::no_error_pushflow );
@@ -1838,14 +1839,14 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     {
         ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessLogSupplyPullFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::LogSupplyPullFlowAck ack;
     ack().set_error_code( LogSupplyPullFlowAck::no_error_pullflow );
@@ -1869,7 +1870,7 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     {
         ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
