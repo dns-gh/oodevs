@@ -119,8 +119,12 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	// update full parameters
 	urban := swapi.NewUrban(21, "Bloc urbain [21]",
 		map[string]*swapi.ResourceNetwork{
-			"Running Water": &swapi.ResourceNetwork{"Running Water", 1, true, false, 2, 3},
-			"Natural Gas":   &swapi.ResourceNetwork{"Natural Gas", 4, false, true, 5, 6},
+			"Running Water": &swapi.ResourceNetwork{Name: "Running Water",
+				Consumption: 1, Critical: true, Activated: false, Production: 2,
+				StockMax: 3},
+			"Natural Gas": &swapi.ResourceNetwork{Name: "Natural Gas",
+				Consumption: 4, Critical: false, Activated: true, Production: 5,
+				StockMax: 6},
 		})
 	err = client.ChangeResourceNetwork(urban)
 	c.Assert(err, IsNil)
@@ -133,7 +137,9 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	// the magic action changes resources network values totally
 	urban = swapi.NewUrban(21, "Bloc urbain [21]",
 		map[string]*swapi.ResourceNetwork{
-			"Electricity": &swapi.ResourceNetwork{"Electricity", 7, true, true, 8, 9},
+			"Electricity": &swapi.ResourceNetwork{Name: "Electricity",
+				Consumption: 7, Critical: true, Activated: true, Production: 8,
+				StockMax: 9},
 		})
 	err = client.ChangeResourceNetwork(urban)
 	c.Assert(err, IsNil)
