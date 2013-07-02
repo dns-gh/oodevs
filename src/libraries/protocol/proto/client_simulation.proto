@@ -214,6 +214,12 @@ message MagicAction {
         //! A create knowledge magic action
         create_knowledge_group             = 4;
         //! A change resource network properties magic action
+        //! parameters[0], Identifier : urban object id
+        //! parameters[1], value parameters of lists of resource data(list)
+        //!   resource data list : resource (string), consumption(quantity),
+        //!     critical(bool), enabled(bool), production(quantity),
+        //!     maxstock(quantity), links
+        //!   links: list of list with a "identifier,quantity" format        
         change_resource_network_properties = 5;
         //! A fire order on location magic action
         //! parameters[0], Location or Point: fire location.
