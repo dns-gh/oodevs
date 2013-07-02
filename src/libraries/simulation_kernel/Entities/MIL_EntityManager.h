@@ -183,7 +183,7 @@ public:
     void OnReceiveSetAutomateMode          ( const sword::SetAutomatMode&       message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveUnitCreationRequest      ( const sword::UnitCreationRequest&  message, unsigned int nCtx );
     void OnReceiveKnowledgeMagicAction     ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
-    void OnReceiveChangeDiplomacy          ( const sword::MagicAction&          message, unsigned int nCtx );
+    void OnReceiveChangeDiplomacy          ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveChangeResourceLinks      ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveBurningCellRequest       ( const sword::BurningCellRequest&   message, unsigned int nCtx );

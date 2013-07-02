@@ -1545,10 +1545,21 @@ void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& mes
 // Name: MIL_EntityManager::OnReceiveChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::ChangeDiplomacyAck ack;
+    client::MagicActionAck magicAck;
+    client::ChangeDiplomacy changeDiplomacyMes;
     int party1 ( 0 ), party2 ( 0 );
+    if( !message.has_parameters() ||message.parameters().elem_size() != 3 
+        || !message.parameters().elem( 0 ).value_size() == 1 
+        || !message.parameters().elem( 1 ).value_size() == 1 
+        || !message.parameters().elem( 2 ).value_size() == 1 )
+    {
+        magicAck().set_error_code( MagicActionAck::error_invalid_parameter );
+        magicAck.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+        throw MASA_EXCEPTION_ASN( MagicActionAck_ErrorCode, MagicActionAck::error_invalid_parameter );
+    }
     if( message.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
         party1 = message.parameters().elem( 0 ).value().Get( 0 ).identifier();
     else if( message.parameters().elem( 0 ).value().Get( 0 ).has_party() )
@@ -1559,10 +1570,6 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
     else if( message.parameters().elem( 1 ).value().Get( 0 ).has_party() )
         party2 = message.parameters().elem( 1 ).value().Get( 0 ).party().id();
 
-    ack().mutable_party1()->set_id( party1 );
-    ack().mutable_party2()->set_id( party2 );
-    ack().set_diplomacy( ( EnumDiplomacy ) message.parameters().elem( 2 ).value().Get( 0 ).enumeration() );
-    ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
     try
     {
         MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );
@@ -1570,11 +1577,23 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
             throw MASA_EXCEPTION_ASN( ChangeDiplomacyAck_ErrorCode, ChangeDiplomacyAck::error_invalid_party_diplomacy );
         pArmy1->OnReceiveChangeDiplomacy( message.parameters() );
     }
-    catch( const NET_AsnException< ChangeDiplomacyAck_ErrorCode >& e )
+    catch( const NET_AsnException< ChangeDiplomacyAck_ErrorCode >& )
     {
-        ack().set_error_code( e.GetErrorID() );
+        magicAck().set_error_code( MagicActionAck::error_invalid_parameter );
+        magicAck.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+        return;
     }
+    changeDiplomacyMes().mutable_party1()->set_id( party1 );
+    changeDiplomacyMes().mutable_party2()->set_id( party2 );
+    changeDiplomacyMes().set_diplomacy( ( EnumDiplomacy ) message.parameters().elem( 2 ).value().Get( 0 ).enumeration() );
+    changeDiplomacyMes.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack().mutable_party1()->set_id( party1 );
+    ack().mutable_party2()->set_id( party2 );
+    ack().set_diplomacy( ( EnumDiplomacy ) message.parameters().elem( 2 ).value().Get( 0 ).enumeration() );
+    ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    magicAck().set_error_code( MagicActionAck::no_error );
+    magicAck.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

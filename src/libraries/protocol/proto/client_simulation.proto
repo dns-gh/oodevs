@@ -205,7 +205,11 @@ message MagicAction {
         local_weather                      = 1;
         //! A local weather destruction magic action
         local_weather_destruction          = 2;
-        //! A change diplomacy magic action
+        //! Change diplomacy between two parties.
+        //! Trigger a ChangeDiplomacy on success
+        //! parameters[0], Identifier: first party identifier
+        //! parameters[1], Identifier: second party identifier
+        //! parameters[2], Enumeration: new diplomacy as EnumDiplomacy
         change_diplomacy                   = 3;
         //! A create knowledge magic action
         create_knowledge_group             = 4;

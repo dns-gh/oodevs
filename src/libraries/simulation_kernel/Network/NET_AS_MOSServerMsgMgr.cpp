@@ -120,7 +120,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
             wrapper.message().magic_action().type() == sword::MagicAction::local_weather_destruction )
             workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                   ( wrapper.message().magic_action()                       , nCtx, clientId );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_diplomacy )
-            workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );
+            workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx, clientId );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_resource_network_properties )
             workspace.GetEntityManager        ().OnReceiveChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx, clientId );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::create_fire_order_on_location )
