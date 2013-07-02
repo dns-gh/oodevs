@@ -169,7 +169,7 @@ void ActionsToolbar::DoLoad( const std::string& filename )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Save()
 {
-    const std::string rootDir = config_.BuildExerciseChildFile( "orders" );
+    const std::string rootDir = config_.BuildExerciseChildFile( config_.GetExerciseName() + "-orders" );
     QString filename = Q3FileDialog::getSaveFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
     if( filename == QString::null )
         return;
