@@ -139,7 +139,7 @@ void ActionsToolbar::SetFilter( const actions::ActionsFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Load()
 {
-    const std::string rootDir = config_.BuildExerciseChildFile( "orders.ord" );
+    const std::string rootDir = config_.BuildExerciseChildFile( config_.GetExerciseName() + "-orders.ord" );
     filename_ = Q3FileDialog::getOpenFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) ).toAscii().constData();
     DoLoad( filename_ );
     emit activeRefreshButton( !filename_.empty() );
