@@ -472,7 +472,7 @@ fillParameters = function( bestList, companyTask, params, nbrFront, context, isM
     local current = 1
     params.maxNbrFront = math.min( #bestList, nbrFront )
     while findFront <= nbrFront and current <= params.maxNbrFront do
-       local paramsPion = bestList[current].task:fillParameters( companyTask, params, bestList[current].entity, context, objectif ) -- Save the parameter needed for the platoon task
+       local paramsPion = bestList[current].task:fillParameters( companyTask, params, bestList[current].entity, context, objectif, bestList[current].taskName ) -- Save the parameter needed for the platoon task
        if paramsPion then
           if isMain then          
               F_Pion_SeteEtatEchelon( bestList[current].entity.source, eEtatEchelon_First )
