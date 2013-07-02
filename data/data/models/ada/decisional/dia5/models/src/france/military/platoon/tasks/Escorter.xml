@@ -24,7 +24,7 @@
                             <call method="sword.military.queries.enemies.getEnemiesInRange">
                                 <parameter name="probabilityToHit">
                                     <value>
-                                        <number>0.1</number>
+                                        <number>0.0010</number>
                                     </value>
                                 </parameter>
                             </call>
