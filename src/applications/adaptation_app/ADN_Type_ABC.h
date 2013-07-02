@@ -91,7 +91,7 @@ public:
 
     //! @name Operations
     //@{
-    const T GetData() const;
+    const T& GetData() const;
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
     //@}
 

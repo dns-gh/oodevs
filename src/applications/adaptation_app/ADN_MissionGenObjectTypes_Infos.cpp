@@ -53,7 +53,7 @@ void ADN_MissionGenObjectTypes_Infos::WriteArchive( xml::xostream& output )
     if( isAllowed_.GetData() )
     {
         output << xml::start( "parameter" )
-                  << xml::attribute( "type", ptrObject_ )
+                  << xml::attribute( "type", ptrObject_.GetData()->strType_ )
                << xml::end;
     }
 }
