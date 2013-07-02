@@ -51,6 +51,8 @@ public:
     void ReadEvent  ( const std::string& uuid );
     void UpdateEvent( const Event& event );
     void DeleteEvent( const std::string& uuid );
+    void LoadEvents( const std::string& events );
+    void SaveEvents();
 
 private:
     void SendCreatedEvent( const Event& event, const Error& err );
@@ -58,6 +60,8 @@ private:
     void SendReadEvent   ( const Event& event, const Error& err );
     void SendUpdatedEvent( const Event& event, const Error& err );
     void SendDeletedEvent( const std::string& uuid, const Error& err );
+    void SendLoadedEvents( const Error& err );
+    void SendSavedEvents ( const std::string& events, const Error& err );
 
     // V8 handlers
     CefRefPtr< CefV8Value > OnReady                ( const CefV8ValueList& args );
@@ -66,6 +70,8 @@ private:
     CefRefPtr< CefV8Value > OnReadEvent            ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnUpdatedEvent         ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnDeletedEvent         ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnLoadedEvents         ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnSavedEvents          ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnSelectEvent          ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnDeselectEvent        ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnActivateEvent        ( const CefV8ValueList& args );

@@ -35,6 +35,8 @@ namespace controls
     size_t ReadEvent   ( void* dst, size_t size, const std::string& uuid );
     size_t UpdateEvent ( void* dst, size_t size, const Event& event );
     size_t DeleteEvent ( void* dst, size_t size, const std::string& uuid );
+    size_t LoadEvents  ( void* dst, size_t size, const std::string& events );
+    size_t SaveEvents  ( void* dst, size_t size );
 
     struct ClientHandler_ABC : public boost::noncopyable
     {
@@ -50,6 +52,8 @@ namespace controls
         virtual void OnReadEvent( const std::string& uuid ) = 0;
         virtual void OnUpdateEvent( const Event& event ) = 0;
         virtual void OnDeleteEvent( const std::string& uuid ) = 0;
+        virtual void OnLoadEvents( const std::string& events ) = 0;
+        virtual void OnSaveEvents() = 0;
     };
 
     void ParseClient( ClientHandler_ABC& client, const void* src, size_t size );
@@ -60,6 +64,9 @@ namespace controls
     size_t ReadEvent            ( void* data, size_t size, const Event& event, const Error& error );
     size_t UpdatedEvent         ( void* data, size_t size, const Event& event, const Error& error );
     size_t DeletedEvent         ( void* data, size_t size, const std::string& uuid, const Error& error );
+    size_t LoadedEvents         ( void* data, size_t size, const Error& error );
+    size_t SavedEvents          ( void* data, size_t size, const std::string& events, const Error& error );
+
     size_t SelectedEvent        ( void* data, size_t size, const Event& event );
     size_t DeselectedEvent      ( void* data, size_t size );
     size_t ActivatedEvent       ( void* data, size_t size, const Event& event );
@@ -80,6 +87,8 @@ namespace controls
         virtual void OnReadEvent            ( const Event& event, const Error& error ) = 0;
         virtual void OnUpdatedEvent         ( const Event& event, const Error& error ) = 0;
         virtual void OnDeletedEvent         ( const std::string& uuid, const Error& error ) = 0;
+        virtual void OnLoadedEvents         ( const Error& error ) = 0;
+        virtual void OnSavedEvents          ( const std::string& events, const Error& error ) = 0;
         virtual void OnSelectedEvent        ( const Event& event ) = 0;
         virtual void OnDeselectedEvent      () = 0;
         virtual void OnActivatedEvent       ( const Event& event ) = 0;

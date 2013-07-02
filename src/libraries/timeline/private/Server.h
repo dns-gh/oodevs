@@ -49,6 +49,8 @@ public:
     virtual bool ReadEvent( const std::string& uuid );
     virtual bool UpdateEvent( const Event& event );
     virtual bool DeleteEvent( const std::string& uuid );
+    virtual void LoadEvents( const std::string& events );
+    virtual void SaveEvents() const;
 
     /// controls::Server_ABC methods
     virtual void OnReadyServer();
@@ -57,6 +59,8 @@ public:
     virtual void OnReadEvent( const Event& event, const Error& error );
     virtual void OnUpdatedEvent( const Event& event, const Error& error );
     virtual void OnDeletedEvent( const std::string& uuid, const Error& error );
+    virtual void OnLoadedEvents( const Error& error );
+    virtual void OnSavedEvents( const std::string& uuid, const Error& error );
     virtual void OnSelectedEvent( const Event& event );
     virtual void OnDeselectedEvent();
     virtual void OnActivatedEvent( const Event& event );

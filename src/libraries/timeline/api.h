@@ -125,6 +125,8 @@ public slots:
     virtual bool ReadEvent( const std::string& uuid ) = 0;
     virtual bool UpdateEvent( const timeline::Event& event ) = 0;
     virtual bool DeleteEvent( const std::string& uuid ) = 0;
+    virtual void LoadEvents( const std::string& events ) = 0;
+    virtual void SaveEvents() const = 0;
 
     // Public signals
 signals:
@@ -134,6 +136,8 @@ signals:
     void GetEvent( const timeline::Event& event, const timeline::Error& error );
     void UpdatedEvent( const timeline::Event& event, const timeline::Error& error );
     void DeletedEvent( const std::string& uuid, const timeline::Error& error );
+    void LoadedEvents( const timeline::Error& error );
+    void SavedEvents( const std::string& events, const timeline::Error& error );
     void SelectedEvent( boost::shared_ptr< timeline::Event > event );
     void ActivatedEvent( const timeline::Event& event );
     void ContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time );

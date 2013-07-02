@@ -28,6 +28,16 @@ Controller::Controller( const Configuration& cfg )
     ui_->setupUi( &main_ );
     ui_->toolBar->addWidget( &url_ );
     url_.setText( QString::fromStdString( cfg.url ) );
+
+    loadEventsDialog_.setWindowTitle( "Load events dialog" );
+    loadEventsDialog_.setMinimumSize( 400, 500 );
+    QVBoxLayout* layout = new QVBoxLayout( &loadEventsDialog_ );
+    QPushButton* okButton = new QPushButton();
+    okButton->setText( "Load" );
+    layout->addWidget( &loadEventsText_ );
+    layout->addWidget( okButton );
+    QObject::connect( okButton, SIGNAL( clicked() ), this, SLOT( OnLoadEvents() ) );
+
     Configuration next = cfg;
     next.widget = ui_->centralwidget;
     ctx_ = timeline::MakeServer( next );
@@ -36,12 +46,16 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
     QObject::connect( ui_->actionTest, SIGNAL( triggered() ), this, SLOT( OnTestCrud() ) );
     QObject::connect( ui_->actionReadEvents, SIGNAL( triggered() ), ctx_.get(), SLOT( ReadEvents() ) );
+    QObject::connect( ui_->actionLoad, SIGNAL( triggered() ), this, SLOT( OnLoadActionTriggered() ) );
+    QObject::connect( ui_->actionSave, SIGNAL( triggered() ), ctx_.get(), SLOT( SaveEvents() ) );
 
     QObject::connect( &url_, SIGNAL( editingFinished() ), this, SLOT( OnLoad() ) );
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyDown( int ) ), this, SLOT( OnKeyDown( int ) ) );
@@ -245,6 +259,44 @@ void Controller::OnGetEvents( const timeline::Events& events, const timeline::Er
     {
         list.addItem( QString( "Event %1: %2: %3" ).arg( i++ ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
     }
+    dialog.exec();
+}
+
+void Controller::OnLoadEvents()
+{
+    ctx_->LoadEvents( loadEventsText_.toPlainText().toStdString() );
+    loadEventsDialog_.hide();
+}
+
+void Controller::OnLoadActionTriggered()
+{
+    if( !command_.empty() )
+        return;
+    loadEventsDialog_.show();
+}
+
+void Controller::OnLoadedEvents( const timeline::Error& error )
+{
+    if( error.code != EC_OK )
+        ui_->statusBar->showMessage( QString( "An error occured during while receiving GetEvents: %1" ).arg( error.text.c_str() ) );
+    ui_->statusBar->showMessage( "Events successfully loaded" );
+}
+
+void Controller::OnSavedEvents( const std::string& events, const timeline::Error& error )
+{
+    if( !command_.empty() )
+        return;
+    if( error.code != EC_OK )
+        ui_->statusBar->showMessage( QString( "An error occured during while receiving GetEvents: %1" ).arg( error.text.c_str() ) );
+    ui_->statusBar->showMessage( "Events successfully saved" );
+
+    QDialog dialog( &main_ );
+    dialog.setMinimumSize( 400, 500 );
+    QVBoxLayout layout( &dialog );
+    QTextEdit textEdit;
+    layout.addWidget( &textEdit );
+    textEdit.setPlainText( QString::fromStdString( events ) );
+    textEdit.setReadOnly( true );
     dialog.exec();
 }
 
@@ -567,6 +619,70 @@ int Controller::Update( const std::vector< std::string >& args )
     return 0;
 }
 
+namespace
+{
+    struct CheckSaveLoadEvents : public OnSignal_ABC
+    {
+        CheckSaveLoadEvents( QEventLoop& loop )
+            : OnSignal_ABC()
+            , loop_( loop )
+        {
+            // NOTHING
+        }
+
+        void OnLoadedEvents( const timeline::Error& error )
+        {
+            error_ = error;
+            QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
+        }
+        void OnSavedEvents( const std::string& events, const timeline::Error& error )
+        {
+            events_  = events;
+            error_ = error;
+            QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
+        }
+        QEventLoop& loop_;
+        std::string events_;
+        Error error_;
+    };
+
+    size_t GetSize( Server_ABC& ctx )
+    {
+        const auto pair = ReadEvents( ctx );
+        return pair.first.size();
+    }
+}
+
+int Controller::SaveLoad( const std::vector< std::string >& args )
+{
+    if( args.size() != 0 )
+        throw std::runtime_error( "usage: saveload" );
+    std::string savedEvents = "";
+    {
+        QEventLoop wait;
+        CheckSaveLoadEvents saver( wait );
+        QObject::connect( ctx_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), &saver, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
+        ctx_->SaveEvents();
+        wait.exec();
+        Check( saver.error_ );
+        savedEvents = saver.events_;
+    }
+    if( savedEvents.empty() )
+        throw std::runtime_error( "Save events failed" );
+    ResetEvents( *this, *ctx_, Events() );
+    if( GetSize( *ctx_ ) > 0 )
+        throw std::runtime_error( "Reset events failed" );
+    {
+        QEventLoop wait;
+        CheckSaveLoadEvents loader( wait );
+        QObject::connect( ctx_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), &loader, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
+        ctx_->LoadEvents( savedEvents );
+        wait.exec();
+        Check( loader.error_ );
+    }
+    return 0;
+}
+
 int Controller::Execute( const std::string& command, const std::vector< std::string >& args )
 {
     command_ = command;
@@ -581,5 +697,7 @@ int Controller::Execute( const std::string& command, const std::vector< std::str
         return Read( args );
     if( command == "update" )
         return Update( args );
+    if( command == "saveload" )
+        return SaveLoad( args );
     throw std::runtime_error( "unexpected command " + command );
 }
