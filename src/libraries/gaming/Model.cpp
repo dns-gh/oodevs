@@ -61,7 +61,7 @@
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config )
+Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config, kernel::Profile_ABC& profile )
     : EntityResolverFacade( static_cast< kernel::Model_ABC& >( *this ) )
     , controllers_( controllers )
     , static_( staticModel )
@@ -77,7 +77,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel, simulation ) )
     , fireFactory_( *new FireFactory( *this ) )
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
-    , fireResultsFactory_( *new FireResultFactory( *this, simulation ) )
+    , fireResultsFactory_( *new FireResultFactory( *this, simulation, profile ) )
     , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
     , actionParameterFactory_( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_, controllers_.controller_ ) )
     , actionFactory_( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
@@ -254,9 +254,9 @@ void Model::Purge()
     limits_.Purge();
     logistics_.Purge();
     fires_.Purge();
+    knowledgeGroups_.Purge();
     agents_.Purge();
     objects_.Purge();
-    knowledgeGroups_.Purge();
     teams_.Purge();
     meteo_.Purge();
 }

@@ -94,7 +94,10 @@ void Explosions::DoUpdate( const sword::StopCrowdFire& message )
 // -----------------------------------------------------------------------------
 void Explosions::Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer )
 {
-    agentExplosions_.push_back( factory_.CreateFireResult( message, firer ) );
+    AgentFireResult* result = factory_.CreateFireResult( message, firer );
+    if( !result )
+        return;
+    agentExplosions_.push_back( result );
     if( agentExplosions_.size() > 20 )
     {
         delete agentExplosions_.front();
@@ -108,7 +111,10 @@ void Explosions::Update( const sword::UnitFireDamages& message, const kernel::En
 // -----------------------------------------------------------------------------
 void Explosions::Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer )
 {
-    populationExplosions_.push_back( factory_.CreateFireResult( message, firer ) );
+    PopulationFireResult* result = factory_.CreateFireResult( message, firer );
+    if( !result )
+        return;
+    populationExplosions_.push_back( result );
     if( populationExplosions_.size() > 20 )
     {
         delete populationExplosions_.front();

@@ -13,10 +13,12 @@
 #include "AgentsModel.h"
 #include "AvailableProfile.h"
 #include "Model.h"
+#include "PointingKnowledges.h"
 #include "Services.h"
 #include "Simulation.h"
 #include "TeamsModel.h"
 #include "Tools.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
@@ -245,6 +247,50 @@ bool Profile::CanControlTime() const
 bool Profile::IsVisible( const Entity_ABC& entity ) const
 {
     return IsInHierarchy( entity, readEntities_, false );
+}
+
+namespace
+{
+    class ProfileVisitor
+    {
+    public:
+        ProfileVisitor( const kernel::Entity_ABC& entity, const Profile& profile )
+            : entity_( entity )
+            , profile_( profile )
+            , visible_( false )
+        {
+        }
+        void operator ()( const Knowledge_ABC* knowledge ) const
+        {
+            if( knowledge && knowledge->GetEntity() == &entity_ )
+                visible_ |= profile_.IsKnowledgeVisible( *knowledge );
+        }
+        bool IsPerceived() const
+        {
+            return visible_;
+        }
+    private:
+        ProfileVisitor( const ProfileVisitor& );
+        ProfileVisitor& operator = ( const ProfileVisitor& );
+        const kernel::Entity_ABC& entity_;
+        const Profile& profile_;
+        mutable bool visible_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsPerceived
+// Created: LDC 2013-07-02
+// -----------------------------------------------------------------------------
+bool Profile::IsPerceived( const kernel::Entity_ABC& entity ) const
+{
+    if( IsVisible( entity ) )
+        return true;
+    ProfileVisitor visitor( entity, *this );
+    const PointingKnowledges* pointingKnowledges = entity.Retrieve< PointingKnowledges >();
+    if( pointingKnowledges )
+        pointingKnowledges->Apply( visitor );
+    return visitor.IsPerceived();
 }
 
 // -----------------------------------------------------------------------------

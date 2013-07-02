@@ -83,6 +83,7 @@ public:
     virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& entity ) const;
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsPerceived( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

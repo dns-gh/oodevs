@@ -39,6 +39,8 @@ public:
     virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const = 0;
     virtual bool IsSupervision() const = 0;
     virtual bool CanControlTime() const = 0;
+    /** Returns true is either the entity or a knowledge of this entity is visible. */
+    virtual bool IsPerceived( const kernel::Entity_ABC& ) const = 0;
     //@}
 };
 

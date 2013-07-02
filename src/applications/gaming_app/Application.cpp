@@ -131,8 +131,8 @@ void Application::Initialize( int /*argc*/, char** /*argv*/ )
     network_.reset( new Network( *services_, *simulation_, *logger_, config_->GetNetworkTimeOut() ) );
     rcResolver_.reset( new RcEntityResolver( *controllers_ ) );
     staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_.get(), *simulation_ ) );
-    model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_ ) );
     profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin(), config_->IsLoginInCommandLine() ) );
+    model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_, *profile_ ) );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, *rcResolver_.get(), expiration_ );
     mainWindow_->show();

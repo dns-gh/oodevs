@@ -802,6 +802,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\LogisticHelpers.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PointingKnowledges.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1520,6 +1523,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\LogisticHelpers.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PointingKnowledges.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

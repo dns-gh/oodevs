@@ -61,6 +61,15 @@ bool ProfileFilter::IsVisible( const Entity_ABC& entity ) const
     return ( IsInKnowledgeGroup( entity ) || IsObjectOfSameTeam( entity ) || IsInHierarchy( entity ) ) && forward_.IsVisible( entity );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsPerceived
+// Created: LDC 2013-07-02
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsPerceived( const kernel::Entity_ABC& entity ) const
+{
+    return forward_.IsPerceived( entity );
+}
+
 namespace
 {
     bool IsVisibleFromTeam( const Knowledge_ABC& knowledge, const Entity_ABC* entity )

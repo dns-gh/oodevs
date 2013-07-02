@@ -87,10 +87,10 @@ private:
     std::auto_ptr< kernel::Controllers > controllers_;
     std::auto_ptr< RcEntityResolver_ABC > rcResolver_;
     std::auto_ptr< StaticModel > staticModel_;
+    std::auto_ptr< Profile > profile_;
     std::auto_ptr< Model > model_;
     std::auto_ptr< Services > services_;
     std::auto_ptr< Simulation > simulation_;
-    std::auto_ptr< Profile > profile_;
     std::auto_ptr< kernel::Workers > workers_;
     std::auto_ptr< LoggerProxy > logger_;
     std::auto_ptr< Network > network_;

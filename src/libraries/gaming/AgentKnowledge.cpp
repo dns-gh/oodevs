@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "AgentKnowledge.h"
 #include "Diplomacies.h"
+#include "PointingKnowledges.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
@@ -56,6 +57,7 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const sword::Un
     fullSymbol_  = realAgent_.GetType().GetSymbol();
     UpdateSymbol();
     RegisterSelf( *this );
+    realAgent_.Get< PointingKnowledges >().Add( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,6 +66,9 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const sword::Un
 // -----------------------------------------------------------------------------
 AgentKnowledge::~AgentKnowledge()
 {
+    PointingKnowledges* pointing = realAgent_.Retrieve< PointingKnowledges >();
+    if( pointing )
+        pointing->Remove( *this );
     Destroy();
 }
 

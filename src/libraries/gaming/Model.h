@@ -23,6 +23,7 @@ namespace kernel
     class AgentKnowledgeConverter_ABC;
     class Controllers;
     class ObjectKnowledgeConverter_ABC;
+    class Profile_ABC;
     class SymbolFactory;
     class Workers;
 }
@@ -50,6 +51,8 @@ class KnowledgeGroupsModel;
 class LimitsModel;
 class LogisticConsignFactory_ABC;
 class LogisticsModel;
+class MeteoModel;
+class NotesModel;
 class ObjectFactory_ABC;
 class ObjectKnowledgeFactory;
 class ObjectsModel;
@@ -59,18 +62,16 @@ class ScoreDefinitions;
 class ScoreModel;
 class Simulation;
 class StaticModel;
+class SurfaceFactory;
 class TacticalLineFactory;
 class TeamFactory_ABC;
 class TeamsModel;
 class UrbanBlockDetectionMap;
+class UrbanKnowledgeFactory;
 class UserProfileFactory_ABC;
 class UserProfilesModel;
 class WeatherModel;
-class UrbanKnowledgeFactory;;
 class UrbanModel;
-class SurfaceFactory;
-class NotesModel;
-class MeteoModel;
 
 // =============================================================================
 /** @class  Model
@@ -84,7 +85,7 @@ class Model : public kernel::Model_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config );
+             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config, kernel::Profile_ABC& profile );
     virtual ~Model();
     //@}
 
