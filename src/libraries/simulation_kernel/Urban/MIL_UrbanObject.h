@@ -70,7 +70,6 @@ public:
     
     //! @name Knowledge
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team );
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group );
     //@}
     

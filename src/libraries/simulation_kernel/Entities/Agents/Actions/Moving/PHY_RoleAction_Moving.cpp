@@ -390,7 +390,9 @@ bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object 
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::HasKnowledgeObject( const MIL_Object_ABC& object ) const
 {
-    return owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().HasKnowledgeObject( object );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        return container->HasKnowledgeObject( object );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

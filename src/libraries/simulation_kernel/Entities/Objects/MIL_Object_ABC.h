@@ -156,9 +156,8 @@ public:
 
     //! @name Knowledge
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team ) = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& group ) = 0;
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team, const DEC_Knowledge_Object& knowledge ) = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& group, const DEC_Knowledge_Object& knowledge ) = 0;
     //@}
 
     //! @name Manipulator

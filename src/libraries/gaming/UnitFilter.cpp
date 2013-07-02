@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "UnitFilter.h"
 #include "AgentKnowledges.h"
+#include "ObjectKnowledges.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -80,16 +81,32 @@ bool UnitFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
         return false;
     if( !entity_ || !cHierarchies_ )
         return true; //!forward_.IsSupervision(); $$$$ JSR 2011-12-06: revert temporaire bug 4464
-    const AgentKnowledges* filteredGroup = 0;
-    const AgentKnowledges* knowledgeToCheckGroup = 0;
-    for( const Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
-        filteredGroup = superior->Retrieve< AgentKnowledges >();
-    for( const Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowledgeToCheckGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
-        knowledgeToCheckGroup = superior->Retrieve< AgentKnowledges >();
-    if( filteredGroup && filteredGroup == knowledgeToCheckGroup )
-        return true;
-    if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() )
-        return true;
+    if( knowledge.GetEntity() && knowledge.GetEntity()->GetTypeName() == kernel::Object_ABC::typeName_ )
+    {
+        const ObjectKnowledges* filteredGroup = 0;
+        const ObjectKnowledges* knowledgeToCheckGroup = 0;
+        for( const Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
+            filteredGroup = superior->Retrieve< ObjectKnowledges >();
+        for( const Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowledgeToCheckGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
+            knowledgeToCheckGroup = superior->Retrieve< ObjectKnowledges >();
+        if( filteredGroup == knowledgeToCheckGroup && filteredGroup )
+            return true;
+        if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() )
+            return true;
+    }
+    else
+    {
+        const AgentKnowledges* filteredGroup = 0;
+        const AgentKnowledges* knowledgeToCheckGroup = 0;
+        for( const Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
+            filteredGroup = superior->Retrieve< AgentKnowledges >();
+        for( const Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowledgeToCheckGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
+            knowledgeToCheckGroup = superior->Retrieve< AgentKnowledges >();
+        if( filteredGroup && filteredGroup == knowledgeToCheckGroup )
+            return true;
+        if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() )
+            return true;
+    }
     if( &cHierarchies_->GetTop() == entity_ )
         return IsVisibleFromTeam( knowledge, entity_ );
     return false;

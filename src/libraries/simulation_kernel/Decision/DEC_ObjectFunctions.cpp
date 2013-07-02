@@ -19,6 +19,8 @@
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
@@ -162,7 +164,15 @@ void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_O
         {
             const MIL_Army_ABC* army = pKnowledge->GetArmy();
             if( army )
-                army->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
+            {
+                auto knowledges = pKnowledge->GetArmy()->GetKnowledgeGroups();
+                for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+                {
+                    auto bbKg = it->second->GetKnowledge();
+                    if( bbKg )
+                        bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+                }
+            }
             ( *pObject )().Destroy();
         }
     }

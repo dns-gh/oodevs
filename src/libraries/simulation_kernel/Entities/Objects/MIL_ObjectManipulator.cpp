@@ -41,9 +41,10 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Objects/BridgingCapacity.h"
 #include "Entities/Objects/ConstructionAttribute.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "tools/Iterator.h"
 #include "Tools/MIL_Tools.h"
@@ -137,8 +138,18 @@ void MIL_ObjectManipulator::Destroy()
     {
         // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
         const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
-        for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
-            it.NextElement().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object_ );
+        auto it = armies.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const MIL_Army_ABC& army = it.NextElement();
+            auto kgs = army.GetKnowledgeGroups();
+            for( auto kgIt = kgs.begin(); kgIt != kgs.end(); ++kgIt )
+            {
+                auto bbKg = const_cast< DEC_KnowledgeBlackBoard_KnowledgeGroup* >( kgIt->second->GetKnowledge() );
+                if( bbKg )
+                    bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( object_ );
+            }
+        }
     }
 }
 

@@ -27,8 +27,10 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/QueryValidity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/ClientSenders.h"
@@ -175,13 +177,21 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions
         throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges; //T_KnowledgeObjectDiaIDVector
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pZone );
-    for ( IT_KnowledgeObject it = knowledges.begin(); it != knowledges.end(); )
+
+    auto knowledgeGroups = caller.GetArmy().GetKnowledgeGroups();
+    for( auto it = knowledgeGroups.begin(); it != knowledgeGroups.end(); ++it )
     {
-        if( ! IsKnowledgeObjectValid( *it ) )
-            it = knowledges.erase( it );
-        else
-            ++it;
+        if( it->second->IsJammed() )
+            continue;
+        auto bbKg = it->second->GetKnowledge();
+        if( bbKg )
+        {
+            std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledgesTmp; //T_KnowledgeObjectDiaIDVector
+            bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, *pZone );
+            for( auto it = knowledgesTmp.begin(); it != knowledgesTmp.end(); ++it )
+                if( IsKnowledgeObjectValid( *it) )
+                    knowledges.push_back( *it );
+        }
     }
     return knowledges;
 }

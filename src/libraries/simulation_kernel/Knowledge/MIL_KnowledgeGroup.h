@@ -127,7 +127,7 @@ public:
     MIL_Army_ABC& GetArmy() const;
     const T_AutomateVector& GetAutomates() const;
     const DEC_KnowledgeBlackBoard_KnowledgeGroup* GetKnowledge() const;
-    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
+    DEC_BlackBoard_CanContainKnowledgeObject* GetKnowledgeObjectContainer() const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int ) const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int ) const;
@@ -153,7 +153,7 @@ public:
     void ApplyOnKnowledgesPerception( int currentTimeStep );
     // LTO end
 
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( MIL_Object_ABC& objectKnown );
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_Agent_ABC& perceived );
     DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
     void UpdateKnowledgeFromTransported( const MIL_Agent_ABC& perceived );
@@ -171,6 +171,13 @@ public:
         if( knowledgeBlackBoard_ )
             knowledgeBlackBoard_->ApplyOnKnowledgesPopulation( fct );
     }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
+    {
+        if( knowledgeBlackBoard_ )
+            knowledgeBlackBoard_->ApplyOnKnowledgesObject( fct );
+    }
     //@}
 
 private:
@@ -183,6 +190,7 @@ private:
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );
+    void CreateKnowledgeFromObjectPerception( boost::shared_ptr< DEC_Knowledge_Object >& object );
 
     void ApplyOnKnowledgesPopulationPerception( int currentTimeStep );
     void ApplyOnKnowledgesAgentPerception( int currentTimeStep );

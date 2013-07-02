@@ -351,9 +351,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\ModelAdapter.cpp">
       <Filter>Source Files\Model\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectKnowledgeConverter.cpp">
-      <Filter>Source Files\Model\Adapters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\KnowledgeGroup.cpp">
       <Filter>Source Files\Model\KnowledgeGroup</Filter>
     </ClCompile>
@@ -765,9 +762,6 @@
       <Filter>Source Files\Model\Adapters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\ModelAdapter.h">
-      <Filter>Source Files\Model\Adapters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectKnowledgeConverter.h">
       <Filter>Source Files\Model\Adapters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\KnowledgeGroup.h">

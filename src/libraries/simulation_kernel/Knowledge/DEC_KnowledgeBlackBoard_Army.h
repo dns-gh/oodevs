@@ -16,21 +16,15 @@
 
 namespace sword
 {
-    class ObjectKnowledgeId;
     class CrowdKnowledgeId;
     class UnitKnowledgeId;
     class UrbanObjectKnowledgeId;
 }
 
-class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_BlackBoard_CanContainKnowledgeUrban;
-class DEC_KS_ObjectKnowledgeSynthetizer;
 class DEC_KS_UrbanKnowledgeSynthetizer;
 class MIL_Army_ABC;
-class MIL_Object_ABC;
-class MIL_ObjectFilter;
 class TER_Polygon;
-class TER_Localisation;
 class KnowledgesVisitor_ABC;
 
 // =============================================================================
@@ -54,17 +48,10 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
-    //! @name CheckPoints
-    //@{
-    virtual void Update( int currentTimeStep );
-    //@}
-
     //! @name Accessors
     //@{
     MIL_Army_ABC& GetArmy() const;
-    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
     DEC_BlackBoard_CanContainKnowledgeUrban& GetKnowledgeUrbanContainer() const;
-    DEC_KS_ObjectKnowledgeSynthetizer& GetKsObjectKnowledgeSynthetizer() const;
     DEC_KS_UrbanKnowledgeSynthetizer& GetKsUrbanKnowledgeSynthetizer() const;
     //@}
 
@@ -93,23 +80,14 @@ public:
     //! @name Queries
     //@{
     void Finalize();
-    void GetObjects( T_KnowledgeObjectVector& container ) const; // only for population
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const; ; // only for population
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromObjectID( unsigned int nID ) const; // only for population
-    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone ); // only for population
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& object ) const; // only for population
-    void GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
     void GetUrbanObjects( T_UrbanObjectVector& container ) const;
-    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
 private:
     MIL_Army_ABC* pArmy_;
     // Containers
-    DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;
     DEC_BlackBoard_CanContainKnowledgeUrban* pKnowledgeUrbanContainer_;
     // Knowledge sources
-    DEC_KS_ObjectKnowledgeSynthetizer* pKsObjectKnowledgeSynthetizer_;
     DEC_KS_UrbanKnowledgeSynthetizer* pKsUrbanKnowledgeSynthetizer_;
 };
 

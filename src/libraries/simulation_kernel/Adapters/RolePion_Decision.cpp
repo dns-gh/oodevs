@@ -270,7 +270,8 @@ namespace
     {
         double rDistanceCollision = 0;
         KnowledgeCache cache;
-        agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( cache.objectsToAvoid_, agent, filter, bCheckBypassed );
+        if( DEC_BlackBoard_CanContainKnowledgeObject* container = agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+            container->GetObjectsAtInteractionHeight( cache.objectsToAvoid_, agent, filter, bCheckBypassed );
         std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
         const SWORD_Model* pObject = 0;
         if( cache.objectsToAvoid_.empty() || ! GET_HOOK( ComputeAgentFutureObjectCollision )( core::Convert( &model ), core::Convert( &model[ "entities" ][ agent.GetID() ] ), &cache, rDistanceCollision, &pObject ) )

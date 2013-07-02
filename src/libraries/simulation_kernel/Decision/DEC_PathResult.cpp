@@ -175,7 +175,6 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
     std::size_t hullSize = pathHull.GetBorderPoints().size();
     bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hullPoints.size();
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
-    std::auto_ptr< const TER_Localisation > pScaledObjectLocation;
     for( auto itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
@@ -190,8 +189,8 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
                 if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, agent ) )
                     continue;
             }
-            const_cast< TER_Localisation* >( pObjectLocation )->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
-            pScaledObjectLocation.reset( pObjectLocation );
+            if( pObjectLocation->GetType() != TER_Localisation::eNone )
+                const_cast< TER_Localisation* >( pObjectLocation )->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
         }
         else
             pObjectLocation = &pKnowledge->GetLocalisation();

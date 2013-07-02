@@ -99,7 +99,6 @@ public:
     virtual void CleanKnowledges();
     virtual void CleanDeletedAgentKnowledges();
     virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& );
-    virtual void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Hierarchy

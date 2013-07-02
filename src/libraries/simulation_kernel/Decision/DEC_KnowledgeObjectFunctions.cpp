@@ -164,7 +164,8 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     filter.Set( "nbc zone" );
     filter.Set( "nbc cloud" );
     T_KnowledgeObjectVector knownObjects;
-    callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjects( knownObjects, filter );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetObjects( knownObjects, filter );
     for( auto it = knownObjects.begin(); it != knownObjects.end(); ++it )
         if( *it && location->IsIntersecting( ( *it )->GetLocalisation() ) )
         {

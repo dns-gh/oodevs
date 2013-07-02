@@ -396,8 +396,9 @@ namespace
     }
     void UpdateObjectKnowledgeGroupBlackBoard( core::Model& knowledges, const MIL_KnowledgeGroup& group )
     {
-        BOOST_FOREACH( const auto& object, group.GetKnowledgeObjectContainer().GetKnowledgeObjects() )
-            UpdateObjectKnowledge( knowledges[ "objects" ][ object.second->GetID() ], object.second );
+        if( DEC_BlackBoard_CanContainKnowledgeObject* container = group.GetKnowledgeObjectContainer() )
+            BOOST_FOREACH( const auto& object, container->GetKnowledgeObjects() )
+                UpdateObjectKnowledge( knowledges[ "objects" ][ object.second->GetID() ], object.second );
     }
     void UpdateKnowledgeGroup( const core::Model& model,
         core::Model& knowledges, core::Model& enemies, core::Model& friends, boost::shared_ptr< MIL_KnowledgeGroup > group )

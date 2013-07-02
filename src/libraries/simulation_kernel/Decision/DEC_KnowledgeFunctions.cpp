@@ -292,7 +292,7 @@ void DEC_KnowledgeFunctions::GetObservableKnowledge( sword::Brain& brain, const 
 
     //Object
     T_KnowledgeObjectVector objectsKn;
-    pion.GetArmy().GetKnowledge().GetObjects( objectsKn );
+    bbKg->GetKnowledgeObjectContainer().GetObjects( objectsKn );
 
     knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.object" ), objectsKn, true );
 
@@ -459,7 +459,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestObje
     std::vector< std::string > typeList;
     typeList.push_back( type );
     const MIL_ObjectFilter filter( typeList );
-    return callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetClosestObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        return container->GetClosestObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
@@ -471,7 +473,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestFrie
     std::vector< std::string > typeList;
     typeList.push_back( type );
     const MIL_ObjectFilter filter( typeList );
-    return callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetClosestFriendObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter, callerAgent.GetArmy() );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        return container->GetClosestFriendObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter, callerAgent.GetArmy() );
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
@@ -532,15 +536,16 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetDisasters( const MIL_Age
 {
     T_KnowledgeObjectDiaIDVector disasters;
     T_KnowledgeObjectDiaIDVector objects;
-    callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjects( objects );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetObjects( objects );
     for( auto it = objects.begin(); it != objects.end(); ++it )
         if( *it )
         {
-            const MIL_ObjectType_ABC& type = (*it)->GetType();
+            const MIL_ObjectType_ABC& type = ( *it )->GetType();
             if( type.GetCapacity< DisasterCapacity >() )
                 disasters.push_back( *it );
         }
-        return disasters;
+    return disasters;
 }
 
 // -----------------------------------------------------------------------------
@@ -552,7 +557,8 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsWithCapacityInZon
     if( !pLoc || !callerAgent )
         throw MASA_EXCEPTION( "invalid parameter." );
     T_KnowledgeObjectDiaIDVector knowledges;
-    callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
     return knowledges;
 }
 
@@ -564,7 +570,9 @@ bool DEC_KnowledgeFunctions::IsPositionInsideObjectOfType( const DEC_Decision_AB
 {
     if( !callerAgent || !pCenter )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer().IsPositionInsideObjectOfType( capacity, *pCenter );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        return container->IsPositionInsideObjectOfType( capacity, *pCenter );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

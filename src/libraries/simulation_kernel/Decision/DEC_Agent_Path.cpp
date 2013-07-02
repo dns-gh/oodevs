@@ -226,7 +226,8 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     {
         T_KnowledgeObjectVector knowledgesObject;
         MIL_PathObjectFilter filter;
-        queryMaker_.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );
+        if( DEC_BlackBoard_CanContainKnowledgeObject* container = queryMaker_.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+            container->GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );
 
         T_PointVector firstPointVector;
         if( !pathPoints.empty() )

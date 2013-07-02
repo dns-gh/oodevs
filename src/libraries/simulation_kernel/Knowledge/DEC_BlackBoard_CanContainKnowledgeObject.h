@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_BlackBoard_CanContainKnowledgeObject();
-             DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup );
+             DEC_BlackBoard_CanContainKnowledgeObject( MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~DEC_BlackBoard_CanContainKnowledgeObject();
     //@}
 
@@ -59,13 +59,13 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( MIL_Object_ABC& objectKnown );
     void DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
     void NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     void Prepare();
-    void UpdateUniversalObjects( const MIL_Army_ABC& team );
-    void Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup, const MIL_Army_ABC& teamKnowing  );
+    void UpdateUniversalObjects();
+    void Merge( const DEC_BlackBoard_CanContainKnowledgeObject& subGroup );
     void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter, bool bCheckBypassed = true );
     void GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles );
     void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
@@ -125,8 +125,8 @@ private:
     void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
     void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight );
     bool HasObjectsAtInteractionHeightCache( double rHeight ) const;
-    void UpdateUniversalObject( MIL_Object_ABC& object, const MIL_Army_ABC& team );
-    void CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge, const MIL_Army_ABC& teamKnowing );
+    void UpdateUniversalObject( MIL_Object_ABC& object );
+    void CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge );
     //@}
 
 private:

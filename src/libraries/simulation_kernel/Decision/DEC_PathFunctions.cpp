@@ -101,7 +101,8 @@ namespace
         boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
         double rDistanceCollision = 0.;
         T_KnowledgeObjectVector knowledges;
-        callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledges, callerAgent, filter, bCheckBypassed );
+        if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+            container->GetObjectsAtInteractionHeight( knowledges, callerAgent, filter, bCheckBypassed );
         if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( knowledges, rDistanceCollision, pObjectColliding, callerAgent, false, false ) )
         {
             result.first = false;

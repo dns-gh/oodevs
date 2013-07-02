@@ -2671,7 +2671,6 @@ void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
     std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > elements = knowledgeGroupFactory_->GetElements();
     for( auto it = elements.begin(); it != elements.end(); ++it )
         it->second->Accept( visitor );
-    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------

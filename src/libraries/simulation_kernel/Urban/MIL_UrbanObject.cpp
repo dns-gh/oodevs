@@ -489,15 +489,6 @@ void MIL_UrbanObject::WriteODB( xml::xostream& ) const
 // Name: MIL_UrbanObject::CreateKnowledge
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > MIL_UrbanObject::CreateKnowledge( const MIL_Army_ABC& )
-{
-    return boost::shared_ptr< DEC_Knowledge_Object >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::CreateKnowledge
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_UrbanObject::CreateKnowledge( const MIL_KnowledgeGroup& )
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();

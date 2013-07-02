@@ -40,9 +40,8 @@ MOCK_BASE_CLASS( MockMIL_Object_ABC, MIL_Object_ABC )
     MOCK_METHOD( ApplyDestruction, 2 );
     MOCK_METHOD( IsUniversal, 0 );
     MOCK_METHOD( CanBeSeen, 0 );
-    MOCK_METHOD( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_Army_ABC& ) , CreateKnowledgeArmy );
     MOCK_METHOD( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const boost::shared_ptr< MIL_KnowledgeGroup >& ) , CreateKnowledgeKnowledgeGroup );
-    MOCK_METHOD( CreateKnowledge, 2, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_Army_ABC&, const DEC_Knowledge_Object& ) , CreateKnowledgeArmyKnowledgeGroup );
+    MOCK_METHOD( CreateKnowledge, 2, boost::shared_ptr< DEC_Knowledge_Object >( const boost::shared_ptr< MIL_KnowledgeGroup >&, const DEC_Knowledge_Object& ) , CreateKnowledgeArmyKnowledgeGroup );
     MOCK_CONST_METHOD( operator(), 0, const MIL_ObjectManipulator_ABC&(), OperatorConst );
     MOCK_NON_CONST_METHOD( operator(), 0, MIL_ObjectManipulator_ABC&(), OperatorNonConst );
     MOCK_METHOD( OnUpdate, 1 );

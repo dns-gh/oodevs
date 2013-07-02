@@ -27,7 +27,9 @@
 #include "Entities/Objects/FloodCapacity.h"
 #include "Entities/Objects/BurnSurfaceCapacity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "MIL_AgentServer.h"
@@ -98,7 +100,19 @@ void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& /*pathP
     if( pathClass_.AvoidObjects() )
     {
         T_KnowledgeObjectVector knowledgesObject;
-        population_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+        auto knowledges = population_.GetArmy().GetKnowledgeGroups();
+        for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+        {
+            if( it->second->IsJammed() )
+                continue;
+            auto knowledge = it->second->GetKnowledge();
+            if( knowledge )
+            {
+                T_KnowledgeObjectVector knowledgesObjectTmp;
+                knowledge->GetKnowledgeObjectContainer().GetObjects( knowledgesObjectTmp );
+                knowledgesObject.insert( knowledgesObject.end(), knowledgesObjectTmp.begin(), knowledgesObjectTmp.end() );
+            }
+        }
         for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;

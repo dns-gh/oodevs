@@ -66,7 +66,8 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     T_KnowledgeObjectVector knowledges;
     T_KnowledgeObjectVector newKnowledges;
     MIL_PathObjectFilter filter;
-    pion_.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledges, pion_, filter );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = pion_.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetObjectsAtInteractionHeight( knowledges, pion_, filter );
     for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
     {
         double cost = pMainPath_->GetPathClass().GetObjectCost( (*it)->GetType() );

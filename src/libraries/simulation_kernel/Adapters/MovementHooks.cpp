@@ -438,7 +438,8 @@ namespace
     {
         T_KnowledgeObjectVector knowledges;
         MIL_AgentPion& pion = GET_PION( entity );
-        pion.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledges, pion, MIL_DangerousObjectFilter() );
+        if( DEC_BlackBoard_CanContainKnowledgeObject* container = pion.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+            container->GetObjectsAtInteractionHeight( knowledges, pion, MIL_DangerousObjectFilter() );
 
         if( knowledges != cache->objectsToAvoid_ )
         {

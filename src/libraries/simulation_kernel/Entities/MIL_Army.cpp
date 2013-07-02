@@ -248,13 +248,6 @@ void MIL_Army::WriteKnowledges( xml::xostream& xos ) const
             << xml::attribute( "id", GetID() )
             << xml::attribute( "name", GetName() );
 
-    xos     << xml::start( "objects" );
-    T_KnowledgeObjectVector knowledgeVector;
-    GetKnowledge().GetKnowledgesObject( knowledgeVector );
-    for( auto it = knowledgeVector.begin(); it != knowledgeVector.end(); ++it )
-        ( *it )->WriteKnowledges( xos );
-    xos     << xml::end;
-
     xos << xml::start( "knowledge-groups" );
     T_KnowledgeGroupMap knowledgeGroupMap = GetKnowledgeGroups();
     for( auto it = knowledgeGroupMap.begin(); it != knowledgeGroupMap.end(); ++it )
@@ -819,14 +812,4 @@ MIL_AutomateLOG* MIL_Army::FindBrainLogistic( unsigned int nID, AutomateFactory_
     if( pAutomate  )
         return pAutomate->GetBrainLogistic();
     return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Army::Accept
-// Created: LGY 2012-01-23
-// -----------------------------------------------------------------------------
-void MIL_Army::Accept( KnowledgesVisitor_ABC& visitor ) const
-{
-    if( pKnowledgeBlackBoard_ )
-        pKnowledgeBlackBoard_->Accept( visitor );
 }

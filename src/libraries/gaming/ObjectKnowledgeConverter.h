@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -27,6 +28,7 @@ namespace kernel
 class ObjectKnowledgeConverter : public kernel::ObjectKnowledgeConverter_ABC
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< kernel::ObjectKnowledge_ABC >
+                               , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -37,20 +39,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::KnowledgeGroup_ABC& owner ) const;
     virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Entity_ABC& owner ) const;
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner ) const;
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base, const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::KnowledgeGroup_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base, const kernel::KnowledgeGroup_ABC& owner ) const;
     virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base, const kernel::Entity_ABC& owner ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectKnowledgeConverter( const ObjectKnowledgeConverter& );            //!< Copy constructor
-    ObjectKnowledgeConverter& operator=( const ObjectKnowledgeConverter& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::ObjectKnowledge_ABC& );
@@ -60,9 +56,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< const kernel::Object_ABC*, const kernel::ObjectKnowledge_ABC* > T_KnowledgeMap;
-    typedef T_KnowledgeMap::const_iterator                                            CIT_KnowledgeMap;
-    typedef std::map< const kernel::Entity_ABC*, T_KnowledgeMap >                       T_Knowledges;
-    typedef T_Knowledges::const_iterator                                              CIT_Knowledges;
+    typedef std::map< const kernel::Entity_ABC*, T_KnowledgeMap > T_Knowledges;
     //@}
 
 private:

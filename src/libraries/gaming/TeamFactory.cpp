@@ -23,7 +23,6 @@
 #include "LogisticConsigns.h"
 #include "LogisticLinks.h"
 #include "Model.h"
-#include "ObjectKnowledges.h"
 #include "StaticModel.h"
 #include "StaticModel.h"
 #include "Team.h"
@@ -72,7 +71,6 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
     Team* result = new Team( message, controllers_ );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
-    result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
     result->Attach< kernel::Diplomacies_ABC > ( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result ) );

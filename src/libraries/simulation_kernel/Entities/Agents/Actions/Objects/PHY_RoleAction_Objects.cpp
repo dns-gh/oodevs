@@ -43,7 +43,7 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -104,7 +104,12 @@ MIL_Object_ABC* PHY_RoleAction_Objects::GetObject( const boost::shared_ptr< DEC_
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
     if( pObject )
         return pObject;
-    owner_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+    if( owner_->GetKnowledgeGroup() )
+    {
+        auto bbKg = owner_->GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
+            bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+    }
     return 0;
 }
 
@@ -170,7 +175,8 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
         pKnowledge.reset();
         return eImpossible;
     }
-    pKnowledge = owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetKnowledgeObject( *pObject );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        pKnowledge = container->GetKnowledgeObject( *pObject );
     if( instantaneous )
         return pKnowledge.get() ? eFinished : eRunning;
     else
@@ -186,9 +192,11 @@ int PHY_RoleAction_Objects::Destroy( const boost::shared_ptr< DEC_Knowledge_Obje
     if( !pKnowledge || !pKnowledge->IsValid() )
         return eImpossible;
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+    auto bbKg = owner_->GetKnowledgeGroup()->GetKnowledge();
     if( !pObject )
     {
-        owner_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+        if( bbKg )
+            bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
         return eImpossible;
     }
 
@@ -199,8 +207,8 @@ int PHY_RoleAction_Objects::Destroy( const boost::shared_ptr< DEC_Knowledge_Obje
     if( ret == eFinished )
     {
         const ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
-        if( construction && construction->GetState() == 0 )
-            owner_->GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+        if( bbKg && construction && construction->GetState() == 0 )
+            bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
     }
     else if( ret == eRunning )
         owner_->GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );

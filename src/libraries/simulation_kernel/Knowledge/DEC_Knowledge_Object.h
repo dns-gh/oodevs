@@ -77,6 +77,7 @@ public:
     //! @name Operations
     //@{
     void Recon( const MIL_Agent_ABC& agent );
+    void CopyFrom( const DEC_Knowledge_Object& object );
     virtual void Prepare();
     void Update( const PHY_PerceptionLevel& currentPerceptionLevel );
     void Update( const DEC_Knowledge_ObjectPerception& perception );

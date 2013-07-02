@@ -26,6 +26,7 @@ class DEC_BlackBoard_CanContainKnowledgeAgent;
 class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_BlackBoard_CanContainKnowledgePopulation;
 class DEC_KS_KnowledgeSynthetizer;
+class DEC_KS_ObjectKnowledgeSynthetizer;
 class DEC_KS_Sharing;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_PopulationCollision;
@@ -34,6 +35,7 @@ class DEC_Knowledge_AgentPerception;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
 class MIL_Object_ABC;
+class MIL_ObjectFilter;
 class MIL_Population;
 class TER_Localisation;
 class TER_Polygon;
@@ -67,15 +69,14 @@ public:
     DEC_KS_Sharing& GetKsSharing() const;
     DEC_BlackBoard_CanContainKnowledgeAgent& GetKnowledgeAgentContainer() const;
     DEC_BlackBoard_CanContainKnowledgePopulation& GetKnowledgePopulationContainer() const;
-    DEC_BlackBoard_CanContainKnowledgeObject* GetKnowledgeObjectContainer() const;
-    void UpdateKnowledgeObjectContainer();
+    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
+    DEC_KS_ObjectKnowledgeSynthetizer& GetKsObjectKnowledgeSynthetizer() const;
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Operations
     //@{
     virtual void Update( int currentTimeStep );
-    void Jam();
     //@}
 
     //! @name Network
@@ -136,12 +137,18 @@ public:
     boost::shared_ptr< DEC_Knowledge_Population > GetKnowledgePopulationFromID( unsigned int nID ) const;
     void GetPopulations( T_KnowledgePopulationDiaIDVector& container ) const;
     void GetPopulations( T_KnowledgePopulationVector& container ) const;
-     //@}
+
+    // Knowledge objects
+//     void GetObjects( T_KnowledgeObjectVector& container ) const; // only for population
+//     void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone ) const; // only for population
+//     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& object ) const; // only for population
+//     void GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
+    //@}
 
     //! @name Tools
     //@{
     void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const boost::shared_ptr< MIL_KnowledgeGroup >& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( MIL_Object_ABC& objectKnown );
     void ApplyOnKnowledgesPerception( int currentTimeStep );
     void UpdateUniversalObjects();
 
@@ -156,6 +163,12 @@ public:
     {
         GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( fct );
     }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
+    {
+        GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( fct );
+    }
     //@}
 
 private:
@@ -168,6 +181,7 @@ private:
     DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;
     // Knowledge sources
     DEC_KS_KnowledgeSynthetizer* pKsKnowledgeSynthetizer_;
+    DEC_KS_ObjectKnowledgeSynthetizer* pKsObjectKnowledgeSynthetizer_;
     DEC_KS_Sharing* pKsSharing_;
     //@}
 };

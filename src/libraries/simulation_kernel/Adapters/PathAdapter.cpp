@@ -322,7 +322,8 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
     {
         T_KnowledgeObjectVector knowledgesObject;
         MIL_DangerousObjectFilter filter;
-        pion.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledgesObject, pion, filter );
+        if( DEC_BlackBoard_CanContainKnowledgeObject* container = pion.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+            container->GetObjectsAtInteractionHeight( knowledgesObject, pion, filter );
         T_PointVector firstPointVector;
         GET_HOOK( GetFirstPoint )( GetID(), &AddPoint, &firstPointVector );
         for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )

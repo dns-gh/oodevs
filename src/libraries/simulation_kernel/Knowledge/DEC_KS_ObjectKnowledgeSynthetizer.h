@@ -15,11 +15,10 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Def.h"
 
-class DEC_KnowledgeBlackBoard_Army;
+class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_Object;
-class MIL_Army;
 class MIL_Object_ABC;
 
 // =============================================================================
@@ -36,7 +35,7 @@ class DEC_KS_ObjectKnowledgeSynthetizer : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_Army& blackBoard );
+    explicit DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard );
              DEC_KS_ObjectKnowledgeSynthetizer();
     virtual ~DEC_KS_ObjectKnowledgeSynthetizer();
     //@}
@@ -88,10 +87,10 @@ private:
 private:
     //! @name Members
     //@{
-    DEC_KnowledgeBlackBoard_Army* pBlackBoard_;
-    T_ObjectVector                ephemeralKnowledges_;
-    T_ObjectVector                objectsToForget_;
-    T_KnowledgeObjectVector       knowledgesObjectToForget_;
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
+    T_ObjectVector ephemeralKnowledges_;
+    T_ObjectVector objectsToForget_;
+    T_KnowledgeObjectVector knowledgesObjectToForget_;
     //@}
 };
 

@@ -84,7 +84,6 @@ void DEC_KS_KnowledgeSynthetizer::Talk( int currentTimeStep )
     pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( agentFunctorRelevance );
     boost::function< void( DEC_Knowledge_Population& ) > populationFunctor = boost::bind( &DEC_Knowledge_Population::UpdateRelevance, _1 );
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( populationFunctor );
-    pBlackBoard_->UpdateKnowledgeObjectContainer();
 }
 
 // =============================================================================
@@ -137,8 +136,7 @@ void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject( const boost::shared_ptr<
     if( knowledge->Clean() )
     {
         assert( pBlackBoard_ );
-        if( pBlackBoard_->GetKnowledgeObjectContainer() )
-            pBlackBoard_->GetKnowledgeObjectContainer()->DestroyKnowledgeObject( *knowledge ); // The knowledge will be deleted
+        pBlackBoard_->GetKnowledgeObjectContainer().DestroyKnowledgeObject( *knowledge ); // The knowledge will be deleted
     }
 }
 
@@ -157,8 +155,7 @@ void DEC_KS_KnowledgeSynthetizer::Clean()
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( methodPopulation );
 
     class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, const boost::shared_ptr< DEC_Knowledge_Object > > methodObject( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject, *this );
-    if( pBlackBoard_->GetKnowledgeObjectContainer() )
-        pBlackBoard_->GetKnowledgeObjectContainer()->ApplyOnKnowledgesObject( methodObject );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodObject );
 }
 
 // -----------------------------------------------------------------------------

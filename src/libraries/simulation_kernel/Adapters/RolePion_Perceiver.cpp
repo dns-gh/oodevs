@@ -578,7 +578,9 @@ bool RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 {
-    return owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().HasKnowledgeObject( object );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        return container->HasKnowledgeObject( object );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

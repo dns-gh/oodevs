@@ -51,12 +51,10 @@ void ParamObjectKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, 
     if( agent_ && !entity.GetType().IsUrban() && parameter_.HasGenObject( entity.GetType().GetType() ) )
     {
         const kernel::Hierarchies* hierarchies = agent_->Retrieve< kernel::CommunicationHierarchies >();
-        if( ! hierarchies )
-            hierarchies = agent_->Retrieve< kernel::TacticalHierarchies >();
-        const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() );
-        const kernel::ObjectKnowledge_ABC* knowledge = converter_->Find( entity, team );
-        if( knowledge )
-            EntityParameter< kernel::ObjectKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
+        if( hierarchies )
+            if( const kernel::Entity_ABC* superior = hierarchies->GetSuperior() )
+                if( const kernel::ObjectKnowledge_ABC* knowledge = converter_->Find( entity, *superior ) )
+                    EntityParameter< kernel::ObjectKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
     }
 }
 

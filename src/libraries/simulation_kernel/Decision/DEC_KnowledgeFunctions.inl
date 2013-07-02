@@ -89,7 +89,8 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T
         throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( filters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = caller.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
     return knowledges;
 }
 
@@ -104,7 +105,13 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& 
         throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pLoc );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, *pLoc );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
     return knowledges;
 }
 
@@ -119,7 +126,8 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsIntersectingInZon
         throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsIntersectingInZone( knowledges, filter, *pLoc );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = caller.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetObjectsIntersectingInZone( knowledges, filter, *pLoc );
     return knowledges;
 }
 
@@ -133,9 +141,15 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInFuseau( const T
     std::vector< std::string > types;
     types.push_back( type );
     MIL_ObjectFilter filter( types );
-    T_KnowledgeObjectDiaIDVector results;
-    caller.GetArmy().GetKnowledge().GetObjectsInZone( results, filter, caller.GetOrderManager().GetFuseau() );
-    return results;
+    T_KnowledgeObjectDiaIDVector knowledges;
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, caller.GetOrderManager().GetFuseau() );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
+    return knowledges;
 }
 
 // -----------------------------------------------------------------------------

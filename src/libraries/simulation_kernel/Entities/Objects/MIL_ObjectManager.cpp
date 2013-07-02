@@ -24,7 +24,8 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
@@ -190,7 +191,14 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
         universalObjects_.push_back( pObject );
     pObject->SendCreation();
     if( pObject->GetArmy() )
-        pObject->GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
+    {
+        auto knowledges = pObject->GetArmy()->GetKnowledgeGroups();
+        for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+        {
+            if( auto bbKg = it->second->GetKnowledge() )
+                bbKg->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
+         }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -445,7 +453,15 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
         {
             MIL_Army_ABC* army = pObject->GetArmy();
             if( army )
-                army->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
+            {
+                auto knowledges = army->GetKnowledgeGroups();
+                for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+                {
+                    auto bbKg = it->second->GetKnowledge();
+                    if( bbKg )
+                        bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
+                }
+            }
             ( *pObject )().Destroy();
         }
     }

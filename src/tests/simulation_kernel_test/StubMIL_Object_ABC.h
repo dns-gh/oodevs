@@ -50,9 +50,8 @@ public:
     virtual void ApplyDirectFire() const {};
     virtual void ApplyDestruction( const TER_Localisation& /*attritionSurface*/, const PHY_UrbanAttritionData& /*attrition*/ ) {};
     virtual bool IsUniversal() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; };
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& /*team*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& /*group*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& /*team*/, const DEC_Knowledge_Object& /*object*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& /*group*/, const DEC_Knowledge_Object& /*object*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual const MIL_ObjectManipulator_ABC& operator()() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual MIL_ObjectManipulator_ABC& operator()() { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const sword::MissionParameter_Value& /*asn*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }

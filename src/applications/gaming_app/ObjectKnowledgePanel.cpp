@@ -281,11 +281,10 @@ void ObjectKnowledgePanel::NotifyUpdated( const MineAttribute_ABC& element )
 // Name: ObjectKnowledgePanel::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Select( const Team_ABC* team )
+void ObjectKnowledgePanel::Select( const Team_ABC* /*team*/ )
 {
-    const ObjectKnowledges* k = team ? team->Retrieve< ObjectKnowledges >() : 0;
-    if( ! k || k != selected_ )
-        Select( k );
+    // Useful?
+    Select( static_cast< const ObjectKnowledges* >( 0 ) );
 }
 
 // -----------------------------------------------------------------------------

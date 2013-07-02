@@ -194,7 +194,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\MeteoModel.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledgeConverter.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\ModelAdapter.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectKnowledgeConverter.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\KnowledgeGroup.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Formation.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Inhabitant.cpp" />
@@ -339,7 +338,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\MeteoModel.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledgeConverter.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\ModelAdapter.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectKnowledgeConverter.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\KnowledgeGroup.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\KnowledgeGroup_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Formation.h" />

@@ -152,7 +152,8 @@ T_ResourceNetworkVector DEC_ResourceNetworkFunctions::GetResourceNetworksInZone(
     T_ResourceNetworkVector result;
     if( !caller || !pLocalisation )
         return result;
-    caller->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetResourceNetworksInZone( result, *pLocalisation );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = caller->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetResourceNetworksInZone( result, *pLocalisation );
     return result;
 }
 
@@ -165,7 +166,8 @@ T_ResourceNetworkVector DEC_ResourceNetworkFunctions::GetResourceNetworksInZoneB
     T_ResourceNetworkVector result;
     if( !caller || !pLocalisation )
         return result;
-    caller->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetResourceNetworksInZone( result, *pLocalisation, type );
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = caller->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetResourceNetworksInZone( result, *pLocalisation, type );
     return result;
 }
 

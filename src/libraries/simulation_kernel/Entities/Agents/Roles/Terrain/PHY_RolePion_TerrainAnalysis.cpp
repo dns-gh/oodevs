@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_TerrainAnalysis.h"
+#include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -22,10 +23,11 @@
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/MIL_BurningCells.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_AnalyzerManager.h"
-#include "simulation_kernel/MIL_AgentServer.h"
 #include <spatialcontainer/TerrainData.h>
 
 // -----------------------------------------------------------------------------
@@ -244,7 +246,9 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< 
         return true;
 
     T_KnowledgeObjectVector knowledgesObject;
-    owner_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+    auto bbKg = owner_.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetKnowledgeObjectContainer().GetObjects( knowledgesObject );
     if( knowledgesObject.empty() )
         return true;
 

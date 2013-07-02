@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
-#include "DEC_KnowledgeBlackBoard_Army.h"
+#include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Object.h"
 #include "MIL_AgentServer.h"
@@ -42,7 +42,17 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObject )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject()
-: pKnowledgeGroup_( 0 )
+    : pKnowledgeGroup_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject constructor
+// Created: LDC 2010-04-06
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_KnowledgeGroup* pKnowledgeGroup )
+    : pKnowledgeGroup_( pKnowledgeGroup )
 {
     // NOTHING
 }
@@ -55,25 +65,6 @@ DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObj
 {
     while( !knowledgeObjectFromIDMap_.empty() )
         DestroyKnowledgeObject( *knowledgeObjectFromIDMap_.begin()->second );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeObject constructor
-// Created: LDC 2010-04-06
-// Copies army's object blackboard.
-// -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup )
-: pKnowledgeGroup_( pKnowledgeGroup )
-{
-    DEC_BlackBoard_CanContainKnowledgeObject& copy = army.GetKnowledge().GetKnowledgeObjectContainer();
-    for( auto it = copy.objectMap_.begin(); it != copy.objectMap_.end(); ++it )
-    {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_->shared_from_this() ) );
-        if( ! objectMap_.insert( std::make_pair( it->first, knowledge ) ).second )
-            MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
-        if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
-            MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -112,20 +103,19 @@ void DEC_BlackBoard_CanContainKnowledgeObject::SetKnowledgeGroup( MIL_KnowledgeG
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
+boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( MIL_Object_ABC& objectKnown )
 {
+    auto it = objectMap_.find( &objectKnown );
+    if( it != objectMap_.end() )
+        return it->second;
     boost::shared_ptr< DEC_Knowledge_Object > knowledge;
     if( pKnowledgeGroup_ )
         knowledge = objectKnown.CreateKnowledge( pKnowledgeGroup_->shared_from_this() );
-    else
-        knowledge = objectKnown.CreateKnowledge( teamKnowing );
 
     if( knowledge )
     {
-        if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
-            MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
-        if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
-            MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+        objectMap_.insert( std::make_pair( &objectKnown, knowledge ) );
+        knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) );
     }
     return knowledge;
 }
@@ -286,21 +276,21 @@ void DEC_BlackBoard_CanContainKnowledgeObject::SetCachedObjectsAtInteractionHeig
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects
 // Created: LDC 2012-02-07
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects( const MIL_Army_ABC& team )
+void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects()
 {
     MIL_AgentServer::GetWorkspace().GetEntityManager().VisitUniversalObjects(
-        boost::bind( &DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject, this, _1, boost::cref( team ) ) );
+        boost::bind( &DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject
 // Created: LDC 2012-02-07
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject( MIL_Object_ABC& object, const MIL_Army_ABC& team )
+void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject( MIL_Object_ABC& object )
 {
     if( !HasKnowledgeObject( object ) )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( team, object );
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( object );
         knowledge->Update( PHY_PerceptionLevel::identified_ );
         knowledge->SkipPreparation();
     }
@@ -310,11 +300,11 @@ void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject( MIL_Object
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject
 // Created: LGY 2013-03-28
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge, const MIL_Army_ABC& teamKnowing )
+void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge )
 {
-    if( !knowledge.GetObjectKnown() )
+    if( !knowledge.GetObjectKnown() || !pKnowledgeGroup_ )
         return;
-    boost::shared_ptr< DEC_Knowledge_Object > copy = knowledge.GetObjectKnown()->CreateKnowledge( teamKnowing, knowledge );
+    boost::shared_ptr< DEC_Knowledge_Object > copy = knowledge.GetObjectKnown()->CreateKnowledge( pKnowledgeGroup_->shared_from_this(), knowledge );
     objectMap_.insert( std::make_pair( copy->GetObjectKnown(), copy ) );
     knowledgeObjectFromIDMap_.insert( std::make_pair( copy->GetID(), copy ) );
 }
@@ -324,20 +314,18 @@ void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::Merge
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup, const MIL_Army_ABC& teamKnowing )
+void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject& subGroup )
 {
-    if( !subGroup )
-        return;
-    for( auto itKnowledge = subGroup->objectMap_.begin(); itKnowledge != subGroup->objectMap_.end(); ++itKnowledge )
+    for( auto itKnowledge = subGroup.objectMap_.begin(); itKnowledge != subGroup.objectMap_.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeObject( *itKnowledge->first );
         boost::shared_ptr< DEC_Knowledge_Object > pSubKnowledge = itKnowledge->second;
         if( !pKnowledge.get() )
-            CreateKnowledgeObject( *pSubKnowledge, teamKnowing );
+            CreateKnowledgeObject( *pSubKnowledge );
         else if( pKnowledge->GetRelevance() < pSubKnowledge->GetRelevance() )
         {
             DestroyKnowledgeObject( *pKnowledge );
-            CreateKnowledgeObject( *pSubKnowledge, teamKnowing );
+            CreateKnowledgeObject( *pSubKnowledge );
         }
     }
 }
