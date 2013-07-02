@@ -66,11 +66,11 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     Runtime runtime( log, api );
 
     // Check the test executable is here
-    const std::string app = BOOST_RESOLVE( "res/echowin32.exe" );
+    const tools::Path app = testOptions.GetDataPath( "res/echowin32.exe" );
     boost::system::error_code err;
-    if( !boost::filesystem::is_regular_file( app, err ))
+    if( !app.IsRegularFile() )
         BOOST_FAIL("Cannot find echowin32.exe, please set --data_directory to the project root: "
-            + app );
+            + app.ToDebug() );
 
     // Call it with random arguments
     std::string randarg = boost::lexical_cast< std::string >( std::time( NULL ));
@@ -80,8 +80,8 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
         .parent_path().string();
     FileDeleter logDeleter(dir / boost::filesystem::path( "runtime_process_starts" + randarg + ".log" ));
     const std::string logs = logDeleter.path.string();
-    boost::shared_ptr< Process_ABC > p = runtime.Start( app, args, dir, logs );
-    BOOST_CHECK( p );
+    boost::shared_ptr< Process_ABC > p = runtime.Start( app.ToUTF8(), args, dir, logs );
+    BOOST_REQUIRE( p );
     BOOST_CHECK_GT( p->GetPid(), 0 );
     p->Join( 5000 );
 

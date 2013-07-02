@@ -173,7 +173,7 @@ namespace
     {
         Fixture()
             : fs        ( log )
-            , plugins   ( fs, BOOST_RESOLVE( "plugins" ) )
+            , plugins   ( fs, testOptions.GetDataPath( "plugins" ).ToUTF8() )
             , controller( plugins, log, agent, users, false )
         {
             // NOTHING

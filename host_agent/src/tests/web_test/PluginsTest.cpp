@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_CASE( plugin_directory_skips_invalid_root )
 {
     cpplog::OstreamLogger log( std::cout );
     FileSystem fs( log );
-    const std::string path = BOOST_RESOLVE( "missing" );
+    const std::string path = testOptions.GetDataPath( "missing" ).ToUTF8();
     Plugins plugins( fs, path );
     BOOST_CHECK( !plugins.Count() );
     BOOST_CHECK( plugins.GetNames( 0, INT_MAX ).empty() );
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE( plugin_directory_parses )
 {
     cpplog::OstreamLogger log( std::cout );
     FileSystem fs( log );
-    const std::string path = BOOST_RESOLVE( "plugins" );
+    const std::string path = testOptions.GetDataPath( "plugins" ).ToUTF8();
     static const char* valid_plugins[] =
     {
         "with spaces",
@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE( plugin_parse_bml )
 {
     cpplog::OstreamLogger log( std::cout );
     FileSystem fs( log );
-    const std::string path = BOOST_RESOLVE( "plugins" );
+    const std::string path = testOptions.GetDataPath( "plugins" ).ToUTF8();
     Plugins plugins( fs, path );
     const Plugins::T_Defaults expected = boost::assign::map_list_of
         ( "server/@url", "" )

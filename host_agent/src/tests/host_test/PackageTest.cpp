@@ -389,7 +389,7 @@ BOOST_AUTO_TEST_CASE( package_checksum_skip_unwanted_data )
     MockPool pool;
     MockLog log;
     runtime::FileSystem fs( log );
-    const Path root = BOOST_RESOLVE( "packages" );
+    const Path root = testOptions.GetDataPath( "packages" ).ToBoost();
     Package pkg( pool, fs, root, true );
     pkg.Parse();
 
@@ -445,7 +445,7 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
     MockPool pool;
     MockLog log;
     runtime::FileSystem fs( log );
-    const Path root = BOOST_RESOLVE( "packages" );
+    const Path root = testOptions.GetDataPath( "packages" ).ToBoost();
     Package pkg( pool, fs, root, true );
     pkg.Parse();
 
@@ -460,7 +460,7 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
     pkg.Download( chunker, *item );
 
     // uncompress package to random dir, and check it against source
-    const Path output = fs.MakeAnyPath( BOOST_RESOLVE( "." ) );
+    const Path output = fs.MakeAnyPath( testOptions.GetDataPath( "." ).ToBoost() );
     const auto erase = runtime::Scoper( boost::bind( &runtime::FileSystem_ABC::Remove, &fs, output ) );
     const Path pkgdir = output / "0";
     auto unpacker = fs.Unpack( pkgdir, buffer, 0 );

@@ -14,8 +14,9 @@
 
 #include <boost/test/auto_unit_test.hpp>
 #include <turtle/mock.hpp>
+#include <tools/BoostTest.h>
 
-std::string BOOST_RESOLVE( const std::string& filename );
+extern tools::TestOptions testOptions;
 
 struct StreamReader : public io::Reader_ABC
 {

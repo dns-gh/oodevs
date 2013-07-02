@@ -39,7 +39,7 @@ struct SubFixture
     SubFixture()
         : log( std::cout )
         , fs ( log )
-        , db ( boost::filesystem::unique_path( BOOST_RESOLVE( "%%%%%%%%.db" ) ) )
+        , db ( boost::filesystem::unique_path( testOptions.GetDataPath( "%%%%%%%%.db" ).ToBoost() ) )
     {
         // NOTHING
     }

@@ -104,7 +104,10 @@ target_link_libraries( cloud_client
 
 # runtime_test
 masa_add_target( runtime_test tests "tests/runtime_test" OPTIONS test )
-target_link_libraries( runtime_test runtime )
+target_link_libraries( runtime_test
+    runtime
+    ${TOOLS_LIBRARIES}
+)
 
 # host_test
 masa_add_target( host_test tests "tests/host_test" OPTIONS test )
@@ -119,4 +122,5 @@ masa_add_target( web_test tests "tests/web_test" OPTIONS test )
 target_link_libraries( web_test
     runtime
     web
+    ${TOOLS_LIBRARIES}
 )
