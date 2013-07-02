@@ -180,6 +180,19 @@ size_t tic::DeleteEvent( void* data, size_t size, const std::string& uuid )
     return Marshall( data, size, cmd );
 }
 
+size_t tic::LoadEvents( void* data, size_t size, const std::string& events )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_EVENTS_LOAD );
+    cmd.set_data( events );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::SaveEvents( void* data, size_t size )
+{
+    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_EVENTS_SAVE );
+}
+
 void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size )
 {
     ClientCommand cmd;
@@ -195,6 +208,8 @@ void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size
         case sdk::CLIENT_EVENT_READ_ONE: return handler.OnReadEvent( GetEvent( cmd.event() ).uuid );
         case sdk::CLIENT_EVENT_UPDATE:   return handler.OnUpdateEvent( GetEvent( cmd.event() ) );
         case sdk::CLIENT_EVENT_DELETE:   return handler.OnDeleteEvent( GetEvent( cmd.event() ).uuid );
+        case sdk::CLIENT_EVENTS_LOAD:    return handler.OnLoadEvents( cmd.data() );
+        case sdk::CLIENT_EVENTS_SAVE:    return handler.OnSaveEvents();
     }
 }
 
@@ -245,6 +260,23 @@ size_t tic::DeletedEvent( void* data, size_t size, const std::string& uuid, cons
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_DELETED );
     cmd.mutable_event()->set_uuid( uuid );
+    SetError( *cmd.mutable_error(), error );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::LoadedEvents( void* data, size_t size, const Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENTS_LOADED );
+    SetError( *cmd.mutable_error(), error );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::SavedEvents( void* data, size_t size, const std::string& events, const Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENTS_SAVED );
+    cmd.set_data( events );
     SetError( *cmd.mutable_error(), error );
     return Marshall( data, size, cmd );
 }
@@ -322,6 +354,8 @@ void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size
         case sdk::SERVER_EVENT_READ_ONE:              return handler.OnReadEvent( GetEvent( cmd.event() ), GetError( cmd.error() ) );
         case sdk::SERVER_EVENT_UPDATED:               return handler.OnUpdatedEvent( GetEvent( cmd.event() ), GetError( cmd.error() ) );
         case sdk::SERVER_EVENT_DELETED:               return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
+        case sdk::SERVER_EVENTS_LOADED:               return handler.OnLoadedEvents( GetError( cmd.error() ) );
+        case sdk::SERVER_EVENTS_SAVED:                return handler.OnSavedEvents( cmd.data(), GetError( cmd.error() ) );
         case sdk::SERVER_EVENT_SELECTED:              return handler.OnSelectedEvent( GetEvent( cmd.event() ) );
         case sdk::SERVER_EVENT_DESELECTED:            return handler.OnDeselectedEvent();
         case sdk::SERVER_EVENT_ACTIVATED:             return handler.OnActivatedEvent( GetEvent( cmd.event() ) );

@@ -57,6 +57,8 @@ public:
     virtual void OnReadEvent( const std::string& uuid );
     virtual void OnUpdateEvent( const Event& event );
     virtual void OnDeleteEvent( const std::string& uuid );
+    virtual void OnLoadEvents( const std::string& events );
+    virtual void OnSaveEvents();
 
 private:
     const Configuration cfg_;

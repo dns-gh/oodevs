@@ -22,6 +22,9 @@ enum ClientType
     CLIENT_EVENT_READ_ONE = 0x202;
     CLIENT_EVENT_UPDATE   = 0x203;
     CLIENT_EVENT_DELETE   = 0x204;
+    // serialization commands
+    CLIENT_EVENTS_LOAD    = 0x300;
+    CLIENT_EVENTS_SAVE    = 0x301;
 }
 
 enum ServerType
@@ -44,6 +47,9 @@ enum ServerType
     SERVER_KEYBOARD_KEYDOWN            = 0x300;
     SERVER_KEYBOARD_KEYPRESS           = 0x301;
     SERVER_KEYBOARD_KEYUP              = 0x302;
+    // serialization command
+    SERVER_EVENTS_LOADED               = 0x400;
+    SERVER_EVENTS_SAVED                = 0x401;
 }
 
 message Action
@@ -82,6 +88,7 @@ message ClientCommand
     optional ClientType type  = 1;
     optional Event      event = 2;
     optional string     url   = 3;
+    optional string     data  = 4;
 }
 
 message ServerCommand
@@ -92,4 +99,5 @@ message ServerCommand
     optional KeyBoardEvent keyboardevent = 4;
     repeated Event         events        = 5;
     optional string        time          = 6;
+    optional string        data          = 7;
 }

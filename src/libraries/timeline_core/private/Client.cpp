@@ -147,3 +147,13 @@ void Client::OnDeleteEvent( const std::string& uuid )
 {
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::DeleteEvent, uuid ) );
 }
+
+void Client::OnLoadEvents( const std::string& events )
+{
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::LoadEvents, events ) );
+}
+
+void Client::OnSaveEvents()
+{
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::SaveEvents ) );
+}

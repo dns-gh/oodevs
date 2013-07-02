@@ -154,6 +154,16 @@ bool Server::DeleteEvent( const std::string& uuid )
     return Write( *write_, boost::bind( &controls::DeleteEvent, _1, _2, uuid ) );
 }
 
+void Server::LoadEvents( const std::string& events )
+{
+    Write( *write_, boost::bind( &controls::LoadEvents, _1, _2, events ) );
+}
+
+void Server::SaveEvents() const
+{
+    Write( *write_, &controls::SaveEvents );
+}
+
 void Server::Run()
 {
     try
@@ -213,6 +223,16 @@ void Server::OnUpdatedEvent( const Event& event, const Error& error )
 void Server::OnDeletedEvent( const std::string& uuid, const Error& error )
 {
     emit DeletedEvent( uuid, error );
+}
+
+void Server::OnLoadedEvents( const Error& error )
+{
+    emit LoadedEvents( error );
+}
+
+void Server::OnSavedEvents( const std::string& events, const Error& error )
+{
+    emit SavedEvents( events, error );
 }
 
 void Server::OnSelectedEvent( const Event& event )
