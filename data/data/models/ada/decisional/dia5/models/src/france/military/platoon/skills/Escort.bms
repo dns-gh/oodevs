@@ -48,7 +48,7 @@ rootnode
        end
        if self.route then
             meKnowledge:sendNeedRoute( self.escortableUnit, false )
-            if distance < 50 then
+            if distance < 50 or integration.distance( meKnowledge, self.escortableUnit ) > 500 then
                 myself.speedModulation.escort =  0 -- l'unité qui escorte s'arrete
             elseif distance < 90 then
                 local mySpeed = DEC_Agent_GetCurrentSpeed(meKnowledge.source)
@@ -84,9 +84,6 @@ rootnode
                     Activate( skill.links.moveToward, 1, { entities  = { self.escortableUnit } } )
                 end
             end
-        end
-        if distance > 200 then
-           myself.speedModulation.escort =  0 -- l'unité qui escorte s'arrete
         end
     end,
 

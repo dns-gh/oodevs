@@ -17,6 +17,7 @@ rootnode
     -- them.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        myself.speedModulation.escort = 1 -- if escort, unit should move to engage enemy
         if skill.modifiers.effect == "destroy" then
             Activate( skill.links.destroy, 1, { entities = self.params.entities, positions = self.params.positions } )
         else -- neutralize
