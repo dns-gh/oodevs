@@ -157,7 +157,7 @@ void RawDataHazardContourGroup::RegisterAttributes()
 // Name: RawDataHazardContourGroup::SpatialChanged
 // Created: AHC 2013-06-28
 // -----------------------------------------------------------------------------
-void RawDataHazardContourGroup::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+void RawDataHazardContourGroup::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
 {
     if( pos.size() == 0 )
         return;
@@ -186,7 +186,7 @@ void RawDataHazardContourGroup::Attach( Agent_ABC* /*agent*/, unsigned long /*si
 // Name: RawDataHazardContourGroup::ResourcesChanged
 // Created: AHC 2013-06-28
 // -----------------------------------------------------------------------------
-void RawDataHazardContourGroup::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& /*res*/ )
+void RawDataHazardContourGroup::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& /*res*/ )
 {
     // NOTHING
 }

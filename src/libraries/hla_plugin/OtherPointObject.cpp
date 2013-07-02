@@ -173,7 +173,7 @@ void OtherPointObject::RegisterAttributes()
 // Name: OtherPointObject::SpatialChanged
 // Created: AHC 2013-01-22
 // -----------------------------------------------------------------------------
-void OtherPointObject::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+void OtherPointObject::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
 {
     if( pos.size() == 0 )
         return;
@@ -204,7 +204,7 @@ void OtherPointObject::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*/ )
 // Name: OtherPointObject::ResourcesChanged
 // Created: AHC 2013-01-22
 // -----------------------------------------------------------------------------
-void OtherPointObject::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& /*res*/ )
+void OtherPointObject::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& /*res*/ )
 {
     // NOTHING
 }

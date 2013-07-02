@@ -187,15 +187,15 @@ void BreachableLinearObject::RegisterAttributes()
 // Name: BreachableLinearObject::SpatialChanged
 // Created: AHC 2013-01-22
 // -----------------------------------------------------------------------------
-void BreachableLinearObject::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+void BreachableLinearObject::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
 {
     if( pos.size() < 2 )
         return;
     segments_.clear();
     for( std::size_t i = 0; i < pos.size()-1; ++i )
     {
-        TacticalObjectEventListener_ABC::T_PositionVector::const_reference start = pos[i];
-        TacticalObjectEventListener_ABC::T_PositionVector::const_reference end = pos[i+1];
+        ObjectLocationEventListener_ABC::T_PositionVector::const_reference start = pos[i];
+        ObjectLocationEventListener_ABC::T_PositionVector::const_reference end = pos[i+1];
         const rpr::WorldLocation wStart( start.latitude(), start.longitude(), 0 );
         const rpr::WorldLocation wEnd( end.latitude(), end.longitude(), 0 );
         const rpr::VelocityVector diff( (float)(wEnd.X()-wStart.X()), (float)(wEnd.Y()-wStart.Y()), (float)(wEnd.Z()-wStart.Z())) ;
@@ -243,7 +243,7 @@ void BreachableLinearObject::Attach( Agent_ABC* /*agent*/, unsigned long /*simId
 // Name: BreachableLinearObject::ResourcesChanged
 // Created: AHC 2013-01-22
 // -----------------------------------------------------------------------------
-void BreachableLinearObject::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& /*res*/ )
+void BreachableLinearObject::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& /*res*/ )
 {
     // NOTHING
 }

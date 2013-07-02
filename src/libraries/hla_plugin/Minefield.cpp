@@ -202,7 +202,7 @@ namespace
 // Name: Minefield::SpatialChanged
 // Created: AHC 2012-08-10
 // -----------------------------------------------------------------------------
-void Minefield::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+void Minefield::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
 {
     if( pos.size() == 0 )
         return;
@@ -241,7 +241,7 @@ void Minefield::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*/ )
 // Name: Minefield::ResourcesChanged
 // Created: AHC 2012-09-06
 // -----------------------------------------------------------------------------
-void Minefield::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& res )
+void Minefield::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& res )
 {
     mineTypes_ = res;
     attributes_->Update( "MineTypes",  Wrapper< std::vector< rpr::EntityType > >( mineTypes_ )  );

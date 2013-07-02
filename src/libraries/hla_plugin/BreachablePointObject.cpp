@@ -174,7 +174,7 @@ void BreachablePointObject::RegisterAttributes()
 // Name: BreachablePointObject::SpatialChanged
 // Created: AHC 2013-01-22
 // -----------------------------------------------------------------------------
-void BreachablePointObject::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+void BreachablePointObject::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
 {
     if( pos.size() == 0 )
         return;
@@ -205,7 +205,7 @@ void BreachablePointObject::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*
 // Name: BreachablePointObject::ResourcesChanged
 // Created: AHC 2013-01-22
 // -----------------------------------------------------------------------------
-void BreachablePointObject::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& /*res*/ )
+void BreachablePointObject::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& /*res*/ )
 {
     // NOTHING
 }

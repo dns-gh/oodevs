@@ -164,7 +164,7 @@ void CulturalFeature::RegisterAttributes()
 // Name: CulturalFeature::SpatialChanged
 // Created: AHC 2013-01-21
 // -----------------------------------------------------------------------------
-void CulturalFeature::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+void CulturalFeature::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
 {
     if( pos.size() == 0 )
         return;
@@ -196,7 +196,7 @@ void CulturalFeature::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*/ )
 // Name: CulturalFeature::ResourcesChanged
 // Created: AHC 2013-01-21
 // -----------------------------------------------------------------------------
-void CulturalFeature::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& /*res*/ )
+void CulturalFeature::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& /*res*/ )
 {
     // NOTHING
 }

@@ -51,6 +51,18 @@ TacticalObjectProxy::~TacticalObjectProxy()
     // NOTHING
 }
 
+namespace
+{
+    template< typename T, typename A0 >
+    void Apply( TacticalObjectEventListener_ABC& listener, void (T::*func)( const A0&), const A0& v0)
+    {
+        T* tmp = dynamic_cast< T* >( &listener );
+        if( tmp != 0 )
+        {
+            (tmp->*func)( v0 );
+        }
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: TacticalObjectProxy::Register
 // Created: AHC 2012-08-08
@@ -59,7 +71,8 @@ void TacticalObjectProxy::Register( TacticalObjectEventListener_ABC& listener )
 {
     listeners_.Register( listener );
     const dispatcher::Localisation::T_PositionVector& points( object_.GetLocalisation().GetPoints() );
-    listener.SpatialChanged( points );
+    Apply( listener, &ObjectLocationEventListener_ABC::SpatialChanged, points );
+    //listener.SpatialChanged( points );
     kernel::ObjectType::CIT_Capacities it( object_.GetType().CapacitiesBegin() );
 
     while( object_.GetType().CapacitiesEnd() != it && it->first != "constructor" )
@@ -78,7 +91,8 @@ void TacticalObjectProxy::Register( TacticalObjectEventListener_ABC& listener )
                     >> xml::list( "resource", boost::bind( &readResource, _1, boost::cref( dotationResolver_ ), boost::ref( resources ) ) )
                 >> xml::end
             >> xml::end;
-        listener.ResourcesChanged( resources );
+        //listener.ResourcesChanged( resources );
+        Apply( listener, &ObjectLocationEventListener_ABC::ResourcesChanged, resources );
     }
 }
 

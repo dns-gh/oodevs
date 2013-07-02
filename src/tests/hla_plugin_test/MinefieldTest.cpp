@@ -157,7 +157,7 @@ namespace
         retval.set_longitude( lon );
         return retval;
     }
-    bool CheckPerimeter( ::hla::T_SerializerPtr serializer, const TacticalObjectEventListener_ABC::T_PositionVector& p,
+    bool CheckPerimeter( ::hla::T_SerializerPtr serializer, const ObjectLocationEventListener_ABC::T_PositionVector& p,
         const rpr::WorldLocation& center )
     {
         static const double rPiOver180 = std::acos( -1. ) / 180.;
@@ -171,7 +171,7 @@ namespace
         geocoord::PlanarCartesian::Parameters params; params.SetOrigin( center.Latitude() * rPiOver180, center.Longitude() * rPiOver180);
         for( std::size_t i = 0; i< locs.size(); ++i )
         {
-            TacticalObjectEventListener_ABC::T_PositionVector::const_reference pRef = p[i];
+            ObjectLocationEventListener_ABC::T_PositionVector::const_reference pRef = p[i];
             std::vector< rpr::PerimeterPoint >::const_reference pExt = locs[i];
             geocoord::PlanarCartesian loc( pExt.X(), pExt.Y(), 0, params );
             geocoord::Geodetic wl( loc );
@@ -193,12 +193,17 @@ namespace
 }
 BOOST_FIXTURE_TEST_CASE( minefield_serializes_perimeter, RegisteredFixture )
 {
-    const TacticalObjectEventListener_ABC::T_PositionVector perimeter = boost::assign::list_of( createCoord( 30, 28 ) )
+    const ObjectLocationEventListener_ABC::T_PositionVector perimeter = boost::assign::list_of( createCoord( 30, 28 ) )
                                                                                               ( createCoord( 30, 28.1 ) )
                                                                                               ( createCoord( 30.1, 28.1 ) )
                                                                                               ( createCoord( 30.1, 28 ) );
+
+    BOOST_CHECK( listener != 0 );
+    ObjectLocationEventListener_ABC* locationListener = dynamic_cast< ObjectLocationEventListener_ABC* >( listener );
+    BOOST_CHECK( locationListener != 0 );
+
     rpr::WorldLocation center;
-    listener->SpatialChanged( perimeter );
+    locationListener->SpatialChanged( perimeter );
     MOCK_EXPECT( functor.Visit ).once().with( "MinefieldLocation", boost::bind( &GetValue< rpr::WorldLocation >, _1, boost::ref( center ) ) );
     MOCK_EXPECT( functor.Visit ).once().with( "PerimeterPointCoordinates", boost::bind( &CheckPerimeter, _1, boost::cref( perimeter ), boost::cref( center  ) ) );
     MOCK_EXPECT( functor.Visit );

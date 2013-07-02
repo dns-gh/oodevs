@@ -157,7 +157,7 @@ void ATP45HazardArea::RegisterAttributes()
 // Name: ATP45HazardArea::SpatialChanged
 // Created: AHC 2013-06-28
 // -----------------------------------------------------------------------------
-void ATP45HazardArea::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+void ATP45HazardArea::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
 {
     if( pos.size() == 0 )
         return;
@@ -185,7 +185,7 @@ void ATP45HazardArea::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*/ )
 // Name: ATP45HazardArea::ResourcesChanged
 // Created: AHC 2013-06-28
 // -----------------------------------------------------------------------------
-void ATP45HazardArea::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& /*res*/ )
+void ATP45HazardArea::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& /*res*/ )
 {
     // NOTHING
 }

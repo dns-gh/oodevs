@@ -47,7 +47,8 @@ namespace hla
 /// Created: 2013-06-28
 /// =============================================================================
 class ATP45HazardArea : public HlaObject_ABC
-    , private TacticalObjectEventListener_ABC
+    , public TacticalObjectEventListener_ABC
+    , public ObjectLocationEventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -72,8 +73,8 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos );
-    virtual void ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& res );
+    virtual void SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos );
+    virtual void ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& res );
     void RegisterAttributes();
     //@}
     //! @name Attributes

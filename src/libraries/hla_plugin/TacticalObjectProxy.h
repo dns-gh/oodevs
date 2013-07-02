@@ -11,7 +11,7 @@
 #define plugins_hla_TACTICALOBJECTPROXY_H_
 
 #include "TacticalObject_ABC.h"
-#include "TacticalObjectEventListenerComposite.h"
+#include "tools/SortedInterfaceContainer.h"
 
 namespace dispatcher
 {
@@ -55,7 +55,7 @@ private:
     //@{
     dispatcher::Object_ABC& object_;
     const rpr::EntityTypeResolver_ABC& dotationResolver_;
-    TacticalObjectEventListenerComposite listeners_;
+    tools::SortedInterfaceContainer< TacticalObjectEventListener_ABC > listeners_;
     //@}
 };
 

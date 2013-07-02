@@ -32,7 +32,12 @@ namespace hla
 */
 // Created: AHC 201-08-10
 // =============================================================================
-class TacticalObjectEventListener_ABC : private boost::noncopyable
+struct TacticalObjectEventListener_ABC
+{
+    virtual ~TacticalObjectEventListener_ABC() {}
+};
+
+class ObjectLocationEventListener_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -43,8 +48,8 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-            TacticalObjectEventListener_ABC() {}
-    virtual ~TacticalObjectEventListener_ABC() {}
+    ObjectLocationEventListener_ABC() {}
+    virtual ~ObjectLocationEventListener_ABC() {}
     //@}
 
     //! @name Operations

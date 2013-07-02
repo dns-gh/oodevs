@@ -16,7 +16,7 @@ namespace plugins
 {
 namespace hla
 {
-    class TacticalObjectEventListener_ABC;
+    struct TacticalObjectEventListener_ABC;
 
 // =============================================================================
 /** @class  TacticalObject_ABC

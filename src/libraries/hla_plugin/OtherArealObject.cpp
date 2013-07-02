@@ -173,13 +173,13 @@ void OtherArealObject::RegisterAttributes()
 // Name: OtherArealObject::SpatialChanged
 // Created: AHC 2013-01-22
 // -----------------------------------------------------------------------------
-void OtherArealObject::SpatialChanged( const TacticalObjectEventListener_ABC::T_PositionVector& pos )
+void OtherArealObject::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
 {
     if( pos.size() == 0 )
         return;
 
     points_.clear();
-    BOOST_FOREACH( TacticalObjectEventListener_ABC::T_PositionVector::const_reference v, pos )
+    BOOST_FOREACH( ObjectLocationEventListener_ABC::T_PositionVector::const_reference v, pos )
     {
         rpr::WorldLocation wl( v.latitude(), v.longitude(), 0 );
         points_.push_back( wl );
@@ -209,7 +209,7 @@ void OtherArealObject::Attach( Agent_ABC* /*agent*/, unsigned long /*simId*/ )
 // Name: OtherArealObject::ResourcesChanged
 // Created: AHC 2013-01-22
 // -----------------------------------------------------------------------------
-void OtherArealObject::ResourcesChanged( const TacticalObjectEventListener_ABC::T_ResourceVector& /*res*/ )
+void OtherArealObject::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& /*res*/ )
 {
     // NOTHING
 }
