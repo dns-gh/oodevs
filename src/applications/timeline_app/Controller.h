@@ -50,13 +50,18 @@ public slots:
     void OnKeyPress( int key );
     void OnKeyUp( int key );
     void OnGetEvents( const timeline::Events& events, const timeline::Error& error );
+    void OnLoadEvents();
+    void OnLoadActionTriggered();
+    void OnLoadedEvents( const timeline::Error& error );
+    void OnSavedEvents( const std::string& events, const timeline::Error& error );
 
 public:
     void WaitReady() const;
-    int  Create( const std::vector< std::string >& args );
-    int  Read  ( const std::vector< std::string >& args );
-    int  Update( const std::vector< std::string >& args );
-    int  Delete( const std::vector< std::string >& args );
+    int Create( const std::vector< std::string >& args );
+    int Read( const std::vector< std::string >& args );
+    int Update( const std::vector< std::string >& args );
+    int Delete( const std::vector< std::string >& args );
+    int SaveLoad( const std::vector< std::string >& args );
 
 private:
     QMainWindow main_;
@@ -64,6 +69,8 @@ private:
     std::auto_ptr< timeline::Server_ABC > ctx_;
     std::string uuid_;
     QLineEdit url_;
+    QDialog loadEventsDialog_;
+    QTextEdit loadEventsText_;
     std::string command_;
 };
 
@@ -79,6 +86,8 @@ public slots:
     virtual void OnReadEvent   ( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
     virtual void OnUpdatedEvent( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
     virtual void OnDeletedEvent( const std::string& /*uuid*/, const timeline::Error& /*error*/ ) {}
+    virtual void OnLoadedEvents( const timeline::Error& /*error*/ ) {}
+    virtual void OnSavedEvents( const std::string& /*events*/, const timeline::Error& /*error*/ ) {}
 };
 
 #endif//CONTROLLER_H__

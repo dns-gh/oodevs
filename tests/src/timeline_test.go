@@ -260,3 +260,16 @@ func (s *TestSuite) TestServerUpdates(c *C) {
 	defer client.Process.Kill()
 	WaitCommand(c, client)
 }
+
+func (s *TestSuite) TestServerSaveLoad(c *C) {
+	script, model := MakeServerConfig(c)
+	server := StartServer(c, script)
+	defer server.Process.Kill()
+	previousEvents := GetEvents(c, model["uuid"].(string))
+	client := StartClient(c, "saveload")
+	defer client.Process.Kill()
+	WaitCommand(c, client)
+	afterEvents := GetEvents(c, model["uuid"].(string))
+	c.Assert(previousEvents, DeepEquals, afterEvents)
+	c.Assert(afterEvents, HasLen, 1)
+}
