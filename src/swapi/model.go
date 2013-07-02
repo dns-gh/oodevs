@@ -367,6 +367,38 @@ func (model *Model) update(msg *SwordMessage) {
 			d.addUrban(urban)
 		} else if mm := m.GetUrbanUpdate(); mm != nil {
 			d.updateUrban(mm.GetObject().GetId(), NewResourceNetworks(mm.GetAttributes()))
+		} else if mm := m.GetAutomatChangeLogisticLinks(); mm != nil {
+			if mm.GetRequester() != nil {
+				requester := mm.GetRequester()
+				superiors := []uint32{}
+				for _, s := range mm.GetSuperior() {
+					if s.GetAutomat() != nil {
+						superiors = append(superiors, s.GetAutomat().GetId())
+					}
+					if s.GetFormation() != nil {
+						superiors = append(superiors, s.GetFormation().GetId())
+					}
+				}
+				if requester.GetAutomat() != nil {
+					d.changeLogisticsLinks(requester.GetAutomat().GetId(), superiors)
+				} else if requester.GetFormation() != nil {
+					d.changeLogisticsLinks(requester.GetFormation().GetId(), superiors)
+				}
+			}
+		} else if mm := m.GetLogSupplyQuotas(); mm != nil {
+			quotas := map[uint32]int32{}
+			if mm.GetQuotas() != nil {
+				for _, quota := range mm.GetQuotas().GetElem() {
+					quotas[quota.GetResource().GetId()] = quota.GetQuantity()
+				}
+			}
+			if mm.GetSupplied() != nil {
+				if mm.GetSupplied().GetAutomat() != nil {
+					d.changeSupplyQuotas(mm.GetSupplied().GetAutomat().GetId(), quotas)
+				} else if mm.GetSupplied().GetFormation() != nil {
+					d.changeSupplyQuotas(mm.GetSupplied().GetFormation().GetId(), quotas)
+				}
+			}
 		}
 	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()

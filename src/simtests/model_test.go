@@ -306,6 +306,22 @@ func (s *TestSuite) TestModelInitialization(c *C) {
                   Id: -
                   AutomatId: -
                   Name: ARMOR.MBT platoon
+            Automat[-]
+              Id: -
+              PartyId: -
+              Name: Logistic combat train [23]
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: Logistic CT
+            Automat[-]
+              Id: -
+              PartyId: -
+              Name: Logistic combat train [31]
+                Unit[-]
+                  Id: -
+                  AutomatId: -
+                  Name: Logistic CT
     Formation[-]
       Id: -
       Name: empty
@@ -313,6 +329,21 @@ func (s *TestSuite) TestModelInitialization(c *C) {
       PartyId: -
       Level: xxxxx
       LogLevel: none
+    Formation[-]
+      Id: -
+      Name: BLD
+      ParentId: -
+      PartyId: -
+      Level: x
+      LogLevel: logistic_base
+        Automat[-]
+          Id: -
+          PartyId: -
+          Name: Supply logistic area  (corps) [26]
+            Unit[-]
+              Id: -
+              AutomatId: -
+              Name: Supply CP (division)
     Crowds[-]
       Id: -
       PartyId: -

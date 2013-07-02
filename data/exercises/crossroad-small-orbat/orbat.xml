@@ -14,9 +14,20 @@
               <unit command-post="false" id="13" name="ARMOR.MBT platoon" position="28RDS1997335641" type="ARMOR.MBT platoon"/>
               <unit command-post="false" id="14" name="ARMOR.MBT platoon" position="28RDS1987435741" type="ARMOR.MBT platoon"/>
             </automat>
+            <automat engaged="true" id="23" knowledge-group="3" logistic-level="logistic-base" name="Logistic combat train [23]" symbol="symbols/sfgpuss" type="LOG.Logistic combat train">
+              <unit command-post="true" id="24" name="Logistic CT" position="28RDS0777321908" type="LOG.Logistic CT"/>
+            </automat>
+            <automat engaged="true" id="31" knowledge-group="3" logistic-level="logistic-base" name="Logistic combat train [31]" symbol="symbols/sfgpuss" type="LOG.Logistic combat train">
+              <unit command-post="true" id="32" name="Logistic CT" position="28RDS0777321908" type="LOG.Logistic CT"/>
+            </automat>            
           </formation>
         </formation>
         <formation id="6" level="xxxxx" name="empty" symbol="symbols/sfgpu"/>
+        <formation id="25" level="x" logistic-level="logistic-base" name="BLD" symbol="symbols/sfgpust">
+          <automat engaged="true" id="26" knowledge-group="3" name="Supply logistic area  (corps) [26]" symbol="symbols/sfgpust" type="LOG.Supply logistic area  (corps)">
+            <unit command-post="true" id="27" name="Supply CP (division)" position="28RDS0777321908" type="LOG.Supply CP (division)"/>
+          </automat>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="3" name="knowledge group [3]" type="Standard"/>
@@ -45,7 +56,14 @@
           </adhesions>
         </inhabitant>
       </inhabitants>
-      <logistics/>
+      <logistics>
+        <logistic-base id="23">
+          <subordinate id="9"/>
+        </logistic-base>
+        <logistic-base id="25">
+          <subordinate id="23"/>
+        </logistic-base>
+      </logistics>
     </party>
     <party id="2" name="empty-party" type="friend">
       <objects/>

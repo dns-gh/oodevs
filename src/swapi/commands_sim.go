@@ -43,6 +43,14 @@ func makeCrowdTasker(crowdId uint32) *sword.Tasker {
 	}
 }
 
+func makeAutomatTasker(automatId uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Automat: &sword.AutomatId{
+			Id: proto.Uint32(automatId),
+		},
+	}
+}
+
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	// Wait for the final UnitMagicActionAck
 	code := msg.GetErrorCode()
@@ -955,6 +963,55 @@ func (c *Client) ChangeAttitude(crowdId uint32, attitude int32) error {
 	}
 	msg := createMagicActionMessage(params, makeCrowdTasker(crowdId),
 		sword.UnitMagicAction_crowd_change_attitude.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) LogisticsChangeLinks(automatId uint32, superiors []uint32) error {
+	params := []*sword.MissionParameter{}
+	for _, s := range superiors {
+		params = append(params, MakeIdentifier(s))
+	}
+	msg := createMagicActionMessage(MakeParameters(params...), makeAutomatTasker(automatId),
+		sword.UnitMagicAction_change_logistic_links.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) LogisticsSupplyChangeQuotas(supplierId uint32, suppliedId uint32, quotas map[uint32]int32) error {
+	params := []*sword.MissionParameter{MakeIdentifier(supplierId)}
+	values := []*sword.MissionParameter_Value{}
+	for dotation, qty := range quotas {
+		values = append(values, MakeList(MakeIdentifier(dotation), MakeQuantity(qty)))
+	}
+	params = append(params, MakeParameter(values...))
+	msg := createMagicActionMessage(MakeParameters(params...), makeAutomatTasker(suppliedId),
+		sword.UnitMagicAction_log_supply_change_quotas.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.MissionParameters) error {
+	msg := createMagicActionMessage(params, makeUnitTasker(supplierId),
+		sword.UnitMagicAction_log_supply_push_flow.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) LogisticsSupplyPushFlow(supplierId uint32, suppliedId uint32) error {
+	recipient := &sword.SupplyFlowRecipient{Receiver: &sword.AutomatId{Id: proto.Uint32(suppliedId)}}
+	recipients := []*sword.SupplyFlowRecipient{recipient}
+	pushFlowParams := &sword.PushFlowParameters{Recipients: recipients}
+	param := MakeParameter(&sword.MissionParameter_Value{PushFlowParameters: pushFlowParams})
+	return c.LogisticsSupplyPushFlowTest(supplierId, MakeParameters(param))
+}
+
+func (c *Client) LogisticsSupplyPullFlow(supplierId uint32, suppliedId uint32) error {
+	supplier := &sword.ParentEntity{Formation: &sword.FormationId{Id: proto.Uint32(supplierId)}}
+	pullFlowParams := &sword.PullFlowParameters{Supplier: supplier}
+	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
+	msg := createMagicActionMessage(MakeParameters(param), makeAutomatTasker(suppliedId),
+		sword.UnitMagicAction_log_supply_pull_flow.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
