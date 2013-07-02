@@ -36,6 +36,7 @@ public:
     virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision() const;
     virtual bool CanControlTime() const;
+    virtual bool IsPerceived( const kernel::Entity_ABC& ) const;
     //@}
 };
 
