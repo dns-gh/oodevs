@@ -188,7 +188,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Subordinates.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectController.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Transportation.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\TransportationFacade.cpp" />
@@ -338,7 +337,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\Subordinates_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\SurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectController.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.h" />

@@ -268,9 +268,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectProxy.cpp">
       <Filter>Source Files\Dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.cpp">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocationOwnershipPolicy.cpp">
       <Filter>Source Files\Interactions\Ownership</Filter>
     </ClCompile>
@@ -730,9 +727,6 @@
       <Filter>Source Files\Dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListener_ABC.h">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\TacticalObjectEventListenerComposite.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocationOwnershipPolicy.h">
