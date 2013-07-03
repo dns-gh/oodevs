@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+#include "tools_pch.h"
 #include "ContourComputer.h"
 
 #include <boost/bind.hpp>
