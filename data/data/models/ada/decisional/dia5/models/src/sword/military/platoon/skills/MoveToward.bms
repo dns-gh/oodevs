@@ -56,7 +56,7 @@ rootnode
         Activate( skill.links.moveToward, 1, { entities  = self.entities , 
                                                positions = self.positions, 
                                                pathType = self.pathType } )
-        if self.positions == 0 then
+        if #self.positions == 0 then
             Activate( skill.nodes.CR, 1, { RC = eRC_NoPositionsToReachTargets } ) 
         end
     end
