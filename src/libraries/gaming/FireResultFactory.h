@@ -26,6 +26,11 @@ class PopulationFireResult;
 class Model;
 class Simulation;
 
+namespace kernel
+{
+    class Profile_ABC;
+}
+
 // =============================================================================
 /** @class  FireResultFactory
     @brief  FireResultFactory
@@ -37,7 +42,7 @@ class FireResultFactory : private::boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FireResultFactory( Model& model, const Simulation& simulation );
+             FireResultFactory( Model& model, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~FireResultFactory();
     //@}
 
@@ -55,6 +60,7 @@ private:
     //@{
     Model& model_;
     const Simulation& simulation_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

@@ -829,6 +829,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\TimelinePublisher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PointingKnowledges.cpp">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1577,6 +1580,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\TimelinePublisher.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PointingKnowledges.h">
+      <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

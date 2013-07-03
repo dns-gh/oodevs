@@ -9,18 +9,19 @@
 
 #include "gaming_pch.h"
 #include "RightsResolver.h"
-#include "Model.h"
 #include "AgentKnowledges.h"
-#include "clients_kernel/Knowledge_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "Model.h"
+#include "PointingKnowledges.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Knowledge_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -75,6 +76,51 @@ bool RightsResolver::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
             return false;
 
     return IsInHierarchy( knowledge.GetOwner(), readEntities_, false );
+}
+
+
+namespace
+{
+    class ProfileVisitor
+    {
+    public:
+        ProfileVisitor( const kernel::Entity_ABC& entity, const RightsResolver& profile )
+            : entity_( entity )
+            , profile_( profile )
+            , visible_( false )
+        {
+        }
+        void operator ()( const Knowledge_ABC* knowledge ) const
+        {
+            if( knowledge && knowledge->GetEntity() == &entity_ )
+                visible_ |= profile_.IsKnowledgeVisible( *knowledge );
+        }
+        bool IsPerceived() const
+        {
+            return visible_;
+        }
+    private:
+        ProfileVisitor( const ProfileVisitor& );
+        ProfileVisitor& operator = ( const ProfileVisitor& );
+        const kernel::Entity_ABC& entity_;
+        const RightsResolver& profile_;
+        mutable bool visible_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsPerceived
+// Created: LDC 2013-07-02
+// -----------------------------------------------------------------------------
+bool RightsResolver::IsPerceived( const kernel::Entity_ABC& entity ) const
+{
+    if( IsVisible( entity ) )
+        return true;
+    ProfileVisitor visitor( entity, *this );
+    const PointingKnowledges* pointingKnowledges = entity.Retrieve< PointingKnowledges >();
+    if( pointingKnowledges )
+        pointingKnowledges->Apply( visitor );
+    return visitor.IsPerceived();
 }
 
 // -----------------------------------------------------------------------------

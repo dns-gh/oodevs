@@ -91,6 +91,15 @@ bool ProfileFilter::IsSupervision() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsPerceived
+// Created: LDC 2013-07-02
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsPerceived( const kernel::Entity_ABC& entity ) const
+{
+    return pUnitFilter_->IsPerceived( entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfileFilter::GetFilter
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------

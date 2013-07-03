@@ -51,6 +51,7 @@
 #include "ObjectDetections.h"
 #include "ObjectsModel.h"
 #include "Paths.h"
+#include "PointingKnowledges.h"
 #include "Population.h"
 #include "PopulationDecisions.h"
 #include "PopulationDetections.h"
@@ -201,6 +202,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
+    result->Attach( *new PointingKnowledges() );
     AttachExtensions( *result );
 
     result->Update( message );

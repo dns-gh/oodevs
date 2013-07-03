@@ -39,6 +39,15 @@ bool PreparationProfile::IsVisible( const kernel::Entity_ABC& ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PreparationProfile::IsPerceived
+// Created: LDC 2013-07-02
+// -----------------------------------------------------------------------------
+bool PreparationProfile::IsPerceived( const kernel::Entity_ABC& ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PreparationProfile::IsKnowledgeVisible
 // Created: HBD 2010-08-03
 // -----------------------------------------------------------------------------

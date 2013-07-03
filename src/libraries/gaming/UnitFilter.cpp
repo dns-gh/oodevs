@@ -140,6 +140,15 @@ bool UnitFilter::IsSupervision() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitFilter::IsPerceived
+// Created: LDC 2013-07-02
+// -----------------------------------------------------------------------------
+bool UnitFilter::IsPerceived( const kernel::Entity_ABC& entity ) const
+{
+    return forward_.IsPerceived( entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitFilter::SetFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------

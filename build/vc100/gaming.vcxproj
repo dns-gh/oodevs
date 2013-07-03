@@ -128,6 +128,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\RightsResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\PhysicalAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SimulationController.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PointingKnowledges.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyResourceRequest.cpp" />
@@ -361,6 +362,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\RightsResolver.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PhysicalAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SimulationController.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PointingKnowledges.h" />
     <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyResourceRequest.h" />
