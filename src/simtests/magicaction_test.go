@@ -72,7 +72,7 @@ func (s *TestSuite) TestFireOrderCreation(c *C) {
 	// error: invalid parameters count, 3 parameters expected
 	params := swapi.MakeParameters()
 	err := client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_target")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// error: first parameter must be a location or a point
 	params = swapi.MakeParameters(
@@ -80,32 +80,32 @@ func (s *TestSuite) TestFireOrderCreation(c *C) {
 		swapi.MakeNullValue(),
 		swapi.MakeNullValue())
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_target")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// error: second parameter must be a resource type
 	params.Elem[0] = swapi.MakePointParam(point)
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_ammunition")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// error: second parameter must be a valid resource type
 	params.Elem[1] = swapi.MakeResourceType(uint32(12345))
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_ammunition")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// error: second parameter must be a resource type with a indirect fire
 	params.Elem[1] = swapi.MakeResourceType(ResourceTypeWithoutIndirectFire)
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_ammunition")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// error: third parameter must be a real
 	params.Elem[1] = swapi.MakeResourceType(ResourceTypeWithIndirectFire)
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_iteration")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// error: third parameter must be a positive real number
 	params.Elem[2] = swapi.MakeFloat(float32(-3))
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_iteration")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// indirect fire with a point
 	params.Elem[2] = swapi.MakeFloat(float32(5))

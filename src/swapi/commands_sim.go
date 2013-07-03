@@ -614,6 +614,18 @@ func defaultUnitMagicHandler(msg *sword.SimToClient_Content) error {
 	return nil
 }
 
+func defaultMagicHandler(msg *sword.SimToClient_Content) error {
+	reply := msg.GetMagicActionAck()
+	if reply == nil {
+		return unexpected(msg)
+	}
+	code := reply.GetErrorCode()
+	if code != sword.MagicActionAck_no_error {
+        return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+	}
+	return nil
+}
+
 func createMagicActionMessage(params *sword.MissionParameters, tasker *sword.Tasker,
 	magicAction *sword.UnitMagicAction_Type) SwordMessage {
 	return SwordMessage{
@@ -659,18 +671,7 @@ func (c *Client) DestroyLocalWeather(id uint32) error {
 			},
 		},
 	}
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		code := reply.GetErrorCode()
-		if code != sword.MagicActionAck_no_error {
-			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
-		}
-		return nil
-	}
-	return <-c.postSimRequest(msg, handler)
+    return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
 func (c *Client) UpdateGlobalWeather(global *Weather) error {
@@ -695,18 +696,7 @@ func (c *Client) UpdateGlobalWeather(global *Weather) error {
 			},
 		},
 	}
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		code := reply.GetErrorCode()
-		if code != sword.MagicActionAck_no_error {
-			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
-		}
-		return nil
-	}
-	return <-c.postSimRequest(msg, handler)
+    return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
 func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) {
@@ -777,18 +767,7 @@ func (c *Client) ChangeDiplomacyTest(params *sword.MissionParameters) error {
 			},
 		},
 	}
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		code := reply.GetErrorCode()
-		if code != sword.MagicActionAck_no_error {
-			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
-		}
-		return nil
-	}
-	return <-c.postSimRequest(msg, handler)
+    return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
 func (c *Client) ChangeDiplomacy(party1Id uint32, party2Id uint32, diplomacy sword.EnumDiplomacy) error {
@@ -810,18 +789,7 @@ func (c *Client) CreateFireOnLocationTest(params *sword.MissionParameters) error
 			},
 		},
 	}
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetActionCreateFireOrderAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		code := reply.GetErrorCode()
-		if code != sword.ActionCreateFireOrderAck_no_error {
-			return nameof(sword.ActionCreateFireOrderAck_ErrorCode_name, int32(code))
-		}
-		return nil
-	}
-	return <-c.postSimRequest(msg, handler)
+    return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
 func (c *Client) CreateFireOnLocation(location Point, ammoType uint32, salvoCount int) error {
@@ -843,18 +811,7 @@ func (c *Client) ChangeResourceNetworkTest(params *sword.MissionParameters) erro
 			},
 		},
 	}
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		code := reply.GetErrorCode()
-		if code != sword.MagicActionAck_no_error {
-			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
-		}
-		return nil
-	}
-	return <-c.postSimRequest(msg, handler)
+    return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
 func (c *Client) ChangeResourceNetwork(urban *Urban) error {
