@@ -66,6 +66,7 @@ void ADN_Missions_GUI::Build()
     pTabWidget_->addTab( BuildPopulationMissions(), tr( "Crowd missions" ) );
     pTabWidget_->addTab( BuildFragOrders(), tr( "Fragmentary orders" ) );
     pTabWidget_->addTab( BuildSICActivities(), tr( "SIC Activities" ) );
+    pTabWidget_->addTab( BuildSICPackages(), tr( "SIC Packages" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
@@ -262,32 +263,9 @@ QWidget* ADN_Missions_GUI::BuildSICActivities()
     builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Melee activity" ) , vInfosConnectors[ eActivityMelee ] );
     builder.AddField< ADN_ComboBox_Vector< ADN_Activities_Data::PackageInfos > >( pInfoHolder, tr( "Associated package" ), vInfosConnectors[ ePackage ]  );
 
-    // Packages
-    QGroupBox* pPackagesGroup = new QGroupBox( tr( "Package" ) );
-
-    T_ConnectorVector vPackageInfosConnectors( eNbrPackageGuiElements,( ADN_Connector_ABC* )0 );
-
-    // Package name modifier
-    Q3VGroupBox* pGroup = new Q3VGroupBox( pPackagesGroup );
-    pGroup->setInsideMargin(20);
-    pGroup->setInsideSpacing(20);
-    builder.AddField< ADN_EditLine_String >( pGroup, tr( "Package" ), vPackageInfosConnectors[ ePackageName ] );
-
-    // Packages list
-    ADN_Packages_ListView* packageList = new ADN_Packages_ListView( pPackagesGroup );
-    static_cast< ADN_Connector_Vector_ABC* >( &packageList->GetConnector() )->Connect( &data_.activitiesData_->GetPackages() );
-    connect( packageList, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
-    packageList->SetItemConnectors( vPackageInfosConnectors );
-
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
-    // Parameters layout
-    QGridLayout* packageLayout = new QGridLayout( pPackagesGroup, 5, 1 );
-    packageLayout->setMargin( 10 );
-    packageLayout->setSpacing( 10 );
-    packageLayout->addWidget( packageList );
-    packageLayout->addWidget( pGroup );
 
     // Content layout
     pSicActivities_ = new QWidget();
@@ -296,7 +274,6 @@ QWidget* ADN_Missions_GUI::BuildSICActivities()
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addWidget( pInfoHolder );
-    pContentLayout->addWidget( pPackagesGroup );
 
     // List view
     ADN_SearchListView< ADN_Activities_ListView >* pSearchListView = new ADN_SearchListView< ADN_Activities_ListView >( this, data_.activitiesData_->GetActivities(), vInfosConnectors, 4 );
@@ -304,6 +281,37 @@ QWidget* ADN_Missions_GUI::BuildSICActivities()
 
     // Main page
     return CreateScrollArea( *pSicActivities_, pSearchListView );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::BuildSICPackages
+// Created: LDC 2013-07-03
+// -----------------------------------------------------------------------------
+QWidget* ADN_Missions_GUI::BuildSICPackages()
+{
+    // Packages
+    T_ConnectorVector vPackageInfosConnectors( eNbrPackageGuiElements,( ADN_Connector_ABC* )0 );
+
+    // Package name modifier
+    ADN_GuiBuilder builder;
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Package" ), vPackageInfosConnectors[ ePackageName ] );
+
+    // Packages list
+    ADN_SearchListView< ADN_Packages_ListView >* packageList = new ADN_SearchListView< ADN_Packages_ListView >( this, data_.activitiesData_->GetPackages(), vPackageInfosConnectors, 4 );
+    connect( packageList->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    
+    // Parameters layout
+    pSicPackages_ = new QWidget();
+
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pSicPackages_ );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+
+    // Main page
+    return CreateScrollArea( *pSicPackages_, packageList );
 }
 
 // -----------------------------------------------------------------------------

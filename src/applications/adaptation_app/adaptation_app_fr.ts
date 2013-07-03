@@ -2646,6 +2646,10 @@ du tireur</translation>
         <translation>Activités SIC</translation>
     </message>
     <message>
+        <source>SIC Packages</source>
+        <translation>Packages SIC</translation>
+    </message>
+    <message>
         <source>Description</source>
         <translation>Description</translation>
     </message>

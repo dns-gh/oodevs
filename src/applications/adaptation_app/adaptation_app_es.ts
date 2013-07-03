@@ -2660,6 +2660,10 @@ tirador</translation>
         <source>Package</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SIC Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>

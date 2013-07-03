@@ -83,6 +83,7 @@ private:
     QWidget* BuildPopulationMissions();
     QWidget* BuildFragOrders();
     QWidget* BuildSICActivities();
+    QWidget* BuildSICPackages();
     QGroupBox* AddParameters( T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder );
     //@}
 
@@ -95,6 +96,7 @@ private:
     QWidget* pPopulationMissionsWidget_;
     QWidget* pFragOrderWidget_;
     QWidget* pSicActivities_;
+    QWidget* pSicPackages_;
     //@}
 };
 
