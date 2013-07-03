@@ -52,20 +52,31 @@ masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
 
 masa_set_external_library( TOOLS_LIBRARIES              tools_d tools )
 
+function( add_target target group dir )
+    message( "-- ${target}" )
+    masa_extract_options( options ${ARGN} )
+    masa_has_item( executable "executable" ${options} )
+    masa_has_item( shared "shared" ${options} )
+    masa_add_target( ${target} ${group} ${dir} OPTIONS ${options} )
+    if( executable OR shared )
+        masa_add_version( ${target} "${root_dir}/build/template.res" "${PRODUCT}" )
+    endif()
+endfunction()
+
 # runtime
-masa_add_target( runtime libraries "libraries/runtime" )
+add_target( runtime libraries "libraries/runtime" )
 target_link_libraries( runtime
     shlwapi
     ${ARCHIVE_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )
 if( WIN32 )
-    masa_add_target( runtime_win32 libraries "libraries/runtime/win32" )
+    add_target( runtime_win32 libraries "libraries/runtime/win32" )
     target_link_libraries( runtime runtime_win32 )
 endif()
 
 # web_server
-masa_add_target( web libraries "libraries/web" )
+add_target( web libraries "libraries/web" )
 target_link_libraries( web
     ws2_32
     ${CPP_NETLIB_CLIENT_LIBRARIES}
@@ -75,7 +86,7 @@ target_link_libraries( web
 )
 
 # host
-masa_add_target( host libraries "libraries/host" )
+add_target( host libraries "libraries/host" )
 target_link_libraries( host
     web
     version
@@ -85,17 +96,17 @@ target_link_libraries( host
 )
 
 # cloud_server
-masa_add_target( cloud_server applications "applications/cloud_server" OPTIONS executable )
+add_target( cloud_server applications "applications/cloud_server" OPTIONS executable )
 target_link_libraries( cloud_server
     host
     runtime
 )
 
 # client
-masa_add_target( client libraries "libraries/client" OPTIONS qt )
+add_target( client libraries "libraries/client" OPTIONS qt )
 
 # cloud_client
-masa_add_target( cloud_client applications "applications/cloud_client" OPTIONS win32 qt executable )
+add_target( cloud_client applications "applications/cloud_client" OPTIONS win32 qt executable )
 target_link_libraries( cloud_client
     client
     host
@@ -103,14 +114,14 @@ target_link_libraries( cloud_client
 )
 
 # runtime_test
-masa_add_target( runtime_test tests "tests/runtime_test" OPTIONS test )
+add_target( runtime_test tests "tests/runtime_test" OPTIONS test )
 target_link_libraries( runtime_test
     runtime
     ${TOOLS_LIBRARIES}
 )
 
 # host_test
-masa_add_target( host_test tests "tests/host_test" OPTIONS test )
+add_target( host_test tests "tests/host_test" OPTIONS test )
 masa_set_target_folder( host_test tests )
 target_link_libraries( host_test
     host
@@ -118,7 +129,7 @@ target_link_libraries( host_test
 )
 
 # web_test
-masa_add_target( web_test tests "tests/web_test" OPTIONS test )
+add_target( web_test tests "tests/web_test" OPTIONS test )
 target_link_libraries( web_test
     runtime
     web
