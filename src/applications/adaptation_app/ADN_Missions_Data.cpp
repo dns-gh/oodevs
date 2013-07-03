@@ -428,6 +428,7 @@ ADN_Missions_Data::ADN_Missions_ABC* ADN_Missions_Data::Mission::CreateCopy()
     newMission->mrtDiaBehavior_      = mrtDiaBehavior_.GetData();
     newMission->doctrineDescription_ = doctrineDescription_.GetData();
     newMission->usageDescription_    = usageDescription_.GetData();
+    newMission->strPackage_          = strPackage_.GetData();
     newMission->symbol_              = symbol_.GetData();
     newMission->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
