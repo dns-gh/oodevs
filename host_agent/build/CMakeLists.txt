@@ -86,7 +86,7 @@ target_link_libraries( web
 )
 
 # host
-add_target( host libraries "libraries/host" )
+add_target( host libraries "libraries/host" OPTIONS qt )
 target_link_libraries( host
     web
     version

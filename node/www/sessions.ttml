@@ -236,31 +236,35 @@
 <!-- session_play_btn -->
 [[ define "session_play_btn" ]]
 {{#is_option status stopped="" waiting=""}}
-{{#count checkpoints.list}}
-{{#count replay.list}}
-<a class="btn disabled">
-    <i class="icon-play"></i>
-</a>
-{{else}}
-<a class="btn dropdown-toggle" data-toggle="dropdown">
-    <i class="icon-play"></i>
-    <span class="caret"></span>
-</a>
-{{/count}}
-<ul class="dropdown-menu">
-    [[ if .reset ]]
-    <li><a class="play emu_btn">From Scratch</a></li>
-    <li class="divider"></li>
-    [[ end ]]
-    {{#each checkpoints.list}}
-    <li><a class="play emu_btn" name="{{.}}">{{.}}</a></li>
-    {{/each}}
-</ul>
-{{else}}
-[[ if .reset ]][[ else ]]{{#can_play .}}[[ end ]]
-<a title="Play" class="btn play{{#count replay.list}} disabled{{/count}}"><i class="icon-play"></i></a>
-[[ if .reset ]][[ else ]]{{/can_play}}[[ end ]]
-{{/count}}
+    {{#count checkpoints.list}}
+        {{#count replay.list}}
+            <a class="btn disabled">
+                <i class="icon-play"></i>
+            </a>
+        {{else}}
+            <a class="btn dropdown-toggle {{#count replay.list}} disabled{{/count}}{{#unless sim_license}} disabled{{/unless}}" data-toggle="dropdown">
+                <i class="icon-play"></i>
+                <span class="caret"></span>
+            </a>
+        {{/count}}
+        <ul class="dropdown-menu">
+            [[ if .reset ]]
+            <li><a class="play emu_btn">From Scratch</a></li>
+            <li class="divider"></li>
+            [[ end ]]
+            {{#each checkpoints.list}}
+            <li><a class="play emu_btn" name="{{.}}">{{.}}</a></li>
+            {{/each}}
+        </ul>
+    {{else}}
+        [[ if .reset ]][[ else ]]{{#can_play .}}[[ end ]]
+        {{#is_option status waiting="" replaying=""}}
+        <a title="Play" class="btn play{{#count replay.list}} disabled{{/count}}{{#unless replay_license}} disabled{{/unless}}"><i class="icon-play"></i></a>
+        {{else}}
+            <a title="Play" class="btn play{{#count replay.list}} disabled{{/count}}{{#unless sim_license}} disabled{{/unless}}"><i class="icon-play"></i></a>
+        {{/is_option}}
+        [[ if .reset ]][[ else ]]{{/can_play}}[[ end ]]
+    {{/count}}
 {{/is_option}}
 {{#is_option status paused=""}}
 <a title="Play" class="btn play"><i class="icon-play"></i></a>

@@ -47,13 +47,14 @@ namespace
 
     struct SubFixture
     {
-        SubFixture( const Path& app, const Path& web )
+        SubFixture( const Path& app, const Path& web, const Path& license )
             : idx( 0 )
         {
             MOCK_EXPECT( fs.MakePaths );
             MOCK_EXPECT( fs.Exists ).with( app ).returns( true );
             MOCK_EXPECT( fs.IsFile ).with( app ).returns( true );
             MOCK_EXPECT( fs.IsDirectory ).with( web ).returns( true );
+            MOCK_EXPECT( fs.IsDirectory ).with( license ).returns( true );
             MOCK_EXPECT( proxy.GetPort ).returns( 8080 );
             MOCK_EXPECT( fs.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
             MOCK_EXPECT( fs.Walk ).once().with( boost::bind( &EndWith, "plugins", _1 ), false, mock::any );
@@ -101,16 +102,18 @@ namespace
             : root   ( "e:/root" )
             , app    ( "e:/bin/node.exe" )
             , web    ( "e:/zomg/www" )
+            , license( "e:/bin" )
             , type   ( isCluster ? "cluster" : "node" )
-            , sub    ( app, web )
+            , sub    ( app, web, license )
             , plugins( sub.fs, "plugins" )
-            , control( sub.log, sub.runtime, sub.fs, plugins, sub.nodes, root, app, web, Path(), type, 0, sub.pool, sub.proxy )
+            , control( sub.log, sub.runtime, sub.fs, plugins, sub.nodes, root, app, web, Path(), license, type, 0, sub.pool, sub.proxy )
         {
             // NOTHING
         }
         const Path root;
         const Path app;
         const Path web;
+        const Path license;
         const std::string type;
         SubFixture sub;
         web::Plugins plugins;

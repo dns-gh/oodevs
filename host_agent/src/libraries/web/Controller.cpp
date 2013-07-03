@@ -998,7 +998,7 @@ void Controller::UploadLicenses( Reply_ABC& rpy, Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     boost::optional< Tree > reply;
-    request.RegisterMime( "cache", boost::bind( &OnUploadLicences, boost::ref( reply ), boost::ref( agent_ ), _1 ) );
+    request.RegisterMime( "license", boost::bind( &OnUploadLicences, boost::ref( reply ), boost::ref( agent_ ), _1 ) );
     request.ParseBodyAsMime();
     if( reply == boost::none )
         return WriteHttpReply( rpy, NOT_FOUND );

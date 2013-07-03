@@ -627,7 +627,10 @@ Tree NodeController::ListLicenses( const Uuid& /*id*/ ) const
 // -----------------------------------------------------------------------------
 Tree NodeController::UploadLicenses( io::Reader_ABC& src )
 {
-    const Path output = licensesDir_ / "licenseTemp.lic";
+    boost::system::error_code ec;
+    const Path output = boost::filesystem::unique_path( Path( licensesDir_ ) / "%%%%%%%%.%%%", ec );
+    if( ec )
+        return Tree();
     std::string content = fs_.ReadAll( src );
     fs_.WriteFile( output, content );
     boost::shared_ptr< Package_ABC > next;
@@ -638,12 +641,12 @@ Tree NodeController::UploadLicenses( io::Reader_ABC& src )
             try
             {
                 FlexLmLicense license( *it );
-                boost::filesystem::copy_file( output, licensesDir_ / std::string( *it + ".lic" ), boost::filesystem::copy_option::overwrite_if_exists );
+                fs_.Rename( output, licensesDir_ / std::string( *it + ".lic" ) );
             }
             catch( const FlexLmLicense::LicenseError& ){}
         }
     }
-    boost::filesystem::remove( output );
+    fs_.Remove( output );
     GetAvailableLicences();
     return licenses_;
 }

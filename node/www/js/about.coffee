@@ -69,8 +69,6 @@ license_view = new LicenseItemView
 
 $("#upload_form").attr "action", (get_url "/api/upload_licenses")
 
-set_spinner $(".spin_btn")
-
 $("#upload_form input:file").change ->
     ctl = $("#upload_form .upload")
     ctl.toggleClass "disabled", !@value?

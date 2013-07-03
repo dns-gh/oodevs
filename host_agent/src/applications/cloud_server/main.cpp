@@ -35,6 +35,11 @@
 #define  CPPLOG_THREADING
 #include <cpplog/cpplog.hpp>
 
+#pragma warning( push, 0 )
+#include <Qt/qsettings.h>
+#include <Qt/qstring.h>
+#pragma warning( pop )
+
 #include <boost/filesystem/operations.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
@@ -334,6 +339,15 @@ struct Facade : SqlFacade
             users.CreateUser( boost::uuids::nil_uuid(), cfg.proxy.user, cfg.proxy.display, cfg.proxy.password, web::USER_TYPE_ADMINISTRATOR, false );
         }
     }
+
+    void AddLicensePathToReg( const std::string& value )
+    {
+        QSettings settings( "HKEY_CURRENT_USER\\Software\\FLEXlm License Manager", QSettings::NativeFormat );
+        QString currentValue = settings.value( "BKMASA_LICENSE_FILE" ).toString();
+        if( !currentValue.contains( value.c_str() ) )
+            settings.setValue( "BKMASA_LICENSE_FILE", currentValue + ";" + value.c_str() );
+    }
+
     int Start( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& fs, const Waiter& waiter )
     {
         Pool pool( 32, 256 );
@@ -347,9 +361,9 @@ struct Facade : SqlFacade
         NodeFactory fnodes( packages, fs, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
         const Port host = ports.Create();
         const Path client_root = cfg.root / "client";
-        NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, client_root, cfg.session.simulation.root_directory(), "node", host->Get(), pool, proxy );
+        NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, client_root, cfg.session.simulation.parent_path(), "node", host->Get(), pool, proxy );
         fnodes.observer = &nodes;
-        NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), cfg.session.simulation.root_directory(), "cluster", host->Get(), pool, proxy );
+        NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), cfg.session.simulation.parent_path(), "cluster", host->Get(), pool, proxy );
         SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
         SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
         Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
@@ -357,6 +371,7 @@ struct Facade : SqlFacade
         web::Server server( log, pool, controller, host->Get() );
         server.Listen();
         proxy.Register( "api", "localhost", host->Get() );
+        AddLicensePathToReg( cfg.session.simulation.parent_path().string() );
         waiter();
         return 0;
     }

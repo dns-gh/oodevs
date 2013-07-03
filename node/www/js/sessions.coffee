@@ -3,12 +3,13 @@
 # This file is part of a MASA library or program.
 # Refer to the included end-user license agreement for restrictions.
 #
-# Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
+# Copyright (c) 2012 MathÃ©matiques AppliquÃ©es SA (MASA)
 #
 # *****************************************************************************
 
 session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
+license_error_template = Handlebars.compile $("#session_error_template").html()
 session_settings_template = Handlebars.compile $("#session_settings_template").html()
 session_redirect_template = Handlebars.compile $("#session_redirect_template").html()
 
@@ -26,6 +27,7 @@ print_error = (text) ->
 Handlebars.registerHelper "can_play", (data, options) ->
     valid  = convert_to_boolean data.first_time
     valid |= convert_to_boolean data.replay.root?.length
+    valid &= data.sim_license
     if valid
         return options.fn this
     return options.inverse this
@@ -268,8 +270,7 @@ class SessionItem extends Backbone.Model
         cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline"]
 
         if method == "create"
-            data = select_attributes model.attributes, cfg_attributes
-            data.exercise = model.attributes.exercise
+            data = select_attributes model.attributes, _.union cfg_attributes, ["exercise", "license"]
             return pajax "/api/create_session", node: uuid,
                 data, options.success, options.error
 
@@ -417,6 +418,8 @@ class SessionItemView extends Backbone.View
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
         data.can_link = data.status != "playing" || data.start_time
+        data.sim_license = get_license_validity "sword", licenses.attributes
+        data.replay_license = get_license_validity "sword-replayer", licenses.attributes
         $(@el).html session_template data
         $(@el).find(".link").click (evt) =>
             return if is_disabled evt
@@ -532,6 +535,15 @@ get_filters = ->
 get_search = ->
     $(".session_search .search-query").val()
 
+get_license_validity = (licensename, tree) ->
+    lic = tree[licensename]
+    if lic?
+        if lic.validity == "none" || lic.validity == "warning"
+            return false
+        else if lic.validity == "valid"
+            return true
+    return true
+
 class SessionListView extends Backbone.View
     el: $ "#sessions"
     delta_period: 5000
@@ -552,6 +564,8 @@ class SessionListView extends Backbone.View
         $(@el).empty()
         for item in list.models
             @add item
+        if !get_license_validity "sword", licenses.attributes
+            $(@el).prepend license_error_template content: "No Sword license Uploaded"
         return
 
     add: (item) =>
@@ -614,6 +628,8 @@ class SessionListView extends Backbone.View
         # update parent replay list
         root = get_replay_root @model, data
         if root?
+            if !get_license_validity "sword-replayer", licenses.attributes
+                $(@el).prepend license_error_template content: "No Sword-replayer license Uploaded"
             replay = $.extend {}, root.attributes.replay
             replay.list = [] unless _.isArray replay.list
             replay.list = _.union replay.list, [data.id]
@@ -658,8 +674,28 @@ class ExerciseListItemView extends Backbone.View
                 print_error "Unable to fetch exercises"
                 setTimeout @delta, @delta_period
 
+class LicenseItem extends Backbone.Model
+
+    initialize: ->
+        @delta()
+
+    sync: (method, model, options) =>
+        if method == "read"
+            return ajax "/api/list_licenses", id: model.id,
+                options.success, options.error
+
+    delta: =>
+        @fetch
+            success: (model, response, options) =>
+                @set response
+                setTimeout @delta, 5000
+            error: => 
+                print_error "Unable to fetch licenses"
+                setTimeout @delta, 5000
+
 exercise_view = new ExerciseListItemView
 session_view = new SessionListView
+licenses = new LicenseItem
 
 validate_input_session = (control, result, error) ->
     unless result
@@ -677,7 +713,7 @@ $("#session_create").click ->
     exercise = $ "#exercises"
     unless validate_input_session exercise, exercise.val()?, "Missing exercise"
         return
-    session_view.create name: name.val(), exercise: exercise.val()
+    session_view.create name: name.val(), exercise: exercise.val(), license: licenses
     name.val ''
 
 $(".session_create_form").keypress (e) ->
