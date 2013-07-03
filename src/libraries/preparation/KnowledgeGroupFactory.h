@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC* Create( kernel::Team_ABC& team );
+    virtual kernel::KnowledgeGroup_ABC* Create( kernel::Team_ABC& team, bool isCrowd );
     virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::Team_ABC& team );
 
     virtual kernel::KnowledgeGroup_ABC* Create( kernel::KnowledgeGroup_ABC& knowledgeGroup );

@@ -140,6 +140,8 @@ void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::Valu
     item->SetBold( false );
     if( const KnowledgeGroup_ABC* kg = dynamic_cast< const KnowledgeGroup_ABC* >( &entity ) )
     {
+        if( kg->IsCrowd() )
+            return;
         const Entity_ABC& top = kg->Get< CommunicationHierarchies >().GetTop();
         const CommunicationHierarchies& teamHierarchy = top.Get< CommunicationHierarchies >();
         tools::Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();

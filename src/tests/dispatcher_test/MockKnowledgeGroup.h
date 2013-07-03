@@ -34,6 +34,7 @@ MOCK_BASE_CLASS( MockKnowledgeGroup, dispatcher::KnowledgeGroup_ABC )
     // LTO begin
     MOCK_METHOD( IsActivated, 0 );
     MOCK_METHOD( IsJammed, 0 );
+    MOCK_METHOD( IsCrowd, 0 );
     // LTO end
 
     // dispatcher::KnowledgeGroup_ABC

@@ -33,6 +33,7 @@ Population::Population( const PopulationType& type, int number, Controller& cont
     , armedIndividuals_( static_cast< unsigned int >( type.GetArmedIndividuals() * 100 ), Units::percentage )
     , repartition_     ( new PopulationRepartition() )
     , attitude_        ( ePopulationAttitude_Calme )
+    , knowledgeGroupId_( 0 )
 {
     repartition_->male_ = static_cast< unsigned int >( type.GetMale() * 100 );
     repartition_->female_ = static_cast< unsigned int >( type.GetFemale() * 100 );
@@ -52,6 +53,7 @@ Population::Population( xml::xistream& xis, const kernel::PopulationType& type, 
     , armedIndividuals_( 0, Units::percentage )
     , repartition_     ( new PopulationRepartition() )
     , attitude_        ( xis.attribute< std::string >( "attitude" ).c_str() )
+    , knowledgeGroupId_( 0 )
 {
     float male = type_.GetMale();
     float female = type_.GetFemale();
@@ -150,6 +152,15 @@ unsigned int Population::GetTotalLivingHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Population::SetKnowledgeGroupForSerialization
+// Created: JSR 2013-07-03
+// -----------------------------------------------------------------------------
+void Population::SetKnowledgeGroupForSerialization( unsigned long knowledgeGroupId )
+{
+    knowledgeGroupId_ = knowledgeGroupId;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Population::DisplayInTooltip
 // Created: JSR 2012-03-13
 // -----------------------------------------------------------------------------
@@ -202,8 +213,10 @@ void Population::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", static_cast< long >( id_ ) )
         << xml::attribute( "name", name_.toAscii().constData() )
         << xml::attribute( "type", type_.GetName() )
-        << xml::attribute( "attitude", attitude_.ToXml() )
-        << xml::start( "composition" )
+        << xml::attribute( "attitude", attitude_.ToXml() );
+    if( knowledgeGroupId_ != 0 )
+        xos << xml::attribute( "knowledge-group", knowledgeGroupId_ );
+    xos << xml::start( "composition" )
             << xml::attribute( "healthy", healthy_ )
             << xml::attribute( "wounded", wounded_ )
             << xml::attribute( "dead", dead_ )

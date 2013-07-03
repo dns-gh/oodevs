@@ -25,6 +25,7 @@ namespace kernel
     class Team_ABC;
     class Controllers;
     class Entity_ABC;
+    class KnowledgeGroup_ABC;
 }
 
 class Model;
@@ -68,6 +69,8 @@ private:
     void ReadDiplomacy( xml::xistream& xis );
     void ReadLogistic( xml::xistream& xis, Model& model );
     void ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Entity_ABC& superior );
+    const kernel::KnowledgeGroup_ABC* FindCrowdKnowledgeGroup( const kernel::Team_ABC& team ) const;
+    void UpdateCrowdKnowledgeGroups() const;
     //@}
 
 private:

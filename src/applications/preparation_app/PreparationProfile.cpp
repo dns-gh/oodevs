@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "PreparationProfile.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PreparationProfile::GetProfile
@@ -33,8 +34,11 @@ QString PreparationProfile::GetLogin() const
 // Name: PreparationProfile::IsVisible
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-bool PreparationProfile::IsVisible( const kernel::Entity_ABC& ) const
+bool PreparationProfile::IsVisible( const kernel::Entity_ABC& entity ) const
 {
+    if( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+        if( kg->IsCrowd() )
+            return false;
     return true;
 }
 

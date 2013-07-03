@@ -36,13 +36,16 @@
 #include "UndergroundAttribute.h"
 #include "UrbanModel.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/ResourceNetworkSelectionObserver.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerModel.h"
@@ -104,6 +107,7 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     , performanceIndicator_( *new PerformanceIndicator( *this ) )
     , width_                ( 0.f )
     , height_               ( 0.f )
+    , needsSaving_          ( false )
 {
     // NOTHING
 }
@@ -141,6 +145,16 @@ Model::~Model()
     delete &ghostFactory_;
     delete &idManager_;
     delete &performanceIndicator_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Model::NeedsSaving
+// Created: JSR 2013-07-03
+// -----------------------------------------------------------------------------
+bool Model::NeedsSaving() const
+{
+    return needsSaving_ || !GetLoadingErrors().empty() || ghosts_.NeedSaving() || HasConsistencyErrorsOnLoad() || exercise_.NeedsSaving();
 }
 
 // -----------------------------------------------------------------------------
@@ -327,6 +341,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config )
 {
+    needsSaving_ = false;
     config_ = &config;
     if( !config.IsTerrainSamePhysicalRef() )
         AppendLoadingError( eOthers, tools::translate( "Model", "Terrain's physical base does not match the one selected for the exercise. All urban materials, roofshapes, usages and infrastructures will be lost at next save." ).toAscii().constData(), 0 );
@@ -360,6 +375,8 @@ void Model::Load( const tools::ExerciseConfig& config )
     performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
     if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
         ghosts_.Finalize( staticModel_ ); // $$$$ ABR 2012-06-25: Resolve logistic link and profiles for ghost ... frozen ICD
+
+    UpdateCrowdKnowledgeGroups();
 
     SetLoaded( true );
 }
@@ -538,6 +555,36 @@ bool Model::IsLoaded() const
 void Model::SetLoaded( bool status )
 {
     loaded_ = status;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::UpdateCrowdKnowledgeGroups
+// Created: JSR 2013-07-03
+// -----------------------------------------------------------------------------
+void Model::UpdateCrowdKnowledgeGroups()
+{
+    auto it = teams_.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Team_ABC& team = it.NextElement();
+        auto itKg = knowledgeGroups_.CreateIterator();
+        bool found = false;
+        while( itKg.HasMoreElements() )
+        {
+            const kernel::KnowledgeGroup_ABC& kg = itKg.NextElement();
+            const kernel::CommunicationHierarchies* hierarchies = kg.Retrieve< kernel::CommunicationHierarchies >();
+            if( hierarchies && kg.IsCrowd() && &hierarchies->GetTop() == &team )
+            {
+                found = true;
+                break;
+            }
+        }
+        if( !found )
+        {
+            needsSaving_ = true;
+            knowledgeGroups_.Create( const_cast< kernel::Team_ABC& >( team ), true );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

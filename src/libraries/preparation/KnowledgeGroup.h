@@ -43,7 +43,7 @@ class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGro
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( kernel::Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types, bool isCrowd );
              KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
@@ -54,6 +54,7 @@ public:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual bool IsActivated() const;
     virtual bool IsJammed() const;
+    virtual bool IsCrowd() const;
     //@}
 
 private:
@@ -69,6 +70,7 @@ private:
     //@{
     kernel::KnowledgeGroupType* type_;
     std::string communicationDelay_;
+    bool isCrowd_;
     //@}
 };
 

@@ -34,13 +34,13 @@ class KnowledgeGroupFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupFactory_ABC() {};
-    virtual ~KnowledgeGroupFactory_ABC() {};
+             KnowledgeGroupFactory_ABC() {}
+    virtual ~KnowledgeGroupFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC* Create( kernel::Team_ABC& team ) = 0;
+    virtual kernel::KnowledgeGroup_ABC* Create( kernel::Team_ABC& team, bool isCrowd ) = 0;
     virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::Team_ABC& team ) = 0;
 
     virtual kernel::KnowledgeGroup_ABC* Create( kernel::KnowledgeGroup_ABC& knowledgeGroup ) = 0;

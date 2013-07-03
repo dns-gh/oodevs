@@ -60,6 +60,7 @@ public:
     //@{
     virtual const dispatcher::Team_ABC& GetTeam() const;
     virtual bool IsJammed() const;
+    virtual bool IsCrowd() const;
     //@}
 
 private:

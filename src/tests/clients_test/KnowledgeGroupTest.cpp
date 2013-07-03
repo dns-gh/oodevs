@@ -45,6 +45,7 @@ namespace
         MOCK_METHOD( Activate, 1 );
         MOCK_METHOD( IsActivated, 0 );
         MOCK_METHOD( IsJammed, 0 );
+        MOCK_METHOD( IsCrowd, 0 );
     };
 
     template< typename T, typename Identifier >
@@ -69,7 +70,7 @@ namespace
 
     MOCK_BASE_CLASS( MockKnowledgeGroupFactory, kernel::KnowledgeGroupFactory_ABC)
     {
-        MOCK_METHOD_EXT( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::Team_ABC& ), Create1 );
+        MOCK_METHOD_EXT( Create, 2, kernel::KnowledgeGroup_ABC*( kernel::Team_ABC&, bool ), Create1 );
         MOCK_METHOD_EXT( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream& , kernel::Team_ABC& ), Create2 );
         MOCK_METHOD_EXT( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::KnowledgeGroup_ABC& ), Create3 );
         MOCK_METHOD_EXT( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream&, kernel::KnowledgeGroup_ABC& ), Create4 );

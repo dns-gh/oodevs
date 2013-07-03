@@ -63,6 +63,7 @@ public:
     virtual unsigned int GetDeadHumans() const;
     unsigned int GetTotalLivingHumans() const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
+    void SetKnowledgeGroupForSerialization( unsigned long knowledgeGroupId );
     //@}
 
 private:
@@ -80,6 +81,7 @@ private:
     unsigned long wounded_;
     unsigned long dead_;
     unsigned long contaminated_;
+    unsigned long knowledgeGroupId_;
     kernel::UnitedValue< unsigned int > armedIndividuals_;
     PopulationRepartition* repartition_;
     Enum_PopulationAttitude attitude_;

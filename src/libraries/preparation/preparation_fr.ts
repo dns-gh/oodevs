@@ -304,6 +304,10 @@
         <source>Type/Delay</source>
         <translation>Type/Délai</translation>
     </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Lima</name>

@@ -21,12 +21,16 @@ using namespace kernel;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types, bool isCrowd )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( ResolveType( "Standard", types ) )
+    , isCrowd_( isCrowd )
 {
     UpdateCommunicationDelay();
-    name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
+    if( isCrowd_ )
+        name_ = tools::translate( "KnowledgeGroup", "Crowd" );
+    else
+        name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -38,6 +42,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idMana
 KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xis.attribute< unsigned int >( "id" ), "" )
     , type_( ResolveType( xis.attribute< std::string >( "type" ), types ) )
+    , isCrowd_( xis.has_attribute( "crowd" ) && xis.attribute< bool >( "crowd" ) == true )
 {
     name_ = xis.attribute< std::string >( "name", "" ).c_str();
     if( name_.isEmpty() )
@@ -122,6 +127,8 @@ void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", id_ )
         << xml::attribute( "type", type_->GetName() ) // type_ cannot be null (else, exception thrown in constructor)
         << xml::attribute( "name", name_ );
+    if( isCrowd_ )
+        xos << xml::attribute( "crowd", true );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,4 +148,13 @@ bool KnowledgeGroup::IsActivated() const
 bool KnowledgeGroup::IsJammed() const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsCrowd
+// Created: JSR 2013-07-03
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsCrowd() const
+{
+    return isCrowd_;
 }

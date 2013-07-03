@@ -54,6 +54,7 @@ public:
     //@{
     virtual bool IsActivated() const;
     virtual bool IsJammed() const;
+    virtual bool IsCrowd() const;
     std::string GetType() const;
 
     // LTO end

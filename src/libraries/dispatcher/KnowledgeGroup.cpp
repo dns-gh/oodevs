@@ -218,3 +218,12 @@ bool KnowledgeGroup::IsJammed() const
 {
     return jammed_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsCrowd
+// Created: JSR 2013-07-03
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsCrowd() const
+{
+    return false;
+}

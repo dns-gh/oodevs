@@ -19,6 +19,8 @@
 #include "AgentsModel.h"
 #include "Diplomacies.h"
 #include "GhostModel.h"
+#include "Population.h"
+#include "Populations.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -69,10 +71,11 @@ void TeamsModel::Purge()
 void TeamsModel::CreateTeam()
 {
     Team_ABC* team = factory_.CreateTeam();
-    if(team )
+    if( team )
     {
-        knowledgeGroupsModel_.Create( *team );
-    Register( team->GetId(), *team );
+        knowledgeGroupsModel_.Create( *team, false );
+        knowledgeGroupsModel_.Create( *team, true );
+        Register( team->GetId(), *team );
     }
 }
 
@@ -110,11 +113,59 @@ void TeamsModel::NotifyDeleted( const Team_ABC& team )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TeamsModel::FindCrowdKnowledgeGroup
+// Created: JSR 2013-07-03
+// -----------------------------------------------------------------------------
+const kernel::KnowledgeGroup_ABC* TeamsModel::FindCrowdKnowledgeGroup( const kernel::Team_ABC& team ) const
+{
+    auto it = knowledgeGroupsModel_.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::KnowledgeGroup_ABC& kg = it.NextElement();
+        if( kg.IsCrowd() )
+        {
+            const kernel::CommunicationHierarchies* hierarchies = kg.Retrieve< kernel::CommunicationHierarchies >();
+            if( hierarchies && &hierarchies->GetTop() == &team )
+                return &kg;
+        }
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::UpdateCrowdKnowledgeGroups
+// Created: JSR 2013-07-03
+// -----------------------------------------------------------------------------
+void TeamsModel::UpdateCrowdKnowledgeGroups() const
+{
+    auto it = CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Team_ABC& team = it.NextElement();
+        const kernel::KnowledgeGroup_ABC* kg = FindCrowdKnowledgeGroup( team );
+        if( kg )
+        {
+            const Populations* populations = team.Retrieve< Populations >();
+            if( populations )
+            {
+               auto it = populations->CreateIterator();
+               while( it.HasMoreElements() )
+               {
+                   const Population& population = it.NextElement();
+                   const_cast< Population& >( population ).SetKnowledgeGroupForSerialization( kg->GetId() );
+               }
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TeamsModel::Serialize
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
 void TeamsModel::Serialize( xml::xostream& xos ) const
 {
+    UpdateCrowdKnowledgeGroups();
     xos << xml::start( "parties" );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {

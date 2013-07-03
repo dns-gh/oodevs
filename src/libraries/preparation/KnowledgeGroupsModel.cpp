@@ -45,17 +45,17 @@ void KnowledgeGroupsModel::Purge()
     Clear();
 }
 
-// LTO begin
 // -----------------------------------------------------------------------------
 // Name: void KnowledgeGroupsModel::Create
 // Created:  FHD 2009-11-19:
 // -----------------------------------------------------------------------------
-void KnowledgeGroupsModel::Create( kernel::Team_ABC& parent )
+void KnowledgeGroupsModel::Create( kernel::Team_ABC& parent, bool isCrowd )
 {
-    KnowledgeGroup_ABC* knowledgegroup = knowledgeGroupFactory_.Create( parent );
+    KnowledgeGroup_ABC* knowledgegroup = knowledgeGroupFactory_.Create( parent, isCrowd );
     Register( knowledgegroup->GetId(), *knowledgegroup );
 }
 
+// LTO begin
 // -----------------------------------------------------------------------------
 // Name: void KnowledgeGroupsModel::Create
 // Created:  FHD 2009-11-19:

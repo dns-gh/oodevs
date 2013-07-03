@@ -125,7 +125,7 @@ void ModelBuilder::OnCreate()
 void ModelBuilder::OnCreateCommunication()
 {
     if( selectedTeam_ ) // LTO
-        model_.knowledgeGroups_.Create( *selectedTeam_.ConstCast() );
+        model_.knowledgeGroups_.Create( *selectedTeam_.ConstCast(), false );
     else if( selectedGroup_ ) // LTO
         model_.knowledgeGroups_.CreateSubKnowledgeGroup( *selectedGroup_.ConstCast() ); // LTO
 }
@@ -230,6 +230,8 @@ namespace
         while( it.HasMoreElements() )
         {
             const kernel::KnowledgeGroup_ABC& group = it.NextElement();
+            if( group.IsCrowd() )
+                continue;
             if( const kernel::CommunicationHierarchies* itHierarchies = group.Retrieve< kernel::CommunicationHierarchies >() )
                 if( const kernel::Entity_ABC* itSuperior = itHierarchies->GetSuperior() )
                     if( itSuperior->GetId() == superior->GetId() )

@@ -553,7 +553,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
         controllers_.ChangeMode( ePreparationMode_Exercise );
         if( checkConsistency )
             emit CheckConsistency();
-        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() || model_.HasConsistencyErrorsOnLoad() || model_.exercise_.NeedsSaving() );
+        SetWindowTitle( model_.NeedsSaving() );
     }
     catch( std::exception& e )
     {

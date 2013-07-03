@@ -51,7 +51,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Create( kernel::Team_ABC& parent ); // LTO
+    void Create( kernel::Team_ABC& parent, bool isCrowd );
     void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
     void CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent ); // LTO
     void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model );

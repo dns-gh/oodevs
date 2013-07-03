@@ -91,6 +91,7 @@ public:
 
     //! @name Operations
     //@
+    bool NeedsSaving() const;
     void Load( const tools::ExerciseConfig& config );
     void SaveExercise( const tools::ExerciseConfig& config );
     void SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban = true );
@@ -117,6 +118,7 @@ private:
     //@{
     void UpdateName( const std::string& orbat );
     void SetLoaded( bool status );
+    void UpdateCrowdKnowledgeGroups();
     //@}
 
 private:
@@ -145,6 +147,7 @@ private:
     ModelConsistencyChecker::T_ConsistencyErrors externalErrors_;
     float width_;
     float height_;
+    bool needsSaving_;
     //@}
 
 public:
