@@ -29,6 +29,10 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Circle.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
@@ -272,7 +276,8 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                     PHY_RoleInterface_Perceiver& perceiver = observingPion.GetRole< PHY_RoleInterface_Perceiver >();
                     if( perceiver.IsFireObserver() )
                     {
-                        if( perceiver.GetPerception( (*itobserver)->GetPosition(), vTargetPosition ) > 0 )
+                        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = perceiver.GetKnowledgeGroup()->GetKnowledge()->GetKnowledgeAgentContainer().GetKnowledgeAgent( target );
+                        if( knowledge && knowledge->GetRelevance() == 1. && knowledge->GetCurrentPerceptionLevel() >= PHY_PerceptionLevel::detected_ )
                         {
                             typedef std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > > T_Content;
                             T_Content content;
