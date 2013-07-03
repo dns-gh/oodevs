@@ -59,6 +59,8 @@ public:
     virtual bool Build( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& interaction ) const;
     virtual bool Build( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& interaction ) const;
     virtual bool Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ) const;
     //@}
 
 private:

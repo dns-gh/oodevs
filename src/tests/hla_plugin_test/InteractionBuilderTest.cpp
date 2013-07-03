@@ -468,6 +468,27 @@ BOOST_FIXTURE_TEST_CASE( build_request_transfer_modelling_responibility, Fixture
     CheckBuild< interactions::TMR_RequestTransferModellingResponsibility >( name, parameters );
 }
 
+BOOST_FIXTURE_TEST_CASE( build_tmr_cancel_request, FixtureV2 )
+{
+    const std::string name = "TMR.TMR_CancelRequest";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "RequestFederate" )
+                                                                        ( "ResponseFederate" )
+                                                                        ( "Reason" );
+    CheckBuild< interactions::TMR_CancelRequest >( name, parameters );
+}
+
+/*
+BOOST_FIXTURE_TEST_CASE( build_tmr_transfer_result, FixtureV2 )
+{
+    const std::string name = "TMR.TMR_TransferResult";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "RequestFederate" )
+                                                                        ( "ResponseFederate" )
+                                                                        ( "TransferOk" );
+    CheckBuild< interactions::TMR_TransferResult >( name, parameters );
+}*/
+
 BOOST_FIXTURE_TEST_CASE( interaction_builder_registers_name_and_attributes_for_weapon_fire, Fixture )
 {
     const std::string name = "WeaponFire";

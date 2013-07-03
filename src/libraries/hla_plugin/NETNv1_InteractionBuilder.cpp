@@ -252,3 +252,21 @@ bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_Req
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NETNv1_InteractionBuilder::Build
+// Created: AHC 2012-07-02
+// -----------------------------------------------------------------------------
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_CancelRequest >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NETNv1_InteractionBuilder::Build
+// Created: AHC 2012-07-02
+// -----------------------------------------------------------------------------
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_TransferResult >& ) const
+{
+    return false;
+}

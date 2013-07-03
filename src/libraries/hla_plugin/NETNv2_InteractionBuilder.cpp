@@ -350,3 +350,27 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_Req
     REGISTER( "InstanceAttributeValues", &interactions::TMR_RequestTransferModellingResponsibility::attributeValues );
     return DoRegister( name, interaction, true, true );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NETNv2_InteractionBuilder::Build
+// Created: AHC 2012-07-02
+// -----------------------------------------------------------------------------
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ) const
+{
+    const std::string name = "TMR.TMR_CancelRequest";
+    RegisterTMR( interaction, name, logger_ );
+    REGISTER( "Reason", &interactions::TMR_CancelRequest::reason );
+    return DoRegister( name, interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NETNv2_InteractionBuilder::Build
+// Created: AHC 2012-07-02
+// -----------------------------------------------------------------------------
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ) const
+{
+    const std::string name = "TMR.TMR_TransferResult";
+    RegisterTMR( interaction, name, logger_ );
+    REGISTER( "TransferOk", &interactions::TMR_TransferResult::transferOk );
+    return DoRegister( name, interaction, true, true );
+}

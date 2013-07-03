@@ -39,6 +39,8 @@ MOCK_BASE_CLASS( MockNETNInteractionBuilder, NETN_InteractionBuilder_ABC )
     MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& interaction ), BuildTMR_OfferTransferModellingResponsibility );
     MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& interaction ), BuildTMR_InitiateTransferModellingResponsibility );
     MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ), BuildTMR_RequestTransferModellingResponsibility );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ), BuildTMR_CancelRequest );
+    MOCK_CONST_METHOD_EXT( Build, 1, bool ( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ), BuildTMR_TransferResult );
 };
 
 }

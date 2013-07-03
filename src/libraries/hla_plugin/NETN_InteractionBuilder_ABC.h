@@ -38,6 +38,8 @@ namespace interactions
     struct TMR_OfferTransferModellingResponsibility;
     struct TMR_InitiateTransferModellingResponsibility;
     struct TMR_RequestTransferModellingResponsibility;
+    struct TMR_CancelRequest;
+    struct TMR_TransferResult;
 }
 
 // =============================================================================
@@ -71,6 +73,8 @@ public:
     virtual bool Build( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& interaction ) const = 0;
     virtual bool Build( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& interaction ) const = 0;
     virtual bool Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ) const = 0;
     //@}
 };
 

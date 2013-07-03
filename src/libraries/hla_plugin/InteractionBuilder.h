@@ -53,6 +53,8 @@ namespace interactions
     struct TMR_OfferTransferModellingResponsibility;
     struct TMR_InitiateTransferModellingResponsibility;
     struct TMR_RequestTransferModellingResponsibility;
+    struct TMR_CancelRequest;
+    struct TMR_TransferResult;
 }
     class Federate_ABC;
     class NETN_InteractionBuilder_ABC;
@@ -104,6 +106,8 @@ public:
     bool Build( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ) const;
     //@}
     //@}
 

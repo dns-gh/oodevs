@@ -154,6 +154,7 @@ struct TMR
 struct TMR_OfferTransferModellingResponsibility : public TMR
 {
     bool isOffering;
+    UnicodeString respondent;
     uint32_t reason; // type is NoofferReasonEnum32
 };
 
@@ -181,10 +182,10 @@ struct AttributeValueStruct
 
 struct TMR_InitiateTransferModellingResponsibility : public TMR
 {
+    UnicodeString intiating;
     uint32_t transferType; // TMR::TransferTypeEnum32
     VariableArray< NETN_UUID > instances;
     VariableArray< UnicodeString > attributes;
-    UnicodeString intiating;
     uint32_t capabilityType; // TMR::CapabilityTypeEnum32
     VariableArray< AttributeValueStruct >attributeValues;
 };
@@ -196,6 +197,21 @@ struct TMR_RequestTransferModellingResponsibility : public TMR
     VariableArray< UnicodeString > attributes;
     uint32_t capabilityType; // TMR::CapabilityTypeEnum32
     VariableArray< AttributeValueStruct > attributeValues;
+};
+
+struct TMR_CancelRequest : public TMR
+{
+    enum CancellationReasonEnum32
+    {
+        Other = 0,
+        TimeOut = 1
+    };
+    uint32_t reason;
+};
+
+struct TMR_TransferResult : public TMR
+{
+    bool transferOk;
 };
 
 } // namespace interactions

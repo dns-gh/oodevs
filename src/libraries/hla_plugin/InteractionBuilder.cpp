@@ -328,6 +328,23 @@ bool InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_RequestTra
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
+// Created: AHC 2013-07-02
+// -----------------------------------------------------------------------------
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_CancelRequest >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2013-07-02
+// -----------------------------------------------------------------------------
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_TransferResult >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
 // Created: AHC 2012-11-15
 // ----------------------------------------------------------------------------
 bool InteractionBuilder::Build( ::hla::Interaction< interactions::WeaponFire >& interaction ) const
