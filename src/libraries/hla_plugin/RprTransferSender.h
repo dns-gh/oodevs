@@ -60,6 +60,7 @@ public:
     //! @name Operations
     //@{
     virtual void RequestTransfer( const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes );
+    virtual void RequestTransfer( const std::vector< std::string >& agentIDs, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes );
     //@}
 
 private:
@@ -92,6 +93,7 @@ private:
     std::auto_ptr< T_TransferSender > pTransferSender_;
     OwnershipStrategy_ABC& ownershipStrategy_;
     OwnershipController_ABC& ownershipController_;
+    dispatcher::Logger_ABC& logger_;
     T_Callbacks callbacks_;
     //@}
 };

@@ -164,6 +164,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\EntityTypeResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\EnvironmentObjectTypesTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\EquipmentUpdaterTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\ExternalOwnershipPolicyTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FederateFacadeTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationCreaterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\FormationTest.cpp" />

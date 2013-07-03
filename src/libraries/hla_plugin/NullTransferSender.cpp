@@ -97,3 +97,13 @@ void NullTransferSender::Receive( interactions::Acknowledge& /*interaction*/ )
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: NullTransferSender::RequestTransfer
+// Created: AHC 2013-07-03
+// -----------------------------------------------------------------------------
+void NullTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& callback, TransferType , const std::vector< ::hla::AttributeIdentifier >&  )
+{
+    callback( true );
+    return;
+}
