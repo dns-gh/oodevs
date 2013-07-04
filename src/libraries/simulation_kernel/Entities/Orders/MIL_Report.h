@@ -177,7 +177,8 @@ public:
         eRC_LogSuperiorAdded = 513,
         eRC_LogSuperiorRemoved = 514,
         eRC_CloseCrowdDemonstration = 517,
-        eRC_MilitaryEquipmentPlundered = 518
+        eRC_MilitaryEquipmentPlundered = 518,
+        eRC_CorpseTransported = 769,
     };
     //@}
 

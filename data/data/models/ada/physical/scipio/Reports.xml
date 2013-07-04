@@ -711,5 +711,8 @@
     <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="518" message="Matériel militaire pillé par la foule"/>
+  <report category="operational" id="769" message="Evacuation de %1">
+    <parameter type="ResourceType"/>
+  </report>
 </reports>
 <!-- signature="3677028831" -->

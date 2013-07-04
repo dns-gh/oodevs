@@ -311,3 +311,12 @@ void SupplyConvoyReal::serialize( Archive& archive, const unsigned int )
     archive & convoyPion_;
     archive & currentActionDone_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoyReal::GetReporter
+// Created: LDC 2013-07-04
+// -----------------------------------------------------------------------------
+const MIL_Agent_ABC* SupplyConvoyReal::GetReporter() const
+{
+    return convoyPion_;
+}

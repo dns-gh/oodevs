@@ -55,6 +55,7 @@ public:
     virtual SupplySupplier_ABC& GetTransportersProvider() const = 0;
     virtual bool CanTransport( const PHY_DotationCategory& dotationCategory ) const = 0;
     virtual void SetProvider( const MIL_Agent_ABC* provider ) = 0;
+    virtual const MIL_Agent_ABC* GetReporter() const = 0;
     //@}
 
     //! @name Network

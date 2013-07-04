@@ -36,6 +36,7 @@ public:
     virtual unsigned MoveToSupplier            ();
     virtual unsigned MoveToSupplyRecipient     ();
     virtual unsigned MoveToTransportersProvider();
+    virtual const MIL_Agent_ABC* GetReporter() const;
     //@}
 
     //! @name Network

@@ -62,6 +62,7 @@ public:
     virtual const T_PointVector* GetPathToNextDestination () const;
     virtual const MIL_Agent_ABC* GetProvider              () const;
     virtual bool                 IsPushedFlow             () const;
+    virtual const MIL_Agent_ABC* GetReporter() const;
     //@}
 
     //! @name Algorithms
