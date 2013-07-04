@@ -1140,6 +1140,15 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                 innerKg.GetKnowledge()->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( functorAgent );
             }
         }
+        for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
+        {
+            const MIL_KnowledgeGroup& innerKg = **itKG;
+            if( innerKg.IsEnabled() && IsEnabled() && innerKg.IsJammed() && innerKg.CanReport() && innerKg.GetKnowledge() )
+            {
+                boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
+                innerKg.ApplyOnKnowledgesAgentPerception( functorAgent );
+            }
+        }
         // LTO end
     }
 
@@ -1371,4 +1380,15 @@ void MIL_KnowledgeGroup::RegisterPion( const MIL_Agent_ABC& agent )
 void MIL_KnowledgeGroup::UnregisterPion( const MIL_Agent_ABC& agent )
 {
     pions_.erase( std::remove( pions_.begin(), pions_.end(), &agent ), pions_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::CanReport
+// Created: LGY 2013-07-03
+// -----------------------------------------------------------------------------
+bool MIL_KnowledgeGroup::CanReport() const
+{
+    if( !jammedPion_ )
+        return false;
+    return jammedPion_->GetRole< PHY_RolePion_Communications >().CanReport();
 }

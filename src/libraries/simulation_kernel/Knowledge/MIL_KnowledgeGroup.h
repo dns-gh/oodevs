@@ -117,6 +117,7 @@ public:
     bool IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown ) const;
     bool IsPerceptionDistanceHacked( MIL_Object_ABC& objectKnown ) const;
     bool IsPerceptionDistanceHacked( MIL_Population& populationKnown ) const;
+    bool CanReport() const;
     const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Agent_ABC& agentKnown ) const;
     const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Object_ABC& ObjectKnown ) const;
     const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Population& populationKnown ) const;
@@ -184,6 +185,13 @@ public:
     {
         if( knowledgeBlackBoard_ )
             knowledgeBlackBoard_->ApplyOnKnowledgesObject( fct );
+    }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesAgentPerception( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( fct );
     }
     //@}
 
