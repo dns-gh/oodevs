@@ -48,6 +48,7 @@ public:
     //@{
     virtual bool CanEmit() const = 0;
     virtual bool CanReceive() const = 0;
+    virtual bool CanReport() const = 0;
     virtual void Jam( const MIL_Object_ABC& jammer ) = 0;
     virtual void Unjam( const MIL_Object_ABC& jammer ) = 0;
     virtual void ActivateBlackout () = 0;

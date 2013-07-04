@@ -241,6 +241,15 @@ void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) c
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::CanReport
+// Created: LGY 2013-07-03
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Communications::CanReport() const
+{
+    return !bBlackoutEmmittedReport_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
