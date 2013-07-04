@@ -9,15 +9,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "FuneralConsign.h"
-#include "FuneralRequest_ABC.h"
 #include "FuneralPackagingResource.h"
+#include "FuneralRequest_ABC.h"
+#include "FuneralConfig.h"
+#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "SupplyConsign_ABC.h"
 #include "SupplyConvoy_ABC.h"
-#include "FuneralConfig.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Orders/MIL_Report.h"
+#include "Entities/Orders/MIL_DecisionalReport.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "MIL_Time_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <tools/iterator.h>
@@ -307,6 +310,9 @@ void FuneralConsign::OnSupplyConvoyLeaving( boost::shared_ptr< const SupplyConsi
             handler_->AddSupplyConvoysObserver( *this );
             convoy_ = supplyConsign->GetConvoy();
             needNetworkUpdate_ = true;
+            const MIL_Agent_ABC* reporter = convoy_ ? convoy_->GetReporter() : 0;
+            if( reporter )
+                MIL_Report::PostEvent<MIL_Agent_ABC>( *reporter, report::eRC_CorpseTransported, packaging_->GetDotationCategory() );
             SetState( eTransportingPackaged );
             return;
         }

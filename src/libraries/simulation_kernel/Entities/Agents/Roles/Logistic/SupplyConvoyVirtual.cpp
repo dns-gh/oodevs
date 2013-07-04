@@ -138,3 +138,12 @@ template< typename Archive > void SupplyConvoyVirtual::serialize( Archive& archi
     archive & boost::serialization::base_object< SupplyConvoy >( *this );
     archive & position_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoyVirtual::GetReporter
+// Created: LDC 2013-07-04
+// -----------------------------------------------------------------------------
+const MIL_Agent_ABC* SupplyConvoyVirtual::GetReporter() const
+{
+    return provider_;
+}
