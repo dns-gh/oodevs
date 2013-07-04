@@ -230,12 +230,12 @@ void PHY_MeteoDataManager::RemoveLocalWeather( const sword::MagicAction& msg, un
         if( msg.parameters().elem_size() != 1 )
             throw MASA_BADPARAM( "invalid parameters count, one parameter expected" );
         if(  msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
-            throw MASA_BADPARAM( "parameters[10] must be an Identifier" );
+            throw MASA_BADPARAM( "parameters[0] must be an Identifier" );
 
         unsigned int id = msg.parameters().elem( 0 ).value().Get( 0 ).identifier();
         weather::Meteo* meteo = Find( id );
         if( !meteo )
-            throw MASA_BADPARAM( "parameters[10] must be a local weather identifier" );
+            throw MASA_BADPARAM( "parameters[0] must be a local weather identifier" );
 
         meteo->SendDestruction();
         Remove( id );

@@ -183,9 +183,8 @@ message MagicAction {
         @todo Explain what parameters are expected for each type
     */
     enum Type {
-        //! A global weather magic action
-        global_weather                     = 0;
-        //! Create or update a local weather.
+        //! Update global weather parameters. A ControlGlobalWeather
+        //! will be emitted to notify the weather changes.
         //! parameters[0], AReal: temperature.
         //! parameters[1], AReal: wind speed in km/h.
         //! parameters[2], Heading: the direction where the wind flows
@@ -193,7 +192,19 @@ message MagicAction {
         //! parameters[3], AReal: cloud layer bottom altitude in meters.
         //! parameters[4], AReal: cloud layer top altitude in meters.
         //! parameters[5], AReal: cloud density.
-        //! parameters[6], Enumeration: a value within PrecipicationType.
+        //! parameters[6], Enumeration: a value within PrecipitationType.
+        global_weather                     = 0;
+        //! Create or update a local weather. In both cases, a
+        //! ControlLocalWeatherCreation message is sent will local weather
+        //! attributes.
+        //! parameters[0], AReal: temperature.
+        //! parameters[1], AReal: wind speed in km/h.
+        //! parameters[2], Heading: the direction where the wind flows
+        //!   in degrees.
+        //! parameters[3], AReal: cloud layer bottom altitude in meters.
+        //! parameters[4], AReal: cloud layer top altitude in meters.
+        //! parameters[5], AReal: cloud density.
+        //! parameters[6], Enumeration: a value within PrecipitationType.
         //! parameters[7], Datetime: start time.
         //! parameters[8], Datetime: end time.
         //! parameters[9], Location: a location with two points defining
@@ -203,7 +214,10 @@ message MagicAction {
         //!   created instead.
         //! result[0], Identifier: on success, created local weather identifier.
         local_weather                      = 1;
-        //! A local weather destruction magic action
+        //! Remove a local weather. A ControlLocalWeatherDestruction
+        //! message is emitted on success.
+        //! parameters[0], Identifier: identifier of the local weather
+        //!   to remove.
         local_weather_destruction          = 2;
         //! Change diplomacy between two parties.
         //! Trigger a ChangeDiplomacy on success

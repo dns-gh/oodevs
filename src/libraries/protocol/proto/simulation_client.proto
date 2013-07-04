@@ -3289,121 +3289,82 @@ message KnowledgeGroupUpdateAck {
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
 }
 
-/** @struct ControlGlobalWeatherAck
-    @brief Acknowledges a global weather magic action
-    @see MagicAction
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message was sent when updating the global weather.
 message ControlGlobalWeatherAck {
 }
 
-/** @struct ControlLocalWeatherAck
-    @brief Acknowledges a local weather magic action
-    @see MagicAction
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message was sent when creating or updating a local weather.
 message ControlLocalWeatherAck {
 }
 
-/** @struct WeatherAttributes
-    @brief Defines the weather attributes
-*/
+//! Global or local weather attributes.
 message WeatherAttributes {
-    /** @enum EnumPrecipitationType
-        @brief Defines the different types of precipitation
-    */
+
     enum EnumPrecipitationType {
-        //! Dry
         dry        = 0;
-        //! Sand storm
         sand_storm = 1;
-        //! Fog
         fog        = 2;
-        //! Drizzle
         drizzle    = 3;
-        //! Rain
         rain       = 4;
-        //! Snow
         snow       = 5;
     }
-    /** @enum EnumLightingType
-        @brief Defines the different types of lighting
-    */
+
     enum EnumLightingType {
-        //! Clear day
         clear_day               = 0;
-        //! Slightly cloudy day
         slightly_cloudy_day     = 1;
-        //! Mildly cloudy day
         mildly_cloudy_day       = 2;
-        //! Fairly cloudy day
         fairly_cloudy_day       = 3;
-        //! Very cloudy day
         very_cloudy_day         = 4;
-        //! Full moon night
         full_moon_night         = 5;
-        //! Three quater moon night
         three_quater_moon_night = 6;
-        //! Half quater moon night
         half_quater_moon_night  = 7;
-        //! Quater moon night
         quater_moon_night       = 8;
-        //! New moon night
         new_moon_night          = 9;
-        //! Artificial light
         artificial_light        = 10;
-        //! Global weather
         global_weather          = 11;
     }
-    //! The temperatur in Celsius
+    //! Temperature in degrees Celsius
     required int32                 temperature    = 1;
-    //! The speed of wind in km/h
+    //! Wind speed in kilometers per hour.
     required int32                 wind_speed     = 2;
-    //! The direction of wind
+    //! Direction where the wind flows in degrees.
     required Heading               wind_direction = 3;
-    //! The cloud floor altitude in meters
+    //! Cloud layer bottom altitude in meters
     required int32                 cloud_floor    = 4;
-    //! The cloud ceiling altitude in meters
+    //! Cloud layer top altitude in meters
     required int32                 cloud_ceiling  = 5;
-    //! The cloud density in percent
+    //! Cloud density in percent
     required int32                 cloud_density  = 6;
-    //! The precipiration type
+    //! Precipitation type
     required EnumPrecipitationType precipitation  = 7;
-    //! The lighting type
+    //! Lighting type, this parameter is currently ignored.
     required EnumLightingType      lighting       = 8;
 }
 
-/** @struct ControlGlobalWeather
-    @brief Notifies of the global weather
-*/
+//! Global weather update notification.
 message ControlGlobalWeather {
-    //! The weather identifier
     required WeatherId         weather    = 1;
-    //! The weather attributes
     required WeatherAttributes attributes = 2;
 }
 
-/** @struct ControlLocalWeatherCreation
-    @brief Notifies of the creation of a local weather
-*/
+//! Local weather creation or update notification.
 message ControlLocalWeatherCreation {
-    //! The weather identifier
     required WeatherId         weather      = 1;
-    //! The top-left corner of the zone
+    //! The top-left corner of the area
     optional CoordLatLong      top_left     = 2;
-    //! The bottom-left corner of the zone
+    //! The bottom-left corner of the area
     optional CoordLatLong      bottom_right = 3;
-    //! The weather attributes
     optional WeatherAttributes attributes   = 4;
-    //! The weather start date
     optional DateTime          start_date   = 5;
-    //! The weather end date
     optional DateTime          end_date     = 6;
 }
 
-/** @struct ControlLocalWeatherDestruction
-    @brief Notifies of the destruction of a local weather
-*/
+//! Local weather removal notification.
 message ControlLocalWeatherDestruction {
-    //! The weather identifier
     required WeatherId weather = 1;
 }
 
