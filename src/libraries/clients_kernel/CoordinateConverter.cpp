@@ -11,6 +11,7 @@
 #include "CoordinateConverter.h"
 #include "CoordinateSystems.h"
 #include "tools/ExerciseConfig.h"
+#include "Tools.h"
 #include <boost/format.hpp>
 #include <geocoord/Geoid.h>
 #include <boost/lexical_cast.hpp>
@@ -151,7 +152,8 @@ bool CoordinateConverter::IsInBoundaries( const geometry::Point2f& point ) const
 std::string CoordinateConverter::ConvertToGeoDms( const geometry::Point2f& pos ) const
 {
     SetGeodeticCoordinates( pos );
-    return geodetic_.GetLatitude( "DD° MM' SS.SS H" ) + ":" + geodetic_.GetLongitude( "DD° MM' SS.SS H" );
+    const std::string strFormat = tools::translate( "CoordinateConverter", "DD° MM' SS.SS H" ).toStdString();
+    return geodetic_.GetLatitude( strFormat ) + ":" + geodetic_.GetLongitude( strFormat );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +187,8 @@ void CoordinateConverter::SetGeodeticCoordinates( const geometry::Point2f& pos )
 // -----------------------------------------------------------------------------
 geometry::Point2f CoordinateConverter::ConvertFromGeoDms ( const std::string& longitude, const std::string& latitude ) const
 {
-    geodetic_.Set( latitude , longitude,  "DD° MM' SS.SS H",  "DD° MM' SS.SS H" );
+    const std::string strFormat = tools::translate( "CoordinateConverter", "DD° MM' SS.SS H" ).toStdString();
+    geodetic_.Set( latitude , longitude, strFormat, strFormat );
     planar_.SetCoordinates( geodetic_ );
     return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) ) + translation_;
 }

@@ -255,6 +255,13 @@
     </message>
 </context>
 <context>
+    <name>Wgs84DmsParser</name>
+    <message>
+        <source>%1° %2&apos; %3.%4 %5</source>
+        <translation>%1° %2&apos; %3.%4 %5</translation>
+    </message>
+</context>
+<context>
     <name>Yes/No</name>
     <message>
         <source>Yes</source>

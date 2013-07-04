@@ -45,6 +45,13 @@
     </message>
 </context>
 <context>
+    <name>CoordinateConverter</name>
+    <message>
+        <source>DD° MM&apos; SS.SS H</source>
+        <translation>DD° MM&apos; SS.SS H</translation>
+    </message>
+</context>
+<context>
     <name>CoordinateSystems</name>
     <message>
         <source>UTM MGRS</source>

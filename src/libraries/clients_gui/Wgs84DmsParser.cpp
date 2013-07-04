@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Wgs84DmsParser.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "tools.h"
 
 using namespace gui;
 
@@ -22,6 +23,7 @@ Wgs84DmsParser::Wgs84DmsParser( const kernel::CoordinateConverter_ABC& converter
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: Wgs84DmsParser destructor
 // Created: AME 2010-03-04
@@ -30,6 +32,7 @@ Wgs84DmsParser::~Wgs84DmsParser()
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: Wgs84DmsParser::Parse
 // Created: AME 2010-03-04
@@ -39,11 +42,10 @@ bool Wgs84DmsParser::Parse( const QString& content, geometry::Point2f& result, Q
     try
     {
         QStringList listValue = QStringList::split( ":", content );
-        bool formatCoordX, formatCoordY = false;
-        QString hintx, hinty;
-        formatCoordX = FormatDmsCoordinate( listValue[ 0 ].stripWhiteSpace(), true, hintx );
-        if( formatCoordX )
-        formatCoordY = FormatDmsCoordinate( listValue[ 1 ].stripWhiteSpace(), false, hinty );
+        QString hintx;
+        QString hinty;
+        bool formatCoordX = FormatDmsCoordinate( listValue[ 0 ].stripWhiteSpace(), true, hintx );
+        bool formatCoordY = FormatDmsCoordinate( listValue[ 1 ].stripWhiteSpace(), false, hinty );
 
         if( formatCoordX && formatCoordY )
         {
@@ -52,13 +54,12 @@ bool Wgs84DmsParser::Parse( const QString& content, geometry::Point2f& result, Q
             hint.append( hinty );
             return true;
         }
-        return false;
     }
     catch( ... )
     {
-        return false;
+        //NOTHING
     }
-    return true;
+    return false;
 }
 // -----------------------------------------------------------------------------
 // Name: Wgs84DmsParser::FormatDmsCoordinate
@@ -67,10 +68,10 @@ bool Wgs84DmsParser::Parse( const QString& content, geometry::Point2f& result, Q
 bool Wgs84DmsParser::FormatDmsCoordinate( const QString& content, bool longitude, QString& hint ) const
 {
     QString coordValue = content.stripWhiteSpace().upper();
-    coordValue.replace('°',' ');
-    coordValue.replace('\'',' ');
+    coordValue.replace( L'°', ' ' );
+    coordValue.replace( L'\'', ' ' );
     if( coordValue.find( "S" ) >= 0 || coordValue.find( "W" ) >= 0 )
-      coordValue = "-" + coordValue;
+        coordValue = "-" + coordValue;
     coordValue.replace( 'N', ' ' );
     coordValue.replace( 'S', ' ' );
     coordValue.replace( 'E', ' ' );
@@ -81,29 +82,31 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString& content, bool longitude
       return false;
 
     bool ok = true;
-    int value;
-    if( longitude )  value = 180; else value = 90;
+    const int value = longitude ? 180 : 90;
 
-    int deg_lat = listParameters[0].toInt( &ok );
-    if(!ok || deg_lat < -value || deg_lat > value ) return false;
+    int deg_lat = listParameters[ 0 ].toInt( &ok );
+    if( !ok || deg_lat < -value || deg_lat > value )
+        return false;
     int min_lat = listParameters[1].toInt( &ok );
-    if(!ok || min_lat < 0 || min_lat >= 60) return false;
-    double sec_lat = listParameters[2].toDouble( &ok );
-    if(!ok || sec_lat < 0 || sec_lat >= 60) return false;
+    if( !ok || min_lat < 0 || min_lat >= 60 )
+        return false;
+    double sec_lat = listParameters[ 2 ].toDouble( &ok );
+    if( !ok || sec_lat < 0 || sec_lat >= 60 )
+        return false;
 
-    const char* finalParameter;
+    QChar finalParameter;
     if( longitude )
-      if( deg_lat < 0 )
-        finalParameter = "W";
-      else
-        finalParameter = "E";
+        finalParameter = ( deg_lat < 0 ) ? 'W' : 'E';
     else
-      if( deg_lat < 0 )
-        finalParameter = "S";
-      else
-        finalParameter = "N";
+        finalParameter = ( deg_lat < 0 ) ? 'S' : 'N';
 
-    hint.sprintf( "%02d° %02d' %02d.%02d %s", abs(deg_lat), min_lat, (int)sec_lat, (int)(sec_lat - floor(sec_lat) )*100, finalParameter ) ;
+    static const QChar padding( '0' );
+    hint = tools::translate( "Wgs84DmsParser", "%1° %2' %3.%4 %5" )
+                       .arg( std::abs( deg_lat ), 2, 10, padding )
+                       .arg( min_lat, 2, 10, padding )
+                       .arg( static_cast< int >( sec_lat ), 2, 10, padding )
+                       .arg( static_cast< int >( ( sec_lat - std::floor( sec_lat ) ) * 100 ), 2, 10, padding )
+                       .arg( finalParameter );
     return true;
 }
 
