@@ -170,18 +170,8 @@ message ObjectMagicAction {
     optional string            name       = 4;
 }
 
-/** @struct MagicAction
-    @brief A magic action request
-    @see MagicActionAck
-*/
 message MagicAction {
-    /** @enum Type
-        @brief The type of magic action.
 
-        Specific parameters are expected for each type.
-
-        @todo Explain what parameters are expected for each type
-    */
     enum Type {
         //! Update global weather parameters. A ControlGlobalWeather
         //! will be emitted to notify the weather changes.
@@ -235,18 +225,17 @@ message MagicAction {
         //!     maxstock(quantity), links
         //!   links: list of list with a "identifier,quantity" format        
         change_resource_network_properties = 5;
-        //! A fire order on location magic action
+        //! Initiate a fire order on a specific location.
         //! parameters[0], Location or Point: fire location.
         //! parameters[1], ResourceType: resource type.
         //! parameters[2], AReal: real multiplied by an intervention type
         //!  of a resource type to calculate the iterations number.
         create_fire_order_on_location      = 6;
     }
-    //! The type of magic action
     required Type              type       = 1;
-    //! The parameters of the magic action
     required MissionParameters parameters = 2;
-    //! optional name
+    //! The action name is mostly used as a label by third-party systems
+    //! listening and displaying simulation events.
     optional string            name       = 3;
 }
 
