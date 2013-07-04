@@ -49,6 +49,30 @@ func Read(body io.Reader) []byte {
 	return contents
 }
 
+func Restart(address, sid, nodeId string) {
+	resp := Get(address, "list_sessions", url.Values{"sid": {sid}, "node": {nodeId}})
+	defer resp.Body.Close()
+	contents := Read(resp.Body)
+
+	var sessions []Session
+	err := json.Unmarshal(contents, &sessions)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var stopped []string
+	for _, v := range sessions {
+		if v.Status != "playing" {
+			stopped = append(stopped, v.Id)
+		}
+	}
+
+	for _, v := range stopped {
+		resp = Get(address, "start_session", url.Values{"sid": {sid}, "id": {v}})
+		defer resp.Body.Close()
+	}
+}
+
 func main() {
 	host := flag.String("host", "localhost", "server host name")
 	port := flag.Int("port", 8080, "server port")
@@ -56,6 +80,7 @@ func main() {
 	node := flag.String("node", "", "node name")
 	username := flag.String("user", "", "username")
 	password := flag.String("password", "", "password")
+	alone := flag.Bool("standalone", false, "standalone")
 	flag.Parse()
 
 	b, err := json.Marshal(Login{*username, *password})
@@ -97,27 +122,12 @@ func main() {
 		log.Fatal("Unknown node: ", *node)
 	}
 
-	for _ = range time.Tick(time.Duration(*duration) * time.Minute) {
-		resp = Get(address, "list_sessions", url.Values{"sid": {result.Sid}, "node": {nodeId}})
-		defer resp.Body.Close()
-		contents = Read(resp.Body)
-
-		var sessions []Session
-		err = json.Unmarshal(contents, &sessions)
-		if err != nil {
-			log.Fatal(err)
+	if *alone {
+		for _ = range time.Tick(time.Duration(*duration) * time.Minute) {
+			Restart(address, result.Sid, nodeId)
 		}
-
-		var stopped []string
-		for _, v := range sessions {
-			if v.Status != "playing" {
-				stopped = append(stopped, v.Id)
-			}
-		}
-
-		for _, v := range stopped {
-			resp = Get(address, "start_session", url.Values{"sid": {result.Sid}, "id": {v}})
-			defer resp.Body.Close()
-		}
+	} else {
+		Restart(address, result.Sid, nodeId)
 	}
+
 }
