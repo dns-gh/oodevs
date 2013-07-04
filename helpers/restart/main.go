@@ -62,7 +62,7 @@ func Restart(address, sid, nodeId string) {
 
 	var stopped []string
 	for _, v := range sessions {
-		if v.Status != "playing" {
+		if v.Status == "stopped" {
 			stopped = append(stopped, v.Id)
 		}
 	}
