@@ -282,26 +282,22 @@ message CrowdMagicActionAck {
     required ErrorCode error_code = 2;
 }
 
-/** @struct ChangeDiplomacy
-    @brief Notifies of a change in diplomacy
-*/
+//! Define the diplomatic relationship of party1 with party2. These
+//! relationships are not symmetric, the relation of party1 with party2
+//! may be different from the one of party2 with party1.
 message ChangeDiplomacy {
-    //! Identifier of the party from which the diplomacy is defined
     required PartyId       party1    = 1;
-    //! Identifier of the party to which the diplomacy is defined
     required PartyId       party2    = 2;
-    //! Definition of the diplomacy between specified parties
+    //! Relationship from party1 to party2.
     required EnumDiplomacy diplomacy = 3;
 }
 
-/** @struct ChangeDiplomacyAck
-    @brief Acknowledges a diplomacy change magic action
-    @see MagicAction
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message was sent in response to a diplomacy change made through
+//! a magic action. A regular DiplomacyChange message is now sent as
+//! well.
 message ChangeDiplomacyAck {
-    /** @enum ErrorCode
-        @brief Reason for the failure of the diplomacy change operation
-    */
     enum ErrorCode {
         //! Operation succeeded @todo rename to no_error
         no_error_diplomacy            = 0;
