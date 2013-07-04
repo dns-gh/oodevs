@@ -52,8 +52,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
 	data, err := WriteSession(session)
 	c.Assert(err, IsNil)
 
-	expected := `
-<session>
+	expected := `<session>
   <config>
     <dispatcher>
       <network client="localhost:10000" server="masagroup.net"></network>
