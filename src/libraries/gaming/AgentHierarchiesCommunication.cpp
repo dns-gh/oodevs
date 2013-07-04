@@ -66,10 +66,11 @@ void AgentHierarchiesCommunication::DoUpdate( const sword::UnitAttributes& messa
         jammed_ = message.communications().jammed() ;
         radioEmitterDisabled_ = message.has_radio_emitter_disabled() && message.radio_emitter_disabled();
         radioReceiverDisabled_ = message.has_radio_receiver_disabled() && message.radio_receiver_disabled();
-        if( jammed_ || radioReceiverDisabled_ || radioEmitterDisabled_ )
-            UpdateSuperior( groupResolver_.Get( message.communications().knowledge_group().id() )  );
-        else
+        unsigned int id = message.communications().knowledge_group().id();
+        if( id == 0 )
             UpdateSuperior( *superior_ );
+        else
+            UpdateSuperior( groupResolver_.Get( id )  );
     }
 }
 
