@@ -15,6 +15,7 @@
 #include "SubObjectName.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/Resolver.h"
@@ -28,6 +29,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 DiffusionListDialog::DiffusionListDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const kernel::ExtensionTypes& extensions, const char* name )
     : ModalDialog( parent, name )
+    , extensions_( extensions )
     , contextMenuEntry_( true )
     , controllers_     ( controllers )
     , currentTeam_     ( controllers )
@@ -110,7 +112,8 @@ void DiffusionListDialog::SetContextMenuEntry( bool contextMenuEntry )
 // -----------------------------------------------------------------------------
 void DiffusionListDialog::NotifyContextMenu( const kernel::Team_ABC& team, ContextMenu& menu )
 {
-    if( !contextMenuEntry_ || team.GetId() == 0 ) // no side team
+    if( !contextMenuEntry_ || team.GetId() == 0 || // no side team
+        extensions_.GetNameByType( kernel::AttributeType::ETypeDiffusionList ).empty() ) // no diffusion list extension
         return;
     currentTeam_ = &team;
     currentAgent_ = 0;

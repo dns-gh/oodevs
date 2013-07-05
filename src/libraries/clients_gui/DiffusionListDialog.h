@@ -86,6 +86,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    const kernel::ExtensionTypes&               extensions_;
     kernel::Controllers&                        controllers_;
     kernel::SafePointer< kernel::Entity_ABC >   currentTeam_;
     kernel::SafePointer< kernel::Entity_ABC >   currentAgent_;
