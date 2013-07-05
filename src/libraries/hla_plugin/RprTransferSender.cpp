@@ -43,7 +43,6 @@ RprTransferSender::RprTransferSender( const rpr::EntityIdentifier federateID, co
     , pTransferSender_( new InteractionSender< interactions::TransferControl >( *this, builder ) )
     , ownershipStrategy_ ( ownershipStrategy )
     , ownershipController_( controller )
-    , logger_( logger )
 {
     if (!pAcknowledgeSender_->IsSupported())
     {
@@ -51,7 +50,7 @@ RprTransferSender::RprTransferSender( const rpr::EntityIdentifier federateID, co
     }   
     if (!pTransferSender_->IsSupported())
     {
-        logger.LogWarning("TransferControl interaction not supported.  OwnershipTransfer will be disabled.");
+        logger.LogWarning("TransferContral interaction not supported.  OwnershipTransfer will be disabled.");
     }   
 }
 
@@ -128,11 +127,3 @@ void RprTransferSender::Receive( interactions::Acknowledge& interaction )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: RprTransferSender::RequestTransfer
-// Created: AHC 2013-07-03
-// -----------------------------------------------------------------------------
-void RprTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& , TransferType , const std::vector< ::hla::AttributeIdentifier >&  )
-{
-    logger_.LogWarning("Attempting to perform multiple ownership transfers using RPR.");
-}

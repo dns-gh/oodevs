@@ -361,9 +361,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\RawDataHazardContourGroup.cpp">
       <Filter>Source Files\Classes\netn</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\ExternalOwnershipPolicy.cpp">
-      <Filter>Source Files\Interactions\Ownership</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -860,9 +857,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\RawDataHazardContourGroup.h">
       <Filter>Source Files\Classes\netn</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\ExternalOwnershipPolicy.h">
-      <Filter>Source Files\Interactions\Ownership</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

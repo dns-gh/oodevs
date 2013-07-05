@@ -64,7 +64,6 @@ public:
     //! @name Operations
     //@{
     virtual void RequestTransfer( const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes );
-    virtual void RequestTransfer( const std::vector< std::string >& agentIDs, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes );
     //@}
 
 private:
@@ -79,7 +78,8 @@ private:
     //@{
     typedef InteractionSender_ABC< interactions::TMR_OfferTransferModellingResponsibility > T_OfferSender;
     typedef InteractionSender_ABC< interactions::TMR_RequestTransferModellingResponsibility > T_RequestSender;
-    typedef std::map< unsigned int, TransferRequestCallback > T_Callbacks;
+    typedef std::pair< std::string, TransferRequestCallback > T_RequestInfo;
+    typedef std::map< unsigned int, T_RequestInfo > T_Callbacks;
     //@}
 
 private:

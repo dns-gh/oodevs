@@ -127,7 +127,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\EntityIdentifierResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\EventListenerComposite.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\ExternalOwnershipPolicy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FederateFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FomBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FOM_Serializer.cpp" />
@@ -253,7 +252,6 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ExtentResolver_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\ExternalOwnershipPolicy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FederateFactory.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FomBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FOM_Serializer.h" />

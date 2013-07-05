@@ -164,11 +164,11 @@ BOOST_FIXTURE_TEST_CASE( location_ownership_stategy_move_transfer_negative_ack, 
     callback( false );
 }
 
-
+/*
 BOOST_FIXTURE_TEST_CASE( location_ownership_stategy_move_transfer_negative_ack_moveagain, FilledFixture )
 {
     Callback callback;
-    MOCK_EXPECT( hlaClass.GetAttributes ).returns( attributes );
+    MOCK_EXPECT( hlaClass.GetAttributes ).returns( boost::cref( attributes ) );
     MOCK_EXPECT( transferSender.RequestTransfer ).once().with( "identifier", mock::any, TransferSender_ABC::E_EntityPush, attributes ).calls( boost::bind( &Callback::Capture, boost::ref(callback), _1, _2 ) );
     objectListener->Moved( "identifier", 42, 43 );
     callback( false );
@@ -188,11 +188,11 @@ BOOST_FIXTURE_TEST_CASE( location_ownership_stategy_move_transfer_negative_ack_o
     objectListener->Moved( "identifier", 42, 43 );
 
 }
-/*
+
 BOOST_FIXTURE_TEST_CASE( location_ownership_stategy_transfer_pull_back, FilledFixture )
 {
     Callback callback;
-    MOCK_EXPECT( hlaClass.GetAttributes ).returns( attributes );
+    MOCK_EXPECT( hlaClass.GetAttributes ).once().returns( attributes );
     MOCK_EXPECT( transferSender.RequestTransfer ).once().with( "identifier", mock::any, TransferSender_ABC::E_EntityPush, attributes ).calls( boost::bind( &Callback::Capture, boost::ref(callback), _1, _2 ) );
     objectListener->Moved( "identifier", 42, 43 );
     MOCK_EXPECT( hlaClass.GetAttributes ).once().returns( attributes );
@@ -203,5 +203,4 @@ BOOST_FIXTURE_TEST_CASE( location_ownership_stategy_transfer_pull_back, FilledFi
     MOCK_EXPECT( transferSender.RequestTransfer ).once().with( "identifier", mock::any, TransferSender_ABC::E_EntityPull, attributes ).calls( boost::bind( &Callback::Capture, boost::ref(callback), _1, _2 ) );
     objectListener->Moved( "identifier", 42, 120 );
     classListener->Acquired( "identifier" );
-}
-*/
+}*/
