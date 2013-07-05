@@ -95,38 +95,44 @@ BOOST_FIXTURE_TEST_CASE( TestKnowledgeGroupType, Initialization )
 
 namespace
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, unsigned int id )
+    struct ArmyFixture : Initialization
     {
-        const MIL_KnowledgeGroupType& type = *MIL_KnowledgeGroupType::FindType( "GTIA" );
-        MOCK_EXPECT( army.RegisterKnowledgeGroup ).once();
-        boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( type, id, army ) );
-        army.RegisterKnowledgeGroup( result );
-        return result;
-    }
-    boost::shared_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, const boost::shared_ptr< MIL_KnowledgeGroup >& group, unsigned int id, const std::string& type )
-    {
-        xml::xistringstream xis( "<root id='" + boost::lexical_cast< std::string >( id ) + "' type='" + type + "' name='group'/>" );
-        xis >> xml::start( "root" );
-//        MOCK_EXPECT( group.RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration of nested KG
-        boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( xis, army, group.get() ) );
-        group->RegisterKnowledgeGroup( result );
-        return result;
-    }
+        ArmyFixture()
+        {
+            MOCK_EXPECT( army.GetID ).returns( 42u );
+            MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
+        }
+        boost::shared_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( unsigned int id )
+        {
+            return boost::shared_ptr< MIL_KnowledgeGroup >(
+                new MIL_KnowledgeGroup(
+                    xml::xistringstream( "<root id='" + boost::lexical_cast< std::string >( id ) + "' type='GTIA' name='root'/>" )
+                        >> xml::start( "root" ),
+                    army, 0 ) );
+        }
+        boost::shared_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& group, unsigned int id, const std::string& type )
+        {
+            xml::xistringstream xis( "<root id='" + boost::lexical_cast< std::string >( id ) + "' type='" + type + "' name='group'/>" );
+            xis >> xml::start( "root" );
+    //        MOCK_EXPECT( group.RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration of nested KG
+            boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( xis, army, group.get() ) );
+            group->RegisterKnowledgeGroup( result );
+            return result;
+        }
+        MockArmy army;
+        MockMIL_Time_ABC time;
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: TestPropagationInKnowledgeGroups
 // Created: HBD 2009-12-10
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, Initialization )
+BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, ArmyFixture )
 {
-    MockArmy army;
-    MOCK_EXPECT( army.GetID ).returns( 42u );
-    MockMIL_Time_ABC time;
-    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
-    boost::shared_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
-    boost::shared_ptr< MIL_KnowledgeGroup > group1( CreateKnowledgeGroup( army, armyGroup, 2, "GTIA" ) );
-    boost::shared_ptr< MIL_KnowledgeGroup > group2( CreateKnowledgeGroup( army, armyGroup, 3, "GTIA" ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > group( CreateKnowledgeGroup( 1 ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > group1( CreateKnowledgeGroup( group, 2, "GTIA" ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > group2( CreateKnowledgeGroup( group, 3, "GTIA" ) );
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher.Send ).once();
     DEC_KnowledgeBlackBoard_Army blackboard( army );
@@ -196,10 +202,10 @@ BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, Initialization )
     //}
     //{
         // TestKnowledgeIsNotPropagatedWhenSourceIsJammed
-        DEC_BlackBoard_CanContainKnowledgeAgent& test3 = armyGroup->GetKnowledge()->GetKnowledgeAgentContainer();
+        DEC_BlackBoard_CanContainKnowledgeAgent& test3 = group->GetKnowledge()->GetKnowledgeAgentContainer();
         MOCK_EXPECT( mockAgent.CreateKnowledge ).once().returns( knowledge );
 //        MOCK_EXPECT( mockAgentJammed1.CreateKnowledge ).once().returns( knowledgeJammed1 );
-        armyGroup->UpdateKnowledges( 1 );
+        group->UpdateKnowledges( 1 );
         BOOST_CHECK_EQUAL( true,  test3.HasKnowledgeAgent( mockAgent ) );
         BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgent ) );
         BOOST_CHECK_EQUAL( false, testjammed1.HasKnowledgeAgent( mockAgent ) );
@@ -221,7 +227,7 @@ BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, Initialization )
         MOCK_EXPECT( mockAgent.CreateKnowledge ).once().returns( knowledge );
 //        MOCK_EXPECT( mockAgentJammed1.CreateKnowledge ).once().returns( knowledgeJammed1 );
         group2->UpdateKnowledges( 200 );
-        armyGroup->UpdateKnowledges( 200 );
+        group->UpdateKnowledges( 200 );
         BOOST_CHECK_EQUAL( true,  test3.HasKnowledgeAgent( mockAgent ) );
         BOOST_CHECK_EQUAL( true,  test2.HasKnowledgeAgent( mockAgent ) );
         BOOST_CHECK_EQUAL( false, testjammed1.HasKnowledgeAgent( mockAgent ) );
@@ -238,26 +244,20 @@ BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, Initialization )
 // Name: TestExtrapolationTimeInKnowledgeGroup
 // Created: FDS 2010-04-28
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup, Initialization )
+BOOST_FIXTURE_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup, ArmyFixture )
 {
-    MockArmy army;
-    MOCK_EXPECT( army.GetID ).returns( 42u );
-    boost::shared_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
-    BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, armyGroup->GetType().GetKnowledgeAgentExtrapolationTime() );
+    boost::shared_ptr< MIL_KnowledgeGroup > group( CreateKnowledgeGroup( 1 ) );
+    BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, group->GetType().GetKnowledgeAgentExtrapolationTime() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TestLatentRelevance
 // Created: FDS 2010-04-28
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( TestLatentRelevance, Initialization )
+BOOST_FIXTURE_TEST_CASE( TestLatentRelevance, ArmyFixture )
 {
-    MockArmy army;
-    MOCK_EXPECT( army.GetID ).returns( 42u );
-    MockMIL_Time_ABC time;
-    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
-    boost::shared_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
-    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup( CreateKnowledgeGroup( army, armyGroup, 2, "GTIA" ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > group( CreateKnowledgeGroup( 1 ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup( CreateKnowledgeGroup( group, 2, "GTIA" ) );
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboard ) );
     MockAgentWithPerceiver mockAgent;
@@ -307,47 +307,39 @@ BOOST_FIXTURE_TEST_CASE( TestLatentRelevance, Initialization )
 
 namespace
 {
-    class Configuration : Initialization
+    struct Configuration : ArmyFixture
     {
-    public:
         Configuration()
-            : blackboardArmy( army )
+            : blackboard( army )
         {
             MOCK_EXPECT( publisher.Send );
-            MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboardArmy ) );
-            MOCK_EXPECT( army.GetID ).returns( 42u );
+            MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboard ) );
         }
         MockNET_Publisher_ABC publisher;
-        MockArmy army;
-        DEC_KnowledgeBlackBoard_Army blackboardArmy;
+        DEC_KnowledgeBlackBoard_Army blackboard;
     };
-    class Fixture : public Configuration
+    struct Fixture : Configuration
     {
-    public:
         Fixture()
-            : group1( CreateKnowledgeGroup( army, 1 ) )
-            , group2( CreateKnowledgeGroup( army, 2 ) )
+            : group1( CreateKnowledgeGroup( 1 ) )
+            , group2( CreateKnowledgeGroup( 2 ) )
         {
             group2->Clone( *group1 );
         }
         boost::shared_ptr< MIL_KnowledgeGroup > group1;
         boost::shared_ptr< MIL_KnowledgeGroup > group2;
     };
-    class AgentFixture : public Fixture
+    struct AgentFixture : Fixture
     {
-    public:
         AgentFixture()
             : blackBoardGroup1( group1->GetKnowledge()->GetKnowledgeAgentContainer() )
             , blackBoardGroup2( group2->GetKnowledge()->GetKnowledgeAgentContainer() )
-        {
-            // NOTHING
-        }
+        {}
         DEC_BlackBoard_CanContainKnowledgeAgent& blackBoardGroup1;
         DEC_BlackBoard_CanContainKnowledgeAgent& blackBoardGroup2;
     };
-    class ObjectFixture : public Fixture
+    struct ObjectFixture : Fixture
     {
-    public:
         ObjectFixture()
             : objectBlackBoardGroup1( *group1->GetKnowledgeObjectContainer() )
             , objectBlackBoardGroup2( *group2->GetKnowledgeObjectContainer() )
@@ -364,10 +356,8 @@ namespace
         MockMIL_Object_ABC object;
         MockMIL_Object_ABC object2;
     };
-
-    class PopulationFixture : public Fixture
+    struct PopulationFixture : Fixture
     {
-    public:
         PopulationFixture()
             : blackBoardGroup1( group1->GetKnowledge()->GetKnowledgePopulationContainer() )
             , blackBoardGroup2( group2->GetKnowledge()->GetKnowledgePopulationContainer() )
@@ -379,14 +369,13 @@ namespace
             MIL_PopulationAttitude::Initialize();
             MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
         }
-        virtual ~PopulationFixture()
+        ~PopulationFixture()
         {
             TER_World::DestroyWorld();
         }
         DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup1;
         DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup2;
         MockAgent agent;
-        MockMIL_Time_ABC time;
         xml::xistringstream xis;
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         DEC_Model model;
@@ -427,7 +416,7 @@ BOOST_FIXTURE_TEST_CASE( agent_merge_knowledge_group_in_empty_knowledge_group, A
     BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgeAgents().size(), 1u );
     mock::verify();
 
-    // merge two group
+    // merge two groups
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
     // check group1 is not empty
@@ -459,7 +448,7 @@ BOOST_FIXTURE_TEST_CASE( agent_merge_knowledge_group_in_knowledge_group, AgentFi
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 1u );
     mock::verify();
 
-    // merge two group
+    // merge two groups
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
     // check group1 is not empty
@@ -486,7 +475,7 @@ BOOST_FIXTURE_TEST_CASE( agent_merge_knowledge_group_in_knowledge_group_with_sam
     CreateAgentKnowledge( agent2, blackBoardGroup1, group1, 0.9 );
     CreateAgentKnowledge( agent2, blackBoardGroup2, group2, 0.5 );
 
-    // merge two group
+    // merge two groups
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
     // check group1 is not empty

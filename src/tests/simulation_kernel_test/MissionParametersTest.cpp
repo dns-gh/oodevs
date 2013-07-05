@@ -75,25 +75,21 @@ namespace
                    "    <population-knowledge max-lifetime='2m'/>"
                    "  </knowledge-group>"
                    "</knowledge-groups>" )
-             , group( new MIL_KnowledgeGroup() )
         {
-            MOCK_EXPECT( publisher.Send );
             MIL_KnowledgeGroupType::InitializeWithTime( xis, 0.5f );
-            group->SetType( MIL_KnowledgeGroupType::FindType( "Standard" ) );
+            MOCK_EXPECT( publisher.Send );
             MOCK_EXPECT( army.GetID ).returns( 29u );
-            MOCK_EXPECT( army.RegisterKnowledgeGroup );
             MOCK_EXPECT( army.UnregisterKnowledgeGroup );
         }
         ~Fixture()
         {
             MIL_KnowledgeGroupType::Terminate();
         }
+        xml::xistringstream xis;
         MockNET_Publisher_ABC publisher;
         MockArmy army;
         MockDEC_KnowledgeResolver_ABC resolver;
         MockMIL_EntityManager_ABC manager;
-        xml::xistringstream xis;
-        boost::shared_ptr< MIL_KnowledgeGroup > group;
     };
 }
 
@@ -116,6 +112,11 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_AgentKnowledgeParameter, Fixture )
     MOCK_EXPECT( manager.FindAgentPion ).once().returns( &pion );
     MOCK_EXPECT( agent.BelongsTo ).once().returns( false );
     MOCK_EXPECT( agent.GetType ).once().returns( boost::cref( type ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > group(
+        new MIL_KnowledgeGroup(
+            xml::xistringstream( "<root id='30' type='Standard' name='group'/>" )
+                >> xml::start( "root" ),
+            army, 0 ) );
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( group, agent ) );
     MOCK_EXPECT( resolver.ResolveKnowledgeAgent ).once().returns( knowledge );
     MIL_AgentKnowledgeParameter param( in, resolver, manager );
@@ -160,11 +161,13 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_PopulationKnowledgeParameter, Fixture )
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type, army );
     MOCK_EXPECT( manager.FindPopulation ).once().returns( &population );
-    boost::shared_ptr< MIL_KnowledgeGroup > group( new MIL_KnowledgeGroup( *MIL_KnowledgeGroupType::FindType( "Standard" ), 30, army ) );
-    army.RegisterKnowledgeGroup( group );
+    boost::shared_ptr< MIL_KnowledgeGroup > group(
+        new MIL_KnowledgeGroup(
+            xml::xistringstream( "<root id='30' type='Standard' name='group'/>" )
+                >> xml::start( "root" ),
+            army, 0 ) );
     boost::shared_ptr< DEC_Knowledge_Population > knowledge( new DEC_Knowledge_Population( group, population ) );
     MOCK_EXPECT( resolver.ResolveKnowledgePopulation ).once().returns( knowledge );
-
     MIL_PopulationKnowledgeParameter param( in, resolver, manager );
     MissionParameter_Value out;
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );

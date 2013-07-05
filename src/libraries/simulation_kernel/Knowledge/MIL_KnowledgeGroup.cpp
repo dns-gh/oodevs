@@ -76,27 +76,6 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup constructor
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army )
-    : type_               ( &type )
-    , id_                 ( idManager_.GetId( id, true ) )
-    , name_               ( "knowledge group[" + boost::lexical_cast< std::string >( id_ ) + "]" )
-    , army_               ( &army )
-    , parent_             ( 0 )
-    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_      ( 0 ) // LTO
-    , isActivated_        ( true ) // LTO
-    , hasBeenUpdated_     ( false )
-    , isJammed_           ( false )
-    , createdByJamming_   ( false )
-    , jammedPion_         ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup constructor
 // Created: MCO 2013-07-01
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_KnowledgeGroup& parent )
@@ -119,7 +98,6 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup constructor
 // Created: SLG 2009-11-11
-// LTO
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
     : type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
