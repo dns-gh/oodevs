@@ -69,6 +69,7 @@ public:
     //@{
              MIL_KnowledgeGroup();
              MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_KnowledgeGroup& parent );
+             MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_Army_ABC& parent );
              MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent );
              MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent );
     virtual ~MIL_KnowledgeGroup();

@@ -98,6 +98,27 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup constructor
+// Created: MCO 2013-07-05
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_Army_ABC& army )
+    : type_               ( &type )
+    , id_                 ( idManager_.GetId() )
+    , name_               ( "knowledge group[" + boost::lexical_cast< std::string >( id_ ) + "]" )
+    , army_               ( &army )
+    , parent_             ( 0 )
+    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
+    , timeToDiffuse_      ( 0 ) // LTO
+    , isActivated_        ( true ) // LTO
+    , hasBeenUpdated_     ( false )
+    , isJammed_           ( false )
+    , createdByJamming_   ( false )
+    , jammedPion_         ( 0 )
+{
+    SendCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup constructor
 // Created: SLG 2009-11-11
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )

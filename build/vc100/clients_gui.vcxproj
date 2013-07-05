@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Selection.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SignalAdapter.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SubObjectName.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectNameManager.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
@@ -807,6 +808,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Selection.h" />
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SignalAdapter.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SubObjectName.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectNameManager.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectTreeView.h" />

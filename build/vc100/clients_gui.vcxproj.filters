@@ -1003,6 +1003,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SignalAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -2090,6 +2093,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h">
       <Filter>Source Files\RichObjects</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SignalAdapter.h">
+      <Filter>Source Files</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

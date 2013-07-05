@@ -1926,21 +1926,31 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
     client::MagicActionAck ack;
     if( !message.has_parameters() || message.parameters().elem_size() != 2 )
         RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "invalid parameters count, 2 parameters expected" );
-    const MissionParameter& param0 = message.parameters().elem( 0 );
-    if( param0.value_size() != 1 || ! param0.value().Get( 0 ).has_identifier() )
-        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be an identifier" );
-    boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( param0.value().Get( 0 ).identifier() );
-    if( ! parent )
-        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be a valid knowledge group identifier" );
     const MissionParameter& param1 = message.parameters().elem( 1 );
     if( param1.value_size() != 1 || ! param1.value().Get( 0 ).has_acharstr() )
         RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[1] must be a string" );
     const MIL_KnowledgeGroupType* type = MIL_KnowledgeGroupType::FindType( param1.value().Get( 0 ).acharstr() );
     if( ! type )
         RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[1] must be a valid knowledge group type identifier" );
-    boost::shared_ptr< MIL_KnowledgeGroup > group( new MIL_KnowledgeGroup( *type, *parent ) );
-    parent->RegisterKnowledgeGroup( group );
-    ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+    const MissionParameter& param0 = message.parameters().elem( 0 );
+    if( param0.value_size() != 1 || ! param0.value().Get( 0 ).has_identifier() )
+        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be an identifier" );
+    boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( param0.value().Get( 0 ).identifier() );
+    if( parent )
+    {
+        boost::shared_ptr< MIL_KnowledgeGroup > group( new MIL_KnowledgeGroup( *type, *parent ) );
+        parent->RegisterKnowledgeGroup( group );
+        ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+    }
+    else
+    {
+        MIL_Army_ABC* army = armyFactory_->Find( param0.value().Get( 0 ).identifier() );
+        if( ! army )
+            RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be a valid army or knowledge group identifier" );
+        boost::shared_ptr< MIL_KnowledgeGroup > group( new MIL_KnowledgeGroup( *type, *army ) );
+        army->RegisterKnowledgeGroup( group );
+        ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+    }
     ack().set_error_code( MagicActionAck::no_error );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }

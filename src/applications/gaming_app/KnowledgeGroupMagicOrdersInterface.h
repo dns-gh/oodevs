@@ -21,6 +21,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class Team_ABC;
     class KnowledgeGroup_ABC;
     class Profile_ABC;
     class Time_ABC;
@@ -42,6 +43,7 @@ class KnowledgeAddInGroupDialog;
 // =============================================================================
 class KnowledgeGroupMagicOrdersInterface : public QObject
                                          , public tools::Observer_ABC
+                                         , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                                          , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
 {
     Q_OBJECT;
@@ -55,17 +57,20 @@ public:
 
     //! @name Operations
     //@{
+    virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnCreateKnowledgeGroup();
     void OnToggleKnowledgeGroupActivation();
     void OnAddKnowledgeInGroup();
     void OnSetType();
     //@}
+
+private:
+    void OnCreateKnowledgeGroup( const kernel::SafePointer< kernel::Entity_ABC >& entity, const std::string& type );
 
 private:
     //! @name Member data
