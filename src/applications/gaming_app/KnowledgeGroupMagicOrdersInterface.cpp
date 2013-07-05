@@ -39,19 +39,18 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
     : QObject( parent )
-    , controllers_( controllers )
-    , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , profile_( profile )
-    , selectedEntity_( controllers )
-    , knowledgeGroupTypes_( types )
+    , controllers_         ( controllers )
+    , actionsModel_        ( actionsModel )
+    , static_              ( staticModel )
+    , simulation_          ( simulation )
+    , profile_             ( profile )
+    , selectedEntity_      ( controllers )
+    , types_               ( types )
     , pAddKnowledgeDialog_ ( 0 )
 {
-    controllers_.Register( *this );
-
     pAddKnowledgeDialog_ = new KnowledgeAddInGroupDialog( parent , controllers, simulation, actionsModel, staticModel );
     pAddKnowledgeDialog_->hide();
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,23 +72,23 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
         return;
     selectedEntity_ = &entity;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
-    const KnowledgeGroup& knowledgeGroup = static_cast< const KnowledgeGroup& >( entity );
-
-    if( knowledgeGroup.IsActivated() )
-        AddMagic( tr( "Desactivate" ), SLOT( OnToggleKnowledgeGroupActivation() ), magicMenu );
+    if( entity.IsActivated() )
+        magicMenu->insertItem( tr( "Desactivate" ), this, SLOT( OnToggleKnowledgeGroupActivation() ) );
     else
-        AddMagic( tr( "Activate" ), SLOT( OnToggleKnowledgeGroupActivation() ), magicMenu );
-    //AddMagic( tr( "Create child KnowledgeGroup" ), SLOT( OnCreateSubKnowledgeGroup() ), magicMenu );  // $$$$ _RC_ SBO 2010-03-05: Not implemented
-
-    AddMagic( tr( "Add knowledge" ), SLOT( OnAddKnowledgeInGroup() ), magicMenu  );
-
-    kernel::ContextMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
-    tools::Iterator< const kernel::KnowledgeGroupType& > it = knowledgeGroupTypes_.CreateIterator();
-    for( int id = 0; it.HasMoreElements(); ++id )
+        magicMenu->insertItem( tr( "Activate" ), this, SLOT( OnToggleKnowledgeGroupActivation() ) );
+    kernel::ContextMenu* createKnowledgeGroup = magicMenu->SubMenu( "Create", tr( "Create Knowledge Group", false, 1 ) );
+    for( auto it = types_.CreateIterator(); it.HasMoreElements(); )
     {
         const KnowledgeGroupType& type = it.NextElement();
-        AddMagicTypeItem( tr( type.GetName().c_str() ), SLOT( OnSetType( int ) ), typeMenu, type, id );
-        typeMenu->setItemChecked( id, type.GetName() == knowledgeGroup.GetType() );
+        createKnowledgeGroup->insertItem( QString::fromStdString( type.GetName() ), this, SLOT( OnCreateKnowledgeGroup() ) );
+    }
+    magicMenu->insertItem( tr( "Add knowledge" ), this, SLOT( OnAddKnowledgeInGroup() ) );
+    kernel::ContextMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
+    for( auto it = types_.CreateIterator(); it.HasMoreElements(); )
+    {
+        const KnowledgeGroupType& type = it.NextElement();
+        int id = typeMenu->insertItem( QString::fromStdString( type.GetName() ), this, SLOT( OnSetType() ) );
+        typeMenu->setItemChecked( id, type.GetName() == static_cast< const KnowledgeGroup& >( entity ).GetType() );
     }
 }
 
@@ -130,22 +129,20 @@ void KnowledgeGroupMagicOrdersInterface::OnAddKnowledgeInGroup()
 // Name: KnowledgeGroupMagicOrdersInterface::OnSetType
 // Created: SLG 2009-12-22
 // -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
+void KnowledgeGroupMagicOrdersInterface::OnSetType()
 {
     if( selectedEntity_ )
     {
-        T_Items::const_iterator it = items_.find( id );
-        if( it != items_.end() )
-        {
-            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_type" );
-            KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
-            tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
-            action->AddParameter( *new parameters::String( paramIt.NextElement(), it->second->GetName() ) );
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new ActionTasker( selectedEntity_, false ) );
-            action->RegisterAndPublish( actionsModel_ );
-        }
+        const QAction& s = dynamic_cast< QAction& >( *sender() );
+        auto& type = types_.Get( s.text().toStdString() );
+        // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_type" );
+        KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
+        action->AddParameter( *new parameters::String( paramIt.NextElement(), type.GetName() ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
     }
 }
 
@@ -153,39 +150,18 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
 // Name: KnowledgeGroupMagicOrdersInterface::CreateSubKnowledgeGroup
 // Created: FHD 2009-12-23
 // -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
+void KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup()
 {
     if( selectedEntity_ )
-        if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
-        {
-            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
-            MagicAction* action = new MagicAction( actionType, controllers_.controller_, tr( "Create Knowledge Group"), true );
-            tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
-            action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), hierarchies->GetTop().GetId() ) );
-            action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), selectedEntity_->GetId() ) );
-            action->AddParameter( *new parameters::String( paramIt.NextElement(), "Standard" ) ); // $$$$ _RC_ SBO 2010-03-04: used kernel::KnowledgeGroupTypes::GetDefault() or something
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new ActionTasker( selectedEntity_, false ) );
-            action->RegisterAndPublish( actionsModel_ );
-        }
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicOrdersInterface::AddMagic
-// Created: SLG 2009-12-16
-// -----------------------------------------------------------------------------
-int KnowledgeGroupMagicOrdersInterface::AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu )
-{
-    return menu->insertItem( label, this, slot );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicOrdersInterface::AddMagicTypeItem
-// Created: SLG 2009-12-16
-// -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::AddMagicTypeItem( const QString& label, const char* slot, kernel::ContextMenu* menu, const kernel::KnowledgeGroupType& type, int id )
-{
-    menu->insertItem( label, this, slot, 0, id );
-    items_[ id ] = &type;
+    {
+        const QAction& s = dynamic_cast< QAction& >( *sender() );
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
+        MagicAction* action = new MagicAction( actionType, controllers_.controller_, tr( "Create Knowledge Group" ), true );
+        tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
+        action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), selectedEntity_->GetId() ) );
+        action->AddParameter( *new parameters::String( paramIt.NextElement(), s.text().toStdString() ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
 }

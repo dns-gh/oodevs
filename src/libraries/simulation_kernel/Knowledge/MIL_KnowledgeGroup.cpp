@@ -56,52 +56,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_KnowledgeGroup )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup constructor
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army )
-    : type_               ( &type )
-    , id_                 ( idManager_.GetId( id, true ) )
-    , army_               ( &army )
-    , parent_             ( 0 )
-    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_      ( 0 ) // LTO
-    , isActivated_        ( true ) // LTO
-    , hasBeenUpdated_     ( false )
-    , isJammed_           ( false )
-    , createdByJamming_   ( false )
-    , jammedPion_         ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup constructor
-// Created: SLG 2009-11-11
-// LTO
-// -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
-    : id_                 ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
-    , type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
-    , name_               ( xis.attribute< std::string >( "name" ) )
-    , army_               ( &army )
-    , parent_             ( parent )
-    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_      ( 0 ) // LTO
-    , isActivated_        ( true ) // LTO
-    , hasBeenUpdated_     ( true )
-    , isJammed_           ( false )
-    , createdByJamming_   ( false )
-    , jammedPion_         ( 0 )
-{
-    if( ! type_ )
-        throw MASA_EXCEPTION( "Knowledge group '" + boost::lexical_cast< std::string >( id_ )
-            + "' cannot be created because its type does not exist: " + xis.attribute< std::string >( "type" ) );
-    if( parent_ )
-        timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup constructor
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup()
@@ -110,6 +64,27 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , army_               ( 0 )
     , parent_             ( 0 )
     , knowledgeBlackBoard_( 0 )
+    , timeToDiffuse_      ( 0 )
+    , isActivated_        ( true )
+    , hasBeenUpdated_     ( false )
+    , isJammed_           ( false )
+    , createdByJamming_   ( false )
+    , jammedPion_         ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup constructor
+// Created: NLD 2004-08-11
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army )
+    : type_               ( &type )
+    , id_                 ( idManager_.GetId( id, true ) )
+    , name_               ( "knowledge group[" + boost::lexical_cast< std::string >( id_ ) + "]" )
+    , army_               ( &army )
+    , parent_             ( 0 )
+    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
     , timeToDiffuse_      ( 0 ) // LTO
     , isActivated_        ( true ) // LTO
     , hasBeenUpdated_     ( false )
@@ -118,6 +93,51 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , jammedPion_         ( 0 )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup constructor
+// Created: MCO 2013-07-01
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_KnowledgeGroup& parent )
+    : type_               ( &type )
+    , id_                 ( idManager_.GetId() )
+    , name_               ( "knowledge group[" + boost::lexical_cast< std::string >( id_ ) + "]" )
+    , army_               ( parent.army_ )
+    , parent_             ( &parent )
+    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
+    , timeToDiffuse_      ( parent.GetType().GetKnowledgeCommunicationDelay() ) // LTO
+    , isActivated_        ( true ) // LTO
+    , hasBeenUpdated_     ( false )
+    , isJammed_           ( false )
+    , createdByJamming_   ( false )
+    , jammedPion_         ( 0 )
+{
+    SendCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup constructor
+// Created: SLG 2009-11-11
+// LTO
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
+    : type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
+    , id_                 ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
+    , name_               ( xis.attribute< std::string >( "name" ) )
+    , army_               ( &army )
+    , parent_             ( parent )
+    , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
+    , timeToDiffuse_      ( parent ? parent->GetType().GetKnowledgeCommunicationDelay() : 0 )
+    , isActivated_        ( true )
+    , hasBeenUpdated_     ( true )
+    , isJammed_           ( false )
+    , createdByJamming_   ( false )
+    , jammedPion_         ( 0 )
+{
+    if( ! type_ )
+        throw MASA_EXCEPTION( "Knowledge group '" + boost::lexical_cast< std::string >( id_ )
+            + "' cannot be created because its type does not exist: " + xis.attribute< std::string >( "type" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,15 +151,13 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , army_               ( source.army_ )
     , parent_             ( parent )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_      ( 0 ) // LTO
-    , isActivated_        ( true ) // LTO
+    , timeToDiffuse_      ( parent ? parent->GetType().GetKnowledgeCommunicationDelay() : 0 )
+    , isActivated_        ( true )
     , hasBeenUpdated_     ( true )
     , isJammed_           ( true )
     , createdByJamming_   ( true )
     , jammedPion_         ( &pion )
 {
-    if( parent_ )
-        timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();
     SendCreation();
 }
 
@@ -620,7 +638,6 @@ const MIL_KnowledgeGroup::T_AutomateVector& MIL_KnowledgeGroup::GetAutomates() c
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::GetKnowledgeGroups
 // Created:
-// LTO
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroup::T_KnowledgeGroupVector& MIL_KnowledgeGroup::GetKnowledgeGroups() const
 {
@@ -665,7 +682,7 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObjectByObjectID
+// Name: MIL_KnowledgeGroup::ResolveKnowledgeObjectByObjectID
 // Created: JSR 2011-09-29
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObjectByObjectID( unsigned int id ) const
@@ -870,15 +887,6 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType( const sword::MissionPar
         return true;
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupCreation
-// Created: FHD 2009-12-17:
-// -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupCreation( const sword::KnowledgeGroupCreationRequest& /*message*/ )
-{
-    // TODO
 }
 
 // -----------------------------------------------------------------------------

@@ -125,10 +125,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
             workspace.GetEntityManager        ().OnReceiveChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx, clientId );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::create_fire_order_on_location )
             workspace.GetEntityManager        ().OnReceiveCreateFireOrderOnLocation  ( wrapper.message().magic_action()                       , nCtx, clientId );
-    // LTO BEGIN
         else if( wrapper.message().magic_action().type() == sword::MagicAction::create_knowledge_group )
-            workspace.GetEntityManager        ().OnReceiveKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx );
-    // LTO END
+            workspace.GetEntityManager        ().OnReceiveKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

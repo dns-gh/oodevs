@@ -1900,23 +1900,45 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message
     throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
 }
 
+#define RETURN_ACK_ERROR( code, msg ) \
+    { \
+        ack().set_error_code( code ); \
+        ack().set_error_msg( msg ); \
+        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId ); \
+        return; \
+    }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveKnowledgeGroupCreation
 // Created: FHD 2009-12-15:
-// LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& /*message*/, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    client::KnowledgeGroupCreationAck ack;
-    ack().mutable_knowledge_group()->set_id( 0 );
-    ack().set_error_code( KnowledgeGroupAck::no_error );
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    client::MagicActionAck ack;
+    if( !message.has_parameters() || message.parameters().elem_size() != 2 )
+        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "invalid parameters count, 2 parameters expected" );
+    const MissionParameter& param0 = message.parameters().elem( 0 );
+    if( param0.value_size() != 1 || ! param0.value().Get( 0 ).has_identifier() )
+        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be an identifier" );
+    boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( param0.value().Get( 0 ).identifier() );
+    if( ! parent )
+        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be a valid knowledge group identifier" );
+    const MissionParameter& param1 = message.parameters().elem( 1 );
+    if( param1.value_size() != 1 || ! param1.value().Get( 0 ).has_acharstr() )
+        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[1] must be a string" );
+    const MIL_KnowledgeGroupType* type = MIL_KnowledgeGroupType::FindType( param1.value().Get( 0 ).acharstr() );
+    if( ! type )
+        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[1] must be a valid knowledge group type identifier" );
+    boost::shared_ptr< MIL_KnowledgeGroup > group( new MIL_KnowledgeGroup( *type, *parent ) );
+    parent->RegisterKnowledgeGroup( group );
+    ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+    ack().set_error_code( MagicActionAck::no_error );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessKnowledgeGroupUpdate
 // Created: FDS 2010-01-13
-// LTO
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction& message, unsigned int nCtx )
 {
@@ -2261,11 +2283,11 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     AgentFactory_ABC * agentFactory;
     PopulationFactory_ABC * populationFactory;
     InhabitantFactory_ABC * inhabitantFactory;
-    KnowledgeGroupFactory_ABC * knowledgeGroupFactory; // LTO
+    KnowledgeGroupFactory_ABC * knowledgeGroupFactory;
     MIL_ObjectManager* objectManager;
     MissionController_ABC* missionController;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         >> knowledgeGroupFactory; // LTO
+         >> knowledgeGroupFactory;
     knowledgeGroupFactory_.reset( knowledgeGroupFactory );
     file >> armyFactory
          >> formationFactory//@TODO MGD serialize

@@ -3229,7 +3229,7 @@ message KnowledgeGroupDestruction {
     required PartyId          party           = 2;
 }
 
-/** @struct KnowledgeGroupDestruction
+/** @struct KnowledgeGroupAck
     @brief Factorizes knowledge group related magic action error codes
     @todo This is pointless to factorize this...
 */
@@ -3270,6 +3270,7 @@ message KnowledgeGroupMagicActionAck {
 /** @struct KnowledgeGroupCreationAck
     @brief Acknowledges a knowledge group creation magic action
     @see MagicAction
+    @deprecated MagicActionAck are sent instead
 */
 message KnowledgeGroupCreationAck {
     //! The knowledge group identifier

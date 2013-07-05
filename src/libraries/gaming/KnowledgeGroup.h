@@ -12,7 +12,6 @@
 
 #include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-// LTO begin
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
@@ -25,7 +24,6 @@ namespace sword
 {
     class KnowledgeGroupUpdate;
 }
-// LTO end
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -34,8 +32,8 @@ namespace sword
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public gui::EntityImplementation< kernel::KnowledgeGroup_ABC >
-                     , public kernel::Extension_ABC // LTO
-                     , public kernel::Updatable_ABC< sword::KnowledgeGroupUpdate > // LTO
+                     , public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< sword::KnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -46,15 +44,13 @@ public:
 
     //! @name Operation
     //@{
-    // LTO begin
     virtual void DoUpdate( const sword::KnowledgeGroupUpdate& message );
     //@}
 
     //! @name Accessors
     //@{
     virtual bool IsActivated() const;
-    std::string GetType() const;
-    // LTO end
+    const std::string& GetType() const;
     //@}
 
 private:
@@ -78,7 +74,6 @@ private:
     const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;
     bool activated_;
     //@}
-    // LTO end
 };
 
 #endif // __KnowledgeGroup_h_

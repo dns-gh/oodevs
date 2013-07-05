@@ -86,7 +86,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, IndirectFirePerception                 , indirect_fire_perception                  )
     GENERATE_MESSAGE( sword::SimToClient, sword, InvalidateReport                       , invalidate_report                         )
     GENERATE_MESSAGE( sword::SimToClient, sword, KnowledgeGroupCreation                 , knowledge_group_creation                  )
-    GENERATE_MESSAGE( sword::SimToClient, sword, KnowledgeGroupCreationAck              , knowledge_group_creation_ack              )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, KnowledgeGroupCreationAck, knowledge_group_creation_ack              )
     GENERATE_MESSAGE( sword::SimToClient, sword, KnowledgeGroupDestruction              , knowledge_group_destruction               )
     GENERATE_MESSAGE( sword::SimToClient, sword, KnowledgeGroupMagicActionAck           , knowledge_group_magic_action_ack          )
     GENERATE_MESSAGE( sword::SimToClient, sword, KnowledgeGroupUpdate                   , knowledge_group_update                    )

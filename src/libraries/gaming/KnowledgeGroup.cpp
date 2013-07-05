@@ -32,7 +32,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, kern
     : gui::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ) )
     , type_( type )
     , types_( types )
-    , activated_( true ) // LTO
+    , activated_( true )
 {
     AddExtension( *this );
     kernel::KnowledgeGroupType* pType = types.Find( type_ );
@@ -49,7 +49,6 @@ KnowledgeGroup::~KnowledgeGroup()
     Destroy();
 }
 
-// LTO begin
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup IsActivated
 // Created: SLG 2009-12-18
@@ -63,7 +62,7 @@ bool KnowledgeGroup::IsActivated() const
 // Name: KnowledgeGroup::GetType
 // Created: FHD 2010-01-15
 // -----------------------------------------------------------------------------
-std::string KnowledgeGroup::GetType() const
+const std::string& KnowledgeGroup::GetType() const
 {
     return type_;
 }
@@ -84,7 +83,6 @@ void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
         activated_ = message.enabled();
     Touch();
 }
-// LTO end
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::CreateDictionary
@@ -94,5 +92,5 @@ void KnowledgeGroup::CreateDictionary()
 {
     gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_ );
-    dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Delay" ), delay_ ); // LTO
+    dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Delay" ), delay_ );
 }

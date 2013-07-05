@@ -22,6 +22,7 @@
 namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
+    enum MagicActionAck_ErrorCode;
     class CrowdOrder;
     class UnitOrder;
     class AutomatOrder;
@@ -38,6 +39,11 @@ namespace sword
     class BurningCellRequest;
     class ParentEntity;
     class Sink_ABC;
+}
+
+namespace client
+{
+    class MagicActionAck;
 }
 
 namespace xml
@@ -187,9 +193,7 @@ public:
     void OnReceiveChangeResourceLinks      ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveBurningCellRequest       ( const sword::BurningCellRequest&   message, unsigned int nCtx );
-    // LTO begin
-    void OnReceiveKnowledgeGroupCreation    ( const sword::MagicAction&         message, unsigned int nCtx );
-    // LTO end
+    void OnReceiveKnowledgeGroupCreation   ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     //@}
 
     //! @name Population channeling
@@ -233,10 +237,8 @@ private:
     void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
     void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
     void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    // LTO begin
     void ProcessKnowledgeGroupUpdate        ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
     void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    // LTO end
     void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack );
     void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx, sword::UnitMagicActionAck& ack );
     void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, unsigned int parentId, unsigned int context, sword::UnitMagicActionAck& ack );

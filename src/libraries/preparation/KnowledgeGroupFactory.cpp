@@ -44,7 +44,7 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupFactory::CreateKnowledgeGroup
+// Name: KnowledgeGroupFactory::Create
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::Team_ABC& team )
@@ -56,7 +56,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::Team_ABC& tea
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupFactory::CreateKnowledgeGroup
+// Name: KnowledgeGroupFactory::Create
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::Team_ABC& team )
@@ -68,7 +68,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, k
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupFactory::CreateKnowledgeGroup
+// Name: KnowledgeGroupFactory::Create
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::KnowledgeGroup_ABC& kgparent )
@@ -80,7 +80,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::KnowledgeGrou
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupFactory::CreateKnowledgeGroup
+// Name: KnowledgeGroupFactory::Create
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& kgparent )

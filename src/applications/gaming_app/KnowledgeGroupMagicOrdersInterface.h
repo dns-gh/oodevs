@@ -61,35 +61,22 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnCreateSubKnowledgeGroup();
+    void OnCreateKnowledgeGroup();
     void OnToggleKnowledgeGroupActivation();
     void OnAddKnowledgeInGroup();
-    void OnSetType( int );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    int  AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );
-    void AddMagicTypeItem( const QString& label, const char* slot, kernel::ContextMenu* menu, const kernel::KnowledgeGroupType& type, int id );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< int, const kernel::KnowledgeGroupType* > T_Items;
+    void OnSetType();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& knowledgeGroupTypes_;
+    const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedEntity_;
-    T_Items items_;
     KnowledgeAddInGroupDialog* pAddKnowledgeDialog_;
     //@}
 };
