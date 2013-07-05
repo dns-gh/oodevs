@@ -165,3 +165,54 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	err = client.ChangeResourceNetworkTest(params)
 	c.Assert(err, IsNil)
 }
+
+func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: invalid parameters count, parameters expected
+	params := swapi.MakeParameters()
+	group, err := client.CreateKnowledgeGroupTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: first parameter must be an identifier
+	params = swapi.MakeParameters(
+		swapi.MakeNullValue(),
+		swapi.MakeNullValue())
+	group, err = client.CreateKnowledgeGroupTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: first parameter must be a valid identifier
+	params.Elem[0] = swapi.MakeIdentifier(uint32(1000))
+	group, err = client.CreateKnowledgeGroupTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	parent := client.Model.GetData().ListKnowledgeGroups()[0]
+	c.Assert(parent, Not(IsNil))
+
+	// error: second parameter must be a valid knowledge group type identifier
+	params.Elem[0] = swapi.MakeIdentifier(uint32(parent.Id))
+	params.Elem[1] = swapi.MakeString("invalid knowledge group type")
+	group, err = client.CreateKnowledgeGroupTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// first parameter with a valid identifier
+	// second parameter with a valid knowledge group type identifier
+	params.Elem[0] = swapi.MakeIdentifier(uint32(parent.Id))
+	params.Elem[1] = swapi.MakeString("Standard")
+	group, err = client.CreateKnowledgeGroupTest(params)
+	c.Assert(err, IsNil)
+	c.Assert(group.ParentId, Equals, parent.Id)
+	c.Assert(group.PartyId, Equals, parent.PartyId)
+	c.Assert(group.Name, Not(IsNil))
+
+	// first parameter with a valid identifier
+	// second parameter with a valid party identifier
+	params.Elem[0] = swapi.MakeIdentifier(uint32(parent.PartyId))
+	params.Elem[1] = swapi.MakeString("Standard")
+	group, err = client.CreateKnowledgeGroupTest(params)
+	c.Assert(err, IsNil)
+	c.Assert(group.PartyId, Equals, parent.PartyId)
+	c.Assert(group.ParentId, Equals, uint32(0))
+	c.Assert(group.Name, Not(IsNil))
+}

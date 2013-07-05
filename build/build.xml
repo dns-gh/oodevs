@@ -30,10 +30,16 @@
         <go cmd="install"/>
     </target>
 
+    <condition property="gocheck.filter" value="-gocheck.f ${gocheck.f}" else="">
+        <isset property="gocheck.f"/>
+    </condition>
+    <condition property="gocheck.verbose" value="-gocheck.v" else="">
+        <isset property="gocheck.v"/>
+    </condition>
     <macrodef name="runtests">
         <element name="args" implicit="true" optional="true"/>
         <sequential>
-            <echo message="test.port=${test.port}"/>
+            <echo taskname="runtests" message="test.port=${test.port}"/>
             <go cmd="vet"/>
             <go cmd="test">
                 <arg value="-i"/>
@@ -46,10 +52,11 @@
                      need a port allocation solution instead.
                 -->
                 <arg value="-test.parallel=1"/>
+                <arg value="${gocheck.verbose}"/>
+                <arg line="${gocheck.filter}"/>
                 <arg value="--application=${run.dir}/simulation_app.exe"/>
                 <arg value="--root-dir=${data.dir}"/>
                 <arg value="--test-port=${test.port}"/>
-                <!--arg value="-v=true"/-->
                 <args/>
             </go>
         </sequential>

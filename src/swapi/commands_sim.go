@@ -732,3 +732,53 @@ func (c *Client) ChangeResourceNetworkTest(params *sword.MissionParameters) erro
 	}
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*KnowledgeGroup, error) {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       sword.MagicAction_create_knowledge_group.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	var id uint32
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.MagicActionAck_no_error {
+			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+		}
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		id = value.GetIdentifier()
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	if err != nil {
+		return nil, err
+	}
+	var group *KnowledgeGroup
+	ok := c.Model.WaitCondition(func(data *ModelData) bool {
+		for _, party := range data.Parties {
+			for _, g := range party.KnowledgeGroups {
+				if g.Id == id {
+					group = g
+					return true
+				}
+			}
+		}
+		return false
+	})
+	if !ok {
+		return nil, ErrTimeout
+	}
+	return group, nil
+}
