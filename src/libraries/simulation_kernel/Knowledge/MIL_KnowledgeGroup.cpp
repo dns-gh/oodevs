@@ -495,7 +495,6 @@ const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( const MIL_Obj
         if( DEC_Knowledge_Object* pKnowledge = knowledgeObjectContainer->RetrieveKnowledgeObject( objectKnown ) )
             return pKnowledge->GetCurrentPerceptionLevel();
     return PHY_PerceptionLevel::notSeen_;
-
 }
 
 // -----------------------------------------------------------------------------
@@ -507,7 +506,7 @@ const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Populatio
     if( knowledgeBlackBoard_ )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = knowledgeBlackBoard_->GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
-        if( pKnowledge)
+        if( pKnowledge )
             return *pKnowledge->GetHackedPerceptionLevel();
     }
     return PHY_PerceptionLevel::notSeen_;
@@ -716,7 +715,6 @@ MIL_Army_ABC& MIL_KnowledgeGroup::GetArmy() const
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
 {
-    assert( std::find( knowledgeGroups_.begin(), knowledgeGroups_.end(), knowledgeGroup ) == knowledgeGroups_.end() );
     knowledgeGroups_.push_back( knowledgeGroup );
     for( auto it = additionalPerceptions_.begin(); it != additionalPerceptions_.end(); ++it )
         knowledgeGroup->additionalPerceptions_.insert( *it ); 
@@ -775,22 +773,19 @@ bool MIL_KnowledgeGroup::IsEnabled() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > MIL_KnowledgeGroup::FindKnowledgeGroup( unsigned int id ) const
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup;
-
-    for( auto itKG = GetKnowledgeGroups().begin(); itKG != GetKnowledgeGroups().end(); ++itKG )
-        if( (*itKG)->GetId() == id )
-            knowledgeGroup = *itKG;
-    if( knowledgeGroup == 0 )
+    boost::shared_ptr< MIL_KnowledgeGroup > group;
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        if( (*it)->GetId() == id )
+            group = *it;
+    if( group )
+        return group;
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
     {
-        for( auto itKG = GetKnowledgeGroups().begin(); itKG != GetKnowledgeGroups().end(); ++itKG )
-         {
-            knowledgeGroup = (*itKG)->FindKnowledgeGroup( id );
-            if( knowledgeGroup )
-                return knowledgeGroup;
-         }
-         return boost::shared_ptr< MIL_KnowledgeGroup >();
-     }
-     return knowledgeGroup;
+        group = (*it)->FindKnowledgeGroup( id );
+        if( group )
+            return group;
+    }
+    return boost::shared_ptr< MIL_KnowledgeGroup >();
 }
 
 // -----------------------------------------------------------------------------
@@ -891,17 +886,14 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
             return true;
         }
     }
-    else
+    else if( parent_ )
     {
+        boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
         // moving knowledge group under army node
-        if( parent_ )
-        {
-            boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-            parent_->UnregisterKnowledgeGroup( shared );
-            army_->RegisterKnowledgeGroup( shared );
-            parent_.reset();
-            return true;
-        }
+        parent_->UnregisterKnowledgeGroup( shared );
+        army_->RegisterKnowledgeGroup( shared );
+        parent_.reset();
+        return true;
     }
     return false;
 }
@@ -985,9 +977,9 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception )
 {
     additionalPerceptions_.insert( agent.GetID() );
-    for( auto itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
+    for( auto it( knowledgeGroups_.begin() ); it != knowledgeGroups_.end(); ++it )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *itKG;
+        boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *it;
         if ( pKnowledgeGroup )
         {
             DEC_Knowledge_Agent& curKnowledgeAgent = pKnowledgeGroup->GetAgentKnowledgeToUpdate( agent );
@@ -1010,9 +1002,9 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object
         if ( knowledgeObject )
             knowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
         else
-            for( auto itKG = knowledgeGroups_.begin(); itKG != knowledgeGroups_.end(); ++itKG )
+            for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
             {
-                boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *itKG;
+                boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *it;
                 if ( pKnowledgeGroup )
                 {
                     boost::shared_ptr< DEC_Knowledge_Object > curKnowledgeObject = pKnowledgeGroup->GetObjectKnowledgeToUpdate( object );
@@ -1031,9 +1023,9 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception )
 {
     additionalPerceptions_.insert( population.GetID() );
-    for( auto itKG = knowledgeGroups_.begin(); itKG != knowledgeGroups_.end(); ++itKG )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *itKG;
+        boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *it;
         if( pKnowledgeGroup )
         {
             DEC_Knowledge_Population& curKnowledgePopulation = pKnowledgeGroup->GetPopulationKnowledgeToUpdate( population );
@@ -1135,9 +1127,9 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         }
         // LTO begin
         // acquisition des connaissances des groupes fils
-        for( auto itKG = GetKnowledgeGroups().begin(); itKG != GetKnowledgeGroups().end(); ++itKG )
+        for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         {
-            const MIL_KnowledgeGroup& innerKg = **itKG;
+            const MIL_KnowledgeGroup& innerKg = **it;
             if( innerKg.IsEnabled() && IsEnabled() && !innerKg.IsJammed() && innerKg.GetKnowledge() )
             {
                 boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
