@@ -133,7 +133,7 @@ public:
     virtual MIL_Inhabitant*     FindInhabitant    ( unsigned int nID ) const;
     virtual MIL_Formation*      FindFormation     ( unsigned int nID ) const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const;
-    virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroupFromParents( unsigned int nID );
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroupFromParents( unsigned int nID ) const;
     virtual MIL_AgentPion*      FindAgentPion     ( unsigned int nID ) const;
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
 
@@ -277,25 +277,16 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< const MIL_UrbanObject_ABC* > T_Cities;
-    typedef T_Cities::iterator                      IT_Cities;
-    typedef T_Cities::const_iterator               CIT_Cities;
-
-    typedef std::map< std::string, double > T_Profilers;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const MIL_Time_ABC& time_;
-    const unsigned int  gcPause_;
-    const unsigned int  gcMult_;
+    const unsigned int gcPause_;
+    const unsigned int gcMult_;
     MIL_EffectManager& effectManager_;
-    T_Cities cities_;
+    std::vector< const MIL_UrbanObject_ABC* > cities_;
 
     // Profiling
+    std::map< std::string, double > profilers_;
     std::auto_ptr< MIL_ProfilerManager > profilerManager_;
     unsigned int nRandomBreakdownsNextTimeStep_;
     double rKnowledgesTime_;
@@ -307,22 +298,18 @@ private:
     double rStatesTime_;
 
     // Order is important here
-    std::auto_ptr< MIL_IDManager >                idManager_;          // has to be declared before agentFactory & automatFactory
-    std::auto_ptr< MissionController_ABC >        missionController_;  // has to be declared before populationFactory and agentFactory
-
-    // Factories
-    std::auto_ptr< PopulationFactory_ABC >        populationFactory_;      // has to be declared before armyFactory
-    std::auto_ptr< InhabitantFactory_ABC >        inhabitantFactory_;      // has to be declared before armyFactory
-    std::auto_ptr< AgentFactory_ABC >             agentFactory_;           // has to be declared before Sink
-    std::auto_ptr< sword::Sink_ABC >              sink_;
-    std::auto_ptr< MIL_ObjectManager >            pObjectManager_;
-    std::auto_ptr< propagation::FloodModel_ABC >        pFloodModel_;
-    std::auto_ptr< AutomateFactory_ABC >          automateFactory_;        // has to be declared before armyFactory & formation factory
-    std::auto_ptr< FormationFactory_ABC >         formationFactory_;       // has to be declared before armyFactory
-    std::auto_ptr< KnowledgeGroupFactory_ABC >    knowledgeGroupFactory_;  // has to be declared before armyFactory
-    std::auto_ptr< ArmyFactory_ABC >              armyFactory_;
-
-    T_Profilers profilers_;    
+    std::auto_ptr< MIL_IDManager >               idManager_;          // has to be declared before agentFactory & automatFactory
+    std::auto_ptr< MissionController_ABC >       missionController_;  // has to be declared before populationFactory and agentFactory
+    std::auto_ptr< PopulationFactory_ABC >       populationFactory_;      // has to be declared before armyFactory
+    std::auto_ptr< InhabitantFactory_ABC >       inhabitantFactory_;      // has to be declared before armyFactory
+    std::auto_ptr< AgentFactory_ABC >            agentFactory_;           // has to be declared before Sink
+    std::auto_ptr< sword::Sink_ABC >             sink_;
+    std::auto_ptr< MIL_ObjectManager >           pObjectManager_;
+    std::auto_ptr< propagation::FloodModel_ABC > pFloodModel_;
+    std::auto_ptr< AutomateFactory_ABC >         automateFactory_;        // has to be declared before armyFactory & formation factory
+    std::auto_ptr< FormationFactory_ABC >        formationFactory_;       // has to be declared before armyFactory
+    std::auto_ptr< KnowledgeGroupFactory_ABC >   knowledgeGroupFactory_;  // has to be declared before armyFactory
+    std::auto_ptr< ArmyFactory_ABC >             armyFactory_;
     //@}
 };
 

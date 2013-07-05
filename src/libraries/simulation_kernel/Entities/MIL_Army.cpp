@@ -34,7 +34,7 @@
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/InhabitantFactory_ABC.h"
-#include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
+#include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
 #include <boost/bind.hpp>
@@ -88,7 +88,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     if( canCreateChildren )
     {
         xis >> xml::start( "communication" )
-                >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory ) // LTO
+                >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory )
             >> xml::end
             >> xml::start( "tactical" )
                 >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
@@ -249,9 +249,9 @@ void MIL_Army::WriteKnowledges( xml::xostream& xos ) const
             << xml::attribute( "name", GetName() );
 
     xos << xml::start( "knowledge-groups" );
-    T_KnowledgeGroupMap knowledgeGroupMap = GetKnowledgeGroups();
+    T_KnowledgeGroups knowledgeGroupMap = GetKnowledgeGroups();
     for( auto it = knowledgeGroupMap.begin(); it != knowledgeGroupMap.end(); ++it )
-        it->second->WriteKnowledges( boost::ref( xos ) );
+        it->second->WriteKnowledges( xos );
     xos     << xml::end;
 
     xos << xml::end;
@@ -402,7 +402,7 @@ void MIL_Army::RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGro
 // Name: MIL_Army::UnregisterKnowledgeGroup
 // Created: NLD 2006-10-18
 // -----------------------------------------------------------------------------
-void MIL_Army::UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup )
+void MIL_Army::UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
 {
     if( knowledgeGroups_.erase( knowledgeGroup->GetId() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
@@ -412,16 +412,16 @@ void MIL_Army::UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeG
 // Name: MIL_Army::UpdateKnowledges
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-void MIL_Army::UpdateKnowledges(int currentTimeStep)
+void MIL_Army::UpdateKnowledges( int currentTimeStep )
 {
     // Update population and agent knowledge (in knowledge groups)
-    for( auto itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->UpdateKnowledges(currentTimeStep);
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        it->second->UpdateKnowledges( currentTimeStep );
     assert( pKnowledgeBlackBoard_ );
     // Update objects (at army level plus those in jammed groups)
     pKnowledgeBlackBoard_->Update( currentTimeStep );
-    for( auto itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->UpdateObjectKnowledges(currentTimeStep);
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        it->second->UpdateObjectKnowledges( currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -432,8 +432,8 @@ void MIL_Army::CleanKnowledges()
 {
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Clean();
-    for( auto itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->CleanKnowledges();
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        it->second->CleanKnowledges();
 }
 
 // -----------------------------------------------------------------------------
@@ -443,8 +443,8 @@ void MIL_Army::CleanKnowledges()
 void MIL_Army::CleanDeletedAgentKnowledges()
 {
     pKnowledgeBlackBoard_->CleanDeletedAgentKnowledges();
-    for( auto itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->CleanDeletedAgentKnowledges();
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        it->second->CleanDeletedAgentKnowledges();
 }
 
 // -----------------------------------------------------------------------------
@@ -453,8 +453,8 @@ void MIL_Army::CleanDeletedAgentKnowledges()
 // -----------------------------------------------------------------------------
 bool MIL_Army::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
-    for( auto itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        if( !itKnowledgeGroup->second->IsJammed() && itKnowledgeGroup->second->IsPerceived( knowledge ) )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        if( !it->second->IsJammed() && it->second->IsPerceived( knowledge ) )
             return true;
     return false;
 }
@@ -597,8 +597,8 @@ void MIL_Army::SendKnowledge() const
 {
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->SendFullState( 0 );
-    for( auto itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->SendKnowledge( 0 );
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        it->second->SendKnowledge( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -715,18 +715,15 @@ void MIL_Army::UnregisterInhabitant( MIL_Inhabitant& inhabitant )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > MIL_Army::FindKnowledgeGroup( unsigned int nID ) const
 {
-    auto it = knowledgeGroups_.find( nID );
-    if( it == knowledgeGroups_.end() )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
     {
-        for( auto itBis = knowledgeGroups_.begin(); itBis != knowledgeGroups_.end(); ++itBis )
-        {
-            boost::shared_ptr< MIL_KnowledgeGroup > pkg = itBis->second->FindKnowledgeGroup( nID );
-            if( pkg )
-                return pkg;
-        }
-        return boost::shared_ptr< MIL_KnowledgeGroup >();
+        if( it->second->GetId() == nID )
+            return it->second;
+        boost::shared_ptr< MIL_KnowledgeGroup > pkg = it->second->FindKnowledgeGroup( nID );
+        if( pkg )
+            return pkg;
     }
-    return it->second;
+    return boost::shared_ptr< MIL_KnowledgeGroup >();
 }
 
 // -----------------------------------------------------------------------------
@@ -742,7 +739,7 @@ unsigned int MIL_Army::GetID() const
 // Name: MIL_Army::GetKnowledgeGroups
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
-const MIL_Army::T_KnowledgeGroupMap& MIL_Army::GetKnowledgeGroups() const
+const MIL_Army::T_KnowledgeGroups& MIL_Army::GetKnowledgeGroups() const
 {
     return knowledgeGroups_;
 }

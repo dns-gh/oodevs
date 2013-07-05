@@ -64,7 +64,7 @@ class MIL_Army : public MIL_Army_ABC
 public:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroupMap;
+    typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroups;
     //@}
 
 public:
@@ -134,7 +134,7 @@ public:
     //@{
     unsigned int GetID() const;
     const std::string& GetName() const;
-    const T_KnowledgeGroupMap& GetKnowledgeGroups() const;
+    const T_KnowledgeGroups& GetKnowledgeGroups() const;
     DEC_KnowledgeBlackBoard_Army& GetKnowledge() const;
     virtual const MIL_Color& GetColor() const;
     //@}
@@ -180,7 +180,7 @@ private:
     std::string strName_;
     E_Diplomacy nType_;
     T_DiplomacyMap diplomacies_;
-    T_KnowledgeGroupMap knowledgeGroups_;
+    T_KnowledgeGroups knowledgeGroups_;
     ArmyFactory_ABC& armyFactory_;
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
     const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter_;

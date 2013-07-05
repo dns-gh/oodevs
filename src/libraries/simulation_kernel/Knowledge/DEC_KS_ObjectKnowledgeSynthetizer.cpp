@@ -116,7 +116,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
     class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectPerception> methodUpdateKnowledgesFromObjectPerception( & DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception, *this );
     class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectCollision > methodUpdateKnowledgesFromObjectCollision ( & DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision , *this );
 
-    const MIL_KnowledgeGroup::T_AutomateVector& automates = pBlackBoard_->GetKnowledgeGroup()->GetAutomates();
+    const auto& automates = pBlackBoard_->GetKnowledgeGroup()->GetAutomates();
     for( auto itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
     {
         const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();

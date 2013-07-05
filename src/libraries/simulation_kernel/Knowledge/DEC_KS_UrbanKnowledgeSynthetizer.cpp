@@ -98,9 +98,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception( cons
 // -----------------------------------------------------------------------------
 void DEC_KS_UrbanKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
 {
-    class_mem_fun_void_const_t< DEC_KS_UrbanKnowledgeSynthetizer, DEC_Knowledge_UrbanPerception> methodUpdateKnowledgesFromUrbanPerception( & DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception, *this );
-
-    const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pBlackBoard_->GetArmy().GetKnowledgeGroups();
+    const auto& knowledgeGroups = pBlackBoard_->GetArmy().GetKnowledgeGroups();
     for( auto itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
     {
         const auto& automates = itKnowledgeGroup->second->GetAutomates();
@@ -110,6 +108,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
             for( auto itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
+                auto methodUpdateKnowledgesFromUrbanPerception = boost::bind( &DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception, this, _1 );
                 pion.GetKnowledge().GetKnowledgeUrbanPerceptionContainer().ApplyOnKnowledgesUrbanPerception( methodUpdateKnowledgesFromUrbanPerception );
             }
         }
@@ -137,7 +136,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
     SynthetizeSubordinatesPerception();
 
     // Relevance
-    class_mem_fun_void_t< DEC_KS_UrbanKnowledgeSynthetizer,  boost::shared_ptr< DEC_Knowledge_Urban > > methodRelevance( & DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgeRelevance, *this );
+    auto methodRelevance = boost::bind( &DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgeRelevance, this, _1 );
     pBlackBoard_->GetKnowledgeUrbanContainer().ApplyOnKnowledgesUrban( methodRelevance );
 }
 

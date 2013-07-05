@@ -321,7 +321,7 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "type", type_->GetName() )
         << xml::end;
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
-        ( **it ).WriteODB( boost::ref( xos ) );     // LTO
+        ( **it ).WriteODB( xos );     // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -363,7 +363,7 @@ void MIL_KnowledgeGroup::WriteKnowledges( xml::xostream& xos ) const
     xos     << xml::end;
 
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        ( **it ).WriteKnowledges( boost::ref( xos ) );
+        ( **it ).WriteKnowledges( xos );
     xos << xml::end;
 }
 
@@ -768,15 +768,11 @@ bool MIL_KnowledgeGroup::IsEnabled() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > MIL_KnowledgeGroup::FindKnowledgeGroup( unsigned int id ) const
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > group;
-    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        if( (*it)->GetId() == id )
-            group = *it;
-    if( group )
-        return group;
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
     {
-        group = (*it)->FindKnowledgeGroup( id );
+        if( (*it)->GetId() == id )
+            return *it;
+        const auto& group = (*it)->FindKnowledgeGroup( id );
         if( group )
             return group;
     }
