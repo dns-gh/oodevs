@@ -385,7 +385,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::PopulationKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledge" ) 
         param.reset( new parameters::ObjectKnowledgeOrder( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "urbanknowledge" )
+    else if( type == "urbanknowledge" || type == "urbanblock" )
         param.reset( new parameters::UrbanBlock( parameter, xis, entities_, controller_ ) );
     else
         return false;
