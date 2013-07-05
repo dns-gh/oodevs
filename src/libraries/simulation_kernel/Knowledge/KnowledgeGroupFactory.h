@@ -11,6 +11,10 @@
 #define __KnowledgeGroupFactory_h_
 
 #include "KnowledgeGroupFactory_ABC.h"
+#include <boost/serialization/export.hpp>
+
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  FormationFactory
@@ -30,6 +34,17 @@ public:
     //! @name Operations
     //@{
     virtual boost::shared_ptr< MIL_KnowledgeGroup > Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent );
+
+    void Register( const unsigned long& identifier, const boost::shared_ptr< MIL_KnowledgeGroup >& element );
+    void Remove( const unsigned long& identifier );
+    void Clear();
+    //@}
+
+    //! @name Accessors
+    //@{
+    boost::shared_ptr< MIL_KnowledgeGroup > Find( const unsigned long& identifier ) const;
+    const std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >& GetElements() const;
+    unsigned long Count() const;
     //@}
 
     //! @name CheckPoint
@@ -40,10 +55,17 @@ public:
     //@}
 
 private:
-    //! @name CheckPoint
+    //! @name Types
     //@{
-    template< typename Archive > friend void save_construct_data( Archive& archive, const KnowledgeGroupFactory* role, const unsigned int /*version*/ );
-    template< typename Archive > friend void load_construct_data( Archive& archive, KnowledgeGroupFactory* role, const unsigned int /*version*/ );
+    typedef std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > T_Elements;
+    typedef T_Elements::iterator IT_Elements;
+    typedef T_Elements::const_iterator CIT_Elements;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_Elements elements_;
     //@}
 };
 

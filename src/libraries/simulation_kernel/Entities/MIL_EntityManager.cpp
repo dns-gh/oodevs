@@ -81,6 +81,7 @@
 #include "Knowledge/KnowledgeGroupFactory.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Objects/MIL_FireClass.h"
@@ -983,7 +984,7 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
     Profiler profiler( rStatesTime_ ); // $$$$ MCO 2012-11-28: again ?
     try
     {
-        const std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >& groups = knowledgeGroupFactory_->GetElements();
+        const auto& groups = knowledgeGroupFactory_->GetElements();
         for( auto it = groups.begin(); it != groups.end(); ++it )
             it->second->UpdateKnowledgeGroup();
     }
@@ -2281,7 +2282,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     AgentFactory_ABC * agentFactory;
     PopulationFactory_ABC * populationFactory;
     InhabitantFactory_ABC * inhabitantFactory;
-    KnowledgeGroupFactory_ABC * knowledgeGroupFactory;
+    KnowledgeGroupFactory * knowledgeGroupFactory;
     MIL_ObjectManager* objectManager;
     MissionController_ABC* missionController;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
@@ -2346,7 +2347,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
     const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
     const InhabitantFactory_ABC * const inhabitantFactory = inhabitantFactory_.get();
-    const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
+    const KnowledgeGroupFactory* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
     const MIL_ObjectManager* const objectManager = pObjectManager_.get();
     const MissionController_ABC* const missionController = missionController_.get();
 

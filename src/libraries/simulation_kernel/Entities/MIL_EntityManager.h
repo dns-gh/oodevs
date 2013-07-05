@@ -61,7 +61,7 @@ class ArmyFactory_ABC;
 class AgentFactory_ABC;
 class AutomateFactory_ABC;
 class FormationFactory_ABC;
-class KnowledgeGroupFactory_ABC;
+class KnowledgeGroupFactory;
 class MIL_AgentTypePion;
 class MIL_AutomateType;
 class MIL_EffectManager;
@@ -308,7 +308,7 @@ private:
     std::auto_ptr< propagation::FloodModel_ABC > pFloodModel_;
     std::auto_ptr< AutomateFactory_ABC >         automateFactory_;        // has to be declared before armyFactory & formation factory
     std::auto_ptr< FormationFactory_ABC >        formationFactory_;       // has to be declared before armyFactory
-    std::auto_ptr< KnowledgeGroupFactory_ABC >   knowledgeGroupFactory_;  // has to be declared before armyFactory
+    std::auto_ptr< KnowledgeGroupFactory >       knowledgeGroupFactory_;  // has to be declared before armyFactory
     std::auto_ptr< ArmyFactory_ABC >             armyFactory_;
     //@}
 };
