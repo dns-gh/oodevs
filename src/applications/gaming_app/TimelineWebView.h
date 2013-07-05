@@ -18,7 +18,6 @@ namespace kernel
 {
     class ContextMenu;
     class ActionController;
-    class Time_ABC;
 }
 
 namespace tools
@@ -28,7 +27,6 @@ namespace tools
 
 class Config;
 class Event;
-class EventDialog;
 class Model;
 
 // =============================================================================
@@ -39,7 +37,6 @@ class Model;
 // =============================================================================
 class TimelineWebView : public QWidget
                       , public tools::Observer_ABC
-                      , public kernel::ContextMenuObserver_ABC< timeline::Event >
                       , public kernel::ContextMenuObserver_ABC< QDateTime >
 {
     Q_OBJECT
@@ -48,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
-                              const kernel::Time_ABC& simulation, Model& model, EventDialog& eventDialog, timeline::Configuration& cfg );
+                              Model& model, timeline::Configuration& cfg );
     virtual ~TimelineWebView();
     //@}
 
@@ -64,7 +61,6 @@ private:
     void CreateDummyEvent( E_EventTypes type ); // $$$$ ABR 2013-05-24: Test method
     Event& GetOrCreateEvent( const timeline::Event& event );
 
-    virtual void NotifyContextMenu( const timeline::Event& event, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
 
     void ReadActions( xml::xistream& xis );
@@ -77,6 +73,8 @@ signals:
     void CreateEventSignal( const timeline::Event& event );
     void EditEventSignal( const timeline::Event& event );
     void DeleteEventSignal( const std::string& uuid );
+
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
     //@}
 
 private slots:
@@ -96,8 +94,6 @@ private slots:
     void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time );
     void OnKeyUp( int key );
 
-    void OnEditClicked();
-    void OnDeleteClicked();
     void OnCreateClicked( int );
     void OnCreateDummyClicked( int );
 
@@ -108,19 +104,16 @@ private slots:
 private:
     //! @name Member data
     //@{
-    EventDialog& eventDialog_;
     QWidget* timelineWidget_;
     QVBoxLayout* mainLayout_;
 
     const tools::ExerciseConfig& config_;
-    const kernel::Time_ABC& simulation_;
     kernel::ActionController& actionController_;
     Model& model_;
 
     std::auto_ptr< timeline::Server_ABC > server_;
     std::auto_ptr< timeline::Configuration > cfg_;
     boost::shared_ptr< timeline::Event > selected_;
-    boost::shared_ptr< timeline::Event > contextMenuEvent_;
     QDateTime selectedDateTime_;
     QSignalMapper* creationSignalMapper_;
     QSignalMapper* dummySignalMapper_;

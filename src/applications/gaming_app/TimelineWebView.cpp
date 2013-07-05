@@ -11,7 +11,6 @@
 #include "TimelineWebView.h"
 
 #include "moc_TimelineWebView.cpp"
-#include "EventDialog.h"
 #include "TimelineToolBar.h"
 
 #include "actions/Action_ABC.h"
@@ -21,7 +20,6 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Time_ABC.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/EventAction.h"
@@ -42,13 +40,11 @@
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
 TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
-                                  const kernel::Time_ABC& simulation, Model& model, EventDialog& eventDialog, timeline::Configuration& cfg )
+                                  Model& model, timeline::Configuration& cfg )
     : QWidget( parent )
     , config_( config )
     , actionController_( actionController )
-    , simulation_( simulation )
     , model_( model )
-    , eventDialog_( eventDialog )
     , server_( 0 )
     , cfg_( new timeline::Configuration( cfg ) )
     , creationSignalMapper_( 0 )
@@ -230,10 +226,8 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
     selected_ = event;
     if( selected_.get() )
     {
-        Event& gamingEvent = GetOrCreateEvent( *event );
-        if( gamingEvent.GetType() == eEventTypes_Order )
-            if( const actions::Action_ABC* action = static_cast< EventAction& >( gamingEvent ).GetAction() )
-                action->Select( actionController_ );
+        Event& gamingEvent = GetOrCreateEvent( *selected_ );
+        gamingEvent.Select( actionController_ );
     }
     else if( hadSelection )
         actionController_.DeselectAll();
@@ -246,10 +240,8 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
 void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
     Event& gamingEvent = GetOrCreateEvent( event );
-    if( gamingEvent.GetType() == eEventTypes_Order )
-        if( const actions::Action_ABC* action = static_cast< EventAction& >( gamingEvent ).GetAction() )
-            action->Select( actionController_ );
-    eventDialog_.Edit( gamingEvent );
+    gamingEvent.Select( actionController_ );
+    gamingEvent.Activate( actionController_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,21 +251,14 @@ void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time )
 {
     selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), EVENT_DATE_FORMAT );
-    contextMenuEvent_ = event;
+    //contextMenuEvent_ = event;
     if( event )
-        actionController_.ContextMenu( *event, QCursor::pos() );
+    {
+        Event& gamingEvent = GetOrCreateEvent( *event );
+        gamingEvent.ContextMenu( actionController_, QCursor::pos() );
+    }
     else
         actionController_.ContextMenu( selectedDateTime_, QCursor::pos() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineWebView::NotifyContextMenu
-// Created: ABR 2013-06-19
-// -----------------------------------------------------------------------------
-void TimelineWebView::NotifyContextMenu( const timeline::Event& /* event */, kernel::ContextMenu& menu )
-{
-    menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditClicked() ) );
-    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeleteClicked() ) );
 }
 
 namespace
@@ -315,33 +300,13 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineWebView::OnEditClicked
-// Created: ABR 2013-06-19
-// -----------------------------------------------------------------------------
-void TimelineWebView::OnEditClicked()
-{
-    if( contextMenuEvent_ )
-        OnActivatedEvent( *contextMenuEvent_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineWebView::OnDeleteClicked
-// Created: ABR 2013-06-19
-// -----------------------------------------------------------------------------
-void TimelineWebView::OnDeleteClicked()
-{
-    if( contextMenuEvent_ )
-        DeleteEvent( contextMenuEvent_->uuid );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TimelineWebView::OnCreateClicked
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnCreateClicked( int type )
 {
     assert( type >= 0 && type < eNbrEventTypes );
-    eventDialog_.Create( static_cast< E_EventTypes >( type ), selectedDateTime_ ) ;
+    emit StartCreation( static_cast< E_EventTypes >( type ), selectedDateTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -422,7 +387,7 @@ void TimelineWebView::CreateDummyEvent( E_EventTypes type )
     timeline::Event event;
     event.name = "Dummy " + ENT_Tr::ConvertFromEventType( type );
     event.info = "Dummy Infos";
-    event.begin = simulation_.GetDateTime().toTimeSpec( Qt::UTC ).toString( "yyyy-MM-ddTHH:mm:ssZ" ).toStdString();
+    event.begin = selectedDateTime_.toString( EVENT_DATE_FORMAT ).toStdString();
     event.done = false;
     event.action = action;
     CreateEvent( event );

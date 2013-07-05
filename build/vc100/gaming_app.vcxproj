@@ -191,7 +191,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\DockContainer.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\EventBottomWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\EventDetailWidget.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\EventDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\EventDockWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\EventMultimediaWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\EventOrderWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\EventReportWidget.cpp" />
@@ -450,11 +450,11 @@
     <ClInclude Include="..\..\src\applications\gaming_app\ConnectLoginDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\DisasterPrototype.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\DockContainer.h" />
-    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventDialog.h" />
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventBottomWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventDetailWidget.h" />
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventMultimediaWidget.h" />
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventOrderWidget.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventDockWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventReportWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventSupervisorActionWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventTaskWidget.h" />

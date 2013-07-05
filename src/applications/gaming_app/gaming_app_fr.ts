@@ -673,11 +673,7 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>EventDialog</name>
-    <message>
-        <source>Event creation</source>
-        <translation>Création d&apos;évènement</translation>
-    </message>
+    <name>EventDockWidget</name>
     <message>
         <source>Event edition</source>
         <translation>Edition d&apos;évènement</translation>
@@ -689,6 +685,14 @@ Raison: %3
     <message>
         <source>This event is incomplete so it can&apos;t be triggered.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editer</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
@@ -3262,14 +3266,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>An error occurred during event deletion process: %1</source>
         <translation>Une erreur s&apos;est produite pendant le processus de suppression d&apos;événement: %1</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Editer</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Create an event</source>

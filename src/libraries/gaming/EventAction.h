@@ -48,6 +48,14 @@ public:
     E_MissionType GetMissionType() const;
     //@}
 
+    //! @name GraphicalEntity_ABC implementation
+    //@{
+    virtual QString GetName() const;
+    virtual QString GetTooltip() const;
+
+    virtual void Select( kernel::ActionController& controller ) const;
+    //@}
+
 private:
     //! @name Helpers
     //@{

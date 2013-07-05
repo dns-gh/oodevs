@@ -10,8 +10,14 @@
 #ifndef __Event_h_
 #define __Event_h_
 
-#include <boost/noncopyable.hpp>
+#include "clients_kernel/GraphicalEntity_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include <boost/noncopyable.hpp>
+
+namespace kernel
+{
+    class ActionController;
+}
 
 namespace timeline
 {
@@ -34,7 +40,8 @@ namespace timeline
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class Event : private boost::noncopyable
+class Event : public kernel::GraphicalEntity_ABC
+            , private boost::noncopyable
 {
 
 public:
@@ -50,6 +57,18 @@ public:
     timeline::Event& GetEvent() const;
     virtual Event* Clone() const;
     virtual void Update( const timeline::Event& event );
+    //@}
+
+    //! @name GraphicalEntity_ABC implementation
+    //@{
+    virtual QString GetName() const;
+    virtual QString GetTooltip() const;
+
+    virtual void Select( kernel::ActionController& controller ) const;
+    virtual void MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const;
+    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
+    virtual void OverFly( kernel::ActionController& controller ) const;
     //@}
 
 protected:

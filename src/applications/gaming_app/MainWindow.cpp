@@ -21,6 +21,7 @@
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "DockContainer.h"
+#include "EventDockWidget.h"
 #include "EventToolbar.h"
 #include "FogLayer.h"
 #include "FormationLayer.h"
@@ -45,7 +46,6 @@
 #include "SimulationLighting.h"
 #include "StatusBar.h"
 #include "TeamLayer.h"
-#include "TimelineDockWidget.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
 #include "OrbatPanel.h"
@@ -285,9 +285,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation );
     gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( dockContainer_->GetMissionPanel() );
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
-    gui::Layer* timelineLayer = 0;
-    if( config_.HasTimeline() )
-        timelineLayer = new gui::MiscLayer< TimelineDockWidget >( *dockContainer_->GetTimelineDockWidget() );
+    gui::Layer& eventLayer           = *new gui::MiscLayer< EventDockWidget >( dockContainer_->GetEventDockWidget() );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
@@ -336,8 +334,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( missionsLayer, "main,miniviews" );
     AddLayer( actionsLayer, "main" );
     AddLayer( creationsLayer, "main" );
-    if( timelineLayer )
-        AddLayer( *timelineLayer, "main" );
+    AddLayer( eventLayer, "main" );
     AddLayer( *parameters_, "main" );
     AddLayer( metrics, "main" );
     AddLayer( locationsLayer, "main" );

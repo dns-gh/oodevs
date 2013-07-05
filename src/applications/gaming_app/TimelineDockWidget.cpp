@@ -11,7 +11,6 @@
 #include "TimelineDockWidget.h"
 #include "moc_TimelineDockWidget.cpp"
 #include "Config.h"
-#include "EventDialog.h"
 #include "TimelineToolBar.h"
 #include "TimelineWebView.h"
 
@@ -27,13 +26,10 @@ int TimelineDockWidget::maxTabNumber_ = -1;
 // Name: TimelineDockWidget constructor
 // Created: ABR 2013-05-14
 // -----------------------------------------------------------------------------
-TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation,
-                                        Model& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
-                                        gui::GlTools_ABC& tools )
+TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, Model& model )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , cfg_( new timeline::Configuration() )
     , config_( config )
-    , eventDialog_( 0 )
     , webView_( 0 )
 {
     // Init
@@ -48,16 +44,10 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     if( !cfg_->binary.IsRegularFile() )
         MT_LOG_ERROR_MSG( tr( "Invalid timeline binary '%1'" ).arg( QString::fromStdWString( cfg_->binary.ToUnicode() ) ).toStdString() );
 
-    // Dialog
-    eventDialog_ = new EventDialog( this, controllers, model, config, simulation, interfaceBuilder, profile, tools );
-
-    // Tabbed toolbar
+    // Content
     tabWidget_ = new QTabWidget();
     tabWidget_->setVisible( false );
-
-    webView_ = new TimelineWebView( 0, config, controllers.actions_, simulation, model, *eventDialog_, *cfg_ );
-
-    // Add first toolbar
+    webView_ = new TimelineWebView( 0, config, controllers.actions_, model, *cfg_ );
     AddView();
 
     // Main Layout
@@ -70,9 +60,10 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     setWidget( mainWidget );
 
     // Connections
-    connect( eventDialog_, SIGNAL( CreateEvent( const timeline::Event& ) ), webView_, SLOT( CreateEvent( const timeline::Event& ) ) );
-    connect( eventDialog_, SIGNAL( EditEvent( const timeline::Event& ) ), webView_, SLOT( EditEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( CreateEvent( const timeline::Event& ) ), webView_, SLOT( CreateEvent( const timeline::Event& ) ) );
+    connect( this, SIGNAL( EditEvent( const timeline::Event& ) ), webView_, SLOT( EditEvent( const timeline::Event& ) ) );
+    connect( this, SIGNAL( DeleteEvent( const std::string& ) ), webView_, SLOT( DeleteEvent( const std::string& ) ) );
+    connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,16 +95,6 @@ void TimelineDockWidget::Disconnect()
     tabWidget_->setVisible( false );
     if( webView_ )
         webView_->Disconnect();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineDockWidget::Draw
-// Created: ABR 2013-06-11
-// -----------------------------------------------------------------------------
-void TimelineDockWidget::Draw( gui::Viewport_ABC& viewport )
-{
-    if( eventDialog_ )
-        eventDialog_->Draw( viewport );
 }
 
 // -----------------------------------------------------------------------------

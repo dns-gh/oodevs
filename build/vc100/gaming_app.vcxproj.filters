@@ -814,9 +814,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\TimelineToolBar.cpp">
       <Filter>Source Files\Panels\Timeline</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\EventDialog.cpp">
-      <Filter>Source Files\Dialogs\Events</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\EventMultimediaWidget.cpp">
       <Filter>Source Files\Dialogs\Events</Filter>
     </ClCompile>
@@ -846,6 +843,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\TimelineWebView.cpp">
       <Filter>Source Files\Panels\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventDockWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1539,9 +1539,6 @@
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\TimelineToolBar.h">
       <Filter>Source Files\Panels\Timeline</Filter>
     </Qt_file_Mocing>
-    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventDialog.h">
-      <Filter>Source Files\Dialogs\Events</Filter>
-    </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventBottomWidget.h">
       <Filter>Source Files\Dialogs\Events</Filter>
     </Qt_file_Mocing>
@@ -1556,6 +1553,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\TimelineWebView.h">
       <Filter>Source Files\Panels\Timeline</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventDockWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

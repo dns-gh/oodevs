@@ -16,6 +16,7 @@
 #include "ClockDock.h"
 #include "Config.h"
 #include "CreationPanels.h"
+#include "EventDockWidget.h"
 #include "FormationLayer.h"
 #include "IndicatorPlotFactory.h"
 #include "InfoDock.h"
@@ -63,7 +64,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               gui::GlProxy& proxy, gui::RichItemFactory& factory, LinkInterpreter& interpreter,
                               gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, gui::EntitySymbols& entitySymbols, 
                               IndicatorExportDialog& indicatorExportDialog )
-    : timeline_( 0 )
+    : timelineDockWidget_( 0 )
 {
     // Tools
     interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers, paramLayer, staticModel, &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_, &simulation, &model.limits_ ) );
@@ -71,6 +72,16 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
     QObject::connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), &interpreter, SLOT( Interprete( const QString& ) ) );
     plotFactory_.reset( new IndicatorPlotFactory( parent, controllers, network.GetMessageMgr(), indicatorExportDialog, simulation ) );
+
+    // -----------------------------------------------------------------------------
+    // Floating
+    // -----------------------------------------------------------------------------
+    // Event panel
+    {
+        eventDockWidget_ = new EventDockWidget( parent, controllers, model, config, simulation, *interfaceBuilder_, profile, proxy );
+        eventDockWidget_->SetModes( eModes_Default );
+        parent->addDockWidget( Qt::LeftDockWidgetArea, eventDockWidget_ );
+    }
 
     // -----------------------------------------------------------------------------
     // Left
@@ -198,12 +209,15 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     if( config.HasTimeline() )
     {
         // New Timeline
-        timeline_ = new TimelineDockWidget( parent, controllers, config, simulation, model, *interfaceBuilder_, profile, proxy );
-        timeline_->SetModes( eModes_Default );
-        parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
-        QObject::connect( missionPanel_, SIGNAL( CreateEvent( const timeline::Event& ) ), timeline_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
+        timelineDockWidget_ = new TimelineDockWidget( parent, controllers, config, model );
+        timelineDockWidget_->SetModes( eModes_Default );
+        parent->addDockWidget( Qt::TopDockWidgetArea, timelineDockWidget_ );
+        QObject::connect( missionPanel_,       SIGNAL( CreateEvent( const timeline::Event& ) ),           timelineDockWidget_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
+        QObject::connect( eventDockWidget_,    SIGNAL( CreateEvent( const timeline::Event& ) ),           timelineDockWidget_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
+        QObject::connect( eventDockWidget_,    SIGNAL( EditEvent( const timeline::Event& ) ),             timelineDockWidget_, SIGNAL( EditEvent( const timeline::Event& ) ) );
+        QObject::connect( eventDockWidget_,    SIGNAL( DeleteEvent( const std::string& ) ),               timelineDockWidget_, SIGNAL( DeleteEvent( const std::string& ) ) );
+        QObject::connect( timelineDockWidget_, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), eventDockWidget_,    SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
     }
-
     {
         // Old Timeline
         TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, *displayExtractor_ );
@@ -243,8 +257,9 @@ DockContainer::~DockContainer()
 {
     delete afterAction_;
     delete missionPanel_;
-    if( timeline_ )
-        delete timeline_;
+    delete eventDockWidget_;
+    if( timelineDockWidget_ )
+        delete timelineDockWidget_;
 }
 
 // -----------------------------------------------------------------------------
@@ -255,8 +270,8 @@ void DockContainer::Purge()
 {
     missionPanel_->Purge();
     orbatDockWidget_->Purge();
-    if( timeline_ )
-        timeline_->Disconnect();
+    if( timelineDockWidget_ )
+        timelineDockWidget_->Disconnect();
 }
 
 // -----------------------------------------------------------------------------
@@ -265,8 +280,8 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
-    if( timeline_ )
-        timeline_->Connect();
+    if( timelineDockWidget_ )
+        timelineDockWidget_->Connect();
 }
 
 // -----------------------------------------------------------------------------
@@ -324,10 +339,10 @@ gui::MiniViews& DockContainer::GetMiniView() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DockContainer::GetTimelineDockWidget
-// Created: ABR 2013-06-11
+// Name: DockContainer::GetEventDockWidget
+// Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-TimelineDockWidget* DockContainer::GetTimelineDockWidget() const
+EventDockWidget& DockContainer::GetEventDockWidget() const
 {
-    return timeline_;
+    return *eventDockWidget_;
 }

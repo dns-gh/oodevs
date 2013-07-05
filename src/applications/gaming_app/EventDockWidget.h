@@ -7,11 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef __EventDialog_h_
-#define __EventDialog_h_
+#ifndef __EventDockWidget_h_
+#define __EventDockWidget_h_
 
-#include "clients_gui/ModalDialog.h"
+#include "clients_gui/RichDockWidget.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include "clients_kernel/ActivationObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace actions
@@ -54,30 +57,28 @@ class EventWidget_ABC;
 class Model;
 
 // =============================================================================
-/** @class  EventDialog
-    @brief  EventDialog
+/** @class  EventDockWidget
+    @brief  EventDockWidget
 */
-// Created: ABR 2013-05-28
+// Created: ABR 2013-07-02
 // =============================================================================
-class EventDialog : public QDialog
-                  , public tools::ElementObserver_ABC< Event >
-                  , public tools::Observer_ABC
+class EventDockWidget : public gui::RichDockWidget
+                      , public kernel::ContextMenuObserver_ABC< Event >
+                      , public tools::ElementObserver_ABC< Event >
+                      , public kernel::ActivationObserver_ABC< Event >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventDialog( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
-                          const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                          const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools );
-    virtual ~EventDialog();
+             EventDockWidget( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
+                              const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                              const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools );
+    virtual ~EventDockWidget();
     //@}
-
     //! @name Operations
     //@{
-    void Create( E_EventTypes type, const QDateTime& dateTime );
-    void Edit( const Event& event );
     void Draw( gui::Viewport_ABC& viewport );
     //@}
 
@@ -89,18 +90,22 @@ private:
     void Purge();
     void Fill();
     virtual void closeEvent( QCloseEvent * event );
+    void SetContentVisible( bool visible );
     //@}
 
-    //! @name ElementObserver_ABC< Event > implementation
+    //! @name Observers implementation
     //@{
-    virtual void NotifyUpdated( const Event& event );
+    virtual void NotifyActivated( const Event& event );
+    virtual void NotifyContextMenu( const Event& event, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const Event& event );
+    virtual void NotifyUpdated( const Event& event );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void CreateEvent( const timeline::Event& );
+    void DeleteEvent( const std::string& uuid );
     void EditEvent( const timeline::Event& );
     void BeginDateChanged( const QDateTime& );
     //@}
@@ -108,6 +113,12 @@ signals:
 private slots:
     //! @name Slots
     //@{
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void StartEdition( const Event& event );
+
+    void OnEditClicked();
+    void OnDeleteClicked();
+
     void OnTrigger();
     void OnCreateReminder();
     void OnShowDetail();
@@ -120,6 +131,7 @@ private:
     //@{
     const EventFactory& factory_;
     const kernel::Time_ABC& simulation_;
+    QWidget* mainWidget_;
     QStackedWidget* stack_;
     EventWidget_ABC* topWidget_;
     EventWidget_ABC* currentWidget_;
@@ -127,10 +139,9 @@ private:
     EventWidget_ABC* bottomWidget_;
     int lastCurrentIndex_;
     std::auto_ptr< Event > event_;
+    kernel::SafePointer< Event > selected_;
     bool editing_;
-    const QString creationCaption_;
-    const QString editionCaption_;
     //@}
 };
 
-#endif // __EventDialog_h_
+#endif // __EventDockWidget_h_

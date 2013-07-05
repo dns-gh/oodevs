@@ -45,6 +45,7 @@ class AfterAction;
 class AutomatsLayer;
 class Config;
 class CreationPanels;
+class EventDockWidget;
 class FormationLayer;
 class IndicatorExportDialog;
 class IndicatorPlotFactory;
@@ -95,7 +96,7 @@ public:
     ProfilingPanel& GetProfilingPanel() const;
     gui::TerrainProfiler& GetTerrainProfiler() const;
     gui::MiniViews& GetMiniView() const;
-    TimelineDockWidget* GetTimelineDockWidget() const;
+    EventDockWidget& GetEventDockWidget() const;
     //@}
 
 private:
@@ -109,7 +110,8 @@ private:
     ProfilingPanel* profilingPanel_;
     gui::TerrainProfiler* terrainProfiler_;
     gui::MiniViews* miniView_;
-    TimelineDockWidget* timeline_;
+    TimelineDockWidget* timelineDockWidget_;
+    EventDockWidget* eventDockWidget_;
     //@}
 
     //! @name Member data

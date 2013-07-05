@@ -9,7 +9,9 @@
 
 #include "gaming_pch.h"
 #include "Event.h"
+#include "clients_kernel/ActionController.h"
 #include "timeline/api.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: Event constructor
@@ -65,4 +67,71 @@ Event* Event::Clone() const
 void Event::Update( const timeline::Event& event )
 {
     event_.reset( new timeline::Event( event ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::GetName
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+QString Event::GetName() const
+{
+    if( event_.get() )
+        return QString::fromStdString( event_->name );
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::GetTooltip
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+QString Event::GetTooltip() const
+{
+    if( event_.get() )
+        return QString::fromStdString( event_->name );
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::Select
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void Event::Select( kernel::ActionController& controller ) const
+{
+    controller.Select( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::MultipleSelect
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void Event::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
+{
+    controller.MultipleSelect( elements );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::ContextMenu
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void Event::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
+{
+    controller.ContextMenu( *this, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::Activate
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void Event::Activate( kernel::ActionController& controller ) const
+{
+    controller.Activate( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::OverFly
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void Event::OverFly( kernel::ActionController& controller ) const
+{
+    controller.OverFly( *this );
 }

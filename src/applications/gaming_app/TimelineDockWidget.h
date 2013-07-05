@@ -12,25 +12,9 @@
 
 #include "clients_gui/RichDockWidget.h"
 
-namespace actions
-{
-    namespace gui
-    {
-        class InterfaceBuilder_ABC;
-    }
-}
-
-namespace gui
-{
-    class GlTools_ABC;
-    class Viewport_ABC;
-}
-
 namespace kernel
 {
     class Controllers;
-    class Profile_ABC;
-    class Time_ABC;
 }
 
 namespace timeline
@@ -45,10 +29,7 @@ namespace tools
 }
 
 class Config;
-class EventAction;
-class EventDialog;
 class Model;
-class TimelineToolBar;
 class TimelineWebView;
 
 // =============================================================================
@@ -64,9 +45,7 @@ class TimelineDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation,
-                                 Model& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
-                                 gui::GlTools_ABC& tools );
+             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, Model& model );
     virtual ~TimelineDockWidget();
     //@}
 
@@ -74,13 +53,16 @@ public:
     //@{
     void Connect();
     void Disconnect();
-    void Draw( gui::Viewport_ABC& viewport );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void CreateEvent( const timeline::Event& );
+    void EditEvent( const timeline::Event& );
+    void DeleteEvent( const std::string& );
+
+    void StartCreation( E_EventTypes, const QDateTime& );
     //@}
 
 public slots:
@@ -95,8 +77,6 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     std::auto_ptr< timeline::Configuration > cfg_;
-
-    EventDialog* eventDialog_;
 
     QTabWidget* tabWidget_;
     std::vector< std::pair< int, QWidget* > > toolbars_;

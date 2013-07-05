@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "EventDialog.h"
-#include "moc_EventDialog.cpp"
+#include "EventDockWidget.h"
+#include "moc_EventDockWidget.cpp"
 
 #include "EventBottomWidget.h"
 #include "EventDetailWidget.h"
@@ -38,13 +38,13 @@
 #include <boost/uuid/uuid_io.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog constructor
+// Name: EventDockWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
-                          const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                          const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools )
-    : QDialog( parent )
+EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
+                                  const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                                  const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools )
+    : gui::RichDockWidget( controllers, parent, "event-dock-widget" )
     , factory_( model.eventFactory_ )
     , simulation_( simulation )
     , topWidget_( 0 )
@@ -52,13 +52,12 @@ EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Mod
     , stack_( 0 )
     , currentWidget_( 0 )
     , editing_( false )
-    , creationCaption_( tr( "Event creation" ) )
-    , editionCaption_( tr( "Event edition" ) )
+    , event_( 0 )
+    , selected_( controllers )
 {
-    setObjectName( "event-dialog" );
-    setModal( false );
-    setMinimumWidth( 800 );
-    setMinimumHeight( 600 );
+    setWindowTitle( tr( "Event edition" ) );
+    setFloating( true );
+    hide();
 
     topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
     bottomWidget_ = new EventBottomWidget();
@@ -87,30 +86,33 @@ EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Mod
     stack_->insertWidget( eNbrEventTypes,               detailWidget_ );
 
     // Layout
-    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    QWidget* mainWidget = new QWidget();
+    QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
     mainLayout->setMargin( 0 );
     mainLayout->setSpacing( 0 );
     mainLayout->addWidget( topWidget_ );
     mainLayout->addWidget( stack_, 1 );
     mainLayout->addWidget( bottomWidget_ );
+    setWidget( mainWidget );
+
+    SetContentVisible( false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog destructor
+// Name: EventDockWidget destructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventDialog::~EventDialog()
+EventDockWidget::~EventDockWidget()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::Create
+// Name: EventDockWidget::Create
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::Create( E_EventTypes type, const QDateTime& dateTime )
+void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime )
 {
-    setCaption( creationCaption_ );
     editing_ = false;
     event_.reset( factory_.Create( type ) );
     SetEventType( type );
@@ -118,61 +120,75 @@ void EventDialog::Create( E_EventTypes type, const QDateTime& dateTime )
     Fill();
     if( dateTime.isValid() )
         emit BeginDateChanged( dateTime );
-    show();
+    SetContentVisible( true );
+    setVisible( true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::Edit
+// Name: EventDockWidget::Edit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::Edit( const Event& event )
+void EventDockWidget::StartEdition( const Event& event )
 {
-    setCaption( editionCaption_ );
     editing_ = true;
     event_.reset( event.Clone() );
     SetEventType( event.GetType() );
     Purge();
     Fill();
-    show();
+    SetContentVisible( true );
+    setVisible( true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::SetType
+// Name: EventDockWidget::SetType
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::SetEventType( E_EventTypes type )
+void EventDockWidget::SetEventType( E_EventTypes type )
 {
     stack_->setCurrentIndex( type );
     currentWidget_ = static_cast< EventWidget_ABC* >( stack_->widget( type ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::closeEvent
+// Name: EventDockWidget::closeEvent
 // Created: ABR 2013-06-11
 // -----------------------------------------------------------------------------
-void EventDialog::closeEvent( QCloseEvent * event )
+void EventDockWidget::closeEvent( QCloseEvent * event )
 {
     Purge();
-    QDialog::closeEvent( event );
+    gui::RichDockWidget::closeEvent( event );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::Purge
+// Name: EventDockWidget::SetContentVisible
+// Created: ABR 2013-07-03
+// -----------------------------------------------------------------------------
+void EventDockWidget::SetContentVisible( bool visible )
+{
+    topWidget_->setVisible( visible );
+    stack_->setVisible( visible );
+    bottomWidget_->setVisible( visible );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::Purge
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventDialog::Purge()
+void EventDockWidget::Purge()
 {
     topWidget_->Purge();
-    currentWidget_->Purge();
+    if( currentWidget_ )
+        currentWidget_->Purge();
     bottomWidget_->Purge();
     detailWidget_->Purge();
+    SetContentVisible( false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::Fill
+// Name: EventDockWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::Fill()
+void EventDockWidget::Fill()
 {
     assert( event_.get() );
     topWidget_->Fill( *event_ );
@@ -182,10 +198,10 @@ void EventDialog::Fill()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::Commit
+// Name: EventDockWidget::Commit
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
-void EventDialog::Commit( timeline::Event& event )
+void EventDockWidget::Commit( timeline::Event& event )
 {
     topWidget_->Commit( event );
     currentWidget_->Commit( event );
@@ -193,10 +209,10 @@ void EventDialog::Commit( timeline::Event& event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::OnTrigger
+// Name: EventDockWidget::OnTrigger
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::OnTrigger()
+void EventDockWidget::OnTrigger()
 {
     if( currentWidget_->IsValid() )
         currentWidget_->Trigger();
@@ -208,19 +224,19 @@ void EventDialog::OnTrigger()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::OnCreateReminder
+// Name: EventDockWidget::OnCreateReminder
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::OnCreateReminder()
+void EventDockWidget::OnCreateReminder()
 {
     QMessageBox::question( this, "Reminder", "Reminder creation !" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::OnShowDetail
+// Name: EventDockWidget::OnShowDetail
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
-void EventDialog::OnShowDetail()
+void EventDockWidget::OnShowDetail()
 {
     if( stack_->currentIndex() == eNbrEventTypes )
         stack_->setCurrentIndex( lastCurrentIndex_ );
@@ -232,60 +248,102 @@ void EventDialog::OnShowDetail()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::OnDiscard
+// Name: EventDockWidget::OnDiscard
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::OnDiscard()
+void EventDockWidget::OnDiscard()
 {
     Fill();
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::OnSave
+// Name: EventDockWidget::OnSave
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::OnSave()
+void EventDockWidget::OnSave()
 {
     timeline::Event event;
     Commit( event );
+    assert( event_.get() );
     event.uuid = ( editing_ ) ? event_->GetEvent().uuid : boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     event_->Update( event );
     if( editing_ )
         emit EditEvent( event );
     else
     {
-        setCaption( editionCaption_ );
         emit CreateEvent( event );
         editing_ = true;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::Draw
+// Name: EventDockWidget::OnEditClicked
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void EventDockWidget::OnEditClicked()
+{
+    if( selected_ )
+        StartEdition( *selected_ );
+    selected_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::OnDeleteClicked
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void EventDockWidget::OnDeleteClicked()
+{
+    if( selected_ )
+        emit DeleteEvent( selected_->GetEvent().uuid );
+    selected_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::Draw
 // Created: ABR 2013-06-11
 // -----------------------------------------------------------------------------
-void EventDialog::Draw( gui::Viewport_ABC& viewport )
+void EventDockWidget::Draw( gui::Viewport_ABC& viewport )
 {
     if( currentWidget_ && isVisible() )
         currentWidget_->Draw( viewport );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::NotifyUpdated
-// Created: ABR 2013-06-18
+// Name: EventDockWidget::NotifyActivated
+// Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void EventDialog::NotifyUpdated( const Event& event )
+void EventDockWidget::NotifyActivated( const Event& event )
 {
-    if( event_->GetEvent().uuid == event.GetEvent().uuid )
-        Edit( event );
+    StartEdition( event );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDialog::NotifyDeleted
+// Name: EventDockWidget::NotifyContextMenu
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void EventDockWidget::NotifyContextMenu( const Event& event, kernel::ContextMenu& menu )
+{
+    selected_ = &event;
+    menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditClicked() ) );
+    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeleteClicked() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::NotifyDeleted
 // Created: ABR 2013-06-18
 // -----------------------------------------------------------------------------
-void EventDialog::NotifyDeleted( const Event& event )
+void EventDockWidget::NotifyDeleted( const Event& event )
 {
-    if( event_->GetEvent().uuid == event.GetEvent().uuid )
-         Purge();
+    if( event_.get() && event_->GetEvent().uuid == event.GetEvent().uuid )
+        Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::NotifyUpdated
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+void EventDockWidget::NotifyUpdated( const Event& event )
+{
+    if( event_.get() && event_->GetEvent().uuid == event.GetEvent().uuid )
+        StartEdition( event );
 }
