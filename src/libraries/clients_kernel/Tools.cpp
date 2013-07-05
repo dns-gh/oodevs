@@ -117,8 +117,7 @@ QString tools::translate( const char* context, const char* what )
 {
     if( qApp )
         return qApp->translate( context, what );
-    else
-        return QString::fromUtf8( what );
+    return QString::fromUtf8( what );
 }
 
 // -----------------------------------------------------------------------------

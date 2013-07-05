@@ -430,28 +430,17 @@ void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& ent
     while( it.HasMoreElements() )
     {
         const ResourceNetworkType& resource = it.NextElement();
+        ContextMenu* resourceMenu = new ContextMenu( subMenu );
+        subMenu->insertItem( QString::fromStdString( resource.GetName() ), resourceMenu );
         if( selected_.size() == 1 && selected_.front() == &entity )
         {
             if( !node->FindResourceNode( resource.GetName() ) )
-            {
-                ContextMenu* resourceMenu = new ContextMenu( subMenu );
-                subMenu->insertItem( QString::fromUtf8( resource.GetName().c_str() ), resourceMenu );
-                resourceMenu->insertItem( tr( "Create node" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
-            }
+                resourceMenu->insertItem( tr( "Create node" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId++ );
             else
-            {
-                ContextMenu* resourceMenu = new ContextMenu( subMenu );
-                subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
-                resourceMenu->insertItem( tr( "Remove node" ), this , SLOT( OnRemoveNode( int ) ), 0, resourceId );
-            }
-            ++resourceId;
+                resourceMenu->insertItem( tr( "Remove node" ), this , SLOT( OnRemoveNode( int ) ), 0, resourceId++ );
         }
         else
-        {
-            ContextMenu* resourceMenu = new ContextMenu( subMenu );
-            subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
             resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId++ );
-        }
     }
 }
 
