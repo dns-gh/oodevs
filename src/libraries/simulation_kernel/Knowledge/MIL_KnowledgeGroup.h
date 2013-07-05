@@ -133,10 +133,8 @@ public:
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int ) const;
     // LTO begin
     const T_KnowledgeGroupVector& GetKnowledgeGroups() const;
-    boost::shared_ptr< MIL_KnowledgeGroup > GetParent() const;
     double GetTimeToDiffuseToKnowledgeGroup() const;
     bool IsEnabled() const;
-    void SetParent( const boost::shared_ptr< MIL_KnowledgeGroup >& parent );
     // LTO end
     bool IsJammed() const;
     void Accept( KnowledgesVisitor_ABC& visitor ) const;

@@ -222,8 +222,8 @@ void MIL_KnowledgeGroup::Destroy()
     if( knowledgeBlackBoard_ )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-        if( GetParent() )
-            GetParent()->UnregisterKnowledgeGroup( shared );
+        if( parent_ )
+            parent_->UnregisterKnowledgeGroup( shared );
         else if( army_ )
             army_->UnregisterKnowledgeGroup( shared );
         delete knowledgeBlackBoard_;
@@ -560,8 +560,8 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
     {
         client::KnowledgeGroupUpdate message;
         message().mutable_knowledge_group()->set_id( id_ );
-        if( boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent() )
-            message().mutable_parent()->set_id( parent->GetId() );
+        if( parent_ )
+            message().mutable_parent()->set_id( parent_->GetId() );
         else
             // army is the parent
             message().mutable_parent()->set_id( 0 );
@@ -579,13 +579,12 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
 // Created: NLD 2004-09-06
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::MoveKnowledgeGroup( MIL_KnowledgeGroup *newParent )
+void MIL_KnowledgeGroup::MoveKnowledgeGroup( MIL_KnowledgeGroup* newParent )
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
-    if( newParent && parent )
+    if( newParent && parent_ )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-        parent->UnregisterKnowledgeGroup( shared );
+        parent_->UnregisterKnowledgeGroup( shared );
         newParent->RegisterKnowledgeGroup( shared );
         hasBeenUpdated_ = true;
     }
@@ -708,28 +707,7 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
 // -----------------------------------------------------------------------------
 MIL_Army_ABC& MIL_KnowledgeGroup::GetArmy() const
 {
-   // assert( army_ );
     return *army_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::GetParent
-// Created: NLD 2004-09-07
-// LTO
-// -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_KnowledgeGroup > MIL_KnowledgeGroup::GetParent() const
-{
-    return parent_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::SetParent
-// Created: FHD 2009-12-22
-// LTO
-// -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::SetParent( const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
-{
-    parent_ = parent;
 }
 
 // -----------------------------------------------------------------------------
@@ -883,7 +861,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupEnable( const sword::MissionPara
 bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
 {
     MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().Get( 0 ).party().id() );
-    if( !pTargetArmy || *pTargetArmy != GetArmy() )
+    if( !pTargetArmy || *pTargetArmy != *army_ )
         throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_party );
     boost::shared_ptr< MIL_KnowledgeGroup > pNewParent;
     if( hasParent )
@@ -893,39 +871,36 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
         if( !pNewParent || pNewParent->IsJammed() )
             throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_superior );
     }
-    if( pNewParent.get() )
+    if( pNewParent )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
-        if( parent.get() && parent != pNewParent )
+        if( parent_ && parent_ != pNewParent )
         {
             boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
             // moving knowledge group from knowledgegroup under knowledgegroup
-            parent->UnregisterKnowledgeGroup( shared );
+            parent_->UnregisterKnowledgeGroup( shared );
             pNewParent->RegisterKnowledgeGroup( shared );
-            SetParent( pNewParent );
+            parent_ = pNewParent;
             return true;
         }
-        else if( !parent )
+        else if( !parent_ )
         {
             boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
             // moving knowledge group from army node under knowledgegroup
-            GetArmy().UnregisterKnowledgeGroup( shared );
+            army_->UnregisterKnowledgeGroup( shared );
             pNewParent->RegisterKnowledgeGroup( shared );
-            SetParent( pNewParent );
+            parent_ = pNewParent;
             return true;
         }
     }
     else
     {
         // moving knowledge group under army node
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
-        if( parent.get() )
+        if( parent_ )
         {
             boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-            parent->UnregisterKnowledgeGroup( shared );
-            GetArmy().RegisterKnowledgeGroup( shared );
-            boost::shared_ptr< MIL_KnowledgeGroup > noParent;
-            SetParent( noParent );
+            parent_->UnregisterKnowledgeGroup( shared );
+            army_->RegisterKnowledgeGroup( shared );
+            parent_.reset();
             return true;
         }
     }
@@ -1177,12 +1152,11 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
     {
         // LTO begin
         //mis à jour des groupes de connaissances depuis leur parent avec un délai
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
         if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
         {
-            if( parent.get() && IsEnabled() )
+            if( parent_ && IsEnabled() )
             {
-                auto bbKg = parent->GetKnowledge();
+                auto bbKg = parent_->GetKnowledge();
                 if( bbKg )
                 {
                     boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
