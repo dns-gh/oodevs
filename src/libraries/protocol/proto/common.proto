@@ -1988,6 +1988,8 @@ message UnitMagicAction {
         //! A change knowledge group magic action
         change_knowledge_group            = 19;
         //! A change logistic links magic action
+        //! parameters with each parameter has value(0) for 
+        //! 'superior' that is an identifier, an automat or a formation
         change_logistic_links             = 20;
         //! A unit change superior magic action
         unit_change_superior              = 21;
@@ -1998,8 +2000,18 @@ message UnitMagicAction {
         //! A knowledge group update magic action
         knowledge_group_update            = 24;
         //! A log supply push flow magic action
+        //! tasker must match a logistics automat/formation/unit
+        //! parameters[0]: value matches 'push_flow_parameters' param
+        //! (see PushFlowParameters message definition)
         log_supply_push_flow              = 25;
         //! A log supply change quotas magic action
+        //! parameters[0], value(0) : supplier id/automat/formation
+        //! The tasker must be an automat or a formation identifier
+        //! for the supplied unit
+        //! parameters[1] : values of list
+        //! for each list :
+        //!     list(0) is the dotation id
+        //!     list(1) is the dotation quantity
         log_supply_change_quotas          = 26;
         //! An automate creation magic action
         //! The tasker must be set to the parent formation or automat.
@@ -2020,6 +2032,9 @@ message UnitMagicAction {
         //! result[0], CrowdId: created crowd identifier.
         crowd_creation                    = 29;
         //! A log supply pull flow magic action
+        //! The tasker must be an automat
+        //! parameters[0]: value matches 'pull_flow_parameters' param
+        //! (see PullFlowParameters message definition)
         log_supply_pull_flow              = 30;
         //! A create wound magic action
         create_wound                      = 31;

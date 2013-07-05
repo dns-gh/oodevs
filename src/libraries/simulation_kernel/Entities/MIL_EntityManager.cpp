@@ -1153,7 +1153,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             ProcessAutomateChangeKnowledgeGroup( message, nCtx );
             break;
         case UnitMagicAction::change_logistic_links:
-            ProcessChangeLogisticLinks( message, nCtx, clientId );
+            ProcessChangeLogisticLinks( message );
             break;
         case UnitMagicAction::unit_change_superior:
             ProcessUnitChangeSuperior( message, nCtx );
@@ -1168,13 +1168,13 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                 throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::log_supply_push_flow:
-            ProcessLogSupplyPushFlow( message, nCtx, clientId );
+            ProcessLogSupplyPushFlow( message );
             break;
         case UnitMagicAction::log_supply_pull_flow:
-            ProcessLogSupplyPullFlow( message, nCtx, clientId );
+            ProcessLogSupplyPullFlow( message );
             break;
         case UnitMagicAction::log_supply_change_quotas:
-            ProcessLogSupplyChangeQuotas( message, nCtx, clientId );
+            ProcessLogSupplyChangeQuotas( message );
             break;
         case UnitMagicAction::automat_creation:
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
@@ -1685,36 +1685,25 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
 // Name: MIL_EntityManager::ProcessChangeLogisticLinks
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& message )
 {
-    client::ChangeLogisticLinksAck ack;
-    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
-    try
-    {
-        // Subordinate
-        logistic::LogisticHierarchy_ABC* pSubordinate = TaskerToLogisticHierarchy( *this, message.tasker() );
-        if( !pSubordinate )
-            throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck_ErrorCode, sword::HierarchyModificationAck::error_invalid_automate );
+    logistic::LogisticHierarchy_ABC* pSubordinate = TaskerToLogisticHierarchy( *this, message.tasker() );
+    if( !pSubordinate )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid subordinate automate" );
 
-        std::vector< MIL_AutomateLOG* > superiors;
-        for( int i = 0; i < message.parameters().elem_size(); ++i )
-        {
-            const sword::MissionParameter& parameterSuperior = message.parameters().elem( i );
-            if( !parameterSuperior.null_value() )
-            {
-                MIL_AutomateLOG* pSuperior = FindBrainLogistic( parameterSuperior.value( 0 ) );
-                if( !pSuperior )
-                    throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck_ErrorCode, sword::HierarchyModificationAck::error_invalid_supply_automat  ); //$$ Msg d'erreur incohérent
-                superiors.push_back( pSuperior );
-            }
-        }
-        pSubordinate->ChangeLinks( superiors );
-    }
-    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
+    std::vector< MIL_AutomateLOG* > superiors;
+    for( int i = 0; i < message.parameters().elem_size(); ++i )
     {
-        ack().set_error_code( e.GetErrorID() );
+        const sword::MissionParameter& parameterSuperior = message.parameters().elem( i );
+        if( !parameterSuperior.null_value() )
+        {
+            MIL_AutomateLOG* pSuperior = FindBrainLogistic( parameterSuperior.value( 0 ) );
+            if( !pSuperior )
+                throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supply automat" );
+            superiors.push_back( pSuperior );
+        }
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    pSubordinate->ChangeLinks( superiors );
 }
 
 // -----------------------------------------------------------------------------
@@ -1783,106 +1772,74 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& messag
 // Name: MIL_EntityManager::ProcessLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& message )
 {
-    client::LogSupplyChangeQuotasAck ack;
-    ack().set_error_code( LogSupplyChangeQuotasAck::no_error_quotas );
-    try
+    if( message.parameters().elem_size() != 2 )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
+
+    // Supplied
+    logistic::LogisticHierarchy_ABC* pSupplied = TaskerToLogisticHierarchy( *this, message.tasker() );
+    if( !pSupplied )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
+
+    // Param 0: supplier
+    MIL_AutomateLOG* pSupplier = FindBrainLogistic( message.parameters().elem( 0 ).value( 0 ) );
+    if( !pSupplier )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supplier" );
+
+    // Param 1: quotas
+    std::set< const PHY_DotationCategory* > quotasTypes;
+    const sword::MissionParameter& quotas = message.parameters().elem( 1 );
+    const boost::shared_ptr< logistic::LogisticLink_ABC > superiorLink = pSupplied->FindSuperiorLink( *pSupplier );
+    if( !superiorLink.get() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver superior logistic link" );
+
+    quotasTypes = superiorLink->OnReceiveChangeQuotas( quotas );
+    if( quotasTypes.empty() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid dotation" );
+
+    std::set< MIL_Automate* > unavailableSuppliers;
+    for( std::set< const PHY_DotationCategory* >::iterator typeIt = quotasTypes.begin(); typeIt != quotasTypes.end(); ++typeIt )
     {
-        if( message.parameters().elem_size() != 2 )
-            throw MASA_EXCEPTION_ASN( LogSupplyChangeQuotasAck::ErrorCode, LogSupplyChangeQuotasAck::error_invalid_receiver );
-
-        // Supplied
-        logistic::LogisticHierarchy_ABC* pSupplied = TaskerToLogisticHierarchy( *this, message.tasker() );
-        if( !pSupplied )
-            throw MASA_EXCEPTION_ASN( LogSupplyChangeQuotasAck::ErrorCode, LogSupplyChangeQuotasAck::error_invalid_receiver );
-
-        // Param 0: supplier
-        MIL_AutomateLOG* pSupplier = FindBrainLogistic( message.parameters().elem( 0 ).value( 0 ) );
-        if( !pSupplier )
-            throw MASA_EXCEPTION_ASN( sword::LogSupplyChangeQuotasAck::ErrorCode, sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_supplier );
-
-        // Param 1: quotas
-        std::set< const PHY_DotationCategory* > quotasTypes;
-        const sword::MissionParameter& quotas = message.parameters().elem( 1 );
-        const boost::shared_ptr< logistic::LogisticLink_ABC > superiorLink = pSupplied->FindSuperiorLink( *pSupplier );
-        if( superiorLink.get() )
-            quotasTypes = superiorLink->OnReceiveChangeQuotas( quotas );
-        //$$ throw sinon ??
-
-        std::set< MIL_Automate* > unavailableSuppliers;
-        for( std::set< const PHY_DotationCategory* >::iterator typeIt = quotasTypes.begin(); typeIt != quotasTypes.end(); ++typeIt )
-        {
-            bool bDeployed = false;
-            MIL_Automate* pStockAutomat = pSupplier->GetStockAutomat( **typeIt, bDeployed );
-            if( pStockAutomat && !bDeployed )
-                unavailableSuppliers.insert( pStockAutomat );
-        }
-        for( std::set< MIL_Automate* >::iterator supplierIt = unavailableSuppliers.begin(); supplierIt != unavailableSuppliers.end(); ++supplierIt )
-            MIL_Report::PostEvent( **supplierIt, report::eRC_SupplierUnavailable );
+        bool bDeployed = false;
+        MIL_Automate* pStockAutomat = pSupplier->GetStockAutomat( **typeIt, bDeployed );
+        if( pStockAutomat && !bDeployed )
+            unavailableSuppliers.insert( pStockAutomat );
     }
-    catch( const NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    for( std::set< MIL_Automate* >::iterator supplierIt = unavailableSuppliers.begin(); supplierIt != unavailableSuppliers.end(); ++supplierIt )
+        MIL_Report::PostEvent( **supplierIt, report::eRC_SupplierUnavailable );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessLogSupplyPushFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message )
 {
-    client::LogSupplyPushFlowAck ack;
-    ack().set_error_code( LogSupplyPushFlowAck::no_error_pushflow );
-    try
-    {
-        MIL_AutomateLOG* pBrainLog = FindBrainLogistic( TaskerToId( message.tasker() ) );
-        if( !pBrainLog )
-            throw MASA_EXCEPTION_ASN( LogSupplyPushFlowAck::ErrorCode, LogSupplyPushFlowAck::error_invalid_supplier );
-
-        if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_push_flow_parameters() )
-            throw MASA_EXCEPTION_ASN( LogSupplyPushFlowAck::ErrorCode, LogSupplyPushFlowAck::error_invalid_receiver );
-
-        pBrainLog->OnReceiveLogSupplyPushFlow( message.parameters().elem( 0 ).value().Get( 0 ).push_flow_parameters(), *automateFactory_ );
-    }
-    catch( const NET_AsnException< LogSupplyPushFlowAck::ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    MIL_AutomateLOG* pBrainLog = FindBrainLogistic( TaskerToId( message.tasker() ) );
+    if( !pBrainLog )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supplier" );
+    if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_push_flow_parameters() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
+    pBrainLog->OnReceiveLogSupplyPushFlow( message.parameters().elem( 0 ).value().Get( 0 ).push_flow_parameters(), *automateFactory_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessLogSupplyPullFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message )
 {
-    client::LogSupplyPullFlowAck ack;
-    ack().set_error_code( LogSupplyPullFlowAck::no_error_pullflow );
-    try
-    {
-        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
-        if( !pAutomate )
-            throw MASA_EXCEPTION_ASN( LogSupplyPullFlowAck::ErrorCode, LogSupplyPullFlowAck::error_invalid_receiver );
-
-        if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_pull_flow_parameters() )
-            throw MASA_EXCEPTION_ASN( LogSupplyPullFlowAck::ErrorCode, LogSupplyPullFlowAck::error_invalid_receiver );
-
-        const sword::PullFlowParameters& parameters = message.parameters().elem( 0 ).value().Get( 0 ).pull_flow_parameters();
-        MIL_AutomateLOG* supplier = FindBrainLogistic( parameters.supplier() );
-        if( !supplier )
-            throw MASA_EXCEPTION_ASN( LogSupplyPullFlowAck::ErrorCode, LogSupplyPullFlowAck::error_invalid_supplier );
-
-        pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier );
-    }
-    catch( const NET_AsnException< LogSupplyPullFlowAck::ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
+    if( !pAutomate )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
+    if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_pull_flow_parameters() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
+    const sword::PullFlowParameters& parameters = message.parameters().elem( 0 ).value().Get( 0 ).pull_flow_parameters();
+    MIL_AutomateLOG* supplier = FindBrainLogistic( parameters.supplier() );
+    if( !supplier )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supplier" );
+    pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier );
 }
 
 // -----------------------------------------------------------------------------

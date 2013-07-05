@@ -231,11 +231,11 @@ private:
 
     void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessChangeLogisticLinks         ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
+    void ProcessChangeLogisticLinks         ( const sword::UnitMagicAction&      message );
     void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
-    void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
-    void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
+    void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message );
+    void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message );
+    void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message );
     void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessKnowledgeGroupUpdate        ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
     void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message, unsigned int nCtx );

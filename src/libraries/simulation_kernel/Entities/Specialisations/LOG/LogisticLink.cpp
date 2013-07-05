@@ -235,17 +235,18 @@ std::set< const PHY_DotationCategory* > LogisticLink::OnReceiveChangeQuotas( con
     {
         unsigned int type = message.value( i ).list( 0 ).identifier();
         int number = message.value( i ).list( 1 ).quantity();
-
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
-        if( !pDotationCategory )
-            throw MASA_EXCEPTION_ASN( sword::LogSupplyChangeQuotasAck_ErrorCode, sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_dotation );
-        quotasTypes.insert( pDotationCategory );
-        sDotationQuota& quota = quotas_[ pDotationCategory ];
-        quota.quota_          = number;
-        quota.quotaThreshold_ = number * 0.1; //$$ fichier de conf cpp ;)
-        quota.notifications_.clear();
+        if( pDotationCategory )
+        {
+            quotasTypes.insert( pDotationCategory );
+            sDotationQuota& quota = quotas_[ pDotationCategory ];
+            quota.quota_          = number;
+            quota.quotaThreshold_ = number * 0.1; //$$ fichier de conf cpp ;)
+            quota.notifications_.clear();
+        }
     }
-    quotasUpdated_ = true;
+    if( !quotasTypes.empty() )
+        quotasUpdated_ = true;
     return quotasTypes;
 }
 

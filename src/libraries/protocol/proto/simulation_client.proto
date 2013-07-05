@@ -377,11 +377,10 @@ message AutomatChangeKnowledgeGroup {
     required KnowledgeGroupId knowledge_group = 3;
 }
 
-/** @struct ChangeLogisticLinksAck
-    @brief Acknowledges an automat logistic links change request
-    @see UnitMagicAction of type UnitMagiAction.Type.change_logistic_links
-    @todo gather magic action acks
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message was sent on an
+//! automat logistic links change request 
 message ChangeLogisticLinksAck {
     //! Reason for the failure of the automat logistic links change
     //! operation @see HierarchyModificationAck.ErrorCode
@@ -421,11 +420,9 @@ message UnitChangeSuperiorAck {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @struct LogSupplyPushFlowAck
-    @brief Acknowledges a push flow request
-    @see UnitMagicAction of UnitMagiAction.Type.log_supply_push_flow
-    @todo gather magic action acks
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message was sent on a push flow request
 message LogSupplyPushFlowAck {
     /** @enum ErrorCode
         @brief Reason for the failure of the pushed flow creation
@@ -445,11 +442,9 @@ message LogSupplyPushFlowAck {
     optional ErrorCode error_code = 1;
 }
 
-/** @struct LogSupplyPullFlowAck
-    @brief Acknowledges a pull flow request
-    @see UnitMagicAction of UnitMagiAction.Type.log_supply_pull_flow
-    @todo gather magic action acks
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message was sent on a pull flow request
 message LogSupplyPullFlowAck {
     /** @enum ErrorCode
         @brief Reason for the failure of the pulled flow creation
@@ -469,11 +464,9 @@ message LogSupplyPullFlowAck {
     optional ErrorCode error_code = 1;
 }
 
-/** @struct LogSupplyChangeQuotasAck
-    @brief Acknowledges a quota allocation change request
-    @see UnitMagicAction of UnitMagiAction.Type.log_supply_change_quotas
-    @todo gather magic action acks
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message was sent on a quota allocation change request
 message LogSupplyChangeQuotasAck {
     /** @enum ErrorCode
         @brief Reason for the failure of the quota allocation.
