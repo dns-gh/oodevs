@@ -3178,33 +3178,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>TimelineFilteredViewWidget</name>
-    <message>
-        <source>An error occurred during event creation process: %1</source>
-        <translation>Une erreur s&apos;est produite pendant le processus de création d&apos;événement: %1</translation>
-    </message>
-    <message>
-        <source>An error occurred during event deletion process: %1</source>
-        <translation>Une erreur s&apos;est produite pendant le processus de suppression d&apos;événement: %1</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Editer</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Create an event</source>
-        <translation>Créer un évenement</translation>
-    </message>
-    <message>
-        <source>An error occurred during &apos;get all events&apos; request: %1</source>
-        <translation>Une erreur s&apos;est produite pendant la requete &apos;obtenir tous les evenements&apos;: %1</translation>
-    </message>
-</context>
-<context>
     <name>TimelineListView</name>
     <message>
         <source>Units</source>
@@ -3257,26 +3230,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Supprimer la vue courrante</translation>
     </message>
     <message>
-        <source>Orders</source>
-        <translation>Ordres</translation>
-    </message>
-    <message>
-        <source>Reports</source>
-        <translation>Comptes-rendus</translation>
-    </message>
-    <message>
-        <source>Multimedia</source>
-        <translation>Multimédia</translation>
-    </message>
-    <message>
-        <source>Tasks</source>
-        <translation>Tâches</translation>
-    </message>
-    <message>
-        <source>Supervisor actions</source>
-        <translation>Actions de supervision</translation>
-    </message>
-    <message>
         <source>Actions files (*.ord)</source>
         <translation>Fichier d&apos;actions (*.ord)</translation>
     </message>
@@ -3298,6 +3251,33 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Zoom Out</source>
         <translation>Dézoomer</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineWebView</name>
+    <message>
+        <source>An error occurred during event creation process: %1</source>
+        <translation>Une erreur s&apos;est produite pendant le processus de création d&apos;événement: %1</translation>
+    </message>
+    <message>
+        <source>An error occurred during event deletion process: %1</source>
+        <translation>Une erreur s&apos;est produite pendant le processus de suppression d&apos;événement: %1</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editer</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Create an event</source>
+        <translation>Créer un évenement</translation>
+    </message>
+    <message>
+        <source>An error occurred during &apos;get all events&apos; request: %1</source>
+        <translation>Une erreur s&apos;est produite pendant la requete &apos;obtenir tous les evenements&apos;: %1</translation>
     </message>
 </context>
 <context>

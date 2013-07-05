@@ -28,16 +28,15 @@ class TimelineToolBar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain, const QStringList& activeFilters );
+             TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain );
     virtual ~TimelineToolBar();
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void FilterSelectionChanged( const QStringList& filters );
-    void AddNewFilteredView( const QStringList& filters );
-    void RemoveCurrentFilteredView();
+    void AddView();
+    void RemoveCurrentView();
 
     void LoadOrderFileRequest( const tools::Path& path );
     void SaveOrderFileRequest( const tools::Path& path );
@@ -48,38 +47,14 @@ public slots:
     //@{
     void OnCenterView();
     void OnFilterSelection();
-    void OnAddNewFilteredView();
-    void OnRemoveCurrentFilteredView();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void AddFilter( const QString& filter, const QString& displayName, const QStringList& filters );
-    void AddFilter( const QString& filter, const QString& displayName, bool isActive );
-
-    QStringList GetActiveFilters();
-    //@}
-
-    //! @name Types
-    //@{
-    struct Filter
-    {
-        QString filter_;
-        QString displayName_;
-        bool isActive_;
-    };
-    //@}
-
-
-private:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
-    std::vector< Filter > filters_;
-    QMenu* filtersMenu_;
     //@}
 };
 

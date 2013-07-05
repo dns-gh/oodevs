@@ -18,7 +18,7 @@
 // Name: TimelineToolBar constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain, const QStringList& activeFilters )
+TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain )
     : QToolBar( parent )
     , config_( config )
 {
@@ -28,17 +28,9 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load actions file" ), this, SLOT( OnLoadOrderFile() ) );
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save actions in active timeline to file" ), this, SLOT( OnSaveOrderFile() ) );
     addSeparator();
-    addAction( qApp->style()->standardIcon( QStyle::SP_DialogOkButton ), tr( "Create a new view" ), this, SLOT( OnAddNewFilteredView() ) );
+    addAction( qApp->style()->standardIcon( QStyle::SP_DialogOkButton ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
     if( !isMain )
-        addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SLOT( OnRemoveCurrentFilteredView() ) );
-
-    filtersMenu_ = new QMenu( this );
-    AddFilter( "orders", tr( "Orders" ), activeFilters );
-    AddFilter( "reports", tr( "Reports" ), activeFilters );
-    AddFilter( "supervisor", tr( "Supervisor actions" ), activeFilters );
-    AddFilter( "multimedia", tr( "Multimedia" ), activeFilters );
-    AddFilter( "tasks",      tr( "Tasks" ), activeFilters );
-    filtersMenu_->addSeparator();
+        addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,52 +43,15 @@ TimelineToolBar::~TimelineToolBar()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineToolBar::AddFilter
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineToolBar::AddFilter( const QString& filter, const QString& displayName, const QStringList& filters )
-{
-    AddFilter( filter, displayName, filters.contains( "all" ) || filters.contains( filter ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineToolBar::AddFilter
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineToolBar::AddFilter( const QString& filter, const QString& displayName, bool isActive )
-{
-    Filter newFilter;
-    newFilter.filter_ = filter;
-    newFilter.displayName_ = displayName;
-    newFilter.isActive_ = isActive;
-    filters_.push_back( newFilter );
-    QAction* action = filtersMenu_->addAction( displayName );
-    action->setCheckable( true );
-    action->setChecked( isActive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineToolBar::GetActiveFilters
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-QStringList TimelineToolBar::GetActiveFilters()
-{
-    QStringList activeFilters;
-    for( auto it = filters_.begin(); it != filters_.end(); ++it )
-    {
-        if( it->isActive_ )
-            activeFilters << it->filter_;
-    }
-    return activeFilters;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TimelineToolBar::OnCenterView
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
 void TimelineToolBar::OnCenterView()
 {
     // Center the view !
+    QMenu menu( this );
+    menu.addAction( "Center the view" );
+    menu.exec( QCursor::pos() );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,32 +61,9 @@ void TimelineToolBar::OnCenterView()
 void TimelineToolBar::OnFilterSelection()
 {
     // $$$$ ABR 2013-05-28: Use a better trick than a QMenu to allow multiple selection in only one click
-    filtersMenu_->hideTearOffMenu();
-    QAction* resultingAction = filtersMenu_->exec( QCursor::pos() );
-    if( !resultingAction )
-        return;
-    for( auto it = filters_.begin(); it != filters_.end(); ++it )
-        if( it->displayName_ == resultingAction->text() )
-            it->isActive_ = resultingAction->isChecked();
-    emit FilterSelectionChanged( GetActiveFilters() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineToolBar::OnAddNewFilteredView
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineToolBar::OnAddNewFilteredView()
-{
-    emit AddNewFilteredView( GetActiveFilters() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineToolBar::OnRemoveCurrentFilteredView
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineToolBar::OnRemoveCurrentFilteredView()
-{
-    emit RemoveCurrentFilteredView();
+    QMenu menu( this );
+    menu.addAction( "Add filters here" );
+    menu.exec( QCursor::pos() );
 }
 
 // -----------------------------------------------------------------------------

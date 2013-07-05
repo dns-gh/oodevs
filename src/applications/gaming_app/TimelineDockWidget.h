@@ -39,11 +39,17 @@ namespace timeline
     struct Event;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class Config;
 class EventAction;
 class EventDialog;
 class Model;
-class TimelineFilteredViewWidget;
+class TimelineToolBar;
+class TimelineWebView;
 
 // =============================================================================
 /** @class  TimelineDockWidget
@@ -80,22 +86,21 @@ signals:
 public slots:
     //! @name Slots
     //@{
-    void AddFilteredView( QStringList filters );
-    void RemoveCurrentFilteredView();
+    void AddView();
+    void RemoveCurrentView();
     //@}
 
 private:
     //! @name Member data
     //@{
+    const tools::ExerciseConfig& config_;
+    std::auto_ptr< timeline::Configuration > cfg_;
+
     EventDialog* eventDialog_;
+
     QTabWidget* tabWidget_;
-    QString mainTitle_;
-    std::vector< TimelineFilteredViewWidget* > filteredViews_;
-    boost::shared_ptr< timeline::Configuration > cfg_;
-    const kernel::Time_ABC& simulation_;
-    Model& model_;
-    const Config& config_;
-    bool isConnected_;
+    std::vector< std::pair< int, QWidget* > > toolbars_;
+    TimelineWebView* webView_;
     //@}
 
 private:

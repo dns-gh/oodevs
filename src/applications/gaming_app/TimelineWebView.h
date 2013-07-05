@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __TimelineFilteredViewWidget_h_
-#define __TimelineFilteredViewWidget_h_
+#ifndef __TimelineWebView_h_
+#define __TimelineWebView_h_
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
@@ -19,15 +19,6 @@ namespace kernel
     class ContextMenu;
     class ActionController;
     class Time_ABC;
-}
-
-namespace timeline
-{
-    struct Configuration;
-    struct Error;
-    struct Event;
-    //typedef std::vector< Event > Events;
-    class Server_ABC;
 }
 
 namespace tools
@@ -41,31 +32,30 @@ class EventDialog;
 class Model;
 
 // =============================================================================
-/** @class  TimelineFilteredViewWidget
-    @brief  TimelineFilteredViewWidget
+/** @class  TimelineWebView
+    @brief  TimelineWebView
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class TimelineFilteredViewWidget : public QWidget
-                                 , public tools::Observer_ABC
-                                 , public kernel::ContextMenuObserver_ABC< timeline::Event >
-                                 , public kernel::ContextMenuObserver_ABC< QDateTime >
+class TimelineWebView : public QWidget
+                      , public tools::Observer_ABC
+                      , public kernel::ContextMenuObserver_ABC< timeline::Event >
+                      , public kernel::ContextMenuObserver_ABC< QDateTime >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineFilteredViewWidget( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController, const kernel::Time_ABC& simulation, Model& model, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
-    virtual ~TimelineFilteredViewWidget();
+             TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
+                              const kernel::Time_ABC& simulation, Model& model, EventDialog& eventDialog, timeline::Configuration& cfg );
+    virtual ~TimelineWebView();
     //@}
 
     //! @name Operations
     //@{
     void Connect();
     void Disconnect();
-
-    int GetViewNumber() const;
     //@}
 
 private:
@@ -87,9 +77,6 @@ signals:
     void CreateEventSignal( const timeline::Event& event );
     void EditEventSignal( const timeline::Event& event );
     void DeleteEventSignal( const std::string& uuid );
-
-    void AddNewFilteredView( const QStringList& filters );
-    void RemoveCurrentFilteredView();
     //@}
 
 private slots:
@@ -109,8 +96,6 @@ private slots:
     void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time );
     void OnKeyUp( int key );
 
-    void OnFilterSelectionChanged( const QStringList& );
-
     void OnEditClicked();
     void OnDeleteClicked();
     void OnCreateClicked( int );
@@ -124,10 +109,9 @@ private:
     //! @name Member data
     //@{
     EventDialog& eventDialog_;
-    int viewNumber_;
-    QToolBar* toolBar_;
     QWidget* timelineWidget_;
     QVBoxLayout* mainLayout_;
+
     const tools::ExerciseConfig& config_;
     const kernel::Time_ABC& simulation_;
     kernel::ActionController& actionController_;
@@ -148,4 +132,4 @@ private:
     //@}
 };
 
-#endif // __TimelineFilteredViewWidget_h_
+#endif // __TimelineWebView_h_

@@ -8,8 +8,9 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "TimelineFilteredViewWidget.h"
-#include "moc_TimelineFilteredViewWidget.cpp"
+#include "TimelineWebView.h"
+
+#include "moc_TimelineWebView.cpp"
 #include "EventDialog.h"
 #include "TimelineToolBar.h"
 
@@ -37,69 +38,49 @@
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget constructor
+// Name: TimelineWebView constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController, const kernel::Time_ABC& simulation, Model& model, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
+TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
+                                  const kernel::Time_ABC& simulation, Model& model, EventDialog& eventDialog, timeline::Configuration& cfg )
     : QWidget( parent )
     , config_( config )
     , actionController_( actionController )
     , simulation_( simulation )
     , model_( model )
     , eventDialog_( eventDialog )
-    , toolBar_( 0 )
-    , timelineWidget_( 0 )
     , server_( 0 )
     , cfg_( new timeline::Configuration( cfg ) )
-    , viewNumber_( viewNumber )
     , creationSignalMapper_( 0 )
     , dummySignalMapper_( 0 )
 {
-    setObjectName( QString( "timeline-filteredview-widget-%1" ).arg( viewNumber ) );
+    setObjectName( "timeline-webview" );
+
     mainLayout_ = new QVBoxLayout( this );
     mainLayout_->setMargin( 0 );
     mainLayout_->setSpacing( 0 );
-    toolBar_ = new TimelineToolBar( 0, config, viewNumber == 0, filters );
-    setObjectName( QString( "timeline-filteredview-widget-%1" ).arg( viewNumber ) );
-    connect( toolBar_, SIGNAL( FilterSelectionChanged( const QStringList& ) ), this, SLOT( OnFilterSelectionChanged( const QStringList& ) ) );
-    connect( toolBar_, SIGNAL( AddNewFilteredView( const QStringList& ) ), this, SIGNAL( AddNewFilteredView( const QStringList& ) ) );
-    connect( toolBar_, SIGNAL( RemoveCurrentFilteredView() ), this, SIGNAL( RemoveCurrentFilteredView() ) );
-    connect( toolBar_, SIGNAL( LoadOrderFileRequest( const tools::Path& ) ), this, SLOT( OnLoadOrderFileRequested( const tools::Path& ) ) );
-    connect( toolBar_, SIGNAL( SaveOrderFileRequest( const tools::Path& ) ), this, SLOT( OnSaveOrderFileRequested( const tools::Path& ) ) );
+
     actionController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget destructor
+// Name: TimelineWebView destructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineFilteredViewWidget::~TimelineFilteredViewWidget()
+TimelineWebView::~TimelineWebView()
 {
     actionController_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::GetViewNumber
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-int TimelineFilteredViewWidget::GetViewNumber() const
-{
-    return viewNumber_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::Connect
+// Name: TimelineWebView::Connect
 // Created: ABR 2013-05-15
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::Connect()
+void TimelineWebView::Connect()
 {
-    timelineWidget_ = new QWidget( this );
-    timelineWidget_->setObjectName( "timeline-widget" );
-    mainLayout_->addWidget( toolBar_ );
-    mainLayout_->addWidget( timelineWidget_, 1 );
-
+    timelineWidget_ = new QWidget();
+    mainLayout_->addWidget( timelineWidget_ );
     cfg_->widget = timelineWidget_;
-
     server_ = MakeServer( *cfg_ );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
@@ -118,10 +99,10 @@ void TimelineFilteredViewWidget::Connect()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::Disconnect
+// Name: TimelineWebView::Disconnect
 // Created: ABR 2013-05-15
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::Disconnect()
+void TimelineWebView::Disconnect()
 {
     if( server_.get() )
     {
@@ -140,18 +121,17 @@ void TimelineFilteredViewWidget::Disconnect()
         disconnect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
 
         server_.reset();
-        mainLayout_->removeWidget( timelineWidget_ );
-        mainLayout_->removeWidget( toolBar_ );
-        delete timelineWidget_;
         cfg_->widget = 0;
+        mainLayout_->removeWidget( timelineWidget_ );
+        delete timelineWidget_;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::GetOrCreateEvent
+// Name: TimelineWebView::GetOrCreateEvent
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-Event& TimelineFilteredViewWidget::GetOrCreateEvent( const timeline::Event& event )
+Event& TimelineWebView::GetOrCreateEvent( const timeline::Event& event )
 {
     Event* gamingEvent = model_.events_.Find( event.uuid );
     if( !gamingEvent )
@@ -162,30 +142,30 @@ Event& TimelineFilteredViewWidget::GetOrCreateEvent( const timeline::Event& even
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::CreateEvent
+// Name: TimelineWebView::CreateEvent
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::CreateEvent( const timeline::Event& event )
+void TimelineWebView::CreateEvent( const timeline::Event& event )
 {
     creationRequestedEvents_.push_back( event.uuid );
     emit CreateEventSignal( event );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::EditEvent
+// Name: TimelineWebView::EditEvent
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::EditEvent( const timeline::Event& event )
+void TimelineWebView::EditEvent( const timeline::Event& event )
 {
     editionRequestedEvents_.push_back( event.uuid );
     emit EditEventSignal( event );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::DeleteEvent
+// Name: TimelineWebView::DeleteEvent
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::DeleteEvent( const std::string& uuid )
+void TimelineWebView::DeleteEvent( const std::string& uuid )
 {
     actionController_.DeselectAll();
     deletionRequestedEvents_.push_back( uuid );
@@ -193,10 +173,10 @@ void TimelineFilteredViewWidget::DeleteEvent( const std::string& uuid )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnCreatedEvent
+// Name: TimelineWebView::OnCreatedEvent
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnCreatedEvent( const timeline::Event& event, const timeline::Error& error )
+void TimelineWebView::OnCreatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
     auto it = std::find( creationRequestedEvents_.begin(), creationRequestedEvents_.end(), event.uuid );
     if( it != creationRequestedEvents_.end() )
@@ -209,10 +189,10 @@ void TimelineFilteredViewWidget::OnCreatedEvent( const timeline::Event& event, c
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnEditedEvent
+// Name: TimelineWebView::OnEditedEvent
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnEditedEvent( const timeline::Event& event, const timeline::Error& error )
+void TimelineWebView::OnEditedEvent( const timeline::Event& event, const timeline::Error& error )
 {
     auto it = std::find( editionRequestedEvents_.begin(), editionRequestedEvents_.end(), event.uuid );
     if( it != editionRequestedEvents_.end() )
@@ -225,10 +205,10 @@ void TimelineFilteredViewWidget::OnEditedEvent( const timeline::Event& event, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnDeletedEvent
+// Name: TimelineWebView::OnDeletedEvent
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnDeletedEvent( const std::string& uuid, const timeline::Error& error )
+void TimelineWebView::OnDeletedEvent( const std::string& uuid, const timeline::Error& error )
 {
     auto it = std::find( deletionRequestedEvents_.begin(), deletionRequestedEvents_.end(), uuid );
     if( it != deletionRequestedEvents_.end() )
@@ -241,10 +221,10 @@ void TimelineFilteredViewWidget::OnDeletedEvent( const std::string& uuid, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnSelectedEvent
+// Name: TimelineWebView::OnSelectedEvent
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::Event > event )
+void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > event )
 {
     bool hadSelection = selected_.get() != 0;
     selected_ = event;
@@ -260,10 +240,10 @@ void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::E
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnActivatedEvent
+// Name: TimelineWebView::OnActivatedEvent
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnActivatedEvent( const timeline::Event& event )
+void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
     Event& gamingEvent = GetOrCreateEvent( event );
     if( gamingEvent.GetType() == eEventTypes_Order )
@@ -273,10 +253,10 @@ void TimelineFilteredViewWidget::OnActivatedEvent( const timeline::Event& event 
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnContextMenuEvent
+// Name: TimelineWebView::OnContextMenuEvent
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time )
+void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time )
 {
     selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), EVENT_DATE_FORMAT );
     contextMenuEvent_ = event;
@@ -287,10 +267,10 @@ void TimelineFilteredViewWidget::OnContextMenuEvent( boost::shared_ptr< timeline
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::NotifyContextMenu
+// Name: TimelineWebView::NotifyContextMenu
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::NotifyContextMenu( const timeline::Event& /* event */, kernel::ContextMenu& menu )
+void TimelineWebView::NotifyContextMenu( const timeline::Event& /* event */, kernel::ContextMenu& menu )
 {
     menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditClicked() ) );
     menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeleteClicked() ) );
@@ -308,10 +288,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::NotifyContextMenu
+// Name: TimelineWebView::NotifyContextMenu
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::NotifyContextMenu( const QDateTime& /* dateTime */, kernel::ContextMenu& menu )
+void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel::ContextMenu& menu )
 {
     delete creationSignalMapper_;
     creationSignalMapper_ = new QSignalMapper( this );
@@ -335,68 +315,59 @@ void TimelineFilteredViewWidget::NotifyContextMenu( const QDateTime& /* dateTime
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnEditClicked
+// Name: TimelineWebView::OnEditClicked
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnEditClicked()
+void TimelineWebView::OnEditClicked()
 {
     if( contextMenuEvent_ )
         OnActivatedEvent( *contextMenuEvent_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnDeleteClicked
+// Name: TimelineWebView::OnDeleteClicked
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnDeleteClicked()
+void TimelineWebView::OnDeleteClicked()
 {
     if( contextMenuEvent_ )
         DeleteEvent( contextMenuEvent_->uuid );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnCreateClicked
+// Name: TimelineWebView::OnCreateClicked
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnCreateClicked( int type )
+void TimelineWebView::OnCreateClicked( int type )
 {
     assert( type >= 0 && type < eNbrEventTypes );
     eventDialog_.Create( static_cast< E_EventTypes >( type ), selectedDateTime_ ) ;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnCreateDummyClicked
+// Name: TimelineWebView::OnCreateDummyClicked
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnCreateDummyClicked( int type )
+void TimelineWebView::OnCreateDummyClicked( int type )
 {
     assert( type >= 0 && type < eNbrEventTypes );
     CreateDummyEvent( static_cast< E_EventTypes >( type ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnKeyUp
+// Name: TimelineWebView::OnKeyUp
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnKeyUp( int key )
+void TimelineWebView::OnKeyUp( int key )
 {
     if( selected_ && key == VK_DELETE )
         DeleteEvent( selected_->uuid );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnFilterSelectionChanged
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnFilterSelectionChanged( const QStringList& )
-{
-    // Send the new filter list to the timeline_server
-}
-
-// -----------------------------------------------------------------------------
 // Temporary method to test display
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
+void TimelineWebView::CreateDummyEvent( E_EventTypes type )
 {
     // Action
     timeline::Action action;
@@ -458,30 +429,30 @@ void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnLoadOrderFileRequested
+// Name: TimelineWebView::OnLoadOrderFileRequested
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnLoadOrderFileRequested( const tools::Path& filename )
+void TimelineWebView::OnLoadOrderFileRequested( const tools::Path& filename )
 {
-    config_.GetLoader().LoadFile( filename, boost::bind( &TimelineFilteredViewWidget::ReadActions, this, _1 ) ); // $$$$ ABR 2013-06-19: ReadOnly if replay ? may be we can handle that directly with timeline_ui, or with profile
+    config_.GetLoader().LoadFile( filename, boost::bind( &TimelineWebView::ReadActions, this, _1 ) ); // $$$$ ABR 2013-06-19: ReadOnly if replay ? may be we can handle that directly with timeline_ui, or with profile
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::ReadActions
+// Name: TimelineWebView::ReadActions
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::ReadActions( xml::xistream& xis )
+void TimelineWebView::ReadActions( xml::xistream& xis )
 {
     xis >> xml::start( "actions" )
-            >> xml::list( "action", *this, &TimelineFilteredViewWidget::ReadAction )
+        >> xml::list( "action", *this, &TimelineWebView::ReadAction )
         >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::ReadAction
+// Name: TimelineWebView::ReadAction
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::ReadAction( xml::xistream& xis )
+void TimelineWebView::ReadAction( xml::xistream& xis )
 {
     std::auto_ptr< actions::Action_ABC > action;
     // $$$$ ABR 2013-06-19: The dual try catch was in actionsModel, so i keep it for now but it's ugly and should be remove asap
@@ -518,10 +489,10 @@ void TimelineFilteredViewWidget::ReadAction( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnSaveOrderFileRequested
+// Name: TimelineWebView::OnSaveOrderFileRequested
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnSaveOrderFileRequested( const tools::Path& filename )
+void TimelineWebView::OnSaveOrderFileRequested( const tools::Path& filename )
 {
     if( server_.get() )
     {
@@ -531,10 +502,10 @@ void TimelineFilteredViewWidget::OnSaveOrderFileRequested( const tools::Path& fi
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineFilteredViewWidget::OnGetEvents
+// Name: TimelineWebView::OnGetEvents
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnGetEvents( const timeline::Events& events, const timeline::Error& error )
+void TimelineWebView::OnGetEvents( const timeline::Events& events, const timeline::Error& error )
 {
     if( currentOrderFile_.IsEmpty() )
         return;
