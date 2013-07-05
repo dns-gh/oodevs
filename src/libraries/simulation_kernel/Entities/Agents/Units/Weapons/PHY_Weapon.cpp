@@ -322,5 +322,7 @@ void PHY_Weapon::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPos
                 nNbrAmmoFiredFromLoader_  = 0;
             }
         }
+        else
+            break;
     }
 }
