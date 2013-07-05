@@ -33,6 +33,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
+#include <tools/StdFileWrapper.h>
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -87,6 +88,8 @@ void TimelineWebView::Connect()
     connect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
+    connect( server_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
+    connect( server_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
 
     connect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     connect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
@@ -110,6 +113,8 @@ void TimelineWebView::Disconnect()
         disconnect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
         disconnect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
         disconnect( server_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
+        disconnect( server_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
+        disconnect( server_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
 
         disconnect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
         disconnect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
@@ -460,8 +465,44 @@ void TimelineWebView::OnSaveOrderFileRequested( const tools::Path& filename )
 {
     if( server_.get() )
     {
-        currentOrderFile_ = filename;
+        currentFile_ = filename;
         server_->ReadEvents();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnLoadTimelineSessionFileRequested
+// Created: ABR 2013-07-03
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnLoadTimelineSessionFileRequested( const tools::Path& filename )
+{
+    if( !server_.get() )
+        return;
+    tools::Ifstream is( filename );
+    if( !is.is_open() )
+        return;
+    std::string content;
+    while( is.good() )
+    {
+        std::string line;
+        std::getline( is, line );
+        content += line;
+    }
+    is.close();
+    if( !content.empty() )
+        server_->LoadEvents( content );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnSaveTimelineSessionFileRequested
+// Created: ABR 2013-07-03
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnSaveTimelineSessionFileRequested( const tools::Path& filename )
+{
+    if( server_.get() )
+    {
+        currentFile_ = filename;
+        server_->SaveEvents();
     }
 }
 
@@ -471,7 +512,7 @@ void TimelineWebView::OnSaveOrderFileRequested( const tools::Path& filename )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnGetEvents( const timeline::Events& events, const timeline::Error& error )
 {
-    if( currentOrderFile_.IsEmpty() )
+    if( currentFile_.IsEmpty() || currentFile_.Extension() != ".ord" )
         return;
 
     if( error.code != timeline::EC_OK )
@@ -480,7 +521,7 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
         return;
     }
 
-    tools::Xofstream xos( currentOrderFile_ );
+    tools::Xofstream xos( currentFile_ );
     tools::SchemaWriter schemaWriter;
     xos << xml::start( "actions" );
     schemaWriter.WriteExerciseSchema( xos, "orders" );
@@ -497,5 +538,40 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
     }
     xos << xml::end; //! actions
 
-    currentOrderFile_.Clear();
+    currentFile_.Clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnLoadedEvents
+// Created: ABR 2013-07-03
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnLoadedEvents( const timeline::Error& error )
+{
+    if( error.code != timeline::EC_OK )
+    {
+        MT_LOG_ERROR_MSG( tr( "An error occurred during 'LoadEvents' request: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
+        return;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnSavedEvents
+// Created: ABR 2013-07-03
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnSavedEvents( const std::string& content, const timeline::Error& error )
+{
+    if( currentFile_.IsEmpty() || currentFile_.Extension() != ".timeline" || content.empty() )
+        return;
+
+    if( error.code != timeline::EC_OK )
+    {
+        MT_LOG_ERROR_MSG( tr( "An error occurred during 'SaveEvents' request: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
+        return;
+    }
+
+    tools::Ofstream os( currentFile_ );
+    if( !os.is_open() )
+        return;
+    os << content;
+    os.close();
 }

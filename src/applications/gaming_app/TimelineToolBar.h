@@ -40,6 +40,9 @@ signals:
 
     void LoadOrderFileRequest( const tools::Path& path );
     void SaveOrderFileRequest( const tools::Path& path );
+
+    void LoadTimelineSessionFileRequest( const tools::Path& path );
+    void SaveTimelineSessionFileRequest( const tools::Path& path );
     //@}
 
 public slots:
@@ -49,6 +52,8 @@ public slots:
     void OnFilterSelection();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
+    void OnLoadTimelineSessionFile();
+    void OnSaveTimelineSessionFile();
     //@}
 
 private:

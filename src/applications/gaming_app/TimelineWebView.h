@@ -88,6 +88,8 @@ private slots:
     void OnEditedEvent( const timeline::Event& event, const timeline::Error& error );
     void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
     void OnGetEvents( const timeline::Events& events, const timeline::Error& error );
+    void OnLoadedEvents( const timeline::Error& error );
+    void OnSavedEvents( const std::string& content, const timeline::Error& error );
 
     void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
     void OnActivatedEvent( const timeline::Event& event );
@@ -99,6 +101,8 @@ private slots:
 
     void OnLoadOrderFileRequested( const tools::Path& filename );
     void OnSaveOrderFileRequested( const tools::Path& filename );
+    void OnLoadTimelineSessionFileRequested( const tools::Path& filename );
+    void OnSaveTimelineSessionFileRequested( const tools::Path& filename );
     //@}
 
 private:
@@ -117,7 +121,7 @@ private:
     QDateTime selectedDateTime_;
     QSignalMapper* creationSignalMapper_;
     QSignalMapper* dummySignalMapper_;
-    tools::Path currentOrderFile_;
+    tools::Path currentFile_;
 
     std::vector< std::string > creationRequestedEvents_;
     std::vector< std::string > editionRequestedEvents_;

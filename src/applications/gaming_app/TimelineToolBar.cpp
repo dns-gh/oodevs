@@ -28,6 +28,9 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load actions file" ), this, SLOT( OnLoadOrderFile() ) );
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save actions in active timeline to file" ), this, SLOT( OnSaveOrderFile() ) );
     addSeparator();
+    addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load timeline session file" ), this, SLOT( OnLoadTimelineSessionFile() ) );
+    addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save timeline session to file" ), this, SLOT( OnSaveTimelineSessionFile() ) );
+    addSeparator();
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOkButton ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
     if( !isMain )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
@@ -90,4 +93,30 @@ void TimelineToolBar::OnSaveOrderFile()
     if( filename.Extension() != ".ord" )
         filename.ReplaceExtension( ".ord" );
     emit SaveOrderFileRequest( filename );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnLoadSessionFile
+// Created: ABR 2013-07-03
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnLoadTimelineSessionFile()
+{
+    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load timeline session file" ), config_.BuildExerciseChildFile( config_.GetExerciseName() + "-session.timeline" ), tr( "Timeline session files (*.timeline)" ) );
+    if( !filename.IsEmpty() && filename.Exists() && filename.IsRegularFile() )
+        emit LoadTimelineSessionFileRequest( filename );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnSaveSessionFile
+// Created: ABR 2013-07-03
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnSaveTimelineSessionFile()
+{
+    tools::Path defaultPath = config_.BuildExerciseChildFile( config_.GetExerciseName() + "-session" );
+    tools::Path filename = gui::FileDialog::getSaveFileName( this, tr( "Save timeline session to file" ), defaultPath, tr( "Timeline session files (*.timeline)" ) );
+    if( filename.IsEmpty() )
+        return;
+    if( filename.Extension() != ".timeline" )
+        filename.ReplaceExtension( ".timeline" );
+    emit SaveTimelineSessionFileRequest( filename );
 }

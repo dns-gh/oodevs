@@ -3210,6 +3210,18 @@ This data can&apos;t be projected.</source>
         <source>Save actions in active timeline to file</source>
         <translation type="unfinished">Grabar acciones en linea de tiempo activo a archivo</translation>
     </message>
+    <message>
+        <source>Load timeline session file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save timeline session to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline session files (*.timeline)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>
@@ -3238,6 +3250,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>An error occurred during &apos;get all events&apos; request: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error occurred during &apos;LoadEvents&apos; request: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error occurred during &apos;SaveEvents&apos; request: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
