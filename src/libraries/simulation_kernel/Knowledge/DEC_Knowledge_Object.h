@@ -82,6 +82,7 @@ public:
     void Update( const PHY_PerceptionLevel& currentPerceptionLevel );
     void Update( const DEC_Knowledge_ObjectPerception& perception );
     void Update( const DEC_Knowledge_ObjectCollision& collision );
+    void Update( const DEC_Knowledge_Object& knowledge, int currentTimeStep );
     bool Clean() const;
     void CleanObjectKnown();
     bool IsValid() const;
@@ -170,6 +171,7 @@ private:
     //! @name Internal updaters
     //@{
     void UpdateLocalisations();
+    void UpdateLocalisations( const MIL_Object_ABC& pObjectKnown );
     void UpdateLocalisationPartially( const DEC_Knowledge_ObjectCollision& collision );
     void UpdatePerceptionSources( const DEC_Knowledge_ObjectPerception& perception );
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );

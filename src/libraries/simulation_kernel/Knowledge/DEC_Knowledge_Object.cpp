@@ -368,15 +368,23 @@ void DEC_Knowledge_Object::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::UpdateLocalisations()
 {
-    if( !pObjectKnown_ )
-        return;
-    const TER_Localisation& localisation = const_cast< const MIL_Object_ABC* >( pObjectKnown_ )->GetLocalisation();
+    if( pObjectKnown_ )
+        UpdateLocalisations( *pObjectKnown_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::UpdateLocalisations
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::UpdateLocalisations( const MIL_Object_ABC& pObjectKnown )
+{
+    const TER_Localisation& localisation = const_cast< const MIL_Object_ABC& >( pObjectKnown ).GetLocalisation(); 
     if( !( localisation_ == localisation ) )
     {
         localisation_.Reset( localisation );
         NotifyAttributeUpdated( eAttr_Localisation );
     }
-    const AvoidanceCapacity* capacity = pObjectKnown_->Retrieve< AvoidanceCapacity >();
+    const AvoidanceCapacity* capacity = pObjectKnown.Retrieve< AvoidanceCapacity >();
     if( capacity )
     {
         const TER_Localisation& avoidanceLocalisation = capacity->GetLocalisation();
@@ -500,6 +508,42 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
             UpdateLocalisationPartially( collision );
     }
     UpdateAttributes( boost::bind( &DEC_Knowledge_IObjectAttributeProxy::UpdateOnCollision, _1, boost::ref( *this ), boost::ref( collision ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::Update
+// Created: MMC 2013-070-3
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::Update( const DEC_Knowledge_Object& knowledge, int currentTimeStep )
+{
+    nTimeLastUpdate_ = currentTimeStep;
+
+    for( auto it = knowledge.perceptionPerAutomateSet_.begin(); it != knowledge.perceptionPerAutomateSet_.end(); ++it )
+        perceptionPerAutomateSet_.insert( *it );
+    if( previousPerceptionPerAutomateSet_ != perceptionPerAutomateSet_ )
+        NotifyAttributeUpdated( eAttr_PerceptionSources );
+
+    if( knowledge.pObjectKnown_ )
+        UpdateLocalisations( *knowledge.pObjectKnown_ );
+
+    double newRelevance = std::max( rRelevance_, knowledge.GetRelevance() );
+    if( newRelevance != rRelevance_ )
+    {
+        rRelevance_ = newRelevance;
+        NotifyAttributeUpdated( eAttr_Relevance );
+    }
+    const PHY_PerceptionLevel* newCurLevel = &std::max( *pCurrentPerceptionLevel_, knowledge.GetCurrentPerceptionLevel() );
+    if( newCurLevel != pMaxPerceptionLevel_ )
+    {
+        pCurrentPerceptionLevel_ = newCurLevel;
+        NotifyAttributeUpdated( eAttr_CurrentPerceptionLevel );
+    }
+    const PHY_PerceptionLevel* newMaxLevel = &std::max( *pMaxPerceptionLevel_, *knowledge.pMaxPerceptionLevel_ );
+    if( newMaxLevel != pMaxPerceptionLevel_ )
+    {
+        pMaxPerceptionLevel_ = newMaxLevel;
+        NotifyAttributeUpdated( eAttr_MaxPerceptionLevel );
+    }
 }
 
 // -----------------------------------------------------------------------------

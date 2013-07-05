@@ -78,6 +78,7 @@ public:
     bool IsPositionInsideObjectOfType( const std::string& capacity, const MT_Vector2D& loc );
     void GetObjectsWithCapacityInZone( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone );
     void GetObjectsIntersectingInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
+    void SaveAllCurrentKnowledgeObject();
     //@}
 
     //! @name Queries
@@ -100,7 +101,16 @@ public:
             fct( knowledge );
         }
     }
-
+    template < class UnaryFunction >
+    void ApplyOnPreviousKnowledgesObject( UnaryFunction& fct ) const
+    {
+        for( auto itKnowledge = previousObjectMap_.begin(); itKnowledge != previousObjectMap_.end(); )
+        {
+            DEC_Knowledge_Object& knowledge = *itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge );
+        }
+    }
     template < class UnaryFunction >
     void ApplyOnKnowledgesObjectRef( UnaryFunction& fct ) const
     {
@@ -136,6 +146,7 @@ private:
     T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
     MIL_KnowledgeGroup* pKnowledgeGroup_;
     std::map< double, T_KnowledgeObjectVector > obstacleCache_;
+    T_KnowledgeObjectMap previousObjectMap_;
     //@}
 };
 

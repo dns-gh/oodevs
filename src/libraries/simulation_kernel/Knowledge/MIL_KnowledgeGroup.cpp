@@ -71,6 +71,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , isJammed_           ( false )
     , createdByJamming_   ( false )
     , jammedPion_         ( 0 )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     // NOTHING
 }
@@ -92,6 +93,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
     , isJammed_           ( false )
     , createdByJamming_   ( false )
     , jammedPion_         ( 0 )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     SendCreation();
 }
@@ -113,6 +115,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
     , isJammed_           ( false )
     , createdByJamming_   ( false )
     , jammedPion_         ( 0 )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     SendCreation();
 }
@@ -134,6 +137,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , isJammed_           ( false )
     , createdByJamming_   ( false )
     , jammedPion_         ( 0 )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     if( ! type_ )
         throw MASA_EXCEPTION( "Knowledge group '" + boost::lexical_cast< std::string >( id_ )
@@ -157,6 +161,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , isJammed_           ( true )
     , createdByJamming_   ( true )
     , jammedPion_         ( &pion )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     SendCreation();
 }
@@ -1028,6 +1033,12 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
 {
     ApplyOnKnowledgesPopulationPerception( currentTimeStep );
     ApplyOnKnowledgesAgentPerception( currentTimeStep );
+    ApplyOnKnowledgesObjectPerception( currentTimeStep );
+    if( bDiffuseToKnowledgeGroup_ )
+    {
+        bDiffuseToKnowledgeGroup_ = false;
+        RefreshTimeToDiffuseToKnowledgeGroup();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1120,7 +1131,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                     bbKg->GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
                 }
             }
-            RefreshTimeToDiffuseToKnowledgeGroup();
+            bDiffuseToKnowledgeGroup_ = true;
         }
         // LTO end
     }
@@ -1128,6 +1139,28 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
     {
         boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
         jammedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception
+// Created: MMC 2013-07-03
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep )
+{
+    const PHY_RolePion_Communications* communications = jammedPion_ ? jammedPion_->RetrieveRole< PHY_RolePion_Communications >() : 0;
+    if( !IsJammed() || ( communications && communications->CanReceive() ) )
+    {
+        if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
+        {
+            if( parent_ && IsEnabled() && parent_->GetKnowledge() )
+            {
+                boost::function< void( DEC_Knowledge_Object& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+                parent_->GetKnowledge()->GetKnowledgeObjectContainer().ApplyOnPreviousKnowledgesObject( functorObject );
+                parent_->GetKnowledge()->GetKnowledgeObjectContainer().SaveAllCurrentKnowledgeObject();
+            }
+            bDiffuseToKnowledgeGroup_ = true;
+        }
     }
 }
 
@@ -1184,6 +1217,21 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC
 {
     if( agentKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
         GetAgentKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup
+// Created: MMC 2013-07-03
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Object& objectKnowledge, int currentTimeStep )
+{
+    if( objectKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
+        if( objectKnowledge.GetObjectKnown() )
+        {
+            boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject = GetObjectKnowledgeToUpdate( *objectKnowledge.GetObjectKnown() );
+            if( pKnowledgeObject.get() )
+                pKnowledgeObject->Update( objectKnowledge, currentTimeStep );
+        }
 }
 
 // -----------------------------------------------------------------------------
