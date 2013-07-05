@@ -135,7 +135,7 @@ private:
 signals:
     //! @name Signals
     //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool fromTimeline );
     void SelectMission( const kernel::Entity_ABC& entity, E_MissionType type, int id );
     //@}
 

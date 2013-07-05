@@ -91,6 +91,7 @@ private:
     void Fill();
     virtual void closeEvent( QCloseEvent * event );
     void SetContentVisible( bool visible );
+    void SetEditing( bool editing, bool fromTimeline );
     //@}
 
     //! @name Observers implementation
@@ -108,19 +109,19 @@ signals:
     void DeleteEvent( const std::string& uuid );
     void EditEvent( const timeline::Event& );
     void BeginDateChanged( const QDateTime& );
+    void EditingChanged( bool, bool );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool fromTimeline );
     void StartEdition( const Event& event );
 
     void OnEditClicked();
     void OnDeleteClicked();
 
     void OnTrigger();
-    void OnCreateReminder();
     void OnShowDetail();
     void OnDiscard();
     void OnSave();

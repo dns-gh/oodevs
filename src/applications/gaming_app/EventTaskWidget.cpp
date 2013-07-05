@@ -25,8 +25,7 @@ EventTaskWidget::EventTaskWidget()
     profiles_ = new QComboBox();
 
     QGridLayout* gridLayout = new QGridLayout( 3, 2 );
-    gridLayout->setMargin( 10 );
-    gridLayout->setSpacing( 10 );
+    gridLayout->setSpacing( 5 );
 
     gridLayout->addWidget( new QLabel( tr( "Label" ) ), 0, 0 );
     gridLayout->addWidget( label_, 0, 1 );

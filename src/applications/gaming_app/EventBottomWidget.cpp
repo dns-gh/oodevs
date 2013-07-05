@@ -43,6 +43,13 @@ EventBottomWidget::EventBottomWidget( const kernel::Time_ABC& simulation, kernel
     , actionController_( actionController )
     , switchAction_( 0 )
     , detailAction_( 0 )
+    , triggerAction_( 0 )
+    , saveAction_( 0 )
+    , editing_( false )
+    , triggerText_( tr( "Trigger" ) )
+    , saveText_( tr( "Save" ) )
+    , triggerAsCopyText_( tr( "Copy and trigger" ) )
+    , saveAsCopyText_( tr( "Save as copy" ) )
 {
     // Dates
     beginDateTimeEdit_ = new gui::RichDateTimeEdit( "begin-date" );
@@ -80,13 +87,13 @@ EventBottomWidget::EventBottomWidget( const kernel::Time_ABC& simulation, kernel
         planningActions_.push_back( detailAction_ );
         planningActions_.push_back( toolBar->addSeparator() );
     }
-    planningActions_.push_back( toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save" ), this, SIGNAL( Save() ) ) );
+    saveAction_ = toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), saveText_, this, SIGNAL( Save() ) );
+    planningActions_.push_back( saveAction_ );
     planningActions_.push_back( toolBar->addSeparator() );
     toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), tr( "Discard" ), this, SIGNAL( Discard() ) );
-    toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_MediaPlay ), tr( "Trigger" ), this, SIGNAL( Trigger() ) );
+    triggerAction_ = toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_MediaPlay ), triggerText_, this, SIGNAL( Trigger() ) );
 
     // Layout
-    mainLayout_->setMargin( 5 );
     mainLayout_->addWidget( toolBar );
 
     // Initialization
@@ -109,6 +116,10 @@ EventBottomWidget::~EventBottomWidget()
 // -----------------------------------------------------------------------------
 void EventBottomWidget::Fill( const Event& event )
 {
+    triggerAction_->setText( event.GetEvent().done ? triggerAsCopyText_ : triggerText_ );
+    saveAction_->setText( event.GetEvent().done ? saveAsCopyText_ : saveText_ );
+    // $$$$ ABR 2013-07-04: TODO Change icon when "as copy"
+
     if( detailAction_ )
         detailAction_->setChecked( false );
 
@@ -150,8 +161,23 @@ void EventBottomWidget::Commit( timeline::Event& event ) const
 // -----------------------------------------------------------------------------
 void EventBottomWidget::OnSwitchToggled( bool checked )
 {
-    for( auto it = planningActions_.begin(); it != planningActions_.end(); ++it )
-        ( *it )->setVisible( checked );
+    if( editing_ && !checked )
+        switchAction_->setChecked( true );
+    else
+        for( auto it = planningActions_.begin(); it != planningActions_.end(); ++it )
+            if( *it )
+                ( *it )->setVisible( checked );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventBottomWidget::OnEditingChanged
+// Created: ABR 2013-07-04
+// -----------------------------------------------------------------------------
+void EventBottomWidget::OnEditingChanged( bool editing, bool fromTimeline )
+{
+    editing_ = editing;
+    switchAction_->setChecked( editing || fromTimeline );
+    OnSwitchToggled( editing || fromTimeline );
 }
 
 // -----------------------------------------------------------------------------

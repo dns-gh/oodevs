@@ -63,7 +63,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     connect( this, SIGNAL( CreateEvent( const timeline::Event& ) ), webView_, SLOT( CreateEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( EditEvent( const timeline::Event& ) ), webView_, SLOT( EditEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( DeleteEvent( const std::string& ) ), webView_, SLOT( DeleteEvent( const std::string& ) ) );
-    connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ) );
+    connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
 }
 
 // -----------------------------------------------------------------------------

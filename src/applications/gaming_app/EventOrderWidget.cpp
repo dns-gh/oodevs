@@ -81,11 +81,9 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     internalTargetLayout->addWidget( targetLabel_, 0, Qt::AlignCenter );
 
     QHBoxLayout* targetLayout = new QHBoxLayout();
-    targetLayout->setContentsMargins( 5, 0, 5, 0 );
     targetLayout->addWidget( targetGroupBox_ );
 
     QHBoxLayout* topLayout = new QHBoxLayout();
-    topLayout->setContentsMargins( 5, 0, 5, 0 );
     topLayout->setSpacing( 5 );
     topLayout->addWidget( missionTypeCombo_ );
     topLayout->addLayout( missionComboLayout_ );
@@ -753,7 +751,7 @@ void EventOrderWidget::ActivateAgentMission( int id )
 {
     assert( selectedEntity_ );
     const kernel::Entity_ABC& entity = *selectedEntity_;
-    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     emit SelectMission( entity, eMissionType_Pawn, id );
 }
 
@@ -767,7 +765,7 @@ void EventOrderWidget::ActivateAutomatMission( int id )
     if( !selectedEntity_->Retrieve< kernel::AutomatDecisions_ABC >() )
         selectedEntity_ = selectedEntity_->Get< kernel::TacticalHierarchies >().GetSuperior();
     const kernel::Entity_ABC& entity = *selectedEntity_;
-    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     emit SelectMission( entity, eMissionType_Automat, id );
 }
 
@@ -779,7 +777,7 @@ void EventOrderWidget::ActivatePopulationMission( int id )
 {
     assert( selectedEntity_ );
     const kernel::Entity_ABC& entity = *selectedEntity_;
-    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     emit SelectMission( entity, eMissionType_Population, id );
 }
 
@@ -798,6 +796,6 @@ void EventOrderWidget::ActivateFragOrder( int id )
                 selectedEntity_ = superior;
     }
     const kernel::Entity_ABC& entity = *selectedEntity_;
-    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     emit SelectMission( entity, eMissionType_FragOrder, id );
 }

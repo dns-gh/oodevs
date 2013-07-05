@@ -82,8 +82,8 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     // Layout
     QWidget* mainWidget = new QWidget();
     QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
-    mainLayout->setMargin( 0 );
-    mainLayout->setSpacing( 0 );
+    mainLayout->setMargin( 5 );
+    mainLayout->setSpacing( 5 );
     mainLayout->addWidget( topWidget_ );
     mainLayout->addWidget( stack_, 1 );
     mainLayout->addWidget( bottomWidget_ );
@@ -92,12 +92,12 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
 
     // Connections
     connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), bottomWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
+    connect( this, SIGNAL( EditingChanged( bool, bool ) ), bottomWidget_, SLOT( OnEditingChanged( bool, bool ) ) );
     connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
-    connect( bottomWidget_, SIGNAL( CreateReminder() ), this, SLOT( OnCreateReminder() ) );
     connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
     connect( bottomWidget_, SIGNAL( Save() ),           this, SLOT( OnSave() ) );
     connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
-    connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
+    connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,12 +113,12 @@ EventDockWidget::~EventDockWidget()
 // Name: EventDockWidget::Create
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime )
+void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime, bool fromTimeline )
 {
-    editing_ = false;
     event_.reset( factory_.Create( type ) );
     SetEventType( type );
     Purge();
+    SetEditing( false, fromTimeline );
     Fill();
     if( dateTime.isValid() )
         emit BeginDateChanged( dateTime );
@@ -132,10 +132,10 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
 // -----------------------------------------------------------------------------
 void EventDockWidget::StartEdition( const Event& event )
 {
-    editing_ = true;
     event_.reset( event.Clone() );
     SetEventType( event.GetType() );
     Purge();
+    SetEditing( true, false );
     Fill();
     SetContentVisible( true );
     setVisible( true );
@@ -217,21 +217,18 @@ void EventDockWidget::Commit( timeline::Event& event )
 void EventDockWidget::OnTrigger()
 {
     if( currentWidget_->IsValid() )
+    {
+        if( editing_ && event_.get() && !event_->GetEvent().done )
+            emit DeleteEvent( event_->GetEvent().uuid );
         currentWidget_->Trigger();
+        if( event_.get() && !event_->GetEvent().done )
+            SetVisible( false );
+    }
     else
     {
         currentWidget_->Warn();
         QMessageBox::warning( this, tr( "Warning" ), tr( "This event is incomplete so it can't be triggered.") );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventDockWidget::OnCreateReminder
-// Created: ABR 2013-05-30
-// -----------------------------------------------------------------------------
-void EventDockWidget::OnCreateReminder()
-{
-    QMessageBox::question( this, "Reminder", "Reminder creation !" );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,7 +252,13 @@ void EventDockWidget::OnShowDetail()
 // -----------------------------------------------------------------------------
 void EventDockWidget::OnDiscard()
 {
-    Fill();
+    if( editing_ )
+        Fill();
+    else
+    {
+        Purge();
+        SetVisible( false );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -267,15 +270,16 @@ void EventDockWidget::OnSave()
     timeline::Event event;
     Commit( event );
     assert( event_.get() );
-    event.uuid = ( editing_ ) ? event_->GetEvent().uuid : boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
+    bool create = !editing_ || event_->GetEvent().done;
+    event.uuid = ( create ) ? boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) : event_->GetEvent().uuid;
     event_->Update( event );
-    if( editing_ )
-        emit EditEvent( event );
-    else
-    {
+    if( create )
         emit CreateEvent( event );
-        editing_ = true;
-    }
+    else
+        emit EditEvent( event );
+
+    if( !editing_ )
+        SetEditing( true, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -348,4 +352,14 @@ void EventDockWidget::NotifyUpdated( const Event& event )
 {
     if( event_.get() && event_->GetEvent().uuid == event.GetEvent().uuid )
         StartEdition( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::SetEditing
+// Created: ABR 2013-07-04
+// -----------------------------------------------------------------------------
+void EventDockWidget::SetEditing( bool editing, bool fromTimeline )
+{
+    editing_ = editing;
+    emit EditingChanged( editing, fromTimeline );
 }

@@ -29,7 +29,6 @@ EventTopWidget::EventTopWidget()
 
     // Layout
     QHBoxLayout* headerLayout = new QHBoxLayout();
-    headerLayout->setMargin( 5 );
     headerLayout->setSpacing( 5 );
     headerLayout->addWidget( title_ );
     headerLayout->addStretch( 1 );

@@ -74,6 +74,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSwitchToggled( bool checked );
+    void OnEditingChanged( bool editing, bool fromTimeline );
 
     void OnBeginDateTimeChanged( const QDateTime& dateTime );
     void OnHasEndTimeChanged( int state );
@@ -107,10 +108,19 @@ private:
     //@{
     const kernel::Time_ABC& simulation_;
     kernel::ActionController& actionController_;
+    bool editing_;
+    bool alreadyDone_;
 
     std::vector< QAction* > planningActions_;
     QAction* switchAction_;
     QAction* detailAction_;
+    QAction* triggerAction_;
+    QAction* saveAction_;
+
+    QString triggerText_;
+    QString saveText_;
+    QString triggerAsCopyText_;
+    QString saveAsCopyText_;
 
     QDateTime selectedDateTime_;
     gui::RichDateTimeEdit* beginDateTimeEdit_;

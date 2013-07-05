@@ -671,6 +671,14 @@ Raison: %3
         <source>Trigger</source>
         <translation>Déclancher</translation>
     </message>
+    <message>
+        <source>Copy and trigger</source>
+        <translation>Copier et déclancher</translation>
+    </message>
+    <message>
+        <source>Save as copy</source>
+        <translation>Copier et enregistrer</translation>
+    </message>
 </context>
 <context>
     <name>EventDockWidget</name>

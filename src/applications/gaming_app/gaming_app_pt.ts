@@ -669,6 +669,14 @@ Reason: %3
         <source>Trigger</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Copy and trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as copy</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventDockWidget</name>
