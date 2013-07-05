@@ -141,7 +141,6 @@ public:
     const tools::Resolver< MIL_Army_ABC >& GetArmies() const;
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     bool ConvertIdToUrbanId( unsigned int& id ) const;
-    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     unsigned long FindMaxId( const MIL_Config& config ) const;
     //@}
 
@@ -228,7 +227,7 @@ private:
     //! @name Helpers
     //@{
     boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const;
-    boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroupFromParents( unsigned int nID ) const;
+    void Accept( KnowledgesVisitor_ABC& visitor ) const;
 
     void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );

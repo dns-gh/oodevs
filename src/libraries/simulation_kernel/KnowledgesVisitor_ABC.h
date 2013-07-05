@@ -30,6 +30,7 @@ public:
     virtual void VisitKnowledgesAgent( std::size_t knowledges ) = 0;
     virtual void VisitKnowledgesObject( std::size_t knowledges ) = 0;
     virtual void VisitKnowledgesPopulation( std::size_t knowledges ) = 0;
+    virtual void VisitKnowledgesGroup( std::size_t knowledges ) = 0;
     //@}
 };
 

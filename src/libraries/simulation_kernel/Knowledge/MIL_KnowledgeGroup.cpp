@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_KnowledgeGroup.h"
 #include "MIL_AgentServer.h"
+#include "KnowledgesVisitor_ABC.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -1242,6 +1243,9 @@ DEC_BlackBoard_CanContainKnowledgeObject* MIL_KnowledgeGroup::GetKnowledgeObject
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
+    visitor.VisitKnowledgesGroup( knowledgeGroups_.size() );
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        (*it)->Accept( visitor );
     if( knowledgeBlackBoard_ )
         knowledgeBlackBoard_->Accept( visitor );
 }

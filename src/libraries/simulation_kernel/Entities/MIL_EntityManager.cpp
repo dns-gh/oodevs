@@ -352,12 +352,11 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( "ODB file name : '" << orbatFile.ToUTF8() << "'" );
     config.GetLoader().LoadFile( orbatFile, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1, boost::cref( config ) ) );
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"       , automateFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"           , sink_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations"     , populationFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants"     , inhabitantFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"         , pObjectManager_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d knowledge groups", knowledgeGroupFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , sink_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
@@ -638,10 +637,11 @@ namespace
     class KnowledgesVisitor : public KnowledgesVisitor_ABC
     {
     public:
-        explicit KnowledgesVisitor()
+        KnowledgesVisitor()
             : agents_     ( 0 )
             , objects_    ( 0 )
             , populations_( 0 )
+            , groups_     ( 0 )
         {
             // NOTHING
         }
@@ -657,6 +657,10 @@ namespace
         {
             populations_ += knowledges;
         }
+        virtual void VisitKnowledgesGroup( std::size_t knowledges )
+        {
+            groups_ += knowledges;
+        }
         std::size_t Count()
         {
             return agents_ + objects_ + populations_;
@@ -665,6 +669,7 @@ namespace
         std::size_t agents_;
         std::size_t objects_;
         std::size_t populations_;
+        std::size_t groups_;
     };
 }
 
@@ -676,10 +681,10 @@ void MIL_EntityManager::LogInfo()
 {
     KnowledgesVisitor visitor;
     Accept( visitor );
-    MT_LOG_INFO_MSG( MT_FormatString( "%d Objects - %d Knowledges ( %d Knowledge agents, %d Knowledge objects, %d Knowledge populations )" ,
-        pObjectManager_->Count(), visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "%d Agents - %d Automats - %d Crowds" ,
-        sink_->Count(), automateFactory_->Count(), populationFactory_->Count() ) );
+    MT_LOG_INFO_MSG(
+        pObjectManager_->Count() << " Objects - " << visitor.Count() << " Knowledges ( " << visitor.agents_ << " agents,"
+            << visitor.objects_ << " objects, " << visitor.populations_ << " populations ) - " << visitor.groups_ << " Knowledge groups" );
+    MT_LOG_INFO_MSG( sink_->Count() << " Agents - " << automateFactory_->Count() << " Automats - " << populationFactory_->Count() << " Crowds" );
     {
         std::stringstream s;
         s.setf( std::ios::fixed, std::ios::floatfield );
@@ -984,9 +989,12 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
     Profiler profiler( rStatesTime_ ); // $$$$ MCO 2012-11-28: again ?
     try
     {
-        const auto& groups = knowledgeGroupFactory_->GetElements();
-        for( auto it = groups.begin(); it != groups.end(); ++it )
-            it->second->UpdateKnowledgeGroup();
+        for( auto it = armyFactory_->CreateIterator(); it.HasMoreElements(); )
+        {
+            const auto& groups = it.NextElement().GetKnowledgeGroups();
+            for( auto it = groups.begin(); it != groups.end(); ++it )
+                it->second->UpdateKnowledgeGroup();
+        }
     }
     catch( const std::exception& e )
     {
@@ -1948,7 +1956,7 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction&
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroupFromParents( message.knowledge_group().id() );
+        boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
         if( ! pReceiver )
             throw MASA_EXCEPTION_ASN( KnowledgeGroupAck::ErrorCode, KnowledgeGroupAck::error_invalid_type );
         pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
@@ -2488,24 +2496,9 @@ MIL_Formation* MIL_EntityManager::FindFormation( unsigned int nID ) const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
 {
-    return knowledgeGroupFactory_->Find( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindKnowledgeGroupFromParents
-// Created: MMC 2011-06-14
-// -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_KnowledgeGroup > MIL_EntityManager::FindKnowledgeGroupFromParents( unsigned int nID ) const
-{
-    const auto& elements = knowledgeGroupFactory_->GetElements();
-    for( auto it = elements.begin(); it != elements.end(); ++it )
-    {
-        if( it->second->GetId() == nID )
-            return it->second;
-        boost::shared_ptr< MIL_KnowledgeGroup > group = it->second->FindKnowledgeGroup( nID );
-        if( group )
+    for( auto it = armyFactory_->CreateIterator(); it.HasMoreElements(); )
+        if( boost::shared_ptr< MIL_KnowledgeGroup > group = it.NextElement().FindKnowledgeGroup( nID ) )
             return group;
-    }
     return boost::shared_ptr< MIL_KnowledgeGroup >();
 }
 
@@ -2696,9 +2689,12 @@ MIL_Population* MIL_EntityManager::FindPopulation( MIL_UrbanObject_ABC* urbanObj
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
-    std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > elements = knowledgeGroupFactory_->GetElements();
-    for( auto it = elements.begin(); it != elements.end(); ++it )
-        it->second->Accept( visitor );
+    for( auto it = armyFactory_->CreateIterator(); it.HasMoreElements(); )
+    {
+        const auto& groups = it.NextElement().GetKnowledgeGroups();
+        for( auto it2 = groups.begin(); it2 != groups.end(); ++it2 )
+            it2->second->Accept( visitor );
+    }
 }
 
 // -----------------------------------------------------------------------------

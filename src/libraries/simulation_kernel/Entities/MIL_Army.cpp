@@ -719,9 +719,8 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_Army::FindKnowledgeGroup( unsigned i
     {
         if( it->second->GetId() == nID )
             return it->second;
-        boost::shared_ptr< MIL_KnowledgeGroup > pkg = it->second->FindKnowledgeGroup( nID );
-        if( pkg )
-            return pkg;
+        if( boost::shared_ptr< MIL_KnowledgeGroup > group = it->second->FindKnowledgeGroup( nID ) )
+            return group;
     }
     return boost::shared_ptr< MIL_KnowledgeGroup >();
 }

@@ -34,17 +34,6 @@ public:
     //! @name Operations
     //@{
     virtual boost::shared_ptr< MIL_KnowledgeGroup > Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent );
-
-    void Register( const unsigned long& identifier, const boost::shared_ptr< MIL_KnowledgeGroup >& element );
-    void Remove( const unsigned long& identifier );
-    void Clear();
-    //@}
-
-    //! @name Accessors
-    //@{
-    boost::shared_ptr< MIL_KnowledgeGroup > Find( const unsigned long& identifier ) const;
-    const std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >& GetElements() const;
-    unsigned long Count() const;
     //@}
 
     //! @name CheckPoint
@@ -52,20 +41,6 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > T_Elements;
-    typedef T_Elements::iterator IT_Elements;
-    typedef T_Elements::const_iterator CIT_Elements;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_Elements elements_;
     //@}
 };
 
