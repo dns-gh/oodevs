@@ -806,6 +806,8 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
+    if( IsJammed() && message.type() != sword::KnowledgeMagicAction::add_knowledge )
+        throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_type );
     switch( message.type() )
     {
     case sword::KnowledgeMagicAction::enable:

@@ -1948,11 +1948,9 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction&
     try
     {
         boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroupFromParents( message.knowledge_group().id() );
-        if ( pReceiver.get() && ( !pReceiver->IsJammed()
-                            || message.type() == sword::KnowledgeMagicAction::add_knowledge ) )
-            pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
-        else
+        if( ! pReceiver )
             throw MASA_EXCEPTION_ASN( KnowledgeGroupAck::ErrorCode, KnowledgeGroupAck::error_invalid_type );
+        pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
     }
     catch( const NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
     {
