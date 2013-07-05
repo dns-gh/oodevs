@@ -92,7 +92,7 @@ void AgentHierarchiesCommunication::DoUpdate( const sword::UnitChangeSuperior& m
 // -----------------------------------------------------------------------------
 bool AgentHierarchiesCommunication::CanCommunicate() const
 {
-    return !jammed_ && !radioReceiverDisabled_;
+    return !jammed_ && !radioReceiverDisabled_ && !radioEmitterDisabled_;
 }
 
 // -----------------------------------------------------------------------------

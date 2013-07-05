@@ -94,6 +94,7 @@ namespace boost
 void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> objectMap_;
+    file >> previousObjectMap_;
     for( auto it = objectMap_.begin(); it != objectMap_.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
@@ -108,6 +109,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& fi
 void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << objectMap_;
+    file << previousObjectMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -304,4 +306,13 @@ void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects()
             knowledge->SkipPreparation();
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::SaveAllCurrentKnowledgeObject
+// Created: MMC 2013-07-03
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::SaveAllCurrentKnowledgeObject()
+{
+    previousObjectMap_ = objectMap_;
 }

@@ -1055,6 +1055,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
 {
     ApplyOnKnowledgesPopulationPerception( currentTimeStep );
     ApplyOnKnowledgesAgentPerception( currentTimeStep );
+    ApplyOnKnowledgesObjectPerception( currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -1180,6 +1181,28 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception
+// Created: MMC 2013-07-03
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep )
+{
+    const PHY_RolePion_Communications* communications = jammedPion_ ? jammedPion_->RetrieveRole< PHY_RolePion_Communications >() : 0;
+    if( !IsJammed() || ( communications && communications->CanReceive() ) )
+    {
+        if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
+        {
+            if( parent_ && IsEnabled() && parent_->GetKnowledge() )
+            {
+                boost::function< void( DEC_Knowledge_Object& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+                parent_->GetKnowledge()->GetKnowledgeObjectContainer().ApplyOnPreviousKnowledgesObject( functorObject );
+                parent_->GetKnowledge()->GetKnowledgeObjectContainer().SaveAllCurrentKnowledgeObject();
+            }
+            RefreshTimeToDiffuseToKnowledgeGroup();
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate
 // Created: FDS 2010-04-08
 // -----------------------------------------------------------------------------
@@ -1232,6 +1255,21 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC
 {
     if( agentKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
         GetAgentKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup
+// Created: MMC 2013-07-03
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Object& objectKnowledge, int currentTimeStep )
+{
+    if( objectKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
+        if( objectKnowledge.GetObjectKnown() )
+        {
+            boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject = GetObjectKnowledgeToUpdate( *objectKnowledge.GetObjectKnown() );
+            if( pKnowledgeObject.get() )
+                pKnowledgeObject->Update( objectKnowledge, currentTimeStep );
+        }
 }
 
 // -----------------------------------------------------------------------------

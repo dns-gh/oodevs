@@ -58,6 +58,7 @@ public:
     void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight ) const;
     void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
     void UpdateUniversalObjects();
+    void SaveAllCurrentKnowledgeObject();
     //@}
 
     //! @name Queries
@@ -79,7 +80,16 @@ public:
             fct( knowledge );
         }
     }
-
+    template < class UnaryFunction >
+    void ApplyOnPreviousKnowledgesObject( UnaryFunction& fct ) const
+    {
+        for( CIT_KnowledgeObjectMap itKnowledge = previousObjectMap_.begin(); itKnowledge != previousObjectMap_.end(); )
+        {
+            DEC_Knowledge_Object& knowledge = *itKnowledge->second;
+            ++itKnowledge;
+            fct( knowledge );
+        }
+    }
     template < class UnaryFunction >
     void ApplyOnKnowledgesObjectRef( UnaryFunction& fct ) const
     {
@@ -115,6 +125,7 @@ private:
     T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
     MIL_KnowledgeGroup* pKnowledgeGroup_;
     std::map< double, T_KnowledgeObjectVector > obstacleCache_;
+    T_KnowledgeObjectMap previousObjectMap_;
     //@}
 };
 
