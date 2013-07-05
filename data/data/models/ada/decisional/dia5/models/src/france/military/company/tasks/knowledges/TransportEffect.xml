@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.knowledges.TransportEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
     <methods>
-        <method name="getUnitsToTransport">
-            <return>
-                <type>
-                    <list>
-                        <class name="sword.military.knowledge.decisional.Loadable"/>
-                    </list>
-                </type>
-            </return>
-        </method>
         <method name="getLoadingPoint">
             <return>
                 <type>
@@ -49,6 +40,24 @@
             <return>
                 <type>
                     <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getObstaclesParameter">
+            <return name="obstacles">
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getTargets">
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
                 </type>
             </return>
         </method>

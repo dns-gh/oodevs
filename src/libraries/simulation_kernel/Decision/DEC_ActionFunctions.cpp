@@ -373,16 +373,6 @@ bool DEC_ActionFunctions::CanTransportKnowledge( DEC_Decision_ABC& callerAgent, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::AgentCanTransportPion
-// Created: GGE 2013-07-04
-// -----------------------------------------------------------------------------
-bool DEC_ActionFunctions::AgentCanTransportPion( DEC_Decision_ABC& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
-{
-    assert( pPion );
-    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge
 // Created: GGE 2013-04-04
 // -----------------------------------------------------------------------------

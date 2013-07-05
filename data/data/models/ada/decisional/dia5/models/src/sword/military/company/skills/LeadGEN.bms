@@ -158,8 +158,7 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
                             workMap[obstacle] = workMap[obstacle] or {}
                             local currentMap = workMap[obstacle]
                             local hasDotation = task:hasDotation( entity, obstacle )
-                            local canDoIt = task:canDoIt( entity, obstacle )
-
+                            local canDoIt = task:canDoIt( entity, obstacle, params.withEquipment )
                             myself.leadData.platoonHasTask[taskName] = myself.leadData.platoonHasTask[taskName] or {}
                             local platoonHasTask =  myself.leadData.platoonHasTask[taskName]
                             platoonHasTask[obstacle] = platoonHasTask[obstacle] or {}

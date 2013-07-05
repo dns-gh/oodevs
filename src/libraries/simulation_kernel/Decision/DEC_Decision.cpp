@@ -488,6 +488,7 @@ void RegisterObjectFunctions( directia::brain::Brain& brain )
     brain[ "DEC_Agent_AgentPeutConstruireContournementObjet" ] = &DEC_AgentFunctions::AgentCanBypassObject;
     brain[ "DEC_Agent_AgentPeutDetruireTypeObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObjectType;
     brain[ "DEC_Agent_AgentPeutDetruireTypeObjetAvecLocalisation" ] = &DEC_AgentFunctions::AgentCanDestroyObjectTypeWithLocalisation;
+    brain[ "DEC_Agent_AgentPeutTransporterPion" ] = &DEC_AgentFunctions::AgentCanTransportPion;
 
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
     

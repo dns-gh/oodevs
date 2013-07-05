@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.knowledges.Transporter" source-version="1.0.0" extends="sword.military.platoon.tasks.knowledges.PlatoonTask">
-  <methods>
-    <method name="fillParameters" abstract="false">
-      <argument name="companyTask">
-        <description>La t??che automate</description>
-        <type>
-          <class name="sword.military.knowledge.decisional.Commandable"/>
-        </type>
-      </argument>
-      <argument name="objectives">
-        <description>Les objectifs de la t??che automate</description>
-        <type>
-          <list>
-            <class name="directia.core.Object"/>
-          </list>
-        </type>
-      </argument>
-      <return>
-        <type>
-          <list>
-            <class name="directia.core.Object"/>
-          </list>
-        </type>
-      </return>
-    </method>
-  </methods>
+    <methods>
+        <method name="fillParameters" abstract="false">
+            <argument name="companyTask">
+                <description>La t??che automate</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Commandable"/>
+                </type>
+            </argument>
+            <argument name="objectives">
+                <description>Les objectifs de la t??che automate</description>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getObstaclesParameter">
+            <return name="obstacles">
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="canDoIt">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="hasDotation">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
 </class>

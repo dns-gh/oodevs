@@ -349,6 +349,7 @@
         <mission name="PION ASA Surveiller"/>
         <mission name="PION ASA Defendre"/>
         <mission name="PION ASA Defendre Unites"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -551,6 +552,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -612,6 +614,7 @@
         <mission name="PION GENIE Valoriser"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -654,6 +657,7 @@
         <mission name="PION GENIE Equiper Exploiter Site Franchissement"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION GENIE Executer Variantement"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -694,6 +698,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION ALAT Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -737,6 +742,7 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION GENIE Brecher obstacles"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -880,6 +886,7 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -923,6 +930,7 @@
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1147,6 +1155,7 @@
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Desactiver Point Du Reseau"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2786,6 +2795,7 @@
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -3287,6 +3297,7 @@
         <mission name="PION LOGISTIQUE Transporter Foule"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -4574,6 +4585,7 @@
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -4617,6 +4629,7 @@
         <mission name="PION GENIE Appui Mobilite"/>
         <mission name="PION GENIE Degager Obstacles"/>
         <mission name="PION GENIE Depolluer zone"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -4794,6 +4807,7 @@
         <mission name="PION GENIE Appui Mobilite"/>
         <mission name="PION GENIE Ouvrir Itineraire"/>
         <mission name="PION GENIE Reconnaitre"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7591,4 +7605,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1940980329" -->
+<!-- signature="3875609531" -->

@@ -29,6 +29,7 @@
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
@@ -444,6 +445,16 @@ bool DEC_AgentFunctions::CanMineObject( const MIL_Agent_ABC& callerAgent, boost:
 bool DEC_AgentFunctions::CanActivateObject( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
     return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->GetType().GetCapacity< ActivableCapacity >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanTransportPion
+// Created: GGE 2013-07-04
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanTransportPion( const DEC_Decision_ABC* agent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
+{
+    assert( pPion );
+    return agent->GetPion().GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pPion->GetPion(), bTransportOnlyLoadable );
 }
 
 //-----------------------------------------------------------------------------

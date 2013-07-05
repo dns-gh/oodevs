@@ -39,7 +39,7 @@
     <stages>
         <stage label="Transport" disable-when-done="true">
             <skills>
-                <skill name="sword.military.company.skills.Lead" main="true">
+                <skill name="sword.military.company.skills.LeadGEN" main="true">
                     <parameter name="companyTask">
                         <value>
                             <string>france.military.company.tasks.Transporter</string>

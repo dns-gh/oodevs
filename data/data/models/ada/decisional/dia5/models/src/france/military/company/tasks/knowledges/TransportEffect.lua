@@ -1,23 +1,17 @@
 return
 {
-    getUnitsToTransport = function( self, params )
-        if not myself.leadData.unitsIndex then
-            myself.leadData.unitsIndex = 0
+    getTargets = function( self, params, entity, taskKnowledge )
+        local result = {}
+        for task, taskTargetMap in pairs( myself.leadData.workMap ) do
+            if task == taskKnowledge then
+                for target, units in pairs( taskTargetMap ) do
+                    if units[1] == entity.source then
+                        result[ #result + 1] = target
+                    end
+                end
+            end
         end
-        if #params.units < params.maxNbrFront then
-            myself.leadData.unitsIndex = myself.leadData.unitsIndex % #params.units + 1
-            return { params.units[ myself.leadData.unitsIndex ] }
-        end
-        myself.leadData.unitsIndex = myself.leadData.unitsIndex + 1
-        local index = 0
-        while myself.leadData.unitsIndex + ( index + params.maxNbrFront ) <= #params.units do
-            index = index + params.maxNbrFront
-        end
-        local unitsBuffer = {}
-        for i = 0, index, params.maxNbrFront do
-            unitsBuffer[ #unitsBuffer + 1 ] = params.units[ myself.leadData.unitsIndex + i ]
-        end
-        return unitsBuffer
+        return result
     end,
 
     getLoadingPoint = function( self, params )
@@ -42,5 +36,9 @@ return
         else
             return false
         end
+    end,
+    
+    getObstaclesParameter = function( self, params )
+        return params.units
     end,
 }
