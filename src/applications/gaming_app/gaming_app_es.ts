@@ -722,6 +722,22 @@ Reason: %3
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Agent missions</source>
+        <translation type="unfinished">Misiones de agentes</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation type="unfinished">Misiones de autómata</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fragmentary orders</source>
+        <translation type="unfinished">Órdenes Fragmentarias</translation>
+    </message>
 </context>
 <context>
     <name>EventTaskWidget</name>
@@ -2248,56 +2264,8 @@ This data can&apos;t be projected.</source>
 <context>
     <name>MissionPanel</name>
     <message>
-        <source>Mission</source>
-        <translation>Misión</translation>
-    </message>
-    <message>
-        <source>Agent missions</source>
-        <translation>Misiones de agentes</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Misiones de autómata</translation>
-    </message>
-    <message>
-        <source>Engage</source>
-        <translation>Comprometer</translation>
-    </message>
-    <message>
-        <source>Disengage</source>
-        <translation>Liberar</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Órdenes Fragmentarias</translation>
-    </message>
-    <message>
         <source></source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Plan mission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add to planning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Planned mission start date</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3362,6 +3330,14 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Deactivate brain debug</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Engage</source>
+        <translation type="unfinished">Comprometer</translation>
+    </message>
+    <message>
+        <source>Disengage</source>
+        <translation type="unfinished">Liberar</translation>
     </message>
 </context>
 <context>

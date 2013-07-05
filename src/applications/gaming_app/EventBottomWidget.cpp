@@ -19,6 +19,7 @@
 // -----------------------------------------------------------------------------
 EventBottomWidget::EventBottomWidget()
     : EventWidget_ABC()
+    , detailAction_( 0 )
 {
     QToolBar* toolbar = new QToolBar();
 
@@ -26,6 +27,7 @@ EventBottomWidget::EventBottomWidget()
     flagAsCompleteAction_ = toolbar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogApplyButton ), tr( "Flag as complete" ) );
     flagAsCompleteAction_->setCheckable( true );
     toolbar->addAction( qApp->style()->standardIcon( QStyle::SP_ComputerIcon ), tr( "Create a reminder" ), this, SIGNAL( CreateReminder() ) );
+
     detailAction_ = toolbar->addAction( qApp->style()->standardIcon( QStyle::SP_FileDialogInfoView ), tr( "Detail" ), this, SIGNAL( ShowDetail() ) );
     detailAction_->setCheckable( true );
 

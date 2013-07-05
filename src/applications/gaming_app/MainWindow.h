@@ -58,7 +58,6 @@ class Model;
 class StaticModel;
 class Profile;
 class Network;
-class MissionPanel;
 class LoggerProxy;
 class Simulation;
 class SimulationController;

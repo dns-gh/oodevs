@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "EventOrderWidget.h"
 #include "moc_EventOrderWidget.cpp"
+#include "icons.h"
 #include "actions/ActionWithTarget_ABC.h"
 #include "actions_gui/MissionInterface.h"
 #include "clients_gui/GLToolColors.h"
@@ -24,9 +25,11 @@
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/MissionType.h"
+#include "clients_kernel/OrderType.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/OrderType.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Time_ABC.h"
 #include "clients_kernel/VariantPointer.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
@@ -45,14 +48,15 @@
 // -----------------------------------------------------------------------------
 EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
                                     actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
-                                    gui::GlTools_ABC& tools )
+                                    gui::GlTools_ABC& tools, const kernel::Time_ABC& simulation )
     : EventWidget_ABC()
     , controllers_( controllers )
     , model_( model )
     , interfaceBuilder_( interfaceBuilder )
     , profile_( profile )
     , tools_( tools )
-    , contextMenuEntity_( controllers )
+    , simulation_( simulation )
+    , selectedEntity_( controllers )
     , target_( controllers )
     , missionInterface_( 0 )
     , missionCombo_( 0 )
@@ -86,13 +90,15 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
 
     // Body
     missionInterface_ = new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config );
-    connect( missionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC&, timeline::Event* ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC&, timeline::Event* ) ) );
-
     // Layout
     mainLayout_->addLayout( topLayout );
     mainLayout_->addWidget( missionInterface_, 1 );
 
     controllers_.Register( *this );
+
+    // Connections
+    connect( missionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC&, timeline::Event* ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC&, timeline::Event* ) ) );
+    connect( this, SIGNAL( SelectMission( const kernel::Entity_ABC&, E_MissionType, int ) ), this, SLOT( OnSelectMission( const kernel::Entity_ABC&, E_MissionType, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +116,7 @@ EventOrderWidget::~EventOrderWidget()
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Purge()
 {
-    contextMenuEntity_ = 0;
+    selectedEntity_ = 0;
     SetTarget( 0 );
     missionTypeCombo_->setCurrentIndex( eMissionType_Pawn );
     currentType_ = eMissionType_Pawn;
@@ -293,7 +299,7 @@ const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::FillComboMission
+// Name: EventOrderWidget::FillMission
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
 void EventOrderWidget::FillMission()
@@ -453,9 +459,9 @@ void EventOrderWidget::OnMissionChanged( int )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnTargetSelected()
 {
-    if( !contextMenuEntity_ )
+    if( !selectedEntity_ )
         return;
-    SetTarget( contextMenuEntity_ );
+    SetTarget( selectedEntity_ );
     if( missionChoosed_ )
     {
         if( !AreTargetAndMissionCompatible() )
@@ -478,16 +484,29 @@ void EventOrderWidget::OnPlannedMission( const actions::Action_ABC& action, time
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventOrderWidget::OnSelectMission
+// Created: ABR 2013-07-03
+// -----------------------------------------------------------------------------
+void EventOrderWidget::OnSelectMission( const kernel::Entity_ABC& entity, E_MissionType type, int id )
+{
+    missionTypeCombo_->setCurrentIndex( type );
+    SetTarget( &entity );
+    FillMission();
+    const kernel::OrderType& order = ( type != eMissionType_FragOrder )
+        ? static_cast< kernel::OrderType& >( static_cast< tools::Resolver_ABC< kernel::MissionType >& >( model_.static_.types_ ).Get( id ) )
+        : static_cast< kernel::OrderType& >( static_cast< tools::Resolver_ABC< kernel::FragOrderType >& >( model_.static_.types_ ).Get( id ) );
+    missionCombo_->setCurrentIndex( missionCombo_->findText( order.GetName().c_str() ) );
+    BuildMissionInterface();
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventOrderWidget::AddTargetToMenu
 // Created: ABR 2013-06-07
 // -----------------------------------------------------------------------------
 void EventOrderWidget::AddTargetToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu, E_MissionType allowedType )
 {
     if( profile_.CanBeOrdered( entity ) && isVisible() && ( currentType_ == allowedType || currentType_ == eMissionType_FragOrder ) )
-    {
-        contextMenuEntity_ = &entity;
         menu.InsertItem( "Target", tr( "Target" ), this, SLOT( OnTargetSelected() ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -496,7 +515,15 @@ void EventOrderWidget::AddTargetToMenu( const kernel::Entity_ABC& entity, kernel
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
 {
+    selectedEntity_ = &agent;
     AddTargetToMenu( agent, menu, eMissionType_Pawn );
+    if( profile_.CanBeOrdered( agent ) )
+    {
+        if( const Decisions* decisions = agent.Retrieve< Decisions >() )
+            AddMissionsToMenu( *decisions, menu, tr( "Agent missions" ), SLOT( ActivateAgentMission( int ) ) );
+        if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
+            AddMissionsToMenu( static_cast< const AutomatDecisions& >( automat->Get< kernel::AutomatDecisions_ABC >() ), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ), MAKE_PIXMAP( lock ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -505,7 +532,13 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
 {
+    selectedEntity_ = &automat;
     AddTargetToMenu( automat, menu, eMissionType_Automat );
+    if( profile_.CanBeOrdered( automat ) )
+    {
+        const AutomatDecisions& decisions = static_cast< const AutomatDecisions& >( automat.Get< kernel::AutomatDecisions_ABC >() );
+        AddMissionsToMenu( decisions, menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ), MAKE_PIXMAP( lock ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -514,7 +547,13 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& population, kernel::ContextMenu& menu )
 {
+    selectedEntity_ = &population;
     AddTargetToMenu( population, menu, eMissionType_Population );
+    if( profile_.CanBeOrdered( population ) )
+    {
+        const PopulationDecisions& decisions = population.Get< PopulationDecisions >();
+        AddMissionsToMenu( decisions, menu, tr( "Crowd missions" ), SLOT( ActivatePopulationMission( int ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -523,7 +562,7 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& populati
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    if( target_ == &entity || contextMenuEntity_ == &entity )
+    if( target_ == &entity || selectedEntity_ == &entity )
         Purge();
 }
 
@@ -541,4 +580,220 @@ void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
         missionInterface_->Draw( tools_, viewport );
         glPopAttrib();
     }
+}
+namespace
+{
+    QString GetPrefix( const QString& name )
+    {
+        {
+            QRegExp regexp( "(^[A-Z ]*[A-Z]{3,})\\s" );
+            if( regexp.search( name ) > -1 )
+                return regexp.cap( 1 );
+        }
+        {
+            QRegExp regexp( "^(\\w{3,})\\s-\\s" );
+            if( regexp.search( name ) > -1 )
+                return regexp.cap( 1 );
+        }
+        return "";
+    }
+
+    QString FormatName( const kernel::Mission& mission, const QString& prefix )
+    {
+        QString result( QString( mission.GetName().c_str() ).mid( prefix.length() ).stripWhiteSpace() );
+        if( result.startsWith( "-" ) )
+            return result.mid( 1 ).stripWhiteSpace();
+        return result;
+    }
+
+    QString FormatName( const kernel::FragOrder& order, const QString& /*prefix*/ )
+    {
+        return order.GetName().c_str();
+    }
+
+    struct MissionComparator
+    {
+        bool operator()( const kernel::Mission* lhs, const kernel::Mission* rhs )
+        {
+            return lhs->GetName() < rhs->GetName();
+        }
+        bool operator()( const kernel::FragOrder* lhs, const kernel::FragOrder* rhs )
+        {
+            return lhs->GetName() < rhs->GetName();
+        }
+        bool operator()( const QString& lhs, const QString& rhs ) const
+        {
+            return ( lhs.isEmpty() && ! rhs.isEmpty() ) ? false : ( ( rhs.isEmpty() && !lhs.isEmpty() ) ? true : lhs < rhs );
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::AddMissionGroup
+// Created: SBO 2008-10-20
+// -----------------------------------------------------------------------------
+template< typename E, typename T >
+void EventOrderWidget::AddMissionGroupToMenu( kernel::ContextMenu& menu, const QString& prefix, const T& list, const char* slot, int current )
+{
+    if( list.empty() )
+        return;
+    if( prefix.isEmpty() )
+    {
+        if( menu.idAt( 0 ) != -1 )
+            menu.addSeparator()->setText( "" );
+    }
+    else
+    {
+        if( !menu.count() ) // $$$$ FPT 2011-08-12 : Can't have a separator without an item before
+        {
+            menu.insertItem( "", 0 );
+            menu.setItemFont( 0, QFont ( "Arial", 1 ) );
+            menu.setItemEnabled( 0, false );
+        }
+        menu.addSeparator()->setText( prefix );
+    }
+    for( T::const_iterator it = list.begin(); it != list.end(); ++it )
+    {
+        const E& order = **it;
+        const int id = menu.insertItem( FormatName( order, prefix ), this, slot );
+        menu.setItemParameter( id, order.GetId() );
+        menu.setItemChecked( id, current == int( order.GetId() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::AddMissions
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+QAction* EventOrderWidget::AddMissionsToMenu( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot, int current )
+{
+    kernel::ContextMenu& missions = *new kernel::ContextMenu( &menu );
+    QString lastPrefix;
+    typedef std::map< QString, std::set< const kernel::Mission*, MissionComparator >, MissionComparator > T_Missions;
+    T_Missions list;
+    while( it.HasMoreElements() )
+    {
+        const kernel::Mission& mission = it.NextElement();
+        const QString prefix = GetPrefix( mission.GetName().c_str() );
+        list[ prefix ].insert( &mission );
+    }
+    for( T_Missions::const_iterator itM = list.begin(); itM != list.end(); ++itM )
+        AddMissionGroupToMenu< kernel::Mission >( missions, itM->first, itM->second, slot, current );
+    return menu.InsertItem( "Order", name, &missions, 3 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::AddFragOrders
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+QAction* EventOrderWidget::AddFragOrdersToMenu( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot )
+{
+    kernel::ContextMenu& orders = *new kernel::ContextMenu( &menu );
+    typedef std::map< QString, std::set< const kernel::FragOrder*, MissionComparator >, MissionComparator > T_FragOrders;
+    T_FragOrders list;
+    if( const kernel::Mission* mission = decisions.GetCurrentMission() )
+    {
+        tools::Iterator< const kernel::FragOrder& > it = static_cast< const tools::Resolver< kernel::FragOrder >& >( *mission ).CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::FragOrder& element = it.NextElement();
+            list[ element.GetType().IsMissionRequired() ? mission->GetName().c_str() : "" ].insert( &element );
+        }
+        it = decisions.GetFragOrders();
+        while( it.HasMoreElements() )
+        {
+            const kernel::FragOrder& element = it.NextElement();
+            if( element.GetType().IsMissionRequired() && element.GetType().IsAvailableFor( *selectedEntity_ ) )
+                list[ "" ].insert( &element );
+        }
+    }
+    {
+        tools::Iterator< const kernel::FragOrder& > it = decisions.GetFragOrders();
+        while( it.HasMoreElements() )
+        {
+            const kernel::FragOrder& element = it.NextElement();
+            if( !element.GetType().IsMissionRequired() && element.GetType().IsAvailableFor( *selectedEntity_ ) )
+                list[ "" ].insert( &element );
+        }
+    }
+    for( T_FragOrders::const_iterator itM = list.begin(); itM != list.end(); ++itM )
+        AddMissionGroupToMenu< kernel::FragOrder >( orders, itM->first, itM->second, slot, -1 );
+    return menu.InsertItem( "Order", name, &orders, 2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::AddMissions
+// Created: AGE 2007-04-04
+// -----------------------------------------------------------------------------
+void EventOrderWidget::AddMissionsToMenu( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap /* = QPixmap()*/ )
+{
+    if( !decisions.CanBeOrdered() )
+        return;
+
+    const kernel::Mission* current = decisions.GetCurrentMission();
+    QAction* action = AddMissionsToMenu( decisions.GetMissions(), menu, name, slot, current ? current->GetId() : -1 );
+    if( !pixmap.isNull() )
+    {
+        QIcon icon( pixmap );
+        action->setIcon( icon );
+    }
+
+    AddFragOrdersToMenu( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::ActivateAgentMission
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void EventOrderWidget::ActivateAgentMission( int id )
+{
+    assert( selectedEntity_ );
+    const kernel::Entity_ABC& entity = *selectedEntity_;
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit SelectMission( entity, eMissionType_Pawn, id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::ActivateAutomatMission
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void EventOrderWidget::ActivateAutomatMission( int id )
+{
+    assert( selectedEntity_ );
+    if( !selectedEntity_->Retrieve< kernel::AutomatDecisions_ABC >() )
+        selectedEntity_ = selectedEntity_->Get< kernel::TacticalHierarchies >().GetSuperior();
+    const kernel::Entity_ABC& entity = *selectedEntity_;
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit SelectMission( entity, eMissionType_Automat, id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::ActivatePopulationMission
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void EventOrderWidget::ActivatePopulationMission( int id )
+{
+    assert( selectedEntity_ );
+    const kernel::Entity_ABC& entity = *selectedEntity_;
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit SelectMission( entity, eMissionType_Population, id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::ActivateFragOrder
+// Created: AGE 2006-04-05
+// -----------------------------------------------------------------------------
+void EventOrderWidget::ActivateFragOrder( int id )
+{
+    assert( selectedEntity_ );
+    if( !selectedEntity_->Retrieve< kernel::AutomatDecisions_ABC >() )
+    {
+        kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( selectedEntity_->Get< kernel::TacticalHierarchies >().GetSuperior() );
+        if( const kernel::AutomatDecisions_ABC* decisions = superior->Retrieve< kernel::AutomatDecisions_ABC >() )
+            if( decisions->IsEmbraye() )
+                selectedEntity_ = superior;
+    }
+    const kernel::Entity_ABC& entity = *selectedEntity_;
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit SelectMission( entity, eMissionType_FragOrder, id );
 }

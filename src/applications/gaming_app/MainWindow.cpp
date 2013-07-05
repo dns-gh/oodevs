@@ -35,7 +35,6 @@
 #include "MagicOrdersInterface.h"
 #include "Menu.h"
 #include "MessagePanel.h"
-#include "MissionPanel.h"
 #include "ObjectKnowledgesLayer.h"
 #include "ObjectsLayer.h"
 #include "PopulationKnowledgesLayer.h"
@@ -283,7 +282,6 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::TooltipsLayer& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer& terrainLayer         = *new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), picker );
     gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation );
-    gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( dockContainer_->GetMissionPanel() );
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
     gui::Layer& eventLayer           = *new gui::MiscLayer< EventDockWidget >( dockContainer_->GetEventDockWidget() );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
@@ -331,10 +329,9 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( inhabitants, "main,miniviews", tr( "Populations" ) );
     AddLayer( agents, "main,miniviews", tr( "Units" ) );
     AddLayer( automats, "main,miniviews", tr( "Automats" ) );
-    AddLayer( missionsLayer, "main,miniviews" );
     AddLayer( actionsLayer, "main" );
     AddLayer( creationsLayer, "main" );
-    AddLayer( eventLayer, "main" );
+    AddLayer( eventLayer, "main,miniviews" );
     AddLayer( *parameters_, "main" );
     AddLayer( metrics, "main" );
     AddLayer( locationsLayer, "main" );

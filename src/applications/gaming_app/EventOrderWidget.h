@@ -41,9 +41,11 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class Mission;
     class OrderType;
     class Population_ABC;
     class Profile_ABC;
+    class Time_ABC;
 }
 
 namespace tools
@@ -76,7 +78,7 @@ public:
     //@{
              EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
                                actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
-                               gui::GlTools_ABC& tools );
+                               gui::GlTools_ABC& tools, const kernel::Time_ABC& simulation );
     virtual ~EventOrderWidget();
     //@}
 
@@ -102,7 +104,6 @@ private:
 
     //! @name Helpers
     //@{
-    void AddTargetToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu, E_MissionType allowedType );
     const Decisions_ABC* GetTargetDecision() const;
     void FillMission();
     void SetTarget( const kernel::Entity_ABC* entity );
@@ -114,14 +115,28 @@ private:
 
     template< typename T >
     void AddSingleOrder( const T& mission );
-
     template< typename T >
     void AddAllOrders();
-
     template< typename T >
     void AddCompatibleOrders( tools::Iterator< const T& > it );
-
     void AddCompatibleFragOrders( const Decisions_ABC& decisions );
+    //@}
+
+    //! @name Add to menu
+    //@{
+    void AddTargetToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu, E_MissionType allowedType );
+    QAction* AddFragOrdersToMenu( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
+    QAction* AddMissionsToMenu( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot, int current );
+    void AddMissionsToMenu( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
+    template< typename E, typename T >
+    void AddMissionGroupToMenu( kernel::ContextMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void SelectMission( const kernel::Entity_ABC& entity, E_MissionType type, int id );
     //@}
 
 private slots:
@@ -131,6 +146,12 @@ private slots:
     void OnMissionChanged( int id );
     void OnTargetSelected();
     void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
+    void OnSelectMission( const kernel::Entity_ABC& entity, E_MissionType type, int id );
+
+    void ActivateAgentMission( int );
+    void ActivateAutomatMission( int );
+    void ActivateFragOrder( int );
+    void ActivatePopulationMission( int );
     //@}
 
 private:
@@ -141,6 +162,7 @@ private:
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const kernel::Profile_ABC& profile_;
     gui::GlTools_ABC& tools_;
+    const kernel::Time_ABC& simulation_;
 
     gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
     QVBoxLayout* missionComboLayout_;
@@ -153,7 +175,7 @@ private:
     E_MissionType currentType_;
     bool missionChoosed_;
 
-    kernel::SafePointer< kernel::Entity_ABC > contextMenuEntity_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     kernel::SafePointer< kernel::Entity_ABC > target_;
     //@}
 };

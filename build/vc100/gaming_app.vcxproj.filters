@@ -113,12 +113,6 @@
     <Filter Include="Source Files\Resources">
       <UniqueIdentifier>{58163413-91c7-4a10-ac65-2ac20b2e717a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Missions">
-      <UniqueIdentifier>{fc4e162d-277a-4896-b127-8b67e162b048}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Missions\Magic orders">
-      <UniqueIdentifier>{4c13e0e5-ff7c-4cf8-aee5-10db934a1921}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Creation">
       <UniqueIdentifier>{6a6f7c7f-ea79-44a4-87e9-278af061bb20}</UniqueIdentifier>
     </Filter>
@@ -172,6 +166,9 @@
     </Filter>
     <Filter Include="Source Files\Dialogs\Events">
       <UniqueIdentifier>{32874e40-5761-4940-9f17-c6cde6ba3f4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Magic orders">
+      <UniqueIdentifier>{4c13e0e5-ff7c-4cf8-aee5-10db934a1921}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -553,23 +550,20 @@
     <ClCompile Include="..\..\src\applications\gaming_app\icons.cpp">
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\MissionPanel.cpp">
-      <Filter>Source Files\Missions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\KnowledgeGroupMagicOrdersInterface.cpp">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\MagicOrdersInterface.cpp">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\ObjectMagicOrdersInterface.cpp">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\PopulationMagicOrdersInterface.cpp">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\UnitMagicOrdersInterface.cpp">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\CreationPanels.cpp">
       <Filter>Source Files\Creation</Filter>
@@ -1429,23 +1423,20 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\PopulationOptionChooser.h">
       <Filter>Source Files\Menus\Population</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\MissionPanel.h">
-      <Filter>Source Files\Missions</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\KnowledgeGroupMagicOrdersInterface.h">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\MagicOrdersInterface.h">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\ObjectMagicOrdersInterface.h">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\PopulationMagicOrdersInterface.h">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\UnitMagicOrdersInterface.h">
-      <Filter>Source Files\Missions\Magic orders</Filter>
+      <Filter>Source Files\Magic orders</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\FireCreationPanel.h">
       <Filter>Source Files\Creation</Filter>

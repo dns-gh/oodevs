@@ -13,6 +13,7 @@
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
+#include "actions/EngageMagicAction.h"
 #include "actions/Point.h"
 #include "actions/String.h"
 #include "actions/Bool.h"
@@ -141,6 +142,11 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
             AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
         else
             AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
+
+        if( !decisions->IsEmbraye() )
+            menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
+        else if( bMoveAllowed )
+            menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
     AddReloadBrainMenu( magicMenu, static_.types_.automatModels_, decisions ? decisions->ModelName() : "unknown",
@@ -625,4 +631,42 @@ void UnitMagicOrdersInterface::AddReloadBrainMenu( QMenu* parent, const tools::S
     }
     connect(menu, SIGNAL( triggered(QAction*) ), this, SLOT( ReloadBrain(QAction*) ) );
     parent->addMenu( menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::Engage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::Engage()
+{
+    if( !selectedEntity_ )
+        return;
+    kernel::AutomatDecisions_ABC* decisions = selectedEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >();
+    if( !decisions )
+        return;
+
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_mode" );
+    actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Engage" ), true, true );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
+    action->RegisterAndPublish( actionsModel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::Disengage
+// Created: SBO 2006-06-19
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::Disengage()
+{
+    if( !selectedEntity_ )
+        return;
+    kernel::AutomatDecisions_ABC* decisions = selectedEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >();
+    if( !decisions )
+        return;
+
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_mode" );
+    actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Disengage" ), false, true );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
+    action->RegisterAndPublish( actionsModel_ );
 }

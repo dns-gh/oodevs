@@ -50,7 +50,6 @@ class FormationLayer;
 class IndicatorExportDialog;
 class IndicatorPlotFactory;
 class LinkInterpreter;
-class MissionPanel;
 class Model;
 class Network;
 class OrbatDockWidget;
@@ -91,7 +90,6 @@ public:
     //! @name Accessors
     //@{
     CreationPanels& GetCreationPanel() const;
-    MissionPanel& GetMissionPanel() const;
     gui::Logger& GetLoggerPanel() const;
     ProfilingPanel& GetProfilingPanel() const;
     gui::TerrainProfiler& GetTerrainProfiler() const;
@@ -103,7 +101,6 @@ private:
     //! @name Panels
     //@{
     CreationPanels* creationPanel_;
-    MissionPanel* missionPanel_;
     OrbatDockWidget* orbatDockWidget_;
     gui::Logger* loggerPanel_;
     AfterAction* afterAction_;

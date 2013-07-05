@@ -90,6 +90,8 @@ private slots:
     void ActivateBrainDebug();
     void DeactivateBrainDebug();
     void FinishLogisticHandlings();
+    void Engage();
+    void Disengage();
     //@}
 
 private:

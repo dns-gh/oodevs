@@ -25,7 +25,6 @@
 #include "ExtensionsPanel.h"
 #include "InhabitantPanel.h"
 #include "LinkInterpreter.h"
-#include "MissionPanel.h"
 #include "NotesPanel.h"
 #include "OrbatDockWidget.h"
 #include "PlanificationModePanel.h"
@@ -74,16 +73,6 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     plotFactory_.reset( new IndicatorPlotFactory( parent, controllers, network.GetMessageMgr(), indicatorExportDialog, simulation ) );
 
     // -----------------------------------------------------------------------------
-    // Floating
-    // -----------------------------------------------------------------------------
-    // Event panel
-    {
-        eventDockWidget_ = new EventDockWidget( parent, controllers, model, config, simulation, *interfaceBuilder_, profile, proxy );
-        eventDockWidget_->SetModes( eModes_Default );
-        parent->addDockWidget( Qt::LeftDockWidgetArea, eventDockWidget_ );
-    }
-
-    // -----------------------------------------------------------------------------
     // Left
     // -----------------------------------------------------------------------------
     // ResourceNetwork panel
@@ -115,12 +104,12 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         properties->SetModes( eModes_Default );
         parent->addDockWidget( Qt::LeftDockWidgetArea, properties );
     }
-    // Mission panel
+    // Event panel
     {
-        missionPanel_ = new MissionPanel( parent, controllers, staticModel, network.GetMessageMgr(), proxy, profile, model.actions_, simulation, *interfaceBuilder_, config, model.timelinePublisher_ );
-        missionPanel_->SetModes( eModes_Default | eModes_Replay );
-        missionPanel_->SetMenuVisibility( false );
-        parent->addDockWidget( Qt::LeftDockWidgetArea, missionPanel_ );
+        eventDockWidget_ = new EventDockWidget( parent, controllers, model, config, simulation, *interfaceBuilder_, profile, proxy );
+        eventDockWidget_->SetModes( eModes_Default );
+        //eventDockWidget_->SetMenuVisibility( false );
+        parent->addDockWidget( Qt::LeftDockWidgetArea, eventDockWidget_ );
     }
     // Orbat panel
     {
@@ -212,7 +201,6 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         timelineDockWidget_ = new TimelineDockWidget( parent, controllers, config, model );
         timelineDockWidget_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timelineDockWidget_ );
-        QObject::connect( missionPanel_,       SIGNAL( CreateEvent( const timeline::Event& ) ),           timelineDockWidget_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
         QObject::connect( eventDockWidget_,    SIGNAL( CreateEvent( const timeline::Event& ) ),           timelineDockWidget_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
         QObject::connect( eventDockWidget_,    SIGNAL( EditEvent( const timeline::Event& ) ),             timelineDockWidget_, SIGNAL( EditEvent( const timeline::Event& ) ) );
         QObject::connect( eventDockWidget_,    SIGNAL( DeleteEvent( const std::string& ) ),               timelineDockWidget_, SIGNAL( DeleteEvent( const std::string& ) ) );
@@ -256,7 +244,6 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
 DockContainer::~DockContainer()
 {
     delete afterAction_;
-    delete missionPanel_;
     delete eventDockWidget_;
     if( timelineDockWidget_ )
         delete timelineDockWidget_;
@@ -268,7 +255,6 @@ DockContainer::~DockContainer()
 // -----------------------------------------------------------------------------
 void DockContainer::Purge()
 {
-    missionPanel_->Purge();
     orbatDockWidget_->Purge();
     if( timelineDockWidget_ )
         timelineDockWidget_->Disconnect();
@@ -291,15 +277,6 @@ void DockContainer::Load()
 CreationPanels& DockContainer::GetCreationPanel() const
 {
     return *creationPanel_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DockContainer::GetMissionPanel
-// Created: ABR 2013-02-13
-// -----------------------------------------------------------------------------
-MissionPanel& DockContainer::GetMissionPanel() const
-{
-    return *missionPanel_;
 }
 
 // -----------------------------------------------------------------------------

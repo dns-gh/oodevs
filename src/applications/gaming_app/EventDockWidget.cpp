@@ -59,18 +59,12 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     setFloating( true );
     hide();
 
+    // Header / footer
     topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
     bottomWidget_ = new EventBottomWidget();
 
-    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), topWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
-    connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
-    connect( bottomWidget_, SIGNAL( CreateReminder() ), this, SLOT( OnCreateReminder() ) );
-    connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
-    connect( bottomWidget_, SIGNAL( Save() ),           this, SLOT( OnSave() ) );
-    connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
-
     // Content
-    EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools );
+    EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools, simulation_ );
     EventSupervisorActionWidget* supervisorWidget = new EventSupervisorActionWidget();
     EventReportWidget* reportWidget = new EventReportWidget();
     EventTaskWidget* taskWidget = new EventTaskWidget();
@@ -94,8 +88,16 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     mainLayout->addWidget( stack_, 1 );
     mainLayout->addWidget( bottomWidget_ );
     setWidget( mainWidget );
-
     SetContentVisible( false );
+
+    // Connections
+    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), topWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
+    connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
+    connect( bottomWidget_, SIGNAL( CreateReminder() ), this, SLOT( OnCreateReminder() ) );
+    connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
+    connect( bottomWidget_, SIGNAL( Save() ),           this, SLOT( OnSave() ) );
+    connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
+    connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
 }
 
 // -----------------------------------------------------------------------------
