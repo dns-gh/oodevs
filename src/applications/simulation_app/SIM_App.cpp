@@ -62,7 +62,6 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpC
     , nIconIndex_    ( 0 )
 {
     config_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
-
     bool bClearPreviousLog = !config_->HasCheckpoint();
     tools::ExerciseConfig* exerciceConfig = static_cast< tools::ExerciseConfig* >( config_.get() );
     logger_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Sim.log" ),

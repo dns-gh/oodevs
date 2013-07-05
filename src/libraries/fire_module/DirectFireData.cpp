@@ -123,12 +123,12 @@ void DirectFireData::Fire( const wrapper::View& target, const T_Components& targ
 // -----------------------------------------------------------------------------
 void DirectFireData::Fire( const wrapper::View& element )
 {
-    const SWORD_Model* pFirer = 0;
-    const Weapon* pFirerWeapon = 0;
-    while( GetUnusedFirerWeapon( pFirer, pFirerWeapon ) )
+    const SWORD_Model* firer = 0;
+    const Weapon* weapon = 0;
+    while( GetUnusedFirerWeapon( firer, weapon ) )
     {
-        pFirerWeapon->DirectFire( entity_, element );
-        ReleaseWeapon( pFirer, *pFirerWeapon );
+        weapon->DirectFire( entity_, element );
+        ReleaseWeapon( firer, *weapon );
     }
 }
 
