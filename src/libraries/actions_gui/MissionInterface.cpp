@@ -150,6 +150,7 @@ void MissionInterface::Build( InterfaceBuilder_ABC& builder, const kernel::Order
         {
             fileName.MakePreferred();
             QWebView* missionSheetText = new QWebView( helpTab_ );
+            missionSheetText->setZoomFactor( 0.75 );
             missionSheetText->setContextMenuPolicy( Qt::NoContextMenu );
             missionSheetText->load( QUrl( fileName.Normalize().ToUTF8().c_str() ) );
             widgetToDelete_.push_back( missionSheetText );
