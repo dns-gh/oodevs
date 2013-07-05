@@ -128,14 +128,12 @@ public:
             MIL_AutomateLOG*    FindBrainLogistic( unsigned int nID ) const;
             MIL_AutomateLOG*    FindBrainLogistic( const sword::MissionParameter_Value& parameter ) const;
             MIL_AutomateLOG*    FindBrainLogistic( const sword::ParentEntity& parameter ) const;
-    virtual MIL_Automate*       FindAutomate      ( unsigned int nID ) const;
-    virtual MIL_Population*     FindPopulation    ( unsigned int nID ) const;
-    virtual MIL_Inhabitant*     FindInhabitant    ( unsigned int nID ) const;
-    virtual MIL_Formation*      FindFormation     ( unsigned int nID ) const;
-    virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const;
-    virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroupFromParents( unsigned int nID ) const;
-    virtual MIL_AgentPion*      FindAgentPion     ( unsigned int nID ) const;
-    virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
+    virtual MIL_Automate*       FindAutomate     ( unsigned int nID ) const;
+    virtual MIL_Population*     FindPopulation   ( unsigned int nID ) const;
+    virtual MIL_Inhabitant*     FindInhabitant   ( unsigned int nID ) const;
+    virtual MIL_Formation*      FindFormation    ( unsigned int nID ) const;
+    virtual MIL_AgentPion*      FindAgentPion    ( unsigned int nID ) const;
+    virtual MIL_Object_ABC*     FindObject       ( unsigned int nID ) const;
 
     void VisitUniversalObjects( const boost::function< void( MIL_Object_ABC& ) >& visitor ) const;
 
@@ -229,6 +227,9 @@ public:
 private:
     //! @name Helpers
     //@{
+    boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const;
+    boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroupFromParents( unsigned int nID ) const;
+
     void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessChangeLogisticLinks         ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
@@ -246,7 +247,6 @@ private:
     void ProcessFormationChangeSuperior     ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     //@}
 
-private:
     //! @name Init
     //@{
     void ReadOrbat          ( xml::xistream& xis, const MIL_Config& config );

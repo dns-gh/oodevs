@@ -24,7 +24,6 @@ MOCK_BASE_CLASS( MockMIL_EntityManager_ABC, MIL_EntityManager_ABC )
     MOCK_METHOD( FindAutomate, 1 );
     MOCK_METHOD( FindObject, 1 );
     MOCK_METHOD( FindPopulation, 1 );
-    MOCK_METHOD( FindKnowledgeGroup, 1 ); // LTO
 
     MOCK_METHOD( CreateObject, 3, MIL_Object_ABC*( const std::string&, MIL_Army_ABC*, const TER_Localisation& ), CreateObjectFromType );
     MOCK_METHOD( CreateObject, 2, MIL_Object_ABC*( MIL_Army_ABC*, const MIL_ObjectBuilder_ABC& ), CreateObjectFromBuilder );
