@@ -238,6 +238,7 @@ private:
     std::set< unsigned int > additionalPerceptions_;
     T_KnowledgeGroupVector knowledgeGroups_; // LTO
     double timeToDiffuse_; // LTO
+    int bDiffuseToKnowledgeGroup_;
     bool isActivated_; // LTO
     bool hasBeenUpdated_;
     bool isJammed_;

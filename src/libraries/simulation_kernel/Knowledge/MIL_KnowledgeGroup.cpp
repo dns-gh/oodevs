@@ -71,6 +71,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , isJammed_           ( false )
     , createdByJamming_   ( false )
     , jammedPion_         ( 0 )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     idManager_.Lock( id_ );
 }
@@ -93,6 +94,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , isJammed_           ( false )
     , createdByJamming_   ( false )
     , jammedPion_         ( 0 )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     if( ! type_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Knowledge group '%d' cannot be created because its type does not exist: %s ", id_, xis.attribute< std::string >( "type" ).c_str() ) );
@@ -118,6 +120,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , isJammed_           ( false )
     , createdByJamming_   ( false )
     , jammedPion_         ( 0 )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     // NOTHING
 }
@@ -139,6 +142,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , isJammed_           ( true )
     , createdByJamming_   ( true )
     , jammedPion_         ( &pion )
+    , bDiffuseToKnowledgeGroup_( false )
 {
     if( parent_ )
         timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();
@@ -1056,6 +1060,11 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
     ApplyOnKnowledgesPopulationPerception( currentTimeStep );
     ApplyOnKnowledgesAgentPerception( currentTimeStep );
     ApplyOnKnowledgesObjectPerception( currentTimeStep );
+    if( bDiffuseToKnowledgeGroup_ )
+    {
+        bDiffuseToKnowledgeGroup_ = false;
+        RefreshTimeToDiffuseToKnowledgeGroup();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1166,7 +1175,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                 parent_->GetKnowledge()->GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( functorAgent );
                 parent_->GetKnowledge()->GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
             }
-            RefreshTimeToDiffuseToKnowledgeGroup();
+            bDiffuseToKnowledgeGroup_ = true;
         }
         // LTO end
     }
@@ -1197,7 +1206,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
                 parent_->GetKnowledge()->GetKnowledgeObjectContainer().ApplyOnPreviousKnowledgesObject( functorObject );
                 parent_->GetKnowledge()->GetKnowledgeObjectContainer().SaveAllCurrentKnowledgeObject();
             }
-            RefreshTimeToDiffuseToKnowledgeGroup();
+            bDiffuseToKnowledgeGroup_ = true;
         }
     }
 }
