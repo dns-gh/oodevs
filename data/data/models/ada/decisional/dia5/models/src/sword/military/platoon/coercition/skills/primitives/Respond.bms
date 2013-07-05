@@ -8,6 +8,7 @@ rootnode
     done = function( self ) end,
  
     activate = function( self )
+        local Activate = Activate
         -- Manage respond if under fire
         for _, entity in pairs( self.params.entities ) do
             if entity:canRespond() then

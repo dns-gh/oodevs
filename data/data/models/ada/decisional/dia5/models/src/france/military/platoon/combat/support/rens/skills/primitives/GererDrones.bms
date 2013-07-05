@@ -16,6 +16,7 @@ rootnode
     end,
     
     activate = function( self )
+        local Activate = Activate
         for pionSource in pairs( meKnowledge.dronesToEmbark ) do
            local pion = CreateKnowledge( sword.military.world.PlatoonAlly, pionSource )
            if pion:isOperational() then

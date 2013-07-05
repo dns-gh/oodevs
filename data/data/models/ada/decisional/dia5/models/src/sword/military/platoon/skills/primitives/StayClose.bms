@@ -15,6 +15,7 @@ rootnode
     -- For each objective of the skill, stay close to it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         local positions = {}
         if self.params.positions == NIL then
             positions = sword.military.queries.tactical.getPositionsToFollow[ "execute" ]( 

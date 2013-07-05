@@ -28,6 +28,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
 
+        local Activate = Activate
         if self.arrived then -- once arrived in camp, discharge elements
             for _, element in pairs( self.params.elements ) do
                if not element:isLoaded() then

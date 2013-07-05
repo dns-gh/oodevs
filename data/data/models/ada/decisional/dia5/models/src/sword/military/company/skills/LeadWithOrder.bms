@@ -104,7 +104,6 @@ create = function( self )
             integration.setNeedReinforcement( pion, nil, nil, false )
         end
         -- Init
-        local Activate = Activate
         myself.leadData = {}
         myself.leadData.noASSScoutUnit = false
         self.entitiesWithoutMission = copyTable( self.parameters.commandingEntities )

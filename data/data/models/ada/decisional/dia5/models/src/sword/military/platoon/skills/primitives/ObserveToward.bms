@@ -13,6 +13,7 @@ rootnode
     -- For each objective of the skill, try to observe it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.ObserveTowardElement, entity:observationPriority(),
                 { entity = entity, positions = self.params.positions } )
@@ -30,6 +31,7 @@ node "ObserveTowardElement"
     -- Move toward the observing elements using the skill MoveAndTakePosition
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- Main observation effort on current neutralizable element
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
 

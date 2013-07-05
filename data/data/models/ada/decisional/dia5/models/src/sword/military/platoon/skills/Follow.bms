@@ -11,6 +11,7 @@ rootnode
     -- For each objective of the skill, stay close to it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- Verify that entities can be followed
         self.entities = {}
         for _, entity in pairs( self.params.entities ) do

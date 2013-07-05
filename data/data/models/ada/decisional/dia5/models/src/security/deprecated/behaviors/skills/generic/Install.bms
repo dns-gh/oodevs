@@ -26,6 +26,7 @@ rootnode
     -- If element is reached and if agent can install it then install.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if self.arrived then
             Activate( skill.nodes.Install, 1, { element = self.params.element } )
         end

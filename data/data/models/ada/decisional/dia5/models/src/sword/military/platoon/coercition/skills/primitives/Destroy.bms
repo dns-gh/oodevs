@@ -33,6 +33,7 @@ rootnode
     -- For each objective of the skill, try to destroy it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
 
         local positions
         if self.params.positions == NIL then
@@ -62,6 +63,7 @@ node "DestroyElement"
     -- Move toward a destroying element and edstroy the entity
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- Check if target is valid
         if not self.params.entity:isValid() then
             Activate( skill.nodes.CR_TargetInvalid, 1, { RC = eRC_InvalidTarget } )

@@ -25,6 +25,7 @@ rootnode
     -- take position on it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- move toward the entities
         if self.params.entity:canTakePosition() or myself.blocked or myself.blockForcesContinue then
             Activate( skill.nodes.TakePosition, 1, { position = self.params.entity } )

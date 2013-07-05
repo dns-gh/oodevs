@@ -33,6 +33,7 @@ rootnode
     -- Try to load each elements.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.LoadElement, entity:loadPriority(),
                 { entity = entity, positions = self.positions } )
@@ -76,6 +77,7 @@ node "LoadElement"
     -- Try to reach a loading position
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if self.params.entity:isLoaded() then
             Feedback( self.feedbacks.loaded, { element = self.params.entity } )
             return

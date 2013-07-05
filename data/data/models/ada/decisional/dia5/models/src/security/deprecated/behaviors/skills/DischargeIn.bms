@@ -18,6 +18,7 @@ rootnode
     -- For each objective of the skill, reconnoiter it. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for _, element in pairs( self.params.treatingElements ) do
             Activate( skill.links.discharge, element:getScoreAsMeanToTreat(),{ element = element } )
         end

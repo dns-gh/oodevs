@@ -53,6 +53,7 @@ node "ScoutElement"
     -- Move toward a reconnoitering element and recconnoiter the entity
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- Feedback is sent only if element is recongized and if movement is done
         -- toward the reconnoitring position.
         if self.params.entity:isReconnoitred() and self.movementDone then

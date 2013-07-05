@@ -21,6 +21,7 @@ rootnode
     end,
     
     activate = function( self )
+        local Acticate = Activate
         if ( self.area:getMyPosition():isVisible() ) then
             Activate( skill.links.modifierAltitude, 1, { HauteurDeVol = 3000 } )
             self.area:getIntelligence()

@@ -26,6 +26,7 @@ rootnode
     -- Move along the entities.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if not self.firstMoveIsDone then
             Activate( skill.links.moveAlong,1, { entities  = self.params.entities } )
         else

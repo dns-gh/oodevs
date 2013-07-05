@@ -23,6 +23,7 @@ rootnode
     -- If element is reached and if agent can supply stock, supply.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
        if self.arrived then
            if self.params.stock:isSupplyPossible( self.params.resourceTypes ) == true then
                self.params.stock:supply( self.params.resourceTypes )

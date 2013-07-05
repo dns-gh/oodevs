@@ -13,6 +13,7 @@ rootnode
     end,
 
     activate = function( self )
+        local Activate = Activate
         if self.params.byNight and not integration.isNight() then
             Activate( skill.nodes.CR, 1, { RC = eRC_AttenteConditionFavorablePourInfiltration } )
             return

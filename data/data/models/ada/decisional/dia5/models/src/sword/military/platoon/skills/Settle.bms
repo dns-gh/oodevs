@@ -10,6 +10,7 @@ rootnode {
     end,
 
     activate = function( self )
+        local Activate = Activate
         rDistanceLigne = settleDistance( self.resultatCalcul )
         if rDistanceLigne < 300 then
             Activate( skill.links.moveToward, 1000, { entity  = meKnowledge:getMyPosition() } )

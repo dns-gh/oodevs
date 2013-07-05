@@ -58,6 +58,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
     
+        local Activate = Activate
         self.startDecrocher = false
 
         -- moving toward next fire position

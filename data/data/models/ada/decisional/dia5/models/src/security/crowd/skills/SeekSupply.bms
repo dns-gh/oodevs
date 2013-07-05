@@ -19,6 +19,7 @@ rootnode
     end,
 
     activate = function( self )
+        local Activate = Activate
         if self.arrived == false then
             for _, supplyPoint in pairs( self.params.supplyPoints ) do
                 Activate( skill.links.moveTo, supplyPoint:proximityLevel(), { element = supplyPoint } )

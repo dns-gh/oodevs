@@ -16,7 +16,8 @@ rootnode
     end,
             
     activate = function( self )
-	     Activate( skill.links.moveToward, 1, { entities = { self.params.objective } } )
+        local Activate = Activate
+	Activate( skill.links.moveToward, 1, { entities = { self.params.objective } } )
         if self.isPosted then
             if self.params.objective:isReached() then
                 Activate( skill.nodes.JammingActivation, 1, { position = self.params.objective } )

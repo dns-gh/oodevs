@@ -33,6 +33,7 @@ rootnode
     -- Try to unload each elements.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.UnloadElement, entity:unloadPriority(),
                 { entity = entity, positions = self.params.positions } )
@@ -77,6 +78,7 @@ node "UnloadElement"
     -- Try to reach a (un)loading position
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- Main observation effort on current neutralizable element
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
 

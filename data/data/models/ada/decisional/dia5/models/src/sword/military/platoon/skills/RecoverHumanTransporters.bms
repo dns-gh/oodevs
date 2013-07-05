@@ -12,6 +12,7 @@
 rootnode
 {
     create = function( self )
+        local Activate = Activate
         local fragOrder = CreateFragOrder("Rep_OrderConduite_RecupererTransporteurs")
         local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )       
             

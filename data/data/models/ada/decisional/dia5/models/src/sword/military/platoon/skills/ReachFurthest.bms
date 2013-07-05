@@ -22,6 +22,7 @@ rootnode
     -- Get furthest element and reach it. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- Select furthest position
         local furthestPosition = next( self.positions )
         for position in pairs( self.positions ) do  -- select the furthest element

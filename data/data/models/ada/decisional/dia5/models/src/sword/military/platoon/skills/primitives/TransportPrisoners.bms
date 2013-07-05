@@ -18,6 +18,7 @@ rootnode
     -- For each objective of the skill, stay close to it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
 
         -- Filtering platoons to be transported 
         self.platoons = {} -- init

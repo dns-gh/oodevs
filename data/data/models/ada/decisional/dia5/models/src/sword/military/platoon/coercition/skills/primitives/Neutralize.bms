@@ -32,6 +32,7 @@ rootnode
     -- Try to neutralize each element
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         local positions
         if self.params.positions == NIL then
             positions = sword.military.queries.tactical.getPositionsToDestroy[ "execute" ]( { elementsToDestroy = self.params.entities, dynamic = true } )
@@ -63,6 +64,7 @@ node "NeutralizeElement"
     -- Try to reach a neutrlaizing position and to neutralize the element.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- when the entity is not operationnal send a feedback containing the entity
         if not self.params.entity:isOperational() then
             Feedback( self.feedbacks.done, { reason = "neutralized", element = self.params.entity } )

@@ -28,6 +28,7 @@ rootnode
             end
         end
         if maxSpeed < 0.01 then
+            local Activate = Activate
             Activate( skill.nodes.Wait, 1000, emptyTable ) -- $$$ MIA???? TODO A REVOIR
         else
             DEC_ModulationVitesseMax( maxSpeed ) -- $$$ MIA TODO a appler dans le moveto côté intégration

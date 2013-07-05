@@ -30,6 +30,7 @@ rootnode
     -- If element is reached and if agent can build it then build it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if self.params.element:isExtinguished() then
 	        Feedback( self.feedbacks.done, { reason = "extinguished", element = self.params.element } )
             return

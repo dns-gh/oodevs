@@ -46,7 +46,6 @@ create = function( self )
         self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
         -- Init
-        local Activate = Activate
         myself.leadData = {}
         myself.leadData.taskError = false
         self.entitiesWithoutMission = copyTable( self.parameters.commandingEntities )
@@ -72,7 +71,6 @@ create = function( self )
 end,
 
 activate = function( self )
-    local Activate = Activate
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
     local pionsPE =  echelons[1]
     local pionsSE =  echelons[2]

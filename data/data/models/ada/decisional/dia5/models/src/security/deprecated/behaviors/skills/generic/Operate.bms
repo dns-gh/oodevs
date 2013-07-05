@@ -26,6 +26,7 @@ rootnode
     -- If element is reached and if agent can build it then build it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if self.arrived and self.params.element:canAnimateIt() then
             Activate( skill.nodes.Animate, 1, { element = self.params.element } )
         end

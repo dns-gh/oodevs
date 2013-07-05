@@ -24,6 +24,7 @@ rootnode
     end,
     
     activate = function( self ) 
+        local Activate = Activate
         if not meKnowledge.source:GetbMiseEnOeuvre_() then
             Activate( skill.nodes.CR, 1, { RC = eRC_DroneDoitEtreMisEnOeuvre } )
             return

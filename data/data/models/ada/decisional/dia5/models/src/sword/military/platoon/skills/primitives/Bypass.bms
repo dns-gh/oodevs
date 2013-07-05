@@ -45,6 +45,7 @@ rootnode
     -- For each objective of the skill, try to remove it. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for entity in pairs( self.targets ) do
             Activate( skill.nodes.bypassElement, entity:bypassPriority(), 
                 { entity = entity, positions = self.params.positions, avoidObstacles = self.params.avoidObstacles } )

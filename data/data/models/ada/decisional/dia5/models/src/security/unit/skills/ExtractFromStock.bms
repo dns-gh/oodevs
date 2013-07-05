@@ -23,6 +23,7 @@ rootnode
     -- If element is reached and if agent can extract stock, extract.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
        if self.stock ~= nil then
            self.stock:extract( self.params.resourceTypes )
            if not self.stock:isExtractPossible( self.params.resourceTypes ) then

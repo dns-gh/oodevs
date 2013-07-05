@@ -38,6 +38,7 @@ rootnode
     -- Suppport element if possible, else try to coordinate
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for _, entity in pairs( self.entities ) do
             Activate( skill.nodes.SupportElement, entity:supportPriority(),
                 { entity = entity, retrogradeContext = self.params.retrogradeContext } )

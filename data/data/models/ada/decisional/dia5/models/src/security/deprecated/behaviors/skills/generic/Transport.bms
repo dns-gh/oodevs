@@ -26,6 +26,7 @@ rootnode
     -- If element is reached and if agent can transport it then transport it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if self.params.element:canTransportIt() and self.arrived then
             Activate( skill.nodes.Transport, 1, { element = self.params.element } )
         end

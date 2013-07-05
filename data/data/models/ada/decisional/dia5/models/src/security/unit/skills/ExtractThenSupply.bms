@@ -36,6 +36,7 @@ rootnode
     -- Extract then supply
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if meKnowledge.mustStopAndGotoGarage == true then
             meKnowledge.mustStopAndGotoGarage = nil
             Feedback( self.feedbacks.done, { reason = "stopped" } )

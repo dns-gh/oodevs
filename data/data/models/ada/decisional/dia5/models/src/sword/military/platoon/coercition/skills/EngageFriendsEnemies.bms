@@ -8,6 +8,7 @@ rootnode
     end,
     
     activate = function( self )
+        local Activate = Activate
         local res = {}
         local entities = {}
         if next( myself.enemyToEngage[1] ) then

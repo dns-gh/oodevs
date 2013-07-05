@@ -26,6 +26,7 @@ rootnode
     -- If element is reached and if agent can dischargeIn it then dischargeIn it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if self.params.element:candischargeInIt() and self.arrived then
             Activate( skill.nodes.dischargeIn, 1, { element = self.params.element } )
         end

@@ -27,7 +27,6 @@ connections = {},
     end,
 
     activate = function( self )
-        local Activate = Activate
         -- Dès qu'un élément est à porter de tir de l'unité qu'il suit, dans ce cas, l'automate peut relever
         for _, elem in pairs (self.params.commandingEntities) do
             if myself.pionParams[elem] then

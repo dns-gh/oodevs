@@ -11,6 +11,7 @@ rootnode
     -- For each objective of the skill, try to activate it. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.animateElement, entity:animationPriority(), 
                 { entity = entity, positions = self.params.positions } )

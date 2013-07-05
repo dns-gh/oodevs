@@ -3,6 +3,7 @@ rootnode
     connections = { skill.links.observeToward,  skill.nodes.activateRadar },
   
     activate = function( self )
+        local Activate = Activate
         if meKnowledge:isPosted() then
              Activate( skill.nodes.activateRadar, 1, { area = self.params.area } )
         end

@@ -31,11 +31,11 @@ rootnode
     -- Select nearest element in objectives and move toward it. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if meKnowledge.mustStopAndGotoGarage == true then
             meKnowledge.mustStopAndGotoGarage = nil
             Feedback( self.feedbacks.done, { reason = "stopped" } )
         end
-
     
         if not self.builded then
             Activate( skill.links.build, 1, { entities   = self.genRoadBlocks, 

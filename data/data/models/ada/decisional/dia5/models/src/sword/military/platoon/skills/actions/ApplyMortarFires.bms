@@ -42,6 +42,7 @@ rootnode
     -- For each objective of the skill, try to shoot it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         
         if not self.order then -- received frago : apply fire
             self.order = integration.query.getFirstFireOrder()

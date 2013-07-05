@@ -14,6 +14,7 @@ end,
 
  activate = function( self )
     local getFragOrder = integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_PoursuivreConvoi" )
+    local Activate = Activate
     self.ePhase = integration.getActionCouranteConvoi()
     -- Action de chargement
     if self.ePhase == eConvoyerAction_Load then

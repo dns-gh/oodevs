@@ -11,6 +11,7 @@ rootnode {
     done = function( self ) end,
 
     activate = function( self )
+        local Activate = Activate
         local current
         self.last = math.huge
         -- self.last: the less value in advancement of all units (latest entity)

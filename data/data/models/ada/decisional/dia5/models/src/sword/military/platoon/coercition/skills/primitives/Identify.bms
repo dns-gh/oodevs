@@ -22,6 +22,7 @@ rootnode
     -- Try to Identify elements each element
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.IdentifyElement, entity:identificationPriority(),
                  { entity = entity } )
@@ -47,6 +48,7 @@ node "IdentifyElement"
     -- Move toward a destroying element and edstroy the entity
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- when the entity is identifyed send a feedback containing the entity
         if self.params.entity:isIdentified() then
             Feedback( self.feedbacks.done, { reason = "identified", element = self.params.entity } )

@@ -41,6 +41,7 @@ rootnode
     -- For each objective of the skill, try to remove it. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for entity in pairs( self.targets ) do
             Activate( skill.nodes.removeElement, entity:removalPriority(), 
                 { entity = entity, positions = self.params.positions, avoidObstacles = self.params.avoidObstacles } )
@@ -83,6 +84,7 @@ node "removeElement"
     -- Move toward a removing element and remove the entity
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         local cancelOrder = integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_Pion_AbandonnerTravaux" )
         if cancelOrder then
             Feedback( self.feedbacks.cancelled, {element = self.params.entity} )

@@ -49,6 +49,7 @@ rootnode
     -- Select next element in objectives and move toward it. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         if meKnowledge.mustStopAndGotoGarage == true then
             meKnowledge.mustStopAndGotoGarage = nil
             Feedback( self.feedbacks.done, { reason = "stopped", zone = self.params.zone } )

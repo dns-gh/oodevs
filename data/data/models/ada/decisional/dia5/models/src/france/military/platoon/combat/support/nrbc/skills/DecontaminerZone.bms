@@ -13,8 +13,6 @@ rootnode
     -- Decontaminate area
     -- --------------------------------------------------------------------------------
     activate = function( self )
-        local Activate = Activate
-        
         if meKnowledge:isPosted() then
             if self.params.area:decontaminateIt() then
                 Feedback( self.feedbacks.done )

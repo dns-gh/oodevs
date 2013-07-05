@@ -31,6 +31,7 @@ rootnode
     -- For each objective of the skill, try to activate it. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         for entity in pairs( self.targets ) do
             Activate( skill.nodes.activateElement, entity:activationPriority(), 
                 { entity = entity, positions = self.params.positions } )
@@ -72,6 +73,7 @@ node "activateElement"
     -- Move toward an animating element and activate the entity
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- when the entity is activated send a feedback
         if not self.params.entity:isManeuverObstacle() or self.params.entity:isActifManeuverObstacle() or self.params.entity:delayedActivationTime() > 0 then
                meKnowledge:RC( eRC_ObstacleNonActivable, self.params.entity.source )

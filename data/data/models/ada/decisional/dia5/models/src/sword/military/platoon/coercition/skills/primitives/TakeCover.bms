@@ -20,6 +20,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
 
+        local Activate = Activate
         if self.params.positions == NIL then
             self.positions = sword.military.queries.tactical.getPositionsToCover[ "execute" ]( 
                 { elementsToCoverFrom = self.params.entities, dynamic = true } )
@@ -54,6 +55,7 @@ node "TakeCoverAgainstElement"
     -- Self protect and try to reach a nearby covered position with respond capability
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        local Activate = Activate
         -- Main observation effort on current safeguardable element
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
 
