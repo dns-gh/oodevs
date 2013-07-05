@@ -94,6 +94,8 @@ type Automat struct {
 	Units            map[uint32]*Unit
 	Engaged          bool
 	KnowledgeGroupId uint32
+	LogSuperiors     []uint32
+	SuperiorQuotas   map[uint32]int32
 }
 
 func NewAutomat(id, partyId, knowledgeGroupId uint32, name string) *Automat {
@@ -109,14 +111,16 @@ func NewAutomat(id, partyId, knowledgeGroupId uint32, name string) *Automat {
 }
 
 type Formation struct {
-	Id         uint32
-	PartyId    uint32
-	ParentId   uint32
-	Name       string
-	Level      string
-	LogLevel   string
-	Formations map[uint32]*Formation
-	Automats   map[uint32]*Automat
+	Id             uint32
+	PartyId        uint32
+	ParentId       uint32
+	Name           string
+	Level          string
+	LogLevel       string
+	Formations     map[uint32]*Formation
+	Automats       map[uint32]*Automat
+	LogSuperiors   []uint32
+	SuperiorQuotas map[uint32]int32
 }
 
 func NewFormation(id uint32, name string, parentId uint32,
@@ -513,6 +517,37 @@ func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*Reso
 	if urban, ok := model.Urbans[id]; ok {
 		urban.ResourceNetworks = resourceNetworks
 		return true
+	}
+	return false
+}
+func (model *ModelData) changeLogisticsLinks(entityId uint32, superiors []uint32) bool {
+	automat := model.FindAutomat(entityId)
+	if automat != nil {
+		automat.LogSuperiors = make([]uint32, len(superiors))
+		copy(automat.LogSuperiors, superiors)
+		return true
+	} else {
+		formation := model.FindFormation(entityId)
+		if formation != nil {
+			formation.LogSuperiors = make([]uint32, len(superiors))
+			copy(formation.LogSuperiors, superiors)
+			return true
+		}
+	}
+	return false
+}
+
+func (model *ModelData) changeSupplyQuotas(suppliedId uint32, quotas map[uint32]int32) bool {
+	automat := model.FindAutomat(suppliedId)
+	if automat != nil {
+		automat.SuperiorQuotas = quotas
+		return true
+	} else {
+		formation := model.FindFormation(suppliedId)
+		if formation != nil {
+			formation.SuperiorQuotas = quotas
+			return true
+		}
 	}
 	return false
 }

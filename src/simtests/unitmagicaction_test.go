@@ -508,3 +508,98 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 		return Nearby(data.FindUnit(unit.Id).Position, pos)
 	})
 }
+
+func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: invalid automat id
+	err := client.LogisticsChangeLinks(10, []uint32{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// valid automat id with no link
+	err = client.LogisticsChangeLinks(9, []uint32{})
+	c.Assert(err, IsNil)
+
+	// error : 42 is an invalid superior id
+	newSuperiors := []uint32{23, 42}
+	err = client.LogisticsChangeLinks(9, newSuperiors)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// valid superiors id
+	newSuperiors = []uint32{25, 31}
+	err = client.LogisticsChangeLinks(9, newSuperiors)
+	c.Assert(err, IsNil)
+
+	// logistics links model updated
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		a := data.FindAutomat(9)
+		return (a != nil) && (len(a.LogSuperiors) > 1)
+	})
+	automat := client.Model.GetData().FindAutomat(9)
+	c.Assert(automat.LogSuperiors, DeepEquals, newSuperiors)
+}
+
+func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: invalid supplied id parameter
+	err := client.LogisticsSupplyChangeQuotas(25, 42, map[uint32]int32{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: invalid supplier id parameter
+	err = client.LogisticsSupplyChangeQuotas(42, 23, map[uint32]int32{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error : valid units id but no dotation
+	err = client.LogisticsSupplyChangeQuotas(25, 23, map[uint32]int32{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// quotas model updated and no error with valid ids
+	newQuotas := map[uint32]int32{1: 100, 2: 200}
+	err = client.LogisticsSupplyChangeQuotas(25, 23, newQuotas)
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		a := data.FindAutomat(23)
+		return (a != nil) && (len(a.SuperiorQuotas) > 0)
+	})
+	automat := client.Model.GetData().FindAutomat(23)
+	c.Assert(automat.SuperiorQuotas, DeepEquals, newQuotas)
+}
+
+func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: invalid supplier parameter
+	err := client.LogisticsSupplyPushFlow(42, 9)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: invalid receiver parameter
+	param := swapi.MakeParameter(&sword.MissionParameter_Value{})
+	err = client.LogisticsSupplyPushFlowTest(23, swapi.MakeParameters(param))
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// valid supplier parameter
+	err = client.LogisticsSupplyPushFlow(23, 9)
+	c.Assert(err, IsNil)
+}
+
+func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: invalid supplier parameter
+	err := client.LogisticsSupplyPullFlow(23, 42)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: invalid receiver parameter
+	err = client.LogisticsSupplyPullFlow(42, 9)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// valid supplier parameter
+	err = client.LogisticsSupplyPullFlow(23, 9)
+	c.Assert(err, IsNil)
+}
