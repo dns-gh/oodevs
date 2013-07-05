@@ -10,10 +10,8 @@
 #ifndef SIMULATION_KERNEL_TEST_SINGLETONTERMINATOR_H
 #define SIMULATION_KERNEL_TEST_SINGLETONTERMINATOR_H
 
-class SingletonTerminator
+struct SingletonTerminator
 {
-public:
-     SingletonTerminator();
     ~SingletonTerminator();
 };
 
