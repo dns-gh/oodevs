@@ -168,9 +168,9 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::Clone( const MIL_KnowledgeGroup& source )
 {
-    boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception, this, _1 );
+    auto functorAgent = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception, this, _1 );
     source.ApplyOnKnowledgesAgent( functorAgent );
-    boost::function< void( DEC_Knowledge_Population& ) > functorPopulation = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception, this, _1 );
+    auto functorPopulation = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception, this, _1 );
     source.ApplyOnKnowledgesPopulation( functorPopulation );
     boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromObjectPerception, this, _1 );
     source.ApplyOnKnowledgesObject( functorObject );
@@ -227,7 +227,6 @@ void MIL_KnowledgeGroup::Destroy()
         else if( army_ )
             army_->UnregisterKnowledgeGroup( shared );
         delete knowledgeBlackBoard_;
-        // myself destruction
         knowledgeBlackBoard_ = 0;
     }
 }
@@ -1105,10 +1104,10 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
 // Created: FDS 2010-04-08
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeStep )
-    {
+{
     if( ! IsJammed() )
     {
-        const MIL_KnowledgeGroup::T_AutomateVector& automates = GetAutomates();
+        const T_AutomateVector& automates = GetAutomates();
         for( auto itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
         {
             const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
@@ -1117,24 +1116,21 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
                 MIL_AgentPion& pion = **itPion;
                 if( pion.CallRole( &PHY_RoleInterface_Communications::CanReceive, false ) )
                 {
-                    boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+                    auto functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
                     pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
-                    boost::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+                    auto functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
                     pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( functorPopulationCollision );
                 }
             }
         }
     }
-    else
+    else if( jammedPion_ )
     {
-        if( jammedPion_ )
-        {
-            DEC_KnowledgeBlackBoard_AgentPion& knowledgeBlackboard = jammedPion_->GetKnowledge();
-            boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep)  );
-            knowledgeBlackboard.GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
-            boost::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep)  );
-            knowledgeBlackboard.GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( functorPopulationCollision  );
-        }
+        DEC_KnowledgeBlackBoard_AgentPion& knowledgeBlackboard = jammedPion_->GetKnowledge();
+        auto functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep)  );
+        knowledgeBlackboard.GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
+        auto functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep)  );
+        knowledgeBlackboard.GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( functorPopulationCollision  );
     }
    // knowledgeBlackBoard_->SendFullState();
 }

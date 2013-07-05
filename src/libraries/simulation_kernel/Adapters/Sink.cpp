@@ -406,8 +406,8 @@ namespace
         const unsigned int id = group->GetId();
         UpdateAgentKnowledgeGroupBlackBoard( model, knowledges[ id ], enemies[ id ], friends[ id ], *group );
         UpdateObjectKnowledgeGroupBlackBoard( knowledges[ id ], *group );
-        MIL_KnowledgeGroup::T_KnowledgeGroupVector groups = group->GetKnowledgeGroups();
-        for( MIL_KnowledgeGroup::T_KnowledgeGroupVector::const_iterator it = groups.begin(); it != groups.end(); ++it )
+        auto groups = group->GetKnowledgeGroups();
+        for( auto it = groups.begin(); it != groups.end(); ++it )
             UpdateKnowledgeGroup( model, knowledges, enemies, friends, *it );
     }
     void UpdateKnowledges( const core::Model& model, core::Model& knowledges, core::Model& enemies, core::Model& friends )

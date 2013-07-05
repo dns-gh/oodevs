@@ -103,7 +103,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
     const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pBlackBoard_->GetArmy().GetKnowledgeGroups();
     for( auto itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
     {
-        const MIL_KnowledgeGroup::T_AutomateVector& automates = itKnowledgeGroup->second->GetAutomates();
+        const auto& automates = itKnowledgeGroup->second->GetAutomates();
         for( auto itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
         {
             const MIL_Automate::T_PionVector& pions = ( **itAutomate ).GetPions();

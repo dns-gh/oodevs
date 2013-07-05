@@ -58,7 +58,7 @@ namespace sword
 class MIL_KnowledgeGroup : public boost::enable_shared_from_this< MIL_KnowledgeGroup >
                          , private boost::noncopyable
 {
-public:
+private:
     //! @name Types
     //@{
     typedef std::vector< MIL_Automate* > T_AutomateVector;
