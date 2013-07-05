@@ -250,8 +250,7 @@ void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time )
 {
-    selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), EVENT_DATE_FORMAT );
-    //contextMenuEvent_ = event;
+    selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), Qt::ISODate );
     if( event )
     {
         Event& gamingEvent = GetOrCreateEvent( *event );
