@@ -865,37 +865,18 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
         if( !pNewParent || pNewParent->IsJammed() )
             throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_superior );
     }
-    if( pNewParent )
-    {
-        if( parent_ && parent_ != pNewParent )
-        {
-            boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-            // moving knowledge group from knowledgegroup under knowledgegroup
-            parent_->UnregisterKnowledgeGroup( shared );
-            pNewParent->RegisterKnowledgeGroup( shared );
-            parent_ = pNewParent;
-            return true;
-        }
-        else if( !parent_ )
-        {
-            boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-            // moving knowledge group from army node under knowledgegroup
-            army_->UnregisterKnowledgeGroup( shared );
-            pNewParent->RegisterKnowledgeGroup( shared );
-            parent_ = pNewParent;
-            return true;
-        }
-    }
-    else if( parent_ )
-    {
-        boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-        // moving knowledge group under army node
-        parent_->UnregisterKnowledgeGroup( shared );
-        army_->RegisterKnowledgeGroup( shared );
-        parent_.reset();
-        return true;
-    }
-    return false;
+    if( pNewParent == parent_ )
+        return false;
+    if( parent_ )
+        parent_->UnregisterKnowledgeGroup( shared_from_this() );
+    else
+        army_->UnregisterKnowledgeGroup( shared_from_this() );
+    parent_ = pNewParent;
+    if( parent_ )
+        parent_->RegisterKnowledgeGroup( shared_from_this() );
+    else
+        army_->RegisterKnowledgeGroup( shared_from_this() );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
