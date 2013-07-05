@@ -11,6 +11,24 @@
 #define __EventBottomWidget_h_
 
 #include "EventWidget_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+
+namespace gui
+{
+    class RichDateTimeEdit;
+}
+
+namespace kernel
+{
+    class ActionController;
+    class ContextMenu;
+    class Time_ABC;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
+}
 
 // =============================================================================
 /** @class  EventBottomWidget
@@ -19,13 +37,15 @@
 // Created: ABR 2013-05-30
 // =============================================================================
 class EventBottomWidget : public EventWidget_ABC
+                        , public tools::Observer_ABC
+                        , public kernel::ContextMenuObserver_ABC< QDateTime >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventBottomWidget();
+             EventBottomWidget( const kernel::Time_ABC& simulation, kernel::ActionController& actionController, const tools::ExerciseConfig& config );
     virtual ~EventBottomWidget();
     //@}
 
@@ -39,8 +59,26 @@ signals:
     void Trigger();
     void CreateReminder();
     void ShowDetail();
+    void Cancel();
     void Discard();
     void Save();
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void SetBeginDateTime( const QDateTime& dateTime );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSwitchToggled( bool checked );
+
+    void OnBeginDateTimeChanged( const QDateTime& dateTime );
+    void OnHasEndTimeChanged( int state );
+    void OnBeginDateTimeSelected();
+    void OnEndDateTimeSelected();
     //@}
 
 private:
@@ -50,11 +88,34 @@ private:
     virtual void Commit( timeline::Event& event ) const;
     //@}
 
+    //! @name kernel::ContextMenuObserver_ABC< QDateTime >
+    //@{
+    virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
+    //@}
+
+    //! @name Types
+    //@{
+    enum E_EventModes
+    {
+        eEventModes_Execution = 0,
+        eEventModes_Planning = 1
+    };
+    //@}
+
 private:
     //! @name Member data
     //@{
-    QAction* flagAsCompleteAction_;
+    const kernel::Time_ABC& simulation_;
+    kernel::ActionController& actionController_;
+
+    std::vector< QAction* > planningActions_;
+    QAction* switchAction_;
     QAction* detailAction_;
+
+    QDateTime selectedDateTime_;
+    gui::RichDateTimeEdit* beginDateTimeEdit_;
+    QCheckBox* hasEndDateTimeCheckbox_;
+    gui::RichDateTimeEdit* endDateTimeEdit_;
     //@}
 };
 

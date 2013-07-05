@@ -648,28 +648,28 @@ Raison: %3
 <context>
     <name>EventBottomWidget</name>
     <message>
-        <source>Trigger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flag as complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create a reminder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Sauvegarder</translation>
+        <translation>Sauvegarder</translation>
     </message>
     <message>
-        <source>Detail</source>
-        <translation type="unfinished"></translation>
+        <source>End date</source>
+        <translation>Date de fin</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation>Date de début</translation>
+    </message>
+    <message>
+        <source>Planning</source>
+        <translation>Plannification</translation>
+    </message>
+    <message>
+        <source>Trigger</source>
+        <translation>Déclancher</translation>
     </message>
 </context>
 <context>
@@ -773,17 +773,6 @@ Raison: %3
     <message>
         <source>Notifications</source>
         <translation>Notifications</translation>
-    </message>
-</context>
-<context>
-    <name>EventTopWidget</name>
-    <message>
-        <source>Start date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End date</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -646,18 +646,6 @@ Reason: %3
 <context>
     <name>EventBottomWidget</name>
     <message>
-        <source>Trigger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flag as complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create a reminder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Discard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -666,7 +654,19 @@ Reason: %3
         <translation type="unfinished">حفظ</translation>
     </message>
     <message>
-        <source>Detail</source>
+        <source>End date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Planning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -770,17 +770,6 @@ Reason: %3
     </message>
     <message>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>EventTopWidget</name>
-    <message>
-        <source>Start date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1191,6 +1191,9 @@
     <ClInclude Include="..\..\src\applications\gaming_app\EventWidget_ABC.h">
       <Filter>Source Files\Dialogs\Events</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\EventTopWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">
@@ -1531,9 +1534,6 @@
       <Filter>Source Files\Panels\Timeline</Filter>
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventBottomWidget.h">
-      <Filter>Source Files\Dialogs\Events</Filter>
-    </Qt_file_Mocing>
-    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventTopWidget.h">
       <Filter>Source Files\Dialogs\Events</Filter>
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventMultimediaWidget.h">

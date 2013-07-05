@@ -76,21 +76,25 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     connect( missionTypeCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionTypeChanged( int ) ) );
 
     targetGroupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Target" ) );
-    QVBoxLayout* targetLayout = new QVBoxLayout( targetGroupBox_ );
-    targetLayout->setContentsMargins( 5, 0, 5, 5 );
-    targetLayout->addWidget( targetLabel_, 0, Qt::AlignCenter );
+    QVBoxLayout* internalTargetLayout = new QVBoxLayout( targetGroupBox_ );
+    internalTargetLayout->setContentsMargins( 5, 0, 5, 5 );
+    internalTargetLayout->addWidget( targetLabel_, 0, Qt::AlignCenter );
+
+    QHBoxLayout* targetLayout = new QHBoxLayout();
+    targetLayout->setContentsMargins( 5, 0, 5, 0 );
+    targetLayout->addWidget( targetGroupBox_ );
 
     QHBoxLayout* topLayout = new QHBoxLayout();
-    topLayout->setMargin( 5 );
+    topLayout->setContentsMargins( 5, 0, 5, 0 );
     topLayout->setSpacing( 5 );
     topLayout->addWidget( missionTypeCombo_ );
     topLayout->addLayout( missionComboLayout_ );
-    //topLayout->addStretch( 1 );
-    topLayout->addWidget( targetGroupBox_, 1 );
 
     // Body
     missionInterface_ = new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config );
     // Layout
+    mainLayout_->setSpacing( 5 );
+    mainLayout_->addLayout( targetLayout );
     mainLayout_->addLayout( topLayout );
     mainLayout_->addWidget( missionInterface_, 1 );
 

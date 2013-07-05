@@ -60,8 +60,8 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     hide();
 
     // Header / footer
-    topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
-    bottomWidget_ = new EventBottomWidget();
+    topWidget_ = new EventTopWidget();
+    bottomWidget_ = new EventBottomWidget( simulation_, controllers.actions_, config );
 
     // Content
     EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools, simulation_ );
@@ -91,7 +91,7 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     SetContentVisible( false );
 
     // Connections
-    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), topWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
+    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), bottomWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
     connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
     connect( bottomWidget_, SIGNAL( CreateReminder() ), this, SLOT( OnCreateReminder() ) );
     connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
