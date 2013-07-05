@@ -59,7 +59,7 @@
         <sequential>
             <delete dir="@{todir}"/>
             <unzip src="@{zipped-database}" dest="@{todir}"/>
-            <run-adaptation input="@{todir}" output="@{todir}"/>
+            <run-adaptation dir="@{todir}" todir="@{todir}"/>
             <zip basedir="@{todir}" zipfile="@{zipped-database}" encoding="UTF-8"/>
             <delete dir="@{todir}"/>
         </sequential>
@@ -303,50 +303,50 @@
     </target>
 
     <macrodef name="run-adaptation">
-        <attribute name="input"/>
-        <attribute name="output"/>
+        <attribute name="dir"/>
+        <attribute name="todir"/>
         <sequential>
             <exec taskname="adn" executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-i"/>
-                <arg value="@{input}/physical.xml"/>
+                <arg value="@{dir}/physical.xml"/>
                 <arg value="-o"/>
-                <arg value="@{output}/physical.xml"/>
+                <arg value="@{todir}/physical.xml"/>
                 <arg value="--silent"/>
             </exec>
         </sequential>
     </macrodef>
 
     <macrodef name="test-adaptation">
-        <attribute name="input"/>
+        <attribute name="dir"/>
         <attribute name="sheets" default="Mission sheets"/>
-        <attribute name="dir" default="${out.dir}/test-adaptation"/>
-        <attribute name="checksums" default="@{dir}.checksums"/>
+        <attribute name="todir" default="${out.dir}/test-adaptation"/>
+        <attribute name="checksums" default="@{todir}.checksums"/>
         <attribute name="excludes" default="*/@{sheets}/*.html"/>
         <sequential>
-            <echo>Testing models: @{input}</echo>
+            <echo>Testing models: @{dir}</echo>
             <!-- HTML files are not versioned, there is no easy way to test for
                  non-regressions, this is someone else job.
             -->
-            <delete dir="@{dir}"/>
             <python taskname="checksum">
                 <arg value="checksum.py"/>
                 <arg value="write"/>
-                <arg value="@{input}"/>
+                <arg value="@{dir}"/>
                 <arg value="@{checksums}"/>
                 <arg value="--exclude=@{excludes}"/>
             </python>
-            <run-adaptation input="@{input}" output="@{dir}"/>
-            <python taskname="checksum">
-                <arg value="checksum.py"/>
-                <arg value="read"/>
-                <arg value="@{input}"/>
-                <arg value="@{checksums}"/>
-                <arg value="--exclude=@{excludes}"/>
-            </python>
+            <delete dir="@{todir}"/>
+            <run-adaptation dir="@{dir}" todir="@{todir}"/>
             <python taskname="checksum">
                 <arg value="checksum.py"/>
                 <arg value="read"/>
                 <arg value="@{dir}"/>
+                <arg value="@{checksums}"/>
+                <arg value="--exclude=@{excludes}"/>
+            </python>
+            <python taskname="checksum">
+                <arg value="checksum.py"/>
+                <arg value="read"/>
+                <arg value="@{todir}"/>
                 <arg value="@{checksums}"/>
                 <arg value="--exclude=@{excludes}"/>
             </python>
@@ -363,30 +363,29 @@
         <sequential>
             <delete dir="@{todir}"/>
             <unzip src="@{zipped-database}" dest="@{todir}"/>
-            <test-adaptation input="@{todir}" sheets="Mission sheetsひらがな"/>
-            <delete dir="@{todir}"/>
+            <test-adaptation dir="@{todir}" sheets="Mission sheetsひらがな"/>
         </sequential>
     </macrodef>
 
     <macrodef name="test-adaptation-newbase">
+        <attribute name="todir" default="${out.dir}/test-adaptation-newbase"/>
         <sequential>
-            <delete dir="${out.dir}/test-adaptation-newbase"/>
+            <delete dir="@{todir}"/>
             <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-c"/>
-                <arg value="${out.dir}/test-adaptation-newbase/physical.xml"/>
+                <arg value="@{todir}/physical.xml"/>
                 <arg value="--silent"/>
             </exec>
-            <test-adaptation input="${out.dir}/test-adaptation-newbase"/>
-            <delete dir="${out.dir}/test-adaptation-newbase"/>
+            <test-adaptation dir="@{todir}"/>
         </sequential>
     </macrodef>
 
     <target name="adaptation_test" description="load, save then diff physical data">
         <test-adaptation-newbase/>
         <!-- This should be replaced by an equivalent test on ww-ML
-        <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
+        <test-adaptation dir="${data.dir}/data/models/ada/physical/scipio"/>
         -->
-        <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
+        <test-adaptation dir="${data.dir}/data/models/ada/physical/worldwide"/>
         <test-adaptation-unicode zipped-database="${data.dir}/tests/test_data_unicode/physical base with unicode.zip"/>
     </target>
 
@@ -427,7 +426,7 @@
             </copy>
             <!-- ADN -->
             <delete dir="${out.dir}/@{temporary-name}"/>
-            <run-adaptation input="${data.dir}/data/models/ada/physical/@{temporary-name}" output="${out.dir}/@{temporary-name}"/>
+            <run-adaptation dir="${data.dir}/data/models/ada/physical/@{temporary-name}" todir="${out.dir}/@{temporary-name}"/>
             <!-- Copy exercise -->
             <delete dir="${data.dir}/exercises/@{temporary-name}" failonerror="false"/>
             <copy todir="${data.dir}/exercises/@{temporary-name}">
