@@ -65,7 +65,6 @@
 #include "Decision/DEC_Workspace.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Inhabitants/MIL_InhabitantType.h"
-#include "Knowledge/KnowledgeGroupFactory.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Objects/MIL_FireClass.h"
