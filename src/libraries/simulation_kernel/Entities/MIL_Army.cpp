@@ -348,7 +348,7 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
 {
-    knowledgeGroupFactory.Create( xis, *this );
+    knowledgeGroupFactory.Create( xis, *this, 0 );
 }
 
 // -----------------------------------------------------------------------------

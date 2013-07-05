@@ -136,11 +136,10 @@ void PHY_RolePion_Communications::CopyKnowledgeGroup()
 {
     if( !pJammingKnowledgeGroup_ )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > noParent;
-        boost::shared_ptr< MIL_KnowledgeGroup > entityKnowledgeGroup = owner_->GetKnowledgeGroup();
-        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *entityKnowledgeGroup, *owner_, noParent ) );
-        entityKnowledgeGroup->GetArmy().RegisterKnowledgeGroup( pJammingKnowledgeGroup_ );
-        pJammingKnowledgeGroup_->Clone( *entityKnowledgeGroup );
+        boost::shared_ptr< MIL_KnowledgeGroup > group = owner_->GetKnowledgeGroup();
+        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *group, *owner_, 0 ) );
+        group->GetArmy().RegisterKnowledgeGroup( pJammingKnowledgeGroup_ );
+        pJammingKnowledgeGroup_->Clone( *group );
     }
 }
 
@@ -153,7 +152,7 @@ void PHY_RolePion_Communications::CopyKnowledgeGroupPartial()
     if( !pJammingKnowledgeGroup_ )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > parent = owner_->GetKnowledgeGroup();
-        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *parent, *owner_, parent ) );
+        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *parent, *owner_, parent.get() ) );
         parent->RegisterKnowledgeGroup( pJammingKnowledgeGroup_ );
         pJammingKnowledgeGroup_->Clone( *parent );
     }
@@ -168,7 +167,7 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
     bHasChanged_ = ( jammers_.erase( &jammer ) == 1 );
 
     // delete copy of knowledge group used in jamming
-    if( pJammingKnowledgeGroup_.get() && CanEmit() )
+    if( pJammingKnowledgeGroup_ && CanEmit() )
     {
         owner_->GetKnowledgeGroup()->Merge( *pJammingKnowledgeGroup_ );
         pJammingKnowledgeGroup_->Destroy();
@@ -188,7 +187,7 @@ void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) c
     if( !jammers_.empty() || bBlackoutEmmittedActivated_ )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > kg = GetJammedKnowledgeGroup();
-        if( kg.get() )
+        if( kg )
             jammedKgId = kg->GetId();
     }
     msg().mutable_communications()->mutable_knowledge_group()->set_id( jammedKgId );
@@ -213,7 +212,7 @@ void PHY_RolePion_Communications::SendChangedState( client::UnitAttributes& msg 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
 {
-    if( bHasChanged_ && pJammingKnowledgeGroup_.get() )
+    if( bHasChanged_ && pJammingKnowledgeGroup_ )
         pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
     if( bHasChanged_ )
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
@@ -266,7 +265,7 @@ void PHY_RolePion_Communications::DeactivateBlackout()
         return;
     bBlackoutEmmittedActivated_ = false;
     bBlackoutReceivedActivated_ = false;
-    if( pJammingKnowledgeGroup_.get() && jammers_.empty() )
+    if( pJammingKnowledgeGroup_ && jammers_.empty() )
     {
         owner_->GetKnowledgeGroup()->Merge( *pJammingKnowledgeGroup_ );
         pJammingKnowledgeGroup_->Destroy();

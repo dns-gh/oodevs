@@ -23,7 +23,6 @@
 #include "MockMIL_Object_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "StubTER_World.h"
-
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -50,60 +49,66 @@
 
 namespace
 {
-    class MockAgentWithPerceiver : public MockAgent
+    const double timeFactor = 0.5;
+
+    struct MockAgentWithPerceiver : MockAgent
     {
-    public:
         MockAgentWithPerceiver()
         {
             RegisterRole( *new MockPHY_RoleInterface_Perceiver() );
         }
-        virtual ~MockAgentWithPerceiver() {}
     };
-    const double timeFactor = 0.5f;
+    struct Initialization
+    {
+        Initialization()
+        {
+            xml::xistringstream xis( "<knowledge-groups>"
+                                     "  <knowledge-group name='GTIA' communication-delay='01m'>"
+                                     "    <unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000' interpolation-time='010m'/>"
+                                     "    <population-knowledge max-lifetime='2m'/>"
+                                    "  </knowledge-group>"
+                                    "</knowledge-groups>" );
+            MIL_KnowledgeGroupType::InitializeWithTime( xis, timeFactor );
+        }
+        ~Initialization()
+        {
+            MIL_KnowledgeGroupType::Terminate();
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: TestKnowledgeGroupType
 // Created: LDC 2009-12-10
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
+BOOST_FIXTURE_TEST_CASE( TestKnowledgeGroupType, Initialization )
 {
-    const std::string initialisation =
-        "<knowledge-groups>"
-            "<knowledge-group name='GTIA' communication-delay='01m'>"
-                "<unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000' interpolation-time='010m'/>"
-                "<population-knowledge max-lifetime='2m'/>"
-            "</knowledge-group>"
-        "</knowledge-groups>";
-    xml::xistringstream xis( initialisation );
-    MIL_KnowledgeGroupType::InitializeWithTime( xis, timeFactor );
-    const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("GTIA");
-    BOOST_CHECK_EQUAL( 60 * timeFactor, kgType.GetKnowledgeCommunicationDelay() );
-    BOOST_CHECK_EQUAL( 3 * 60 * 60 * timeFactor, kgType.GetKnowledgeAgentMaxLifeTime() );
-    BOOST_CHECK_EQUAL( 60000, kgType.GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() );
-    BOOST_CHECK_EQUAL( 60 * timeFactor, kgType.GetKnowledgeCommunicationDelay() );
-    BOOST_CHECK_EQUAL( "GTIA", kgType.GetName() );
-    BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, kgType.GetKnowledgeAgentExtrapolationTime() );
+    const MIL_KnowledgeGroupType* type = MIL_KnowledgeGroupType::FindType( "GTIA" );
+    BOOST_REQUIRE( type );
+    BOOST_CHECK_EQUAL( 60 * timeFactor, type->GetKnowledgeCommunicationDelay() );
+    BOOST_CHECK_EQUAL( 3 * 60 * 60 * timeFactor, type->GetKnowledgeAgentMaxLifeTime() );
+    BOOST_CHECK_EQUAL( 60000, type->GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() );
+    BOOST_CHECK_EQUAL( 60 * timeFactor, type->GetKnowledgeCommunicationDelay() );
+    BOOST_CHECK_EQUAL( "GTIA", type->GetName() );
+    BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, type->GetKnowledgeAgentExtrapolationTime() );
 }
 
 namespace
 {
     boost::shared_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, unsigned int id )
     {
-        const MIL_KnowledgeGroupType& kgType = *MIL_KnowledgeGroupType::FindType( "GTIA" );
+        const MIL_KnowledgeGroupType& type = *MIL_KnowledgeGroupType::FindType( "GTIA" );
         MOCK_EXPECT( army.RegisterKnowledgeGroup ).once();
-        boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( kgType, id, army ) );
+        boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( type, id, army ) );
         army.RegisterKnowledgeGroup( result );
         return result;
     }
-
-    boost::shared_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, boost::shared_ptr< MIL_KnowledgeGroup > group, unsigned int id, const std::string& type )
+    boost::shared_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, const boost::shared_ptr< MIL_KnowledgeGroup >& group, unsigned int id, const std::string& type )
     {
-        MockKnowledgeGroupFactory factory;
         xml::xistringstream xis( "<root id='" + boost::lexical_cast< std::string >( id ) + "' type='" + type + "' name='group'/>" );
         xis >> xml::start( "root" );
 //        MOCK_EXPECT( group.RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration of nested KG
-        boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( xis, army, group ) );
+        boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( xis, army, group.get() ) );
         group->RegisterKnowledgeGroup( result );
         return result;
     }
@@ -113,7 +118,7 @@ namespace
 // Name: TestPropagationInKnowledgeGroups
 // Created: HBD 2009-12-10
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
+BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, Initialization )
 {
     MockArmy army;
     MOCK_EXPECT( army.GetID ).returns( 42u );
@@ -127,8 +132,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboard ) );
     MockAgentWithPerceiver jammedAgent;
-    boost::shared_ptr< MIL_KnowledgeGroup > none;
-    boost::shared_ptr< MIL_KnowledgeGroup > groupJammed1( new MIL_KnowledgeGroup( *group1, jammedAgent, none ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > groupJammed1( new MIL_KnowledgeGroup( *group1, jammedAgent, 0 ) );
     MockAgentWithPerceiver mockAgent;
     MOCK_EXPECT( mockAgent.BelongsTo ).with( boost::cref( *group1 ) ).returns( true );
     MOCK_EXPECT( mockAgent.GetKnowledgeGroup ).returns( boost::ref( group1 ) );
@@ -234,7 +238,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
 // Name: TestExtrapolationTimeInKnowledgeGroup
 // Created: FDS 2010-04-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
+BOOST_FIXTURE_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup, Initialization )
 {
     MockArmy army;
     MOCK_EXPECT( army.GetID ).returns( 42u );
@@ -246,13 +250,14 @@ BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
 // Name: TestLatentRelevance
 // Created: FDS 2010-04-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestLatentRelevance )
+BOOST_FIXTURE_TEST_CASE( TestLatentRelevance, Initialization )
 {
     MockArmy army;
+    MOCK_EXPECT( army.GetID ).returns( 42u );
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
     boost::shared_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
-    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup   ( CreateKnowledgeGroup( army, armyGroup, 2, "GTIA" ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup( CreateKnowledgeGroup( army, armyGroup, 2, "GTIA" ) );
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboard ) );
     MockAgentWithPerceiver mockAgent;
@@ -302,7 +307,7 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
 
 namespace
 {
-    class Configuration : private boost::noncopyable
+    class Configuration : Initialization
     {
     public:
         Configuration()
@@ -311,18 +316,6 @@ namespace
             MOCK_EXPECT( publisher.Send );
             MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboardArmy ) );
             MOCK_EXPECT( army.GetID ).returns( 42u );
-            MIL_KnowledgeGroupType::Terminate();
-            xml::xistringstream xis( "<knowledge-groups>"
-                                     "   <knowledge-group name='GTIA' communication-delay='01m'>"
-                                     "       <unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000' interpolation-time='010m'/>"
-                                     "       <population-knowledge max-lifetime='2m'/>"
-                                     "   </knowledge-group>"
-                                     "</knowledge-groups>" );
-            MIL_KnowledgeGroupType::InitializeWithTime( xis, timeFactor );
-        }
-        virtual ~Configuration()
-        {
-            MIL_KnowledgeGroupType::Terminate();
         }
         MockNET_Publisher_ABC publisher;
         MockArmy army;
@@ -395,8 +388,8 @@ namespace
         MockAgent agent;
         MockMIL_Time_ABC time;
         xml::xistringstream xis;
-        DEC_Model model;
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
+        DEC_Model model;
         StubMIL_PopulationType type;
     };
     void CreateAgentKnowledge( MockAgent& agent, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, boost::shared_ptr< MIL_KnowledgeGroup > group, double relevance )

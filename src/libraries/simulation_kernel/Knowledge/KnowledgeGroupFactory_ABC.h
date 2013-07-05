@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual boost::shared_ptr< MIL_KnowledgeGroup > Create( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup > parent = boost::shared_ptr< MIL_KnowledgeGroup >() ) = 0;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent ) = 0;
     //@}
 
     //! @name CheckPoints
@@ -53,7 +53,7 @@ public:
     void Register( const unsigned long& identifier, const boost::shared_ptr< MIL_KnowledgeGroup >& element )
     {
         boost::shared_ptr< MIL_KnowledgeGroup >& p = elements_[ identifier ];
-        if( p.get() )
+        if( p )
             Error( identifier, "already registered" );
         p = element;
     }
@@ -89,7 +89,7 @@ public:
 protected:
     //! @name Constructor
     //@{
-    KnowledgeGroupFactory_ABC() {};
+    KnowledgeGroupFactory_ABC() {}
     //@}
 
 protected:

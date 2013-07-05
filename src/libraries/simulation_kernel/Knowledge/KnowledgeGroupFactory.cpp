@@ -47,23 +47,13 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupFactory::Create
-// Created: JSR 2012-08-30
-// -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army )
-{
-    boost::shared_ptr< MIL_KnowledgeGroup > noParent;
-    return Create( xis, army, noParent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupFactory::Create
 // Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup > parent )
+boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
 {
     boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup( new MIL_KnowledgeGroup( xis, army, parent ) );
-    xis >> xml::list( "knowledge-group", boost::bind( &KnowledgeGroupFactory::Create, this, _1, boost::ref( army ), knowledgeGroup ) );
-    if( parent.get() )
+    xis >> xml::list( "knowledge-group", boost::bind( &KnowledgeGroupFactory::Create, this, _1, boost::ref( army ), knowledgeGroup.get() ) );
+    if( parent )
         parent->RegisterKnowledgeGroup( knowledgeGroup );
     else
         army.RegisterKnowledgeGroup( knowledgeGroup );

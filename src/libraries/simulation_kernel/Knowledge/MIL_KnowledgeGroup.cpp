@@ -62,6 +62,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     : type_               ( &type )
     , id_                 ( idManager_.GetId( id, true ) )
     , army_               ( &army )
+    , parent_             ( 0 )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
     , timeToDiffuse_      ( 0 ) // LTO
     , isActivated_        ( true ) // LTO
@@ -78,7 +79,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
 // Created: SLG 2009-11-11
 // LTO
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
     : id_                 ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
     , name_               ( xis.attribute< std::string >( "name" ) )
@@ -107,6 +108,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     : type_               ( 0 )
     , id_                 ( 0 )
     , army_               ( 0 )
+    , parent_             ( 0 )
     , knowledgeBlackBoard_( 0 )
     , timeToDiffuse_      ( 0 ) // LTO
     , isActivated_        ( true ) // LTO
@@ -122,12 +124,12 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // Name: MIL_KnowledgeGroup::Create
 // Created: FDS 2010-03-17
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent )
     : type_               ( source.type_ )
     , id_                 ( idManager_.GetId() )
     , name_               ( source.name_ + " (" + pion.GetName() + ")" )
     , army_               ( source.army_ )
-    , parent_             ( parent ) // LTO
+    , parent_             ( parent )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
     , timeToDiffuse_      ( 0 ) // LTO
     , isActivated_        ( true ) // LTO
@@ -221,11 +223,10 @@ void MIL_KnowledgeGroup::Destroy()
 {
     if( knowledgeBlackBoard_ )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
         if( parent_ )
-            parent_->UnregisterKnowledgeGroup( shared );
+            parent_->UnregisterKnowledgeGroup( shared_from_this() );
         else if( army_ )
-            army_->UnregisterKnowledgeGroup( shared );
+            army_->UnregisterKnowledgeGroup( shared_from_this() );
         delete knowledgeBlackBoard_;
         knowledgeBlackBoard_ = 0;
     }
@@ -263,7 +264,6 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
          >> isActivated_ // LTO
          >> isJammed_;
     idManager_.GetId( id_, true );
-//    ids_.insert( id_ );
     hasBeenUpdated_ = true;
     knowledgeBlackBoard_->SetKnowledgeGroup( this );
 }
@@ -524,18 +524,13 @@ void MIL_KnowledgeGroup::SendCreation( unsigned int context /*= 0*/ ) const
     msg().set_name( name_ );
     msg().mutable_party()->set_id( army_->GetID() );
     msg().set_type(GetType().GetName());
-    // LTO begin
     if( parent_ )
         msg().mutable_parent()->set_id( parent_->GetId() );
-    // LTO end
     if( isJammed_ )
         msg().set_jam( true );
     msg.Send( NET_Publisher_ABC::Publisher(), context );
-    //SLG : @TODO MGD Move to factory
-    // LTO begin
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         (**it).SendCreation( context );
-    // LTO end
 }
 
 // -----------------------------------------------------------------------------
@@ -544,14 +539,13 @@ void MIL_KnowledgeGroup::SendCreation( unsigned int context /*= 0*/ ) const
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::SendFullState() const
 {
-    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
-        (**it).SendFullState(); // LTO
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        (**it).SendFullState();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::UpdateKnowledgeGroup
 // Created: SLG 2009-12-23
-// LTO
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
 {
@@ -574,22 +568,6 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::MoveKnowledgeGroup
-// Created: NLD 2004-09-06
-// LTO
-// -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::MoveKnowledgeGroup( MIL_KnowledgeGroup* newParent )
-{
-    if( newParent && parent_ )
-    {
-        boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-        parent_->UnregisterKnowledgeGroup( shared );
-        newParent->RegisterKnowledgeGroup( shared );
-        hasBeenUpdated_ = true;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::SendKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
@@ -599,8 +577,8 @@ void MIL_KnowledgeGroup::SendKnowledge( unsigned int context ) const
         knowledgeBlackBoard_->SendFullState( context );
     for( auto it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendKnowledge( context );
-    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
-        (**it).SendKnowledge( context ); // LTO
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        (**it).SendKnowledge( context );
 }
 
 // -----------------------------------------------------------------------------
@@ -865,13 +843,13 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
         if( !pNewParent || pNewParent->IsJammed() )
             throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_superior );
     }
-    if( pNewParent == parent_ )
+    if( pNewParent.get() == parent_ )
         return false;
     if( parent_ )
         parent_->UnregisterKnowledgeGroup( shared_from_this() );
     else
         army_->UnregisterKnowledgeGroup( shared_from_this() );
-    parent_ = pNewParent;
+    parent_ = pNewParent.get();
     if( parent_ )
         parent_->RegisterKnowledgeGroup( shared_from_this() );
     else
@@ -1224,8 +1202,7 @@ DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( const MIL_Ag
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Agent& MIL_KnowledgeGroup::CreateKnowledgeAgent( const MIL_Agent_ABC& perceived )
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-    return knowledgeBlackBoard_->CreateKnowledgeAgent( shared, const_cast< MIL_Agent_ABC& >( perceived ) );
+    return knowledgeBlackBoard_->CreateKnowledgeAgent( shared_from_this(), const_cast< MIL_Agent_ABC& >( perceived ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1234,8 +1211,7 @@ DEC_Knowledge_Agent& MIL_KnowledgeGroup::CreateKnowledgeAgent( const MIL_Agent_A
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population& MIL_KnowledgeGroup::CreateKnowledgePopulation( MIL_Population& perceived )
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > shared = shared_from_this();
-    return knowledgeBlackBoard_->CreateKnowledgePopulation( shared, perceived );
+    return knowledgeBlackBoard_->CreateKnowledgePopulation( shared_from_this(), perceived );
 }
 
 // -----------------------------------------------------------------------------

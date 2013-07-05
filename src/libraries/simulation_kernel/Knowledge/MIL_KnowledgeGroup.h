@@ -68,10 +68,10 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
-             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent ); // LTO
              MIL_KnowledgeGroup();
-             MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, const boost::shared_ptr< MIL_KnowledgeGroup >& parent );
+             MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
+             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent );
+             MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent );
     virtual ~MIL_KnowledgeGroup();
     //@}
 
@@ -145,11 +145,8 @@ public:
     void SendCreation ( unsigned int context = 0 ) const;
     void SendFullState() const;
     void SendKnowledge( unsigned int context ) const;
-    // LTO begin
     void UpdateKnowledgeGroup();
-    void MoveKnowledgeGroup( MIL_KnowledgeGroup *newParent );
     void ApplyOnKnowledgesPerception( int currentTimeStep );
-    // LTO end
 
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( MIL_Object_ABC& objectKnown );
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_Agent_ABC& perceived );
@@ -211,7 +208,7 @@ private:
     unsigned int id_;
     std::string name_;
     MIL_Army_ABC* army_;
-    boost::shared_ptr< MIL_KnowledgeGroup > parent_;
+    MIL_KnowledgeGroup* parent_;
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
     T_AutomateVector automates_;
     std::set< unsigned int > additionalPerceptions_;
