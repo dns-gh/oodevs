@@ -418,10 +418,9 @@ namespace
         const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
         for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
         {
-            typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_Groups;
-            const T_Groups& groups = it.NextElement().GetKnowledgeGroups();
-            for( T_Groups::const_iterator it = groups.begin(); it != groups.end(); ++it )
-                UpdateKnowledgeGroup( model, knowledges, enemies, friends, it->second );
+            const auto& groups = it.NextElement().GetKnowledgeGroups();
+            for( auto it2 = groups.begin(); it2 != groups.end(); ++it2 )
+                UpdateKnowledgeGroup( model, knowledges, enemies, friends, it2->second );
         }
     }
     struct PopulationElementVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
