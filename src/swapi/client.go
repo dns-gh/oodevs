@@ -158,7 +158,6 @@ func (c *Client) getContext() int32 {
 			return context
 		}
 	}
-	panic("unreachable")
 }
 
 func (c *Client) register(data HandlerRegister) {

@@ -11,7 +11,7 @@
 
     <target name="update">
         <update name="gocheck"/>
-        <update name="golang"/>
+        <update name="golang" version="1.1.1"/>
         <update name="goprotobuf"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
