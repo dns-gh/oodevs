@@ -46,7 +46,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/split_free.hpp>
+#include <boost/serialization/scoped_ptr.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
@@ -60,17 +60,16 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_KnowledgeGroup )
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup()
-    : type_               ( 0 )
-    , id_                 ( 0 )
-    , army_               ( 0 )
-    , parent_             ( 0 )
-    , knowledgeBlackBoard_( 0 )
-    , timeToDiffuse_      ( 0 )
-    , isActivated_        ( true )
-    , hasBeenUpdated_     ( false )
-    , isJammed_           ( false )
-    , createdByJamming_   ( false )
-    , jammedPion_         ( 0 )
+    : type_            ( 0 )
+    , id_              ( 0 )
+    , army_            ( 0 )
+    , parent_          ( 0 )
+    , timeToDiffuse_   ( 0 )
+    , isActivated_     ( true )
+    , hasBeenUpdated_  ( false )
+    , isJammed_        ( false )
+    , createdByJamming_( false )
+    , jammedPion_      ( 0 )
     , bDiffuseToKnowledgeGroup_( false )
 {
     // NOTHING
@@ -172,7 +171,6 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 {
-    delete knowledgeBlackBoard_;
     if( army_ )
     {
         try
@@ -250,8 +248,7 @@ void MIL_KnowledgeGroup::Destroy()
             parent_->UnregisterKnowledgeGroup( shared_from_this() );
         else if( army_ )
             army_->UnregisterKnowledgeGroup( shared_from_this() );
-        delete knowledgeBlackBoard_;
-        knowledgeBlackBoard_ = 0;
+        knowledgeBlackBoard_.reset();
     }
 }
 
@@ -655,7 +652,7 @@ const MIL_KnowledgeGroup::T_KnowledgeGroupVector& MIL_KnowledgeGroup::GetKnowled
 // -----------------------------------------------------------------------------
 const DEC_KnowledgeBlackBoard_KnowledgeGroup* MIL_KnowledgeGroup::GetKnowledge() const
 {
-    return knowledgeBlackBoard_;
+    return knowledgeBlackBoard_.get();
 }
 
 // -----------------------------------------------------------------------------

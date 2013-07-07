@@ -20,7 +20,7 @@
 #include "tools/Resolver.h"
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/serialization/export.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 
 namespace xml
 {
@@ -210,7 +210,7 @@ private:
     std::string name_;
     MIL_Army_ABC* army_;
     MIL_KnowledgeGroup* parent_;
-    DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
+    boost::scoped_ptr< DEC_KnowledgeBlackBoard_KnowledgeGroup > knowledgeBlackBoard_;
     T_AutomateVector automates_;
     std::set< unsigned int > additionalPerceptions_;
     T_KnowledgeGroupVector knowledgeGroups_; // LTO
