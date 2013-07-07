@@ -92,7 +92,6 @@ public:
     void RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
     void UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
     boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup ( unsigned int id ) const;
-    void SetType( const MIL_KnowledgeGroupType *type ){ type_ = type; }
     void RefreshTimeToDiffuseToKnowledgeGroup();
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
