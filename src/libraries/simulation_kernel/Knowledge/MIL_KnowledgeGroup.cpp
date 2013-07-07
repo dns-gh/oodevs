@@ -1188,7 +1188,6 @@ void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision( const DEC_Knowl
 // Name: MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
-inline
 void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep )
 {
     if( perception.IsAvailable() )
@@ -1225,7 +1224,6 @@ void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup( const DE
 // Name: MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-inline
 DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( const MIL_Agent_ABC& agentKnown )
 {
     if( knowledgeBlackBoard_ )
