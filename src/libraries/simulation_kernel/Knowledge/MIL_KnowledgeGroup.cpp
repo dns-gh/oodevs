@@ -782,16 +782,6 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_KnowledgeGroup::FindKnowledgeGroup( 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup
-// Created: SLG 2009-11-30
-// LTO
-// -----------------------------------------------------------------------------
-double MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup() const
-{
-    return timeToDiffuse_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup
 // Created: SLG 2009-11-30
 // LTO
@@ -1116,7 +1106,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
     {
         // LTO begin
         //mis à jour des groupes de connaissances depuis leur parent avec un délai
-        if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
+        if( timeToDiffuse_ < currentTimeStep )
         {
             if( parent_ && IsEnabled() )
             {

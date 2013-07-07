@@ -131,7 +131,6 @@ public:
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int ) const;
     // LTO begin
     const T_KnowledgeGroupVector& GetKnowledgeGroups() const;
-    double GetTimeToDiffuseToKnowledgeGroup() const;
     bool IsEnabled() const;
     // LTO end
     bool IsJammed() const;
