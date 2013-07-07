@@ -195,7 +195,7 @@ void MIL_KnowledgeGroup::Clone( const MIL_KnowledgeGroup& source )
     source.ApplyOnKnowledgesAgent( functorAgent );
     auto functorPopulation = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception, this, _1 );
     source.ApplyOnKnowledgesPopulation( functorPopulation );
-    boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromObjectPerception, this, _1 );
+    auto functorObject = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromObjectPerception, this, _1 );
     source.ApplyOnKnowledgesObject( functorObject );
 }
 
@@ -206,10 +206,7 @@ void MIL_KnowledgeGroup::Clone( const MIL_KnowledgeGroup& source )
 void MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent )
 {
     if( agent.IsValid() )
-    {
-        DEC_Knowledge_Agent& knowledge = CreateKnowledgeAgent( agent.GetAgentKnown() );
-        knowledge.CopyFrom( agent );
-    }
+        CreateKnowledgeAgent( agent.GetAgentKnown() ).CopyFrom( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,8 +215,7 @@ void MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception( const DEC_Knowledge
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population )
 {
-    DEC_Knowledge_Population& knowledge = CreateKnowledgePopulation( population.GetPopulationKnown() );
-    knowledge.CopyFrom( population );
+    CreateKnowledgePopulation( population.GetPopulationKnown() ).CopyFrom( population );
 }
 
 // -----------------------------------------------------------------------------
