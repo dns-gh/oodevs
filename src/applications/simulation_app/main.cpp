@@ -12,7 +12,6 @@
 #include <license_gui/LicenseDialog.h>
 #include <tools/win32/FlexLm.h>
 #include <tools/win32/CrashHandler.h>
-#include <masalloc/masalloc.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/message.h>
 #pragma warning( pop )
