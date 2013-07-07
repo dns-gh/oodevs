@@ -1134,7 +1134,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
     const PHY_RolePion_Communications* communications = jammedPion_ ? jammedPion_->RetrieveRole< PHY_RolePion_Communications >() : 0;
     if( !IsJammed() || ( communications && communications->CanReceive() ) )
     {
-        if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
+        if( timeToDiffuse_ < currentTimeStep )
         {
             if( parent_ && IsEnabled() && parent_->GetKnowledge() )
             {
