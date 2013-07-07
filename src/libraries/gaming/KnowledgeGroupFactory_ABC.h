@@ -13,13 +13,11 @@
 namespace kernel
 {
     class KnowledgeGroup_ABC;
-    class Team_ABC;
 }
 
 namespace sword
 {
     class KnowledgeGroupCreation;
-    class KnowledgeGroupDestruction;
 }
 
 // =============================================================================
