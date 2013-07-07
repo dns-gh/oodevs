@@ -52,11 +52,11 @@ MIL_IDManager DEC_Knowledge_Agent::idManager_;
 // Name: DEC_Knowledge_Agent constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Agent_ABC& agentKnown, double rRelevance )
-    : pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
-    , pKnowledgeGroup_               ( knowledgeGroup )
+DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& group, MIL_Agent_ABC& agentKnown, double rRelevance )
+    : pArmyKnowing_                  ( &group.GetArmy() )
     , pAgentKnown_                   ( &agentKnown )
     , nID_                           ( idManager_.GetId() )
+    , groupId_                       ( group.GetId() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
@@ -65,13 +65,16 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_Knowledge
     , nTimeExtrapolationEnd_         ( -1 )
     , locked_                        ( 0 )
     , bValid_                        ( true )
-    , bCreatedOnNetwork_             ( !pAgentKnown_->BelongsTo( *knowledgeGroup ) )
+    , bCreatedOnNetwork_             ( !pAgentKnown_->BelongsTo( group ) )
     , bRelevanceUpdated_             ( false )
     , bCurrentPerceptionLevelUpdated_( false )
     , bMaxPerceptionLevelUpdated_    ( false )
     , bCriticalIntelligenceUpdated_  ( false )
     , bPerceptionDistanceHacked_     ( false )
     , rLastRelevanceSent_            ( 0 )
+    , maxLifetime_                   ( group.GetType().GetKnowledgeAgentMaxLifeTime() )
+    , maxDistance_                   ( group.GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() )
+    , extrapolationTime_             ( static_cast< int >( group.GetType().GetKnowledgeAgentExtrapolationTime() ) )
 {
     if( bCreatedOnNetwork_ )
         SendMsgCreation();
@@ -83,11 +86,11 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_Knowledge
 // Name: DEC_Knowledge_Agent constructor
 // Created: LGY 2012-05-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent::DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
-    : pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
-    , pKnowledgeGroup_               ( knowledgeGroup )
+DEC_Knowledge_Agent::DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, const MIL_KnowledgeGroup& group )
+    : pArmyKnowing_                  ( &group.GetArmy() )
     , pAgentKnown_                   ( knowledge.pAgentKnown_ )
     , nID_                           ( idManager_.GetId() )
+    , groupId_                       ( group.GetId() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
@@ -96,13 +99,16 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, 
     , nTimeExtrapolationEnd_         ( -1 )
     , locked_                        ( 0 )
     , bValid_                        ( true )
-    , bCreatedOnNetwork_             ( !pAgentKnown_->BelongsTo( *knowledgeGroup ) )
+    , bCreatedOnNetwork_             ( !pAgentKnown_->BelongsTo( group ) )
     , bRelevanceUpdated_             ( false )
     , bCurrentPerceptionLevelUpdated_( false )
     , bMaxPerceptionLevelUpdated_    ( false )
     , bCriticalIntelligenceUpdated_  ( false )
     , bPerceptionDistanceHacked_     ( false )
     , rLastRelevanceSent_            ( 0 )
+    , maxLifetime_                   ( group.GetType().GetKnowledgeAgentMaxLifeTime() )
+    , maxDistance_                   ( group.GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() )
+    , extrapolationTime_             ( static_cast< int >( group.GetType().GetKnowledgeAgentExtrapolationTime() ) )
 {
     CopyFrom( knowledge );
     if( bCreatedOnNetwork_ )
@@ -119,6 +125,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, 
 DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     : DEC_Knowledge_ABC()
     , nID_                           ( 0 )
+    , groupId_                       ( 0 )
     , pArmyKnowing_                  ( 0 )
     , pAgentKnown_                   ( 0 )
     , nTimeLastUpdate_               ( 0 )
@@ -136,6 +143,9 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , bCriticalIntelligenceUpdated_  ( false )
     , bPerceptionDistanceHacked_     ( false )
     , rLastRelevanceSent_            ( 0 )
+    , maxLifetime_                   ( 0 )
+    , maxDistance_                   ( 0 )
+    , extrapolationTime_             ( 0 )
 {
     // NOTHING
 }
@@ -198,9 +208,9 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> pArmyKnowing_;
-    file >> pKnowledgeGroup_;
     file >> pAgentKnown_
          >> nID_
+         >> groupId_
          >> dataDetection_
          >> dataRecognition_
          >> dataIdentification_
@@ -239,9 +249,9 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned i
     unsigned int max = pMaxPerceptionLevel_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << pArmyKnowing_
-         << pKnowledgeGroup_
          << pAgentKnown_
          << nID_
+         << groupId_
          << dataDetection_
          << dataRecognition_
          << dataIdentification_
@@ -371,7 +381,7 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataRecognition_.Update( perception.GetRecognitionData() );
     dataIdentification_.Update( perception.GetIdentificationData() );
     UpdatePerceptionSources( perception );
-    nTimeExtrapolationEnd_ = static_cast< int >( pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime() );
+    nTimeExtrapolationEnd_ = extrapolationTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -438,10 +448,10 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
         return;
     }
     // Degradation : effacement au bout de X minutes
-    const double rTimeRelevanceDegradation = ( currentTimeStep - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxLifeTime();
+    const double rTimeRelevanceDegradation = ( currentTimeStep - nTimeLastUpdate_ ) / maxLifetime_;
     // Degradation : effacement quand l'unité réelle et l'unité connnue sont distantes de X metres
     const double rDistanceBtwKnowledgeAndKnown = dataDetection_.GetPosition().Distance( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    const double rDistRelevanceDegradation     = bPerceptionDistanceHacked_? 0.0 : rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit();
+    const double rDistRelevanceDegradation     = bPerceptionDistanceHacked_? 0.0 : rDistanceBtwKnowledgeAndKnown / maxDistance_;
 
     ChangeRelevance( std::max( 0., rRelevance_ - rTimeRelevanceDegradation - rDistRelevanceDegradation ) );
     nTimeLastUpdate_ = currentTimeStep;
@@ -477,7 +487,7 @@ void DEC_Knowledge_Agent::SendChangedState()
         return;
     client::UnitKnowledgeUpdate asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
-    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( groupId_ );
     if( bRelevanceUpdated_ )
     {
         asnMsg().set_pertinence( (int)( rRelevance_ * 100. ) );
@@ -518,7 +528,7 @@ void DEC_Knowledge_Agent::SendFullState()
 {
     client::UnitKnowledgeUpdate asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
-    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( groupId_ );
     asnMsg().set_pertinence( static_cast< int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
     sword::UnitIdentification::Level level( asnMsg().identification_level() );
@@ -545,7 +555,7 @@ void DEC_Knowledge_Agent::SendFullState()
 void DEC_Knowledge_Agent::UpdateOnNetwork()
 {
     assert( pAgentKnown_ );
-    if( pAgentKnown_->GetKnowledgeGroup()->GetId() == pKnowledgeGroup_->GetId() )
+    if( pAgentKnown_->GetKnowledgeGroup()->GetId() == groupId_ )
     {
         if( bCreatedOnNetwork_ )
         {
@@ -586,7 +596,7 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     assert( pAgentKnown_ );
     client::UnitKnowledgeCreation asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
-    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( groupId_ );
     asnMsg().mutable_unit()->set_id( pAgentKnown_->GetID() );
     asnMsg().mutable_type()->set_id( pAgentKnown_->GetType().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -600,7 +610,7 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
 {
     client::UnitKnowledgeDestruction asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
-    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( groupId_ );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -1241,5 +1251,5 @@ bool DEC_Knowledge_Agent::IsTransported() const
 // -----------------------------------------------------------------------------
 unsigned int DEC_Knowledge_Agent::GetGroupID() const
 {
-    return pKnowledgeGroup_->GetId();
+    return groupId_;
 }

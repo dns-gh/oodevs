@@ -88,6 +88,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 
 #include "Adapters/RoleAdapterInterface.h"
 
@@ -730,7 +731,7 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_AgentPion::GetKnowledgeGroup() const
     if( !CallRole( &PHY_RoleInterface_Communications::CanEmit, true ) )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > jamKg = CallRole( &PHY_RolePion_Communications::GetJammedKnowledgeGroup, boost::shared_ptr< MIL_KnowledgeGroup >() );
-        if( jamKg.get() )
+        if( jamKg )
             return jamKg;
     }
     if( !pAutomate_ )
@@ -751,10 +752,9 @@ bool MIL_AgentPion::BelongsTo( const MIL_KnowledgeGroup& group ) const
 // Name: MIL_AgentPion::CreateKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
+boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& group )
 {
-    boost::shared_ptr< DEC_Knowledge_Agent > result( new DEC_Knowledge_Agent( knowledgeGroup, *this ) );
-    return result;
+    return boost::make_shared< DEC_Knowledge_Agent >( *group, boost::ref( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1905,8 +1905,7 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
     MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
     if( target == 0 )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = GetKnowledgeGroup();
-    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( knowledgeGroup );
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( GetKnowledgeGroup() );
     // firing mode
     firing::PHY_DirectFireData::E_FiringMode firingMode = firing::PHY_DirectFireData::eFiringModeNormal;
     if( msg.elem_size() >= 2 && msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value( 1 ).has_enumeration() )

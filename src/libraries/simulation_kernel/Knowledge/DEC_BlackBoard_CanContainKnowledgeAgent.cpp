@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeAgent )
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent constructor
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent( MIL_KnowledgeGroup * knowledgeGroup )
+DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent( MIL_KnowledgeGroup* knowledgeGroup )
     : pKnowledgeGroup_           ( knowledgeGroup )
     , nLastCacheUpdateTick_      ( 0 )
     , detectedContainer_         ()
@@ -308,7 +308,7 @@ const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& DEC_BlackBoa
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent( const DEC_Knowledge_Agent& knowledge )
 {
-    boost::shared_ptr< DEC_Knowledge_Agent > copy( new DEC_Knowledge_Agent( knowledge, pKnowledgeGroup_->shared_from_this() ) );
+    boost::shared_ptr< DEC_Knowledge_Agent > copy( new DEC_Knowledge_Agent( knowledge, *pKnowledgeGroup_ ) );
     realAgentMap_.insert( std::make_pair( &knowledge.GetAgentKnown(), copy ) );
     unitKnowledgeFromIDMap_.insert( std::make_pair( copy->GetID(), copy ) );
 }

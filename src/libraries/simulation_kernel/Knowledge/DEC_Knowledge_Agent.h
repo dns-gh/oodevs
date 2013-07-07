@@ -58,8 +58,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Agent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Agent_ABC& agentKnown, double relevance = 0.);
-             DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
+             DEC_Knowledge_Agent( const MIL_KnowledgeGroup& group, MIL_Agent_ABC& agentKnown, double relevance = 0.);
+             DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, const MIL_KnowledgeGroup& group );
              DEC_Knowledge_Agent();
     virtual ~DEC_Knowledge_Agent();
     //@}
@@ -191,9 +191,9 @@ private:
     //! @name Member data
     //@{
     MIL_Army_ABC* pArmyKnowing_;
-    boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
     MIL_Agent_ABC* pAgentKnown_;
     unsigned int nID_;
+    unsigned int groupId_;
     DEC_Knowledge_AgentDataDetection dataDetection_;
     DEC_Knowledge_AgentDataRecognition dataRecognition_;
     DEC_Knowledge_AgentDataIdentification dataIdentification_;
@@ -218,6 +218,9 @@ private:
     bool bCriticalIntelligenceUpdated_;
     bool bPerceptionDistanceHacked_;
     double rLastRelevanceSent_;
+    double maxLifetime_;
+    double maxDistance_;
+    int extrapolationTime_;
     static MIL_IDManager idManager_;
     //@}
 };
