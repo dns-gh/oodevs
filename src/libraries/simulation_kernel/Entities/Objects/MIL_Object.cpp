@@ -465,7 +465,7 @@ void MIL_Object::UpdateLocalisation( const TER_Localisation& location )
 // Name: MIL_Object::CreateKnowledge
 // Created: SLG 2011-01-10
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& group )
+boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_KnowledgeGroup& group )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( group, *this ) );
     InstanciateAttributes( *pKnowledge );
@@ -476,7 +476,7 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const boo
 // Name: MIL_Object::CreateKnowledge
 // Created: LGY 2013-04-03
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& group, const DEC_Knowledge_Object& knowledge )
+boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_KnowledgeGroup& group, const DEC_Knowledge_Object& knowledge )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( knowledge, group ) );
     InstanciateAttributes( *pKnowledge );

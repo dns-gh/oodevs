@@ -104,7 +104,7 @@ public:
 
     //! @name Knowledge
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup ) = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( const MIL_KnowledgeGroup& group ) = 0;
     virtual bool                                     IsPerceived    ( const MIL_Agent_ABC& target ) const = 0; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
     virtual DEC_KnowledgeBlackBoard_AgentPion&       GetKnowledge   () const = 0;
     //@}

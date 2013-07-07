@@ -281,7 +281,7 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationCollisi
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::UpdateRelevance()
 {
-    double rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroupType().GetKnowledgePopulationMaxLifeTime();
+    double rMaxLifeTime = pPopulationKnowledge_->GetMaxLifeTime();
     if( pFlowKnown_ && pFlowKnown_->GetPopulation().HasDoneMagicMove() )
         rMaxLifeTime = 0.;
     if( flowParts_.UpdateRelevance( rMaxLifeTime ) )

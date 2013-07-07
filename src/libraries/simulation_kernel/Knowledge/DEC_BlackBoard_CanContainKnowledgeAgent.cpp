@@ -99,9 +99,9 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& fi
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& agentKnown )
+DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent( const MIL_KnowledgeGroup& group, const MIL_Agent_ABC& agentKnown )
 {
-    boost::shared_ptr< DEC_Knowledge_Agent > knowledge = const_cast< MIL_Agent_ABC& >( agentKnown ).CreateKnowledge( knowledgeGroup );
+    boost::shared_ptr< DEC_Knowledge_Agent > knowledge = const_cast< MIL_Agent_ABC& >( agentKnown ).CreateKnowledge( group );
     if( ! realAgentMap_.insert( std::make_pair( &agentKnown, knowledge ) ).second )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     if( ! unitKnowledgeFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )

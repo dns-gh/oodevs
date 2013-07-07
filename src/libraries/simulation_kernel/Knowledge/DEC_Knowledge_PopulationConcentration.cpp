@@ -285,7 +285,7 @@ void DEC_Knowledge_PopulationConcentration::UpdateRelevance()
     if( pConcentrationKnown_ && pConcentrationKnown_->GetPopulation().HasDoneMagicMove() )
         ChangeRelevance( 0. );
     // Degradation : effacement au bout de X minutes
-    const double rTimeRelevanceDegradation = ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroupType().GetKnowledgePopulationMaxLifeTime();
+    const double rTimeRelevanceDegradation = ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetMaxLifeTime();
     const double rRelevance = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
     ChangeRelevance( rRelevance );
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();

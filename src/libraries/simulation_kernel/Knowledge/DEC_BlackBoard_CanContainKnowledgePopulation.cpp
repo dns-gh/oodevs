@@ -25,8 +25,8 @@ BOOST_CLASS_TRACKING( DEC_BlackBoard_CanContainKnowledgePopulation, boost::seria
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgePopulation::DEC_BlackBoard_CanContainKnowledgePopulation( MIL_KnowledgeGroup* knowledgeGroup )
-    : pKnowledgeGroup_( knowledgeGroup )
+DEC_BlackBoard_CanContainKnowledgePopulation::DEC_BlackBoard_CanContainKnowledgePopulation( MIL_KnowledgeGroup* group )
+    : pKnowledgeGroup_( group )
 {
     // NOTHING
 }
@@ -75,9 +75,9 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchiv
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationPerceived )
+DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation( const MIL_KnowledgeGroup& group, MIL_Population& populationPerceived )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge( new DEC_Knowledge_Population( knowledgeGroup, populationPerceived ) );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge( new DEC_Knowledge_Population( group, populationPerceived ) );
     if( ! knowledgePopulationMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return *pKnowledge;
@@ -147,7 +147,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::Merge( const DEC_BlackBoard_C
         boost::shared_ptr< DEC_Knowledge_Population > pSubKnowledge = itKnowledge->second;
         if( !pKnowledge.get() )
         {
-            boost::shared_ptr< DEC_Knowledge_Population > copy( new DEC_Knowledge_Population( *pSubKnowledge, pKnowledgeGroup_->shared_from_this() ) );
+            boost::shared_ptr< DEC_Knowledge_Population > copy( new DEC_Knowledge_Population( *pSubKnowledge, *pKnowledgeGroup_ ) );
             copy->CopyFrom( *pSubKnowledge );
             knowledgePopulationMap_.insert( std::make_pair( &copy->GetPopulationKnown(), copy ) );
         }

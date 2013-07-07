@@ -52,7 +52,7 @@ class DEC_KnowledgeBlackBoard_KnowledgeGroup : public DEC_KnowledgeBlackBoard_AB
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup* knowledgeGroup );
+    explicit DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup* group );
              DEC_KnowledgeBlackBoard_KnowledgeGroup();
     virtual ~DEC_KnowledgeBlackBoard_KnowledgeGroup();
     //@}
@@ -105,8 +105,8 @@ public:
     //! @name Queries
     //@{
     // Knowledge agents
-    DEC_Knowledge_Agent& CreateKnowledgeAgent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& agentKnown );
-    DEC_Knowledge_Population& CreateKnowledgePopulation( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& perceived );
+    DEC_Knowledge_Agent& CreateKnowledgeAgent( const MIL_KnowledgeGroup& group, const MIL_Agent_ABC& agentKnown );
+    DEC_Knowledge_Population& CreateKnowledgePopulation( const MIL_KnowledgeGroup& group, MIL_Population& perceived );
     bool IsKnown( const MIL_Agent_ABC& agent ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const DEC_Knowledge_AgentPerception& perception ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const MIL_Agent_ABC& agent ) const;

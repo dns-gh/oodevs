@@ -133,7 +133,7 @@ namespace
             boost::shared_ptr< DEC_Knowledge_Agent > pNewKnowledge = blackBoard_.GetKnowledgeAgent( agentKnown );
             DEC_Knowledge_Agent* newKnowledge = pNewKnowledge.get();
             if( !newKnowledge )
-                newKnowledge = &blackBoard_.CreateKnowledgeAgent( knowledgeGroup_, agentKnown );
+                newKnowledge = &blackBoard_.CreateKnowledgeAgent( *knowledgeGroup_, agentKnown );
             newKnowledge->Update( knowledge, currentTimeStep );
         }
 

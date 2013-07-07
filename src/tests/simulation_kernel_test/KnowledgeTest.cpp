@@ -134,7 +134,7 @@ BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, ArmyFixture )
     boost::shared_ptr< MIL_KnowledgeGroup > group1( CreateKnowledgeGroup( group, 2, "GTIA" ) );
     boost::shared_ptr< MIL_KnowledgeGroup > group2( CreateKnowledgeGroup( group, 3, "GTIA" ) );
     MockNET_Publisher_ABC mockPublisher;
-    MOCK_EXPECT( mockPublisher.Send ).once();
+    MOCK_EXPECT( mockPublisher.Send );
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboard ) );
     MockAgentWithPerceiver jammedAgent;
@@ -145,12 +145,12 @@ BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, ArmyFixture )
     MOCK_EXPECT( mockAgent.GetType );
     //{
         // TestAgentKnowledgeIsCreated
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( group1, mockAgent, 0.5 ) );
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( *group1, mockAgent, 0.5 ) );
 
         DEC_BlackBoard_CanContainKnowledgeAgent& test1 = group1->GetKnowledge()->GetKnowledgeAgentContainer();
-        MOCK_EXPECT( mockAgent.CreateKnowledge ).with( mock::same( group1 ) ).once().returns( knowledge );
+        MOCK_EXPECT( mockAgent.CreateKnowledge ).with( mock::same( *group1 ) ).once().returns( knowledge );
 
-        DEC_Knowledge_Agent& obj = test1.CreateKnowledgeAgent( group1, mockAgent );
+        DEC_Knowledge_Agent& obj = test1.CreateKnowledgeAgent( *group1, mockAgent );
         BOOST_CHECK_EQUAL( &obj, knowledge.get() );
         mock::verify( mockAgent );
     //}
@@ -160,11 +160,11 @@ BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, ArmyFixture )
     MOCK_EXPECT( mockAgentJammed1.GetType );
     //{
         // TestJammedUnitHasItsOwnKnowledgeGroup
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledgeJammed1( new DEC_Knowledge_Agent( groupJammed1, mockAgentJammed1, 0.5 ) );
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledgeJammed1( new DEC_Knowledge_Agent( *groupJammed1, mockAgentJammed1, 0.5 ) );
 
-        MOCK_EXPECT( mockAgentJammed1.CreateKnowledge ).with( mock::same( groupJammed1 ) ).once().returns( knowledgeJammed1 );
+        MOCK_EXPECT( mockAgentJammed1.CreateKnowledge ).with( mock::same( *groupJammed1 ) ).once().returns( knowledgeJammed1 );
         DEC_BlackBoard_CanContainKnowledgeAgent& testjammed1 = groupJammed1->GetKnowledge()->GetKnowledgeAgentContainer();
-        DEC_Knowledge_Agent& objJammed1 = testjammed1.CreateKnowledgeAgent( groupJammed1, mockAgentJammed1 );
+        DEC_Knowledge_Agent& objJammed1 = testjammed1.CreateKnowledgeAgent( *groupJammed1, mockAgentJammed1 );
 
         BOOST_CHECK_EQUAL( &objJammed1, knowledgeJammed1.get() );
         BOOST_CHECK_EQUAL( true, testjammed1.HasKnowledgeAgent( mockAgentJammed1 ) );
@@ -266,12 +266,12 @@ BOOST_FIXTURE_TEST_CASE( TestLatentRelevance, ArmyFixture )
     MOCK_EXPECT( mockAgent.GetType );
     //{
         // TestAgentKnowledgeIsCreatedWithRelevanceMax
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( knowledgeGroup, mockAgent, 1. ) ); // 1 for relevance
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( *knowledgeGroup, mockAgent, 1. ) ); // 1 for relevance
 
         DEC_BlackBoard_CanContainKnowledgeAgent& knowledgeAgentContainer = knowledgeGroup->GetKnowledge()->GetKnowledgeAgentContainer();
         MOCK_EXPECT( mockAgent.CreateKnowledge ).once().returns( knowledge );
 
-        DEC_Knowledge_Agent& obj = knowledgeAgentContainer.CreateKnowledgeAgent( knowledgeGroup, mockAgent );
+        DEC_Knowledge_Agent& obj = knowledgeAgentContainer.CreateKnowledgeAgent( *knowledgeGroup, mockAgent );
         BOOST_CHECK_EQUAL( knowledge.get(), &obj );
         BOOST_CHECK_EQUAL( 1., obj.GetRelevance() );
     //}
@@ -389,9 +389,9 @@ namespace
         DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
         StubMIL_AgentTypePion type( model );
         MOCK_EXPECT( agent.GetType ).returns( boost::cref( type ) );
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( group, agent, relevance ) );
-        MOCK_EXPECT( agent.CreateKnowledge ).with( mock::same( group ) ).once().returns( knowledge );
-        blackBoard.CreateKnowledgeAgent( group, agent );
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( *group, agent, relevance ) );
+        MOCK_EXPECT( agent.CreateKnowledge ).with( mock::same( *group ) ).once().returns( knowledge );
+        blackBoard.CreateKnowledgeAgent( *group, agent );
     }
 
     template< typename Knowledge >
@@ -493,7 +493,7 @@ namespace
                                                                      boost::shared_ptr< MIL_KnowledgeGroup > group, double relevance )
     {
         MOCK_EXPECT( object.GetName ).returns( "object" );
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( group, object, relevance ) );
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *group, object, relevance ) );
         MOCK_EXPECT( object.CreateKnowledgeKnowledgeGroup ).once().returns( knowledge );
         blackBoard.CreateKnowledgeObject( object );
         return knowledge;
@@ -629,7 +629,7 @@ BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_empty_knowledge_gro
 
     // knowledge creation in group2
     StubMIL_Population population( type, army );
-    DEC_Knowledge_Population& knowledge = blackBoardGroup2.CreateKnowledgePopulation( group2, population );
+    DEC_Knowledge_Population& knowledge = blackBoardGroup2.CreateKnowledgePopulation( *group2, population );
     BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgePopulations().size(), 1u );
     mock::verify();
 
@@ -658,13 +658,13 @@ BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_knowledge_group, Po
 
     // knowledge creation in group2
     StubMIL_Population population2( type, army );
-    DEC_Knowledge_Population& knowledge2 = blackBoardGroup2.CreateKnowledgePopulation( group2, population2 );
+    DEC_Knowledge_Population& knowledge2 = blackBoardGroup2.CreateKnowledgePopulation( *group2, population2 );
     BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgePopulations().size(), 1u );
     mock::verify();
 
     // knowledge creation in group1
     StubMIL_Population population1( type, army );
-    DEC_Knowledge_Population& knowledge1 = blackBoardGroup1.CreateKnowledgePopulation( group1, population1 );
+    DEC_Knowledge_Population& knowledge1 = blackBoardGroup1.CreateKnowledgePopulation( *group1, population1 );
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 1u );
     mock::verify();
 
@@ -702,14 +702,14 @@ BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_knowledge_group_wit
     StubMIL_Population population2( type, army );
 
     // knowledge creation in group2
-    DEC_Knowledge_Population& knowledge21 = blackBoardGroup2.CreateKnowledgePopulation( group2, population1 );
-    DEC_Knowledge_Population& knowledge22 = blackBoardGroup2.CreateKnowledgePopulation( group2, population2 );
+    DEC_Knowledge_Population& knowledge21 = blackBoardGroup2.CreateKnowledgePopulation( *group2, population1 );
+    DEC_Knowledge_Population& knowledge22 = blackBoardGroup2.CreateKnowledgePopulation( *group2, population2 );
     BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgePopulations().size(), 2u );
     mock::verify();
 
     // knowledge creation in group1
-    DEC_Knowledge_Population& knowledge11 = blackBoardGroup1.CreateKnowledgePopulation( group1, population1 );
-    DEC_Knowledge_Population& knowledge12 = blackBoardGroup1.CreateKnowledgePopulation( group1, population2 );
+    DEC_Knowledge_Population& knowledge11 = blackBoardGroup1.CreateKnowledgePopulation( *group1, population1 );
+    DEC_Knowledge_Population& knowledge12 = blackBoardGroup1.CreateKnowledgePopulation( *group1, population2 );
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 2u );
     mock::verify();
 

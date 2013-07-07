@@ -35,7 +35,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_BlackBoard_CanContainKnowledgePopulation( MIL_KnowledgeGroup* knowledgeGroup );
+             DEC_BlackBoard_CanContainKnowledgePopulation( MIL_KnowledgeGroup* group );
              DEC_BlackBoard_CanContainKnowledgePopulation();
     virtual ~DEC_BlackBoard_CanContainKnowledgePopulation();
     //@}
@@ -50,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_Population& CreateKnowledgePopulation ( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationPerceived );
+    DEC_Knowledge_Population& CreateKnowledgePopulation ( const MIL_KnowledgeGroup& group, MIL_Population& populationPerceived );
     void DestroyKnowledgePopulation( DEC_Knowledge_Population& knowledge );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     void Merge( const DEC_BlackBoard_CanContainKnowledgePopulation& subGroup );

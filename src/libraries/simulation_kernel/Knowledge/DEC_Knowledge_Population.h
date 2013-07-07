@@ -15,13 +15,11 @@
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
 #include "Tools/MIL_IDManager.h"
-#include <boost/shared_ptr.hpp>
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
-class MIL_KnowledgeGroupType;
 class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
@@ -43,8 +41,8 @@ class DEC_Knowledge_Population : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Population( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationKnown );
-             DEC_Knowledge_Population( const DEC_Knowledge_Population& knowledge, const boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup );
+             DEC_Knowledge_Population( const MIL_KnowledgeGroup& group, MIL_Population& populationKnown );
+             DEC_Knowledge_Population( const DEC_Knowledge_Population& knowledge, const MIL_KnowledgeGroup& group );
              DEC_Knowledge_Population();
     virtual ~DEC_Knowledge_Population();
     //@}
@@ -92,7 +90,7 @@ public:
     //@{
     unsigned int GetID() const;
     const MIL_Army_ABC& GetArmy() const;
-    const MIL_KnowledgeGroupType& GetKnowledgeGroupType() const;
+    double GetMaxLifeTime() const;
     const unsigned int GetKnowledgeGroupId() const;
     MIL_Population& GetPopulationKnown() const;
     double GetDangerosity( const MIL_AgentPion& target ) const;
@@ -133,13 +131,14 @@ private:
     //@{
     static MIL_IDManager idManager_;
     MIL_Population* pPopulationKnown_;
-    boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
     const PHY_PerceptionLevel* pHackedPerceptionLevel_;
     std::string criticalIntelligence_;
-    const unsigned int nID_;
+    unsigned int nID_;
+    unsigned int groupId_;
     T_ConcentrationMap concentrations_;
     T_FlowMap flows_;
     double rDominationState_;
+    double maxLifetime_;
     int locked_;
     bool bIsRecon_;
     bool bReconAttributesValid_;

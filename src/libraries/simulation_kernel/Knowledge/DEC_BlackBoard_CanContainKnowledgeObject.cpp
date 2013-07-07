@@ -112,7 +112,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
         return it->second;
     boost::shared_ptr< DEC_Knowledge_Object > knowledge;
     if( pKnowledgeGroup_ )
-        knowledge = objectKnown.CreateKnowledge( pKnowledgeGroup_->shared_from_this() );
+        knowledge = objectKnown.CreateKnowledge( *pKnowledgeGroup_ );
 
     if( knowledge )
     {
@@ -306,7 +306,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_
 {
     if( !knowledge.GetObjectKnown() || !pKnowledgeGroup_ )
         return;
-    boost::shared_ptr< DEC_Knowledge_Object > copy = knowledge.GetObjectKnown()->CreateKnowledge( pKnowledgeGroup_->shared_from_this(), knowledge );
+    boost::shared_ptr< DEC_Knowledge_Object > copy = knowledge.GetObjectKnown()->CreateKnowledge( *pKnowledgeGroup_, knowledge );
     objectMap_.insert( std::make_pair( copy->GetObjectKnown(), copy ) );
     knowledgeObjectFromIDMap_.insert( std::make_pair( copy->GetID(), copy ) );
 }

@@ -36,11 +36,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_KnowledgeGroup )
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup constructor
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup* knowledgeGroup )
-    : pKnowledgeGroup_( knowledgeGroup )
-    , pKnowledgeAgentContainer_( new DEC_BlackBoard_CanContainKnowledgeAgent( knowledgeGroup ) )
-    , pKnowledgePopulationContainer_( new DEC_BlackBoard_CanContainKnowledgePopulation( knowledgeGroup ) )
-    , pKnowledgeObjectContainer_( new DEC_BlackBoard_CanContainKnowledgeObject( knowledgeGroup ) )
+DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup* group )
+    : pKnowledgeGroup_( group )
+    , pKnowledgeAgentContainer_( new DEC_BlackBoard_CanContainKnowledgeAgent( group ) )
+    , pKnowledgePopulationContainer_( new DEC_BlackBoard_CanContainKnowledgePopulation( group ) )
+    , pKnowledgeObjectContainer_( new DEC_BlackBoard_CanContainKnowledgeObject( group ) )
     , pKsKnowledgeSynthetizer_( new DEC_KS_KnowledgeSynthetizer( *this ) )
     , pKsObjectKnowledgeSynthetizer_( new DEC_KS_ObjectKnowledgeSynthetizer( *this ) )
     , pKsSharing_( new DEC_KS_Sharing( *this ) )
@@ -733,18 +733,18 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPerception( int cu
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent
 // Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& perceived )
+DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( const MIL_KnowledgeGroup& group, const MIL_Agent_ABC& perceived )
 {
-    return GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup, perceived );
+    return GetKnowledgeAgentContainer().CreateKnowledgeAgent( group, perceived );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation
 // Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& perceived )
+DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation( const MIL_KnowledgeGroup& group, MIL_Population& perceived )
 {
-    return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );
+    return GetKnowledgePopulationContainer().CreateKnowledgePopulation( group, perceived );
 }
 
 // -----------------------------------------------------------------------------

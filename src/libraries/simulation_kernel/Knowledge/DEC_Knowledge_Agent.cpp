@@ -235,7 +235,10 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> locked_
          >> bValid_
          >> bCriticalIntelligenceUpdated_
-         >> bPerceptionDistanceHacked_;
+         >> bPerceptionDistanceHacked_
+         >> maxLifetime_
+         >> maxDistance_
+         >> extrapolationTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -271,7 +274,10 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned i
          << locked_
          << bValid_
          << bCriticalIntelligenceUpdated_
-         << bPerceptionDistanceHacked_;
+         << bPerceptionDistanceHacked_
+         << maxLifetime_
+         << maxDistance_
+         << extrapolationTime_;
 }
 
 // -----------------------------------------------------------------------------

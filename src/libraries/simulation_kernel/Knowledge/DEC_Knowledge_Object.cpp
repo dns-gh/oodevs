@@ -48,6 +48,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include <boost/serialization/optional.hpp>
 #include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Object )
@@ -59,8 +60,7 @@ MIL_IDManager DEC_Knowledge_Object::idManager_;
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown, bool sendCreation /*= true*/ )
-    : DEC_Knowledge_ABC()
-    , pArmyKnowing_            ( &armyKnowing )
+    : pArmyKnowing_            ( &armyKnowing )
     , pObjectKnown_            ( &objectKnown )
     , objectId_                ( objectKnown.GetID() )
     , pObjectType_             ( &objectKnown.GetType() )
@@ -85,14 +85,13 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
 // Name: DEC_Knowledge_Object constructor
 // Created: LDC 2010-04-15
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( const boost::shared_ptr< MIL_KnowledgeGroup >& groupKnowing, MIL_Object_ABC& objectKnown, double rRelevance )
-    : DEC_Knowledge_ABC()
-    , pArmyKnowing_            ( &groupKnowing->GetArmy() )
+DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& group, MIL_Object_ABC& objectKnown, double rRelevance )
+    : pArmyKnowing_            ( &group.GetArmy() )
     , pObjectKnown_            ( &objectKnown )
     , objectId_                ( objectKnown.GetID() )
     , pObjectType_             ( &objectKnown.GetType() )
     , nID_                     ( idManager_.GetId() )
-    , pKnowledgeGroup_         ( groupKnowing )
+    , groupId_                 ( group.GetId() )
     , name_                    ( objectKnown.GetName() )
     , nAttributesUpdated_      ( eAttr_AllAttributes )
     , pOwnerArmy_              ( objectKnown.GetArmy() )
@@ -113,8 +112,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const boost::shared_ptr< MIL_Knowled
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object()
-    : DEC_Knowledge_ABC()
-    , pArmyKnowing_            ( 0 )
+    : pArmyKnowing_            ( 0 )
     , pObjectKnown_            ( 0 )
     , objectId_                ( 0 )
     , pObjectType_             ( 0 )
@@ -138,14 +136,14 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
 // Name: DEC_Knowledge_Object constructor
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const boost::shared_ptr< MIL_KnowledgeGroup >& pGroupKnowing )
+DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_KnowledgeGroup& group )
     : DEC_Knowledge_ABC()
     , pArmyKnowing_                    ( copy.pArmyKnowing_ )
     , pObjectKnown_                    ( copy.pObjectKnown_ )
     , objectId_                        ( copy.objectId_ )
     , pObjectType_                     ( copy.pObjectType_ )
     , nID_                             ( copy.idManager_.GetId() )
-    , pKnowledgeGroup_                 ( pGroupKnowing )
+    , groupId_                         ( group.GetId() )
     , name_                            ( copy.name_ )
     , nAttributesUpdated_              ( copy.nAttributesUpdated_ )
     , pOwnerArmy_                      ( copy.pOwnerArmy_ )
@@ -219,7 +217,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> pObjectKnown_
          >> const_cast< unsigned int& >( objectId_ )
          >> const_cast< unsigned int& >( nID_ )
-         >> pKnowledgeGroup_
+         >> groupId_
          >> name_
          >> nAttributesUpdated_
          >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
@@ -276,7 +274,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
          << pObjectKnown_
          << objectId_
          << nID_
-         << pKnowledgeGroup_
+         << groupId_
          << name_
          << nAttributesUpdated_
          << pOwnerArmy_
@@ -675,9 +673,8 @@ void DEC_Knowledge_Object::SendUpdateOnNetwork()
     client::ObjectKnowledgeUpdate asn;
     asn().mutable_knowledge()->set_id( nID_ );
     asn().mutable_party()->set_id( pArmyKnowing_ ? pArmyKnowing_->GetID() : 0 );
-    if( pKnowledgeGroup_.get() )
-        asn().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
-
+    if( groupId_ )
+        asn().mutable_knowledge_group()->set_id( *groupId_ );
     BuildMsgRealObject( asn() );
     BuildMsgPerceptionSources( asn() );
     BuildMsgRelevance( asn() );
@@ -697,8 +694,8 @@ void DEC_Knowledge_Object::SendMsgCreation() const
     asn().mutable_knowledge()->set_id( nID_ );
     asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
     asn().mutable_party()->set_id( pArmyKnowing_ ? pArmyKnowing_->GetID() : 0 );
-    if( pKnowledgeGroup_.get() )
-        asn().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+    if( groupId_ )
+        asn().mutable_knowledge_group()->set_id( *groupId_ );
     asn().mutable_type()->set_id( pObjectType_->GetName().c_str() );
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
     asn.Send( NET_Publisher_ABC::Publisher() );

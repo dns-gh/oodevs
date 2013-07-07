@@ -20,6 +20,7 @@
 #include "Tools/MIL_IDManager.h"
 #include <tools/Extendable.h>
 #include <tools/Set.h>
+#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -50,8 +51,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown, bool sendCreation = true );
-             DEC_Knowledge_Object( const boost::shared_ptr< MIL_KnowledgeGroup >& groupKnowing, MIL_Object_ABC& objectKnown, double rRelevance = 1. );
-             DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const boost::shared_ptr< MIL_KnowledgeGroup >& pGroupKnowing );
+             DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowing, MIL_Object_ABC& objectKnown, double rRelevance = 1. );
+             DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_KnowledgeGroup& pGroupKnowing );
              DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_Army_ABC& armyKnowing );
              DEC_Knowledge_Object();
     virtual ~DEC_Knowledge_Object();
@@ -215,7 +216,7 @@ private:
     const unsigned int objectId_;
     const MIL_ObjectType_ABC* pObjectType_;
     const unsigned int nID_;
-    boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
+    boost::optional< unsigned int > groupId_;
     std::string name_;
     int nAttributesUpdated_;
     // Attributes

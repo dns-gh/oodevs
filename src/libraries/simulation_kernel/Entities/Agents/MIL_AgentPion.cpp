@@ -752,9 +752,9 @@ bool MIL_AgentPion::BelongsTo( const MIL_KnowledgeGroup& group ) const
 // Name: MIL_AgentPion::CreateKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& group )
+boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const MIL_KnowledgeGroup& group )
 {
-    return boost::make_shared< DEC_Knowledge_Agent >( *group, boost::ref( *this ) );
+    return boost::make_shared< DEC_Knowledge_Agent >( group, boost::ref( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1905,7 +1905,7 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
     MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
     if( target == 0 )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( GetKnowledgeGroup() );
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( *GetKnowledgeGroup() ); // $$$$ MCO 2013-07-05: check before deref !
     // firing mode
     firing::PHY_DirectFireData::E_FiringMode firingMode = firing::PHY_DirectFireData::eFiringModeNormal;
     if( msg.elem_size() >= 2 && msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value( 1 ).has_enumeration() )

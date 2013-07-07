@@ -1237,7 +1237,7 @@ DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( const MIL_Ag
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Agent& MIL_KnowledgeGroup::CreateKnowledgeAgent( const MIL_Agent_ABC& perceived )
 {
-    return knowledgeBlackBoard_->CreateKnowledgeAgent( shared_from_this(), const_cast< MIL_Agent_ABC& >( perceived ) );
+    return knowledgeBlackBoard_->CreateKnowledgeAgent( *this, const_cast< MIL_Agent_ABC& >( perceived ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1246,7 +1246,7 @@ DEC_Knowledge_Agent& MIL_KnowledgeGroup::CreateKnowledgeAgent( const MIL_Agent_A
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population& MIL_KnowledgeGroup::CreateKnowledgePopulation( MIL_Population& perceived )
 {
-    return knowledgeBlackBoard_->CreateKnowledgePopulation( shared_from_this(), perceived );
+    return knowledgeBlackBoard_->CreateKnowledgePopulation( *this, perceived );
 }
 
 // -----------------------------------------------------------------------------

@@ -117,7 +117,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_AgentKnowledgeParameter, Fixture )
             xml::xistringstream( "<root id='30' type='Standard' name='group'/>" )
                 >> xml::start( "root" ),
             army, 0 ) );
-    boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( group, agent ) );
+    boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( *group, agent ) );
     MOCK_EXPECT( resolver.ResolveKnowledgeAgent ).once().returns( knowledge );
     MIL_AgentKnowledgeParameter param( in, resolver, manager );
     MissionParameter_Value out;
@@ -166,7 +166,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_PopulationKnowledgeParameter, Fixture )
             xml::xistringstream( "<root id='30' type='Standard' name='group'/>" )
                 >> xml::start( "root" ),
             army, 0 ) );
-    boost::shared_ptr< DEC_Knowledge_Population > knowledge( new DEC_Knowledge_Population( group, population ) );
+    boost::shared_ptr< DEC_Knowledge_Population > knowledge( new DEC_Knowledge_Population( *group, population ) );
     MOCK_EXPECT( resolver.ResolveKnowledgePopulation ).once().returns( knowledge );
     MIL_PopulationKnowledgeParameter param( in, resolver, manager );
     MissionParameter_Value out;

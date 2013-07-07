@@ -67,7 +67,7 @@ void PHY_ActionIllumination::Execute()
     {
         auto bbKg = knowledgeGroup_->GetKnowledge();
         if( bbKg && !bbKg->IsKnown( pEnemy_->GetAgentKnown() ) )
-            bbKg->GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup_, pEnemy_->GetAgentKnown() );
+            bbKg->GetKnowledgeAgentContainer().CreateKnowledgeAgent( *knowledgeGroup_, pEnemy_->GetAgentKnown() );
     }
     Callback( nResult );
 }

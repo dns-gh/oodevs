@@ -36,14 +36,14 @@ MIL_IDManager DEC_Knowledge_Population::idManager_;
 // Name: DEC_Knowledge_Population constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population::DEC_Knowledge_Population( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationKnown )
-    : DEC_Knowledge_ABC()
-    , pPopulationKnown_            ( &populationKnown )
-    , pKnowledgeGroup_             ( knowledgeGroup )
+DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& group, MIL_Population& populationKnown )
+    : pPopulationKnown_            ( &populationKnown )
     , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , criticalIntelligence_        ( "" )
     , nID_                         ( idManager_.GetId() )
+    , groupId_                     ( group.GetId() )
     , rDominationState_            ( 0. )
+    , maxLifetime_                 ( group.GetType().GetKnowledgePopulationMaxLifeTime() )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
@@ -57,14 +57,14 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const boost::shared_ptr< MIL
 // Name: DEC_Knowledge_Population constructor
 // Created: LGY 2012-05-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population::DEC_Knowledge_Population( const DEC_Knowledge_Population& knowledge, const boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup )
-    : DEC_Knowledge_ABC()
-    , nID_                         ( knowledge.idManager_.GetId() )
-    , pKnowledgeGroup_             ( pKnowledgeGroup )
-    , pPopulationKnown_            ( knowledge.pPopulationKnown_ )
+DEC_Knowledge_Population::DEC_Knowledge_Population( const DEC_Knowledge_Population& knowledge, const MIL_KnowledgeGroup& group )
+    : pPopulationKnown_            ( knowledge.pPopulationKnown_ )
     , pHackedPerceptionLevel_      ( knowledge.pHackedPerceptionLevel_ )
-    , rDominationState_            ( knowledge.rDominationState_ )
     , criticalIntelligence_        ( knowledge.criticalIntelligence_ )
+    , nID_                         ( knowledge.idManager_.GetId() )
+    , groupId_                     ( group.GetId() )
+    , rDominationState_            ( knowledge.rDominationState_ )
+    , maxLifetime_                 ( group.GetType().GetKnowledgePopulationMaxLifeTime() )
     , bIsRecon_                    ( knowledge.bIsRecon_ )
     , bReconAttributesValid_       ( knowledge.bReconAttributesValid_ )
     , bDecStateUpdated_            ( knowledge.bDecStateUpdated_ )
@@ -78,12 +78,13 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const DEC_Knowledge_Populati
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population()
-    : DEC_Knowledge_ABC()
-    , pPopulationKnown_            ( 0 )
+    : pPopulationKnown_            ( 0 )
     , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , criticalIntelligence_        ( "" )
     , nID_                         ( 0 )
-    , rDominationState_            ( 0. )
+    , groupId_                     ( 0 )
+    , rDominationState_            ( 0 )
+    , maxLifetime_                 ( 0 )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
@@ -110,13 +111,14 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsign
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> pPopulationKnown_
-         >> const_cast< unsigned int& >( nID_ )
-         >> pKnowledgeGroup_;
+         >> nID_
+         >> groupId_;
     file >> concentrations_
          >> flows_
          >> bIsRecon_
          >> bReconAttributesValid_
          >> rDominationState_
+         >> maxLifetime_
          >> criticalIntelligence_;
     idManager_.GetId( nID_, true );
     assert( pPopulationKnown_ );
@@ -131,12 +133,13 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsig
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << pPopulationKnown_
          << nID_
-         << pKnowledgeGroup_
+         << groupId_
          << concentrations_
          << flows_
          << bIsRecon_
          << bReconAttributesValid_
          << rDominationState_
+         << maxLifetime_
          << criticalIntelligence_;
 }
 
@@ -423,7 +426,7 @@ void DEC_Knowledge_Population::SendMsgCreation() const
     assert( pPopulationKnown_ );
     client::CrowdKnowledgeCreation asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
-    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( groupId_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnown_->GetID() );
     asnMsg().mutable_party()->set_id( GetArmy().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -437,7 +440,7 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
 {
     client::CrowdKnowledgeDestruction asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
-    asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+    asnMsg().mutable_knowledge_group()->set_id( groupId_ );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -451,7 +454,7 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
     {
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
-        asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+        asnMsg().mutable_knowledge_group()->set_id( groupId_ );
         if( bDecStateUpdated_ )
             asnMsg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
         if( bCriticalIntelligenceUpdated_ )
@@ -475,7 +478,7 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
     {
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
-        asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
+        asnMsg().mutable_knowledge_group()->set_id( groupId_ );
         if( bReconAttributesValid_)
             asnMsg().set_domination( static_cast< unsigned int>( rDominationState_ * 100. ) );
         if( !criticalIntelligence_.empty() )
@@ -507,21 +510,21 @@ unsigned int DEC_Knowledge_Population::GetID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Population::GetKnowledgeGroupType
+// Name: DEC_Knowledge_Population::GetMaxLifeTime
 // Created: LDC 2012-08-28
 // -----------------------------------------------------------------------------
-const MIL_KnowledgeGroupType& DEC_Knowledge_Population::GetKnowledgeGroupType() const
+double DEC_Knowledge_Population::GetMaxLifeTime() const
 {
-    return pKnowledgeGroup_->GetType();
+    return maxLifetime_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::GetKnowledgeGroupId
 // Created: LDC 2012-08-28
 // -----------------------------------------------------------------------------
 const unsigned int DEC_Knowledge_Population::GetKnowledgeGroupId() const
 {
-    return pKnowledgeGroup_->GetId();
+    return groupId_;
 }
 
 // -----------------------------------------------------------------------------
