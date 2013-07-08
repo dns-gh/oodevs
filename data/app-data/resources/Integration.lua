@@ -18,6 +18,7 @@ include "integration/Observable.lua"
 include "integration/Reconnoitrable.lua"
 include "integration/Unit.lua"
 include "integration/UndergroundNetworkIntegration.lua"
+include "integration/LeadIntegration.lua"
 
 include "integration/CRTaskListener.lua"
 
