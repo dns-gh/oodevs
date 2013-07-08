@@ -52,7 +52,7 @@ public:
     //! @name Operations
     //@{
     virtual void ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
-            bool isBreachable, GeometryType geometry ) = 0;
+            bool isBreachable, GeometryType geometry, bool isPropagation ) = 0;
     //@}
 };
 

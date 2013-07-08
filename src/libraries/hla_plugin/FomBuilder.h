@@ -63,6 +63,8 @@ public:
     std::auto_ptr< HlaTacticalObjectClass > CreateBreachableLinearObjectClass();
     std::auto_ptr< HlaTacticalObjectClass > CreateOtherPointObjectClass();
     std::auto_ptr< HlaTacticalObjectClass > CreateOtherArealObjectClass();
+    std::auto_ptr< HlaTacticalObjectClass > CreateATP45HazardAreaClass();
+    std::auto_ptr< HlaTacticalObjectClass > CreateRawDataHazardContourGroupClass();
     //@}
 
 private:

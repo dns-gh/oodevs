@@ -16,6 +16,8 @@
 #include "dispatcher/Object.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Logger_ABC.h"
+#include "dispatcher/ObjectAttributeContainer.h"
+#include "dispatcher/PropagationAttribute.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Karma.h"
@@ -27,6 +29,21 @@
 #include <boost/algorithm/string.hpp>
 
 using namespace plugins::hla;
+
+namespace
+{
+    const dispatcher::PropagationAttribute* getPropagationAttribute(const dispatcher::Object_ABC& object)
+    {
+        const dispatcher::PropagationAttribute* retval = 0;
+        for( auto it = object.GetAttributes().GetAttributes().begin(); it!=object.GetAttributes().GetAttributes().end(); ++it)
+        {
+            retval = dynamic_cast< const dispatcher::PropagationAttribute* >( &*it );
+            if( retval )
+                break;
+        }
+        return retval;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: TacticalObjectController::Register
@@ -114,7 +131,8 @@ namespace
 void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
 {
     std::string remoteExt;
-    bool isRemote = object.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
+    const bool isRemote = object.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
+    const bool isPropagation = getPropagationAttribute( object ) != 0;
     // TODO check if object must be created
     if( !isRemote )
     {
@@ -132,7 +150,7 @@ void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
             geom = TacticalObjectListener_ABC::eGeometryType_Point;
         bool isBreachable = objectType.CanBeBypassed();
         for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
-            (*it)->ObjectCreated( *(itObject->second), object.GetId(), object.GetName().toStdString(), forceIdentifier, entityType, isBreachable, geom );
+            (*it)->ObjectCreated( *(itObject->second), object.GetId(), object.GetName().toStdString(), forceIdentifier, entityType, isBreachable, geom, isPropagation );
     }
 }
 

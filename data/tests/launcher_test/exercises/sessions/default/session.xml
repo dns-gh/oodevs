@@ -2,30 +2,30 @@
 <session>
   <config>
     <dispatcher>
-      <network client="localhost:10000" server="10001"/>
+      <network client="localhost:30002" server="30003"/>
       <plugins>
         <recorder fragmentfreq="200" keyframesfreq="100"/>
       </plugins>
     </dispatcher>
     <gaming>
-      <network server="localhost:10001"/>
+      <network server="localhost:30003"/>
     </gaming>
     <simulation>
-      <GarbageCollector setpause="100" setstepmul="100"/>
-      <checkpoint frequency="100000h" keep="1" usecrc="true"/>
-      <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="false" networkloggerport="20000" pathfind="false"/>
+      <GarbageCollector setpause="100" setstepmul="200"/>
+      <checkpoint frequency="100000h" keep="1" usecrc="1"/>
+      <debug decisional="0" diadebugger="false" diadebuggerport="15000" networklogger="0" networkloggerport="20000" pathfind="0"/>
       <decisional useonlybinaries="false"/>
-      <dispatcher embedded="true"/>
-      <network port="10000"/>
-      <orbat checkcomposition="false"/>
-      <pathfinder threads="1"/>
-      <profiling enabled="false"/>
+      <dispatcher embedded="1"/>
+      <network port="30002"/>
+      <orbat checkcomposition="0"/>
+      <pathfinder threads="4"/>
+      <profiling enabled="0"/>
       <time factor="10" step="10"/>
     </simulation>
   </config>
   <meta>
     <comment/>
-    <date>20110624T183856</date>
-    <name>default</name>
+    <date><![CDATA["default"]]></date>
+    <name><![CDATA["default"]]></name>
   </meta>
 </session>

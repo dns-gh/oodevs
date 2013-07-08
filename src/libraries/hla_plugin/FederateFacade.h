@@ -135,7 +135,7 @@ private:
     virtual void AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, const std::vector< char >& uniqueId );
     virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::vector< char >& uniqueId );
     virtual void ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
-            bool isBreachable, TacticalObjectListener_ABC::GeometryType geometry );
+            bool isBreachable, TacticalObjectListener_ABC::GeometryType geometry, bool isPropagation );
     //@}
 
 private:
@@ -172,6 +172,8 @@ private:
     std::auto_ptr< HlaTacticalObjectClass > breachablePointObjectClass_;
     std::auto_ptr< HlaTacticalObjectClass > otherPointObjectClass_;
     std::auto_ptr< HlaTacticalObjectClass > otherArealObjectClass_;
+    std::auto_ptr< HlaTacticalObjectClass > rawDataHazardContourGroupClass_;
+    std::auto_ptr< HlaTacticalObjectClass > atp45HazardAreaClass_;
     //@}
 };
 

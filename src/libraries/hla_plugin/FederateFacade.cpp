@@ -35,6 +35,15 @@
 
 using namespace plugins::hla;
 
+namespace
+{
+    bool isNetn2( xml::xisubstream xis)
+    {
+        return xis.attribute< bool >( "netn", true ) &&
+                xis.attribute< int >( "netn-version", 1 ) == 2;
+    }
+}
+
 struct FederateFacade::FederationDestructor : private boost::noncopyable
 {
 public:
@@ -96,6 +105,10 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , breachablePointObjectClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateBreachablePointObjectClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
     , otherPointObjectClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateOtherPointObjectClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
     , otherArealObjectClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateOtherArealObjectClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
+    , rawDataHazardContourGroupClass_( xis.attribute< bool >( "handle-objects", true ) && isNetn2( xis ) ?
+            fomBuilder_->CreateRawDataHazardContourGroupClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
+    , atp45HazardAreaClass_( xis.attribute< bool >( "handle-objects", true ) && isNetn2( xis ) ?
+            fomBuilder_->CreateATP45HazardAreaClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
 {
     subject_.Register( *this );
     tacticalObjectSubject_.Register( *this );
@@ -124,6 +137,8 @@ FederateFacade::~FederateFacade()
     breachablePointObjectClass_.reset( 0 );
     otherPointObjectClass_.reset( 0 );
     otherArealObjectClass_.reset( 0 );
+    rawDataHazardContourGroupClass_.reset( 0 );
+    atp45HazardAreaClass_.reset( 0 );
     destructor_.reset( 0 );
     federate_.reset( 0 );
     rtiFactory_.DeleteAmbassador( ambassador_ );
@@ -370,9 +385,16 @@ void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier,
 // Created: AHC 2012-08-08
 // -----------------------------------------------------------------------------
 void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
-    bool isBreachable, TacticalObjectListener_ABC::GeometryType geometry )
+    bool isBreachable, TacticalObjectListener_ABC::GeometryType geometry, bool isPropagation )
 {
-    if( isBreachable )
+    if( isPropagation )
+    {
+        if( rawDataHazardContourGroupClass_.get() )
+        {
+            rawDataHazardContourGroupClass_->Created( object, identifier, name, force, type );
+        }
+    }
+    else if( isBreachable )
     {
         switch( geometry )
         {

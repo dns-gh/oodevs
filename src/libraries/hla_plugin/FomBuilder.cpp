@@ -28,6 +28,8 @@
 #include "BreachablePointObject.h"
 #include "OtherPointObject.h"
 #include "OtherArealObject.h"
+#include "RawDataHazardContourGroup.h"
+#include "ATP45HazardArea.h"
 
 #include "Federate_ABC.h"
 #include "MarkingFactory.h"
@@ -266,4 +268,20 @@ std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateOtherArealObjectClass(
                                         std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< OtherArealObject >( entityIdentifierResolver_ ) ) ,
                                         std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< OtherArealObject >( entityIdentifierResolver_, fomSerializer_ ) ),
                                         CreateClassBuilder< OtherArealObjectBuilder, OtherArealObjectBuilder >( false, isHla13( xis_ ) ) ) );
+}
+
+std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateATP45HazardAreaClass()
+{
+    return std::auto_ptr< HlaTacticalObjectClass >( new HlaTacticalObjectClass( federate_, nameFactory_,
+                                        std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< ATP45HazardArea >( entityIdentifierResolver_ ) ) ,
+                                        std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< ATP45HazardArea >( entityIdentifierResolver_, fomSerializer_ ) ),
+                                        CreateClassBuilder< ATP45HazardAreaBuilder, ATP45HazardAreaBuilder >( false, isHla13( xis_ ) ) ) );
+}
+
+std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateRawDataHazardContourGroupClass()
+{
+    return std::auto_ptr< HlaTacticalObjectClass >( new HlaTacticalObjectClass( federate_, nameFactory_,
+                                        std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< RawDataHazardContourGroup >( entityIdentifierResolver_ ) ) ,
+                                        std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< RawDataHazardContourGroup >( entityIdentifierResolver_, fomSerializer_ ) ),
+                                        CreateClassBuilder< RawDataHazardContourGroupBuilder, RawDataHazardContourGroupBuilder >( false, isHla13( xis_ ) ) ) );
 }
