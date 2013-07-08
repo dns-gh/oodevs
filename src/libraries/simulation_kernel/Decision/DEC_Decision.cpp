@@ -320,6 +320,7 @@ void RegisterUrbanBlockFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_Barycentre", &DEC_UrbanObjectFunctions::GetCurrentBarycenter );
     brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_BarycentreDansBU", &DEC_UrbanObjectFunctions::GetBarycenter );
     brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_Lisiere", &DEC_UrbanObjectFunctions::GetBoundingBox );
+    brain.RegisterFunction( "DEC_Connaissances_BlocUrbainDansZone", &DEC_KnowledgeFunctions::GetUrbanBlockInZone );
     brain.RegisterFunction( "DEC_NiveauDeProtectionMaterielComposantes", &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel );
     brain.RegisterFunction( "DEC_PolygoneBlocUrbain", &DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock );
     brain.RegisterFunction( "DEC_BlocUrbain_Type", &DEC_UrbanObjectFunctions::GetType );
