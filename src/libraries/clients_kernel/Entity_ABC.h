@@ -46,7 +46,7 @@ public:
              EntityBase_ABC() {}
     virtual ~EntityBase_ABC() {}
 
-    typedef public tools::SortedInterfaceContainer< Extension_ABC > T_Interfaces;
+    typedef tools::SortedInterfaceContainer< Extension_ABC > T_Interfaces;
 
     template< typename T >
     void Update( const T& updateMessage )
