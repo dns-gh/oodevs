@@ -136,6 +136,7 @@ struct Agent_ABC : public boost::noncopyable
     //! @name Licenses Methods
     //@{
     virtual Tree ListLicenses( const Uuid& node ) const = 0;
+    virtual Tree UploadLicenses( io::Reader_ABC& src ) = 0;
     //@}
 };
 }

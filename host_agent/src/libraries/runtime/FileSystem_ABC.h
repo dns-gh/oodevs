@@ -131,6 +131,8 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual Path        MakeAnyPath( const Path& root ) const = 0;
     virtual std::time_t GetLastWrite( const Path& file ) const = 0;
     virtual size_t      GetDirectorySize( const Path& dir ) const = 0;
+    virtual std::string ReadAll( io::Reader_ABC& input ) const = 0;
+
     //@}
 };
 }

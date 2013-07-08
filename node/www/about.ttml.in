@@ -7,6 +7,19 @@
             <dd><span class="label label-info"> SIMULATION_VERSION </span></dd>
         </dl>
         <div id="licenses"></div>
+        [[ if eq .type "cluster" ]]
+            <div class="hide">
+                <iframe id="upload_target" name="upload_target"></iframe>
+            </div>
+            <form id="upload_form" class="form-horizontal" enctype="multipart/form-data" method="post" target="upload_target">
+                <div class="control-group" align="right">
+                    <div class="controls">
+                        <input type="file" name="license"/>
+                        <a class="btn upload disabled"><i class="icon-upload"></i>Upload</a>
+                    </div>
+                </div>
+            </form>
+        [[ end ]]
         <div class="alert alert-info alert-block">
             <strong>Warning:</strong>
 MASA SWORD is a COTS constructive simulation software product created by MASA Group.

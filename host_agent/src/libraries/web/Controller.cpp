@@ -351,6 +351,7 @@ void Controller::DoPost( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/login" )           return UserLogin      ( rpy, request );
         if( uri == "/update_login" )    return UserUpdateLogin( rpy, request );
         if( uri == "/create_user" )     return CreateUser     ( rpy, request );
+        if( uri == "/upload_licenses" ) return UploadLicenses ( rpy, request );
     }
     catch( const HttpException& err )
     {
@@ -814,6 +815,11 @@ void OnUploadCache( boost::optional< Tree >& reply, Agent_ABC& agent, const Uuid
 {
     reply = agent.UploadCache( id, src );
 }
+
+void OnUploadLicences( boost::optional< Tree >& reply, Agent_ABC& agent, io::Reader_ABC& src )
+{
+    reply = agent.UploadLicenses( src );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -980,9 +986,25 @@ void Controller::UpdateUser( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::ListLicenses( Reply_ABC& reply, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     WriteHttpReply( reply, agent_.ListLicenses( node ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Controller::UploadLicenses
+// Created: NPT 2013-06-28
+// -----------------------------------------------------------------------------
+void Controller::UploadLicenses( Reply_ABC& rpy, Request_ABC& request )
+{
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    boost::optional< Tree > reply;
+    request.RegisterMime( "license", boost::bind( &OnUploadLicences, boost::ref( reply ), boost::ref( agent_ ), _1 ) );
+    request.ParseBodyAsMime();
+    if( reply == boost::none )
+        return WriteHttpReply( rpy, NOT_FOUND );
+    WriteHttpReply( rpy, *reply );
+}
+
 
 namespace
 {

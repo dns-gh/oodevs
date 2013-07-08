@@ -503,3 +503,11 @@ Tree Agent::ListLicenses( const Uuid& node ) const
     return nodes_.ListLicenses( node );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Agent::UploadLicenses
+// Created: NPT 2013-06-28
+// -----------------------------------------------------------------------------
+Tree Agent::UploadLicenses( io::Reader_ABC& src )
+{
+    return nodes_.UploadLicenses( src );
+}

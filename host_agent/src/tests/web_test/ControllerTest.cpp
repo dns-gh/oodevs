@@ -105,6 +105,7 @@ namespace
         MOCK_METHOD( CountPlugins, 0 );
         // licenses
         MOCK_METHOD( ListLicenses, 1 );
+        MOCK_METHOD( UploadLicenses, 1 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )

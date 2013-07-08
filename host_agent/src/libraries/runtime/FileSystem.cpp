@@ -685,3 +685,13 @@ size_t FileSystem::GetDirectorySize( const Path& root ) const
     }
     return sum;
 }
+
+std::string FileSystem::ReadAll( io::Reader_ABC& input ) const
+{
+    std::string res;
+    std::vector< char > buffer( 1<<12 );
+    int len = 0;
+    while( (len = input.Read( &buffer[0], buffer.size() ) ) > 0 )
+        res.append( &buffer[0], len );
+    return res;
+}
