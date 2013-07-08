@@ -29,6 +29,7 @@
 #include "Decision/DEC_MedicalTreatmentFunctions.h"
 #include "Decision/DEC_TerrainFunctions.h"
 #include "Entities/Actions/PHY_ActionInterrogate.h"
+#include "Entities/Actions/PHY_ActionRecoLIA.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendSpecificComposantes.h"
@@ -147,11 +148,11 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Stock_IsSupplyPossible" ] = boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object >, const std::vector< const PHY_DotationCategory* >& ) >( boost::bind( &DEC_ActionFunctions::Stock_IsSupplyPossible, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Stock_IsDistributePossible" ] = boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object >, boost::shared_ptr< DEC_Knowledge_Population > ) >( boost::bind( &DEC_ActionFunctions::Stock_IsDistributePossible, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC__StartControlerZone" ] =
-        boost::function< unsigned int( const TER_Localisation*, double, bool ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone, const TER_Localisation*, double, bool >, boost::ref( GetPion() ), _1, _2, _3 ) );
+        boost::function< unsigned int( const TER_Localisation*, double, bool ) >( boost::bind( &DEC_ActionFunctions::StartAction < PHY_ActionControlZone, const TER_Localisation*, double, bool >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_StartEmbarquement" ] =
-        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction  < transport::PHY_ActionLoad >, boost::ref( GetPion() ) ) );
+        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction < transport::PHY_ActionLoad >, boost::ref( GetPion() ) ) );
     brain[ "DEC_StartDebarquement" ] =
-        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction  < transport::PHY_ActionUnload >, boost::ref( GetPion() ) ) );
+        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction < transport::PHY_ActionUnload >, boost::ref( GetPion() ) ) );
     brain[ "DEC_StartIlluminer" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIllumination, boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Orientate" ] =
@@ -164,6 +165,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInterrogate, boost::shared_ptr< DEC_Knowledge_Agent > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartTraverserReseauSouterrain" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMoveUnderground, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_StartRecoLIA" ] =
+        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction < PHY_ActionRecoLIA >, boost::ref( GetPion() ) ) );
 
     // Embarquement / debarquement
     brain[ "DEC_Agent_EstEmbarquable" ] =

@@ -2538,6 +2538,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoardObjects_ABC.cpp">
       <Filter>Source Files\Knowledge</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionRecoLIA.cpp">
+      <Filter>Source Files\Entities\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4987,6 +4990,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_KnowledgeBlackBoardObjects_ABC.h">
       <Filter>Source Files\Knowledge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionRecoLIA.h">
+      <Filter>Source Files\Entities\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
