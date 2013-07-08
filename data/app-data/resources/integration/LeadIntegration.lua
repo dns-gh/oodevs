@@ -354,9 +354,7 @@ end
 
 -- Manage the end of the commander mission
 integration.manageEndMission = function( self )
-    DEC_Trace("myself.feedback : " .. tostring(myself.feedback))
     if myself.feedback then
-        DEC_Trace("self.params.disableWhenDone : " .. tostring(self.params.disableWhenDone))
         if self.params.disableWhenDone then
             self.Feedback( self.feedbacks.done )
             return
