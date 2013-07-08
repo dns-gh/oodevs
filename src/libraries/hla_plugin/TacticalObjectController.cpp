@@ -130,7 +130,7 @@ void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
             geom = TacticalObjectListener_ABC::eGeometryType_Line;
         else if(object.GetLocalisation().GetTypeName() == "point" )
             geom = TacticalObjectListener_ABC::eGeometryType_Point;
-        bool isBreachable = object.GetType().CanBeBypassed();
+        bool isBreachable = objectType.CanBeBypassed();
         for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->ObjectCreated( *(itObject->second), object.GetId(), object.GetName().toStdString(), forceIdentifier, entityType, isBreachable, geom );
     }

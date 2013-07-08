@@ -158,3 +158,12 @@ void ObjectAttributeContainer::Send( sword::ObjectAttributes& message ) const
     std::for_each( attributes_.begin(), attributes_.end(),
         boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( message ) ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeContainer::GetAttributes
+// Created: AHC 2013-07-08
+// -----------------------------------------------------------------------------
+const ObjectAttributeContainer::T_ObjectAttributes& ObjectAttributeContainer::GetAttributes() const
+{
+    return attributes_;
+}

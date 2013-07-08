@@ -60,6 +60,7 @@ void Object::DoUpdate( const sword::ObjectUpdate& msg )
         optionals_.localisationPresent = 1;
     }
     attributes_.Update( msg.attributes() );
+    Observable< sword::ObjectUpdate >::Notify( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,4 +177,13 @@ bool Object::GetExtension( const std::string& key, std::string& result ) const
         return false;
     result = it->second;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetAttributes
+// Created: AHC 2013-07-08
+// -----------------------------------------------------------------------------
+const ObjectAttributeContainer& Object::GetAttributes() const
+{
+    return attributes_;
 }

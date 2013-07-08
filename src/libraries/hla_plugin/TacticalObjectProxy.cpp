@@ -36,7 +36,8 @@ using namespace plugins::hla;
 // Created: AHC 2012-08-08
 // -----------------------------------------------------------------------------
 TacticalObjectProxy::TacticalObjectProxy( dispatcher::Object_ABC& object, const rpr::EntityTypeResolver_ABC& dotationResolver  )
-    : object_( object )
+    : dispatcher::Observer< sword::ObjectUpdate >( object )
+    , object_( object )
     , dotationResolver_( dotationResolver )
 {
     // NOTHING
@@ -72,7 +73,6 @@ void TacticalObjectProxy::Register( TacticalObjectEventListener_ABC& listener )
     listeners_.Register( listener );
     const dispatcher::Localisation::T_PositionVector& points( object_.GetLocalisation().GetPoints() );
     Apply( listener, &ObjectLocationEventListener_ABC::SpatialChanged, points );
-    //listener.SpatialChanged( points );
     kernel::ObjectType::CIT_Capacities it( object_.GetType().CapacitiesBegin() );
 
     while( object_.GetType().CapacitiesEnd() != it && it->first != "constructor" )
@@ -91,7 +91,6 @@ void TacticalObjectProxy::Register( TacticalObjectEventListener_ABC& listener )
                     >> xml::list( "resource", boost::bind( &readResource, _1, boost::cref( dotationResolver_ ), boost::ref( resources ) ) )
                 >> xml::end
             >> xml::end;
-        //listener.ResourcesChanged( resources );
         Apply( listener, &ObjectLocationEventListener_ABC::ResourcesChanged, resources );
     }
 }
@@ -103,4 +102,13 @@ void TacticalObjectProxy::Register( TacticalObjectEventListener_ABC& listener )
 void TacticalObjectProxy::Unregister( TacticalObjectEventListener_ABC& listener )
 {
     listeners_.Unregister( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalObjectProxy::Unregister
+// Created: AHC 2012-08-08
+// -----------------------------------------------------------------------------
+void TacticalObjectProxy::Notify( const sword::ObjectUpdate&  )
+{
+    // NOTHING
 }

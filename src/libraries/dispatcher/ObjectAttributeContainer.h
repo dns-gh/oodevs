@@ -32,6 +32,11 @@ namespace dispatcher
 class ObjectAttributeContainer : private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
+    typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
+    //@}
+
     //! @name Constructors/Destructor
     //@{
     explicit ObjectAttributeContainer( const Model_ABC& model );
@@ -42,6 +47,7 @@ public:
     //@{
     void Update( const sword::ObjectAttributes& message );
     void Send  ( sword::ObjectAttributes& message ) const;
+    const T_ObjectAttributes& GetAttributes() const;
     //@}
 
 private:
@@ -49,12 +55,6 @@ private:
     //@{
     template< typename T > void CreateOrUpdate( const sword::ObjectAttributes& message );
     template< typename T > void CreateOrUpdate( const sword::ObjectAttributes& message, const Model_ABC& model );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
     //@}
 
 private:

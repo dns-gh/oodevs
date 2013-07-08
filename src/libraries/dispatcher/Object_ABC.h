@@ -11,12 +11,19 @@
 #define __dispatcher_Object_ABC_h_
 
 #include "Sendable.h"
+#include "Observable.h"
 #include "clients_kernel/Object_ABC.h"
+
+namespace sword
+{
+    class ObjectUpdate;
+}
 
 namespace dispatcher
 {
     class Team_ABC;
     class Localisation;
+    class ObjectAttributeContainer;
 
 // =============================================================================
 /** @class  Object_ABC
@@ -24,7 +31,9 @@ namespace dispatcher
 */
 // Created: SBO 2010-06-07
 // =============================================================================
-class Object_ABC : public Sendable< kernel::Object_ABC >
+class Object_ABC
+    : public Sendable< kernel::Object_ABC >
+    , public Observable< sword::ObjectUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -39,6 +48,7 @@ public:
     virtual const dispatcher::Team_ABC& GetTeam() const = 0;
     virtual const Localisation& GetLocalisation() const = 0;
     virtual bool GetExtension( const std::string& key, std::string& result ) const = 0;
+    virtual const ObjectAttributeContainer& GetAttributes() const = 0;
     //@}
 };
 

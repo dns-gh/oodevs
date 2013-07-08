@@ -12,10 +12,16 @@
 
 #include "TacticalObject_ABC.h"
 #include "tools/SortedInterfaceContainer.h"
+#include "dispatcher/Observer.h"
 
 namespace dispatcher
 {
     class Object_ABC;
+}
+
+namespace sword
+{
+    class ObjectUpdate;
 }
 
 namespace rpr
@@ -35,7 +41,9 @@ namespace hla
 ///
 /// Created: ahc 8 août 2012
 /// =============================================================================
-class TacticalObjectProxy : public TacticalObject_ABC
+class TacticalObjectProxy
+    : public TacticalObject_ABC
+    , private dispatcher::Observer< sword::ObjectUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,6 +57,9 @@ public:
     virtual void Register( TacticalObjectEventListener_ABC& listener );
     virtual void Unregister( TacticalObjectEventListener_ABC& listener );
     //@}
+
+private:
+    virtual void Notify( const sword::ObjectUpdate& message );
 
 private:
     //! @name Attributes

@@ -56,6 +56,7 @@ public:
     virtual std::string GetSymbol() const;
     virtual const Localisation& GetLocalisation() const;
     virtual bool GetExtension( const std::string& key, std::string& result ) const;
+    virtual const ObjectAttributeContainer& GetAttributes() const;
     //@}
 
 private:
