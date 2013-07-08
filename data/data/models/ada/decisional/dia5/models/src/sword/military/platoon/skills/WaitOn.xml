@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.WaitOn" source-version="1.0.0">
+	<links>
+		<link name="moveToward" skill="sword.military.platoon.skills.primitives.MoveToward"/>
+	</links>
+</skill>

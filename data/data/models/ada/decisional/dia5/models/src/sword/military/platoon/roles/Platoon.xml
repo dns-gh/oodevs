@@ -96,6 +96,7 @@
         <skill name="sword.military.platoon.coercition.skills.EngageFriendsEnemies"/>
         <skill name="sword.military.platoon.skills.Follow"/>
         <skill name="sword.military.platoon.skills.primitives.TransportPrisoners"/>
+        <skill name="sword.military.platoon.skills.WaitOn"/>
     </skills>
     <resources>
         <resource name="sword.military.platoon.resources.EngageCapacity"/>

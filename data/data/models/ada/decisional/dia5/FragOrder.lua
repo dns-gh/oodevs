@@ -153,8 +153,6 @@ integration.startFragOrderTask = function( self )
   elseif orderType == "Rep_OrderConduite_AttendreSePoster" then
     orderType = "sword.military.platoon.tasks.frago.Settle"
   elseif orderType == "Rep_OrderConduite_SArreter" then
-    local point = CreateKnowledge( integration.ontology.types.point, integration.copyPoint( meKnowledge:getPosition() ) )
-    mission.objectives = { point }
     orderType = "sword.military.platoon.tasks.frago.WaitOn"
   elseif orderType == "Rep_OrderConduite_Attendre" then
     local point = CreateKnowledge( integration.ontology.types.point, integration.copyPoint( meKnowledge:getPosition() ) )

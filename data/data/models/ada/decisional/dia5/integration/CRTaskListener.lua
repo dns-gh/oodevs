@@ -133,7 +133,9 @@ function RegisterDoneTaskListener()
         -- NOTHING
     end
     function doneTaskListener:TaskFinished( taskName )
-        integration.notifyTaskEnded()
+        if taskName == myself.currentMission then
+            integration.notifyTaskEnded()
+        end
     end
     function doneTaskListener:TaskDone()
         integration.notifyTaskEnded()

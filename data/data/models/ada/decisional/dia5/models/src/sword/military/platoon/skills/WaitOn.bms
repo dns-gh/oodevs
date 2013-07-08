@@ -1,0 +1,17 @@
+-- **************************************************************************** 
+-- Move toward reachable entities
+-- self.params.entities: the reachable elements
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveToward },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Movement toward the objectives
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        Activate( skill.links.moveToward, 1, { entities  = {meKnowledge:getMyPosition()} , 
+                                               positions = {meKnowledge:getMyPosition()} } )
+    end
+}    

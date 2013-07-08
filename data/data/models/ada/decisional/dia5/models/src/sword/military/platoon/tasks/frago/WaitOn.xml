@@ -1,34 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.frago.WaitOn" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.WaitOn">
-    <description>Ordre de conduite de poste sur les objectifs.</description>
-    <parameters>
-        <parameter name="objectives">
-            <description>Les objectifs sur lesquels se poster.</description>
-            <type>
-                <list>
-                    <class name="sword.military.knowledge.decisional.Reachable"/>
-                </list>
-            </type>
-        </parameter>
-    </parameters>
-    <goal>
-        <description>S'arreter.</description>
-    </goal>
-    <stages>
-        <stage label="Arret" permanent="true">
-            <description>Se déplacer vers les objectifs.</description>
-            <goal>
-                <description>Occuper les objectifs à tout prix.</description>
-            </goal>
-            <skills>
-                <skill name="sword.military.platoon.skills.MoveToward" priority="100000.0">
-                    <parameter name="entities">
-                        <value>
-                            <parameter>objectives</parameter>
-                        </value>
-                    </parameter>
-                </skill>
-            </skills>
-        </stage>
-    </stages>
+	<description>Ordre de conduite de poste sur les objectifs.</description>
+	<goal>
+		<description>S'arreter.</description>
+	</goal>
+	<stages>
+		<stage label="Arret" permanent="true">
+			<description>Se déplacer vers les objectifs.</description>
+			<goal>
+				<description>Occuper les objectifs à tout prix.</description>
+			</goal>
+			<skills>
+				<skill name="sword.military.platoon.skills.WaitOn" priority="100000.0"/>
+			</skills>
+		</stage>
+	</stages>
 </task>
