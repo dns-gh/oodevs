@@ -628,7 +628,7 @@ Tree NodeController::ListLicenses( const Uuid& /*id*/ ) const
 Tree NodeController::UploadLicenses( io::Reader_ABC& src )
 {
     boost::system::error_code ec;
-    const Path output = boost::filesystem::unique_path( Path( licensesDir_ ) / "%%%%%%%%.%%%", ec );
+    const Path output = boost::filesystem::unique_path( Path( licensesDir_ ) / "%%%%%%%%.lic", ec );
     if( ec )
         return Tree();
     std::string content = fs_.ReadAll( src );
