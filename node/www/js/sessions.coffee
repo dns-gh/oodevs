@@ -418,7 +418,7 @@ class SessionItemView extends Backbone.View
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
         data.can_link = data.status != "playing" || data.start_time
-        data.sim_license = get_license_validity "sword", licenses.attributes
+        data.sim_license = get_license_validity "sword-runtime", licenses.attributes
         data.replay_license = get_license_validity "sword-replayer", licenses.attributes
         $(@el).html session_template data
         $(@el).find(".link").click (evt) =>
@@ -542,7 +542,7 @@ get_license_validity = (licensename, tree) ->
             return false
         else if lic.validity == "valid"
             return true
-    return true
+    return false
 
 class SessionListView extends Backbone.View
     el: $ "#sessions"
@@ -564,8 +564,8 @@ class SessionListView extends Backbone.View
         $(@el).empty()
         for item in list.models
             @add item
-        if !get_license_validity "sword", licenses.attributes
-            $(@el).prepend license_error_template content: "No Sword license Uploaded"
+        if !get_license_validity "sword-runtime", licenses.attributes
+            $(@el).prepend license_error_template content: "No sword-runtime license Uploaded"
         return
 
     add: (item) =>
