@@ -21,13 +21,13 @@ return
         end
         self.nbScout = integration.reconPlatoons( listPlatoonAlly )
 
-        local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LR, ( self.nbMain ) )		
+        local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LR, ( self.nbMain ) )
         for _, points in pairs( pointsOnLimas ) do
             for _, point in pairs( points ) do
                 self.mainPositions[#self.mainPositions + 1] = CreateKnowledge( sword.military.world.Point, point )
             end
         end
-        if not pointsOnLimas or #pointsOnLimas == 0 then
+        if self.nbMain ~= 0 and (not pointsOnLimas or #pointsOnLimas == 0 ) then
             DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LR )
         end
         if #self.mainPositions == 0 then
@@ -40,7 +40,7 @@ return
                     self.scoutPositions[#self.scoutPositions + 1] = CreateKnowledge( sword.military.world.Point, point )
                 end
             end
-            if not pointsOnLimas or #pointsOnLimas == 0 then
+            if self.nbScout ~=0 and (not pointsOnLimas or #pointsOnLimas == 0 )then
                 DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LIA )
             end
         end
