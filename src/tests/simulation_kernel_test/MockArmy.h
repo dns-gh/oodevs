@@ -31,7 +31,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( UnregisterPopulation, 1 )
     MOCK_METHOD( RegisterInhabitant, 1 )
     MOCK_METHOD( UnregisterInhabitant, 1 )
-    MOCK_METHOD( Finalize, 0 )
+    MOCK_METHOD( Finalize, 1 )
 
     MOCK_METHOD( UpdateKnowledges, 1 )
     MOCK_METHOD( CleanKnowledges, 0 )
@@ -47,6 +47,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( IsNeutral, 1 )
 
     MOCK_METHOD( FindKnowledgeGroup, 1 )
+    MOCK_METHOD( FindCrowdKnowledgeGroup, 0 )
     MOCK_METHOD( RegisterKnowledgeGroup, 1 )
     MOCK_METHOD( UnregisterKnowledgeGroup, 1 )
 

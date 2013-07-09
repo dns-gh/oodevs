@@ -68,6 +68,8 @@ public:
     typedef T_AutomateVector::iterator        IT_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
 
+    typedef std::vector< MIL_Population* > T_PopulationVector;
+
     typedef std::vector< boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroupVector;
     typedef T_KnowledgeGroupVector::iterator         IT_KnowledgeGroupVector;
     typedef T_KnowledgeGroupVector::const_iterator  CIT_KnowledgeGroupVector;
@@ -77,6 +79,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
+             MIL_KnowledgeGroup( MIL_Army_ABC& army ); // for crowds
              MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup >& parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
              MIL_KnowledgeGroup();
              MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, boost::shared_ptr< MIL_KnowledgeGroup >& parent );
@@ -106,6 +109,8 @@ public:
     void UnregisterAutomate( MIL_Automate& automate );
     void RegisterPion( const MIL_Agent_ABC& agent );
     void UnregisterPion( const MIL_Agent_ABC& agent );
+    void RegisterPopulation( MIL_Population& population );
+    void UnregisterPopulation( MIL_Population& population );
 
     void AppendAddedKnowledge( TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, TER_Object_ABC::T_ObjectVector& perceivableObjects, TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector& perceivablePopulationDensity, TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivablePopulationFlow ) const;
 
@@ -147,6 +152,7 @@ public:
           void                                    SetParent( boost::shared_ptr< MIL_KnowledgeGroup >& parent );
     // LTO end
           bool IsJammed() const;
+          bool IsCrowd() const;
           void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
@@ -214,6 +220,8 @@ private:
     void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision, int currentTimeStep  );
     void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception, int currentTimeStep  );
     DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( const MIL_Agent_ABC& agentKnown );
+    void UpdateAgentKnowledgeFromCrowdPerception( const MIL_Agent_ABC& agent, const MIL_Population& population, int currentTimeStep );
+    void UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& agent, const MIL_Population& population );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     void UpdateObjectKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Object& objectKnowledge, int currentTimeStep );
@@ -235,6 +243,7 @@ private:
     MIL_KnowledgeGroup* parent_;
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
     T_AutomateVector automates_;
+    T_PopulationVector populations_;
     std::set< unsigned int > additionalPerceptions_;
     T_KnowledgeGroupVector knowledgeGroups_; // LTO
     double timeToDiffuse_; // LTO
@@ -243,6 +252,7 @@ private:
     bool hasBeenUpdated_;
     bool isJammed_;
     bool createdByJamming_;
+    bool isCrowd_;
     const MIL_Agent_ABC* jammedPion_;
     static MIL_IDManager idManager_;
 

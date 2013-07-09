@@ -56,6 +56,18 @@ boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xist
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupFactory::Create
+// Created: JSR 2013-07-04
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( MIL_Army_ABC& army )
+{
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup( new MIL_KnowledgeGroup( army ) );
+    army.RegisterKnowledgeGroup( knowledgeGroup );
+    Register( knowledgeGroup->GetId(), knowledgeGroup );
+    return knowledgeGroup;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory::Create
 // Created: MGD 2009-10-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup > parent )

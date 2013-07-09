@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>Crowd</source>
-        <translation type="unfinished"></translation>
+        <translation>Foule</translation>
     </message>
 </context>
 <context>

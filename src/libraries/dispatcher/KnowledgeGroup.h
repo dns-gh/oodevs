@@ -52,8 +52,6 @@ public:
     virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP  // LTO
     virtual void Register( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void Remove( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
-    virtual void Register( dispatcher::Automat_ABC& automat ); // LTO
-    virtual void Remove( dispatcher::Automat_ABC& automat ); // LTO
     //@}
 
     //! @name Accessors
@@ -86,7 +84,6 @@ private:
     bool jammed_; // LTO
     std::string name_; // LTO
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
-    tools::Resolver< dispatcher::Automat_ABC > automats_;
     //@}
 };
 

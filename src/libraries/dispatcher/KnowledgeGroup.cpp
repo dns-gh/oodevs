@@ -182,26 +182,6 @@ void KnowledgeGroup::Remove( dispatcher::KnowledgeGroup_ABC& knowledgeGroup )
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Register
-// Created: MGD 2009-12-21
-// LTO
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Register( dispatcher::Automat_ABC& automat )
-{
-    automats_.Register( automat.GetId(), automat );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Register
-// Created: MGD 2009-12-21
-// LTO
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Remove( dispatcher::Automat_ABC& automat )
-{
-    automats_.Remove( automat.GetId() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::GetTeam
 // Created: SBO 2010-03-04
 // -----------------------------------------------------------------------------

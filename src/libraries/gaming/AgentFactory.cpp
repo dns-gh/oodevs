@@ -60,6 +60,7 @@
 #include "PopulationDecisions.h"
 #include "PopulationDetections.h"
 #include "PopulationHierarchies.h"
+#include "PopulationHierarchiesCommunication.h"
 #include "PopulationPositions.h"
 #include "Quotas.h"
 #include "Reinforcements.h"
@@ -221,6 +222,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
 {
     Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::CommunicationHierarchies >( *new PopulationHierarchiesCommunication( controllers_.controller_, *result, model_.knowledgeGroups_ ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
@@ -228,6 +230,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dico ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     AttachExtensions( *result );
+    result->Update( message );
     result->Polish();
     return result;
 }

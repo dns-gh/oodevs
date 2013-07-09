@@ -87,10 +87,6 @@
         <translation>transport naval</translation>
     </message>
     <message>
-        <source>transportation-naval</source>
-        <translation>transport</translation>
-    </message>
-    <message>
         <source>warehouse</source>
         <translation>entrepot</translation>
     </message>

@@ -279,9 +279,9 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpd
 {
     if( bPositionUpdated_ )
         NET_ASN_Tools::WritePoint( *vPosition_, *msg.mutable_position() );
-    if( bDirectionUpdated_ )
+    if( bDirectionUpdated_ && !vDirection_.IsZero() )
         NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
-    if( bSpeedUpdated_ )
+    if( bSpeedUpdated_ && rSpeed_ != std::numeric_limits< double >::max() )
         msg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     if( bSurrenderedUpdated_ )
         msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );

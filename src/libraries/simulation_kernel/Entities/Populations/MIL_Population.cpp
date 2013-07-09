@@ -23,6 +23,7 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -30,12 +31,12 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_Geometry.h"
 #include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 #include <boost/foreach.hpp>
-#include "Tools/MIL_Geometry.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
 
@@ -118,6 +119,13 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
     pArmy_->RegisterPopulation( *this );
+    if( xis.has_attribute( "knowledge-group" ) )
+    {
+        pKnowledgeGroup_ = pArmy_->FindKnowledgeGroup( xis.attribute< unsigned long >( "knowledge-group" ) );
+        if( pKnowledgeGroup_ )
+            pKnowledgeGroup_->RegisterPopulation( *this );
+    }
+
     vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
@@ -185,6 +193,9 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
+    pKnowledgeGroup_ = army.FindCrowdKnowledgeGroup();
+    if( pKnowledgeGroup_.get() )
+        pKnowledgeGroup_->RegisterPopulation( *this );
     SendCreation( context );
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );
     concentrations_.push_back( pConcentration );
@@ -201,6 +212,8 @@ MIL_Population::~MIL_Population()
 {
     if( pArmy_ )
         pArmy_->UnregisterPopulation( *this );
+    if( pKnowledgeGroup_ )
+        pKnowledgeGroup_->UnregisterPopulation( *this );
     delete pKnowledge_;
 }
 
@@ -250,6 +263,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bPionMaxSpeedOverloaded_
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
+         >> pKnowledgeGroup_
          >> bHasDoneMagicMove_
          >> pAffinities
          >> pExtensions;
@@ -291,6 +305,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << bPionMaxSpeedOverloaded_
          << rOverloadedPionMaxSpeed_
          << pKnowledge_
+         << pKnowledgeGroup_
          << bHasDoneMagicMove_
          << pAffinities
          << pExtensions
@@ -315,6 +330,8 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     xos << xml::attribute( "id", nID_ )
         << xml::attribute( "type", pType_->GetName() )
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
+    if( pKnowledgeGroup_ )
+        xos << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() );
     if( !concentrations_.empty() )
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else if( !flows_.empty() )
@@ -1376,6 +1393,8 @@ void MIL_Population::SendCreation( unsigned int context ) const
     asnMsg().mutable_crowd()->set_id( nID_ );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().mutable_party()->set_id( pArmy_->GetID() );
+    if( pKnowledgeGroup_.get() )
+        asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     asnMsg().set_name( GetName() );
     asnMsg().mutable_repartition()->set_male( static_cast< float >( rMale_ ) );
     asnMsg().mutable_repartition()->set_female( static_cast< float >( rFemale_ ) );
@@ -1497,6 +1516,26 @@ const DEC_PopulationKnowledge& MIL_Population::GetKnowledge() const
 {
     assert( pKnowledge_ );
     return *pKnowledge_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetKnowledgeGroup
+// Created: JSR 2013-07-04
+// -----------------------------------------------------------------------------
+void MIL_Population::SetKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup )
+{
+    pKnowledgeGroup_ = pKnowledgeGroup;
+    if( pKnowledgeGroup_ )
+        pKnowledgeGroup_->RegisterPopulation( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetKnowledgeGroup
+// Created: JSR 2013-07-08
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_Population::GetKnowledgeGroup() const
+{
+    return pKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------

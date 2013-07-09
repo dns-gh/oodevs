@@ -27,6 +27,7 @@ class MIL_Population;
 class KnowledgeVisitor_ABC;
 class MIL_Color;
 class KnowledgesVisitor_ABC;
+class KnowledgeGroupFactory_ABC;
 
 namespace sword
 {
@@ -97,7 +98,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Finalize() = 0;
+    virtual void Finalize( KnowledgeGroupFactory_ABC& knowledgegroupFactory ) = 0;
 
     virtual bool IsPerceived( const DEC_Knowledge_Object& knowledge ) const = 0;
 
@@ -106,6 +107,7 @@ public:
     virtual E_Tristate IsNeutral( const MIL_Army_ABC& army ) const = 0;
 
     virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const = 0;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > FindCrowdKnowledgeGroup() const = 0;
     virtual void                RegisterKnowledgeGroup  ( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup ) = 0;
     virtual void                UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup ) = 0;
 

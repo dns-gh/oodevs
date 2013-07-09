@@ -432,6 +432,38 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::UpdateFromCrowdPerception
+// Created: JSR 2013-07-08
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::UpdateFromCrowdPerception( const MIL_Population& population )
+{
+    nTimeLastUpdate_ = GetCurrentTimeStep();
+    UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::recognized_ );
+    if( UpdateMaxPerceptionLevel( PHY_PerceptionLevel::recognized_ ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+        boost::shared_ptr< DEC_Knowledge_Object > shared_this;
+        if( pKnowledgeGroup_.get() )
+            shared_this = pKnowledgeGroup_->ResolveKnowledgeObjectByObjectID( objectId_ );
+        else if( pArmyKnowing_ )
+            shared_this = pArmyKnowing_->GetKnowledge().ResolveKnowledgeObjectByObjectID( objectId_ );
+        if( !shared_this )
+        {
+            MT_LOG_ERROR_MSG( "Object knowledge with neither an army nor a knowledge group!" );
+        }
+        else
+        {
+            boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateObjectKnowledge( shared_this ) );
+            parameters.push_back( pParameter );
+            MIL_Report::PostEvent( population, MIL_Report::eRC_DetectedObject, parameters );
+        }
+    }
+    // NB - Quand nPerceptionLevel vaut eNotPerceived => l'agent associé vient juste d'être perdu de vue
+    //      => Pas de eNotPerceived aux ticks suivant la perte de contact
+    UpdateLocalisations();// Updaté même quand 'NotPerceived', pour les objets pouvant bouger
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::UpdateLocalisationPartially
 // Created: JCR 2009-12-09
 // -----------------------------------------------------------------------------

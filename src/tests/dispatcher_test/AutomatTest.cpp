@@ -70,7 +70,6 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
 
         // creation
         MOCK_EXPECT( formation, RegisterAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
         dispatcher::Automat result( model, message );
 
         // network serialization
@@ -81,7 +80,6 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
 
         // cleaning
         MOCK_EXPECT( formation, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
     }
 }
 
@@ -136,7 +134,6 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
 
         // creation
         MOCK_EXPECT( automat, RegisterAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
         dispatcher::Automat result( model, message );
 
         // network serialization
@@ -147,7 +144,6 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
 
         // cleaning
         MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
     }
 }
 
@@ -202,7 +198,6 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message ) );
             automats.Register( result->GetId(), *result );
         }
@@ -222,7 +217,6 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
 
         // cleaning
         MOCK_EXPECT( formation, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
     }
 }
 
@@ -280,7 +274,6 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup1, RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message ) );
             automats.Register( result->GetId(), *result );
         }
@@ -292,8 +285,6 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             message.mutable_knowledge_group()->set_id( knowledgeGroup2.GetId() );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( knowledgeGroup1, RemoveAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup2, RegisterAutomat ).once();
             automats.Get( 1 ).Update( message );
             knowledgeGroup1.verify();
             knowledgeGroup2.verify();
@@ -301,7 +292,6 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
 
         // cleaning
         MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup2, RemoveAutomat ).once();
     }
 }
 
@@ -356,7 +346,6 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message ) );
             automats.Register( result->GetId(), *result );
         }
@@ -382,7 +371,6 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
 
         // cleaning
         MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
     }
 }
 
@@ -437,7 +425,6 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message ) );
             automats.Register( result->GetId(), *result );
         }
@@ -466,7 +453,6 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
 
         // cleaning
         MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
     }
 }
 
@@ -535,7 +521,6 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message ) );
             automats.Register( result->GetId(), *result );
         }
@@ -582,7 +567,6 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
 
         // cleaning
         MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
     }
 }
 

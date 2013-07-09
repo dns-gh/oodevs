@@ -14,7 +14,8 @@
 
 MOCK_BASE_CLASS( MockKnowledgeGroupFactory, KnowledgeGroupFactory_ABC )
 {
-    MOCK_METHOD( Create, 3 );
+    MOCK_METHOD_EXT( Create, 3, boost::shared_ptr< MIL_KnowledgeGroup >( xml::xistream&, MIL_Army_ABC&, boost::shared_ptr< MIL_KnowledgeGroup > ), CreateFromXis );
+    MOCK_METHOD_EXT( Create, 1, boost::shared_ptr< MIL_KnowledgeGroup >( MIL_Army_ABC& ), CreateForCrowd );
 };
 
 #endif // __MockKnowledgeGroupFactory_h_

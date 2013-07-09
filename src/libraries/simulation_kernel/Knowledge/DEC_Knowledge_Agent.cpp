@@ -26,6 +26,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MaterialAttribute.h"
@@ -397,6 +398,40 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int curr
         pMaxPerceptionLevel_ = newLevel;
         bMaxPerceptionLevelUpdated_ = true;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::UpdateFromCrowdPerception
+// Created: JSR 2013-07-08
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::UpdateFromCrowdPerception( const MIL_Population& population, int currentTimeStep )
+{
+    nTimeLastUpdate_ = currentTimeStep;
+    ChangeRelevance( 1. );
+    if( PHY_PerceptionLevel::recognized_ > *pCurrentPerceptionLevel_ )
+    {
+        pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
+        bCurrentPerceptionLevelUpdated_ = ( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ );
+    }
+    if( PHY_PerceptionLevel::recognized_ > *pMaxPerceptionLevel_ )
+    {
+        pMaxPerceptionLevel_= &PHY_PerceptionLevel::recognized_;
+        bMaxPerceptionLevelUpdated_ = true;
+        bCurrentPerceptionLevelUpdated_ = true;
+    }
+    if( bMaxPerceptionLevelUpdated_ && !IsDead() )
+    {
+        if( pAgentKnown_ )
+        {
+            if( pArmyKnowing_->IsAFriend( pAgentKnown_->GetArmy() ) == eTristate_True )
+                MIL_Report::PostEvent( population, MIL_Report::eRC_FriendUnitRecognized );
+            else if( pArmyKnowing_->IsAnEnemy( pAgentKnown_->GetArmy() ) == eTristate_True )
+                MIL_Report::PostEvent( population, MIL_Report::eRC_EnemyUnitRecognized );
+            else if( pArmyKnowing_->IsNeutral( pAgentKnown_->GetArmy() ) == eTristate_True )
+                MIL_Report::PostEvent( population, MIL_Report::eRC_NeutralUnitRecognized );
+        }
+    }
+    nTimeExtrapolationEnd_ = static_cast< int >( pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime() );
 }
 
 // -----------------------------------------------------------------------------

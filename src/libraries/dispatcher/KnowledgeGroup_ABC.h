@@ -43,8 +43,6 @@ public:
     //@{
     virtual void Register( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ) = 0;
     virtual void Remove( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ) = 0;
-    virtual void Register( dispatcher::Automat_ABC& automat ) = 0;
-    virtual void Remove( dispatcher::Automat_ABC& automat ) = 0;
 
     virtual void ChangeSuperior( dispatcher::KnowledgeGroup_ABC* superior ) = 0;
     //@}

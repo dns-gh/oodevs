@@ -103,6 +103,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\LogisticHelpers.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\PhysicalAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\PointingKnowledges.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationHierarchiesCommunication.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyResourceRequest.cpp" />
@@ -328,6 +329,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PhysicalAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PointingKnowledges.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationHierarchiesCommunication.h" />
     <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyResourceRequest.h" />

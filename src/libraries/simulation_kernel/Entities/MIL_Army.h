@@ -117,6 +117,7 @@ public:
     void UnregisterInhabitant( MIL_Inhabitant& inhabitant );
 
     boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const;
+    boost::shared_ptr< MIL_KnowledgeGroup > FindCrowdKnowledgeGroup() const;
     void RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup );
     void UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup );
     //@}
@@ -129,7 +130,7 @@ public:
     E_Tristate IsAnEnemy( const DEC_Knowledge_Population & knowledge ) const;
     virtual E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
     virtual E_Tristate IsNeutral( const MIL_Army_ABC& army ) const;
-    virtual void Finalize();
+    virtual void Finalize( KnowledgeGroupFactory_ABC& knowledgegroupFactory );
     //@}
 
     //! @name Accessors

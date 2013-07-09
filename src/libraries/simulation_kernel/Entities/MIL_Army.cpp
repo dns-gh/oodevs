@@ -631,12 +631,30 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Army::FindCrowdKnowledgeGroup
+// Created: JSR 2013-07-04
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_Army::FindCrowdKnowledgeGroup() const
+{
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        if( it->second->IsCrowd() )
+            return it->second;
+    return boost::shared_ptr< MIL_KnowledgeGroup >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Army::Finalize
 // Created: LMT 2011-07-21
 // -----------------------------------------------------------------------------
-void MIL_Army::Finalize()
+void MIL_Army::Finalize( KnowledgeGroupFactory_ABC& knowledgegroupFactory )
 {
     pKnowledgeBlackBoard_->Finalize();
+    boost::shared_ptr< MIL_KnowledgeGroup > crowdKnowledgeGroup = FindCrowdKnowledgeGroup();
+    if( crowdKnowledgeGroup.get() == 0 )
+    {
+        crowdKnowledgeGroup = knowledgegroupFactory.Create( *this );
+        tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SetKnowledgeGroup, _1, crowdKnowledgeGroup ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

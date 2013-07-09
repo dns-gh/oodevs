@@ -33,6 +33,7 @@ class MIL_Army_ABC;
 class MIL_Automate;
 class MIL_Entity_ABC;
 class MIL_KnowledgeGroup;
+class MIL_Population;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 
@@ -80,6 +81,7 @@ public:
     void Update( const DEC_Knowledge_ObjectPerception& perception );
     void Update( const DEC_Knowledge_ObjectCollision& collision );
     void Update( const DEC_Knowledge_Object& knowledge, int currentTimeStep );
+    void UpdateFromCrowdPerception( const MIL_Population& population );
     bool Clean() const;
     void CleanObjectKnown();
     bool IsValid() const;

@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Population.h"
 #include "Model.h"
+#include "KnowledgeGroup_ABC.h"
 #include "Side.h"
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
@@ -33,6 +34,7 @@ Population::Population( Model_ABC& model, const sword::CrowdCreation& msg )
     , nType_           ( msg.type().id() )
     , strName_         ( msg.name() )
     , side_            ( model.Sides().Get( msg.party().id() ) )
+    , knowledgeGroup_  ( msg.has_knowledge_group() ?  &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) : 0 )
     , male_            ( msg.repartition().male() )
     , female_          ( msg.repartition().female() )
     , children_        ( msg.repartition().children() )
@@ -58,9 +60,13 @@ Population::~Population()
 // Name: Population::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const sword::CrowdCreation& /*message*/ )
+void Population::DoUpdate( const sword::CrowdCreation& msg )
 {
     decisionalInfos_.Clear();
+    if( !knowledgeGroup_ || knowledgeGroup_->GetId() != msg.knowledge_group().id() )
+    {
+        knowledgeGroup_ = &model_.KnowledgeGroups().Get( msg.knowledge_group().id() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -193,6 +199,8 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
     client::CrowdCreation asn;
     asn().mutable_crowd()->set_id( GetId() );
     asn().mutable_party()->set_id( side_.GetId() );
+    if( knowledgeGroup_ )
+        asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     asn().mutable_type()->set_id( nType_ );
     asn().set_name( strName_ );
     asn().mutable_repartition()->set_male( male_ );

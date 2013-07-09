@@ -229,7 +229,8 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
 {
     TER_Agent_ABC::T_AgentPtrVector agents;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocation(), agents, 100. ); //$$$ TEST
-    collidingAgents_.clear(); collidingAgents_.reserve( agents.size() );
+    collidingAgents_.clear();
+    collidingAgents_.reserve( agents.size() );
     for( TER_Agent_ABC::CIT_AgentPtrVector it = agents.begin(); it != agents.end(); ++it )
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
@@ -238,9 +239,12 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
     }
     TER_ObjectManager::T_ObjectVector objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
+    collidingObjects_.clear();
+    collidingObjects_.reserve( objects.size() );
     for( TER_Object_ABC::CIT_ObjectVector it = objects.begin(); it != objects.end(); ++it )
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
+        collidingObjects_.push_back( &object );
         object.NotifyPopulationMovingInside( *this );
     }
     ClearCollidingAttackingAgents();
@@ -284,7 +288,8 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
 {
     file >> humans_
          >> rDensity_
-         >> collidingAgents_;
+         >> collidingAgents_
+         >> collidingObjects_;
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
@@ -303,6 +308,7 @@ void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const unsi
     file << humans_
          << rDensity_
          << collidingAgents_
+         << collidingObjects_
          << attitude;
     file << intoxicationEffects_;
     file << contaminationEffects_;
@@ -560,12 +566,31 @@ bool MIL_PopulationElement_ABC::IsInZone( const TER_Localisation& loc ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetCollidingAgents
+// Created: JSR 2013-07-05
+// -----------------------------------------------------------------------------
+const MIL_PopulationElement_ABC::T_AgentVector& MIL_PopulationElement_ABC::GetCollidingAgents() const
+{
+    return collidingAgents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetCollidingObjects
+// Created: JSR 2013-07-08
+// -----------------------------------------------------------------------------
+const MIL_PopulationElement_ABC::T_ObjectVector& MIL_PopulationElement_ABC::GetCollidingObjects() const
+{
+    return collidingObjects_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::ClearCollisions
 // Created: NLD 2005-12-06
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::ClearCollisions()
 {
     collidingAgents_.clear();
+    collidingObjects_.clear();
 }
 
 // -----------------------------------------------------------------------------

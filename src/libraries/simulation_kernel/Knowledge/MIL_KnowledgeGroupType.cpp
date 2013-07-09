@@ -147,6 +147,18 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( unsigned int nID
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroupType::FindTypeOrAny
+// Created: JSR 2013-07-04
+// -----------------------------------------------------------------------------
+const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindTypeOrAny( const std::string& strName )
+{
+    const MIL_KnowledgeGroupType* ret = FindType( strName );
+    if( !ret && knowledgeGroupTypes_.size() > 0 )
+        ret = knowledgeGroupTypes_.begin()->second;
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::GetID
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------

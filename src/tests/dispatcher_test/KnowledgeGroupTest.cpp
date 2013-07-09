@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( side, RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
-            MOCK_EXPECT( knowledgeGroup, RegisterKnowledgeGroup ).once().with( mock::same( *result ) );
+            MOCK_EXPECT( knowledgeGroup, Register ).once().with( mock::same( *result ) );
             result->Update( message );
         }
         {
@@ -126,5 +126,5 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             publisher.verify();
         }
     }
-    MOCK_EXPECT( knowledgeGroup, RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
+    MOCK_EXPECT( knowledgeGroup, Remove ).once().with( mock::same( *result ) );
 }

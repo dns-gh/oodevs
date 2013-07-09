@@ -12,9 +12,8 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupSelectionObserver constructor
@@ -57,7 +56,7 @@ void KnowledgeGroupSelectionObserver::AfterSelection()
 // Name: KnowledgeGroupSelectionObserver::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void KnowledgeGroupSelectionObserver::Select( const KnowledgeGroup_ABC& element )
+void KnowledgeGroupSelectionObserver::Select( const kernel::KnowledgeGroup_ABC& element )
 {
     selected_ = &element;
 }
@@ -66,12 +65,12 @@ void KnowledgeGroupSelectionObserver::Select( const KnowledgeGroup_ABC& element 
 // Name: KnowledgeGroupSelectionObserver::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void KnowledgeGroupSelectionObserver::Select( const Agent_ABC& element )
+void KnowledgeGroupSelectionObserver::Select( const kernel::Agent_ABC& element )
 {
-    if( !element.Get< CommunicationHierarchies >().CanCommunicate() )
-        selected_ = & element.Get< CommunicationHierarchies >().GetUp();
+    if( !element.Get< kernel::CommunicationHierarchies >().CanCommunicate() )
+        selected_ = & element.Get< kernel::CommunicationHierarchies >().GetUp();
     else
-        selected_ = & element.Get< CommunicationHierarchies >().GetUp( 2 );
+        selected_ = & element.Get< kernel::CommunicationHierarchies >().GetUp( 2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,5 +79,15 @@ void KnowledgeGroupSelectionObserver::Select( const Agent_ABC& element )
 // -----------------------------------------------------------------------------
 void KnowledgeGroupSelectionObserver::Select( const kernel::Automat_ABC& element )
 {
-    selected_ = & element.Get< CommunicationHierarchies >().GetUp();
+    selected_ = & element.Get< kernel::CommunicationHierarchies >().GetUp();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupSelectionObserver::Select
+// Created: JSR 2013-07-05
+// -----------------------------------------------------------------------------
+void KnowledgeGroupSelectionObserver::Select( const kernel::Population_ABC& element )
+{
+    if( const kernel::CommunicationHierarchies* hierarchies = element.Retrieve< kernel::CommunicationHierarchies >() )
+        selected_ = & hierarchies->GetUp();
 }

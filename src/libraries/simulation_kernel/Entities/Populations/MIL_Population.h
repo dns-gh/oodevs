@@ -75,6 +75,8 @@ public:
     const MIL_PopulationAttitude& GetAttitude() const;
     virtual MIL_Army_ABC& GetArmy() const;
     const DEC_PopulationKnowledge& GetKnowledge() const;
+    void SetKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup );
+    boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     bool IsDead() const;
     bool HasDoneMagicMove() const;
     unsigned int GetAllHumans() const;
@@ -248,6 +250,7 @@ private:
     const MIL_PopulationType*                   pType_;
     const unsigned int                          nID_;
     MIL_Army_ABC*                               pArmy_;
+    boost::shared_ptr< MIL_KnowledgeGroup >     pKnowledgeGroup_;
     const MIL_PopulationAttitude*               pDefaultAttitude_;
     double                                      rArmedIndividuals_;
     double                                      rNewArmedIndividuals_;

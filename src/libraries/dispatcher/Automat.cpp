@@ -50,7 +50,6 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
 {
     if( ! parentFormation_ && ! parentAutomat_ )
         throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.name() );
-    knowledgeGroup_->Register( *this );
     if( msg.has_color() )
         color_ = msg.color();
     if( parentFormation_ )
@@ -86,7 +85,6 @@ Automat::~Automat()
         MoveAgents( *parentAutomat_ );
         parentAutomat_->Remove( *this );
     }
-    knowledgeGroup_->Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,10 +160,7 @@ void Automat::ChangeKnowledgeGroup( unsigned long id )
 {
     if( knowledgeGroup_ && knowledgeGroup_->GetId() == id )
         return;
-    if( knowledgeGroup_ )
-        knowledgeGroup_->Remove( *this );
     knowledgeGroup_ = &model_.KnowledgeGroups().Get( id );
-    knowledgeGroup_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------

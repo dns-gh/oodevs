@@ -113,7 +113,7 @@ MIL_Army_ABC* ArmyFactory::Create( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ArmyFactory::Finalize()
 {
-    Apply( boost::bind( &MIL_Army_ABC::Finalize, _1 ) );
+    Apply( boost::bind( &MIL_Army_ABC::Finalize, _1, boost::ref( knowledgeGroupFactory_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

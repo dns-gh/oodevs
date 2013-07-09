@@ -40,11 +40,9 @@ MOCK_BASE_CLASS( MockKnowledgeGroup, dispatcher::KnowledgeGroup_ABC )
     // dispatcher::KnowledgeGroup_ABC
     MOCK_METHOD( GetTeam, 0 );
     // LTO begin
-    MOCK_METHOD_EXT( Register, 1, void ( dispatcher::KnowledgeGroup_ABC& ), RegisterKnowledgeGroup );
-    MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::KnowledgeGroup_ABC& ), RemoveKnowledgeGroup );
+    MOCK_METHOD( Register, 1 );
+    MOCK_METHOD( Remove, 1 );
     // LTO end
-    MOCK_METHOD_EXT( Register, 1, void ( dispatcher::Automat_ABC& ), RegisterAutomat );
-    MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Automat_ABC& ), RemoveAutomat );
     MOCK_METHOD( ChangeSuperior, 1 );
 
     // Sendable

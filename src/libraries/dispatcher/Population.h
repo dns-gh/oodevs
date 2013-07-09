@@ -29,6 +29,7 @@ namespace sword
 
 namespace dispatcher
 {
+    class KnowledgeGroup_ABC;
     class Model_ABC;
     class PopulationOrder;
     class Team_ABC;
@@ -107,6 +108,7 @@ private:
     const unsigned long nType_;
     const std::string strName_;
     dispatcher::Team_ABC& side_;
+    dispatcher::KnowledgeGroup_ABC* knowledgeGroup_;
     float male_;
     float female_;
     float children_;
