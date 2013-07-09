@@ -171,6 +171,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< int () >( boost::bind( &DEC_PopulationFunctions::GetContaminatedHumans, boost::cref( GetPopulation() ) ) );
     
     // Agents
+    brain[ "DEC_GetAgentOperationalStateById" ] = &DEC_PopulationFunctions::GetAgentOperationalStateById;
     brain[ "DEC_Agent_EstDansFoule" ] =
         boost::function< bool(  DEC_Decision_ABC* ) >( boost::bind( &DEC_PopulationFunctions::IsAgentInside, boost::ref( GetPopulation() ), _1 ) );
 

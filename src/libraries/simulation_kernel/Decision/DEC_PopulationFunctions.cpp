@@ -17,6 +17,7 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -49,6 +50,19 @@ void DEC_PopulationFunctions::DecisionalState( const MIL_Population& callerPopul
     msg().set_key( key.c_str() );
     msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetAgentOperationalStateById
+// Created: LMT 2013-07-08
+// -----------------------------------------------------------------------------
+double DEC_PopulationFunctions::GetAgentOperationalStateById( unsigned int id )
+{
+    MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion for GetAgentOperationalStateById" );
+    return pAgent->GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
 }
 
 // -----------------------------------------------------------------------------

@@ -34,6 +34,7 @@ public:
     static void DecisionalState( const MIL_Population& callerPopulation, const std::string& key, const std::string& value );
 
     // State
+    static double GetAgentOperationalStateById( unsigned int id );
     static boost::shared_ptr< MT_Vector2D > GetBarycenter( const MIL_Population& callerPopulation );
     static int GetActualNumber( const MIL_Population& callerPopulation );
     static int GetContaminatedHumans( const MIL_Population& callerPopulation );
