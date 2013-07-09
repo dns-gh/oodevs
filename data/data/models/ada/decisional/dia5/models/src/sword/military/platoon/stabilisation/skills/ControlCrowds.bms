@@ -16,7 +16,6 @@ rootnode
         self.nextTargetIndex = self.nextTargetIndex + 1 -- try on next crowd
         if self.nextTargetIndex > #self.params.crowds then
             self.nextTargetIndex = #self.params.crowds
-        else
             Feedback( self.feedbacks.failed, { positionSurete = additionalParams.positionSurete } )
         end
     end,

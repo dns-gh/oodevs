@@ -56,10 +56,12 @@ rootnode
                 self.positionSurete = integration.getSafetyPositionFromCrowd( 
                         self.params.crowd, skill.modifiers.distanceEsquivePopulation )
                 if self.positionSurete then 
+                DEC_Trace("on bouge vers la pos de sureté")
                     StartActivate( skill.links.moveToward, 1, { entities  = { self.positionSurete } } )
                     self.isSelfProtecting = true
                 end
             end
+            DEC_Trace("on renvoi failed")
             Feedback( self.feedbacks.failed, { positionSurete = self.positionSurete } )
         else  -- move to crowd and try to control it
             Activate( skill.links.control, 1, { objective  = self.params.crowd, dontMove = self.params.dontMove } )

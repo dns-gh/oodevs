@@ -203,7 +203,7 @@ integration.FouleEstSecurisee = function( nonLethalWeaponsAuthorizedFactor, leth
     local pions = DEC_Connaissances_PionsSecurisant()
     local calculDomination = 0
     for _,pion in pairs( pions ) do
-        calculDomination = calculDomination + S_EffetSecurisationSurDomination( DEC_ConnaissanceAgent_RoePopulation( pion ), nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
+       calculDomination = calculDomination + (S_EffetSecurisationSurDomination( DEC_ConnaissanceAgent_RoePopulation( pion ), nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor ) * DEC_GetAgentOperationalStateById( pion ))
     end
     if next( pions ) then
         myself.domination.default = myself.domination.default + calculDomination
