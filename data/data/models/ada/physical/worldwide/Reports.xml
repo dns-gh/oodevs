@@ -711,8 +711,11 @@
     <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="518" message="Military equipment plundered by the crowd"/>
+  <report category="operational" id="519" message="LIA crossed by unit: %1">
+    <parameter type="String"/>
+  </report>
   <report category="operational" id="769" message="Evacuating %1">
     <parameter type="ResourceType"/>
   </report>
 </reports>
-<!-- signature="0369819834" -->
+<!-- signature="3342552578" -->

@@ -483,4 +483,5 @@ eRC_stopHidingInTheCrowd = 516
 eRC_CloseCrowdDemonstration = 517
 eRC_MilitaryEquipmentPlundered = 518
 eRC_CorpseTransported = 769
+eRC_UnitCrossedLimaLIA = 519
 eNbr = 770

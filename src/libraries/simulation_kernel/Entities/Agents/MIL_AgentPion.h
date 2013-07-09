@@ -173,6 +173,7 @@ public:
     void ChangeSuperiorSilently( MIL_Automate& newAutomate );
     void NotifySendHeadquarters();
     void ChangeNationality( const std::string& nationality );
+    const std::string& GetLongName() const;
     //@}
 
 private:

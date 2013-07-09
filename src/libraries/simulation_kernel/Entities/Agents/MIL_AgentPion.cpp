@@ -714,6 +714,15 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_AgentPion::GetKnowledgeGroup() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetLongName
+// Created: MMC 2013-07-09
+// -----------------------------------------------------------------------------
+const std::string& MIL_AgentPion::GetLongName() const
+{
+    return pExtensions_->GetExtension( "NomLong" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::BelongsTo
 // Created: AGE 2004-11-23
 // -----------------------------------------------------------------------------

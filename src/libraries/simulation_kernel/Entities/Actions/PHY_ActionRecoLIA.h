@@ -14,6 +14,7 @@
 #include "Entities/Actions/PHY_Action_ABC.h"
 
 class MIL_AgentPion;
+class MIL_Automate;
 class DEC_Knowledge_Agent;
 
 // =============================================================================
@@ -44,7 +45,10 @@ protected:
 private:
     //! @name Helpers
     //@{
-    void CheckAgentsNearLimasLIA( DEC_Knowledge_Agent& agent );
+    void CheckAgentKnowledgesNearLimasLIA( const DEC_Knowledge_Agent& agent );
+    void CheckAgentsNearLimasLIA( const std::vector< MIL_Automate* >& automats );
+    void CheckAgentsNearLimasLIA( const MIL_AgentPion& agent );
+    bool IsFirstInAutomatWithMission();
     //@}
 
 private:
@@ -52,9 +56,9 @@ private:
     //@{
     unsigned int simTime_;
     MIL_AgentPion& caller_;
-    std::map< const DEC_Knowledge_Agent*, MT_Vector2D > previousAgents_;
-    std::map< const DEC_Knowledge_Agent*, MT_Vector2D > agents_;
-    std::set< const DEC_Knowledge_Agent* > lineCrossedAgents_;
+    std::map< const MIL_AgentPion*, MT_Vector2D > previousAgentsPos_;
+    std::map< const MIL_AgentPion*, MT_Vector2D > agentsPos_;
+    std::set< const MIL_AgentPion* > lineCrossedAgents_;
     //@}
 };
 
