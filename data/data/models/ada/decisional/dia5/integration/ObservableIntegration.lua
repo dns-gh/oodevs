@@ -124,3 +124,9 @@ integration.isPointVisible = function ( point )
     return DEC_Perception_PointEstVisible( point.source )
 end
 
+integration.startRecoLIA = function()
+  return DEC_StartRecoLIA()
+end
+integration.stopRecoLIA = function( idAction )
+  DEC__StopAction( idAction )
+end

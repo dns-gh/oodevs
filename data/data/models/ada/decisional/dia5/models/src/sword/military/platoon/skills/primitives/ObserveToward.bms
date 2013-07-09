@@ -8,6 +8,10 @@ rootnode
     connections = { skill.nodes.ObserveTowardElement },
 
     done = function( self ) end,
+    
+    create = function( self )
+        self.idAction = integration.startRecoLIA()
+    end,
 
     -- --------------------------------------------------------------------------------
     -- For each objective of the skill, try to observe it.
@@ -18,7 +22,11 @@ rootnode
             Activate( skill.nodes.ObserveTowardElement, entity:observationPriority(),
                 { entity = entity, positions = self.params.positions } )
         end
-    end
+    end,
+    
+    destroy = function( self )
+        integration.stopRecoLIA( self.idAction )
+    end,
 }
 -- ****************************************************************************
 -- Straight movement toward the observing element
