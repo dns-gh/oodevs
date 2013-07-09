@@ -127,6 +127,17 @@ masalife.brain.communication.setMessageTreatment( "killOfficers",
         meKnowledge:RC( eRC_OfficersKilled )
     end )
 
+masalife.brain.communication.setMessageTreatment( "startBuildingObstacle",
+    function( content, sender )
+       myself.buildingByOther = myself.buildingByOther or {}
+       myself.buildingByOther[#myself.buildingByOther + 1] = content
+    end )
+    
+masalife.brain.communication.setMessageTreatment( "SendClearBuildingObstacleList",
+    function( content, sender )
+        myself.buildingByOther = {}
+    end )
+
 -- -------------------------------------------------------------------------------- 
 -- Predicates
 -- --------------------------------------------------------------------------------
@@ -445,6 +456,12 @@ return
     end,
     sendStopPerceptionShared = function( self, receiver, friend )
         integration.SendMessage( "stopPerceptionShared", receiver, { friend = friend }, { type = "dynamic" } )
+    end,
+    sendStartBuildingObstacle = function( self, receiver, unit, objectType, localisation )
+        integration.SendMessage( "startBuildingObstacle", receiver, { unit = unit, objectType = objectType, localisation = localisation }, { type = "dynamic" } )
+    end,
+    SendClearBuildingObstacleList = function( self, receiver )
+        integration.SendMessage( "clearBuildingObstacleList", receiver, { }, { type = "dynamic" } )
     end,
     getObstaclesOnAllyPath = function( self )
         return myself.engineerObjectsOnPath

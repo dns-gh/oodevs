@@ -41,6 +41,7 @@ rootnode
         for _, object in pairs( self.params.entities ) do
             self.objectsToBuild[ object ] = true
         end
+        meKnowledge:SendClearBuildingObstacleList( meKnowledge )
     end,
 
     activate = function( self ) 
@@ -83,11 +84,17 @@ node "BuildElement"
 
     create = function( self )
         self.arrived = false
+        self.obstacleBeginConstructByOther = false
+        self.alreadyBeginByMe = false
         if self.params.positions or self.params.positions == NIL then
             self.positions = sword.military.queries.tactical.getPositionsToBuild[ "execute" ](
                                              { elementsToBuild = { self.params.entity } } )
         else
             self.positions = self.params.positions
+        end
+        self.pionsFriends = {}
+        if not meKnowledge:isSelfCommanding() then
+            self.pionsFriends = sword.military.queries.miscellaneous.getFriends[ "execute" ]()
         end
     end,
 
@@ -124,7 +131,19 @@ node "BuildElement"
                     if meKnowledge:isDismounted() then
                         Activate( skill.links.dismount, 1 )
                     end
-                    Activate( skill.nodes.Build, 1, { entity = toBuild } )
+                    if not integration.unitBuildSameObstacleAtSameTime( toBuild, true ) then
+                        if not self.obstacleBeginConstructByOther and not self.alreadyBeginByMe then
+                            for i = 1, #self.pionsFriends do
+                                if self.pionsFriends[i] ~= meKnowledge then
+                                    meKnowledge:sendStartBuildingObstacle( self.pionsFriends[i], meKnowledge, toBuild:getType(), toBuild:getLocalisation() )
+                                end
+                            end
+                        end
+                        Activate( skill.nodes.Build, 1, { entity = toBuild } )
+                        self.alreadyBeginByMe = true
+                    else
+                        self.obstacleBeginConstructByOther = true
+                    end
                 end
             else
                 if not self.params.entity:buildingCapacity() then

@@ -367,3 +367,18 @@ end
 integration.hasEnoughtDotationForObjectTypeWithoutReinforcement = function( objectType )
   return DEC_Agent_ADotationPourConstruireObjetSansRenforts( objectType )
 end
+
+integration.unitBuildSameObstacleAtSameTime = function( object, removeIt )
+    if myself.buildingByOther then
+        for i = 1, #myself.buildingByOther do
+            if myself.buildingByOther[i].localisation == object:getLocalisation() and
+                myself.buildingByOther[i].objectType == object:getType() then
+                if removeIt then -- clean the obstacle already treated
+                    table.remove( myself.buildingByOther, i )
+                end
+                return true
+            end
+        end
+    end
+    return false
+end

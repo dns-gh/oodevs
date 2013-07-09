@@ -1544,27 +1544,41 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </argument>
         </method>
-	    <method name="switchOnRadio">
-		    <description>Switch on radio</description>
-		</method>
-		<method name="switchEmitOnlyOffRadio">
-		    <description>Switch emit only off radio</description>
-		</method>
-		<method name="switchEmitOnly">
-		    <description>Switch emit only</description>
-		</method>
-		<method name="disableEmitOnly">
-		    <description>disable emit only</description>
-		</method>
-	    <method name="isPartialRadioState">
-		    <description>Returns 'true' if agent is in partial silent radio state</description>
-		    <return>
+        <method name="sendStartBuildingObstacle">
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="SendClearBuildingObstacleList">
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="switchOnRadio">
+            <description>Switch on radio</description>
+        </method>
+        <method name="switchEmitOnlyOffRadio">
+            <description>Switch emit only off radio</description>
+        </method>
+        <method name="switchEmitOnly">
+            <description>Switch emit only</description>
+        </method>
+        <method name="disableEmitOnly">
+            <description>disable emit only</description>
+        </method>
+        <method name="isPartialRadioState">
+            <description>Returns 'true' if agent is in partial silent radio state</description>
+            <return>
                 <type>
                     <simple name="boolean"/>
                 </type>
             </return>
-		</method>
-	</methods>
+        </method>
+    </methods>
 	<predicates>
 		<predicate name="isCommandingFor">
 			<description>Détermine si la connaissance est capable d'être commandée.</description>
