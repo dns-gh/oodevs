@@ -1209,7 +1209,7 @@ bool TER_Localisation::IsInside( const MT_Vector2D& vPos, double rPrecision ) co
 //        case ePoint:   return vPos.SquareDistance( pointVector_[0] ) <= ( rPrecision_ * rPrecision_ );
         case ePoint:   return polygon_ .IsInside( vPos, rPrecision );
         case ePolygon: return polygon_ .IsInside( vPos, rPrecision );
-        case eLine:    return boundingBox_.IsInside( vPos, rPrecision_ ) && polyline_.IsInside( vPos, rPrecision );
+        case eLine:    return boundingBox_.IsInside( vPos, rPrecision ) && polyline_.IsInside( vPos, rPrecision );
         default:
             return false;
     }
@@ -1224,9 +1224,9 @@ bool TER_Localisation::IsOnBorder( const MT_Vector2D& vPos, double rPrecision ) 
     switch( nType_ )
     {
 //        case ePoint:   return vPos.SquareDistance( pointVector_[0] ) <= ( rPrecision * rPrecision );
-        case ePoint:   return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsOnBorder( vPos, rPrecision );
-        case ePolygon: return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsOnBorder( vPos, rPrecision );
-        case eLine:    return boundingBox_.IsInside( vPos, rPrecision_ ) && polyline_.IsInside  ( vPos, rPrecision );
+        case ePoint:   return boundingBox_.IsInside( vPos, rPrecision ) && polygon_ .IsOnBorder( vPos, rPrecision );
+        case ePolygon: return boundingBox_.IsInside( vPos, rPrecision ) && polygon_ .IsOnBorder( vPos, rPrecision );
+        case eLine:    return boundingBox_.IsInside( vPos, rPrecision ) && polyline_.IsInside  ( vPos, rPrecision );
         default:
             return false;
     }
