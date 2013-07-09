@@ -14,6 +14,7 @@
 
 #include "tools/ServerNetworker.h"
 #include "NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 namespace sword
 {
@@ -48,9 +49,10 @@ public:
 
     //! @name Ugly accessors
     //@{
-    bool MustInitUnitVisionCones   () const;
-    bool MustSendUnitVisionCones   () const;
-    void SetMustSendUnitVisionCones( bool bEnable );
+    bool MustInitUnitVisionCones   ( int id ) const;
+    bool MustSendUnitVisionCones   ( int id ) const;
+    void SetMustSendUnitVisionCones( const sword::ControlEnableVisionCones& msg );
+    bool HasActiveVisionCones() const;
     //@}
 
 private:
@@ -80,9 +82,11 @@ private:
     //@{
     const MIL_Time_ABC& time_;
     NET_Simulation_ABC& simulation_;
-    T_Clients           clients_;
-    unsigned int        nUnitVisionConesChangeTimeStep_;
-    bool                bSendUnitVisionCones_;
+    T_Clients clients_;
+    unsigned int nUnitVisionConesChangeTimeStep_;
+    bool bSendUnitVisionCones_;
+    bool unitVisionMode_;
+    std::vector< int > enabledUnitVisions_;
     //@}
 };
 

@@ -33,6 +33,7 @@ NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& 
     , simulation_                    ( simulation )
     , nUnitVisionConesChangeTimeStep_( 0 )
     , bSendUnitVisionCones_          ( false )
+    , unitVisionMode_( false )
 {
     MT_LOG_INFO_MSG( "Starting simulation server on port " << config.GetNetworkPort() );
     AllowConnections();
@@ -154,7 +155,7 @@ void NET_AgentServer::OnReceiveClient( const std::string& /*from*/, const sword:
     else if( wrapper.message().has_control_export() )
         workspace.GetCheckPointManager().OnReceiveMsgControlExportRequest( wrapper.message().control_export() );
     else if( wrapper.message().has_control_toggle_vision_cones() )
-        SetMustSendUnitVisionCones( wrapper.message().control_toggle_vision_cones().vision_cones() );
+        SetMustSendUnitVisionCones( wrapper.message().control_toggle_vision_cones() );
     else if( wrapper.message().has_unit_order() )
         workspace.GetEntityManager().OnReceiveUnitOrder( wrapper.message().unit_order(), nCtx );
     else if( wrapper.message().has_automat_order() )
@@ -233,26 +234,55 @@ void NET_AgentServer::OnReceiveCtrlClientAnnouncement( const std::string& from )
 // Name: NET_AgentServer::SetMustSendUnitVisionCones
 // Created: NLD 2003-10-24
 // -----------------------------------------------------------------------------
-void NET_AgentServer::SetMustSendUnitVisionCones( bool bEnable )
+void NET_AgentServer::SetMustSendUnitVisionCones( const sword::ControlEnableVisionCones& msg )
 {
+    if( msg.has_unit() )
+    {
+        unitVisionMode_ = true;
+        auto it = std::find( enabledUnitVisions_.begin(), enabledUnitVisions_.end(), msg.unit().id() );
+        if( msg.vision_cones() )
+        {
+            if( it == enabledUnitVisions_.end() )
+                enabledUnitVisions_.push_back( msg.unit().id() );
+        }
+        else
+            if( it != enabledUnitVisions_.end() )
+                enabledUnitVisions_.erase( it );
+    }
+    else
+    {
+        unitVisionMode_ = false;
+        enabledUnitVisions_.clear();
+        bSendUnitVisionCones_ = msg.vision_cones();
+    }
     nUnitVisionConesChangeTimeStep_ = time_.GetCurrentTick();
-    bSendUnitVisionCones_           = bEnable;
 }
 
 // -----------------------------------------------------------------------------
 // Name: NET_AgentServer::MustInitUnitVisionCones
 // Created: NLD 2004-11-30
 // -----------------------------------------------------------------------------
-bool NET_AgentServer::MustInitUnitVisionCones() const
+bool NET_AgentServer::MustInitUnitVisionCones( int id ) const
 {
-    return bSendUnitVisionCones_ && time_.GetCurrentTick() == nUnitVisionConesChangeTimeStep_ + 1;
+    return MustSendUnitVisionCones( id ) && time_.GetCurrentTick() == nUnitVisionConesChangeTimeStep_ + 1;
 }
 
 // -----------------------------------------------------------------------------
 // Name: NET_AgentServer::MustSendUnitVisionCones
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-bool NET_AgentServer::MustSendUnitVisionCones() const
+bool NET_AgentServer::MustSendUnitVisionCones( int id ) const
 {
+    if( unitVisionMode_ )
+        return std::find( enabledUnitVisions_.begin(), enabledUnitVisions_.end(), id ) != enabledUnitVisions_.end();
     return bSendUnitVisionCones_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_AgentServer::HasActiveVisionCones
+// Created: NPT 2013-07-09
+// -----------------------------------------------------------------------------
+bool NET_AgentServer::HasActiveVisionCones() const
+{
+    return ( unitVisionMode_ && !enabledUnitVisions_.empty() ) || ( !unitVisionMode_ && bSendUnitVisionCones_ );
 }

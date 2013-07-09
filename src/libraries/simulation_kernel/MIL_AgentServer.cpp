@@ -470,7 +470,7 @@ void MIL_AgentServer::SendControlInformation() const
     message().set_time_factor( nTimeFactor_ );
     message().set_status( sword::EnumSimulationState( nSimState_ == eSimWait ? ( config_.GetPausedAtStartup() ? eSimPaused : eSimRunning ) : nSimState_ ) );
     message().set_checkpoint_frequency( GetCheckPointManager().GetCheckPointFrequency() );
-    message().set_send_vision_cones( GetAgentServer().MustSendUnitVisionCones() );
+    message().set_send_vision_cones( GetAgentServer().HasActiveVisionCones() );
     message().set_profiling_enabled( GetProfilerManager().IsProfilingEnabled() );
     if( localTime_ != "" )
         message().mutable_checkpoint_real_time()->set_data( localTime_ );

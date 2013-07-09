@@ -1094,10 +1094,10 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
         pion_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
     // Debug - Cones de vision
-    if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
+    if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones( pion_->GetID() ) )
     {
         if( bExternalMustUpdateVisionCones_
-            || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
+            || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones( pion_->GetID() ) )
             SendDebugState();
     }
 }
