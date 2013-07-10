@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_UrbanObjectFunctions.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -26,6 +27,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Urban/MIL_UrbanCache.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 
@@ -258,4 +260,21 @@ std::string DEC_UrbanObjectFunctions::GetType( const MIL_UrbanObject_ABC* pUrban
     if( !pUrbanObject )
         throw MASA_EXCEPTION( "invalid parameter." );
     return pUrbanObject->GetType().GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_UrbanObjectFunctions::GetUrbanBlockInZone
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+T_UrbanObjectVector DEC_UrbanObjectFunctions::GetUrbanBlockInZone( TER_Localisation* pLocalisation )
+{
+    T_UrbanObjectVector result;
+    if( pLocalisation )
+    {
+        const T_UrbanObjectVector& blocks = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocks();
+        for( auto it = blocks.begin(); it != blocks.end(); ++it )
+            if( ( *it ) && pLocalisation->Contains( ( *it )->GetLocalisation() ) )
+                result.push_back( *it );
+    }
+    return result;
 }

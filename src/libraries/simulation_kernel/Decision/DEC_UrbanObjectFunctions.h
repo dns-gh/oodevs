@@ -40,6 +40,7 @@ public:
     static float GetStateUrbanBlock( MIL_UrbanObject_ABC* pUrbanObject );
     static boost::shared_ptr< TER_Localisation > GetPolygonFromUrbanBlock( const MIL_UrbanObject_ABC* pUrbanObject );
     static std::string GetType( const MIL_UrbanObject_ABC* pUrbanObject );
+    static T_UrbanObjectVector GetUrbanBlockInZone( TER_Localisation* );
     //@}
 };
 

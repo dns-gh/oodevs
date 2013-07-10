@@ -325,6 +325,7 @@ void RegisterUrbanBlockFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_BlocUrbain_Type", &DEC_UrbanObjectFunctions::GetType );
     brain.RegisterFunction( "DEC_EtatBlocUrbain", &DEC_UrbanObjectFunctions::GetStateUrbanBlock );
     brain.RegisterFunction( "DEC_IsPointInUrbanBlock", &DEC_GeometryFunctions::IsPointInUrbanBlock );
+    brain.RegisterFunction( "DEC_UrbanBlocksInZone", &DEC_UrbanObjectFunctions::GetUrbanBlockInZone );
 }
 
 // -----------------------------------------------------------------------------
