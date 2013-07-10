@@ -41,6 +41,7 @@ public:
     virtual bool CanControlTime() const = 0;
     /** Returns true is either the entity or a knowledge of this entity is visible. */
     virtual bool IsPerceived( const kernel::Entity_ABC& ) const = 0;
+    virtual bool IsKnowledgeVisibleNoSupervision( const kernel::Knowledge_ABC& knowledge ) const { return IsKnowledgeVisible( knowledge ); }
     //@}
 };
 

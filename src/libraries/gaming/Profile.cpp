@@ -303,7 +303,15 @@ bool Profile::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
         if( std::find( readTeams_.begin(), readTeams_.end(), knowledge.GetTeam()->GetId() ) != readTeams_.end() 
             || std::find( writeTeams_.begin(), writeTeams_.end(), knowledge.GetTeam()->GetId() ) != writeTeams_.end() )
             return false;
+    return IsKnowledgeVisibleNoSupervision( knowledge );
+}
 
+// -----------------------------------------------------------------------------
+// Name: Profile::IsKnowledgeVisibleNoSupervision
+// Created: MMC 2013-07-10
+// -----------------------------------------------------------------------------
+bool Profile::IsKnowledgeVisibleNoSupervision( const kernel::Knowledge_ABC& knowledge ) const
+{
     return IsInHierarchy( knowledge.GetOwner(), readEntities_, false );
 }
 

@@ -85,10 +85,10 @@ namespace
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
-    if( !forward_.IsKnowledgeVisible( knowledge ) )
-        return false;
     if( !entity_ )
-        return true; //!forward_.IsSupervision(); $$$$ JSR 2011-12-06: revert temporaire bug 4464
+        return forward_.IsKnowledgeVisible( knowledge );
+    if( !forward_.IsKnowledgeVisibleNoSupervision( knowledge ) )
+        return false;
     if( knowledge.GetEntity() && knowledge.GetEntity()->GetTypeName() == kernel::Object_ABC::typeName_ )
     {
         const ObjectKnowledges* filteredGroup = 0;
