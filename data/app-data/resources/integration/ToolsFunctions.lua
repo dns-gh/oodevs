@@ -486,6 +486,55 @@ fillParameters = function( bestList, companyTask, params, nbrFront, context, isM
     return bestListNbrFront
 end
 
+-- @param entities A list of PlatoonAlly
+-- @param tasks A list of Task that we want to give
+-- @param companyTask The company's task
+-- @param effect The effect of the company's task
+-- @param params Parameters from the company's task
+-- @param isMain True if tasks are for the first echelon
+-- @return List of entities than can do tasks, sorted by efficiency
+-- @author MGD
+-- @modifier LMT
+-- @release 2010-12-03
+findBests = function( entities, tasks, companyTask , params, nbrFront, context, isMain, objectif )
+    local bestList = {}
+    local size = 1
+    local bestTask = nil
+    local bestTaskName = nil
+    local bestParams = nil
+    for _, entity in pairs( entities ) do
+        local efficiencyFind = false
+        local bestEfficiency = -1
+        local efficiency  = -1
+        local nTasks = #tasks
+        for i = 1, nTasks do
+            local taskName = tasks[i]
+            local task = integration.RetrievePionTask( entity, taskName ) -- Save the task object if  the entity can do it
+            if task then
+                efficiency = entity:computePhysicalEfficiencyForEffect( task:getPionEfficiency() ) -- Efficiency for this entity to do this task
+                if efficiency > bestEfficiency then
+                    efficiencyFind = true
+                    bestEfficiency = efficiency
+                    bestTask = task
+                    bestTaskName = taskName
+                end
+            end
+        end
+        if efficiencyFind then
+            bestList[size] = { entity = entity,
+                               task = bestTask,
+                               taskName = bestTaskName,
+                               efficiency = bestEfficiency }
+            size = size + 1
+        end
+    end
+    table.sort( bestList, comp ) -- Sort the list in order to have the couple entity/task with the best efficiency in first
+    if isMain then
+        myself.leadData.nbrWithMainTask = #bestList
+    end
+    return fillParameters( bestList, companyTask, params, nbrFront, context, isMain, objectif )
+end
+
 -- @param entities A list of Company
 -- @param tasks A list of Task that we want to give
 -- @param companyTask The batallion's task

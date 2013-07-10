@@ -77,56 +77,6 @@ end
 -- @author MGD
 -- @modifier LMT
 -- @release 2010-12-03
-integration.findBests = function( entities, tasks, companyTask , params, nbrFront, context, isMain, objectif )
-    local bestList = {}
-    local size = 1
-    local bestTask = nil
-    local bestTaskName = nil
-    local bestParams = nil
-    for _, entity in pairs( entities ) do
-        local efficiencyFind = false
-        local bestEfficiency = -1
-        local efficiency  = -1
-        local nTasks = #tasks
-        for i = 1, nTasks do
-            local taskName = tasks[i]
-            local task = integration.RetrievePionTask( entity, taskName ) -- Save the task object if  the entity can do it
-            if task then
-                efficiency = entity:computePhysicalEfficiencyForEffect( task:getPionEfficiency() ) -- Efficiency for this entity to do this task
-                if efficiency > bestEfficiency then
-                    efficiencyFind = true
-                    bestEfficiency = efficiency
-                    bestTask = task
-                    bestTaskName = taskName
-                end
-            end
-        end
-        if efficiencyFind then
-            bestList[size] = { entity = entity,
-                               task = bestTask,
-                               taskName = bestTaskName,
-                               efficiency = bestEfficiency }
-            size = size + 1
-        end
-    end
-    table.sort( bestList, comp ) -- Sort the list in order to have the couple entity/task with the best efficiency in first
-    if isMain then
-        pcall( function() return companyTask:distributeObjectives( bestList, params ) end )
-        myself.leadData.nbrWithMainTask = #bestList
-    end
-    return fillParameters( bestList, companyTask, params, nbrFront, context, isMain, objectif )
-end
-
--- @param entities A list of PlatoonAlly
--- @param tasks A list of Task that we want to give
--- @param companyTask The company's task
--- @param effect The effect of the company's task
--- @param params Parameters from the company's task
--- @param isMain True if tasks are for the first echelon
--- @return List of entities than can do tasks, sorted by efficiency
--- @author MGD
--- @modifier LMT
--- @release 2010-12-03
 integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, retrogradeContext, isMain, objectif )
     local bestList = {}
     local size = 1
@@ -460,7 +410,7 @@ end
 --- Generic create for Lead skills
 -- @param self: The leading skill
 -- @param functionsToExecute: A table of potential functions to execute if needed (with self as the only parameter)
--- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : integration.findBests)
+-- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
 -- @param disengageTask : The name of the disengage task given to the non operational entities
 -- @param givePCTask : Whether or not the PC task should be issued
 -- @param giveEngineerTask : Whether or not the engineer task should be issued
@@ -569,7 +519,7 @@ end
 -- @param manageSecondEchelonWhenNoCoordination : Whether or not the second echelon should be managed when there is no coordination management
 -- @param manageRCnoPEInAutomatWhenNoCoordination : Whether or not the RC "No PE In Automat" should be managed when there is no coordination management
 -- @param assignDefaultTaskToSE : Whether or not the default task should be assigned to the second echelon (along with the support tasks)
--- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : integration.findBests)
+-- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
 -- @param disengageTask : the name of the disengage task given to the non operational entities
 -- @author NMI
 -- @release 2013-07-05
@@ -687,7 +637,7 @@ end
 -- @author NMI
 -- @release 2013-07-05
 integration.leadDelayActivate = function( self )  
-      integration.manageAddedAndDeletedUnits( self, integration.findBests, true )
+      integration.manageAddedAndDeletedUnits( self, findBests, true )
     
         -- Mis à jour des echelons
       integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
@@ -804,7 +754,7 @@ integration.leadDroneActivate = function( self )
     if meKnowledge.availableDrone then
         local drones = { meKnowledge.availableDrone }
         -- Le premier echelon recoit les missions principales ("mainTasks")
-        local bestUnits = integration.issueMission ( self, self.params.droneTasks, 1, eEtatEchelon_First, drones, false, integration.findBests, false)
+        local bestUnits = integration.issueMission ( self, self.params.droneTasks, 1, eEtatEchelon_First, drones, false, findBests, false)
         for _, elem in pairs ( drones ) do
               integration.ListenFrontElement( elem )
         end
