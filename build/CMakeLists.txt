@@ -21,7 +21,7 @@ set( PRODUCT "Sword" )
 find_package( Protobuf REQUIRED )
 find_package( OpenGL REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
-masa_find_qt4( REQUIRED QtCore QtGui QtNetwork QtOpenGL QtWebKit )
+masa_find_qt4( REQUIRED QtCore QtGui QtNetwork QtOpenGL QtWebKit phonon )
 
 masa_set_library( FLEX_LIBRARIES
     lm_new_md
@@ -569,6 +569,7 @@ target_link_libraries( clients_gui
     ${GLEW_LIBRARIES}
     ${LICENSE_GUI_LIBRARIES}
     ${OPENGL_LIBRARIES}
+    ${QT_PHONON_LIBRARY}
     ${SPATIALCONTAINER_LIBRARIES}
     ${SVGL_LIBRARIES}
     ${TERRAIN_LIBRARIES}
