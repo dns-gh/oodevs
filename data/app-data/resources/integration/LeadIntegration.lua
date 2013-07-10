@@ -111,6 +111,7 @@ integration.findBests = function( entities, tasks, companyTask , params, nbrFron
     end
     table.sort( bestList, comp ) -- Sort the list in order to have the couple entity/task with the best efficiency in first
     if isMain then
+        pcall( function() return companyTask:distributeObjectives( bestList, params ) end )
         myself.leadData.nbrWithMainTask = #bestList
     end
     return fillParameters( bestList, companyTask, params, nbrFront, context, isMain, objectif )
@@ -214,13 +215,15 @@ end
 -- @params nbrFront : how many platoon can take this task
 -- @params echelon : echelon number
 -- @params isMain : whether or not the tasks are the main tasks
+-- @params findBestsFunction : the function used to find the best units for the tasks
+-- @params disengageTask : the name of the disengage task given to the non operational entities
 -- @author LMT
 -- @release 2011-01-13
-integration.issueMission = function( self, tasks, nbrFront, echelon, entities, isMain, findBestsFunction, disengageWhenTacticallyDestroyed )
+integration.issueMission = function( self, tasks, nbrFront, echelon, entities, isMain, findBestsFunction, disengageTask )
     local tasks = explode( ";", tasks )
     entities = entities or self.entitiesWithoutMission
     
-    if disengageWhenTacticallyDestroyed then
+    if disengageTask then
         -- NMI whenever a mission is given, non operational entities should not receive the mission,
         -- and receive the Disengage mission instead (of course this doesn't apply if the mission
         -- given in the first place is Disengage, that's what the next "if" is for)
@@ -237,7 +240,7 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
             
             if next( nonOperationalEntities ) then
                 entities = operationalEntities
-                integration.issueMission( self, "worldwide.agent.tasks.Disengage", 1, eEtatEchelon_None, nonOperationalEntities, false, findBestsFunction, disengageWhenTacticallyDestroyed )
+                integration.issueMission( self, "worldwide.agent.tasks.Disengage", 1, eEtatEchelon_None, nonOperationalEntities, false, findBestsFunction, disengageTask )
             end
         end
     end
@@ -255,7 +258,7 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
     return bestUnits
 end
 
-integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageWhenTacticallyDestroyed )
+integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
     local redone = false
     self.listenFrontElementInitialized = false
     local oldEntities = self.parameters.commandingEntities
@@ -277,7 +280,7 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
     end
     
     
-    if disengageWhenTacticallyDestroyed then
+    if disengageTask then
         -- Si un pion devient tactiquement detruit
         for _, entity in pairs( self.operationnalEntities ) do
             if not exists( newOperationnalEntities, entity ) then
@@ -301,10 +304,10 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
                     local tasksForNewEntity = ""
                     if myself.taskParams.echelonNumber == 1 then
                           tasksForNewEntity = self.params.mainTasks..";"..self.params.supportTasks..";"..self.params.defaultTask
-                          integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_First, { entity }, false, findBestsFunction, disengageWhenTacticallyDestroyed )
+                          integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_First, { entity }, false, findBestsFunction, disengageTask )
                     else
                           tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
-                          integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity }, false, findBestsFunction, disengageWhenTacticallyDestroyed )
+                          integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity }, findBestsFunction, disengageTask )
                     end
                 end
             end
@@ -458,7 +461,7 @@ end
 -- @param self: The leading skill
 -- @param functionsToExecute: A table of potential functions to execute if needed (with self as the only parameter)
 -- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : integration.findBests)
--- @param disengageWhenTacticallyDestroyed : Whether or not the units should be issued the Disengage mission when tactically destroyed
+-- @param disengageTask : The name of the disengage task given to the non operational entities
 -- @param givePCTask : Whether or not the PC task should be issued
 -- @param giveEngineerTask : Whether or not the engineer task should be issued
 -- @param giveMainTask : Whether or not the main task should be issued
@@ -467,7 +470,7 @@ end
 -- @param giveDefaultTask : Whether or not the default task should be issued
 -- @author NMI
 -- @release 2013-07-05
-integration.leadCreate = function( self, functionsToExecute, findBestsFunction, disengageWhenTacticallyDestroyed,
+integration.leadCreate = function( self, functionsToExecute, findBestsFunction, disengageTask,
                                     givePCTask, giveEngineerTask, giveMainTask, giveSupportTask, givePEITask, giveDefaultTask )
     integration.initializeListenFrontElement()
     myself.newTask = false
@@ -521,17 +524,17 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     -- Le pion PC rejoint le meetingPoint
     if givePCTask and self.params.pcTasks and self.params.pcTasks ~= NIL then
         self.parameters.pcObjective = self.params.pcObjective
-        integration.issueMission ( self, self.params.pcTasks, 1, eEtatEchelon_Reserve, { integration.query.getPCUnit() }, false, findBestsFunction, disengageWhenTacticallyDestroyed )
+        integration.issueMission ( self, self.params.pcTasks, 1, eEtatEchelon_Reserve, { integration.query.getPCUnit() }, false, findBestsFunction, disengageTask )
     end
 
     -- S'il y a des obstacles � construire, les pions GEN (ou PIA) vont le construire
     if giveEngineerTask and self.params.engineerTask and self.params.engineerTask ~= NIL then
-        integration.issueMission ( self, self.params.engineerTask,  #self.companyTask:getObstaclesPlan( myself.taskParams ), eEtatEchelon_None, nil, false, findBestsFunction, disengageWhenTacticallyDestroyed )
+        integration.issueMission ( self, self.params.engineerTask,  #self.companyTask:getObstaclesPlan( myself.taskParams ), eEtatEchelon_None, nil, false, findBestsFunction, disengageTask )
     end
 
     -- Le premier echelon recoit les missions principales ("mainTasks")
     if giveMainTask then
-        local bestUnits = integration.issueMission ( self, self.params.mainTasks, self.nbrFront, eEtatEchelon_First, nil, true, findBestsFunction, disengageWhenTacticallyDestroyed )
+        local bestUnits = integration.issueMission ( self, self.params.mainTasks, self.nbrFront, eEtatEchelon_First, nil, true, findBestsFunction, disengageTask )
         if #bestUnits == 0 then
             Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
             return
@@ -543,17 +546,17 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
 
     -- Le second echelon recoit les missions de "supportTask"
     if giveSupportTask then
-        integration.issueMission ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Second, nil, false, findBestsFunction, disengageWhenTacticallyDestroyed )
+        integration.issueMission ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Second, nil, false, findBestsFunction, disengageTask )
     end
 
     -- Les pions PEI
     if givePEITask and self.params.peiTasks and self.params.peiTasks ~= NIL then
-        integration.issueMission ( self, self.params.peiTasks, self.nbrFront, eEtatEchelon_Scout, nil, false, findBestsFunction, disengageWhenTacticallyDestroyed )
+        integration.issueMission ( self, self.params.peiTasks, self.nbrFront, eEtatEchelon_Scout, nil, false, findBestsFunction, disengageTask )
     end
 
     -- Ceux qui n'ont toujours pas de mission recoivent la mission par d�faut
     if giveDefaultTask then
-        integration.issueMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_Reserve, nil, false, findBestsFunction, disengageWhenTacticallyDestroyed )
+        integration.issueMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_Reserve, nil, false, findBestsFunction, disengageTask )
     end
 end
 
@@ -567,12 +570,12 @@ end
 -- @param manageRCnoPEInAutomatWhenNoCoordination : Whether or not the RC "No PE In Automat" should be managed when there is no coordination management
 -- @param assignDefaultTaskToSE : Whether or not the default task should be assigned to the second echelon (along with the support tasks)
 -- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : integration.findBests)
--- @param disengageWhenTacticallyDestroyed : Whether or not the units should be issued the Disengage mission when tactically destroyed
+-- @param disengageTask : the name of the disengage task given to the non operational entities
 -- @author NMI
 -- @release 2013-07-05
 integration.leadActivate = function( self, listenFrontElement, endMissionBeforeCoordination, manageRelieveBeforeCoordination,
                             manageSecondEchelonWhenNoCoordination, manageRCnoPEInAutomatWhenNoCoordination, assignDefaultTaskToSE,
-                            findBestsFunction, disengageWhenTacticallyDestroyed )
+                            findBestsFunction, disengageTask )
                                    
     if myself.newTask then
       self:create()
@@ -586,7 +589,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     end
 
     if self.params.manageAddedAndDeletedUnits ~= false then
-        integration.manageAddedAndDeletedUnits( self, findBestsFunction, disengageWhenTacticallyDestroyed)
+        integration.manageAddedAndDeletedUnits( self, findBestsFunction, disengageTask)
     end
 
     local Activate = Activate
