@@ -32,6 +32,7 @@
     <libSqlite>sqlite3-$(CurrentPlatform)-mt-gd.lib</libSqlite>
     <libTimeline_win32>timeline-$(CurrentPlatform)-mt-gd.lib;timeline_controls-$(CurrentPlatform)-mt-gd.lib</libTimeline_win32>
     <libTimeline_x64>timeline-$(CurrentPlatform)-mt-gd.lib;timeline_controls-$(CurrentPlatform)-mt-gd.lib</libTimeline_x64>
+    <libPhonon>phonond4.lib;phonon_ds9d4.lib</libPhonon>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
@@ -155,6 +156,9 @@
     </BuildMacro>
     <BuildMacro Include="libTimeline_x64">
       <Value>$(libTimeline_x64)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libPhonon">
+      <Value>$(libPhonon)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>

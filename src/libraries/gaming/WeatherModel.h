@@ -23,6 +23,7 @@ namespace sword
 namespace kernel
 {
     class Controller;
+    class Profile_ABC;
 }
 
 class AmmoEffect;
@@ -40,7 +41,7 @@ class WeatherModel : public tools::Resolver< AmmoEffect >
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherModel( kernel::Controller& controller, Model& model );
+             WeatherModel( kernel::Controller& controller, Model& model, kernel::Profile_ABC& profile );
     virtual ~WeatherModel();
     //@}
 
@@ -58,6 +59,7 @@ private:
     //@{
     kernel::Controller& controller_;
     Model& model_;
+    kernel::Profile_ABC& profile_;
     //@}
 };
 

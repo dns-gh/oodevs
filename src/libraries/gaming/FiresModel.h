@@ -24,6 +24,7 @@ namespace kernel
     class Agent_ABC;
     class Entity_ABC;
     class PopulationPart_ABC;
+    class Profile_ABC;
 }
 
 // =============================================================================
@@ -37,7 +38,7 @@ class FiresModel : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations );
+             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations, kernel::Profile_ABC& profile );
     virtual ~FiresModel();
     //@}
 
@@ -74,6 +75,7 @@ private:
     T_IDs targets_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
     const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations_;
+    kernel::Profile_ABC& profile_;
     //@}
 };
 

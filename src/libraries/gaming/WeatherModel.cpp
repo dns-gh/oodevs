@@ -19,9 +19,10 @@ using namespace kernel;
 // Name: WeatherModel constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-WeatherModel::WeatherModel( Controller& controller, Model& model )
+WeatherModel::WeatherModel( Controller& controller, Model& model, kernel::Profile_ABC& profile )
      : controller_( controller )
      , model_     ( model )
+     , profile_   ( profile )
 {
     // NOTHING
 }
@@ -50,7 +51,7 @@ void WeatherModel::Purge()
 // -----------------------------------------------------------------------------
 void WeatherModel::CreateAmmoEffect( const sword::StartFireEffect& message )
 {
-    Register( message.fire_effect().id(), *new AmmoEffect( message, controller_, model_.static_.coordinateConverter_, model_.GetAgentResolver() ) );
+    Register( message.fire_effect().id(), *new AmmoEffect( message, controller_, model_.static_.coordinateConverter_, model_.GetAgentResolver(), profile_ ) );
 }
 
 // -----------------------------------------------------------------------------

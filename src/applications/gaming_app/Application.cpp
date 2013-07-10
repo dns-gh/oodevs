@@ -66,6 +66,11 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     networkTimer_.reset( new QTimer( this ) );
     connect( networkTimer_.get(), SIGNAL( timeout()), SLOT( UpdateData() ) );
 
+    //Qt
+    QStringList libList = qApp->libraryPaths();
+    libList.append( "." );
+    qApp->setLibraryPaths( libList );
+
     // GUI
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *simulationController_, *network_, *profile_, *config_, *logger_, GetExpiration() );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.

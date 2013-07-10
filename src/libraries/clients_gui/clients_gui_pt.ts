@@ -241,6 +241,45 @@
     </message>
 </context>
 <context>
+    <name>SoundPanel</name>
+    <message>
+        <source>Direct fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fumigen fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explosive fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutralisation fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ajust all sound volumes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound directory :</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Time Format</name>
     <message>
         <source>hh:mm:ss</source>
@@ -1510,6 +1549,10 @@ Do you want to remove it?</source>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::PresetDialog</name>
@@ -1642,6 +1685,13 @@ Do you want to remove it?</source>
     <name>gui::SelectionMenu</name>
     <message>
         <source>And %1 more elements...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::SoundPanel</name>
+    <message>
+        <source>Select sounds directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

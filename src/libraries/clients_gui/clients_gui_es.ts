@@ -244,6 +244,45 @@
     </message>
 </context>
 <context>
+    <name>SoundPanel</name>
+    <message>
+        <source>Direct fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fumigen fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explosive fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutralisation fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ajust all sound volumes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound directory :</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Time Format</name>
     <message>
         <source>hh:mm:ss</source>
@@ -1515,6 +1554,10 @@ Voulez-vous le supprimer?</translation>
         <source>2D/Population</source>
         <translation>2D/Population couvrante</translation>
     </message>
+    <message>
+        <source>Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::PresetDialog</name>
@@ -1647,6 +1690,13 @@ Voulez-vous le supprimer?</translation>
     <name>gui::SelectionMenu</name>
     <message>
         <source>And %1 more elements...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::SoundPanel</name>
+    <message>
+        <source>Select sounds directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

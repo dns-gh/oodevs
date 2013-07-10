@@ -244,6 +244,45 @@
     </message>
 </context>
 <context>
+    <name>SoundPanel</name>
+    <message>
+        <source>Direct fires</source>
+        <translation>Tirs directs</translation>
+    </message>
+    <message>
+        <source>Fumigen fires</source>
+        <translation>Tirs fumigènes</translation>
+    </message>
+    <message>
+        <source>Explosive fires</source>
+        <translation>Tirs explosifs</translation>
+    </message>
+    <message>
+        <source>Illumination fires</source>
+        <translation>Tirs d&apos;illumination</translation>
+    </message>
+    <message>
+        <source>Neutralisation fires</source>
+        <translation>Tirs de neutralisation</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <source>Ajust all sound volumes:</source>
+        <translation type="unfinished">Ajuster tous les sons :</translation>
+    </message>
+    <message>
+        <source>Sound control</source>
+        <translation type="unfinished">Contrôle du son</translation>
+    </message>
+    <message>
+        <source>Sound directory :</source>
+        <translation>Répertoire du son :</translation>
+    </message>
+</context>
+<context>
     <name>Time Format</name>
     <message>
         <source>hh:mm:ss</source>
@@ -1515,6 +1554,10 @@ Voulez-vous le supprimer?</translation>
         <source>2D/Population</source>
         <translation>2D/Population couvrante</translation>
     </message>
+    <message>
+        <source>Sound</source>
+        <translation>Son</translation>
+    </message>
 </context>
 <context>
     <name>gui::PresetDialog</name>
@@ -1648,6 +1691,13 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>And %1 more elements...</source>
         <translation>Et %1 éléments ...</translation>
+    </message>
+</context>
+<context>
+    <name>gui::SoundPanel</name>
+    <message>
+        <source>Select sounds directory</source>
+        <translation>Chosir le répertoire de sons</translation>
     </message>
 </context>
 <context>

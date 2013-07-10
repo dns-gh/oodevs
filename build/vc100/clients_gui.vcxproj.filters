@@ -137,6 +137,9 @@
     <Filter Include="Source Files\RichObjects">
       <UniqueIdentifier>{ea7bfce5-3dd6-4aca-99a7-992d24cc97bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Sound">
+      <UniqueIdentifier>{20f3b8b8-2cd2-461c-ba07-8adc0a257dbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_gui\clients_gui_pch.cpp">
@@ -1003,6 +1006,15 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SoundManager.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SoundPanel.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichSlider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\SignalAdapter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1692,6 +1704,12 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticHelpers.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SoundManager.h">
+      <Filter>Source Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichSlider.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">
@@ -2093,6 +2111,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h">
       <Filter>Source Files\RichObjects</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SoundPanel.h">
+      <Filter>Source Files\Sound</Filter>
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SignalAdapter.h">
       <Filter>Source Files</Filter>

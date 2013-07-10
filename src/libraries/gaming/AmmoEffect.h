@@ -44,7 +44,7 @@ class AmmoEffect : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& agents );
+    AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& agents, kernel::Profile_ABC& profile );
     virtual ~AmmoEffect();
     //@}
 
@@ -60,6 +60,7 @@ private:
     //! @name Helpers
     //@{
     bool IsVisible( const kernel::Profile_ABC& profile ) const;
+    void PlaySoundEffect() const;
     //@}
 
 private:
@@ -71,6 +72,7 @@ private:
     unsigned long id_;
     sword::StartFireEffect::EnumFireEffectType type_;
     MSEllipse ellipse_;
+    kernel::Profile_ABC& profile_;
     //@}
 };
 
