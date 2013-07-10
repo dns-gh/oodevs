@@ -14,9 +14,11 @@ rootnode
         if self.nextTargetIndex > #self.params.obstacles then
             Feedback( self.feedbacks.done )
         end
-        local agents = integration.getEntitiesFromAutomatCommunication(integration.GetSuperiorKnowledge(meKnowledge), "none", true)
-        for _,agent in pairs(agents) do
-            meKnowledge:sendObstacleByPassed( agent, meKnowledge)
+        if not meKnowledge:isSelfCommanding() then
+          local agents = integration.getEntitiesFromAutomatCommunication(integration.GetSuperiorKnowledge(meKnowledge), "none", true)
+          for _,agent in pairs(agents) do
+              meKnowledge:sendObstacleByPassed( agent, meKnowledge)
+          end
         end
     end,
 
