@@ -257,7 +257,7 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
                           integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_First, { entity }, false, findBestsFunction, disengageTask )
                     else
                           tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
-                          integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity }, findBestsFunction, disengageTask )
+                          integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity }, false, findBestsFunction, disengageTask )
                     end
                 end
             end
