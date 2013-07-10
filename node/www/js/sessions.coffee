@@ -418,8 +418,12 @@ class SessionItemView extends Backbone.View
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
         data.can_link = data.status != "playing" || data.start_time
-        data.sim_license = get_license_validity "sword-runtime", licenses.attributes
-        data.replay_license = get_license_validity "sword-replayer", licenses.attributes
+        data.sim_license = true;
+        data.replay_license = true;
+        if licenses.attributes["sword-runtime"]?
+            data.sim_license = get_license_validity "sword-runtime", licenses.attributes
+        if licenses.attributes["sword-replayer"]?
+            data.replay_license = get_license_validity "sword-replayer", licenses.attributes
         $(@el).html session_template data
         $(@el).find(".link").click (evt) =>
             return if is_disabled evt
@@ -564,8 +568,12 @@ class SessionListView extends Backbone.View
         $(@el).empty()
         for item in list.models
             @add item
-        if !get_license_validity "sword-runtime", licenses.attributes
-            $(@el).prepend license_error_template content: "No sword-runtime license Uploaded"
+        if licenses.attributes["sword-runtime"]?
+            if !get_license_validity "sword-runtime", licenses.attributes
+                $(@el).prepend license_error_template content: "No sword-runtime license Uploaded"
+        if item.attributes.replay.root && licenses.attributes["sword-replayer"]?
+            if !get_license_validity "sword-replayer", licenses.attributes
+                $(@el).prepend license_error_template content: "No sword-replayer license Uploaded"
         return
 
     add: (item) =>

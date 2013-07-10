@@ -632,18 +632,30 @@ Tree NodeController::UploadLicenses( io::Reader_ABC& src )
     if( ec )
         return Tree();
     std::string content = fs_.ReadAll( src );
+    std::vector< std::string > strVec;
+    static const std::string feature = "FEATURE";
+    size_t start = content.find( feature );
+    while( start != content.npos )
+    {
+        size_t end = content.find( feature, start + feature.size() );
+        strVec.push_back( content.substr( start, end == content.npos? content.npos : ( end - start ) ) );
+        start = end;
+    }
     fs_.WriteFile( output, content );
     boost::shared_ptr< Package_ABC > next;
-    for( auto it = ::licenses.begin(); it != ::licenses.end(); ++it )
+    for( auto it = strVec.begin(); it != strVec.end(); ++it )
     {
-        if( content.find( " " + *it + " " ) != content.npos )
+        for( auto it2 = ::licenses.begin(); it2 != ::licenses.end(); ++it2 )
         {
-            try
+            if( ( *it ).find( " " + *it2 + " " ) != ( *it ).npos )
             {
-                FlexLmLicense license( *it );
-                fs_.Rename( output, licensesDir_ / std::string( *it + ".lic" ) );
+                try
+                {
+                    FlexLmLicense license( *it2 );
+                    fs_.WriteFile( licensesDir_ / std::string( *it2 + ".lic" ), *it );
+                }
+                catch( const FlexLmLicense::LicenseError& ){}
             }
-            catch( const FlexLmLicense::LicenseError& ){}
         }
     }
     fs_.Remove( output );
