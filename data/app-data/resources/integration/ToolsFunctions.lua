@@ -530,6 +530,7 @@ findBests = function( entities, tasks, companyTask , params, nbrFront, context, 
     end
     table.sort( bestList, comp ) -- Sort the list in order to have the couple entity/task with the best efficiency in first
     if isMain then
+        pcall( function() return companyTask:distributeObjectives( bestList, params ) end )
         myself.leadData.nbrWithMainTask = #bestList
     end
     return fillParameters( bestList, companyTask, params, nbrFront, context, isMain, objectif )
