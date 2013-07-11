@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ProfileFilter.h"
 #include "UnitFilter.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter constructor

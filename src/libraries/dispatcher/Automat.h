@@ -93,7 +93,6 @@ public:
     virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     virtual void Register( dispatcher::Automat_ABC& automat );
     virtual void Remove( dispatcher::Automat_ABC& automat );
-    virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomats() const;
     virtual void Register( dispatcher::Agent_ABC& automat );
     virtual void Remove( dispatcher::Agent_ABC& automat );
     virtual const tools::Resolver< dispatcher::Agent_ABC >& GetAgents() const;
@@ -103,12 +102,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Automat( const Automat& );            //!< Copy constructor
-    Automat& operator=( const Automat& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ChangeKnowledgeGroup( unsigned long id );

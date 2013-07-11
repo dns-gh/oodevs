@@ -56,6 +56,7 @@
 #include "PopulationDecisions.h"
 #include "PopulationDetections.h"
 #include "PopulationHierarchies.h"
+#include "PopulationHierarchiesCommunication.h"
 #include "PopulationPositions.h"
 #include "Reinforcements.h"
 #include "Reports.h"
@@ -220,12 +221,14 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     const kernel::PopulationType* type = static_.types_.tools::Resolver< kernel::PopulationType >::Find( message.type().id() );
     if( !type )
         return 0;
+    const kernel::Team_ABC& team = model_.teams_.GetTeam( message.party().id() );
     Population* result = new Population( message, controllers_, static_.coordinateConverter_, *type );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach< kernel::CommunicationHierarchies >( *new PopulationHierarchiesCommunication( controllers_.controller_, *result, model_.knowledgeGroups_.FindCrowdKnowledgeGroup( team ) ) );
     result->Attach( *new gui::EntityType< kernel::PopulationType >( *result, *type, dictionary ) );
     result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
-    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, team ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result, *type ) );
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );

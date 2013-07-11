@@ -80,8 +80,10 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/KnowledgeGroupFactory.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Objects/MIL_FireClass.h"
@@ -1341,13 +1343,13 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
 // Name: MIL_EntityManager::ProcessCrowdCreationRequest
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message,\
+void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message,
         unsigned int parentId, unsigned int context, sword::UnitMagicActionAck& ack )
 {
     MIL_Army_ABC* parent = 0;
-    if( MIL_Formation* formation = FindFormation( parentId ))
+    if( MIL_Formation* formation = FindFormation( parentId ) )
         parent = &formation->GetArmy();
-    else if( MIL_Army_ABC* army = armyFactory_->Find( parentId ))
+    else if( MIL_Army_ABC* army = armyFactory_->Find( parentId ) )
         parent = army;
     else
         throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
@@ -1893,21 +1895,28 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
     if( param0.value_size() != 1 || ! param0.value().Get( 0 ).has_identifier() )
         RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be an identifier" );
     boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( param0.value().Get( 0 ).identifier() );
+    boost::shared_ptr< MIL_KnowledgeGroup > group;
     if( parent )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > group( new MIL_KnowledgeGroup( *type, *parent ) );
+        group.reset( new MIL_KnowledgeGroup( *type, *parent ) );
         parent->RegisterKnowledgeGroup( group );
-        ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
     }
     else
     {
         MIL_Army_ABC* army = armyFactory_->Find( param0.value().Get( 0 ).identifier() );
         if( ! army )
             RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be a valid army or knowledge group identifier" );
-        boost::shared_ptr< MIL_KnowledgeGroup > group( new MIL_KnowledgeGroup( *type, *army ) );
+        group.reset( new MIL_KnowledgeGroup( *type, *army, false ) );
         army->RegisterKnowledgeGroup( group );
-        ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
     }
+    if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = group->GetKnowledge() )
+    {
+        const MIL_Army_ABC::T_Objects& objects = group->GetArmy().GetObjects();
+        for( auto it = objects.begin(); it != objects.end(); ++it )
+            blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
+    }
+
+    ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
     ack().set_error_code( MagicActionAck::no_error );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }

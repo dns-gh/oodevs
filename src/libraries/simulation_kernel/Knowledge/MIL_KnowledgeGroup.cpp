@@ -22,7 +22,8 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
@@ -60,16 +61,17 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_KnowledgeGroup )
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup()
-    : type_            ( 0 )
-    , id_              ( 0 )
-    , army_            ( 0 )
-    , parent_          ( 0 )
-    , timeToDiffuse_   ( 0 )
-    , isActivated_     ( true )
-    , hasBeenUpdated_  ( false )
-    , isJammed_        ( false )
+    : type_( 0 )
+    , id_( 0 )
+    , army_( 0 )
+    , parent_( 0 )
+    , timeToDiffuse_( 0 )
+    , isActivated_( true )
+    , hasBeenUpdated_( false )
+    , isJammed_( false )
     , createdByJamming_( false )
-    , jammedPion_      ( 0 )
+    , crowd_( false )
+    , jammedPion_( 0 )
     , bDiffuseToKnowledgeGroup_( false )
 {
     // NOTHING
@@ -80,18 +82,19 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // Created: MCO 2013-07-01
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_KnowledgeGroup& parent )
-    : type_               ( &type )
-    , id_                 ( idManager_.GetId() )
-    , name_               ( "knowledge group[" + boost::lexical_cast< std::string >( id_ ) + "]" )
-    , army_               ( parent.army_ )
-    , parent_             ( &parent )
+    : type_( &type )
+    , id_( idManager_.GetId() )
+    , name_( "knowledge group[" + boost::lexical_cast< std::string >( id_ ) + "]" )
+    , army_( parent.army_ )
+    , parent_( &parent )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_      ( parent.GetType().GetKnowledgeCommunicationDelay() ) // LTO
-    , isActivated_        ( true ) // LTO
-    , hasBeenUpdated_     ( false )
-    , isJammed_           ( false )
-    , createdByJamming_   ( false )
-    , jammedPion_         ( 0 )
+    , timeToDiffuse_( parent.GetType().GetKnowledgeCommunicationDelay() ) // LTO
+    , isActivated_( true ) // LTO
+    , hasBeenUpdated_( false )
+    , isJammed_( false )
+    , createdByJamming_( false )
+    , crowd_( false )
+    , jammedPion_( 0 )
     , bDiffuseToKnowledgeGroup_( false )
 {
     SendCreation();
@@ -101,22 +104,24 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
 // Name: MIL_KnowledgeGroup constructor
 // Created: MCO 2013-07-05
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_Army_ABC& army )
-    : type_               ( &type )
-    , id_                 ( idManager_.GetId() )
-    , name_               ( "knowledge group[" + boost::lexical_cast< std::string >( id_ ) + "]" )
-    , army_               ( &army )
-    , parent_             ( 0 )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_Army_ABC& army, bool crowd )
+    : type_( &type )
+    , id_( idManager_.GetId() )
+    , name_( "knowledge group[" + boost::lexical_cast< std::string >( id_ ) + "]" )
+    , army_( &army )
+    , parent_( 0 )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_      ( 0 ) // LTO
-    , isActivated_        ( true ) // LTO
-    , hasBeenUpdated_     ( false )
-    , isJammed_           ( false )
-    , createdByJamming_   ( false )
-    , jammedPion_         ( 0 )
+    , timeToDiffuse_( 0 ) // LTO
+    , isActivated_( true ) // LTO
+    , hasBeenUpdated_( false )
+    , isJammed_( false )
+    , createdByJamming_( false )
+    , crowd_( crowd )
+    , jammedPion_( 0 )
     , bDiffuseToKnowledgeGroup_( false )
 {
-    SendCreation();
+    if( !crowd_)
+        SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -124,18 +129,19 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, MIL_
 // Created: SLG 2009-11-11
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
-    : type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
-    , id_                 ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
-    , name_               ( xis.attribute< std::string >( "name" ) )
-    , army_               ( &army )
-    , parent_             ( parent )
+    : type_( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
+    , id_( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
+    , name_( xis.attribute< std::string >( "name" ) )
+    , army_( &army )
+    , parent_( parent )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_      ( parent ? parent->GetType().GetKnowledgeCommunicationDelay() : 0 )
-    , isActivated_        ( true )
-    , hasBeenUpdated_     ( true )
-    , isJammed_           ( false )
-    , createdByJamming_   ( false )
-    , jammedPion_         ( 0 )
+    , timeToDiffuse_( parent ? parent->GetType().GetKnowledgeCommunicationDelay() : 0 )
+    , isActivated_( true )
+    , hasBeenUpdated_( true )
+    , isJammed_( false )
+    , createdByJamming_( false )
+    , crowd_( false )
+    , jammedPion_( 0 )
     , bDiffuseToKnowledgeGroup_( false )
 {
     if( ! type_ )
@@ -148,18 +154,19 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
 // Created: FDS 2010-03-17
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent )
-    : type_               ( source.type_ )
-    , id_                 ( idManager_.GetId() )
-    , name_               ( source.name_ + " (" + pion.GetName() + ")" )
-    , army_               ( source.army_ )
-    , parent_             ( parent )
+    : type_( source.type_ )
+    , id_( idManager_.GetId() )
+    , name_( source.name_ + " (" + pion.GetName() + ")" )
+    , army_( source.army_ )
+    , parent_( parent )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_      ( parent ? parent->GetType().GetKnowledgeCommunicationDelay() : 0 )
-    , isActivated_        ( true )
-    , hasBeenUpdated_     ( true )
-    , isJammed_           ( true )
-    , createdByJamming_   ( true )
-    , jammedPion_         ( &pion )
+    , timeToDiffuse_( parent ? parent->GetType().GetKnowledgeCommunicationDelay() : 0 )
+    , isActivated_( true )
+    , hasBeenUpdated_( true )
+    , isJammed_( true )
+    , createdByJamming_( true )
+    , crowd_( false )
+    , jammedPion_( &pion )
     , bDiffuseToKnowledgeGroup_( false )
 {
     SendCreation();
@@ -278,7 +285,8 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
          >> knowledgeGroups_ // LTO
          >> timeToDiffuse_ // LTO
          >> isActivated_ // LTO
-         >> isJammed_;
+         >> isJammed_
+         >> crowd_;
     idManager_.GetId( id_, true );
     hasBeenUpdated_ = true;
     knowledgeBlackBoard_->SetKnowledgeGroup( this );
@@ -303,7 +311,8 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned in
          << knowledgeGroups_ // LTO
          << timeToDiffuse_ // LTO
          << isActivated_ // LTO
-         << isJammed_;
+         << isJammed_
+         << crowd_;
 }
 
 // -----------------------------------------------------------------------------
@@ -312,6 +321,8 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned in
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
 {
+    if( crowd_ )
+        return;
     assert( type_ );
     xos << xml::start( "knowledge-group" )
             << xml::attribute( "id", id_ )
@@ -441,6 +452,9 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) co
     for( auto it = automates_.begin(); it != automates_.end(); ++it )
         if( (*it)->IsPerceived( knowledge ) )
             return true;
+    for( auto it = populations_.begin(); it != populations_.end(); ++it )
+        if( (*it)->IsInZone( knowledge.GetLocalisation() ) )
+            return true;
     return false;
 }
 
@@ -539,7 +553,8 @@ void MIL_KnowledgeGroup::SendCreation( unsigned int context /*= 0*/ ) const
     msg().mutable_knowledge_group()->set_id( id_ );
     msg().set_name( name_ );
     msg().mutable_party()->set_id( army_->GetID() );
-    msg().set_type(GetType().GetName());
+    msg().set_type( GetType().GetName() );
+    msg().set_crowd( crowd_ );
     if( parent_ )
         msg().mutable_parent()->set_id( parent_->GetId() );
     if( isJammed_ )
@@ -738,6 +753,24 @@ void MIL_KnowledgeGroup::RegisterAutomate( MIL_Automate& automate )
 void MIL_KnowledgeGroup::UnregisterAutomate( MIL_Automate& automate )
 {
     automates_.erase( std::remove( automates_.begin(), automates_.end(), &automate ), automates_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::RegisterPopulation
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::RegisterPopulation( MIL_Population& population )
+{
+    populations_.push_back( &population );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UnregisterPopulation
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UnregisterPopulation( MIL_Population& population )
+{
+    populations_.erase( std::remove( populations_.begin(), populations_.end(), &population ), populations_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -998,6 +1031,15 @@ bool MIL_KnowledgeGroup::IsJammed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::IsCrowd
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+bool MIL_KnowledgeGroup::IsCrowd() const
+{
+    return crowd_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::CreateKnowledgeObject
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
@@ -1060,6 +1102,35 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
    // knowledgeBlackBoard_->SendFullState();
 }
 
+namespace
+{
+    template< class T >
+    class sCollidingPopulationVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
+    {
+        typedef const std::vector< T* >&( MIL_PopulationElement_ABC::*T_Getter )() const;
+    public:
+        explicit sCollidingPopulationVisitor( boost::function< void( T& ) > fun, T_Getter getter )
+            : fun_( fun )
+            , getter_( getter )
+        {
+            //NOTHING
+        }
+        virtual ~sCollidingPopulationVisitor()
+        {
+            //NOTHING
+        }
+        virtual void Visit( const MIL_PopulationElement_ABC& element )
+        {
+            auto collidingAgents = ( element.*getter_)();
+            for( auto it = collidingAgents.begin(); it != collidingAgents.end(); ++it )
+                fun_( **it );
+        }
+    private:
+        boost::function< void( T& ) > fun_;
+        T_Getter getter_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception
 // Created: FDS 2010-04-09
@@ -1084,6 +1155,18 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                 }
             }
         }
+
+        // Crowds
+        for( auto it = populations_.begin(); it != populations_.end(); ++it )
+        {
+            sCollidingPopulationVisitor< MIL_Agent_ABC > visitor1( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception, this, _1, currentTimeStep ), &MIL_PopulationElement_ABC::GetCollidingAgents );
+            ( *it )->Apply( visitor1 );
+            sCollidingPopulationVisitor< TER_PopulationConcentration_ABC > visitor2( boost::bind( &MIL_KnowledgeGroup::UpdateConcentrationKnowledgeFromCrowdPerception, this, _1, currentTimeStep ), &MIL_PopulationElement_ABC::GetCollidingConcentrations );
+            ( *it )->Apply( visitor2 );
+            sCollidingPopulationVisitor< TER_PopulationFlow_ABC > visitor3( boost::bind( &MIL_KnowledgeGroup::UpdateFlowKnowledgeFromCrowdPerception, this, _1, currentTimeStep ), &MIL_PopulationElement_ABC::GetCollidingFlows );
+            ( *it )->Apply( visitor3 );
+        }
+
         // LTO begin
         // acquisition des connaissances des groupes fils
         for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
@@ -1131,6 +1214,13 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep )
 {
+    // Crowds
+    for( auto it = populations_.begin(); it != populations_.end(); ++it )
+    {
+        sCollidingPopulationVisitor< MIL_Object_ABC > visitor( boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception, this, _1 ), &MIL_PopulationElement_ABC::GetCollidingObjects );
+        ( *it )->Apply( visitor );
+    }
+
     const PHY_RolePion_Communications* communications = jammedPion_ ? jammedPion_->RetrieveRole< PHY_RolePion_Communications >() : 0;
     if( !IsJammed() || ( communications && communications->CanReceive() ) )
     {
@@ -1160,6 +1250,55 @@ DEC_Knowledge_Population& MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate( MI
             return *pKnowledge;
     }
     return CreateKnowledgePopulation( populationKnown );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception( MIL_Agent_ABC& agent, int currentTimeStep )
+{
+    DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( agent );
+    knowledgeAgent.UpdateFromCrowdPerception( currentTimeStep);
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateConcentrationKnowledgeFromCrowdPerception
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateConcentrationKnowledgeFromCrowdPerception( TER_PopulationConcentration_ABC& c, int currentTimeStep )
+{
+    const MIL_PopulationConcentration& concentration = static_cast< const MIL_PopulationConcentration& >( c );
+    if( std::find( populations_.begin(), populations_.end(), &concentration.GetPopulation() ) == populations_.end() )
+    {
+        DEC_Knowledge_Population& knowledgePopulation = GetPopulationKnowledgeToUpdate( concentration.GetPopulation() );
+        knowledgePopulation.UpdateFromCrowdPerception( concentration, currentTimeStep );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateFlowKnowledgeFromCrowdPerception
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateFlowKnowledgeFromCrowdPerception( TER_PopulationFlow_ABC& f, int currentTimeStep )
+{
+    const MIL_PopulationFlow& flow = static_cast< const MIL_PopulationFlow& >( f );
+    if( std::find( populations_.begin(), populations_.end(), &flow.GetPopulation() ) == populations_.end() )
+    {
+        DEC_Knowledge_Population& knowledgePopulation = GetPopulationKnowledgeToUpdate( flow.GetPopulation() );
+        knowledgePopulation.UpdateFromCrowdPerception( flow, currentTimeStep );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& object )
+{
+    boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = GetObjectKnowledgeToUpdate( object );
+    if( knowledgeObject )
+        knowledgeObject->UpdateFromCrowdPerception();
 }
 
 // -----------------------------------------------------------------------------

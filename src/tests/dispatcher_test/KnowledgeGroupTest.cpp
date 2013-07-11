@@ -39,6 +39,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
         message.mutable_party()->set_id( side.GetId() );
         message.set_type( "Standard" );
         message.set_jam( true );
+        message.set_crowd( false );
         message.set_name( "standard group" );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
@@ -86,6 +87,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             message.set_type( "Standard" );
             message.set_jam( true );
             message.set_name( "standard group" );
+            message.set_crowd( false );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             // creation
@@ -116,6 +118,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             message.set_type( "GTIA" );
             message.set_jam( true );
             message.set_name( "standard group" );
+            message.set_crowd( false );
             message.mutable_parent()->set_id( knowledgeGroup.GetId() );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 

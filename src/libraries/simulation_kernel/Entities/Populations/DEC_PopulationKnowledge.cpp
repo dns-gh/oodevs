@@ -128,17 +128,24 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring() const
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const sword::UnitKnowledgeId& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const sword::UnitKnowledgeId& asn ) const
 {
-    return boost::shared_ptr< DEC_Knowledge_Agent >();
+    return ResolveKnowledgeAgent( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: LGY 2011-07-11
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const MIL_Agent_ABC& /*agent*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const
 {
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = population_.GetKnowledgeGroup();
+    if( knowledgeGroup )
+    {
+        auto bbKg = knowledgeGroup->GetKnowledge();
+        if( bbKg )
+            return bbKg->GetKnowledgeAgent( agent );
+    }
     return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
@@ -146,8 +153,15 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowled
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( unsigned int /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( unsigned int nID ) const
 {
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = population_.GetKnowledgeGroup();
+    if( knowledgeGroup )
+    {
+        auto bbKg = knowledgeGroup->GetKnowledge();
+        if( bbKg )
+            return bbKg->GetKnowledgeAgentFromID( nID );
+    }
     return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
@@ -166,19 +180,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
 {
-    auto kgs = population_.GetArmy().GetKnowledgeGroups();
-    for( auto it = kgs.begin(); it != kgs.end(); ++it )
-    {
-        if( it->second->IsJammed() )
-            continue;
-        auto bbKg = it->second->GetKnowledge();
-        if( bbKg )
-        {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->ResolveKnowledgeObject( object );
-            if( knowledge.get() )
-                return knowledge;
-        }
-    }
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = population_.GetKnowledgeGroup();
+    if( knowledgeGroup )
+        return knowledgeGroup->ResolveKnowledgeObject( object );
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
@@ -188,19 +192,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( unsigned int nID ) const
 {
-    auto kgs = population_.GetArmy().GetKnowledgeGroups();
-    for( auto it = kgs.begin(); it != kgs.end(); ++it )
-    {
-        if( it->second->IsJammed() )
-            continue;
-        auto bbKg = it->second->GetKnowledge();
-        if( bbKg )
-        {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->ResolveKnowledgeObject( nID );
-            if( knowledge.get() )
-                return knowledge;
-        }
-    }
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = population_.GetKnowledgeGroup();
+    if( knowledgeGroup )
+        return knowledgeGroup->ResolveKnowledgeObject( nID );
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
@@ -210,19 +204,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObjectByObjectID( unsigned int nID ) const
 {
-    auto kgs = population_.GetArmy().GetKnowledgeGroups();
-    for( auto it = kgs.begin(); it != kgs.end(); ++it )
-    {
-        if( it->second->IsJammed() )
-            continue;
-        auto bbKg = it->second->GetKnowledge();
-        if( bbKg )
-        {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = bbKg->ResolveKnowledgeObjectByObjectID( nID );
-            if( knowledge.get() )
-                return knowledge;
-        }
-    }
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = population_.GetKnowledgeGroup();
+    if( knowledgeGroup )
+        return knowledgeGroup->ResolveKnowledgeObjectByObjectID( nID );
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
@@ -230,17 +214,24 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
-    return boost::shared_ptr< DEC_Knowledge_Population >();
+    return ResolveKnowledgePopulation( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: LGY 2011-07-11
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( const MIL_Population& /*population*/ ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( const MIL_Population& population ) const
 {
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = population_.GetKnowledgeGroup();
+    if( knowledgeGroup )
+    {
+        auto bbKg = knowledgeGroup->GetKnowledge();
+        if( bbKg )
+            return bbKg->GetKnowledgePopulation( population );
+    }
     return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
@@ -248,8 +239,15 @@ boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKn
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( unsigned int /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_PopulationKnowledge::ResolveKnowledgePopulation( unsigned int nID ) const
 {
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = population_.GetKnowledgeGroup();
+    if( knowledgeGroup )
+    {
+        auto bbKg = knowledgeGroup->GetKnowledge();
+        if( bbKg )
+            return bbKg->GetKnowledgePopulationFromID( nID );
+    }
     return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 

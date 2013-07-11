@@ -18,6 +18,7 @@
 class AttritionCapacity;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
+class MIL_Object_ABC;
 class MIL_BurnEffectManipulator;
 class MIL_Injury_ABC;
 class MIL_Population;
@@ -31,6 +32,8 @@ class PHY_Volume;
 class PHY_FireResults_ABC;
 class PHY_FireResults_Population;
 class TER_Localisation;
+class TER_PopulationConcentration_ABC;
+class TER_PopulationFlow_ABC;
 class MIL_NbcAgentType;
 
 // =============================================================================
@@ -38,6 +41,15 @@ class MIL_NbcAgentType;
 // =============================================================================
 class MIL_PopulationElement_ABC : private boost::noncopyable
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::vector< MIL_Agent_ABC* > T_AgentVector;
+    typedef std::vector< MIL_Object_ABC* > T_ObjectVector;
+    typedef std::vector< TER_PopulationConcentration_ABC* > T_ConcentrationVector;
+    typedef std::vector< TER_PopulationFlow_ABC* > T_FlowVector;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -95,6 +107,10 @@ public:
     double GetDensity() const;
     bool IsDead() const;
     bool IsInZone( const TER_Localisation& loc ) const;
+    const T_AgentVector& GetCollidingAgents() const;
+    const T_ObjectVector& GetCollidingObjects() const;
+    const T_ConcentrationVector& GetCollidingConcentrations() const;
+    const T_FlowVector& GetCollidingFlows() const;
 
     virtual const TER_Localisation& GetLocation() const = 0;
     virtual MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
@@ -147,16 +163,11 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_Agent_ABC* >   T_AgentVector;
-    typedef T_AgentVector::const_iterator CIT_AgentVector;
-
-    typedef boost::shared_ptr< MIL_IntoxicationEffect >    T_IntoxicationEffect;
+    typedef boost::shared_ptr< MIL_IntoxicationEffect > T_IntoxicationEffect;
     typedef std::map< unsigned int, T_IntoxicationEffect > T_IntoxicationEffects;
-    typedef T_IntoxicationEffects::iterator               IT_IntoxicationEffects;
 
-    typedef boost::shared_ptr< MIL_ContaminationEffect >    T_ContaminationEffect;
+    typedef boost::shared_ptr< MIL_ContaminationEffect > T_ContaminationEffect;
     typedef std::map< unsigned int, T_ContaminationEffect > T_ContaminationEffects;
-    typedef T_ContaminationEffects::iterator               IT_ContaminationEffects;
     //@}
 
 private:
@@ -168,6 +179,9 @@ private:
     double rDensity_; // Alive humans density
     const MIL_PopulationAttitude* pAttitude_;
     T_AgentVector collidingAgents_;
+    T_ObjectVector collidingObjects_;
+    T_ConcentrationVector collidingConcentrations_;
+    T_FlowVector collidingFlows_;
     // Network
     bool bAttitudeUpdated_;
     bool bHumansUpdated_;

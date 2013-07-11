@@ -37,6 +37,7 @@ class MIL_Entity_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
+class MIL_Population;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Object
@@ -84,6 +85,7 @@ public:
     void Update( const DEC_Knowledge_ObjectPerception& perception );
     void Update( const DEC_Knowledge_ObjectCollision& collision );
     void Update( const DEC_Knowledge_Object& knowledge, int currentTimeStep );
+    void UpdateFromCrowdPerception();
     bool Clean() const;
     void CleanObjectKnown();
     bool IsValid() const;

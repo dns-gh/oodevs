@@ -122,6 +122,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\HumanState.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogisticHelpers.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationHierarchiesCommunication.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ProfileFilter.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Propagation.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\PropagationAttribute.cpp" />
@@ -356,6 +357,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogisticHelpers.h" />
     <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationHierarchiesCommunication.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Propagation.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PropagationAttribute.h" />

@@ -31,6 +31,7 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const sword::KnowledgeGroupCre
     , type_( msg.type() ) // LTO
     , enabled_( true ) // LTO
     , jammed_( msg.has_jam() && msg.jam() )
+    , crowd_( msg.has_crowd() && msg.crowd() )
     , name_( msg.name() )
 {
     // LTO begin
@@ -83,6 +84,24 @@ void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsActivated
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsActivated() const
+{
+    return enabled_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsCrowd
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsCrowd() const
+{
+    return crowd_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::ChangeSuperior
 // Created: SBO 2010-03-04
 // -----------------------------------------------------------------------------
@@ -114,6 +133,7 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
     message().mutable_party()->set_id( team_.GetId() );
     // LTO begin
     message().set_type( type_ );
+    message().set_crowd( crowd_ );
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
     if( jammed_ )

@@ -49,7 +49,8 @@ public:
     virtual void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual void DoUpdate( const sword::KnowledgeGroupUpdate& message ); // LTO
-    virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP  // LTO
+    virtual bool IsActivated() const;
+    virtual bool IsCrowd() const;
     virtual void Register( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void Remove( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void Register( dispatcher::Automat_ABC& automat ); // LTO
@@ -62,12 +63,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    KnowledgeGroup( const KnowledgeGroup& );            //!< Copy constructor
-    KnowledgeGroup& operator=( const KnowledgeGroup& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void ChangeSuperior( dispatcher::KnowledgeGroup_ABC* superior );
@@ -82,6 +77,7 @@ private:
     std::string type_; // LTO
     bool enabled_; // LTO
     bool jammed_; // LTO
+    bool crowd_;
     std::string name_; // LTO
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< dispatcher::Automat_ABC > automats_;

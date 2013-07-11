@@ -58,11 +58,6 @@ public:
     const DEC_Model_ABC& GetModel() const;
     //@}
 
-    //! @name Operations
-    //@{
-//    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult ) const;
-    //@}
-
     //! @name Effects
     //@{
     double GetPionMaxSpeed( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const;

@@ -3194,6 +3194,8 @@ message KnowledgeGroupCreation {
     optional bool             jam             = 5;
     //! This particular knowledge group's name
     required string           name            = 6 [default = ""];
+    //! Whether the group is specific for the army crowds or not
+    optional bool             crowd           = 7;
 }
 
 /** @struct KnowledgeGroupUpdate

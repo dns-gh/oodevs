@@ -259,6 +259,16 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::UpdateFromCrowdPerception
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationConcentration::UpdateFromCrowdPerception( int currentTimeStep )
+{
+    nTimeLastUpdate_ = currentTimeStep;
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration::Update
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------

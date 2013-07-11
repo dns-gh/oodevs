@@ -467,6 +467,18 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::UpdateFromCrowdPerception
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::UpdateFromCrowdPerception()
+{
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+    UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::recognized_ );
+    UpdateMaxPerceptionLevel( PHY_PerceptionLevel::recognized_ );
+    UpdateLocalisations();// Updaté même quand 'NotPerceived', pour les objets pouvant bouger
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::UpdateLocalisationPartially
 // Created: JCR 2009-12-09
 // -----------------------------------------------------------------------------

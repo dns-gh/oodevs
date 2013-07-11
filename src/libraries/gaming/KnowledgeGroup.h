@@ -38,7 +38,7 @@ class KnowledgeGroup : public gui::EntityImplementation< kernel::KnowledgeGroup_
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long nId, const std::string& name, kernel::Controller& controller, const std::string& sType, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( unsigned long nId, const std::string& name, bool crowd, kernel::Controller& controller, const std::string& sType, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -50,6 +50,7 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsActivated() const;
+    virtual bool IsCrowd() const;
     const std::string& GetType() const;
     //@}
 
@@ -60,12 +61,6 @@ private:
     void CreateDictionary();
     //@}
 
-    //! @name Copy/Assignment
-    //@{
-    KnowledgeGroup( const KnowledgeGroup& );
-    KnowledgeGroup& operator=( const KnowledgeGroup& );
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -73,6 +68,7 @@ private:
     std::string type_;
     const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;
     bool activated_;
+    bool crowd_;
     //@}
 };
 

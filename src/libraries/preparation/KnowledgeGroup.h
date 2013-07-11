@@ -53,6 +53,7 @@ public:
     void SetType( kernel::KnowledgeGroupType* const& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual bool IsActivated() const;
+    virtual bool IsCrowd() const;
     //@}
 
 private:

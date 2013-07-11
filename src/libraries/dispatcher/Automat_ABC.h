@@ -52,7 +52,6 @@ public:
     virtual dispatcher::Team_ABC& GetTeam() const = 0;
     virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
     virtual const tools::Resolver< dispatcher::Agent_ABC >& GetAgents() const = 0;
-    virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomats() const = 0;
     virtual Automat_ABC* GetParentAutomat() const = 0;
     virtual Formation_ABC* GetFormation() const = 0;
     virtual LogisticEntity_ABC* GetLogisticEntity() const = 0;

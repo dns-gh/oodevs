@@ -407,14 +407,7 @@ void Automat::Remove( dispatcher::Automat_ABC& automat )
 {
     automats_.Remove( automat.GetId() );
 }
-// -----------------------------------------------------------------------------
-// Name: Automat::GetAutomats
-// Created: MGD 2009-12-21
-// -----------------------------------------------------------------------------
-const tools::Resolver< dispatcher::Automat_ABC >& Automat::GetAutomats() const
-{
-    return automats_;
-}
+
 // -----------------------------------------------------------------------------
 // Name: Automat::Register
 // Created: MGD 2009-12-21

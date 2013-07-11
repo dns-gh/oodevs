@@ -832,6 +832,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\PointingKnowledges.cpp">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PopulationHierarchiesCommunication.cpp">
+      <Filter>Source Files\Model\Populations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1583,6 +1586,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\PointingKnowledges.h">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PopulationHierarchiesCommunication.h">
+      <Filter>Source Files\Model\Populations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

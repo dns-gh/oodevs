@@ -40,6 +40,7 @@ public:
     static void Terminate ();
     static const MIL_KnowledgeGroupType* FindType( const std::string& strName );
     static const MIL_KnowledgeGroupType* FindType( unsigned int nID );
+    static const MIL_KnowledgeGroupType* FindTypeOrAny( const std::string& strName );
     //@}
     
     //! @name Accessors

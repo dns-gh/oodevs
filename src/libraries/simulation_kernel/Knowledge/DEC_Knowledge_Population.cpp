@@ -260,6 +260,24 @@ void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationFlowPercept
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::UpdateFromCrowdPerception
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::UpdateFromCrowdPerception( const MIL_PopulationConcentration& concentration, int currentTimeStep )
+{
+    GetKnowledge( concentration ).UpdateFromCrowdPerception( currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::UpdateFromCrowdPerception
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::UpdateFromCrowdPerception( const MIL_PopulationFlow& flow, int currentTimeStep )
+{
+    GetKnowledge( flow ).UpdateFromCrowdPerception( currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::UpdateRelevance
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------

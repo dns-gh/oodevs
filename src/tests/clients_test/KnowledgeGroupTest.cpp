@@ -44,6 +44,7 @@ namespace
         MOCK_METHOD( ContextMenu, 2 );
         MOCK_METHOD( Activate, 1 );
         MOCK_METHOD( IsActivated, 0 );
+        MOCK_METHOD( IsCrowd, 0 );
     };
 
     template< typename T, typename Identifier >

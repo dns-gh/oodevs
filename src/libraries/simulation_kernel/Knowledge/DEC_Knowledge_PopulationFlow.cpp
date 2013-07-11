@@ -276,6 +276,15 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationCollisi
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow::UpdateFromCrowdPerception
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlow::UpdateFromCrowdPerception( int /*currentTimeStep*/ )
+{
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow::UpdateRelevance
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------

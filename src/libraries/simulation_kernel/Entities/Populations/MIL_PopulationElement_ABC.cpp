@@ -34,8 +34,10 @@
 #include "Tools/MIL_Geometry.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/serialization/vector.hpp>
+#include <boost/serialization/set.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor
@@ -227,8 +229,9 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
 {
     TER_Agent_ABC::T_AgentPtrVector agents;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocation(), agents, 10. );
-    collidingAgents_.clear(); collidingAgents_.reserve( agents.size() );
-    for( TER_Agent_ABC::CIT_AgentPtrVector it = agents.begin(); it != agents.end(); ++it )
+    collidingAgents_.clear();
+    collidingAgents_.reserve( agents.size() );
+    for( auto it = agents.begin(); it != agents.end(); ++it )
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
         collidingAgents_.push_back( &agent );
@@ -236,11 +239,26 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
     }
     TER_ObjectManager::T_ObjectVector objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
-    for( TER_Object_ABC::CIT_ObjectVector it = objects.begin(); it != objects.end(); ++it )
+    collidingObjects_.clear();
+    collidingObjects_.reserve( objects.size() );
+    for( auto it = objects.begin(); it != objects.end(); ++it )
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
+        collidingObjects_.push_back( &object );
         object.NotifyPopulationMovingInside( *this );
     }
+    TER_PopulationConcentrationManager::T_PopulationConcentrationVector concentrations;
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocation(), concentrations );
+    collidingConcentrations_.clear();
+    collidingConcentrations_.reserve( concentrations.size() );
+    for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
+         collidingConcentrations_.push_back( *it );
+    TER_PopulationFlowManager::T_PopulationFlowVector flows;
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocation(), flows );
+    collidingFlows_.clear();
+    collidingFlows_.reserve( flows.size() );
+    for( auto it = flows.begin(); it != flows.end(); ++it )
+        collidingFlows_.push_back( *it );
     ClearCollidingAttackingAgents();
 }
 
@@ -282,7 +300,10 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
 {
     file >> humans_
          >> rDensity_
-         >> collidingAgents_;
+         >> collidingAgents_
+         >> collidingObjects_
+         >> collidingConcentrations_
+         >> collidingFlows_;
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
@@ -301,6 +322,9 @@ void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const unsi
     file << humans_
          << rDensity_
          << collidingAgents_
+         << collidingObjects_
+         << collidingConcentrations_
+         << collidingFlows_
          << attitude;
     file << intoxicationEffects_;
     file << contaminationEffects_;
@@ -537,12 +561,51 @@ bool MIL_PopulationElement_ABC::IsInZone( const TER_Localisation& loc ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetCollidingAgents
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+const MIL_PopulationElement_ABC::T_AgentVector& MIL_PopulationElement_ABC::GetCollidingAgents() const
+{
+    return collidingAgents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetCollidingObjects
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+const MIL_PopulationElement_ABC::T_ObjectVector& MIL_PopulationElement_ABC::GetCollidingObjects() const
+{
+    return collidingObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetCollidingConcentrations
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+const MIL_PopulationElement_ABC::T_ConcentrationVector& MIL_PopulationElement_ABC::GetCollidingConcentrations() const
+{
+    return collidingConcentrations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetCollidingFlows
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+const MIL_PopulationElement_ABC::T_FlowVector& MIL_PopulationElement_ABC::GetCollidingFlows() const
+{
+    return collidingFlows_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::ClearCollisions
 // Created: NLD 2005-12-06
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::ClearCollisions()
 {
     collidingAgents_.clear();
+    collidingObjects_.clear();
+    collidingConcentrations_.clear();
+    collidingFlows_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -552,7 +615,7 @@ void MIL_PopulationElement_ABC::ClearCollisions()
 void MIL_PopulationElement_ABC::ApplyContamination( const MIL_NbcAgentType& type )
 {
     const MIL_PopulationType& populationType = pPopulation_->GetType();
-    IT_ContaminationEffects it = contaminationEffects_.find( type.GetID() );
+    auto it = contaminationEffects_.find( type.GetID() );
     if( it == contaminationEffects_.end() )
     {
         boost::shared_ptr< MIL_ContaminationEffect > pEffect( new MIL_ContaminationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) );
@@ -570,7 +633,7 @@ void MIL_PopulationElement_ABC::ApplyContamination( const MIL_NbcAgentType& type
 void MIL_PopulationElement_ABC::ApplyIntoxication( const MIL_NbcAgentType& type )
 {
     const MIL_PopulationType& populationType = pPopulation_->GetType();
-    IT_IntoxicationEffects it = intoxicationEffects_.find( type.GetID() );
+    auto it = intoxicationEffects_.find( type.GetID() );
     if( it == intoxicationEffects_.end() )
     {
         boost::shared_ptr< MIL_IntoxicationEffect > pEffect( new MIL_IntoxicationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) );

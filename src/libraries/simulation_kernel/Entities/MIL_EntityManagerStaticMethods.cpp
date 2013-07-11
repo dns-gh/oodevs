@@ -16,7 +16,6 @@
 #include "InhabitantFactory.h"
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
-#include "PopulationFactory.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
 #include "Agents/Perceptions/PHY_PerceptionRecoSurveillance.h"

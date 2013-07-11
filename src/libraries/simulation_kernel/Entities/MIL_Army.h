@@ -62,12 +62,6 @@ class MIL_Army : public MIL_Army_ABC
                , private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroups;
-    //@}
-
-public:
     //! @name Constructor/Destructor
     //@{
              MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory,
@@ -115,6 +109,7 @@ public:
     void UnregisterInhabitant( MIL_Inhabitant& inhabitant );
 
     boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const;
+    boost::shared_ptr< MIL_KnowledgeGroup > FindCrowdKnowledgeGroup() const;
     void RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup );
     void UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup );
     //@}
@@ -134,7 +129,8 @@ public:
     //@{
     unsigned int GetID() const;
     const std::string& GetName() const;
-    const T_KnowledgeGroups& GetKnowledgeGroups() const;
+    virtual const T_KnowledgeGroups& GetKnowledgeGroups() const;
+    virtual const T_Objects& GetObjects() const;
     DEC_KnowledgeBlackBoard_Army& GetKnowledge() const;
     virtual const MIL_Color& GetColor() const;
     //@}
@@ -191,4 +187,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( MIL_Army )
 
-#endif // __MIL_Army_h_
+#endif // o

@@ -52,6 +52,7 @@ public:
     void Prepare();
     void Update( const DEC_Knowledge_PopulationFlowPerception& perception );
     void Update( const DEC_Knowledge_PopulationCollision& collision  );
+    void UpdateFromCrowdPerception( int currentTimeStep );
     void UpdateRelevance();
     bool Clean();
     void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );

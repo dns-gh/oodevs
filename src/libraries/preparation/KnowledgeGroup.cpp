@@ -141,3 +141,12 @@ bool KnowledgeGroup::IsActivated() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsCrowd
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsCrowd() const
+{
+    return false;
+}

@@ -293,15 +293,6 @@ void MIL_PopulationType::ReadUrbanDestructionEffect( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationType::InstanciatePopulation
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-//MIL_Population& MIL_PopulationType::InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult ) const
-//{
-//    return *new MIL_Population( xis, *this, army, gcPause, gcMult );
-//}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::GetPionMaxSpeed
 // Created: NLD 2005-10-20
 // -----------------------------------------------------------------------------

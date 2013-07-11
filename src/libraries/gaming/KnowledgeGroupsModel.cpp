@@ -11,7 +11,8 @@
 #include "KnowledgeGroupsModel.h"
 #include "KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "protocol/SimulationSenders.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupsModel constructor
@@ -60,4 +61,21 @@ void KnowledgeGroupsModel::Delete( unsigned int id )
 void KnowledgeGroupsModel::Purge()
 {
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupsModel::FindCrowdKnowledgeGroup
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+kernel::KnowledgeGroup_ABC* KnowledgeGroupsModel::FindCrowdKnowledgeGroup( const kernel::Team_ABC& team ) const
+{
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        kernel::KnowledgeGroup_ABC* knowledgeGroup = it->second;
+        if( knowledgeGroup && knowledgeGroup->IsCrowd() )
+            if( const kernel::CommunicationHierarchies* h = knowledgeGroup->Retrieve< kernel::CommunicationHierarchies >() )
+                if( h->GetSuperior() == &team )
+                    return knowledgeGroup;
+    }
+    return 0;
 }

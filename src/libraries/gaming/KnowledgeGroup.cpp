@@ -28,11 +28,12 @@ namespace
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, bool crowd, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
     : gui::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ) )
     , type_( type )
     , types_( types )
     , activated_( true )
+    , crowd_( crowd )
 {
     AddExtension( *this );
     kernel::KnowledgeGroupType* pType = types.Find( type_ );
@@ -56,6 +57,15 @@ KnowledgeGroup::~KnowledgeGroup()
 bool KnowledgeGroup::IsActivated() const
 {
     return activated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::IsCrowd
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::IsCrowd() const
+{
+    return crowd_;
 }
 
 // -----------------------------------------------------------------------------

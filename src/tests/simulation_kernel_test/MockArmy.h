@@ -49,6 +49,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( IsNeutral, 1 )
 
     MOCK_METHOD( FindKnowledgeGroup, 1 )
+    MOCK_METHOD( FindCrowdKnowledgeGroup, 0 )
     MOCK_METHOD( RegisterKnowledgeGroup, 1 )
     MOCK_METHOD( UnregisterKnowledgeGroup, 1 )
 
@@ -61,6 +62,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( GetKnowledge, 0 )
     MOCK_METHOD( GetColor, 0 )
     MOCK_METHOD( GetKnowledgeGroups, 0 )
+    MOCK_METHOD( GetObjects, 0 )
 
     template< typename Archive >
     void serialize( Archive& archive, const unsigned int )

@@ -11,6 +11,7 @@
 #define __KnowledgeGroupSelectionObserver_h_
 
 #include "tools/SelectionObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -18,6 +19,7 @@ namespace kernel
     class KnowledgeGroup_ABC;
     class Controllers;
     class Automat_ABC;
+    class Population_ABC;
     class Entity_ABC;
 }
 
@@ -31,6 +33,8 @@ class KnowledgeGroupSelectionObserver : public tools::SelectionObserver_ABC
                                       , public tools::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
                                       , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                                       , public tools::SelectionObserver_Base< kernel::Automat_ABC >
+                                      , public tools::SelectionObserver_Base< kernel::Population_ABC >
+                                      , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -46,19 +50,13 @@ public:
     virtual void Select( const kernel::KnowledgeGroup_ABC& element );
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
+    virtual void Select( const kernel::Population_ABC& element );
     //@}
 
 protected:
     //! @name Operations
     //@{
     virtual void Select( const kernel::KnowledgeGroup_ABC* ) = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    KnowledgeGroupSelectionObserver( const KnowledgeGroupSelectionObserver& );            //!< Copy constructor
-    KnowledgeGroupSelectionObserver& operator=( const KnowledgeGroupSelectionObserver& ); //!< Assignment operator
     //@}
 
 private:

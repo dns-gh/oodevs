@@ -29,7 +29,6 @@ namespace dispatcher
         MOCK_METHOD( GetLogisticLevel, 0 );
         MOCK_METHOD( GetKnowledgeGroup, 0 );
         MOCK_METHOD( GetAgents, 0 );
-        MOCK_METHOD( GetAutomats, 0 );
         MOCK_METHOD( GetParentAutomat, 0 );
         MOCK_METHOD( GetFormation, 0 );
         MOCK_METHOD( GetLogisticEntity, 0 );

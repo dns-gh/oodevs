@@ -22,23 +22,21 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
-#include "Tools/NET_AsnException.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "simulation_terrain/TER_World.h"
+#include "Tools/NET_AsnException.h"
 #include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
-#include "simulation_terrain/TER_World.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
-#include <boost/foreach.hpp>
 #include "Tools/MIL_Geometry.h"
-
 #include "Urban/MIL_UrbanObject_ABC.h"
+#include <boost/foreach.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
 
@@ -192,6 +190,9 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult, logger ) );
     RegisterRole( *new DEC_Representations() );
+    pKnowledgeGroup_ = army.FindCrowdKnowledgeGroup();
+    if( pKnowledgeGroup_ )
+        pKnowledgeGroup_->RegisterPopulation( *this );
     SendCreation( context );
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );
     concentrations_.push_back( pConcentration );
@@ -208,6 +209,8 @@ MIL_Population::~MIL_Population()
 {
     if( pArmy_ )
         pArmy_->UnregisterPopulation( *this );
+    if( pKnowledgeGroup_ )
+        pKnowledgeGroup_->UnregisterPopulation( *this );
     delete pKnowledge_;
 }
 
@@ -258,6 +261,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bPionMaxSpeedOverloaded_
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
+         >> pKnowledgeGroup_
          >> bHasDoneMagicMove_
          >> pAffinities
          >> pExtensions;
@@ -300,6 +304,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << bPionMaxSpeedOverloaded_
          << rOverloadedPionMaxSpeed_
          << pKnowledge_
+         << pKnowledgeGroup_
          << bHasDoneMagicMove_
          << pAffinities
          << pExtensions
@@ -1520,6 +1525,26 @@ const DEC_PopulationKnowledge& MIL_Population::GetKnowledge() const
 {
     assert( pKnowledge_ );
     return *pKnowledge_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetKnowledgeGroup
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+void MIL_Population::SetKnowledgeGroup( boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup )
+{
+    pKnowledgeGroup_ = pKnowledgeGroup;
+    if( pKnowledgeGroup_ )
+        pKnowledgeGroup_->RegisterPopulation( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MIL_KnowledgeGroup > MIL_Population::GetKnowledgeGroup
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_Population::GetKnowledgeGroup() const
+{
+    return pKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------

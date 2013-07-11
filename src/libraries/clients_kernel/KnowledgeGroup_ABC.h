@@ -46,6 +46,7 @@ public:
     virtual void Activate( ActionController& controller ) const;
     // LTO begin
     virtual bool IsActivated() const = 0;
+    virtual bool IsCrowd() const = 0;
     //@}
 };
 

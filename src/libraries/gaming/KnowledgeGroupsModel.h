@@ -11,10 +11,12 @@
 #define __KnowledgeGroupsModel_h_
 
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class KnowledgeGroup_ABC;
+    class Team_ABC;
 }
 
 namespace sword
@@ -31,6 +33,7 @@ class KnowledgeGroupFactory_ABC;
 // Created: AGE 2006-02-15
 // =============================================================================
 class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC >
+                           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,13 +47,7 @@ public:
     void Create( const sword::KnowledgeGroupCreation& message );
     void Delete( unsigned int id );
     void Purge();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    KnowledgeGroupsModel( const KnowledgeGroupsModel& );            //!< Copy constructor
-    KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignment operator
+    kernel::KnowledgeGroup_ABC* FindCrowdKnowledgeGroup( const kernel::Team_ABC& team ) const;
     //@}
 
 private:

@@ -28,6 +28,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Population_ABC.h"
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
 #include "icons.h"
@@ -209,6 +210,25 @@ void CommunicationTreeView::drawRow( QPainter* painter, const QStyleOptionViewIt
         }
     }
     gui::HierarchyTreeView< kernel::CommunicationHierarchies >::drawRow( painter, options, index );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::ApplyProfileFilter
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+bool CommunicationTreeView::ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const
+{
+    if( item.data( gui::Roles::SafeRole ).isValid() && item.data( gui::Roles::SafeRole ).toBool() )
+    {
+        const kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item );
+        const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( entity );
+        if( kg && kg->IsCrowd() )
+            return false;
+        const kernel::Population_ABC* population = dynamic_cast< const kernel::Population_ABC* >( entity );
+        if( population )
+            return false;
+    }
+    return gui::HierarchyTreeView< kernel::CommunicationHierarchies >::ApplyProfileFilter( item, model );
 }
 
 // -----------------------------------------------------------------------------

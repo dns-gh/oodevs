@@ -41,7 +41,6 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     MOCK_METHOD( Remove, 1, void ( dispatcher::Automat_ABC& ), RemoveAutomat );
     MOCK_METHOD( Register, 1, void ( dispatcher::Agent_ABC& ), RegisterAgent );
     MOCK_METHOD( Remove, 1, void ( dispatcher::Agent_ABC& ), RemoveAgent );
-    MOCK_METHOD( GetAutomats, 0 );
     MOCK_METHOD( GetAgents, 0 );
     MOCK_METHOD( GetParentAutomat, 0 );
     MOCK_METHOD( GetFormation, 0 );

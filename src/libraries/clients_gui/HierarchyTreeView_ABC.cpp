@@ -16,6 +16,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -144,6 +145,7 @@ QStandardItem* HierarchyTreeView_ABC::AddItem( QStandardItem* parent, const kern
         AddItemIfPossible< kernel::Formation_ABC >( entity, parent, ret ) ||
         AddItemIfPossible< kernel::Team_ABC >( entity, parent, ret ) ||
         AddItemIfPossible< kernel::Ghost_ABC >( entity, parent, ret ) ||
+        AddItemIfPossible< kernel::Population_ABC >( entity, parent, ret ) ||
         AddItemIfPossible< kernel::KnowledgeGroup_ABC >( entity, parent, ret ) )
         return ret;
     assert( false );

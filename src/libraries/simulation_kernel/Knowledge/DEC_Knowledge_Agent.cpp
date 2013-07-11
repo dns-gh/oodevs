@@ -419,6 +419,28 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int curr
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::UpdateFromCrowdPerception
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::UpdateFromCrowdPerception( int currentTimeStep )
+{
+    nTimeLastUpdate_ = currentTimeStep;
+    ChangeRelevance( 1. );
+    if( PHY_PerceptionLevel::recognized_ > *pCurrentPerceptionLevel_ )
+    {
+        pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
+        bCurrentPerceptionLevelUpdated_ = ( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ );
+    }
+    if( PHY_PerceptionLevel::recognized_ > *pMaxPerceptionLevel_ )
+    {
+        pMaxPerceptionLevel_= &PHY_PerceptionLevel::recognized_;
+        bMaxPerceptionLevelUpdated_ = true;
+        bCurrentPerceptionLevelUpdated_ = true;
+    }
+    nTimeExtrapolationEnd_ = extrapolationTime_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::ChangeRelevance
 // Created: NLD 2005-08-09
 // -----------------------------------------------------------------------------

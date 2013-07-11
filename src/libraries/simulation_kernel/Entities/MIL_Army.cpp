@@ -11,6 +11,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Army.h"
+#include "ArmyFactory_ABC.h"
+#include "AutomateFactory_ABC.h"
+#include "FormationFactory_ABC.h"
+#include "InhabitantFactory_ABC.h"
+#include "MIL_EntityManager.h"
+#include "MIL_Formation.h"
+#include "PopulationFactory_ABC.h"
 #include "CheckPoints/SerializationTools.h"
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
@@ -19,24 +26,19 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/KnowledgeVisitor_ABC.h"
+#include "Knowledge/KnowledgeGroupFactory_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "MIL_EntityManager.h"
-#include "MIL_Formation.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Color.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/ArmyFactory_ABC.h"
-#include "simulation_kernel/AutomateFactory_ABC.h"
-#include "simulation_kernel/FormationFactory_ABC.h"
-#include "simulation_kernel/InhabitantFactory_ABC.h"
-#include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h"
-#include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
-#include "simulation_kernel/PopulationFactory_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -249,8 +251,7 @@ void MIL_Army::WriteKnowledges( xml::xostream& xos ) const
             << xml::attribute( "name", GetName() );
 
     xos << xml::start( "knowledge-groups" );
-    T_KnowledgeGroups knowledgeGroupMap = GetKnowledgeGroups();
-    for( auto it = knowledgeGroupMap.begin(); it != knowledgeGroupMap.end(); ++it )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->WriteKnowledges( xos );
     xos     << xml::end;
 
@@ -544,6 +545,18 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 void MIL_Army::Finalize()
 {
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::Finalize, _1 ) );
+    const MIL_KnowledgeGroupType* knowledgeGroupType = MIL_KnowledgeGroupType::FindTypeOrAny( "Standard" );
+    if( !knowledgeGroupType )
+        throw MASA_EXCEPTION( "No Knowledge group types defined in physical database." );
+    boost::shared_ptr< MIL_KnowledgeGroup > crowdKnowledgeGroup( new MIL_KnowledgeGroup( *knowledgeGroupType, *this, true ) );
+    RegisterKnowledgeGroup( crowdKnowledgeGroup );
+    tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SetKnowledgeGroup, _1, crowdKnowledgeGroup ) );
+    if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = crowdKnowledgeGroup->GetKnowledge() )
+    {
+        const MIL_Army_ABC::T_Objects& objects = GetObjects();
+        for( auto it = objects.begin(); it != objects.end(); ++it )
+            blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
+    }
     pKnowledgeBlackBoard_->Finalize();
 }
 
@@ -726,6 +739,18 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_Army::FindKnowledgeGroup( unsigned i
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MIL_KnowledgeGroup > MIL_Army::FindCrowdKnowledgeGroup
+// Created: JSR 2013-07-10
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_KnowledgeGroup > MIL_Army::FindCrowdKnowledgeGroup() const
+{
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        if( it->second->IsCrowd() )
+            return it->second;
+    return boost::shared_ptr< MIL_KnowledgeGroup >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Army::GetID
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
@@ -738,9 +763,18 @@ unsigned int MIL_Army::GetID() const
 // Name: MIL_Army::GetKnowledgeGroups
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
-const MIL_Army::T_KnowledgeGroups& MIL_Army::GetKnowledgeGroups() const
+const MIL_Army_ABC::T_KnowledgeGroups& MIL_Army::GetKnowledgeGroups() const
 {
     return knowledgeGroups_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::GetObjects
+// Created: JSR 2013-07-11
+// -----------------------------------------------------------------------------
+const MIL_Army_ABC::T_Objects& MIL_Army::GetObjects() const
+{
+    return tools::Resolver< MIL_Object_ABC >::elements_;
 }
 
 // -----------------------------------------------------------------------------

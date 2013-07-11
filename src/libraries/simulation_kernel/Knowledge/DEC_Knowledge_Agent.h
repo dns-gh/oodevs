@@ -32,6 +32,7 @@ class MIL_Object_ABC;
 class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Automate;
+class MIL_Population;
 class PHY_PerceptionLevel;
 class PHY_Posture;
 class PHY_SensorTypeAgent_ABC;
@@ -77,6 +78,7 @@ public:
     void Prepare();
     void Update( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void Update( const DEC_Knowledge_Agent& knowledge, int currentTimeStep );
+    void UpdateFromCrowdPerception( int currentTimeStep );
     void Extrapolate();
     bool Clean() const;
     void Invalidate();

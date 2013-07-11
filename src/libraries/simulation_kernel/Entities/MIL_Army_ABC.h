@@ -27,6 +27,7 @@ class MIL_Population;
 class KnowledgeVisitor_ABC;
 class MIL_Color;
 class KnowledgesVisitor_ABC;
+class KnowledgeGroupFactory_ABC;
 
 namespace sword
 {
@@ -46,6 +47,12 @@ namespace xml
 class MIL_Army_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroups;
+    typedef std::map< unsigned long, MIL_Object_ABC* > T_Objects;
+    //@}
+
     //! @name Diplomacy Types
     //@{
     enum E_Diplomacy
@@ -108,6 +115,7 @@ public:
     virtual E_Tristate IsNeutral( const MIL_Army_ABC& army ) const = 0;
 
     virtual boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup( unsigned int nID ) const = 0;
+    virtual boost::shared_ptr< MIL_KnowledgeGroup > FindCrowdKnowledgeGroup() const = 0;
     virtual void                RegisterKnowledgeGroup  ( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup ) = 0;
     virtual void                UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup ) = 0;
 
@@ -122,7 +130,8 @@ public:
     virtual const std::string&            GetName() const = 0;
     virtual DEC_KnowledgeBlackBoard_Army& GetKnowledge() const = 0;
     virtual const MIL_Color& GetColor() const = 0;
-    virtual const std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > >& GetKnowledgeGroups() const = 0;
+    virtual const T_KnowledgeGroups& GetKnowledgeGroups() const = 0;
+    virtual const T_Objects& GetObjects() const = 0;
     //@}
 
     //! @name

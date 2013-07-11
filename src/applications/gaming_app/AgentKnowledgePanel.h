@@ -57,13 +57,6 @@ public:
     //@}
 
 private:
-    //! @name Copy / Assignment
-    //@{
-    AgentKnowledgePanel( const AgentKnowledgePanel& );
-    AgentKnowledgePanel& operator=( const AgentKnowledgePanel& );
-    //@}
-
-private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );

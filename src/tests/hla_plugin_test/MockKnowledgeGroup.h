@@ -36,6 +36,7 @@ MOCK_BASE_CLASS( MockKnowledgeGroup, KnowledgeGroup_ABC )
     MOCK_METHOD( SendDestruction, 1 );
     MOCK_METHOD( Accept, 1 );
     MOCK_METHOD( IsActivated, 0 );
+    MOCK_METHOD( IsCrowd, 0 );
 };
 
 }
