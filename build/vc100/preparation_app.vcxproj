@@ -68,6 +68,7 @@
     <Import Project="Property sheets\link_qtweb.props" />
     <Import Project="Property sheets\link_sqlite.props" />
     <Import Project="Property sheets\link_license_gui.props" />
+    <Import Project="Property sheets\link_phonon.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -98,6 +99,7 @@
     <Import Project="Property sheets\link_qtweb.props" />
     <Import Project="Property sheets\link_sqlite.props" />
     <Import Project="Property sheets\link_license_gui.props" />
+    <Import Project="Property sheets\link_phonon.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -128,6 +130,7 @@
     <Import Project="Property sheets\link_qtweb.props" />
     <Import Project="Property sheets\link_sqlite.props" />
     <Import Project="Property sheets\link_license_gui.props" />
+    <Import Project="Property sheets\link_phonon.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -158,6 +161,7 @@
     <Import Project="Property sheets\link_qtweb.props" />
     <Import Project="Property sheets\link_sqlite.props" />
     <Import Project="Property sheets\link_license_gui.props" />
+    <Import Project="Property sheets\link_phonon.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
