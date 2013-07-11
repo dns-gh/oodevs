@@ -63,8 +63,8 @@ local function manageAddedAndDeletedUnits( self )
     local redone = false
     local DEC_HasMission = DEC_HasMission
     local oldEntities = self.parameters.commandingEntities
-    local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", true )
-    local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", true )
+    local newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", true )
+    local newOperationnalEntities = integration.getOperationnalEntitiesDespiteJammedFromAutomat( meKnowledge, "none", true )
 
     -- Si un pion a été supprimé de l'automate, on redistribue les missions
     for i, entity in pairs( oldEntities ) do
