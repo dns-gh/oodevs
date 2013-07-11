@@ -124,3 +124,15 @@ void DEC_ActionFunctions::ResumeAction( const T& caller, unsigned int actionId )
     if( pAction.get() )
         pAction->Resume();
 }
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::GetActionState
+// Created: LGY 2013-07-11
+// -----------------------------------------------------------------------------
+template< typename T >
+unsigned int DEC_ActionFunctions::GetActionState( const T& caller, unsigned int actionId )
+{
+    boost::shared_ptr< PHY_Action_ABC > pAction = caller.GetAction( actionId );
+    if( pAction.get() )
+        return pAction->GetActionState();
+    return PHY_Action_ABC::eError;
+}

@@ -36,8 +36,9 @@ public:
     template< typename ActionType, typename T1, typename T2, typename T3, typename T4 > static unsigned int StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4 );
     template< typename ActionType, typename T1, typename T2, typename T3, typename T4, typename T5 > static unsigned int StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5 );
     template< typename T >          static unsigned int StopAction   ( T& caller, unsigned int actionId );
-    template< typename T >          static void SuspendAction( const T& caller, unsigned int actionId );
-    template< typename T >          static void ResumeAction ( const T& caller, unsigned int actionId );
+    template< typename T >          static void SuspendAction  ( const T& caller, unsigned int actionId );
+    template< typename T >          static void ResumeAction   ( const T& caller, unsigned int actionId );
+    template< typename T >          static unsigned int GetActionState( const T& caller, unsigned int actionId );
 
     static void Orientate                 ( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > dir );
 

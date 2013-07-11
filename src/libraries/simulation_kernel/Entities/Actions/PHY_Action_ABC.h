@@ -33,11 +33,22 @@ public:
     virtual ~PHY_Action_ABC();
     //@}
 
+    //! @name Types
+    //@{
+    enum E_State
+    {
+        eError = 0,
+        eDone = 1,
+        eRunning = 2
+    };
+    //@}
+
     //! @name Operations
     //@{
     unsigned int GetId() const;
     virtual void Suspend();
     virtual void Resume();
+    virtual E_State GetState() const;
     void Update();
     virtual void Stop();
     //@}

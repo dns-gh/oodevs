@@ -81,3 +81,12 @@ void PHY_Action_ABC::Stop()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DecisionCallbackAction_ABC::GetState
+// Created: LGY 2013-07-11
+// -----------------------------------------------------------------------------
+PHY_Action_ABC::E_State PHY_Action_ABC::GetState() const
+{
+    return eRunning;
+}

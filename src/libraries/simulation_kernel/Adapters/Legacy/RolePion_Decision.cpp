@@ -133,6 +133,8 @@ void RolePion_Decision::RegisterActions()
 {
     RegisterFunction( "DEC_StartDeplacement",
         boost::function< unsigned int( boost::shared_ptr< DEC_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< DEC_Path_ABC > >, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_StartMovementSuspended",
+        boost::function< unsigned int( boost::shared_ptr< DEC_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< DEC_Path_ABC >, bool >, boost::ref( GetPion() ), _1, true ) ) );
     RegisterFunction( "DEC_Orientate",
         boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_ActionFunctions::Orientate, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_StartTirDirect",

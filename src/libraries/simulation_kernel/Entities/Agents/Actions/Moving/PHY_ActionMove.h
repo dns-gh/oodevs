@@ -40,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath );
+             PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath, bool suspended = false );
     virtual ~PHY_ActionMove();
     //@}
 
@@ -48,6 +48,7 @@ public:
     //@{
     virtual void Execute();
     virtual void ExecuteSuspended();
+    virtual E_State GetState() const;
     virtual void StopAction();
     //@}
 

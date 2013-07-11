@@ -34,7 +34,7 @@
 // Name: PHY_ActionMove constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath )
+PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath, bool suspended )
     : PHY_DecisionCallbackAction_ABC( pion )
     , pion_( pion )
     , role_( pion.GetRole< moving::PHY_RoleAction_Moving >() )
@@ -46,6 +46,8 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
 {
     if( pMainPath_.get() )
         pMainPath_->AddRef();
+    if( suspended )
+        Suspend();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,4 +232,13 @@ void PHY_ActionMove::StopAction()
         executionSuspended_ = false;
     }
     Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::GetState
+// Created: LGY 2013-07-11
+// -----------------------------------------------------------------------------
+PHY_ActionMove::E_State PHY_ActionMove::GetState() const
+{
+    return pMainPath_->GetState() == DEC_Path_ABC::eComputing ? eRunning : eDone;
 }
