@@ -146,8 +146,12 @@ integration.getUrbanBlockInsideCircle = function( position, radius )
     return DEC_Connaissances_BlocUrbainDansCercle( position, radius )
 end
 
-integration.getUrbanBlockInsideArea = function( area )
+integration.getUrbanBlockInsideArea = function( area ) -- deprecated : use integration.getUrbanBlockInArea instead
     return DEC_Connaissances_BlocUrbainDansZone( area )
+end
+
+integration.getUrbanBlockInArea = function( area )
+    return DEC_UrbanBlocksInZone( area.source )
 end
 
 integration.getUrbanBlockBarycenter = function( urbanBlock )
