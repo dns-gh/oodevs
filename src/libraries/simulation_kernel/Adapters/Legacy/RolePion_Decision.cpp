@@ -123,6 +123,8 @@ void RolePion_Decision::RegisterControlActions()
         boost::function< void( unsigned int ) >( boost::bind( &DEC_ActionFunctions::SuspendAction< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ReprendAction",
         boost::function< void( unsigned int ) >( boost::bind( &DEC_ActionFunctions::ResumeAction < MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_EtatAction",
+        boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_ActionFunctions::GetActionState < MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

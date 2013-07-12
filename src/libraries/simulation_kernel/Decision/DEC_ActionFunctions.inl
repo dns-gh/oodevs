@@ -133,6 +133,6 @@ unsigned int DEC_ActionFunctions::GetActionState( const T& caller, unsigned int 
 {
     boost::shared_ptr< PHY_Action_ABC > pAction = caller.GetAction( actionId );
     if( pAction.get() )
-        return pAction->GetActionState();
+        return pAction->GetState();
     return PHY_Action_ABC::eError;
 }
