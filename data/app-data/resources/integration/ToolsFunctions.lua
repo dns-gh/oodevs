@@ -390,6 +390,23 @@ removeFromList = function( unit, returnList )
     return returnList
 end
 
+-- Return the returnList without the unit
+-- @param list : list of elements to remove
+-- @param returnList : list from which the elements must be removed
+-- @author NMI
+-- @release 2013-07-12
+removeListFromList = function( list, returnList )
+    for _, listElement in pairs( list ) do
+        for i, elemListReturn in pairs( returnList ) do
+            if listElement == elemListReturn then
+                table.remove( returnList, i )
+                break
+            end
+        end
+    end
+    return returnList
+end
+
 -- Return the list without element from list
 removeListElementWithSameLocation = function( position, list )
     local result = {}
