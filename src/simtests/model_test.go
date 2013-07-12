@@ -55,6 +55,9 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		p.P("Id: %s", p.Unstable(group.Id))
 		p.P("PartyId: %s", p.Unstable(group.PartyId))
 		p.P("Name: %s", group.Name)
+		if group.IsCrowdDefaultGroup {
+			p.P("IsCrowdDefaultGroup: true")
+		}
 	}
 
 	printPopulation := func(p *prettyPrinter, pop *swapi.Population) {
@@ -356,12 +359,22 @@ func (s *TestSuite) TestModelInitialization(c *C) {
       Id: -
       PartyId: -
       Name: knowledge group [3]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[41]
+      IsCrowdDefaultGroup: true
 Party[-]
   Name: empty-party
     KnowledgeGroup[-]
       Id: -
       PartyId: -
       Name: knowledge group[4]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[43]
+      IsCrowdDefaultGroup: true
 `
 	c.Assert(dump, Equals, expected)
 	client.Close()

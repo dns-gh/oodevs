@@ -180,12 +180,22 @@ func (s *TestSuite) TestCreateFormation(c *C) {
       Id: -
       PartyId: -
       Name: knowledge group [3]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[6]
+      IsCrowdDefaultGroup: true
 Party[-]
   Name: party2
     KnowledgeGroup[-]
       Id: -
       PartyId: -
       Name: knowledge group[4]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[7]
+      IsCrowdDefaultGroup: true
 `
 	c.Assert(dump, Equals, expected)
 
@@ -362,14 +372,18 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 	// matches selected formation.
 	knowledgeGroups := model.GetData().ListKnowledgeGroups()
 	c.Assert(len(knowledgeGroups), Greater, 1)
-	kg0 := knowledgeGroups[0]
-	kg1 := knowledgeGroups[1]
-	if kg0.PartyId != formation.PartyId {
-		kg0 = knowledgeGroups[1]
-		kg1 = knowledgeGroups[0]
+	var kg0 *swapi.KnowledgeGroup
+	var kg1 *swapi.KnowledgeGroup
+	for _, kg := range knowledgeGroups {
+		if kg0 == nil && kg.PartyId == formation.PartyId {
+			kg0 = kg
+		}
+		if kg1 == nil && kg.PartyId != formation.PartyId {
+			kg1 = kg
+		}
 	}
-	c.Assert(kg0.PartyId, Equals, formation.PartyId)
-	c.Assert(kg0.PartyId, Not(Equals), kg1.Id)
+	c.Assert(kg0, NotNil)
+	c.Assert(kg1, NotNil)
 
 	automatType := AutomatType
 
