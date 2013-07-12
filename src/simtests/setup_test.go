@@ -13,12 +13,15 @@ import (
 	"fmt"
 	. "launchpad.net/gocheck"
 	"log"
+	"os"
+	"path/filepath"
 	"swapi"
 	"swapi/simu"
 	"testing"
 )
 
 var (
+	projectRoot string
 	application string
 	rootdir     string
 	rundir      string
@@ -27,6 +30,8 @@ var (
 )
 
 func init() {
+	flag.StringVar(&projectRoot, "projectRoot", os.Getenv("GOSWORD_ROOT"),
+		"path to gosword project root directory")
 	flag.StringVar(&application, "application", "",
 		"path to simulation_app executable")
 	flag.StringVar(&rootdir, "root-dir", "",
@@ -43,9 +48,17 @@ const ExCrossroadSmallEmpty = "crossroad-small-empty"
 
 func MakeOpts() *simu.SimOpts {
 	opts := simu.SimOpts{}
-	opts.Executable = application
-	opts.RootDir = rootdir
-	opts.DataDir = rootdir
+	if len(application) > 0 {
+		opts.Executable = application
+	} else if len(projectRoot) > 0 {
+		opts.Executable = filepath.Join(projectRoot, "run/vc100_x64/simulation_app.exe")
+	}
+	if len(rootdir) > 0 {
+		opts.RootDir = rootdir
+	} else if len(projectRoot) > 0 {
+		opts.RootDir = filepath.Join(projectRoot, "data")
+	}
+	opts.DataDir = opts.RootDir
 	if len(rundir) > 0 {
 		opts.RunDir = &rundir
 	}
@@ -118,6 +131,7 @@ type TestSuite struct{}
 var _ = Suite(&TestSuite{})
 
 func (t *TestSuite) SetUpSuite(c *C) {
+	log.Println("projectRoot", projectRoot)
 	log.Println("application", application)
 	log.Println("rootdir", rootdir)
 	log.Println("rundir", rundir)

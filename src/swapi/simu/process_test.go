@@ -13,12 +13,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
+	"os"
 	"path/filepath"
 	"regexp"
 	"time"
 )
 
 var (
+	projectRoot string
 	application string
 	rootdir     string
 	rundir      string
@@ -27,6 +29,8 @@ var (
 )
 
 func init() {
+	flag.StringVar(&projectRoot, "projectRoot", os.Getenv("GOSWORD_ROOT"),
+		"path to gosword project root directory")
 	flag.StringVar(&application, "application", "",
 		"path to simulation_app executable")
 	flag.StringVar(&rootdir, "root-dir", "",
@@ -49,9 +53,17 @@ func (s *TestSuite) TestSimOpts(c *C) {
 
 func MakeOpts() *SimOpts {
 	opts := SimOpts{}
-	opts.Executable = application
-	opts.RootDir = rootdir
-	opts.DataDir = rootdir
+	if len(application) > 0 {
+		opts.Executable = application
+	} else if len(projectRoot) > 0 {
+		opts.Executable = filepath.Join(projectRoot, "run/vc100_x64/simulation_app.exe")
+	}
+	if len(rootdir) > 0 {
+		opts.RootDir = rootdir
+	} else if len(projectRoot) > 0 {
+		opts.RootDir = filepath.Join(projectRoot, "data")
+	}
+	opts.DataDir = opts.RootDir
 	if len(rundir) > 0 {
 		opts.RunDir = &rundir
 	}
