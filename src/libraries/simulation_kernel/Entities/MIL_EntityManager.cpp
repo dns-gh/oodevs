@@ -1158,7 +1158,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             ProcessChangeLogisticLinks( message );
             break;
         case UnitMagicAction::unit_change_superior:
-            ProcessUnitChangeSuperior( message, nCtx );
+            ProcessUnitChangeSuperior( message, nCtx, clientId );
             break;
         case UnitMagicAction::change_automat_superior:
         case UnitMagicAction::change_formation_superior:
@@ -1745,27 +1745,52 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
 // Name: MIL_EntityManager::ProcessUnitChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    client::UnitChangeSuperiorAck ack;
-    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
+    client::UnitMagicActionAck ack;
+    unsigned int id = 0;
     try
     {
-        MIL_AgentPion* pPion = ( message.tasker().has_unit() && message.tasker().unit().has_id() ) ? FindAgentPion( message.tasker().unit().id() ) : 0;
-        if( !pPion )
-            throw MASA_EXCEPTION_ASN( HierarchyModificationAck_ErrorCode, HierarchyModificationAck::error_invalid_agent );
-        pPion->OnReceiveChangeSuperior( *this, message );
+        const Tasker& tasker = message.tasker();
+        id = TaskerToId( tasker );
     }
-    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
+    catch( const std::exception& )
+    {
+        ack().mutable_unit()->set_id( 0 );
+        ack().set_error_code( UnitActionAck::error_invalid_unit );
+        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+        return;
+    }
+    ack().mutable_unit()->set_id( id );
+    ack().set_error_code( UnitActionAck::no_error );
+    unsigned int automatId = 0u;
+    try
+    {
+        MIL_AgentPion* pPion = FindAgentPion( id );
+        if( !pPion )
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+        if( !message.has_parameters() || message.parameters().elem_size() != 1 )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                    "invalid parameters count, 1 parameter expected" );
+        const MissionParameter& parameter = message.parameters().elem( 0 );
+        if( parameter.value_size() != 1 || ! parameter.value().Get( 0 ).has_automat() )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                    "parameters[0] must be an Automat" );
+        automatId = parameter.value().Get( 0 ).automat().id();
+        pPion->OnReceiveChangeSuperior( *this, automatId );
+    }
+    catch( const NET_AsnBadParam< UnitActionAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
-    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+
+    if( ack().error_code() ==  UnitActionAck::no_error )
     {
         client::UnitChangeSuperior resendMessage;
-        resendMessage().mutable_unit()->set_id ( message.tasker().unit().id() );
-        resendMessage().mutable_parent()->set_id ( message.parameters().elem( 0 ).value().Get(0).automat().id() );
+        resendMessage().mutable_unit()->set_id ( id );
+        resendMessage().mutable_parent()->set_id ( automatId );
         resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
     }
 }

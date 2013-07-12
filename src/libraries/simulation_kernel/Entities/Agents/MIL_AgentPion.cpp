@@ -1305,13 +1305,15 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // Name: MIL_AgentPion::OnReceiveChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveChangeSuperior( const MIL_EntityManager& manager, const sword::UnitMagicAction& msg )
+void MIL_AgentPion::OnReceiveChangeSuperior( const MIL_EntityManager& manager, unsigned int automatId )
 {
-    MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parameters().elem( 0 ).value().Get(0).automat().id() );
+    MIL_Automate* pNewAutomate = manager.FindAutomate( automatId );
     if( !pNewAutomate )
-        throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_invalid_automate );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+            "parameters[0] must be an automat identifier" );
     if( pNewAutomate->GetArmy() != GetArmy() )
-        throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_parties_mismatched );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+            "parameters[0] must be an automat in the same side" );
     if( pAutomate_ == pNewAutomate )
         return;
     ChangeSuperiorSilently( *pNewAutomate );

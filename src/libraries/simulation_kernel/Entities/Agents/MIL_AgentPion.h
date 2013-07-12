@@ -163,7 +163,7 @@ public:
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn );
     void OnReceiveOrder( const sword::UnitOrder& msg );
     void OnReceiveFragOrder( const sword::FragOrder& msg );
-    void OnReceiveChangeSuperior( const MIL_EntityManager& manager, const sword::UnitMagicAction& msg );
+    void OnReceiveChangeSuperior( const MIL_EntityManager& manager, unsigned int automatId );
     void OnReceiveMagicSurrender();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate

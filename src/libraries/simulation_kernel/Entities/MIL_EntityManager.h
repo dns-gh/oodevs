@@ -232,7 +232,7 @@ private:
     void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessChangeLogisticLinks         ( const sword::UnitMagicAction&      message );
-    void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
     void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message );
     void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message );
     void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message );
