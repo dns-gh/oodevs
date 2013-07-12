@@ -79,6 +79,26 @@ bool UnitFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
     if( !forward_.IsKnowledgeVisible( knowledge ) )
         return false;
+    return IsVisibleInHierarchy( knowledge );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitFilter::IsKnowledgeVisibleNoSupervision
+// Created: MMC 2013-07-10
+// -----------------------------------------------------------------------------
+bool UnitFilter::IsKnowledgeVisibleNoSupervision( const Knowledge_ABC& knowledge ) const
+{
+    if( !forward_.IsKnowledgeVisibleNoSupervision( knowledge )  )
+        return false;
+    return IsVisibleInHierarchy( knowledge );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitFilter::IsVisibleInHierarchy
+// Created: MMC 2013-07-10
+// -----------------------------------------------------------------------------
+bool UnitFilter::IsVisibleInHierarchy( const kernel::Knowledge_ABC& knowledge ) const
+{
     if( !entity_ || !cHierarchies_ )
         return true; //!forward_.IsSupervision(); $$$$ JSR 2011-12-06: revert temporaire bug 4464
     if( knowledge.GetEntity() && knowledge.GetEntity()->GetTypeName() == kernel::Object_ABC::typeName_ )
@@ -181,6 +201,15 @@ void UnitFilter::RemoveFilter()
     cHierarchies_ = 0;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
     controller_.Update( *static_cast< Filter_ABC* >( this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitFilter::GetFilter
+// Created: MMC 2013-07-10
+// -----------------------------------------------------------------------------
+bool UnitFilter::IsFiltered() const
+{
+    return entity_ != 0;
 }
 
 // -----------------------------------------------------------------------------

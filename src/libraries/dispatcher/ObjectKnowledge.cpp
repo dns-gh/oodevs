@@ -36,6 +36,8 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     , automatPerceptions_            ()
     , typename_                      ( "objectKnowledge" )
     , attributes_                    ( model )
+    , realObjectTeam_                ( message.has_object_party() ? &model.Sides().Get( message.object_party().id() ) : 0 )
+    , realObjectName_                ( message.has_object_name() ? message.object_name() : "" )
 {
     optionals_.realObjectPresent = ( entityId_ != 0 );
     optionals_.relevancePresent = 0;
@@ -112,6 +114,10 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( owner_.GetId() );
     if( knowledgeGroup_ )
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
+    if( realObjectTeam_ )
+        asn().mutable_object_party()->set_id( realObjectTeam_->GetId() );
+    if( !realObjectName_.empty() )
+        *asn().mutable_object_name() = realObjectName_;
     if( optionals_.realObjectPresent )
         asn().mutable_object()->set_id( entityId_ );
     asn().mutable_type()->set_id( nType_ );  // $$$$ _RC_ PHC 2010-07-07: ???

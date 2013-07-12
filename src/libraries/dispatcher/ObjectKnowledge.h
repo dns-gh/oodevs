@@ -95,6 +95,7 @@ private:
     //@{
     const Model_ABC& model_;
     const kernel::Team_ABC& owner_;
+    const kernel::Team_ABC* realObjectTeam_;
     unsigned long entityId_;
     const std::string nType_;
     const kernel::KnowledgeGroup_ABC* knowledgeGroup_;
@@ -105,6 +106,7 @@ private:
     std::vector< unsigned int > automatPerceptions_;
     ObjectAttributeContainer attributes_;
     T_Optionals optionals_;
+    std::string realObjectName_;
     //@}
 };
 

@@ -74,7 +74,15 @@ bool RightsResolver::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
     if( !knowledge.GetEntity() && IsSupervision() && knowledge.GetTeam() )
         if( rights_.FindSide( knowledge.GetTeam()->GetId() ) )
             return false;
+    return IsKnowledgeVisibleNoSupervision( knowledge );
+}
 
+// -----------------------------------------------------------------------------
+// Name: RightsResolver::IsKnowledgeVisibleNoSupervision
+// Created: MMC 2013-07-10
+// -----------------------------------------------------------------------------
+bool RightsResolver::IsKnowledgeVisibleNoSupervision( const kernel::Knowledge_ABC& knowledge ) const
+{
     return IsInHierarchy( knowledge.GetOwner(), readEntities_, false );
 }
 

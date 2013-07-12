@@ -658,7 +658,7 @@ void DEC_Knowledge_Object::BuildMsgAttributes( sword::ObjectKnowledgeUpdate& asn
 void DEC_Knowledge_Object::BuildMsgRealObject( sword::ObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_RealObject ) )
-        asn.mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
+        asn.mutable_object()->set_id( objectId_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -704,8 +704,12 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 {
     client::ObjectKnowledgeCreation asn;
     asn().mutable_knowledge()->set_id( nID_ );
-    asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
+    asn().mutable_object()->set_id( objectId_ );
     asn().mutable_party()->set_id( pArmyKnowing_ ? pArmyKnowing_->GetID() : 0 );
+    if( pOwnerArmy_ )
+        asn().mutable_object_party()->set_id( pOwnerArmy_->GetID() );
+    if( !name_.empty() )
+        *asn().mutable_object_name() = name_;
     if( groupId_ )
         asn().mutable_knowledge_group()->set_id( *groupId_ );
     asn().mutable_type()->set_id( pObjectType_->GetName().c_str() );

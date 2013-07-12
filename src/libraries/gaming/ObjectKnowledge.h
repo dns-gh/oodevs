@@ -50,6 +50,7 @@ public:
              ObjectKnowledge( const kernel::Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message,
                               kernel::Controller& controller,
                               const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver,
+                              const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver,
                               const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~ObjectKnowledge();
     //@}
@@ -93,6 +94,7 @@ private:
     std::string symbol_;
     kernel::OptionalValue< bool > bIsPerceived_;
     kernel::OptionalValue< uint > nRelevance_;
+    QString objectName_;
     //@}
 };
 

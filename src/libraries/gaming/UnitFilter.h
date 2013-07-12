@@ -44,11 +44,12 @@ public:
     virtual QString GetLogin() const;
     virtual bool IsVisible( const kernel::Entity_ABC& entity ) const;
     virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const;
+    virtual bool IsKnowledgeVisibleNoSupervision( const kernel::Knowledge_ABC& knowledge ) const;
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision() const;
     virtual bool IsPerceived( const kernel::Entity_ABC& ) const;
-
+    virtual bool IsFiltered() const;
     virtual QString GetFilter() const;
     virtual void SetFilter( const kernel::Entity_ABC& entity );
     virtual void SetFilter( const kernel::Profile_ABC& profile );
@@ -71,6 +72,7 @@ private:
     template< typename D, typename U >
     bool IsChildSubordinateOf( const D& down, const U& up ) const;
     bool IsKnown( const kernel::TacticalHierarchies* t, const kernel::CommunicationHierarchies* c, const kernel::Entity_ABC& entity ) const;
+    bool IsVisibleInHierarchy( const kernel::Knowledge_ABC& knowledge ) const;
     //@}
 
 private:

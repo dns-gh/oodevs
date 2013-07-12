@@ -152,7 +152,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
     while( iterator.HasMoreElements() )
     {
         const kernel::ObjectKnowledge_ABC& knowledge = iterator.NextElement();
-        knowledgeModel_.item( i )->setText( knowledge.GetEntity()? knowledge.GetEntity()->GetName() : QString::number( knowledge.GetEntityId() ) );
+        knowledgeModel_.item( i )->setText( knowledge.GetName() );
         knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
         ++i;
     }

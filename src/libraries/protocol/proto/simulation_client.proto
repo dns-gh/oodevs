@@ -2011,6 +2011,10 @@ message ObjectKnowledgeCreation {
     required ObjectAttributes  attributes      = 5;
     //! The knowledge group identifier
     optional KnowledgeGroupId  knowledge_group = 6;
+    //! The object party
+    optional PartyId           object_party    = 7;
+    //! The object name
+    optional string            object_name     = 8;
 }
 
 /** @struct ObjectKnowledgeUpdate

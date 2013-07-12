@@ -29,13 +29,16 @@ using namespace kernel;
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message, Controller& controller,
-                                  const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
+                                  const tools::Resolver_ABC< Object_ABC >& objectResolver,
+                                  const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver,
+                                  const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
     : gui::EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "", true )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
     , type_          ( & typeResolver.Get( message.type().id() ) )
     , entityId_      ( message.object().id() )
-    , pTeam_         ( 0 )
+    , pTeam_         ( message.has_object_party() ? teamResolver.Find( message.object_party().id() ) : 0 )
+    , objectName_    ( message.has_object_name() ? QString::fromStdString( message.object_name() ) : tools::translate( "Object", "Unknown object" ) )
 {
     AddExtension( *this );
 
@@ -54,6 +57,7 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
         }
         const Entity_ABC& tmp = hierarchies ? hierarchies->GetTop() : *pRealObject;
         pTeam_ = dynamic_cast< const kernel::Team_ABC* >( &tmp );
+        objectName_ = pRealObject->GetName();
     }
 }
 
@@ -108,7 +112,6 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
     if( ! position_.empty() )
         displayer.Group( tools::translate( "Object", "Information" ) )
                  .Display( tools::translate( "Object", "Location:" ), position_ );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -149,8 +152,7 @@ void ObjectKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QString ObjectKnowledge::GetName() const
 {
-    kernel::Object_ABC* pRealObject = objectResolver_.Find( entityId_ );
-    return pRealObject ? pRealObject->GetName() : tools::translate( "Object", "Unknown object" );
+    return objectName_;
 }
 
 // -----------------------------------------------------------------------------
