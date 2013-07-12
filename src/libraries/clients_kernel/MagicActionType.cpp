@@ -153,9 +153,9 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Camp", "army" );
     }
     else if( name == "unit_change_superior" )
-        CreateOrderParameter( "Superior", "automate" );
+        CreateOrderParameter( "Superior", "automat" );
     else if( name == "change_automat_superior" )
-        CreateOrderParameter( "Automat", "automate" );
+        CreateOrderParameter( "Automat", "automat" );
     else if( name == "change_formation_superior" )
         CreateOrderParameter( "Formation", "formation" );
     else if( name == "change_logistic_links" )
