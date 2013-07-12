@@ -556,7 +556,9 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     end
 
     -- Gestion du soutien
-    Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
+    if self.params.taskForSupporting and self.params.taskForSupporting ~= NIL then
+        Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
+    end
 
     if manageRelieveBeforeCoordination then
         -- Gestion de la relève
