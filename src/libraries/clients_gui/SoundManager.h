@@ -36,9 +36,11 @@ public:
     //! @name Operations
     //@{
     static SoundManager* GetInstance();
-    void PlaySound( const std::string& filePath );
+    void PlaySound( const std::string& filePath, int tic );
     void SetVolume( const std::string& canal, double value );
     void ChangeSoundsDirectory( const tools::Path& path );
+    bool FindFile( const tools::Path& path, const std::string& name );
+    bool CanPlaySound( const std::string& canal, int currentTic );
     //@}
 
 private:
@@ -51,9 +53,11 @@ private:
     //@{
     static SoundManager* instance_;
     std::map< std::string, double > volume_;
+    std::map< std::string, double > lastPlayTic_;
     std::map< std::string, Phonon::AudioOutput* > canals_;
     tools::Path defaultSoundsPath_;
     tools::Path currentSoundsPath_;
+    tools::Path currentSound_;
     //@}
 };
 

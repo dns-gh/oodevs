@@ -11,13 +11,17 @@
 #define __SoundPanel_h_
 
 #include "PreferencePanel_ABC.h"
-#include "RichLineEdit.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
-
+namespace kernel
+{
+    class Controllers;
+}
 
 namespace gui
 {
     class RichSlider;
+    class RichLineEdit;
 // =============================================================================
 /** @class  SoundPanel
     @brief  SoundPanel
@@ -25,24 +29,31 @@ namespace gui
 // Created: NPT 2013-07-05
 // =============================================================================
 class SoundPanel : public PreferencePanel_ABC
+                 , public tools::Observer_ABC
+                 , public kernel::OptionsObserver_ABC
 {
 Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SoundPanel( QWidget* parent );
+             SoundPanel( QWidget* parent, kernel::Controllers& controllers );
     virtual ~SoundPanel();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Reset();
+    virtual void Commit();
+    std::map< std::string, RichSlider*>& GetSoundSliders();
     //@}
 
 private:
     //! @name Helpers
     //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
+
 signals:
     void soundSliderUpdated( const std::string name, int val );
 
@@ -55,6 +66,9 @@ private:
     //@{
     std::map< std::string, RichSlider*> soundSliders_;
     gui::RichLineEdit*  soundDirectoryEditor_;
+    std::map< std::string, int > soundValues_;
+    tools::Path soundDirectory_;
+    kernel::Controllers& controllers_;
     //@}
 };
 

@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "FiresModel.h"
+#include "Simulation.h"
 #include "clients_gui/SoundManager.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/PopulationPart_ABC.h"
@@ -21,10 +22,11 @@ using namespace kernel;
 // Name: FiresModel constructor
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-FiresModel::FiresModel( const tools::Resolver_ABC< Agent_ABC >& agents, const tools::Resolver_ABC< PopulationPart_ABC >& populations, kernel::Profile_ABC& profile )
+FiresModel::FiresModel( const tools::Resolver_ABC< Agent_ABC >& agents, const tools::Resolver_ABC< PopulationPart_ABC >& populations, kernel::Profile_ABC& profile, const Simulation& simulation )
     : agents_( agents )
     , populations_( populations )
     , profile_( profile )
+    , simulation_( simulation )
 {
     // NOTHING
 }
@@ -58,7 +60,7 @@ void FiresModel::AddFire( const sword::StartUnitFire& message )
         firers_[ message.fire().id() ] = message.firing_unit().id();
     const kernel::Entity_ABC* entity = FindEntity( message.firing_unit().id() );
     if( entity && profile_.IsPerceived( *entity ) )
-        SoundManager::GetInstance()->PlaySound( "directfire" );
+        SoundManager::GetInstance()->PlaySound( "directfire", simulation_.GetCurrentTick() );
     AddTarget( message );
 }
 
@@ -72,7 +74,7 @@ void FiresModel::AddFire( const sword::StartCrowdFire& message )
         firers_[ message.fire().id() ] = message.firing_crowd().id();
     const kernel::Entity_ABC* entity = FindEntity( message.firing_crowd().id() );
     if( entity && profile_.IsPerceived( *entity ) )
-        SoundManager::GetInstance()->PlaySound( "directfire" );
+        SoundManager::GetInstance()->PlaySound( "directfire", simulation_.GetCurrentTick() );
 }
 
 // -----------------------------------------------------------------------------

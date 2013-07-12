@@ -83,8 +83,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "2D/Population" ), *new InhabitantPanel( this, controllers ) );
     AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, elevation2dLayer, controllers_, painter_ ) );
-    if( controllers_.GetCurrentMode() == eModes_Gaming )
-        AddPage( tr( "Sound" ), *new SoundPanel( this ) );
+    AddPage( tr( "Sound" ), *new SoundPanel( this, controllers ) );
 
     box = new Q3HBox( this );
     box->setMargin( 5 );

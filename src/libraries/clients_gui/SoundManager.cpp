@@ -17,17 +17,18 @@
 #pragma warning( pop )
 
 #include <boost/assign/list_of.hpp>
+#include <boost/bind.hpp>
 
 SoundManager* SoundManager::instance_ = NULL;
 
 namespace
 {
-    std::map< std::string, std::string > sounds = boost::assign::map_list_of
-        ( "directfire", "directfire.wav" )
-        ( "indirectsmoke", "indirectsmoke.wav" )
-        ( "indirectexplosive", "indirectexplosive.wav" )
-        ( "indirectillumination", "indirectillumination.wav" )
-        ( "indirecteffect", "indirecteffect.wav" );
+    const std::vector< std::string > sounds = boost::assign::list_of< std::string >
+        ( "directfire" )
+        ( "indirectsmoke" )
+        ( "indirectexplosive" )
+        ( "indirectillumination" )
+        ( "indirecteffect" );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,8 +37,11 @@ namespace
 // -----------------------------------------------------------------------------
 SoundManager::SoundManager()
 {
-    for( auto it = sounds.begin(); it != sounds.end(); ++it )
-        volume_[ it->first ] = 0.5;
+    for( auto it = ::sounds.begin(); it != ::sounds.end(); ++it )
+    {
+            volume_[ *it ] = 0.5;
+            lastPlayTic_[ *it ] = 0;
+    }
 }
 
 
@@ -69,18 +73,24 @@ SoundManager* SoundManager::GetInstance()
 // Name: SoundManager::PlaySound
 // Created: NPT 2013-07-03
 // -----------------------------------------------------------------------------
-void SoundManager::PlaySound( const std::string& soundName )
+void SoundManager::PlaySound( const std::string& soundName, int tic )
 {
-    tools::Path soundPath = currentSoundsPath_ / sounds[ soundName ].c_str();
-    if( !soundPath.Exists() )
-        soundPath = defaultSoundsPath_ / sounds[ soundName ].c_str();
+    currentSound_ = tools::Path();
+    currentSoundsPath_.Apply( boost::bind( &SoundManager::FindFile, this, _1, boost::cref( soundName ) ), false );
+    if( currentSound_.IsEmpty() )
+        defaultSoundsPath_.Apply( boost::bind( &SoundManager::FindFile, this, _1, boost::cref( soundName ) ), false );
+    if( !currentSound_.Exists() )
+        return;
     Phonon::MediaObject* mediaObject = new Phonon::MediaObject();
-    mediaObject->setCurrentSource( Phonon::MediaSource( soundPath.ToUTF8().c_str() ) );
+    mediaObject->setCurrentSource( Phonon::MediaSource( currentSound_.Normalize().ToUTF8().c_str() ) );
     Phonon::AudioOutput* audioOutput = new Phonon::AudioOutput( Phonon::MusicCategory );
     audioOutput->setVolume( volume_[ soundName ] );
     Phonon::createPath(mediaObject, audioOutput);
-    mediaObject->play();
-    canals_[ soundName ] = audioOutput;
+    if( CanPlaySound( soundName, tic ) )
+    {
+        mediaObject->play();
+        canals_[ soundName ] = audioOutput;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -90,10 +100,8 @@ void SoundManager::PlaySound( const std::string& soundName )
 void SoundManager::SetVolume( const std::string& canal, double value )
 {
     if( canals_[ canal ] )
-    {
-        volume_[ canal ] = value;
         canals_[ canal ]->setVolume( value );
-    }
+    volume_[ canal ] = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,4 +111,34 @@ void SoundManager::SetVolume( const std::string& canal, double value )
 void SoundManager::ChangeSoundsDirectory( const tools::Path& path )
 {
     currentSoundsPath_ = path;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SoundManager::FindFile
+// Created: NPT 2013-07-12
+// -----------------------------------------------------------------------------
+bool SoundManager::FindFile( const tools::Path& path, const std::string& name )
+{
+    if( !path.Exists() )
+        return false;
+    if( path.BaseName().ToUTF8() == name )
+    {
+        currentSound_ = path;
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SoundManager::CanPlaySound
+// Created: NPT 2013-07-12
+// -----------------------------------------------------------------------------
+bool SoundManager::CanPlaySound( const std::string& canal, int currentTic )
+{
+    if( lastPlayTic_[ canal ] < currentTic )
+    {
+        lastPlayTic_[ canal ] = currentTic;
+        return true;
+    }
+    return false;
 }

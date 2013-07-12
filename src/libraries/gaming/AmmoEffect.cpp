@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AmmoEffect.h"
+#include "Simulation.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/SoundManager.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -24,13 +25,14 @@ using namespace kernel;
 // Name: AmmoEffect constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& agents, kernel::Profile_ABC& profile )
+AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& agents, kernel::Profile_ABC& profile, const Simulation& simulation )
     : controller_( controller )
     , agents_( agents )
     , id_( message.fire_effect().id() )
     , type_( message.type() )
     , ellipse_( message.location(), converter )
     , profile_( profile )
+    , simulation_( simulation )
 {
     controller_.Create( *this );
     PlaySoundEffect();
@@ -55,10 +57,10 @@ void AmmoEffect::PlaySoundEffect() const
     {
         switch( type_ )
         {
-            case sword::StartFireEffect::smoke:             SoundManager::GetInstance()->PlaySound( "indirectsmoke" ); break;
-            case sword::StartFireEffect::light:             SoundManager::GetInstance()->PlaySound( "indirectillumination" ); break;
-            case sword::StartFireEffect::explosion:         SoundManager::GetInstance()->PlaySound( "indirectexplosive" ); break;
-            case sword::StartFireEffect::neutralization:    SoundManager::GetInstance()->PlaySound( "indirecteffect" ); break;
+            case sword::StartFireEffect::smoke:             SoundManager::GetInstance()->PlaySound( "indirectsmoke", simulation_.GetCurrentTick() ); break;
+            case sword::StartFireEffect::light:             SoundManager::GetInstance()->PlaySound( "indirectillumination", simulation_.GetCurrentTick() ); break;
+            case sword::StartFireEffect::explosion:         SoundManager::GetInstance()->PlaySound( "indirectexplosive", simulation_.GetCurrentTick() ); break;
+            case sword::StartFireEffect::neutralization:    SoundManager::GetInstance()->PlaySound( "indirecteffect", simulation_.GetCurrentTick() ); break;
         default:
             ;
         }

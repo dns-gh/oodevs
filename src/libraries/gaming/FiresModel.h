@@ -27,6 +27,8 @@ namespace kernel
     class Profile_ABC;
 }
 
+class Simulation;
+
 // =============================================================================
 /** @class  FiresModel
     @brief  FiresModel
@@ -38,7 +40,7 @@ class FiresModel : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations, kernel::Profile_ABC& profile );
+             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations, kernel::Profile_ABC& profile, const Simulation& simulation );
     virtual ~FiresModel();
     //@}
 
@@ -76,6 +78,7 @@ private:
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
     const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations_;
     kernel::Profile_ABC& profile_;
+    const Simulation& simulation_;
     //@}
 };
 
