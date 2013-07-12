@@ -138,10 +138,11 @@ func NewFormation(id uint32, name string, parentId uint32,
 }
 
 type KnowledgeGroup struct {
-	Id       uint32
-	Name     string
-	PartyId  uint32
-	ParentId uint32
+	Id                  uint32
+	Name                string
+	PartyId             uint32
+	ParentId            uint32
+	IsCrowdDefaultGroup bool
 }
 
 type Party struct {

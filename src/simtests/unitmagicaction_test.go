@@ -184,6 +184,7 @@ func (s *TestSuite) TestCreateFormation(c *C) {
       Id: -
       PartyId: -
       Name: knowledge group[6]
+      IsCrowdDefaultGroup: true
 Party[-]
   Name: party2
     KnowledgeGroup[-]
@@ -194,6 +195,7 @@ Party[-]
       Id: -
       PartyId: -
       Name: knowledge group[7]
+      IsCrowdDefaultGroup: true
 `
 	c.Assert(dump, Equals, expected)
 

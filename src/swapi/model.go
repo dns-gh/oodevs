@@ -302,10 +302,12 @@ func (model *Model) update(msg *SwordMessage) {
 			d.removeUnit(mm.GetUnit().GetId())
 		} else if mm := m.GetKnowledgeGroupCreation(); mm != nil {
 			group := &KnowledgeGroup{
-				mm.GetKnowledgeGroup().GetId(),
-				mm.GetName(),
-				mm.GetParty().GetId(),
-				mm.GetParent().GetId()}
+				Id:                  mm.GetKnowledgeGroup().GetId(),
+				Name:                mm.GetName(),
+				PartyId:             mm.GetParty().GetId(),
+				ParentId:            mm.GetParent().GetId(),
+				IsCrowdDefaultGroup: mm.GetCrowd(),
+			}
 			if !d.addKnowledgeGroup(group) {
 				// XXX report error here
 			}
