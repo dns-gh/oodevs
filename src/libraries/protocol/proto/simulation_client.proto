@@ -409,6 +409,8 @@ message AutomatChangeSuperiorAck {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
+//! DEPRECATED in 5.3
+//!
 /** @struct UnitChangeSuperiorAck
     @brief Acknowledges an agent superior change request
     @see UnitMagicAction of UnitMagiAction.Type.unit_change_superior
