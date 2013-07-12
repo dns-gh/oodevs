@@ -80,6 +80,15 @@ void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& fi
         boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
         knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) );
     }
+    T_KnowledgeObjectIDMap knowledgesWithNoRealObject;
+    file >> knowledgesWithNoRealObject;
+    for( auto it = knowledgesWithNoRealObject.begin(); it != knowledgesWithNoRealObject.end(); ++it )
+    {
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
+        auto itIdMap = knowledgeObjectFromIDMap_.find( it->first );
+        if( itIdMap == knowledgeObjectFromIDMap_.end() )
+            knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +99,16 @@ void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& f
 {
     file << objectMap_;
     file << previousObjectMap_;
+
+    T_KnowledgeObjectIDMap knowledgesWithNoRealObject;
+    for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); ++it )
+    {
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
+        if( !knowledge->GetObjectKnown() )
+            knowledgesWithNoRealObject.insert( std::make_pair( knowledge->GetID(), knowledge ) );
+    }
+
+    file << knowledgesWithNoRealObject;
 }
 
 // -----------------------------------------------------------------------------
