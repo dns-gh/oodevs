@@ -356,12 +356,20 @@ func (s *TestSuite) TestModelInitialization(c *C) {
       Id: -
       PartyId: -
       Name: knowledge group [3]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[41]
 Party[-]
   Name: empty-party
     KnowledgeGroup[-]
       Id: -
       PartyId: -
       Name: knowledge group[4]
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[43]
 `
 	c.Assert(dump, Equals, expected)
 	client.Close()
