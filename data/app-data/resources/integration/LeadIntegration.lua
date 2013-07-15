@@ -154,6 +154,10 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
                 end
             end
         end
+        if isMain then
+            pcall( function() return companyTask:distributeObjectives( bestList, params ) end )
+            myself.leadData.nbrWithMainTask = #bestList
+        end
         return fillParameters( bestList, companyTask, params, nbrFront, retrogradeContext, isMain, objectif )
     end
     return {}
