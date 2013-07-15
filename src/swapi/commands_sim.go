@@ -1022,3 +1022,17 @@ func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*Kno
 	}
 	return group, nil
 }
+
+func (c *Client) ChangeSuperior(unitId, automatId uint32) error {
+	params := MakeParameters()
+	tasker := &sword.Tasker{}
+	if unitId != 0 {
+		tasker = makeUnitTasker(unitId)
+	}
+	if automatId != 0 {
+		params = MakeParameters(MakeAutomat(automatId))
+	}
+	msg := createMagicActionMessage(params, tasker,
+		sword.UnitMagicAction_unit_change_superior.Enum())
+	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
+}
