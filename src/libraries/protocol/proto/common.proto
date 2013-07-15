@@ -1992,6 +1992,8 @@ message UnitMagicAction {
         //! 'superior' that is an identifier, an automat or a formation
         change_logistic_links             = 20;
         //! A unit change superior magic action
+        //!  The tasker must be an unit identifier.
+        //! parameters[0], Automat: the new automat
         unit_change_superior              = 21;
         //! A change automate superior magic action
         change_automat_superior           = 22;
