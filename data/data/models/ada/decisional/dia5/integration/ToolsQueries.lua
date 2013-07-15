@@ -330,6 +330,23 @@ integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withP
     end
     return operationnalEntities
  end
+ 
+  -- -------------------------------------------------------------------------------- 
+-- Param a automat
+-- Return a list of operationnal platoon
+-- @author LMT
+-- @release 2011-10-12
+-- --------------------------------------------------------------------------------
+integration.getOperationnalEntitiesDespiteJammedFromAutomat = function ( automat, role, withPC)
+    local entities = integration.getEntitiesFromAutomat( automat, role, withPC)
+    local operationnalEntities = {}
+    for i = 1, #entities do
+        if entities[i].source:DEC_Agent_EtatOpsMajeur() ~= 0 then
+            operationnalEntities[#operationnalEntities + 1] = entities[i]
+        end
+    end
+    return operationnalEntities
+ end
 
 -- -------------------------------------------------------------------------------- 
 -- Param an objective
