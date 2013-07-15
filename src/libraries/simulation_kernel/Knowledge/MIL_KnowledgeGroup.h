@@ -150,6 +150,7 @@ public:
     void ApplyOnKnowledgesPerception( int currentTimeStep );
 
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& object );
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_Agent_ABC& perceived );
     DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
     void UpdateKnowledgeFromTransported( const MIL_Agent_ABC& perceived );

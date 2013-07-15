@@ -63,8 +63,8 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObject()
 {
-    while( !knowledgeObjectFromIDMap_.empty() )
-        DestroyKnowledgeObject( *knowledgeObjectFromIDMap_.begin()->second );
+    while( !objectMap_.empty() )
+        DestroyKnowledgeObject( *objectMap_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,20 +75,6 @@ void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& fi
 {
     file >> objectMap_;
     file >> previousObjectMap_;
-    for( auto it = objectMap_.begin(); it != objectMap_.end(); ++it )
-    {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
-        knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) );
-    }
-    T_KnowledgeObjectIDMap knowledgesWithNoRealObject;
-    file >> knowledgesWithNoRealObject;
-    for( auto it = knowledgesWithNoRealObject.begin(); it != knowledgesWithNoRealObject.end(); ++it )
-    {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
-        auto itIdMap = knowledgeObjectFromIDMap_.find( it->first );
-        if( itIdMap == knowledgeObjectFromIDMap_.end() )
-            knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -99,16 +85,6 @@ void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& f
 {
     file << objectMap_;
     file << previousObjectMap_;
-
-    T_KnowledgeObjectIDMap knowledgesWithNoRealObject;
-    for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); ++it )
-    {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
-        if( !knowledge->GetObjectKnown() )
-            knowledgesWithNoRealObject.insert( std::make_pair( knowledge->GetID(), knowledge ) );
-    }
-
-    file << knowledgesWithNoRealObject;
 }
 
 // -----------------------------------------------------------------------------
@@ -126,18 +102,28 @@ void DEC_BlackBoard_CanContainKnowledgeObject::SetKnowledgeGroup( MIL_KnowledgeG
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( MIL_Object_ABC& objectKnown )
 {
-    auto it = objectMap_.find( &objectKnown );
+    auto it = objectMap_.find( objectKnown.GetID() );
     if( it != objectMap_.end() )
         return it->second;
     boost::shared_ptr< DEC_Knowledge_Object > knowledge;
     if( pKnowledgeGroup_ )
         knowledge = objectKnown.CreateKnowledge( *pKnowledgeGroup_ );
-
     if( knowledge )
-    {
-        objectMap_.insert( std::make_pair( &objectKnown, knowledge ) );
-        knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) );
-    }
+        objectMap_.insert( std::make_pair( objectKnown.GetID(), knowledge ) );
+    return knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject
+// Created: MMC 2013-07-15
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& object )
+{
+    auto it = objectMap_.find( object->GetObjectId() );
+    if( it != objectMap_.end() )
+        return it->second;
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *object, *pKnowledgeGroup_ ) );
+    objectMap_.insert( std::make_pair( object->GetObjectId(), knowledge ) );
     return knowledge;
 }
 
@@ -148,26 +134,8 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge )
 {
     if( knowledge.IsValid() )
-    {
         knowledge.Invalidate();
-        if( knowledge.GetObjectKnown() )
-        {
-            if( objectMap_.erase( knowledge.GetObjectKnown() ) < 1 )
-                MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
-            knowledge.CleanObjectKnown();
-        }
-        if( knowledgeObjectFromIDMap_.erase( knowledge.GetID() ) < 1 )
-            MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedFromRealObject
-// Created: NLD 2004-03-25
-// -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& /*knowledge*/ )
-{
-    if( objectMap_.erase( &objectKnown ) < 1 )
+    if( objectMap_.erase( knowledge.GetObjectId() ) < 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
@@ -177,7 +145,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedF
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
-    auto it = objectMap_.find( &objectKnown );
+    auto it = objectMap_.find( objectKnown.GetID() );
     if( it == objectMap_.end() )
         return boost::shared_ptr< DEC_Knowledge_Object >();
     return it->second;
@@ -198,7 +166,7 @@ const DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& DEC_BlackB
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::RetrieveKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
-    auto it = objectMap_.find( &objectKnown );
+    auto it = objectMap_.find( objectKnown.GetID() );
     if( it != objectMap_.end() )
         return it->second.get();
     return 0;
@@ -210,8 +178,8 @@ DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::RetrieveKnowledg
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( T_KnowledgeObjectVector& outContainer ) const
 {
-    outContainer.reserve( knowledgeObjectFromIDMap_.size() );
-    for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); ++it )
+    outContainer.reserve( objectMap_.size() );
+    for( auto it = objectMap_.begin(); it != objectMap_.end(); ++it )
         outContainer.push_back( it->second );
 }
 
@@ -221,8 +189,10 @@ void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( T_KnowledgeO
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromID( unsigned int nMosID ) const
 {
-    auto it = knowledgeObjectFromIDMap_.find( nMosID );
-    return it == knowledgeObjectFromIDMap_.end() ? boost::shared_ptr< DEC_Knowledge_Object >() : it->second;
+    for( auto it = objectMap_.begin(); it != objectMap_.end(); ++it )
+        if( it->second->GetID() == nMosID )
+            return it->second;
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
@@ -231,9 +201,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromObjectID( unsigned int nID ) const
 {
-    for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); ++it )
-        if( it->second->GetObjectId() == nID )
-            return it->second;
+    auto it = objectMap_.find( nID );
+    if( it != objectMap_.end() )
+        return it->second;
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
@@ -243,7 +213,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 // -----------------------------------------------------------------------------
 bool DEC_BlackBoard_CanContainKnowledgeObject::HasKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
-    return objectMap_.find( &objectKnown ) != objectMap_.end();
+    return objectMap_.find( objectKnown.GetID() ) != objectMap_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -326,10 +296,8 @@ void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_
     if( !knowledge.GetObjectKnown() || !pKnowledgeGroup_ )
         return;
     boost::shared_ptr< DEC_Knowledge_Object > copy = knowledge.GetObjectKnown()->CreateKnowledge( *pKnowledgeGroup_, knowledge );
-    objectMap_.insert( std::make_pair( copy->GetObjectKnown(), copy ) );
-    knowledgeObjectFromIDMap_.insert( std::make_pair( copy->GetID(), copy ) );
+    objectMap_.insert( std::make_pair( copy->GetObjectKnown()->GetID(), copy ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::Merge
@@ -339,7 +307,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanCo
 {
     for( auto itKnowledge = subGroup.objectMap_.begin(); itKnowledge != subGroup.objectMap_.end(); ++itKnowledge )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeObject( *itKnowledge->first );
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeObjectFromObjectID( itKnowledge->first );
         boost::shared_ptr< DEC_Knowledge_Object > pSubKnowledge = itKnowledge->second;
         if( !pKnowledge.get() )
             CreateKnowledgeObject( *pSubKnowledge );

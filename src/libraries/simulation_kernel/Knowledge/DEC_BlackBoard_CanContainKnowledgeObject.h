@@ -44,7 +44,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Object_ABC*, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectMap;
+    typedef std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectMap;
     //@}
 
 public:
@@ -59,9 +59,9 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& object );
     void DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
-    void NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     void Prepare();
     void UpdateUniversalObjects();
@@ -94,7 +94,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
     {
-        for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); )
+        for( auto it = objectMap_.begin(); it != objectMap_.end(); )
         {
             boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
             ++it;
@@ -114,7 +114,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesObjectRef( UnaryFunction& fct ) const
     {
-        for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); )
+        for( auto it = objectMap_.begin(); it != objectMap_.end(); )
         {
             DEC_Knowledge_Object& knowledge = *it->second;
             ++it;
@@ -126,7 +126,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectIDMap;
+    
     //@}
 
 private:
@@ -142,10 +142,9 @@ private:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeObjectMap objectMap_;
-    T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
     MIL_KnowledgeGroup* pKnowledgeGroup_;
     std::map< double, T_KnowledgeObjectVector > obstacleCache_;
+    T_KnowledgeObjectMap objectMap_;
     T_KnowledgeObjectMap previousObjectMap_;
     //@}
 };

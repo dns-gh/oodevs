@@ -721,6 +721,15 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject
+// Created: MMC 2013-07-15
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject(  boost::shared_ptr< DEC_Knowledge_Object >& object  )
+{
+    return pKnowledgeObjectContainer_->CreateKnowledgeObject( object );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPerception
 // Created: FDS 2010-04-08
 // -----------------------------------------------------------------------------

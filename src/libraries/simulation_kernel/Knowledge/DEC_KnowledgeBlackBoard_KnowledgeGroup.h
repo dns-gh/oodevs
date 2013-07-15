@@ -149,6 +149,7 @@ public:
     //@{
     void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const boost::shared_ptr< MIL_KnowledgeGroup >& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& object );
     void ApplyOnKnowledgesPerception( int currentTimeStep );
     void UpdateUniversalObjects();
 

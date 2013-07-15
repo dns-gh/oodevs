@@ -201,12 +201,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
 {
     assert( pBlackBoard_ );
-
-    //$$$$ VIRER TOUT CA quand stockage dans blackboard avec comme clé l'ID de l'objet réel plutot que le pointeur de l'objet réél ...
-    const MIL_Object_ABC* pObjectKnown = knowledge->GetObjectKnown();
     knowledge->UpdateRelevance();
-    if( pObjectKnown && !knowledge->GetObjectKnown() )
-        pBlackBoard_->GetKnowledgeObjectContainer().NotifyKnowledgeObjectDissociatedFromRealObject( *pObjectKnown, *knowledge );
 }
 
 // -----------------------------------------------------------------------------

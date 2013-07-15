@@ -231,11 +231,16 @@ void MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception( const DEC_Know
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::CreateKnowledgeFromObjectPerception( boost::shared_ptr< DEC_Knowledge_Object >& object )
 {
-    if( object && object->IsValid() && object->GetObjectKnown() )
+    if( object && object->IsValid() )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( *object->GetObjectKnown() );
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge =
+            object->GetObjectKnown()? CreateKnowledgeObject( *object->GetObjectKnown() )
+                                    : CreateKnowledgeObject( object );
         if( knowledge )
+        {
             knowledge->CopyFrom( *object );
+            knowledge->UpdateOnNetwork();
+        }
      }
 }
 
@@ -1047,6 +1052,17 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObj
 {
     if( knowledgeBlackBoard_ )
         return knowledgeBlackBoard_->CreateKnowledgeObject( objectKnown );
+    return boost::shared_ptr< DEC_Knowledge_Object >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::CreateKnowledgeObject
+// Created: MMC 2013-07-15
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& object )
+{
+    if( knowledgeBlackBoard_ )
+        return knowledgeBlackBoard_->CreateKnowledgeObject( object );
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
