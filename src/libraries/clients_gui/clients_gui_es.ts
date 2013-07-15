@@ -233,6 +233,37 @@
     </message>
 </context>
 <context>
+    <name>PreferencesDialog</name>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished">Système de coordonnées</translation>
+    </message>
+    <message>
+        <source>Visualisation Scales</source>
+        <translation type="unfinished">Echelles de Visualisation</translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished">2D</translation>
+    </message>
+    <message>
+        <source>2D/Terrain</source>
+        <translation type="unfinished">2D/Terrain</translation>
+    </message>
+    <message>
+        <source>2D/Population</source>
+        <translation type="unfinished">2D/Population couvrante</translation>
+    </message>
+    <message>
+        <source>2D/Elevation</source>
+        <translation type="unfinished">2D/Elevation</translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished">3D</translation>
+    </message>
+</context>
+<context>
     <name>Règle GL</name>
     <message>
         <source>2D: %L1m
@@ -1519,40 +1550,12 @@ Voulez-vous le supprimer?</translation>
         <translation>Préférences</translation>
     </message>
     <message>
-        <source>3D</source>
-        <translation>3D</translation>
-    </message>
-    <message>
-        <source>2D</source>
-        <translation>2D</translation>
-    </message>
-    <message>
-        <source>2D/Terrain</source>
-        <translation>2D/Terrain</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>2D/Elevation</source>
-        <translation>2D/Elevation</translation>
-    </message>
-    <message>
-        <source>Coordinate System</source>
-        <translation>Système de Coordonnées</translation>
-    </message>
-    <message>
-        <source>Visualisation Scales</source>
-        <translation>Echelles de Visualisation</translation>
-    </message>
-    <message>
-        <source>2D/Population</source>
-        <translation>2D/Population couvrante</translation>
     </message>
     <message>
         <source>Sound</source>

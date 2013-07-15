@@ -25,6 +25,8 @@
 #include "SoundPanel.h"
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
+#include "clients_kernel/ModeController.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -39,6 +41,9 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     , controllers_      ( controllers )
     , painter_          ( painter )
     , pGraphicPrefPanel_( 0 )
+    , oldMode_ ( eModes_None )
+    , lighting_ ( lighting )
+    , elevation2dLayer_ ( elevation2dLayer )
 {
     SubObjectName subObject( "PreferencesDialog" );
     setCaption( tr( "Preferences" ) );
@@ -76,15 +81,6 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     layersPanel_             = new LayersPanel( this, controllers, selector );
     pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
 
-    AddPage( tr( "Coordinate System" ), *pCoordinateSystemsPanel_ );
-    AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, controllers ) );
-    AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
-    AddPage( tr( "2D" ), *layersPanel_ );
-    AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
-    AddPage( tr( "2D/Population" ), *new InhabitantPanel( this, controllers ) );
-    AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, elevation2dLayer, controllers_, painter_ ) );
-    AddPage( tr( "Sound" ), *new SoundPanel( this, controllers ) );
-
     box = new Q3HBox( this );
     box->setMargin( 5 );
     box->setMaximumHeight( 40 );
@@ -98,6 +94,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     connect( this, SIGNAL( OnAddRaster() ), parent, SLOT( OnAddRaster() ) );
 
     hide();
+    controllers_.modes_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +103,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 // -----------------------------------------------------------------------------
 PreferencesDialog::~PreferencesDialog()
 {
-    // NOTHING
+    controllers_.modes_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +153,7 @@ GraphicPreferences& PreferencesDialog::GetPreferences() const
 {
     if( !pGraphicPrefPanel_ )
         throw MASA_EXCEPTION( "Graphic preference panel not initialized" );
-    return pGraphicPrefPanel_->GetPreferences();
+       return pGraphicPrefPanel_->GetPreferences();
 }
 
 // -----------------------------------------------------------------------------
@@ -188,4 +185,50 @@ void PreferencesDialog::OnCancel()
 void PreferencesDialog::AddLayer( const QString& name, gui::Layer& layer, bool dynamic /* = false */ )
 {
     layersPanel_->AddLayer( name, layer, dynamic );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::NotifyModeChanged
+// Created: NPT 2013-07-15
+// -----------------------------------------------------------------------------
+void PreferencesDialog::NotifyModeChanged( E_Modes newMode )
+{
+    if( ( newMode & eModes_AllGaming ) != 0 && oldMode_ != eModes_AllGaming )
+    {
+        oldMode_ = eModes_AllGaming;
+        PurgeDialog();
+        BuildPreparationSettings();
+        AddPage( tr( "Sound" ), *new SoundPanel( this, controllers_ ) );
+    }
+    else if( ( newMode & eModes_Preparation ) != 0 && oldMode_ != eModes_Preparation )
+    {
+        oldMode_ = eModes_Preparation;
+        PurgeDialog();
+        BuildPreparationSettings();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::PurgeDialog
+// Created: NPT 2013-07-15
+// -----------------------------------------------------------------------------
+void PreferencesDialog::PurgeDialog()
+{
+    list_->Purge();
+    pages_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::BuildPreparationSettings
+// Created: NPT 2013-07-15
+// -----------------------------------------------------------------------------
+void PreferencesDialog::BuildPreparationSettings()
+{
+    AddPage( tools::translate( "PreferencesDialog", "Coordinate System" ), *pCoordinateSystemsPanel_ );
+    AddPage( tools::translate( "PreferencesDialog", "Visualisation Scales" ), *new VisualisationScalesPanel( this, controllers_ ) );
+    AddPage( tools::translate( "PreferencesDialog", "2D" ), *layersPanel_ );
+    AddPage( tools::translate( "PreferencesDialog", "2D/Terrain" ), *pGraphicPrefPanel_ );
+    AddPage( tools::translate( "PreferencesDialog", "2D/Population" ), *new InhabitantPanel( this, controllers_ ) );
+    AddPage( tools::translate( "PreferencesDialog", "2D/Elevation" ), *new ElevationPanel( this, elevation2dLayer_, controllers_, painter_ ) );
+    AddPage( tools::translate( "PreferencesDialog", "3D" ), *new LightingPanel( this, lighting_, controllers_ ) );
 }

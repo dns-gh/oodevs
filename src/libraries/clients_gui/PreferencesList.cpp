@@ -65,6 +65,18 @@ void PreferencesList::AddPage( const QString& name, QWidget* widget )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PreferencesList::Purge
+// Created: NPT 2013-07-15
+// -----------------------------------------------------------------------------
+void PreferencesList::Purge()
+{
+    for( int i = 0; i < pages_.count(); ++i )
+        pages_.removeWidget( pages_.widget( i ) );
+    widgets_.clear();
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: PreferencesList::OnSelect
 // Created: LGY 2012-09-25
 // -----------------------------------------------------------------------------

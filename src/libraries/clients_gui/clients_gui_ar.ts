@@ -233,6 +233,37 @@
     </message>
 </context>
 <context>
+    <name>PreferencesDialog</name>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished">نظام الإحداثيات</translation>
+    </message>
+    <message>
+        <source>Visualisation Scales</source>
+        <translation type="unfinished">جداول التخيل</translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished">2D</translation>
+    </message>
+    <message>
+        <source>2D/Terrain</source>
+        <translation type="unfinished">2D/التضاريس</translation>
+    </message>
+    <message>
+        <source>2D/Population</source>
+        <translation type="unfinished">2D/السكان</translation>
+    </message>
+    <message>
+        <source>2D/Elevation</source>
+        <translation type="unfinished">2D/ارتفاع</translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished">3D</translation>
+    </message>
+</context>
+<context>
     <name>Règle GL</name>
     <message>
         <source>2D: %L1m
@@ -1518,40 +1549,12 @@ Do you want to remove it?</source>
         <translation type="unfinished">تفضيلات</translation>
     </message>
     <message>
-        <source>Coordinate System</source>
-        <translation type="unfinished">نظام الإحداثيات</translation>
-    </message>
-    <message>
-        <source>Visualisation Scales</source>
-        <translation type="unfinished">جداول التخيل</translation>
-    </message>
-    <message>
-        <source>3D</source>
-        <translation type="unfinished">3D</translation>
-    </message>
-    <message>
-        <source>2D</source>
-        <translation type="unfinished">2D</translation>
-    </message>
-    <message>
-        <source>2D/Terrain</source>
-        <translation type="unfinished">2D/التضاريس</translation>
-    </message>
-    <message>
-        <source>2D/Population</source>
-        <translation type="unfinished">2D/السكان</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished">موافق</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>2D/Elevation</source>
-        <translation type="unfinished">2D/ارتفاع</translation>
     </message>
     <message>
         <source>Sound</source>

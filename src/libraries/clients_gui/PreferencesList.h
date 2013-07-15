@@ -35,6 +35,7 @@ public:
     //! @name Operations
     //@{
     void AddPage( const QString& name, QWidget* widget );
+    void Purge();
     //@}
 
 private slots:

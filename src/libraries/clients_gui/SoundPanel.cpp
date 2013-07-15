@@ -70,8 +70,7 @@ SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers )
     QLabel* soundDirectoryLabel = new QLabel( tools::translate( "SoundPanel", "Sound directory :" ) );
     tools::Path soundPath;
     soundPath = soundPath.Absolute( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) );
-
-    soundDirectory_ = controllers_.options_.GetOption( "soundDirectory", soundPath.Normalize().ToUTF8() ).To< std::string >().c_str();
+    soundDirectory_ = controllers_.options_.GetOption( "soundDirectory", QString( soundPath.Normalize().ToUTF8().c_str() ) ).To< QString >().toStdString().c_str();
     soundDirectoryEditor_ = new gui::RichLineEdit( "soundDirectoryEditor", soundPath.Normalize().ToUTF8().c_str() );
     QPushButton* soundDirectoryButton = new gui::RichPushButton( "soundDirectoryButton", tools::translate( "SoundPanel", "..." ) );
     connect( soundDirectoryButton, SIGNAL( clicked( bool ) ), this, SLOT( OnChooseSoundsDirectory() ) );
@@ -121,7 +120,7 @@ void SoundPanel::Reset()
         if( soundSliders_[ *it ] )
             soundSliders_[ *it ]->setValue( soundValues_[ *it ] );
     }
-    controllers_.options_.Change( "soundDirectory", soundDirectory_.Normalize().ToUTF8() );
+    controllers_.options_.Change( "soundDirectory", QString( soundDirectory_.Normalize().ToUTF8().c_str() ) );
     soundDirectoryEditor_->setText( soundDirectory_.Normalize().ToUTF8().c_str() );
 }
 // -----------------------------------------------------------------------------
@@ -135,7 +134,7 @@ void SoundPanel::Commit()
         controllers_.options_.Change( *it + "volume", soundSliders_[ *it ]->value() );
         OnChangeVolume( *it, soundSliders_[ *it ]->value() );
     }
-    controllers_.options_.Change( "soundDirectory", soundDirectoryEditor_->text().toStdString() );
+    controllers_.options_.Change( "soundDirectory", soundDirectoryEditor_->text() );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +144,10 @@ void SoundPanel::Commit()
 void SoundPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
     if( name == "soundDirectory" )
-        soundDirectory_ = value.To< std::string >().c_str();
+    {
+        soundDirectory_ = value.To< QString >().toStdString().c_str();
+        soundDirectoryEditor_->setText( soundDirectory_.Normalize().ToUTF8().c_str() );
+    }
     else
     {
         QString soundName = name.c_str();

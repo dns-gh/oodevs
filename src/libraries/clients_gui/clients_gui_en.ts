@@ -237,6 +237,37 @@
     </message>
 </context>
 <context>
+    <name>PreferencesDialog</name>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished">Coordinate System</translation>
+    </message>
+    <message>
+        <source>Visualisation Scales</source>
+        <translation type="unfinished">Visualisation Scales</translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished">2D</translation>
+    </message>
+    <message>
+        <source>2D/Terrain</source>
+        <translation type="unfinished">2D/Terrain</translation>
+    </message>
+    <message>
+        <source>2D/Population</source>
+        <translation type="unfinished">2D/Population</translation>
+    </message>
+    <message>
+        <source>2D/Elevation</source>
+        <translation type="unfinished">2D/Elevation</translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished">3D</translation>
+    </message>
+</context>
+<context>
     <name>Règle GL</name>
     <message>
         <source>2D: %L1m
@@ -1523,40 +1554,12 @@ Do you want to remove it?</translation>
         <translation>Preferences</translation>
     </message>
     <message>
-        <source>Coordinate System</source>
-        <translation>Coordinate System</translation>
-    </message>
-    <message>
-        <source>Visualisation Scales</source>
-        <translation>Visualisation Scales</translation>
-    </message>
-    <message>
-        <source>3D</source>
-        <translation>3D</translation>
-    </message>
-    <message>
-        <source>2D</source>
-        <translation>2D</translation>
-    </message>
-    <message>
-        <source>2D/Terrain</source>
-        <translation>2D/Terrain</translation>
-    </message>
-    <message>
-        <source>2D/Population</source>
-        <translation>2D/Population</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>2D/Elevation</source>
-        <translation>2D/Elevation</translation>
     </message>
     <message>
         <source>Sound</source>

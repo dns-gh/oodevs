@@ -11,6 +11,8 @@
 #define __PreferencesDialog_h_
 
 #include "ModalDialog.h"
+#include "clients_kernel/ModesObserver_ABC.h"
+#include "tools/Observer_ABC.h"
 
 namespace kernel
 {
@@ -38,6 +40,8 @@ namespace gui
 // Created: SBO 2006-05-03
 // =============================================================================
 class PreferencesDialog : public ModalDialog
+                        , public tools::Observer_ABC
+                        , public kernel::ModesObserver_ABC
 {
     Q_OBJECT
 
@@ -58,6 +62,9 @@ public:
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
     void AddLayer( const QString& name, gui::Layer& layer, bool dynamic = false );
+
+    void PurgeDialog();
+    void BuildPreparationSettings();
     //@}
 
 private slots:
@@ -71,6 +78,13 @@ signals:
     void OnAddRaster();
 
 private:
+
+
+    //! @name Helpers
+    //@{
+    virtual void NotifyModeChanged( E_Modes newMode );
+    //@}
+
     //! @name Types
     //@{
     typedef std::vector< PreferencePanel_ABC* > T_Pages;
@@ -87,6 +101,9 @@ private:
     LayersPanel* layersPanel_;
     GraphicsPanel* pGraphicPrefPanel_;
     CoordinateSystemsPanel* pCoordinateSystemsPanel_;
+    E_Modes oldMode_;
+    LightingProxy& lighting_;
+    Elevation2dLayer& elevation2dLayer_;
     //@}
 };
 

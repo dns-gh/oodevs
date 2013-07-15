@@ -232,6 +232,37 @@
     </message>
 </context>
 <context>
+    <name>PreferencesDialog</name>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visualisation Scales</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D/Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D/Population</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D/Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Règle GL</name>
     <message>
         <source>2D: %L1m
@@ -1511,34 +1542,6 @@ Do you want to remove it?</source>
     <name>gui::PreferencesDialog</name>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coordinate System</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Visualisation Scales</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D/Terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D/Population</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D/Elevation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
