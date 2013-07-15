@@ -177,7 +177,7 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
         -- NMI whenever a mission is given, non operational entities should not receive the mission,
         -- and receive the Disengage mission instead (of course this doesn't apply if the mission
         -- given in the first place is Disengage, that's what the next "if" is for)
-        if not exists( tasks, "worldwide.agent.tasks.Disengage" ) then
+        if not exists( tasks, disengageTask ) then
             operationalEntities = {}
             nonOperationalEntities = {}
             for _, entity in pairs( entities ) do
@@ -190,7 +190,7 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
             
             if next( nonOperationalEntities ) then
                 entities = operationalEntities
-                integration.issueMission( self, "worldwide.agent.tasks.Disengage", 1, eEtatEchelon_None, nonOperationalEntities, false, findBestsFunction, disengageTask )
+                integration.issueMission( self, disengageTask, 1, eEtatEchelon_None, nonOperationalEntities, false, findBestsFunction, disengageTask )
             end
         end
     end
@@ -307,7 +307,8 @@ end
 
 -- Manage the end of the commander mission
 integration.manageEndMission = function( self )
-    if myself.feedback then
+    local ok, canMissionEnd = pcall( function() return self.companyTask:canMissionEnd() end )
+    if myself.feedback and ( not ok or canMissionEnd ) then
         if self.params.disableWhenDone then
             self.Feedback( self.feedbacks.done )
             return
@@ -432,6 +433,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     end
     -- Init
     local Activate = Activate
+    myself.tasksGiven = {}
     myself.leadData = {}
     myself.leadData.workMap = {}
     myself.leadData.taskError = false
@@ -487,6 +489,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
         local bestUnits = integration.issueMission ( self, self.params.mainTasks, self.nbrFront, eEtatEchelon_First, nil, true, findBestsFunction, disengageTask )
         if #bestUnits == 0 then
             Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
+            myself.feedback = true
             return
         end
         integration.manageFeedback( bestUnits )
@@ -530,7 +533,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     if myself.newTask then
       self:create()
     end
-          
+    
     if listenFrontElement and self.listenFrontElementInitialized then -- if a subordinate destroyed before and tasks issued a new time
         for _, elem in pairs( self.bestUnits or emptyTable ) do
             integration.ListenFrontElement( elem.entity )
@@ -554,6 +557,22 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     if endMissionBeforeCoordination then
         integration.manageEndMission( self )
     end
+    
+    -- Dynamicity managing
+    local ok, isDynamic = pcall( function() return self.companyTask:isDynamic() end )
+    if ok and isDynamic then
+        local ok, dynamicEntities = pcall( function() return self.companyTask:readyToGiveDynamicTasks( self ) end )
+        if dynamicEntities then
+            for _, entity in pairs( dynamicEntities ) do
+                integration.ListenFrontElement( entity )
+            end
+            local ok, dynamicTask = pcall( function() return self.companyTask:getDynamicTask( self.params, dynamicEntities ) end )
+            integration.issueMission ( self, dynamicTask, 1, integration.getEchelonState( dynamicEntities[ 1 ].source ), dynamicEntities, false, findBestsFunction, disengageTask )
+        end
+    end
+    
+    -- Communication between the company and the subordinates
+    pcall( function() return self.companyTask:communicateWithSubordinates() end )
 
     -- Gestion du soutien
     if self.params.taskForSupporting and self.params.taskForSupporting ~= NIL then

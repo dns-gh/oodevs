@@ -139,7 +139,7 @@ function RegisterDoneTaskListener()
         -- NOTHING
     end
     function doneTaskListener:StageChanged( taskName, id, label)
-        -- NOTHING
+        integration.notifyStageChanged( taskName, id )
     end
     function doneTaskListener:TaskFinished( taskName )
         -- NOTHING
@@ -148,6 +148,13 @@ function RegisterDoneTaskListener()
         integration.notifyTaskEnded()
     end
     masalife.brain.core.registerTaskListener( doneTaskListener )
+end
+
+integration.notifyStageChanged = function( taskName, id )
+    local automat = integration.GetSuperiorKnowledge( meKnowledge )
+    if automat then
+        integration.SendMessage( "StageChanged", automat, { element = myself, taskName = taskName, id = id }, { type = "dynamic" } )
+    end
 end
 
 integration.notifyTaskEnded = function( )
