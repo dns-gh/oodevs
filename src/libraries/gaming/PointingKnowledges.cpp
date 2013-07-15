@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "PointingKnowledges.h"
+#include "clients_kernel/Knowledge_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PointingKnowledges constructor
@@ -45,3 +46,28 @@ void PointingKnowledges::Remove( const kernel::Knowledge_ABC& knowledge )
 {
     knowledges_.erase( &knowledge );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PointingKnowledges::IsKnown
+// Created: NPT 2013-07-15
+// -----------------------------------------------------------------------------
+bool PointingKnowledges::IsKnown( unsigned int id ) const
+{
+    for( auto it = knowledges_.begin(); it != knowledges_.end(); ++it )
+        if ( ( *it )->GetEntityId() == id )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PointingKnowledges::GetKnowledgeFromUnitId
+// Created: NPT 2013-07-15
+// -----------------------------------------------------------------------------
+const kernel::Knowledge_ABC* PointingKnowledges::GetKnowledgeFromUnitId( unsigned int id ) const
+{
+    for( auto it = knowledges_.begin(); it != knowledges_.end(); ++it )
+        if ( ( *it )->GetEntityId() == id )
+            return *it;
+    return 0;
+}
+

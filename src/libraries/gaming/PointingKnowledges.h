@@ -43,6 +43,9 @@ public:
         for( auto it = knowledges_.begin(); it != knowledges_.end(); ++it )
             functor( *it );
     }
+
+    bool IsKnown( unsigned int id ) const;
+    const kernel::Knowledge_ABC* GetKnowledgeFromUnitId( unsigned int i ) const;
     //@}
 
 private:

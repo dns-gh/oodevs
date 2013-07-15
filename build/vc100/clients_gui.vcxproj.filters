@@ -1018,6 +1018,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SignalAdapter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SoundEvent.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1709,6 +1712,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichSlider.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SoundEvent.h">
+      <Filter>Source Files\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@
 #include "AmmoEffect.h"
 #include "Simulation.h"
 #include "clients_gui/GlTools_ABC.h"
-#include "clients_gui/SoundManager.h"
+#include "clients_gui/SoundEvent.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -57,10 +57,10 @@ void AmmoEffect::PlaySoundEffect() const
     {
         switch( type_ )
         {
-            case sword::StartFireEffect::smoke:             SoundManager::GetInstance()->PlaySound( "indirectsmoke", simulation_.GetCurrentTick() ); break;
-            case sword::StartFireEffect::light:             SoundManager::GetInstance()->PlaySound( "indirectillumination", simulation_.GetCurrentTick() ); break;
-            case sword::StartFireEffect::explosion:         SoundManager::GetInstance()->PlaySound( "indirectexplosive", simulation_.GetCurrentTick() ); break;
-            case sword::StartFireEffect::neutralization:    SoundManager::GetInstance()->PlaySound( "indirecteffect", simulation_.GetCurrentTick() ); break;
+            case sword::StartFireEffect::smoke:             controller_.Update( gui::SoundEvent( 0, "indirectsmoke", simulation_.GetCurrentTick() ) ); break;
+            case sword::StartFireEffect::light:             controller_.Update( gui::SoundEvent( 0, "indirectillumination", simulation_.GetCurrentTick() ) ); break;
+            case sword::StartFireEffect::explosion:         controller_.Update( gui::SoundEvent( 0, "indirectexplosive", simulation_.GetCurrentTick() ) ); break;
+            case sword::StartFireEffect::neutralization:    controller_.Update( gui::SoundEvent( 0, "indirecteffect", simulation_.GetCurrentTick() ) ); break;
         default:
             ;
         }

@@ -101,6 +101,8 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/SelectionMenu.h"
+#include "clients_gui/SoundEvent.h"
+#include "clients_gui/SoundManager.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/TerrainLayer.h"
 #include "clients_gui/TerrainPicker.h"
@@ -125,6 +127,45 @@ namespace
         mainWindow.addToolBar( toolBar );
         toolBar->SetModes( hiddenModes, visibleModes, visibleByDefault );
     }
+
+class SoundPlayer : public tools::Observer_ABC
+                   , public tools::ElementObserver_ABC< gui::SoundEvent >
+                   , private boost::noncopyable
+{
+
+public:
+    SoundPlayer( Controllers& controllers, const Profile_ABC& profile )
+        : controllers_( controllers )
+        , profileFilter_( profile )
+        , currentTick_( 0 )
+    {
+        controllers_.Register( *this );
+    }
+
+    virtual ~SoundPlayer()
+    {
+        controllers_.Unregister( *this );
+    }
+
+    virtual void NotifyUpdated( const gui::SoundEvent& soundEvent )
+    {
+        if( !soundEvent.GetEntity() )
+            SoundManager::GetInstance()->PlaySound( soundEvent.GetSoundType(), soundEvent.GetSoundTick() );
+        else
+        {
+            if( profileFilter_.IsPerceived( *soundEvent.GetEntity() ) && profileFilter_.IsVisible( *soundEvent.GetEntity() ) )
+                SoundManager::GetInstance()->PlaySound( soundEvent.GetSoundType(), soundEvent.GetSoundTick() );
+        }
+    }
+
+    //! @name Member data
+    //@{
+    Controllers& controllers_;
+    const kernel::Profile_ABC& profileFilter_;
+    int currentTick_;
+    //@}
+};
+
 }
 
 // -----------------------------------------------------------------------------
@@ -181,6 +222,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_underground    , -200, 50 );
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
+
+    //sound player
+    new SoundPlayer( controllers, *pProfile_ );
 
     // Misc
     lighting_.reset( new SimulationLighting( controllers, this ) );

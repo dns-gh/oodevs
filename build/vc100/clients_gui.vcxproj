@@ -164,6 +164,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichSlider.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Selection.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SoundEvent.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SoundPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SignalAdapter.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SubObjectName.cpp" />
@@ -409,6 +410,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichSlider.h" />
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SoundPanel.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\SoundEvent.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SoundManager.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\AggregateToolbar.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
