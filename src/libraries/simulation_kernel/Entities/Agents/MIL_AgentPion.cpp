@@ -1314,9 +1314,8 @@ void MIL_AgentPion::OnReceiveChangeSuperior( const MIL_EntityManager& manager, u
     if( pNewAutomate->GetArmy() != GetArmy() )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
             "parameters[0] must be an automat in the same side" );
-    if( pAutomate_ == pNewAutomate )
-        return;
-    ChangeSuperiorSilently( *pNewAutomate );
+
+    ChangeSuperior( *pNewAutomate );
 }
 
 // -----------------------------------------------------------------------------
@@ -1327,19 +1326,6 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
 {
     if( pAutomate_ == &newAutomate )
         return;
-    ChangeSuperiorSilently( newAutomate );
-    client::UnitChangeSuperior asnMsg;
-    asnMsg().mutable_unit()->set_id( GetID() );
-    asnMsg().mutable_parent()->set_id( newAutomate.GetID() );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::ChangeSuperiorSilently
-// Created: LDC 2012-05-03
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::ChangeSuperiorSilently( MIL_Automate& newAutomate )
-{
     assert( GetArmy() == newAutomate.GetArmy() );
     SetPionAsCommandPost( false );
     const MIL_AutomateLOG* before = GetLogisticHierarchy().GetPrimarySuperior();
@@ -1354,6 +1340,10 @@ void MIL_AgentPion::ChangeSuperiorSilently( MIL_Automate& newAutomate )
         if( after && after->GetPC() )
             MIL_Report::PostEvent( *after->GetPC(), report::eRC_LogSuperiorAdded, *this );
     }
+    client::UnitChangeSuperior asnMsg;
+    asnMsg().mutable_unit()->set_id( GetID() );
+    asnMsg().mutable_parent()->set_id( newAutomate.GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

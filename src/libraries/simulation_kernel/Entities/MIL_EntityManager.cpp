@@ -1785,14 +1785,6 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& messag
         ack().set_error_msg( e.what() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-
-    if( ack().error_code() ==  UnitActionAck::no_error )
-    {
-        client::UnitChangeSuperior resendMessage;
-        resendMessage().mutable_unit()->set_id ( id );
-        resendMessage().mutable_parent()->set_id ( automatId );
-        resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
-    }
 }
 
 // -----------------------------------------------------------------------------

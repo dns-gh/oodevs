@@ -189,7 +189,6 @@ private:
     //! @name Operations
     //@{
     void UpdatePhysicalState();
-    void ChangeSuperiorSilently( MIL_Automate& newAutomate );
     void CancelCurrentMission();
     virtual void SpecializedDelete();
     //@}
