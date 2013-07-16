@@ -159,6 +159,16 @@ namespace
         if( ( missionPath / ADN_Missions_Data::imagePath_ ).Exists() )
         {
             if( tempDir.Exists() )
+            {
+                try
+                {
+                    tempDir.RemoveAll();
+                }
+                catch( ... )
+                {
+                    // NOTHING
+                }
+            }
                 tempDir.RemoveAll();
             ( missionPath / ADN_Missions_Data::imagePath_ ).Copy( tempDir, tools::Path::OverwriteIfExists );
         }
@@ -173,7 +183,14 @@ namespace
         //copy images from temp directory for image temp reset
         if( tempDir.Exists() )
         {
-            ( missionPath / ADN_Missions_Data::imagePath_ ).RemoveAll();
+            try
+            {
+                ( missionPath / ADN_Missions_Data::imagePath_ ).RemoveAll();
+            }
+            catch( ... )
+            {
+                // NOTHING
+            }
             bool copyDone = false;
             int attemptNumber = 0;
             while( !copyDone )

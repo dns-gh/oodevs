@@ -109,7 +109,7 @@ void ADN_ListView_DescriptionAttachment::RemoveFile()
     tools::Path namePath = tools::Path::FromUnicode( missionName_->text().replace( "\'", " ").toStdWString() );
     tools::Path imageDir = ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( missionType_ ).c_str() ) / namePath;
     imageDir /= tools::Path::FromUnicode( GetModel().item( currentIndex().row() )->text().toStdWString() );
-    if( imageDir.Exists() )
+    if( imageDir.Exists() && imageDir.IsRegularFile() )
         imageDir.Remove();
     if( connector )
         connector->RemItem( GetCurrentData() );
