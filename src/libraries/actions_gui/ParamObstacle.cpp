@@ -144,7 +144,7 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
         while( it.HasMoreElements() )
         {
             const kernel::ObjectType& type = it.NextElement();
-            if( parameter_.HasGenObject( type.GetType() ) )
+            if( parameter_.HasGenObject( type.GetName() ) )
                 typeCombo_->AddItem( type.GetName(), &type );
         }
         layout->addWidget( new QLabel( tr( "Type:" ), parent ) );
