@@ -487,7 +487,7 @@ void MIL_LivingArea::Confine( const TER_Localisation& localisation, bool status 
 {
     bool hasBeenConfined = false;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
-        if( block->GetObject().IsContainedByLocalisation( localisation ) )
+        if( block->GetObject().Intersect2DWithLocalisation( localisation ) )
         {
             block->SetConfined( status );
             hasBeenConfined = true;
@@ -505,7 +505,7 @@ void MIL_LivingArea::Evacuate( const TER_Localisation& localisation, bool status
 {
     bool hasBeenConfined = false;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
-        if( block->GetObject().IsContainedByLocalisation( localisation ) )
+        if( block->GetObject().Intersect2DWithLocalisation( localisation ) )
         {
             block->SetEvacuated( status );
             hasBeenConfined = true;
