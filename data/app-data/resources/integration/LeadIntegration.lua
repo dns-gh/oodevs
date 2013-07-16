@@ -153,8 +153,6 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
                     integration.optimizeWorkMap( params.maxNbrFront, myself.leadData.nbrTotalObstacle )
                 end
             end
-        end
-        if isMain then
             pcall( function() return companyTask:distributeObjectives( bestList, params ) end )
             myself.leadData.nbrWithMainTask = #bestList
         end
@@ -565,13 +563,22 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     -- Dynamicity managing
     local ok, isDynamic = pcall( function() return self.companyTask:isDynamic() end )
     if ok and isDynamic then
-        local ok, dynamicEntities = pcall( function() return self.companyTask:readyToGiveDynamicTasks( self ) end )
-        if dynamicEntities then
-            for _, entity in pairs( dynamicEntities ) do
-                integration.ListenFrontElement( entity )
+        local ok, dynamicEntitiesAndTasks = pcall( function() return self.companyTask:readyToGiveDynamicTasks( self ) end )
+        if ok and dynamicEntitiesAndTasks then
+            for i=1, #dynamicEntitiesAndTasks do
+                local dynamicEntities = dynamicEntitiesAndTasks[i].entities
+                local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
+                
+                for _, entity in pairs( dynamicEntities or emptyTable ) do
+                    integration.ListenFrontElement( entity )
+                end
+                
+                local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
+                                         or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
+                                         or eEtatEchelon_None
+                
+                integration.issueMission ( self, dynamicTasks, 1, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
             end
-            local ok, dynamicTask = pcall( function() return self.companyTask:getDynamicTask( self.params, dynamicEntities ) end )
-            integration.issueMission ( self, dynamicTask, 1, integration.getEchelonState( dynamicEntities[ 1 ].source ), dynamicEntities, false, findBestsFunction, disengageTask )
         end
     end
     
