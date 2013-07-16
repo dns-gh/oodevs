@@ -11,9 +11,9 @@ package swapi
 import (
 	"bytes"
 	"encoding/gob"
+	"fmt"
 	"sword"
 	"time"
-	"fmt"
 )
 
 func DeepCopy(dst, src interface{}) interface{} {
