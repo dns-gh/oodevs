@@ -27,7 +27,8 @@
     <target name="configure" depends="update,proto"/>    
 
     <target name="build">
-        <go cmd="install"/>
+        <go_fmt/>
+        <go_build/>
     </target>
 
     <condition property="gocheck.filter" value="-gocheck.f ${gocheck.f}" else="">
@@ -79,10 +80,5 @@
     </target>
 
     <target name="all" depends="update,proto,build,test,package"/>
-
-    <!-- helper targets -->
-    <target name="fmt">
-        <go cmd="fmt"/>
-    </target>    
 
 </project>
