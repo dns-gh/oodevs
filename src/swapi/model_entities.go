@@ -13,6 +13,7 @@ import (
 	"encoding/gob"
 	"sword"
 	"time"
+	"fmt"
 )
 
 func DeepCopy(dst, src interface{}) interface{} {
@@ -415,6 +416,21 @@ func (model *ModelData) removeUnit(unitId uint32) bool {
 		return true
 	}
 	return false
+}
+
+func (model *ModelData) changeSuperior(unit *Unit, newSuperior *Automat) error {
+	oldAutomat := model.FindAutomat(unit.AutomatId)
+	if oldAutomat == nil {
+		return fmt.Errorf("invalid automat identifier: %v", unit.AutomatId)
+	}
+	if !model.removeUnit(unit.Id) {
+		return fmt.Errorf("impossible to remove the unit: %v", unit.Id)
+	}
+	unit.AutomatId = newSuperior.Id
+	if !model.addUnit(unit) {
+		return fmt.Errorf("impossible to add the unit: %v", unit.Id)
+	}
+	return nil
 }
 
 func (model *ModelData) ListCrowds() []*Crowd {

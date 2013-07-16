@@ -83,6 +83,15 @@ func MakeIdentifier(value uint32) *sword.MissionParameter {
 		})
 }
 
+func MakeAutomat(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Automat: &sword.AutomatId{
+				Id: proto.Uint32(value),
+			},
+		})
+}
+
 func MakeQuantity(value int32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{

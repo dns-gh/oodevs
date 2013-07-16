@@ -617,3 +617,131 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	err = client.LogisticsSupplyPullFlow(23, 9)
 	c.Assert(err, IsNil)
 }
+
+func CheckSuperior(model *swapi.Model, c *C,
+	unitId, newAutomatId, oldAutomatId uint32) {
+	// Check AutomatId attribute in Unit
+	unit := model.GetData().FindUnit(unitId)
+	c.Assert(unit, NotNil)
+	c.Assert(unit.AutomatId, Equals, newAutomatId)
+
+	// Check oldAutomat is empty
+	oldAutomat := model.GetData().FindAutomat(oldAutomatId)
+	c.Assert(oldAutomat, NotNil)
+	c.Assert(oldAutomat.Units, HasLen, 0)
+
+	// Check newAutomat contains one element
+	newAutomat := model.GetData().FindAutomat(newAutomatId)
+	c.Assert(newAutomat, NotNil)
+	c.Assert(newAutomat.Units, HasLen, 1)
+}
+
+func CreateFormation(c *C, client *swapi.Client, partyId uint32) *swapi.Formation {
+	formation, err := client.CreateFormation(partyId, 0, "newformation", 1, "")
+	c.Assert(err, IsNil)
+	return formation
+}
+
+func CreateAutomat(c *C, client *swapi.Client, formationId, knowledgeGroup uint32) *swapi.Automat {
+	knowledgeGroups := client.Model.GetData().ListKnowledgeGroups()
+	kg0 := knowledgeGroups[knowledgeGroup]
+
+	automat, err := client.CreateAutomat(formationId, 0, AutomatType, kg0.Id)
+	c.Assert(err, IsNil)
+	c.Assert(automat.KnowledgeGroupId, Equals, kg0.Id)
+	return automat
+}
+
+func CreateUnit(c *C, client *swapi.Client, automatId uint32) *swapi.Unit {
+	unit, err := client.CreateUnit(automatId, UnitType, swapi.Point{X: -15.8219, Y: 28.2456})
+	c.Assert(err, IsNil)
+	return unit
+}
+
+func (s *TestSuite) TestUnitChangeSuperior(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+
+	// Create 2 automats
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	a2 := CreateAutomat(c, client, f1.Id, 0)
+
+	// One unit in a2 automat
+	u2 := CreateUnit(c, client, a2.Id)
+
+	// error: no tasker
+	err := client.ChangeSuperior(0, a1.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// error: invalid tasker
+	err = client.ChangeSuperior(12345, a1.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// error: missing parameter
+	err = client.ChangeSuperior(u2.Id, 0)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: invalid automat identifier
+	err = client.ChangeSuperior(u2.Id, 12345)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: automat parameter isn't in the same side
+	f2 := CreateFormation(c, client, 2)
+	a3 := CreateAutomat(c, client, f2.Id, 2)
+
+	err = client.ChangeSuperior(u2.Id, a3.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Change superior u2 -> a1
+	err = client.ChangeSuperior(u2.Id, a1.Id)
+	c.Assert(err, IsNil)
+
+	// Wait unit update
+	client.Model.WaitTicks(1)
+	CheckSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
+
+	// Change superior u2 -> a1 again, does nothing
+	err = client.ChangeSuperior(u2.Id, a1.Id)
+	c.Assert(err, IsNil)
+
+	// Wait unit update
+	client.Model.WaitTicks(1)
+	CheckSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
+}
+
+func (s *TestSuite) TestPcChangeSuperior(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	// Create 2 automats
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	a2 := CreateAutomat(c, client, f1.Id, 0)
+	// Create 2 units in a1 automat
+	u1 := CreateUnit(c, client, a1.Id)
+	u2 := CreateUnit(c, client, a1.Id)
+
+	// Check u1 is PC
+	c.Assert(u1.Pc, Equals, true)
+	c.Assert(u2.Pc, Equals, false)
+
+	// Change superior u2 -> a2
+	err := client.ChangeSuperior(u2.Id, a2.Id)
+	c.Assert(err, IsNil)
+
+	// Check u2 is PC
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindUnit(u2.Id).Pc
+	})
+
+	// Change superior u1 -> a2
+	err = client.ChangeSuperior(u1.Id, a2.Id)
+	c.Assert(err, IsNil)
+
+	// Check u1 is not PC
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return !data.FindUnit(u1.Id).Pc
+	})
+}

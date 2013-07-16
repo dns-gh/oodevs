@@ -401,6 +401,21 @@ func (model *Model) update(msg *SwordMessage) {
 					d.changeSupplyQuotas(mm.GetSupplied().GetFormation().GetId(), quotas)
 				}
 			}
+		} else if mm := m.GetUnitChangeSuperior(); mm != nil {
+			unit := d.FindUnit(mm.GetUnit().GetId())
+			if unit == nil {
+				// XXX report error here
+				return
+			}
+			newAutomat := d.FindAutomat(mm.GetParent().GetId())
+			if newAutomat == nil {
+				// XXX report error here
+				return
+			}
+			if d.changeSuperior(unit, newAutomat) != nil {
+				// XXX report error here
+				return
+			}
 		}
 	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()
