@@ -296,13 +296,22 @@ void DEC_KS_ObjectKnowledgeSynthetizer::AddEphemeralObjectKnowledge( MIL_Object_
     ephemeralKnowledges_.push_back( &objectKnown );
 }
 
+namespace
+{
+    template< class T >
+    bool Contains( const std::vector< T >& v, T value )
+    {
+        return std::find( v.begin(), v.end(), value ) != v.end();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget
 // Created: NLD 2004-06-04
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( MIL_Object_ABC& objectKnown )
 {
-    if( std::find( objectsToForget_.begin(), objectsToForget_.end(), &objectKnown ) == objectsToForget_.end() )
+    if( !Contains( objectsToForget_, &objectKnown ) && pBlackBoard_->ResolveKnowledgeObject( objectKnown ) )
         objectsToForget_.push_back( &objectKnown );
 }
 
@@ -312,6 +321,6 @@ void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( MIL_Object_A
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::AddObjectKnowledgeToForget( boost::shared_ptr< DEC_Knowledge_Object > knowledge )
 {
-    if( std::find( knowledgesObjectToForget_.begin(), knowledgesObjectToForget_.end(), knowledge ) == knowledgesObjectToForget_.end() )
+    if( !Contains( knowledgesObjectToForget_, knowledge ) && pBlackBoard_->GetKnowledgeObjectContainer().GetKnowledgeObjectFromID( knowledge->GetID() ) )
         knowledgesObjectToForget_.push_back( knowledge );
 }

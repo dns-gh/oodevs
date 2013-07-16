@@ -173,16 +173,13 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge )
 {
-    if( knowledge.IsValid() )
+    knowledge.Invalidate();
+    if( knowledge.GetObjectKnown() )
     {
-        knowledge.Invalidate();
-        if( knowledge.GetObjectKnown() )
-        {
-            objectMap_.erase( knowledge.GetObjectKnown() );
-            knowledge.CleanObjectKnown();
-        }
-        knowledgeObjectFromIDMap_.erase( knowledge.GetID() );
+        objectMap_.erase( knowledge.GetObjectKnown() );
+        knowledge.CleanObjectKnown();
     }
+    knowledgeObjectFromIDMap_.erase( knowledge.GetID() );
 }
 
 // -----------------------------------------------------------------------------
