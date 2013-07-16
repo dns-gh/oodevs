@@ -36,7 +36,7 @@ using namespace gui;
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                      const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer )
+                                      const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, SoundManager& soundManager )
     : ModalDialog( parent, "PreferencesDialog" )
     , controllers_      ( controllers )
     , painter_          ( painter )
@@ -44,6 +44,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     , oldMode_ ( eModes_None )
     , lighting_ ( lighting )
     , elevation2dLayer_ ( elevation2dLayer )
+    , soundManager_( soundManager )
 {
     SubObjectName subObject( "PreferencesDialog" );
     setCaption( tr( "Preferences" ) );
@@ -198,7 +199,7 @@ void PreferencesDialog::NotifyModeChanged( E_Modes newMode )
         oldMode_ = eModes_AllGaming;
         PurgeDialog();
         BuildPreparationSettings();
-        AddPage( tr( "Sound" ), *new SoundPanel( this, controllers_ ) );
+        AddPage( tr( "Sound" ), *new SoundPanel( this, controllers_, soundManager_ ) );
     }
     else if( ( newMode & eModes_Preparation ) != 0 && oldMode_ != eModes_Preparation )
     {

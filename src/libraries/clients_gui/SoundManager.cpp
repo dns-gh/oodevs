@@ -16,32 +16,21 @@
 #include <phonon/mediaobject.h>
 #pragma warning( pop )
 
-#include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
 
-SoundManager* SoundManager::instance_ = NULL;
-
-namespace
-{
-    const std::vector< std::string > sounds = boost::assign::list_of< std::string >
-        ( "directfire" )
-        ( "indirectsmoke" )
-        ( "indirectexplosive" )
-        ( "indirectillumination" )
-        ( "indirecteffect" );
-}
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: SoundManager constructor
 // Created: NPT 2013-07-03
 // -----------------------------------------------------------------------------
-SoundManager::SoundManager()
+SoundManager::SoundManager( const std::vector< std::string >& sounds )
+    : sounds_( sounds )
+    , defaultSoundsPath_( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) )
+    , currentSoundsPath_( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) )
 {
-    for( auto it = ::sounds.begin(); it != ::sounds.end(); ++it )
-    {
-            volume_[ *it ] = 0.5;
-            lastPlayTic_[ *it ] = 0;
-    }
+    for( auto it = sounds.begin(); it != sounds.end(); ++it )
+        volume_[ *it ] = 0.5;
 }
 
 
@@ -51,29 +40,13 @@ SoundManager::SoundManager()
 // -----------------------------------------------------------------------------
 SoundManager::~SoundManager()
 {
-    instance_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SoundManager::GetInstance
-// Created: NPT 2013-07-03
-// -----------------------------------------------------------------------------
-SoundManager* SoundManager::GetInstance()
-{
-    if ( instance_ == NULL )
-    {
-        instance_ = new SoundManager;
-        instance_->defaultSoundsPath_ = tools::GeneralConfig::BuildResourceChildFile( "sounds" );
-        instance_->currentSoundsPath_ = tools::GeneralConfig::BuildResourceChildFile( "sounds" );
-    }
-    return instance_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SoundManager::PlaySound
 // Created: NPT 2013-07-03
 // -----------------------------------------------------------------------------
-void SoundManager::PlaySound( const std::string& soundName, int tic )
+void SoundManager::PlaySound( const std::string& soundName )
 {
     currentSound_ = tools::Path();
     currentSoundsPath_.Apply( boost::bind( &SoundManager::FindFile, this, _1, boost::cref( soundName ) ), false );
@@ -86,11 +59,8 @@ void SoundManager::PlaySound( const std::string& soundName, int tic )
     Phonon::AudioOutput* audioOutput = new Phonon::AudioOutput( Phonon::MusicCategory );
     audioOutput->setVolume( volume_[ soundName ] );
     Phonon::createPath(mediaObject, audioOutput);
-    if( CanPlaySound( soundName, tic ) )
-    {
-        mediaObject->play();
-        canals_[ soundName ] = audioOutput;
-    }
+    mediaObject->play();
+    canals_[ soundName ] = audioOutput;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,20 +94,6 @@ bool SoundManager::FindFile( const tools::Path& path, const std::string& name )
     if( path.BaseName().ToUTF8() == name )
     {
         currentSound_ = path;
-        return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SoundManager::CanPlaySound
-// Created: NPT 2013-07-12
-// -----------------------------------------------------------------------------
-bool SoundManager::CanPlaySound( const std::string& canal, int currentTic )
-{
-    if( lastPlayTic_[ canal ] < currentTic )
-    {
-        lastPlayTic_[ canal ] = currentTic;
         return true;
     }
     return false;

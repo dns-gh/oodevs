@@ -11,6 +11,7 @@
 #define __PreferencesDialog_h_
 
 #include "ModalDialog.h"
+#include "SoundManager.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 
@@ -49,7 +50,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer );
+                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, SoundManager& soundManager );
     virtual ~PreferencesDialog();
     //@}
 
@@ -104,6 +105,7 @@ private:
     E_Modes oldMode_;
     LightingProxy& lighting_;
     Elevation2dLayer& elevation2dLayer_;
+    SoundManager& soundManager_;
     //@}
 };
 

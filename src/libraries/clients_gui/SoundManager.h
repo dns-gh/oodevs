@@ -17,6 +17,9 @@
 #include <phonon/audiooutput.h>
 #pragma warning( pop )
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  SoundManager
     @brief  SoundManager
@@ -29,18 +32,16 @@ class SoundManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             SoundManager();
+             SoundManager( const std::vector< std::string >& sounds );
     virtual ~SoundManager();
     //@}
 
     //! @name Operations
     //@{
-    static SoundManager* GetInstance();
-    void PlaySound( const std::string& filePath, int tic );
+    void PlaySound( const std::string& filePath );
     void SetVolume( const std::string& canal, double value );
     void ChangeSoundsDirectory( const tools::Path& path );
     bool FindFile( const tools::Path& path, const std::string& name );
-    bool CanPlaySound( const std::string& canal, int currentTic );
     //@}
 
 private:
@@ -51,14 +52,15 @@ private:
 private:
     //! @name Member data
     //@{
-    static SoundManager* instance_;
     std::map< std::string, double > volume_;
-    std::map< std::string, double > lastPlayTic_;
     std::map< std::string, Phonon::AudioOutput* > canals_;
     tools::Path defaultSoundsPath_;
     tools::Path currentSoundsPath_;
     tools::Path currentSound_;
+    const std::vector< std::string > sounds_;
     //@}
 };
+
+}
 
 #endif // __SoundManager_h_

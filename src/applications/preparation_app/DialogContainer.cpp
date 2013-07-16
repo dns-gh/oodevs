@@ -34,12 +34,16 @@
 #include "UnitStateDialog.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/PreferencesDialog.h"
+#include "clients_gui/SoundManager.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 #include "tools/DefaultLoader.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
+
+#include <vector>
+#include <string>
 
 // -----------------------------------------------------------------------------
 // Name: DialogContainer constructor
@@ -63,7 +67,9 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LogisticStockEditor( parent, controllers, staticModel );
     new LongNameEditor( parent, controllers, staticModel );
 
-    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer );
+    std::vector< std::string > sounds;
+    gui::SoundManager soundManager( sounds );
+    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer, soundManager );
     prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );

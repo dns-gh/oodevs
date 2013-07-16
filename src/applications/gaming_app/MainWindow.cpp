@@ -23,6 +23,7 @@
 #include "DockContainer.h"
 #include "EventDockWidget.h"
 #include "EventToolbar.h"
+#include "FirePlayer.h"
 #include "FogLayer.h"
 #include "FormationLayer.h"
 #include "icons.h"
@@ -101,8 +102,6 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/SelectionMenu.h"
-#include "clients_gui/SoundEvent.h"
-#include "clients_gui/SoundManager.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/TerrainLayer.h"
 #include "clients_gui/TerrainPicker.h"
@@ -116,7 +115,6 @@
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/bind.hpp>
 
 using namespace kernel;
 
@@ -127,45 +125,6 @@ namespace
         mainWindow.addToolBar( toolBar );
         toolBar->SetModes( hiddenModes, visibleModes, visibleByDefault );
     }
-
-class SoundPlayer : public tools::Observer_ABC
-                   , public tools::ElementObserver_ABC< gui::SoundEvent >
-                   , private boost::noncopyable
-{
-
-public:
-    SoundPlayer( Controllers& controllers, const Profile_ABC& profile )
-        : controllers_( controllers )
-        , profileFilter_( profile )
-        , currentTick_( 0 )
-    {
-        controllers_.Register( *this );
-    }
-
-    virtual ~SoundPlayer()
-    {
-        controllers_.Unregister( *this );
-    }
-
-    virtual void NotifyUpdated( const gui::SoundEvent& soundEvent )
-    {
-        if( !soundEvent.GetEntity() )
-            SoundManager::GetInstance()->PlaySound( soundEvent.GetSoundType(), soundEvent.GetSoundTick() );
-        else
-        {
-            if( profileFilter_.IsPerceived( *soundEvent.GetEntity() ) && profileFilter_.IsVisible( *soundEvent.GetEntity() ) )
-                SoundManager::GetInstance()->PlaySound( soundEvent.GetSoundType(), soundEvent.GetSoundTick() );
-        }
-    }
-
-    //! @name Member data
-    //@{
-    Controllers& controllers_;
-    const kernel::Profile_ABC& profileFilter_;
-    int currentTick_;
-    //@}
-};
-
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +183,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_observe        ,  200, 150 );
 
     //sound player
-    new SoundPlayer( controllers, *pProfile_ );
+    firePlayer_.reset( new FirePlayer( controllers, *pProfile_ ) );
 
     // Misc
     lighting_.reset( new SimulationLighting( controllers, this ) );
@@ -233,7 +192,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d ) );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d, firePlayer_->GetSoundManager() ) );
 
     preferenceDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( preferenceDialog_.get(), controllers ) );
     new VisionConesToggler( controllers, network_.GetMessageMgr(), this );

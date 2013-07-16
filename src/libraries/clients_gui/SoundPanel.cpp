@@ -60,9 +60,10 @@ namespace
 // Name: SoundPanel constructor
 // Created: NPT 2013-07-05
 // -----------------------------------------------------------------------------
-SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers )
+SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers, SoundManager& soundManager )
     : PreferencePanel_ABC( parent, "SoundPanel" )
     , controllers_( controllers )
+    , soundManager_( soundManager )
 {
     QLabel* coordinateLabel = new QLabel( tools::translate( "SoundPanel", "Ajust all sound volumes:" ) );
     RichGroupBox* box = new RichGroupBox( "soundControl", tools::translate( "SoundPanel", "Sound control" ), this );
@@ -183,7 +184,7 @@ void SoundPanel::OnSliderChanged( int value )
 // -----------------------------------------------------------------------------
 void SoundPanel::OnChangeVolume( const std::string& name, int value )
 {
-    SoundManager::GetInstance()->SetVolume( name, double( value )/ 100. );
+    soundManager_.SetVolume( name, double( value )/ 100. );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +195,7 @@ void SoundPanel::OnChooseSoundsDirectory()
 {
     tools::Path newDirectory = gui::FileDialog::getExistingDirectory( this, tr( "Select sounds directory" ), tools::Path::FromUnicode( soundDirectoryEditor_->text().toStdWString() ) );
     soundDirectoryEditor_->setText( QString::fromStdWString( newDirectory.ToUnicode() ) );
-    SoundManager::GetInstance()->ChangeSoundsDirectory( soundDirectoryEditor_->text().toStdString().c_str() );
+    soundManager_.ChangeSoundsDirectory( soundDirectoryEditor_->text().toStdString().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,4 +206,3 @@ std::map< std::string, RichSlider*>& SoundPanel::GetSoundSliders()
 {
     return soundSliders_;
 }
-

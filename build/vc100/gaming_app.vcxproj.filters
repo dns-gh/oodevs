@@ -841,6 +841,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\EventDockWidget.cpp">
       <Filter>Source Files\Dialogs\Events</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\FirePlayer.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1193,6 +1196,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\EventTopWidget.h">
       <Filter>Source Files\Dialogs\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\FirePlayer.h">
+      <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

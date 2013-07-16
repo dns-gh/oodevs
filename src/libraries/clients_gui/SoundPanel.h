@@ -12,6 +12,7 @@
 
 #include "PreferencePanel_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "SoundManager.h"
 
 namespace kernel
 {
@@ -22,6 +23,7 @@ namespace gui
 {
     class RichSlider;
     class RichLineEdit;
+
 // =============================================================================
 /** @class  SoundPanel
     @brief  SoundPanel
@@ -37,7 +39,7 @@ Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             SoundPanel( QWidget* parent, kernel::Controllers& controllers );
+    SoundPanel( QWidget* parent, kernel::Controllers& controllers, SoundManager& soundManager );
     virtual ~SoundPanel();
     //@}
 
@@ -69,6 +71,7 @@ private:
     std::map< std::string, int > soundValues_;
     tools::Path soundDirectory_;
     kernel::Controllers& controllers_;
+    SoundManager& soundManager_;
     //@}
 };
 

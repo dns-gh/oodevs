@@ -66,6 +66,7 @@ class OrbatDockWidget;
 class ProfileFilter;
 class DockContainer;
 class IndicatorPlotFactory;
+class FirePlayer;
 
 // =============================================================================
 /** @class  MainWindow
@@ -155,6 +156,7 @@ private:
     std::auto_ptr< gui::LightingProxy > lighting_;
     std::auto_ptr< gui::GlSelector > selector_;
     std::auto_ptr< StatusBar > pStatus_;
+    std::auto_ptr< FirePlayer > firePlayer_;
     std::auto_ptr< IndicatorPlotFactory > plotFactory_;
     gui::ParametersLayer* parameters_; // $$$$ ABR 2013-02-14: Can't make an auto_ptr of this one, because every layers are destroyed into GlProxy destructor.
     QByteArray states_;
