@@ -344,7 +344,7 @@ namespace
             : objectBlackBoardGroup1( *group1->GetKnowledgeObjectContainer() )
             , objectBlackBoardGroup2( *group2->GetKnowledgeObjectContainer() )
             , object( &army, objectType, 15u )
-            , object2( &army, objectType, 15u )
+            , object2( &army, objectType, 16u )
         {
             objectBlackBoardGroup1.SetKnowledgeGroup( group1.get() );
             objectBlackBoardGroup2.SetKnowledgeGroup( group2.get() );
