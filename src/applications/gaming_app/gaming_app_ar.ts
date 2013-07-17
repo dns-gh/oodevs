@@ -421,11 +421,7 @@
 <context>
     <name>CommunicationTreeView</name>
     <message>
-        <source>Change Knowledge Group</source>
-        <translation type="unfinished">تغيير مجموعة المعارف</translation>
-    </message>
-    <message>
-        <source>Change knowledge group</source>
+        <source>Change superior</source>
         <translation type="unfinished">تغيير مجموعة المعارف</translation>
     </message>
     <message>

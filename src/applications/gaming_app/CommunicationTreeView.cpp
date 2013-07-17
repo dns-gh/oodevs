@@ -280,7 +280,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::Automat_ABC& /*auto
     if( !isVisible() )
         return;
     if( controllers_.GetCurrentMode() != eModes_Replay )
-        menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,7 +292,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
     if( !isVisible() )
         return;
     if( controllers_.GetCurrentMode() != eModes_Replay )
-        menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -367,7 +367,7 @@ void CommunicationTreeView::Drop( const kernel::Automat_ABC& item, const kernel:
     if( const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target ) )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_knowledge_group" );
-        actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Knowledge Group" ), true );
+        actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change superior" ), true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::KnowledgeGroup( it.NextElement(), *group, controllers_.controller_ ) );
         if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &group->Get< kernel::CommunicationHierarchies >().GetTop() ) )

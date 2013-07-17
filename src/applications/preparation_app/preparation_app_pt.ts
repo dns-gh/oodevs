@@ -91,7 +91,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change knowledge group</source>
+        <source>Change superior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

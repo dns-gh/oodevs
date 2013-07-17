@@ -421,12 +421,8 @@
 <context>
     <name>CommunicationTreeView</name>
     <message>
-        <source>Change Knowledge Group</source>
+        <source>Change superior</source>
         <translation type="unfinished">Cambiar grupo de conocimeinto</translation>
-    </message>
-    <message>
-        <source>Change knowledge group</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit Change Superior</source>
@@ -3032,7 +3028,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Change superior</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cambiar grupo de conocimeinto</translation>
     </message>
     <message>
         <source>Create formation</source>

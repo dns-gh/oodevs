@@ -95,8 +95,8 @@
         <translation>Create sub knowledge group</translation>
     </message>
     <message>
-        <source>Change knowledge group</source>
-        <translation>Change knowledge group</translation>
+        <source>Change superior</source>
+        <translation>Change superior</translation>
     </message>
 </context>
 <context>

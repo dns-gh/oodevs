@@ -95,7 +95,7 @@
         <translation type="unfinished">إنشاء المجموعة الفرعية المعرفة</translation>
     </message>
     <message>
-        <source>Change knowledge group</source>
+        <source>Change superior</source>
         <translation type="unfinished">تغيير مجموعة المعارف</translation>
     </message>
 </context>

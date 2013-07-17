@@ -95,7 +95,7 @@
         <translation>Crear subgrupo de información</translation>
     </message>
     <message>
-        <source>Change knowledge group</source>
+        <source>Change superior</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
