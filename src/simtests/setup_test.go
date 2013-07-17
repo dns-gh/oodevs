@@ -18,6 +18,7 @@ import (
 	"swapi"
 	"swapi/simu"
 	"testing"
+	"time"
 )
 
 var (
@@ -67,6 +68,29 @@ func MakeOpts() *simu.SimOpts {
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
 	opts.Legacy = legacy
 	return &opts
+}
+
+func startSimOnExercise(c *C, exercise string, endTick int,
+	paused bool) *simu.SimProcess {
+
+	opts := MakeOpts()
+	opts.ExerciseName = exercise
+	opts.ConnectTimeout = 40 * time.Second
+
+	session := simu.CreateDefaultSession()
+	session.Paused = paused
+	session.GamingServer = opts.DispatcherAddr
+	WriteSession(c, opts, session)
+	sim, err := simu.StartSim(opts)
+	c.Assert(err, IsNil) // failed to start the simulation
+	return sim
+}
+
+func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
+	client, err := swapi.Connect(sim.DispatcherAddr)
+	client.PostTimeout = 10 * time.Second
+	c.Assert(err, IsNil) // failed to connect to simulation
+	return client
 }
 
 func addClientLogger(client *swapi.Client) {

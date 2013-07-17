@@ -15,35 +15,12 @@ import (
 	"time"
 )
 
-func startSimOnExercise(c *C, exercise string, endTick int,
-	paused bool) *simu.SimProcess {
-
-	opts := MakeOpts()
-	opts.ExerciseName = exercise
-	opts.ConnectTimeout = 20 * time.Second
-
-	session := simu.CreateDefaultSession()
-	session.Paused = paused
-	session.GamingServer = opts.DispatcherAddr
-	WriteSession(c, opts, session)
-	sim, err := simu.StartSim(opts)
-	c.Assert(err, IsNil) // failed to start the simulation
-	return sim
-}
-
-func ConnectClient(c *C, sim *simu.SimProcess) *swapi.Client {
-	client, err := swapi.Connect(sim.DispatcherAddr)
-	client.PostTimeout = 10 * time.Second
-	c.Assert(err, IsNil) // failed to connect to simulation
-	return client
-}
-
 func (s *TestSuite) TestLogin(c *C) {
 	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
 	defer sim.Stop()
 
 	// Test invalid login
-	client := ConnectClient(c, sim)
+	client := connectClient(c, sim)
 	c.Assert(client.GetClientId(), Equals, int32(0))
 	err := client.Login("foo", "bar")
 	c.Assert(err, ErrorMatches, "invalid_login")
@@ -51,13 +28,13 @@ func (s *TestSuite) TestLogin(c *C) {
 	client.Close()
 
 	// Test invalid version
-	client = ConnectClient(c, sim)
+	client = connectClient(c, sim)
 	err = client.LoginWithVersion("admin", "user", "1.0")
 	c.Assert(err, ErrorMatches, "mismatched_protocol_version")
 	client.Close()
 
 	// Test valid login
-	client = ConnectClient(c, sim)
+	client = connectClient(c, sim)
 	err = client.Login("admin", "")
 	c.Assert(err, IsNil) // login failed
 	c.Assert(client.GetClientId(), Not(Equals), int32(0))
@@ -108,7 +85,7 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	defer sim.Stop()
 
 	// Connect and watch incoming messages
-	client := ConnectClient(c, sim)
+	client := connectClient(c, sim)
 	seen := waitForMessages(client, 5*time.Second)
 	if seen {
 		c.Fatal("messages seen before any client action")
@@ -123,7 +100,7 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 }
 
 func connectAndWait(c *C, sim *simu.SimProcess, user, password string) *swapi.Client {
-	client := ConnectClient(c, sim)
+	client := connectClient(c, sim)
 	err := client.Login(user, password)
 	c.Assert(err, IsNil)
 	ok := client.Model.WaitReady(10 * time.Second)
@@ -244,7 +221,7 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	// Delete valid profile
 	err = admin.DeleteProfile("user2")
 	c.Assert(err, IsNil)
-	user2 := ConnectClient(c, sim)
+	user2 := connectClient(c, sim)
 	err = user2.Login("user2", "user2")
 	c.Assert(err, ErrorMatches, "invalid_login")
 	user2.Close()
@@ -263,12 +240,12 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	c.Assert(admin.Model.GetProfile(userProfile.Login), NotNil)
 	admin.Close()
 	// And taken in account for removed...
-	user2 = ConnectClient(c, sim)
+	user2 = connectClient(c, sim)
 	err = user2.Login("user2", "user2")
 	c.Assert(err, ErrorMatches, "invalid_login")
 	user2.Close()
 	// ... and created profiles
-	user = ConnectClient(c, sim)
+	user = connectClient(c, sim)
 	err = user.Login(userProfile.Login, userProfile.Password)
 	c.Assert(err, IsNil)
 	user.Close()
