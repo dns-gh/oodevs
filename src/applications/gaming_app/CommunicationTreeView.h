@@ -40,6 +40,7 @@ class StaticModel;
 // =============================================================================
 class CommunicationTreeView : public gui::HierarchyTreeView< kernel::CommunicationHierarchies >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                            , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
                             , gui::ChangeSuperior_ABC
 {
@@ -47,7 +48,9 @@ class CommunicationTreeView : public gui::HierarchyTreeView< kernel::Communicati
 public:
     //! @name Constructors/Destructor
     //@{
-             CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
+             CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
+                                    gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel,
+                                    const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
     virtual ~CommunicationTreeView();
     //@}
 
@@ -73,16 +76,19 @@ private:
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& group, kernel::ContextMenu& menu );
     virtual void Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target );
     void UpdateLongName( const kernel::Entity_ABC& entity );
+    void OnCreateKnowledgeGroup( const kernel::SafePointer< kernel::Entity_ABC >& entity, const std::string& type );
     //@}
 
 private:
     //! @name Member data
     //@{
+    const kernel::Profile_ABC& profile_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     actions::ActionsModel& actionsModel_;

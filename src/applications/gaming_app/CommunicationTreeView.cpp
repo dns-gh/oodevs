@@ -14,21 +14,27 @@
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Automat.h"
-#include "actions/UnitMagicAction.h"
+#include "actions/Identifier.h"
+#include "actions/MagicAction.h"
 #include "actions/KnowledgeGroup.h"
 #include "actions/KnowledgeGroupMagicAction.h"
+#include "actions/String.h"
+#include "actions/UnitMagicAction.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_gui/ItemPixmapDelegate.h"
 #include "clients_gui/LongNameHelper.h"
+#include "clients_gui/SignalAdapter.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
 #include "icons.h"
@@ -62,15 +68,18 @@ namespace
 // Name: CommunicationTreeView constructor
 // Created: JSR 2012-09-28
 // -----------------------------------------------------------------------------
-CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
+CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
+                                              gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel,
+                                              const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
     : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( objectName, controllers, profile, modelObserver, symbols, parent )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , actionsModel_( actionsModel )
+    , profile_             ( profile )
+    , static_              ( staticModel )
+    , simulation_          ( simulation )
+    , actionsModel_        ( actionsModel )
     , changeSuperiorDialog_( 0 )
-    , lock_( MAKE_PIXMAP( lock ) )
-    , scisors_( MAKE_PIXMAP( scisors ) ) // LTO
-    , commandPost_( MAKE_PIXMAP( commandpost ) )
+    , lock_                ( MAKE_PIXMAP( lock ) )
+    , scisors_             ( MAKE_PIXMAP( scisors ) ) // LTO
+    , commandPost_         ( MAKE_PIXMAP( commandpost ) )
 {
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &CommunicationTreeView::GetEntityPixmap, this, _1 ), this ) );
     setEditTriggers( 0 );
@@ -284,6 +293,46 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
         return;
     if( controllers_.GetCurrentMode() != eModes_Replay )
         menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::NotifyContextMenu
+// Created: SLI 2013-07-17
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    if( !profile_.CanDoMagic( team ) )
+        return;
+    kernel::ContextMenu* createKnowledgeGroup = menu.SubMenu( "Create", tr( "Create Knowledge Group", false, 1 ) );
+    const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types = static_.types_;
+    for( auto it = types.CreateIterator(); it.HasMoreElements(); )
+    {
+        const kernel::KnowledgeGroupType& type = it.NextElement();
+        QAction* action = createKnowledgeGroup->addAction( QString::fromStdString( type.GetName() ) );
+        kernel::SafePointer< kernel::Entity_ABC > entity( controllers_, &team );
+        gui::connect( action, SIGNAL( triggered() ), boost::bind( &CommunicationTreeView::OnCreateKnowledgeGroup, this, entity, type.GetName() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::OnCreateKnowledgeGroup
+// Created: SLI 2013-07-17
+// -----------------------------------------------------------------------------
+void CommunicationTreeView::OnCreateKnowledgeGroup( const kernel::SafePointer< kernel::Entity_ABC >& entity, const std::string& type )
+{
+    if( entity )
+    {
+        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
+        actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Create Knowledge Group" ), true );
+        tools::Iterator< const kernel::OrderParameter& > paramIt = actionType.CreateIterator();
+        action->AddParameter( *new actions::parameters::Identifier( paramIt.NextElement(), entity->GetId() ) );
+        action->AddParameter( *new actions::parameters::String( paramIt.NextElement(), type ) );
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new actions::ActionTasker( entity, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

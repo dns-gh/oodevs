@@ -432,6 +432,10 @@
         <source>Unit Change Superior</source>
         <translation type="unfinished">وحدة التغيير متفوقة</translation>
     </message>
+    <message>
+        <source>Create Knowledge Group</source>
+        <translation type="unfinished">إنشاء مجموعة المعارف</translation>
+    </message>
 </context>
 <context>
     <name>Config</name>

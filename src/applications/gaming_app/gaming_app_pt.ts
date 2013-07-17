@@ -432,6 +432,10 @@
         <source>Change Knowledge Group</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Create Knowledge Group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Config</name>

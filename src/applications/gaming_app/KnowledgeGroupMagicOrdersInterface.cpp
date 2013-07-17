@@ -25,7 +25,6 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_gui/SignalAdapter.h"
 #include "gaming/KnowledgeGroup.h"
@@ -39,7 +38,9 @@ using namespace kernel;
 // Name: KnowledgeGroupMagicOrdersInterface constructor
 // Created: SLG 2009-12-16
 // -----------------------------------------------------------------------------
-KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel,
+                                                                        const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile,
+                                                                        const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
     : QObject( parent )
     , controllers_        ( controllers )
     , actionsModel_       ( actionsModel )
@@ -65,25 +66,6 @@ KnowledgeGroupMagicOrdersInterface::~KnowledgeGroupMagicOrdersInterface()
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupMagicOrdersInterface::NotifyContextMenu
-// Created: MCO 2013-07-04
-// -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
-{
-    if( !profile_.CanDoMagic( team ) )
-        return;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
-    kernel::ContextMenu* createKnowledgeGroup = magicMenu->SubMenu( "Create", tr( "Create Knowledge Group", false, 1 ) );
-    for( auto it = types_.CreateIterator(); it.HasMoreElements(); )
-    {
-        const KnowledgeGroupType& type = it.NextElement();
-        QAction* action = createKnowledgeGroup->addAction( QString::fromStdString( type.GetName() ) );
-        kernel::SafePointer< kernel::Entity_ABC > entity( controllers_, &team );
-        gui::connect( action, SIGNAL( triggered() ), boost::bind( &KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup, this, entity, type.GetName() ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicOrdersInterface::NotifyContextMenu
 // Created: SLG 2009-12-16
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& entity, ContextMenu& menu )
@@ -96,7 +78,7 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
         magicMenu->insertItem( tr( "Desactivate" ), this, SLOT( OnToggleKnowledgeGroupActivation() ) );
     else
         magicMenu->insertItem( tr( "Activate" ), this, SLOT( OnToggleKnowledgeGroupActivation() ) );
-    kernel::ContextMenu* createKnowledgeGroup = magicMenu->SubMenu( "Create", tr( "Create Knowledge Group", false, 1 ) );
+    kernel::ContextMenu* createKnowledgeGroup = menu.SubMenu( "Create", tr( "Create Knowledge Group", false, 1 ) );
     for( auto it = types_.CreateIterator(); it.HasMoreElements(); )
     {
         const KnowledgeGroupType& type = it.NextElement();

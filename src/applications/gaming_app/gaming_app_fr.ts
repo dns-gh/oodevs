@@ -432,6 +432,10 @@
         <source>Unit Change Superior</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Create Knowledge Group</source>
+        <translation type="unfinished">Créer un groupe de connaissance</translation>
+    </message>
 </context>
 <context>
     <name>Config</name>
@@ -1439,7 +1443,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Create Knowledge Group</source>
-        <translation>Création d&apos;un groupe de connaissance</translation>
+        <translation>Créer un groupe de connaissance</translation>
     </message>
 </context>
 <context>

@@ -432,6 +432,10 @@
         <source>Unit Change Superior</source>
         <translation>Unit Change Superior</translation>
     </message>
+    <message>
+        <source>Create Knowledge Group</source>
+        <translation type="unfinished">Create Knowledge Group</translation>
+    </message>
 </context>
 <context>
     <name>Config</name>
