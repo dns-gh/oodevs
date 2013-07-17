@@ -234,7 +234,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 func loginAndWaitModel(c *C, sim *simu.SimProcess, user, password,
 	exercise string) *swapi.Client {
 
-	client := ConnectClient(c, sim)
+	client := connectClient(c, sim)
 	err := client.Login(user, password)
 	c.Assert(err, IsNil) // login failed
 	ok := client.Model.WaitReady(10 * time.Second)
