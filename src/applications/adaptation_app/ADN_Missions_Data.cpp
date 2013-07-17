@@ -169,7 +169,6 @@ namespace
                     // NOTHING
                 }
             }
-                tempDir.RemoveAll();
             ( missionPath / ADN_Missions_Data::imagePath_ ).Copy( tempDir, tools::Path::OverwriteIfExists );
         }
         else
