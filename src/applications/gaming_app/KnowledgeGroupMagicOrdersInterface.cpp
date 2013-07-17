@@ -78,7 +78,7 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
         magicMenu->insertItem( tr( "Desactivate" ), this, SLOT( OnToggleKnowledgeGroupActivation() ) );
     else
         magicMenu->insertItem( tr( "Activate" ), this, SLOT( OnToggleKnowledgeGroupActivation() ) );
-    kernel::ContextMenu* createKnowledgeGroup = menu.SubMenu( "Create", tr( "Create Knowledge Group", false, 1 ) );
+    kernel::ContextMenu* createKnowledgeGroup = menu.SubMenu( "Knowledge", tr( "Create Knowledge Group", false, 1 ) );
     for( auto it = types_.CreateIterator(); it.HasMoreElements(); )
     {
         const KnowledgeGroupType& type = it.NextElement();
@@ -87,7 +87,7 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
             boost::bind( &KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup, this, kernel::SafePointer< kernel::Entity_ABC >( controllers_, &entity ), type.GetName() ) );
     }
     magicMenu->insertItem( tr( "Add knowledge" ), this, SLOT( OnAddKnowledgeInGroup() ) );
-    kernel::ContextMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
+    kernel::ContextMenu* typeMenu = menu.SubMenu( "Knowledge", tr( "Change Type" ) );
     for( auto it = types_.CreateIterator(); it.HasMoreElements(); )
     {
         const KnowledgeGroupType& type = it.NextElement();

@@ -71,7 +71,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Entity_ABC& entity, kern
         return;
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 && controllers_.GetCurrentMode() != eModes_Replay )
-            menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
+            menu.InsertItem( "Formation", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& entity, kernel
     if( profile_.CanDoMagic( entity ) )
     {
         currentEntity_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Formation", tr( "Create formation" ) );
         for( int levelIt = static_cast< int >( eNatureLevel_xxxxx ); levelIt > 0; --levelIt )
             subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
     }

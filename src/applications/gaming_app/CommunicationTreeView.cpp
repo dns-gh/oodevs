@@ -280,7 +280,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::Automat_ABC& /*auto
     if( !isVisible() )
         return;
     if( controllers_.GetCurrentMode() != eModes_Replay )
-        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+        menu.InsertItem( "Knowledge", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,7 +292,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
     if( !isVisible() )
         return;
     if( controllers_.GetCurrentMode() != eModes_Replay )
-        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+        menu.InsertItem( "Knowledge", tr( "Change superior" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -305,7 +305,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::Team_ABC& team, ker
         return;
     if( !profile_.CanDoMagic( team ) )
         return;
-    kernel::ContextMenu* createKnowledgeGroup = menu.SubMenu( "Create", tr( "Create Knowledge Group", false, 1 ) );
+    kernel::ContextMenu* createKnowledgeGroup = menu.SubMenu( "Knowledge", tr( "Create Knowledge Group", false, 1 ) );
     const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types = static_.types_;
     for( auto it = types.CreateIterator(); it.HasMoreElements(); )
     {

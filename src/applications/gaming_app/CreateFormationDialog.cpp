@@ -57,7 +57,7 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Formation_ABC& enti
     if( profile_.CanDoMagic( entity ) && level > eNatureLevel_c )
     {
         currentEntity_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Formation", tr( "Create formation" ) );
         for( int levelIt = static_cast< int >( level ); levelIt > 0; --levelIt )
             subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
     }
