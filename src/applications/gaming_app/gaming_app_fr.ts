@@ -3033,6 +3033,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Change superior</source>
         <translation>Changer de supérieur</translation>
     </message>
+    <message>
+        <source>Create formation</source>
+        <translation type="unfinished">Créer une formation</translation>
+    </message>
 </context>
 <context>
     <name>TimeTableDialog</name>

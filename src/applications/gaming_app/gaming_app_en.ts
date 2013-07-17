@@ -3022,6 +3022,10 @@ This data can&apos;t be projected.</source>
         <source>Change superior</source>
         <translation>Change superior</translation>
     </message>
+    <message>
+        <source>Create formation</source>
+        <translation type="unfinished">Create formation</translation>
+    </message>
 </context>
 <context>
     <name>TimeTableDialog</name>

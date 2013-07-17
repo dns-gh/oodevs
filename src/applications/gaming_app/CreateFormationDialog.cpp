@@ -49,26 +49,9 @@ CreateFormationDialog::~CreateFormationDialog()
 // Name: CreateFormationDialog::NotifyContextMenu
 // Created: LDC 2010-10-12
 // -----------------------------------------------------------------------------
-void CreateFormationDialog::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
-{
-    NotifyContextMenu( entity, eNatureLevel_xxxxx, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreateFormationDialog::NotifyContextMenu
-// Created: LDC 2010-10-12
-// -----------------------------------------------------------------------------
 void CreateFormationDialog::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
 {
-    NotifyContextMenu( entity, entity.GetLevel(), menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreateFormationDialog::NotifyContextMenu
-// Created: LDC 2010-10-13
-// -----------------------------------------------------------------------------
-void CreateFormationDialog::NotifyContextMenu( const kernel::Entity_ABC& entity, E_NatureLevel level, kernel::ContextMenu& menu )
-{
+    const int level = entity.GetLevel();
     if( entity.GetId() == 0 ) // no side team
         return;
     if( profile_.CanDoMagic( entity ) && level > eNatureLevel_c )

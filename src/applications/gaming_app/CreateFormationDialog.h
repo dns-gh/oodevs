@@ -38,12 +38,9 @@ namespace kernel
 // =============================================================================
 class CreateFormationDialog : public QDialog
                             , public tools::Observer_ABC
-                            , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
-
     Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,14 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Team_ABC&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const kernel::Formation_ABC&, kernel::ContextMenu& );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void NotifyContextMenu( const kernel::Entity_ABC&, E_NatureLevel level, kernel::ContextMenu& menu);
     //@}
 
 private slots:

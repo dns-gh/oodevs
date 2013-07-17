@@ -40,20 +40,24 @@ class StaticModel;
 // =============================================================================
 class TacticalTreeView  : public gui::TacticalTreeView
                         , public gui::ChangeSuperior_ABC
-                        , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                         , public tools::ElementObserver_ABC< kernel::AutomatDecisions_ABC >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
     Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-    TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
+             TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
+                               gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel,
+                               const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
     virtual ~TacticalTreeView();
     //@}
 
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const kernel::AutomatDecisions_ABC& decisions );
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
@@ -66,6 +70,7 @@ private slots:
     //! @name Slots
     //@{
     void OnChangeSuperior();
+    void OnCreateFormation( int level );
     void ChangeDisplay( int mode );
     virtual void OnActivate( const QModelIndex& index );
     //@}
@@ -97,6 +102,7 @@ private:
     actions::ActionsModel& actionsModel_;
     EDisplayMode displayMode_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
+    const kernel::Entity_ABC* currentEntity_;
     QPixmap icon_user_;
     //@}
 };

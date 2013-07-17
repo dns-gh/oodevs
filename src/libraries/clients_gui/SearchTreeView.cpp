@@ -27,9 +27,9 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 SearchTreeView_ABC::SearchTreeView_ABC( QWidget* parent )
     : QWidget( parent )
-    , filtersLayout_( 0 )
+    , filtersLayout_   ( 0 )
     , currentFilterRow_( 0 )
-    , signalMapper_( new QSignalMapper( this ) )
+    , signalMapper_    ( new QSignalMapper( this ) )
 {
     connect( signalMapper_, SIGNAL( mapped( QWidget* ) ), this, SLOT( OnFiltersChanged( QWidget* ) ) );
 }

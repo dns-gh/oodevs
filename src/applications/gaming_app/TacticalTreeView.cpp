@@ -12,6 +12,7 @@
 #include "moc_TacticalTreeView.cpp"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
+#include "actions/ActionsModel.h"
 #include "actions/Automat.h"
 #include "actions/Army.h"
 #include "actions/Formation.h"
@@ -29,19 +30,23 @@
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
 #include "tools/GeneralConfig.h"
+#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: TacticalTreeView constructor
 // Created: JSR 2012-09-27
 // -----------------------------------------------------------------------------
-TacticalTreeView::TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
+TacticalTreeView::TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile,
+                                    gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel,
+                                    const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
     : gui::TacticalTreeView( objectName, controllers, profile, modelObserver, symbols, parent )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , actionsModel_( actionsModel )
-    , displayMode_( eObservableUnits )
+    , static_              ( staticModel )
+    , simulation_          ( simulation )
+    , actionsModel_        ( actionsModel )
+    , displayMode_         ( eObservableUnits )
     , changeSuperiorDialog_( 0 )
-    , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).ToUTF8().c_str() )
+    , currentEntity_       ( 0 )
+    , icon_user_           ( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).ToUTF8().c_str() )
 {
     controllers_.Update( *this );
     setEditTriggers( 0 );
@@ -67,6 +72,26 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Entity_ABC& entity, kern
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 && controllers_.GetCurrentMode() != eModes_Replay )
             menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::NotifyContextMenu
+// Created: SLI 2013-07-16
+// -----------------------------------------------------------------------------
+void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( !isVisible() || !profile_.IsVisible( entity ) )
+        return;
+    if( entity.GetId() == 0 ) // no side team
+        return;
+    if( profile_.CanDoMagic( entity ) )
+    {
+        currentEntity_ = &entity;
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
+        for( int levelIt = static_cast< int >( eNatureLevel_xxxxx ); levelIt > 0; --levelIt )
+            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
+    }
+    NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -348,4 +373,16 @@ void TacticalTreeView::OnActivate( const QModelIndex& index )
     const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
     if( entity && profile_.IsVisible( *entity ) )
         entity->Activate( controllers_.actions_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnCreateFormation
+// Created: SLI 2013-07-16
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnCreateFormation( int level )
+{
+    actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_ );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( currentEntity_, false ) );
+    actionsModel_.Publish( *action, 0 );
 }

@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-
 // =============================================================================
 /** @class  ContextMenuObserver_ABC
     @brief  ContextMenuObserver_ABC
@@ -28,8 +27,8 @@ class ContextMenuObserver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ContextMenuObserver_ABC() {};
-    virtual ~ContextMenuObserver_ABC() {};
+             ContextMenuObserver_ABC() {}
+    virtual ~ContextMenuObserver_ABC() {}
     //@}
 
     //! @name Operations
