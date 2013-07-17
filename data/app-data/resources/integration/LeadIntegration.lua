@@ -576,8 +576,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
                 local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
                                          or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
                                          or eEtatEchelon_None
-                
-                integration.issueMission ( self, dynamicTasks, 1, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
+                integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
             end
         end
     end
