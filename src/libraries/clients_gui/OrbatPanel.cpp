@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "OrbatPanel.h"
 #include "moc_OrbatPanel.cpp"
-#include "clients_gui/ColorButton.h"
+#include "ColorButton.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 

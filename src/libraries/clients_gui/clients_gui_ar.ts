@@ -233,6 +233,25 @@
     </message>
 </context>
 <context>
+    <name>OrbatPanel</name>
+    <message>
+        <source>Operational state color</source>
+        <translation type="unfinished">لون الدولة التنفيذية</translation>
+    </message>
+    <message>
+        <source>Neutralized:</source>
+        <translation type="unfinished">تحييد:</translation>
+    </message>
+    <message>
+        <source>Tactically destroyed:</source>
+        <translation type="unfinished">تكتيكيا دمرت:</translation>
+    </message>
+    <message>
+        <source>Totally destroyed:</source>
+        <translation type="unfinished">دمرت تماما:</translation>
+    </message>
+</context>
+<context>
     <name>PreferencesDialog</name>
     <message>
         <source>Coordinate System</source>
@@ -1559,6 +1578,10 @@ Do you want to remove it?</source>
     <message>
         <source>Sound</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orbat</source>
+        <translation type="unfinished">أوربات</translation>
     </message>
 </context>
 <context>

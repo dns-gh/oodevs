@@ -1761,10 +1761,6 @@ Reason: %3
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Orbat</source>
-        <translation type="unfinished">أوربات</translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation type="unfinished">الكائنات</translation>
     </message>
@@ -2513,25 +2509,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Orbat</source>
         <translation type="unfinished">أوربات</translation>
-    </message>
-</context>
-<context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Operational state color</source>
-        <translation type="unfinished">لون الدولة التنفيذية</translation>
-    </message>
-    <message>
-        <source>Neutralized:</source>
-        <translation type="unfinished">تحييد:</translation>
-    </message>
-    <message>
-        <source>Tactically destroyed:</source>
-        <translation type="unfinished">تكتيكيا دمرت:</translation>
-    </message>
-    <message>
-        <source>Totally destroyed:</source>
-        <translation type="unfinished">دمرت تماما:</translation>
     </message>
 </context>
 <context>

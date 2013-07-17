@@ -153,6 +153,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\MergingTacticalHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NullDisplayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\OrbatPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesDictionary.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesGroup.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesGroupDictionary.cpp" />
@@ -408,6 +409,14 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SoundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\OrbatPanel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichSlider.h" />
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SoundPanel.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SoundEvent.h" />

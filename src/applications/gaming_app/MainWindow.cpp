@@ -48,7 +48,6 @@
 #include "TeamLayer.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
-#include "OrbatPanel.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController.h"
@@ -193,8 +192,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d, firePlayer_->GetSoundManager() ) );
-
-    preferenceDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( preferenceDialog_.get(), controllers ) );
     new VisionConesToggler( controllers, network_.GetMessageMgr(), this );
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, *pProfile_ );
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );

@@ -1760,10 +1760,6 @@ Reason: %3
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Orbat</source>
-        <translation>Orbat</translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation>Objects</translation>
     </message>
@@ -2511,25 +2507,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Orbat</source>
         <translation>Orbat</translation>
-    </message>
-</context>
-<context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Operational state color</source>
-        <translation>Operational state color</translation>
-    </message>
-    <message>
-        <source>Neutralized:</source>
-        <translation>Neutralized:</translation>
-    </message>
-    <message>
-        <source>Tactically destroyed:</source>
-        <translation>Tactically destroyed:</translation>
-    </message>
-    <message>
-        <source>Totally destroyed:</source>
-        <translation>Totally destroyed:</translation>
     </message>
 </context>
 <context>

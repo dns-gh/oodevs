@@ -20,6 +20,7 @@
 #include "LayersPanel.h"
 #include "InhabitantPanel.h"
 #include "resources.h"
+#include "OrbatPanel.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
 #include "SoundPanel.h"
@@ -200,6 +201,7 @@ void PreferencesDialog::NotifyModeChanged( E_Modes newMode )
         PurgeDialog();
         BuildPreparationSettings();
         AddPage( tr( "Sound" ), *new SoundPanel( this, controllers_, soundManager_ ) );
+        AddPage( tr( "Orbat" ), *new OrbatPanel( this, controllers_ ) );
     }
     else if( ( newMode & eModes_Preparation ) != 0 && oldMode_ != eModes_Preparation )
     {

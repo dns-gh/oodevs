@@ -233,6 +233,25 @@
     </message>
 </context>
 <context>
+    <name>OrbatPanel</name>
+    <message>
+        <source>Operational state color</source>
+        <translation>Couleur des états opérationnels</translation>
+    </message>
+    <message>
+        <source>Neutralized:</source>
+        <translation>Neutralisé :</translation>
+    </message>
+    <message>
+        <source>Tactically destroyed:</source>
+        <translation>Détruit tactiquement :</translation>
+    </message>
+    <message>
+        <source>Totally destroyed:</source>
+        <translation>Détruit totalement :</translation>
+    </message>
+</context>
+<context>
     <name>PreferencesDialog</name>
     <message>
         <source>Coordinate System</source>
@@ -1560,6 +1579,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Sound</source>
         <translation>Son</translation>
+    </message>
+    <message>
+        <source>Orbat</source>
+        <translation>ODB</translation>
     </message>
 </context>
 <context>

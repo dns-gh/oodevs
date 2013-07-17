@@ -1779,10 +1779,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Populations</translation>
     </message>
     <message>
-        <source>Orbat</source>
-        <translation>ODB</translation>
-    </message>
-    <message>
         <source>Elevation</source>
         <translation>Elévation</translation>
     </message>
@@ -2522,25 +2518,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Orbat</source>
         <translation>ODB</translation>
-    </message>
-</context>
-<context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Operational state color</source>
-        <translation>Couleur des états opérationnels</translation>
-    </message>
-    <message>
-        <source>Neutralized:</source>
-        <translation>Neutralisé :</translation>
-    </message>
-    <message>
-        <source>Tactically destroyed:</source>
-        <translation>Détruit tactiquement :</translation>
-    </message>
-    <message>
-        <source>Totally destroyed:</source>
-        <translation>Détruit totalement :</translation>
     </message>
 </context>
 <context>
