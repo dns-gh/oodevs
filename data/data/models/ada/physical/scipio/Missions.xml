@@ -3616,9 +3616,9 @@
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="381" name="Changer les regles d'engagement">
       <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Ordre conduite: changer les regles d'engagement" optional="false" type="Enumeration">
-        <value id="0" name="tir_libre"/>
-        <value id="1" name="tir_sur_riposte"/>
-        <value id="2" name="tir_interdit"/>
+        <value id="0" name="tir autorisé"/>
+        <value id="1" name="tir sur riposte"/>
+        <value id="2" name="tir interdit"/>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="385" name="Interdire Munitions">
@@ -3678,4 +3678,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28810" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="3026064021" -->
+<!-- signature="4288309427" -->
