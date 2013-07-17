@@ -1405,32 +1405,30 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
 // Name: MIL_EntityManager::OnReceiveKnowledgeMagicAction
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::KnowledgeGroupMagicActionAck ack;
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
     {
-        switch( message.type() )
-        {
-        case KnowledgeMagicAction::enable :
-        case KnowledgeMagicAction::update_party :
-        case KnowledgeMagicAction::update_party_parent :
-        case KnowledgeMagicAction::update_type :
-        case KnowledgeMagicAction::add_knowledge :
-            ProcessKnowledgeGroupUpdate( message, nCtx );
-            break;
-        default:
-            throw MASA_EXCEPTION_ASN( KnowledgeGroupAck::ErrorCode, KnowledgeGroupAck::error_invalid_type );
-            break;
-        }
+        boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
+        if( pReceiver )
+            pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
+        else
+            throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck_ErrorCode, sword::KnowledgeGroupAck::error_invalid_knowledgegroup, "Knowledge Group not found" );
     }
-    catch( const NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
+    catch( const NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    catch( const std::exception& e )
+    {
+        ack().set_error_code( sword::KnowledgeGroupAck::error_invalid_parameter );
+        ack().set_error_msg( e.what() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1936,29 +1934,6 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
     ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
     ack().set_error_code( MagicActionAck::no_error );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::ProcessKnowledgeGroupUpdate
-// Created: FDS 2010-01-13
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction& message, unsigned int nCtx )
-{
-    client::KnowledgeGroupUpdateAck ack;
-    ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
-    ack().set_error_code( KnowledgeGroupAck::no_error );
-    try
-    {
-        boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
-        if( ! pReceiver )
-            throw MASA_EXCEPTION_ASN( KnowledgeGroupAck::ErrorCode, KnowledgeGroupAck::error_invalid_type );
-        pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
-    }
-    catch( const NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------

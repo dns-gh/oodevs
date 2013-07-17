@@ -107,7 +107,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_unit_creation_request() )
         workspace.GetEntityManager        ().OnReceiveUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx );
     else if( wrapper.message().has_knowledge_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx );
+        workspace.GetEntityManager        ().OnReceiveKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx, clientId );
     else if( wrapper.message().has_unit_magic_action() )
         workspace.GetEntityManager        ().OnReceiveUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx, clientId );
     else if( wrapper.message().has_object_magic_action() )

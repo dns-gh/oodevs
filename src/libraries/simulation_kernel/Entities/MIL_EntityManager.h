@@ -185,7 +185,7 @@ public:
     void OnReceiveFragOrder                ( const sword::FragOrder&            message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveSetAutomateMode          ( const sword::SetAutomatMode&       message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveUnitCreationRequest      ( const sword::UnitCreationRequest&  message, unsigned int nCtx );
-    void OnReceiveKnowledgeMagicAction     ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
+    void OnReceiveKnowledgeMagicAction     ( const sword::KnowledgeMagicAction& message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveChangeDiplomacy          ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveChangeResourceLinks      ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
@@ -237,7 +237,6 @@ private:
     void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message );
     void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message );
     void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessKnowledgeGroupUpdate        ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
     void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack );
     void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx, sword::UnitMagicActionAck& ack );

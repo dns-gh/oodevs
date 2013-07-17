@@ -3254,6 +3254,9 @@ message KnowledgeGroupAck {
         error_invalid_type           = 5;
         //! The perception provided is invalid
         error_invalid_perception     = 6;
+        //! Operation failed because the provided action parameters
+        //! were invalid
+        error_invalid_parameter      = 7;
     }
 }
 
@@ -3266,6 +3269,8 @@ message KnowledgeGroupMagicActionAck {
     required KnowledgeGroupId            knowledge_group = 1;
     //! The error code
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
+    //! More detailed account of the returned error
+    optional string                      error_msg       = 3;
 }
 
 /** @struct KnowledgeGroupCreationAck

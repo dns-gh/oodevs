@@ -74,14 +74,34 @@ message KnowledgeMagicAction {
     */
     enum Type {
         //! A enable knowledge magic action
+        //! parameters[0], BooleanValue: Whether to enable or disable the group.
         enable              = 0;
         //! A update party knowledge magic action
+        //! parameters[0], PartyId: The top level party.
+        //! Must be the same as the knowledge group top party.
+        //! Used when the group was under another group, to put it at top level.
         update_party        = 1;
         //! A update party parent knowledge magic action
+        //! parameters[0], PartyId: The parent party.
+        //! Must be the same as the knowledge group top party.
+        //! parameters[1], KnowledgeGroupId: The new parent knowledge group.
+        //! Must be from the same party.
+        //! Used when the group was at top level, to put it under another group.
         update_party_parent = 2;
         //! A update type knowledge magic action
+        //! parameters[0], ACharStr: The new knowledge group type according to
+        //! those defined in the physical database.
         update_type         = 3;
         //! An add knowledge in group magic action
+        //! parameters[0], Identifier: The id of the real entity from which a 
+        //! knowledge should be created.
+        //! Can be the id of an agent, an object or a population.
+        //! parameters[1], Quantity: The perception level according internal
+        //! enumeration:
+        //! 1 -> detected
+        //! 2 -> recognized
+        //! 3 -> identified
+        //! This parameter can also be an Enumeration (deprecated)
         add_knowledge       = 4;
     }
     //! The knowledge group identifier
