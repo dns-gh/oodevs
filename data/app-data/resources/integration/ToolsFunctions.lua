@@ -665,3 +665,7 @@ end
 getRandomNumber = function( minValue, maxValue )
     return DEC_RandomValue( minValue, maxValue )
 end
+
+getEtatAction = function( idAction )
+    return DEC_EtatAction( idAction )
+end
