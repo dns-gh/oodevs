@@ -1692,11 +1692,9 @@
             package="Troyes ponctuel 05 08 2008 1" todir="${data.dir}/data/propagations"/>
         <update name="swdata/propagations/Troyes ponctuel 05 08 2008 2" version="1.0"
             package="Troyes ponctuel 05 08 2008 2" todir="${data.dir}/data/propagations"/>
-        <!--
         <antcall target="deploy-application-data"/>
         <antcall target="generate-database"/>
         <antcall target="generate-symbols"/>
-        -->
     </target>
 
     <target name="clean" description="clean intermediate build artifacts">
