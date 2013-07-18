@@ -595,12 +595,9 @@ enum EnumHumanWound {
     wounded_extreme_urgency = 5;
 }
 
-/** @enum EnumNatureLevel
-    @brief Defines the different nature levels using APP-6A symbols
-    @see http://en.wikipedia.org/wiki/Military_organization
-*/
+//! Defines the different nature levels using APP-6A symbols
+//! See: http://en.wikipedia.org/wiki/Military_organization
 enum EnumNatureLevel {
-    //! No nature @todo rename to no_nature
     none_naturelevel = 0;
     //! Fire and maneuver team
     b                = 1;
@@ -628,7 +625,7 @@ enum EnumNatureLevel {
     xxx              = 11;
     //! Army
     xxxx             = 12;
-    //! What's this ?
+    //! Army group, front
     xxxxx            = 13;
 }
 
@@ -2021,7 +2018,14 @@ message UnitMagicAction {
         //! parameters[1], Identifier: the automat knowledge group.
         //! result[0], AutomatId: created automat identifier.
         automat_creation                  = 27;
-        //! A formation creation magic action
+        //! Create a formation
+        //! The tasker must be the parent party or parent formation.
+        //! parameters[0], AReal: formation level, among EnumNatureLevel
+        //!   values.
+        //! parameters[1], String: name.
+        //! parameters[2], String: logistic level, an empty string or
+        //!   "logistic-base".
+        //! result[0], FormationId: created formation identifier.
         formation_creation                = 28;
         //! A crowd creation magic action
         //! The tasker must be set to the parent party or formation.
