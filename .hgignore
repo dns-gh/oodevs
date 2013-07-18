@@ -1,4 +1,4 @@
-^(bin|dist|include|out|run|lib)/
+^(bin|dist|include|out|run|lib|doc)/
 ^data/data/
 ^data/exercises/
 ^tags$
