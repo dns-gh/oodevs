@@ -1486,15 +1486,6 @@
             <include name="data/terrains/StNazairePontSuspendu/**"/>
         </pack>
     </target>
-	
-    <target name="package.otpack.lossc" description="package du LOSSC otpack">
-        <pack name="LOSSC" description="LOSSC exercises package">
-            <include name="exercises/worldwide/LOSSC Scenario 1/**"/>
-            <include name="exercises/worldwide/LOSSC Scenario 2/**"/>
-            <include name="exercises/worldwide/LOSSC Scenario 3/**"/>
-            <include name="data/terrains/afghan_kabuldist/**"/>
-        </pack>
-    </target>
 
     <target name="package.otpack.trainingML" description="package de training MasaLife">
         <pack name="trainingML" description="package de training MasaLife">
@@ -1587,8 +1578,6 @@
         <update name="geos" version="3.2.2"/>
         <update name="iconv" version="1.13.1"/>
         <update name="proj4" version="4.7.0"/>
-        <update name="swdata/terrains/afghan_kabuldist" version="1.0"
-            package="afghan_kabuldist" todir="${data.dir}/data/terrains"/>
         <update name="swdata/terrains/Angers" version="1.0"
             package="Angers" todir="${data.dir}/data/terrains"/>
         <update name="swdata/terrains/Angers_x9_en" version="1.0"
