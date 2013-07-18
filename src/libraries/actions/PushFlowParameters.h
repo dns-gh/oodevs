@@ -91,6 +91,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     bool isSupply_;
     T_Recipients recipients_;
+    std::vector< const kernel::Automat_ABC* > recipientsSequence_;
     T_Equipments transporters_;
     T_PointVector wayBackPath_;
     //@}

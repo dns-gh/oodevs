@@ -80,6 +80,7 @@ void PushFlowParameters::ReadRecipient( xml::xistream& xis, const kernel::Entity
 {
     kernel::Automat_ABC& automat = entityResolver.GetAutomat( xis.attribute< unsigned int >( "id" ) );
     Recipient& recipient = recipients_[ &automat ];
+    recipientsSequence_.push_back( &automat );
     xis >> xml::list( "resource", *this, &PushFlowParameters::ReadResource, dotationTypeResolver, recipient.resources_ )
         >> xml::optional >> xml::start( "path" )
             >> xml::list( "point", *this, &PushFlowParameters::ReadPoint, recipient.path_ );
@@ -150,6 +151,7 @@ void PushFlowParameters::AddTransporter( const kernel::EquipmentType& type, unsi
 void PushFlowParameters::SetPath( const T_PointVector& path, const kernel::Automat_ABC& recipient )
 {
     recipients_[ &recipient ].path_ = path;
+    recipientsSequence_.push_back( &recipient );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,11 +180,16 @@ void PushFlowParameters::CommitTo( sword::MissionParameter& message ) const
 void PushFlowParameters::CommitTo( sword::MissionParameter_Value& message ) const
 {
     sword::PushFlowParameters* msgPushFlow = message.mutable_push_flow_parameters();
-    BOOST_FOREACH( const T_Recipients::value_type& recipientData, recipients_ )
+    for( auto it = recipientsSequence_.begin(); it != recipientsSequence_.end() ; ++it )
     {
+        const kernel::Automat_ABC* pAutomat = *it;
+        auto itRecipient = recipients_.find( pAutomat );
+        if( !pAutomat || itRecipient == recipients_.end() )
+            continue;
+        const Recipient& recipient = itRecipient->second;
         sword::SupplyFlowRecipient* msgRecipient = msgPushFlow->add_recipients();
-        msgRecipient->mutable_receiver()->set_id( recipientData.first->GetId() );
-        BOOST_FOREACH( const T_Resources::value_type& resource, recipientData.second.resources_ )
+        msgRecipient->mutable_receiver()->set_id( pAutomat->GetId() );
+        BOOST_FOREACH( const T_Resources::value_type& resource, recipient.resources_ )
         {
             sword::SupplyFlowResource* msgResource = msgRecipient->add_resources();
             msgResource->mutable_resourcetype()->set_id( resource.first->GetId() );
@@ -190,7 +197,7 @@ void PushFlowParameters::CommitTo( sword::MissionParameter_Value& message ) cons
         }
 
         //$$$ Un rien trop compliqué ...
-        const T_PointVector& path = recipientData.second.path_;
+        const T_PointVector& path = recipient.path_;
         if( !path.empty() )
             CommitTo( path, *msgRecipient->mutable_path() );
     }
@@ -240,18 +247,23 @@ void PushFlowParameters::Serialize( const T_PointVector& path, const std::string
 void PushFlowParameters::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    BOOST_FOREACH( const T_Recipients::value_type& recipientData, recipients_ )
+    for( auto it = recipientsSequence_.begin(); it != recipientsSequence_.end() ; ++it )
     {
+        const kernel::Automat_ABC* pAutomat = *it;
+        auto itRecipient = recipients_.find( pAutomat );
+        if( !pAutomat || itRecipient == recipients_.end() )
+            continue;
+        const Recipient& recipient = itRecipient->second;
         xos << xml::start( "recipient" )
-                << xml::attribute( "id", recipientData.first->GetId() );
-        BOOST_FOREACH( const T_Resources::value_type& resource, recipientData.second.resources_ )
+                << xml::attribute( "id", pAutomat->GetId() );
+        BOOST_FOREACH( const T_Resources::value_type& resource, recipient.resources_ )
         {
             xos << xml::start( "resource" )
                     << xml::attribute( "id", resource.first->GetId() )
                     << xml::attribute( "quantity", resource.second )
                 << xml::end;
         }
-        Serialize( recipientData.second.path_, "path", xos );
+        Serialize( recipient.path_, "path", xos );
         xos << xml::end;
     }
     BOOST_FOREACH( const T_Equipments::value_type& equipment, transporters_ )
