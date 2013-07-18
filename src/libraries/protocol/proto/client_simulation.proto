@@ -63,36 +63,29 @@ message UnitCreationRequest {
     required CoordLatLong position = 3;
 }
 
-/** @struct KnowledgeMagicAction
-    @brief A knowledge magic action request
-    @todo no corresponding ack message ?
-*/
 message KnowledgeMagicAction {
-    /** @enum Type
-        @brief The type of magic action.
-        @todo Explain what parameters are expected for each type
-    */
+    //! A KnowledgeGroupMagicActionAck message is returned in response.
     enum Type {
-        //! A enable knowledge magic action
+        //! Enables or disables the knowledge group
         //! parameters[0], BooleanValue: Whether to enable or disable the group.
         enable              = 0;
-        //! A update party knowledge magic action
+        //! Changes the knowledge group parent to a party
         //! parameters[0], PartyId: The top level party.
         //! Must be the same as the knowledge group top party.
         //! Used when the group was under another group, to put it at top level.
         update_party        = 1;
-        //! A update party parent knowledge magic action
+        //! Changes the knowledge group parent to another knowledge group.
         //! parameters[0], PartyId: The parent party.
         //! Must be the same as the knowledge group top party.
         //! parameters[1], KnowledgeGroupId: The new parent knowledge group.
         //! Must be from the same party.
         //! Used when the group was at top level, to put it under another group.
         update_party_parent = 2;
-        //! A update type knowledge magic action
+        //! Changes the knowledge group type
         //! parameters[0], ACharStr: The new knowledge group type according to
         //! those defined in the physical database.
         update_type         = 3;
-        //! An add knowledge in group magic action
+        //! Adds a new unit/object/population knowledge in the knowledge group.
         //! parameters[0], Identifier: The id of the real entity from which a 
         //! knowledge should be created.
         //! Can be the id of an agent, an object or a population.
@@ -104,11 +97,8 @@ message KnowledgeMagicAction {
         //! This parameter can also be an Enumeration (deprecated)
         add_knowledge       = 4;
     }
-    //! The knowledge group identifier
     required KnowledgeGroupId  knowledge_group = 1;
-    //! The magic action type
     required Type              type            = 2;
-    //! The magic action parameters, depending on the magic action type
     required MissionParameters parameters      = 3;
     //! optional name
     optional string            name            = 4;

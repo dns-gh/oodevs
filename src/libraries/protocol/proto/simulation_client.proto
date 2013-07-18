@@ -3273,11 +3273,9 @@ message KnowledgeGroupMagicActionAck {
     optional string                      error_msg       = 3;
 }
 
-/** @struct KnowledgeGroupCreationAck
-    @brief Acknowledges a knowledge group creation magic action
-    @see MagicAction
-    @deprecated MagicActionAck are sent instead
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message is replaced by MagicActionAck.
 message KnowledgeGroupCreationAck {
     //! The knowledge group identifier
     required KnowledgeGroupId            knowledge_group = 1;
@@ -3285,10 +3283,9 @@ message KnowledgeGroupCreationAck {
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
 }
 
-/** @struct KnowledgeGroupUpdateAck
-    @brief Acknowledges a knowledge group update magic action
-    @see KnowledgeMagicAction
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message is replaced by KnowledgeGroupMagicActionAck.
 message KnowledgeGroupUpdateAck {
     //! The knowledge group identifier
     required KnowledgeGroupId            knowledge_group = 1;
