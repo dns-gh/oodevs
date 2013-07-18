@@ -635,7 +635,36 @@ integration.startMoveToItItinerary = function( objective )
     return false
 end
 
-
+-- **************************************************************************** 
+-- integration.computePath
+-- comments: ask the simulation to compute a path to the given destination
+-- Returns 'true' when computing is over.
+-- ****************************************************************************
+integration.computePath = function( objective, pathType )
+    objective[ myself ] = objective[ myself ] or {}
+        
+    objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
+    if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
+       and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) then
+        local simPositions = DEC_Geometrie_CalculerTrafficablePointPourPoint( objective.initialeDestination )
+        objective.destination = DEC_Geometrie_CopiePoint(  getNearestSimPoint( objective.initialeDestination, simPositions ) )
+    else
+        objective.destination = objective.initialeDestination
+    end
+     
+    if not objective[ myself ].it then
+        objective[ myself ].it = DEC_CreerItineraireBM( objective.destination, pathType )
+        objective[ myself ].moveAction = DEC_StartMovementSuspended( objective[ myself ].it )
+    end
+    local pathCompute
+    if objective[ myself ].moveAction then
+        pathCompute = getEtatAction( objective[ myself ].moveAction )
+    end
+    if pathCompute == 1 then
+        return true
+    end
+    return false
+end
 
 -- **************************************************************************** 
 -- CROWD AGENT MOVEMENT
