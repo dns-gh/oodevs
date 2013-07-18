@@ -92,6 +92,24 @@ func MakeAutomat(value uint32) *sword.MissionParameter {
 		})
 }
 
+func MakeKnowledgeGroup(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			KnowledgeGroup: &sword.KnowledgeGroupId{
+				Id: proto.Uint32(value),
+			},
+		})
+}
+
+func MakeParty(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Party: &sword.PartyId{
+				Id: proto.Uint32(value),
+			},
+		})
+}
+
 func MakeQuantity(value int32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{

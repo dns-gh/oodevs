@@ -306,6 +306,7 @@ func (model *Model) update(msg *SwordMessage) {
 				Name:                mm.GetName(),
 				PartyId:             mm.GetParty().GetId(),
 				ParentId:            mm.GetParent().GetId(),
+				Type:                mm.GetType(),
 				IsCrowdDefaultGroup: mm.GetCrowd(),
 				Enabled:             true,
 			}
@@ -318,8 +319,17 @@ func (model *Model) update(msg *SwordMessage) {
 				// XXX report error here
 				return
 			}
+			if mm.Party != nil {
+				knowledgeGroup.PartyId = mm.GetParty().GetId()
+			}
+			if mm.Parent != nil {
+				knowledgeGroup.ParentId = mm.GetParent().GetId()
+			}
 			if mm.Enabled != nil {
 				knowledgeGroup.Enabled = *mm.Enabled
+			}
+			if mm.Type != nil {
+				knowledgeGroup.Type = mm.GetType()
 			}
 		} else if mm := m.GetControlGlobalWeather(); mm != nil {
 			attributes := mm.GetAttributes()

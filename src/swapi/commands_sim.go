@@ -1068,12 +1068,21 @@ func (c *Client) ChangeSuperior(unitId, automatId uint32) error {
 	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
 }
 
-func (c *Client) EnableKnowledgeGroupTest(params *sword.MissionParameters, knowledgeGroupId uint32) error {
-	msg := createKnowledgeMagicActionMessage(params, knowledgeGroupId, sword.KnowledgeMagicAction_enable.Enum())
+func (c *Client) KnowledgeGroupMagicActionTest(actionType sword.KnowledgeMagicAction_Type, params *sword.MissionParameters, knowledgeGroupId uint32) error {
+	msg := createKnowledgeMagicActionMessage(params, knowledgeGroupId, &actionType)
 	handler := defaultKnowledgeGroupMagicHandler
 	return <-c.postSimRequest(*msg, handler)
 }
 
 func (c *Client) EnableKnowledgeGroup(knowledgeGroupId uint32, enable bool) error {
-	return c.EnableKnowledgeGroupTest(MakeParameters(MakeBoolean(enable)), knowledgeGroupId)
+	return c.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable, MakeParameters(MakeBoolean(enable)), knowledgeGroupId)
+}
+
+func (c *Client) ChangeKnowledgeGroupSuperiorToArmy(knowledgeGroupId uint32, partyId uint32) error {
+	return c.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_party, MakeParameters(MakeParty(partyId)), knowledgeGroupId)
+}
+
+func (c *Client) ChangeKnowledgeGroupSuperiorToKnowledgeGroup(knowledgeGroupId uint32, partyId uint32, superiorKnowledgeGroupId uint32) error {
+	params := MakeParameters(MakeParty(partyId), MakeKnowledgeGroup(superiorKnowledgeGroupId))
+	return c.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_party_parent, params, knowledgeGroupId)
 }

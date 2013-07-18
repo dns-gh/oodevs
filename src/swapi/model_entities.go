@@ -143,6 +143,7 @@ type KnowledgeGroup struct {
 	Name                string
 	PartyId             uint32
 	ParentId            uint32
+	Type                string
 	IsCrowdDefaultGroup bool
 	Enabled             bool
 }
