@@ -541,6 +541,8 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
 // -----------------------------------------------------------------------------
 void DEC_PathWalker::MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath )
 {
+    if( !pCurrentPath_ && ( pPath->GetState() == DEC_Path_ABC::eValid || pPath->GetState() == DEC_Path_ABC::ePartial ) )
+        SetCurrentPath(pPath );
     if( !pCurrentPath_.get() && !bForcePathCheck_ )
         MT_LOG_ERROR_MSG( "Move cannot be suspended" );
     if( pCurrentPath_.get() && pCurrentPath_ == pPath )
@@ -590,4 +592,13 @@ void DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
 {
     if( pCurrentPath_.get() )
         pCurrentPath_->Serialize( asn, pointsPassed_, 2*pathSizeThreshold );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathWalker::HasCurrentPath
+// Created: LGY 2013-07-18
+// -----------------------------------------------------------------------------
+bool DEC_PathWalker::HasCurrentPath() const
+{
+    return pCurrentPath_.get() ? true : false;
 }

@@ -110,3 +110,12 @@ bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const T_KnowledgeObject
 {
     return pathWalker_.ComputeFutureObjectCollision( objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MovingEntity_ABC::HasCurrentPath
+// Created: LGY 2013-07-18
+// -----------------------------------------------------------------------------
+bool PHY_MovingEntity_ABC::HasCurrentPath() const
+{
+    return pathWalker_.HasCurrentPath();
+}

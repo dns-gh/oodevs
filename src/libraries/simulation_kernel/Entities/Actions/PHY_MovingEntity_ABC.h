@@ -41,7 +41,7 @@ public:
     int  Move         ( boost::shared_ptr< DEC_PathResult > pPath );
     void MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath );
     void MoveCanceled ( boost::shared_ptr< DEC_PathResult > pPath );
-
+    bool HasCurrentPath() const;
     virtual void Clean();
     //@}
 

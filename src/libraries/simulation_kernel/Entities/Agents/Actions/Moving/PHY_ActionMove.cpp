@@ -240,5 +240,9 @@ void PHY_ActionMove::StopAction()
 // -----------------------------------------------------------------------------
 PHY_ActionMove::E_State PHY_ActionMove::GetState() const
 {
-    return pMainPath_->GetState() == DEC_Path_ABC::eComputing ? eRunning : eDone;
+    if( pMainPath_->GetState() == DEC_Path_ABC::eComputing )
+        return eRunning;
+    if( !role_.HasCurrentPath() )
+        return eRunning;
+    return eDone;
 }

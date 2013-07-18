@@ -65,6 +65,7 @@ public:
     void MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath );
     void Apply(); // Called by MIL_Effect_Move
     void Clean();
+    bool HasCurrentPath() const;
     //@}
 
     //! @name Tools
