@@ -889,6 +889,7 @@
         <update name="steel"/>
         <update name="svgl"/>
         <update name="sword-proto" package="sword-protobuf" todir="${bin.dir}"/>
+        <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
         <update name="tools"/>
