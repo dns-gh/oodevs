@@ -901,6 +901,7 @@
         <update name="steel" version="1.1"/>
         <update name="svgl" version="1.2"/>
         <update name="sword-proto" version="1.0" package="sword-protobuf" todir="${bin.dir}"/>
+        <update name="sword-doc" version="5.2" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" version="5.2" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain" version="5.2.1"/>
         <update name="tools" version="1.2"/>
