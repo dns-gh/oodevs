@@ -1407,25 +1407,11 @@
             <include name="exercises/worldwide/Egypt/**"/>
             <include name="exercises/worldwide/Paris/**"/>
             <include name="exercises/worldwide/9_cases/**"/>
-            <include name="exercises/worldwide/Musoria Border Defense/**"/>
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
             <include name="data/terrains/Angers_x9_en/**"/>
             <include name="exercises/worldwide/Tuto_sw/**"/>
             <include name="data/terrains/Sw_terrain2/**"/>
-            <include name="exercises/worldwide/tutorials/01 - Generalities/**"/>
-            <include name="exercises/worldwide/tutorials/02 - Gaming/**"/>
-            <include name="exercises/worldwide/tutorials/03 - Missions/**"/>
-            <include name="exercises/worldwide/tutorials/04 - Armor units/**"/>
-            <include name="exercises/worldwide/tutorials/05 - Infantry/**"/>
-            <include name="exercises/worldwide/tutorials/06 - Engineering/**"/>
-            <include name="exercises/worldwide/tutorials/07 - Artillery/**"/>
-            <include name="exercises/worldwide/tutorials/08 - Logistic/**"/>
-            <include name="exercises/worldwide/tutorials/09 - Air units/**"/>
-            <include name="exercises/worldwide/tutorials/10 - NBC/**"/>
-            <include name="exercises/worldwide/tutorials/11 - Preparation/**"/>
-            <include name="exercises/worldwide/tutorials/12 - AAR/**"/>
-            <include name="exercises/worldwide/tutorials/13 - Advanced features/**"/>
         </pack>
     </target>
 
@@ -1586,8 +1572,6 @@
             package="baltimore" todir="${data.dir}/data/terrains"/>
         <update name="swdata/terrains/Blois" version="1.0"
             package="Blois" todir="${data.dir}/data/terrains"/>
-        <update name="swdata/terrains/bruxelles" version="1.0"
-            package="bruxelles" todir="${data.dir}/data/terrains"/>
         <update name="swdata/terrains/Cabourg" version="1.0"
             package="Cabourg" todir="${data.dir}/data/terrains"/>
         <update name="swdata/terrains/cavaillon" version="1.0"
