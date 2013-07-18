@@ -223,6 +223,7 @@ private:
     void UpdateAgentKnowledgeFromCrowdPerception( const MIL_Agent_ABC& agent, const MIL_Population& population, int currentTimeStep );
     void UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& agent, const MIL_Population& population );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
+    void UpdateObjectKnowledgeFromAgent( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     void UpdateObjectKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Object& objectKnowledge, int currentTimeStep );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception );

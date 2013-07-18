@@ -1353,6 +1353,13 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
             bDiffuseToKnowledgeGroup_ = true;
         }
     }
+
+    // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
+    {
+        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >) > functorObject = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
+        (*it)->GetKnowledgeGroup()->knowledgeBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( functorObject );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1423,6 +1430,20 @@ void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup( const DE
             if( pKnowledgeObject.get() )
                 pKnowledgeObject->Update( objectKnowledge, currentTimeStep );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromAgent
+// Created: LGY 2013-07-18
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromAgent( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, int currentTimeStep )
+{
+    if( objectKnowledge->GetObjectKnown() )
+    {
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject = GetObjectKnowledgeToUpdate( *objectKnowledge->GetObjectKnown() );
+        if( pKnowledgeObject.get() )
+            pKnowledgeObject->Update( *objectKnowledge, currentTimeStep );
+    }
 }
 
 // -----------------------------------------------------------------------------
