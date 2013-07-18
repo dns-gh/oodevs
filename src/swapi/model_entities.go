@@ -144,6 +144,7 @@ type KnowledgeGroup struct {
 	PartyId             uint32
 	ParentId            uint32
 	IsCrowdDefaultGroup bool
+	Enabled             bool
 }
 
 type Party struct {
@@ -508,6 +509,15 @@ func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
 		return true
 	}
 	return false
+}
+
+func (model *ModelData) FindKnowledgeGroup(knowledgeGroupId uint32) *KnowledgeGroup {
+	for _, u := range model.ListKnowledgeGroups() {
+		if u.Id == knowledgeGroupId {
+			return u
+		}
+	}
+	return nil
 }
 
 func (model *ModelData) addLocalWeather(weather *LocalWeather) {

@@ -52,13 +52,21 @@ func makeAutomatTasker(automatId uint32) *sword.Tasker {
 }
 
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
-	// Wait for the final UnitMagicActionAck
 	code := msg.GetErrorCode()
 	if code == sword.UnitActionAck_no_error {
 		id := msg.GetUnit().GetId()
 		return id, nil
 	}
 	return 0, nameof(sword.UnitActionAck_ErrorCode_name, int32(code))
+}
+
+func GetKnowledgeGroupMagicActionAck(msg *sword.KnowledgeGroupMagicActionAck) (uint32, error) {
+	code := msg.GetErrorCode()
+	if code == sword.KnowledgeGroupAck_no_error {
+		id := msg.GetKnowledgeGroup().GetId()
+		return id, nil
+	}
+	return 0, nameof(sword.KnowledgeGroupAck_ErrorCode_name, int32(code))
 }
 
 type simHandler func(msg *sword.SimToClient_Content) error
@@ -616,10 +624,7 @@ func defaultUnitMagicHandler(msg *sword.SimToClient_Content) error {
 		return unexpected(msg)
 	}
 	_, err := GetUnitMagicActionAck(reply)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func defaultMagicHandler(msg *sword.SimToClient_Content) error {
@@ -634,6 +639,15 @@ func defaultMagicHandler(msg *sword.SimToClient_Content) error {
 	return nil
 }
 
+func defaultKnowledgeGroupMagicHandler(msg *sword.SimToClient_Content) error {
+	reply := msg.GetKnowledgeGroupMagicActionAck()
+	if reply == nil {
+		return unexpected(msg)
+	}
+	_, err := GetKnowledgeGroupMagicActionAck(reply)
+	return err
+}
+
 func createMagicActionMessage(params *sword.MissionParameters, tasker *sword.Tasker,
 	magicAction *sword.UnitMagicAction_Type) SwordMessage {
 	return SwordMessage{
@@ -641,6 +655,23 @@ func createMagicActionMessage(params *sword.MissionParameters, tasker *sword.Tas
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker:     tasker,
+					Type:       magicAction,
+					Parameters: params,
+				},
+			},
+		},
+	}
+}
+
+func createKnowledgeMagicActionMessage(params *sword.MissionParameters, knowledgeGroupId uint32,
+	magicAction *sword.KnowledgeMagicAction_Type) *SwordMessage {
+	return &SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				KnowledgeMagicAction: &sword.KnowledgeMagicAction{
+					KnowledgeGroup: &sword.KnowledgeGroupId{
+						Id: &knowledgeGroupId,
+					},
 					Type:       magicAction,
 					Parameters: params,
 				},
@@ -1035,4 +1066,14 @@ func (c *Client) ChangeSuperior(unitId, automatId uint32) error {
 	msg := createMagicActionMessage(params, tasker,
 		sword.UnitMagicAction_unit_change_superior.Enum())
 	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
+}
+
+func (c *Client) EnableKnowledgeGroupTest(params *sword.MissionParameters, knowledgeGroupId uint32) error {
+	msg := createKnowledgeMagicActionMessage(params, knowledgeGroupId, sword.KnowledgeMagicAction_enable.Enum())
+	handler := defaultKnowledgeGroupMagicHandler
+	return <-c.postSimRequest(*msg, handler)
+}
+
+func (c *Client) EnableKnowledgeGroup(knowledgeGroupId uint32, enable bool) error {
+	return c.EnableKnowledgeGroupTest(MakeParameters(MakeBoolean(enable)), knowledgeGroupId)
 }
