@@ -329,7 +329,7 @@ func (model *Model) update(msg *SwordMessage) {
 				knowledgeGroup.Enabled = *mm.Enabled
 			}
 			if mm.Type != nil {
-				knowledgeGroup.Type = mm.GetType()
+				knowledgeGroup.Type = *mm.Type
 			}
 		} else if mm := m.GetControlGlobalWeather(); mm != nil {
 			attributes := mm.GetAttributes()

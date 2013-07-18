@@ -115,3 +115,30 @@ func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 		return data.FindKnowledgeGroup(kg.Id).ParentId == 0
 	})
 }
+
+func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: no knowledge group defined
+	data := client.Model.GetData()
+	kgs := data.ListKnowledgeGroups()
+	c.Assert(len(kgs), Greater, 0)
+	kg := kgs[0]
+
+	// error: no params
+	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type, swapi.MakeParameters(), kg.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: first parameter must be a string
+	params := swapi.MakeParameters(swapi.MakeNullValue())
+	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type, params, kg.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// change parent back to army
+	err = client.ChangeKnowledgeGroupType(kg.Id, "Battalion")
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindKnowledgeGroup(kg.Id).Type == "Battalion"
+	})
+}

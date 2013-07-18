@@ -1086,3 +1086,7 @@ func (c *Client) ChangeKnowledgeGroupSuperiorToKnowledgeGroup(knowledgeGroupId u
 	params := MakeParameters(MakeParty(partyId), MakeKnowledgeGroup(superiorKnowledgeGroupId))
 	return c.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_party_parent, params, knowledgeGroupId)
 }
+
+func (c *Client) ChangeKnowledgeGroupType(knowledgeGroupId uint32, knowledgeGroupType string) error {
+	return c.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type, MakeParameters(MakeString(knowledgeGroupType)), knowledgeGroupId)
+}
