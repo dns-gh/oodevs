@@ -412,4 +412,7 @@ return
     agentKnowledgeStopSharedPerception = function( self )
         integration.agentKnowledgeStopSharedPerceptionWithKnowledge( self )
     end,
+    communicateWithKnowledge = function( self )
+        integration.communicateWithKnowledge( self )
+    end
 }

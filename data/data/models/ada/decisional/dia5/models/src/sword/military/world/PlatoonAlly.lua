@@ -1045,5 +1045,8 @@ return
     end,
     isPartialRadioState = function( self )
         return integration.isPartialRadioState( self )
-    end
+    end,
+    communicateWithKnowledge = function( self )
+        return integration.communicateWithKnowledge( self )
+    end,
 }

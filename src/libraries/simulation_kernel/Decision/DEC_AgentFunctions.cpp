@@ -1650,3 +1650,10 @@ void DEC_AgentFunctions::KnowledgeDisabledSharedPerceptionWithKnowledge( DEC_Dec
     pAgent->GetPion().GetKnowledgeGroup()->UnregisterPion( callerAgent.GetPion() );
     callerAgent.GetKnowledgeGroup()->UnregisterPion( pAgent->GetPion() );
 }
+
+bool DEC_AgentFunctions::KnowledgeCommunicate( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in KnowledgeCommunicate" );
+    return pAgent->GetPion().GetKnowledgeGroup()->GetId() == callerAgent.GetKnowledgeGroup()->GetId();
+}

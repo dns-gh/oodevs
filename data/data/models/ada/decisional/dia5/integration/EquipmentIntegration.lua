@@ -145,6 +145,10 @@ integration.agentKnowledgeStopSharedPerceptionWithKnowledge = function( self )
     DEC_Knowledge_DisabledSharedPerceptionWithKnowledge( agent, myself )
 end
 
+integration.communicateWithKnowledge = function( supportedUnit )
+   return DEC_Knowledge_CommunicateWithKnowledgeGroup( myself, supportedUnit.source )
+end
+
 integration.isPartialRadioState = function( self )
     return eEtatRadio_Silence_Partiel == integration.getRadioState( self )
 end

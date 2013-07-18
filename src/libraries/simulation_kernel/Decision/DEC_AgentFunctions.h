@@ -223,6 +223,8 @@ public:
     static void KnowledgeEnableSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent );
     static void KnowledgeDisabledSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent );
 
+    static bool KnowledgeCommunicate( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pAgent );
+
     // Perception
     static void IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, const TER_Localisation* location );
     //@}

@@ -750,6 +750,14 @@
         <method name="agentKnowledgeStopSharedPerception">
             <description>Stops sharing knowledges to friend</description>
         </method>
+        <method name="communicateWithKnowledge">
+            <description>Return true if it's a same knowledge group</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isDestroyed">

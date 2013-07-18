@@ -1578,6 +1578,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="communicateWithKnowledge">
+            <description>Return true if it's a same knowledge group</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 	<predicates>
 		<predicate name="isCommandingFor">

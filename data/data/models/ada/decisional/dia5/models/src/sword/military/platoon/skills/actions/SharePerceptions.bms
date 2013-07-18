@@ -8,15 +8,24 @@ rootnode
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
-        if not meKnowledge:isPartialRadioState() then
-            meKnowledge:switchEmitOnly()
-        end
+        local group = true
         for _, supportUnit in pairs( self.params.unitsToSupport ) do
-            supportUnit:enabledSharedPerception( )
-            if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
-                supportUnit:agentKnowledgeSharedPerception( ) 
-            else
-                meKnowledge:sendBeginPerceptionShared( supportUnit, meKnowledge )
+            if group then
+                group = supportUnit:communicateWithKnowledge( )
+            end
+        end
+
+        if not group then
+            if not meKnowledge:isPartialRadioState() then
+                meKnowledge:switchEmitOnly()
+            end
+            for _, supportUnit in pairs( self.params.unitsToSupport ) do
+                supportUnit:enabledSharedPerception( )
+                if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
+                    supportUnit:agentKnowledgeSharedPerception( ) 
+                else
+                    meKnowledge:sendBeginPerceptionShared( supportUnit, meKnowledge )
+                end
             end
         end
     end,

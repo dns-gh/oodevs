@@ -1561,7 +1561,9 @@ void MIL_KnowledgeGroup::AppendAddedKnowledge( TER_Agent_ABC::T_AgentPtrVector& 
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::RegisterPion( const MIL_Agent_ABC& agent )
 {
-    pions_.push_back( &agent );
+    auto it = std::find( pions_.begin(), pions_.end(), &agent );
+    if( it == pions_.end() )
+        pions_.push_back( &agent );
 }
 
 // -----------------------------------------------------------------------------
