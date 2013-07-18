@@ -281,6 +281,7 @@ void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent 
     {
         kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
+        InsertIntoQuadTree( *ptr );
     }
 }
 
@@ -524,16 +525,6 @@ void UrbanModel::CreateQuadTree( float width, float height )
 
     precision_ = sqrt( ( rect.Right() - rect.Left() ) * ( rect.Top() - rect.Bottom() ) * 1e-16f );
     maxElementSize_ = 0;
-
-    tools::Iterator< const kernel::UrbanObject_ABC& > it = CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const kernel::UrbanObject_ABC& urbanObject = it.NextElement();
-        if( const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() ) )
-            if( urbanHierarchies->GetLevel() != eUrbanLevelBlock )
-                if( urbanHierarchies->GetLevel() == eUrbanLevelBlock )
-                    InsertIntoQuadTree( urbanObject );
-    }
 }
 
 // -----------------------------------------------------------------------------
