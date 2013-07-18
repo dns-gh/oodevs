@@ -1670,6 +1670,28 @@
             package="Sw_terrain2" todir="${data.dir}/data/terrains"/>
         <update name="swdata/terrains/test" version="1.0"
             package="test" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/propagations/Mailly epandage 11 08 2008 1" version="1.0"
+            package="Mailly epandage 11 08 2008 1" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Mailly ponctuel 11 08 2008 1" version="1.0"
+            package="Mailly ponctuel 11 08 2008 1" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Romilly ponctuel 04 08 2008 1" version="1.0"
+            package="Romilly ponctuel 04 08 2008 1" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Romilly ponctuel chimique 04 08 2008 1" version="1.0"
+            package="Romilly ponctuel chimique 04 08 2008 1" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Romilly ponctuel chimique 04 08 2008 2" version="1.0"
+            package="Romilly ponctuel chimique 04 08 2008 2" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Sezanne ponctuel 06 08 2008" version="1.0"
+            package="Sezanne ponctuel 06 08 2008" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Sezanne ponctuel 07 08 2008" version="1.0"
+            package="Sezanne ponctuel 07 08 2008" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/test" version="1.0"
+            package="test" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Troyes epandage 05 08 2008 1" version="1.0"
+            package="Troyes epandage 05 08 2008 1" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Troyes ponctuel 05 08 2008 1" version="1.0"
+            package="Troyes ponctuel 05 08 2008 1" todir="${data.dir}/data/propagations"/>
+        <update name="swdata/propagations/Troyes ponctuel 05 08 2008 2" version="1.0"
+            package="Troyes ponctuel 05 08 2008 2" todir="${data.dir}/data/propagations"/>
         <!--
         <antcall target="deploy-application-data"/>
         <antcall target="generate-database"/>

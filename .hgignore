@@ -4,6 +4,7 @@
 ^data/data/models/ada/decisional/dia5/models/directia.core/directia.core.bml$
 ^data/exercises/.*/sessions/
 ^data/data/terrains/
+^data/data/propagations/
 syntax: glob
 *.ipch
 *.ncb
