@@ -851,7 +851,7 @@ void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMa
         hasBeenUpdated_ = OnReceiveKnowledgeGroupSetType( message.parameters() ) || hasBeenUpdated_;
         break;
     case sword::KnowledgeMagicAction::add_knowledge:
-        hasBeenUpdated_ = OnReceiveKnowledgeGroupAddKnowledge( message.parameters() ) || hasBeenUpdated_;
+        OnReceiveKnowledgeGroupAddKnowledge( message.parameters() );
         break;
     default:
         throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck_ErrorCode, sword::KnowledgeGroupAck::error_invalid_type, "Unknown magic action type" );
@@ -942,7 +942,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType( const sword::MissionPar
 // Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge
 // Created: MMC 2011-06-09:
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& msg )
+void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& msg )
 {
     if( msg.elem_size() != 2 )
         throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_parameter, "invalid parameters count, 2 parameters expected" );
@@ -964,12 +964,12 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
 
     if( MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( identifier ) )
     {
-        if ( pAgent->GetKnowledgeGroup()->GetId() == this->GetId() )
-            return false;
-
-        DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( *pAgent );
-        knowledgeAgent.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
-        HackPerceptionLevelFromParentKnowledgeGroup( *pAgent, perception );
+        if ( pAgent->GetKnowledgeGroup()->GetId() != this->GetId() )
+        {
+            DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( *pAgent );
+            knowledgeAgent.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
+            HackPerceptionLevelFromParentKnowledgeGroup( *pAgent, perception );
+        }
     }
     else if( MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( identifier ) )
     {
@@ -987,8 +987,6 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
     }
     else
         throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_unit );
-
-    return true;
 }
 
 // -----------------------------------------------------------------------------
