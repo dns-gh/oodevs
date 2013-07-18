@@ -103,6 +103,10 @@ integration.getUrbanBlockPositions = function( urbanBlock )
   urbanBlock.getUrbanBlockPositionsResult = urbanBlock.getUrbanBlockPositionsResult or DEC_Geometrie_CalculerLocalisationsBU( urbanBlock.source )
   return urbanBlock.getUrbanBlockPositionsResult
 end
+integration.getUrbanBlockNearestBorder = function( position, urbanBlock )
+    urbanBlock.getUrbanBlockNearestBorderResult = urbanBlock.getUrbanBlockNearestBorderResult or DEC_Geometrie_ComputeNearestBorder( position, urbanBlock:getLocalisation() )
+    return urbanBlock.getUrbanBlockNearestBorderResult
+end
 integration.getAreaPositions = function( area )
     area.getAreaPositionsResult = area.getAreaPositionsResult or DEC_Geometrie_CalculerTrafficablePointPourPoint( integration.getCentralAreaPosition( area ) )
     area.getTrafficableAreaPositionsResult = area.getTrafficableAreaPositionsResult or {}
