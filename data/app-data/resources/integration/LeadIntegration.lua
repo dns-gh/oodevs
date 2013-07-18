@@ -242,7 +242,7 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
                 elseif myself.leadData.pionsLima2 and myself.leadData.pionsLima2[ entity ] then
                     myself.leadData.pionsLima2[ entity ] = nil
                 end
-                giveMission ( self, "worldwide.agent.tasks.Disengage", 1, eEtatEchelon_None, { entity })
+                giveMission ( self, disengageTask, 1, eEtatEchelon_None, { entity })
             end
         end
     end
