@@ -207,7 +207,7 @@ integration.setMovementPace = function( modulation, maxSpeed ) -- maxSpeed TRUE/
     -- Moderate the speed of movement
     -- --------------------------------------------------------------------------------
     myself.speedModulations = myself.speedModulations or {}
-    local currentModulation = modulation or 0.5
+    local currentModulation = modulation or 1
 
     -- -------------------------------------------------------------------------------- 
     -- Terrain modulation
