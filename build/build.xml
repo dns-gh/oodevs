@@ -1608,9 +1608,73 @@
         <update name="geos" version="3.2.2"/>
         <update name="iconv" version="1.13.1"/>
         <update name="proj4" version="4.7.0"/>
+        <update name="swdata/terrains/afghan_kabuldist" version="1.0"
+            package="afghan_kabuldist" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Angers" version="1.0"
+            package="Angers" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Angers_x9_en" version="1.0"
+            package="Angers_x9_en" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/baltimore" version="1.0"
+            package="baltimore" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Blois" version="1.0"
+            package="Blois" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/bruxelles" version="1.0"
+            package="bruxelles" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Cabourg" version="1.0"
+            package="Cabourg" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/cavaillon" version="1.0"
+            package="cavaillon" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Drosoville" version="1.0"
+            package="Drosoville" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Granada_Cartagena" version="1.0"
+            package="Granada_Cartagena" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/larochelle" version="1.0"
+            package="larochelle" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/lehavre" version="1.0"
+            package="lehavre" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/lehavre_4.2.0" version="1.0"
+            package="lehavre_4.2.0" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Malaisie" version="1.0"
+            package="Malaisie" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/montereycross" version="1.0"
+            package="montereycross" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Nord egypt" version="1.0"
+            package="Nord egypt" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Paris_Est" version="1.0"
+            package="Paris_Est" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Paris_Est_en" version="1.0"
+            package="Paris_Est_en" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/PasDeZurb" version="1.0"
+            package="PasDeZurb" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Porto ZURB etendue" version="1.0"
+            package="Porto ZURB etendue" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Porto" version="1.0"
+            package="Porto" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/PortoV3" version="1.0"
+            package="PortoV3" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/PortoV3Lite - worldwide" version="1.0"
+            package="PortoV3Lite - worldwide" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/PortoV3Lite" version="1.0"
+            package="PortoV3Lite" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/PoseidonVA" version="1.0"
+            package="PoseidonVA" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/PoseidonVALite" version="1.0"
+            package="PoseidonVALite" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Rio" version="1.0"
+            package="Rio" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/StNazairePontSuspendu" version="1.0"
+            package="StNazairePontSuspendu" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/stoutswell" version="1.0"
+            package="stoutswell" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/Sw_terrain2" version="1.0"
+            package="Sw_terrain2" todir="${data.dir}/data/terrains"/>
+        <update name="swdata/terrains/test" version="1.0"
+            package="test" todir="${data.dir}/data/terrains"/>
+        <!--
         <antcall target="deploy-application-data"/>
         <antcall target="generate-database"/>
         <antcall target="generate-symbols"/>
+        -->
     </target>
 
     <target name="clean" description="clean intermediate build artifacts">

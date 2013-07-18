@@ -3,6 +3,7 @@
 ^data/data/models/ada/decisional/dia5/TaskKnowledge.lua$
 ^data/data/models/ada/decisional/dia5/models/directia.core/directia.core.bml$
 ^data/exercises/.*/sessions/
+^data/data/terrains/
 syntax: glob
 *.ipch
 *.ncb
