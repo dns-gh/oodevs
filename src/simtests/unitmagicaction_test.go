@@ -153,70 +153,23 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	// Add formation to party
 	f1, err := client.CreateFormation(1, 0, "newformation", 1, "")
 	c.Assert(f1, NotNil)
+	c.Assert(f1.PartyId, Equals, uint32(1))
+	c.Assert(f1.ParentId, Equals, uint32(0))
+	c.Assert(f1.Level, Equals, "b")
+	c.Assert(f1.LogLevel, Equals, "none")
 
 	// Add formation to formation
-	_, err = client.CreateFormation(0, f1.Id, "newformation2", 2, "aucun")
-	c.Assert(err, IsNil) // failed to create formation
-	dump := printParties(&prettyPrinter{HideUnstable: true},
-		model.GetData()).GetOutput()
-	expected := "" +
-		`Party[-]
-  Name: party1
-    Formation[-]
-      Id: -
-      Name: newformation
-      ParentId: -
-      PartyId: -
-      Level: b
-      LogLevel: none
-        Formation[-]
-          Id: -
-          Name: newformation2
-          ParentId: -
-          PartyId: -
-          Level: o
-          LogLevel: none
-    KnowledgeGroup[-]
-      Id: -
-      PartyId: -
-      Name: knowledge group [3]
-    KnowledgeGroup[-]
-      Id: -
-      PartyId: -
-      Name: knowledge group[6]
-      IsCrowdDefaultGroup: true
-Party[-]
-  Name: party2
-    KnowledgeGroup[-]
-      Id: -
-      PartyId: -
-      Name: knowledge group[4]
-    KnowledgeGroup[-]
-      Id: -
-      PartyId: -
-      Name: knowledge group[7]
-      IsCrowdDefaultGroup: true
-`
-	c.Assert(dump, Equals, expected)
+	f2, err := client.CreateFormation(0, f1.Id, "newformation2", 2, "logistic-base")
+	c.Assert(err, IsNil)
+	c.Assert(f2.PartyId, Equals, uint32(1))
+	c.Assert(f2.ParentId, Equals, f1.Id)
+	c.Assert(f2.Level, Equals, "o")
+	c.Assert(f2.LogLevel, Equals, "logistic_base")
+	f1 = model.GetFormation(f1.Id)
+	c.Assert(f1.Formations[f2.Id].Id, Equals, f2.Id)
 
 	// Invalid formation parameters (empty)
-	actionType := sword.UnitMagicAction_formation_creation
-	msg := swapi.SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker: &sword.Tasker{
-						Formation: &sword.FormationId{
-							Id: proto.Uint32(f1.Id),
-						},
-					},
-					Type:       &actionType,
-					Parameters: swapi.MakeParameters(),
-				},
-			},
-		},
-	}
-	err = postInvalidUnitMagicAction(client, &msg)
+	_, err = client.CreateFormationTest(0, f1.Id, swapi.MakeParameters())
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 }
 
