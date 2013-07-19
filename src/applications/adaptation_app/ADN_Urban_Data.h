@@ -283,7 +283,7 @@ ADN_Urban_Data::T_UrbanMaterialInfos_Vector& ADN_Urban_Data::GetMaterialsInfos()
 inline
 bool ADN_Urban_Data::UrbanMaterialInfos::operator==( const std::string& str )
 {
-    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+    return strName_ == str;
 }
 
 // -----------------------------------------------------------------------------
@@ -339,7 +339,7 @@ ADN_Urban_Data::T_AccommodationInfos_Vector& ADN_Urban_Data::GetAccommodationsIn
 inline
 bool ADN_Urban_Data::AccommodationInfos::operator==( const std::string& str )
 {
-    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+    return strName_ == str;
 }
 
 // -----------------------------------------------------------------------------
@@ -372,7 +372,7 @@ ADN_Urban_Data::T_InfrastructureInfos_Vector& ADN_Urban_Data::GetInfrastructures
 inline
 bool ADN_Urban_Data::InfrastructureInfos::operator==( const std::string& str )
 {
-    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+    return strName_ == str;
 }
 
 // -----------------------------------------------------------------------------
@@ -382,7 +382,7 @@ bool ADN_Urban_Data::InfrastructureInfos::operator==( const std::string& str )
 inline
 bool ADN_Urban_Data::RoofShapeInfos::operator==( const std::string& str )
 {
-    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+    return strName_.GetData() == str;
 }
 
 // -----------------------------------------------------------------------------

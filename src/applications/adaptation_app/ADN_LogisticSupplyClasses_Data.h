@@ -89,7 +89,7 @@ inline
 ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* ADN_LogisticSupplyClasses_Data::FindLogisticSupplyClass( const std::string& strName )
 {
     for( auto it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( ( *it )->strName_.GetData(), strName ) )
+        if( ( *it )->strName_ == strName )
             return *it;
     return 0;
 }

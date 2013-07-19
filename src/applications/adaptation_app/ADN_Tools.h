@@ -131,15 +131,10 @@ namespace ADN_Tools
     };
 
     // -----------------------------------------------------------------------------
-    bool CaselessCompare( const std::string& str1, const std::string& str2 );
-
     std::string Scriptify( const std::string& strFieldName );
     std::string ComputePostureScriptName( E_UnitPosture nPosture );
 
     void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
-
-    std::string SecondToString( double rSecond );
-
     void SortMenu( Q3PopupMenu& menu );
 
     // -----------------------------------------------------------------------------

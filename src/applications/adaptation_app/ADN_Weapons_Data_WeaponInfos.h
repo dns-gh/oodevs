@@ -76,8 +76,7 @@ public:
         {
             if( !tgtnfos->ptrLauncher_.GetData() || !tgtnfos->ptrAmmunition_.GetData() )
                 return false;
-            return (  ADN_Tools::CaselessCompare( tgtnfos->ptrLauncher_.GetData()->strName_.GetData(), strLauncher_ )
-                && ADN_Tools::CaselessCompare( tgtnfos->ptrAmmunition_.GetData()->strName_.GetData(), strAmmo_ ) );
+            return tgtnfos->ptrLauncher_.GetData()->strName_ == strLauncher_ && tgtnfos->ptrAmmunition_.GetData()->strName_ == strAmmo_;
         }
 
     private:

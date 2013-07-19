@@ -567,7 +567,7 @@ namespace
         template < typename T >
         bool operator()( T* tgtnfos ) const
         {
-            return ADN_Tools::CaselessCompare( tgtnfos->strType_.GetData(), strType_ );
+            return tgtnfos->strType_ == strType_;
         }
 
     private:

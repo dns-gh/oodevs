@@ -90,7 +90,7 @@ inline
 ADN_Natures_Data::NatureInfos* ADN_Natures_Data::FindNature( const std::string& strName )
 {
     for( auto it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->strName_.GetData(), strName ) )
+        if( (*it)->strName_ == strName )
             return *it;
     return 0;
 }

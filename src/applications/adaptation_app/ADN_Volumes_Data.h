@@ -83,7 +83,7 @@ inline
 ADN_Volumes_Data::VolumeInfos* ADN_Volumes_Data::FindSize( const std::string& strName )
 {
     for( auto it = vSizes_.begin(); it != vSizes_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->strName_.GetData(), strName ) )
+        if( (*it)->strName_ == strName )
             return *it;
     return 0;
 }
