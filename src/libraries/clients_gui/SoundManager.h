@@ -15,6 +15,7 @@
 
 #pragma warning( push, 0 )
 #include <phonon/audiooutput.h>
+#include <phonon/mediaobject.h>
 #pragma warning( pop )
 
 namespace gui
@@ -54,6 +55,7 @@ private:
     //@{
     std::map< std::string, double > volume_;
     std::map< std::string, Phonon::AudioOutput* > canals_;
+    std::map< std::string, Phonon::MediaObject* > medias_;
     tools::Path defaultSoundsPath_;
     tools::Path currentSoundsPath_;
     tools::Path currentSound_;

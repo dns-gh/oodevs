@@ -194,8 +194,11 @@ void SoundPanel::OnChangeVolume( const std::string& name, int value )
 void SoundPanel::OnChooseSoundsDirectory()
 {
     tools::Path newDirectory = gui::FileDialog::getExistingDirectory( this, tr( "Select sounds directory" ), tools::Path::FromUnicode( soundDirectoryEditor_->text().toStdWString() ) );
-    soundDirectoryEditor_->setText( QString::fromStdWString( newDirectory.ToUnicode() ) );
-    soundManager_.ChangeSoundsDirectory( soundDirectoryEditor_->text().toStdString().c_str() );
+    if( !newDirectory.IsEmpty() )
+    {
+        soundDirectoryEditor_->setText( QString::fromStdWString( newDirectory.ToUnicode() ) );
+        soundManager_.ChangeSoundsDirectory( soundDirectoryEditor_->text().toStdString().c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

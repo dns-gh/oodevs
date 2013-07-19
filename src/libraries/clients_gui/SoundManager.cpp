@@ -54,13 +54,17 @@ void SoundManager::PlaySound( const std::string& soundName )
         defaultSoundsPath_.Apply( boost::bind( &SoundManager::FindFile, this, _1, boost::cref( soundName ) ), false );
     if( !currentSound_.Exists() )
         return;
-    Phonon::MediaObject* mediaObject = new Phonon::MediaObject();
-    mediaObject->setCurrentSource( Phonon::MediaSource( currentSound_.Normalize().ToUTF8().c_str() ) );
-    Phonon::AudioOutput* audioOutput = new Phonon::AudioOutput( Phonon::MusicCategory );
-    audioOutput->setVolume( volume_[ soundName ] );
-    Phonon::createPath(mediaObject, audioOutput);
-    mediaObject->play();
-    canals_[ soundName ] = audioOutput;
+    if( !medias_[ soundName ] )
+        medias_[ soundName ] = new Phonon::MediaObject();
+    if( medias_[ soundName ]->remainingTime() <= 0 )
+    {
+        medias_[ soundName ]->setCurrentSource( Phonon::MediaSource( currentSound_.Normalize().ToUTF8().c_str() ) );
+        Phonon::AudioOutput* audio = new Phonon::AudioOutput( Phonon::MusicCategory );
+        audio->setVolume( volume_[ soundName ] );
+        Phonon::createPath( medias_[ soundName ], audio );
+        medias_[ soundName ]->play();
+        canals_[ soundName ] = audio;
+    }
 }
 
 // -----------------------------------------------------------------------------
