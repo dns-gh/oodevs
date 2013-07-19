@@ -42,6 +42,8 @@ class ADN_Inhabitants_Data;
 class ADN_Inhabitants_GUI;
 class ADN_KnowledgeGroups_Data;
 class ADN_KnowledgeGroups_GUI;
+class ADN_Languages_Data;
+class ADN_Languages_GUI;
 class ADN_Launchers_Data;
 class ADN_Launchers_GUI;
 class ADN_Logistic_Data;
@@ -144,6 +146,7 @@ public:
     ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
     ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& GetLogistic();
     ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& GetDisasters();
+    ADN_WorkspaceElement< ADN_Languages_Data, ADN_Languages_GUI >& GetLanguages();
 
     T_UsingElements GetElementThatWillBeDeleted( ADN_Ref_ABC* data );
     T_UsingElements GetElementThatUse( ADN_Ref_ABC* data );
@@ -473,7 +476,16 @@ inline
 ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& ADN_Workspace::GetDisasters()
 {
     return static_cast< ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& >( *elements_[ eDisasters ] );
+}
 
+// -----------------------------------------------------------------------------
+// Name: ADN_WorkspaceElement< ADN_Languages_Data, ADN_Languages_GUI >& ADN_Workspace::GetLanguages
+// Created: ABR 2013-07-08
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_Languages_Data, ADN_Languages_GUI >& ADN_Workspace::GetLanguages()
+{
+    return static_cast< ADN_WorkspaceElement< ADN_Languages_Data, ADN_Languages_GUI >& >( *elements_[ eLanguages ] );
 }
 
 // -----------------------------------------------------------------------------

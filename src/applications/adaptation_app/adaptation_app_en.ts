@@ -2094,6 +2094,21 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Languages_GUI</name>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Launchers_GUI</name>
     <message>
         <source>Name</source>
@@ -5493,6 +5508,10 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Stage</source>
         <translation>Stage</translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

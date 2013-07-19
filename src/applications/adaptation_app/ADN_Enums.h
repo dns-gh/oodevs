@@ -16,6 +16,7 @@
 
 enum E_WorkspaceElements
 {
+    eLanguages, // Must be the first loaded
     eCategories,
     eSymbols, // Must be before eUnits && before eUrban
     eUrban,

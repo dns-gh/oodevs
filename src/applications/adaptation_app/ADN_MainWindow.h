@@ -110,10 +110,9 @@ private:
     ADN_Workspace&  workspace_;
     ADN_Config&     config_;
     QAction*        pProjectLoadAction_;
-    Q3PopupMenu*    pProjectMenu_;
     Q3PopupMenu*    pCoheranceTablesMenu_;
     Q3PopupMenu*    pConfigurationMenu_;
-    Q3PopupMenu*    pHelpMenu_;
+    QMenu*          pLanguagesMenu_;
     QAction*        pActionSave_;
     QAction*        pActionSaveAs_;
     QAction*        pOptional_;

@@ -202,6 +202,8 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GoToButton.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GUI_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Languages_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Languages_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Linear_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.cpp" />
@@ -239,6 +241,8 @@
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionAttachment.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GeneralConfig.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Languages_Data.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Languages_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionParameter.h" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.cpp" />

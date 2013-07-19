@@ -17,6 +17,7 @@
 #include "ADN_Table.h"
 #include "ADN_TableDialog.h"
 #include "ADN_GeneralConfig.h"
+#include "ADN_Languages_GUI.h"
 #include "ADN_ListView.h"
 #include "ADN_ListViewDialog.h"
 #include "ADN_MainTabWidget.h"
@@ -88,10 +89,8 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     , openGLContext_( new gui::GlContext() )
     , config_( config )
     , pProjectLoadAction_( 0 )
-    , pProjectMenu_( 0 )
     , pCoheranceTablesMenu_( 0 )
     , pConfigurationMenu_( 0 )
-    , pHelpMenu_( 0 )
     , pActionSave_( 0 )
     , pActionSaveAs_( 0 )
     , rIdSaveAs_( 0 )
@@ -167,36 +166,42 @@ void ADN_MainWindow::Build()
 
     // Project menu
     {
-        pProjectMenu_ = new Q3PopupMenu( this );
-        menuBar()->insertItem( tr("&Project"), pProjectMenu_ );
-        pProjectNewAction->addTo( pProjectMenu_ );
-        pProjectLoadAction_->addTo( pProjectMenu_ );
+        Q3PopupMenu* pProjectMenu = new Q3PopupMenu( this );
+        menuBar()->insertItem( tr("&Project"), pProjectMenu );
+        pProjectNewAction->addTo( pProjectMenu );
+        pProjectLoadAction_->addTo( pProjectMenu );
 
-        pProjectMenu_->insertSeparator();
-        pActionSave_->addTo( pProjectMenu_ );
-        pActionSaveAs_->addTo( pProjectMenu_ );
-        pProjectMenu_->insertSeparator();
-        pProjectMenu_->insertItem( tr( "&Export HTML" ), this, SLOT(ExportHtml()) );
-        pProjectMenu_->insertItem( tr( "Consistency analysis" ), consistencyDialog_.get(), SLOT( Display() ) );
-        pOptional_->addTo( pProjectMenu_ );
+        pProjectMenu->insertSeparator();
+        pActionSave_->addTo( pProjectMenu );
+        pActionSaveAs_->addTo( pProjectMenu );
+        pProjectMenu->insertSeparator();
+        pProjectMenu->insertItem( tr( "&Export HTML" ), this, SLOT(ExportHtml()) );
+        pProjectMenu->insertItem( tr( "Consistency analysis" ), consistencyDialog_.get(), SLOT( Display() ) );
+        pOptional_->addTo( pProjectMenu );
 
-        pProjectMenu_->insertSeparator();
-        pProjectMenu_->insertItem( tr("E&xit"),  this, SLOT(close()) );
+        pProjectMenu->insertSeparator();
+        pProjectMenu->insertItem( tr("E&xit"),  this, SLOT(close()) );
     }
     // Consistency tables menu
     {
         pCoheranceTablesMenu_ = new Q3PopupMenu( this );
         menuBar()->insertItem( tr( "Consistency &tables" ), pCoheranceTablesMenu_ );
     }
+    // Language menu
+    {
+        pLanguagesMenu_ = workspace_.GetLanguages().GetGui().CreateMenu( this );
+        menuBar()->addMenu( pLanguagesMenu_ );
+    }
     // Help menu
     {
         gui::HelpSystem* help = new gui::HelpSystem( this, generalConfig_->BuildResourceChildFile( "help/adaptation.xml" ) );
-        pHelpMenu_ = new Q3PopupMenu( this );
-        menuBar()->insertItem( tr( "&Help" ), pHelpMenu_ );
-        pHelpMenu_->insertItem( tr( "Help" ), help, SLOT( ShowHelp() ) );
-        pHelpMenu_->insertSeparator();
-        pHelpMenu_->insertItem( tr( "&About" ), this, SLOT(About()), Qt::CTRL+Qt::Key_F1 );
+        Q3PopupMenu* pHelpMenu = new Q3PopupMenu( this );
+        menuBar()->insertItem( tr( "&Help" ), pHelpMenu );
+        pHelpMenu->insertItem( tr( "Help" ), help, SLOT( ShowHelp() ) );
+        pHelpMenu->insertSeparator();
+        pHelpMenu->insertItem( tr( "&About" ), this, SLOT(About()), Qt::CTRL+Qt::Key_F1 );
     }
+
     // Disable the menus.
     SetMenuEnabled( false );
 
@@ -251,6 +256,7 @@ void ADN_MainWindow::SetMenuEnabled( bool bEnabled )
 {
     pActionSave_->setEnabled( bEnabled );
     pActionSaveAs_->setEnabled( bEnabled );
+    pLanguagesMenu_->setEnabled( bEnabled );
 }
 
 // -----------------------------------------------------------------------------

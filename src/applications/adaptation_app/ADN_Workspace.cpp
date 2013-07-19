@@ -44,6 +44,8 @@
 #include "ADN_Inhabitants_GUI.h"
 #include "ADN_KnowledgeGroups_Data.h"
 #include "ADN_KnowledgeGroups_GUI.h"
+#include "ADN_Languages_Data.h"
+#include "ADN_Languages_GUI.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Launchers_GUI.h"
 #include "ADN_Logistic_Data.h"
@@ -165,6 +167,7 @@ void ADN_Workspace::Initialize()
     elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >                ( eFireClasses );
     elements_[eLogistic]          = new ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >                  ( eLogistic );
     elements_[eDisasters]         = new ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >                ( eDisasters );
+    elements_[eLanguages]         = new ADN_WorkspaceElement< ADN_Languages_Data, ADN_Languages_GUI >                ( eLanguages );
 }
 
 #define INITIALIZE_ADN_ENUMTYPE( TypeName ) \
@@ -345,6 +348,7 @@ void ADN_Workspace::Load( const tools::Path& filename, const tools::Loader_ABC& 
     GetModels().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
     GetMissions().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
     GetObjects().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
+    GetLanguages().GetGui().FillMenu();
 }
 
 // -----------------------------------------------------------------------------

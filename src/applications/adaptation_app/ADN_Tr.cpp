@@ -309,6 +309,7 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "reports",          QT_TRANSLATE_NOOP("ADN_Tr", "Reports" ),              eReports ),
     T_ConverterWorkspaceElements( "logistic",         QT_TRANSLATE_NOOP("ADN_Tr", "Log" ),                  eLogistic ),
     T_ConverterWorkspaceElements( "disasters",        QT_TRANSLATE_NOOP("ADN_Tr", "Disasters" ),            eDisasters ),
+    T_ConverterWorkspaceElements( "languages",        QT_TRANSLATE_NOOP("ADN_Tr", "Languages" ),            eLanguages ),
     T_ConverterWorkspaceElements( "", "", (E_WorkspaceElements)-1 )
 };
 

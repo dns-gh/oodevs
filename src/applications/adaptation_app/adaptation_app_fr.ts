@@ -2102,6 +2102,21 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_Languages_GUI</name>
+    <message>
+        <source>Default</source>
+        <translation>Défaut</translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation>Langues</translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation>Editer...</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Launchers_GUI</name>
     <message>
         <source>Name</source>
@@ -5509,6 +5524,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Stage</source>
         <translation>Phase</translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation>Langues</translation>
     </message>
 </context>
 <context>

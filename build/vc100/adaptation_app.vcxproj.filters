@@ -386,6 +386,15 @@
     <Filter Include="Source Files\Dialogs">
       <UniqueIdentifier>{edbd886b-23e1-408f-bf88-9f60dcbbae86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Languages">
+      <UniqueIdentifier>{e766dfcd-cef4-4efd-8aac-74282872a75a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Languages\Languages Data">
+      <UniqueIdentifier>{ce2e2831-481b-4d05-99c5-eaa796dc922c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Languages\Languages GUI">
+      <UniqueIdentifier>{809f384a-4e7c-4edb-8239-805584897310}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -1204,6 +1213,12 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GeneralConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Languages_Data.cpp">
+      <Filter>Source Files\Workspace\Languages\Languages Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Languages_GUI.cpp">
+      <Filter>Source Files\Workspace\Languages\Languages GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1435,9 +1450,6 @@
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UrbanAttritionInfos.h">
-      <Filter>Source Files\Workspace\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.h">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Data.h">
@@ -1809,6 +1821,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GeneralConfig.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Languages_Data.h">
+      <Filter>Source Files\Workspace\Languages\Languages Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2084,6 +2099,7 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.h">
       <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.h" />
   </ItemGroup>
   <ItemGroup>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_CheckBox.h">
@@ -2211,6 +2227,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.h">
       <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Languages_GUI.h">
+      <Filter>Source Files\Workspace\Languages\Languages GUI</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>
