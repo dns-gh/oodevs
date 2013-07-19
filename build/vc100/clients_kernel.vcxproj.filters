@@ -451,6 +451,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Curve.cpp">
       <Filter>Source Files\Tools\Locations</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\XQuery.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h">
@@ -1064,6 +1067,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\XQuery.h">
+      <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

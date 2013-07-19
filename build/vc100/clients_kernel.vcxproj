@@ -238,6 +238,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\XQuery.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\AutomatDecisions_ABC.h" />
@@ -374,6 +375,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\XmlAdapter.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\XmlDescription.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\XQuery.h" />
     <CustomBuildStep Include="..\..\src\libraries\clients_kernel\ActionController.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Controller.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Controllers.h" />
