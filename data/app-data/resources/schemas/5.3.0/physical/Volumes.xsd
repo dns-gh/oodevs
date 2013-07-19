@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
-    <xs:include schemaLocation="../exercise/common.xsd"/>
+	<xs:include schemaLocation="../exercise/common.xsd"/>
 	<xs:element name="volumes">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Data specifying volume for equipments</xs:documentation>
@@ -22,8 +22,9 @@
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="translation-queries" type="T_TranslationQueries" minOccurs="0" maxOccurs="1"/>
 			</xs:sequence>
-			<xs:attribute name="model-version" type="T_Version"/>			
+			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

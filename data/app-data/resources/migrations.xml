@@ -186,5 +186,9 @@
   <migration from="5.2.1" to="5.3.0">
     <upgrade schema="schemas/5.2.1/physical/Missions.xsd" apply="schemas/5.3.0/xsl/missions_5.2.1-5.3.0.xsl"/>
     <upgrade schema="schemas/5.2.1/physical/Physical.xsd" apply="schemas/5.3.0/xsl/physical_5.2.1-5.3.0.xsl"/>
+    <upgrade schema="schemas/5.2.1/physical/Armors.xsd" apply="schemas/5.3.0/xsl/armors_5.2.1-5.3.0.xsl"/>
+    <upgrade schema="schemas/5.2.1/physical/LogisticSupplyClasses.xsd" apply="schemas/5.3.0/xsl/logistic-supply-classes_5.2.1-5.3.0.xsl"/>
+    <upgrade schema="schemas/5.2.1/physical/ResourceNatures.xsd" apply="schemas/5.3.0/xsl/resource-natures_5.2.1-5.3.0.xsl"/>
+    <upgrade schema="schemas/5.2.1/physical/Volumes.xsd" apply="schemas/5.3.0/xsl/volumes_5.2.1-5.3.0.xsl"/>
   </migration>
 </migrations>
