@@ -10,6 +10,25 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Volumes_Data.h"
 #include "ADN_Project_Data.h"
+#include "clients_kernel/XmlTranslations.h"
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Volumes_Data::VolumeInfos
+// Created: ABR 2013-07-12
+// -----------------------------------------------------------------------------
+ADN_Volumes_Data::VolumeInfos::VolumeInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Volumes_Data::CreateCopy
+// Created: ABR 2013-07-12
+// -----------------------------------------------------------------------------
+ADN_Volumes_Data::VolumeInfos* ADN_Volumes_Data::VolumeInfos::CreateCopy()
+{
+    return new VolumeInfos();
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Volumes_Data constructor
@@ -67,13 +86,9 @@ void ADN_Volumes_Data::ReadArchive( xml::xistream& input )
 void ADN_Volumes_Data::ReadVolume( xml::xistream& input )
 {
     std::string strName = input.attribute< std::string >( "name" );
-    T_VolumeInfos_Vector::iterator foundSize = std::find_if( vSizes_.begin(), vSizes_.end(), ADN_Tools::NameCmp( strName ) );
-    if( foundSize != vSizes_.end() )
-        throw MASA_EXCEPTION( tools::translate( "Categories_Data", "Categories - Duplicated volume type name '%1'" ).arg( strName.c_str() ).toStdString() );
-
-    VolumeInfos* pNewArmor = new VolumeInfos();
-    pNewArmor->strName_ = strName;
-    vSizes_.AddItem( pNewArmor );
+    VolumeInfos* pNew = new VolumeInfos();
+    pNew->strName_.SetTranslation( strName, translations_->GetTranslation( "volumes", strName ) );
+    vSizes_.AddItem( pNew );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,11 +107,9 @@ void ADN_Volumes_Data::WriteArchive( xml::xostream& output )
     {
         if( ( *itSize )->strName_.GetData().empty() )
             throw MASA_EXCEPTION( tools::translate( "Categories_Data", "Categories - Invalid volume type name" ).toStdString() );
-        std::string strData( ( *itSize )->strName_.GetData() );
         output << xml::start( "volume" )
-            << xml::attribute( "name", trim( strData ) )
+            << xml::attribute( "name", ( *itSize )->strName_ )
             << xml::end;
-
     }
     output << xml::end;
 }

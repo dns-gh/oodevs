@@ -291,8 +291,9 @@ void ADN_Crowds_Data::SpeedEffectInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::SpeedEffectInfos::ReadSpeedEffect( xml::xistream& input )
 {
+    const std::string type = input.attribute< std::string >( "unit-size" );
     auto itVolume = std::find_if( vVolumeInfos_.begin(), vVolumeInfos_.end(),
-                                  ADN_Tools::NameCmp( input.attribute< std::string >( "unit-size" ) ) );
+                                  boost::bind( &ADN_Tools::CrossedRefNameCompare< SpeedEffectVolumeInfos >, _1, boost::cref( type ) ) );
     assert( itVolume != vVolumeInfos_.end() );
     ( *itVolume )->ReadArchive( input );
 }

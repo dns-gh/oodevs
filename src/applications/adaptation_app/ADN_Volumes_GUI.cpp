@@ -58,8 +58,10 @@ void ADN_Volumes_GUI::Build()
     // size infos
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
     pHolder->layout()->setMargin( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pHolder, "name", tr( "Name" ), vInfosConnectors[ eSizeName ], 0, eVarName );
-    nameField->ConnectWithRefValidity( data_.GetVolumesInfos() );
+
+    // Name field
+    ADN_EditLine_ABC* namefield = builder.AddLocalizedField( pHolder, "name", tr( "Name" ), vInfosConnectors[ eSizeName ], 0, eVarName );
+    namefield->ConnectWithRefValidity( data_.GetVolumesInfos() );
 
     builder.PopSubName(); //! volumes
 

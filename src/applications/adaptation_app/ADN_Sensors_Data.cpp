@@ -693,7 +693,8 @@ void ADN_Sensors_Data::SensorInfos::ReadBaseDistance( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
-    auto it = std::find_if( vModifSizes_.begin(), vModifSizes_.end(), ModificatorSizeInfos::Cmp( type ) );
+    auto it = std::find_if( vModifSizes_.begin(), vModifSizes_.end(),
+                            boost::bind( &ADN_Tools::CrossedRefNameCompare< ModificatorSizeInfos >, _1, boost::cref( type ) ) );
     if( it == vModifSizes_.end() )
         throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toStdString() );
     (*it)->ReadArchive( input );

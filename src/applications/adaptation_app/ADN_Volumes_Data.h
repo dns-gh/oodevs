@@ -24,11 +24,11 @@ class ADN_Volumes_Data : public ADN_Data_ABC
 public:
     //! @name Types
     //@{
-    class VolumeInfos : public ADN_RefWithName
+    class VolumeInfos : public ADN_RefWithLocalizedName
     {
     public:
-        VolumeInfos() {}
-        VolumeInfos* CreateCopy() { return new VolumeInfos(); }
+        VolumeInfos();
+        VolumeInfos* CreateCopy();
     };
 
     typedef ADN_Type_Vector_ABC< VolumeInfos > T_VolumeInfos_Vector;
