@@ -11,7 +11,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Units_LogThreshold_GUI.h"
 #include "ADN_Units_Data.h"
-#include "ADN_LogisticSupplyClass.h"
+#include "ADN_LogisticSupplyClasses_Data.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_LogThreshold_GUI constructor
@@ -68,7 +68,7 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( const QPoint& pt )
     Q3PopupMenu targetMenu( &menu );
 
     // Get the list.
-    helpers::T_LogisticSupplyClass_Vector& logisticSupplyClasses = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses();
+    ADN_LogisticSupplyClasses_Data::T_LogisticSupplyClass_Vector& logisticSupplyClasses = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses();
 
     // Fill the popup menu with submenus, one for each dotation.
     for( auto it = logisticSupplyClasses.begin(); it != logisticSupplyClasses.end(); ++it )
@@ -97,14 +97,14 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( const QPoint& pt )
     if( nMenuResult == 1 )
         RemoveCurrentLogSupplyClass();
     else if( nMenuResult > 1 )
-        AddNewLogSupplyClass( *(helpers::LogisticSupplyClass*)nMenuResult ); // $$$$ ABR 2012-02-16: OMFG
+        AddNewLogSupplyClass( *(ADN_LogisticSupplyClasses_Data::LogisticSupplyClass*)nMenuResult ); // $$$$ ABR 2012-02-16: OMFG
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_LogThreshold_GUI::AddNewLogSupplyClass
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
-void ADN_Units_LogThreshold_GUI::AddNewLogSupplyClass( helpers::LogisticSupplyClass& category )
+void ADN_Units_LogThreshold_GUI::AddNewLogSupplyClass( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass& category )
 {
     ADN_Units_Data::StockLogThresholdInfos* pNewInfo = new ADN_Units_Data::StockLogThresholdInfos();
     pNewInfo->SetCrossedElement( &category );

@@ -21,7 +21,7 @@ enum E_WorkspaceElements
     eSymbols, // Must be before eUnits && before eUrban
     eUrban,
     eNBC,
-    eLaunchers, // $$$$ ABR 2013-02-05: Here I am !
+    eLaunchers,
     eResources,
     eFireClasses,
     eDrawings, // Must be before eObjects
@@ -46,6 +46,15 @@ enum E_WorkspaceElements
     eReports,
     eLogistic, // Gather eMaintenance, eSupply, eHealth and eFuneral in a container
     eNbrWorkspaceElements
+};
+
+enum E_CategoriesElements
+{
+    eArmors                 = 0,
+    eLogisticSupplyClasses  = 1,
+    eNatures                = 2,
+    eVolumes                = 3,
+    eNbrCategoriesElements
 };
 
 enum E_LogElements

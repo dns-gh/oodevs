@@ -395,6 +395,42 @@
     <Filter Include="Source Files\Workspace\Languages\Languages GUI">
       <UniqueIdentifier>{809f384a-4e7c-4edb-8239-805584897310}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Armors">
+      <UniqueIdentifier>{eaf9a9e2-5112-43fe-ab28-a411615bd4db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Volumes">
+      <UniqueIdentifier>{dba8109c-8060-4f46-9e1e-11baaf934e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\LogisticSupplyClasses">
+      <UniqueIdentifier>{568c9777-3fbb-4409-bab3-49cf52bb46ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Natures">
+      <UniqueIdentifier>{43e2ad64-617b-407e-9dbd-6e732a493662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Armors\Armors GUI">
+      <UniqueIdentifier>{669ff07d-84a4-4114-b253-5316257b9c88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Armors\Armors Data">
+      <UniqueIdentifier>{f1ce50f7-b294-4b7a-8479-bbc2ffc64b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\LogisticSupplyClasses\LogisticSupplyClasses GUI">
+      <UniqueIdentifier>{d387cdd7-cdfa-4ddf-9d16-6e19dbcf1e35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\LogisticSupplyClasses\LogisticSupplyClasses Data">
+      <UniqueIdentifier>{827eaeed-2655-41df-a922-7145f0c83e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Natures\Natures GUI">
+      <UniqueIdentifier>{d2c70413-db49-4c8d-8578-16999c505167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Natures\Natures Data">
+      <UniqueIdentifier>{8944ef50-071d-4b44-88a8-dcc05c2d67f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Volumes\Volumes GUI">
+      <UniqueIdentifier>{a796570b-690a-44cb-87cd-bd641e46d12d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Volumes\Volumes Data">
+      <UniqueIdentifier>{c15281ee-556d-451a-a795-a599e3ccb435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -482,15 +518,6 @@
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.cpp">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Armor.cpp">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_DotationNature.cpp">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.cpp">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.cpp">
@@ -757,16 +784,10 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.cpp">
       <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.cpp">
-      <Filter>Source Files\Workspace\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionEffectOnHuman.cpp">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionInfos.cpp">
-      <Filter>Source Files\Workspace\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNatureInfos.cpp">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UrbanAttritionInfos.cpp">
@@ -927,12 +948,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.cpp">
       <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.cpp">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.cpp">
-      <Filter>Source Files\Workspace\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral Data</Filter>
@@ -1219,6 +1234,45 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Languages_GUI.cpp">
       <Filter>Source Files\Workspace\Languages\Languages GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Armors_Data.cpp">
+      <Filter>Source Files\Workspace\Categories\Armors\Armors Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Armors_GUI.cpp">
+      <Filter>Source Files\Workspace\Categories\Armors\Armors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Natures_Data.cpp">
+      <Filter>Source Files\Workspace\Categories\Natures\Natures Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Natures_GUI.cpp">
+      <Filter>Source Files\Workspace\Categories\Natures\Natures GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Volumes_GUI.cpp">
+      <Filter>Source Files\Workspace\Categories\Volumes\Volumes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Volumes_Data.cpp">
+      <Filter>Source Files\Workspace\Categories\Volumes\Volumes Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.cpp">
+      <Filter>Source Files\Workspace\Categories\Volumes\Volumes GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.cpp">
+      <Filter>Source Files\Workspace\Categories\LogisticSupplyClasses\LogisticSupplyClasses GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_DotationNature.cpp">
+      <Filter>Source Files\Workspace\Categories\Natures\Natures GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Armor.cpp">
+      <Filter>Source Files\Workspace\Categories\Armors\Armors GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_Data.cpp">
+      <Filter>Source Files\Workspace\Categories\LogisticSupplyClasses\LogisticSupplyClasses Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_GUI.cpp">
+      <Filter>Source Files\Workspace\Categories\LogisticSupplyClasses\LogisticSupplyClasses GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Grid_Container.cpp">
+      <Filter>Source Files\Workspace\Container\Container GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1295,15 +1349,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Categories_Data.h">
       <Filter>Source Files\Workspace\Categories\Categories Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Armor.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_DotationNature.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.h">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
@@ -1434,9 +1479,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.h">
       <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.h">
-      <Filter>Source Files\Workspace\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AttritionEffectOnHuman.h">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
@@ -1444,9 +1486,6 @@
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_CapacityInfos.h">
-      <Filter>Source Files\Workspace\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNatureInfos.h">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UrbanAttritionInfos.h">
@@ -1568,12 +1607,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.h">
       <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.h">
-      <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral Data</Filter>
@@ -1823,6 +1856,33 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Languages_Data.h">
       <Filter>Source Files\Workspace\Languages\Languages Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Armors_Data.h">
+      <Filter>Source Files\Workspace\Categories\Armors\Armors Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Natures_Data.h">
+      <Filter>Source Files\Workspace\Categories\Natures\Natures Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Volumes_Data.h">
+      <Filter>Source Files\Workspace\Categories\Volumes\Volumes Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.h">
+      <Filter>Source Files\Workspace\Categories\Volumes\Volumes GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.h">
+      <Filter>Source Files\Workspace\Categories\LogisticSupplyClasses\LogisticSupplyClasses GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_DotationNature.h">
+      <Filter>Source Files\Workspace\Categories\Natures\Natures GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Armor.h">
+      <Filter>Source Files\Workspace\Categories\Armors\Armors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_Data.h">
+      <Filter>Source Files\Workspace\Categories\LogisticSupplyClasses\LogisticSupplyClasses Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Grid_Container.h">
+      <Filter>Source Files\Workspace\Container\Container GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2120,9 +2180,6 @@
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Launchers_GUI.h">
       <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
     </Qt_file_Mocing>
-    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.h">
       <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </Qt_file_Mocing>
@@ -2230,6 +2287,21 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Languages_GUI.h">
       <Filter>Source Files\Workspace\Languages\Languages GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Volumes_GUI.h">
+      <Filter>Source Files\Workspace\Categories\Volumes\Volumes GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Natures_GUI.h">
+      <Filter>Source Files\Workspace\Categories\Natures\Natures GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_GUI.h">
+      <Filter>Source Files\Workspace\Categories\LogisticSupplyClasses\LogisticSupplyClasses GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Armors_GUI.h">
+      <Filter>Source Files\Workspace\Categories\Armors\Armors GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

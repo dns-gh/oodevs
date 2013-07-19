@@ -156,7 +156,7 @@ void ADN_Resources_AttritionGraph::ClearAttritions()
 // -----------------------------------------------------------------------------
 void ADN_Resources_AttritionGraph::Update()
 {
-    helpers::ArmorInfos* info = ADN_Workspace::GetWorkspace().GetResources().GetGui().GetSelectedArmor();
+    ADN_Armors_Data::ArmorInfos* info = ADN_Workspace::GetWorkspace().GetResources().GetGui().GetSelectedArmor();
     if( info == 0 )
         return;
 

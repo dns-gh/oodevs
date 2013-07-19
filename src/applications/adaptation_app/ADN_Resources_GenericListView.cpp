@@ -80,7 +80,7 @@ void ADN_Resources_GenericListView::ConnectItem( bool bConnect )
 
         vItemConnectors_[ADN_Resources_GUI::eGenAttritions]->Connect( &pAmmoInfos->attritions_, bConnect );
         vItemConnectors_[ADN_Resources_GUI::eGenUrbanAttritions]->Connect( &pAmmoInfos->modifUrbanBlocks_, bConnect );
-        vItemConnectors_[ADN_Resources_GUI::eGenArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), bConnect );
+        vItemConnectors_[ADN_Resources_GUI::eGenArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), bConnect );
         vItemConnectors_[ADN_Resources_GUI::eGenMaterial]->Connect( &pAmmoInfos->modifUrbanBlocks_, bConnect );
         vItemConnectors_[ADN_Resources_GUI::eGenAttritionGraph]->Connect( &pAmmoInfos->attritions_, bConnect );
 

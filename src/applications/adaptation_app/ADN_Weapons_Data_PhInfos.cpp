@@ -17,6 +17,7 @@
 // *****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_Data_PhInfos.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
 
@@ -101,8 +102,8 @@ void ADN_Weapons_Data_PhInfos::WriteArchive( xml::xostream& output )
 // Name: ADN_Weapons_Data_PhSizeInfos::ADN_Weapons_Data_PhSizeInfos
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-ADN_Weapons_Data_PhSizeInfos::ADN_Weapons_Data_PhSizeInfos( ADN_Categories_Data::SizeInfos* ptr )
-    : ptrSize_              ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr )
+ADN_Weapons_Data_PhSizeInfos::ADN_Weapons_Data_PhSizeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
+    : ptrSize_              ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr )
     , vPhs_                 ( false )
 {
     this->BindExistenceTo( &ptrSize_ );

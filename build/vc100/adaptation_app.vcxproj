@@ -182,6 +182,8 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Armors_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Armors_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Config.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.cpp" />
@@ -200,6 +202,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GeneralConfig.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GoToButton.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Grid_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GUI_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Languages_Data.cpp" />
@@ -213,11 +216,14 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Disasters.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Logistic_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Armors_Data.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Armors_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Checker.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_CrossedRef.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.h" />
@@ -241,6 +247,7 @@
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionAttachment.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GeneralConfig.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Grid_Container.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Languages_Data.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Languages_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionParameter.h" />
@@ -254,6 +261,8 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_Type.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_ParameterValue.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Natures_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Natures_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NbcSuitTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchListView.cpp" />
@@ -340,6 +349,8 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Volumes_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Volumes_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_PhInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_WeaponInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.cpp" />
@@ -1155,10 +1166,8 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_AttritionTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionEffectOnHuman.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionInfos.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNatureInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UrbanAttritionInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Data.cpp" />
@@ -1592,9 +1601,13 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_Data.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_WizardPage.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Natures_Data.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Natures_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h" />
@@ -1648,7 +1661,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClass.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -1832,6 +1844,8 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tr.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolWidget.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_VectorEditionDialog.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Volumes_Data.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Volumes_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_PhInfos.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_WeaponInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.h" />
@@ -2815,11 +2829,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </Qt_file_Mocing>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AttritionEffectOnHuman.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AttritionInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_CapacityInfos.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNatureInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UrbanAttritionInfos.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>

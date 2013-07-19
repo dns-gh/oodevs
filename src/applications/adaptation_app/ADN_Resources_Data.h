@@ -18,8 +18,8 @@
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
-#include "ADN_ResourceNatureInfos.h"
-#include "ADN_LogisticSupplyClass.h"
+#include "ADN_Natures_Data.h"
+#include "ADN_LogisticSupplyClasses_Data.h"
 #include "ADN_UrbanAttritionInfos.h"
 
 // =============================================================================
@@ -57,8 +57,8 @@ public:
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
-        ADN_TypePtr_InVector_ABC< helpers::ResourceNatureInfos > ptrResourceNature_;
-        ADN_TypePtr_InVector_ABC< helpers::LogisticSupplyClass > ptrLogisticSupplyClass_;
+        ADN_TypePtr_InVector_ABC< ADN_Natures_Data::NatureInfos > ptrResourceNature_;
+        ADN_TypePtr_InVector_ABC< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass > ptrLogisticSupplyClass_;
         ADN_Type_Double rNbrInPackage_;
         ADN_Type_Double rPackageVolume_;
         ADN_Type_Double rPackageWeight_;
@@ -233,9 +233,9 @@ public:
     void                    Initialize();
 
     QStringList GetResourcesThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList GetResourcesThatUse( helpers::ResourceNatureInfos& object );
-    QStringList GetResourcesThatUse( helpers::ResourceNatureInfos& object, E_DotationFamily familly );
-    QStringList GetResourcesThatUse( helpers::LogisticSupplyClass& object );
+    QStringList GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object );
+    QStringList GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object, E_DotationFamily familly );
+    QStringList GetResourcesThatUse( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass& object );
     QStringList GetResourcesWithDirectFire();
 
     static bool IsMineOrExplosive( E_DotationFamily type );

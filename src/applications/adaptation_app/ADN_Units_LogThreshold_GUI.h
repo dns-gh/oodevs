@@ -13,11 +13,7 @@
 #define __ADN_Units_LogThreshold_GUI_h_
 
 #include "ADN_CommonGfx.h"
-
-namespace helpers
-{
-    class LogisticSupplyClass;
-}
+#include "ADN_LogisticSupplyClasses_Data.h"
 
 // =============================================================================
 /** @class  ADN_Units_LogThreshold_GUI
@@ -35,7 +31,7 @@ public:
 
 private:
     virtual void OnContextMenu( const QPoint& pt );
-    void AddNewLogSupplyClass( helpers::LogisticSupplyClass& data );
+    void AddNewLogSupplyClass( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass& data );
     void RemoveCurrentLogSupplyClass();
 };
 

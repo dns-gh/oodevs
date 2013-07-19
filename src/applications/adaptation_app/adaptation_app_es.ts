@@ -158,6 +158,68 @@
     </message>
 </context>
 <context>
+    <name>ADN_Armors_Data::ArmorInfos</name>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Armors_GUI</name>
+    <message>
+        <source>Armor classes</source>
+        <translation type="unfinished">Clases de blindaje</translation>
+    </message>
+    <message>
+        <source>Armor class</source>
+        <translation type="unfinished">Clase de blindaje</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutralization</source>
+        <translation type="unfinished">Neutralización</translation>
+    </message>
+    <message>
+        <source>Average time</source>
+        <translation type="unfinished">Tiempo promedio</translation>
+    </message>
+    <message>
+        <source>Variance</source>
+        <translation type="unfinished">Varianza</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished">Fallas</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">Réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished">Réparable sur place</translation>
+    </message>
+    <message>
+        <source>Attrition effects on humans</source>
+        <translation type="unfinished">Efectos de atrición en humanos</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Units</source>
@@ -494,56 +556,12 @@ estacionado con motor encendido</translation>
 <context>
     <name>ADN_Categories_GUI</name>
     <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Neutralization</source>
-        <translation>Neutralización</translation>
-    </message>
-    <message>
-        <source>Average time</source>
-        <translation>Tiempo promedio</translation>
-    </message>
-    <message>
-        <source>Variance</source>
-        <translation>Varianza</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Fallas</translation>
-    </message>
-    <message>
         <source>Sizes</source>
         <translation>Volumenes</translation>
     </message>
     <message>
         <source>Armor classes</source>
         <translation>Clases de blindaje</translation>
-    </message>
-    <message>
-        <source>Armor class</source>
-        <translation>Clase de blindaje</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Attrition effects on humans</source>
-        <translation>Efectos de atrición en humanos</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation>Requiere mantenimiento</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation>Reparable en sitio</translation>
     </message>
     <message>
         <source>Resource natures</source>
@@ -2427,6 +2445,17 @@ PNG (*.png)
     </message>
 </context>
 <context>
+    <name>ADN_LogisticSupplyClasses_GUI</name>
+    <message>
+        <source>Logistic resource categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Logistic_GUI</name>
     <message>
         <source>Maintenance</source>
@@ -3085,6 +3114,17 @@ PNG (*.png)
     <message>
         <source>Contamination</source>
         <translation>Contaminación</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Natures_GUI</name>
+    <message>
+        <source>Resource natures</source>
+        <translation type="unfinished">Naturaleza de recursos</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3824,11 +3864,11 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
     <message>
         <source>On site fixable</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Réparable sur place</translation>
     </message>
     <message>
         <source>Maintenance support needed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Réparable avec évacuation</translation>
     </message>
     <message>
         <source>Destroyed</source>
@@ -5977,6 +6017,17 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Volumes_GUI</name>
+    <message>
+        <source>Sizes</source>
+        <translation type="unfinished">Volumenes</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_WeaponFilter</name>
     <message>
         <source>Warning</source>
@@ -6402,20 +6453,8 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation>Categorías - Nombre de tipo de recurso natural duplicado &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Categories - Duplicated volume type names</source>
-        <translation>Categorias - Nombre de tipo de volúmen duplicado</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation>Categorías - Tipo de volumen inválido</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type names</source>
-        <translation>Categorías - nombre de tipo de blindaje duplicado</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature names</source>
-        <translation>Categorías - Nombre de recurso natural duplicado</translation>
     </message>
     <message>
         <source>Categories - Invalid resource nature</source>
@@ -6423,10 +6462,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated logistic resource category</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6656,17 +6691,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Protection</source>
         <translation type="unfinished">Protección</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::ArmorInfos</name>
-    <message>
-        <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type name</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

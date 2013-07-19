@@ -8,8 +8,8 @@ using namespace helpers;
 // Name: AttritionInfos::AttritionInfos
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-AttritionInfos::AttritionInfos( ArmorInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr, true )
+AttritionInfos::AttritionInfos( ADN_Armors_Data::ArmorInfos* ptr )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), ptr, true )
     , rDestroy_( 0 )
     , rRepairWithEvac_( 0 )
     , rRepairNoEvac_( 0 )

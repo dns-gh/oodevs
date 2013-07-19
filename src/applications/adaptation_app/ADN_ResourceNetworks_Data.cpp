@@ -149,7 +149,7 @@ ADN_ResourceNetworks_Data::T_ResourceNetworkInfosVector& ADN_ResourceNetworks_Da
 // -----------------------------------------------------------------------------
 ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::FindResourceNetwork( const std::string& strName )
 {
-    auto it = std::find_if( resourceNetworks_.begin(), resourceNetworks_.end(), ADN_Tools::NameCmp< ResourceNetworkInfos >( strName ) );
+    auto it = std::find_if( resourceNetworks_.begin(), resourceNetworks_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == resourceNetworks_.end() )
         return 0;
     return *it;

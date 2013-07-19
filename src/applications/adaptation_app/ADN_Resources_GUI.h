@@ -134,7 +134,7 @@ public:
     void ExportPKs( ADN_HtmlBuilder& builder, ADN_Resources_Data::AmmoCategoryInfo& infos );
     void UpdateGraph();
     void InitializeSimulationCombos();
-    helpers::ArmorInfos* GetSelectedArmor() const;
+    ADN_Armors_Data::ArmorInfos* GetSelectedArmor() const;
     helpers::ADN_UrbanAttritionInfos* GetSelectedMaterial() const;
     //@}
 

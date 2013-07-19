@@ -158,6 +158,68 @@
     </message>
 </context>
 <context>
+    <name>ADN_Armors_Data::ArmorInfos</name>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished">فئات--اكتب الدروع غير صالح &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation type="unfinished">فئات-اسم نوع الدروع المكررة</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Armors_GUI</name>
+    <message>
+        <source>Armor classes</source>
+        <translation type="unfinished">فئات الدروع</translation>
+    </message>
+    <message>
+        <source>Armor class</source>
+        <translation type="unfinished">فئة المدرعات</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
+    </message>
+    <message>
+        <source>Neutralization</source>
+        <translation type="unfinished">تحييد</translation>
+    </message>
+    <message>
+        <source>Average time</source>
+        <translation type="unfinished">متوسط الوقت</translation>
+    </message>
+    <message>
+        <source>Variance</source>
+        <translation type="unfinished">الفرق</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished">أعطال</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة اللازمة</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished">في الموقع يمكن حلها</translation>
+    </message>
+    <message>
+        <source>Attrition effects on humans</source>
+        <translation type="unfinished">آثار الاستنزاف على البشر</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Units</source>
@@ -484,50 +546,6 @@ Parked engine running</source>
     <message>
         <source>Armor classes</source>
         <translation type="unfinished">فئات الدروع</translation>
-    </message>
-    <message>
-        <source>Armor class</source>
-        <translation type="unfinished">فئة المدرعات</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished">نوع</translation>
-    </message>
-    <message>
-        <source>Neutralization</source>
-        <translation type="unfinished">تحييد</translation>
-    </message>
-    <message>
-        <source>Average time</source>
-        <translation type="unfinished">متوسط الوقت</translation>
-    </message>
-    <message>
-        <source>Variance</source>
-        <translation type="unfinished">الفرق</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation type="unfinished">أعطال</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished">دعم الصيانة اللازمة</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation type="unfinished">%</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished">في الموقع يمكن حلها</translation>
-    </message>
-    <message>
-        <source>Attrition effects on humans</source>
-        <translation type="unfinished">آثار الاستنزاف على البشر</translation>
     </message>
     <message>
         <source>Sizes</source>
@@ -2412,6 +2430,17 @@ PNG (*.png)
     </message>
 </context>
 <context>
+    <name>ADN_LogisticSupplyClasses_GUI</name>
+    <message>
+        <source>Logistic resource categories</source>
+        <translation type="unfinished">فئات الموارد اللوجستية</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Logistic_GUI</name>
     <message>
         <source>Maintenance</source>
@@ -3070,6 +3099,17 @@ PNG (*.png)
     <message>
         <source>Contamination</source>
         <translation type="unfinished">تلوث</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Natures_GUI</name>
+    <message>
+        <source>Resource natures</source>
+        <translation type="unfinished">الموارد الطبيعة</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
 </context>
 <context>
@@ -5960,6 +6000,17 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Volumes_GUI</name>
+    <message>
+        <source>Sizes</source>
+        <translation type="unfinished">أحجام</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+</context>
+<context>
     <name>ADN_WeaponFilter</name>
     <message>
         <source>Warning</source>
@@ -6389,28 +6440,12 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">فئات-ازدواجية الموارد اللوجستية الفئة &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Categories - Duplicated volume type names</source>
-        <translation type="unfinished">فئات-أسماء نوع وحدة التخزين المكررة</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation type="unfinished">فئات-اسم نوع وحدة التخزين غير صحيحة</translation>
     </message>
     <message>
-        <source>Categories - Duplicated armor type names</source>
-        <translation type="unfinished">فئات-أسماء أنواع الدروع المكررة</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature names</source>
-        <translation type="unfinished">فئات-أسماء طبيعة الموارد المكررة</translation>
-    </message>
-    <message>
         <source>Categories - Invalid resource nature</source>
         <translation type="unfinished">فئات-طبيعة المورد غير صحيح</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated logistic resource category</source>
-        <translation type="unfinished">فئات-تكرار فئة الموارد اللوجستية</translation>
     </message>
 </context>
 <context>
@@ -6639,17 +6674,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Protection</source>
         <translation type="unfinished">حماية</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::ArmorInfos</name>
-    <message>
-        <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation type="unfinished">فئات--اكتب الدروع غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type name</source>
-        <translation type="unfinished">فئات-اسم نوع الدروع المكررة</translation>
     </message>
 </context>
 <context>

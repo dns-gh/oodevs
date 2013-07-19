@@ -39,7 +39,7 @@ class ADN_AgentDetection_Table: public ADN_Table
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_AgentDetection_Table( const QString& objectName, ADN_Categories_Data::T_SizeInfos_Vector& sizes, ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials, QWidget* pParent = 0  )
+    ADN_AgentDetection_Table( const QString& objectName, ADN_Volumes_Data::T_VolumeInfos_Vector& sizes, ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials, QWidget* pParent = 0  )
         : ADN_Table( objectName, pParent )
     {
         int sizesSize = static_cast< int >( sizes.size() );
@@ -425,7 +425,7 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
-    ADN_Categories_Data::T_SizeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
+    ADN_Volumes_Data::T_VolumeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos();
     ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos();
     ADN_AgentDetection_Table* pTable = new ADN_AgentDetection_Table( tr( "Agent detection" ), sizes, materials );
 

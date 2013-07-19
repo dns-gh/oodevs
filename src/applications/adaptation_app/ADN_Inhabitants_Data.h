@@ -139,7 +139,7 @@ ADN_Inhabitants_Data::T_InhabitantsInfosVector& ADN_Inhabitants_Data::GetInhabit
 inline
 ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::FindInhabitant( const std::string& strName )
 {
-    auto it = std::find_if( vInhabitants_.begin(), vInhabitants_.end(), ADN_Tools::NameCmp< InhabitantsInfos >( strName ) );
+    auto it = std::find_if( vInhabitants_.begin(), vInhabitants_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vInhabitants_.end() )
         return 0;
     return *it;

@@ -10,10 +10,10 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_DotationNature.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Categories_Data.h"
-#include "ADN_Categories_GUI.h"
+#include "ADN_Natures_Data.h"
+#include "ADN_Natures_GUI.h"
 #include "ADN_Resources_Data.h"
-#include "ADN_ResourceNatureInfos.h"
+#include "ADN_Natures_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 #include "ENT/ENT_Tr_Gen.h"
@@ -25,7 +25,7 @@
 ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_DotationNature", tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< helpers::ResourceNatureInfos >( *this );
+    pConnector_ = new ADN_Connector_ListView< ADN_Natures_Data::NatureInfos >( *this );
     SetDeletionEnabled( true );
 }
 
@@ -47,10 +47,10 @@ void ADN_ListView_Categories_DotationNature::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    helpers::ResourceNatureInfos* pInfos = (helpers::ResourceNatureInfos*) pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Categories_GUI::eNbrDotationNatureGuiElements );
+    ADN_Natures_Data::NatureInfos* pInfos = (ADN_Natures_Data::NatureInfos*) pCurData_;
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Natures_GUI::eNbrDotationNatureGuiElements );
 
-    vItemConnectors_[ ADN_Categories_GUI::eDotationNatureName ]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ ADN_Natures_GUI::eDotationNatureName ]->Connect( &pInfos->strName_, bConnect );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,11 +60,11 @@ void ADN_ListView_Categories_DotationNature::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< helpers::ResourceNatureInfos > wizard( tools::translate( "ADN_ListView_Categories_DotationNature", "Natures" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), this );
+    ADN_Wizard< ADN_Natures_Data::NatureInfos > wizard( tools::translate( "ADN_ListView_Categories_DotationNature", "Natures" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
-        helpers::ResourceNatureInfos* pCastData = static_cast< helpers::ResourceNatureInfos* >( pCurData_ );
+        ADN_Natures_Data::NatureInfos* pCastData = static_cast< ADN_Natures_Data::NatureInfos* >( pCurData_ );
         assert( pCastData != 0 );
         for( uint n = 0; n < eNbrDotationFamily; ++n )
         {
@@ -86,7 +86,7 @@ std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( const QModelI
     if( !index.isValid() )
         return "";
     void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
-    helpers::ResourceNatureInfos* pCastData = static_cast< helpers::ResourceNatureInfos* >( pData );
+    ADN_Natures_Data::NatureInfos* pCastData = static_cast< ADN_Natures_Data::NatureInfos* >( pData );
     assert( pCastData != 0 );
 
     std::string result;

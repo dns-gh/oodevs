@@ -78,8 +78,8 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& outpu
 // Name: ModificatorSizeInfos::ModificatorSizeInfos
 // Created: JDY 03-08-28
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos( ADN_Categories_Data::SizeInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr, true, "type" )
+ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true, "type" )
     , rCoeff_( 0 )
 {
     // NOTHING
@@ -101,7 +101,7 @@ void ADN_Sensors_Data::ModificatorSizeInfos::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "distance-modifier" );
-    ADN_CrossedRef< ADN_Categories_Data::SizeInfos >::WriteArchive( output );
+    ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >::WriteArchive( output );
     output   << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }
@@ -527,7 +527,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     , rDistDetection_      ( 0 )
     , rDistReco_           ( 0 )
     , rDistIdent_          ( 0 )
-    , vModifSizes_         ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
+    , vModifSizes_         ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos() )
     , vModifIlluminations_ ( false )
     , vModifWeather_       ( false )
     , vModifEnvironments_  ( false )

@@ -99,7 +99,7 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
 ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0, false, "logistic-supply-class" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), 0, false, "logistic-supply-class" )
     , rLogThreshold_( 0. )
 {
     // NOTHING
@@ -950,13 +950,13 @@ QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Models_Data::ModelInfos& model 
 // Name: ADN_Units_Data::GetUnitsThatUse
 // Created: ABR 2012-07-26
 // -----------------------------------------------------------------------------
-QStringList ADN_Units_Data::GetUnitsThatUse( helpers::LogisticSupplyClass& supply )
+QStringList ADN_Units_Data::GetUnitsThatUse( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass& supply )
 {
     QStringList result;
     for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
         for( auto itStock = ( *it )->stocks_.vLogThresholds_.begin(); itStock != ( *it )->stocks_.vLogThresholds_.end(); ++itStock )
         {
-            helpers::LogisticSupplyClass* infos = ( *itStock )->GetCrossedElement();
+            ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* infos = ( *itStock )->GetCrossedElement();
             if( infos && infos->strName_.GetData() == supply.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
         }

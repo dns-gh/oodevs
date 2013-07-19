@@ -206,7 +206,7 @@ void ADN_Breakdowns_Data::Reset()
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::FindBreakdown( const std::string& strName )
 {
-    auto it = std::find_if( vBreakdowns_.begin(), vBreakdowns_.end(), ADN_Tools::NameCmp< BreakdownInfo >( strName ) );
+    auto it = std::find_if( vBreakdowns_.begin(), vBreakdowns_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vBreakdowns_.end() )
         return 0;
     return *it;

@@ -103,7 +103,7 @@ void ADN_Resources_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Resources_GUI::eEffectLifetime]->Connect( &pInfos->indirectAmmoInfos_.effectLifeTime_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eNetworkUsable]->Connect( &pInfos->bNetworkUsable_, bConnect );
 
-    vItemConnectors_[ADN_Resources_GUI::eArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), bConnect );
     vItemConnectors_[ADN_Resources_GUI::eMaterial]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eAttritionGraph]->Connect( &pInfos->attritions_, bConnect );
 

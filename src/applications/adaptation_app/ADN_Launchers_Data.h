@@ -88,7 +88,7 @@ ADN_Launchers_Data::T_LauncherInfos_Vector& ADN_Launchers_Data::GetLaunchersInfo
 inline
 ADN_Launchers_Data::LauncherInfos* ADN_Launchers_Data::FindLauncher( const std::string& strName )
 {
-    auto it = std::find_if( vLaunchers_.begin(), vLaunchers_.end(), ADN_Tools::NameCmp<ADN_Launchers_Data::LauncherInfos>( strName ) );
+    auto it = std::find_if( vLaunchers_.begin(), vLaunchers_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vLaunchers_.end() )
         return 0;
     return *it;

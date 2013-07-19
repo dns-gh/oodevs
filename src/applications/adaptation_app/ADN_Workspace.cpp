@@ -611,9 +611,9 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
     T_UsingElements result;
 
     // Equipments to delete when armor or size deleted
-    if( helpers::ArmorInfos* infos = dynamic_cast< helpers::ArmorInfos* >( data ) )
+    if( ADN_Armors_Data::ArmorInfos* infos = dynamic_cast< ADN_Armors_Data::ArmorInfos* >( data ) )
         return FillUsingElements( eEquipments, *infos, GetEquipments().GetData(), &ADN_Equipments_Data::GetEquipmentsThatUse, result );
-    if( ADN_Categories_Data::SizeInfos* infos = dynamic_cast< ADN_Categories_Data::SizeInfos* >( data ) )
+    if( ADN_Volumes_Data::VolumeInfos* infos = dynamic_cast< ADN_Volumes_Data::VolumeInfos* >( data ) )
         return FillUsingElements( eEquipments, *infos, GetEquipments().GetData(), &ADN_Equipments_Data::GetEquipmentsThatUse, result );
 
     // Urban templates to delete when material, roofshape or accomodation deleted
@@ -627,7 +627,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
     // Resources to delete when object or nature deleted
     if( ADN_Objects_Data_ObjectInfos* infos = dynamic_cast< ADN_Objects_Data_ObjectInfos* >( data ) )
         return FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
-    if( helpers::ResourceNatureInfos* infos = dynamic_cast< helpers::ResourceNatureInfos* >( data ) )
+    if( ADN_Natures_Data::NatureInfos* infos = dynamic_cast< ADN_Natures_Data::NatureInfos* >( data ) )
         return FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
 
     // Weapons to delete when launcher or ammo deleted
@@ -736,7 +736,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         return FillUsingElements( eUnits, *infos, GetUnits().GetData(), &ADN_Units_Data::GetUnitsThatUse, result );
 
     // Units and resources that use logistic supply stock
-    if( helpers::LogisticSupplyClass* infos = dynamic_cast< helpers::LogisticSupplyClass* >( data ) )
+    if( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* infos = dynamic_cast< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* >( data ) )
     {
         FillUsingElements( eUnits, *infos, GetUnits().GetData(), &ADN_Units_Data::GetUnitsThatUse, result );
         FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
@@ -754,7 +754,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         return result;
     }
     // All urban materials, ammunitions and crowds use armor. Resources that use armor
-    if( helpers::ArmorInfos* infos = dynamic_cast< helpers::ArmorInfos* >( data ) )
+    if( ADN_Armors_Data::ArmorInfos* infos = dynamic_cast< ADN_Armors_Data::ArmorInfos* >( data ) )
     {
         result[ eUrban ];
         result[ eCrowds ];
@@ -762,7 +762,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         return result;
     }
     // All crowds and sensors use volume
-    if( ADN_Categories_Data::SizeInfos* infos = dynamic_cast< ADN_Categories_Data::SizeInfos* >( data ) )
+    if( ADN_Volumes_Data::VolumeInfos* infos = dynamic_cast< ADN_Volumes_Data::VolumeInfos* >( data ) )
     {
         result[ eSensors ];
         result[ eCrowds ];

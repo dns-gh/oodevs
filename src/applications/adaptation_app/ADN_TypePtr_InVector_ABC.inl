@@ -285,7 +285,7 @@ void ADN_TypePtr_InVector_ABC< T >::Initialize( T_TypeVector* vector /* = 0 */ )
         pVector_ = vector;
     if( !pVector_ )
         return;
-    auto it = std::find_if( pVector_->begin(), pVector_->end(), ADN_Tools::NameCmp< T >( refName_ ) );
+    auto it = std::find_if( pVector_->begin(), pVector_->end(), ADN_Tools::NameCmp( refName_ ) );
     if( it == pVector_->end() )
         SetData( 0 );
     else

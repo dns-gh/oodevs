@@ -51,10 +51,7 @@ void ADN_Linear_Container::Build()
     pLayout->setAlignment( ( orientation_ == Qt::Vertical ) ? Qt::AlignTop : Qt::AlignLeft );
 
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        it->second.second->GetMainWidget()->reparent( pMainWidget_, QPoint( 0, 0 ) );
         pLayout->addWidget( it->second.second->GetMainWidget() );
-    }
 
     if( orientation_ == Qt::Vertical )
         pLayout->addStretch( 1 );

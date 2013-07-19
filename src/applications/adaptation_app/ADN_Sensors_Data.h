@@ -18,7 +18,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
-#include "ADN_Categories_Data.h"
+#include "ADN_Volumes_Data.h"
 #include "ADN_Disasters_Data.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Radars_Data.h"
@@ -46,10 +46,10 @@ public:
 // LTO end
 
 //*****************************************************************************
-    class ModificatorSizeInfos : public ADN_CrossedRef< ADN_Categories_Data::SizeInfos >
+    class ModificatorSizeInfos : public ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >
     {
     public:
-        explicit ModificatorSizeInfos( ADN_Categories_Data::SizeInfos* ptr );
+        explicit ModificatorSizeInfos( ADN_Volumes_Data::VolumeInfos* ptr );
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -58,7 +58,7 @@ public:
         ADN_Type_Double rCoeff_;
 
     public:
-        typedef ADN_Categories_Data::SizeInfos T_Item;
+        typedef ADN_Volumes_Data::VolumeInfos T_Item;
 
         class Cmp : public std::unary_function< ModificatorSizeInfos*, bool >
         {
@@ -78,7 +78,7 @@ public:
         class CmpRef : public std::unary_function< ModificatorSizeInfos*, bool >
         {
         public:
-            explicit CmpRef( ADN_Categories_Data::SizeInfos* val ) : val_( val ) {}
+            explicit CmpRef( ADN_Volumes_Data::VolumeInfos* val ) : val_( val ) {}
             virtual ~CmpRef(){}
 
             bool operator()( ModificatorSizeInfos* tgtnfos ) const
@@ -87,7 +87,7 @@ public:
             }
 
         private:
-            ADN_Categories_Data::SizeInfos* val_;
+            ADN_Volumes_Data::VolumeInfos* val_;
         };
     };
 
@@ -458,7 +458,7 @@ ADN_Sensors_Data::T_SensorsInfos_Vector&    ADN_Sensors_Data::GetSensorsInfos()
 inline
 ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::FindSensor( const std::string& strName )
 {
-    auto it = std::find_if( vSensors_.begin(), vSensors_.end(), ADN_Tools::NameCmp< SensorInfos >( strName ) );
+    auto it = std::find_if( vSensors_.begin(), vSensors_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vSensors_.end() )
         return 0;
     return *it;

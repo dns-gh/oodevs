@@ -297,7 +297,7 @@ void ADN_Radars_Data::Reset()
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::RadarInfos* ADN_Radars_Data::FindRadar( const std::string& strName )
 {
-    auto it = std::find_if( vRadars_.begin(), vRadars_.end(), ADN_Tools::NameCmp<RadarInfos>( strName ) );
+    auto it = std::find_if( vRadars_.begin(), vRadars_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vRadars_.end() )
         return 0;
     return *it;

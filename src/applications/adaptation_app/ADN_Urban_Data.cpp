@@ -72,48 +72,6 @@ void ADN_Urban_Data::Reset()
     defaultMaxCapacity_ = 1;
 }
 
-class ADN_String_Cmp : public std::unary_function< ADN_Type_String* , bool >
-{
-public:
-    ADN_String_Cmp(const std::string& val) : val_( val ) {}
-    virtual ~ADN_String_Cmp() {}
-
-    template< typename T >
-    bool operator()( T* infos ) const
-    {
-        return infos->strName_.GetData() == val_;
-    }
-
-private:
-    std::string val_;
-};
-
-namespace
-{
-    template< typename Vector, typename Extractor >
-    bool HasDuplicates( const Vector& vect, const Extractor& extractor )
-    {
-        std::vector< std::string > tmp;
-        tmp.reserve( vect.size() );
-        for( Vector::const_iterator it = vect.begin(); it != vect.end(); ++it )
-            tmp.push_back( extractor( **it ) );
-
-        std::sort( tmp.begin(), tmp.end() );
-        std::vector< std::string >::iterator itNewEnd = std::unique( tmp.begin(), tmp.end() );
-        size_t total = std::distance( tmp.begin(), itNewEnd );
-        return total != tmp.size();
-    }
-
-    struct StringExtractor
-    {
-        template< typename T >
-        std::string operator()( T& infos ) const
-        {
-            return infos.strName_.GetData();
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::Save
 // Created: LGY 2011-09-21
@@ -297,7 +255,7 @@ ADN_Urban_Data::UrbanMaterialInfos* ADN_Urban_Data::UrbanMaterialInfos::CreateCo
 // Created: SLG 2010-07-01
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
-    : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
 {
     input >> xml::attribute( "name", strName_ )
           >> xml::start( "attritions" )
@@ -310,7 +268,7 @@ ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
 // Created: HBD 2010-11-17
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos()
-    : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
 {
     // NOTHING
 }

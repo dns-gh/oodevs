@@ -88,19 +88,26 @@ namespace ADN_Tools
     }
 
     // -----------------------------------------------------------------------------
-    template< typename T >
-    class NameCmp : public std::unary_function< T* , bool >
+    class NameCmp// : public std::unary_function< T* , bool >
     {
     public:
-        NameCmp( const std::string& strName ) : strName_( strName ) {}
+                 NameCmp( const std::string& strName, bool caselessCompare = true ) : strName_( strName ), caselessCompare_( caselessCompare ) {}
         virtual ~NameCmp() {}
 
         template < typename T >
-        bool operator()( T* tgtnfos ) const
-        { return CaselessCompare( tgtnfos->strName_.GetData(), strName_ ); }
+        bool operator()( T* infos ) const
+        {
+            if( infos == 0 )
+                return false;
+            if( caselessCompare_ ) 
+                return CaselessCompare( infos->strName_.GetData(), strName_ );
+            else
+                return infos->strName_.GetData() == strName_;
+        }
 
     private:
         std::string strName_;
+        bool caselessCompare_;
     };
 
     template< class DataClass >

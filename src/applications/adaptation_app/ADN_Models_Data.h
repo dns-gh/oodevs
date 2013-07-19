@@ -142,7 +142,7 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetUnitModelsInfos()
 inline
 ADN_Models_Data::ModelInfos* ADN_Models_Data::FindUnitModel( const std::string& strName )
 {
-    auto it = std::find_if( vUnitModels_.begin(), vUnitModels_.end(), ADN_Tools::NameCmp< ModelInfos >( strName ) );
+    auto it = std::find_if( vUnitModels_.begin(), vUnitModels_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vUnitModels_.end() )
         return 0;
     return *it;
@@ -165,7 +165,7 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetAutomataModelsInfos()
 inline
 ADN_Models_Data::ModelInfos* ADN_Models_Data::FindAutomataModel( const std::string& strName )
 {
-    auto it = std::find_if( vAutomataModels_.begin(), vAutomataModels_.end(), ADN_Tools::NameCmp< ModelInfos >( strName ) );
+    auto it = std::find_if( vAutomataModels_.begin(), vAutomataModels_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vAutomataModels_.end() )
         return 0;
     return *it;
@@ -188,7 +188,7 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetPopulationModelsInfos(
 inline
 ADN_Models_Data::ModelInfos* ADN_Models_Data::FindPopulationModel( const std::string& strName )
 {
-    auto it = std::find_if( vPopulationModels_.begin(), vPopulationModels_.end(), ADN_Tools::NameCmp< ModelInfos >( strName ) );
+    auto it = std::find_if( vPopulationModels_.begin(), vPopulationModels_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vPopulationModels_.end() )
         return 0;
     return *it;

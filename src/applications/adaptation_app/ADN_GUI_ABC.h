@@ -106,7 +106,6 @@ protected:
     ADN_ListView* pListView_;
     std::vector< QWidget* > optionalWidgets_;
     std::map< QString, OptionalTab > optionalTabs_;
-
     //@}
 };
 

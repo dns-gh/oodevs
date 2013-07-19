@@ -21,7 +21,7 @@
 #include "ADN_Resources_Data.h"
 #include "ADN_Weapons_Data_WeaponInfos.h"
 #include "ADN_ActiveProtections_Data.h"
-#include "ADN_ResourceNatureInfos.h"
+#include "ADN_Natures_Data.h"
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_Tr.h"
 
@@ -144,7 +144,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC< helpers::ResourceNatureInfos > ptr_;
+        ADN_TypePtr_InVector_ABC< ADN_Natures_Data::NatureInfos > ptr_;
         ADN_Type_Bool bIsCarrier_;
         ADN_Type_Double rWeight_;
         ADN_Type_Double rVolume_;
@@ -496,8 +496,8 @@ public:
         ADN_Type_String strStartingDate_;
         ADN_Type_String strInformationOrigin_;
         ADN_Type_String equipmentCategory_;
-        ADN_TypePtr_InVector_ABC< helpers::ArmorInfos > ptrArmor_;
-        ADN_TypePtr_InVector_ABC< ADN_Categories_Data::SizeInfos > ptrSize_;
+        ADN_TypePtr_InVector_ABC< ADN_Armors_Data::ArmorInfos > ptrArmor_;
+        ADN_TypePtr_InVector_ABC< ADN_Volumes_Data::VolumeInfos > ptrSize_;
         ADN_Type_Double rWeight_;
         ADN_Type_Double rMaxSpeed_;
         T_SpeedInfos_Vector vSpeeds_;
@@ -569,8 +569,8 @@ public:
     QStringList GetEquipmentsThatUse( ADN_Weapons_Data_WeaponInfos& weapon );
     QStringList GetEquipmentsThatUse( ADN_Breakdowns_Data::BreakdownInfo& breakdown );
     QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList GetEquipmentsThatUse( helpers::ArmorInfos& armor );
-    QStringList GetEquipmentsThatUse( ADN_Categories_Data::SizeInfos& size );
+    QStringList GetEquipmentsThatUse( ADN_Armors_Data::ArmorInfos& armor );
+    QStringList GetEquipmentsThatUse( ADN_Volumes_Data::VolumeInfos& size );
     QStringList GetEquipmentsThatUse( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtection );
     QStringList GetEquipmentsThatUse( ADN_Resources_Data::CategoryInfo& category );
 
@@ -603,7 +603,7 @@ ADN_Equipments_Data::T_EquipmentInfos_Vector&  ADN_Equipments_Data::GetEquipment
 inline
 ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::FindEquipment( const std::string& strName )
 {
-    auto it = std::find_if( vEquipments_.begin(), vEquipments_.end(), ADN_Tools::NameCmp< EquipmentInfos >( strName ) );
+    auto it = std::find_if( vEquipments_.begin(), vEquipments_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vEquipments_.end() )
         return 0;
     return *it;

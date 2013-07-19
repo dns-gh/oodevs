@@ -31,8 +31,8 @@ tools::IdManager ADN_Resources_Data::idManager_;
 ADN_Resources_Data::CategoryInfo::CategoryInfo()
     : nId_( 0 )
     , parentResource_( *gpDummyDotationInfos )
-    , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
+    , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), 0 )
+    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), 0 )
 {
     assert( 0 );
 }
@@ -49,8 +49,8 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     , strCodeEMAT8_          ()
     , strCodeLFRIL_          ()
     , strCodeNNO_            ()
-    , ptrResourceNature_     ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
+    , ptrResourceNature_     ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), 0 )
+    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), 0 )
     , rNbrInPackage_         ( 1. )
     , rPackageVolume_        ( 1. )
     , rPackageWeight_        ( 1. )
@@ -71,8 +71,8 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, u
     , strCodeEMAT8_          ()
     , strCodeLFRIL_          ()
     , strCodeNNO_            ()
-    , ptrResourceNature_     ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
+    , ptrResourceNature_     ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), 0 )
+    , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), 0 )
     , rNbrInPackage_         ( 1. )
     , rPackageVolume_        ( 1. )
     , rPackageWeight_        ( 1. )
@@ -419,7 +419,7 @@ ADN_Resources_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDot
     , bGuided_              ( false )
     , bMaintainGuidance_    ( false )
     , fGuidanceRange_       ( 0 )
-    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
     , modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
     BindExistenceTo( &( indirectAmmoInfos_.objectType_ ) );
@@ -440,7 +440,7 @@ ADN_Resources_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDot
     , bGuided_              ( false )
     , bMaintainGuidance_    ( false )
     , fGuidanceRange_       ( 0 )
-    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
     , modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
     BindExistenceTo( &( indirectAmmoInfos_.objectType_ ) );
@@ -679,7 +679,7 @@ ADN_Resources_Data::T_CategoryInfos_Vector& ADN_Resources_Data::ResourceInfos::G
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::ResourceInfos::FindCategory( const std::string& strName )
 {
-    auto it = std::find_if( categories_.begin(), categories_.end(), ADN_Tools::NameCmp<CategoryInfo>( strName ) );
+    auto it = std::find_if( categories_.begin(), categories_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == categories_.end() )
         return 0;
     return *it;
@@ -857,7 +857,7 @@ void ADN_Resources_Data::Initialize()
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::FindResourceCategory( const std::string& strDotationName, const std::string& strCategoryName )
 {
-    auto it = std::find_if( resources_.begin(), resources_.end(), ADN_Tools::NameCmp<ResourceInfos>( strDotationName ) );
+    auto it = std::find_if( resources_.begin(), resources_.end(), ADN_Tools::NameCmp( strDotationName ) );
     if( it == resources_.end() )
         return 0;
     return (*it)->FindCategory( strCategoryName );
@@ -911,7 +911,7 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Objects_Data_ObjectInfo
 // Name: ADN_Resources_Data::GetResourcesThatUse
 // Created: ABR 2012-07-26
 // -----------------------------------------------------------------------------
-QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfos& object )
+QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object )
 {
     QStringList result;
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
@@ -919,7 +919,7 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfo
         ResourceInfos* pComp = *it;
         for( auto itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
         {
-            helpers::ResourceNatureInfos* infos = ( *itCategory )->ptrResourceNature_.GetData();
+            ADN_Natures_Data::NatureInfos* infos = ( *itCategory )->ptrResourceNature_.GetData();
             if( infos && infos->strName_.GetData() == object.strName_.GetData() )
                     result << ( *itCategory )->strName_.GetData().c_str();
         }
@@ -931,7 +931,7 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfo
 // Name: ADN_Resources_Data::GetResourcesThatUse
 // Created: ABR 2012-07-26
 // -----------------------------------------------------------------------------
-QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::LogisticSupplyClass& object )
+QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass& object )
 {
     QStringList result;
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
@@ -939,7 +939,7 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::LogisticSupplyClas
         ResourceInfos* pComp = *it;
         for( auto itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
         {
-            helpers::LogisticSupplyClass* infos = ( *itCategory )->ptrLogisticSupplyClass_.GetData();
+            ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* infos = ( *itCategory )->ptrLogisticSupplyClass_.GetData();
             if( infos && infos->strName_.GetData() == object.strName_.GetData() )
                 result << ( *itCategory )->strName_.GetData().c_str();
         }
@@ -969,13 +969,13 @@ QStringList ADN_Resources_Data::GetResourcesWithDirectFire()
 // Name: ADN_Resources_Data::GetResourcesThatUse
 // Created: ABR 2012-08-06
 // -----------------------------------------------------------------------------
-QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfos& object, E_DotationFamily familly )
+QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object, E_DotationFamily familly )
 {
     QStringList result;
     ResourceInfos& resourceInfos = GetResource( familly );
     for( auto it = resourceInfos.categories_.begin(); it != resourceInfos.categories_.end(); ++it )
     {
-        helpers::ResourceNatureInfos* infos = ( *it )->ptrResourceNature_.GetData();
+        ADN_Natures_Data::NatureInfos* infos = ( *it )->ptrResourceNature_.GetData();
         if(infos && infos->strName_.GetData() == object.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     }

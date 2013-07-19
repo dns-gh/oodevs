@@ -17,7 +17,8 @@
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Type_Repartition.h"
 #include "ADN_Models_Data.h"
-#include "ADN_Categories_Data.h"
+#include "ADN_Armors_Data.h"
+#include "ADN_Volumes_Data.h"
 
 // =============================================================================
 /** @class  ADN_Crowds_Data
@@ -28,10 +29,10 @@ class ADN_Crowds_Data : public ADN_Data_ABC
 {
 public:
 // *****************************************************************************
-    class FireEffectProtectionInfos : public ADN_CrossedRef< helpers::ArmorInfos >
+    class FireEffectProtectionInfos : public ADN_CrossedRef< ADN_Armors_Data::ArmorInfos >
     {
     public:
-        explicit FireEffectProtectionInfos( helpers::ArmorInfos* ptr );
+        explicit FireEffectProtectionInfos( ADN_Armors_Data::ArmorInfos* ptr );
         virtual ~FireEffectProtectionInfos();
 
         void ReadArchive( xml::xistream& input );
@@ -46,12 +47,12 @@ public:
         ADN_Type_Double rArmedFixableWithoutEvacuation_;
 
     public:
-        typedef helpers::ArmorInfos T_Item;
+        typedef ADN_Armors_Data::ArmorInfos T_Item;
 
         class CmpRef : public std::unary_function< FireEffectProtectionInfos*, bool >
         {
         public:
-             CmpRef( helpers::ArmorInfos* val ) : val_( val ) {}
+             CmpRef( ADN_Armors_Data::ArmorInfos* val ) : val_( val ) {}
             ~CmpRef(){}
 
             bool operator()( FireEffectProtectionInfos* tgtnfos ) const
@@ -60,7 +61,7 @@ public:
             }
 
         private:
-            helpers::ArmorInfos* val_;
+            ADN_Armors_Data::ArmorInfos* val_;
         };
     };
     typedef ADN_Type_VectorFixed_ABC< FireEffectProtectionInfos > T_FireEffectProtectionInfosVector;
@@ -120,10 +121,10 @@ public:
     typedef ADN_Type_Vector_ABC< FireEffectRoeInfos > T_FireEffectRoeInfosVector;
 
 // *****************************************************************************
-    class SpeedEffectVolumeInfos : public ADN_CrossedRef< ADN_Categories_Data::SizeInfos >
+    class SpeedEffectVolumeInfos : public ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >
     {
     public:
-        explicit SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr );
+        explicit SpeedEffectVolumeInfos( ADN_Volumes_Data::VolumeInfos* ptr );
         virtual ~SpeedEffectVolumeInfos();
 
         void ReadArchive( xml::xistream& input );
@@ -134,12 +135,12 @@ public:
         ADN_Type_Double rMaxSpeed_;
 
     public:
-        typedef ADN_Categories_Data::SizeInfos T_Item;
+        typedef ADN_Volumes_Data::VolumeInfos T_Item;
 
         class CmpRef : public std::unary_function< SpeedEffectVolumeInfos*, bool >
         {
         public:
-             CmpRef(ADN_Categories_Data::SizeInfos* val) : val_( val ) {}
+             CmpRef(ADN_Volumes_Data::VolumeInfos* val) : val_( val ) {}
             ~CmpRef(){}
 
             bool operator()( SpeedEffectVolumeInfos* tgtnfos ) const
@@ -148,7 +149,7 @@ public:
             }
 
         private:
-            ADN_Categories_Data::SizeInfos* val_;
+            ADN_Volumes_Data::VolumeInfos* val_;
         };
     };
     typedef ADN_Type_VectorFixed_ABC< SpeedEffectVolumeInfos > T_SpeedEffectVolumeInfosVector;
@@ -281,7 +282,7 @@ ADN_Crowds_Data::T_CrowdsInfosVector& ADN_Crowds_Data::GetCrowds()
 inline
 ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::FindCrowd( const std::string& strName )
 {
-    auto it = std::find_if( vCrowds_.begin(), vCrowds_.end(), ADN_Tools::NameCmp< CrowdsInfos >( strName ) );
+    auto it = std::find_if( vCrowds_.begin(), vCrowds_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vCrowds_.end() )
         return 0;
     return *it;

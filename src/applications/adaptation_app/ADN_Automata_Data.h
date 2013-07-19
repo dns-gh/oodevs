@@ -117,7 +117,7 @@ ADN_Automata_Data::T_AutomatonInfosVector& ADN_Automata_Data::GetAutomata()
 inline
 ADN_Automata_Data::AutomatonInfos* ADN_Automata_Data::FindAutomaton( const std::string& strName )
 {
-    auto it = std::find_if( vAutomata_.begin(), vAutomata_.end(), ADN_Tools::NameCmp< AutomatonInfos >( strName ) );
+    auto it = std::find_if( vAutomata_.begin(), vAutomata_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vAutomata_.end() )
         return 0;
     return *it;

@@ -12,14 +12,14 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Armor.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Categories_Data.h"
-#include "ADN_Categories_GUI.h"
+#include "ADN_Armors_Data.h"
+#include "ADN_Armors_GUI.h"
 #include "ADN_MainWindow.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 
-typedef helpers::ArmorInfos ArmorInfos;
+typedef ADN_Armors_Data::ArmorInfos ArmorInfos;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor constructor
@@ -51,15 +51,15 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
         return;
 
     ArmorInfos* pInfos = (ArmorInfos*)pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Categories_GUI::eNbrArmorGuiElements );
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Armors_GUI::eNbrArmorGuiElements );
 
-    vItemConnectors_[ADN_Categories_GUI::eArmorName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eArmorType]->Connect( &pInfos->nType_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eNeutralizationAverage]->Connect( &pInfos->neutralizationAverageTime_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eNeutralizationVariance]->Connect( &pInfos->neutralizationVariance_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eBreakdownEVA]->Connect( &pInfos->rBreakdownEVA_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eBreakdownNEVA]->Connect( &pInfos->rBreakdownNEVA_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eAttritionEffects]->Connect( &pInfos->vAttritionEffects_, bConnect );
+    vItemConnectors_[ADN_Armors_GUI::eArmorName]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ADN_Armors_GUI::eArmorType]->Connect( &pInfos->nType_, bConnect );
+    vItemConnectors_[ADN_Armors_GUI::eNeutralizationAverage]->Connect( &pInfos->neutralizationAverageTime_, bConnect );
+    vItemConnectors_[ADN_Armors_GUI::eNeutralizationVariance]->Connect( &pInfos->neutralizationVariance_, bConnect );
+    vItemConnectors_[ADN_Armors_GUI::eBreakdownEVA]->Connect( &pInfos->rBreakdownEVA_, bConnect );
+    vItemConnectors_[ADN_Armors_GUI::eBreakdownNEVA]->Connect( &pInfos->rBreakdownNEVA_, bConnect );
+    vItemConnectors_[ADN_Armors_GUI::eAttritionEffects]->Connect( &pInfos->vAttritionEffects_, bConnect );
 }
 
 //-----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), this );
+    ADN_Wizard< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

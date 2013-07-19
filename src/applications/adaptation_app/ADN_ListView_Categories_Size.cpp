@@ -11,13 +11,13 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Size.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Categories_Data.h"
-#include "ADN_Categories_GUI.h"
+#include "ADN_Volumes_Data.h"
+#include "ADN_Volumes_GUI.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 
-typedef ADN_Categories_Data::SizeInfos SizeInfos;
+typedef ADN_Volumes_Data::VolumeInfos VolumeInfos;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Size constructor
@@ -26,7 +26,7 @@ typedef ADN_Categories_Data::SizeInfos SizeInfos;
 ADN_ListView_Categories_Size::ADN_ListView_Categories_Size( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_Size", tools::translate( "ADN_ListView_Categories_Size", "Sizes" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< SizeInfos >( *this );
+    pConnector_ = new ADN_Connector_ListView< VolumeInfos >( *this );
     this->SetDeletionEnabled( true, false );
 }
 
@@ -48,10 +48,10 @@ void ADN_ListView_Categories_Size::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    SizeInfos* pInfos = (SizeInfos*) pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Categories_GUI::eNbrSizeGuiElements );
+    VolumeInfos* pInfos = (VolumeInfos*) pCurData_;
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Volumes_GUI::eNbrSizeGuiElements );
 
-    vItemConnectors_[ADN_Categories_GUI::eSizeName]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ADN_Volumes_GUI::eSizeName]->Connect( &pInfos->strName_, bConnect );
 }
 
 //-----------------------------------------------------------------------------
@@ -61,11 +61,11 @@ void ADN_ListView_Categories_Size::ConnectItem( bool bConnect )
 void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< SizeInfos > wizard( tools::translate( "ADN_ListView_Categories_Size", "Sizes" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), this );
+    ADN_Wizard< VolumeInfos > wizard( tools::translate( "ADN_ListView_Categories_Size", "Sizes" ), ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
-        SizeInfos* pCastData = static_cast< SizeInfos* >( pCurData_ );
+        VolumeInfos* pCastData = static_cast< VolumeInfos* >( pCurData_ );
         assert( pCastData != 0 );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
                                       ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
@@ -82,7 +82,7 @@ std::string ADN_ListView_Categories_Size::GetToolTipFor( const QModelIndex& inde
     if( !index.isValid() )
         return "";
     void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
-    SizeInfos* pCastData = static_cast< SizeInfos* >( pData );
+    VolumeInfos* pCastData = static_cast< VolumeInfos* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
                             ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ) );

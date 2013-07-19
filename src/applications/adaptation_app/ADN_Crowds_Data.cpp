@@ -8,6 +8,7 @@
 // *****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Crowds_Data.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
@@ -19,8 +20,8 @@ tools::IdManager ADN_Crowds_Data::idManager_;
 // Name: ADN_Crowds_Data::FireEffectProtectionInfos::FireEffectProtectionInfos
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-ADN_Crowds_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( helpers::ArmorInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr, true )
+ADN_Crowds_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( ADN_Armors_Data::ArmorInfos* ptr )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), ptr, true )
     , rUnarmedDestruction_( 0. )
     , rUnarmedFixableWithEvacuation_( 0. )
     , rUnarmedFixableWithoutEvacuation_ ( 0. )
@@ -99,7 +100,7 @@ ADN_Crowds_Data::FireEffectProtectionInfos::~FireEffectProtectionInfos()
 ADN_Crowds_Data::FireEffectInfos::FireEffectInfos( E_PopulationAttitude nAttitude )
     : ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
     , nAttitude_( nAttitude )
-    , vProtectionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    , vProtectionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
     , rIntensityDensity_( 0. )
     , rIntensityFactor_ ( 0. )
 {
@@ -124,7 +125,7 @@ void ADN_Crowds_Data::FireEffectInfos::ReadArchive( xml::xistream& input )
 void ADN_Crowds_Data::FireEffectInfos::ReadProtection( xml::xistream& input )
 {
     auto itProtection = std::find_if( vProtectionInfos_.begin(), vProtectionInfos_.end(),
-                                      ADN_Tools::NameCmp< FireEffectProtectionInfos >( input.attribute< std::string >( "name" ) ) );
+                                      ADN_Tools::NameCmp( input.attribute< std::string >( "name" ) ) );
     assert( itProtection != vProtectionInfos_.end() );
     ( *itProtection )->ReadArchive( input );
 }
@@ -215,8 +216,8 @@ void ADN_Crowds_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& output ) 
 // Name: ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr, true )
+ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true )
     , rDensity_( 0. )
     , rMaxSpeed_( 0. )
 {
@@ -270,7 +271,7 @@ ADN_Crowds_Data::SpeedEffectVolumeInfos::~SpeedEffectVolumeInfos()
 ADN_Crowds_Data::SpeedEffectInfos::SpeedEffectInfos( E_PopulationAttitude nAttitude )
     : ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
     , nAttitude_( nAttitude )
-    , vVolumeInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
+    , vVolumeInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos() )
 {
     // NOTHING
 }
@@ -291,7 +292,7 @@ void ADN_Crowds_Data::SpeedEffectInfos::ReadArchive( xml::xistream& input )
 void ADN_Crowds_Data::SpeedEffectInfos::ReadSpeedEffect( xml::xistream& input )
 {
     auto itVolume = std::find_if( vVolumeInfos_.begin(), vVolumeInfos_.end(),
-                                  ADN_Tools::NameCmp< SpeedEffectVolumeInfos >( input.attribute< std::string >( "unit-size" ) ) );
+                                  ADN_Tools::NameCmp( input.attribute< std::string >( "unit-size" ) ) );
     assert( itVolume != vVolumeInfos_.end() );
     ( *itVolume )->ReadArchive( input );
 }

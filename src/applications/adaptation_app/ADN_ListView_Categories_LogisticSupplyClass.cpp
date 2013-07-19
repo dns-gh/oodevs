@@ -10,8 +10,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_LogisticSupplyClass.h"
 #include "ADN_Connector_ListView.h"
-#include "ADN_Categories_GUI.h"
-#include "ADN_LogisticSupplyClass.h"
+#include "ADN_LogisticSupplyClasses_Data.h"
+#include "ADN_LogisticSupplyClasses_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Wizard.h"
@@ -23,7 +23,7 @@
 ADN_ListView_Categories_LogisticSupplyClass::ADN_ListView_Categories_LogisticSupplyClass( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_LogisticSupplyClass", tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic categories" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< helpers::LogisticSupplyClass >( *this );
+    pConnector_ = new ADN_Connector_ListView< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass >( *this );
     SetDeletionEnabled( true );
 }
 
@@ -45,10 +45,10 @@ void ADN_ListView_Categories_LogisticSupplyClass::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    helpers::LogisticSupplyClass* pInfos = (helpers::LogisticSupplyClass*) pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Categories_GUI::eNbrLogisticSupplyClassGuiElements );
+    ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* pInfos = (ADN_LogisticSupplyClasses_Data::LogisticSupplyClass*) pCurData_;
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_LogisticSupplyClasses_GUI::eNbrLogisticSupplyClassGuiElements );
 
-    vItemConnectors_[ ADN_Categories_GUI::eLogisticSupplyClassName ]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ ADN_LogisticSupplyClasses_GUI::eLogisticSupplyClassName ]->Connect( &pInfos->strName_, bConnect );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,12 +58,12 @@ void ADN_ListView_Categories_LogisticSupplyClass::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_LogisticSupplyClass::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< helpers::LogisticSupplyClass > wizard( tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic categories" ),
-                                                       ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), this );
+    ADN_Wizard< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass > wizard( tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic categories" ),
+                                                       ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
-        helpers::LogisticSupplyClass* pCastData = static_cast< helpers::LogisticSupplyClass* >( pCurData_ );
+        ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* pCastData = static_cast< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* >( pCurData_ );
         assert( pCastData != 0 );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                       ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
@@ -81,7 +81,7 @@ std::string ADN_ListView_Categories_LogisticSupplyClass::GetToolTipFor( const QM
     if( !index.isValid() )
         return "";
     void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
-    helpers::LogisticSupplyClass* pCastData = static_cast< helpers::LogisticSupplyClass* >( pData );
+    ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* pCastData = static_cast< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* >( pData );
     assert( pCastData != 0 );
 
     std::string result;

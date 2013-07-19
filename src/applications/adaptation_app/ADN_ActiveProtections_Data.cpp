@@ -48,7 +48,7 @@ ADN_ActiveProtections_Data::T_ActiveProtectionsInfosVector& ADN_ActiveProtection
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::FindActiveProtection(const std::string& strName )
 {
-    auto it = std::find_if( activeProtections_.begin(), activeProtections_.end(), ADN_Tools::NameCmp<ActiveProtectionsInfos>( strName ) );
+    auto it = std::find_if( activeProtections_.begin(), activeProtections_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == activeProtections_.end() )
         return 0;
     return *it;

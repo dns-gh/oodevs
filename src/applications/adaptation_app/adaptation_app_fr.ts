@@ -158,6 +158,68 @@
     </message>
 </context>
 <context>
+    <name>ADN_Armors_Data::ArmorInfos</name>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation>Catégories - Type de blindage &apos;%1&apos; non valide</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation>Catégories - Le nom de blindage existe déjà</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Armors_GUI</name>
+    <message>
+        <source>Armor classes</source>
+        <translation>Blindages</translation>
+    </message>
+    <message>
+        <source>Armor class</source>
+        <translation>Blindages</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Neutralization</source>
+        <translation>Neutralisation</translation>
+    </message>
+    <message>
+        <source>Average time</source>
+        <translation>Temps moyen</translation>
+    </message>
+    <message>
+        <source>Variance</source>
+        <translation>Variance</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation>Pannes</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation>Réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation>Réparable sur place</translation>
+    </message>
+    <message>
+        <source>Attrition effects on humans</source>
+        <translation>Effets d&apos;attrition sur les humains</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
@@ -494,56 +556,12 @@ Arrêt moteur allumé</translation>
 <context>
     <name>ADN_Categories_GUI</name>
     <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Neutralization</source>
-        <translation>Neutralisation</translation>
-    </message>
-    <message>
-        <source>Average time</source>
-        <translation>Temps moyen</translation>
-    </message>
-    <message>
-        <source>Variance</source>
-        <translation>Variance</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Pannes</translation>
-    </message>
-    <message>
         <source>Sizes</source>
         <translation>Volumes</translation>
     </message>
     <message>
         <source>Armor classes</source>
         <translation>Blindages</translation>
-    </message>
-    <message>
-        <source>Armor class</source>
-        <translation>Blindages</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Attrition effects on humans</source>
-        <translation>Effets d&apos;attrition sur les humains</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation>Réparable avec évacuation</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation>Réparable sur place</translation>
     </message>
     <message>
         <source>Resource natures</source>
@@ -2436,6 +2454,17 @@ PNG (*.png)</translation>
     </message>
 </context>
 <context>
+    <name>ADN_LogisticSupplyClasses_GUI</name>
+    <message>
+        <source>Logistic resource categories</source>
+        <translation>Catégories de ressource logistique</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Logistic_GUI</name>
     <message>
         <source>Maintenance</source>
@@ -3094,6 +3123,17 @@ PNG (*.png)</translation>
     <message>
         <source>Wounded extreme seriousness</source>
         <translation>Blessure extrêmement grave</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Natures_GUI</name>
+    <message>
+        <source>Resource natures</source>
+        <translation>Nature de ressource</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
     </message>
 </context>
 <context>
@@ -5995,6 +6035,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Volumes_GUI</name>
+    <message>
+        <source>Sizes</source>
+        <translation>Volumes</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+</context>
+<context>
     <name>ADN_WeaponFilter</name>
     <message>
         <source>Warning</source>
@@ -6420,20 +6471,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Catégories - Nature de ressource déjà existante &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Categories - Duplicated volume type names</source>
-        <translation>Catégories - Deux types de volume ont le même nom</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation>Catégories - Type de volume invalide</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type names</source>
-        <translation>Catégories - Deux types de blindage ont le même nom</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature names</source>
-        <translation>Catégories - Deux natures de ressource ont le même nom</translation>
     </message>
     <message>
         <source>Categories - Invalid resource nature</source>
@@ -6442,10 +6481,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
         <translation>Catégories - Catégorie de ressource dupliquée &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated logistic resource category</source>
-        <translation>Catégories - Catégirue de ressource dupliquée</translation>
     </message>
 </context>
 <context>
@@ -6674,17 +6709,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Protection</source>
         <translation>Protection</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::ArmorInfos</name>
-    <message>
-        <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation>Catégories - Type de blindage &apos;%1&apos; non valide</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type name</source>
-        <translation>Catégories - Le nom de blindage existe déjà</translation>
     </message>
 </context>
 <context>

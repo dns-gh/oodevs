@@ -12,7 +12,7 @@
 
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
-#include "ADN_Categories_Data.h"
+#include "ADN_Volumes_Data.h"
 
 namespace xml { class xistream; }
 
@@ -49,7 +49,7 @@ public:
 class ADN_Weapons_Data_PhSizeInfos : public ADN_Ref_ABC
 {
 public:
-    explicit ADN_Weapons_Data_PhSizeInfos( ADN_Categories_Data::SizeInfos *ptr );
+    explicit ADN_Weapons_Data_PhSizeInfos( ADN_Volumes_Data::VolumeInfos *ptr );
     virtual ~ADN_Weapons_Data_PhSizeInfos();
 
     void ReadArchive( xml::xistream& input );
@@ -57,11 +57,11 @@ public:
     void WriteArchive( xml::xostream& output );
 
 public:
-    ADN_TypePtr_InVector_ABC< ADN_Categories_Data::SizeInfos > ptrSize_;
+    ADN_TypePtr_InVector_ABC< ADN_Volumes_Data::VolumeInfos > ptrSize_;
     ADN_Type_Vector_ABC< ADN_Weapons_Data_PhInfos > vPhs_;
 
 public:
-    typedef ADN_Categories_Data::SizeInfos  T_Item;
+    typedef ADN_Volumes_Data::VolumeInfos  T_Item;
 
     class Cmp : public std::unary_function< ADN_Weapons_Data_PhSizeInfos*, bool >
     {
@@ -79,14 +79,14 @@ public:
     class CmpRef : public std::unary_function< ADN_Weapons_Data_PhSizeInfos*, bool >
     {
     public:
-        CmpRef( ADN_Categories_Data::SizeInfos* val ) : val_( val ) {}
+        CmpRef( ADN_Volumes_Data::VolumeInfos* val ) : val_( val ) {}
         ~CmpRef(){}
 
         bool operator()( ADN_Weapons_Data_PhSizeInfos* tgtnfos ) const
         { return tgtnfos->ptrSize_.GetData() == val_; }
 
     private:
-        ADN_Categories_Data::SizeInfos* val_;
+        ADN_Volumes_Data::VolumeInfos* val_;
     };
 };
 

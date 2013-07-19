@@ -420,7 +420,7 @@ void ADN_Resources_GUI::InitializeSimulationCombos()
     if( pArmorCombos_[ currentTab_ ] )
     {
         for( int i = pArmorCombos_[ currentTab_ ]->count() - 1; i >= 0; --i )
-            if( static_cast< helpers::ArmorInfos* >( pArmorCombos_[ currentTab_ ]->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
+            if( static_cast< ADN_Armors_Data::ArmorInfos* >( pArmorCombos_[ currentTab_ ]->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
                 pArmorCombos_[ currentTab_ ]->removeItem( i );
         if( pArmorCombos_[ currentTab_ ]->GetItem( 0 ) )
             pArmorCombos_[ currentTab_ ]->setCurrentItem( 0 );
@@ -441,12 +441,12 @@ void ADN_Resources_GUI::InitializeSimulationCombos()
 // Name: ADN_Resources_GUI::GetSelectedArmor
 // Created: JSR 2010-04-30
 // -----------------------------------------------------------------------------
-helpers::ArmorInfos* ADN_Resources_GUI::GetSelectedArmor() const
+ADN_Armors_Data::ArmorInfos* ADN_Resources_GUI::GetSelectedArmor() const
 {
     std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pArmorCombos_.find( currentTab_ );
     if( it == pArmorCombos_.end() )
         throw MASA_EXCEPTION( "cannot find armor element" );
-    return static_cast< helpers::ArmorInfos* >( it->second->GetCurrentData() );
+    return static_cast< ADN_Armors_Data::ArmorInfos* >( it->second->GetCurrentData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -489,7 +489,7 @@ void ADN_Resources_GUI::SimulationCombosActivated()
 // -----------------------------------------------------------------------------
 ADN_Table* ADN_Resources_GUI::CreatePKTable()
 {
-    helpers::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
+    ADN_Armors_Data::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos();
 
     ADN_Table* pTable = new ADN_PK_Table( tr( "PKs" ) );
     // Fill the table.

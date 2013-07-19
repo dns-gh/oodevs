@@ -10,18 +10,18 @@
 #ifndef __ADN_AttritionInfos_h_
 #define __ADN_AttritionInfos_h_
 
-#include "ADN_ArmorInfos.h"
+#include "ADN_Armors_Data.h"
 #include "ADN_CrossedRef.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 
 namespace helpers
 {
 
-class AttritionInfos : public ADN_CrossedRef< ArmorInfos >
+class AttritionInfos : public ADN_CrossedRef< ADN_Armors_Data::ArmorInfos >
 {
 
 public:
-    explicit AttritionInfos( ArmorInfos* ptr );
+    explicit AttritionInfos( ADN_Armors_Data::ArmorInfos* ptr );
     virtual ~AttritionInfos() {}
 
     void CopyFrom( AttritionInfos& attritions );
@@ -36,19 +36,19 @@ public:
     ADN_Type_Double rRepairNoEvac_;
 
 public:
-    typedef ArmorInfos  T_Item;
+    typedef ADN_Armors_Data::ArmorInfos  T_Item;
 
     class CmpRef : public std::unary_function< AttritionInfos*, bool >
     {
     public:
-        CmpRef( ArmorInfos* val ) : val_( val ) {}
+        CmpRef( ADN_Armors_Data::ArmorInfos* val ) : val_( val ) {}
         bool operator()( AttritionInfos* tgtnfos ) const
         {
             return tgtnfos->GetCrossedElement() == val_;
         }
 
     private:
-        ArmorInfos* val_;
+        ADN_Armors_Data::ArmorInfos* val_;
     };
 
     class Cmp : public std::unary_function< AttritionInfos*, bool >

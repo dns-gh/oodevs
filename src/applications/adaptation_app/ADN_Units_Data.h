@@ -67,7 +67,7 @@ public:
 
     //*****************************************************************************
 
-    class StockLogThresholdInfos : public ADN_CrossedRef< helpers::LogisticSupplyClass >
+    class StockLogThresholdInfos : public ADN_CrossedRef< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass >
     {
 
     public:
@@ -237,7 +237,7 @@ public:
 
     QStringList GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos& composante );
     QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
-    QStringList GetUnitsThatUse( helpers::LogisticSupplyClass& supply );
+    QStringList GetUnitsThatUse( ADN_LogisticSupplyClasses_Data::LogisticSupplyClass& supply );
 
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
@@ -270,7 +270,7 @@ ADN_Units_Data::T_UnitInfos_Vector& ADN_Units_Data::GetUnitsInfos()
 inline
 ADN_Units_Data::UnitInfos* ADN_Units_Data::FindUnit( const std::string& strName )
 {
-    auto it = std::find_if( vUnits_.begin(), vUnits_.end(), ADN_Tools::NameCmp< UnitInfos >( strName ) );
+    auto it = std::find_if( vUnits_.begin(), vUnits_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vUnits_.end() )
         return 0;
     return *it;

@@ -348,7 +348,7 @@ ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetMissions( E_MissionTy
 // -----------------------------------------------------------------------------
 ADN_Missions_ABC* ADN_Missions_Data::FindMission( const ADN_Missions_Data::T_Mission_Vector& missions, const std::string& strName ) const
 {
-    auto it = std::find_if( missions.begin(), missions.end(), ADN_Tools::NameCmp< ADN_Missions_Mission >( strName ) );
+    auto it = std::find_if( missions.begin(), missions.end(), ADN_Tools::NameCmp( strName ) );
     if( it == missions.end() )
         return 0;
     return *it;

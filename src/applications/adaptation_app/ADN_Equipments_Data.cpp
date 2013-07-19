@@ -400,7 +400,7 @@ bool ADN_Equipments_Data::LogMaintenanceInfos::IsRepairTypeValid() const
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::LogSupplyInfos::LogSupplyInfos()
-    : ptr_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+    : ptr_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), 0 )
     , bIsCarrier_( false )
     , rWeight_( 0 )
     , rVolume_( 0 )
@@ -1388,8 +1388,8 @@ void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output
 ADN_Equipments_Data::EquipmentInfos::EquipmentInfos()
     : nId_                           ( ADN_Equipments_Data::idManager_.GetNextId() )
     , equipmentCategory_             ( "Autres" )
-    , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
-    , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
+    , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), 0 )
+    , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), 0 )
     , rWeight_                       ( 100 )
     , vSpeeds_                       ( false )
     , bTroopEmbarkingTimes_          ( false )
@@ -1428,8 +1428,8 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos()
 ADN_Equipments_Data::EquipmentInfos::EquipmentInfos( unsigned int id )
     : nId_                           ( id )
     , equipmentCategory_             ( "Autres" )
-    , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
-    , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
+    , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), 0 )
+    , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), 0 )
     , rWeight_                       ( 100 )
     , vSpeeds_                       ( false )
     , bTroopEmbarkingTimes_          ( false )
@@ -2162,7 +2162,7 @@ QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Objects_Data_ObjectIn
 // Name: ADN_Equipments_Data::GetEquipmentsThatUse
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-QStringList ADN_Equipments_Data::GetEquipmentsThatUse( helpers::ArmorInfos& armor )
+QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Armors_Data::ArmorInfos& armor )
 {
     QStringList result;
     for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
@@ -2178,7 +2178,7 @@ QStringList ADN_Equipments_Data::GetEquipmentsThatUse( helpers::ArmorInfos& armo
 // Name: ADN_Equipments_Data::GetEquipmentsThatUse
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Categories_Data::SizeInfos& size )
+QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Volumes_Data::VolumeInfos& size )
 {
     QStringList result;
     for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )

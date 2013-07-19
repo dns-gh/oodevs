@@ -158,6 +158,68 @@
     </message>
 </context>
 <context>
+    <name>ADN_Armors_Data::ArmorInfos</name>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Armors_GUI</name>
+    <message>
+        <source>Armor classes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Armor class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutralization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Variance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attrition effects on humans</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
@@ -483,50 +545,6 @@ Parked engine running</source>
     <name>ADN_Categories_GUI</name>
     <message>
         <source>Armor classes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Armor class</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Neutralization</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Average time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Variance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attrition effects on humans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2410,6 +2428,17 @@ PNG (*.png)
     </message>
 </context>
 <context>
+    <name>ADN_LogisticSupplyClasses_GUI</name>
+    <message>
+        <source>Logistic resource categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Logistic_GUI</name>
     <message>
         <source>Maintenance</source>
@@ -3067,6 +3096,17 @@ PNG (*.png)
     </message>
     <message>
         <source>Contamination</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Natures_GUI</name>
+    <message>
+        <source>Resource natures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5955,6 +5995,17 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Volumes_GUI</name>
+    <message>
+        <source>Sizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_WeaponFilter</name>
     <message>
         <source>Warning</source>
@@ -6384,27 +6435,11 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Categories - Duplicated volume type names</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Categories - Duplicated armor type names</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature names</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Categories - Invalid resource nature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated logistic resource category</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6633,17 +6668,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Protection</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>helpers::ArmorInfos</name>
-    <message>
-        <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

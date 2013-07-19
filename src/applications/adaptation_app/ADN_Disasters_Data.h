@@ -203,7 +203,7 @@ ADN_Disasters_Data::T_DisasterInfos_Vector& ADN_Disasters_Data::GetDisastersInfo
 inline
 ADN_Disasters_Data::DisasterInfos* ADN_Disasters_Data::FindDisaster( const std::string& strName )
 {
-    auto it = std::find_if( vDisasters_.begin(), vDisasters_.end(), ADN_Tools::NameCmp< ADN_Disasters_Data::DisasterInfos >( strName ) );
+    auto it = std::find_if( vDisasters_.begin(), vDisasters_.end(), ADN_Tools::NameCmp( strName ) );
     if( it == vDisasters_.end() )
         return 0;
     return *it;
