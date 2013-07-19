@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Natures_Data.h"
 #include "ADN_Project_Data.h"
+#include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_Natures_Data::idManager_;
 
@@ -27,11 +28,10 @@ ADN_Natures_Data::NatureInfos::NatureInfos()
 // Name: NatureInfos::NatureInfos
 // Created: RPD 2010-10-29
 // -----------------------------------------------------------------------------
-ADN_Natures_Data::NatureInfos::NatureInfos( const std::string& name, int id )
-    : ADN_RefWithName( name )
-    , nId_( id )
+ADN_Natures_Data::NatureInfos::NatureInfos( int id )
+    : nId_( id )
 {
-    // NOTHING
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -104,12 +104,10 @@ void ADN_Natures_Data::ReadNature( xml::xistream& input )
     int id ( 0 );
     input >> xml::attribute( "type", strName );
     input >> xml::optional >> xml::attribute( "id", id );
-    ADN_Natures_Data::T_NatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_Tools::NameCmp( strName ) );
-    if( found != vDotationNatures_.end() )
-        throw MASA_EXCEPTION( tools::translate( "Categories_Data", "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).toStdString() );
     if( !id )
         id = idManager_.GetNextId();
-    ADN_Natures_Data::NatureInfos* pNew = new ADN_Natures_Data::NatureInfos( strName, id );
+    ADN_Natures_Data::NatureInfos* pNew = new ADN_Natures_Data::NatureInfos( id );
+    pNew->strName_.SetTranslation( strName, translations_->GetTranslation( "natures", strName ) );
     vDotationNatures_.AddItem( pNew );
     idManager_.Lock( id );
 }

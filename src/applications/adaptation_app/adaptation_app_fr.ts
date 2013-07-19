@@ -6484,10 +6484,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>Categories_Data</name>
     <message>
-        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
-        <translation>Catégories - Nature de ressource déjà existante &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation>Catégories - Type de volume invalide</translation>
     </message>

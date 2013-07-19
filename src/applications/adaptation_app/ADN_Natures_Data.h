@@ -25,12 +25,12 @@ class ADN_Natures_Data : public ADN_Data_ABC
 public:
     //! @name NatureInfos
     //@{
-    class NatureInfos : public ADN_RefWithName
+    class NatureInfos : public ADN_RefWithLocalizedName
     {
 
     public:
         NatureInfos();
-        NatureInfos( const std::string& name, int id );
+        NatureInfos( int id );
         NatureInfos* CreateCopy();
 
     public:

@@ -6466,10 +6466,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Categories_Data</name>
     <message>
-        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
-        <translation>Categorías - Nombre de tipo de recurso natural duplicado &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation>Categorías - Tipo de volumen inválido</translation>
     </message>

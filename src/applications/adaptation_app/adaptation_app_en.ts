@@ -6461,10 +6461,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Categories_Data</name>
     <message>
-        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
-        <translation>Categories - Duplicated resource nature type name &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation>Categories - Invalid volume type name</translation>
     </message>

@@ -6449,10 +6449,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Categories_Data</name>
     <message>
-        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
-        <translation type="unfinished">فئات-اسم نوع المورد المكررة الطبيعة &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation type="unfinished">فئات-اسم نوع وحدة التخزين غير صحيحة</translation>
     </message>
