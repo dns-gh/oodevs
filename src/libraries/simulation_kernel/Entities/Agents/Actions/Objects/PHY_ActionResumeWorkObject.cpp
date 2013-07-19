@@ -54,6 +54,7 @@ void PHY_ActionResumeWorkObject::Execute()
 {
     int nReturn = role_.ResumeWork( pKnowledge_, valorizeIt_ );
     Callback( nReturn );
+    CallbackKnowledge( pKnowledge_ );
 }
 
 // -----------------------------------------------------------------------------
