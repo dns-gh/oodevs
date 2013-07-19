@@ -12,6 +12,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Project_Data.h"
 #include "ADN_tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 using namespace helpers;
 
@@ -55,8 +56,7 @@ void ADN_Armors_Data::ArmorInfos::CreateDefaultAttrition()
 void ADN_Armors_Data::ArmorInfos::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "name", strName_ )
-        >> xml::attribute( "type", type );
+    input >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToProtectionType( type );
     if( nType_ == E_ProtectionType( -1 ) )
         throw MASA_EXCEPTION( tr( "Categories - Invalid armor type '%1'" ).arg( type.c_str() ).toStdString() );
@@ -202,9 +202,11 @@ void ADN_Armors_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Armors_Data::ReadArmor( xml::xistream& input )
 {
-    std::auto_ptr< ArmorInfos > spNewArmor( new ArmorInfos() );
-    spNewArmor->ReadArchive( input );
-    vArmors_.AddItem( spNewArmor.release() );
+    std::string strName = input.attribute< std::string >( "name" );;
+    std::auto_ptr< ArmorInfos > pNew( new ArmorInfos() );
+    pNew->ReadArchive( input );
+    pNew->strName_.SetTranslation( strName, translations_->GetTranslation( "protections", strName ) );
+    vArmors_.AddItem( pNew.release() );
 }
 
 // -----------------------------------------------------------------------------

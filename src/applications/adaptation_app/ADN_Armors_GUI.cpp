@@ -60,8 +60,10 @@ void ADN_Armors_GUI::Build()
     Q3VGroupBox* pArmorInfoGroup = new Q3VGroupBox( tr( "Armor class" ), pGroup );
 
     QWidget* pHolder = builder.AddFieldHolder( pArmorInfoGroup );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pHolder, "name", tr( "Name" ), vInfosConnectors[ eArmorName ], 0, eVarName );
-    nameField->ConnectWithRefValidity( data_.GetArmorsInfos() );
+
+    // Name field
+    ADN_EditLine_ABC* namefield = builder.AddLocalizedField( pHolder, "name", tr( "Name" ), vInfosConnectors[ eArmorName ], 0, eVarName );
+    namefield->ConnectWithRefValidity( data_.GetArmorsInfos() );
 
     pComboType_ = builder.AddEnumField( pHolder, "type", tr( "Type" ), vInfosConnectors[ eArmorType ] );
     connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );

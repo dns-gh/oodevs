@@ -27,7 +27,7 @@ class ADN_Armors_Data : public ADN_Data_ABC
 public:
     //! @name Armors infos
     //@{
-    class ArmorInfos : public ADN_RefWithName
+    class ArmorInfos : public ADN_RefWithLocalizedName
     {
 
     public:
