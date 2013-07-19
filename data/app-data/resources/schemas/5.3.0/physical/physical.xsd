@@ -63,6 +63,8 @@
         <xs:element name="symbols-directory" type="PathReference"/>
         <xs:element name="mission-sheets-xsl" type="FileReference"/>
         <xs:element name="stages" type="FileReference"/>
+        <xs:element name="languages" type="FileReference"/>
+        <xs:element name="locales-directory" type="PathReference"/>
       </xs:all>
       <xs:attribute name="model-version" type="T_Version"/>
       <xs:attribute name="read-only" type="xs:boolean" use="optional"/>

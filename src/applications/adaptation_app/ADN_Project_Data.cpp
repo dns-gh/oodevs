@@ -169,6 +169,8 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadPath( input, "symbols-directory", szSymbolsPath_ );
     ReadFile( input, "mission-sheets-xsl", szMissionSheetXslPath_ );
     ReadFile( input, "stages", szStages_ );
+    ReadFile( input, "languages", szLanguages_ );
+    ReadPath( input, "locales-directory", szLocalesDirectory_ );
 
     input >> xml::end;
 }
@@ -231,6 +233,8 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WritePath( output, "symbols-directory", szSymbolsPath_ );
     WriteFile( output, "mission-sheets-xsl", szMissionSheetXslPath_ );
     WriteFile( output, "stages", szStages_ );
+    WriteFile( output, "languages", szLanguages_ );
+    WritePath( output, "locales-directory", szLocalesDirectory_ );
     output << xml::end;
 }
 

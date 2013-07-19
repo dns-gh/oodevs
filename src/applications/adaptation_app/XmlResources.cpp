@@ -62,4 +62,6 @@ static const char* physicalXml =
 "  <symbols-directory path=\"Symbols\"/>"
 "  <mission-sheets-xsl file=\"missionSheets.xslt\"/>"
 "  <stages file=\"Stages.xml\"/>"
+"  <languages file=\"Languages.xml\"/>"
+"  <locales-directory path=\"Locales\"/>"
 "</physical>";
