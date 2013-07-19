@@ -12,6 +12,11 @@
 
 #include "ADN_Enums.h"
 
+namespace kernel
+{
+    class XmlTranslations;
+}
+
 namespace tools
 {
     class Loader_ABC;
@@ -49,7 +54,22 @@ public:
 
     //! @name Initializer
     //@{
-    static void InitTranslations();
+    static void InitQtTranslations();
+    //@}
+
+protected:
+    //! @name Types
+    //@{
+    typedef boost::function< void ( xml::xistream& ) > T_Loader;
+    typedef boost::function< void ( xml::xostream& ) > T_Saver;
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void LoadFile( const tools::Loader_ABC& fileLoader, const tools::Path& xmlFile, T_Loader loader );
+    virtual void SaveFile( const tools::Path& xmlFile, T_Saver saver );
+    virtual void LoadTranslations( const tools::Path& xmlFile );
+    virtual void SaveTranslations( const tools::Path& xmlFile );
     //@}
 
 protected:
@@ -58,6 +78,7 @@ protected:
     static QString duplicateName_;
     static QString invalidDataOntab_;
     E_WorkspaceElements currentTab_;
+    std::auto_ptr< kernel::XmlTranslations > translations_;
     int subTab_;
     //@}
 };

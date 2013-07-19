@@ -92,7 +92,7 @@ void ADN_App::CreateTranslators()
     AddTranslator( "clients_gui_app6" );
     ADN_Tr::InitTranslations();
     ENT_Tr::InitTranslations();
-    ADN_Data_ABC::InitTranslations();
+    ADN_Data_ABC::InitQtTranslations();
 }
 
 namespace
