@@ -656,7 +656,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.debug,package.ts,package.binaries,package.gaming_app,package.sdk,package.proto,package.doc" description="package the installers and packs"/>
+    <target name="package" depends="package.debug,package.ts,package.binaries,package.gaming_app,package.sdk,package.proto" description="package the installers and packs"/>
 
     <!-- Package misc -->
     <target name="package.debug" description="create a zip with all PDB files">
@@ -709,14 +709,6 @@
                 </fileset>
             </zip>
             <check-depends file="@{file}"/>
-        </safe-move>
-    </target>
-
-    <target name="package.doc" description="create a zip with all documentation">
-        <safe-move file="${out.dir}/doc.zip">
-            <zip destfile="@{file}" duplicate="fail">
-                <fileset dir="${doc.dir}"/>
-            </zip>
         </safe-move>
     </target>
 
