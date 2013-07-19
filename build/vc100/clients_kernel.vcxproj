@@ -140,6 +140,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TranslationQuery.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp" />
@@ -301,6 +302,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TranslationQuery.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h" />
