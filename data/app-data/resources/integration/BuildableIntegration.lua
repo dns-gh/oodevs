@@ -197,7 +197,13 @@ end
 -- -----------------------------------------------------------------------------
 integration.startBuildItSecu = function( object, objectType )
     object[ myself ] = object[ myself ] or {}
-    object[myself].actionBuild = DEC_StartCreateObject( object.source )
+    local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
+                        object:getType(), 10 )
+    if existingObject == nil then
+        object[myself].actionBuild = DEC_StartCreateObject( object.source )
+    else
+        object[myself].actionBuild = DEC_StartReprendreTravauxObjet( existingObject, false )
+    end
     actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
         object[ myself ].actionBuildState = arg
     end
