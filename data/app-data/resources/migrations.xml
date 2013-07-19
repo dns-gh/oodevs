@@ -80,6 +80,7 @@
     <added-file filename="Disasters.xml" assign-file="schemas/5.2.0/added-files/Disasters.xml"/>
     <added-file filename="missionSheets.xslt" assign-file="schemas/5.2.0/added-files/missionSheets.xslt"/>
     <added-file filename="Stages.xml" assign-file="schemas/5.2.0/added-files/Stages.xml"/>
+    <added-file filename="Languages.xml" assign-file="schemas/5.3.0/added-files/Languages.xml"/>
   </added-files>
 
   <migration from="3.0" to="4.2.0">

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+    <xs:include schemaLocation="../exercise/common.xsd"/>
+	<xs:element name="languages">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Data specifying supported languages for translatable datas</xs:documentation>
+			<xs:documentation xml:lang="fr">Cette donnée définie les langues supportées pour les données traductibles</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="language" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A given languages</xs:documentation>
+						<xs:documentation xml:lang="fr">Une langue</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Language name</xs:documentation>
+								<xs:documentation xml:lang="fr">Nom de la langue</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="shortname" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Language short name</xs:documentation>
+								<xs:documentation xml:lang="fr">Nom court de la langue</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>			
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
