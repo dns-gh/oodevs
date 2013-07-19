@@ -6453,10 +6453,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">فئات-اسم نوع المورد المكررة الطبيعة &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation type="unfinished">فئات-ازدواجية الموارد اللوجستية الفئة &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation type="unfinished">فئات-اسم نوع وحدة التخزين غير صحيحة</translation>
     </message>

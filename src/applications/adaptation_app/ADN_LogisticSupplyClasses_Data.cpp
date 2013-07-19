@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_LogisticSupplyClasses_Data.h"
 #include "ADN_Project_Data.h"
+#include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_LogisticSupplyClasses_Data::idManager_;
 
@@ -27,9 +28,8 @@ ADN_LogisticSupplyClasses_Data::LogisticSupplyClass::LogisticSupplyClass()
 // Name: LogisticSupplyClass::LogisticSupplyClass
 // Created: RPD 2010-10-29
 // -----------------------------------------------------------------------------
-ADN_LogisticSupplyClasses_Data::LogisticSupplyClass::LogisticSupplyClass( const std::string& name, int id )
-    : ADN_RefWithName( name )
-    , nId_( id )
+ADN_LogisticSupplyClasses_Data::LogisticSupplyClass::LogisticSupplyClass( int id )
+    : nId_( id )
 {
     // NOTHING
 }
@@ -105,12 +105,10 @@ void ADN_LogisticSupplyClasses_Data::ReadLogisticSupplyClass( xml::xistream& inp
     int id ( 0 );
     input >> xml::attribute( "type", strName );
     input >> xml::optional >> xml::attribute( "id", id );
-    ADN_LogisticSupplyClasses_Data::T_LogisticSupplyClass_Vector::iterator found = std::find_if( vLogisticSupplyClasses_.begin(), vLogisticSupplyClasses_.end(), ADN_Tools::NameCmp( strName ) );
-    if( found != vLogisticSupplyClasses_.end() )
-        throw MASA_EXCEPTION( tools::translate( "Categories_Data", "Categories - Duplicated resource logistic category '%1'" ).arg( strName.c_str() ).toStdString() );
     if( !id )
         id = idManager_.GetNextId();
-    ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* pNew = new ADN_LogisticSupplyClasses_Data::LogisticSupplyClass( strName, id );
+    ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* pNew = new ADN_LogisticSupplyClasses_Data::LogisticSupplyClass( id );
+    pNew->strName_.SetTranslation( strName, translations_->GetTranslation( "logistic-supply-classes", strName ) );
     vLogisticSupplyClasses_.AddItem( pNew );
     idManager_.Lock( id );
 }

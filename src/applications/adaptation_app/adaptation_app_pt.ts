@@ -6448,10 +6448,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation type="unfinished"></translation>
     </message>

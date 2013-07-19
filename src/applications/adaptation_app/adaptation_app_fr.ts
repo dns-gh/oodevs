@@ -6495,10 +6495,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Categories - Invalid resource nature</source>
         <translation>Catégories - Nature de ressource invalide</translation>
     </message>
-    <message>
-        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation>Catégories - Catégorie de ressource dupliquée &apos;%1&apos;</translation>
-    </message>
 </context>
 <context>
     <name>Equipments_Data</name>

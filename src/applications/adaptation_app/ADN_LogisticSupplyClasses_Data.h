@@ -25,13 +25,12 @@ class ADN_LogisticSupplyClasses_Data : public ADN_Data_ABC
 public:
     //! @name LogisticSupplyClass
     //@{
-    class LogisticSupplyClass : public ADN_RefWithName
+    class LogisticSupplyClass : public ADN_RefWithLocalizedName
     {
     public:
         LogisticSupplyClass();
-        LogisticSupplyClass( const std::string& name, int id );
+        LogisticSupplyClass( int id );
         LogisticSupplyClass* CreateCopy();
-        std::string GetItemName() { return strName_.GetData(); }
 
     public:
         ADN_Type_Int nId_;

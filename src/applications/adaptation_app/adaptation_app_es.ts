@@ -6477,10 +6477,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Categories - Invalid resource nature</source>
         <translation>Categorías - Recurso naural inválido</translation>
     </message>
-    <message>
-        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Equipments_Data</name>

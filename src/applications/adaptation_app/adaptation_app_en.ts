@@ -6465,10 +6465,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Categories - Duplicated resource nature type name &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation>Categories - Duplicated resource logistic category &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Categories - Invalid volume type name</source>
         <translation>Categories - Invalid volume type name</translation>
     </message>
