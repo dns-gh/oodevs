@@ -121,6 +121,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityHelpers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Language.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ModeController.cpp" />
@@ -261,6 +262,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\HumanDefs.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeGroupFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Language.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MaintenanceStates_ABC.h" />
