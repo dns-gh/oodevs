@@ -37,7 +37,7 @@ private:
     void  connectNotify(const char *signal);
     void  disconnectNotify(const char *signal);
 
-private:
+protected:
     T*  pGfx_;
     bool bIsConnected_;
 };

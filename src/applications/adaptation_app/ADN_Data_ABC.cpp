@@ -71,8 +71,8 @@ void ADN_Data_ABC::Load( const tools::Loader_ABC& fileLoader )
 // -----------------------------------------------------------------------------
 void ADN_Data_ABC::LoadFile( const tools::Loader_ABC& fileLoader, const tools::Path& xmlFile, T_Loader loader )
 {
-    fileLoader.LoadFile( xmlFile, loader );
     LoadTranslations( xmlFile );
+    fileLoader.LoadFile( xmlFile, loader );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,4 +176,13 @@ void ADN_Data_ABC::InitQtTranslations()
 {
     duplicateName_ = qApp->translate( "ADN_Data_ABC", duplicateName_ );
     invalidDataOntab_ = qApp->translate( "ADN_Data_ABC", invalidDataOntab_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Data_ABC::OnLanguageChanged
+// Created: ABR 2013-07-15
+// -----------------------------------------------------------------------------
+void ADN_Data_ABC::OnLanguageChanged( const std::string& )
+{
+    // NOTHING
 }

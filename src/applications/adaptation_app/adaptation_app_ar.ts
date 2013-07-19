@@ -158,6 +158,13 @@
     </message>
 </context>
 <context>
+    <name>ADN_ApplyButton</name>
+    <message id="0">
+        <source>Mark as finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Armors_Data::ArmorInfos</name>
     <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
@@ -1826,6 +1833,13 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
+    <name>ADN_GoToButton</name>
+    <message>
+        <source>Go to</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Health_GUI</name>
     <message>
         <source>Diagnostic duration</source>
@@ -2427,6 +2441,13 @@ PNG (*.png)
     <message>
         <source>Materials</source>
         <translation type="unfinished">المواد</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_LocalizedType</name>
+    <message>
+        <source>Unfinished translation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6427,10 +6448,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Categories_Data</name>
-    <message>
-        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
-        <translation type="unfinished">فئات-اسم نوع وحدة التخزين المكررة &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
         <translation type="unfinished">فئات-اسم نوع المورد المكررة الطبيعة &apos;%1&apos;</translation>

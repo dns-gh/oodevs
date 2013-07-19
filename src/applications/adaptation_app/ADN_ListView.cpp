@@ -16,11 +16,13 @@
 #include "ADN_Enums.h"
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_App.h"
+#include "ADN_Languages_GUI.h"
 #include "ADN_MainWindow.h"
 #include "ADN_MultiRefWarningDialog.h"
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_MainWindow.h"
 #include "ADN_ListViewToolTip.h"
+#include "clients_kernel/Language.h"
 #include <boost/bind.hpp>
 #include <excel/ExcelFormat.h>
 
@@ -71,6 +73,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
     , pObjectCreator_   ( 0 )
     , bDeletionEnabled_ ( false )
     , bDeletionWarning_ ( true )
+    , bEditionEnabled_  ( true )
     , bPrinting_        ( false )
     , usedByMapper_     ( this )
 {
@@ -82,6 +85,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( SetCurrentItem() ) );
     connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
     connect( &usedByMapper_, SIGNAL( mapped( int ) ), this, SLOT( ContextMenuSearchElements( int ) ) );
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged( const std::string& ) ), this, SLOT( OnLanguageChanged( const std::string& ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -318,6 +322,9 @@ void ADN_ListView::OnContextMenu( const QPoint& /*pt*/ )
 void ADN_ListView::FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator )
 {
     usedByInfos_.clear();
+    pObjectCreator_ = 0;
+    if( !bEditionEnabled_ )
+        return;
     pObjectCreator_ = &objectCreator;
     popupMenu.insertItem( tr( "Create new" ), this, SLOT( ContextMenuNew() ) );
     if( pCurData_ != 0 )
@@ -901,33 +908,30 @@ void ADN_ListView::GoToOnDoubleClicked( const QModelIndex& index )
 // Name: ADN_ListView::Warn
 // Created: ABR 2013-01-15
 // -----------------------------------------------------------------------------
-void ADN_ListView::Warn( ADN_ErrorStatus /* errorStatus */, const QString& )
+void ADN_ListView::Warn( ADN_ErrorStatus /* errorStatus = eNoError */, const QString& /* = "" */ )
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
     {
-        ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) );
-        ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() );
-
-        if( !pData )
-            continue;
-
-        ADN_ErrorStatus elementStatus = pData->GetErrorStatus();
-        QBrush brush = Qt::transparent;
-        switch( elementStatus )
-        {
-        case eWarning:
-            brush = Qt::yellow;
-            break;
-        case eError:
-            brush = Qt::red;
-            break;
-        case eNoError:
-        default:
-            break;
-        }
-        item->setBackground( brush );
+        if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
+            if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
+            {
+                ADN_ErrorStatus elementStatus = pData->GetErrorStatus();
+                QBrush brush = Qt::transparent;
+                switch( elementStatus )
+                {
+                case eWarning:
+                    brush = Qt::yellow;
+                    break;
+                case eError:
+                    brush = Qt::red;
+                    break;
+                case eNoError:
+                default:
+                    break;
+                }
+                item->setBackground( brush );
+            }
     }
-
     // $$$$ ABR 2013-01-15: ListView Border color depending on errorStatus ??
 }
 
@@ -940,4 +944,23 @@ void ADN_ListView::RemoveCurrentElement()
     void* data = GetCurrentData();
     if( data )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( data );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::OnLanguageChanged
+// Created: ABR 2013-07-17
+// -----------------------------------------------------------------------------
+void ADN_ListView::OnLanguageChanged( const std::string& language )
+{
+    bEditionEnabled_ = language == kernel::Language::default_;
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+    {
+        if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
+            if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
+            {
+                pData->OnLanguageChanged( language );
+                pData->CheckValidity();
+            }
+    }
+    Warn();
 }

@@ -67,7 +67,7 @@ public:
 
     virtual void CheckValidity();
     void AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor = &ADN_Tools::NameExtractor );
-    virtual std::vector< T* > FindElements( boost::function< bool( const T& ) > func ) const;
+    virtual std::vector< T* > FindElements( boost::function< bool( const T* ) > func ) const;
 
 protected:
     virtual void SetDataPrivate( void* pData );

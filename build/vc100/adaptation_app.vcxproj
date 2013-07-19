@@ -186,6 +186,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ApplyButton.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Armors_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Armors_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.cpp" />
@@ -226,9 +227,11 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ApplyButton.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Armors_Data.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Armors_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Checker.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_LocalizedString.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_CrossedRef.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Disasters_GUI.h" />
@@ -1551,7 +1554,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.h">
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
@@ -1568,7 +1571,7 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
+    </Qt_file_Mocing>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Connector_Vector_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
@@ -1605,6 +1608,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LocalizedType.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LocalizedTypes.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_Data.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_LogisticSupplyClasses_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_ABC.h" />
@@ -3164,7 +3169,7 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ComboBoxItem.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_EditLine.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_EditLine_ABC.h">
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_EditLine_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
@@ -3181,7 +3186,7 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
+    </Qt_file_Mocing>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Validator.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
@@ -3318,6 +3323,8 @@
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_pt.ts" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo.inl" />
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_LocalizedString.inl" />
+    <None Include="..\..\src\applications\adaptation_app\ADN_LocalizedType.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_TextEdit.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Type_Enum.inl" />

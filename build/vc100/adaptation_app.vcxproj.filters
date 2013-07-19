@@ -1273,6 +1273,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Grid_Container.cpp">
       <Filter>Source Files\Workspace\Container\Container GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ApplyButton.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1884,6 +1887,15 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Grid_Container.h">
       <Filter>Source Files\Workspace\Container\Container GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LocalizedType.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_LocalizedTypes.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_LocalizedString.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -1959,13 +1971,16 @@
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_pt.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_LocalizedType.inl">
+      <Filter>Source Files\Common types</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_LocalizedString.inl">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainWindow.h">
       <Filter>Source Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.h">
-      <Filter>Source Files\Common types</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Connector_Vector_ABC.h">
       <Filter>Source Files\Common types</Filter>
@@ -2050,9 +2065,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ComboBox.h">
       <Filter>Source Files\Common widgets\Combo box</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_EditLine_ABC.h">
-      <Filter>Source Files\Common widgets\Edit line</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Validator.h">
       <Filter>Source Files\Common widgets\Edit line</Filter>
@@ -2302,6 +2314,15 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.h">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ApplyButton.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.h">
+      <Filter>Source Files\Common types</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_EditLine_ABC.h">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

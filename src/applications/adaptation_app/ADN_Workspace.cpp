@@ -783,3 +783,13 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     }
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::OnLanguageChanged
+// Created: ABR 2013-07-15
+// -----------------------------------------------------------------------------
+void ADN_Workspace::OnLanguageChanged( const std::string& language )
+{
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
+        elements_[n]->GetDataABC().OnLanguageChanged( language );
+}

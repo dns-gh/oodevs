@@ -37,9 +37,11 @@ ADN_Languages_GUI::ADN_Languages_GUI( ADN_Languages_Data& data )
     , menu_( 0 )
     , currentAction_( 0 )
     , defaultAction_( 0 )
+    , currentLanguage_( kernel::Language::default_ )
 {
     mapper_ = new QSignalMapper( this );
     connect( mapper_, SIGNAL( mapped( const QString& ) ), this, SLOT( OnLanguageChanged( const QString& ) ) );
+    connect( this, SIGNAL( LanguageChanged( const std::string& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnLanguageChanged( const std::string& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +83,7 @@ QMenu* ADN_Languages_GUI::CreateMenu( QWidget* parent )
 void ADN_Languages_GUI::FillMenu()
 {
     const std::string currentLanguageShort = tools::readLang();
-    std::string currentLanguage = "";
+    std::string currentLanguage = kernel::Language::default_;
 
     for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
     {
@@ -94,8 +96,7 @@ void ADN_Languages_GUI::FillMenu()
     QAction* editAction = menu_->addAction( tr( "Edit..." ), this, SLOT( OnEditLanguages() ) );
     editAction->setEnabled( false );
 
-    if( !currentLanguage.empty() )
-        OnLanguageChanged( currentLanguage.c_str() );
+    OnLanguageChanged( currentLanguage.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,9 +127,29 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
     for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
         if( it->GetName() == language.toStdString() )
         {
-            emit LanguageChanged( it->GetShortName() );
-            break;
+            ChangeLanguage( it->GetShortName() );
+            return;
         }
+    ChangeLanguage( kernel::Language::default_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_GUI::GetCurrentLanguage
+// Created: ABR 2013-07-15
+// -----------------------------------------------------------------------------
+const std::string& ADN_Languages_GUI::GetCurrentLanguage() const
+{
+    return currentLanguage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_GUI::ChangeLanguage
+// Created: ABR 2013-07-17
+// -----------------------------------------------------------------------------
+void ADN_Languages_GUI::ChangeLanguage( const std::string& language )
+{
+    currentLanguage_ = language;
+    emit LanguageChanged( currentLanguage_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,5 +158,5 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::OnEditLanguages()
 {
-     // $$$$ ABR 2013-07-08: Do something here to edit languages
+    // $$$$ ABR 2013-07-08: Do something here to edit languages
 }

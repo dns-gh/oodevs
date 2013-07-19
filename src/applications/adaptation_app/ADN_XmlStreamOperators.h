@@ -13,6 +13,7 @@
 #include <xeumeuleu/xml.hpp>
 #include "ADN_Type_ABC.h"
 #include "ADN_TypePtr_InVector_ABC.h"
+#include "ADN_LocalizedType.h"
 
 namespace xml
 {
@@ -39,9 +40,7 @@ namespace xml
         }
         friend xostream& operator<<( xostream& xos, const attribute_manipulator& m )
         {
-            T value = m.value_.GetData();
-            xos << xml::attribute( m.name_, value );
-            return xos;
+            return xos << xml::attribute( m.name_, m.value_.GetData() );
         }
         //@}
 
@@ -124,7 +123,7 @@ namespace xml
         {
             T* value = m.value_.GetData();
             if( value )
-                xos << xml::attribute( m.name_, value->strName_.GetData() );
+                xos << xml::attribute( m.name_, value->strName_ );
             else
                 xos << xml::attribute( m.name_, "" );
             return xos;
@@ -142,6 +141,47 @@ namespace xml
         //@{
         std::string name_;
         ADN_TypePtr_InVector_ABC< T >& value_;
+        //@}
+    };
+
+    template< typename T >
+    class attribute_manipulator< ADN_LocalizedType< T > >
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        attribute_manipulator( const std::string& name, ADN_LocalizedType< T >& value )
+            : name_ ( name )
+            , value_( value )
+        {}
+        //@}
+
+        //! @name Operators
+        //@{
+        friend xistream& operator>>( xml::xistream& xis, const attribute_manipulator& m )
+        {
+            T value = m.value_.GetData();
+            xis >> xml::attribute( m.name_, value );
+            m.value_ = value;
+            return xis;
+        }
+        friend xostream& operator<<( xostream& xos, const attribute_manipulator& m )
+        {
+            return xos << xml::attribute( m.name_, m.value_.GetKey() );
+        }
+        //@}
+
+    private:
+        //! @name Copy/Assignment
+        //@{
+        attribute_manipulator& operator=( const attribute_manipulator& ); //!< Assignment operator
+        //@}
+
+    private:
+        //! @name Member data
+        //@{
+        std::string name_;
+        ADN_LocalizedType< T >& value_;
         //@}
     };
 }

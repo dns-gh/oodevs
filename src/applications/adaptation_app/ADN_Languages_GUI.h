@@ -36,6 +36,7 @@ public:
     virtual void Build();
     QMenu* CreateMenu( QWidget* parent );
     void FillMenu();
+    const std::string& GetCurrentLanguage() const;
     //@}
 
 signals:
@@ -47,8 +48,14 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void OnLanguageChanged( const QString& language );
+    void OnLanguageChanged( const QString& name );
     void OnEditLanguages();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void ChangeLanguage( const std::string& language );
     //@}
 
 private:
@@ -58,6 +65,7 @@ private:
     std::vector< QAction* > actions_;
     QSignalMapper* mapper_;
     QMenu* menu_;
+    std::string currentLanguage_;
     QAction* currentAction_;
     QAction* defaultAction_;
     //@}

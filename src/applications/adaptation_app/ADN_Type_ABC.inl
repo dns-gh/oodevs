@@ -96,7 +96,6 @@ void ADN_Type_ABC<T>::SetData(const T& data )
     if (val_!=data)
     {
         val_ = data;
-        // emit signal
         emit DataChanged((void*)&val_);
     }
 }
@@ -156,7 +155,7 @@ void ADN_Type_ABC< T >::CheckValidity()
     for( auto checker = checkers_.begin(); checker != checkers_.end(); ++checker )
     {
         assert( *checker != 0 );
-        if( !( *checker )->IsValid( GetData() ) )
+        if( !( *checker )->IsValid( *this ) )
         {
             errorStatus = std::max< ADN_ErrorStatus >( ( *checker )->status_, errorStatus );
             if( !msg.isEmpty() )

@@ -52,6 +52,7 @@ public:
     //@{
     ADN_ErrorStatus GetErrorStatus() const;
     void SetErrorStatus( ADN_ErrorStatus errorStatus, const QString& errorMsg = "" );
+    virtual void OnLanguageChanged( const std::string& ) {};
     //@}
 
 public slots:

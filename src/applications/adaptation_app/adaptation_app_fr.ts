@@ -158,6 +158,13 @@
     </message>
 </context>
 <context>
+    <name>ADN_ApplyButton</name>
+    <message id="0">
+        <source>Mark as finished</source>
+        <translation>Marquer comme terminé</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Armors_Data::ArmorInfos</name>
     <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
@@ -1845,6 +1852,13 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_GoToButton</name>
+    <message>
+        <source>Go to</source>
+        <translation>Aller à</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Health_GUI</name>
     <message>
         <source>Diagnostic duration</source>
@@ -2451,6 +2465,13 @@ PNG (*.png)</translation>
     <message>
         <source>Materials</source>
         <translation>Matériaux</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_LocalizedType</name>
+    <message>
+        <source>Unfinished translation</source>
+        <translation>Traduction non terminée</translation>
     </message>
 </context>
 <context>
@@ -6462,10 +6483,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 </context>
 <context>
     <name>Categories_Data</name>
-    <message>
-        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
-        <translation>Catégories - Type de volume déjà existant &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
         <translation>Catégories - Nature de ressource déjà existante &apos;%1&apos;</translation>

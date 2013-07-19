@@ -18,6 +18,8 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_ApplyButton.h"
+#include "ADN_EditLine_ABC.h"
 #include "ADN_Type_ABC.h"
 #include "ADN_FileChooser.h"
 #include "ADN_Project_Data.h"
@@ -262,4 +264,28 @@ void ADN_GuiBuilder::PopSubName()
 QString ADN_GuiBuilder::GetChildName( QString childName ) const
 {
     return name_ + "_" + childName;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddLocalizedField
+// Created: ABR 2013-07-18
+// -----------------------------------------------------------------------------
+ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
+{
+    ADN_ApplyButton* applyButton = new ADN_ApplyButton();
+    ADN_EditLine_ABC* field = AddField< ADN_EditLine_LocalizedString >( pParent, objectName, szName, pGuiConnector, szUnit, nValidator, applyButton );
+    applyButton->Connect( field );
+    return field;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddLocalizedField
+// Created: ABR 2013-07-18
+// -----------------------------------------------------------------------------
+ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
+{
+    ADN_ApplyButton* applyButton = new ADN_ApplyButton();
+    ADN_EditLine_ABC* field = AddField< ADN_EditLine_LocalizedString >( pParent, objectName, szName, itemConnector, szUnit, nValidator, applyButton );
+    applyButton->Connect( field );
+    return field;
 }

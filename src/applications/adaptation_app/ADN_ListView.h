@@ -84,6 +84,7 @@ public slots:
     bool SetCurrentItem( const QString& itemName );
     void OnFilterChanged( const QString& );
     void OnFilterChanged( const QStringList& );
+    void OnLanguageChanged( const std::string& language );
 
 protected:
     virtual void ConnectItem( bool /*bConnect*/ ){}// = 0;
@@ -121,7 +122,7 @@ protected slots:
     bool SetCurrentItem();
     void UpdateEnableState();
 
-    void Warn( ADN_ErrorStatus errorStatus, const QString& errorMsg );
+    void Warn( ADN_ErrorStatus errorStatus = eNoError, const QString& errorMsg = "" );
 
 signals:
     void ItemSelected( void* pData );
@@ -136,6 +137,7 @@ protected:
     ADN_ObjectCreator_ABC*      pObjectCreator_;
     bool                        bDeletionEnabled_;
     bool                        bDeletionWarning_;
+    bool                        bEditionEnabled_;
     bool                        bPrinting_;
     QRect                       toolTipRect_;
     QSignalMapper                               usedByMapper_;

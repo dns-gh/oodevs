@@ -35,7 +35,7 @@ public:
         {}
         virtual ~TypeChecker() {}
 
-        virtual bool IsValid( const BaseType& ) const
+        virtual bool IsValid( const ADN_Type_ABC< BaseType >& ) const
         {
             return true;
         }
@@ -51,9 +51,9 @@ public:
         {}
         virtual ~MinMaxChecker() {}
 
-        virtual bool IsValid( const BaseType& val ) const
+        virtual bool IsValid( const ADN_Type_ABC< BaseType >& data ) const
         {
-            return val >= min_ && val <= max_;
+            return data.GetData() >= min_ && data.GetData() <= max_;
         }
 
     private:
@@ -70,9 +70,9 @@ public:
         {}
         virtual ~RegExpChecker() {}
 
-        virtual bool IsValid( const std::string& val ) const
+        virtual bool IsValid( const ADN_Type_ABC< BaseType >& data ) const
         {
-            return regExp_.exactMatch( val.c_str() );
+            return regExp_.exactMatch( data.GetData().c_str() );
         }
 
     private:
@@ -91,7 +91,7 @@ public:
 
     //! @name Operations
     //@{
-    const T& GetData() const;
+    virtual const T& GetData() const;
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
     //@}
 
@@ -105,8 +105,8 @@ public:
     //! @name Operators
     //@{
     ADN_Type_ABC& operator =(const T& val);
-    bool          operator ==(const T& val) const;
-    bool          operator !=(const T& val) const;
+    virtual bool operator ==(const T& val) const;
+    virtual bool operator !=(const T& val) const;
     //@}
 
 public:
@@ -128,11 +128,11 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void SetData( const T& data );
+    virtual void SetData( const T& data );
     void SetDataPrivate( void *data );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     T val_;

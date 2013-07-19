@@ -193,7 +193,7 @@ void ADN_EditLine_ABC::Warn( ADN_ErrorStatus errorStatus, const QString& errorMe
             palette.setColor( QPalette::Base, Qt::yellow );
             palette.setColor( QPalette::Shadow, Qt::yellow );
             palette.setColor( QPalette::Window, Qt::yellow );
-            palette.setColor( QPalette::Highlight, Qt::yellow );
+            palette.setColor( QPalette::Highlight, QColor( Qt::yellow ).lighter( 50 ) );
             palette.setColor( QPalette::HighlightedText, Qt::black );
             setPalette( palette );
         }
@@ -207,7 +207,7 @@ void ADN_EditLine_ABC::Warn( ADN_ErrorStatus errorStatus, const QString& errorMe
             palette.setColor( QPalette::Base, Qt::red );
             palette.setColor( QPalette::Shadow, Qt::red );
             palette.setColor( QPalette::Window, Qt::red );
-            palette.setColor( QPalette::Highlight, Qt::red );
+            palette.setColor( QPalette::Highlight, QColor( Qt::red ).lighter( 150 ) );
             palette.setColor( QPalette::HighlightedText, Qt::black );
             setPalette( palette );
         }

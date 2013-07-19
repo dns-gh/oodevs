@@ -40,7 +40,7 @@ namespace ADN_Tools
     template< typename T, typename FieldType >
     bool FieldCompare( const T& element, boost::function< const ADN_Type_ABC< FieldType >& ( const T& ) > fieldExtractor, const FieldType& value )
     {
-        return fieldExtractor( element ).GetData() == value;
+        return fieldExtractor( element ) == value;
     }
 
     // -----------------------------------------------------------------------------
@@ -57,6 +57,13 @@ namespace ADN_Tools
     }
 
     template< typename Data >
+    const ADN_Type_ABC< std::string >& CrossedRefNameExtractor( const Data& data )
+    {
+        assert( data.GetCrossedElement() != 0 );
+        return data.GetCrossedElement()->strName_;
+    }
+
+    template< typename Data >
     const ADN_Type_ABC< int >& IdExtractor( const Data& data )
     {
         return data.id_;
@@ -70,44 +77,48 @@ namespace ADN_Tools
 
     // -----------------------------------------------------------------------------
     template< typename T >
-    bool NameCompare( const T& element, const std::string& name )
+    bool NameCompare( const T* element, const std::string& name )
     {
-        return FieldCompare< T, std::string >( element, boost::bind( &ADN_Tools::NameExtractor< T >, boost::cref( element ) ), boost::cref( name ) );
+        assert( element != 0 );
+        return FieldCompare< T, std::string >( *element, boost::bind( &ADN_Tools::NameExtractor< T >, boost::cref( *element ) ), boost::cref( name ) );
     }
 
     template< typename T >
-    bool IdCompare( const T& element, const int& id )
+    bool CrossedRefNameCompare( const T* element, const std::string& name )
     {
-        return FieldCompare< T, int >( element, boost::bind( &ADN_Tools::IdExtractor< T >, boost::cref( element ) ), boost::cref( id ) );
+        assert( element != 0 );
+        return FieldCompare< T, std::string >( *element, boost::bind( &ADN_Tools::CrossedRefNameExtractor< T >, boost::cref( *element ) ), boost::cref( name ) );
     }
 
     template< typename T >
-    bool NIdCompare( const T& element, const int& id )
+    bool IdCompare( const T* element, const int& id )
     {
-        return FieldCompare< T, int >( element, boost::bind( &ADN_Tools::NIdExtractor< T >, boost::cref( element ) ), boost::cref( id ) );
+        assert( element != 0 );
+        return FieldCompare< T, int >( *element, boost::bind( &ADN_Tools::IdExtractor< T >, boost::cref( *element ) ), boost::cref( id ) );
+    }
+
+    template< typename T >
+    bool NIdCompare( const T* element, const int& id )
+    {
+        assert( element != 0 );
+        return FieldCompare< T, int >( *element, boost::bind( &ADN_Tools::NIdExtractor< T >, boost::cref( *element ) ), boost::cref( id ) );
     }
 
     // -----------------------------------------------------------------------------
-    class NameCmp// : public std::unary_function< T* , bool >
+    class NameCmp
     {
     public:
-                 NameCmp( const std::string& strName, bool caselessCompare = true ) : strName_( strName ), caselessCompare_( caselessCompare ) {}
+                 NameCmp( const std::string& strName ) : strName_( strName ) {}
         virtual ~NameCmp() {}
 
         template < typename T >
         bool operator()( T* infos ) const
         {
-            if( infos == 0 )
-                return false;
-            if( caselessCompare_ ) 
-                return CaselessCompare( infos->strName_.GetData(), strName_ );
-            else
-                return infos->strName_.GetData() == strName_;
+            return ( infos != 0 ) ? infos->strName_ == strName_ : false;
         }
 
     private:
         std::string strName_;
-        bool caselessCompare_;
     };
 
     template< class DataClass >

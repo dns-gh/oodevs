@@ -115,6 +115,9 @@ public:
 
     ADN_FileChooser* AddFileField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter = "(*.*)" );
 
+    ADN_EditLine_ABC* AddLocalizedField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+    ADN_EditLine_ABC* AddLocalizedField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+
     void AddStretcher( QWidget* pParent, Qt::Orientation nOrientation );
     void AddStretcher( QLayout* pLayout, Qt::Orientation nOrientation );
 

@@ -21,7 +21,8 @@ ADN_GoToButton::ADN_GoToButton( E_WorkspaceElements targetTab, int subTargetTab 
     : QPushButton( qApp->style()->standardIcon( QStyle::SP_ArrowRight ), "", parent )
     , linkedCombo_( 0 )
 {
-    QToolTip::add( this, "Go to" );
+    QToolTip::add( this, tr( "Go to" ) );
+    setIconSize( QSize( 10, 10 ) );
 
     goToInfo_.targetName_ = "";
     goToInfo_.targetTab_ = targetTab;

@@ -47,10 +47,12 @@ public:
     bool bAutoHide_;
 
 public slots:
-   void SetData( void* pData );
+   virtual void SetData( void* pData );
+   virtual void OnTypeChanged( int ) {}
 
 signals:
     void DataChanged( void* pData );
+    void TypeChanged( int type ) const;
 
 protected:
     //! @name Double dispatch connexion mechanism

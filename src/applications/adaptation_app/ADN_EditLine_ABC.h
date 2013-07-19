@@ -45,6 +45,8 @@ protected:
 
 signals:
     void StartEditing();
+    void TypeChanged( int );
+    void OnTypeChanged( int );
 
 protected slots:
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
