@@ -132,11 +132,6 @@ namespace ADN_Tools
     void SortMenu( Q3PopupMenu& menu );
 
     // -----------------------------------------------------------------------------
-    void AddSchema( xml::xostream& xos, const std::string& name );
-
-    void AddVersion( xml::xostream& xos, const std::string& name );
-
-    // -----------------------------------------------------------------------------
     template< typename TargetType, typename ViewType >
     void GenerateStandardContextMenu( ViewType& view, const QPoint& pt )
     {

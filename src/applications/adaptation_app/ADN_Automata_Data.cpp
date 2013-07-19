@@ -280,7 +280,8 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "automats" );
-    ADN_Tools::AddSchema( output, "Automats" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Automats" );
     for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
         ( *it )->WriteArchive( output );
     output  << xml::end;

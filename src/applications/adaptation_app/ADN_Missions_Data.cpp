@@ -307,7 +307,8 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
                                   .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str() ).toStdString() );
 
     output << xml::start( "missions" );
-    ADN_Tools::AddSchema( output, "Missions" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Missions" );
 
     for( int type = 0; type < eNbrMissionTypes; ++type )
         WriteMissions( output, missionsVector_[ type ].first, static_cast< E_MissionType >( type ), missionsVector_[ type ].second );

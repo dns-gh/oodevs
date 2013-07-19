@@ -1407,7 +1407,7 @@ void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     xos << xml::start( "objects" );
-    ADN_Tools::AddSchema( xos, "Objects" );
+    tools::SchemaWriter schemaWriter; schemaWriter.WritePhysicalSchema( xos, "Objects" );
     for( auto it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
         ( *it )->WriteArchive( xos );
     xos << xml::end;

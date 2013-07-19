@@ -422,7 +422,8 @@ void ADN_FireClass_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "fires" );
-    ADN_Tools::AddSchema( output, "Fires" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Fires" );
     output << xml::start( "cell-size" )
                 << xml::attribute( "value", cellSize_ )
             << xml::end;

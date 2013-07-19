@@ -146,7 +146,8 @@ void ADN_Urban_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "urban" );
-    ADN_Tools::AddSchema( output, "UrbanTypes" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "UrbanTypes" );
     output  << xml::start( "urban-block-types" );
     WriteMaterials( output );
     WriteRoofShapes( output );
@@ -174,7 +175,8 @@ void ADN_Urban_Data::ReadTemplates( xml::xistream& input )
 void ADN_Urban_Data::WriteTemplates( xml::xostream& output )
 {
     output << xml::start( "templates" );
-    ADN_Tools::AddSchema( output, "UrbanTemplates" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "UrbanTemplates" );
         for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
             ( *it )->Write( output );
     output << xml::end;

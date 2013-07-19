@@ -467,7 +467,8 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output )
                               .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Models_Data", "Crowds models" ) ).toStdString() );
 
     output << xml::start( "models" );
-    ADN_Tools::AddSchema( output, "Models" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Models" );
     output  << xml::start( "units" );
     for( auto  it1 = vUnitModels_.begin(); it1 != vUnitModels_.end(); ++it1 )
         ( *it1 )->WriteArchive( "unit", output );

@@ -90,7 +90,8 @@ void ADN_Weapons_Data::ReadWeapon( xml::xistream& input )
 void ADN_Weapons_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "weapons" );
-    ADN_Tools::AddSchema( output, "WeaponSystems" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "WeaponSystems" );
     for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

@@ -2056,7 +2056,8 @@ void ADN_Equipments_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "equipments" );
-    ADN_Tools::AddSchema( output, "Equipments" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Equipments" );
     for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

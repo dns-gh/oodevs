@@ -77,7 +77,8 @@ void ADN_Languages_Data::ReadLanguage( xml::xistream& input )
 void ADN_Languages_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "languages" );
-    ADN_Tools::AddSchema( output, "Languages" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Languages" );
     for( auto it = languages_.begin(); it != languages_.end(); ++it )
         output << *it;
     output << xml::end; //! languages

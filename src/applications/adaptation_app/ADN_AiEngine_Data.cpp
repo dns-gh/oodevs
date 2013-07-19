@@ -149,7 +149,8 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "decisional" );
-    ADN_Tools::AddSchema( output, "Decisional" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Decisional" );
     output  << xml::start( "dangerosity-modifiers" )
                 << xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
                 << xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )

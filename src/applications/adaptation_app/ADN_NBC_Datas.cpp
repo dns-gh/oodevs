@@ -374,7 +374,8 @@ void ADN_NBC_Datas::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "nbc" );
-    ADN_Tools::AddSchema( output, "NBC" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "NBC" );
     output  << xml::start( "propagation" )
                 << xml::attribute( "wind-speed-limit", rWindSpeedLimitForSpreading_ )
                 << xml::attribute( "contamination-distance", rContaminationDistance_ )

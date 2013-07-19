@@ -62,6 +62,7 @@
 #include <tools/Exception.h>
 #include <tools/Path.h>
 #include "tools/FileWrapper.h"
+#include "tools/SchemaWriter.h"
 #include "tools/XmlStreamOperators.h"
 #include <cassert>
 #include "MT_Tools/MT_Logger.h"

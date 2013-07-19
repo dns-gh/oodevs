@@ -229,7 +229,8 @@ void ADN_Supply_Data::SupplyDataInfos::CheckDatabaseValidity( ADN_ConsistencyChe
 void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "supply" );
-    ADN_Tools::AddSchema( output, "Supply" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Supply" );
     if( ptrUnit_.GetData() != 0 && ptrUnit_.GetData()->eTypeId_.GetData() == eAgentTypePionLOGConvoi )
     {
         output  << xml::start( "convoys" )

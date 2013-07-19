@@ -91,7 +91,8 @@ void ADN_Funeral_Data::ReadArchive( xml::xistream& input )
 void ADN_Funeral_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "funeral" );
-    ADN_Tools::AddSchema( output, "Funeral" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Funeral" );
     output  << xml::start( "fake-transporter" )
                 << xml::attribute( "speed", fakeTransporterSpeed_ )
             << xml::end

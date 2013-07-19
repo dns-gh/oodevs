@@ -268,7 +268,8 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "breakdowns" );
-    ADN_Tools::AddSchema( output, "Breakdowns" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Breakdowns" );
     output   << xml::start( "diagnosis" )
                << xml::attribute( "time", strAverageDiagnosticTime_ )
              << xml::end;

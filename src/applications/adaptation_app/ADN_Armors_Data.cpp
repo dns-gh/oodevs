@@ -217,7 +217,8 @@ void ADN_Armors_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "protections" );
-    ADN_Tools::AddSchema( output, "Armors" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Armors" );
     for( T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
         ( *itArmor )->WriteArchive( output );
     output << xml::end;

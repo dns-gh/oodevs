@@ -191,7 +191,8 @@ void ADN_Launchers_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "launchers" );
-    ADN_Tools::AddSchema( output, "Launchers" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Launchers" );
     for( T_LauncherInfos_Vector::iterator it = vLaunchers_.begin(); it != vLaunchers_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

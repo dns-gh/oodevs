@@ -221,7 +221,8 @@ void ADN_HumanFactors_Data::ReadModifier( xml::xistream& input )
 void ADN_HumanFactors_Data::WriteArchive( xml::xostream& output )
 {
     output  << xml::start( "humans-factors" );
-    ADN_Tools::AddSchema( output, "HumanFactors" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "HumanFactors" );
     output  << xml::start( "experience-factor" );
     veteranModifiers_.WriteArchive( output );
     xpModifiers_.WriteArchive( output );

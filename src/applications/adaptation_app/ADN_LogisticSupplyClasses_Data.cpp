@@ -125,7 +125,8 @@ void ADN_LogisticSupplyClasses_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "logistic-supply-classes" );
-    ADN_Tools::AddSchema( output, "LogisticSupplyClasses" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "LogisticSupplyClasses" );
     for( ADN_LogisticSupplyClasses_Data::T_LogisticSupplyClass_Vector::const_iterator it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
     {
         if( ( *it )->strName_.GetData().empty() )

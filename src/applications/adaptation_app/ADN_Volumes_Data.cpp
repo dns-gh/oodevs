@@ -86,7 +86,8 @@ void ADN_Volumes_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "volumes" );
-    ADN_Tools::AddSchema( output, "Volumes" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Volumes" );
     for( T_VolumeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
         if( ( *itSize )->strName_.GetData().empty() )

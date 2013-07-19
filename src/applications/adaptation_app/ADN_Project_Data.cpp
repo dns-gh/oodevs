@@ -184,7 +184,8 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "physical" );
     if( readOnly_ )
         output << xml::attribute( "read-only", readOnly_ );
-    ADN_Tools::AddSchema( output, "Physical" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Physical" );
     WriteFile( output, "decisional", szDecisional_ );
     WriteFile( output, "volumes", szSizes_ );
     WriteFile( output, "protections", szArmors_ );
@@ -496,7 +497,7 @@ namespace
         rootNode = nodeName;
     }
 
-    void ChangeSchema( const tools::Path& inputFile, const std::string& schemaName )
+    void ChangeSchema( const tools::Path& inputFile, const tools::Path& schemaName )
     {
         if( !inputFile.Exists() || inputFile.IsDirectory() )
             return;
@@ -508,7 +509,8 @@ namespace
         tools::Xofstream xos( inputFile );
         xos << xml::start( rootNode );
         xos << xis;
-        ADN_Tools::AddSchema( xos, schemaName );
+        tools::SchemaWriter schemaWriter;
+        schemaWriter.WritePhysicalSchema( xos, schemaName );
         xos << xml::end;
     }
 }
@@ -522,7 +524,8 @@ void ADN_Project_Data::WritePathfind( xml::xistream& xis, const tools::Path& pat
     tools::Xofstream xos( path );
     xis >> xml::start( "pathfind" );
     xos << xml::start( "pathfind" );
-    ADN_Tools::AddSchema( xos, "Pathfind" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( xos, "Pathfind" );
     xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
 }
 
@@ -532,7 +535,8 @@ namespace
     {
         tools::Xofstream xos( path );
         xos << xml::start( "pathfind" );
-        ADN_Tools::AddSchema( xos, "Pathfind" );
+        tools::SchemaWriter schemaWriter;
+        schemaWriter.WritePhysicalSchema( xos, "Pathfind" );
         xos << xml::start( "configuration" )
                 << xml::attribute( "distance-threshold", 15000 )
                 << xml::attribute( "max-calculation-time", "15s" )
@@ -548,7 +552,8 @@ namespace
     {
         tools::Xofstream xos( path );
         xos << xml::start( "objects" );
-        ADN_Tools::AddSchema( xos, "ObjectNames" );
+        tools::SchemaWriter schemaWriter;
+        schemaWriter.WritePhysicalSchema( xos, "ObjectNames" );
         const ADN_Objects_Data::T_ObjectsInfos_Vector& objects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
         unsigned int objectId = 0;
         for( auto it = objects.begin(); it != objects.end(); ++it, ++objectId )
@@ -559,12 +564,18 @@ namespace
                 << xml::end;
         }
     }
-    void CreateEmptyFile( const tools::Path& path, const std::string& openning, const std::string& schema = "" )
+    void CreateEmptyFileIfNeeded( const tools::Path& path, const std::string& openning, const tools::Path& schema = "" )
     {
-        tools::Xofstream xos( path );
-        xos << xml::start( openning );
-        if( !schema.empty() )
-            ADN_Tools::AddSchema( xos, schema );
+        if( !path.Exists() )
+        {
+            tools::Xofstream xos( path );
+            xos << xml::start( openning );
+            if( !schema.IsEmpty() )
+            {
+                tools::SchemaWriter schemaWriter;
+                schemaWriter.WritePhysicalSchema( xos, schema );
+            }
+        }
     }
 }
 
@@ -588,20 +599,13 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
         fileLoader.LoadFile( pathfindFile, boost::bind( &ADN_Project_Data::WritePathfind, this, _1, boost::cref( pathfindFile ) ) );
     else
         CreateNewPathfindFile( pathfindFile );
-    tools::Path objectNamesFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_;
-    CreateObjectNames( objectNamesFile );
-    tools::Path medicalTreatmentFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_;
-    if( !medicalTreatmentFile.Exists() )
-        CreateEmptyFile( medicalTreatmentFile, "medical-treatments", "MedicalTreatment" );
-    tools::Path templatesFile = workDir_.GetWorkingDirectory().GetData() / "templates.xml";
-    if( !templatesFile.Exists() )
-        CreateEmptyFile( templatesFile, "templates" );
-    tools::Path drawingTemplatesFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szDrawingTemplates_;
-    if( !drawingTemplatesFile.Exists() )
-        CreateEmptyFile( drawingTemplatesFile, "templates", "DrawingTemplates" );
-    tools::Path stageFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_;
-    if( !stageFile.Exists() )
-        CreateEmptyFile( stageFile, "stages", "Stages" );
+
+    CreateObjectNames( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_ );
+
+    CreateEmptyFileIfNeeded( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_, "medical-treatments", "MedicalTreatment" );
+    CreateEmptyFileIfNeeded( workDir_.GetWorkingDirectory().GetData() / "templates.xml", "templates" );
+    CreateEmptyFileIfNeeded( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szDrawingTemplates_, "templates", "DrawingTemplates" );
+    CreateEmptyFileIfNeeded( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_, "stages", "Stages" );
 
     addedObjects_.clear();
 

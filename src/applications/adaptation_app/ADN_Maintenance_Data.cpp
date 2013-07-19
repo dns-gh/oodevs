@@ -149,7 +149,8 @@ void ADN_Maintenance_Data::ReadArchive( xml::xistream& input )
 void ADN_Maintenance_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "maintenance" );
-    ADN_Tools::AddSchema( output, "Maintenance" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Maintenance" );
     output << xml::start( "working-schemes" );
     for( auto it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->WriteArchive( output );

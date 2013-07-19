@@ -835,7 +835,8 @@ void ADN_Resources_Data::WriteArchive( xml::xostream& output )
     }
 
     output << xml::start( "resources" );
-    ADN_Tools::AddSchema( output, "Resources" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Resources" );
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

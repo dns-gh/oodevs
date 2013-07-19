@@ -105,7 +105,8 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     xos << xml::start( "protections" );
-    ADN_Tools::AddSchema( xos, "ActiveProtections" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( xos, "ActiveProtections" );
     for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         (*it)->WriteArchive( xos );
     xos << xml::end;

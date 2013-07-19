@@ -188,7 +188,8 @@ void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "resource-networks" );
-    ADN_Tools::AddSchema( output, "ResourceNetworks" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "ResourceNetworks" );
     for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

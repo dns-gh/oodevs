@@ -904,7 +904,8 @@ void ADN_Units_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "units" );
-    ADN_Tools::AddSchema( output, "Units" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Units" );
     for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

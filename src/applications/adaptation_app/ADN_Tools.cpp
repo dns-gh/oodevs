@@ -132,25 +132,4 @@ void SortMenu( Q3PopupMenu& menu )
         menu.insertItem( (*it).first, (*it).second );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AddSchema
-// Created: SBO 2009-08-25
-// -----------------------------------------------------------------------------
-void AddSchema( xml::xostream& xos, const std::string& name )
-{
-    xos << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
-            << xml::attribute( "model-version", tools::AppModelVersion() )
-            << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
-            << xml::attribute( "noNamespaceSchemaLocation", "schemas/" + std::string( tools::AppMajorVersion() ) + "/physical/" + name + ".xsd" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AddVersion
-// Created: RPD 2010-09-22
-// -----------------------------------------------------------------------------
-void AddVersion( xml::xostream& xos, const std::string& version )
-{
-    xos << xml::attribute( "model-version", version );
-}
-
 }

@@ -769,7 +769,8 @@ void ADN_Crowds_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "populations" );
-    ADN_Tools::AddSchema( output, "Crowds" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Crowds" );
     reloadingSpeedEffectInfos_.WriteArchive( output );
     output << xml::start( "time-between-nbc-applications" )
             << xml::attribute( "delay", timeBetweenNbcApplication_.GetData() )

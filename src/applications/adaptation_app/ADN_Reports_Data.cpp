@@ -310,7 +310,8 @@ void ADN_Reports_Data::ReadReport( xml::xistream& input )
 void ADN_Reports_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "reports" );
-    ADN_Tools::AddSchema( output, "Reports" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Reports" );
     for( unsigned long i = 0; i < reports_.size(); ++i )
         reports_[i]->WriteArchive( output );
     output << xml::end;

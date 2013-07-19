@@ -214,7 +214,8 @@ void ADN_KnowledgeGroups_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "knowledge-groups" );
-    ADN_Tools::AddSchema( output, "KnowledgeGroups" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "KnowledgeGroups" );
     for( auto it = vGroups_.begin(); it != vGroups_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

@@ -445,7 +445,8 @@ void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "populations" );
-    ADN_Tools::AddSchema( output, "Inhabitants" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Inhabitants" );
     for( auto it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;

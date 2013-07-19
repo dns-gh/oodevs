@@ -124,7 +124,8 @@ void ADN_Natures_Data::WriteArchive( xml::xostream& output )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
     output << xml::start( "natures" );
-    ADN_Tools::AddSchema( output, "ResourceNatures" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "ResourceNatures" );
     for( ADN_Natures_Data::T_NatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
         if( ( *it )->strName_.GetData().empty() )

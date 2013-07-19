@@ -1188,7 +1188,8 @@ void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
                               .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Sensors_Data", "Sensors" ) ).toStdString() );
 
     output << xml::start( "sensors" );
-    ADN_Tools::AddSchema( output, "Sensors" );
+    tools::SchemaWriter schemaWriter;
+    schemaWriter.WritePhysicalSchema( output, "Sensors" );
     alatInfos_ .WriteArchive( output );
     cobraInfos_.WriteArchive( output );
     radarData_->WriteArchive( output );
