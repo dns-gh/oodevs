@@ -8,8 +8,9 @@
     <libGeocoord>geocoord.lib</libGeocoord>
     <libOpengl>opengl32.lib;QtOpenGL4.lib</libOpengl>
     <libQT>QtCore4.lib;QtGui4.lib</libQT>
-    <libQT3>Qt3Support4.lib</libQT3>
     <libQTWeb>QtWebKit4.lib</libQTWeb>
+    <libQTXml>QtXmlPatterns4.lib</libQTXml>
+    <libQT3>Qt3Support4.lib</libQT3>
     <libTools>tools.lib</libTools>
     <libZip>zipstream.lib;zlib1.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-4_6.lib</libDirectIA>
@@ -92,6 +93,9 @@
     </BuildMacro>
     <BuildMacro Include="libQTWeb">
       <Value>$(libQTWeb)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libQTXml">
+      <Value>$(libQTXml)</Value>
     </BuildMacro>
     <BuildMacro Include="libQT3">
       <Value>$(libQT3)</Value>
