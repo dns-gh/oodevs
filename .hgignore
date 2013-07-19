@@ -1,4 +1,4 @@
-^(bin|dist|include|out|run|lib)/
+^(bin|dist|include|out|run|lib|doc)/
 \.(bmo|bmk|bmq|bmt|bmsk|bmr|bmsc|luac)$
 ^data/data/models/ada/decisional/dia5/TaskKnowledge.lua$
 ^data/data/models/ada/decisional/dia5/models/directia.core/directia.core.bml$
