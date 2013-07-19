@@ -59,9 +59,18 @@ local function manageAddedAndDeletedUnits( self )
     self.listenFrontElementInitialized = false
     local DEC_HasMission = DEC_HasMission
     local oldEntities = self.parameters.commandingEntities
+    
     local newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
     local newOperationnalEntities = integration.getOperationnalEntitiesDespiteJammedFromAutomat( meKnowledge, "none", self.params.withPC )
 
+    local entitiesNotJammed = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    if #entitiesNotJammed == 1 then  -- PC or unit is jammed : don't redone tasks and don't manage relieve ### GGE TO REVIEW
+        local withoutPC = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
+        if #withoutPC == 0 then
+            return
+        end
+    end
+    
     -- Si un pion a été supprimé de l'automate, on redistribue les missions
     for i, entity in pairs( oldEntities ) do
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
@@ -177,7 +186,6 @@ activate = function( self )
     end
     
     if self.listenFrontElementInitialized then -- if a subordinate destroyed before and tasks issued a new time
-        DEC_Trace("self.listenFrontElementInitialized true")
         for _, elem in pairs (self.bestUnits) do
             integration.ListenFrontElement( elem.entity )
         end

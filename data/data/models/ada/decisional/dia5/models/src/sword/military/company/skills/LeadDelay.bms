@@ -66,6 +66,14 @@ local function manageAddedAndDeletedUnits( self )
     local newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", true )
     local newOperationnalEntities = integration.getOperationnalEntitiesDespiteJammedFromAutomat( meKnowledge, "none", true )
 
+    local entitiesNotJammed = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    if #entitiesNotJammed == 1 then  -- PC or unit is jammed : don't redone tasks and don't manage relieve ### GGE TO REVIEW
+        local withoutPC = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
+        if #withoutPC == 0 then
+            return
+        end
+    end
+    
     -- Si un pion a été supprimé de l'automate, on redistribue les missions
     for i, entity in pairs( oldEntities ) do
         if not exists( newEntities, entity ) then
