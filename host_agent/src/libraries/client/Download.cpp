@@ -149,7 +149,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         current_ += size;
         if( !total_ )
             return rpy;
-        const size_t next = ( current_ * 100 ) / total_;
+        const qint64 next = ( current_ * 100 ) / total_;
         if( next <= progress_ )
             return rpy;
         progress_ = next;
@@ -258,9 +258,9 @@ private:
     QPointer< QNetworkReply > rpy_;
     size_t write_;
     size_t read_;
-    size_t current_;
+    qint64 current_;
     size_t total_;
-    size_t progress_;
+    qint64 progress_;
     bool eof_;
     bool headers_;
     bool finished_;
