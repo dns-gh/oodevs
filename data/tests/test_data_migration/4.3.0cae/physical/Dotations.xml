@@ -978,7 +978,7 @@
     <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="47" id-nature="3" name="155-mm FASCAM Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="6" life-time="2h" object-type="Mined Area (linear)" type="effect" x-dispersion="200" y-dispersion="200"/>
+    <indirect-fire intervention-type="6" life-time="2h" object-type="mined area (linear)" type="effect" x-dispersion="200" y-dispersion="200"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="48" id-nature="3" name="152-mm Chemical Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="4" life-time="30m" object-type="nbc zone" type="effect" x-dispersion="500" y-dispersion="500"/>
