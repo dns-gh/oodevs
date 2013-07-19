@@ -141,6 +141,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\TranslationQuery.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Translations.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp" />
@@ -239,6 +240,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\XmlTranslations.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\XQuery.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +305,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\TranslationQuery.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Translations.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h" />
@@ -377,6 +380,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\XmlAdapter.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\XmlDescription.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\XmlTranslations.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\XQuery.h" />
     <CustomBuildStep Include="..\..\src\libraries\clients_kernel\ActionController.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Controller.h" />

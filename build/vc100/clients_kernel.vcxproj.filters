@@ -71,6 +71,9 @@
     <Filter Include="Source Files\Model\Entities\Urban">
       <UniqueIdentifier>{be79ce9d-0e9f-4bb3-98df-ae385d46baf8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tools\Translations">
+      <UniqueIdentifier>{1a854db6-807c-4688-81eb-c2098aa480cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
@@ -453,6 +456,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\XQuery.cpp">
       <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Language.cpp">
+      <Filter>Source Files\Tools\Translations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TranslationQuery.cpp">
+      <Filter>Source Files\Tools\Translations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\XmlTranslations.cpp">
+      <Filter>Source Files\Tools\Translations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Translations.cpp">
+      <Filter>Source Files\Tools\Translations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1070,6 +1085,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\XQuery.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Language.h">
+      <Filter>Source Files\Tools\Translations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TranslationQuery.h">
+      <Filter>Source Files\Tools\Translations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\XmlTranslations.h">
+      <Filter>Source Files\Tools\Translations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Translations.h">
+      <Filter>Source Files\Tools\Translations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
