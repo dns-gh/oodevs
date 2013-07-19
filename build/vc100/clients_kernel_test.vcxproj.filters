@@ -15,6 +15,9 @@
     <ClCompile Include="..\..\src\tests\clients_kernel_test\SymbolTest.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\clients_kernel_test\XQueryTest.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\clients_kernel_test\clients_kernel_test_pch.h">

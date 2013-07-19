@@ -9,6 +9,7 @@
     <libOpengl>opengl32.lib;QtOpenGLd4.lib</libOpengl>
     <libQT>QtCored4.lib;QtGuid4.lib</libQT>
     <libQT3>Qt3Supportd4.lib</libQT3>
+    <libQTXml>QtXmlPatternsd4.lib</libQTXml>
     <libTools>tools_d.lib</libTools>
     <libZip>zipstream_d.lib;zlib1d.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-gd-4_6.lib</libDirectIA>
@@ -24,7 +25,7 @@
     <libTerrain>libterrain-$(CurrentPlatform)-mt-gd.lib</libTerrain>
     <libAnalysis>libanalysis-$(CurrentPlatform)-mt-gd.lib</libAnalysis>
     <libSvgl>svgl_d.lib</libSvgl>
-	<libLicenseGui>license_gui_d.lib</libLicenseGui>
+    <libLicenseGui>license_gui_d.lib</libLicenseGui>
     <SrcDir>..\..\src\tests\$(ProjectName)</SrcDir>
     <libSqlite>sqlite3-$(CurrentPlatform)-mt-gd.lib</libSqlite>
   </PropertyGroup>
@@ -86,6 +87,9 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     </BuildMacro>
     <BuildMacro Include="libQT3">
       <Value>$(libQT3)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libQTXml">
+      <Value>$(libQTXml)</Value>
     </BuildMacro>
     <BuildMacro Include="libTools">
       <Value>$(libTools)</Value>

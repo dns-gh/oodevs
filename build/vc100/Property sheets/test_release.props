@@ -8,6 +8,7 @@
     <libGeocoord>geocoord.lib</libGeocoord>
     <libOpengl>opengl32.lib;QtOpenGL4.lib</libOpengl>
     <libQT>QtCore4.lib;QtGui4.lib</libQT>
+    <libQTXml>QtXmlPatterns4.lib</libQTXml>
     <libQT3>Qt3Support4.lib</libQT3>
     <libTools>tools.lib</libTools>
     <libZip>zipstream.lib;zlib1.lib</libZip>
@@ -24,7 +25,7 @@
     <libTerrain>libterrain-$(CurrentPlatform)-mt.lib</libTerrain>
     <libAnalysis>libanalysis-$(CurrentPlatform)-mt.lib</libAnalysis>
     <libSvgl>svgl.lib</libSvgl>
-	<libLicenseGui>license_gui.lib</libLicenseGui>
+    <libLicenseGui>license_gui.lib</libLicenseGui>
     <SrcDir>..\..\src\tests\$(ProjectName)</SrcDir>
     <libSqlite>sqlite3-$(CurrentPlatform)-mt.lib</libSqlite>
   </PropertyGroup>
@@ -82,6 +83,9 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     </BuildMacro>
     <BuildMacro Include="libQT">
       <Value>$(libQT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libQTXml">
+      <Value>$(libQTXml)</Value>
     </BuildMacro>
     <BuildMacro Include="libQT3">
       <Value>$(libQT3)</Value>
