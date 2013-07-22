@@ -8,7 +8,7 @@
       <xsl:if test="count( ./translation-queries ) = 0">
         <xsl:element name="translation-queries">
           <xsl:element name="translation-query">
-            <xsl:attribute name="path">/volumes/volume/@name</xsl:attribute>
+            <xsl:attribute name="query">/volumes/volume/string(@name)</xsl:attribute>
             <xsl:attribute name="context">volumes</xsl:attribute>
           </xsl:element>
         </xsl:element>

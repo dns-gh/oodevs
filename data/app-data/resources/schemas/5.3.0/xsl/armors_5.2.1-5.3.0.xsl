@@ -8,7 +8,7 @@
       <xsl:if test="count( ./translation-queries ) = 0">
         <xsl:element name="translation-queries">
           <xsl:element name="translation-query">
-            <xsl:attribute name="path">/protections/protection/@name</xsl:attribute>
+            <xsl:attribute name="query">/protections/protection/string(@name)</xsl:attribute>
             <xsl:attribute name="context">protections</xsl:attribute>
           </xsl:element>
         </xsl:element>

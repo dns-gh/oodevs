@@ -8,7 +8,7 @@
       <xsl:if test="count( ./translation-queries ) = 0">
         <xsl:element name="translation-queries">
           <xsl:element name="translation-query">
-            <xsl:attribute name="path">/natures/nature/@type</xsl:attribute>
+            <xsl:attribute name="query">/natures/nature/string(@type)</xsl:attribute>
             <xsl:attribute name="context">natures</xsl:attribute>
           </xsl:element>
         </xsl:element>
