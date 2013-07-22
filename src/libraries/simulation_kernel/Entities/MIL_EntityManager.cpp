@@ -1414,7 +1414,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
     {
         boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
         if( pReceiver )
-            pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
+            pReceiver->OnReceiveKnowledgeGroupUpdate( message, ack(), *armyFactory_ );
         else
             throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck_ErrorCode, sword::KnowledgeGroupAck::error_invalid_knowledgegroup, "Knowledge Group not found" );
     }

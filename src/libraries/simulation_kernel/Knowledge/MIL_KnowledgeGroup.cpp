@@ -830,7 +830,7 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 // Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate
 // Created: FDS 2010-01-13
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies  )
+void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMagicAction& message, sword::KnowledgeGroupMagicActionAck &ack, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
     if( IsJammed() && message.type() != sword::KnowledgeMagicAction::add_knowledge )
         throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_knowledgegroup, "Invalid operation on jammed knowledge group" );
@@ -851,7 +851,10 @@ void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMa
         hasBeenUpdated_ = OnReceiveKnowledgeGroupSetType( message.parameters() ) || hasBeenUpdated_;
         break;
     case sword::KnowledgeMagicAction::add_knowledge:
-        OnReceiveKnowledgeGroupAddKnowledge( message.parameters() );
+        {
+            unsigned long knowledgeId = OnReceiveKnowledgeGroupAddKnowledge( message.parameters() );
+            ack.mutable_result()->add_elem()->add_value()->set_identifier( knowledgeId );
+        }
         break;
     default:
         throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck_ErrorCode, sword::KnowledgeGroupAck::error_invalid_type, "Unknown magic action type" );
@@ -942,7 +945,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType( const sword::MissionPar
 // Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge
 // Created: MMC 2011-06-09:
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& msg )
+unsigned long MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& msg )
 {
     if( msg.elem_size() != 2 )
         throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_parameter, "invalid parameters count, 2 parameters expected" );
@@ -962,13 +965,15 @@ void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
     if( perception != PHY_PerceptionLevel::identified_.GetID() && perception != PHY_PerceptionLevel::recognized_.GetID() && perception != PHY_PerceptionLevel::detected_.GetID() )
         throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_perception );
 
+    unsigned long ret = 0;
     if( MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( identifier ) )
     {
-        if ( pAgent->GetKnowledgeGroup()->GetId() != this->GetId() )
+        if ( pAgent->GetKnowledgeGroup()->GetId() != id_ )
         {
             DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( *pAgent );
             knowledgeAgent.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
             HackPerceptionLevelFromParentKnowledgeGroup( *pAgent, perception );
+            ret = knowledgeAgent.GetID();
         }
     }
     else if( MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( identifier ) )
@@ -978,15 +983,18 @@ void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
             throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_unit );
         knowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
         HackPerceptionLevelFromParentKnowledgeGroup( *pObject, perception );
+        ret = knowledgeObject->GetID();
     }
     else if( MIL_Population* pPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( identifier ) )
     {
         DEC_Knowledge_Population& knowledgePopulation = GetPopulationKnowledgeToUpdate( *pPopulation );
         knowledgePopulation.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
         HackPerceptionLevelFromParentKnowledgeGroup( *pPopulation, perception );
+        ret = knowledgePopulation.GetID();
     }
     else
         throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_unit );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

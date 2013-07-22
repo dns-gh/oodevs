@@ -3271,6 +3271,8 @@ message KnowledgeGroupMagicActionAck {
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
     //! More detailed account of the returned error
     optional string                      error_msg       = 3;
+    //! Action results, depends on the action type and outcome.
+    optional MissionParameters           result          = 4;
 }
 
 //! DEPRECATED in 5.3

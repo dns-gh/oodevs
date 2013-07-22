@@ -1997,6 +1997,7 @@ message UnitMagicAction {
         //! A change formation superior magic action
         change_formation_superior         = 23;
         //! A knowledge group update magic action
+        //! @deprecated never used
         knowledge_group_update            = 24;
         //! A log supply push flow magic action
         //! tasker must match a logistics automat/formation/unit

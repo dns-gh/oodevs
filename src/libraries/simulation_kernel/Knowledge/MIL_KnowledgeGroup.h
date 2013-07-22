@@ -48,6 +48,7 @@ namespace sword
 {
     class MissionParameters;
     class KnowledgeMagicAction;
+    class KnowledgeGroupMagicActionAck;
 }
 
 // =============================================================================
@@ -116,7 +117,7 @@ public:
     bool operator==( const MIL_KnowledgeGroup& rhs ) const;
     bool operator!=( const MIL_KnowledgeGroup& rhs ) const;
 
-    void OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMagicAction& message, sword::KnowledgeGroupMagicActionAck& ack, const tools::Resolver< MIL_Army_ABC >& armies );
     void Destroy();
     void Merge( const MIL_KnowledgeGroup& subGroup );
     //@}
@@ -183,7 +184,7 @@ private:
     bool OnReceiveKnowledgeGroupEnable( const sword::MissionParameters& message );
     bool OnReceiveKnowledgeGroupChangeSuperior( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
     bool OnReceiveKnowledgeGroupSetType( const sword::MissionParameters& message );
-    void OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& message );
+    unsigned long OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& message );
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );
