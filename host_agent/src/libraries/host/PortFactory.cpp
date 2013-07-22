@@ -134,7 +134,7 @@ bool PortFactory::WaitConnected( boost::upgrade_lock< boost::shared_mutex >& loc
     boost::system::error_code ec;
     boost::condition_variable_any any;
     const boost::posix_time::ptime deadline = boost::posix_time::microsec_clock::local_time()
-                                            + boost::posix_time::seconds( 4 );
+                                            + boost::posix_time::seconds( 10 );
     while( boost::posix_time::microsec_clock::local_time() < deadline )
     {
         socket.connect( endpoint, ec );
