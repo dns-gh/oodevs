@@ -393,6 +393,7 @@ Tree Session::GetProperties() const
     Tree tree = GetProperties( false );
     tree.put( "start_time", start_time_ );
     tree.put( "current_time", current_time_ );
+    tree.put( "timeline.port", port_->Get() + TIMELINE_WEB_PORT );
     PutList( tree, "clients", clients_ );
     PutList( tree, "checkpoints.list", checkpoints_ );
     PutList( tree, "replay.list", replays_ );
