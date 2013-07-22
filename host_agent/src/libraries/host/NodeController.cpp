@@ -642,7 +642,6 @@ Tree NodeController::UploadLicenses( io::Reader_ABC& src )
         start = end;
     }
     fs_.WriteFile( output, content );
-    boost::shared_ptr< Package_ABC > next;
     for( auto it = strVec.begin(); it != strVec.end(); ++it )
     {
         for( auto it2 = ::licenses.begin(); it2 != ::licenses.end(); ++it2 )
@@ -654,7 +653,10 @@ Tree NodeController::UploadLicenses( io::Reader_ABC& src )
                     FlexLmLicense license( *it2 );
                     fs_.WriteFile( licensesDir_ / std::string( *it2 + ".lic" ), *it );
                 }
-                catch( const FlexLmLicense::LicenseError& ){}
+                catch( const FlexLmLicense::LicenseError& err )
+                {
+                    LOG_WARN( log_ ) << "[" << type_ << "] " << err.what();
+                }
             }
         }
     }
