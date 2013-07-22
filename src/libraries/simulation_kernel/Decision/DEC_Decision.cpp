@@ -71,6 +71,7 @@ namespace DEC_DecisionImpl
 // -----------------------------------------------------------------------------
 void RegisterUnitFunctions( sword::Brain& brain)
 {
+    brain.RegisterMethod( "DEC_Agent_EtatOps", &DEC_Decision_ABC::GetOperationalState );
     brain.RegisterMethod( "DEC_Agent_EtatOpsMajeur", &DEC_Decision_ABC::GetMajorOperationalState );
     brain.RegisterMethod( "DEC_Agent_EstPC", &DEC_Decision_ABC::IsPC );
     brain.RegisterMethod( "DEC_Agent_EstTransporte", &DEC_Decision_ABC::IsTransported );

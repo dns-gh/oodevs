@@ -1102,6 +1102,16 @@ bool DEC_Decision< T >::IsFlying() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetOperationalState
+// Created: NMI 2013-06-12
+// -----------------------------------------------------------------------------
+template< class T >
+double DEC_Decision< T >::GetOperationalState() const
+{
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::GetMajorOperationalState
 // Created: SBO 2009-07-29
 // -----------------------------------------------------------------------------

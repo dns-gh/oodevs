@@ -151,6 +151,7 @@ public:
     virtual bool IsPC() const = 0;
     virtual bool IsTransported() const = 0;
     virtual bool IsFlying() const = 0;
+    virtual double GetOperationalState() const = 0;
     virtual double GetMajorOperationalState() const = 0;
     virtual bool IsAutomateEngaged() const = 0;
     virtual bool IsDead() const = 0;

@@ -985,6 +985,15 @@ bool DEC_RolePion_Decision::IsFlying() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetOperationalState
+// Created: NMI 2013-06-12
+// ----------------------------------------------------------------------
+double DEC_RolePion_Decision::GetOperationalState() const
+{
+    return DEC_AgentFunctions::GetOperationalState( GetPion() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetMajorOperationalState
 // Created: SBO 2009-07-29
 // ----------------------------------------------------------------------
