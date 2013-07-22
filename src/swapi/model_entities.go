@@ -146,6 +146,34 @@ type KnowledgeGroup struct {
 	Type                string
 	IsCrowdDefaultGroup bool
 	Enabled             bool
+	UnitKnowledges      map[uint32]*UnitKnowledge
+	ObjectKnowledges    map[uint32]*ObjectKnowledge
+	CrowdKnowledges     map[uint32]*CrowdKnowledge
+}
+
+type UnitKnowledge struct {
+	Id               uint32
+	KnowledgeGroupId uint32
+	UnitId           uint32
+	UnitType         uint32
+}
+
+type ObjectKnowledge struct {
+	Id               uint32
+	PartyId          uint32
+	ObjectId         uint32
+	ObjectType       string
+	KnowledgeGroupId uint32
+	ObjectPartyId    uint32
+	ObjectName       string
+	// todo attributes
+}
+
+type CrowdKnowledge struct {
+	Id               uint32
+	KnowledgeGroupId uint32
+	CrowdId          uint32
+	PartyId          uint32
 }
 
 type Party struct {
@@ -519,6 +547,33 @@ func (model *ModelData) FindKnowledgeGroup(knowledgeGroupId uint32) *KnowledgeGr
 		}
 	}
 	return nil
+}
+
+func (model *ModelData) addUnitKnowledge(knowledge *UnitKnowledge) bool {
+	knowledgeGroup := model.FindKnowledgeGroup(knowledge.KnowledgeGroupId)
+	if knowledgeGroup != nil {
+		knowledgeGroup.UnitKnowledges[knowledge.Id] = knowledge
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) addObjectKnowledge(knowledge *ObjectKnowledge) bool {
+	knowledgeGroup := model.FindKnowledgeGroup(knowledge.KnowledgeGroupId)
+	if knowledgeGroup != nil {
+		knowledgeGroup.ObjectKnowledges[knowledge.Id] = knowledge
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) addCrowdKnowledge(knowledge *CrowdKnowledge) bool {
+	knowledgeGroup := model.FindKnowledgeGroup(knowledge.KnowledgeGroupId)
+	if knowledgeGroup != nil {
+		knowledgeGroup.CrowdKnowledges[knowledge.Id] = knowledge
+		return true
+	}
+	return false
 }
 
 func (model *ModelData) addLocalWeather(weather *LocalWeather) {

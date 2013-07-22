@@ -142,3 +142,47 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 		return data.FindKnowledgeGroup(kg.Id).Type == "Battalion"
 	})
 }
+
+func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: no knowledge group defined
+	data := client.Model.GetData()
+	kgs := data.ListKnowledgeGroups()
+	c.Assert(len(kgs), Greater, 0)
+
+	// error: no units defined
+	units := data.ListUnits()
+	c.Assert(len(units), Greater, 1)
+	unit := units[0]
+	unitKgId := data.FindAutomat(unit.AutomatId).KnowledgeGroupId
+
+	// error: no second knowledge group
+	var kg *swapi.KnowledgeGroup
+	for _, kg = range kgs {
+		if unitKgId != kg.Id {
+			break
+		}
+	}
+	c.Assert(unitKgId, Not(Equals), kg.Id)
+
+	// error: no params
+	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge, swapi.MakeParameters(), kg.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: first parameter must be an identifier, second a quantity
+	params := swapi.MakeParameters(swapi.MakeNullValue(), swapi.MakeNullValue())
+	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_add_knowledge, params, kg.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: invalid perception
+	_, err = client.AddUnitKnowledgeInKnowledgeGroup(kg.Id, unit.Id, 42)
+	c.Assert(err, ErrorMatches, "error_invalid_perception")
+
+	// add a unit in knowledge group and check
+	unitKnowledge, err := client.AddUnitKnowledgeInKnowledgeGroup(kg.Id, unit.Id, 2)
+	c.Assert(err, IsNil)
+	c.Assert(unitKnowledge.KnowledgeGroupId, Equals, kg.Id)
+	c.Assert(unitKnowledge.UnitId, Equals, unit.Id)
+}

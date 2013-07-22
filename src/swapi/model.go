@@ -309,8 +309,44 @@ func (model *Model) update(msg *SwordMessage) {
 				Type:                mm.GetType(),
 				IsCrowdDefaultGroup: mm.GetCrowd(),
 				Enabled:             true,
+				UnitKnowledges:      map[uint32]*UnitKnowledge{},
+				ObjectKnowledges:    map[uint32]*ObjectKnowledge{},
+				CrowdKnowledges:     map[uint32]*CrowdKnowledge{},
 			}
 			if !d.addKnowledgeGroup(group) {
+				// XXX report error here
+			}
+		} else if mm := m.GetUnitKnowledgeCreation(); mm != nil {
+			knowledge := &UnitKnowledge{
+				Id:               mm.GetKnowledge().GetId(),
+				KnowledgeGroupId: mm.GetKnowledgeGroup().GetId(),
+				UnitId:           mm.GetUnit().GetId(),
+				UnitType:         mm.GetType().GetId(),
+			}
+			if !d.addUnitKnowledge(knowledge) {
+				// XXX report error here
+			}
+		} else if mm := m.GetObjectKnowledgeCreation(); mm != nil {
+			knowledge := &ObjectKnowledge{
+				Id:               mm.GetKnowledge().GetId(),
+				PartyId:          mm.GetParty().GetId(),
+				ObjectId:         mm.GetObject().GetId(),
+				ObjectType:       mm.GetType().GetId(),
+				KnowledgeGroupId: mm.GetKnowledgeGroup().GetId(),
+				ObjectPartyId:    mm.GetObjectParty().GetId(),
+				ObjectName:       mm.GetObjectName(),
+			}
+			if !d.addObjectKnowledge(knowledge) {
+				// XXX report error here
+			}
+		} else if mm := m.GetCrowdKnowledgeCreation(); mm != nil {
+			knowledge := &CrowdKnowledge{
+				Id:               mm.GetKnowledge().GetId(),
+				KnowledgeGroupId: mm.GetKnowledgeGroup().GetId(),
+				CrowdId:          mm.GetCrowd().GetId(),
+				PartyId:          mm.GetParty().GetId(),
+			}
+			if !d.addCrowdKnowledge(knowledge) {
 				// XXX report error here
 			}
 		} else if mm := m.GetKnowledgeGroupUpdate(); mm != nil {

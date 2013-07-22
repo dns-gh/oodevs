@@ -1090,3 +1090,52 @@ func (c *Client) ChangeKnowledgeGroupSuperiorToKnowledgeGroup(knowledgeGroupId u
 func (c *Client) ChangeKnowledgeGroupType(knowledgeGroupId uint32, knowledgeGroupType string) error {
 	return c.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type, MakeParameters(MakeString(knowledgeGroupType)), knowledgeGroupId)
 }
+
+func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entityId uint32, perceptionLevel int32) (*UnitKnowledge, error) {
+	params := MakeParameters(MakeIdentifier(entityId), MakeEnumeration(perceptionLevel))
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				KnowledgeMagicAction: &sword.KnowledgeMagicAction{
+					KnowledgeGroup: &sword.KnowledgeGroupId{
+						Id: &knowledgeGroupId,
+					},
+					Type:       sword.KnowledgeMagicAction_add_knowledge.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+
+	var created *UnitKnowledge
+	handler := func(msg *sword.SimToClient_Content) error {
+
+		if reply := msg.GetUnitKnowledgeCreation(); reply != nil {
+			// Context should not be set on this
+			return ErrContinue
+		}
+		if reply := msg.GetUnitKnowledgeUpdate(); reply != nil {
+			// Context should not be set on this
+			return ErrContinue
+		}
+		reply := msg.GetKnowledgeGroupMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		_, err := GetKnowledgeGroupMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		kg := c.Model.GetData().FindKnowledgeGroup(knowledgeGroupId)
+		if kg != nil {
+			created = kg.UnitKnowledges[value.GetIdentifier()]
+		}
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return created, err
+}
