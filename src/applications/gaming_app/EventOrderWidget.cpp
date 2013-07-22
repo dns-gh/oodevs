@@ -375,7 +375,7 @@ bool EventOrderWidget::AreTargetAndMissionCompatible() const
             while( needWarning && itMission.HasMoreElements() )
             {
                 auto itFragO = itMission.NextElement().CreateIterator();
-                while( itFragO.HasMoreElements() )
+                while( needWarning && itFragO.HasMoreElements() )
                     needWarning = itFragO.NextElement().GetName() != order->GetName();
             }
         }
