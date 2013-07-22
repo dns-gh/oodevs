@@ -68,6 +68,7 @@ MIL_AgentParameter::~MIL_AgentParameter()
 bool MIL_AgentParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
     return type == MIL_ParameterType_ABC::eAgent
+        || type == MIL_ParameterType_ABC::eAgentKnowledge
         || type == MIL_ParameterType_ABC::eLocationComposite;
 }
 
