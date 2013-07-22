@@ -47,12 +47,13 @@ public:
     //! @name Operations
     //@{
     gui::SoundManager& GetSoundManager();
+    void PlayPauseSoundControl( bool play );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    bool CanPlaySound( const std::string& canal, int currentTick );
+    bool CanPlaySound( const std::string& channel );
     virtual void NotifyUpdated( const gui::SoundEvent& soundEvent );
     //@}
 
@@ -61,7 +62,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profileFilter_;
-    std::map< std::string, double > lastPlayTick_;
     std::auto_ptr< gui::SoundManager > soundManager_;
     //@}
 };

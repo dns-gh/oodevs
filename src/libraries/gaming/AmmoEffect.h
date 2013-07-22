@@ -46,7 +46,7 @@ class AmmoEffect : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& agents, kernel::Profile_ABC& profile, const Simulation& simulation );
+    AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& agents, kernel::Profile_ABC& profile );
     virtual ~AmmoEffect();
     //@}
 
@@ -75,7 +75,6 @@ private:
     sword::StartFireEffect::EnumFireEffectType type_;
     MSEllipse ellipse_;
     kernel::Profile_ABC& profile_;
-    const Simulation& simulation_;
     //@}
 };
 

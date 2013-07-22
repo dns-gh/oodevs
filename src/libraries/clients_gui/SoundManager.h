@@ -27,8 +27,10 @@ namespace gui
 */
 // Created: NPT 2013-07-03
 // =============================================================================
-class SoundManager : private boost::noncopyable
+class SoundManager : public QObject,
+                     private boost::noncopyable
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -39,16 +41,21 @@ public:
 
     //! @name Operations
     //@{
-    void PlaySound( const std::string& filePath );
-    void SetVolume( const std::string& canal, double value );
     void ChangeSoundsDirectory( const tools::Path& path );
     bool FindFile( const tools::Path& path, const std::string& name );
+    bool IsPlaying( const std::string& channel );
+    void PlayLoopSound( const std::string& soundName );
+    void PlaySound( const std::string& soundName );
+    void SetVolume( const std::string& channel, double value );
+    void StopSound( const std::string& channel );
     //@}
 
-private:
-    //! @name Helpers
-    //@{
-    //@}
+public slots:
+    void PlayPauseAllChannels( bool play );
+
+private slots:
+    void ReplaySound();
+    void KillCurrentMediaObject();
 
 private:
     //! @name Member data

@@ -59,17 +59,23 @@ gui::SoundManager& FirePlayer::GetSoundManager()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FirePlayer::PlayPauseSoundControl
+// Created: NPT 2013-07-22
+// -----------------------------------------------------------------------------
+void FirePlayer::PlayPauseSoundControl( bool play )
+{
+    if( soundManager_.get() )
+        soundManager_->PlayPauseAllChannels( play );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: FirePlayer::CanPlaySound
 // Created: NPT 2013-07-16
 // -----------------------------------------------------------------------------
-bool FirePlayer::CanPlaySound( const std::string& canal, int currentTick )
+bool FirePlayer::CanPlaySound( const std::string& channel )
 {
-    if( lastPlayTick_[ canal ] < currentTick )
-    {
-        lastPlayTick_[ canal ] = currentTick;
-        return true;
-    }
-    return false;
+    return !soundManager_->IsPlaying( channel );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,8 +84,17 @@ bool FirePlayer::CanPlaySound( const std::string& canal, int currentTick )
 // -----------------------------------------------------------------------------
 void FirePlayer::NotifyUpdated( const gui::SoundEvent& soundEvent )
 {
-    if( !CanPlaySound( soundEvent.GetSoundType(), soundEvent.GetSoundTick() ) )
+    if( soundEvent.StopSound() )
+        soundManager_->StopSound( soundEvent.GetSoundType() );
+
+    if( !CanPlaySound( soundEvent.GetSoundType() ) )
         return;
     if( !soundEvent.GetEntity() || profileFilter_.IsPerceived( *soundEvent.GetEntity() ) && profileFilter_.IsVisible( *soundEvent.GetEntity() ) )
-        soundManager_->PlaySound( soundEvent.GetSoundType() );
+    {
+        if( soundEvent.GetSoundType() == "directFire" )
+            soundManager_->PlayLoopSound( soundEvent.GetSoundType() );
+        else
+            soundManager_->PlaySound( soundEvent.GetSoundType() );
+
+    }
 }

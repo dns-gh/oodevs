@@ -25,14 +25,13 @@ using namespace kernel;
 // Name: AmmoEffect constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& agents, kernel::Profile_ABC& profile, const Simulation& simulation )
+AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& agents, kernel::Profile_ABC& profile )
     : controller_( controller )
     , agents_( agents )
     , id_( message.fire_effect().id() )
     , type_( message.type() )
     , ellipse_( message.location(), converter )
     , profile_( profile )
-    , simulation_( simulation )
 {
     controller_.Create( *this );
     PlaySoundEffect();
@@ -57,10 +56,10 @@ void AmmoEffect::PlaySoundEffect() const
     {
         switch( type_ )
         {
-            case sword::StartFireEffect::smoke:             controller_.Update( gui::SoundEvent( 0, "indirectsmoke", simulation_.GetCurrentTick() ) ); break;
-            case sword::StartFireEffect::light:             controller_.Update( gui::SoundEvent( 0, "indirectillumination", simulation_.GetCurrentTick() ) ); break;
-            case sword::StartFireEffect::explosion:         controller_.Update( gui::SoundEvent( 0, "indirectexplosive", simulation_.GetCurrentTick() ) ); break;
-            case sword::StartFireEffect::neutralization:    controller_.Update( gui::SoundEvent( 0, "indirecteffect", simulation_.GetCurrentTick() ) ); break;
+            case sword::StartFireEffect::smoke:             controller_.Update( gui::SoundEvent( 0, "indirectsmoke" ) ); break;
+            case sword::StartFireEffect::light:             controller_.Update( gui::SoundEvent( 0, "indirectillumination" ) ); break;
+            case sword::StartFireEffect::explosion:         controller_.Update( gui::SoundEvent( 0, "indirectexplosive" ) ); break;
+            case sword::StartFireEffect::neutralization:    controller_.Update( gui::SoundEvent( 0, "indirecteffect" ) ); break;
         default:
             ;
         }

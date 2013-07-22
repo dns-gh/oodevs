@@ -38,6 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DirectFire( const sword::StartUnitFire& message,
+                         kernel::Controller& controller,
                          const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver,
                          const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populationResolver,
                          unsigned long entityId );
@@ -55,6 +56,7 @@ public:
     unsigned int id_;
     geometry::Point2f position_;
     bool isTarget_;
+    kernel::Controller& controller_;
     //@}
 };
 

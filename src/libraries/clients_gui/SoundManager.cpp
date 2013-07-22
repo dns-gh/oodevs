@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "SoundManager.h"
+#include "moc_SoundManager.cpp"
 #include "tools/GeneralConfig.h"
 
 #pragma warning( push, 0 )
@@ -43,6 +44,21 @@ SoundManager::~SoundManager()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SoundManager::PauseAllChannels
+// Created: NPT 2013-07-22
+// -----------------------------------------------------------------------------
+void SoundManager::PlayPauseAllChannels( bool play )
+{
+    for( auto it = medias_.begin(); it != medias_.end(); ++it )
+    {
+        if( it->second && play )
+            it->second->play();
+        if( it->second && !play )
+            it->second->pause();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: SoundManager::PlaySound
 // Created: NPT 2013-07-03
 // -----------------------------------------------------------------------------
@@ -56,7 +72,7 @@ void SoundManager::PlaySound( const std::string& soundName )
         return;
     if( !medias_[ soundName ] )
         medias_[ soundName ] = new Phonon::MediaObject();
-    if( medias_[ soundName ]->remainingTime() <= 0 )
+    if( !IsPlaying( soundName ) )
     {
         medias_[ soundName ]->setCurrentSource( Phonon::MediaSource( currentSound_.Normalize().ToUTF8().c_str() ) );
         Phonon::AudioOutput* audio = new Phonon::AudioOutput( Phonon::MusicCategory );
@@ -68,14 +84,24 @@ void SoundManager::PlaySound( const std::string& soundName )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SoundManager::PlayLoopSound
+// Created: NPT 2013-07-22
+// -----------------------------------------------------------------------------
+void SoundManager::PlayLoopSound( const std::string& soundName )
+{
+    PlaySound( soundName );
+    connect( medias_[ soundName ], SIGNAL( finished() ), SLOT( ReplaySound() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SoundManager::SetVolume
 // Created: NPT 2013-07-05
 // -----------------------------------------------------------------------------
-void SoundManager::SetVolume( const std::string& canal, double value )
+void SoundManager::SetVolume( const std::string& channel, double value )
 {
-    if( canals_[ canal ] )
-        canals_[ canal ]->setVolume( value );
-    volume_[ canal ] = value;
+    if( canals_[ channel ] )
+        canals_[ channel ]->setVolume( value );
+    volume_[ channel ] = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,4 +127,47 @@ bool SoundManager::FindFile( const tools::Path& path, const std::string& name )
         return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SoundManager::IsPlaying
+// Created: NPT 2013-07-22
+// -----------------------------------------------------------------------------
+bool SoundManager::IsPlaying( const std::string& channel )
+{
+    return medias_[ channel ] && 
+        ( medias_[ channel ]->state() == Phonon::PlayingState ||
+          medias_[ channel ]->state() == Phonon::BufferingState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SoundManager::StopSound
+// Created: NPT 2013-07-22
+// -----------------------------------------------------------------------------
+void SoundManager::StopSound( const std::string& channel )
+{
+    connect( medias_[ channel ], SIGNAL( finished() ), SLOT( KillCurrentMediaObject() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SoundManager::ReplaySound
+// Created: NPT 2013-07-22
+// -----------------------------------------------------------------------------
+void SoundManager::ReplaySound()
+{
+    if( Phonon::MediaObject* mediaObject = dynamic_cast< Phonon::MediaObject* >( QObject::sender() ) )
+    {
+        mediaObject->stop();
+        mediaObject->play();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SoundManager::KillCurrentMediaObject
+// Created: NPT 2013-07-22
+// -----------------------------------------------------------------------------
+void SoundManager::KillCurrentMediaObject()
+{
+    if( Phonon::MediaObject* mediaObject = dynamic_cast< Phonon::MediaObject* >( QObject::sender() ) )
+        mediaObject->stop();
 }

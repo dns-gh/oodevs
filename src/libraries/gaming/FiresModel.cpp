@@ -23,12 +23,10 @@ using namespace kernel;
 // Name: FiresModel constructor
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-FiresModel::FiresModel( const tools::Resolver_ABC< Agent_ABC >& agents, const tools::Resolver_ABC< PopulationPart_ABC >& populations, kernel::Profile_ABC& profile, const Simulation& simulation, kernel::Controllers& controllers )
+FiresModel::FiresModel( const tools::Resolver_ABC< Agent_ABC >& agents, const tools::Resolver_ABC< PopulationPart_ABC >& populations, kernel::Profile_ABC& profile )
     : agents_( agents )
     , populations_( populations )
     , profile_( profile )
-    , simulation_( simulation )
-    , controllers_( controllers )
 {
     // NOTHING
 }
@@ -60,8 +58,6 @@ void FiresModel::AddFire( const sword::StartUnitFire& message )
 {
     if( firers_.find( message.fire().id() ) == firers_.end() )
         firers_[ message.fire().id() ] = message.firing_unit().id();
-    const kernel::Entity_ABC* firing = FindEntity( message.firing_unit().id() );
-    controllers_.controller_.Update( gui::SoundEvent( firing, "directfire", simulation_.GetCurrentTick() ) );
     AddTarget( message );
 }
 
@@ -73,8 +69,6 @@ void FiresModel::AddFire( const sword::StartCrowdFire& message )
 {
     if( firers_.find( message.fire().id() ) == firers_.end() )
         firers_[ message.fire().id() ] = message.firing_crowd().id();
-    const kernel::Entity_ABC* entity = FindEntity( message.firing_crowd().id() );
-    controllers_.controller_.Update( gui::SoundEvent( entity, "directfire", simulation_.GetCurrentTick() ) );
 }
 
 // -----------------------------------------------------------------------------

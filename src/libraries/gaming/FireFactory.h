@@ -16,6 +16,11 @@ namespace sword
     class StartCrowdFire;
 }
 
+namespace kernel
+{
+    class Controller;
+}
+
 class Fire_ABC;
 class Model;
 
@@ -30,7 +35,7 @@ class FireFactory
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FireFactory( Model& model );
+    explicit FireFactory( Model& model, kernel::Controller& controller );
     virtual ~FireFactory();
     //@}
 
@@ -51,6 +56,7 @@ private:
     //! @name Member data
     //@{
     Model& model_;
+    kernel::Controller& controller_;
     //@}
 };
 

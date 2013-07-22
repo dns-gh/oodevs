@@ -187,6 +187,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, kernel::Controllers&
 
     connect( pConnectButton_, SIGNAL( clicked() ), SLOT( SlotConnectDisconnect() ) );
     connect( pPlayButton_,    SIGNAL( clicked() ), SLOT( SlotPlayPause() ) );
+    connect( pPlayButton_,    SIGNAL( clicked() ), pParent, SLOT( PlayPauseSoundControl() ) );
     connect( pStepButton_,    SIGNAL( clicked() ), SLOT( SlotStep() ) );
     connect( pSpeedButton_,   SIGNAL( clicked() ), SLOT( SlotSpeedChange() ) );
     connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( SlotOnSpinBoxChange( int ) ) );

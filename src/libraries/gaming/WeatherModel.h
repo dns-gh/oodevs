@@ -42,7 +42,7 @@ class WeatherModel : public tools::Resolver< AmmoEffect >
 public:
     //! @name Constructors/Destructor
     //@{
-    WeatherModel( kernel::Controller& controller, Model& model, kernel::Profile_ABC& profile, const Simulation& simulation );
+    WeatherModel( kernel::Controller& controller, Model& model, kernel::Profile_ABC& profile );
     virtual ~WeatherModel();
     //@}
 
@@ -61,7 +61,6 @@ private:
     kernel::Controller& controller_;
     Model& model_;
     kernel::Profile_ABC& profile_;
-    const Simulation& simulation_;
     //@}
 };
 

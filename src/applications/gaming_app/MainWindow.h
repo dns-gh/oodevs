@@ -106,6 +106,7 @@ public slots:
     void OnAddRaster();
     void OnRasterProcessExited( int exitCode, const tools::Path& output );
     void OnGenerateSymbols();
+    void PlayPauseSoundControl( bool play );
     //@}
 
 signals:

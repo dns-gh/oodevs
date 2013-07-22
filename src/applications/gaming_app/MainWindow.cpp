@@ -653,3 +653,13 @@ void MainWindow::OnGenerateSymbols()
 {
     icons_->GenerateSymbols( model_.teams_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::PlayPauseSoundControl
+// Created: NPT 2013-07-22
+// -----------------------------------------------------------------------------
+void MainWindow::PlayPauseSoundControl( bool play )
+{
+    firePlayer_->PlayPauseSoundControl( play );
+}
+

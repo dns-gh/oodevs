@@ -14,6 +14,7 @@
 #include "FireFactory.h"
 #include "Fire_ABC.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/SoundEvent.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
 

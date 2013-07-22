@@ -1710,9 +1710,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticHelpers.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\SoundManager.h">
-      <Filter>Source Files\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichSlider.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -2129,6 +2126,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SignalAdapter.h">
       <Filter>Source Files</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SoundManager.h">
+      <Filter>Source Files\Sound</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

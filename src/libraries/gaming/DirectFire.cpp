@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "DirectFire.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/SoundEvent.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationPart_ABC.h"
@@ -24,10 +25,11 @@ using namespace kernel;
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< PopulationPart_ABC >& populationResolver, unsigned long entityId )
+DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller& controller, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< PopulationPart_ABC >& populationResolver, unsigned long entityId )
     : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
     , id_( message.fire().id() )
     , isTarget_( false )
+    , controller_( controller )
 {
     const kernel::Entity_ABC* target = 0;
 
@@ -59,6 +61,8 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolv
 
     if( position )
         position_ = position->GetPosition();
+
+    controller_.Update( gui::SoundEvent( agentResolver.Find( message.firing_unit().id() ), "directfire" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +71,7 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolv
 // -----------------------------------------------------------------------------
 DirectFire::~DirectFire()
 {
-    // NOTHING
+    controller_.Update( gui::SoundEvent( 0, "directfire", true ) );
 }
 
 // -----------------------------------------------------------------------------

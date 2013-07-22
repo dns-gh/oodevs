@@ -32,7 +32,7 @@ class SoundEvent : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             SoundEvent( const kernel::Entity_ABC* entity, const std::string& soundType, int simulationTick );
+             SoundEvent( const kernel::Entity_ABC* entity, const std::string& soundType, bool stopSound = false );
     virtual ~SoundEvent();
     //@}
 
@@ -40,7 +40,7 @@ public:
     //@{
     const kernel::Entity_ABC* GetEntity() const;
     const std::string& GetSoundType() const;
-    int GetSoundTick() const;
+    bool StopSound() const;
     //@}
 
 private:
@@ -53,7 +53,7 @@ private:
     //@{
     const kernel::Entity_ABC* entity_;
     const std::string& soundType_;
-    int simulationTick_;
+    bool stopSound_;
     //@}
 };
 
