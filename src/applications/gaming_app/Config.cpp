@@ -76,6 +76,7 @@ void Config::ReadSession()
             hasTimeline_ = true;
             xis     >> xml::start( "timeline" )
                         >> xml::attribute( "url", timelineUrl_ )
+                        >> xml::optional
                         >> xml::attribute( "debug-port", timelineDebugPort_ )
                     >> xml::end; // timeline
         }

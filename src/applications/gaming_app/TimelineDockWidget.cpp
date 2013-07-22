@@ -37,7 +37,9 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
 
     // Configuration
     cfg_->url = "http://" + config.GetTimelineUrl() + "/?lang=" + tools::readLang(); // $$$$ ABR 2013-05-24: Timeline server must keep this parameter when it automatically add session id
-    cfg_->debug_port = config.GetTimelineDebugPort();
+    int timelineDebugPort = config.GetTimelineDebugPort();
+    if( timelineDebugPort != 0 )
+        cfg_->debug_port = timelineDebugPort;
     cfg_->rundir = "cef";
     cfg_->binary = "cef/timeline_client.exe";
     cfg_->external = true;
