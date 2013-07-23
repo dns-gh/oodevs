@@ -29,7 +29,7 @@ public:
     typedef ADN_Type_Double ModifPhsInfos;
 
 //*****************************************************************************
-    class LauncherInfos : public ADN_RefWithName
+    class LauncherInfos : public ADN_RefWithLocalizedName
     {
     public:
                  LauncherInfos();

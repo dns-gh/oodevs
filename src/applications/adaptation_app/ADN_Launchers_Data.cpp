@@ -15,6 +15,7 @@
 #include "ADN_Project_Data.h"
 #include "ENT/ENT_Tr.h"
 #include <memory.h>
+#include "clients_kernel/XmlTranslations.h"
 
 //-----------------------------------------------------------------------------
 // Name: LauncherInfos::LauncherInfos
@@ -73,8 +74,7 @@ void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std:
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::LauncherInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::optional >> xml::attribute( "indirect-fire", bIndirect_ )
+    input >> xml::optional >> xml::attribute( "indirect-fire", bIndirect_ )
           >> xml::list( "ph-modifiers", *this, &ADN_Launchers_Data::LauncherInfos::ReadPosture );
 }
 
@@ -164,8 +164,10 @@ void ADN_Launchers_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::ReadLauncher( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<LauncherInfos> spNew( new LauncherInfos() );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "launchers", strName ) );
     vLaunchers_.AddItem( spNew.release() );
 }
 
