@@ -90,13 +90,10 @@ message KnowledgeMagicAction {
         //! Adds a new unit/object/population knowledge in the knowledge group.
         //! parameters[0], Identifier: The id of the real entity from which a 
         //!   knowledge should be created.
-        //! Can be the id of an agent, an object or a population.
-        //! parameters[1], Quantity: The perception level according internal
-        //!   enumeration:
-        //!   1 -> detected
-        //!   2 -> recognized
-        //!   3 -> identified
-        //!   This parameter can also be an Enumeration (deprecated)
+        //! Can be the id of an agent, an object, a population or a urban block.
+        //! parameters[1], Enumeration: The perception level according enum 
+        //!   UnitIdentification::Level as defined in simulation_client.proto
+        //!   This parameter can also be an Quantity (deprecated)
         add_knowledge       = 4;
     }
     required KnowledgeGroupId  knowledge_group = 1;

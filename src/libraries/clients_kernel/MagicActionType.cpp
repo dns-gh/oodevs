@@ -177,7 +177,10 @@ void MagicActionType::Initialize()
     else if( name == "knowledge_group_add_knowledge" )
     {
         CreateOrderParameter( "Entity", "identifier" );
-        CreateOrderParameter( "Perception", "quantity" );
+        OrderParameter* perception = CreateOrderParameter( "Perception", "enumeration" );
+        perception->AddValue( sword::UnitIdentification::detected, tools::ToString( eDetection ).toStdString() );
+        perception->AddValue( sword::UnitIdentification::recognized, tools::ToString( eRecognition ).toStdString() );
+        perception->AddValue( sword::UnitIdentification::identified, tools::ToString( eIdentification ).toStdString() );
     }
      else if( name == "automat_log_supply_push_flow" || name == "formation_log_supply_push_flow" )
     {

@@ -14,7 +14,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/Identifier.h"
 #include "actions/KnowledgeGroupMagicAction.h"
-#include "actions/Quantity.h"
+#include "actions/Enumeration.h"
 #include "gaming/StaticModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
@@ -24,15 +24,13 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-
-using namespace actions;
-using namespace kernel;
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeAddInGroupDialog constructor
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, Controllers& controllers, const Time_ABC& simulation, ActionsModel& actionsModel, const ::StaticModel& staticModel )
+KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel )
     : QDialog( pParent, 0, 0, Qt::WStyle_Customize | Qt::WStyle_NormalBorder | Qt::WStyle_Title | Qt::WStyle_SysMenu )
     , controllers_            ( controllers )
     , simulation_             ( simulation )
@@ -62,9 +60,9 @@ KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, Controll
     {
         grid->addWidget( new QLabel( tr( "Perception: " ), this ), 1, 0 );
         pPerceptionCombo_ = new QComboBox( this );
-        pPerceptionCombo_->insertItem( tools::ToString( eDetection ) );
-        pPerceptionCombo_->insertItem( tools::ToString( eRecognition ) );
-        pPerceptionCombo_->insertItem( tools::ToString( eIdentification ) );
+        pPerceptionCombo_->addItem( tools::ToString( kernel::eDetection ), sword::UnitIdentification::detected );
+        pPerceptionCombo_->addItem( tools::ToString( kernel::eRecognition ), sword::UnitIdentification::recognized );
+        pPerceptionCombo_->addItem( tools::ToString( kernel::eIdentification ), sword::UnitIdentification::identified );
         grid->addWidget( pPerceptionCombo_, 1, 1 );
     }
     {
@@ -92,7 +90,7 @@ KnowledgeAddInGroupDialog::~KnowledgeAddInGroupDialog()
 // Name: KnowledgeAddInGroupDialog::Show
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::Show( SafePointer< KnowledgeGroup_ABC > knowledgeGroup )
+void KnowledgeAddInGroupDialog::Show( kernel::SafePointer< kernel::KnowledgeGroup_ABC > knowledgeGroup )
 {
     show();
     selectedKnowledgeGroup_ = knowledgeGroup;
@@ -110,16 +108,16 @@ void KnowledgeAddInGroupDialog::OnAccept()
         return;
     }
 
-    E_PerceptionResult selectedPerception = static_cast< E_PerceptionResult > ( pPerceptionCombo_->currentItem() + 1 );
+    int selectedPerception = pPerceptionCombo_->itemData( pPerceptionCombo_->currentItem() ).toInt();
 
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_add_knowledge" );
-    KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedKnowledgeGroup_, actionType, controllers_.controller_, true );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_add_knowledge" );
+    actions::KnowledgeGroupMagicAction* action = new actions::KnowledgeGroupMagicAction( *selectedKnowledgeGroup_, actionType, controllers_.controller_, true );
     action->Rename( tools::translate( "gaming_app::Action", "Knowledge Group Add knowledge" ) );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( selectedKnowledgeGroup_, false ) );
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), pSelectedTarget_->GetId() ) );
-    action->AddParameter( *new parameters::Quantity( it.NextElement(), selectedPerception ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( selectedKnowledgeGroup_, false ) );
+    action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), pSelectedTarget_->GetId() ) );
+    action->AddParameter( *new actions::parameters::Enumeration( it.NextElement(), selectedPerception ) );
     action->RegisterAndPublish( actionsModel_ );
 
     Close();
@@ -157,7 +155,7 @@ void KnowledgeAddInGroupDialog::Close()
 // Name: KnowledgeAddInGroupDialog::NotifyContextMenu
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu )
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
 {
     InsertInMenu( entity, menu );
 }
@@ -166,7 +164,7 @@ void KnowledgeAddInGroupDialog::NotifyContextMenu( const Agent_ABC& entity, Cont
 // Name: KnowledgeAddInGroupDialog::NotifyContextMenu
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
 {
     InsertInMenu( entity, menu );
 }
@@ -184,7 +182,7 @@ void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::UrbanObject_ABC
 // Name: KnowledgeAddInGroupDialog::NotifyContextMenu
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu )
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
 {
     InsertInMenu( entity, menu );
 }
@@ -193,7 +191,7 @@ void KnowledgeAddInGroupDialog::NotifyContextMenu( const Population_ABC& entity,
 // Name: KnowledgeAddInGroupDialog::InsertInMenu
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
-void KnowledgeAddInGroupDialog::InsertInMenu( const Entity_ABC& entity, ContextMenu& menu )
+void KnowledgeAddInGroupDialog::InsertInMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     if( !isHidden() )
     {
