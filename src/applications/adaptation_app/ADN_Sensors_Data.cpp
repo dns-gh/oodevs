@@ -17,6 +17,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::LimitedToSensorsInfos::LimitedToSensorsInfos
@@ -887,8 +888,7 @@ void ADN_Sensors_Data::SensorInfos::ReadDisaster( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "detection-delay", detectionDelay_ )
+    input >> xml::attribute( "detection-delay", detectionDelay_ )
           >> xml::optional
           >> xml::attribute( "activation-on-request", activatedOnRequest_ )
           >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
@@ -1156,8 +1156,10 @@ void ADN_Sensors_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::ReadSensor( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<SensorInfos> spNew( new SensorInfos() );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "sensors", strName ) );
     vSensors_.AddItem( spNew.release() );
 }
 
@@ -1250,4 +1252,14 @@ void ADN_Sensors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
 {
     for( auto it = vSensors_.begin(); it != vSensors_.end(); ++it )
         ( *it )->CheckDatabaseValidity( checker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::GetRadars
+// Created: LGY 2013-07-23
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::LoadTranslations( const tools::Path& xmlFile )
+{
+    ADN_Data_ABC::LoadTranslations( xmlFile );
+    radarData_->LoadTranslations( xmlFile );
 }

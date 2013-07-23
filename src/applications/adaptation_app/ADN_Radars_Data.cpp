@@ -14,6 +14,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------
 // Name: DetectTimes::DetectTimes
@@ -111,7 +112,7 @@ void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::RadarInfos::RadarInfos()
-    : ADN_RefWithName( tools::translate( "Radars_Data", "New special sensor" ) )
+    : ADN_RefWithLocalizedName( tools::translate( "Radars_Data", "New special sensor" ) )
     , rRange_                  ( 0 )
     , bHasMaxHeight_           ( false )
     , rMaxHeight_              ( 0 )
@@ -174,8 +175,7 @@ ADN_Radars_Data::RadarInfos* ADN_Radars_Data::RadarInfos::CreateCopy()
 void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "type", type );
+    input >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToRadarType( type );
     if( nType_ == E_RadarType(-1 ) )
         throw MASA_EXCEPTION( tools::translate( "Radars_Data", "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).toStdString() );
@@ -321,8 +321,10 @@ void ADN_Radars_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Radars_Data::ReadRadar( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< RadarInfos > spNew( new RadarInfos() );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "radars", strName ) );
     vRadars_.AddItem( spNew.release() );
 }
 

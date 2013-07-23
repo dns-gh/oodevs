@@ -47,7 +47,7 @@ public:
     };
 
 //*****************************************************************************
-    class RadarInfos : public ADN_RefWithName
+    class RadarInfos : public ADN_RefWithLocalizedName
     {
     public:
                  RadarInfos();

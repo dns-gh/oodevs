@@ -47,7 +47,7 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
     Q3PopupMenu addSensorMenu( &popupMenu );
     Q3PopupMenu addRadarMenu( &popupMenu );
 
-    std::vector< const ADN_RefWithName* > menuItems;
+    std::vector< const ADN_RefWithLocalizedName* > menuItems;
 
     // Add the available sensors to the 'add sensor' submenu.
     ADN_Sensors_Data::T_SensorsInfos_Vector& vSensors = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos();
