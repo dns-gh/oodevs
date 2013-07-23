@@ -385,7 +385,7 @@ void ADN_AutomatLog_ListView::FillTotalItem( QStandardItem& item, const T_Catego
     {
         ADN_Rich_ListViewItem* pSubItem = new ADN_Rich_ListViewItem( &item, Qt::AlignCenter );
         pSubItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
-        pSubItem->setText( eColumnTarget            , const_cast< ADN_Type_String* >( &it->first->strName_ )->GetData().c_str() );
+        pSubItem->setText( eColumnTarget            , const_cast< ADN_Type_LocalizedString* >( &it->first->strName_ )->GetData().c_str() );
         pSubItem->setText( eColumnContenance        , QString::number( it->second->rNbr_ ) );
         pSubItem->setText( eColumnNormalizedConso   , QString::number( it->second->rNormalizedConsumption_ ) );
         pSubItem->setText( eColumnMoveConso         , QString::number( it->second->rMoveQuantityUsedPerHour_ ) );

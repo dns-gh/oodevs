@@ -16,6 +16,7 @@
 #include "ADN_AttritionInfos.h"
 #include "ENT/ENT_Tr.h"
 #include <memory>
+#include "clients_kernel/XmlTranslations.h"
 
 ADN_Resources_Data::ResourceInfos* gpDummyDotationInfos;
 tools::IdManager ADN_Resources_Data::idManager_;
@@ -689,14 +690,16 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::ResourceInfos::FindCategor
 // Name: ResourceInfos::ReadArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::ResourceInfos::ReadArchive( xml::xistream& input )
+void ADN_Resources_Data::ResourceInfos::ReadArchive( xml::xistream& input, kernel::XmlTranslations& xmlTranslations )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< CategoryInfo > spNew;
     if( strName_.GetData() == "munition" || strName_.GetData() == "explosif" || strName_.GetData() == "mine" )
         spNew.reset( new AmmoCategoryInfo( *this, input.attribute< unsigned int >( "id" ) ) );
     else
         spNew.reset( new CategoryInfo( *this, input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, xmlTranslations.GetTranslation( "resources", strName ) );
     categories_.AddItem( spNew.release() );
 }
 
@@ -790,7 +793,7 @@ void ADN_Resources_Data::ReadResource( xml::xistream& input )
     E_DotationFamily nResourceType = ENT_Tr::ConvertToDotationFamily( category );
     if( nResourceType == -1 )
         throw MASA_EXCEPTION( tr( "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).toStdString() );
-    resources_.at( nResourceType )->ReadArchive( input );
+    resources_.at( nResourceType )->ReadArchive( input, *translations_ );
 }
 
 // -----------------------------------------------------------------------------

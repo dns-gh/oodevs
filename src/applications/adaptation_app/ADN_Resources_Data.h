@@ -35,7 +35,7 @@ public:
     class ResourceInfos;
 
 // *****************************************************************************
-    class CategoryInfo : public ADN_RefWithName
+    class CategoryInfo : public ADN_RefWithLocalizedName
     {
 
     public:
@@ -195,7 +195,7 @@ public:
         T_CategoryInfos_Vector& GetCategories();
         CategoryInfo* FindCategory( const std::string& strName );
 
-        void ReadArchive( xml::xistream& );
+        void ReadArchive( xml::xistream&, kernel::XmlTranslations& );
         void WriteArchive( xml::xostream& ) const;
         void Initialize();
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
