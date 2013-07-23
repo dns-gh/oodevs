@@ -72,14 +72,16 @@ message KnowledgeMagicAction {
         //! Changes the knowledge group parent to a party
         //! parameters[0], PartyId: new parent identifier.
         //!   Must be the same as the knowledge group top party.
-        //!   Used when the group was under another group, to put it at top level.
+        //!   Used when the group was under another group, to put it at top
+        //!   level.
         update_party        = 1;
         //! Changes the knowledge group parent to another knowledge group.
         //! parameters[0], PartyId: the parent party.
         //!   Must be the same as the knowledge group top party.
         //! parameters[1], KnowledgeGroupId: the new parent knowledge group.
         //!   Must be from the same party.
-        //!   Used when the group was at top level, to put it under another group.
+        //!   Used when the group was at top level, to put it under another
+        //!   group.
         update_party_parent = 2;
         //! Changes the knowledge group type
         //! parameters[0], ACharStr: The new knowledge group type according to
