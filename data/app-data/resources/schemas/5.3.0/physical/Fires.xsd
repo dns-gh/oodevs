@@ -81,8 +81,9 @@
 						<xs:attribute name="decrease-rate" type="xs:nonNegativeInteger" use="required"/>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="translation-queries" type="T_TranslationQueries" minOccurs="0" maxOccurs="1"/>
 			</xs:sequence>
-		    <xs:attribute name="model-version" type="T_Version"/>
+			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

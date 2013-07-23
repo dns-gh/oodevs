@@ -12,6 +12,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos
@@ -231,8 +232,7 @@ ADN_FireClass_Data::FireClassInfos* ADN_FireClass_Data::FireClassInfos::CreateCo
 // -----------------------------------------------------------------------------
 void ADN_FireClass_Data::FireClassInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "initial-heat", initialHeat_ )
+    input >> xml::attribute( "initial-heat", initialHeat_ )
           >> xml::attribute( "max-heat", maxHeat_ )
           >> xml::attribute( "increase-rate", increaseRate_ )
           >> xml::attribute( "decrease-rate", decreaseRate_ )
@@ -407,8 +407,10 @@ void ADN_FireClass_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_FireClass_Data::ReadFireClass( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< FireClassInfos > spNew( new FireClassInfos() );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "fires", strName ) );
     fireClasses_.AddItem( spNew.release() );
 }
 

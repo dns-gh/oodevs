@@ -85,7 +85,7 @@ public:
 
     typedef ADN_Type_Vector_ABC< FireSurfaceInfos > T_FireSurfaceInfos_Vector;
 
-    class FireClassInfos : public ADN_RefWithName
+    class FireClassInfos : public ADN_RefWithLocalizedName
     {
     public:
         //! @name Constructors/Destructor
