@@ -123,8 +123,10 @@ void NodeController::GetAvailableLicences()
             FlexLmLicense license( *it );
             subTree.put( "date", license.GetExpirationDate() );
             subTree.put( "validity", "valid" );
+#if !defined(_DEBUG)
             if( *it == "sword-dispatcher" )
                 subTree.put( "connections", license.GetAuthorisedUsers() );
+#endif
         }
         catch( const FlexLmLicense::LicenseError& )
         {
