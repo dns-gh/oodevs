@@ -34,7 +34,9 @@ integration.startAnimateIt = function( object )
 end
 integration.stopAnimateIt = function( object )
     object.actionAnimation = DEC__StopAction( object.actionAnimation )
-    meKnowledge:RC( eRC_FinAnimationObjet, object.source )
+    if integration.animationLevel( object ) == 0 then
+        meKnowledge:RC( eRC_FinAnimationObjet, object.source )
+    end
     return false
 end
 
