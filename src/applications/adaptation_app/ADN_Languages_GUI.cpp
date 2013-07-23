@@ -82,21 +82,14 @@ QMenu* ADN_Languages_GUI::CreateMenu( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::FillMenu()
 {
-    const std::string currentLanguageShort = tools::readLang();
-    std::string currentLanguage = kernel::Language::default_;
-
     for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
-    {
         actions_.push_back( AddToMenu( it->GetName().c_str(), menu_, mapper_ ) );
-        if( it->GetShortName() == currentLanguageShort )
-            currentLanguage = it->GetName();
-    }
 
     menu_->addSeparator();
     QAction* editAction = menu_->addAction( tr( "Edit..." ), this, SLOT( OnEditLanguages() ) );
     editAction->setEnabled( false );
 
-    OnLanguageChanged( currentLanguage.c_str() );
+    OnLanguageChanged( currentLanguage_.c_str() );
 }
 
 // -----------------------------------------------------------------------------
