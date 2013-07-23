@@ -44,7 +44,7 @@ public:
 
 // *****************************************************************************
 
-    class BreakdownInfo : public ADN_RefWithName
+    class BreakdownInfo : public ADN_RefWithLocalizedName
     {
     public:
                  BreakdownInfo();

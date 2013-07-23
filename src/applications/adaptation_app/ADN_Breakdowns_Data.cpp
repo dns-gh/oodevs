@@ -15,6 +15,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_Breakdowns_Data::idManager_;
 
@@ -134,8 +135,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
 void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "type", type )
+    input >> xml::attribute( "type", type )
           >> xml::attribute( "average-repairing-time", repairTime_ )
           >> xml::attribute( "variance", repairTimeVariance_ );
     nType_ = ADN_Tr::ConvertToBreakdownType( type );
@@ -252,9 +252,11 @@ void ADN_Breakdowns_Data::ReadCategory( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_BreakdownNTI& nti )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     spNew->nNTI_ = nti;
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "breakdowns", strName ) );
     vBreakdowns_.AddItem( spNew.release() );
 }
 
