@@ -23,6 +23,7 @@ App::App( const Configuration& cfg, CefRefPtr< Engine > engine )
     /// separate from the browser context
     settings.single_process = true;
     settings.remote_debugging_port = cfg.debug_port;
+    settings.log_severity = LOGSEVERITY_DISABLE;
     const bool valid = CefInitialize( CefMainArgs( GetModuleHandle( 0 ) ), settings, this );
     if( !valid )
         throw std::runtime_error( "unable to initialize cef" );
