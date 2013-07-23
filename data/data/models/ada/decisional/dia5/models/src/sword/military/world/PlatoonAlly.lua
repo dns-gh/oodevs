@@ -58,16 +58,6 @@ masalife.brain.communication.setMessageTreatment( "obstacleByPassed",
         myself.blocked = nil
     end )
 
-masalife.brain.communication.setMessageTreatment( "beginPerceptionShared",
-    function( content, sender )
-        meKnowledge:enabledSharedPerception( content.friend )
-    end )
-    
-masalife.brain.communication.setMessageTreatment( "stopPerceptionShared",
-    function( content, sender )
-        meKnowledge:disabledSharedPerception( content.friend )
-    end )
-
 --The unit is caught
 masalife.brain.communication.setMessageTreatment( "capture",
     function( content, sender )
@@ -450,12 +440,6 @@ return
     end,
     sendDisponibleDrone = function( self, receiver, value )
        integration.SendMessage( "disponibleDrone", receiver, value, { type = "dynamic" } )
-    end,
-    sendBeginPerceptionShared = function( self, receiver, friend )
-        integration.SendMessage( "beginPerceptionShared", receiver, { friend = friend }, { type = "dynamic" } )
-    end,
-    sendStopPerceptionShared = function( self, receiver, friend )
-        integration.SendMessage( "stopPerceptionShared", receiver, { friend = friend }, { type = "dynamic" } )
     end,
     sendStartBuildingObstacle = function( self, receiver, unit, objectType, localisation )
         integration.SendMessage( "startBuildingObstacle", receiver, { unit = unit, objectType = objectType, localisation = localisation }, { type = "dynamic" } )

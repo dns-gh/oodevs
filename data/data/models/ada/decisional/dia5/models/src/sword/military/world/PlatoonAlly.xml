@@ -1,1548 +1,1533 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.world.PlatoonAlly" source-version="1.0.0" extends="sword.military.world.LocalizedElement">
-	<description>Une section interarme en milieu urbain.</description>
-	<realizes>sword.military.knowledge.decisional.Commanding</realizes>
-	<realizes>sword.military.knowledge.decisional.Supportable</realizes>
-	<realizes>sword.military.knowledge.decisional.Approachable</realizes>
-	<realizes>sword.military.knowledge.HumanFactors</realizes>
-	<realizes>sword.military.knowledge.decisional.Reinforcable</realizes>
-	<realizes>sword.military.knowledge.Relievable</realizes>
-	<realizes>sword.military.knowledge.ForceRatio</realizes>
-	<realizes>directia.core.model.RoleBody</realizes>
-	<realizes>sword.military.knowledge.Mountable</realizes>
-	<realizes>common.PhysicalBody</realizes>
-	<realizes>sword.military.knowledge.decisional.Destroyable</realizes>
-	<realizes>sword.military.knowledge.decisional.Neutralizable</realizes>
-	<realizes>sword.military.knowledge.Equipment</realizes>
-	<realizes>sword.military.knowledge.Askable</realizes>
-	<realizes>sword.military.knowledge.Motile</realizes>
-	<realizes>sword.military.knowledge.decisional.Transportable</realizes>
-	<methods>
-		<method name="computeMovementCapability">
-			<description>__INTEGRATION</description>
-			<argument name="position">
-				<type>
-					<class name="sword.military.knowledge.decisional.Positionable"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computePerceptionCapabilityFor">
-			<description>__INTEGRATION</description>
-			<argument name="entity">
-				<description>L'unité observant</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Observable"/>
-				</type>
-			</argument>
-			<argument name="position">
-				<description>L'élément position à partir duquel on veut observer l'élément</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Positionable"/>
-				</type>
-			</argument>
-			<return>
-				<description>Retourne la valeur de la perception d'un élément par l'unité entre 0 et 100</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeRelation">
-			<description>__INTEGRATION</description>
-			<argument name="objective">
-				<description>L'unité avec laquelle on veut calculer sa relation de diplomatie</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Observable"/>
-				</type>
-			</argument>
-			<return>
-				<description>Retourne la valeur de la relation entre 0 et 100</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="dischargeItIn" abstract="false">
-			<description>Action de déchargement d'un élément transporté, dans un conteneur.&#xD;
+    <description>Une section interarme en milieu urbain.</description>
+    <realizes>sword.military.knowledge.decisional.Commanding</realizes>
+    <realizes>sword.military.knowledge.decisional.Supportable</realizes>
+    <realizes>sword.military.knowledge.decisional.Approachable</realizes>
+    <realizes>sword.military.knowledge.HumanFactors</realizes>
+    <realizes>sword.military.knowledge.decisional.Reinforcable</realizes>
+    <realizes>sword.military.knowledge.Relievable</realizes>
+    <realizes>sword.military.knowledge.ForceRatio</realizes>
+    <realizes>directia.core.model.RoleBody</realizes>
+    <realizes>sword.military.knowledge.Mountable</realizes>
+    <realizes>common.PhysicalBody</realizes>
+    <realizes>sword.military.knowledge.decisional.Destroyable</realizes>
+    <realizes>sword.military.knowledge.decisional.Neutralizable</realizes>
+    <realizes>sword.military.knowledge.Equipment</realizes>
+    <realizes>sword.military.knowledge.Askable</realizes>
+    <realizes>sword.military.knowledge.Motile</realizes>
+    <realizes>sword.military.knowledge.decisional.Transportable</realizes>
+    <methods>
+        <method name="computeMovementCapability">
+            <description>__INTEGRATION</description>
+            <argument name="position">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computePerceptionCapabilityFor">
+            <description>__INTEGRATION</description>
+            <argument name="entity">
+                <description>L'unité observant</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Observable"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <description>L'élément position à partir duquel on veut observer l'élément</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+            <return>
+                <description>Retourne la valeur de la perception d'un élément par l'unité entre 0 et 100</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeRelation">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'unité avec laquelle on veut calculer sa relation de diplomatie</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Observable"/>
+                </type>
+            </argument>
+            <return>
+                <description>Retourne la valeur de la relation entre 0 et 100</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="dischargeItIn" abstract="false">
+            <description>Action de déchargement d'un élément transporté, dans un conteneur.&#xD;
             </description>
-			<argument name="object">
-				<type>
-					<class name="sword.military.knowledge.decisional.Loading"/>
-				</type>
-			</argument>
-		</method>
-		<method name="getProximity">
-			<description>__INTEGRATION</description>
-			<argument name="objective">
-				<description>L'élément objectif</description>
-				<type>
-					<class name="sword.military.world.Element"/>
-				</type>
-			</argument>
-		</method>
-		<method name="getDistanceTo">
-			<description>__INTEGRATION</description>
-			<argument name="entity">
-				<description>L'élément objectif</description>
-				<type>
-					<class name="sword.military.world.Element"/>
-				</type>
-			</argument>
-		</method>
-		<method name="getPerception">
-			<description>__INTEGRATION</description>
-			<return>
-				<description>Retourne la valeur de la perception de l'element par l'agent entre 0 et 100.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeDestructionCapability">
-			<description>__INTEGRATION</description>
-			<argument name="objective">
-				<description>L'unité sur laquelle l'agent souhaite tirer.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Destroyable"/>
-				</type>
-			</argument>
-			<argument name="position">
-				<description>L'élément position à partir de laquelle l'agent souhaite tirer.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Destroying"/>
-				</type>
-			</argument>
-			<return>
-				<description>Retourne une valeur entre 0 et 100.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeNeutralisationCapability">
-			<description>Retourne l'estimation de l'attrition pour la neutralisation d'un agent de type Unit
+            <argument name="object">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Loading"/>
+                </type>
+            </argument>
+        </method>
+        <method name="getProximity">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'élément objectif</description>
+                <type>
+                    <class name="sword.military.world.Element"/>
+                </type>
+            </argument>
+        </method>
+        <method name="getDistanceTo">
+            <description>__INTEGRATION</description>
+            <argument name="entity">
+                <description>L'élément objectif</description>
+                <type>
+                    <class name="sword.military.world.Element"/>
+                </type>
+            </argument>
+        </method>
+        <method name="getPerception">
+            <description>__INTEGRATION</description>
+            <return>
+                <description>Retourne la valeur de la perception de l'element par l'agent entre 0 et 100.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeDestructionCapability">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'unité sur laquelle l'agent souhaite tirer.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Destroyable"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <description>L'élément position à partir de laquelle l'agent souhaite tirer.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                </type>
+            </argument>
+            <return>
+                <description>Retourne une valeur entre 0 et 100.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeNeutralisationCapability">
+            <description>Retourne l'estimation de l'attrition pour la neutralisation d'un agent de type Unit
             sur un objectif target neutralisable à partir d'une position donnée.
             </description>
-			<argument name="target">
-				<description>La cible à neutraliser.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Neutralizable"/>
-				</type>
-			</argument>
-			<argument name="position">
-				<description>La position à partir de laquelle on veut tirer calculer l'efficacité pour la neutralization
+            <argument name="target">
+                <description>La cible à neutraliser.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Neutralizable"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <description>La position à partir de laquelle on veut tirer calculer l'efficacité pour la neutralization
                 </description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Neutralizing"/>
-				</type>
-			</argument>
-		</method>
-		<method name="computePerceptionCapability">
-			<description>__INTEGRATION</description>
-			<argument name="objective">
-				<description>L'élément à percevoir dont on veut calculer le niveau de perception</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Observable"/>
-				</type>
-			</argument>
-			<argument name="position">
-				<description>L'élément position à partir duquel on veut observer l'élément</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Observable"/>
-				</type>
-			</argument>
-			<return>
-				<description>Retourne la valeur de la perception d'un élément par l'unité entre 0 et 100</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeIdentificationCapability">
-			<description>__INTEGRATION</description>
-			<argument name="objective">
-				<description>L'objectif à identifier.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Identifiable"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeReconnaissanceCapability">
-			<description>__INTEGRATION</description>
-			<argument name="objective">
-				<type>
-					<class name="sword.military.knowledge.decisional.Reconnoitrable"/>
-				</type>
-			</argument>
-		</method>
-		<method name="computeBuildCapability">
-			<argument name="objective">
-				<type>
-					<class name="sword.military.knowledge.decisional.Buildable"/>
-				</type>
-			</argument>
-			<argument name="position">
-				<type>
-					<class name="sword.military.knowledge.decisional.Building"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="communicate">
-			<description>__INTEGRATION : pour communiquer avec une unité.
+                <type>
+                    <class name="sword.military.knowledge.decisional.Neutralizing"/>
+                </type>
+            </argument>
+        </method>
+        <method name="computePerceptionCapability">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'élément à percevoir dont on veut calculer le niveau de perception</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Observable"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <description>L'élément position à partir duquel on veut observer l'élément</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Observable"/>
+                </type>
+            </argument>
+            <return>
+                <description>Retourne la valeur de la perception d'un élément par l'unité entre 0 et 100</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeIdentificationCapability">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <description>L'objectif à identifier.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Identifiable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeReconnaissanceCapability">
+            <description>__INTEGRATION</description>
+            <argument name="objective">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
+                </type>
+            </argument>
+        </method>
+        <method name="computeBuildCapability">
+            <argument name="objective">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Building"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="communicate">
+            <description>__INTEGRATION : pour communiquer avec une unité.
         Ici une implémentation par défaut est proposée.
       </description>
-		</method>
-		<method name="sendForceRatio">
-			<description>__INTEGRATION : envoyer le rapport de force courant aux unités du même groupe de communication.
-            </description>
-		</method>
-		<method name="sendTaskToPion">
-			<description>__INTEGRATION : envoyer une mission d'un pion vers un autre pion du même groupe de communication.
-            </description>
-		</method>
-		<method name="askForMobilitySupport">
-			<description>__INTEGRATION : envoyer un object à gerer d'un pion vers un autre pion du même groupe de communication.
-            </description>
-		</method>
-		<method name="giveMobilitySupport">
-			<description>Informer le pion qu'il est appuyé par une mission d'appui mobilité
-            </description>
-		</method>
-		<method name="endMobilitySupport">
-			<description>Informer le pion qu'il n'est plus appuyé par une mission d'appui mobilité
-            </description>
-		</method>
-		<method name="sendReport">
-			<description>__INTEGRATION : envoyer un object à gerer d'un pion vers un autre pion du même groupe de communication.</description>
-			<argument name="report">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<argument name="state">
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendEndOfMission">
-			<description>__INTEGRATION : envoyer un object à gerer d'un pion vers un autre pion du même groupe de communication.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-		</method>
-		<method name="getPosition">
-			<description>Fonction d'intégration</description>
-		</method>
-		<method name="getMyPosition">
-			<description>Fonction d'intégration retournant un Point qui a pour coordonnées ma position.</description>
-			<return>
-				<type>
-					<class name="sword.military.world.ReachingArea"/>
-				</type>
-			</return>
-		</method>
-		<method name="getPositions">
-			<description>Fonction d'intégration retournant une liste de MT_Vector2D (ici la même que getPosition)</description>
-		</method>
-		<method name="computeProtectionCapability">
-			<description>__INTEGRATION
-Retourne la capacité de l'agent à utiliser cette position pour se protéger (c'est une position de couverture).
-La capacité vaut 0 si la position ne permet pas à l'agent de se protéger, et 100 sinon.
-
-Par défaut, toute position est une position potentielle de couverture.</description>
-			<argument name="objective">
-				<description>L'élément par rapport auquel se mettre à couvert.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Safeguardable"/>
-				</type>
-			</argument>
-			<argument name="position">
-				<description>La position que l'agent souhaite rejoindre.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Positionable"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="supportIt">
-			<description>Action de support d'un élément.</description>
-		</method>
-		<method name="coordinateWithIt">
-			<description>Action de coordination avec l'élément soutenu.</description>
-		</method>
-		<method name="supportPriority">
-			<description>Renvoie l'intérêt de l'élément pour être soutenu.</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="isSupported">
-			<description>_Renvoie vrai si l'entité est soutenu.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeSupportCapability">
-			<description>__INTEGRATION&#xD;
-Renvoie une valeur comprise entre 0 et 1 qui détermine l'efficacité physique potentielle de l'agent à soutenir une unité amie à partir d'une position. Une valeur proche de 1 signifie une efficacité maximale, une valeur de 0 signifie que la position n'est pas adaptée pour le soutien.</description>
-			<argument name="unitToSupport">
-				<type>
-					<class name="sword.military.knowledge.decisional.Supportable"/>
-				</type>
-			</argument>
-			<argument name="position">
-				<type>
-					<class name="sword.military.knowledge.decisional.Supporting"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="approachPriority">
-			<description>
-                Renvoie la priorité du déplacement vers cet élément.
-
-                Cette priorité est calculée en fonction de la distance séparant l'agent et l'élément à approcher. Cette
-                priorité peut également dépendre de la nature même de l'élément.
-            </description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="canApproachIt">
-			<description>Renvoie vrai si les conditions d'approche vers l'élément sont réunies.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="commandEfficiency">
-			<description>Retourne l'efficacité de la connaissance pour mener à bien une mission 
-à l'aide d'une de ses tâches.
-            </description>
-			<argument name="individualTask">
-				<description>La tâche de l'agent.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Commandable"/>
-				</type>
-			</argument>
-			<argument name="groupTask">
-				<description>La mission de groupe à résoudre.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Commandable"/>
-				</type>
-			</argument>
-			<argument name="normalization">
-				<description>La normalisation pour le calcul d'efficacité.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<argument name="objectives">
-				<description>Les objectifs de la tâche de groupe. Ils sont utilisés pour calculer l'efficacité d'un agent
-à résoudre sa tâche par rapport à des objectifs.</description>
-				<type>
-					<class name="directia.core.Object"/>
-				</type>
-			</argument>
-			<argument name="threats">
-				<description>La menace à laquelle est soumis l'agent. Permet de tenir compte des dégâts
-que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe.</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Safeguardable"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computePhysicalEfficiency">
-			<description>Retourne l'efficacité de la connaissance donnée par l'efficacité ADN
-            </description>
-			<argument name="effect">
-				<description>L'effet à réaliser.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computePhysicalEfficiencyForEffect">
-			<description>Retourne l'efficacité de la connaissance pour mener à bien un effet
-            </description>
-			<argument name="effect">
-				<description>L'effet à réaliser en prenant compte.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="hasDotation">
-			<description>Indique si l'unité a encore des dotations du type donnée</description>
-			<argument name="dotation">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="hasDotationForFiring">
-			<description>Indique si l'unité a assez de dotations pour effectuer le nombre d'itération</description>
-			<argument name="dotation">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="canUseDotation">
-			<description>Indique si l'unité peut utiliser des dotations du type donnée</description>
-			<argument name="dotation">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isPosted">
-			<description>Indique si l'unité est postée</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isParked">
-			<description>Indique si l'unité est en poste aménagé</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isContaminated">
-			<description>Indique si l'unité est contaminée</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isPoisoned">
-			<description>Indique si l'unité est empoisonnée</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isAgentNBC">
-			<description>Indique si l'unité est de type NBC</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="switchRadioOff">
-			<description>Couper les equipements afin d'opérer un silence radio</description>
-		</method>
-		<method name="switchRadioPartialOff">
-			<description>Couper les equipements afin d'opérer un silence radio partiel</description>
-		</method>
-		<method name="switchRadioOn">
-			<description>Reactiver les equipements radio</description>
-		</method>
-		<method name="switchRadarOff" abstract="false">
-			<description>Couper les equipements afin d'opérer un silence radar</description>
-		</method>
-		<method name="switchRadarOn" abstract="false">
-			<description>Activer les equipements radar afin d'effectuer une ecoute.</description>
-		</method>
-		<method name="equipNBCOutfit">
-			<description>Mettre les équipements NBC</description>
-		</method>
-		<method name="equipProtectionNBC">
-			<description>Mettre les équipements NBC sans avoir a utilisé le skill equipNBCOutfit qui est activé en permanence</description>
-		</method>
-		<method name="unequipProtectionNBC">
-			<description>Enlever les équipements NBC sans avoir a utiliser le skill equipNBCOutfit qui est activé en permanence</description>
-		</method>
-		<method name="alertNBC">
-			<description>Alerte NBC</description>
-		</method>
-		<method name="hasLauncherFor">
-			<description>indique si l'unité possède une arme pour utiliser la munition spécifiée</description>
-			<argument name="dotation">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="getRole">
-			<return>
-				<type>
-					<simple name="string"/>
-				</type>
-			</return>
-		</method>
-		<method name="becomeStealthy">
-			<description>Devenir furtif</description>
-		</method>
-		<method name="adoptCoverAttitude" abstract="false">
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="adoptSafetyAttitude" abstract="false">
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="stressLevel" abstract="false">
-			<description>Définit le niveau de stress d'une connaissance</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="moraleLevel" abstract="false">
-			<description>Définit le niveau de moral d'une connaissance</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="moveToIt">
-			<description>Action de se déplacer vers l'élément.
-
-                Cette action permet à l'agent de se déplacer de façon simple vers l'élément.
-          </description>
-			<argument name="pathType">
-				<description>Le paramètrage du calcul de l'itinéraire</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="moveToItIntegration" abstract="false">
-			<description>INTEGRATION de l'action de mouvement spécifique à un platoon</description>
-			<argument name="entity">
-				<description>L'entité à rejoindre</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
-				</type>
-			</argument>
-			<argument name="pathType">
-				<description>Le paramètrage du calcul de l'itinéraire</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-		</method>
-		<method name="destroyMoveToItIntegration" abstract="false">
-			<description>INTEGRATION de la destruction de l'action de mouvement spécifique à un platoon</description>
-			<argument name="entity">
-				<description>L'entité à rejoindre</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="observeIt" abstract="false">
-			<description>Action d'observation de l'élément.
-            Cette action permet à l'agent d'observer l'élément. Pour un individu, il peut s'agir d'une orientation simple des senseurs, sans se soucier 
-            de l'efficacité du senseur pour l'indentification de l'élément. Pour une entité de plus haut niveau (équipe ou groupe) il s'agit de 
-            l'effort d'observation vers l'élément (direction principale d'observation vers l'élément).
-            </description>
-		</method>
-		<method name="canReinforceIt" abstract="false">
-			<description>Renvoie vraie si les conditions de renforcement sont réunies.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="reinforceIt" abstract="false">
-			<description>Action de renforcement de l'élément.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="reinforcementLevel" abstract="false">
-			<description>Le niveau de renforcement de l'élément.</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="reinforcementPriority" abstract="false">
-			<description>Renvoie la priorité de l'élément de connaissance pour son renforcement.</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeEstimateAttritionOnMe">
-			<argument>
-				<type>
-					<class name="sword.military.world.Platoon"/>
-				</type>
-			</argument>
-		</method>
-		<method name="canRelieveIt" abstract="false">
-			<description>Renvoie vraie si les conditions de relève sont réunies.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="relieveIt" abstract="false">
-			<description>Action de relève de l'élément.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="getObstaclesOnAllyPath">
-			<description>Ensemble des objets sur les itinéraires alliés</description>
-			<return>
-				<type>
-					<list>
-						<class name="sword.military.world.Object"/>
-					</list>
-				</type>
-			</return>
-		</method>
-		<method name="RC">
-			<description>Action de rendre compte.</description>
-			<argument>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<argument>
-				<type>
-					<class name="directia.core.Object"/>
-				</type>
-			</argument>
-			<argument>
-				<type>
-					<class name="directia.core.Object"/>
-				</type>
-			</argument>
-		</method>
-		<method name="isPC" abstract="false">
-			<description>Renvoie vrai si l'agent est PC</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="destroyMoveToIt" abstract="false"/>
-		<method name="mount" abstract="false">
-			<description>Action d'embarquement de l'�l�ment.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="dismount" abstract="false">
-			<description>Action de d�barquement de l'�l�ment.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="canDismount" abstract="false">
-			<description>Renvoie vrai si l'�lement peut d�barquer.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="setHasMission">
-			<argument name="value">
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</argument>
-		</method>
-		<method name="canMount" abstract="false">
-			<description>Renvoie vrai si l'�l�ment peut embarquer.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="getForceRatio" abstract="false">
-			<description>Renvoie le rapport de force de l'unité</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="getNearestReachingElementFor" abstract="false">
-			<argument>
-				<type>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
-				</type>
-			</argument>
-		</method>
-		<method name="specificActionOnLCA" abstract="false">
-			<description>Renvoie le rapport de force de l'unité</description>
-		</method>
-		<method name="setFront" abstract="false">
-			<description>Détermine si la connaissance est un élément de front</description>
-		</method>
-		<method name="setSupport" abstract="false">
-			<description>Détermine si la connaissance est un élément de front</description>
-		</method>
-		<method name="canIlluminate" abstract="false">
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="getTasks" abstract="false">
-			<return>
-				<type>
-					<list>
-						<class name="common.Task"/>
-					</list>
-				</type>
-			</return>
-		</method>
-		<method name="canDestroyIt" abstract="false">
-			<description>Retourne vrai si les conditions sont réunies pour détruire la connaissance</description>
-			<return>
-				<description>L'état des conditions</description>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="canNeutralizeIt" abstract="false">
-			<description>Retourne vrai si les conditions sont réunies pour neutraliser la connaissance.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="destroyIt" abstract="false">
-			<description>Action physique de destruction.</description>
-			<return>
-				<description>FIXME</description>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="destructionLevel" abstract="false">
-			<description>Retourne le niveau de destruction de la connaissance.</description>
-			<return>
-				<description>La valeur du niveau de destruction</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="destructionPriority" abstract="false">
-			<description>Retourne la priorité de destruction d'un élément de connaissance</description>
-			<return>
-				<description>La valeur de la priorité.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="neutralizationPriority" abstract="false">
-			<description>La priorité de la connaissance pour la neutralisation</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="neutralizeIt" abstract="false">
-			<description>Action de neutralisation</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="operationalLevel" abstract="false">
-			<description>Le niveau opérationel de la connaissance</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="isWounded" abstract="false">
-			<description>Envoie vrai si l'unité est touchée</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="getDestructionState">
-			<description>Retourne le niveau de destruction physique courant de l'unité.</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="getOperationalCapacity">
-			<description>Retourne le niveau opérationnel courant de l'unité. Une unité non opérationnel est une unité qui ne possède plus de composantes majeures en état de marche. </description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="getEchelon">
-			<description>Retourne l'échelon d'un pion: eEtatEchelon_First,  eEtatEchelon_Second, eEtatEchelon_Scout, eEtatEchelon_None.</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="canLoadIt" abstract="false">
-			<description>Renvoie vrai si les conditions de chargement de l'élément sont réunies.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="canUnloadIt" abstract="false">
-			<description>Renvoie vrai si les conditions de déchargement sont réunies (distance par défaut mais la priorité peut dépendre de la mission etc.).</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="loadPriority" abstract="false">
-			<description>Renvoie la priorité de chargement de l'élément.
-            Cette priorité dépend de la distance séparant l'agent et l'élément à charger ou d'une autre piorité définie par l'utilisateur
-            (si l'élément à charger est un paramètre de mission par exemple).
-            </description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="unloadPriority" abstract="false">
-			<description>Renvoie la priorité pour le déchargement de l'élément.</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="loadIt" abstract="false">
-			<description>Action de charger l'élément.
-
-            Cette action permet à l'agent de charger l'élément. Il peut s'agir d'un objet ou d'un idividu etc.
-            </description>
-		</method>
-		<method name="unloadIt" abstract="false">
-			<description>Action de déchargement de l'élément.
-
-            Cette action permet à l'agent de décharger l'élément.
-            </description>
-		</method>
-		<method name="loadLevel" abstract="false">
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="getLoadlevel">
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeUnloadCapability">
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="computeLoadCapability">
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="interrogateIt" abstract="false">
-			<description>Interroger la cible.</description>
-			<return name="isInterrogated">
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="selfDestruct">
-			<description>Action de se suicider.</description>
-		</method>
-		<method name="adoptFiltrationPosture">
-			<description>Méthode spécifique au body de l'agent. Elle permet de metter un dispositif de filtrage en place pour contrôler les populations (barrage plus ou moins filtrant, fouille corporelle plus ou moins intense). L'implémentation de cette méthode fait appel:&#xD;
--  à la construction magique d'un checkpoint qui caractérise les différentes propriétés d'un tel dispositif. &#xD;
-- à la neutralisation des terroristes qui est un effet particulier appliqué sur les individus isolés (il ne s'agit la neutralisation d'un agent type section sur une autre) .</description>
-			<argument name="blockingStrength">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<argument name="bodySearchStrength">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<argument name="position">
-				<type>
-					<class name="sword.military.knowledge.decisional.Positionable"/>
-				</type>
-			</argument>
-		</method>
-		<method name="adoptAnimatingDecontaminatePosture">
-			<description>Méthode spécifique au body de l'agent. Elle permet de mettre un dispositif d'animation d'un plot de décontamination. L'implémentation fait appel à la construction magique d'un plot de décontamination s'il est absent.</description>
-			<argument name="position">
-				<type>
-					<class name="sword.military.knowledge.decisional.Positionable"/>
-				</type>
-			</argument>
-		</method>
-		<method name="buildObjectOnPosition">
-			<description>Méthode spécifique au body de l'agent. Elle permet de construire un objet du type en paramètre sur la position.</description>
-			<argument name="position">
-				<type>
-					<class name="sword.military.knowledge.decisional.Positionable"/>
-				</type>
-			</argument>
-			<argument name="typeObject">
-				<description>Type de l'objet ( par exemple eTypeObjectJammingArea ).</description>
-				<type>
-					<simple name="string"/>
-				</type>
-			</argument>
-		</method>
-		<method name="deploy">
-			<description>Deploy the unit on an objective</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isDeployed">
-			<description>True if the unit has been deployed on a given objective</description>
-			<return>
-				<description>Renvoie vrai si l'unité est deployée.</description>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="treatInjured">
-			<description>Activate treat injured people</description>
-		</method>
-		<method name="desactivateInjuredTreatment">
-			<description>Desactivate treat injured people</description>
-		</method>
-		<method name="hasRadar">
-			<description>_Renvoie vrai si l'entité a un écoute radar.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="modifyHumanWound">
-			<description>Modify human wound priorities</description>
-			<argument name="blessuresTraitees">
-				<type>
-					<class name="sword.military.world.HumanWound"/>
-				</type>
-			</argument>
-		</method>
-		<method name="escortIt">
-			<argument name="taskName">
-				<type>
-					<simple name="string"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="dropTroups">
-			<description>Dechargement des unites qui se faisaent transporter.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="transportTroups">
-			<description>Tranport des unités éjoutées dans la liste des élements à transporter via la méthode 'AddToTransport.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isTransportFinished">
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="addToTransport" abstract="false">
-			<description>Ajout de l'unite dans la file pour le transport.</description>
-		</method>
-		<method name="readyForBeingTransported" abstract="false">
-			<description>Retourne vrai si l'unite est prête à se faire transporter. L'implémentation de cette méthode retourne vrai si l'agent a reçu la mission se faire transporter (et que ce dernier est proche du point de RDV pour le transport).</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="canTransportIt" abstract="false">
-			<description>Retourne vrai si il est physiquement possible de transporter l'element.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="orientateSensor" abstract="false">
-			<description>INTEGRATION de l'action d'observation spécifique à un platoon</description>
-			<argument name="entity">
-				<description>L'entité à observer</description>
-				<type>
-					<class name="sword.military.knowledge.decisional.Observable"/>
-				</type>
-			</argument>
-		</method>
-		<method name="getForceRatioAgent" abstract="false">
-			<description>Renvoie le rapport de force de l'unité en paramètre: un nombre entre 0 et 100 (100 pour un rapport de force fort, et 0 pour un rapport de force faible)</description>
-			<argument name="pion">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="changeAutomate"/>
-		<method name="sortInjured">
-			<description>Action qui corespond a fai de tirer les blesses</description>
-		</method>
-		<method name="activateFunctions">
-			<description>Activation des fonctions spécifiques à l'unité (après déploiement)</description>
-		</method>
-		<method name="activateSensors">
-			<description>Activation des senseurs pour un pion RENS</description>
-		</method>
-		<method name="canTransportCrowd" abstract="false">
-			<description>Retourne vrai si il est physiquement possible de transporter une foule.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isTransportingCrowd">
-			<description>retourne vrai si l'agent transporte une foule.</description>
-		</method>
-		<method name="isSurrendered">
-			<description>retourne vrai si l'agent s'est rendu.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isEngaged">
-			<return name="engaged">
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="setEngaged">
-			<argument name="engaged">
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendGetRouteForEscorting">
-			<description>The unit has a route for escorting.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendConstructedObject">
-			<description>The automat.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendConstructedObjectInitialized">
-			<description>The automat.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendCanGiveRouteForEscorting">
-			<description>The unit can send a route for escorting.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendNeedRoute">
-			<description>The unit wait for a route for escorting.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendSpeedModulationHasToBeMax">
-			<description>The unit has to in the max speed.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendObstacleByPassed">
-			<description>The obstacle is byPassed so unit can move.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendObstacleToActivate">
-			<description>The maneuver obstacle is built so it need to be activated.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendDotationNeededForReinforcement">
-			<description>The agent doesn't have all dotation required.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendCapacityNeededForReinforcement">
-			<description>The agent doesn't have the capacity required.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendStopNeededReinforcement">
-			<description>The agent doesn't need reinforcement.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendReinforceGivenByUser">
-			<description>The agent received an order to reinforce by user.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendNoLongerNeedReinforcement">
-			<description>The agent doesn't need reinforcement anymore.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendRC">
-			<description>The unit sends message report to display.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendCriticalIntelligence">
-			<description>The unit sends message report to display.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendNoDisponibleDrone">
-			<description>The unit sends message report to display.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="sendDisponibleDrone">
-			<description>The unit sends the available drone.</description>
-			<argument name="receiver">
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</argument>
-		</method>
-		<method name="isCaught">
-			<description>Retourne vrai si capturé (pour un terroriste), retourne faux sinon</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="LendVSRAM">
-			<description>Action physique de prêter des ambulances.</description>
-			<argument name="pionRenforce">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-			<argument name="pionARenforcer">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-			<argument name="nbrAmbulances">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-		</method>
-		<method name="GetVSRAM">
-			<description>Action physique de prêter des ambulances.</description>
-			<argument name="pionRenforce">
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</argument>
-			<argument name="nbrAmbulances">
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-		</method>
-		<method name="setROE" abstract="false">
-			<description>Change l'état courant du ROE du pion </description>
-		</method>
-		<method name="getROE" abstract="false">
-			<description>Renvoi l'état courant du ROE du pion </description>
-		</method>
-		<method name="getAutomat">
-			<description>Retourne l'automate de l'unité</description>
-			<return>
-				<type>
-					<class name="sword.military.world.Company"/>
-				</type>
-			</return>
-		</method>
-		<method name="shareKnowledge">
-			<description>Transmet les informations connues a l'automate</description>
-			<argument name="delay">
-				<description>Temps mis pour transmettre l'information.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="shareInstantlyKnowledge">
-			<description>Transmet instantanément les informations connues a l'automate</description>
-			<argument name="delay">
-				<description>Temps mis pour transmettre l'information.</description>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</argument>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="activateDrone">
-			<description>Mettre en oeuvre les drones disponibles</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="startImmuniserNbc">
-			<description>Action d'immuniser un agent vis à vis d'un danger NRBC.</description>
-		</method>
-		<method name="stopImmuniserNbc">
-			<description>Action d'arrêter l'immunisation d'un agent vis à vis d'un danger NRBC.</description>
-		</method>
-		<method name="forcerImmunisationNbc">
-			<description>Action de forcer ou non l'immunisation vis à vis de la contamination NRBC notamment par contact entre agents.</description>
-			<argument name="immunize">
-				<description>Début ou fin d'immunisation.</description>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</argument>
-		</method>
-		<method name="getUnitPC">
-			<description>Retourne le PC du pion.</description>
-			<return>
-				<type>
-					<class name="sword.military.world.PlatoonAlly"/>
-				</type>
-			</return>
-		</method>
-		<method name="isUnderIndirectFire">
-			<description>Retourne vrai si le pion est prit à partie par un tir indirect.</description>
-		</method>
-		<method name="isJammed">
-			<description>Renvoie vrai si le pion est brouillé.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="isPCJammed">
-			<description>Renvoie vrai si le PC est brouillé.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="launchDREB">
-			<description>Envoie des fumigènes pour se protéger d'une ou plusieurs entités dangereuses.</description>
-		</method>
-		<method name="allowCarriers">
-			<description>Allow carriers without delay.</description>
-		</method>
-		<method name="retrieveCarriers">
-			<description>Retrieve carriers without delay.</description>
-		</method>
-		<method name="isMoving" abstract="false">
-			<description>Returns 'true' if this element is moving, 'false' otherwise.</description>
-		</method>
-		<method name="canBeFollowed" abstract="false">
-			<description>Retourne &quot;vrai&quot; si cet élément peut être suivi par l'agent, &quot;faux&quot; sinon. Cette implémentation retourne &quot;vrai&quot; si cet élément est opérationnel, ie: un élément</description>
-		</method>
-		<method name="getName" abstract="false">
-			<description>Returns the name of the motile element.</description>
-			<return>
-				<type>
-					<simple name="string"/>
-				</type>
-			</return>
-		</method>
-		<method name="isStealthy">
-			<description>Returns 'true' if this element is stealthy, 'false' otherwide.</description>
-			<return>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</return>
-		</method>
-		<method name="transportCrowdRoundTrip">
-			<description>Returns the number of shuttles to transport crowd</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="transportUnitRoundTrip">
-			<description>Returns the number of rshuttles to transport units</description>
-			<return>
-				<type>
-					<simple name="numeric"/>
-				</type>
-			</return>
-		</method>
-		<method name="loadElements">
-			<description>Load the given elements (magic action).</description>
-			<argument name="elements">
-				<type>
-					<list>
-						<class name="sword.military.knowledge.decisional.Loadable"/>
-					</list>
-				</type>
-			</argument>
-		</method>
-		<method name="unloadElements">
-			<description>To unload the given elements (magic action).</description>
-			<argument name="elements">
-				<type>
-					<list>
-						<class name="sword.military.knowledge.decisional.Loadable"/>
-					</list>
-				</type>
-			</argument>
-		</method>
-	    <method name="enabledSharedPerception">
-            <description>Begins sharing perceptions with friend.</description>
         </method>
-        <method name="disabledSharedPerception">
-            <description>Stops sharing knowledges to friend</description>
+        <method name="sendForceRatio">
+            <description>__INTEGRATION : envoyer le rapport de force courant aux unités du même groupe de communication.
+            </description>
         </method>
-        <method name="sendBeginPerceptionShared">
-            <description>Notifies to ally that the agent support, escort him, so to share knowledges</description>
+        <method name="sendTaskToPion">
+            <description>__INTEGRATION : envoyer une mission d'un pion vers un autre pion du même groupe de communication.
+            </description>
+        </method>
+        <method name="askForMobilitySupport">
+            <description>__INTEGRATION : envoyer un object à gerer d'un pion vers un autre pion du même groupe de communication.
+            </description>
+        </method>
+        <method name="giveMobilitySupport">
+            <description>Informer le pion qu'il est appuyé par une mission d'appui mobilité
+            </description>
+        </method>
+        <method name="endMobilitySupport">
+            <description>Informer le pion qu'il n'est plus appuyé par une mission d'appui mobilité
+            </description>
+        </method>
+        <method name="sendReport">
+            <description>__INTEGRATION : envoyer un object à gerer d'un pion vers un autre pion du même groupe de communication.</description>
+            <argument name="report">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <argument name="state">
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendEndOfMission">
+            <description>__INTEGRATION : envoyer un object à gerer d'un pion vers un autre pion du même groupe de communication.</description>
             <argument name="receiver">
                 <type>
                     <class name="sword.military.world.PlatoonAlly"/>
                 </type>
             </argument>
         </method>
-        <method name="sendStopPerceptionShared">
-            <argument name="receicer">
+        <method name="getPosition">
+            <description>Fonction d'intégration</description>
+        </method>
+        <method name="getMyPosition">
+            <description>Fonction d'intégration retournant un Point qui a pour coordonnées ma position.</description>
+            <return>
+                <type>
+                    <class name="sword.military.world.ReachingArea"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPositions">
+            <description>Fonction d'intégration retournant une liste de MT_Vector2D (ici la même que getPosition)</description>
+        </method>
+        <method name="computeProtectionCapability">
+            <description>__INTEGRATION
+Retourne la capacité de l'agent à utiliser cette position pour se protéger (c'est une position de couverture).
+La capacité vaut 0 si la position ne permet pas à l'agent de se protéger, et 100 sinon.
+
+Par défaut, toute position est une position potentielle de couverture.</description>
+            <argument name="objective">
+                <description>L'élément par rapport auquel se mettre à couvert.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Safeguardable"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <description>La position que l'agent souhaite rejoindre.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="supportIt">
+            <description>Action de support d'un élément.</description>
+        </method>
+        <method name="coordinateWithIt">
+            <description>Action de coordination avec l'élément soutenu.</description>
+        </method>
+        <method name="supportPriority">
+            <description>Renvoie l'intérêt de l'élément pour être soutenu.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="isSupported">
+            <description>_Renvoie vrai si l'entité est soutenu.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeSupportCapability">
+            <description>__INTEGRATION&#xD;
+Renvoie une valeur comprise entre 0 et 1 qui détermine l'efficacité physique potentielle de l'agent à soutenir une unité amie à partir d'une position. Une valeur proche de 1 signifie une efficacité maximale, une valeur de 0 signifie que la position n'est pas adaptée pour le soutien.</description>
+            <argument name="unitToSupport">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Supportable"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Supporting"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="approachPriority">
+            <description>
+                Renvoie la priorité du déplacement vers cet élément.
+
+                Cette priorité est calculée en fonction de la distance séparant l'agent et l'élément à approcher. Cette
+                priorité peut également dépendre de la nature même de l'élément.
+            </description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="canApproachIt">
+            <description>Renvoie vrai si les conditions d'approche vers l'élément sont réunies.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="commandEfficiency">
+            <description>Retourne l'efficacité de la connaissance pour mener à bien une mission 
+à l'aide d'une de ses tâches.
+            </description>
+            <argument name="individualTask">
+                <description>La tâche de l'agent.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Commandable"/>
+                </type>
+            </argument>
+            <argument name="groupTask">
+                <description>La mission de groupe à résoudre.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Commandable"/>
+                </type>
+            </argument>
+            <argument name="normalization">
+                <description>La normalisation pour le calcul d'efficacité.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <argument name="objectives">
+                <description>Les objectifs de la tâche de groupe. Ils sont utilisés pour calculer l'efficacité d'un agent
+à résoudre sa tâche par rapport à des objectifs.</description>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
+            <argument name="threats">
+                <description>La menace à laquelle est soumis l'agent. Permet de tenir compte des dégâts
+que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Safeguardable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computePhysicalEfficiency">
+            <description>Retourne l'efficacité de la connaissance donnée par l'efficacité ADN
+            </description>
+            <argument name="effect">
+                <description>L'effet à réaliser.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computePhysicalEfficiencyForEffect">
+            <description>Retourne l'efficacité de la connaissance pour mener à bien un effet
+            </description>
+            <argument name="effect">
+                <description>L'effet à réaliser en prenant compte.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="hasDotation">
+            <description>Indique si l'unité a encore des dotations du type donnée</description>
+            <argument name="dotation">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="hasDotationForFiring">
+            <description>Indique si l'unité a assez de dotations pour effectuer le nombre d'itération</description>
+            <argument name="dotation">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canUseDotation">
+            <description>Indique si l'unité peut utiliser des dotations du type donnée</description>
+            <argument name="dotation">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isPosted">
+            <description>Indique si l'unité est postée</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isParked">
+            <description>Indique si l'unité est en poste aménagé</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isContaminated">
+            <description>Indique si l'unité est contaminée</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isPoisoned">
+            <description>Indique si l'unité est empoisonnée</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isAgentNBC">
+            <description>Indique si l'unité est de type NBC</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="switchRadioOff">
+            <description>Couper les equipements afin d'opérer un silence radio</description>
+        </method>
+        <method name="switchRadioPartialOff">
+            <description>Couper les equipements afin d'opérer un silence radio partiel</description>
+        </method>
+        <method name="switchRadioOn">
+            <description>Reactiver les equipements radio</description>
+        </method>
+        <method name="switchRadarOff" abstract="false">
+            <description>Couper les equipements afin d'opérer un silence radar</description>
+        </method>
+        <method name="switchRadarOn" abstract="false">
+            <description>Activer les equipements radar afin d'effectuer une ecoute.</description>
+        </method>
+        <method name="equipNBCOutfit">
+            <description>Mettre les équipements NBC</description>
+        </method>
+        <method name="equipProtectionNBC">
+            <description>Mettre les équipements NBC sans avoir a utilisé le skill equipNBCOutfit qui est activé en permanence</description>
+        </method>
+        <method name="unequipProtectionNBC">
+            <description>Enlever les équipements NBC sans avoir a utiliser le skill equipNBCOutfit qui est activé en permanence</description>
+        </method>
+        <method name="alertNBC">
+            <description>Alerte NBC</description>
+        </method>
+        <method name="hasLauncherFor">
+            <description>indique si l'unité possède une arme pour utiliser la munition spécifiée</description>
+            <argument name="dotation">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getRole">
+            <return>
+                <type>
+                    <simple name="string"/>
+                </type>
+            </return>
+        </method>
+        <method name="becomeStealthy">
+            <description>Devenir furtif</description>
+        </method>
+        <method name="adoptCoverAttitude" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="adoptSafetyAttitude" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="stressLevel" abstract="false">
+            <description>Définit le niveau de stress d'une connaissance</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="moraleLevel" abstract="false">
+            <description>Définit le niveau de moral d'une connaissance</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="moveToIt">
+            <description>Action de se déplacer vers l'élément.
+
+                Cette action permet à l'agent de se déplacer de façon simple vers l'élément.
+          </description>
+            <argument name="pathType">
+                <description>Le paramètrage du calcul de l'itinéraire</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="moveToItIntegration" abstract="false">
+            <description>INTEGRATION de l'action de mouvement spécifique à un platoon</description>
+            <argument name="entity">
+                <description>L'entité à rejoindre</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </type>
+            </argument>
+            <argument name="pathType">
+                <description>Le paramètrage du calcul de l'itinéraire</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+        </method>
+        <method name="destroyMoveToItIntegration" abstract="false">
+            <description>INTEGRATION de la destruction de l'action de mouvement spécifique à un platoon</description>
+            <argument name="entity">
+                <description>L'entité à rejoindre</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="observeIt" abstract="false">
+            <description>Action d'observation de l'élément.
+            Cette action permet à l'agent d'observer l'élément. Pour un individu, il peut s'agir d'une orientation simple des senseurs, sans se soucier 
+            de l'efficacité du senseur pour l'indentification de l'élément. Pour une entité de plus haut niveau (équipe ou groupe) il s'agit de 
+            l'effort d'observation vers l'élément (direction principale d'observation vers l'élément).
+            </description>
+        </method>
+        <method name="canReinforceIt" abstract="false">
+            <description>Renvoie vraie si les conditions de renforcement sont réunies.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="reinforceIt" abstract="false">
+            <description>Action de renforcement de l'élément.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="reinforcementLevel" abstract="false">
+            <description>Le niveau de renforcement de l'élément.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="reinforcementPriority" abstract="false">
+            <description>Renvoie la priorité de l'élément de connaissance pour son renforcement.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeEstimateAttritionOnMe">
+            <argument>
+                <type>
+                    <class name="sword.military.world.Platoon"/>
+                </type>
+            </argument>
+        </method>
+        <method name="canRelieveIt" abstract="false">
+            <description>Renvoie vraie si les conditions de relève sont réunies.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="relieveIt" abstract="false">
+            <description>Action de relève de l'élément.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getObstaclesOnAllyPath">
+            <description>Ensemble des objets sur les itinéraires alliés</description>
+            <return>
+                <type>
+                    <list>
+                        <class name="sword.military.world.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="RC">
+            <description>Action de rendre compte.</description>
+            <argument>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <argument>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
+            <argument>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
+        </method>
+        <method name="isPC" abstract="false">
+            <description>Renvoie vrai si l'agent est PC</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="destroyMoveToIt" abstract="false"/>
+        <method name="mount" abstract="false">
+            <description>Action d'embarquement de l'�l�ment.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="dismount" abstract="false">
+            <description>Action de d�barquement de l'�l�ment.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canDismount" abstract="false">
+            <description>Renvoie vrai si l'�lement peut d�barquer.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="setHasMission">
+            <argument name="value">
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+        </method>
+        <method name="canMount" abstract="false">
+            <description>Renvoie vrai si l'�l�ment peut embarquer.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getForceRatio" abstract="false">
+            <description>Renvoie le rapport de force de l'unité</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getNearestReachingElementFor" abstract="false">
+            <argument>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </type>
+            </argument>
+        </method>
+        <method name="specificActionOnLCA" abstract="false">
+            <description>Renvoie le rapport de force de l'unité</description>
+        </method>
+        <method name="setFront" abstract="false">
+            <description>Détermine si la connaissance est un élément de front</description>
+        </method>
+        <method name="setSupport" abstract="false">
+            <description>Détermine si la connaissance est un élément de front</description>
+        </method>
+        <method name="canIlluminate" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getTasks" abstract="false">
+            <return>
+                <type>
+                    <list>
+                        <class name="common.Task"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="canDestroyIt" abstract="false">
+            <description>Retourne vrai si les conditions sont réunies pour détruire la connaissance</description>
+            <return>
+                <description>L'état des conditions</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canNeutralizeIt" abstract="false">
+            <description>Retourne vrai si les conditions sont réunies pour neutraliser la connaissance.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="destroyIt" abstract="false">
+            <description>Action physique de destruction.</description>
+            <return>
+                <description>FIXME</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="destructionLevel" abstract="false">
+            <description>Retourne le niveau de destruction de la connaissance.</description>
+            <return>
+                <description>La valeur du niveau de destruction</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="destructionPriority" abstract="false">
+            <description>Retourne la priorité de destruction d'un élément de connaissance</description>
+            <return>
+                <description>La valeur de la priorité.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="neutralizationPriority" abstract="false">
+            <description>La priorité de la connaissance pour la neutralisation</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="neutralizeIt" abstract="false">
+            <description>Action de neutralisation</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="operationalLevel" abstract="false">
+            <description>Le niveau opérationel de la connaissance</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="isWounded" abstract="false">
+            <description>Envoie vrai si l'unité est touchée</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getDestructionState">
+            <description>Retourne le niveau de destruction physique courant de l'unité.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getOperationalCapacity">
+            <description>Retourne le niveau opérationnel courant de l'unité. Une unité non opérationnel est une unité qui ne possède plus de composantes majeures en état de marche. </description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getEchelon">
+            <description>Retourne l'échelon d'un pion: eEtatEchelon_First,  eEtatEchelon_Second, eEtatEchelon_Scout, eEtatEchelon_None.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="canLoadIt" abstract="false">
+            <description>Renvoie vrai si les conditions de chargement de l'élément sont réunies.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canUnloadIt" abstract="false">
+            <description>Renvoie vrai si les conditions de déchargement sont réunies (distance par défaut mais la priorité peut dépendre de la mission etc.).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="loadPriority" abstract="false">
+            <description>Renvoie la priorité de chargement de l'élément.
+            Cette priorité dépend de la distance séparant l'agent et l'élément à charger ou d'une autre piorité définie par l'utilisateur
+            (si l'élément à charger est un paramètre de mission par exemple).
+            </description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="unloadPriority" abstract="false">
+            <description>Renvoie la priorité pour le déchargement de l'élément.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="loadIt" abstract="false">
+            <description>Action de charger l'élément.
+
+            Cette action permet à l'agent de charger l'élément. Il peut s'agir d'un objet ou d'un idividu etc.
+            </description>
+        </method>
+        <method name="unloadIt" abstract="false">
+            <description>Action de déchargement de l'élément.
+
+            Cette action permet à l'agent de décharger l'élément.
+            </description>
+        </method>
+        <method name="loadLevel" abstract="false">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getLoadlevel">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeUnloadCapability">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="computeLoadCapability">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="interrogateIt" abstract="false">
+            <description>Interroger la cible.</description>
+            <return name="isInterrogated">
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="selfDestruct">
+            <description>Action de se suicider.</description>
+        </method>
+        <method name="adoptFiltrationPosture">
+            <description>Méthode spécifique au body de l'agent. Elle permet de metter un dispositif de filtrage en place pour contrôler les populations (barrage plus ou moins filtrant, fouille corporelle plus ou moins intense). L'implémentation de cette méthode fait appel:&#xD;
+-  à la construction magique d'un checkpoint qui caractérise les différentes propriétés d'un tel dispositif. &#xD;
+- à la neutralisation des terroristes qui est un effet particulier appliqué sur les individus isolés (il ne s'agit la neutralisation d'un agent type section sur une autre) .</description>
+            <argument name="blockingStrength">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <argument name="bodySearchStrength">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <argument name="position">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+        </method>
+        <method name="adoptAnimatingDecontaminatePosture">
+            <description>Méthode spécifique au body de l'agent. Elle permet de mettre un dispositif d'animation d'un plot de décontamination. L'implémentation fait appel à la construction magique d'un plot de décontamination s'il est absent.</description>
+            <argument name="position">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+        </method>
+        <method name="buildObjectOnPosition">
+            <description>Méthode spécifique au body de l'agent. Elle permet de construire un objet du type en paramètre sur la position.</description>
+            <argument name="position">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+            <argument name="typeObject">
+                <description>Type de l'objet ( par exemple eTypeObjectJammingArea ).</description>
+                <type>
+                    <simple name="string"/>
+                </type>
+            </argument>
+        </method>
+        <method name="deploy">
+            <description>Deploy the unit on an objective</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isDeployed">
+            <description>True if the unit has been deployed on a given objective</description>
+            <return>
+                <description>Renvoie vrai si l'unité est deployée.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="treatInjured">
+            <description>Activate treat injured people</description>
+        </method>
+        <method name="desactivateInjuredTreatment">
+            <description>Desactivate treat injured people</description>
+        </method>
+        <method name="hasRadar">
+            <description>_Renvoie vrai si l'entité a un écoute radar.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="modifyHumanWound">
+            <description>Modify human wound priorities</description>
+            <argument name="blessuresTraitees">
+                <type>
+                    <class name="sword.military.world.HumanWound"/>
+                </type>
+            </argument>
+        </method>
+        <method name="escortIt">
+            <argument name="taskName">
+                <type>
+                    <simple name="string"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="dropTroups">
+            <description>Dechargement des unites qui se faisaent transporter.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="transportTroups">
+            <description>Tranport des unités éjoutées dans la liste des élements à transporter via la méthode 'AddToTransport.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isTransportFinished">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="addToTransport" abstract="false">
+            <description>Ajout de l'unite dans la file pour le transport.</description>
+        </method>
+        <method name="readyForBeingTransported" abstract="false">
+            <description>Retourne vrai si l'unite est prête à se faire transporter. L'implémentation de cette méthode retourne vrai si l'agent a reçu la mission se faire transporter (et que ce dernier est proche du point de RDV pour le transport).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canTransportIt" abstract="false">
+            <description>Retourne vrai si il est physiquement possible de transporter l'element.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="orientateSensor" abstract="false">
+            <description>INTEGRATION de l'action d'observation spécifique à un platoon</description>
+            <argument name="entity">
+                <description>L'entité à observer</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Observable"/>
+                </type>
+            </argument>
+        </method>
+        <method name="getForceRatioAgent" abstract="false">
+            <description>Renvoie le rapport de force de l'unité en paramètre: un nombre entre 0 et 100 (100 pour un rapport de force fort, et 0 pour un rapport de force faible)</description>
+            <argument name="pion">
                 <type>
                     <class name="sword.military.world.PlatoonAlly"/>
                 </type>
             </argument>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="changeAutomate"/>
+        <method name="sortInjured">
+            <description>Action qui corespond a fai de tirer les blesses</description>
+        </method>
+        <method name="activateFunctions">
+            <description>Activation des fonctions spécifiques à l'unité (après déploiement)</description>
+        </method>
+        <method name="activateSensors">
+            <description>Activation des senseurs pour un pion RENS</description>
+        </method>
+        <method name="canTransportCrowd" abstract="false">
+            <description>Retourne vrai si il est physiquement possible de transporter une foule.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isTransportingCrowd">
+            <description>retourne vrai si l'agent transporte une foule.</description>
+        </method>
+        <method name="isSurrendered">
+            <description>retourne vrai si l'agent s'est rendu.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isEngaged">
+            <return name="engaged">
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="setEngaged">
+            <argument name="engaged">
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendGetRouteForEscorting">
+            <description>The unit has a route for escorting.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendConstructedObject">
+            <description>The automat.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendConstructedObjectInitialized">
+            <description>The automat.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendCanGiveRouteForEscorting">
+            <description>The unit can send a route for escorting.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendNeedRoute">
+            <description>The unit wait for a route for escorting.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendSpeedModulationHasToBeMax">
+            <description>The unit has to in the max speed.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendObstacleByPassed">
+            <description>The obstacle is byPassed so unit can move.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendObstacleToActivate">
+            <description>The maneuver obstacle is built so it need to be activated.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendDotationNeededForReinforcement">
+            <description>The agent doesn't have all dotation required.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendCapacityNeededForReinforcement">
+            <description>The agent doesn't have the capacity required.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendStopNeededReinforcement">
+            <description>The agent doesn't need reinforcement.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendReinforceGivenByUser">
+            <description>The agent received an order to reinforce by user.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendNoLongerNeedReinforcement">
+            <description>The agent doesn't need reinforcement anymore.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendRC">
+            <description>The unit sends message report to display.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendCriticalIntelligence">
+            <description>The unit sends message report to display.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendNoDisponibleDrone">
+            <description>The unit sends message report to display.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendDisponibleDrone">
+            <description>The unit sends the available drone.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
+        <method name="isCaught">
+            <description>Retourne vrai si capturé (pour un terroriste), retourne faux sinon</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="LendVSRAM">
+            <description>Action physique de prêter des ambulances.</description>
+            <argument name="pionRenforce">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+            <argument name="pionARenforcer">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+            <argument name="nbrAmbulances">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+        </method>
+        <method name="GetVSRAM">
+            <description>Action physique de prêter des ambulances.</description>
+            <argument name="pionRenforce">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+            <argument name="nbrAmbulances">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+        </method>
+        <method name="setROE" abstract="false">
+            <description>Change l'état courant du ROE du pion </description>
+        </method>
+        <method name="getROE" abstract="false">
+            <description>Renvoi l'état courant du ROE du pion </description>
+        </method>
+        <method name="getAutomat">
+            <description>Retourne l'automate de l'unité</description>
+            <return>
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </return>
+        </method>
+        <method name="shareKnowledge">
+            <description>Transmet les informations connues a l'automate</description>
+            <argument name="delay">
+                <description>Temps mis pour transmettre l'information.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="shareInstantlyKnowledge">
+            <description>Transmet instantanément les informations connues a l'automate</description>
+            <argument name="delay">
+                <description>Temps mis pour transmettre l'information.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="activateDrone">
+            <description>Mettre en oeuvre les drones disponibles</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="startImmuniserNbc">
+            <description>Action d'immuniser un agent vis à vis d'un danger NRBC.</description>
+        </method>
+        <method name="stopImmuniserNbc">
+            <description>Action d'arrêter l'immunisation d'un agent vis à vis d'un danger NRBC.</description>
+        </method>
+        <method name="forcerImmunisationNbc">
+            <description>Action de forcer ou non l'immunisation vis à vis de la contamination NRBC notamment par contact entre agents.</description>
+            <argument name="immunize">
+                <description>Début ou fin d'immunisation.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+        </method>
+        <method name="getUnitPC">
+            <description>Retourne le PC du pion.</description>
+            <return>
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </return>
+        </method>
+        <method name="isUnderIndirectFire">
+            <description>Retourne vrai si le pion est prit à partie par un tir indirect.</description>
+        </method>
+        <method name="isJammed">
+            <description>Renvoie vrai si le pion est brouillé.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isPCJammed">
+            <description>Renvoie vrai si le PC est brouillé.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="launchDREB">
+            <description>Envoie des fumigènes pour se protéger d'une ou plusieurs entités dangereuses.</description>
+        </method>
+        <method name="allowCarriers">
+            <description>Allow carriers without delay.</description>
+        </method>
+        <method name="retrieveCarriers">
+            <description>Retrieve carriers without delay.</description>
+        </method>
+        <method name="isMoving" abstract="false">
+            <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
+        </method>
+        <method name="canBeFollowed" abstract="false">
+            <description>Retourne &quot;vrai&quot; si cet élément peut être suivi par l'agent, &quot;faux&quot; sinon. Cette implémentation retourne &quot;vrai&quot; si cet élément est opérationnel, ie: un élément</description>
+        </method>
+        <method name="getName" abstract="false">
+            <description>Returns the name of the motile element.</description>
+            <return>
+                <type>
+                    <simple name="string"/>
+                </type>
+            </return>
+        </method>
+        <method name="isStealthy">
+            <description>Returns 'true' if this element is stealthy, 'false' otherwide.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="transportCrowdRoundTrip">
+            <description>Returns the number of shuttles to transport crowd</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="transportUnitRoundTrip">
+            <description>Returns the number of rshuttles to transport units</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="loadElements">
+            <description>Load the given elements (magic action).</description>
+            <argument name="elements">
+                <type>
+                    <list>
+                        <class name="sword.military.knowledge.decisional.Loadable"/>
+                    </list>
+                </type>
+            </argument>
+        </method>
+        <method name="unloadElements">
+            <description>To unload the given elements (magic action).</description>
+            <argument name="elements">
+                <type>
+                    <list>
+                        <class name="sword.military.knowledge.decisional.Loadable"/>
+                    </list>
+                </type>
+            </argument>
+        </method>
+        <method name="enabledSharedPerception">
+            <description>Begins sharing perceptions with friend.</description>
+        </method>
+        <method name="disabledSharedPerception">
+            <description>Stops sharing knowledges to friend</description>
         </method>
         <method name="sendStartBuildingObstacle">
             <argument name="receiver">
@@ -1587,102 +1572,102 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
             </return>
         </method>
     </methods>
-	<predicates>
-		<predicate name="isCommandingFor">
-			<description>Détermine si la connaissance est capable d'être commandée.</description>
-		</predicate>
-		<predicate name="isDepressed"/>
-		<predicate name="isStressed"/>
-		<predicate name="isReinforced">
-			<description> Utilisée dans les requêtes ou dans les méthodes utilisées dans les comportements.
+    <predicates>
+        <predicate name="isCommandingFor">
+            <description>Détermine si la connaissance est capable d'être commandée.</description>
+        </predicate>
+        <predicate name="isDepressed"/>
+        <predicate name="isStressed"/>
+        <predicate name="isReinforced">
+            <description> Utilisée dans les requêtes ou dans les méthodes utilisées dans les comportements.
 
             Renvoie vrai si la connaissance est considérée comme renforcé à son potentiel maximum.
             </description>
-		</predicate>
-		<predicate name="isDismounted">
-			<description>Renvoie vrai si l'élément est débarqué.</description>
-		</predicate>
-		<predicate name="isMounted">
-			<description>Renvoie vrai si l'élément est embarqué.</description>
-		</predicate>
-		<predicate name="hasBadForceRatio">
-			<argument>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</argument>
-		</predicate>
-		<predicate name="hasGoodForceRatio">
-			<argument>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</argument>
-		</predicate>
-		<predicate name="hasNeutralForceRatio">
-			<argument>
-				<type>
-					<simple name="boolean"/>
-				</type>
-			</argument>
-		</predicate>
-		<predicate name="hasMission"/>
-		<predicate name="isSelfCommanding"/>
-		<predicate name="isDestroyed" abstract="false">
-			<description>Retourne vrai si la connaissance est détruite.</description>
-		</predicate>
-		<predicate name="isOperational" abstract="false">
-			<description>Retourne vrai si la connaissance est opérationnelle.</description>
-		</predicate>
-		<predicate name="isLoaded" abstract="false">
-			<description>Renvoie vrai si l'élément est chargé.</description>
-		</predicate>
-		<predicate name="fireForbiddenOnCrowd" abstract="false">
-			<description>Renvoie vrai si le ROE de l'unité est &quot;tir interdit face foule&quot;</description>
-		</predicate>
-		<predicate name="isInCrowd" abstract="false">
-			<description>Renvoie vrai si l'agent est dans une foule.</description>
-		</predicate>
-		<predicate name="WLRAllowedOnCrowd" abstract="false">
-			<description>Renvoie vrai si le ROE de l'unité est &quot;armes non letates autorisés&quot;</description>
-		</predicate>
-		<predicate name="fireAllowedOnCrowd" abstract="false">
-			<description>Renvoie vrai si le ROE de l'unité est &quot;armes letates autorisés&quot;</description>
-		</predicate>
-	</predicates>
-	<attributes>
-		<attribute name="tasks">
-			<type>
-				<list>
-					<class name="common.Task"/>
-				</list>
-			</type>
-		</attribute>
-		<attribute name="safetyAttitude">
-			<type>
-				<simple name="boolean"/>
-			</type>
-		</attribute>
-		<attribute name="engaged">
-			<type>
-				<simple name="boolean"/>
-			</type>
-		</attribute>
-		<attribute name="movementRetrograde">
-			<type>
-				<simple name="boolean"/>
-			</type>
-		</attribute>
-		<attribute name="currentTask">
-			<description>Mission courante du pion</description>
-			<type>
-				<class name="common.Task"/>
-			</type>
-		</attribute>
-		<attribute name="g_needReinforcement">
-			<type>
-				<simple name="boolean"/>
-			</type>
-		</attribute>
-	</attributes>
+        </predicate>
+        <predicate name="isDismounted">
+            <description>Renvoie vrai si l'élément est débarqué.</description>
+        </predicate>
+        <predicate name="isMounted">
+            <description>Renvoie vrai si l'élément est embarqué.</description>
+        </predicate>
+        <predicate name="hasBadForceRatio">
+            <argument>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+        </predicate>
+        <predicate name="hasGoodForceRatio">
+            <argument>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+        </predicate>
+        <predicate name="hasNeutralForceRatio">
+            <argument>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+        </predicate>
+        <predicate name="hasMission"/>
+        <predicate name="isSelfCommanding"/>
+        <predicate name="isDestroyed" abstract="false">
+            <description>Retourne vrai si la connaissance est détruite.</description>
+        </predicate>
+        <predicate name="isOperational" abstract="false">
+            <description>Retourne vrai si la connaissance est opérationnelle.</description>
+        </predicate>
+        <predicate name="isLoaded" abstract="false">
+            <description>Renvoie vrai si l'élément est chargé.</description>
+        </predicate>
+        <predicate name="fireForbiddenOnCrowd" abstract="false">
+            <description>Renvoie vrai si le ROE de l'unité est &quot;tir interdit face foule&quot;</description>
+        </predicate>
+        <predicate name="isInCrowd" abstract="false">
+            <description>Renvoie vrai si l'agent est dans une foule.</description>
+        </predicate>
+        <predicate name="WLRAllowedOnCrowd" abstract="false">
+            <description>Renvoie vrai si le ROE de l'unité est &quot;armes non letates autorisés&quot;</description>
+        </predicate>
+        <predicate name="fireAllowedOnCrowd" abstract="false">
+            <description>Renvoie vrai si le ROE de l'unité est &quot;armes letates autorisés&quot;</description>
+        </predicate>
+    </predicates>
+    <attributes>
+        <attribute name="tasks">
+            <type>
+                <list>
+                    <class name="common.Task"/>
+                </list>
+            </type>
+        </attribute>
+        <attribute name="safetyAttitude">
+            <type>
+                <simple name="boolean"/>
+            </type>
+        </attribute>
+        <attribute name="engaged">
+            <type>
+                <simple name="boolean"/>
+            </type>
+        </attribute>
+        <attribute name="movementRetrograde">
+            <type>
+                <simple name="boolean"/>
+            </type>
+        </attribute>
+        <attribute name="currentTask">
+            <description>Mission courante du pion</description>
+            <type>
+                <class name="common.Task"/>
+            </type>
+        </attribute>
+        <attribute name="g_needReinforcement">
+            <type>
+                <simple name="boolean"/>
+            </type>
+        </attribute>
+    </attributes>
 </class>

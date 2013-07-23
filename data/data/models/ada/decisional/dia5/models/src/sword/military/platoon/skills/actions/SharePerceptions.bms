@@ -8,8 +8,14 @@ rootnode
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
+    
+        if masalife.brain.core.class.isOfType( self.params.unitsToSupport[1], sword.military.world.Company) then
+            self.sharedUnits = integration.getEntitiesFromAutomatCommunication( self.params.unitsToSupport[1], "none", true)
+        else
+            self.sharedUnits = self.params.unitsToSupport
+        end
         local group = true
-        for _, supportUnit in pairs( self.params.unitsToSupport ) do
+        for _, supportUnit in pairs( self.sharedUnits ) do
             if group then
                 group = supportUnit:communicateWithKnowledge( )
             end
@@ -19,12 +25,11 @@ rootnode
             if not meKnowledge:isPartialRadioState() then
                 meKnowledge:switchEmitOnly()
             end
-            for _, supportUnit in pairs( self.params.unitsToSupport ) do
-                supportUnit:enabledSharedPerception( )
+            for _, supportUnit in pairs( self.sharedUnits ) do
                 if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
                     supportUnit:agentKnowledgeSharedPerception( ) 
                 else
-                    meKnowledge:sendBeginPerceptionShared( supportUnit, meKnowledge )
+                    supportUnit:enabledSharedPerception( )
                 end
             end
         end
@@ -38,16 +43,14 @@ rootnode
     -- End of behavior
     -- --------------------------------------------------------------------------------
     destroy = function( self )
-        integration.sendfireAvailable(false)
         if meKnowledge:isPartialRadioState() then -- fragorder could be change radio state if given during mission
             meKnowledge:disableEmitOnly()
         end
-        for _, supportUnit in pairs( self.params.unitsToSupport ) do
-            supportUnit:disabledSharedPerception()
+        for _, supportUnit in pairs( self.sharedUnits ) do
             if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
                 supportUnit:agentKnowledgeStopSharedPerception( ) 
             else
-                meKnowledge:sendStopPerceptionShared( supportUnit, meKnowledge )
+                 supportUnit:disabledSharedPerception()
             end
         end
     end,
