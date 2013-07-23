@@ -50,6 +50,9 @@
                     [[ if eq .url.pg "users" ]]
                     [[ template "users.ttml" . ]]
                     [[ end ]]
+                    [[ if eq .url.pg "logs" ]]
+                    [[ template "logs.ttml" . ]]
+                    [[ end ]]
                     [[ end ]]
                     [[ if eq .url.pg "about" ]]
                     [[ template "about.ttml" . ]]
@@ -70,6 +73,9 @@
         [[ end ]]
         [[ if eq .url.pg "users" ]]
         <script src="js/users.js"></script>
+        [[ end ]]
+        [[ if eq .url.pg "logs" ]]
+        <script src="js/logs.js"></script>
         [[ end ]]
         [[ end ]]
         [[ if eq .url.pg "about" ]]

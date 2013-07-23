@@ -15,6 +15,7 @@
 #include "UuidFactory_ABC.h"
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
+#include "runtime/Io.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
@@ -32,6 +33,10 @@
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include <boost/filesystem.hpp>
+
+#include <qstring.h>
+#include <qstringlist.h>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -357,6 +362,28 @@ bool Session::HasReplays() const
     return !replays_.empty();
 }
 
+namespace
+{
+    const std::vector< std::string > logFiles = boost::assign::list_of< std::string >
+        ( "Sim.log" )
+        ( "Dispatcher.log" )
+        ( "Messages.log" )
+        ( "Protobuf.log" )
+        ( "web_control_plugin.log" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::HasLogs
+// Created: NPT 2013-07-10
+// -----------------------------------------------------------------------------
+bool Session::HasLogs() const
+{
+    for( auto it = ::logFiles.begin(); it != ::logFiles.end(); ++it )
+        if( boost::filesystem::exists( Path( GetOutput() / *it ) ) )
+            return true;
+    return false;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Session::GetProperties
 // Created: BAX 2012-06-11
@@ -367,6 +394,7 @@ Tree Session::GetProperties( bool save ) const
     tree.put( "id", id_ );
     tree.put( "node", node_->GetId() );
     tree.put( "port", port_->Get() );
+    tree.put( "has_logs", HasLogs() );
     WriteConfig( tree, cfg_ );
     tree.put( "status", ConvertStatus( status_ ) );
     tree.put( "first_time", first_time_ );
@@ -1115,4 +1143,34 @@ void Session::NotifyNode()
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     node_->FilterConfig( cfg_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::DownloadLogFile
+// Created: NPT 2013-07-10
+// -----------------------------------------------------------------------------
+bool Session::DownloadLogFiles( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
+{
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
+    dst.SetName( logFile );
+    io::Writer_ABC& sink = dst.OpenWriter();
+    if( deps_.fs.Exists( GetOutput() / ( logFile ) ) )
+    {
+        QString content = deps_.fs.ReadFile( GetOutput() / logFile ).c_str();
+        if( limitSize == 0 ) //Take last 100 lines
+        {
+            QStringList list = content.split( "\n" );
+            if( list.count() > 100 )
+                list.erase( list.begin(), list.end() - 100 );
+            content = list.join( "\n" );
+            sink.Write( content.toStdString().c_str(), content.size() );
+        }
+        else // take size limit into account
+        {
+            size_t startFile = content.size() < limitSize ? 0 : content.size() - limitSize;
+            sink.Write( content.toStdString().c_str() + startFile, content.size() < limitSize ? content.size() : limitSize );
+        }
+        return true;
+    }
+    return false;
 }

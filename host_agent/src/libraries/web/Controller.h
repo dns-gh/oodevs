@@ -102,19 +102,21 @@ private:
 
     //! @name Session Methods
     //@{
-    void CreateSession  ( Reply_ABC& reply, Request_ABC& request );
-    void UpdateSession  ( Reply_ABC& reply, Request_ABC& request );
-    void ListSessions   ( Reply_ABC& reply, const Request_ABC& request );
-    void CountSessions  ( Reply_ABC& reply, const Request_ABC& request );
-    void GetSession     ( Reply_ABC& reply, const Request_ABC& request );
-    void DeleteSession  ( Reply_ABC& reply, const Request_ABC& request );
-    void StartSession   ( Reply_ABC& reply, const Request_ABC& request );
-    void StopSession    ( Reply_ABC& reply, const Request_ABC& request );
-    void PauseSession   ( Reply_ABC& reply, const Request_ABC& request );
-    void ArchiveSession ( Reply_ABC& reply, const Request_ABC& request );
-    void RestoreSession ( Reply_ABC& reply, const Request_ABC& request );
-    void DownloadSession( Reply_ABC& reply, const Request_ABC& request );
-    void ReplaySession  ( Reply_ABC& reply, const Request_ABC& request );
+    void CreateSession     ( Reply_ABC& reply, Request_ABC& request );
+    void UpdateSession     ( Reply_ABC& reply, Request_ABC& request );
+    void ListSessions      ( Reply_ABC& reply, const Request_ABC& request );
+    void CountSessions     ( Reply_ABC& reply, const Request_ABC& request );
+    void GetSession        ( Reply_ABC& reply, const Request_ABC& request );
+    void DeleteSession     ( Reply_ABC& reply, const Request_ABC& request );
+    void StartSession      ( Reply_ABC& reply, const Request_ABC& request );
+    void StopSession       ( Reply_ABC& reply, const Request_ABC& request );
+    void PauseSession      ( Reply_ABC& reply, const Request_ABC& request );
+    void ArchiveSession    ( Reply_ABC& reply, const Request_ABC& request );
+    void RestoreSession    ( Reply_ABC& reply, const Request_ABC& request );
+    void DownloadSession   ( Reply_ABC& reply, const Request_ABC& request );
+    void ReplaySession     ( Reply_ABC& reply, const Request_ABC& request );
+    void DownloadSessionLog( Reply_ABC& reply, Request_ABC& request );
+    void HasSessionLogs    ( Reply_ABC& reply, Request_ABC& request );
     //@}
 
     //! @name Exercise Methods

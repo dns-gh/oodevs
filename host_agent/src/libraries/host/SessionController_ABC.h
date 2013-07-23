@@ -11,6 +11,7 @@
 #define SESSION_CONTROLLER_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
 #include <vector>
@@ -39,6 +40,7 @@ namespace host
     struct Session_ABC;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
+    typedef boost::filesystem::path Path;
 }
 
 namespace host
@@ -68,21 +70,23 @@ struct SessionController_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual void        Reload    ( T_Predicate predicate ) = 0;
-    virtual T_Sessions  List      ( T_Predicate predicate, int offset, int limit ) const = 0;
-    virtual size_t      Count     ( T_Predicate predicate ) const = 0;
-    virtual T_Session   Get       ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual T_Session   Create    ( const Uuid& node, const web::session::Config& cfg, const std::string& exercise ) = 0;
-    virtual T_Session   Delete    ( const Uuid& node, const Uuid& id ) = 0;
-    virtual T_Session   Start     ( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const = 0;
-    virtual T_Session   Stop      ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual T_Session   Pause     ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual T_Session   Update    ( const Uuid& node, const Uuid& id, const Tree& cfg ) const = 0;
-    virtual T_Session   Archive   ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual T_Session   Restore   ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual void        Download  ( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const = 0;
-    virtual T_Session   Replay    ( const Uuid& node, const Uuid& id ) = 0;
-    virtual void        NotifyNode( const Uuid& node ) = 0;
+    virtual void        Reload     ( T_Predicate predicate ) = 0;
+    virtual T_Sessions  List       ( T_Predicate predicate, int offset, int limit ) const = 0;
+    virtual size_t      Count      ( T_Predicate predicate ) const = 0;
+    virtual T_Session   Get        ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual T_Session   Create     ( const Uuid& node, const web::session::Config& cfg, const std::string& exercise ) = 0;
+    virtual T_Session   Delete     ( const Uuid& node, const Uuid& id ) = 0;
+    virtual T_Session   Start      ( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const = 0;
+    virtual T_Session   Stop       ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual T_Session   Pause      ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual T_Session   Update     ( const Uuid& node, const Uuid& id, const Tree& cfg ) const = 0;
+    virtual T_Session   Archive    ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual T_Session   Restore    ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual void        Download   ( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const = 0;
+    virtual T_Session   Replay     ( const Uuid& node, const Uuid& id ) = 0;
+    virtual void        NotifyNode ( const Uuid& node ) = 0;
+    virtual void        DownloadLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const = 0;
+
     //@}
 };
 }

@@ -307,6 +307,7 @@ class SessionList extends Backbone.Collection
     model: SessionItem
     order: "name"
 
+
     sync: (method, model, options) =>
         if method == "read"
             return ajax "/api/list_sessions", node: uuid,
@@ -417,6 +418,8 @@ class SessionItemView extends Backbone.View
             duration = current.getTime() - start.getTime()
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
+        if( data.has_logs == "true" )
+            data.can_display_log = true;
         data.can_link = data.status != "playing" || data.start_time
         data.sim_license = true;
         data.replay_license = true;
