@@ -47,7 +47,7 @@ public:
 
     //! @name Types
     //@{
-    class ActiveProtectionsInfos : public ADN_RefWithName
+    class ActiveProtectionsInfos : public ADN_RefWithLocalizedName
     {
     public:
                  ActiveProtectionsInfos();
@@ -59,7 +59,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& xos );
         void ReadWeapon( xml::xistream& xis );
-        using ADN_RefWithName::CheckValidity;
+        using ADN_RefWithLocalizedName::CheckValidity;
         virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
 
     public:

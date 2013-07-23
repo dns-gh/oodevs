@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data constructor
@@ -90,8 +91,10 @@ void ADN_ActiveProtections_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ReadProtection( xml::xistream& xis )
 {
+    std::string strName = xis.attribute< std::string >( "name" );
     std::auto_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
     spNew->ReadArchive( xis );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "protections", strName ) );
     activeProtections_.AddItem( spNew.release() );
 }
 
@@ -206,8 +209,7 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& xis )
 {
-    xis >> xml::attribute( "name", strName_ )
-        >> xml::attribute( "coefficient", coefficient_ )
+    xis >> xml::attribute( "coefficient", coefficient_ )
         >> xml::attribute( "hard-kill", hardKill_ )
         >> xml::optional >> xml::start( "resource" )
             >> xml::attribute( "name", ptr_ )

@@ -4,10 +4,6 @@
 <context>
     <name>ADN_ActiveProtections_GUI</name>
     <message>
-        <source>Properties</source>
-        <translation>Properties</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Name</translation>
     </message>

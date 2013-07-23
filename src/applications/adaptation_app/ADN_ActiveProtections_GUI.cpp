@@ -46,12 +46,12 @@ void ADN_ActiveProtections_GUI::Build()
     T_ConnectorVector vConnectors( ADN_ActiveProtections_GUI::eNbrActiveProtectionsGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Properties
-    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Properties" ) );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pPropertiesGroup, "name", tr( "Name" ), vConnectors[eActiveProtectionName] );
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vConnectors[eActiveProtectionName] );
     nameField->ConnectWithRefValidity( data_.GetActiveProtectionsInfos() );
-    ADN_EditLine_Double* pEdit = builder.AddField< ADN_EditLine_Double >( pPropertiesGroup, "coefficient", tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
+    ADN_EditLine_Double* pEdit = builder.AddField< ADN_EditLine_Double >( pInfoHolder, "coefficient", tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
     pEdit->GetValidator().setTop( 1 );
-    builder.AddField< ADN_CheckBox >( pPropertiesGroup, "hard-kill", tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, "hard-kill", tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
 
     // dotations
     Q3GroupBox* pDotationGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Resource" ) );
@@ -76,7 +76,7 @@ void ADN_ActiveProtections_GUI::Build()
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
-    pContentLayout->addWidget( pPropertiesGroup );
+    pContentLayout->addWidget( pInfoHolder );
     pContentLayout->addWidget( pDotationGroup );
     pContentLayout->addWidget( pWeaponsGroup_ );
 
