@@ -67,8 +67,10 @@ void ADN_NBC_GUI::Build()
     // Specific parameter
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
+
+    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
     nameField->ConnectWithRefValidity( data_.GetNbcAgentVector() );
+
     // effect
     Q3HBox* effectGroup = new Q3HBox();
     effectGroup->setSpacing( 5 );

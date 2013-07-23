@@ -67,7 +67,7 @@ public:
         ADN_Type_Double rSpreadAngle_;
     };
 
-    class NbcAgentInfos : public ADN_RefWithName
+    class NbcAgentInfos : public ADN_RefWithLocalizedName
     {
     public:
                  NbcAgentInfos();

@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_NBC_Datas::idManager_;
 
@@ -263,8 +264,7 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::optional >> xml::attribute( "category", category_ );
+    input >> xml::optional >> xml::attribute( "category", category_ );
     liquidInfos_.parentName_ = strName_.GetData();
     input >> xml::list( "effects", *this, &ADN_NBC_Datas::NbcAgentInfos::ReadEffect );
     if( category_ == "" )
@@ -337,8 +337,10 @@ void ADN_NBC_Datas::Reset()
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::ReadAgent( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< NbcAgentInfos > spNew( new NbcAgentInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "nbc", strName ) );
     vNbcAgent_.AddItem( spNew.release() );
 }
 
