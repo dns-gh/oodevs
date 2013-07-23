@@ -25,7 +25,7 @@ class ADN_ResourceNetworks_Data : public ADN_Data_ABC
 {
 
 public:
-    class ResourceNetworkInfos : public ADN_RefWithName
+    class ResourceNetworkInfos : public ADN_RefWithLocalizedName
     {
     public:
         //! @name Constructors/Destructor

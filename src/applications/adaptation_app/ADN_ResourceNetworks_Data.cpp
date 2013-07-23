@@ -11,6 +11,7 @@
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Project_Data.h"
+#include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkInfos::ResourceNetworkInfos
@@ -54,8 +55,7 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::Reso
 void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream& input )
 {
     int id;
-    input >> xml::attribute( "name", strName_ )
-          >> xml::start( "resource" )
+    input >> xml::start( "resource" )
               >> xml::attribute( "id", id )
           >> xml::end
           >> xml::start( "color" )
@@ -173,8 +173,10 @@ void ADN_ResourceNetworks_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_ResourceNetworks_Data::ReadResourceNetwork( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< ResourceNetworkInfos > spNew( new ResourceNetworkInfos() );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "networks", strName ) );
     resourceNetworks_.AddItem( spNew.release() );
 }
 
