@@ -107,6 +107,7 @@ private:
     ObjectAttributeContainer attributes_;
     T_Optionals optionals_;
     std::string realObjectName_;
+    sword::Location_Geometry symbol_;
     //@}
 };
 

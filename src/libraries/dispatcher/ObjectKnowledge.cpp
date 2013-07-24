@@ -38,6 +38,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     , attributes_                    ( model )
     , realObjectTeam_                ( message.has_object_party() ? &model.Sides().Get( message.object_party().id() ) : 0 )
     , realObjectName_                ( message.has_object_name() ? message.object_name() : "" )
+    , symbol_                        ( message.has_symbol()? message.symbol().type() : sword::Location_Geometry_none )
 {
     optionals_.realObjectPresent = ( entityId_ != 0 );
     optionals_.relevancePresent = 0;
@@ -117,9 +118,11 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
     if( realObjectTeam_ )
         asn().mutable_object_party()->set_id( realObjectTeam_->GetId() );
     if( !realObjectName_.empty() )
-        *asn().mutable_object_name() = realObjectName_;
+        asn().set_object_name( realObjectName_ );
     if( optionals_.realObjectPresent )
         asn().mutable_object()->set_id( entityId_ );
+    if( symbol_ != sword::Location_Geometry_none )
+        asn().mutable_symbol()->set_type( symbol_ );
     asn().mutable_type()->set_id( nType_ );  // $$$$ _RC_ PHC 2010-07-07: ???
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation
     asn.Send( publisher );

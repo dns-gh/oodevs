@@ -2015,6 +2015,8 @@ message ObjectKnowledgeCreation {
     optional PartyId           object_party    = 7;
     //! The object name
     optional string            object_name     = 8;
+    //! The display symbol from location type geometry
+    optional Location          symbol          = 9;
 }
 
 /** @struct ObjectKnowledgeUpdate

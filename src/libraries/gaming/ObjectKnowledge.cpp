@@ -39,6 +39,7 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
     , entityId_      ( message.object().id() )
     , pTeam_         ( message.has_object_party() ? teamResolver.Find( message.object_party().id() ) : 0 )
     , objectName_    ( message.has_object_name() ? QString::fromStdString( message.object_name() ) : tools::translate( "Object", "Unknown object" ) )
+    , symbol_        ( message.has_symbol() ? type_->GetSymbol( tools::ToString( static_cast< E_LocationType >( message.symbol().type() ) ).toStdString()  ) : "" )
 {
     AddExtension( *this );
 
@@ -49,11 +50,14 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
         const Hierarchies* hierarchies = pRealObject->Retrieve< TacticalHierarchies >();
         if( ! hierarchies )
             hierarchies = pRealObject->Retrieve< CommunicationHierarchies >();
-        const ObjectPositions* positions = static_cast< ObjectPositions* >( pRealObject->Retrieve< Positions >() );
-        if( positions && type_ && positions->GetLocation() )
+        if( symbol_.empty() )
         {
-            const std::string locationType = positions->GetLocation()->GetTypeName();
-            symbol_ = type_->GetSymbol( locationType );
+            const ObjectPositions* positions = static_cast< ObjectPositions* >( pRealObject->Retrieve< Positions >() );
+            if( positions && type_ && positions->GetLocation() )
+            {
+                const std::string locationType = positions->GetLocation()->GetTypeName();
+                symbol_ = type_->GetSymbol( locationType );
+            }
         }
         const Entity_ABC& tmp = hierarchies ? hierarchies->GetTop() : *pRealObject;
         pTeam_ = dynamic_cast< const kernel::Team_ABC* >( &tmp );

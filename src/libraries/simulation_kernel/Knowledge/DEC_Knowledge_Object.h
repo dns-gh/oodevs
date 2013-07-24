@@ -238,6 +238,7 @@ private:
     bool bSkipPreparation_;
     T_AgentTypeSet reconByAgentTypes_;
     static MIL_IDManager idManager_;
+    TER_Localisation::E_LocationType  locationType_;
     //@}
 };
 

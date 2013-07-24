@@ -76,6 +76,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
     , bSkipPreparation_        ( false )
+    , locationType_            ( pObjectKnown_->GetLocalisation().GetType() )
 {
     if( sendCreation )
         SendMsgCreation();
@@ -103,6 +104,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& group, MIL
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
     , bSkipPreparation_        ( false )
+    , locationType_            ( pObjectKnown_->GetLocalisation().GetType() )
 {
     SendMsgCreation();
 }
@@ -128,6 +130,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
     , bSkipPreparation_        ( false )
+    , locationType_            ( TER_Localisation::eNone )
 {
     // NOTHING
 }
@@ -159,6 +162,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , bValid_                          ( copy.bValid_ )
     , bPerceptionDistanceHacked_       ( copy.bPerceptionDistanceHacked_ )
     , bSkipPreparation_                ( false )
+    , locationType_                    ( copy.locationType_ )
 {
     SendMsgCreation();
 }
@@ -189,6 +193,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , bValid_                          ( copy.bValid_ )
     , bPerceptionDistanceHacked_       ( copy.bPerceptionDistanceHacked_ )
     , bSkipPreparation_                ( false )
+    , locationType_                    ( copy.locationType_ )
 {
     SendMsgCreation();
     SendUpdateOnNetwork();
@@ -238,7 +243,8 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> rRelevance_
          >> bValid_
          >> bPerceptionDistanceHacked_
-         >> bSkipPreparation_;
+         >> bSkipPreparation_
+         >> locationType_;
 
     // récupération des noms des types
     std::size_t nSize;
@@ -289,7 +295,9 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
          << rRelevance_
          << bValid_
          << bPerceptionDistanceHacked_
-         << bSkipPreparation_;
+         << bSkipPreparation_
+         << locationType_;
+
     // On stocke les types selon leur nom
     std::size_t size = reconByAgentTypes_.size();
     for( auto it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
@@ -709,11 +717,13 @@ void DEC_Knowledge_Object::SendMsgCreation() const
     if( pOwnerArmy_ )
         asn().mutable_object_party()->set_id( pOwnerArmy_->GetID() );
     if( !name_.empty() )
-        *asn().mutable_object_name() = name_;
+        asn().set_object_name( name_ );
     if( groupId_ )
         asn().mutable_knowledge_group()->set_id( *groupId_ );
     asn().mutable_type()->set_id( pObjectType_->GetName().c_str() );
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
+    if( locationType_ != TER_Localisation::eNone )
+        asn().mutable_symbol()->set_type( static_cast< sword::Location_Geometry >( locationType_ ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
