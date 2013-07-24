@@ -91,7 +91,12 @@ void ADN_LocalizedType< T >::SetData( const T& data )
         emit DataChanged( ( void* ) &value );
     }
     else
-        SetKey( data );
+    {
+        if( data == val_ )
+            emit DataChanged( ( void* ) &data );
+        else
+            SetKey( data );
+    }
 }
 
 // -----------------------------------------------------------------------------
