@@ -112,9 +112,10 @@ void ADN_Weapons_Data_WeaponInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "launcher", ptrLauncher_ )
         >> xml::attribute( "munition", ptrAmmunition_ );
 
-    strName_ = ( ptrLauncher_.GetData() ? ptrLauncher_.GetData()->strName_.GetData() : "" )
-        + " & "
-        + ( ptrAmmunition_.GetData() ? ptrAmmunition_.GetData()->strName_.GetData() : "" );
+    connect( &ptrLauncher_.GetData()->strName_, SIGNAL( DataChanged(void*)), this, SLOT(OnNameChanged(void*) ));
+    connect( &ptrAmmunition_.GetData()->strName_, SIGNAL( DataChanged(void*)), this, SLOT(OnNameChanged(void*) ));
+    OnNameChanged(0);
+
     input >> xml::start( "burst" )
         >> xml::attribute( "munition", nRoundsPerBurst_ )
         >> xml::attribute( "duration", burstDuration_ )
@@ -219,4 +220,15 @@ void ADN_Weapons_Data_WeaponInfos::LauncherOrAmmunitionChanged()
         return;
     bDirect_ = ptrLauncher_.GetData()->bDirect_.GetData() && ptrAmmunition_.GetData()->bDirect_.GetData();
     bIndirect_ = ptrLauncher_.GetData()->bIndirect_.GetData() && ptrAmmunition_.GetData()->bIndirect_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data_WeaponInfos::OnNameChanged
+// Created: LGY 2013-07-24
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data_WeaponInfos::OnNameChanged(void*)
+{
+    strName_ = ( ptrLauncher_.GetData() ? ptrLauncher_.GetData()->strName_.GetData() : "" )
+        + " & "
+        + ( ptrAmmunition_.GetData() ? ptrAmmunition_.GetData()->strName_.GetData() : "" );
 }

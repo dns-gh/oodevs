@@ -36,7 +36,6 @@ public:
     int GetIndex( ADN_Weapons_Data_WeaponInfos& weapon );
     QStringList GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher );
     QStringList GetWeaponThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammunition );
-    void UpdateNames();
 
 private:
     void ReadWeapon( xml::xistream& input );

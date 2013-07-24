@@ -61,6 +61,7 @@ public:
 
     private slots:
         void LauncherOrAmmunitionChanged();
+        void OnNameChanged(void*);
 
 public:
     class Cmp : public std::unary_function< ADN_Weapons_Data_WeaponInfos* , bool >

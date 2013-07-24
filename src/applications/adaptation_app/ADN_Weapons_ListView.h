@@ -37,11 +37,6 @@ public:
 
     std::string GetToolTipFor( const QModelIndex& index );
     //@}
-
-    //! @name Event Handler
-    //@{
-    void showEvent( QShowEvent* pEvent );
-    //@}
 };
 
 #endif // __ADN_Weapons_ListView_h_

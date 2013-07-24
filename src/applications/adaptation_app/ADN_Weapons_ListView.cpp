@@ -120,13 +120,3 @@ std::string ADN_Weapons_ListView::GetToolTipFor( const QModelIndex& index )
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
                             ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Weapons_ListView::showEvent
-// Created: SBO 2005-09-15
-// -----------------------------------------------------------------------------
-void ADN_Weapons_ListView::showEvent( QShowEvent* /*pEvent*/ )
-{
-    // update weapon names
-    ADN_Workspace::GetWorkspace().GetWeapons().GetData().UpdateNames();
-}
