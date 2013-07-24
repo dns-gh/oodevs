@@ -95,8 +95,8 @@ func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan err
 	return quit
 }
 
-func (c *Client) CreateFormation(partyId uint32, parentId uint32,
-	name string, level int, logLevel string) (*Formation, error) {
+func (c *Client) CreateFormationTest(partyId uint32, parentId uint32,
+	params *sword.MissionParameters) (*Formation, error) {
 	tasker := &sword.Tasker{}
 	taskerId := uint32(0)
 	if parentId != 0 {
@@ -114,13 +114,9 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker: tasker,
-					Type:   sword.UnitMagicAction_formation_creation.Enum(),
-					Parameters: MakeParameters(
-						MakeFloat(float32(level)),
-						MakeString(name),
-						MakeString(logLevel),
-					),
+					Tasker:     tasker,
+					Type:       sword.UnitMagicAction_formation_creation.Enum(),
+					Parameters: params,
 				},
 			},
 		},
@@ -164,6 +160,15 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		return nil, mismatch("tasker id", taskerId, receivedTaskerId)
 	}
 	return created, nil
+}
+
+func (c *Client) CreateFormation(partyId uint32, parentId uint32,
+	name string, level int, logLevel string) (*Formation, error) {
+	params := MakeParameters(
+		MakeFloat(float32(level)),
+		MakeString(name),
+		MakeString(logLevel))
+	return c.CreateFormationTest(partyId, parentId, params)
 }
 
 func (c *Client) createUnit(automatId, unitType uint32, location Point,
