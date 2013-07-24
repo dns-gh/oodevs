@@ -11,7 +11,6 @@
 #define SESSION_CONTROLLER_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
 #include <vector>
@@ -40,7 +39,6 @@ namespace host
     struct Session_ABC;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
-    typedef boost::filesystem::path Path;
 }
 
 namespace host

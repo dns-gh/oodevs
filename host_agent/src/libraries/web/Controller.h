@@ -116,7 +116,6 @@ private:
     void DownloadSession   ( Reply_ABC& reply, const Request_ABC& request );
     void ReplaySession     ( Reply_ABC& reply, const Request_ABC& request );
     void DownloadSessionLog( Reply_ABC& reply, Request_ABC& request );
-    void HasSessionLogs    ( Reply_ABC& reply, Request_ABC& request );
     //@}
 
     //! @name Exercise Methods

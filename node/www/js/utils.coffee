@@ -19,7 +19,7 @@ load_url = (url) ->
     else
         window.location.href = url
 
-getFileContent = ( url ) ->
+get_file_content = ( url ) ->
     return $.ajax(
        url : url
        async: false

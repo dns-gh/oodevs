@@ -16,24 +16,25 @@ class LogView extends Backbone.View
         uri_params = parse_parameters()
         @session = uri_params[ "session" ]
         @log_name = window.location.hash
-        @log_name = @log_name.replace "#", ""
-        if( !@log_name )
+        @log_name = @log_name.substr(1);
+        if !@log_name.length
             @log_name = "Sim.log"
-        @log_list = []
-        @log_list.push { name:"sim", file:"Sim.log" }
-        @log_list.push { name:"dispatcher", file:"Dispatcher.log" }
-        @log_list.push { name:"messages", file:"Messages.log" }
-        @log_list.push { name:"web_control", file:"web_control_plugin.log" }
-        @log_list.push { name:"protobuf", file:"Protobuf.log" }
-        @download_log @log_name
+
+        ajax "/api/get_session", id: @session, (result) =>
+            @log_list = []
+            for k, v of result.logs
+                if convert_to_boolean v.log
+                    filename = k + ".log"
+                    @log_list.push name: k, file: filename
+            @download_log @log_name
 
     events:
-        "click .sim"        : "download_sim_log",
-        "click .messages"   : "download_messages_log",
-        "click .web_control": "download_web_control_plugin_log",
-        "click .protobuf"   : "download_protobuf_log",
-        "click .dispatcher" : "download_dispatcher_log"
-        "click .download"   : "download_full_log"
+        "click .Sim"                : "download_sim_log",
+        "click .Messages"           : "download_messages_log",
+        "click .web_control_plugin" : "download_web_control_plugin_log",
+        "click .Protobuf"           : "download_protobuf_log",
+        "click .Dispatcher"         : "download_dispatcher_log"
+        "click .download"           : "download_full_log"
 
     download_log: (filename)=>
         uri = get_url "/api/download_session_log?"
@@ -41,7 +42,7 @@ class LogView extends Backbone.View
         uri += "&limitsize=" + 0
         uri += "&node=" + uuid
         uri += "&id=" + @session
-        @log_content = getFileContent uri
+        @log_content = get_file_content uri
         @log_name = filename
         @render()
 
@@ -55,6 +56,8 @@ class LogView extends Backbone.View
 
     render: =>
         $(@el).empty()
+        if( !@log_list || !@log_list.length )
+            return
         for k, v in @log_list
             if k.file == @log_name
                 k.active = true

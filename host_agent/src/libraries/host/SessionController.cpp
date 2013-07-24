@@ -432,11 +432,11 @@ void SessionController::DownloadLog( const Uuid& node, const Uuid& id, web::Chun
 {
     try
     {
-        Dispatch( node, id, boost::bind( &Session_ABC::DownloadLogFiles, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ) ) );
+        Dispatch( node, id, boost::bind( &Session_ABC::DownloadLogFile, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ) ) );
     }
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[session] " << err.what();
-        LOG_WARN( log_ ) << "[session] Unable to download session logs" << id;
+        LOG_WARN( log_ ) << "[session] Unable to download session logs" << logFile;
     }
 }

@@ -373,15 +373,16 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::HasLogs
+// Name: Session::AvailableLogs
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-bool Session::HasLogs() const
+Tree Session::AvailableLogs() const
 {
+    Tree tree;
     for( auto it = ::logFiles.begin(); it != ::logFiles.end(); ++it )
-        if( boost::filesystem::exists( Path( GetOutput() / *it ) ) )
-            return true;
-    return false;
+        if( deps_.fs.Exists( GetOutput() / *it ) )
+            tree.put( *it, true );
+    return tree;
 }
 
 // -----------------------------------------------------------------------------
@@ -394,7 +395,7 @@ Tree Session::GetProperties( bool save ) const
     tree.put( "id", id_ );
     tree.put( "node", node_->GetId() );
     tree.put( "port", port_->Get() );
-    tree.put( "has_logs", HasLogs() );
+    tree.put_child( "logs", AvailableLogs() );
     WriteConfig( tree, cfg_ );
     tree.put( "status", ConvertStatus( status_ ) );
     tree.put( "first_time", first_time_ );
@@ -1149,28 +1150,27 @@ void Session::NotifyNode()
 // Name: Session::DownloadLogFile
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-bool Session::DownloadLogFiles( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
+bool Session::DownloadLogFile( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     dst.SetName( logFile );
     io::Writer_ABC& sink = dst.OpenWriter();
-    if( deps_.fs.Exists( GetOutput() / ( logFile ) ) )
+    if( !deps_.fs.Exists( GetOutput() / logFile ) )
+        return false;
+
+    QString content = deps_.fs.ReadFile( GetOutput() / logFile ).c_str();
+    if( limitSize == 0 ) //Take last 100 lines
     {
-        QString content = deps_.fs.ReadFile( GetOutput() / logFile ).c_str();
-        if( limitSize == 0 ) //Take last 100 lines
-        {
-            QStringList list = content.split( "\n" );
-            if( list.count() > 100 )
-                list.erase( list.begin(), list.end() - 100 );
-            content = list.join( "\n" );
-            sink.Write( content.toStdString().c_str(), content.size() );
-        }
-        else // take size limit into account
-        {
-            size_t startFile = content.size() < limitSize ? 0 : content.size() - limitSize;
-            sink.Write( content.toStdString().c_str() + startFile, content.size() < limitSize ? content.size() : limitSize );
-        }
-        return true;
+        QStringList list = content.split( "\n" );
+        if( list.count() > 100 )
+            list.erase( list.begin(), list.end() - 100 );
+        content = list.join( "\n" );
+        sink.Write( content.toStdString().c_str(), content.size() );
     }
-    return false;
+    else // take size limit into account
+    {
+        size_t startFile = content.size() < limitSize ? 0 : content.size() - limitSize;
+        sink.Write( content.toStdString().c_str() + startFile, content.size() < limitSize ? content.size() : limitSize );
+    }
+    return true;
 }

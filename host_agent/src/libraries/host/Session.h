@@ -148,7 +148,7 @@ public:
     virtual bool IsReplay() const;
     virtual Uuid GetReplayId() const;
     virtual bool HasReplays() const;
-    virtual bool HasLogs() const;
+    virtual Tree AvailableLogs() const;
     //@}
 
     //! @name Public methods
@@ -171,7 +171,7 @@ public:
     virtual void  AttachReplay( const Session_ABC& replay );
     virtual void  DetachReplay( const Session_ABC& replay );
     virtual void  NotifyNode();
-    virtual bool  DownloadLogFiles( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const;
+    virtual bool  DownloadLogFile( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const;
     //@}
 
     //! @name Typedef helpers
