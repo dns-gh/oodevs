@@ -160,7 +160,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , army_( source.army_ )
     , parent_( parent )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
-    , timeToDiffuse_( parent ? parent->GetType().GetKnowledgeCommunicationDelay() : 0 )
+    , timeToDiffuse_( 0 )
     , isActivated_( true )
     , hasBeenUpdated_( true )
     , isJammed_( true )
