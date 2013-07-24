@@ -677,6 +677,17 @@ func (model *Model) GetUrban(id uint32) *Urban {
 	return u
 }
 
+func (model *Model) GetUnitKnowledge(groupId, id uint32) *UnitKnowledge {
+	var k *UnitKnowledge
+	model.waitCommand(func(model *Model) {
+		group := model.data.FindKnowledgeGroup(groupId)
+		if group != nil {
+			k = group.UnitKnowledges[id]
+		}
+	})
+	return k
+}
+
 func (model *Model) GetTick() int32 {
 	tick := int32(0)
 	model.waitCommand(func(model *Model) {

@@ -1110,12 +1110,8 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 	var created *UnitKnowledge
 	handler := func(msg *sword.SimToClient_Content) error {
 
-		if reply := msg.GetUnitKnowledgeCreation(); reply != nil {
-			// Context should not be set on this
-			return ErrContinue
-		}
-		if reply := msg.GetUnitKnowledgeUpdate(); reply != nil {
-			// Context should not be set on this
+		if msg.GetUnitKnowledgeCreation() != nil ||
+			msg.GetUnitKnowledgeUpdate() != nil {
 			return ErrContinue
 		}
 		reply := msg.GetKnowledgeGroupMagicActionAck()
@@ -1130,9 +1126,10 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 		if value == nil {
 			return invalid("result", reply.GetResult())
 		}
-		kg := c.Model.GetData().FindKnowledgeGroup(knowledgeGroupId)
-		if kg != nil {
-			created = kg.UnitKnowledges[value.GetIdentifier()]
+		created = c.Model.GetUnitKnowledge(knowledgeGroupId, value.GetIdentifier())
+		if created == nil {
+			return fmt.Errorf("created unit knowledge %d/%d is not available "+
+				"after ack", knowledgeGroupId, value.GetIdentifier())
 		}
 		return nil
 	}
