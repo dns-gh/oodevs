@@ -548,17 +548,6 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     end
 
     local Activate = Activate
-    local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
-    local pionsPE =  echelons[1]
-    local pionsSE =  echelons[2]
-    local pionsEE =  echelons[3]
-
-    -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
-    Activate( self.skill.links.synchronizeRC, 1, { entities = pionsPE } )
-
-    if endMissionBeforeCoordination then
-        integration.manageEndMission( self )
-    end
     
     -- Dynamicity managing
     local ok, isDynamic = pcall( function() return self.companyTask:isDynamic() end )
@@ -572,7 +561,6 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
                 for _, entity in pairs( dynamicEntities or emptyTable ) do
                     integration.ListenFrontElement( entity )
                 end
-                
                 local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
                                          or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
                                          or eEtatEchelon_None
@@ -583,13 +571,25 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     
     -- Communication between the company and the subordinates
     pcall( function() return self.companyTask:communicateWithSubordinates() end )
+    
+    local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
+    local pionsPE =  echelons[1]
+    local pionsSE =  echelons[2]
+    local pionsEE =  echelons[3]
+
+    -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
+    Activate( self.skill.links.synchronizeRC, 1, { entities = pionsPE } )
+
+    if endMissionBeforeCoordination then
+        integration.manageEndMission( self )
+    end
 
     -- Gestion du soutien
     if self.params.taskForSupporting and self.params.taskForSupporting ~= NIL then
         Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
     end
 
-    if manageRelieveBeforeCoordination then
+    if manageRelieveBeforeCoordination and self.params.relieveManager then
         -- Gestion de la relève
         Activate( self.skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE})
     end
@@ -637,7 +637,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
         Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = fusionList( pionsPE, pionsSE ), progressionInAOR = self.progressionInAOR, distance = maxsupportDistance } )
     end
 
-    if not manageRelieveBeforeCoordination then
+    if not manageRelieveBeforeCoordination and self.params.relieveManager then
         -- Gestion de la relève
         Activate( self.skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE})
     end

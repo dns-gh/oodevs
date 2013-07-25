@@ -182,6 +182,10 @@ integration.removeObjectInstantaneously = function( object )
     return true
 end
 
+integration.removeObjectInstantaneouslyWithoutReport = function( object )
+    DEC_DetruireObjetSansDelais( object.source )
+    return true
+end
 
 
 -- ============================================================================
