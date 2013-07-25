@@ -25,7 +25,6 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( CancelLogisticRequests, 0 );
     MOCK_METHOD( ApplyContamination, 0 );
     MOCK_METHOD( ApplyEffect, 1 );
-    MOCK_METHOD( ApplyInjury, 1 );
     MOCK_METHOD( ApplyWounds, 2 );
     MOCK_METHOD( WoundHumans, 3 );
     MOCK_METHOD( HealHumans, 2 );
@@ -46,7 +45,6 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( GetComposante, 0 );
     MOCK_METHOD( GetNbrUsableHumans, 0 );
     MOCK_METHOD( GetNbrHealthyHumans, 1 );
-    MOCK_METHOD( GetInjury, 0 );
 
     //! @name Serialization
     //@{

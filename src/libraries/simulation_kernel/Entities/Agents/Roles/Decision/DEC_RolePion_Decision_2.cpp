@@ -26,7 +26,6 @@
 #include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
-#include "Decision/DEC_MedicalTreatmentFunctions.h"
 #include "Decision/DEC_TerrainFunctions.h"
 #include "Entities/Actions/PHY_ActionInterrogate.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
@@ -684,14 +683,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_TerrainFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) )  );
     RegisterFunction( "DEC_FindSafetyPositions",
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( float, float ) >( boost::bind( &DEC_TerrainFunctions::FindSafetyPositionsWithinCircle, boost::ref( GetPion() ), _1, _2 ) )  );
-
-    // Hospitals
-    RegisterFunction( "DEC_DeterminerHopital",
-        boost::function< boost::shared_ptr< DEC_Knowledge_Object > ( const DEC_Decision_ABC*, T_KnowledgeObjectDiaIDVector ) >( boost::bind( &DEC_MedicalTreatmentFunctions::DetermineHospital, boost::cref( GetPion() ), _1, _2 ) ) );
-    RegisterFunction( "DEC_CanHospitalTreatWound",
-        boost::function< bool ( const DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::CanHospitalTreatWound, boost::cref( GetPion() ), _1, _2 ) ) );
-    RegisterFunction( "DEC_DebarqueBlesseDansHopital",
-        boost::function< void ( const DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::TakeCareOfThePatient, boost::cref( GetPion() ), _1, _2 ) ) );
 
     // Hierarchie
     RegisterFunction( "DEC_Pion_PionsAvecPC", boost::bind( &DEC_AgentFunctions::GetPionsWithPC, boost::ref( GetPion() ) ) );

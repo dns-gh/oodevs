@@ -61,12 +61,6 @@
     <Filter Include="Source Files\Entities\Agents\Units\Humans\Human Factors">
       <UniqueIdentifier>{d04ab546-47a9-4bda-b407-ed60a7938184}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Agents\Units\Humans\Injured Human">
-      <UniqueIdentifier>{bac0736f-ea75-4f6c-a890-88b2749d43b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries">
-      <UniqueIdentifier>{2501c7c8-8e90-4a1a-8b82-dc37b480b3d1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Entities\Agents\Units\Dotations">
       <UniqueIdentifier>{87586b2d-5031-4de4-ab98-095bdf97d659}</UniqueIdentifier>
     </Filter>
@@ -716,12 +710,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Tiredness.cpp">
       <Filter>Source Files\Entities\Agents\Units\Humans\Human Factors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.cpp">
       <Filter>Source Files\Entities\Agents\Units\Dotations\Capacities</Filter>
@@ -2301,9 +2289,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_LogisticFunctions.cpp">
       <Filter>Source Files\Decision\Functions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MedicalTreatmentFunctions.cpp">
-      <Filter>Source Files\Decision\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MiscFunctions.cpp">
       <Filter>Source Files\Decision\Functions</Filter>
     </ClCompile>
@@ -2902,15 +2887,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Tiredness.h">
       <Filter>Source Files\Entities\Agents\Units\Humans\Human Factors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_ABC.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.h">
       <Filter>Source Files\Entities\Agents\Units\Dotations\Capacities</Filter>
@@ -4812,9 +4788,6 @@
       <Filter>Source Files\Decision\Functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_LogisticFunctions.h">
-      <Filter>Source Files\Decision\Functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MedicalTreatmentFunctions.h">
       <Filter>Source Files\Decision\Functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MiscFunctions.h">

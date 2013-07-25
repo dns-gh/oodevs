@@ -11,7 +11,6 @@
 #define __MedicalCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
-#include "Entities/Agents/Units/Humans/PHY_InjuredHuman.h"
 
 #include <queue>
 
@@ -43,14 +42,6 @@ public:
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
-    virtual void Update( MIL_Object_ABC& object, unsigned int time );
-    void Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ );
-
-    //! @name Decisional functions
-    //@{
-    void TransferPatient();
-    void ReceivePatient( PHY_InjuredHuman& injuredHuman );
-    bool CanTreat( const MIL_Object_ABC& object, const PHY_InjuredHuman& injuredHuman );
     //@}
 
 private:
@@ -59,27 +50,9 @@ private:
     MedicalCapacity( const MedicalCapacity& );
     //@}
 
-    //! @name
-    //@{
-    void RequestTransfert( PHY_InjuredHuman& injuredHuman );
-    void MakeDiagnosis( MedicalTreatmentAttribute& attr );
-    void Accept( MedicalTreatmentAttribute& attr, PHY_InjuredHuman& injuredHuman );
-    //@}
-
     //! @name Helpers
     //@{
     void InitializeData( xml::xistream& xis );
-    //@}
-
-private:
-    typedef std::queue< PHY_InjuredHuman* >    T_WaitingList;
-
-private:
-    //! @name Member data
-    //@{
-    T_WaitingList entranceWaitingList_;
-    T_WaitingList transferWaitingList_;
-    T_WaitingList deadsList_;
     //@}
 };
 

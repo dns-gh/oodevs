@@ -24,8 +24,6 @@
 #include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
 #include <tools/Map.h>
 
-class MIL_Injury_ABC;
-
 namespace xml
 {
     class xostream;
@@ -193,7 +191,6 @@ public:
     virtual void ApplyExplosion                   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
     virtual void ApplyContamination               ();
     virtual void ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
-    virtual void ApplyInjury                      ( MIL_Injury_ABC& injury );
     virtual void ApplyEffect                      ( const WoundEffects_ABC& effect );
 
     virtual double GetDangerosity                  ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo ) const;

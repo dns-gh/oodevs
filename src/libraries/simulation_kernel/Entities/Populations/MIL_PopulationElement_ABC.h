@@ -20,7 +20,6 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Object_ABC;
 class MIL_BurnEffectManipulator;
-class MIL_Injury_ABC;
 class MIL_Population;
 class MIL_PopulationAttitude;
 class MIL_PopulationType;
@@ -84,7 +83,6 @@ public:
     void ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, bool lethal );
     void ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult );
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
-    void ApplyInjury( MIL_Injury_ABC& injury );
     void ApplyBurn( const MIL_BurnEffectManipulator& burn );
     void ApplyContamination( const MIL_NbcAgentType& type );
     void ApplyIntoxication( const MIL_NbcAgentType& type );

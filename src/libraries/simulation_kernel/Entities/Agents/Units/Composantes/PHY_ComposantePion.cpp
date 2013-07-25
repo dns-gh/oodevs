@@ -418,26 +418,6 @@ void PHY_ComposantePion::ApplyEffect( const WoundEffects_ABC& effects )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyInjury
-// Created: NLD 2004-10-13
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyInjury( MIL_Injury_ABC& injury )
-{
-    assert( pHumans_ );
-    pHumans_->ApplyInjury( injury );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::GetInjury
-// Created: LDC 2010-07-02
-// -----------------------------------------------------------------------------
-PHY_InjuredHuman* PHY_ComposantePion::GetInjury() const
-{
-    assert( pHumans_ );
-    return pHumans_->GetInjury();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetProtectionHumanDeadRatio
 // Created: JSR 2011-08-11
 // -----------------------------------------------------------------------------

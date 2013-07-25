@@ -20,9 +20,7 @@ class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
 class PHY_RoleInterface_Composantes;
 class MIL_AutomateLOG;
-class MIL_Injury_ABC;
 class WoundEffects_ABC;
-class PHY_InjuredHuman;
 
 namespace sword
 {
@@ -51,7 +49,6 @@ public:
     //@{
     virtual bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound ) = 0;
 
-    virtual void ApplyInjury( MIL_Injury_ABC& injury ) = 0;
     virtual void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages ) = 0;
     virtual void ApplyEffect( const WoundEffects_ABC& effects ) = 0;
     virtual void ApplyContamination() = 0;
@@ -65,7 +62,6 @@ public:
     virtual void RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove ) = 0;
     virtual void CancelLogisticRequests() = 0;
 
-    virtual PHY_InjuredHuman* GetInjury() = 0;
     virtual double GetOperationalState() const = 0;
     virtual bool IsViable() const = 0;
     virtual bool IsEmpty() const = 0;

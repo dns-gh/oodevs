@@ -867,20 +867,6 @@ void PHY_RolePion_Composantes::ApplyContamination()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyInjury
-// Created: NLD 2006-10-27
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyInjury( MIL_Injury_ABC& injury )
-{
-    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.GetState().IsUsable() )
-            composante.ApplyInjury( injury );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ApplyExplosion
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------

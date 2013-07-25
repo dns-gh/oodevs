@@ -103,9 +103,6 @@
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_EntityManager_ABC.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Injury_ABC.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_LivingArea.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
@@ -230,9 +227,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MedicalCapacityTest.cpp">
-      <Filter>Source Files\objects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectInstanceTest.cpp">
       <Filter>Source Files\objects</Filter>

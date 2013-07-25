@@ -54,7 +54,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Units/Humans/MIL_Injury_Wound.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Stress.h"
@@ -1152,26 +1151,6 @@ void  MIL_AgentPion::OnReceiveRecoverHumansTransporters()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveCreateWound
-// Created: LDC 2010-07-02
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveCreateWound( const sword::MissionParameters& msg )
-{
-    if( msg.elem_size() > 2 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-    if( msg.elem( 0 ).value_size() == 1 )
-    {
-        MIL_Injury_Wound* injury = new MIL_Injury_Wound( msg.elem( 0 ).value().Get( 0 ).identifier() );
-        if( msg.elem_size() == 2 && msg.elem( 1 ).value_size() == 1 )
-            injury->SetInjuryCategory( static_cast< MIL_MedicalTreatmentType::E_InjuryCategories >( msg.elem( 1 ).value().Get( 0 ).identifier() ) );
-        else
-            injury->SetInjuryCategory( static_cast< MIL_MedicalTreatmentType::E_InjuryCategories >( MIL_Random::rand32_oi( MIL_MedicalTreatmentType::eNone, MIL_MedicalTreatmentType::eDead ) ) );
-        GetRole< PHY_RolePion_Composantes >().ApplyInjury( *injury );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
@@ -1227,9 +1206,6 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         break;
     case sword::UnitMagicAction::partial_recovery:
         OnReceiveResupply( msg.parameters() );
-        break;
-    case sword::UnitMagicAction::create_wound:
-        OnReceiveCreateWound( msg.parameters() );
         break;
     case sword::UnitMagicAction::unit_change_affinities:
         pAffinities_->OnReceiveMsgChangeAffinities( msg );

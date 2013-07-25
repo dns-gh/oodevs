@@ -18,7 +18,6 @@
 
 class AttritionCapacity;
 class MIL_Agent_ABC;
-class MIL_Injury_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationAttitude;
 class MIL_PopulationType;
@@ -131,7 +130,6 @@ public:
     virtual double GetMinRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability, bool theoric ) const = 0;
     virtual double GetMaxRangeToFire                ( const MIL_Agent_ABC&  target, double rWantedPH ) const = 0;
 
-    virtual void ApplyInjury( MIL_Injury_ABC& injury ) = 0;
     virtual void ApplyContamination() = 0;
     //@}
 

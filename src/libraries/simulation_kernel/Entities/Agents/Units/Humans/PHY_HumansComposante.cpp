@@ -16,11 +16,9 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Units/Humans/PHY_InjuredHuman.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
-#include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
 #include "HumansActionsNotificationHandler_ABC.h"
@@ -35,7 +33,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
 PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, unsigned int nNbrMdr )
     : pComposante_     ( &composante )
     , nNbrUsableHumans_( 0 )
-    , injury_          ( 0 )
 {
     while( nNbrMdr-- )
     {
@@ -51,7 +48,6 @@ PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_Compos
 PHY_HumansComposante::PHY_HumansComposante()
     : pComposante_     ( 0 )
     , nNbrUsableHumans_( 0 )
-    , injury_          ( 0 )
 {
     // NOTHING
 }
@@ -62,7 +58,7 @@ PHY_HumansComposante::PHY_HumansComposante()
 // -----------------------------------------------------------------------------
 PHY_HumansComposante::~PHY_HumansComposante()
 {
-    delete injury_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -253,31 +249,6 @@ void PHY_HumansComposante::ApplyEffect( const WoundEffects_ABC& effect )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ApplyInjury
-// Created: RFT
-// -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyInjury( MIL_Injury_ABC& injury )
-{
-    for( auto it = humans_.begin(); it != humans_.end(); ++it )
-        if( injury.IsInjured( GetComposante() ) )
-        {
-            //on doit supprimer aussi le human du human vector et il va devenir un InjuredHuman
-            //qui doit avoir une existence propre (mise a jour, que les autres sachent qu ils existent, position, peut etre une faculte de deplacement, ...)
-        }
-    delete injury_;
-    injury_ = new PHY_InjuredHuman( injury );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::GetInjury
-// Created: LDC 2010-07-02
-// -----------------------------------------------------------------------------
-PHY_InjuredHuman* PHY_HumansComposante::GetInjury()
-{
-    return injury_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyComposanteHandledByMaintenance
 // Created: NLD 2005-01-14
 // -----------------------------------------------------------------------------
@@ -430,8 +401,7 @@ void PHY_HumansComposante::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< HumansComposante_ABC >( *this );
     file & pComposante_
          & humans_
-         & nNbrUsableHumans_
-         & injury_;
+         & nNbrUsableHumans_;
     assert( pComposante_ );
 }
 

@@ -279,8 +279,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Morale.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\HumanFactors\PHY_Stress.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Tiredness.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_Dotation.cpp" />
@@ -831,7 +829,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeObjectFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgePopulationFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_LogisticFunctions.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MedicalTreatmentFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MiscFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ObjectFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_OrdersFunctions.cpp" />
@@ -1068,9 +1065,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Morale.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\HumanFactors\PHY_Stress.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Tiredness.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_Dotation.h" />
@@ -1721,7 +1715,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgeObjectFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_KnowledgePopulationFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_LogisticFunctions.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MedicalTreatmentFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_MiscFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ObjectFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_OrdersFunctions.h" />

@@ -199,7 +199,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockLogisticHierarchyOwner_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_AutomateLOG.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_EntityManager_ABC.h" />
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Injury_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_LivingArea.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_MissionType_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockMIL_Object_ABC.h" />
@@ -253,7 +252,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MedicalCapacityTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectInstanceTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ObjectInteractionTest.cpp">
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessToFile>

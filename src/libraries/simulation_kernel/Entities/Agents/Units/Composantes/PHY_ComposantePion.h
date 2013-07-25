@@ -22,14 +22,12 @@ class Human_ABC;
 class HumansComposante_ABC;
 class MIL_Agent_ABC;
 class MIL_AutomateLOG;
-class MIL_Injury_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class MIL_Time_ABC;
 class MIL_BurnEffectManipulator;
 class MIL_DisasterEffectManipulator;
-class PHY_InjuredHuman;
 class PHY_AttritionData;
 class PHY_Breakdown;
 class PHY_FireDamages_Agent;
@@ -159,7 +157,6 @@ public:
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireDamages_Agent& fireDamages );
     void ApplyContamination();
     void ApplyEffect( const WoundEffects_ABC& effects );
-    void ApplyInjury( MIL_Injury_ABC& injury );
     void ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object );
 
     unsigned int GetNeutralizationTime() const;
@@ -175,7 +172,6 @@ public:
     double GetMaxRangeToIndirectFire( ) const;
     double GetMaxRangeToDirectFire() const;
     double GetMaxRangeToFire( const MIL_Agent_ABC& pion, double rWantedPH ) const;
-    PHY_InjuredHuman* GetInjury() const;
     double GetProtectionHumanDeadRatio( const PHY_ComposanteState& state ) const;
     double GetProtectionHumanWoundedRatio( const PHY_ComposanteState& state ) const;
     //@}

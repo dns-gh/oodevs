@@ -21,7 +21,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
-#include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Effects/MIL_Effect_PopulationFire.h"
@@ -201,15 +200,6 @@ void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacit
         if( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH )
             ++nHit;
     ApplyLethalDamage( nHit, fireResult );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::ApplyExplosion
-// Created: NLD 2006-04-24
-// -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::ApplyInjury( MIL_Injury_ABC& injury )
-{
-    injury.SetInjury( humans_.GetTotalLivingHumans(), rDensity_ );
 }
 
 // -----------------------------------------------------------------------------

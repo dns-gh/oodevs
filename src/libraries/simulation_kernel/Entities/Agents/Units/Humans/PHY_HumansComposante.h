@@ -24,10 +24,8 @@ class PHY_ComposantePion;
 class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
 class PHY_RoleInterface_Composantes;
-class PHY_InjuredHuman;
 class MIL_AutomateLOG;
 class MIL_Time_ABC;
-class MIL_Injury_ABC;
 class WoundEffects_ABC;
 
 namespace sword
@@ -60,8 +58,6 @@ public:
 
     virtual void ApplyContamination();
     virtual void ApplyEffect( const WoundEffects_ABC& effect );
-    void ApplyInjury( MIL_Injury_ABC& injury );
-    PHY_InjuredHuman* GetInjury();
     void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
     void HealAllHumans( bool withLog );
     void KillAllHumans();
@@ -108,7 +104,6 @@ public:
 private:
     PHY_ComposantePion* pComposante_;
     unsigned int nNbrUsableHumans_;
-    PHY_InjuredHuman* injury_;
     std::vector< boost::shared_ptr< Human_ABC > > humans_;
 };
 
