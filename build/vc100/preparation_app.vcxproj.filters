@@ -175,9 +175,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticPrototype.cpp">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\MedicalTreatmentPrototype.cpp">
-      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\MinePrototype.cpp">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClCompile>
@@ -583,9 +580,6 @@
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticPrototype.h">
-      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\MedicalTreatmentPrototype.h">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\MinePrototype.h">

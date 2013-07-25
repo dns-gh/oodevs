@@ -571,10 +571,6 @@
         <translation>Zone de vie/Capacité totale</translation>
     </message>
     <message>
-        <source>Living Area/Medical infrastructures</source>
-        <translation>Zone de vie/Infrastructures médicales</translation>
-    </message>
-    <message>
         <source>Living Area/Non medical infrastructures</source>
         <translation>Zone de vie/Infrastructures non médicales</translation>
     </message>
@@ -854,37 +850,6 @@
     <message>
         <source>Medical system</source>
         <translation>Chaîne médicale</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalTreatment</name>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation>Nombre total de médecins:</translation>
-    </message>
-    <message>
-        <source>Number of available doctors:</source>
-        <translation>Nombre de médecins disponibles:</translation>
-    </message>
-    <message>
-        <source>Medical Treatment</source>
-        <translation>Traitement médical</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>Id Hopital:</translation>
-    </message>
-    <message>
-        <source>Medical Treatment services (Available(Baseline)):</source>
-        <translation>Service de traitement médical (Disponible( Base)):</translation>
-    </message>
-    <message>
-        <source>Total number of beds:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of available beds:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

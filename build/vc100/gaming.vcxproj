@@ -280,7 +280,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\FloodAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LodgingAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogisticAttribute.cpp" />
-    <ClCompile Include="..\..\src\libraries\gaming\MedicalTreatmentAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\MineAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\NBCAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ObjectAttributesFactory.cpp" />
@@ -356,7 +355,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\LogConsignDisplayer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogisticHelpers.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentCapacity.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PopulationHierarchiesCommunication.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Propagation.h" />
@@ -528,7 +526,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\FloodAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LodgingAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogisticAttribute.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\MineAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\NBCAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ObjectAttributesFactory.h" />

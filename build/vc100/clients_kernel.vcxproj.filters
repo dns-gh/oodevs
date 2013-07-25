@@ -205,9 +205,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\MaterialCompositionType.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\MedicalTreatmentType.cpp">
-      <Filter>Source Files\XML model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\ModelLoaded.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
@@ -640,9 +637,6 @@
       <Filter>Source Files\XML model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\MaterialCompositionType.h">
-      <Filter>Source Files\XML model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\MedicalTreatmentType.h">
       <Filter>Source Files\XML model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModelLoaded.h">

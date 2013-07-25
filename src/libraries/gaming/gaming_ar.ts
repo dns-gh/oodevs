@@ -575,10 +575,6 @@
         <translation type="unfinished">القدرات إلى مجموع مساحة المعيشة</translation>
     </message>
     <message>
-        <source>Living Area/Medical infrastructures</source>
-        <translation type="unfinished">البنى التحتية في المجال الطبي المعيشة</translation>
-    </message>
-    <message>
         <source>Living Area/Non medical infrastructures</source>
         <translation type="unfinished">المعيشة المنطقة/عدم البنى التحتية الطبية</translation>
     </message>
@@ -854,37 +850,6 @@
     <message>
         <source>Medical system</source>
         <translation type="unfinished">النظام الطبي</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalTreatment</name>
-    <message>
-        <source>Medical Treatment</source>
-        <translation type="unfinished">العلاج الطبي</translation>
-    </message>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation type="unfinished">العدد الإجمالي للأطباء:</translation>
-    </message>
-    <message>
-        <source>Number of available doctors:</source>
-        <translation type="unfinished">عدد من الأطباء المتاحة:</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation type="unfinished">معرف المستشفى:</translation>
-    </message>
-    <message>
-        <source>Total number of beds:</source>
-        <translation type="unfinished">العدد الإجمالي للأسرة:</translation>
-    </message>
-    <message>
-        <source>Number of available beds:</source>
-        <translation type="unfinished">عدد الأسرة المتاحة:</translation>
-    </message>
-    <message>
-        <source>Medical Treatment services (Available(Baseline)):</source>
-        <translation type="unfinished">خدمات العلاج الطبي (Available(Baseline)):</translation>
     </message>
 </context>
 <context>

@@ -57,15 +57,6 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( "Danger", tools::findTranslation( "NBC", "Danger:" ) )
                 .AddLabel( "NBCAgent", tools::findTranslation( "NBC", "NBC agent(s):" ) );
 
-    GetBuilder().AddGroup( tools::findTranslation( "MedicalTreatment", "Medical Treatment" ) )
-                .AddLabel( "TotalNumberBeds", tools::findTranslation( "MedicalTreatment", "Total number of beds:" ) )
-                .AddLabel( "numberBeds", tools::findTranslation( "MedicalTreatment", "Number of available beds:" ) )
-                .AddLabel( "availableBeds", tools::findTranslation( "MedicalTreatment", "Total number of doctors:" ) )
-                .AddLabel( "availableDoctors", tools::findTranslation( "MedicalTreatment", "Number of available doctors:" ) )
-                .AddLabel( "Hospital", tools::findTranslation( "MedicalTreatment", "Hospital ID:" ) );
-
-    GetBuilder().AddGroup( tools::findTranslation( "MedicalTreatment", "Medical Treatment services (Available(Baseline)):" ) );
-
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Logistic route" ) )
                 .AddLabel( "Equipped", tools::findTranslation( "Object", "Equipped:" ) )
                 .AddLabel( "Flow", tools::findTranslation( "Object", "Flow:" ) )

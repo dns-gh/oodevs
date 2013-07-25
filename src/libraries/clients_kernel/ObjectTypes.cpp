@@ -15,7 +15,6 @@
 #include "FireClass.h"
 #include "InfrastructureType.h"
 #include "MaterialCompositionType.h"
-#include "MedicalTreatmentType.h"
 #include "NBCAgent.h"
 #include "ObjectType.h"
 #include "ResourceNetworkType.h"
@@ -67,7 +66,6 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
     loader.LoadPhysicalFile( "components", boost::bind( &ObjectTypes::ReadEquipments, this, _1 ) );
     loader.LoadPhysicalFile( "nbc", boost::bind( &ObjectTypes::ReadNBC, this, _1 ) );
     loader.LoadPhysicalFile( "fires", boost::bind( &ObjectTypes::ReadFires, this, _1 ) );
-    loader.LoadPhysicalFile( "medical-treatment", boost::bind( &ObjectTypes::ReadMedicalTreatment, this, _1 ) );
     loader.LoadPhysicalFile( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) );
     loader.LoadPhysicalFile( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ) );
     loader.LoadPhysicalFile( "urban", boost::bind( &ObjectTypes::ReadUrbanTypes, this, _1 ) );;
@@ -87,7 +85,6 @@ void ObjectTypes::Purge()
     Resolver2< DotationType >::DeleteAll();
     tools::StringResolver< ObjectType >::DeleteAll();
     tools::StringResolver< FireClass >::DeleteAll();
-    Resolver2< MedicalTreatmentType >::DeleteAll();
     tools::Resolver< VolumeType >::DeleteAll();
     tools::StringResolver< ResourceNetworkType >::DeleteAll();
     tools::StringResolver< MaterialCompositionType >::DeleteAll();
@@ -221,24 +218,6 @@ void ObjectTypes::ReadFireClasses( xml::xistream& xis )
     tools::StringResolver< FireClass >::Register( fire->GetName(), *fire );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadMedicalTreatment
-// Created: RFT 2006-04-04
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadMedicalTreatment( xml::xistream& xis )
-{
-    xis >> xml::start( "medical-treatments" ) >> xml::list( "medical-treatment", *this, &ObjectTypes::ReadMedicalTreatmentType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadMedicalTreatmentType
-// Created: RFT 2006-04-04
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadMedicalTreatmentType( xml::xistream& xis )
-{
-    MedicalTreatmentType* medicaltreatment = new MedicalTreatmentType( xis );
-    Resolver2< MedicalTreatmentType >::Register( medicaltreatment->GetId(), medicaltreatment->GetName(), *medicaltreatment );
-}
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes::ReadBreakdowns
 // Created: AGE 2006-04-05

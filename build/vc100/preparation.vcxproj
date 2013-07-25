@@ -244,7 +244,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\InputToxicCloudAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\LodgingAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\LogisticAttribute.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\MedicalTreatmentAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\MineAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\NBCAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ObstacleAttribute.cpp" />
@@ -419,7 +418,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\InputToxicCloudAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LodgingAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticAttribute.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\MedicalTreatmentAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\MineAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\NBCAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ObstacleAttribute.h" />

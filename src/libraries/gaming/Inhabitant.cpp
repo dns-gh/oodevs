@@ -52,7 +52,6 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& co
     , livingUrbanObjects_       ( 0 )
     , nominalCapacity_          ( 0 )
     , infrastructures_          ( 0 )
-    , medicalInfrastructures_   ( 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type.GetName().c_str() ).arg( message.id().id() );
@@ -278,16 +277,14 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
     gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
 
     accomodationCapacties_.clear();
-    infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
+    infrastructures_ = nominalCapacity_ = 0;
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
         auto pObject = static_cast< const gui::UrbanObject* >( it->second );
         if( !pObject )
             continue;
         nominalCapacity_ += static_cast< unsigned int >( pObject->GetNominalCapacity() );
-        if( pObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
-            ++medicalInfrastructures_;
-        else if( auto infra = pObject->Retrieve< gui::Infrastructure_ABC >() )
+        if( auto infra = pObject->Retrieve< gui::Infrastructure_ABC >() )
             if( infra->GetType() != 0 )
                 ++infrastructures_;
         const kernel::AccommodationTypes& accommodations = pObject->GetAccommodations();
@@ -302,7 +299,6 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
     livingUrbanObjects_ = static_cast< unsigned int >( livingUrbanObject_.size() );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Urban blocks number" ), static_cast< const unsigned int& >( livingUrbanObjects_ ) );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Total capacity" ), static_cast< const unsigned int& >( nominalCapacity_ ) );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Medical infrastructures" ), static_cast< const unsigned int& >( medicalInfrastructures_ ) );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Non medical infrastructures" ), static_cast< const unsigned int& >( infrastructures_ ) );
     for( QMap< QString, unsigned int >::const_iterator it = accomodationCapacties_.constBegin(); it != accomodationCapacties_.constEnd(); ++it )
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Capacities/%1" ).arg( it.key() ), it.value() );

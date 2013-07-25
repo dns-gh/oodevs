@@ -26,7 +26,6 @@
 #include "LogisticSupplyPullFlowDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
-#include "MedicalCapacityUpdateDialog.h"
 #include "ObjectStateDialog.h"
 #include "PopulationChangeAffinitiesDialog.h"
 #include "PopulationChangeHealthStateDialog.h"
@@ -51,7 +50,6 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new LogisticSupplyPullFlowDialog( parent, controllers, actionsModel, staticModel, simulation, layer, model.agents_, model.teams_, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
-    new MedicalCapacityUpdateDialog( parent, controllers, actionsModel, staticModel, simulation, publisher, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
     new CreateFormationDialog( parent, controllers, profile, actionsModel, simulation );
     new AgentChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );

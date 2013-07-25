@@ -33,7 +33,6 @@ namespace kernel
     class WeaponSystemType;
     class FireClass;
     class InfrastructureType;
-    class MedicalTreatmentType;
     class ResourceNetworkType;
     class VolumeType;
     class MaterialCompositionType;
@@ -54,7 +53,6 @@ class ObjectTypes
     , public Resolver2< EquipmentType >
     , public Resolver2< NBCAgent >
     , public tools::StringResolver< FireClass >
-    , public Resolver2< MedicalTreatmentType >
     , public Resolver2< BreakdownType >
     , public tools::Resolver< VolumeType >
     , public tools::StringResolver< LogisticSupplyClass >
@@ -99,8 +97,6 @@ private:
     void ReadNBCAgent( xml::xistream& xis );
     void ReadFires( xml::xistream& xis );
     void ReadFireClasses( xml::xistream& xis );
-    void ReadMedicalTreatment( xml::xistream& xis );
-    void ReadMedicalTreatmentType( xml::xistream& xis );
     void ReadBreakdowns( xml::xistream& xis );
     void ReadBreakdownCategory( xml::xistream& xis );
     void ReadBreakdown( xml::xistream& xis );

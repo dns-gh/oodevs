@@ -258,7 +258,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyPullFlowDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyPushFlowDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyRecompletionDialog.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\MedicalCapacityUpdateDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ResourceLinksDialog.cpp" />
@@ -386,7 +385,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\FloodPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LodgingPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticPrototype.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\MedicalTreatmentPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MinePrototype.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\NBCPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ObjectCreationPanel.cpp" />
@@ -934,24 +932,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyRecompletionDialog.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\MedicalCapacityUpdateDialog.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
@@ -2205,7 +2185,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\FloodPrototype.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LodgingPrototype.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticPrototype.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\MedicalTreatmentPrototype.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MinePrototype.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\NBCPrototype.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\ObjectCreationPanel.h">

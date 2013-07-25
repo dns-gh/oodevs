@@ -490,9 +490,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticPrototype_ABC.cpp">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\MedicalTreatmentPrototype_ABC.cpp">
-      <Filter>Source Files\Creation\Objects\Attributes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\MinePrototype_ABC.cpp">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClCompile>
@@ -1318,9 +1315,6 @@
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LodgingPrototype_ABC.h">
-      <Filter>Source Files\Creation\Objects\Attributes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\MedicalTreatmentPrototype_ABC.h">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetworkPrototype_ABC.h">

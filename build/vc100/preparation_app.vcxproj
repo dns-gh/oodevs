@@ -267,7 +267,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FloodPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LodgingPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticPrototype.cpp" />
-    <ClCompile Include="..\..\src\applications\preparation_app\MedicalTreatmentPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\MinePrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\NBCPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ObjectPrototype.cpp" />
@@ -712,7 +711,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\FloodPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LodgingPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticPrototype.h" />
-    <ClInclude Include="..\..\src\applications\preparation_app\MedicalTreatmentPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\MinePrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\NBCPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ObjectPrototype.h" />

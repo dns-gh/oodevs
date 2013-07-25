@@ -23,7 +23,6 @@
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/FireClass.h"
-#include "clients_kernel/MedicalTreatmentType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/AgentType.h"
@@ -198,15 +197,6 @@ void BaseDisplayer::Call( const NBCAgent& value )
 // Created: RFT 2006-04-05
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const FireClass& value )
-{
-    AddToDisplay( value.GetName() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BaseDisplayer::Call
-// Created: RFT 2006-04-05
-// -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const MedicalTreatmentType& value )
 {
     AddToDisplay( value.GetName() );
 }

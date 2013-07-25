@@ -102,7 +102,6 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
             UpdateExtension< BypassAttribute_ABC >( *selected_ );
             UpdateExtension< NBCAttribute_ABC >( *selected_ );
             UpdateExtension< FireAttribute_ABC >( *selected_ );
-            UpdateExtension< MedicalTreatmentAttribute_ABC >( *selected_ );
             UpdateExtension< LogisticAttribute_ABC >( *selected_ );
             UpdateExtension< LodgingAttribute_ABC >( *selected_ );
             UpdateExtension< CrossingSiteAttribute_ABC >( *selected_ );
@@ -257,15 +256,6 @@ void ObjectPanel::NotifyUpdated( const NBCAttribute_ABC& attributes )
 // Created: RFT 2006-02-17
 // -----------------------------------------------------------------------------
 void ObjectPanel::NotifyUpdated( const FireAttribute_ABC& attributes )
-{
-    DisplayIfNeeded( attributes );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectPanel::NotifyUpdated
-// Created: RFT 2006-02-17
-// -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const MedicalTreatmentAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }

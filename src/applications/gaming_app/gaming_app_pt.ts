@@ -1908,49 +1908,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>MedicalCapacityUpdateDialog</name>
-    <message>
-        <source>Update medical capacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MedicalTreatment Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctors:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bed Capacities (Patients/Baseline)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MedicalCollectAmbulancesListView</name>
     <message>
         <source>Collect ambulances</source>

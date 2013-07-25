@@ -11,7 +11,6 @@
 #include "UrbanFactory.h"
 
 #include "InfrastructureAttribute.h"
-#include "MedicalTreatmentAttribute.h"
 #include "PhysicalAttribute.h"
 #include "ResourceNetworkAttribute.h"
 #include "StaticModel.h"
@@ -79,7 +78,6 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Entit
         }
         pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( xis, *pTerrainObject, dictionary ) );
         pTerrainObject->Attach< gui::Infrastructure_ABC >( *new InfrastructureAttribute( xis, controllers_, *pTerrainObject, dictionary, staticModel_.objectTypes_ ) );
-        pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( xis, staticModel_.objectTypes_, dictionary, *pTerrainObject, true, &controllers_ ) );
         pTerrainObject->Attach< gui::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis, true, urbanObjects_, objects_, staticModel_.objectTypes_ ) );
     }
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
@@ -123,7 +121,6 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( const geometry::Polygon2f& locati
 
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< gui::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, dictionary ) );
-    pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( staticModel_.objectTypes_, dictionary, *pTerrainObject, true, &controllers_ ) );
     pTerrainObject->Attach< gui::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, true, urbanObjects_, objects_, staticModel_.objectTypes_ ) );
 
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );

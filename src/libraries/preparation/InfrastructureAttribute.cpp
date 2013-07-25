@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "InfrastructureAttribute.h"
-#include "MedicalTreatmentAttribute.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controllers.h"

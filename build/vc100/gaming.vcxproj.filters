@@ -571,9 +571,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\LogisticAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\gaming\MedicalTreatmentAttribute.cpp">
-      <Filter>Source Files\Model\Object\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\MineAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClCompile>
@@ -1305,9 +1302,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\LogisticAttribute.h">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentAttribute.h">
-      <Filter>Source Files\Model\Object\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\MineAttribute.h">
       <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClInclude>
@@ -1547,9 +1541,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\PhysicalAttribute.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentCapacity.h">
-      <Filter>Source Files\Model\Object\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\LogisticHelpers.h">
       <Filter>Source Files\Tools</Filter>

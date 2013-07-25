@@ -247,9 +247,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\KnowledgeAddInGroupDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\MedicalCapacityUpdateDialog.cpp">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\ResourceLinksDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </ClCompile>
@@ -593,9 +590,6 @@
       <Filter>Source Files\Creation\Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticPrototype.cpp">
-      <Filter>Source Files\Creation\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\MedicalTreatmentPrototype.cpp">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\MinePrototype.cpp">
@@ -1038,9 +1032,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticPrototype.h">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\MedicalTreatmentPrototype.h">
-      <Filter>Source Files\Creation\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\MinePrototype.h">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClInclude>
@@ -1274,9 +1265,6 @@
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\KnowledgeAddInGroupDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\MedicalCapacityUpdateDialog.h">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileDialog.h">

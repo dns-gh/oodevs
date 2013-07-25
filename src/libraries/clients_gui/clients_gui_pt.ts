@@ -1299,29 +1299,6 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
-    <name>gui::MedicalTreatmentPrototype_ABC</name>
-    <message>
-        <source>MedicalTreatment parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MedicalTreatment Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctors:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bed Capacities:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::MinePrototype_ABC</name>
     <message>
         <source>Improvable</source>

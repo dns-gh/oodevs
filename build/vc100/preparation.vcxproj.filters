@@ -451,9 +451,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\LogisticAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\MedicalTreatmentAttribute.cpp">
-      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\MineAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClCompile>
@@ -916,9 +913,6 @@
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\LogisticAttribute.h">
-      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\MedicalTreatmentAttribute.h">
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\MineAttribute.h">

@@ -300,40 +300,6 @@
     </message>
 </context>
 <context>
-    <name>MedicalTreatment</name>
-    <message>
-        <source>Medical Treatment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bed Capacities:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MedicalTreatmentAttribute</name>
-    <message>
-        <source>Info/Medical Treatment attributes/Doctors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Medical Treatment attributes/Hospital ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Medical Treatment attributes/</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MineAttribute</name>
     <message>
         <source>Info/Improvable/Value</source>

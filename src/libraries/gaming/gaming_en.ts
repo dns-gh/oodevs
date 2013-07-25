@@ -575,10 +575,6 @@
         <translation>Living Area/Total capacity</translation>
     </message>
     <message>
-        <source>Living Area/Medical infrastructures</source>
-        <translation>Living Area/Medical infrastructures</translation>
-    </message>
-    <message>
         <source>Living Area/Non medical infrastructures</source>
         <translation>Living Area/Non medical infrastructures</translation>
     </message>
@@ -854,37 +850,6 @@
     <message>
         <source>Medical system</source>
         <translation>Medical system</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalTreatment</name>
-    <message>
-        <source>Medical Treatment</source>
-        <translation>Medical Treatment</translation>
-    </message>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation>Total number of doctors:</translation>
-    </message>
-    <message>
-        <source>Number of available doctors:</source>
-        <translation>Number of available doctors:</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>Hospital ID:</translation>
-    </message>
-    <message>
-        <source>Total number of beds:</source>
-        <translation>Total number of beds:</translation>
-    </message>
-    <message>
-        <source>Number of available beds:</source>
-        <translation>Number of available beds:</translation>
-    </message>
-    <message>
-        <source>Medical Treatment services (Available(Baseline)):</source>
-        <translation>Medical Treatment services (Available(Baseline)):</translation>
     </message>
 </context>
 <context>

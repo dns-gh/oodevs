@@ -19,7 +19,6 @@
 #include "FloodPrototype.h"
 #include "LodgingPrototype.h"
 #include "LogisticPrototype.h"
-#include "MedicalTreatmentPrototype.h"
 #include "MinePrototype.h"
 #include "NBCPrototype.h"
 #include "ObstaclePrototype.h"
@@ -86,11 +85,6 @@ namespace
     void StockAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         container.push_back( new StockPrototype( parent, resolver, attributesList ) );
-    }
-
-    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver, ParameterList*& attributesList )
-    {
-        container.push_back( new MedicalTreatmentPrototype( parent, resolver, attributesList ) );
     }
 
     void DisasterAttribute( T_AttributeContainer& container, QWidget* parent, const tools::GeneralConfig& config, kernel::Controllers& controllers, ParameterList*& attributesList )
@@ -198,7 +192,6 @@ namespace
         factory->Register( "lodging"                   , boost::bind( &Capacity< LodgingPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "underground-network"       , boost::bind( &UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
         factory->Register( "logistic"                  , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
-        factory->Register( "medical"                   , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "resources"                 , boost::bind( &Capacity< ResourceNetworkPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );

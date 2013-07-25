@@ -1303,29 +1303,6 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
-    <name>gui::MedicalTreatmentPrototype_ABC</name>
-    <message>
-        <source>MedicalTreatment parameters</source>
-        <translation type="unfinished">معلمات ميديكالتريتمينت</translation>
-    </message>
-    <message>
-        <source>MedicalTreatment Type:</source>
-        <translation type="unfinished">نوع ميديكالتريتمينت:</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation type="unfinished">معرف المستشفى:</translation>
-    </message>
-    <message>
-        <source>Doctors:</source>
-        <translation type="unfinished">الأطباء:</translation>
-    </message>
-    <message>
-        <source>Bed Capacities:</source>
-        <translation type="unfinished">سرير القدرات:</translation>
-    </message>
-</context>
-<context>
     <name>gui::MinePrototype_ABC</name>
     <message>
         <source>Improvable</source>

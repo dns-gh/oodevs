@@ -1910,49 +1910,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>MedicalCapacityUpdateDialog</name>
-    <message>
-        <source>Update medical capacity</source>
-        <translation type="unfinished">تحديث القدرات الطبية</translation>
-    </message>
-    <message>
-        <source>MedicalTreatment Type</source>
-        <translation type="unfinished">نوع ميديكالتريتمينت</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation type="unfinished">معرف المستشفى:</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation type="unfinished">مركز</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation type="unfinished">الحالة:</translation>
-    </message>
-    <message>
-        <source>Doctors</source>
-        <translation type="unfinished">الأطباء</translation>
-    </message>
-    <message>
-        <source>Doctors:</source>
-        <translation type="unfinished">الأطباء:</translation>
-    </message>
-    <message>
-        <source>Bed Capacities (Patients/Baseline)</source>
-        <translation type="unfinished">سرير القدرات (المرضى/خط الأساس)</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
-    </message>
-</context>
-<context>
     <name>MedicalCollectAmbulancesListView</name>
     <message>
         <source>Collect ambulances</source>

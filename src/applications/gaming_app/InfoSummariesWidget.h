@@ -51,7 +51,6 @@ class InfoSummariesWidget : public Q3VBox
                           , public tools::ElementObserver_ABC< kernel::FireAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::BurnAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::BurnSurfaceAttribute_ABC >
-                          , public tools::ElementObserver_ABC< kernel::MedicalTreatmentAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::OccupantAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::DelayAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::FloodAttribute_ABC >
@@ -88,7 +87,6 @@ private:
     virtual void NotifyUpdated( const kernel::FireAttribute_ABC& extension )             { UpdateDisplayIfNeeded< kernel::FireAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::BurnAttribute_ABC& extension )             { UpdateDisplayIfNeeded< kernel::BurnAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::BurnSurfaceAttribute_ABC& extension )      { UpdateDisplayIfNeeded< kernel::BurnSurfaceAttribute_ABC >( extension ); }
-    virtual void NotifyUpdated( const kernel::MedicalTreatmentAttribute_ABC& extension ) { UpdateDisplayIfNeeded< kernel::MedicalTreatmentAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::OccupantAttribute_ABC& extension )         { UpdateDisplayIfNeeded< kernel::OccupantAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::DelayAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::DelayAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::FloodAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::FloodAttribute_ABC >( extension ); }

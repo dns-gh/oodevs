@@ -1308,29 +1308,6 @@ Do you want to remove it?</translation>
     </message>
 </context>
 <context>
-    <name>gui::MedicalTreatmentPrototype_ABC</name>
-    <message>
-        <source>MedicalTreatment parameters</source>
-        <translation>MedicalTreatment parameters</translation>
-    </message>
-    <message>
-        <source>MedicalTreatment Type:</source>
-        <translation>MedicalTreatment Type:</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>Hospital ID:</translation>
-    </message>
-    <message>
-        <source>Doctors:</source>
-        <translation>Doctors:</translation>
-    </message>
-    <message>
-        <source>Bed Capacities:</source>
-        <translation>Bed Capacities:</translation>
-    </message>
-</context>
-<context>
     <name>gui::MinePrototype_ABC</name>
     <message>
         <source>Improvable</source>

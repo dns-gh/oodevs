@@ -21,7 +21,6 @@
 #include "InputPropagationPrototype.h"
 #include "LodgingPrototype.h"
 #include "LogisticPrototype.h"
-#include "MedicalTreatmentPrototype.h"
 #include "MinePrototype.h"
 #include "NBCPrototype.h"
 #include "ObstaclePrototype.h"
@@ -104,11 +103,6 @@ namespace
     {
         if( xis.attribute< std::string >( "type" ) == "" || xis.attribute< std::string >( "type" ) == "bridge" )
             container.push_back( new CrossingSitePrototype( parent, object ) );
-    }
-
-    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType, std::string >& resolver, Object_ABC*& object )
-    {
-        container.push_back( new MedicalTreatmentPrototype( parent, resolver, object ) );
     }
 
     void ResourceNetworkAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const UrbanModel& urbanModel, const ObjectsModel& objectsModel, const tools::StringResolver< ResourceNetworkType >& resources, Object_ABC*& object )
@@ -223,7 +217,6 @@ namespace
         factory->Register( "underground-network"       , boost::bind( &UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "altitude-modifier"         , boost::bind( &AltitudeModifierAttribute, _2, _3, boost::ref( controllers ), boost::ref( detection ), boost::ref( object ) ) );
 
-        factory->Register( "medical"                   , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
 
         boost::shared_ptr< NBCBuilder > pNBCBuilder = boost::make_shared< NBCBuilder >();

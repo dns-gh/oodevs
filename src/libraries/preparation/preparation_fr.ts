@@ -305,37 +305,6 @@
         <source></source>
         <translation></translation>
     </message>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation>Nombre total de médecins :</translation>
-    </message>
-    <message>
-        <source>Medical Treatment</source>
-        <translation>Traitement médical</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>Id Hopital:</translation>
-    </message>
-    <message>
-        <source>Bed Capacities:</source>
-        <translation>Capacité en lits:</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalTreatmentAttribute</name>
-    <message>
-        <source>Info/Medical Treatment attributes/Doctors</source>
-        <translation>Info/Attributs Traitement médical/Docteurs</translation>
-    </message>
-    <message>
-        <source>Info/Medical Treatment attributes/Hospital ID</source>
-        <translation>Info/Attributs Traitement médical/Id Hopital</translation>
-    </message>
-    <message>
-        <source>Info/Medical Treatment attributes/</source>
-        <translation>Info/Attributs Traitement médical/</translation>
-    </message>
 </context>
 <context>
     <name>MineAttribute</name>

@@ -113,7 +113,6 @@ private:
     unsigned int livingUrbanObjects_;
     unsigned int nominalCapacity_;
     unsigned int infrastructures_;
-    unsigned int medicalInfrastructures_;
     QMap< QString, unsigned int > accomodationCapacties_;
     //@}
 };

@@ -54,7 +54,6 @@ namespace kernel
     class FireAttribute_ABC : public ObjectExtension {};
     class BurnAttribute_ABC : public ObjectExtension {};
     class BurnSurfaceAttribute_ABC : public ObjectExtension {};
-    class MedicalTreatmentAttribute_ABC : public ObjectExtension {};
     class OccupantAttribute_ABC : public ObjectExtension {};
     class DelayAttribute_ABC : public ObjectExtension {};
     class FloodAttribute_ABC : public ObjectExtension {};

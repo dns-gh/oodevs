@@ -175,7 +175,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\InhabitantType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\KnowledgeGroupType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\MaterialCompositionType.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\MedicalTreatmentType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ModelLoaded.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\NBCAgent.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\NBCTypeAgent.cpp" />
@@ -345,7 +344,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\InhabitantType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeGroupType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MaterialCompositionType.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\MedicalTreatmentType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModelLoaded.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\NBCAgent.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\NBCTypeAgent.h" />

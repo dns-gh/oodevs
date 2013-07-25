@@ -1912,49 +1912,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>MedicalCapacityUpdateDialog</name>
-    <message>
-        <source>Update medical capacity</source>
-        <translation>Mise à jour capacité médical</translation>
-    </message>
-    <message>
-        <source>MedicalTreatment Type</source>
-        <translation>Type de traitement médical</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>Id Hopital:</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>Statut</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Statut:</translation>
-    </message>
-    <message>
-        <source>Doctors</source>
-        <translation>Docteurs</translation>
-    </message>
-    <message>
-        <source>Doctors:</source>
-        <translation>Docteurs:</translation>
-    </message>
-    <message>
-        <source>Bed Capacities (Patients/Baseline)</source>
-        <translation>Capacité de lits (patiens/unité)</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-</context>
-<context>
     <name>MedicalCollectAmbulancesListView</name>
     <message>
         <source>Collect ambulances</source>

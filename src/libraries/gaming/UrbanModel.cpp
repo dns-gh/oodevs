@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "UrbanModel.h"
 #include "InfrastructureAttribute.h"
-#include "MedicalTreatmentAttribute.h"
 #include "PhysicalAttribute.h"
 #include "ResourceNetwork.h"
 #include "ResourceNetworkModel.h"
@@ -111,12 +110,6 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
 // -----------------------------------------------------------------------------
 void UrbanModel::Update( const sword::ObjectUpdate& message )
 {
-    if( message.has_attributes() )
-    {
-        kernel::UrbanObject_ABC* pTerrainObject = Find( message.object().id() );
-        if( pTerrainObject && message.attributes().has_medical_treatment() && pTerrainObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
-            pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
-    }
     GetObject( message.object().id() ).Update( message );
 }
 

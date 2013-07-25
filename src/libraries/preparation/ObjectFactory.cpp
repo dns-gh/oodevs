@@ -30,7 +30,6 @@
 #include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
 #include "TrafficabilityAttribute.h"
-#include "MedicalTreatmentAttribute.h"
 #include "MineAttribute.h"
 #include "NBCAttribute.h"
 #include "ObstacleAttribute.h"
@@ -171,16 +170,6 @@ namespace
             result.Attach< gui::ResourceNetwork_ABC >( *new T( controllers, xis, false, urbans, objects, resources ) );
         }
     };
-
-    template<>
-    struct AttributeBuilder< MedicalTreatmentAttribute_ABC >
-    {
-        template< typename T, typename Helper >
-        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
-        {
-            result.Attach( *new T( xis, helper, dico, result ) );
-        }
-    };
 }
 
 #define BIND_ATTACH_ATTRIBUTE( CLASS, P1, P2, P3 ) \
@@ -241,7 +230,6 @@ void ObjectFactory::Initialize()
     factory->Register( "input-toxic-cloud"  ,
                        boost::bind( &AttributeBuilder< ToxicCloudAttribute_ABC >::Attach< InputToxicCloudAttribute >, _1, _2, _3 ) );
     factory->Register( "lodging"            , BIND_ATTACH_ATTRIBUTE( LodgingAttribute, _1, _2, _3 ) );
-    factory->Register( "medical-treatment"  , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( MedicalTreatmentAttribute, MedicalTreatmentType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "mine"               , BIND_ATTACH_ATTRIBUTE( MineAttribute, _1, _2, _3 ) );
     factory->Register( "trafficability"     , BIND_ATTACH_ATTRIBUTE( TrafficabilityAttribute, _1, _2, _3 ) );
     factory->Register( "nbc-agents"         , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( NBCAttribute, NBCAgent, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );

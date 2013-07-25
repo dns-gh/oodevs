@@ -11,7 +11,6 @@
 #include "UrbanModel.h"
 
 #include "InfrastructureAttribute.h"
-#include "MedicalTreatmentAttribute.h"
 #include "ResourceNetworkAttribute.h"
 #include "StaticModel.h"
 #include "StructuralStateAttribute.h"
@@ -341,8 +340,6 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
         UpdateCapacity< StructuralStateAttribute, kernel::StructuralStateAttribute_ABC >( xis, object );
     else if( capacity == "resources" )
         UpdateCapacity< ResourceNetworkAttribute, gui::ResourceNetwork_ABC >( xis, object );
-    else if( capacity == "medical-treatment" )
-        UpdateCapacity< MedicalTreatmentAttribute, kernel::MedicalTreatmentAttribute_ABC >( xis, object );
     else if( capacity == "infrastructure" )
         UpdateCapacity< InfrastructureAttribute, gui::Infrastructure_ABC >( xis, object );
 }

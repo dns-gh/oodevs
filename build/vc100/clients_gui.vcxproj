@@ -332,7 +332,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\InputPropagationPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LodgingPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticPrototype_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\MedicalTreatmentPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\MinePrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NBCPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObstaclePrototype_ABC.cpp" />
@@ -1753,7 +1752,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\MedicalTreatmentPrototype_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\MinePrototype_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Message>
