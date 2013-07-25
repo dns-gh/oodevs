@@ -1464,9 +1464,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MaterialAttribute.cpp">
       <Filter>Source Files\Entities\Objects\Attributes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalTreatmentAttribute.cpp">
-      <Filter>Source Files\Entities\Objects\Attributes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MineAttribute.cpp">
       <Filter>Source Files\Entities\Objects\Attributes</Filter>
     </ClCompile>
@@ -3891,9 +3888,6 @@
       <Filter>Source Files\Entities\Objects\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MaterialAttribute.h">
-      <Filter>Source Files\Entities\Objects\Attributes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalTreatmentAttribute.h">
       <Filter>Source Files\Entities\Objects\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MineAttribute.h">

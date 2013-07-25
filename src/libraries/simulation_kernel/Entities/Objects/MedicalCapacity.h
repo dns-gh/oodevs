@@ -14,8 +14,6 @@
 
 #include <queue>
 
-class MedicalTreatmentAttribute;
-
 // =============================================================================
 /** @class  MedicalCapacity
     @brief  MedicalCapacity

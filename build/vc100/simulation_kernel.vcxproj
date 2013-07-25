@@ -540,7 +540,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LodgingAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MaterialAttribute.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalTreatmentAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MineAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\NBCAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\NBCTypeAttribute.cpp" />
@@ -1409,7 +1408,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LodgingAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MaterialAttribute.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalTreatmentAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MineAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\NBCAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\NBCTypeAttribute.h" />

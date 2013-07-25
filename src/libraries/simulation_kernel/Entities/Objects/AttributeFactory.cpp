@@ -20,7 +20,6 @@
 #include "InputToxicCloudAttribute.h"
 #include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
-#include "MedicalTreatmentAttribute.h"
 #include "MineAttribute.h"
 #include "NBCAttribute.h"
 #include "BypassAttribute.h"
@@ -118,7 +117,6 @@ AttributeFactory::AttributeFactory()
     Register( "crossing-site", boost::bind( &AddBuilder< CrossingSiteAttribute >::Add, _1, _2 ) );
     Register( "fire", boost::bind( &AddBuilder< FireAttribute >::Add, _1, _2 ) );
     Register( "supply-route", boost::bind( &AddBuilder< SupplyRouteAttribute >::Add, _1, _2 ) );
-    Register( "medical-treatment", boost::bind( &AddBuilder< MedicalTreatmentAttribute >::Add, _1, _2 ) );
     Register( "interaction-height", boost::bind( &AddBuilder< InteractionHeightAttribute >::Add, _1, _2 ) );
     Register( "population-filter", boost::bind( &AddBuilder< PopulationAttribute >::Add, _1, _2 ) );
     Register( "stock", boost::bind( &AddBuilder< StockAttribute >::Add, _1, _2 ) );
@@ -226,9 +224,6 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                 break;*/
             case ObjectMagicAction::fire:
                 object.GetAttribute< FireAttribute >() = FireAttribute( attributes );
-                break;
-            case ObjectMagicAction::medical_treatment:
-                object.GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( attributes );
                 break;
             case ObjectMagicAction::interaction_height:
                 object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attributes );

@@ -18,7 +18,6 @@
 #include "CrossingSiteAttribute.h"
 #include "FloodAttribute.h"
 #include "InfrastructureCapacity.h"
-#include "MedicalTreatmentAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "StructuralCapacity.h"
 #include "UndergroundAttribute.h"
@@ -380,9 +379,6 @@ sword::ObjectMagicActionAck_ErrorCode MIL_Object::OnUpdate( const google::protob
             break;
         case sword::ObjectMagicAction::supply_route:
             GetAttribute< SupplyRouteAttribute >().OnUpdate( attribute );
-            break;
-        case sword::ObjectMagicAction::medical_treatment:
-            GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
             break;
         case sword::ObjectMagicAction::structural_state:
             Get< StructuralCapacity >().OnUpdate( attribute );

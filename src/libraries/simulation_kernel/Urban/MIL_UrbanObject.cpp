@@ -16,7 +16,6 @@
 #include "Entities/Objects/InfrastructureCapacity.h"
 #include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/MedicalCapacity.h"
-#include "Entities/Objects/MedicalTreatmentAttribute.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Network/NET_ASN_Tools.h"
@@ -463,8 +462,7 @@ void MIL_UrbanObject::WriteUrban( xml::xostream& xos ) const
         WriteCapacity< InfrastructureCapacity >( xos );
         WriteCapacity< ResourceNetworkCapacity >( xos );
         WriteCapacity< StructuralCapacity >( xos );
-        if( const MedicalTreatmentAttribute* attr = RetrieveAttribute< MedicalTreatmentAttribute >() )
-            attr->WriteODB( xos );
+
     }
     if( Count() )
     {

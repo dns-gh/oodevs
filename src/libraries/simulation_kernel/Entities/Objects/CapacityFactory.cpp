@@ -167,7 +167,6 @@ CapacityFactory::CapacityFactory()
     DoRegister( "intoxication", boost::bind( &AddBuilder< IntoxicationCapacity >::Add, _1, _2 ) );
     DoRegister( "lodging", boost::bind( &AddBuilder< LodgingCapacity >::Add, _1, _2 ) );
     DoRegister( "logistic", boost::bind( &AddBuilder< LogisticCapacity >::Add, _1, _2 ) );
-    DoRegister( "medical", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ) );
     DoRegister( "mobility", boost::bind( &AddBuilder< MobilityCapacity >::Add, _1, _2 ) );
     DoRegister( "perception", boost::bind( &AddBuilder< PerceptionCapacity >::Add, _1, _2 ) );
     DoRegister( "population-filter", boost::bind( &AddBuilder< PopulationFilterCapacity >::Add, _1, _2 ) );
