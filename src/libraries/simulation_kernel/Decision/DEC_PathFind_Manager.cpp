@@ -136,7 +136,7 @@ void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
             }
             else
                 ++it;
-        for( auto it = shortRequests_.begin(); it != shortRequests_.end(); ++it )
+        for( auto it = shortRequests_.begin(); it != shortRequests_.end(); )
             if( ( *it )->IsPathForUnit( pion ) )
             {
                 paths.push_back(  ( *it )->GetPath() );
