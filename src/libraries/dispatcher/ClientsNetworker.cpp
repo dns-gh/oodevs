@@ -199,7 +199,14 @@ void ClientsNetworker::Send( const sword::AuthenticationToClient& msg )
 {
     try
     {
-        for( auto it = clients_.begin(); it != clients_.end(); ++it )
+        // Obviously we must send authentication responses to unauthenticated
+        // clients. The connected_profile_list passthrough is historical and
+        // and might be removed in the future.
+        const T_Clients* receivers = &internals_;
+        if( msg.message().has_authentication_response() ||
+                msg.message().has_connected_profile_list() )
+            receivers = &clients_;
+        for( auto it = receivers->begin(); it != receivers->end(); ++it )
             it->second->Send( msg );
     }
     catch( const std::exception& e )
