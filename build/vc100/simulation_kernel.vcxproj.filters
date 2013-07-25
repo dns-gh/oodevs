@@ -1509,9 +1509,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FloodEffectManipulator.cpp">
       <Filter>Source Files\Entities\Objects\Models</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_MedicalTreatmentType.cpp">
-      <Filter>Source Files\Entities\Objects\Models</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.cpp">
       <Filter>Source Files\Entities\Objects\Models</Filter>
     </ClCompile>
@@ -3939,9 +3936,6 @@
       <Filter>Source Files\Entities\Objects\Models</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FloodEffectManipulator.h">
-      <Filter>Source Files\Entities\Objects\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_MedicalTreatmentType.h">
       <Filter>Source Files\Entities\Objects\Models</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.h">

@@ -149,7 +149,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\InteractionHeightAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LodgingAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogisticAttribute.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\MedicalTreatmentAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\MineAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\NBCAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\NBCTypeAttribute.cpp" />
@@ -279,7 +278,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\InteractionHeightAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LodgingAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogisticAttribute.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\MedicalTreatmentAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\MineAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\NBCAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\NBCTypeAttribute.h" />

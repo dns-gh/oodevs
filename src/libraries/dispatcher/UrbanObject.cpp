@@ -15,7 +15,6 @@
 #include "ResourceNetworkAttribute.h"
 #include "StructureAttribute.h"
 #include "UsagesAttribute.h"
-#include "MedicalTreatmentAttribute.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -34,7 +33,6 @@ UrbanObject::UrbanObject( Model_ABC& /*model*/, const sword::UrbanCreation& msg 
     , hasInfrastructures_ ( false )
     , hasResourceNetwork_ ( false )
     , hasStructure_       ( false )
-    , hasMedicalTreatment_( false )
 {
     Initialize( msg.attributes() );
     AddExtension( *this );
@@ -182,11 +180,6 @@ void UrbanObject::DoUpdate( const sword::ObjectUpdate& msg )
 {
     if( msg.has_attributes() )
     {
-        if( msg.attributes().has_medical_treatment() && !hasMedicalTreatment_ )
-        {
-            hasMedicalTreatment_ = true;
-            AddObjectAttribute( new MedicalTreatmentAttribute( msg.attributes() ) );
-        }
         optionals_.objectAttributesPresent = 1;
         std::for_each( objectAttributes_.begin(), objectAttributes_.end(),
             boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes() ) ) );

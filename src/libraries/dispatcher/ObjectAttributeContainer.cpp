@@ -22,7 +22,6 @@
 #include "InteractionHeightAttribute.h"
 #include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
-#include "MedicalTreatmentAttribute.h"
 #include "MineAttribute.h"
 #include "NBCAttribute.h"
 #include "NBCTypeAttribute.h"
@@ -121,8 +120,6 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< BurnAttribute >( message );
     if( message.has_burn_surface() )
         CreateOrUpdate< BurnSurfaceAttribute >( message );
-    if( message.has_medical_treatment() )
-        CreateOrUpdate< MedicalTreatmentAttribute >( message );
     if( message.has_effect_delay() )
         CreateOrUpdate< DelayAttribute >( message );
     if( message.has_life_time() )

@@ -67,7 +67,6 @@
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Objects/MIL_FireClass.h"
-#include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
 #include "Objects/MIL_DisasterType.h"
 #include "Objects/MIL_ObjectFactory.h"
@@ -176,7 +175,6 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_AutomateType               >( config, "automats"           );
     InitializeType< MIL_KnowledgeGroupType         >( config, "knowledge-groups"   );
     InitializeType< MIL_NbcAgentType               >( config, "nbc"                );
-    InitializeMedicalTreatment( config, time );
     InitializeType< PHY_SupplyResourcesAlarms      >( config, "supply"             );
     InitializeType< logistic::SupplyConvoyConfig   >( config, "supply"             );
     InitializeType< PHY_MedicalResourcesAlarms     >( config, "health"             );
@@ -273,15 +271,5 @@ void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, 
 void MIL_EntityManagerStaticMethods::InitializeWeapons( MIL_Config& config, const MIL_Time_ABC& time )
 {
     const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ) );
-    config.AddFileToCRC( fileLoaded );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManagerStaticMethods::InitializeMedicalTreatment
-// Created: JCR 2010-10-26
-// -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeMedicalTreatment( MIL_Config& config, const MIL_Time_ABC& time )
-{
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "medical-treatment", boost::bind( &MIL_MedicalTreatmentType::Initialize, _1, boost::cref( time ) ) );
     config.AddFileToCRC( fileLoaded );
 }

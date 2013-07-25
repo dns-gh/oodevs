@@ -50,7 +50,6 @@ protected:
 
     static void InitializeFuneral         ( MIL_Config& config, const MIL_Time_ABC& time );
     static void InitializeMedical         ( MIL_Config& config );
-    static void InitializeMedicalTreatment( MIL_Config& config, const MIL_Time_ABC& time );
     static void InitializeComposantes     ( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
     static void InitializeWeapons         ( MIL_Config& config, const MIL_Time_ABC& time );
     static void InitializeObjects         ( MIL_Config& config, MIL_ObjectFactory& objectFactory );

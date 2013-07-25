@@ -105,7 +105,6 @@ private:
     bool hasInfrastructures_;
     bool hasResourceNetwork_;
     bool hasStructure_;
-    bool hasMedicalTreatment_;
     bool hasUrbanObject_;
     T_UrbanObjectAttributes attributes_;
     T_ObjectAttributes objectAttributes_;

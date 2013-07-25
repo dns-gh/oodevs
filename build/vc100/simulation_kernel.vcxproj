@@ -555,7 +555,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurnEffectManipulator.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FireClass.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FloodEffectManipulator.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_MedicalTreatmentType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NBCType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ToxicEffectManipulator.cpp" />
@@ -1425,7 +1424,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurnEffectManipulator.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FireClass.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_FloodEffectManipulator.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_MedicalTreatmentType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NBCType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ToxicEffectManipulator.h" />

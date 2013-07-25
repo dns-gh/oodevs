@@ -222,9 +222,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\LogisticAttribute.cpp">
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\MedicalTreatmentAttribute.cpp">
-      <Filter>Source Files\Model\Object\Attributes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\MineAttribute.cpp">
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClCompile>
@@ -597,9 +594,6 @@
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\LogisticAttribute.h">
-      <Filter>Source Files\Model\Object\Attributes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\MedicalTreatmentAttribute.h">
       <Filter>Source Files\Model\Object\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\MineAttribute.h">

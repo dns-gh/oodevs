@@ -87,7 +87,6 @@
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Objects/MIL_FireClass.h"
-#include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"
@@ -175,7 +174,6 @@ void TerminateMilitarySingletons()
     MIL_NbcAgentType              ::Terminate();
     MIL_FireClass                 ::Terminate();
     MIL_DisasterType              ::Terminate();
-    MIL_MedicalTreatmentType      ::Terminate();
     MIL_KnowledgeGroupType        ::Terminate();
     MIL_PopulationType            ::Terminate();
     MIL_InhabitantType            ::Terminate();

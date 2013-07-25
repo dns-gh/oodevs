@@ -1719,9 +1719,8 @@ message ObjectAttributeBurnSurface {
     repeated BurningCell burning_cells = 2;
 }
 
-/** @struct MedicalTreatmentBedCapacity
-    @brief Defines a medical treatment bed capacity
-*/
+//! DEPRECATED in 5.3
+//!
 message MedicalTreatmentBedCapacity {
     //! The type identifier, see Data/MedicalTreatment.xml
     required int32 type_id          = 1;
@@ -1733,9 +1732,8 @@ message MedicalTreatmentBedCapacity {
     optional uint32 emergency_count = 4;
 }
 
-/** @struct ObjectAttributeMedicalTreatment
-    @brief Defines an object attribute medical treatment
-*/
+//! DEPRECATED in 5.3
+//!
 message ObjectAttributeMedicalTreatment {
     /** @enum EnumMedicalTreatmentStatus
         @brief Defines the different states of a medical treatment
@@ -2044,6 +2042,7 @@ message UnitMagicAction {
         //! (see PullFlowParameters message definition)
         log_supply_pull_flow              = 30;
         //! A create wound magic action
+        //! @deprecated
         create_wound                      = 31;
         //! A change of health state on inhabitant magic action
         inhabitant_change_health_state    = 32;
