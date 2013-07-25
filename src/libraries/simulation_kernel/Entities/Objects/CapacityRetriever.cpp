@@ -92,7 +92,6 @@ const ObjectCapacity_ABC* CapacityRetriever::RetrieveCapacity( const MIL_ObjectT
     RETRIEVE( "intoxication", IntoxicationCapacity );
     RETRIEVE( "lodging", LodgingCapacity );
     RETRIEVE( "logistic", LogisticCapacity );
-    RETRIEVE( "medical-treatment", MedicalCapacity );
     RETRIEVE( "mobility", MobilityCapacity );
     RETRIEVE( "perception", PerceptionCapacity );
     RETRIEVE( "population-filter", PopulationFilterCapacity );
