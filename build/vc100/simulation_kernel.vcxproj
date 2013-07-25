@@ -280,9 +280,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\HumanFactors\PHY_Stress.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Tiredness.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Poison.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_HumanProtection.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_Dotation.cpp" />
@@ -1072,9 +1070,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\humanfactors\PHY_Tiredness.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Poison.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_HumanProtection.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_Dotation.h" />

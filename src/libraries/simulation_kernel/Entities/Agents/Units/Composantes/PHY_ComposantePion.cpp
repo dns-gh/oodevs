@@ -18,7 +18,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_HumansComposante.h"
-#include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
@@ -71,7 +70,6 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
-    pType_->InstanciateProtections( std::back_inserter( protections_ ) );
     pRole_->NotifyComposanteAdded( *this, 0 );
     assert( pHumans_->IsViable() ); //$$$ Pre-check in PHY_UnitType
 }
@@ -109,8 +107,6 @@ PHY_ComposantePion::~PHY_ComposantePion()
 {
     for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
         delete *it;
-    for( auto it = protections_.begin(); it != protections_.end(); ++it )
-        delete *it;
     for( auto it = sensors_.begin(); it != sensors_.end(); ++it )
         delete *it;
     assert( pRole_ );
@@ -138,7 +134,6 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
     assert( pType_ );
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
-    pType_->InstanciateProtections( std::back_inserter( protections_ ) );
     file >> const_cast< bool& >( bMajor_ )
          >> const_cast< bool& >( bLoadable_ )
          >> const_cast< bool& >( bCanBePartOfConvoy_ )

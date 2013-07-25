@@ -33,7 +33,6 @@ class PHY_InjuredHuman;
 class PHY_AttritionData;
 class PHY_Breakdown;
 class PHY_FireDamages_Agent;
-class PHY_HumanProtection;
 class PHY_HumanRank;
 class PHY_MaintenanceComposanteState;
 class PHY_RoleInterface_Composantes;
@@ -276,7 +275,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< PHY_Weapon* >          T_WeaponVector;
-    typedef std::vector< PHY_HumanProtection* > T_HumanProtectionVector;
     typedef std::vector< PHY_Sensor* >          T_SensorVector;
     //@}
 
@@ -304,7 +302,6 @@ private:
     bool bUsedForLogistic_;
     bool bRepairEvacuationNoMeansChecked_;
     T_WeaponVector weapons_;
-    T_HumanProtectionVector protections_;
     T_SensorVector sensors_;
     HumansComposante_ABC* pHumans_;
     // Breakdowns

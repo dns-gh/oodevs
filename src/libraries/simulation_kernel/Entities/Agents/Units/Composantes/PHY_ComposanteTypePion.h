@@ -40,7 +40,6 @@ class PHY_ConsumptionType;
 class PHY_DotationConsumptions;
 class PHY_DotationNature;
 class Human_ABC;
-class PHY_HumanProtection;
 class PHY_MaintenanceLevel;
 class PHY_RadarType;
 class PHY_RolePion_Composantes;
@@ -75,7 +74,6 @@ public:
     PHY_ComposantePion& InstanciateComposante( PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const;
     void InstanciateWeapons( std::back_insert_iterator< std::vector< PHY_Weapon* > > inserter ) const;
     void InstanciateSensors( std::back_insert_iterator< std::vector< PHY_Sensor* > > inserter ) const;
-    void InstanciateProtections( std::back_insert_iterator< std::vector< PHY_HumanProtection* > > inserter ) const;
     //@}
 
     //! @name Dotations
@@ -254,7 +252,6 @@ private:
               double             rProbabilityBound_;
     };
     typedef std::vector< sBreakdownTypeProbability >   T_BreakdownTypeProbabilityVector;
-    typedef std::vector< const PHY_HumanProtection* >  T_ListOfHumanProtection;
     typedef std::vector< const PHY_ActiveProtection* > T_ActiveProtectionVector;
     //@}
 
@@ -264,7 +261,6 @@ private:
     void InitializeAttritionBreakdownTypes( xml::xistream& xis );
     void InitializeBreakdown              ( xml::xistream& xis );
     void InitializeConsumptions           ( xml::xistream& xis );
-    void InitializeHumanProtections       ( xml::xistream& xis );
     void InitializeLogistic               ( xml::xistream& xis );
     void InitializeLogisticMaintenance    ( xml::xistream& xis );
     void InitializeLogisticMedical        ( xml::xistream& xis );
@@ -289,7 +285,6 @@ private:
     static void ReadElement      ( xml::xistream& xis, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
     void InitializeBreakdownTypes( xml::xistream& xis );
     void ReadWeaponSystem        ( xml::xistream& xis );
-    void ReadHumanProtection     ( xml::xistream& xis );
     void ReadSensor              ( xml::xistream& xis );
     void ReadRadar               ( xml::xistream& xis );
     void ReadTransportCrew       ( xml::xistream& xis );
@@ -370,9 +365,6 @@ private:
     const PHY_DotationNature* pStockTransporterNature_;
           double              rStockTransporterWeightCapacity_;
           double              rStockTransporterVolumeCapacity_;
-
-    // Human Protections
-    T_ListOfHumanProtection humanProtections_;
 
     // Active Protections
     T_ActiveProtectionVector activeProtections_;

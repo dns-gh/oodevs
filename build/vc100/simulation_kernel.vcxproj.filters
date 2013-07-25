@@ -67,9 +67,6 @@
     <Filter Include="Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries">
       <UniqueIdentifier>{2501c7c8-8e90-4a1a-8b82-dc37b480b3d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Agents\Units\Humans\Injured Human\Protections">
-      <UniqueIdentifier>{51253b7b-7acc-4038-864c-16167fbb8658}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Entities\Agents\Units\Dotations">
       <UniqueIdentifier>{87586b2d-5031-4de4-ab98-095bdf97d659}</UniqueIdentifier>
     </Filter>
@@ -723,14 +720,8 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_InjuredHuman.cpp">
       <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Poison.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.cpp">
       <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_HumanProtection.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Protections</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.cpp">
       <Filter>Source Files\Entities\Agents\Units\Dotations\Capacities</Filter>
@@ -2918,14 +2909,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_ABC.h">
       <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Poison.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.h">
       <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_HumanProtection.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Protections</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCapacities.h">
       <Filter>Source Files\Entities\Agents\Units\Dotations\Capacities</Filter>
