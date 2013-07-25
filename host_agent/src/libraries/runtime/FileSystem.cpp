@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 #define  __STDC_LIMIT_MACROS
+#define  NOMINMAX
 #include "FileSystem.h"
 
 #include "cpplog/cpplog.hpp"
@@ -24,6 +25,7 @@
 #include <stdint.h>
 #include <fcntl.h>
 #include <iostream>
+
 
 #ifdef WIN32
 #include <io.h>
@@ -305,6 +307,45 @@ std::string FileSystem::ReadFile( const Path& path ) const
     }
     return std::string();
 }
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::ReadFileWithLimitSize
+// Created: NPT 2013-07-25
+// -----------------------------------------------------------------------------
+void FileSystem::ReadFileWithLimitSize( io::Writer_ABC& sink, const Path& path, int limitSize ) const
+{
+    try
+    {
+        char buffer[ 4 * 1024 ];
+        boost::filesystem::ifstream ifs( path );
+        if( ifs.fail() )
+            return;
+        if( limitSize )
+        {
+            ifs.seekg ( 0, ifs.end );
+            int fileSize = (int)ifs.tellg();
+            ifs.seekg ( 0, ifs.beg );
+            int pos = std::max( fileSize - limitSize, 0 );
+            if( pos > 0 )
+            {
+                ifs.seekg( pos );
+                while( ifs.get() != '\n' )
+                    continue;
+            }
+        }
+        while( !ifs.eof() )
+        {
+            ifs.read( buffer, sizeof( buffer ) );
+            sink.Write( buffer, ifs.gcount() );
+        }
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[file] " << err.what();
+        LOG_ERROR( log_ ) << "[file] Unable to read file " << path.string();
+    }
+}
+
 
 namespace
 {

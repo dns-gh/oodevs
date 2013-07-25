@@ -29,60 +29,44 @@ class LogView extends Backbone.View
             @download_log @log_name
 
     events:
-        "click .Sim"                : "download_sim_log",
-        "click .Messages"           : "download_messages_log",
-        "click .web_control_plugin" : "download_web_control_plugin_log",
-        "click .Protobuf"           : "download_protobuf_log",
-        "click .Dispatcher"         : "download_dispatcher_log"
+        "click .logfile"            : "download_logfile",
         "click .download"           : "download_full_log"
 
-    download_log: (filename)=>
+    set_url: (filename, maxsize) =>
         uri = get_url "/api/download_session_log?"
-        uri += "logfile=" + filename
-        uri += "&limitsize=" + 0
-        uri += "&node=" + uuid
-        uri += "&id=" + @session
+        params = $.param( { logfile: filename, limitsize: maxsize, node: uuid, id: @session } )
+        return uri + params
+
+    download_log: (filename)=>
+        uri = @set_url filename, 15000
         @log_content = get_file_content uri
         @log_name = filename
         @render()
 
     download_full_log: =>
-        uri = get_url "/api/download_session_log?"
-        uri += "logfile=" + @log_name
-        uri += "&limitsize=" + 2000000
-        uri += "&node=" + uuid
-        uri += "&id=" + @session
+        uri = @set_url @log_name, 0
         load_url uri
 
     render: =>
         $(@el).empty()
-        if( !@log_list || !@log_list.length )
+        if !@log_list || !@log_list.length
             return
         for k, v in @log_list
             if k.file == @log_name
                 k.active = true
             else
                 delete k.active
-        data = []
-        data.filename = @log_name
-        data.log_text = @log_content
-        data.has_log = @log_content != ""
-        data.log_list = @log_list
+        data = {
+            filename: @log_name,
+            log_text: @log_content,
+            has_log: @log_content != "",
+            log_list: @log_list
+        }
         $(@el).html log_template data
 
-    download_sim_log: =>
-        @download_log "Sim.log"
-
-    download_messages_log: =>
-        @download_log "Messages.log"
-    
-    download_dispatcher_log: =>
-        @download_log "Dispatcher.log"
-
-    download_web_control_plugin_log: =>
-        @download_log "web_control_plugin.log"
-    
-    download_protobuf_log: =>
-        @download_log "Protobuf.log"
+    download_logfile: (evt) =>
+        el = evt.currentTarget
+        name = el.hash.substr(1);
+        @download_log name
 
 log_view = new LogView

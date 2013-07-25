@@ -1158,19 +1158,6 @@ bool Session::DownloadLogFile( web::Chunker_ABC& dst, const std::string& logFile
     if( !deps_.fs.Exists( GetOutput() / logFile ) )
         return false;
 
-    QString content = deps_.fs.ReadFile( GetOutput() / logFile ).c_str();
-    if( limitSize == 0 ) //Take last 100 lines
-    {
-        QStringList list = content.split( "\n" );
-        if( list.count() > 100 )
-            list.erase( list.begin(), list.end() - 100 );
-        content = list.join( "\n" );
-        sink.Write( content.toStdString().c_str(), content.size() );
-    }
-    else // take size limit into account
-    {
-        size_t startFile = content.size() < limitSize ? 0 : content.size() - limitSize;
-        sink.Write( content.toStdString().c_str() + startFile, content.size() < limitSize ? content.size() : limitSize );
-    }
+    deps_.fs.ReadFileWithLimitSize( sink, GetOutput() / logFile, limitSize );
     return true;
 }
