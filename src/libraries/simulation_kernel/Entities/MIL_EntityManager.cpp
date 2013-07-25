@@ -1523,16 +1523,20 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
             quotasTypes = superiorLink->OnReceiveChangeQuotas( quotas );
         //$$ throw sinon ??
 
-        std::set< MIL_Automate* > unavailableSuppliers;
         for( std::set< const PHY_DotationCategory* >::iterator typeIt = quotasTypes.begin(); typeIt != quotasTypes.end(); ++typeIt )
         {
             bool bDeployed = false;
             MIL_Automate* pStockAutomat = pSupplier->GetStockAutomat( **typeIt, bDeployed );
             if( pStockAutomat && !bDeployed )
-                unavailableSuppliers.insert( pStockAutomat );
+            {
+                MIL_Automate* pAutomateTC2 = TaskerToAutomat( *this, message.tasker() );
+                if( pAutomateTC2 )
+                    MIL_Report::PostEvent( *pAutomateTC2, MIL_Report::eRC_SupplierUnavailable );
+                else if( MIL_Formation* pSuppliedFormation = TaskerToFormation( *this, message.tasker() ) )
+                    MIL_Report::PostEvent( *pSuppliedFormation, MIL_Report::eRC_SupplierUnavailable );
+                break;
+            }
         }
-        for( std::set< MIL_Automate* >::iterator supplierIt = unavailableSuppliers.begin(); supplierIt != unavailableSuppliers.end(); ++supplierIt )
-            MIL_Report::PostEvent( **supplierIt, MIL_Report::eRC_SupplierUnavailable );
     }
     catch( NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >& e )
     {
