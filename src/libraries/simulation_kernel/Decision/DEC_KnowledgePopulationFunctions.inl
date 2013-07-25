@@ -12,6 +12,7 @@
 #include "DEC_FunctionsTools.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 
 // -----------------------------------------------------------------------------
@@ -29,6 +30,23 @@ std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( co
             return std::pair< float, int >( float( pKnowledge->GetDominationState() ), knowledgeId );
     }
     return std::pair< float, int >( 0.f, knowledgeId );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetBarycenter
+// Created: JSR 2013-07-25
+// -----------------------------------------------------------------------------
+template< typename T >
+boost::shared_ptr< MT_Vector2D > DEC_KnowledgePopulationFunctions::GetBarycenter( const T& caller, unsigned int knowledgeId )
+{
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return pKnowledge->GetPopulationKnown().GetBarycenter();
+    }
+    return boost::shared_ptr< MT_Vector2D >();
 }
 
 // -----------------------------------------------------------------------------
