@@ -78,6 +78,7 @@ namespace movement
         {
             entity[ "movement/position/x" ] = position.X();
             entity[ "movement/position/y" ] = position.Y();
+            entity[ "movement/has-been-teleported" ] = false;
         }
         void ConfigureImpossiblePathfind()
         {

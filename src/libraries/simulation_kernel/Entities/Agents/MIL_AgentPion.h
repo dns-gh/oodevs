@@ -115,6 +115,7 @@ public:
     virtual bool IsAutonomous() const; // Drones
     virtual bool IsJammed() const;
     virtual bool IsLogisticJammed() const;
+    virtual bool HasBeenTeleported() const;
     //@}
 
     //! @name logistic
@@ -191,6 +192,7 @@ private:
     void UpdatePhysicalState();
     void CancelCurrentMission();
     virtual void SpecializedDelete();
+    void ResetTeleported();
     //@}
 
     //! @name Magic actions
@@ -260,6 +262,7 @@ private:
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     std::auto_ptr< MIL_Color >                pColor_;
     std::set< const DEC_Agent_Path* >         agentPaths_;
+    bool                                      teleported_;
     //@}
 };
 

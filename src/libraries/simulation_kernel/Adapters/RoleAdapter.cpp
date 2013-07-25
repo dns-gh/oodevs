@@ -51,6 +51,7 @@ namespace
         entity[ "movement/speed-modifier" ] = pion.GetType().GetUnitType().GetSpeedModifier();
         entity[ "movement/foot-print-radius" ] = pion.GetType().GetUnitType().GetFootprintRadius();
         entity[ "movement/traffic-modifier" ] = 1.;
+        entity[ "movement/has-been-teleported" ] = false;
         entity[ "identifier" ] = pion.GetID();
         entity[ "can-fly" ] = pion.GetType().GetUnitType().CanFly();
         entity[ "is-autonomous" ] = pion.IsAutonomous();

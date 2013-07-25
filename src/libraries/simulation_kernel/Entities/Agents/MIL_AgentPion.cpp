@@ -113,6 +113,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pColor_              ( new MIL_Color( xis ) )
     , app6Symbol_          ( "" )
     , level_               ( "" )
+    , teleported_          ( false )
 {
     automate.RegisterPion( *this );
     xis >> xml::optional
@@ -146,6 +147,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pExtensions_         ( new MIL_DictionaryExtensions() )
     , app6Symbol_          ( "" )
     , level_               ( "" )
+    , teleported_          ( false )
 {
     pColor_.reset( new MIL_Color( automate.GetColor() ) );
     automate.RegisterPion( *this );
@@ -170,6 +172,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , pColor_              ( 0 )
     , app6Symbol_          ( "" )
     , level_               ( "" )
+    , teleported_          ( false )
 {
     // NOTHING
 }
@@ -582,6 +585,7 @@ void MIL_AgentPion::UpdatePhysicalState()
 void MIL_AgentPion::UpdateState()
 {
     UpdatePhysicalState();
+    ResetTeleported();
 }
 
 // -----------------------------------------------------------------------------
@@ -688,6 +692,24 @@ bool MIL_AgentPion::IsLogisticJammed() const
 {
     MIL_AutomateLOG* pTC2 = GetLogisticHierarchy().GetPrimarySuperior();
     return ( pTC2 && pTC2->GetPC() && pTC2->GetPC()->IsJammed() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::HasBeenTeleported
+// Created: MMC 2013-07-24
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::HasBeenTeleported() const
+{
+    return teleported_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::HasBeenTeleported
+// Created: MMC 2013-07-24
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::ResetTeleported()
+{
+    teleported_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -904,7 +926,7 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
     CallRole( &PHY_RoleAction_MovingUnderground::GetOutFromUndergroundNetwork );
     CallRole( &PHY_RoleInterface_Location::MagicMove, vNewPos );
     CallRole( &PHY_RolePion_UrbanLocation::MagicMove, vNewPos );
-    CancelCurrentMission();
+    teleported_ = true;
 }
 
 // -----------------------------------------------------------------------------

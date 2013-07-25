@@ -164,6 +164,11 @@ void PHY_ActionMove::CreateNewPath()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::Execute()
 {
+    if( pion_.HasBeenTeleported() )
+    {
+        Callback( static_cast< int >( DEC_PathWalker::eTeleported) );
+        return;
+    }
     if( !pion_.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed() ) // $$$$ ABR 2011-12-19: not IsUndeployed == IsDeployed || IsDeploying || IsUndeploying -> Can't move, no call back.
         return;
     if( !pMainPath_.get() )
@@ -177,7 +182,7 @@ void PHY_ActionMove::Execute()
     {
         // Recompute Pathfind in order to avoid obstacle or to get back previous path after suspension.
         CreateNewPath();
-            }
+    }
 
     executionSuspended_ = false;
     isBlockedByObject_ = false;

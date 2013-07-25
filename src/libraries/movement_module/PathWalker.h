@@ -52,7 +52,8 @@ public:
         eAlreadyMoving,
         eItineraireMustBeJoined,
         ePartialPath,
-        eBlockedByObject
+        eBlockedByObject,
+        eTeleported
     };
     //@}
 

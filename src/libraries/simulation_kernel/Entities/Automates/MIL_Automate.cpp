@@ -1071,10 +1071,6 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
     const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         ( **itPion ).OnReceiveMagicActionMoveTo( ( **itPion ).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
-    DEC_AutomateDecision* roleDec = RetrieveRole< DEC_AutomateDecision >();
-    if( roleDec )
-        roleDec->Reset( GetName() );
-    pOrderManager_->CancelMission();
 }
 
 // -----------------------------------------------------------------------------

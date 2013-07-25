@@ -191,6 +191,8 @@ eEtatActionDeplacement_NonAutorise = 4
 eEtatActionDeplacement_DejaEnDeplacement = 5
 eEtatActionDeplacement_ItineraireDoitEtreRejoint = 6
 eEtatActionDeplacement_CheminPartiel = 7
+eEtatActionDeplacement_BloqueParObjet = 8
+eEtatActionDeplacement_Teleporte = 9
 
 --- IndirectFireState
 eIndirectFireState_Running = 0

@@ -490,6 +490,7 @@ namespace
         movement[ "is-ready" ] = pion.CallRole( &RoleAction_Moving::IsReady, true );
         movement[ "can-be-traffic-impacted" ] = pion.CanBeImpactedByTraffic();
         movement[ "can-interact-with-traffic" ] = pion.CanInteractWithTraffic();
+        movement[ "has-been-teleported" ] = pion.HasBeenTeleported();
         entity[ "knowledges" ] = pion.GetKnowledgeGroup()->GetId();
         UpdatePerceptions( entity[ "perceptions/notifications" ] );
         core::Model& components = entity[ "components" ];

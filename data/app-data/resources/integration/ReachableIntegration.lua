@@ -377,10 +377,10 @@ end
 integration.updateMoveToIt = function( objective, pathType )
     local etat = objective[ myself ].etat
 
-    -- -------------------------------------------------------------------------------- 
+    -- --------------------------------------------------------------------------------
     -- End of movement, check if objective is traficable
-    -- --------------------------------------------------------------------------------    
-    if etat == eEtatActionDeplacement_Termine then -- obective is reached or sub-objective if unit needs to dismount 
+    -- --------------------------------------------------------------------------------
+    if etat == eEtatActionDeplacement_Termine then -- obective is reached or sub-objective if unit needs to dismount
         -- Specific case if agent is blocked by an obstacle
         if myself.canBeBlocked then
             myself.blocked = true
@@ -427,7 +427,7 @@ integration.updateMoveToIt = function( objective, pathType )
         
             return false
         end
-        return true 
+        return true
 
     -- -------------------------------------------------------------------------------- 
     -- Movement pause: other movement action is active or agent is mounting
@@ -493,6 +493,10 @@ integration.updateMoveToIt = function( objective, pathType )
             DEC_Trace( "Already moving" )
             objective[ myself ].rcDone = etat
         end
+    elseif etat == eEtatActionDeplacement_Teleporte then
+        DEC__StopAction( objective[ myself ].moveAction )
+        integration.stopMoveToIt( objective )
+        integration.startMoveToIt( objective, pathType )
     end
 
     return false

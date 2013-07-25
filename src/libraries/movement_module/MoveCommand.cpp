@@ -156,6 +156,9 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     const MT_Vector2D position( movement[ "position/x" ], movement[ "position/y" ] );
     pathWalker_->Clean();  // $$$$ _RC_ VPR 2012-01-09: RAII this !
 
+    if( movement[ "has-been-teleported" ] )
+        return PostCallback( PathWalker::eTeleported );
+
     if( entity[ "is-deployed" ] ) // $$$$ ABR 2011-12-19: not IsUndeployed == IsDeployed || IsDeploying || IsUndeploying -> Can't move, no call back.
         return;
 
