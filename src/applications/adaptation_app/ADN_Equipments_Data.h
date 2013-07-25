@@ -327,17 +327,6 @@ public:
 
     typedef ADN_Type_Vector_ABC< ActiveProtectionsInfos > T_ActiveProtectionsInfos_Vector;
 
-    //*****************************************************************************
-    class HumanProtectionInfos : public ADN_Ref_ABC
-    {
-    public:
-                 HumanProtectionInfos();
-        virtual ~HumanProtectionInfos() {}
-
-        void CopyFrom( HumanProtectionInfos& src );
-        void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
-    };
 
     //*****************************************************************************
     class ActiveProtectionInfos : public ADN_Ref_ABC
@@ -507,7 +496,6 @@ public:
         T_ObjectInfos_Vector vObjects_;
         ConsumptionsInfos consumptions_;
         ResourceInfos resources_;
-        HumanProtectionInfos humanProtections_;
         T_ActiveProtectionsInfos_Vector vActiveProtections_;
         BreakdownGroupInfos attritionBreakdowns_;
         BreakdownGroupInfos randomBreakdowns_;

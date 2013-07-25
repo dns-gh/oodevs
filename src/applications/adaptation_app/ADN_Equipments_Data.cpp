@@ -862,43 +862,6 @@ void ADN_Equipments_Data::WeaponInfos::WriteArchive( xml::xostream& output )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Data::HumanProtectionInfos
-// Created: JCR 2009-05-17
-// -----------------------------------------------------------------------------
-ADN_Equipments_Data::HumanProtectionInfos::HumanProtectionInfos()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Data::CopyFrom
-// Created: JCR 2009-05-17
-// -----------------------------------------------------------------------------
-void ADN_Equipments_Data::HumanProtectionInfos::CopyFrom( HumanProtectionInfos& )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Data::ReadArchive
-// Created: JCR 2009-05-17
-// -----------------------------------------------------------------------------
-void ADN_Equipments_Data::HumanProtectionInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::optional >> xml::start( "human-protections" )
-                             >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Data::WriteArchive
-// Created: JCR 2009-05-17
-// -----------------------------------------------------------------------------
-void ADN_Equipments_Data::HumanProtectionInfos::WriteArchive( xml::xostream& output )
-{
-    output << xml::start( "human-protections" ) << xml::end;
-}
-
 //-----------------------------------------------------------------------------
 // Name: ActiveProtectionsInfos::ActiveProtectionsInfos
 // Created: FDS 10-02-24
@@ -1930,8 +1893,6 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output )
                  << xml::attribute( "engineering", nPowerEngineering_ )
                << xml::end;
     }
-
-    humanProtections_.WriteArchive( output );
 
     output << xml::start( "objects" );
     for( auto itObject = vObjects_.begin(); itObject != vObjects_.end(); ++itObject )
