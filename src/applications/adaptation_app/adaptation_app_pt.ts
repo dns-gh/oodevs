@@ -3279,10 +3279,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Medical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Has an effect on</source>
         <translation type="unfinished"></translation>
     </message>

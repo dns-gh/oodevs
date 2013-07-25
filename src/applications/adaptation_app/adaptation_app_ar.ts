@@ -3461,10 +3461,6 @@ PNG (*.png)
         <translation type="unfinished">كائن</translation>
     </message>
     <message>
-        <source>Medical</source>
-        <translation type="unfinished">الطبية</translation>
-    </message>
-    <message>
         <source>Height interaction</source>
         <translation type="unfinished">ذروة التفاعل</translation>
     </message>

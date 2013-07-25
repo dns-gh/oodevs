@@ -438,7 +438,6 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename, const tools::Loader_ABC
     const ADN_Project_Data::DataInfos& infos = projectData_->GetDataInfos();
     unchangedFiles.push_back( infos.szPathfinder_ );
     unchangedFiles.push_back( infos.szObjectNames_ );
-    unchangedFiles.push_back( infos.szMedicalTreatment_ );
     unchangedFiles.push_back( infos.szExtensions_ );
     unchangedFiles.push_back( infos.szDrawingTemplates_ );
     unchangedFiles.push_back( infos.szScores_ );

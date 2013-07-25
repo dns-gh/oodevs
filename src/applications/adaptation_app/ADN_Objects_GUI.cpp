@@ -158,7 +158,6 @@ void ADN_Objects_GUI::Build()
         CreateCapacityCheckBox( builder, "underground-network-exit", tr( "Underground network exit" ), vInfosConnectors[ eUndergroundNetworkCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( builder, "fire-forbidden", tr( "Fire forbidden" ), vInfosConnectors[ eFireForbiddenCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( builder, "border", tr( "Border" ), vInfosConnectors[ eBorderCapacityPresent ], capacitiesGroup );
-        CreateCapacityCheckBox( builder, "medical", tr( "Medical" ), vInfosConnectors[ eMedicalCapacityPresent ], capacitiesGroup );
     }
 
     QGridLayout* grid = new QGridLayout();

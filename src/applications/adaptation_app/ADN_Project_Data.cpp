@@ -137,7 +137,6 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "automats", szAutomata_);
     ReadFile( input, "nbc", szNBC_);
     ReadFile( input, "fires", szFireClasses_ );
-    ReadFile( input, "medical-treatment", szMedicalTreatment_ );
     ReadFile( input, "health", szHealth_);
     ReadFile( input, "human-factors", szHumanFactors_);
     ReadFile( input, "breakdowns", szBreakdowns_);
@@ -203,7 +202,6 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "automats", szAutomata_ );
     WriteFile( output, "nbc", szNBC_ );
     WriteFile( output, "fires", szFireClasses_ );
-    WriteFile( output, "medical-treatment", szMedicalTreatment_ );
     WriteFile( output, "health", szHealth_ );
     WriteFile( output, "human-factors", szHumanFactors_ );
     WriteFile( output, "breakdowns", szBreakdowns_ );
@@ -428,7 +426,6 @@ void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
     // Check XML Validity for files not loaded
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szPathfinder_ );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_ );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_ );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_ );
 
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / "templates.xml" );
@@ -602,7 +599,6 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
 
     CreateObjectNames( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_ );
 
-    CreateEmptyFileIfNeeded( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_, "medical-treatments", "MedicalTreatment" );
     CreateEmptyFileIfNeeded( workDir_.GetWorkingDirectory().GetData() / "templates.xml", "templates" );
     CreateEmptyFileIfNeeded( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szDrawingTemplates_, "templates", "DrawingTemplates" );
     CreateEmptyFileIfNeeded( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_, "stages", "Stages" );
@@ -611,7 +607,6 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_, "ObjectNames" );
-    ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_, "MedicalTreatment" );
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szExtensions_, "Extensions" );
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_, "Stages" );
 }

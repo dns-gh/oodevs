@@ -76,7 +76,6 @@ void ADN_Objects_Data_ObjectInfos::InitializeCapacities()
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Decontamination::TAG ].reset(          new ADN_Objects_Data::ADN_CapacityInfos_Decontamination() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Delay::TAG ].reset(                    new ADN_Objects_Data::ADN_CapacityInfos_Delay() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Detection::TAG ].reset(                new ADN_Objects_Data::ADN_CapacityInfos_Detection() ); // LTO
-    capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Medical::TAG ].reset(                  new ADN_Objects_Data::ADN_CapacityInfos_Medical() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::TAG ].reset(        new ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::TAG ].reset(         new ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Interference::TAG ].reset(             new ADN_Objects_Data::ADN_CapacityInfos_Interference() );

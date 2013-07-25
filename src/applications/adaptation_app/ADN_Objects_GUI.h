@@ -107,7 +107,6 @@ public:
         eIntoxicationCapacityPresent,
         eLodgingCapacityPresent,
         eLogisticCapacityPresent,
-        eMedicalCapacityPresent,
         eMobilityCapacity_DefaultSpeed,
         eMobilityCapacity_MaxAgentSpeed,
         eMobilityCapacity_SpeedModifier,

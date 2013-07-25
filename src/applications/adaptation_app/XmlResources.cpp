@@ -32,7 +32,6 @@ static const char* physicalXml =
 "  <automats file=\"Automats.xml\"/>"
 "  <nbc file=\"NBC.xml\"/>"
 "  <fires file=\"Fires.xml\"/>"
-"  <medical-treatment file=\"MedicalTreatment.xml\"/>"
 "  <health file=\"Health.xml\"/>"
 "  <human-factors file=\"HumanFactors.xml\"/>"
 "  <breakdowns file=\"Breakdowns.xml\"/>"

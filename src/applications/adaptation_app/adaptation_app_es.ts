@@ -3428,10 +3428,6 @@ PNG (*.png)
         <translation>Densidad: </translation>
     </message>
     <message>
-        <source>Medical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Height interaction</source>
         <translation type="unfinished"></translation>
     </message>

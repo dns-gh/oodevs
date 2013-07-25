@@ -1250,7 +1250,6 @@ INIT_DATA( ADN_CapacityInfos_Contamination,           "contamination" );
 INIT_DATA( ADN_CapacityInfos_Decontamination,         "decontamination" );
 INIT_DATA( ADN_CapacityInfos_Delay,                   "delay" );
 INIT_DATA( ADN_CapacityInfos_Detection,               "detection" ); // LTO
-INIT_DATA( ADN_CapacityInfos_Medical,                 "medical" );
 INIT_DATA( ADN_CapacityInfos_InteractionHeight,       "interaction-height" );
 INIT_DATA( ADN_CapacityInfos_InteractWithSide,        "interact-with-enemy" );
 INIT_DATA( ADN_CapacityInfos_Interference,            "interference" );

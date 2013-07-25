@@ -3473,10 +3473,6 @@ PNG (*.png)
         <translation>Object</translation>
     </message>
     <message>
-        <source>Medical</source>
-        <translation>Medical</translation>
-    </message>
-    <message>
         <source>Height interaction</source>
         <translation>Height interaction</translation>
     </message>

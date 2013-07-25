@@ -66,7 +66,6 @@ enum E_Capacities
     eIntoxicationCapacity,
     eLodgingCapacity,
     eLogisticCapacity,
-    eMedicalCapacity,
     eMobilityCapacity,
     ePerceptionCapacity,
     ePopulationCapacity,

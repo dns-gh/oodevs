@@ -3433,10 +3433,6 @@ PNG (*.png)</translation>
         <translation>Valeur initiale</translation>
     </message>
     <message>
-        <source>Medical</source>
-        <translation>Médical</translation>
-    </message>
-    <message>
         <source>Fire propagation modifier</source>
         <translation>Modification propagation feu</translation>
     </message>
