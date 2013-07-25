@@ -33,7 +33,6 @@
         <xs:element name="knowledge-groups" type="FileReference"/>
         <xs:element name="launchers" type="FileReference"/>
         <xs:element name="maintenance" type="FileReference"/>
-        <xs:element name="medical-treatment" type="FileReference"/>
         <xs:element name="missions" type="FileReference"/>
         <xs:element name="models" type="FileReference"/>
         <xs:element name="nbc" type="FileReference"/>
