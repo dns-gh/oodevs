@@ -287,17 +287,18 @@ void Controller::DoGet( Reply_ABC& rpy, Request_ABC& request )
         if( uri == "/install_from_cache" ) return InstallFromCache( rpy, request );
         if( uri == "/download_install" )   return DownloadInstall ( rpy, request );
         // sessions
-        if( uri == "/list_sessions" )      return ListSessions   ( rpy, request );
-        if( uri == "/count_sessions" )     return CountSessions  ( rpy, request );
-        if( uri == "/get_session" )        return GetSession     ( rpy, request );
-        if( uri == "/delete_session" )     return DeleteSession  ( rpy, request );
-        if( uri == "/start_session" )      return StartSession   ( rpy, request );
-        if( uri == "/stop_session" )       return StopSession    ( rpy, request );
-        if( uri == "/pause_session" )      return PauseSession   ( rpy, request );
-        if( uri == "/archive_session" )    return ArchiveSession ( rpy, request );
-        if( uri == "/restore_session" )    return RestoreSession ( rpy, request );
-        if( uri == "/download_session" )   return DownloadSession( rpy, request );
-        if( uri == "/replay_session" )     return ReplaySession  ( rpy, request );
+        if( uri == "/list_sessions" )         return ListSessions   ( rpy, request );
+        if( uri == "/count_sessions" )        return CountSessions  ( rpy, request );
+        if( uri == "/get_session" )           return GetSession     ( rpy, request );
+        if( uri == "/delete_session" )        return DeleteSession  ( rpy, request );
+        if( uri == "/start_session" )         return StartSession   ( rpy, request );
+        if( uri == "/stop_session" )          return StopSession    ( rpy, request );
+        if( uri == "/pause_session" )         return PauseSession   ( rpy, request );
+        if( uri == "/archive_session" )       return ArchiveSession ( rpy, request );
+        if( uri == "/restore_session" )       return RestoreSession ( rpy, request );
+        if( uri == "/download_session" )      return DownloadSession( rpy, request );
+        if( uri == "/replay_session" )        return ReplaySession  ( rpy, request );
+        if( uri == "/download_session_log" )  return DownloadSessionLog( rpy, request );
         // exercises
         if( uri == "/list_exercises")      return ListExercises ( rpy, request );
         if( uri == "/count_exercises" )    return CountExercises( rpy, request );
@@ -762,6 +763,19 @@ void Controller::ReplaySession( Reply_ABC& rpy, const Request_ABC& request )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Controller::DownloadSessionLog
+// Created: NPT 2013-07-10
+// -----------------------------------------------------------------------------
+void Controller::DownloadSessionLog( Reply_ABC& rpy, Request_ABC& request )
+{
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
+    const std::string logFile = RequireParameter< std::string >( "logfile", request );
+    const int limitSize = GetParameter( "limitsize", request, 0 );
+    agent_.DownloadSessionLog( node, GetId( request ), *chunker, logFile, limitSize );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Controller::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
@@ -1004,7 +1018,6 @@ void Controller::UploadLicenses( Reply_ABC& rpy, Request_ABC& request )
         return WriteHttpReply( rpy, NOT_FOUND );
     WriteHttpReply( rpy, *reply );
 }
-
 
 namespace
 {

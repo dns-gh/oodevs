@@ -357,6 +357,29 @@ bool Session::HasReplays() const
     return !replays_.empty();
 }
 
+namespace
+{
+    const std::vector< std::string > logFiles = boost::assign::list_of< std::string >
+        ( "Sim.log" )
+        ( "Dispatcher.log" )
+        ( "Messages.log" )
+        ( "Protobuf.log" )
+        ( "web_control_plugin.log" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::AvailableLogs
+// Created: NPT 2013-07-10
+// -----------------------------------------------------------------------------
+Tree Session::AvailableLogs() const
+{
+    Tree tree;
+    for( auto it = ::logFiles.begin(); it != ::logFiles.end(); ++it )
+        if( deps_.fs.Exists( GetOutput() / *it ) )
+            tree.put( *it, true );
+    return tree;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Session::GetProperties
 // Created: BAX 2012-06-11
@@ -367,6 +390,7 @@ Tree Session::GetProperties( bool save ) const
     tree.put( "id", id_ );
     tree.put( "node", node_->GetId() );
     tree.put( "port", port_->Get() );
+    tree.put_child( "logs", AvailableLogs() );
     WriteConfig( tree, cfg_ );
     tree.put( "status", ConvertStatus( status_ ) );
     tree.put( "first_time", first_time_ );
@@ -1115,4 +1139,20 @@ void Session::NotifyNode()
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     node_->FilterConfig( cfg_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::DownloadLog
+// Created: NPT 2013-07-10
+// -----------------------------------------------------------------------------
+bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
+{
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
+    dst.SetName( logFile );
+    io::Writer_ABC& sink = dst.OpenWriter();
+    if( !deps_.fs.Exists( GetOutput() / logFile ) )
+        return false;
+
+    deps_.fs.ReadFileWithLimitSize( sink, GetOutput() / logFile, limitSize );
+    return true;
 }

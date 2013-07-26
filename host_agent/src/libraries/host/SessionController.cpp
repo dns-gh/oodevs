@@ -423,3 +423,20 @@ void SessionController::NotifyNode( const Uuid& node )
 {
     sessions_.ForeachRef( boost::bind( &Session_ABC::NotifyNode, _1 ), boost::bind( &IsSameNode, boost::cref( node ), _1 ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::DownloadLog
+// Created: NPT 2013-07-10
+// -----------------------------------------------------------------------------
+void SessionController::DownloadLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
+{
+    try
+    {
+        Dispatch( node, id, boost::bind( &Session_ABC::DownloadLog, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ) ) );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_WARN( log_ ) << "[session] " << err.what();
+        LOG_WARN( log_ ) << "[session] Unable to download session logs" << logFile;
+    }
+}

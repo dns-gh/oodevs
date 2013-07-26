@@ -309,6 +309,12 @@
 <a title="Settings..." class="btn edit"><i class="icon-cog"></i> </a>
 {{/is_option}}
 [[ end ]]
+<!-- session_log_btn -->
+[[ define "session_log_btn" ]]
+{{#if can_display_log}}
+<a title="Logs..." href="?pg=logs&session={{{id}}}" class="btn log"><i class="icon-file-text-alt"></i></a>
+{{/if}}
+[[ end ]]
 <!-- session_clone_btn -->
 [[ define "session_clone_btn" ]]
 {{#is_option status playing="" paused="" stopped=""}}
@@ -394,6 +400,7 @@
                     [[ template "session_edit_btn" . ]]
                     [[ template "session_clone_btn" . ]]
                     [[ template "session_download_btn" . ]]
+                    [[ template "session_log_btn" . ]]
                     [[ template "session_archive_btn" . ]]
                     [[ template "session_delete_btn" . ]]
                 </div>

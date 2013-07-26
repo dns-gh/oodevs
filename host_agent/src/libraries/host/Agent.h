@@ -95,19 +95,20 @@ public:
 
     //! @name Session Methods
     //@{
-    virtual std::vector< Tree > ListSessions   ( const Uuid& node, int offset, int limit ) const;
-    virtual size_t              CountSessions  ( const Uuid& node ) const;
-    virtual Tree                GetSession     ( const Uuid& node, const Uuid& id ) const;
-    virtual Tree                CreateSession  ( const Uuid& node, const web::session::Config& cfg, const std::string& exercise );
-    virtual Tree                DeleteSession  ( const Uuid& node, const Uuid& id );
-    virtual Tree                StartSession   ( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const;
-    virtual Tree                StopSession    ( const Uuid& node, const Uuid& id ) const;
-    virtual Tree                PauseSession   ( const Uuid& node, const Uuid& id ) const;
-    virtual Tree                UpdateSession  ( const Uuid& node, const Uuid& id, const Tree& cfg ) const;
-    virtual Tree                ArchiveSession ( const Uuid& node, const Uuid& id ) const;
-    virtual Tree                RestoreSession ( const Uuid& node, const Uuid& id ) const;
-    virtual void                DownloadSession( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const;
-    virtual Tree                ReplaySession  ( const Uuid& node, const Uuid& id ) const;
+    virtual std::vector< Tree > ListSessions      ( const Uuid& node, int offset, int limit ) const;
+    virtual size_t              CountSessions     ( const Uuid& node ) const;
+    virtual Tree                GetSession        ( const Uuid& node, const Uuid& id ) const;
+    virtual Tree                CreateSession     ( const Uuid& node, const web::session::Config& cfg, const std::string& exercise );
+    virtual Tree                DeleteSession     ( const Uuid& node, const Uuid& id );
+    virtual Tree                StartSession      ( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const;
+    virtual Tree                StopSession       ( const Uuid& node, const Uuid& id ) const;
+    virtual Tree                PauseSession      ( const Uuid& node, const Uuid& id ) const;
+    virtual Tree                UpdateSession     ( const Uuid& node, const Uuid& id, const Tree& cfg ) const;
+    virtual Tree                ArchiveSession    ( const Uuid& node, const Uuid& id ) const;
+    virtual Tree                RestoreSession    ( const Uuid& node, const Uuid& id ) const;
+    virtual void                DownloadSession   ( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const;
+    virtual Tree                ReplaySession     ( const Uuid& node, const Uuid& id ) const;
+    virtual void                DownloadSessionLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const;
     //@}
 
     //! @name Exercise Methods

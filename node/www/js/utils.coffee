@@ -19,6 +19,12 @@ load_url = (url) ->
     else
         window.location.href = url
 
+get_file_content = ( url ) ->
+    return $.ajax(
+       url : url
+       async: false
+    ).responseText
+
 raw_ajax = (url, data, success, error, type) ->
     $.ajax
         cache:    false
