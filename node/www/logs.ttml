@@ -7,7 +7,7 @@
     <ul class="nav nav-tabs log_tabs">
         {{#each log_list}}
             <li class="{{#if active}}active{{/if}}">
-                <a class="logfile {{{name}}}" href="#{{{file}}}">{{{file}}}</a>
+                <a class="logfile {{name}}" href="#{{file}}">{{file}}</a>
             </li>
         {{/each}}
     </ul>
@@ -18,6 +18,6 @@
                 Download
             </a>
         {{/if}}
-        <pre>{{{log_text}}}</pre>
+        <pre>{{log_text}}</pre>
     </div>
 </script>
