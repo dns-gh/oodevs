@@ -144,6 +144,20 @@ func MakeAdhesions(adhesions map[uint32]float32) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
+func MakeEquipments(equipments map[uint32]int) *sword.MissionParameter {
+	list := []*sword.MissionParameter_Value{}
+	for k, v := range equipments {
+		party := []*sword.MissionParameter_Value{
+			{Identifier: proto.Uint32(k)},
+			{Quantity: proto.Int(v)},
+		}
+		list = append(list, &sword.MissionParameter_Value{
+			List: party,
+		})
+	}
+	return MakeParameter(list...)
+}
+
 func MakeExtensions(extensions *map[string]string) *sword.MissionParameter {
 	list := []*sword.Extension_Entry{}
 	for k, v := range *extensions {

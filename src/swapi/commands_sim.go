@@ -1162,3 +1162,18 @@ func (c *Client) DebugBrain(automatId uint32, enable bool) error {
 	params := MakeParameters(MakeBoolean(enable))
 	return c.DebugBrainTest(automatId, params)
 }
+
+func (c *Client) TransferEquipment(unitId uint32, targetId uint32, equipments map[uint32]int) error {
+	params := MakeParameters(MakeIdentifier(targetId), MakeEquipments(equipments))
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_transfer_equipment.Enum())
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetUnitMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		_, err := GetUnitMagicActionAck(reply)
+		return err
+	}
+	return <-c.postSimRequest(msg, handler)
+}

@@ -782,3 +782,25 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 		return !model.FindUnit(unit.Id).DebugBrain
 	})
 }
+
+func (s *TestSuite) TestTransferEquipment(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	equipments := make(map[uint32]int)
+	equipments[11] = 1
+	err := client.TransferEquipment(11, 12, equipments)
+	c.Assert(err, IsNil)
+
+	// error: invalid parameters count
+	err = client.TransferEquipment(11, 12, nil)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid empty equipment list")
+
+	// error: invalid unit identifier
+	err = client.TransferEquipment(1000, 12, equipments)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// error: invalid unit identifier
+	err = client.TransferEquipment(11, 1000, equipments)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid target identifier")
+}
