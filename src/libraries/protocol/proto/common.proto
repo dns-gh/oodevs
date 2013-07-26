@@ -1896,20 +1896,8 @@ message HumanRepartition {
     required float     children  = 3;
 }
 
-/** @struct UnitMagicAction
-    @brief An agent magic action request
-    @see UnitMagicActionAck
-    @todo rename into AgentMagicAction
-*/
+//! Perform magic actions on units, automats or crowds.
 message UnitMagicAction {
-    /** @enum Type
-        @brief The type of magic action.
-
-        Specific parameters are expected for each type.
-
-        @todo Explain what parameters are expected for each type
-        @todo Uniformize, for instance unit_creation != create_wound
-    */
     enum Type {
         //! Teleport a unit
         //! The tasker must reference the unit to teleport.
