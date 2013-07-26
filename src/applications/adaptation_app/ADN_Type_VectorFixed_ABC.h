@@ -21,19 +21,21 @@ class ADN_Type_VectorFixed_ABC : public ADN_Type_Vector_ABC< T >
     typedef typename T::T_Item T_Item;
 
 public:
-    explicit ADN_Type_VectorFixed_ABC( const char* szName = 0 );
+    explicit ADN_Type_VectorFixed_ABC();
     virtual ~ADN_Type_VectorFixed_ABC();
 
 public:
     template< class U >
     explicit ADN_Type_VectorFixed_ABC( const ADN_Type_Vector_ABC< U >& v )
         : ADN_Type_Vector_ABC< T >()
+        , v_( 0 )
     {
         SetFixedVector( v );
     }
 
     template< class U > void SetFixedVector( const ADN_Type_Vector_ABC< U >& v )
     {
+        v_ = &v;
         // initialize vector
         for( auto it = v.begin(); it != v.end(); ++it )
             AddItem( new T( *it ) );
@@ -44,8 +46,23 @@ public:
         connect( this, SIGNAL( ItemSwapped( int, int ) ), &v, SLOT( SwapItem( int, int ) ) );
     }
 
+    void ResetFixedVector()
+    {
+        if( v_ )
+        {
+            disconnect( v_, SIGNAL( ItemAdded( void* ) ), this, SLOT( AutoCreate( void* ) ) );
+            disconnect( v_, SIGNAL( ItemSwapped( int, int ) ), this, SLOT( SwapItem( int, int ) ) );
+            disconnect( this, SIGNAL( ItemSwapped( int, int ) ), v_, SLOT( SwapItem( int, int ) ) );
+            Reset();
+            v_ = 0;
+        }
+    }
+
 protected:
     virtual void AutoCreatePrivate( void* ptr );
+
+private:
+    const ADN_Connector_Vector_ABC* v_;
 };
 
 #include "ADN_Type_VectorFixed_ABC.inl"

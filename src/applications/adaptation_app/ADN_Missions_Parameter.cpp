@@ -22,8 +22,6 @@ ADN_Missions_Parameter::ADN_Missions_Parameter()
     , maxOccurs_ ( 1 )
     , minValue_  ( std::numeric_limits< int >::min() )
     , maxValue_  ( std::numeric_limits< int >::max() )
-    , genObjects_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() )
-    , knowledgeObjects_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() )
     , isContext_( false )
 {
     FillChoices();
@@ -63,14 +61,23 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
         assert( choices_[ i ]->name_ == newParam->choices_[ i ]->name_ );
         newParam->choices_[ i ]->isAllowed_ = choices_[ i ]->isAllowed_.GetData();
     }
-    assert( genObjects_.size() == newParam->genObjects_.size() &&
-            knowledgeObjects_.size() == newParam->knowledgeObjects_.size() );
-    for( unsigned int i = 0; i < genObjects_.size(); ++i )
+    if( type_.GetData() == eMissionParameterTypeGenObject )
     {
-        assert( genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() &&
-                knowledgeObjects_[ i ]->ptrObject_.GetData() == newParam->knowledgeObjects_[ i ]->ptrObject_.GetData() );
-        newParam->genObjects_[ i ]->isAllowed_ = genObjects_[ i ]->isAllowed_.GetData();
-        newParam->knowledgeObjects_[ i ]->isAllowed_ = knowledgeObjects_[ i ]->isAllowed_.GetData();
+        newParam->genObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+        for( unsigned int i = 0; i < genObjects_.size(); ++i )
+        {
+            assert( genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() );
+            newParam->genObjects_[ i ]->isAllowed_ = genObjects_[ i ]->isAllowed_.GetData();
+        }
+    }
+    else if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
+    {
+        newParam->knowledgeObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+        for( unsigned int i = 0; i < knowledgeObjects_.size(); ++i )
+        {
+            assert( knowledgeObjects_[ i ]->ptrObject_.GetData() == newParam->knowledgeObjects_[ i ]->ptrObject_.GetData() );
+            newParam->knowledgeObjects_[ i ]->isAllowed_ = knowledgeObjects_[ i ]->isAllowed_.GetData();
+        }
     }
     return newParam;
 }
@@ -109,6 +116,10 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
               >> xml::end;
     if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge )
     {
+        if( type_.GetData() == eMissionParameterTypeGenObject )
+            genObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+        if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
+            knowledgeObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
         helpers::T_MissionGenObjectTypes_Infos_Vector& vector = ( type_.GetData() == eMissionParameterTypeGenObject ) ? genObjects_ : knowledgeObjects_;
         if( !input.has_child( "objects" ) )
             FillGenObjects( vector );
@@ -156,6 +167,31 @@ void ADN_Missions_Parameter::ReadChoiceVector( xml::xistream& input, T_Choice_Ve
             data[ i ]->isAllowed_ = true;
             return;
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::UpdateObjectsVectors
+// Created: JSR 2013-07-26
+// -----------------------------------------------------------------------------
+void ADN_Missions_Parameter::UpdateObjectsVectors()
+{
+    if( type_.GetData() == eMissionParameterTypeGenObject )
+    {
+        if( genObjects_.empty() )
+            genObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+        knowledgeObjects_.ResetFixedVector();
+    }
+    else if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
+    {
+        if( knowledgeObjects_.empty() )
+            knowledgeObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
+        genObjects_.ResetFixedVector();
+    }
+    else
+    {
+        knowledgeObjects_.ResetFixedVector();
+        genObjects_.ResetFixedVector();
     }
 }
 
@@ -245,9 +281,9 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
     if( ( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject == 0 ) ||
         ( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject == 0 ) )
         throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Parameter", "'%1' parameter should have at least one object." ).arg( strName_.GetData().c_str() ).toStdString() );
-    if( nbGenObject != genObjects_.size() )
+    if( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject != genObjects_.size() )
         Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
-    if( nbKnowledgeObject != knowledgeObjects_.size() )
+    if( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject != knowledgeObjects_.size() )
         Write( output, knowledgeObjects_, type_.GetData(), eMissionParameterTypeObjectKnowledge, "objects" );
     output << xml::end;
 }

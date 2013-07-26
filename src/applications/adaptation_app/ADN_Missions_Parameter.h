@@ -44,6 +44,7 @@ public:
     void ReadChoiceVector( xml::xistream& input, T_Choice_Vector& data );
     void ReadChoiceGenObjects( xml::xistream& input, helpers::T_MissionGenObjectTypes_Infos_Vector& data );
     void WriteArchive( xml::xostream& output );
+    void UpdateObjectsVectors();
 
 private:
     void FillChoices();

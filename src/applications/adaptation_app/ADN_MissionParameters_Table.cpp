@@ -241,6 +241,7 @@ void ADN_MissionParameters_Table::Reconnect( const QModelIndex& index )
         return;
     Disconnect( param );
     E_MissionParameterType current = param->type_.GetData();
+    param->UpdateObjectsVectors();
     if( current == eMissionParameterTypeEnumeration )
         itemConnectors_[ADN_Missions_GUI::eParameterValues]->Connect( &param->values_ );
     else
