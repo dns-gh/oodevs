@@ -398,9 +398,9 @@
                     [[ template "session_stop_btn" . ]]
                     [[ template "session_restore_btn" . ]]
                     [[ template "session_edit_btn" . ]]
-                    [[ template "session_log_btn" . ]]
                     [[ template "session_clone_btn" . ]]
                     [[ template "session_download_btn" . ]]
+                    [[ template "session_log_btn" . ]]
                     [[ template "session_archive_btn" . ]]
                     [[ template "session_delete_btn" . ]]
                 </div>
