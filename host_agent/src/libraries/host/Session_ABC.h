@@ -96,7 +96,7 @@ struct Session_ABC : public boost::noncopyable
     virtual void  AttachReplay( const Session_ABC& replay ) = 0;
     virtual void  DetachReplay( const Session_ABC& replay ) = 0;
     virtual void  NotifyNode() = 0;
-    virtual bool  DownloadLogFile( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const = 0;
+    virtual bool  DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const = 0;
     //@}
 };
 

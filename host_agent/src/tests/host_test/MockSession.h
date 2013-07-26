@@ -59,7 +59,7 @@ namespace mocks
         MOCK_METHOD( DetachReplay, 1 );
         MOCK_METHOD( NotifyNode, 0 );
         MOCK_METHOD( AvailableLogs, 0 );
-        MOCK_METHOD( DownloadLogFile, 3 );
+        MOCK_METHOD( DownloadLog, 3 );
     };
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )

@@ -171,7 +171,7 @@ public:
     virtual void  AttachReplay( const Session_ABC& replay );
     virtual void  DetachReplay( const Session_ABC& replay );
     virtual void  NotifyNode();
-    virtual bool  DownloadLogFile( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const;
+    virtual bool  DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const;
     //@}
 
     //! @name Typedef helpers

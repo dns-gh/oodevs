@@ -1142,10 +1142,10 @@ void Session::NotifyNode()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::DownloadLogFile
+// Name: Session::DownloadLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-bool Session::DownloadLogFile( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
+bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     dst.SetName( logFile );
