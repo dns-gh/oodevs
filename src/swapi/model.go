@@ -36,6 +36,8 @@ type ModelRequest struct {
 	Cond    *modelCond
 }
 
+type ModelErrorHandler func(*ModelData, *SwordMessage, error) error
+
 // The model registers a handler to a Client and updates itself with
 // incoming messages in a separate goroutine. It supports two kind of
 // actions: commands which are just functions applied once on the Model,
@@ -50,9 +52,10 @@ type ModelRequest struct {
 type Model struct {
 	// State only touched by the run() goroutine
 	// True once the initial state has been received
-	ready bool
-	conds []*modelCond
-	data  *ModelData
+	ready        bool
+	conds        []*modelCond
+	data         *ModelData
+	errorHandler ModelErrorHandler
 
 	// State only touched by caller routines
 	condId      int
@@ -71,14 +74,45 @@ func NewModel() *Model {
 		conds:       []*modelCond{},
 		data:        NewModelData(),
 	}
+	model.setErrorHandler(nil)
+
 	go model.run()
 	return &model
 }
 
-func (model *Model) run() {
+func (model *Model) setErrorHandler(errorHandler ModelErrorHandler) {
+	if errorHandler == nil {
+		errorHandler = func(data *ModelData, msg *SwordMessage, err error) error {
+			panic(err)
+		}
+	}
+	model.errorHandler = errorHandler
+}
+
+// Reconfigure the model error handler. A nil argument restore the default
+// panicking handler. The handler is called upon update errors with the current
+// ModelData, the input message and the error instance. Return nil to tell the
+// error was handled and the model correctly updated, an error otherwise. Upon
+// error, all the conditions will be terminated on error and model goroutine
+// terminated.
+func (model *Model) SetErrorHandler(errorHandler ModelErrorHandler) {
+	model.waitCommand(func(m *Model) {
+		model.setErrorHandler(errorHandler)
+	})
+}
+
+func (model *Model) run() error {
 	for rq := range model.requests {
 		if rq.Message != nil {
-			model.update(rq.Message)
+			if err := model.update(rq.Message); err != nil {
+				err = model.errorHandler(model.data, rq.Message, err)
+				if err != nil {
+					for _, cond := range model.conds {
+						cond.done <- 0
+					}
+					return err
+				}
+			}
 			for i := 0; i != len(model.conds); {
 				if model.conds[i].cond(model) {
 					model.conds[i].done <- 1
@@ -98,9 +132,10 @@ func (model *Model) run() {
 			}
 		}
 	}
+	return nil
 }
 
-func (model *Model) update(msg *SwordMessage) {
+func (model *Model) update(msg *SwordMessage) error {
 	d := model.data
 	if msg.SimulationToClient != nil {
 		m := msg.SimulationToClient.GetMessage()
@@ -109,8 +144,7 @@ func (model *Model) update(msg *SwordMessage) {
 		} else if mm := m.GetControlBeginTick(); mm != nil {
 			t, err := GetTime(mm.GetDateTime())
 			if err != nil {
-				// XXX: report parsing error here
-				return
+				return err
 			}
 			d.Time = t
 			d.Tick = mm.GetCurrentTick()
@@ -128,13 +162,13 @@ func (model *Model) update(msg *SwordMessage) {
 				Point{},
 				0}
 			if !d.addUnit(unit) {
-				// XXX report the error here
+				return fmt.Errorf("cannot insert created unit: %d", unit.Id)
 			}
 		} else if mm := m.GetUnitAttributes(); mm != nil {
 			unit := d.FindUnit(mm.GetUnit().GetId())
 			if unit == nil {
-				// XXX report there error here
-				return
+				return fmt.Errorf("cannot find unit to update: %d",
+					mm.GetUnit().GetId())
 			}
 			if mm.Headquarters != nil {
 				unit.Pc = *mm.Headquarters
@@ -154,15 +188,14 @@ func (model *Model) update(msg *SwordMessage) {
 			} else if parent := mm.GetParent().GetFormation(); parent != nil {
 				formationId = parent.GetId()
 			}
-			if d.addAutomat(automatId, formationId, automat) {
-				return
+			if !d.addAutomat(automatId, formationId, automat) {
+				return fmt.Errorf("cannot insert created automat: %d", automat.Id)
 			}
-			// XXX: report error here
 		} else if mm := m.GetAutomatAttributes(); mm != nil {
 			automat := d.FindAutomat(mm.GetAutomat().GetId())
 			if automat == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find automat to update: %d",
+					mm.GetAutomat().GetId())
 			}
 			if mm.Mode != nil {
 				mode := mm.GetMode()
@@ -188,9 +221,9 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetParty().GetId(),
 				level, logLevel)
 			if !d.addFormation(formation) {
-				panic(fmt.Sprintf("cannot create formation %v with unknown"+
+				return fmt.Errorf("cannot create formation %v with unknown"+
 					"parent party=%v/parent=%v", formation.Id, formation.PartyId,
-					formation.ParentId))
+					formation.ParentId)
 			}
 		} else if mm := m.GetCrowdCreation(); mm != nil {
 			crowd := NewCrowd(
@@ -198,13 +231,13 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetParty().GetId(),
 				mm.GetName())
 			if !d.addCrowd(crowd) {
-				// XXX report error here
+				return fmt.Errorf("cannot insert created crowd: %d", crowd.Id)
 			}
 		} else if mm := m.GetCrowdUpdate(); mm != nil {
 			crowd := d.FindCrowd(mm.GetCrowd().GetId())
 			if crowd == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find crowd to update: %d",
+					mm.GetCrowd().GetId())
 			}
 			if mm.CriticalIntelligence != nil {
 				crowd.CriticalIntelligence = *mm.CriticalIntelligence
@@ -237,45 +270,47 @@ func (model *Model) update(msg *SwordMessage) {
 				}
 			}
 		} else if mm := m.GetCrowdFlowCreation(); mm != nil {
-			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
-				// XXX report error here
-				return
+			if !d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+				return fmt.Errorf("cannot insert crowd flow %d into crowd %d",
+					mm.GetFlow().GetId(), mm.GetCrowd().GetId())
 			}
 		} else if mm := m.GetCrowdFlowDestruction(); mm != nil {
-			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
-				return
+			if !d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+				return fmt.Errorf("cannot remove crowd flow %d from crowd %d",
+					mm.GetFlow().GetId(), mm.GetCrowd().GetId())
 			}
 		} else if mm := m.GetCrowdFlowUpdate(); mm != nil {
 			crowd := d.FindCrowd(mm.GetCrowd().GetId())
 			if crowd == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find crowd to update: %d",
+					mm.GetCrowd().GetId())
 			}
 			element := crowd.CrowdElements[mm.GetFlow().GetId()]
 			if element == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find crowd flow to update: %d",
+					mm.GetFlow().GetId())
 			}
 			element.Attitude = int32(mm.GetAttitude())
 		} else if mm := m.GetCrowdConcentrationCreation(); mm != nil {
-			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
-				// XXX report error here
-				return
+			if !d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+				return fmt.Errorf("cannot insert crowd concentration %d into crowd %d",
+					mm.GetConcentration().GetId(), mm.GetCrowd().GetId())
 			}
 		} else if mm := m.GetCrowdConcentrationDestruction(); mm != nil {
-			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
-				return
+			if !d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+				return fmt.Errorf("cannot remove crowd concentration %d from crowd %d",
+					mm.GetConcentration().GetId(), mm.GetCrowd().GetId())
 			}
 		} else if mm := m.GetCrowdConcentrationUpdate(); mm != nil {
 			crowd := d.FindCrowd(mm.GetCrowd().GetId())
 			if crowd == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find crowd to update: %d",
+					mm.GetCrowd().GetId())
 			}
 			element := crowd.CrowdElements[mm.GetConcentration().GetId()]
 			if element == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find crowd concentration to update: %d",
+					mm.GetConcentration().GetId())
 			}
 			element.Attitude = int32(mm.GetAttitude())
 		} else if mm := m.GetPopulationCreation(); mm != nil {
@@ -284,13 +319,13 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetParty().GetId(),
 				mm.GetName()}
 			if !d.addPopulation(population) {
-				// XXX report error here
+				return fmt.Errorf("cannot insert population: %d", population.Id)
 			}
 		} else if mm := m.GetUnitPathfind(); mm != nil {
 			unit := d.FindUnit(mm.GetUnit().GetId())
 			if unit == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find pathfind source unit: %d",
+					mm.GetUnit().GetId())
 			}
 			if mm.Path != nil && mm.Path.Location != nil {
 				unit.PathPoints = uint32(0)
@@ -299,7 +334,10 @@ func (model *Model) update(msg *SwordMessage) {
 				}
 			}
 		} else if mm := m.GetUnitDestruction(); mm != nil {
-			d.removeUnit(mm.GetUnit().GetId())
+			if !d.removeUnit(mm.GetUnit().GetId()) {
+				return fmt.Errorf("cannot find unit to destroy: %d",
+					mm.GetUnit().GetId())
+			}
 		} else if mm := m.GetKnowledgeGroupCreation(); mm != nil {
 			group := &KnowledgeGroup{
 				Id:                  mm.GetKnowledgeGroup().GetId(),
@@ -314,7 +352,7 @@ func (model *Model) update(msg *SwordMessage) {
 				CrowdKnowledges:     map[uint32]*CrowdKnowledge{},
 			}
 			if !d.addKnowledgeGroup(group) {
-				// XXX report error here
+				return fmt.Errorf("cannot insert knowledge group: %d", group.Id)
 			}
 		} else if mm := m.GetUnitKnowledgeCreation(); mm != nil {
 			knowledge := &UnitKnowledge{
@@ -324,7 +362,8 @@ func (model *Model) update(msg *SwordMessage) {
 				UnitType:         mm.GetType().GetId(),
 			}
 			if !d.addUnitKnowledge(knowledge) {
-				// XXX report error here
+				return fmt.Errorf("cannot insert unit knowledge %d into group %d",
+					knowledge.Id, knowledge.KnowledgeGroupId)
 			}
 		} else if mm := m.GetObjectKnowledgeCreation(); mm != nil {
 			knowledge := &ObjectKnowledge{
@@ -337,7 +376,8 @@ func (model *Model) update(msg *SwordMessage) {
 				ObjectName:       mm.GetObjectName(),
 			}
 			if !d.addObjectKnowledge(knowledge) {
-				// XXX report error here
+				return fmt.Errorf("cannot insert object knowledge %d into group %d",
+					knowledge.Id, knowledge.KnowledgeGroupId)
 			}
 		} else if mm := m.GetCrowdKnowledgeCreation(); mm != nil {
 			knowledge := &CrowdKnowledge{
@@ -347,13 +387,14 @@ func (model *Model) update(msg *SwordMessage) {
 				PartyId:          mm.GetParty().GetId(),
 			}
 			if !d.addCrowdKnowledge(knowledge) {
-				// XXX report error here
+				return fmt.Errorf("cannot insert crowd knowledge %d into group %d",
+					knowledge.Id, knowledge.KnowledgeGroupId)
 			}
 		} else if mm := m.GetKnowledgeGroupUpdate(); mm != nil {
 			knowledgeGroup := d.FindKnowledgeGroup(mm.GetKnowledgeGroup().GetId())
 			if knowledgeGroup == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find knowledge group to update: %d",
+					mm.GetKnowledgeGroup().GetId())
 			}
 			if mm.Party != nil {
 				knowledgeGroup.PartyId = mm.GetParty().GetId()
@@ -381,13 +422,13 @@ func (model *Model) update(msg *SwordMessage) {
 		} else if mm := m.GetControlLocalWeatherCreation(); mm != nil {
 			start, err := GetTime(mm.GetStartDate())
 			if err != nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot parse local weather start time: %v",
+					mm.GetStartDate())
 			}
 			end, err := GetTime(mm.GetEndDate())
 			if err != nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot parse local weather end time: %v",
+					mm.GetEndDate())
 			}
 			attr := mm.GetAttributes()
 			// most attributes are truncated here...
@@ -410,21 +451,35 @@ func (model *Model) update(msg *SwordMessage) {
 			}
 			d.addLocalWeather(w)
 		} else if mm := m.GetControlLocalWeatherDestruction(); mm != nil {
-			d.removeLocalWeather(mm.GetWeather().GetId())
+			if !d.removeLocalWeather(mm.GetWeather().GetId()) {
+				return fmt.Errorf("cannot find local weather to destroy: %d",
+					mm.GetWeather().GetId())
+			}
 		} else if mm := m.GetChangeDiplomacy(); mm != nil {
 			party1 := d.Parties[mm.GetParty1().GetId()]
-			party2 := d.Parties[mm.GetParty2().GetId()]
-			if party1 != nil && party2 != nil {
-				party1.Diplomacies[party2.Id] = mm.GetDiplomacy()
+			if party1 == nil {
+				return fmt.Errorf("cannot resolve diplomacy change first party: %d",
+					mm.GetParty1().GetId())
 			}
+			party2 := d.Parties[mm.GetParty2().GetId()]
+			if party2 == nil {
+				return fmt.Errorf("cannot resolve diplomacy change second party: %d",
+					mm.GetParty2().GetId())
+			}
+			party1.Diplomacies[party2.Id] = mm.GetDiplomacy()
 		} else if mm := m.GetUrbanCreation(); mm != nil {
 			urban := NewUrban(
 				mm.GetObject().GetId(),
 				mm.GetName(),
 				NewResourceNetworks(mm.GetAttributes()))
-			d.addUrban(urban)
+			if !d.addUrban(urban) {
+				return fmt.Errorf("cannot insert urban block: %d", urban.Id)
+			}
 		} else if mm := m.GetUrbanUpdate(); mm != nil {
-			d.updateUrban(mm.GetObject().GetId(), NewResourceNetworks(mm.GetAttributes()))
+			if !d.updateUrban(mm.GetObject().GetId(), NewResourceNetworks(mm.GetAttributes())) {
+				return fmt.Errorf("cannot update urban block: %d",
+					mm.GetObject().GetId())
+			}
 		} else if mm := m.GetAutomatChangeLogisticLinks(); mm != nil {
 			if mm.GetRequester() != nil {
 				requester := mm.GetRequester()
@@ -438,9 +493,15 @@ func (model *Model) update(msg *SwordMessage) {
 					}
 				}
 				if requester.GetAutomat() != nil {
-					d.changeLogisticsLinks(requester.GetAutomat().GetId(), superiors)
+					if !d.changeLogisticsLinks(requester.GetAutomat().GetId(), superiors) {
+						return fmt.Errorf("cannot update logistic links on automat: %d",
+							requester.GetAutomat().GetId())
+					}
 				} else if requester.GetFormation() != nil {
-					d.changeLogisticsLinks(requester.GetFormation().GetId(), superiors)
+					if !d.changeLogisticsLinks(requester.GetFormation().GetId(), superiors) {
+						return fmt.Errorf("cannot update logistic links on formation: %d",
+							requester.GetFormation().GetId())
+					}
 				}
 			}
 		} else if mm := m.GetLogSupplyQuotas(); mm != nil {
@@ -452,25 +513,31 @@ func (model *Model) update(msg *SwordMessage) {
 			}
 			if mm.GetSupplied() != nil {
 				if mm.GetSupplied().GetAutomat() != nil {
-					d.changeSupplyQuotas(mm.GetSupplied().GetAutomat().GetId(), quotas)
+					if !d.changeSupplyQuotas(mm.GetSupplied().GetAutomat().GetId(), quotas) {
+						return fmt.Errorf("cannot update supply quotas on automat: %d",
+							mm.GetSupplied().GetAutomat().GetId())
+					}
 				} else if mm.GetSupplied().GetFormation() != nil {
-					d.changeSupplyQuotas(mm.GetSupplied().GetFormation().GetId(), quotas)
+					if !d.changeSupplyQuotas(mm.GetSupplied().GetFormation().GetId(), quotas) {
+						return fmt.Errorf("cannot update supply quotas on formation: %d",
+							mm.GetSupplied().GetFormation().GetId())
+					}
 				}
 			}
 		} else if mm := m.GetUnitChangeSuperior(); mm != nil {
 			unit := d.FindUnit(mm.GetUnit().GetId())
 			if unit == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find unit which superior must be updated: %d",
+					mm.GetUnit().GetId())
 			}
 			newAutomat := d.FindAutomat(mm.GetParent().GetId())
 			if newAutomat == nil {
-				// XXX report error here
-				return
+				return fmt.Errorf("cannot find unit new parent automat: %d",
+					mm.GetParent().GetId())
 			}
-			if d.changeSuperior(unit, newAutomat) != nil {
-				// XXX report error here
-				return
+			if err := d.changeSuperior(unit, newAutomat); err != nil {
+				return fmt.Errorf("cannot change %d unit superior to %d: %s",
+					unit.Id, newAutomat.Id, err)
 			}
 		}
 	} else if msg.AuthenticationToClient != nil {
@@ -480,19 +547,25 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetProfile().GetLogin(),
 				mm.GetProfile().GetPassword(),
 				mm.GetProfile().GetSupervisor()}
-			d.addProfile(profile)
+			if !d.addProfile(profile) {
+				return fmt.Errorf("cannot insert profile: %s", profile.Login)
+			}
 		} else if mm := m.GetProfileUpdate(); mm != nil {
 			profile := &Profile{
 				mm.GetProfile().GetLogin(),
 				mm.GetProfile().GetPassword(),
 				mm.GetProfile().GetSupervisor()}
-			d.updateProfile(mm.GetLogin(), profile)
-			// XXX report error here
+			if !d.updateProfile(mm.GetLogin(), profile) {
+				return fmt.Errorf("cannot find profile to update: %s", profile.Login)
+			}
 		} else if mm := m.GetProfileDestruction(); mm != nil {
-			d.removeProfile(mm.GetLogin())
-			// XXX report error here
+			if !d.removeProfile(mm.GetLogin()) {
+				return fmt.Errorf("cannot find profile to remove: %s",
+					mm.GetLogin())
+			}
 		}
 	}
+	return nil
 }
 
 // Register a handler on supplied client and start processing messages

@@ -501,8 +501,12 @@ func (model *ModelData) addPopulation(population *Population) bool {
 	return false
 }
 
-func (model *ModelData) addProfile(profile *Profile) {
-	model.Profiles[profile.Login] = profile
+func (model *ModelData) addProfile(profile *Profile) bool {
+	if _, ok := model.Profiles[profile.Login]; !ok {
+		model.Profiles[profile.Login] = profile
+		return true
+	}
+	return false
 }
 
 func (model *ModelData) updateProfile(login string, profile *Profile) bool {
@@ -592,8 +596,12 @@ func (model *ModelData) removeLocalWeather(id uint32) bool {
 	return false
 }
 
-func (model *ModelData) addUrban(urban *Urban) {
-	model.Urbans[urban.Id] = urban
+func (model *ModelData) addUrban(urban *Urban) bool {
+	if _, ok := model.Urbans[urban.Id]; !ok {
+		model.Urbans[urban.Id] = urban
+		return true
+	}
+	return false
 }
 
 func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*ResourceNetwork) bool {
