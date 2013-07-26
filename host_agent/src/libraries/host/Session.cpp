@@ -15,7 +15,6 @@
 #include "UuidFactory_ABC.h"
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
-#include "runtime/Io.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
@@ -33,10 +32,6 @@
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/algorithm/string/join.hpp>
-#include <boost/filesystem.hpp>
-
-#include <qstring.h>
-#include <qstringlist.h>
 
 #ifdef _MSC_VER
 #   pragma warning( push )

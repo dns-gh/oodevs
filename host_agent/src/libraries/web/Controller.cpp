@@ -1019,7 +1019,6 @@ void Controller::UploadLicenses( Reply_ABC& rpy, Request_ABC& request )
     WriteHttpReply( rpy, *reply );
 }
 
-
 namespace
 {
 UserType ValidateType( const Tree& user, UserType required )

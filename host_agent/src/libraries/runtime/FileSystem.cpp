@@ -26,7 +26,6 @@
 #include <fcntl.h>
 #include <iostream>
 
-
 #ifdef WIN32
 #include <io.h>
 #else
@@ -345,7 +344,6 @@ void FileSystem::ReadFileWithLimitSize( io::Writer_ABC& sink, const Path& path, 
         LOG_ERROR( log_ ) << "[file] Unable to read file " << path.string();
     }
 }
-
 
 namespace
 {
