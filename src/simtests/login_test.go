@@ -49,10 +49,19 @@ func (s *TestSuite) TestLogin(c *C) {
 	client.Close()
 }
 
-func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
-	msgch := make(chan int, 32)
+func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
+	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
+	defer sim.Stop()
 
+	// Connect and watch incoming messages
+	client := connectClient(c, sim)
+
+	msgch := make(chan int, 1)
 	handler := func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+		if err != nil {
+			msgch <- 0
+			return true
+		}
 		if msg != nil && msg.AuthenticationToClient != nil {
 			auth := msg.AuthenticationToClient
 			if auth.GetMessage().GetAuthenticationResponse() != nil ||
@@ -68,34 +77,19 @@ func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
 		}
 
 		msgch <- 1
-		return false
+		return true
 	}
 	client.Register(handler)
+	time.Sleep(2 * time.Second)
+	sim.Stop()
+
 	select {
-	case <-time.After(timeout):
-		return false
-	case <-msgch:
+	case <-time.After(5 * time.Second):
 		break
-	}
-	return true
-}
-
-func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
-	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
-	defer sim.Stop()
-
-	// Connect and watch incoming messages
-	client := connectClient(c, sim)
-	seen := waitForMessages(client, 5*time.Second)
-	if seen {
-		c.Fatal("messages seen before any client action")
-	}
-
-	err := client.Login("foo", "bar")
-	c.Assert(err, NotNil) // login with invalid credentials should have failed
-	seen = waitForMessages(client, 5*time.Second)
-	if seen {
-		c.Fatal("message seen after invalid login")
+	case res := <-msgch:
+		if res != 0 {
+			c.Fatal("messages seen before any client action")
+		}
 	}
 }
 
