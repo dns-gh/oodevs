@@ -155,12 +155,13 @@ func (model *Model) update(msg *SwordMessage) error {
 			d.Parties[party.Id] = party
 		} else if mm := m.GetUnitCreation(); mm != nil {
 			unit := &Unit{
-				mm.GetUnit().GetId(),
-				mm.GetAutomat().GetId(),
-				mm.GetName(),
-				mm.GetPc(),
-				Point{},
-				0}
+				Id:         mm.GetUnit().GetId(),
+				AutomatId:  mm.GetAutomat().GetId(),
+				Name:       mm.GetName(),
+				Pc:         mm.GetPc(),
+				Position:   Point{},
+				PathPoints: 0,
+				DebugBrain: false}
 			if !d.addUnit(unit) {
 				return fmt.Errorf("cannot insert created unit: %d", unit.Id)
 			}
@@ -175,6 +176,9 @@ func (model *Model) update(msg *SwordMessage) error {
 			}
 			if mm.Position != nil {
 				unit.Position = ReadPoint(mm.GetPosition())
+			}
+			if mm.BrainDebug != nil {
+				unit.DebugBrain = *mm.BrainDebug
 			}
 		} else if mm := m.GetAutomatCreation(); mm != nil {
 			automat := NewAutomat(
@@ -204,6 +208,9 @@ func (model *Model) update(msg *SwordMessage) error {
 				} else if mode == sword.EnumAutomatMode_disengaged {
 					automat.Engaged = false
 				}
+			}
+			if mm.BrainDebug != nil {
+				automat.DebugBrain = mm.GetBrainDebug()
 			}
 		} else if mm := m.GetFormationCreation(); mm != nil {
 			level, ok := sword.EnumNatureLevel_name[int32(mm.GetLevel())]

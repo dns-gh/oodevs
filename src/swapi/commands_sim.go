@@ -1141,3 +1141,19 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 	err := <-c.postSimRequest(msg, handler)
 	return created, err
 }
+
+func (c *Client) DebugBrainTest(id uint32, params *sword.MissionParameters) error {
+	tasker := &sword.Tasker{}
+	// Abusing the super tolerant simulation tasker parser
+	if id != 0 {
+		tasker = makeUnitTasker(id)
+	}
+	msg := createMagicActionMessage(params, tasker,
+		sword.UnitMagicAction_change_brain_debug.Enum())
+	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
+}
+
+func (c *Client) DebugBrain(automatId uint32, enable bool) error {
+	params := MakeParameters(MakeBoolean(enable))
+	return c.DebugBrainTest(automatId, params)
+}

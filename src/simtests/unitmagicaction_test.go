@@ -13,8 +13,10 @@ import (
 	"fmt"
 	. "launchpad.net/gocheck"
 	"math"
+	"strings"
 	"swapi"
 	"sword"
+	"time"
 )
 
 // For a given tasker type, send a unit magic action which is not
@@ -696,5 +698,87 @@ func (s *TestSuite) TestPcChangeSuperior(c *C) {
 	// Check u1 is not PC
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return !data.FindUnit(u1.Id).Pc
+	})
+}
+
+func (s *TestSuite) TestDebugBrain(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	automat := createAutomat(c, client)
+	from := swapi.Point{X: -15.9219, Y: 28.3456}
+	to := swapi.Point{X: -15.8193, Y: 28.3456}
+	unit, err := client.CreateUnit(automat.Id, UnitType, from)
+	c.Assert(err, IsNil)
+
+	// Missing boolean parameter
+	params := swapi.MakeParameters()
+	err = client.DebugBrainTest(unit.Id, params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Invalid tasker
+	err = client.DebugBrain(123456, true)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// This one should work
+	err = client.DebugBrain(unit.Id, true)
+	c.Assert(err, IsNil)
+	client.Model.WaitCondition(func(model *swapi.ModelData) bool {
+		return model.FindUnit(unit.Id).DebugBrain
+	})
+
+	// Enable again
+	err = client.DebugBrain(unit.Id, true)
+	c.Assert(err, IsNil)
+
+	// Give a mission and wait for debug reports to be emitted
+	seen := make(chan error)
+	client.Register(func(msg *swapi.SwordMessage, context int32, err error) bool {
+		if err != nil {
+			seen <- err
+			return true
+		}
+		if msg.SimulationToClient == nil ||
+			msg.SimulationToClient.GetMessage() == nil {
+			return false
+		}
+		trace := msg.SimulationToClient.GetMessage().GetTrace()
+		if trace == nil {
+			return false
+		}
+		if trace.GetSource() == nil || trace.GetSource().GetUnit() == nil ||
+			trace.GetSource().GetUnit().GetId() != unit.Id ||
+			strings.Index(trace.GetMessage(), "digraph") == -1 {
+			return false
+		}
+		seen <- nil
+		return true
+	})
+
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+	params = swapi.MakeParameters(
+		swapi.MakeHeading(0),
+		swapi.MakeNullValue(),
+		swapi.MakeNullValue(),
+		swapi.MakeNullValue(),
+		swapi.MakePointParam(to))
+	err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	c.Assert(err, IsNil)
+
+	select {
+	case err := <-seen:
+		c.Assert(err, IsNil)
+	case <-time.After(20 * time.Second):
+		c.Fatal("timed out while waiting for brain debug information")
+	}
+
+	// Disable debugging
+	// It is hard to test that no debug reports are being emitted any longer,
+	// and this kind of test usually requires a timeout which makes the tests
+	// slower. Skip it for now.
+	err = client.DebugBrain(unit.Id, false)
+	c.Assert(err, IsNil)
+	client.Model.WaitCondition(func(model *swapi.ModelData) bool {
+		return !model.FindUnit(unit.Id).DebugBrain
 	})
 }

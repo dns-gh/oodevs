@@ -85,6 +85,7 @@ type Unit struct {
 	Pc         bool
 	Position   Point
 	PathPoints uint32
+	DebugBrain bool
 }
 
 type Automat struct {
@@ -94,6 +95,7 @@ type Automat struct {
 	Automats         map[uint32]*Automat
 	Units            map[uint32]*Unit
 	Engaged          bool
+	DebugBrain       bool
 	KnowledgeGroupId uint32
 	LogSuperiors     []uint32
 	SuperiorQuotas   map[uint32]int32
@@ -107,6 +109,7 @@ func NewAutomat(id, partyId, knowledgeGroupId uint32, name string) *Automat {
 		Automats:         map[uint32]*Automat{},
 		Units:            map[uint32]*Unit{},
 		Engaged:          true,
+		DebugBrain:       false,
 		KnowledgeGroupId: knowledgeGroupId,
 	}
 }
