@@ -35,17 +35,14 @@ message ControlCheckPointSaveNow {
     optional string name = 1;
 }
 
-/** @struct SetAutomatMode
-    @brief An automate mode change request.
-    @see SetAutomatModeAck
-*/
+//! Engage or disengage an automat.
+//! When engaged, missions cannot be sent directly to its units, they
+//! have to be given to the automat which dispatches them afterwards.
+//! The operation is acknowledged with a SetAutomatModeAck.
 message SetAutomatMode {
-    //! The automate identifier
     required AutomatId       automate = 1;
-    //! The new mode
     required EnumAutomatMode mode     = 2;
-    //! optional name
-    optional string            name   = 3;
+    optional string          name     = 3;
 }
 
 /** @struct UnitCreationRequest

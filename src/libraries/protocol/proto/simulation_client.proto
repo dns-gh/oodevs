@@ -106,29 +106,16 @@ message FragOrderAck {
     optional string             error_msg  = 3;
 }
 
-/** @struct SetAutomatModeAck
-    @brief Acknowledges an automat mode change request
-    @see SetAutomatMode
-*/
+//! Acknowledges an automat being engaged or disengaged.
 message SetAutomatModeAck {
-    /** @enum ErrorCode
-        @brief Reason for the failure of automat mode change
-    */
     enum ErrorCode {
-        //! Operation succeeded @todo make error_code field optional
-        //! instead
         no_error           = 0;
         //! Operation failed because of an invalid automat identifier
-        //! @todo rename to error_invalid_automat
         error_invalid_unit = 1;
         //! Operation failed because the parent automat is engaged
-        //! @todo rename to error_parent_automat_engaged
         error_not_allowed  = 2;
     }
-    //! Identifier of the automat for which to change mode @see AutomatId
     required AutomatId automate   = 1;
-    //! Reason for the failure of the automat mode changing operation
-    //! @see ErrorCode
     required ErrorCode error_code = 2;
 }
 
