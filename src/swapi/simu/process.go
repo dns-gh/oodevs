@@ -40,6 +40,8 @@ type SimOpts struct {
 	// startup function fails to connect to its dispatcher server.
 	ConnectTimeout time.Duration
 
+	// Tail log files, output to log module
+	EnableTailing bool
 	// Prefix the tail output with supplied string
 	TailPrefix string
 }
@@ -309,22 +311,24 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		}
 	}()
 
-	sim.quitAll.Add(1)
-	logFiles := []string{
-		opts.GetSimLogPath(),
-		opts.GetDispatcherLogPath(),
-	}
-	go func() {
-		prefix := opts.TailPrefix
-		if len(prefix) > 0 {
-			prefix = prefix + ": "
+	if opts.EnableTailing {
+		sim.quitAll.Add(1)
+		logFiles := []string{
+			opts.GetSimLogPath(),
+			opts.GetDispatcherLogPath(),
 		}
-		defer sim.quitAll.Done()
-		TailFiles(logFiles, sim.tailch, func(line string) bool {
-			log.Printf(prefix + line)
-			return false
-		})
-	}()
+		go func() {
+			prefix := opts.TailPrefix
+			if len(prefix) > 0 {
+				prefix = prefix + ": "
+			}
+			defer sim.quitAll.Done()
+			TailFiles(logFiles, sim.tailch, func(line string) bool {
+				log.Printf(prefix + line)
+				return false
+			})
+		}()
+	}
 
 	connectTimeout := opts.ConnectTimeout
 	if connectTimeout <= 0 {
