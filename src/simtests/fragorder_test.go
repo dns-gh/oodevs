@@ -30,15 +30,15 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 
 	// Cannot send frag order without tasker
 	err = client.SendAutomatFragOrder(0, FragOrderNbcSuitOn, params)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot send frag order with an invalid automat identifier
 	err = client.SendAutomatFragOrder(InvalidIdentifier, FragOrderNbcSuitOn, params)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot send frag order with an invalid frag order identifier
 	err = client.SendAutomatFragOrder(automat.Id, InvalidIdentifier, params)
-	c.Assert(err, ErrorMatches, "error_invalid_frag_order")
+	c.Assert(err, IsSwordError, "error_invalid_frag_order")
 
 	// Disengage automat
 	err = client.SetAutomatMode(automat.Id, false)
@@ -49,7 +49,7 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 
 	// Cannot send frag order to an disengaged automat
 	err = client.SendAutomatFragOrder(automat.Id, FragOrderNbcSuitOn, params)
-	c.Assert(err, ErrorMatches, "error_unit_cannot_receive_order")
+	c.Assert(err, IsSwordError, "error_unit_cannot_receive_order")
 
 	// Engage automat
 	err = client.SetAutomatMode(automat.Id, true)
@@ -80,11 +80,11 @@ func (s *TestSuite) TestCrowdFragOrder(c *C) {
 
 	// Cannot send frag order with an invalid frag order identifier
 	err = client.SendCrowdFragOrder(crowd.Id, InvalidIdentifier, params)
-	c.Assert(err, ErrorMatches, "error_invalid_frag_order")
+	c.Assert(err, IsSwordError, "error_invalid_frag_order")
 
 	// Crowd frag order is unavailable without a mission
 	err = client.SendCrowdFragOrder(crowd.Id, FragOrderCrowdPauseMovement, params)
-	c.Assert(err, ErrorMatches, "error_invalid_frag_order")
+	c.Assert(err, IsSwordError, "error_invalid_frag_order")
 
 	missionParams := swapi.MakeParameters(
 		swapi.MakePointParam(to))
@@ -112,7 +112,7 @@ func (s *TestSuite) TestUnitFragOrder(c *C) {
 
 	// Cannot send frag order to an engaged unit
 	err = client.SendUnitFragOrder(unit.Id, MissionMoveId, params)
-	c.Assert(err, ErrorMatches, "error_unit_cannot_receive_order")
+	c.Assert(err, IsSwordError, "error_unit_cannot_receive_order")
 
 	// Disengage automat
 	err = client.SetAutomatMode(automat.Id, false)
@@ -123,7 +123,7 @@ func (s *TestSuite) TestUnitFragOrder(c *C) {
 
 	// Cannot send frag order with an invalid frag order identifier
 	err = client.SendUnitFragOrder(unit.Id, InvalidIdentifier, params)
-	c.Assert(err, ErrorMatches, "error_invalid_frag_order")
+	c.Assert(err, IsSwordError, "error_invalid_frag_order")
 
 	err = client.SendUnitFragOrder(unit.Id, FragOrderNbcSuitOn, params)
 	c.Assert(err, IsNil)

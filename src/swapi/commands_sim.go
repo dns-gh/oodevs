@@ -57,7 +57,7 @@ func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 		id := msg.GetUnit().GetId()
 		return id, nil
 	}
-	return 0, nameof(sword.UnitActionAck_ErrorCode_name, int32(code))
+	return 0, makeError(msg, int32(code), sword.UnitActionAck_ErrorCode_name)
 }
 
 func GetKnowledgeGroupMagicActionAck(msg *sword.KnowledgeGroupMagicActionAck) (uint32, error) {
@@ -66,7 +66,7 @@ func GetKnowledgeGroupMagicActionAck(msg *sword.KnowledgeGroupMagicActionAck) (u
 		id := msg.GetKnowledgeGroup().GetId()
 		return id, nil
 	}
-	return 0, nameof(sword.KnowledgeGroupAck_ErrorCode_name, int32(code))
+	return 0, makeError(msg, int32(code), sword.KnowledgeGroupAck_ErrorCode_name)
 }
 
 type simHandler func(msg *sword.SimToClient_Content) error
@@ -249,7 +249,7 @@ func orderAckHandler(msg *sword.SimToClient_Content) error {
 	}
 	code := reply.GetErrorCode()
 	if code != sword.OrderAck_no_error {
-		return nameof(sword.OrderAck_ErrorCode_name, int32(code))
+		return makeError(reply, int32(code), sword.OrderAck_ErrorCode_name)
 	}
 	return nil
 }
@@ -495,18 +495,23 @@ func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {
 			return fmt.Errorf("invalid automat identifier")
 		}
 		if code := reply.GetErrorCode(); code != sword.SetAutomatModeAck_no_error {
-			return nameof(sword.SetAutomatModeAck_ErrorCode_name, int32(code))
+			return makeError(reply, int32(code), sword.SetAutomatModeAck_ErrorCode_name)
 		}
 		return nil
 	}
 	return <-c.postSimRequest(msg, handler)
 }
 
-func getControlAckError(code sword.ControlAck_ErrorCode) error {
+type ControlAckError interface {
+	GetErrorCode() sword.ControlAck_ErrorCode
+}
+
+func getControlAckError(reply ControlAckError) error {
+	code := reply.GetErrorCode()
 	if code == sword.ControlAck_no_error {
 		return nil
 	}
-	return nameof(sword.ControlAck_ErrorCode_name, int32(code))
+	return makeError(reply, int32(code), sword.ControlAck_ErrorCode_name)
 }
 
 func (c *Client) Pause() error {
@@ -522,7 +527,7 @@ func (c *Client) Pause() error {
 		if reply == nil {
 			return unexpected(msg)
 		}
-		return getControlAckError(reply.GetErrorCode())
+		return getControlAckError(reply)
 	}
 	return <-c.postSimRequest(msg, handler)
 }
@@ -542,7 +547,7 @@ func (c *Client) Resume(nextPause uint32) error {
 		if reply == nil {
 			return unexpected(msg)
 		}
-		return getControlAckError(reply.GetErrorCode())
+		return getControlAckError(reply)
 	}
 	return <-c.postSimRequest(msg, handler)
 }
@@ -560,7 +565,7 @@ func (c *Client) Stop() error {
 		if reply == nil {
 			return unexpected(msg)
 		}
-		return getControlAckError(reply.GetErrorCode())
+		return getControlAckError(reply)
 	}
 	return <-c.postSimRequest(msg, handler)
 }
@@ -601,7 +606,7 @@ func (c *Client) SendFragOrder(automatId, crowdId, unitId, fragOrderType uint32,
 		}
 		code := reply.GetErrorCode()
 		if code != sword.OrderAck_no_error {
-			return nameof(sword.OrderAck_ErrorCode_name, int32(code))
+			return makeError(reply, int32(code), sword.OrderAck_ErrorCode_name)
 		}
 		return nil
 	}
@@ -639,7 +644,7 @@ func defaultMagicHandler(msg *sword.SimToClient_Content) error {
 	}
 	code := reply.GetErrorCode()
 	if code != sword.MagicActionAck_no_error {
-		return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+		return makeError(reply, int32(code), sword.MagicActionAck_ErrorCode_name)
 	}
 	return nil
 }
@@ -778,7 +783,7 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 		}
 		code := reply.GetErrorCode()
 		if code != sword.MagicActionAck_no_error {
-			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+			return makeError(reply, int32(code), sword.MagicActionAck_ErrorCode_name)
 		}
 		value := GetParameterValue(reply.GetResult(), 0)
 		if value == nil {
@@ -1028,7 +1033,7 @@ func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*Kno
 		}
 		code := reply.GetErrorCode()
 		if code != sword.MagicActionAck_no_error {
-			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+			return makeError(reply, int32(code), sword.MagicActionAck_ErrorCode_name)
 		}
 		value := GetParameterValue(reply.GetResult(), 0)
 		if value == nil {

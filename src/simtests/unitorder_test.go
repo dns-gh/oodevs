@@ -42,11 +42,11 @@ func (s *TestSuite) TestGenericMission(c *C) {
 
 	// Cannot send order with an invalid unit identifier
 	err = client.SendUnitOrder(InvalidIdentifier, MissionMoveId, params)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot send order to an engaged unit
 	err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
-	c.Assert(err, ErrorMatches, "error_unit_cannot_receive_order")
+	c.Assert(err, IsSwordError, "error_unit_cannot_receive_order")
 
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
@@ -57,7 +57,7 @@ func (s *TestSuite) TestGenericMission(c *C) {
 
 	// Cannot order with an invalid mission identifier
 	err = client.SendUnitOrder(unit.Id, InvalidIdentifier, params)
-	c.Assert(err, ErrorMatches, "error_invalid_mission")
+	c.Assert(err, IsSwordError, "error_invalid_mission")
 
 	err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
@@ -87,11 +87,11 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 
 	// Cannot send order with an invalid unit identifier
 	err = client.SendAutomatOrder(InvalidIdentifier, MissionAutomatAttackId, params)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot order with an invalid mission identifier
 	err = client.SendAutomatOrder(automat.Id, InvalidIdentifier, params)
-	c.Assert(err, ErrorMatches, "error_invalid_mission")
+	c.Assert(err, IsSwordError, "error_invalid_mission")
 
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
@@ -101,7 +101,7 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 
 	// Cannot send order to an disengaged automat
 	err = client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
-	c.Assert(err, ErrorMatches, "error_unit_cannot_receive_order")
+	c.Assert(err, IsSwordError, "error_unit_cannot_receive_order")
 
 	err = client.SetAutomatMode(automat.Id, true)
 	c.Assert(err, IsNil)
@@ -133,11 +133,11 @@ func (s *TestSuite) TestCrowdMission(c *C) {
 
 	// Cannot send order with an invalid unit identifier
 	err = client.SendCrowdOrder(InvalidIdentifier, MissionMoveCrowdId, params)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot order with an invalid mission identifier
 	err = client.SendCrowdOrder(crowd.Id, InvalidIdentifier, params)
-	c.Assert(err, ErrorMatches, "error_invalid_mission")
+	c.Assert(err, IsSwordError, "error_invalid_mission")
 
 	err = client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)

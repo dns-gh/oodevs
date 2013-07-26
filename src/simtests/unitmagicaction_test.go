@@ -130,7 +130,7 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	}
 	for _, tasker := range taskers {
 		err := postInvalidTasker(client, tasker)
-		c.Assert(err, ErrorMatches, "error_invalid_unit",
+		c.Assert(err, IsSwordError, "error_invalid_unit",
 			Commentf("for tasker %v", tasker))
 	}
 }
@@ -142,15 +142,15 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 
 	// Test with invalid tasker
 	_, err := client.CreateFormation(0, 0, "invalid-tasker", 1, "")
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Test invalid level
 	_, err = client.CreateFormation(1, 0, "invalid-tasker", 42, "")
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Test invalid log level
 	_, err = client.CreateFormation(1, 0, "invalid-tasker", 1, "invalid")
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Add formation to party
 	f1, err := client.CreateFormation(1, 0, "newformation", 1, "")
@@ -172,7 +172,7 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 
 	// Invalid formation parameters (empty)
 	_, err = client.CreateFormationTest(0, f1.Id, swapi.MakeParameters())
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 }
 
 func Nearby(pointA, pointB swapi.Point) bool {
@@ -215,15 +215,15 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// No tasker
 	_, err = client.CreateUnit(0, unitType, pos)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Invalid automat
 	_, err = client.CreateUnit(InvalidIdentifier, unitType, pos)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Invalid unit type
 	_, err = client.CreateUnit(automat.Id, InvalidIdentifier, pos)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Add unit to automat, automatically becomes PC
 	u, err := client.CreateUnit(automat.Id, unitType, pos)
@@ -301,7 +301,7 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 
 	// Destroy invalid unit
 	err := client.DeleteUnit(1234)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Find some unit
 	units := data.ListUnits()
@@ -344,27 +344,27 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 
 	// No parent formation or automat
 	_, err := client.CreateAutomat(0, 0, automatType, kg0.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Invalid formation
 	_, err = client.CreateAutomat(InvalidIdentifier, 0, automatType, kg0.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Invalid automat
 	_, err = client.CreateAutomat(formation.Id, InvalidIdentifier, automatType, kg0.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Invalid automat type
 	_, err = client.CreateAutomat(formation.Id, 0, InvalidIdentifier, kg0.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Invalid knowledge group
 	_, err = client.CreateAutomat(formation.Id, 0, automatType, InvalidIdentifier)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Knowledge group not belonging to formation party
 	_, err = client.CreateAutomat(formation.Id, 0, automatType, kg1.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Create automat in formation
 	a, err := client.CreateAutomat(formation.Id, 0, automatType, kg0.Id)
@@ -382,14 +382,14 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 
 	// Knowledge group not belonging to parent automat party
 	aa, err = client.CreateAutomat(0, a.Id, automatType, kg1.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	c.Assert(aa, IsNil)
 }
 
 func (s *TestSuite) TestCreateCrowd(c *C) {
 	checkError := func(crowd *swapi.Crowd, err error, expected string) {
 		c.Assert(crowd, IsNil)
-		c.Assert(err, ErrorMatches, expected)
+		c.Assert(err, IsSwordError, expected)
 	}
 
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
@@ -455,11 +455,11 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 
 	// No tasker
 	err = client.TeleportUnit(0, pos)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot teleport unit if its automat is engaged
 	err = client.TeleportUnit(unit.Id, pos)
-	c.Assert(err, ErrorMatches, "error_automat_engaged")
+	c.Assert(err, IsSwordError, "error_automat_engaged")
 
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
@@ -484,7 +484,7 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 
 	// error: invalid automat id
 	err := client.LogisticsChangeLinks(10, []uint32{})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// valid automat id with no link
 	err = client.LogisticsChangeLinks(9, []uint32{})
@@ -493,7 +493,7 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 	// error : 42 is an invalid superior id
 	newSuperiors := []uint32{23, 42}
 	err = client.LogisticsChangeLinks(9, newSuperiors)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// valid superiors id
 	newSuperiors = []uint32{25, 31}
@@ -515,15 +515,15 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 
 	// error: invalid supplied id parameter
 	err := client.LogisticsSupplyChangeQuotas(25, 42, map[uint32]int32{})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid supplier id parameter
 	err = client.LogisticsSupplyChangeQuotas(42, 23, map[uint32]int32{})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error : valid units id but no dotation
 	err = client.LogisticsSupplyChangeQuotas(25, 23, map[uint32]int32{})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// quotas model updated and no error with valid ids
 	newQuotas := map[uint32]int32{1: 100, 2: 200}
@@ -544,12 +544,12 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 
 	// error: invalid supplier parameter
 	err := client.LogisticsSupplyPushFlow(42, 9)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid receiver parameter
 	param := swapi.MakeParameter(&sword.MissionParameter_Value{})
 	err = client.LogisticsSupplyPushFlowTest(23, swapi.MakeParameters(param))
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// valid supplier parameter
 	err = client.LogisticsSupplyPushFlow(23, 9)
@@ -562,11 +562,11 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 
 	// error: invalid supplier parameter
 	err := client.LogisticsSupplyPullFlow(23, 42)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid receiver parameter
 	err = client.LogisticsSupplyPullFlow(42, 9)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// valid supplier parameter
 	err = client.LogisticsSupplyPullFlow(23, 9)
@@ -628,26 +628,26 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 
 	// error: no tasker
 	err := client.ChangeSuperior(0, a1.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// error: invalid tasker
 	err = client.ChangeSuperior(12345, a1.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// error: missing parameter
 	err = client.ChangeSuperior(u2.Id, 0)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid automat identifier
 	err = client.ChangeSuperior(u2.Id, 12345)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: automat parameter isn't in the same side
 	f2 := CreateFormation(c, client, 2)
 	a3 := CreateAutomat(c, client, f2.Id, 2)
 
 	err = client.ChangeSuperior(u2.Id, a3.Id)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change superior u2 -> a1
 	err = client.ChangeSuperior(u2.Id, a1.Id)
@@ -713,11 +713,11 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 	// Missing boolean parameter
 	params := swapi.MakeParameters()
 	err = client.DebugBrainTest(unit.Id, params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid tasker
 	err = client.DebugBrain(123456, true)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// This one should work
 	err = client.DebugBrain(unit.Id, true)

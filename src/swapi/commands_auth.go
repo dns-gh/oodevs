@@ -50,18 +50,6 @@ func Disconnect(link io.ReadWriter, timeout time.Duration) bool {
 	return true
 }
 
-func unexpected(value interface{}) error {
-	return fmt.Errorf("got unexpected value %v", value)
-}
-
-func nameof(names map[int32]string, code int32) error {
-	name, ok := names[code]
-	if !ok {
-		return unexpected(code)
-	}
-	return errors.New(name)
-}
-
 type authHandler func(msg *sword.AuthenticationToClient_Content, clientId int32) error
 
 func (c *Client) postAuthRequestWithCheckingClientId(msg SwordMessage, handler authHandler, checkClientId bool) <-chan error {
@@ -112,8 +100,8 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 		}
 		code := reply.GetErrorCode()
 		if code != sword.AuthenticationResponse_success {
-			return nameof(sword.AuthenticationResponse_ErrorCode_name,
-				int32(code))
+			return makeError(reply, int32(code),
+				sword.AuthenticationResponse_ErrorCode_name)
 		}
 		id = clientId
 
@@ -184,8 +172,8 @@ func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
 		}
 		code := reply.GetErrorCode()
 		if code != sword.ProfileCreationRequestAck_success {
-			return nameof(sword.ProfileCreationRequestAck_ErrorCode_name,
-				int32(code))
+			return makeError(reply, int32(code),
+				sword.ProfileCreationRequestAck_ErrorCode_name)
 		}
 		// The profile should be available by now. It is safe to call
 		// GetProfile() here:
@@ -221,8 +209,8 @@ func (c *Client) UpdateProfile(login string, profile *Profile) (*Profile, error)
 		}
 		code := reply.GetErrorCode()
 		if code != sword.ProfileUpdateRequestAck_success {
-			return nameof(sword.ProfileUpdateRequestAck_ErrorCode_name,
-				int32(code))
+			return makeError(reply, int32(code),
+				sword.ProfileUpdateRequestAck_ErrorCode_name)
 		}
 		updated = c.Model.GetProfile(reply.GetLogin())
 		return nil
@@ -248,8 +236,8 @@ func (c *Client) DeleteProfile(login string) error {
 		}
 		code := reply.GetErrorCode()
 		if code != sword.ProfileDestructionRequestAck_success {
-			return nameof(sword.ProfileDestructionRequestAck_ErrorCode_name,
-				int32(code))
+			return makeError(reply, int32(code),
+				sword.ProfileDestructionRequestAck_ErrorCode_name)
 		}
 		removed := c.Model.GetProfile(reply.GetLogin())
 		if removed != nil {

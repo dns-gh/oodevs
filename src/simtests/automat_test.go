@@ -29,7 +29,7 @@ func (s *TestSuite) TestSetAutomatMode(c *C) {
 
 	// Invalid automat identifier
 	err := client.SetAutomatMode(12456, false)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// This one should work
 	checkEngage(automat.Id, automat.Id, false)
@@ -43,9 +43,9 @@ func (s *TestSuite) TestSetAutomatMode(c *C) {
 
 	// Changing the sub automat mode fails if parent is engaged (why?)
 	err = client.SetAutomatMode(subAutomat.Id, true)
-	c.Assert(err, ErrorMatches, "error_not_allowed")
+	c.Assert(err, IsSwordError, "error_not_allowed")
 	err = client.SetAutomatMode(subAutomat.Id, false)
-	c.Assert(err, ErrorMatches, "error_not_allowed")
+	c.Assert(err, IsSwordError, "error_not_allowed")
 
 	// Disengaging the parent, does not disengage the children
 	checkEngage(automat.Id, automat.Id, false)

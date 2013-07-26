@@ -21,7 +21,7 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 	err := client.Pause()
 	c.Assert(err, IsNil)
 	err = client.Pause()
-	c.Assert(err, ErrorMatches, "error_already_paused")
+	c.Assert(err, IsSwordError, "error_already_paused")
 
 	// Wait a bit to see if it ticks, not super reliable but locally ticks
 	// are around 500ms
@@ -41,7 +41,7 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 	err = client.Resume(0)
 	c.Assert(err, IsNil) // simulation failed to resume
 	err = client.Resume(0)
-	c.Assert(err, ErrorMatches, "error_not_paused")
+	c.Assert(err, IsSwordError, "error_not_paused")
 	// Should tick now
 	if !model.WaitUntilTick(tick1 + 1) {
 		c.Fatal("simulation failed to resume")
@@ -49,7 +49,7 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 
 	// Resuming again with a delay should fail too
 	err = client.Resume(1)
-	c.Assert(err, ErrorMatches, "error_not_paused")
+	c.Assert(err, IsSwordError, "error_not_paused")
 	// Test resuming with a delay
 	err = client.Pause()
 	c.Assert(err, IsNil)
@@ -81,13 +81,13 @@ func (s *TestSuite) TestControlRights(c *C) {
 	defer sim.Stop()
 
 	err := client.Pause()
-	c.Assert(err, ErrorMatches, "error_forbidden")
+	c.Assert(err, IsSwordError, "error_forbidden")
 
 	// Privilege checking should happen before validity checks, that is
 	// resuming a non-paused simulation
 	err = client.Resume(0)
-	c.Assert(err, ErrorMatches, "error_forbidden")
+	c.Assert(err, IsSwordError, "error_forbidden")
 
 	err = client.Stop()
-	c.Assert(err, ErrorMatches, "error_forbidden")
+	c.Assert(err, IsSwordError, "error_forbidden")
 }

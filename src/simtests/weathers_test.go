@@ -38,45 +38,45 @@ func (s *TestSuite) TestControlGlobalWeather(c *C) {
 
 	// Error: missing parameters
 	err := client.UpdateGlobalWeather(nil)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: wind speed negative
 	expected.WindSpeed = -6
 	err = client.UpdateGlobalWeather(&expected)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: cloud floor negative
 	expected.WindSpeed = 0
 	expected.CloudFloor = -5
 	err = client.UpdateGlobalWeather(&expected)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: cloud ceil negative
 	expected.CloudFloor = 0
 	expected.CloudCeil = -5
 	err = client.UpdateGlobalWeather(&expected)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: cloud density negative
 	expected.CloudCeil = 0
 	expected.CloudDensity = -5
 	err = client.UpdateGlobalWeather(&expected)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: precipitation enumeration invalid
 	expected.CloudDensity = 0
 	expected.Precipitation = 12345
 	err = client.UpdateGlobalWeather(&expected)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid direction
 	expected.Precipitation = 0
 	expected.WindDirection = 400
 	err = client.UpdateGlobalWeather(&expected)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	expected.WindDirection = -400
 	err = client.UpdateGlobalWeather(&expected)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Update global weather
 	expected = swapi.Weather{Temperature: 10,
@@ -123,7 +123,7 @@ func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 
 	// Error: missing parameters
 	remote, err := client.CreateLocalWeather(nil)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	local := swapi.LocalWeather{
 		Weather: swapi.Weather{
@@ -156,7 +156,7 @@ func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 	id := local.Id
 	local.Id = 1234
 	remote, err = client.CreateLocalWeather(&local)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Update local weather
 	local.Id = id
@@ -206,11 +206,11 @@ func (s *TestSuite) TestControlLocalWeatherDestruction(c *C) {
 
 	// Error: missing parameters
 	err = client.DestroyLocalWeather(0)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid meteo identifier
 	err = client.DestroyLocalWeather(12345)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: missing parameters
 	err = client.DestroyLocalWeather(1)
