@@ -155,13 +155,17 @@ func (model *Model) update(msg *SwordMessage) error {
 			d.Parties[party.Id] = party
 		} else if mm := m.GetUnitCreation(); mm != nil {
 			unit := &Unit{
-				Id:         mm.GetUnit().GetId(),
-				AutomatId:  mm.GetAutomat().GetId(),
-				Name:       mm.GetName(),
-				Pc:         mm.GetPc(),
-				Position:   Point{},
-				PathPoints: 0,
-				DebugBrain: false}
+				Id:                 mm.GetUnit().GetId(),
+				AutomatId:          mm.GetAutomat().GetId(),
+				Name:               mm.GetName(),
+				Pc:                 mm.GetPc(),
+				Position:           Point{},
+				PathPoints:         0,
+				DebugBrain:         false,
+				EquipmentDotations: map[uint32]*EquipmentDotation{},
+				LentEquipments:     []*LentEquipment{},
+				BorrowedEquipments: []*BorrowedEquipment{}}
+
 			if !d.addUnit(unit) {
 				return fmt.Errorf("cannot insert created unit: %d", unit.Id)
 			}
@@ -179,6 +183,25 @@ func (model *Model) update(msg *SwordMessage) error {
 			}
 			if mm.BrainDebug != nil {
 				unit.DebugBrain = *mm.BrainDebug
+			}
+			if dotations := mm.GetEquipmentDotations(); dotations != nil {
+				for _, dotation := range dotations.GetElem() {
+					unit.EquipmentDotations[dotation.GetType().GetId()] = &EquipmentDotation{dotation.GetAvailable()}
+				}
+			}
+			if lentEquipments := mm.GetLentEquipments(); lentEquipments != nil {
+				unit.LentEquipments = []*LentEquipment{}
+				for _, equipment := range lentEquipments.GetElem() {
+					unit.LentEquipments = append(unit.LentEquipments, &LentEquipment{equipment.GetBorrower().GetId(),
+						equipment.GetType().GetId(), equipment.GetQuantity()})
+				}
+			}
+			if borrowedEquipments := mm.GetBorrowedEquipments(); borrowedEquipments != nil {
+				unit.BorrowedEquipments = []*BorrowedEquipment{}
+				for _, equipment := range borrowedEquipments.GetElem() {
+					unit.BorrowedEquipments = append(unit.BorrowedEquipments, &BorrowedEquipment{equipment.GetOwner().GetId(),
+						equipment.GetType().GetId(), equipment.GetQuantity()})
+				}
 			}
 		} else if mm := m.GetAutomatCreation(); mm != nil {
 			automat := NewAutomat(

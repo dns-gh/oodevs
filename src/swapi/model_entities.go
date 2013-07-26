@@ -78,14 +78,33 @@ func NewCrowd(id, partyId uint32, name string) *Crowd {
 	}
 }
 
+type EquipmentDotation struct {
+	Available int32
+}
+
+type LentEquipment struct {
+	Borrower uint32
+	TypeId   uint32
+	Quantity int32
+}
+
+type BorrowedEquipment struct {
+	Owner    uint32
+	TypeId   uint32
+	Quantity int32
+}
+
 type Unit struct {
-	Id         uint32
-	AutomatId  uint32
-	Name       string
-	Pc         bool
-	Position   Point
-	PathPoints uint32
-	DebugBrain bool
+	Id                 uint32
+	AutomatId          uint32
+	Name               string
+	Pc                 bool
+	Position           Point
+	PathPoints         uint32
+	DebugBrain         bool
+	EquipmentDotations map[uint32]*EquipmentDotation
+	LentEquipments     []*LentEquipment
+	BorrowedEquipments []*BorrowedEquipment
 }
 
 type Automat struct {
