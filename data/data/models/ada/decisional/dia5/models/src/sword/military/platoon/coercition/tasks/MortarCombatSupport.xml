@@ -58,14 +58,14 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.coercition.skills.EngageFriendsEnemies" priority="0.3">
+                <skill name="sword.military.platoon.coercition.skills.EngageFriendsEnemies" priority="0.1">
                     <parameter name="friends">
                         <value>
                             <parameter>objectives</parameter>
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.skills.actions.ApplyMortarFires" priority="0.5">
+                <skill name="sword.military.platoon.skills.actions.ApplyMortarFires" priority="10.0">
                     <parameter name="alliedUnits">
                         <value>
                             <parameter>objectives</parameter>

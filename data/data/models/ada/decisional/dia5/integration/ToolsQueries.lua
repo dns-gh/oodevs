@@ -479,7 +479,7 @@ end
 integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
     local enemies = {}
     for i = 1, #friends do
-        local simEnemies = integration.getMortarUnitsToNeutralize( friends[i] )
+        local simEnemies = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( friends[i].source )
         for j = 1, #simEnemies do
             local eny = CreateKnowledge( sword.military.world.Platoon, simEnemies[j] )
             if not eny:isTransported() then
@@ -530,4 +530,14 @@ integration.query.getEntitiesToCombatSupportTask = function( commander, oldSuppo
         end
     end
     return platoonToSupport
+end
+
+integration.getNearestElement = function( elements )
+    local nearestElement = elements[ 1 ] -- init
+    for _, element in pairs ( elements ) do
+        if integration.distance( meKnowledge, element ) > integration.distance( meKnowledge, nearestElement ) then
+            nearestElement = element
+        end
+    end
+    return nearestElement
 end

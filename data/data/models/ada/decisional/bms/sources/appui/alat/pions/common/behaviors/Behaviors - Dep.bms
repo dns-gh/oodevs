@@ -283,7 +283,7 @@ node "BEH_Dep_Pion_ALAT_RejoindrePoint"
         end
 
         if( self.eEtat ~= eActionEnCours ) then
-            self:SendFeedback( self.eEtat )
+            --self:SendFeedback( self.eEtat ) -- problem lua when use fragorder "poursuivre" after "attendre se poster" , problem masaLife ??? 
             Halt( self )
             do return end
         else

@@ -21,6 +21,7 @@ rootnode
     end,
     
     create = function( self )
+        self.automaticTarget = {}
         self.dangerousEnemies = {}
         self.platoonsToSupport = {}
         self.selfCommanding = true
@@ -58,7 +59,7 @@ rootnode
                 self.automaticTarget = integration.findEnemyToMortarIndirectFire( self.dangerousEnemies ) -- unit should be unload to have result
             end
             if self.order or ( self.dangerousEnemies and #self.dangerousEnemies > 0 ) then --Need to dismount before firing
-                if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
+                if meKnowledge:canDismount() then
                     Activate( skill.links.dismount, 1 )
                 end
             end
@@ -71,13 +72,14 @@ rootnode
                 end
             end
             
-            if self.automaticTarget and self.automaticTarget:isValid() then --Apply fire to support allies automatically
+            if #self.automaticTarget > 0 then  --Apply fire to support allies automatically
                 if meKnowledge:isDismounted() then
-                    self.dotation = integration.munitionPourTirIndirect( self.automaticTarget:getPosition() )
+                    local nearest = integration.getNearestElement( self.automaticTarget )
+                    self.dotation = integration.munitionPourTirIndirect( nearest:getPosition() )
                     if integration.hasDotation( self.dotation ) then
                         integration.sendfireAvailable(true)
                         Activate( skill.nodes.CR, 1, {RC = eRC_ReceptionOrdreDeFeu } )
-                        Activate( skill.links.indirectFire, 1, { entities = { self.automaticTarget }, interventionType = 1, munition = self.dotation } )
+                        Activate( skill.links.indirectFire, 1, { entities = { nearest }, interventionType = 1, munition = self.dotation } )
                     end
                 end
             end
