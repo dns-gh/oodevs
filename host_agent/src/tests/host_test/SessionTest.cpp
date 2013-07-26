@@ -66,6 +66,12 @@ namespace
         "\"terrain\":{\"name\":\"a\",\"checksum\":\"c\"},"
         "\"model\":{\"name\":\"a\",\"checksum\":\"c\"}";
 
+    bool EndWith( const std::string& suffix, const host::Path& path )
+    {
+        const auto regex = boost::xpressive::sregex::compile( suffix + "$" );
+        return boost::xpressive::regex_search( path.string(), regex );
+    }
+
     int BlockUntil( Event& start, Event& end, int code )
     {
         start.Signal();
@@ -90,6 +96,7 @@ namespace
         SubFixture()
         {
             MOCK_EXPECT( fs.Walk );
+            MOCK_EXPECT( fs.Exists ).with( boost::bind( &EndWith, "\\.log", _1 ) ).returns( false );
         }
     };
 
