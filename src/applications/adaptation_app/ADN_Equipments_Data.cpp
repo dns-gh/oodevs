@@ -10,11 +10,10 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_ConsistencyChecker.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Workspace.h"
-#include "ADN_Breakdowns_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
-#include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 

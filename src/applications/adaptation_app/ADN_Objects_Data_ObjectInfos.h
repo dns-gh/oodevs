@@ -10,8 +10,6 @@
 #ifndef __ADN_Objects_Data_ObjectInfos_h_
 #define __ADN_Objects_Data_ObjectInfos_h_
 
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
 #include "ADN_CapacityInfos.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_RefWithName.h"

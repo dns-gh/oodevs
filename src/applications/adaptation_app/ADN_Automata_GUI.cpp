@@ -6,32 +6,17 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Automata_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 7/06/05 10:08 $
-// $Revision: 18 $
-// $Workfile: ADN_Automata_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_GUI.h"
 #include "ADN_MainWindow.h"
-#include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_Workspace.h"
-#include "ADN_CommonGfx.h"
 #include "ADN_Automata_Data.h"
-#include "ADN_Connector_Vector_ABC.h"
 #include "ADN_Automata_ListView.h"
 #include "ADN_Automata_SubUnitsTable.h"
 #include "ADN_ComboBox_Vector.h"
-#include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
-#include "ADN_ListView.h"
 #include "ADN_AutomatLog_ListView.h"
 #include "ADN_AutomatLogCategory_ListView.h"
 #include "ADN_GoToButton.h"

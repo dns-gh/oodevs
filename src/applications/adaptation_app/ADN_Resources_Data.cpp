@@ -10,12 +10,11 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Tools.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Tr.h"
-#include "ADN_AttritionInfos.h"
 #include "ENT/ENT_Tr.h"
-#include <memory>
 #include "clients_kernel/XmlTranslations.h"
 
 ADN_Resources_Data::ResourceInfos* gpDummyDotationInfos;

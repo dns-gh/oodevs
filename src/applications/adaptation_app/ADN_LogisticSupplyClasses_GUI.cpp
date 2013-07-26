@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_LogisticSupplyClasses_GUI.h"
 #include "moc_ADN_LogisticSupplyClasses_GUI.cpp"
-
 #include "ADN_GuiBuilder.h"
 #include "ADN_ListView_Categories_LogisticSupplyClass.h"
 #include "ADN_LogisticSupplyClasses_Data.h"

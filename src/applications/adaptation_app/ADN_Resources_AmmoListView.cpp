@@ -6,19 +6,11 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Resources_AmmoListView.cpp $
-// $Author: Nld $
-// $Modtime: 20/07/05 14:21 $
-// $Revision: 10 $
-// $Workfile: ADN_Resources_AmmoListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Resources_AmmoListView.h"
 #include "ADN_ActiveProtections_Data.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Resources_Wizard.h"

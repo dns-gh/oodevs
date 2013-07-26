@@ -2171,7 +2171,9 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.h">
       <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.h" />
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_CheckBox.h">

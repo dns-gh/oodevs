@@ -20,7 +20,6 @@
 #include "ADN_Resources_Data.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_FireClass_Data.h"
-#include "ADN_Drawings_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Disasters_Data.h"
 #include <boost/tuple/tuple.hpp>

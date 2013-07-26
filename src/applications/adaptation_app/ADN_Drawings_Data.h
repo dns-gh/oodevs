@@ -12,9 +12,7 @@
 
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
-#include "ADN_Ref_ABC.h"
 #include "ADN_Types.h"
-#include "clients_kernel/Types.h"
 #include "clients_gui/DrawingTemplate.h"
 
 namespace svg

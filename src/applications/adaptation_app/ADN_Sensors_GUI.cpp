@@ -17,6 +17,7 @@
 #include "ADN_GroupBox.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Sensors_Data.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_ListView_Sensors.h"
 #include "ADN_SearchListView.h"
 #include "ADN_Sensors_Sizes_GUI.h"

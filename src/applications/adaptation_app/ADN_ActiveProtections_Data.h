@@ -14,9 +14,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
-#include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Resources_Data.h"
-#include "ADN_Weapons_Data.h"
 
 // =============================================================================
 // @class  ADN_ActiveProtections_Data
@@ -26,7 +24,6 @@
 // =============================================================================
 class ADN_ActiveProtections_Data : public ADN_Data_ABC
 {
-
 public:
 
     class ActiveProtectionsInfosWeapons : public ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >

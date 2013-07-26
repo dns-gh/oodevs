@@ -13,11 +13,6 @@
 #include "ADN_Types.h"
 #include "ADN_Connector_ABC.h"
 #include "ADN_Weapons_Data.h"
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
-
-class ADN_Launchers_Data::LauncherInfos;
-class ADN_Resources_Data::AmmoCategoryInfo;
 
 // =============================================================================
 // @class  ADN_WeaponFilter
@@ -25,7 +20,7 @@ class ADN_Resources_Data::AmmoCategoryInfo;
 //
 // Created: MCO 2011-07-05
 // =============================================================================
-class ADN_WeaponFilter : public ADN_Connector_ABC, boost::noncopyable
+class ADN_WeaponFilter : public ADN_Connector_ABC
 {
     Q_OBJECT
 

@@ -8,8 +8,10 @@
 // $Workfile: ADN_Units_LogThreshold_GUI.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Units_LogThreshold_GUI.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Units_Data.h"
 #include "ADN_LogisticSupplyClasses_Data.h"
 

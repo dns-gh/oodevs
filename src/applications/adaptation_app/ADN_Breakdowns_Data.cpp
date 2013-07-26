@@ -11,7 +11,6 @@
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
-#include "ADN_Resources_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"

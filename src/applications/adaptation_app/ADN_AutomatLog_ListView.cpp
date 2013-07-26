@@ -6,19 +6,10 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-04 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_AutomatLog_ListView.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 15:53 $
-// $Revision: 3 $
-// $Workfile: ADN_AutomatLog_ListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Equipments_Data.h"
 #include "ADN_AutomatLog_ListView.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_GridDelegate.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Rich_ListViewItem.h"
@@ -28,11 +19,11 @@
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
 ADN_AutomatLog_ListView::ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidget* pParent )
-: ADN_ListView( pParent, "ADN_AutomatLog_ListView" )
-, data_       ( data )
-, compTotal_    ()
-, unitTotal_    ()
-, automatTotal_ ()
+    : ADN_ListView( pParent, "ADN_AutomatLog_ListView" )
+    , data_( data )
+    , compTotal_()
+    , unitTotal_()
+    , automatTotal_()
 {
     setItemDelegate( new ADN_GridDelegate( this ) );
     setRootIsDecorated( true );

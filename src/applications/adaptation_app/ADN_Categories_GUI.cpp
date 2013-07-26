@@ -10,11 +10,9 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Categories_GUI.h"
 #include "moc_ADN_Categories_GUI.cpp"
-
 #include "ADN_Armors_Data.h"
 #include "ADN_Armors_GUI.h"
 #include "ADN_Categories_Data.h"
-#include "ADN_GuiBuilder.h"
 #include "ADN_LogisticSupplyClasses_Data.h"
 #include "ADN_LogisticSupplyClasses_GUI.h"
 #include "ADN_Natures_Data.h"

@@ -11,7 +11,6 @@
 #define __ADN_Automata_ListView_h_
 
 #include "ADN_ListView.h"
-#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_Automata_ListView
@@ -20,7 +19,6 @@
 // Created: APE 2005-01-06
 // =============================================================================
 class ADN_Automata_ListView : public ADN_ListView
-                            , private boost::noncopyable
 {
 
 public:

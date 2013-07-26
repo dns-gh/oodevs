@@ -11,10 +11,8 @@
 #define __ADN_AutomatLog_ListView_h_
 
 #include "ADN_ListView.h"
-#include "ADN_Data_ABC.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Units_Data.h"
-#include <boost/noncopyable.hpp>
 
 class ADN_Automata_Data;
 class ADN_Rich_ListViewItem;
@@ -23,7 +21,6 @@ class ADN_Rich_ListViewItem;
 // Created: APE 2005-04-04
 // =============================================================================
 class ADN_AutomatLog_ListView : public ADN_ListView
-                              , private boost::noncopyable
 {
 
 public:

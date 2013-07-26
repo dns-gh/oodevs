@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_LogisticSupplyClass.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_LogisticSupplyClasses_Data.h"
 #include "ADN_LogisticSupplyClasses_GUI.h"
 #include "ADN_Tr.h"

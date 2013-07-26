@@ -12,6 +12,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Workspace.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Tools.h"

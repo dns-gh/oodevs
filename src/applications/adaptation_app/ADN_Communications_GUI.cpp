@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Communications_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 13/04/05 17:48 $
-// $Revision: 4 $
-// $Workfile: ADN_Communications_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Communications_GUI.h"

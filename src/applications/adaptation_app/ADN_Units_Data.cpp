@@ -13,6 +13,7 @@
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Units_GUI.h"
 #include "ADN_UnitSymbolWidget.h"
 #include "clients_kernel/SymbolFactory.h"

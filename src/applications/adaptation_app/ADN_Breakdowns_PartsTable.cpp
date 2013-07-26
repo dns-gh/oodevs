@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Breakdowns_PartsTable.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 16:56 $
-// $Revision: 6 $
-// $Workfile: ADN_Breakdowns_PartsTable.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_PartsTable.h"

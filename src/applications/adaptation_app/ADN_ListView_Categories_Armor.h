@@ -21,7 +21,7 @@
 // Created: AGN 2004-05-06
 // =============================================================================
 class ADN_ListView_Categories_Armor
-: public ADN_ListView
+    : public ADN_ListView
 {
 public:
     explicit ADN_ListView_Categories_Armor( QWidget* pParent );

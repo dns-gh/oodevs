@@ -8,8 +8,10 @@
 // $Workfile: ADN_ListView_Categories_Size.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Size.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Volumes_Data.h"
 #include "ADN_Volumes_GUI.h"

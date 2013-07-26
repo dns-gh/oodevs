@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_DotationNature.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Natures_Data.h"
 #include "ADN_Natures_GUI.h"
 #include "ADN_Resources_Data.h"

@@ -12,6 +12,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Armor.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Armors_Data.h"
 #include "ADN_Armors_GUI.h"
 #include "ADN_MainWindow.h"

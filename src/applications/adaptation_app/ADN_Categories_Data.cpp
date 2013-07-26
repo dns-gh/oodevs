@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Categories_Data.h"
-
 #include "ADN_Armors_Data.h"
 #include "ADN_Enums.h"
 #include "ADN_LogisticSupplyClasses_Data.h"

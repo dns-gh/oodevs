@@ -15,11 +15,13 @@
 // $Workfile: ADN_Weapons_Data.cpp $
 //
 // *****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_Data_WeaponInfos.h"
 #include "moc_ADN_Weapons_Data_WeaponInfos.cpp"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Weapons_Data_PhInfos.h"
 #include "ADN_Tr.h"
 

@@ -13,9 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
 #include "ADN_Types.h"
-#include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_ExtinguisherAgentInfos.h"
-#include "ADN_UrbanAttritionInfos.h"
 #include "ADN_WeatherFireEffects.h"
 
 // =============================================================================

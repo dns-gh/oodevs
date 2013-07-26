@@ -15,7 +15,6 @@
 #include "ADN_Enums.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
-#include "ADN_Type_VectorFixed_ABC.h"
 
 // =============================================================================
 /** @class  ADN_Radars_Data

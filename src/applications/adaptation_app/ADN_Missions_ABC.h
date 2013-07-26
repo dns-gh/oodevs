@@ -15,15 +15,13 @@
 #include "ADN_Enums.h"
 #include "ADN_Missions_Parameter.h"
 
-#include <boost/noncopyable.hpp>
 // =============================================================================
 /** @class  ADN_Missions_ABC
     @brief  ADN_Missions_ABC
 */
 // Created: NPT 2013-02-14
 // =============================================================================
-class ADN_Missions_ABC : private boost::noncopyable
-                       , public ADN_RefWithName
+class ADN_Missions_ABC : public ADN_RefWithName
     {
     public:
         class ADN_Missions_Attachment : public ADN_RefWithName

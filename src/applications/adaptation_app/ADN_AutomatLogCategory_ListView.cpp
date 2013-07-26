@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Equipments_Data.h"
 #include "ADN_AutomatLogCategory_ListView.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_GridDelegate.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Rich_ListViewItem.h"

@@ -11,7 +11,6 @@
 #define __ADN_Breakdowns_ListView_h_
 
 #include "ADN_ListView.h"
-#include "ADN_Breakdowns_Data.h"
 
 // =============================================================================
 /** @class  ADN_Breakdowns_ListView
@@ -20,7 +19,6 @@
 // Created: APE 2005-03-18
 // =============================================================================
 class ADN_Breakdowns_ListView : public ADN_ListView
-                              , private boost::noncopyable
 {
 
 public:

@@ -11,8 +11,6 @@
 #define __ADN_ComboBoxItem_h_
 
 #include "ADN_Gfx_ABC.h"
-#include "ADN_ComboBox.h"
-#include <boost/noncopyable.hpp>
 
 class ADN_ComboBox;
 
@@ -21,7 +19,6 @@ class ADN_ComboBox;
 //*****************************************************************************
 class ADN_ComboBoxItem : public QObject
                        , public ADN_Gfx_ABC
-                       , private boost::noncopyable
 {
     Q_OBJECT
 

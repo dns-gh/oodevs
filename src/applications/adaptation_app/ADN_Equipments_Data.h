@@ -14,16 +14,15 @@
 #include "ADN_CrossedRef.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
-#include "ADN_Categories_Data.h"
 #include "ADN_Sensors_Data.h"
-#include "ADN_Launchers_Data.h"
-#include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Resources_Data.h"
-#include "ADN_Weapons_Data_WeaponInfos.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_Natures_Data.h"
 #include "ADN_Breakdowns_Data.h"
+#include "ADN_Weapons_Data.h"
 #include "ADN_Tr.h"
+
+class ADN_Objects_Data_ObjectInfos;
 
 // =============================================================================
 /** @class  ADN_Equipments_Data

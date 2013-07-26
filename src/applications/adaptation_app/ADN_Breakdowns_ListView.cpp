@@ -26,7 +26,7 @@ ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Breakdowns_ListView", ADN_Tr::ConvertFromWorkspaceElement( eBreakdowns ).c_str() )
 {
     // Connector creation
-    pConnector_ = new ADN_Connector_ListView<BreakdownInfo>(*this);
+    pConnector_ = new ADN_Connector_ListView< BreakdownInfo >( *this );
     SetDeletionEnabled( true );
 }
 

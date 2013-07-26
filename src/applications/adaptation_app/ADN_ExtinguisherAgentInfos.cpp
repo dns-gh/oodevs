@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ExtinguisherAgentInfos.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ExtinguisherAgentInfos constructor

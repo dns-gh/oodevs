@@ -10,7 +10,6 @@
 #ifndef __ADN_GUI_Container_h_
 #define __ADN_GUI_Container_h_
 
-#include <boost/noncopyable.hpp>
 #include "ADN_GUI_ABC.h"
 
 class ADN_Data_Container;

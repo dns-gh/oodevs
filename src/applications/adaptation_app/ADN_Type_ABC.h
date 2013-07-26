@@ -12,8 +12,6 @@
 
 #include "ADN_Connector_ABC.h"
 #include <iostream>
-#include <xeumeuleu/xml.h>
-#include <boost/noncopyable.hpp>
 
 //*****************************************************************************
 // Created: JDY 03-07-02

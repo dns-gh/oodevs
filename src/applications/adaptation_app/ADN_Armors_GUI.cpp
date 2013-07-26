@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Armors_GUI.h"
 #include "moc_ADN_Armors_GUI.cpp"
-
 #include "ADN_Armors_Data.h"
 #include "ADN_Categories_AttritionEffect_Table.h"
 #include "ADN_GuiBuilder.h"
