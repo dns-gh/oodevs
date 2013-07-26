@@ -116,6 +116,7 @@ ADN_Workspace& ADN_Workspace::GetWorkspace()
 void ADN_Workspace::CleanWorkspace()
 {
     delete pWorkspace_;
+    pWorkspace_ = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -303,7 +304,7 @@ void ADN_Workspace::Reset(const tools::Path& filename, bool bVisible )
         if( bVisible )
             pProgressIndicator_->Increment( tr( "Unloading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
         qApp->processEvents();
-        elements_[n]->GetDataABC().Reset();
+        elements_[n]->GetDataABC().ResetData();
     }
     projectData_->Reset();
 

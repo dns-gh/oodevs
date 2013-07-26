@@ -76,6 +76,16 @@ void ADN_Data_ABC::LoadFile( const tools::Loader_ABC& fileLoader, const tools::P
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Data_ABC::ResetData
+// Created: JSR 2013-07-23
+// -----------------------------------------------------------------------------
+void ADN_Data_ABC::ResetData()
+{
+    translations_->Purge();
+    Reset();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::LoadTranslations
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------

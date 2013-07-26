@@ -46,7 +46,7 @@ void ADN_Data_Container::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 void ADN_Data_Container::Reset()
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Reset();
+        it->second->ResetData();
 }
 
 // -----------------------------------------------------------------------------

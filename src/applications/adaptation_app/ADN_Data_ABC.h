@@ -41,6 +41,7 @@ public:
 
     //! @name Operations
     //@{
+    void ResetData();
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const = 0;
     virtual void Reset() = 0;
     virtual void Load( const tools::Loader_ABC& fileLoader );

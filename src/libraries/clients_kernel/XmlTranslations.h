@@ -49,6 +49,7 @@ public:
 
     //! @name TranslationQueries operations
     //@{
+    void Purge();
     bool LoadTranslationQueries( const tools::Path& xmlFile );
     void EvaluateTranslationQueries( const tools::Path& xmlFile, const T_Languages& languages );
     void SaveTranslationQueries( const tools::Path& xmlFile ) const;
