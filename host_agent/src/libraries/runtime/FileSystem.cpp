@@ -335,7 +335,8 @@ void FileSystem::ReadFileWithLimitSize( io::Writer_ABC& sink, const Path& path, 
         while( !ifs.eof() )
         {
             ifs.read( buffer, sizeof( buffer ) );
-            sink.Write( buffer, ifs.gcount() );
+            const size_t len = static_cast< size_t >( ifs.gcount() );
+            sink.Write( buffer, len );
         }
     }
     catch( const std::exception& err )
