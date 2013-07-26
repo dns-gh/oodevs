@@ -49,7 +49,7 @@ func (s *TestSuite) TestCrowdTotalDestruction(c *C) {
 
 	// Kill all humans with invalid identifier
 	err := client.SendTotalDestruction(12345)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Kill all humans
 	err = client.SendTotalDestruction(crowd.Id)
@@ -74,13 +74,13 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 
 	// Error : missing parameter
 	err := client.ChangeArmedIndividuals(crowd.Id, 0)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error : Armed individuals must be a percentage between 0 and 100
 	err = client.ChangeArmedIndividuals(crowd.Id, 200)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	err = client.ChangeArmedIndividuals(crowd.Id, -2)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change Armed individuals
 	err = client.ChangeArmedIndividuals(crowd.Id, 50)
@@ -103,7 +103,7 @@ func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 
 	// Error : missing parameter
 	err := client.ChangeCriticalIntelligence(crowd.Id, "")
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change critical intelligence
 	err = client.ChangeCriticalIntelligence(crowd.Id, "critical")
@@ -129,11 +129,11 @@ func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 
 	// Error : negative parameter
 	err := client.ChangeHealthState(crowd.Id, -2, -5, contaminated, -1)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error : all parameters are null
 	err = client.ChangeHealthState(crowd.Id, 0, 0, 0, 0)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change human composition
 	healthy, wounded, contaminated, dead = int32(23), int32(22), int32(21), int32(51)
@@ -156,12 +156,12 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 
 	// Error : missing parameter
 	err := client.ChangeAdhesions(crowd.Id, map[uint32]float32{})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error : adhesion must be between -1 and 1
 	adhesions := map[uint32]float32{0: 1.1, 1: 5.2}
 	err = client.ChangeAdhesions(crowd.Id, adhesions)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change crowd adhesions
 	adhesions = map[uint32]float32{0: 0.7, 1: -0.5}
@@ -176,7 +176,7 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	// No change adhesions if new adhesions are invalid
 	err = client.ChangeAdhesions(crowd.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	newAdhesions = client.Model.GetData().FindCrowd(crowd.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
@@ -199,11 +199,11 @@ func (s *TestSuite) TestCrowdReloadBrain(c *C) {
 
 	// Error : missing parameter
 	err := client.ReloadBrain(crowd.Id, "")
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error : invalid model
 	err = client.ReloadBrain(crowd.Id, "invalid")
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Reload crowd decisional model
 	err = client.ReloadBrain(crowd.Id, "Rioters")
@@ -250,7 +250,7 @@ func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
 
 	// Error : missing parameter
 	err := client.ChangeExtensions(crowd.Id, nil)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Fill new extensions
 	extensions := map[string]string{"name1": "value1", "name2": "value2"}
@@ -309,11 +309,11 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 
 	// Error : missing parameter
 	err := client.ChangeAttitude(crowd.Id, 0)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error : invalid attitude
 	err = client.ChangeAttitude(crowd.Id, 12345)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change attitude(agitated)
 	err = client.ChangeAttitude(crowd.Id, Agitated)

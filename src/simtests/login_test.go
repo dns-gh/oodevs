@@ -23,14 +23,14 @@ func (s *TestSuite) TestLogin(c *C) {
 	client := connectClient(c, sim)
 	c.Assert(client.GetClientId(), Equals, int32(0))
 	err := client.Login("foo", "bar")
-	c.Assert(err, ErrorMatches, "invalid_login")
+	c.Assert(err, IsSwordError, "invalid_login")
 	c.Assert(client.GetClientId(), Equals, int32(0))
 	client.Close()
 
 	// Test invalid version
 	client = connectClient(c, sim)
 	err = client.LoginWithVersion("admin", "user", "1.0")
-	c.Assert(err, ErrorMatches, "mismatched_protocol_version")
+	c.Assert(err, IsSwordError, "mismatched_protocol_version")
 	client.Close()
 
 	// Test valid login
@@ -159,13 +159,13 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	// A regular user cannot do anything
 	user := connectAndWait(c, sim, "user1", "user1")
 	_, err := user.CreateProfile(userProfile)
-	c.Assert(err, ErrorMatches, "forbidden")
+	c.Assert(err, IsSwordError, "forbidden")
 
 	_, err = user.UpdateProfile("user1", userProfile)
-	c.Assert(err, ErrorMatches, "forbidden")
+	c.Assert(err, IsSwordError, "forbidden")
 
 	err = user.DeleteProfile("user2")
-	c.Assert(err, ErrorMatches, "forbidden")
+	c.Assert(err, IsSwordError, "forbidden")
 	user.Close()
 
 	// An admin can create regular users
@@ -183,11 +183,11 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 
 	// Test empty login
 	profile, err = admin.CreateProfile(emptyLoginProfile)
-	c.Assert(err, ErrorMatches, "invalid_login")
+	c.Assert(err, IsSwordError, "invalid_login")
 
 	// Test duplicate login
 	profile, err = admin.CreateProfile(adminProfile)
-	c.Assert(err, ErrorMatches, "duplicate_login")
+	c.Assert(err, IsSwordError, "duplicate_login")
 
 	// Regular profile update
 	userProfile.Password = "userpassword"
@@ -198,31 +198,31 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 
 	// Duplicating through update
 	profile, err = admin.UpdateProfile("user1", userProfile)
-	c.Assert(err, ErrorMatches, "duplicate_login")
+	c.Assert(err, IsSwordError, "duplicate_login")
 
 	// Updating with empty login
 	profile, err = admin.UpdateProfile(userProfile.Login, emptyLoginProfile)
-	c.Assert(err, ErrorMatches, "invalid_login")
+	c.Assert(err, IsSwordError, "invalid_login")
 
 	// Updating missing profile
 	profile, err = admin.UpdateProfile("missing", userProfile)
-	c.Assert(err, ErrorMatches, "invalid_profile")
+	c.Assert(err, IsSwordError, "invalid_profile")
 
 	// Delete myself
 	err = admin.DeleteProfile("admin")
-	c.Assert(err, ErrorMatches, "invalid_profile")
+	c.Assert(err, IsSwordError, "invalid_profile")
 
 	// Delete valid profile
 	err = admin.DeleteProfile("user2")
 	c.Assert(err, IsNil)
 	user2 := connectClient(c, sim)
 	err = user2.Login("user2", "user2")
-	c.Assert(err, ErrorMatches, "invalid_login")
+	c.Assert(err, IsSwordError, "invalid_login")
 	user2.Close()
 
 	// Delete missing profile
 	err = admin.DeleteProfile("missing")
-	c.Assert(err, ErrorMatches, "invalid_profile")
+	c.Assert(err, IsSwordError, "invalid_profile")
 
 	admin.Close()
 	// Check the users are usable
@@ -236,7 +236,7 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	// And taken in account for removed...
 	user2 = connectClient(c, sim)
 	err = user2.Login("user2", "user2")
-	c.Assert(err, ErrorMatches, "invalid_login")
+	c.Assert(err, IsSwordError, "invalid_login")
 	user2.Close()
 	// ... and created profiles
 	user = connectClient(c, sim)

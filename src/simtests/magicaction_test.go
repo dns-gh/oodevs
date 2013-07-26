@@ -29,21 +29,21 @@ func (s *TestSuite) TestChangeDiplomacy(c *C) {
 	//check with no parameters
 	params := swapi.MakeParameters()
 	err := client.ChangeDiplomacyTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	//check with wrong party
 	err = client.ChangeDiplomacy(0, 2, sword.EnumDiplomacy_enemy)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	err = client.ChangeDiplomacy(2, 0, sword.EnumDiplomacy_enemy)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	//check with wrong param number
 	params = swapi.MakeParameters(
 		swapi.MakeIdentifier(1),
 		swapi.MakeIdentifier(2))
 	err = client.ChangeDiplomacyTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	//check with all parameters
 	model := client.Model.GetData()
@@ -72,7 +72,7 @@ func (s *TestSuite) TestFireOrderCreation(c *C) {
 	// error: invalid parameters count, 3 parameters expected
 	params := swapi.MakeParameters()
 	err := client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a location or a point
 	params = swapi.MakeParameters(
@@ -80,32 +80,32 @@ func (s *TestSuite) TestFireOrderCreation(c *C) {
 		swapi.MakeNullValue(),
 		swapi.MakeNullValue())
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: second parameter must be a resource type
 	params.Elem[0] = swapi.MakePointParam(point)
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: second parameter must be a valid resource type
 	params.Elem[1] = swapi.MakeResourceType(uint32(12345))
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: second parameter must be a resource type with a indirect fire
 	params.Elem[1] = swapi.MakeResourceType(ResourceTypeWithoutIndirectFire)
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: third parameter must be a real
 	params.Elem[1] = swapi.MakeResourceType(ResourceTypeWithIndirectFire)
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: third parameter must be a positive real number
 	params.Elem[2] = swapi.MakeFloat(float32(-3))
 	err = client.CreateFireOnLocationTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// indirect fire with a point
 	params.Elem[2] = swapi.MakeFloat(float32(5))
@@ -128,17 +128,17 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	// error: invalid parameters count, 2 parameters expected
 	params := swapi.MakeParameters()
 	err := client.ChangeResourceNetworkTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a location or an identifier
 	params = swapi.MakeParameters(swapi.MakeNullValue(), swapi.MakeNullValue())
 	err = client.ChangeResourceNetworkTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a valid identifier
 	params.Elem[0] = swapi.MakeIdentifier(uint32(1000))
 	err = client.ChangeResourceNetworkTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// first parameter with a valid identifier
 	params.Elem[0] = swapi.MakeIdentifier(uint32(21))
@@ -150,7 +150,7 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 		swapi.MakeList(swapi.MakeString("Running Water")),
 		swapi.MakeList(swapi.MakeString("invalid resource name")))
 	err = client.ChangeResourceNetworkTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// second parameter with valid resource names
 	params.Elem[1] = swapi.MakeParameter(
@@ -200,19 +200,19 @@ func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	// error: invalid parameters count, parameters expected
 	params := swapi.MakeParameters()
 	group, err := client.CreateKnowledgeGroupTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be an identifier
 	params = swapi.MakeParameters(
 		swapi.MakeNullValue(),
 		swapi.MakeNullValue())
 	group, err = client.CreateKnowledgeGroupTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a valid identifier
 	params.Elem[0] = swapi.MakeIdentifier(uint32(1000))
 	group, err = client.CreateKnowledgeGroupTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	parent := client.Model.GetData().ListKnowledgeGroups()[0]
 	c.Assert(parent, Not(IsNil))
@@ -221,7 +221,7 @@ func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	params.Elem[0] = swapi.MakeIdentifier(uint32(parent.Id))
 	params.Elem[1] = swapi.MakeString("invalid knowledge group type")
 	group, err = client.CreateKnowledgeGroupTest(params)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// first parameter with a valid identifier
 	// second parameter with a valid knowledge group type identifier
