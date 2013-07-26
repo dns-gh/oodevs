@@ -770,8 +770,8 @@ void Controller::DownloadSessionLog( Reply_ABC& rpy, Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
-    const std::string& logFile = RequireParameter< std::string >( "logfile", request );
-    const int limitSize = RequireParameter< int >( "limitsize", request );
+    const std::string logFile = RequireParameter< std::string >( "logfile", request );
+    const int limitSize = GetParameter( "limitsize", request, 0 );
     agent_.DownloadSessionLog( node, GetId( request ), *chunker, logFile, limitSize );
 }
 
