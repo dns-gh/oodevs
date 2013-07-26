@@ -417,11 +417,10 @@ class SessionItemView extends Backbone.View
             duration = current.getTime() - start.getTime()
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
-        if data.logs.Sim
-            data.can_display_log = true;
+        data.can_display_log = !_.isEmpty data.logs
         data.can_link = data.status != "playing" || data.start_time
-        data.sim_license = true;
-        data.replay_license = true;
+        data.sim_license = true
+        data.replay_license = true
         if licenses.attributes["sword-runtime"]?
             data.sim_license = get_license_validity "sword-runtime", licenses.attributes
         if licenses.attributes["sword-replayer"]?
