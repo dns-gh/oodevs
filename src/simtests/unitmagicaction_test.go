@@ -787,14 +787,12 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
 
-	equipments := make(map[uint32]int)
-	equipments[11] = 1
-	err := client.TransferEquipment(11, 12, equipments)
-	c.Assert(err, IsNil)
-
 	// error: invalid parameters count
-	err = client.TransferEquipment(11, 12, nil)
+	err := client.TransferEquipment(11, 12, nil)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid empty equipment list")
+
+	equipments := map[uint32]int{}
+	equipments[11] = 1
 
 	// error: invalid unit identifier
 	err = client.TransferEquipment(1000, 12, equipments)
@@ -803,4 +801,14 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 	// error: invalid unit identifier
 	err = client.TransferEquipment(11, 1000, equipments)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid target identifier")
+
+	err = client.TransferEquipment(11, 12, equipments)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(11)
+		target := data.FindUnit(12)
+		return unit.EquipmentDotations[11].Available == 3 &&
+			len(unit.LentEquipments) != 0 && unit.LentEquipments[0].Borrower == 12 && unit.LentEquipments[0].TypeId == 11 && unit.LentEquipments[0].Quantity == 1 &&
+			len(target.BorrowedEquipments) != 0 && target.BorrowedEquipments[0].Owner == 11 && target.BorrowedEquipments[0].TypeId == 11 && target.BorrowedEquipments[0].Quantity == 1
+	})
 }
