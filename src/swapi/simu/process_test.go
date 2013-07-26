@@ -26,6 +26,7 @@ var (
 	rundir      string
 	testPort    int
 	legacy      bool
+	showLog     bool
 )
 
 func init() {
@@ -40,6 +41,7 @@ func init() {
 	flag.IntVar(&testPort, "test-port", 35000,
 		"base port for spawned simulations")
 	flag.BoolVar(&legacy, "legacy", false, "run in legacy mode")
+	flag.BoolVar(&showLog, "show-log", false, "print simulation log files")
 }
 
 func (s *TestSuite) TestSimOpts(c *C) {
@@ -72,6 +74,7 @@ func MakeOpts() *SimOpts {
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+1)
 	opts.ConnectTimeout = 600 * time.Second
 	opts.Legacy = legacy
+	opts.EnableTailing = showLog
 	return &opts
 }
 

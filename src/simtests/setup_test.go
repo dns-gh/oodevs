@@ -28,6 +28,7 @@ var (
 	rundir      string
 	testPort    int
 	legacy      bool
+	showLog     bool
 )
 
 func init() {
@@ -42,6 +43,7 @@ func init() {
 	flag.IntVar(&testPort, "test-port", 35000,
 		"base port for spawned simulations")
 	flag.BoolVar(&legacy, "legacy", false, "run in legacy mode")
+	flag.BoolVar(&showLog, "show-log", false, "print simulation log files")
 }
 
 const ExCrossroadSmallOrbat = "crossroad-small-orbat"
@@ -67,6 +69,7 @@ func MakeOpts() *simu.SimOpts {
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
 	opts.Legacy = legacy
+	opts.EnableTailing = showLog
 	return &opts
 }
 
