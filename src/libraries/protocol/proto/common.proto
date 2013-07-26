@@ -2096,10 +2096,12 @@ message UnitMagicAction {
         recover_equipments_except_log     = 54;
         //! A recover resources except log magic action
         recover_resources_except_log      = 55;
-        //! A change brain debug magic action
-        //! The tasker must be set to the parent automat.
+        //! Make a unit, automat or crowd emit decisional debug traces. The
+        //! traces currently contain activation graphs in Graphviz format, and
+        //! are sent in Trace messages.
+        //! The tasker is selected unit, automat or crowd identifier.
         //! parameters[0], BooleanValue: if true, enable brain debug,
-        //! otherwise disable it
+        //!   otherwise disable it
         change_brain_debug                = 56;
     }
     //! The tasker @todo Explain what is a "tasker"
