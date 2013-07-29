@@ -50,7 +50,19 @@ func (s *TestSuite) TestLogin(c *C) {
 }
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
-	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
+
+	waitForMessages := func(timeout time.Duration, seen chan int) {
+		select {
+		case <-time.After(timeout):
+			break
+		case res := <-seen:
+			if res != 0 {
+				c.Fatal("messages seen before any client action")
+			}
+		}
+	}
+
+	sim := startSimOnExercise(c, ExCrossroadSmallOrbat, 1000, false)
 	defer sim.Stop()
 
 	// Connect and watch incoming messages
@@ -80,17 +92,15 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 		return true
 	}
 	client.Register(handler)
-	time.Sleep(2 * time.Second)
-	sim.Stop()
 
-	select {
-	case <-time.After(5 * time.Second):
-		break
-	case res := <-msgch:
-		if res != 0 {
-			c.Fatal("messages seen before any client action")
-		}
-	}
+	// Trigger simulation_client messages
+	other := loginAndWaitModel(c, sim, "alluser", "alluser")
+	createAutomat(c, other)
+	waitForMessages(2*time.Second, msgch)
+
+	// Trigger destruction events
+	sim.Stop()
+	waitForMessages(5*time.Second, msgch)
 }
 
 func connectAndWait(c *C, sim *simu.SimProcess, user, password string) *swapi.Client {
