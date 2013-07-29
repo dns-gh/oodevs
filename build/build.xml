@@ -738,7 +738,9 @@
                                    Xalan-C_1_11.dll,
                                    XalanMessages_1_11.dll,
                                    xerces-c_3_1.dll,
-                                   zlib1.dll"/>
+                                   zlib1.dll,
+                                   phonon_backend/*.dll,
+                                   imageformats/*.dll"/>
                 <fileset dir="${run.dir}" includes="resources/**"/>
             </zip>
             <check-depends file="@{file}"/>
