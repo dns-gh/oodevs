@@ -1632,6 +1632,8 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
     MIL_AgentPion* target = FindAgentPion( parameters.elem( 0 ).value().Get( 0 ).identifier() );
     if( !target )
         throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "invalid target identifier" );
+    if( target == &pion )
+        throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "source and target are identical" );
     std::map< unsigned int, int > composantesMap;
     for( int i = 0; i < parameters.elem( 1 ).value_size(); ++i )
     {
