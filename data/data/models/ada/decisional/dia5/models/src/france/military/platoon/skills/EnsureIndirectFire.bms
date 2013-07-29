@@ -38,6 +38,7 @@ rootnode
         self.positions = {}
         self.nextTargetIndex = 1
         self.waitOrder = false
+        self.neutralized = false
     end,
     
     activate = function( self )
@@ -45,7 +46,10 @@ rootnode
         
         if integration.isAgentNeutralized() then
             integration.sendfireAvailable(false)
+            self.neutralized = true
             Activate( skill.nodes.CR, 1, {RC = eRC_AgentNeutralizedIndirectFireImpossible } )
+        else
+            self.neutralized = false
         end
          
         if self.params.firePositions == NIL then
@@ -58,7 +62,7 @@ rootnode
             if not self.order then
                 self.order = integration.query.getFirstFireOrder()
             end
-            if meKnowledge:isDeployed() then
+            if meKnowledge:isDeployed() and not self.neutralized then
                 integration.sendfireAvailable(true)
                 Activate( skill.nodes.CR, 1, {RC = eRC_PretPourConduiteTir} )
                 if self.params.callByFragOrder then
