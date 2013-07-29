@@ -1622,27 +1622,28 @@ void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicAction& message, MIL_AgentPion& pion )
 {
-    // Read message
-    if( !message.has_parameters() || message.parameters().elem_size() != 2 ||
-        message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_identifier() ||
-        message.parameters().elem( 1 ).value_size() == 0 )
+    if( !message.has_parameters() || message.parameters().elem_size() != 2 )
         throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter );
-    const ::MissionParameters& parameters = message.parameters();
-    unsigned int otherId = parameters.elem( 0 ).value().Get( 0 ).identifier();
-    MIL_AgentPion* borrower = FindAgentPion( otherId );
-    if( !borrower )
-        throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter );
+    const MissionParameters& parameters = message.parameters();
+    if( parameters.elem( 0 ).value_size() != 1 || !parameters.elem( 0 ).value().Get( 0 ).has_identifier() )
+        throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
+    if( parameters.elem( 1 ).value_size() == 0 )
+        throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "invalid empty equipment list" );
+    MIL_AgentPion* target = FindAgentPion( parameters.elem( 0 ).value().Get( 0 ).identifier() );
+    if( !target )
+        throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "invalid target identifier" );
     std::map< unsigned int, int > composantesMap;
-    for( int i = 0; i < message.parameters().elem( 1 ).value_size(); ++i )
+    for( int i = 0; i < parameters.elem( 1 ).value_size(); ++i )
     {
-        const ::sword::MissionParameter_Value& value = message.parameters().elem( 1 ).value().Get( i );
+        const ::sword::MissionParameter_Value& value = parameters.elem( 1 ).value().Get( i );
         if( value.list_size() != 2 || !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
-            throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter );
+            throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
+                "invalid equipment parameter #" + boost::lexical_cast< std::string >( i ) );
         composantesMap[ value.list( 0 ).identifier() ] = value.list( 1 ).quantity();
     }
     // Transfer composante
     PHY_RolePion_Composantes& pSource = pion.GetRole< PHY_RolePion_Composantes >();
-    PHY_RolePion_Composantes& pTarget = borrower->GetRole< PHY_RolePion_Composantes >();
+    PHY_RolePion_Composantes& pTarget = target->GetRole< PHY_RolePion_Composantes >();
     for( auto it = composantesMap.begin(); it != composantesMap.end(); ++it )
         pSource.GiveComposante( it->first, it->second, pTarget );
 }
