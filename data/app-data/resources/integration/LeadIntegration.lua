@@ -153,7 +153,9 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
                     integration.optimizeWorkMap( params.maxNbrFront, myself.leadData.nbrTotalObstacle )
                 end
             end
-            pcall( function() return companyTask:distributeObjectives( bestList, params ) end )
+            if companyTask.distributeObjectives then
+                companyTask:distributeObjectives( bestList, params )
+            end
             myself.leadData.nbrWithMainTask = #bestList
         end
         return fillParameters( bestList, companyTask, params, nbrFront, retrogradeContext, isMain, objectif )
@@ -550,28 +552,31 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     local Activate = Activate
     
     -- Dynamicity managing
-    local ok, isDynamic = pcall( function() return self.companyTask:isDynamic() end )
-    if ok and isDynamic then
-        local ok, dynamicEntitiesAndTasks = pcall( function() return self.companyTask:readyToGiveDynamicTasks( self ) end )
-        if ok and dynamicEntitiesAndTasks then
-            for i=1, #dynamicEntitiesAndTasks do
-                local dynamicEntities = dynamicEntitiesAndTasks[i].entities
-                local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
-                
-                for _, entity in pairs( dynamicEntities or emptyTable ) do
-                    integration.ListenFrontElement( entity )
+    if self.companyTask.isDynamic and self.companyTask:isDynamic() then
+        if self.companyTask.readyToGiveDynamicTasks then
+            local dynamicEntitiesAndTasks = self.companyTask:readyToGiveDynamicTasks( self )
+            if dynamicEntitiesAndTasks then
+                for i=1, #dynamicEntitiesAndTasks do
+                    local dynamicEntities = dynamicEntitiesAndTasks[i].entities
+                    local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
+                    
+                    for _, entity in pairs( dynamicEntities or emptyTable ) do
+                        integration.ListenFrontElement( entity )
+                    end
+                    
+                    local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
+                                             or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
+                                             or eEtatEchelon_None
+                    integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
                 end
-                local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
-                                         or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
-                                         or eEtatEchelon_None
-                integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
             end
         end
     end
     
     -- Communication between the company and the subordinates
-    pcall( function() return self.companyTask:communicateWithSubordinates() end )
-    
+    if self.companyTask.communicateWithSubordinates then
+        self.companyTask:communicateWithSubordinates()
+    end
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
     local pionsPE =  echelons[1]
     local pionsSE =  echelons[2]
