@@ -54,6 +54,10 @@
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>orders</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AffinitiesDialog</name>
@@ -3155,6 +3159,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Timeline session files (*.timeline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

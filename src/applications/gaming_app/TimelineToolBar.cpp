@@ -75,7 +75,8 @@ void TimelineToolBar::OnFilterSelection()
 // -----------------------------------------------------------------------------
 void TimelineToolBar::OnLoadOrderFile()
 {
-    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load actions file" ), config_.BuildExerciseChildFile( config_.GetExerciseName() + "-orders.ord" ), tr( "Actions files (*.ord)" ) );
+    tools::Path defaultPath = config_.BuildExerciseChildFile( config_.GetExerciseName() + "-" + tools::Path::FromUnicode( tr( "orders" ).toStdWString() ) + ".ord" );
+    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load actions file" ), defaultPath, tr( "Actions files (*.ord)" ) );
     if( !filename.IsEmpty() && filename.Exists() && filename.IsRegularFile() )
         emit LoadOrderFileRequest( filename );
 }
@@ -86,7 +87,7 @@ void TimelineToolBar::OnLoadOrderFile()
 // -----------------------------------------------------------------------------
 void TimelineToolBar::OnSaveOrderFile()
 {
-    tools::Path defaultPath = config_.BuildExerciseChildFile( config_.GetExerciseName() + "-orders" );
+    tools::Path defaultPath = config_.BuildExerciseChildFile( config_.GetExerciseName() + "-" + tools::Path::FromUnicode( tr( "orders" ).toStdWString() ) );
     tools::Path filename = gui::FileDialog::getSaveFileName( this, tr( "Save actions in active timeline to file" ), defaultPath, tr( "Actions files (*.ord)" ) );
     if( filename.IsEmpty() )
         return;
