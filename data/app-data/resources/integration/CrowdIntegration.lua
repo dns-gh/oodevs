@@ -466,6 +466,10 @@ integration.getPositionConcentration = function ( crowd, concentration )
     return CreateKnowledge( integration.ontology.types.point, DEC_GetPositionConcentration( myself, crowd.source, concentration ) )
 end
 
+integration.getCrowdBarycenter = function( crowd )
+    return DEC_KnowledgePopulation_GetBarycenter( crowd.source )
+end
+
 integration.getNbPersonConcentration = function ( crowd, concentration )
     return DEC_GetNombrePersonnesDansConcentration( myself, crowd.source, concentration )
 end
@@ -482,8 +486,20 @@ integration.extractVictimsFromCrowd = function( crowd )
     return DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, position )
 end
 
+integration.extractDeadFromCrowd = function( crowd )
+    local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
+    if not position then
+        position = DEC_Agent_Position() -- extract dead creating a new crowd on my own position
+    end
+    return DEC_Crowd_ExtractDeadFromCrowd( crowd.source, position )
+end
+
 integration.crowdHasWoundHumans = function( crowd )
     return DEC_Crowd_HasWoundedHumans( crowd.source )
+end
+
+integration.crowdHasDeadHumans = function( crowd )
+    return DEC_Crowd_HasDeadHumans( crowd.source )
 end
 
 integration.healWoundedInCrowd = function( crowd )
