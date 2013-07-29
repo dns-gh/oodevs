@@ -15,6 +15,7 @@
 #include "actions/ActionTiming.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionProperties constructor
@@ -25,7 +26,7 @@ ActionProperties::ActionProperties( QWidget* parent, kernel::Controllers& contro
     , controllers_( controllers )
     , selected_( controllers )
 {
-    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Properties" ), this );
+    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "ActionProperties", "Properties" ), this );
     display_.reset( new SummariesDisplayer( group ) );
     new ActionsListView( this, controllers, extractor );
     controllers_.Register( *this );

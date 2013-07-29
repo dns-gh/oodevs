@@ -146,7 +146,8 @@ void ActionsToolbar::SetFilter( const actions::ActionsFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Load()
 {
-    filename_ = gui::FileDialog::getOpenFileName( topLevelWidget(), tr( "Load" ), config_.BuildExerciseChildFile( "orders.ord" ), tr( "Actions files (*.ord)" ) );
+    tools::Path defaultPath = config_.BuildExerciseChildFile( tools::Path::FromUnicode( tr( "orders" ).toStdWString() ) + ".ord" );
+    filename_ = gui::FileDialog::getOpenFileName( topLevelWidget(), tr( "Load" ), defaultPath, tr( "Actions files (*.ord)" ) );
     DoLoad( filename_ );
     emit activeRefreshButton( !filename_.IsEmpty() );
 }
@@ -175,7 +176,8 @@ void ActionsToolbar::DoLoad( const tools::Path& filename )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Save()
 {
-    tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(), tr( "Save" ), config_.BuildExerciseChildFile( "orders" ), tr( "Actions files (*.ord)" ) );
+    tools::Path defaultPath = config_.BuildExerciseChildFile( tools::Path::FromUnicode( tr( "orders" ).toStdWString() ) );
+    tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(), tr( "Save" ), defaultPath, tr( "Actions files (*.ord)" ) );
     if( filename.IsEmpty() )
         return;
     if( filename.Extension() != ".ord" )

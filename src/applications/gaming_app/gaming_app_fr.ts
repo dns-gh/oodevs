@@ -54,6 +54,10 @@
         <source>Reload</source>
         <translation>Recharger</translation>
     </message>
+    <message>
+        <source>orders</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AffinitiesDialog</name>
@@ -3252,6 +3256,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Supervisor actions</source>
         <translation>Actions de supervision</translation>
+    </message>
+    <message>
+        <source>orders</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

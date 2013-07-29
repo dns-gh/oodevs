@@ -97,13 +97,13 @@ namespace
 {
     QString GetDateText( const QFontMetrics& metrics, const QDate& date, int availableWidth )
     {
-        QString result = date.toString();
+        QString result = QLocale().toString( date );
         if( metrics.width( result ) < availableWidth )
             return result;
-        result = date.toString( "MMMM d" );
+        result = QLocale().toString( date, "MMMM d" );
         if( metrics.width( result ) < availableWidth )
             return result;
-        result = date.toString( "MM-dd" );
+        result = QLocale().toString( date, "MM-dd" );
         if( metrics.width( result ) < availableWidth )
             return result;
         return "";
@@ -111,12 +111,13 @@ namespace
 
     QString GetTimeText( const QFontMetrics& metrics, const QTime& time, int availableWidth )
     {
-        QString result = time.toString();
+        QString result = QLocale().toString( time, "hh:mm:ss" );
         if( metrics.width( result ) < availableWidth )
             return result;
-        result = time.toString( "hh:mm" );
+        result = QLocale().toString( time, "hh:mm" );
         if( metrics.width( result ) < availableWidth )
             return result;
+        result = QLocale().toString( time );
         result = time.toString( "hh" );
         if( metrics.width( result ) < availableWidth )
             return result;
