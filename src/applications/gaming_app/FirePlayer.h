@@ -27,6 +27,8 @@ namespace gui
     class SoundManager;
 }
 
+class Simulation;
+
 // =============================================================================
 /** @class  FirePlayer
     @brief  FirePlayer
@@ -40,7 +42,7 @@ class FirePlayer : public tools::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FirePlayer( kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
+             FirePlayer( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const Simulation& simulation );
     virtual ~FirePlayer();
     //@}
 
@@ -63,6 +65,8 @@ private:
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profileFilter_;
     std::auto_ptr< gui::SoundManager > soundManager_;
+    const Simulation& simulation_;
+    unsigned int lastTick_;
     //@}
 };
 

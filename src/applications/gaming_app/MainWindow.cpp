@@ -182,7 +182,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_observe        ,  200, 150 );
 
     //sound player
-    firePlayer_.reset( new FirePlayer( controllers, *pProfile_ ) );
+    firePlayer_.reset( new FirePlayer( controllers, *pProfile_, simulation ) );
 
     // Misc
     lighting_.reset( new SimulationLighting( controllers, this ) );

@@ -13,6 +13,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/SoundManager.h"
 #include "clients_gui/SoundEvent.h"
+#include "gaming/Simulation.h"
 
 #include <boost/bind.hpp>
 #include <boost/assign/list_of.hpp>
@@ -32,10 +33,12 @@ namespace
 // Name: FirePlayer constructor
 // Created: NPT 2013-07-16
 // -----------------------------------------------------------------------------
-FirePlayer::FirePlayer( kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
+FirePlayer::FirePlayer( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const Simulation& simulation )
     : controllers_( controllers )
     , profileFilter_( profile )
     , soundManager_ ( new gui::SoundManager( fireSoundNames ) )
+    , simulation_ ( simulation )
+    , lastTick_ ( 0 )
 {
     controllers_.Register( *this );
 }
@@ -75,7 +78,7 @@ void FirePlayer::PlayPauseSoundControl( bool play )
 // -----------------------------------------------------------------------------
 bool FirePlayer::CanPlaySound( const std::string& channel )
 {
-    return !soundManager_->IsPlaying( channel );
+    return !soundManager_->IsPlaying( channel ) && lastTick_ < simulation_.GetCurrentTick();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,5 +98,6 @@ void FirePlayer::NotifyUpdated( const gui::SoundEvent& soundEvent )
             soundManager_->PlayLoopSound( soundEvent.GetSoundType() );
         else
             soundManager_->PlaySound( soundEvent.GetSoundType() );
+        lastTick_ = simulation_.GetCurrentTick();
     }
 }
