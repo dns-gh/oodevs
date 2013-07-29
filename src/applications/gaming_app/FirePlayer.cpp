@@ -91,10 +91,9 @@ void FirePlayer::NotifyUpdated( const gui::SoundEvent& soundEvent )
         return;
     if( !soundEvent.GetEntity() || profileFilter_.IsPerceived( *soundEvent.GetEntity() ) && profileFilter_.IsVisible( *soundEvent.GetEntity() ) )
     {
-        if( soundEvent.GetSoundType() == "directFire" )
+        if( soundEvent.GetSoundType() == "directfire" )
             soundManager_->PlayLoopSound( soundEvent.GetSoundType() );
         else
             soundManager_->PlaySound( soundEvent.GetSoundType() );
-
     }
 }

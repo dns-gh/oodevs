@@ -74,12 +74,15 @@ void SoundManager::PlaySound( const std::string& soundName )
         medias_[ soundName ] = new Phonon::MediaObject();
     if( !IsPlaying( soundName ) )
     {
-        medias_[ soundName ]->setCurrentSource( Phonon::MediaSource( currentSound_.Normalize().ToUTF8().c_str() ) );
-        Phonon::AudioOutput* audio = new Phonon::AudioOutput( Phonon::MusicCategory );
-        audio->setVolume( volume_[ soundName ] );
-        Phonon::createPath( medias_[ soundName ], audio );
+        medias_[ soundName ]->setCurrentSource( QString( currentSound_.Normalize().ToUTF8().c_str() ) );
+        if( !canals_[ soundName ] )
+        {
+            Phonon::AudioOutput* audio = new Phonon::AudioOutput( Phonon::MusicCategory );
+            Phonon::createPath( medias_[ soundName ], audio );
+            canals_[ soundName ] = audio;
+        }
         medias_[ soundName ]->play();
-        canals_[ soundName ] = audio;
+        canals_[ soundName ]->setVolume( volume_[ soundName ] );
     }
 }
 
@@ -169,5 +172,8 @@ void SoundManager::ReplaySound()
 void SoundManager::KillCurrentMediaObject()
 {
     if( Phonon::MediaObject* mediaObject = dynamic_cast< Phonon::MediaObject* >( QObject::sender() ) )
-        mediaObject->stop();
+    {
+        mediaObject->clearQueue();
+        mediaObject->clear();
+    }
 }
