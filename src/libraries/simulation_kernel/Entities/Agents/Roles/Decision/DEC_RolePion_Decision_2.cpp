@@ -491,8 +491,12 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< boost::shared_ptr<MIL_MissionParameter_ABC>( int ) >( boost::bind( &MIL_MissionParameterFactory::CreatePopulationKnowledge, this, _1 ) ) );
     RegisterFunction( "DEC_Crowd_ExtractWoundedFromCrowd",
         boost::function< bool( int, const MT_Vector2D* ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd, boost::ref( GetPion() ), _1, _2 ) ) );
+    RegisterFunction( "DEC_Crowd_ExtractDeadFromCrowd",
+        boost::function< bool( int, const MT_Vector2D* ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Crowd_HasWoundedHumans",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasWoundedHumans, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasWoundedHumans< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_Crowd_HasDeadHumans",
+        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasDeadHumans< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Crowd_HealWoundedHumans",
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HealWoundedHumans, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Crowd_GetNbreOfWoundedHumans",

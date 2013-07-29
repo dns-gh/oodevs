@@ -450,25 +450,6 @@ bool DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MIL_AgentP
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::HasWoundedHumans
-// Created: MIA 2011-01-20
-// -----------------------------------------------------------------------------
-bool DEC_KnowledgePopulationFunctions::HasWoundedHumans( const MIL_AgentPion& caller, int knowledgeId )
-{
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-        if( pKnowledge )
-        {
-            MIL_Population& population = pKnowledge->GetPopulationKnown();
-            return population.GetWoundedHumans() > 0;
-        }
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::HealWoundedHumans
 // Created: MIA 2011-02-15
 // -----------------------------------------------------------------------------
