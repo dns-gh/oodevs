@@ -190,7 +190,7 @@
             <!-- Create context -->
             <create-unicode-context root="@{root}" exercise-path="@{exercise-path}" exercise="@{exercise}" session="@{session}" terrain="@{terrain}" physical="@{physical}" new-root-without-unicode="@{new-root-without-unicode}" new-exercise-file="@{new-exercise-file}"/>
             <!-- Launch simulation legacy -->
-            <exec-unicode name="sim-unicode-legacy" exe="${out.dir}/release/applications/simulation_app/simulation_app.exe">
+            <exec-unicode name="sim-unicode-legacy" exe="${out.dir}/release/simulation_app.exe">
                 <arg value="root-dir=@{new-root-without-unicode}"/>
                 <arg value="exercise=@{exercise}"/>
                 <arg value="session=@{session}"/>
@@ -200,7 +200,7 @@
                 <arg value="test"/>
             </exec-unicode>
             <!-- Launch simulation non legacy -->
-            <exec-unicode name="sim-unicode-non-legacy" exe="${out.dir}/release/applications/simulation_app/simulation_app.exe">
+            <exec-unicode name="sim-unicode-non-legacy" exe="${out.dir}/release/simulation_app.exe">
                 <arg value="root-dir=@{new-root-without-unicode}"/>
                 <arg value="exercise=@{exercise}"/>
                 <arg value="session=@{session}"/>
@@ -224,7 +224,7 @@
         <attribute name="session" default="default"/>
         <element name="args" implicit="true" optional="true"/>
         <sequential>
-            <exec taskname="sim" executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+            <exec taskname="sim" executable="${out.dir}/release/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="--legacy=@{legacy}"/>
                 <arg value="--root-dir=${data.dir}"/>
                 <arg value="--exercise=@{exercise}"/>
@@ -305,7 +305,7 @@
         <attribute name="dir"/>
         <attribute name="todir"/>
         <sequential>
-            <exec taskname="adn" executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+            <exec taskname="adn" executable="${out.dir}/release/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-i"/>
                 <arg value="@{dir}/physical.xml"/>
                 <arg value="-o"/>
@@ -370,7 +370,7 @@
         <attribute name="todir" default="${out.dir}/test-adaptation-newbase"/>
         <sequential>
             <delete dir="@{todir}"/>
-            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+            <exec executable="${out.dir}/release/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-c"/>
                 <arg value="@{todir}/physical.xml"/>
                 <arg value="--silent"/>
@@ -465,7 +465,7 @@
                 <arg value="--run_dir=${run.dir}"/>
                 <arg value="--logfile=@{logfile}"/>
                 <arg value="--"/>
-                <arg value="${out.dir}/release/applications/@{app}/@{app}.exe"/>
+                <arg value="${out.dir}/release/@{app}.exe"/>
                 <elements/>
             </python>
         </sequential>
@@ -481,7 +481,7 @@
                 <arg value="--run-dir=${run.dir}"/>
                 <arg value="--logfile=@{logfile}"/>
                 <arg value="--"/>
-                <arg value="${out.dir}/release/applications/@{app}/@{app}.exe"/>
+                <arg value="${out.dir}/release/@{app}.exe"/>
                 <elements/>
             </python>
         </sequential>
@@ -491,7 +491,7 @@
         <attribute name="app"/>
         <attribute name="outputfile"/>
         <sequential>
-            <exec taskname="@{app}" executable="${out.dir}/release/applications/@{app}/@{app}.exe" dir="${run.dir}" failonerror="true">
+            <exec taskname="@{app}" executable="${out.dir}/release/@{app}.exe" dir="${run.dir}" failonerror="true">
                 <arg value="--debug-qt-names=@{outputfile}"/>
             </exec>
             <python>
@@ -662,11 +662,7 @@
         <safe-move file="${out.dir}/debug_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
-                    <fileset dir="${out.dir}/release/applications" includes="**/*.pdb"/>
-                    <flattenmapper/>
-                </mappedresources>
-                <mappedresources>
-                    <fileset dir="${out.dir}/release/libraries" includes="**/*_dll/*.pdb"/>
+                    <fileset dir="${out.dir}/release" includes="**/*.pdb" excludes="lib*.pdb,*_test.pdb,client_sample_app.pdb"/>
                     <flattenmapper/>
                 </mappedresources>
              </zip>
@@ -699,7 +695,7 @@
         <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
-                    <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
+                    <fileset dir="${out.dir}/release" includes="**/*.exe" excludes="**/*_test.exe,**/client_sample_app.exe"/>
                     <flattenmapper/>
                 </mappedresources>
                 <fileset dir="${run.dir}">
@@ -714,7 +710,7 @@
     <target name="package.gaming_app" description="create a zip with a standalone gaming_app binary">
         <safe-move file="${out.dir}/gaming_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
-                <fileset dir="${out.dir}/release/applications/gaming_app" includes="gaming_app.exe"/>
+                <fileset dir="${out.dir}/release" includes="gaming_app.exe"/>
                 <fileset dir="${run.dir}"
                          includes="*.qm,
                                    *.qss,
