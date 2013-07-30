@@ -13,6 +13,7 @@
 #include "PHY_RolePion_Refugee.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/LodgingAttribute.h"

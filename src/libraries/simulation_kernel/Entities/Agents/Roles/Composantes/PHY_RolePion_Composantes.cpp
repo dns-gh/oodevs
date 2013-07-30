@@ -26,6 +26,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
@@ -2053,4 +2054,76 @@ bool PHY_RolePion_Composantes::CanPerceive( const MIL_ObjectType_ABC& objectType
             return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::LendComposantes
+// Created: MCO 2013-07-30
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate )
+{
+    unsigned int nNbrDone = 0;
+    for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.CanBeLent() && funcPredicate( composante ) )
+        {
+            ++nNbrDone;
+            LendComposante( borrower, composante );
+            it = composantes_.rbegin(); // LendComposante->TransfertComposante changes composantes_
+        }
+        else
+            ++it;
+    }
+    return nNbrDone;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetLentComposantesTravelTime
+// Created: MCO 2013-07-30
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate )
+{
+    unsigned int nNbrDone = 0;
+    unsigned int nTime = 0;
+    const MT_Vector2D& srcPos = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Vector2D& destPos = borrower.GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
+    for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.CanBeLent() && funcPredicate( composante ) )
+        {
+            ++nNbrDone;
+            nTime = std::max( nTime, composante.ApproximateTravelTime( srcPos, destPos ) );
+        }
+    }
+    return nTime;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::RetrieveLentComposantes
+// Created: MCO 2013-07-30
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate )
+{
+    unsigned int nNbrDone = 0;
+    while( nNbrDone < nNbr )
+    {
+        auto it = lentComposantes_.find( &borrower );
+        if( it == lentComposantes_.end() )
+            return nNbrDone;
+        PHY_ComposantePion* pComposante = 0;
+        const PHY_ComposantePion::T_ComposantePionVector& lentComps = it->second;
+        for( auto it = lentComps.begin(); it != lentComps.end(); ++it )
+        {
+            PHY_ComposantePion* composante = *it;
+            if( funcPredicate( *composante ) )
+                pComposante = composante;
+        }
+        if( !pComposante )
+            return nNbrDone;
+        ++ nNbrDone;
+        RetrieveLentComposante( borrower, *pComposante );
+    }
+    return nNbrDone;
 }

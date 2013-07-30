@@ -137,9 +137,10 @@ public:
 
     //! @name Pret de composantes
     //@{
-    template < typename T > unsigned int LendComposantes             ( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
-    template < typename T > unsigned int GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
-    template < typename T > unsigned int RetrieveLentComposantes     ( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
+    typedef boost::function< bool( const PHY_ComposantePion& composante ) > T_ComponentPredicate;
+    unsigned int LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
+    unsigned int GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
+    unsigned int RetrieveLentComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
 
     // Actions on the composante owner
     virtual void LendComposante        ( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante );

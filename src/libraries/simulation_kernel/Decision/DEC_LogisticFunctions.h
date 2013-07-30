@@ -27,8 +27,6 @@ class PHY_HumanWound;
 // =============================================================================
 class DEC_LogisticFunctions
 {
-    typedef boost::function< bool( PHY_ComposantePion* ) > T_ComposantePredicate;
-
 public:
     //! @name Maintenance
     //@{
@@ -114,11 +112,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    static void UndoLendComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate );
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
