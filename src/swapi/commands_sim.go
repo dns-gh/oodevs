@@ -1163,7 +1163,7 @@ func (c *Client) DebugBrain(automatId uint32, enable bool) error {
 	return c.DebugBrainTest(automatId, params)
 }
 
-func (c *Client) TransferEquipment(unitId uint32, targetId uint32, equipments map[uint32]int) error {
+func (c *Client) TransferEquipment(unitId uint32, targetId uint32, equipments []Equipment) error {
 	params := MakeParameters(MakeIdentifier(targetId), MakeEquipments(equipments))
 	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
 		sword.UnitMagicAction_transfer_equipment.Enum())

@@ -144,12 +144,18 @@ func MakeAdhesions(adhesions map[uint32]float32) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
-func MakeEquipments(equipments map[uint32]int) *sword.MissionParameter {
+type Equipment struct
+{
+	Id uint32
+	Quantity int
+}
+
+func MakeEquipments(equipments []Equipment) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
-	for k, v := range equipments {
+	for _, equipment := range equipments {
 		party := []*sword.MissionParameter_Value{
-			{Identifier: proto.Uint32(k)},
-			{Quantity: proto.Int(v)},
+			{Identifier: proto.Uint32(equipment.Id)},
+			{Quantity: proto.Int(equipment.Quantity)},
 		}
 		list = append(list, &sword.MissionParameter_Value{
 			List: party,

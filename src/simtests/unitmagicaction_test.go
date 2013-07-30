@@ -791,18 +791,24 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 	err := client.TransferEquipment(11, 12, nil)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid empty equipment list")
 
-	equipments := map[uint32]int{}
-	equipments[11] = 1
-
 	// error: invalid unit identifier
-	err = client.TransferEquipment(1000, 12, equipments)
+	err = client.TransferEquipment(1000, 12, []swapi.Equipment{{11,1}})
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
+	// error: target does not have equipment
+	err = client.TransferEquipment(11, 12, []swapi.Equipment{{1000,1}})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: equipment #0 not found in source unit")
+
 	// error: invalid unit identifier
-	err = client.TransferEquipment(11, 1000, equipments)
+	err = client.TransferEquipment(11, 1000, []swapi.Equipment{{11,1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid target identifier")
 
-	err = client.TransferEquipment(11, 12, equipments)
+	// error: cannot transfer from a unit to itself
+	err = client.TransferEquipment(11, 11, []swapi.Equipment{{11,1}})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: source and target are identical")
+
+	// valid: transfer equipment
+	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11,1}})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		unit := data.FindUnit(11)
@@ -810,5 +816,27 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 		return unit.EquipmentDotations[11].Available == 3 &&
 			len(unit.LentEquipments) != 0 && unit.LentEquipments[0].Borrower == 12 && unit.LentEquipments[0].TypeId == 11 && unit.LentEquipments[0].Quantity == 1 &&
 			len(target.BorrowedEquipments) != 0 && target.BorrowedEquipments[0].Owner == 11 && target.BorrowedEquipments[0].TypeId == 11 && target.BorrowedEquipments[0].Quantity == 1
+	})
+
+	// valid: transfer twice the same equipment sums the two quantities
+	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11,1},{11,1}})
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(11)
+		target := data.FindUnit(12)
+		return unit.EquipmentDotations[11].Available == 1 &&
+			len(unit.LentEquipments) != 0 && unit.LentEquipments[0].Borrower == 12 && unit.LentEquipments[0].TypeId == 11 && unit.LentEquipments[0].Quantity == 3 &&
+			len(target.BorrowedEquipments) != 0 && target.BorrowedEquipments[0].Owner == 11 && target.BorrowedEquipments[0].TypeId == 11 && target.BorrowedEquipments[0].Quantity == 3
+	})
+
+	// transfering more caps to the available quantity
+	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11,1000}})
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(11)
+		target := data.FindUnit(12)
+		return unit.EquipmentDotations[11].Available == 0 &&
+			len(unit.LentEquipments) != 0 && unit.LentEquipments[0].Borrower == 12 && unit.LentEquipments[0].TypeId == 11 && unit.LentEquipments[0].Quantity == 4 &&
+			len(target.BorrowedEquipments) != 0 && target.BorrowedEquipments[0].Owner == 11 && target.BorrowedEquipments[0].TypeId == 11 && target.BorrowedEquipments[0].Quantity == 4
 	})
 }
