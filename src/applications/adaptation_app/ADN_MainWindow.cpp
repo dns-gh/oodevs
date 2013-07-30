@@ -544,11 +544,8 @@ void ADN_MainWindow::About()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::closeEvent( QCloseEvent * e )
 {
-    if( this->OfferToSave() == true )
-    {
-        workspace_.Reset( ADN_Project_Data::FileInfos::szUntitled_ );
+    if( OfferToSave() == true )
         e->accept();
-    }
     else
         e->ignore();
 }

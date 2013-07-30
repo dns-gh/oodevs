@@ -11,7 +11,6 @@
 #include "ADN_Communications_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_Data::ADN_Communications_Data
@@ -49,6 +48,7 @@ void ADN_Communications_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_Communications_Data::Reset()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

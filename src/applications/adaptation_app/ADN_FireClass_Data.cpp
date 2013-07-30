@@ -19,8 +19,7 @@
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
 ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos()
-    : parentName_    ()
-    , nNbHurtHumans1_( 0 )
+    : nNbHurtHumans1_( 0 )
     , nNbHurtHumans2_( 0 )
     , nNbHurtHumans3_( 0 )
     , nNbHurtHumansE_( 0 )
@@ -304,9 +303,6 @@ void ADN_FireClass_Data::FireClassInfos::ReadUrbanModifer( xml::xistream& input 
 void ADN_FireClass_Data::FireClassInfos::ReadSurface( xml::xistream& input )
 {
     std::string type = input.attribute< std::string >( "type" );
-    /*E_Location location = ENT_Tr::ConvertToLocation( type );
-    if( location == static_cast< E_Location >( -1 ) )
-        throw MASA_EXCEPTION( tr( "Fire - Invalid location type '%1'" ).arg( type.c_str() ).toStdString() );*/
     auto it = std::find_if( surfaceInfos_.begin(), surfaceInfos_.end(), FireSurfaceInfos::Cmp( type ) );
     if( it == surfaceInfos_.end() )
         throw MASA_EXCEPTION( tr( "Fire - Location type not found '%1'" ).arg( type.c_str() ).toStdString() );
@@ -365,7 +361,7 @@ ADN_FireClass_Data::ADN_FireClass_Data()
 // -----------------------------------------------------------------------------
 ADN_FireClass_Data::~ADN_FireClass_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

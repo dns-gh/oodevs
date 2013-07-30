@@ -8,6 +8,7 @@
 // $Workfile: ADN_Units_Data.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Units_Data.h"
 #include "ADN_App.h"
@@ -845,7 +846,7 @@ ADN_Units_Data::ADN_Units_Data()
 //-----------------------------------------------------------------------------
 ADN_Units_Data::~ADN_Units_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

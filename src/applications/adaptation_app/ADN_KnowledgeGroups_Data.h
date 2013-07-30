@@ -20,8 +20,7 @@
 */
 // Created: APE 2005-03-14
 // =============================================================================
-class ADN_KnowledgeGroups_Data
-    : public ADN_Data_ABC
+class ADN_KnowledgeGroups_Data : public ADN_Data_ABC
 {
 public:
 // *****************************************************************************

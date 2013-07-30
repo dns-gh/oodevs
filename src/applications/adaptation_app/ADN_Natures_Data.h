@@ -29,8 +29,9 @@ public:
     {
 
     public:
-        NatureInfos();
-        NatureInfos( int id );
+                 NatureInfos();
+        explicit NatureInfos( int id );
+        virtual ~NatureInfos();
         NatureInfos* CreateCopy();
 
     public:

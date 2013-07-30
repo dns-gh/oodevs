@@ -49,7 +49,7 @@ public:
         virtual void Initialize();
 
     public:
-        ADN_Type_Int    nId_;
+        ADN_Type_Int nId_;
         ResourceInfos&  parentResource_;
         ADN_Type_String category_;
         ADN_Type_String strCodeEMAT6_;
@@ -61,7 +61,7 @@ public:
         ADN_Type_Double rNbrInPackage_;
         ADN_Type_Double rPackageVolume_;
         ADN_Type_Double rPackageWeight_;
-        ADN_Type_Bool   bNetworkUsable_;
+        ADN_Type_Bool bNetworkUsable_;
     };
     typedef ADN_Type_Vector_ABC< CategoryInfo > T_CategoryInfos_Vector;
 
@@ -69,30 +69,32 @@ public:
     class ModificatorPostureInfos : public ADN_Ref_ABC
     {
     public:
-        explicit ModificatorPostureInfos(const E_UnitPosture& e );
+        explicit ModificatorPostureInfos( const E_UnitPosture& e );
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        E_UnitPosture       eType_;
-        ADN_Type_Double     rCoeff_;
+        E_UnitPosture eType_;
+        ADN_Type_Double rCoeff_;
 
     public:
         class Cmp : public std::unary_function< ModificatorPostureInfos* , bool >
         {
         public:
-            Cmp(const E_UnitPosture& val) : val_(val) {}
+             Cmp( const E_UnitPosture& val) : val_( val ) {}
             ~Cmp() {}
 
             bool operator()( ModificatorPostureInfos* tgtnfos ) const
-            { return tgtnfos->eType_==val_; }
+            {
+                return tgtnfos->eType_ == val_;
+            }
 
         private:
              E_UnitPosture val_;
         };
     };
-    typedef ADN_Type_Vector_ABC<ModificatorPostureInfos> T_ModificatorPostureInfos_Vector;
+    typedef ADN_Type_Vector_ABC< ModificatorPostureInfos > T_ModificatorPostureInfos_Vector;
 
 // *****************************************************************************
     class IndirectAmmoInfos : public ADN_Ref_ABC
@@ -146,7 +148,6 @@ public:
 // *****************************************************************************
     class AmmoCategoryInfo : public CategoryInfo
     {
-
     public:
         explicit AmmoCategoryInfo( ResourceInfos& parentDotation );
                  AmmoCategoryInfo( ResourceInfos& parentDotation, unsigned int id );
@@ -181,12 +182,11 @@ public:
         ADN_Type_Double fGuidanceRange_;
     };
 
-    typedef ADN_Type_Vector_ABC<AmmoCategoryInfo> T_AmmoCategoryInfo_Vector;
+    typedef ADN_Type_Vector_ABC< AmmoCategoryInfo > T_AmmoCategoryInfo_Vector;
 
 // *****************************************************************************
     class ResourceInfos : public ADN_RefWithName
     {
-
     public:
         explicit ResourceInfos( E_DotationFamily nType );
         virtual ~ResourceInfos();
@@ -202,15 +202,15 @@ public:
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     public:
-        E_DotationFamily       nType_;
+        E_DotationFamily nType_;
         T_CategoryInfos_Vector categories_;
     };
 
     class T_ResourceInfos_Vector : public ADN_Type_Vector_ABC< ResourceInfos >
     {
     public:
-        T_ResourceInfos_Vector( bool bAutoRef = true ) : ADN_Type_Vector_ABC< ResourceInfos >( bAutoRef ) {}
-        ~T_ResourceInfos_Vector(){}
+        explicit T_ResourceInfos_Vector( bool bAutoRef = true ) : ADN_Type_Vector_ABC< ResourceInfos >( bAutoRef ) {}
+        virtual ~T_ResourceInfos_Vector() {}
 
         virtual void CheckValidity();
     };
@@ -226,12 +226,12 @@ public:
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_ResourceInfos_Vector& GetResources();
-    ResourceInfos&          GetResource( E_DotationFamily nType );
+    ResourceInfos& GetResource( E_DotationFamily nType );
     T_CategoryInfos_Vector& GetNetworkUsableResources();
-    CategoryInfo*           FindResourceCategory( const std::string& strDotationName, const std::string& strCategoryName );
-    CategoryInfo*           FindResourceCategory( const std::string& strCategoryName );
+    CategoryInfo* FindResourceCategory( const std::string& strDotationName, const std::string& strCategoryName );
+    CategoryInfo* FindResourceCategory( const std::string& strCategoryName );
 
-    void                    Initialize();
+    void Initialize();
 
     QStringList GetResourcesThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList GetResourcesThatUse( ADN_Natures_Data::NatureInfos& object );

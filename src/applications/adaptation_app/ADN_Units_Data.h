@@ -49,7 +49,7 @@ public:
         class Cmp : public std::unary_function< ComposanteInfos* , bool >
         {
         public:
-            Cmp( const std::string& val ) : val_(val) {}
+             Cmp( const std::string& val ) : val_( val ) {}
             ~Cmp() {}
 
             bool operator()( ComposanteInfos* tgtnfos ) const

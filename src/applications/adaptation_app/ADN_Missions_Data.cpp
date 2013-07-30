@@ -69,7 +69,6 @@ void ADN_Missions_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::Reset()
 {
-
     idManager_.Reset();
     for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
         it->second.Reset();

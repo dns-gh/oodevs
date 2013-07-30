@@ -103,7 +103,7 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::AutomatonInfos::~AutomatonInfos()
 {
-    vSubUnits_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

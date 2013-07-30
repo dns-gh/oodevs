@@ -10,21 +10,19 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Launchers_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ENT/ENT_Tr.h"
-#include <memory.h>
 #include "clients_kernel/XmlTranslations.h"
+#include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
 // Name: LauncherInfos::LauncherInfos
 // Created: JDY 03-07-15
 //-----------------------------------------------------------------------------
 ADN_Launchers_Data::LauncherInfos::LauncherInfos()
-    : tabModifs_            ( eNbrUnitPosture, eNbrUnitPosture )
-    , bDirect_              ( false )
-    , bIndirect_            ( false )
+    : tabModifs_( eNbrUnitPosture, eNbrUnitPosture )
+    , bDirect_( false )
+    , bIndirect_( false )
 {
     for( int i = 0; i < eNbrUnitPosture; ++i )
         for( int j = 0; j < eNbrUnitPosture; ++j )
@@ -58,12 +56,15 @@ void ADN_Launchers_Data::LauncherInfos::ReadPosture( xml::xistream& input )
 void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std::string& posture )
 {
     const std::string targetPosture = input.attribute< std::string >( "target-posture" );
-    int fire = -1, target = -1;
-    for( int iPosture =0; iPosture < eNbrUnitPosture; ++iPosture )
+    int fire = -1;
+    int target = -1;
+    for( int iPosture = 0; iPosture < eNbrUnitPosture; ++iPosture )
     {
-        const std::string current = ADN_Tools::ComputePostureScriptName( (E_UnitPosture)iPosture );
-        if( posture == current )       fire   = iPosture;
-        if( targetPosture == current ) target = iPosture;
+        const std::string current = ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( iPosture ) );
+        if( posture == current )
+            fire = iPosture;
+        if( targetPosture == current )
+            target = iPosture;
     }
     tabModifs_.Get( fire, target ) = input.attribute< double >( "value" ) * 100;
 }
@@ -137,7 +138,7 @@ ADN_Launchers_Data::ADN_Launchers_Data()
 //-----------------------------------------------------------------------------
 ADN_Launchers_Data::~ADN_Launchers_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

@@ -31,7 +31,7 @@ ADN_ActiveProtections_Data::ADN_ActiveProtections_Data()
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::~ADN_ActiveProtections_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

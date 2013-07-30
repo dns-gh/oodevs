@@ -21,7 +21,6 @@
 // =============================================================================
 class ADN_Communications_Data : public ADN_Data_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

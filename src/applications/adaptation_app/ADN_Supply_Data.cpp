@@ -26,9 +26,10 @@
 // -----------------------------------------------------------------------------
 template< typename T >
 ADN_Supply_Data::ConvoyInfo< T >::ConvoyInfo( typename T::BaseType value )
-: nNbrTrucks_         ( 1 )
-, value_              ( value )
+    : nNbrTrucks_( 1 )
+    , value_( value )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,8 +61,8 @@ void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& section,
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
 ADN_Supply_Data::SupplyDataInfos::SupplyDataInfos()
-    : ptrUnit_            ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
-    , ptrSupplyMission_   ( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Pawn ), 0 )
+    : ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
+    , ptrSupplyMission_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Pawn ), 0 )
 {
     // NOTHING
 }

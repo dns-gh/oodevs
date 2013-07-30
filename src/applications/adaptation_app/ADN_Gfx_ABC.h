@@ -20,19 +20,19 @@ class ADN_Connector_ABC;
 class ADN_Gfx_ABC
 {
 public:
-    explicit ADN_Gfx_ABC(bool bAuto=true);
+    explicit ADN_Gfx_ABC( bool bAuto = true );
     virtual ~ADN_Gfx_ABC();
 
-    ADN_Connector_ABC&     GetConnector();
-    void                   SetAutoEnabled(bool bAuto);
-    bool                   IsAutoEnabled();
+    ADN_Connector_ABC& GetConnector();
+    void SetAutoEnabled( bool bAuto );
+    bool IsAutoEnabled();
 
     void SetIsEnabledOnlyInAdminMode( bool b );
 
 protected:
     ADN_Connector_ABC* pConnector_;
-    bool               bAutoEnabled_;
-    bool               bEnabledOnlyInAdminMode_;
+    bool bAutoEnabled_;
+    bool bEnabledOnlyInAdminMode_;
 };
 
 //-----------------------------------------------------------------------------
@@ -50,9 +50,9 @@ ADN_Connector_ABC& ADN_Gfx_ABC::GetConnector()
 // Created: JDY 03-07-16
 //-----------------------------------------------------------------------------
 inline
-void ADN_Gfx_ABC::SetAutoEnabled(bool bAuto)
+void ADN_Gfx_ABC::SetAutoEnabled( bool bAuto )
 {
-    bAutoEnabled_=bAuto;
+    bAutoEnabled_ = bAuto;
 }
 
 //-----------------------------------------------------------------------------

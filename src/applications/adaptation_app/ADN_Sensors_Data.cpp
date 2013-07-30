@@ -17,8 +17,8 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
-#include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
+#include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::LimitedToSensorsInfos::LimitedToSensorsInfos
@@ -1129,7 +1129,7 @@ ADN_Sensors_Data::ADN_Sensors_Data()
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::~ADN_Sensors_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

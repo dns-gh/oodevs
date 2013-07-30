@@ -35,13 +35,21 @@ ADN_Natures_Data::NatureInfos::NatureInfos( int id )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NatureInfos::~NatureInfos
+// Created: JSR 2013-07-30
+// -----------------------------------------------------------------------------
+ADN_Natures_Data::NatureInfos::~NatureInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_ResourceNatureInfos::CreateCopy
 // Created: ABR 2012-07-26
 // -----------------------------------------------------------------------------
 ADN_Natures_Data::NatureInfos* ADN_Natures_Data::NatureInfos::CreateCopy()
 {
-    NatureInfos* result = new NatureInfos();
-    return result;
+    return new NatureInfos();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,10 +108,8 @@ void ADN_Natures_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Natures_Data::ReadNature( xml::xistream& input )
 {
-    std::string strName;
-    int id ( 0 );
-    input >> xml::attribute( "type", strName );
-    input >> xml::optional >> xml::attribute( "id", id );
+    std::string strName = input.attribute< std::string >( "type" );
+    int id = input.attribute< int >( "id", 0 );
     if( !id )
         id = idManager_.GetNextId();
     ADN_Natures_Data::NatureInfos* pNew = new ADN_Natures_Data::NatureInfos( id );

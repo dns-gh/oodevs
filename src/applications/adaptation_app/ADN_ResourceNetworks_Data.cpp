@@ -113,7 +113,7 @@ ADN_ResourceNetworks_Data::ADN_ResourceNetworks_Data()
 // -----------------------------------------------------------------------------
 ADN_ResourceNetworks_Data::~ADN_ResourceNetworks_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

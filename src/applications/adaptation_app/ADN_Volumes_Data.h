@@ -61,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T_VolumeInfos_Vector  vSizes_;
+    T_VolumeInfos_Vector vSizes_;
     //@}
 };
 

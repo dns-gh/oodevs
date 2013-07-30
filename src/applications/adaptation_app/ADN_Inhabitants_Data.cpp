@@ -12,9 +12,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
-#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
-#pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
 tools::IdManager ADN_Inhabitants_Data::idManager_;
@@ -65,8 +63,7 @@ ADN_Inhabitants_Data::EventInfos* ADN_Inhabitants_Data::EventInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::EventInfos::ReadArchive( xml::xistream& input )
 {
-    std::string day, accommodation;
-    day = input.attribute< std::string >( "day" );
+    std::string day = input.attribute< std::string >( "day" );
     day_ = ADN_Tr::ConvertToDays( day );
     from_ = input.attribute< std::string >( "from" );
     to_ = input.attribute< std::string >( "to" );
@@ -184,7 +181,7 @@ ADN_Inhabitants_Data::InhabitantsInfos::InhabitantsInfos( unsigned int id )
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_Data::InhabitantsInfos::~InhabitantsInfos()
 {
-    consumptions_.Delete();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -346,6 +343,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadEvent( xml::xistream& input )
     else
         ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eInhabitants, -1, tools::translate( "ADN_Inhabitants_Data", "Schedule" ).toStdString() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Inhabitants_Data::CheckDatabaseValidity
 // Created: JSR 2013-04-12
@@ -390,7 +388,7 @@ ADN_Inhabitants_Data::ADN_Inhabitants_Data()
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_Data::~ADN_Inhabitants_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

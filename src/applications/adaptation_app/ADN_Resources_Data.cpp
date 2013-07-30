@@ -14,8 +14,8 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Tr.h"
-#include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
+#include "ENT/ENT_Tr.h"
 
 ADN_Resources_Data::ResourceInfos* gpDummyDotationInfos;
 tools::IdManager ADN_Resources_Data::idManager_;
