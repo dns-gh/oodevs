@@ -221,8 +221,6 @@ void EventDockWidget::OnTrigger()
         if( editing_ && event_.get() && !event_->GetEvent().done )
             emit DeleteEvent( event_->GetEvent().uuid );
         currentWidget_->Trigger();
-        if( event_.get() && !event_->GetEvent().done )
-            SetVisible( false );
     }
     else
     {
@@ -255,10 +253,7 @@ void EventDockWidget::OnDiscard()
     if( editing_ )
         Fill();
     else
-    {
-        Purge();
-        SetVisible( false );
-    }
+        currentWidget_->Purge();
 }
 
 // -----------------------------------------------------------------------------
