@@ -378,22 +378,22 @@
 
     Client must first establish a TCP connection to a running Dispatcher. @n
     The network port on which the Simulation and Dispatcher accept connections are defined for each exercise session into the session.xml file :
-    @code
+@code
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<session>
-  <config>
-    <dispatcher>
-      <network client="localhost:10000" server="10001"/>
-    </dispatcher>
+&lt;session>
+  &lt;config>
+    &lt;dispatcher>
+      &lt;network client="localhost:10000" server="10001"/>
+    &lt;/dispatcher>
 [...]
-    <simulation>
+    &lt;simulation>
 [...]
-      <network port="10000"/>
+      &lt;network port="10000"/>
 [...]
-    </simulation>
-  </config>
-</session>
-    @endcode
+    &lt;/simulation>
+  &lt;/config>
+&lt;/session>
+@endcode
 
     <table border="1" style="border-collapse: collapse; border:1px solid gray;">
       <tr>
@@ -426,7 +426,7 @@
 
     Here is a short C++ example of message decoding :
 
-    @code
+@code
 void Decode( std::istream& input, MessageHandler& handler )
 {
     // read header and tag
