@@ -1881,26 +1881,6 @@ bool PHY_RolePion_Composantes::CanStockMoreOf( PHY_RoleInterface_Supply& supplyR
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GiveComposante
-// Created: ABR 2011-06-16
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GiveComposante( unsigned int id, int quantity, PHY_RolePion_Composantes& borrower )
-{
-    for( auto it = composantes_.rbegin(); it != composantes_.rend() && quantity; )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.CanBeLent() && composante.GetType().GetMosID().id() == id )
-        {
-            --quantity;
-            LendComposante( const_cast< MIL_Agent_ABC& >( borrower.GetPion() ), composante );
-            it = composantes_.rbegin(); // TransfertComposante modifie composantes_
-        }
-        else
-            ++it;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::CreateBreakdowns
 // Created: ABR 2011-08-10
 // -----------------------------------------------------------------------------

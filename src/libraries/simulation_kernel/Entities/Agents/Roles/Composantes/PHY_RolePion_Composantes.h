@@ -152,11 +152,6 @@ public:
     virtual void NotifyLentComposanteReturned( MIL_Agent_ABC& lender, PHY_ComposantePion& composante );
     //@}
 
-    //! @name Transfert de composantes
-    //@{
-    void GiveComposante( unsigned int id, int quantity, PHY_RolePion_Composantes& borrower );
-    //@}
-
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
     virtual std::size_t GetConvoyTransportersTotal() const;
 
