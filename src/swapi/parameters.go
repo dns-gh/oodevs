@@ -144,9 +144,8 @@ func MakeAdhesions(adhesions map[uint32]float32) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
-type Equipment struct
-{
-	Id uint32
+type Equipment struct {
+	Id       uint32
 	Quantity int
 }
 
