@@ -21,6 +21,7 @@
 #include "PopulationFactory.h"
 #include "InhabitantFactory.h"
 #include "KnowledgesVisitor_ABC.h"
+#include "OnComponentComputer_ABC.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
 #include "Actions/PHY_FireResults_Default.h"
@@ -1622,6 +1623,20 @@ namespace
     {
         return composante.GetType().GetMosID().id() == id;
     }
+    struct EquipmentFinder : OnComponentComputer_ABC
+    {
+        EquipmentFinder( unsigned int id )
+            : found_( false )
+            , id_   ( id )
+        {}
+        virtual void ApplyOnComponent( PHY_ComposantePion& composante )
+        {
+            if( HasId( composante, id_ ) )
+                found_ = true;
+        }
+        bool found_;
+        unsigned int id_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -1642,6 +1657,7 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
         throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "invalid target identifier" );
     if( target == &pion )
         throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "source and target are identical" );
+    PHY_RolePion_Composantes& source = pion.GetRole< PHY_RolePion_Composantes >();
     std::map< unsigned int, int > composantes;
     for( int i = 0; i < parameters.elem( 1 ).value_size(); ++i )
     {
@@ -1649,9 +1665,13 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
         if( value.list_size() != 2 || !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
             throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
                 "invalid equipment parameter #" + boost::lexical_cast< std::string >( i ) );
+        EquipmentFinder finder( value.list( 0 ).identifier() );
+        source.Execute( finder );
+        if( ! finder.found_ )
+            throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
+                "equipment #" + boost::lexical_cast< std::string >( i ) + " not found in source unit" );
         composantes[ value.list( 0 ).identifier() ] += value.list( 1 ).quantity();
     }
-    PHY_RolePion_Composantes& source = pion.GetRole< PHY_RolePion_Composantes >();
     for( auto it = composantes.begin(); it != composantes.end(); ++it )
         source.LendComposantes( *target, it->second, boost::bind( &HasId, _1, it->first ) );
 }
