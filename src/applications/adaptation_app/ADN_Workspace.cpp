@@ -36,7 +36,6 @@
 #include "ADN_Resources_GUI.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_FireClass_GUI.h"
-#include "ADN_GuiBuilder.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_HumanFactors_GUI.h"
@@ -50,7 +49,6 @@
 #include "ADN_Launchers_GUI.h"
 #include "ADN_Logistic_Data.h"
 #include "ADN_Logistic_GUI.h"
-#include "ADN_MainWindow.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Models_Data.h"
@@ -75,19 +73,10 @@
 #include "ADN_Urban_GUI.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
-#include "ADN_WorkspaceElement.h"
 #include "ADN_Disasters_Data.h"
 #include "ADN_Disasters_GUI.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/foreach.hpp>
-#include <errno.h>
-#include <io.h>
-#include <windows.h>
-#pragma warning( push, 0 )
-#include <Qtcore/qtimer.h>
-#include <QtGui/qmessagebox.h>
-#include <QtGui/qlayout.h>
-#pragma warning( pop )
 #include "tools/GeneralConfig.h"
 #include "tools/ZipExtractor.h"
 
@@ -304,6 +293,7 @@ void ADN_Workspace::Reset(const tools::Path& filename, bool bVisible )
         if( bVisible )
             pProgressIndicator_->Increment( tr( "Unloading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
         qApp->processEvents();
+        elements_[n]->GetGuiABC().DisconnectListView();
         elements_[n]->GetDataABC().ResetData();
     }
     projectData_->Reset();

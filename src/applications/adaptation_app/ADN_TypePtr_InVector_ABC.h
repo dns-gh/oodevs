@@ -66,6 +66,8 @@ protected:
     virtual bool AddItemPrivate( void* item );
     virtual bool RemItemPrivate( void* item );
 
+    virtual void ClearPrivate( bool bInConnection = false );
+
 private:
     T_TypePtr pData_;
     T_TypeVector* pVector_;

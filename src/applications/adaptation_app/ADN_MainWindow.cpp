@@ -379,7 +379,6 @@ void ADN_MainWindow::NewProject( const tools::Path& filename )
     SetMenuEnabled( true );
     mainTabWidget_->show();
     setCaption( tr( "Sword Adaptation Tool - " ) + filename.ToUTF8().c_str() + "[*]" );
-    pProjectLoadAction_->setVisible( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -445,7 +444,6 @@ void ADN_MainWindow::OpenProject( const tools::Path& szFilename, bool isAdminMod
     setCaption( title + "[*]" );
     SetMenuEnabled( true );
     mainTabWidget_->show();
-    pProjectLoadAction_->setVisible( false );
     if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
         consistencyDialog_->CheckConsistency();
     else

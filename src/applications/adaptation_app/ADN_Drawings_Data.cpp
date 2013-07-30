@@ -140,7 +140,11 @@ void ADN_Drawings_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Drawings_Data::Reset()
 {
     drawings_.Reset();
+    for( auto it = geometryMap_.begin(); it != geometryMap_.end(); ++it )
+        it->second.clear();
     geometryMap_.clear();
+    for( auto it = categoryMap_.begin(); it != categoryMap_.end(); ++it )
+        it->second.clear();
     categoryMap_.clear();
 }
 

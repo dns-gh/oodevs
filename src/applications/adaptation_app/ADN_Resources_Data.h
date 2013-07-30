@@ -40,6 +40,7 @@ public:
                  CategoryInfo(); // For template usage.
         explicit CategoryInfo( ResourceInfos& parentDotation );
                  CategoryInfo( ResourceInfos& parentDotation, unsigned int id );
+        virtual ~CategoryInfo();
 
         virtual CategoryInfo* CreateCopy();
         virtual void ReadArchive( xml::xistream& );
@@ -97,7 +98,8 @@ public:
     class IndirectAmmoInfos : public ADN_Ref_ABC
     {
     public:
-        IndirectAmmoInfos();
+                 IndirectAmmoInfos();
+        virtual ~IndirectAmmoInfos();
 
         void CopyFrom( IndirectAmmoInfos& ammoInfos );
 
@@ -148,6 +150,7 @@ public:
     public:
         explicit AmmoCategoryInfo( ResourceInfos& parentDotation );
                  AmmoCategoryInfo( ResourceInfos& parentDotation, unsigned int id );
+        virtual ~AmmoCategoryInfo();
 
         CategoryInfo* CreateCopy();
 

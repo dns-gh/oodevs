@@ -6,20 +6,10 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_GUI_ABC.h $
-// $Author: Ape $
-// $Modtime: 19/04/05 16:12 $
-// $Revision: 7 $
-// $Workfile: ADN_GUI_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_GUI_ABC_h_
 #define __ADN_GUI_ABC_h_
 
-#include <boost/noncopyable.hpp>
 #include "ADN_NavigationInfos.h"
 #include "ADN_Enums.h"
 
@@ -28,7 +18,6 @@ class ADN_HtmlBuilder;
 class ADN_ListView;
 
 class ADN_BaseGui_ABC : public QObject
-                      , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -96,6 +85,7 @@ public:
     ADN_ListView* GetListView() const { return pListView_; }
     virtual void AddListView( ADN_ListView* listView );
     QWidget* CreateScrollArea( const char* objectName, QWidget& content, QWidget* list = 0, bool paintSplitter = true, bool paintBackground = false, bool showFrameBorder = true, int margin = 10, int spacing = 10 );
+    void DisconnectListView();
     //@}
 
 protected:

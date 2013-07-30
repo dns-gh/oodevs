@@ -54,6 +54,15 @@ ADN_Weapons_Data_WeaponInfos::ADN_Weapons_Data_WeaponInfos()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data_WeaponInfos destructor
+// Created: JSR 2013-07-29
+// -----------------------------------------------------------------------------
+ADN_Weapons_Data_WeaponInfos::~ADN_Weapons_Data_WeaponInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data_WeaponInfos::CreateCopy
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------

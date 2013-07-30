@@ -9,22 +9,10 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_ABC.h"
-
 #include "ADN_Missions_Data.h"
-#include "ADN_Project_Data.h"
-#include "ADN_ConsistencyChecker.h"
-#include <tools/Loader_ABC.h>
-#include <tools/EncodingConverter.h>
-#include <boost/regex.hpp>
-#include <boost/bind.hpp>
-#include <boost/noncopyable.hpp>
 #include "clients_gui/WikiXmlConverter.h"
-#pragma warning( push, 0 )
-#include <boost/algorithm/string.hpp>
-#pragma warning( pop )
 #include <boost/lexical_cast.hpp>
-#include <queue>
-#include <xeumeuleu/xml.hpp>
+#include <boost/regex.hpp>
 #include <xeuseuleu/xsl.hpp>
 
 // -----------------------------------------------------------------------------
@@ -33,7 +21,7 @@
 // -----------------------------------------------------------------------------
 ADN_Missions_ABC::ADN_Missions_ABC()
     : id_( ADN_Missions_Data::idManager_.GetNextId() )
-    ,needSheetSaving_( false )
+    , needSheetSaving_( false )
 {
     // NOTHING
 }
@@ -88,14 +76,15 @@ void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& chec
 // Name: ADN_Missions_ABC::CheckFieldDataConsistency
 // Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::CheckFieldDataConsistency( std::string fieldData, ADN_ConsistencyChecker& checker, E_MissionType type )
+void ADN_Missions_ABC::CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker, E_MissionType type )
 {
+    std::string str = fieldData;
     boost::smatch match;
-    while( boost::regex_search( fieldData, match, boost::regex( "\\$\\$(.*?)\\$\\$(.*)" ) ) )
+    while( boost::regex_search( str, match, boost::regex( "\\$\\$(.*?)\\$\\$(.*)" ) ) )
     {
         if( !IsFileInAttachmentList( match[ 1 ].str() ) )
             checker.AddError( eMissionAttachmentInvalid, strName_.GetData(), eMissions, type , match[ 1 ].str() );
-        fieldData = match[ 2 ];
+        str = match[ 2 ];
     }
 }
 
@@ -105,11 +94,10 @@ void ADN_Missions_ABC::CheckFieldDataConsistency( std::string fieldData, ADN_Con
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::ReadMissionSheetParametersDescriptions( xml::xistream& xis )
 {
-    std::string parameterName;
     std::string parameterData;
     xml::xisubstream sub( xis );
     FromXmlToWiki( sub, parameterData );
-    xis >> xml::attribute( "name", parameterName );
+    std::string parameterName = xis.attribute< std::string >( "name" );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         if( (*it)->strName_ == parameterName )
         {

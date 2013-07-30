@@ -1980,7 +1980,7 @@ void ADN_Equipments_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Equipments_Data::Reset()
 {
     idManager_.Reset();
-    vEquipments_.Delete();
+    vEquipments_.Reset();
 }
 
 // -----------------------------------------------------------------------------

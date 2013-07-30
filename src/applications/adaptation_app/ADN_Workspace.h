@@ -15,7 +15,6 @@
 #include "ADN_Enums.h"
 #include "ADN_NavigationInfos.h"
 #include "ADN_WorkspaceElement.h"
-#include <boost/noncopyable.hpp>
 
 class ADN_ActiveProtections_Data;
 class ADN_ActiveProtections_GUI;
@@ -27,7 +26,6 @@ class ADN_Breakdowns_Data;
 class ADN_Breakdowns_GUI;
 class ADN_Categories_Data;
 class ADN_Categories_GUI;
-class ADN_ConsistencyChecker;
 class ADN_Crowds_Data;
 class ADN_Crowds_GUI;
 class ADN_Drawings_Data;
@@ -79,8 +77,6 @@ class ADN_Weapons_Data;
 class ADN_Weapons_GUI;
 class ADN_Disasters_Data;
 class ADN_Disasters_GUI;
-class QtCommand;
-class QtUndoStack;
 enum E_OpenMode;
 
 namespace tools
@@ -95,7 +91,6 @@ namespace tools
 // Created: APE 2005-03-18
 // =============================================================================
 class ADN_Workspace : public QObject
-                    , private boost::noncopyable
 {
     Q_OBJECT
 

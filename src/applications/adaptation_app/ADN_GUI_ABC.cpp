@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_GUI_ABC.cpp $
-// $Author: Ape $
-// $Modtime: 11/04/05 18:29 $
-// $Revision: 3 $
-// $Workfile: ADN_GUI_ABC.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_GUI_ABC.h"
@@ -42,6 +33,8 @@ ADN_GUI_ABC::ADN_GUI_ABC( E_WorkspaceElements workspaceElement )
 // -----------------------------------------------------------------------------
 ADN_GUI_ABC::~ADN_GUI_ABC()
 {
+    delete pListView_;
+    delete pMainWidget_;
     // NOTHING
 }
 
@@ -140,6 +133,16 @@ void ADN_GUI_ABC::UpdateOptionalFieldsVisibility( bool show )
         else
             it->second.tab_->removeTab( it->second.index_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GUI_ABC::DisconnectListView
+// Created: JSR 2013-07-30
+// -----------------------------------------------------------------------------
+void ADN_GUI_ABC::DisconnectListView()
+{
+    if( pListView_ )
+        pListView_->ConnectItem( false );
 }
 
 // -----------------------------------------------------------------------------

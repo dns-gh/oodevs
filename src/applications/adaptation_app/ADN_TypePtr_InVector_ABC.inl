@@ -57,7 +57,7 @@ ADN_TypePtr_InVector_ABC< T >::ADN_TypePtr_InVector_ABC( const typename ADN_Type
 template< class T >
 ADN_TypePtr_InVector_ABC< T >::~ADN_TypePtr_InVector_ABC()
 {
-    // NOTHING
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void ADN_TypePtr_InVector_ABC< T >::DisconnectPrivateSub( ADN_Connector_Vector_A
 template< class T >
 void ADN_TypePtr_InVector_ABC< T >::SetData( const T_TypePtr& value )
 {
-    if( pData_!= value)
+    if( pData_ != value )
     {
         if( pData_ )
         {
@@ -107,7 +107,7 @@ void ADN_TypePtr_InVector_ABC< T >::SetData( const T_TypePtr& value )
             pData_->RemoveRef();
         }
 
-        pData_ =value;
+        pData_ = value;
         emit DataChanged( pData_ );
 
         if( pData_ )
@@ -152,7 +152,7 @@ void ADN_TypePtr_InVector_ABC< T >::SetVector( const typename ADN_TypePtr_InVect
             static_cast< ADN_Connector_Vector_ABC* >( this )->Disconnect( static_cast< ADN_Connector_Vector_ABC* >( pVector_ ) );
 
         // set new vector
-        pVector_= const_cast< T_TypeVector* >( &v );
+        pVector_ = const_cast< T_TypeVector* >( &v );
 
         // connect new vector
         if( pVector_ )
@@ -237,7 +237,7 @@ void ADN_TypePtr_InVector_ABC< T >::SetDataPrivate( void* data )
 template< class T >
 void ADN_TypePtr_InVector_ABC< T >::InvalidatePrivate( void* ptr, bool bDel )
 {
-    if( pData_ == ptr)
+    if( pData_ == ptr )
     {
         ADN_TypePtr_InVector_ABC< T >::SetData( static_cast< T_TypePtr >( 0) );
         ADN_Ref_ABC::InvalidatePrivate( this );
@@ -311,4 +311,26 @@ void ADN_TypePtr_InVector_ABC< T >::CheckValidity( ADN_ConsistencyChecker& check
 {
     if( pData_ == 0 )
         checker.AddError( eInvalidPtrInVector, name, tab, subTab, optional );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TypePtr_InVector_ABC::ClearPrivate
+// Created: JSR 2013-07-23
+// -----------------------------------------------------------------------------
+template< class T >
+void ADN_TypePtr_InVector_ABC< T >::ClearPrivate( bool bInConnection /*= false*/ )
+{
+    if( !bInConnection )
+    {
+        if( pData_ )
+        {
+            static_cast< ADN_Ref_ABC* >( pData_ )->ADN_Ref_ABC::DisconnectPrivate( static_cast< ADN_Ref_ABC* >( this ) );
+            pData_->RemoveRef();
+        }
+        if( pVector_ )
+            static_cast< ADN_Connector_Vector_ABC* >( this )->Disconnect( static_cast< ADN_Connector_Vector_ABC* >( pVector_ ) );
+        pData_ = 0;
+        pVector_ = 0;
+    }
+    ADN_Connector_Vector_ABC::ClearPrivate( bInConnection );
 }

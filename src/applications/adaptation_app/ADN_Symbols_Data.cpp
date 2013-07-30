@@ -49,6 +49,7 @@ ADN_Symbols_Data::SymbolsUnit::SymbolsUnit( const std::string& nature, kernel::S
 ADN_Symbols_Data::SymbolsUnit::~SymbolsUnit()
 {
     delete undefined_;
+    undefined_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -250,6 +251,7 @@ void ADN_Symbols_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Symbols_Data::Reset()
 {
     infras_.Reset();
+    units_.Reset();
 }
 
 // -----------------------------------------------------------------------------

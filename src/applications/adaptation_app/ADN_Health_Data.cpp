@@ -97,7 +97,9 @@ void ADN_Health_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_Health_Data::Reset()
 {
-    // NOTHING
+    vChangeOverWarnings_.Reset();
+    vCollectingWarnings_.Reset();
+    vDoctorsWarnings_.Reset();
 }
 
 // -----------------------------------------------------------------------------

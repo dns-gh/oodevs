@@ -25,7 +25,8 @@ class ADN_Weapons_Data_WeaponInfos : public ADN_RefWithName
     Q_OBJECT
     
 public:
-    ADN_Weapons_Data_WeaponInfos();
+             ADN_Weapons_Data_WeaponInfos();
+    virtual ~ADN_Weapons_Data_WeaponInfos();
 
     ADN_Weapons_Data_WeaponInfos* CreateCopy();
     void ReadArchive( xml::xistream& input );
@@ -54,21 +55,21 @@ public:
     ADN_Type_Enum< E_UnitTiredness, eNbrUnitTiredness > nTiredness_;
     ADN_Type_Enum< E_UnitStress, eNbrUnitStress > nStress_;
 
-    ADN_Type_Bool      bIndirect_;
-    ADN_Type_Double    rAverageSpeed_;
-    ADN_Type_Double    rMinRange_;
-    ADN_Type_Double    rMaxRange_;
+    ADN_Type_Bool bIndirect_;
+    ADN_Type_Double rAverageSpeed_;
+    ADN_Type_Double rMinRange_;
+    ADN_Type_Double rMaxRange_;
 
-    private slots:
-        void LauncherOrAmmunitionChanged();
-        void OnNameChanged(void*);
+private slots:
+    void LauncherOrAmmunitionChanged();
+    void OnNameChanged( void* );
 
 public:
     class Cmp : public std::unary_function< ADN_Weapons_Data_WeaponInfos* , bool >
     {
     public:
         Cmp( const std::string& strLauncher, const std::string& strAmmo )
-            : strLauncher_(strLauncher)
+            : strLauncher_( strLauncher )
             , strAmmo_(strAmmo)
         {}
         ~Cmp(){}

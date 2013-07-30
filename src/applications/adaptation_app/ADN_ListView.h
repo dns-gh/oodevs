@@ -68,6 +68,8 @@ public:
     void CreateTableFrom( std::stringstream& stream ) const;
     void RemoveCurrentElement();
 
+    virtual void ConnectItem( bool /*bConnect*/ ) {} 
+
     void setEnabled( bool b );
 
     void SetDeletionEnabled( bool enable, bool warning = true );
@@ -87,8 +89,6 @@ public slots:
     void OnLanguageChanged( const std::string& language );
 
 protected:
-    virtual void ConnectItem( bool /*bConnect*/ ){}// = 0;
-
     void keyReleaseEvent( QKeyEvent* pEvent );
     virtual void mousePressEvent( QMouseEvent* event );
     virtual void contextMenuEvent( QContextMenuEvent* event );

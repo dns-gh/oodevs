@@ -83,6 +83,15 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, u
 }
 
 // -----------------------------------------------------------------------------
+// Name: CategoryInfo::~CategoryInfo
+// Created: JSR 2013-07-29
+// -----------------------------------------------------------------------------
+ADN_Resources_Data::CategoryInfo::~CategoryInfo()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: CategoryInfo::CreateCopy
 // Created: APE 2005-01-19
 // -----------------------------------------------------------------------------
@@ -231,6 +240,15 @@ ADN_Resources_Data::IndirectAmmoInfos::IndirectAmmoInfos()
         std::auto_ptr< ModificatorPostureInfos > spNew( pNew );
         vModifStance_.AddItem( spNew.release() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndirectAmmoInfos::~IndirectAmmoInfos
+// Created: JSR 2013-07-29
+// -----------------------------------------------------------------------------
+ADN_Resources_Data::IndirectAmmoInfos::~IndirectAmmoInfos()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -447,6 +465,15 @@ ADN_Resources_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDot
 }
 
 // -----------------------------------------------------------------------------
+// Name: AmmoCategoryInfo::~AmmoCategoryInfo
+// Created: JSR 2013-07-29
+// -----------------------------------------------------------------------------
+ADN_Resources_Data::AmmoCategoryInfo::~AmmoCategoryInfo()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: AmmoCategoryInfo::CreateCopy
 // Created: APE 2005-01-19
 // -----------------------------------------------------------------------------
@@ -652,7 +679,7 @@ ADN_Resources_Data::ResourceInfos::ResourceInfos( E_DotationFamily nType )
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::ResourceInfos::~ResourceInfos()
 {
-    this->Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -777,6 +804,7 @@ void ADN_Resources_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Resources_Data::Reset()
 {
     idManager_.Reset();
+    networkUsableResources_.clear();
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->Reset();
 }
@@ -787,8 +815,7 @@ void ADN_Resources_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::ReadResource( xml::xistream& input )
 {
-    std::string category;
-    input >> xml::attribute( "category", category );
+    std::string category = input.attribute< std::string >( "category" );
     E_DotationFamily nResourceType = ENT_Tr::ConvertToDotationFamily( category );
     if( nResourceType == -1 )
         throw MASA_EXCEPTION( tr( "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).toStdString() );
