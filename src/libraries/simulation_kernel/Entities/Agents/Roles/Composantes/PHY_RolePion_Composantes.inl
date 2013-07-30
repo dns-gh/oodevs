@@ -33,7 +33,7 @@ unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower,
     for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
     {
         PHY_ComposantePion& composante = **it;
-        if( composante.CanBeLent() && funcPredicate( &composante ) )
+        if( composante.CanBeLent() && funcPredicate( composante ) )
         {
             ++nNbrDone;
             LendComposante( borrower, composante );
@@ -88,7 +88,7 @@ unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( MIL_Agent_A
     for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {
         PHY_ComposantePion& composante = **it;
-        if( composante.CanBeLent() && funcPredicate( &composante ) )
+        if( composante.CanBeLent() && funcPredicate( composante ) )
         {
             ++nNbrDone;
             nTime = std::max( nTime, composante.ApproximateTravelTime( srcPos, destPos ) );
