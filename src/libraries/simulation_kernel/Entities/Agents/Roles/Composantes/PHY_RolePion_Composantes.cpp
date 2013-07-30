@@ -2062,7 +2062,7 @@ bool PHY_RolePion_Composantes::CanPerceive( const MIL_ObjectType_ABC& objectType
 // -----------------------------------------------------------------------------
 unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate )
 {
-    unsigned int nNbrDone = 0;
+    unsigned int nNbrDone = borrower.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( *owner_, nNbr, funcPredicate );
     for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
     {
         PHY_ComposantePion& composante = **it;
