@@ -12,14 +12,13 @@
     <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="svn.revision" value="0"/>
     <property name="version.project.major" value="1.5"/>
     <property name="version.project" value="${version.project.major}.6"/>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="4.3.3"/>
-    <property name="version.minor" value="${version.major}.${svn.revision}"/>
-    <property name="version.version" value="${version.project}.${svn.revision}"/><!-- required for version extension -->
+    <property name="version.minor" value="${version.major}.${git.revision}"/>
+    <property name="version.version" value="${version.project}.${git.revision}"/>
 
     <!--
     ============================================================================
