@@ -91,10 +91,8 @@ EventBottomWidget::EventBottomWidget( const kernel::Time_ABC& simulation, kernel
     planningActions_.push_back( saveAction_ );
     planningActions_.push_back( toolBar->addSeparator() );
     toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), tr( "Discard" ), this, SIGNAL( Discard() ) );
-    QIcon icon = qApp->style()->standardIcon( QStyle::SP_MediaPlay );
-    icon.setPixmapSize( QIcon::Large, QSize( 50, 50 ) );
-    triggerAction_ = toolBar->addAction( icon, triggerText_, this, SIGNAL( Trigger() ) );
-    toolBar->setIconSize( QSize( 30, 30 ) );
+    triggerAction_ = toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_MediaPlay ), triggerText_, this, SIGNAL( Trigger() ) );
+    toolBar->setIconSize( QSize( 80, 30 ) );
 
     // Layout
     mainLayout_->addWidget( toolBar );

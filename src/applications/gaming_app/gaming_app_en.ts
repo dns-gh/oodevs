@@ -735,20 +735,8 @@ Reason: %3
         <translation type="unfinished">Target</translation>
     </message>
     <message>
-        <source>Agent missions</source>
-        <translation type="unfinished">Agent missions</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">Automat missions</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished">Crowd missions</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">Fragmentary orders</translation>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -735,20 +735,8 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agent missions</source>
-        <translation type="unfinished">وكيل البعثات</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">بعثات [اوتومت]</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished">البعثات الحشد</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">أوامر مجزأ</translation>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

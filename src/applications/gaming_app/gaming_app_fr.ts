@@ -673,11 +673,11 @@ Raison: %3
     </message>
     <message>
         <source>Trigger</source>
-        <translation>Déclancher</translation>
+        <translation>Déclencher</translation>
     </message>
     <message>
         <source>Copy and trigger</source>
-        <translation>Copier et déclancher</translation>
+        <translation>Copier et déclencher</translation>
     </message>
     <message>
         <source>Save as copy</source>
@@ -737,20 +737,8 @@ Raison: %3
         <translation type="unfinished">Cible</translation>
     </message>
     <message>
-        <source>Agent missions</source>
-        <translation>Actions tactiques</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Actions tactiques</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation>Actions tactiques</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Conduites à tenir</translation>
+        <source>Order</source>
+        <translation>Ordre</translation>
     </message>
 </context>
 <context>

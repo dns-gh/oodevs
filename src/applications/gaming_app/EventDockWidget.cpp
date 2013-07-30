@@ -117,7 +117,7 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
 {
     event_.reset( factory_.Create( type ) );
     SetEventType( type );
-    Purge();
+    Purge( fromTimeline );
     SetEditing( false, fromTimeline );
     Fill();
     if( dateTime.isValid() )
@@ -176,11 +176,11 @@ void EventDockWidget::SetContentVisible( bool visible )
 // Name: EventDockWidget::Purge
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventDockWidget::Purge()
+void EventDockWidget::Purge( bool fromTimeline )
 {
     topWidget_->Purge();
     if( currentWidget_ )
-        currentWidget_->Purge();
+        currentWidget_->Purge( fromTimeline );
     bottomWidget_->Purge();
     detailWidget_->Purge();
     SetContentVisible( false );
@@ -253,7 +253,7 @@ void EventDockWidget::OnDiscard()
     if( editing_ )
         Fill();
     else
-        currentWidget_->Purge();
+        currentWidget_->Purge( true );
 }
 
 // -----------------------------------------------------------------------------

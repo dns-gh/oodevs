@@ -85,7 +85,7 @@ public:
 private:
     //! @name EventWidget_ABC implementation
     //@{
-    virtual void Purge();
+    virtual void Purge( bool forcePurge = false );
     virtual void Fill( const Event& event );
     virtual void Commit( timeline::Event& event ) const;
     virtual void Trigger() const;
@@ -108,8 +108,9 @@ private:
     void FillMission();
     void SetTarget( const kernel::Entity_ABC* entity );
     bool AreTargetAndMissionCompatible() const;
+    bool AreTargetAndMissionCompatible( const kernel::OrderType* currentOrder ) const;
     void WarnTargetAndMission() const;
-    void BuildMissionInterface();
+    void BuildMissionInterface( bool resetAll );
     void FillMissionInterface( const EventAction& event );
     void Publish( timeline::Event* event = 0 ) const;
 
@@ -122,21 +123,11 @@ private:
     void AddCompatibleFragOrders( const Decisions_ABC& decisions );
     //@}
 
-    //! @name Add to menu
-    //@{
-    void AddTargetToMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu, E_MissionType allowedType );
-    QAction* AddFragOrdersToMenu( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
-    QAction* AddMissionsToMenu( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot, int current );
-    void AddMissionsToMenu( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
-    template< typename E, typename T >
-    void AddMissionGroupToMenu( kernel::ContextMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
-    //@}
-
 signals:
     //! @name Signals
     //@{
     void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool fromTimeline );
-    void SelectMission( const kernel::Entity_ABC& entity, E_MissionType type, int id );
+    void SelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
     //@}
 
 private slots:
@@ -146,12 +137,10 @@ private slots:
     void OnMissionChanged( int id );
     void OnTargetSelected();
     void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
-    void OnSelectMission( const kernel::Entity_ABC& entity, E_MissionType type, int id );
+    void OnSelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
+    void OnTargetRemoved();
 
-    void ActivateAgentMission( int );
-    void ActivateAutomatMission( int );
-    void ActivateFragOrder( int );
-    void ActivatePopulationMission( int );
+    void ActivateMissionPanel();
     //@}
 
 private:
@@ -172,11 +161,15 @@ private:
     gui::RichLabel* targetLabel_;
     actions::gui::MissionInterface* missionInterface_;
 
+    E_MissionType previousType_;
     E_MissionType currentType_;
+    E_MissionType entityType_;
     bool missionChoosed_;
 
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     kernel::SafePointer< kernel::Entity_ABC > target_;
+
+    const kernel::OrderType* currentOrder_;
     //@}
 };
 
