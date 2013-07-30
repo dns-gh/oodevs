@@ -1649,7 +1649,7 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
         if( value.list_size() != 2 || !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
             throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
                 "invalid equipment parameter #" + boost::lexical_cast< std::string >( i ) );
-        composantes[ value.list( 0 ).identifier() ] = value.list( 1 ).quantity();
+        composantes[ value.list( 0 ).identifier() ] += value.list( 1 ).quantity();
     }
     PHY_RolePion_Composantes& source = pion.GetRole< PHY_RolePion_Composantes >();
     for( auto it = composantes.begin(); it != composantes.end(); ++it )
