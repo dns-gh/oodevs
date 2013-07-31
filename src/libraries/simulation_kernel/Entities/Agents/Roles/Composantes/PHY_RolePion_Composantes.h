@@ -138,6 +138,7 @@ public:
     //! @name Pret de composantes
     //@{
     typedef boost::function< bool( const PHY_ComposantePion& composante ) > T_ComponentPredicate;
+    bool CanLendComposantes( const T_ComponentPredicate& funcPredicate ) const;
     unsigned int LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
     unsigned int GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
     unsigned int RetrieveLentComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );

@@ -1619,24 +1619,10 @@ void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message
 
 namespace
 {
-    bool HasId( const PHY_ComposantePion& composante, unsigned int id )
+    bool IsOfType( const PHY_ComposantePion& composante, unsigned int id )
     {
         return composante.GetType().GetMosID().id() == id;
     }
-    struct EquipmentFinder : OnComponentComputer_ABC
-    {
-        EquipmentFinder( unsigned int id )
-            : found_( false )
-            , id_   ( id )
-        {}
-        virtual void ApplyOnComponent( PHY_ComposantePion& composante )
-        {
-            if( HasId( composante, id_ ) )
-                found_ = true;
-        }
-        bool found_;
-        unsigned int id_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -1665,15 +1651,13 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
         if( value.list_size() != 2 || !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
             throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
                 "invalid equipment parameter #" + boost::lexical_cast< std::string >( i ) );
-        EquipmentFinder finder( value.list( 0 ).identifier() );
-        source.Execute( finder );
-        if( ! finder.found_ )
+        if( ! source.CanLendComposantes( boost::bind( &IsOfType, _1, value.list( 0 ).identifier() ) ) )
             throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
-                "equipment #" + boost::lexical_cast< std::string >( i ) + " not found in source unit" );
+                "no equipment type of parameter #" + boost::lexical_cast< std::string >( i ) + " available to lend in source unit" );
         composantes[ value.list( 0 ).identifier() ] += value.list( 1 ).quantity();
     }
     for( auto it = composantes.begin(); it != composantes.end(); ++it )
-        source.LendComposantes( *target, it->second, boost::bind( &HasId, _1, it->first ) );
+        source.LendComposantes( *target, it->second, boost::bind( &IsOfType, _1, it->first ) );
 }
 
 // -----------------------------------------------------------------------------
