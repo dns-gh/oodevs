@@ -21,6 +21,7 @@
 #include "PopulationFactory.h"
 #include "InhabitantFactory.h"
 #include "KnowledgesVisitor_ABC.h"
+#include "OnComponentComputer_ABC.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
 #include "Actions/PHY_FireResults_Default.h"
@@ -1616,6 +1617,14 @@ void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message
     pObjectManager_->OnReceiveChangeResourceLinks( message, nCtx, clientId );
 }
 
+namespace
+{
+    bool IsOfType( const PHY_ComposantePion& composante, unsigned int id )
+    {
+        return composante.GetType().GetMosID().id() == id;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessTransferEquipmentRequest
 // Created: ABR 2011-06-15
@@ -1634,20 +1643,21 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
         throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "invalid target identifier" );
     if( target == &pion )
         throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "source and target are identical" );
-    std::map< unsigned int, int > composantesMap;
+    PHY_RolePion_Composantes& source = pion.GetRole< PHY_RolePion_Composantes >();
+    std::map< unsigned int, int > composantes;
     for( int i = 0; i < parameters.elem( 1 ).value_size(); ++i )
     {
         const ::sword::MissionParameter_Value& value = parameters.elem( 1 ).value().Get( i );
         if( value.list_size() != 2 || !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
             throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
                 "invalid equipment parameter #" + boost::lexical_cast< std::string >( i ) );
-        composantesMap[ value.list( 0 ).identifier() ] = value.list( 1 ).quantity();
+        if( ! source.CanLendComposantes( boost::bind( &IsOfType, _1, value.list( 0 ).identifier() ) ) )
+            throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
+                "no equipment type of parameter #" + boost::lexical_cast< std::string >( i ) + " available to lend in source unit" );
+        composantes[ value.list( 0 ).identifier() ] += value.list( 1 ).quantity();
     }
-    // Transfer composante
-    PHY_RolePion_Composantes& pSource = pion.GetRole< PHY_RolePion_Composantes >();
-    PHY_RolePion_Composantes& pTarget = target->GetRole< PHY_RolePion_Composantes >();
-    for( auto it = composantesMap.begin(); it != composantesMap.end(); ++it )
-        pSource.GiveComposante( it->first, it->second, pTarget );
+    for( auto it = composantes.begin(); it != composantes.end(); ++it )
+        source.LendComposantes( *target, it->second, boost::bind( &IsOfType, _1, it->first ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -137,9 +137,11 @@ public:
 
     //! @name Pret de composantes
     //@{
-    template < typename T > unsigned int LendComposantes             ( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
-    template < typename T > unsigned int GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
-    template < typename T > unsigned int RetrieveLentComposantes     ( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate );
+    typedef boost::function< bool( const PHY_ComposantePion& composante ) > T_ComponentPredicate;
+    bool CanLendComposantes( const T_ComponentPredicate& funcPredicate ) const;
+    unsigned int LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
+    unsigned int GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
+    unsigned int RetrieveLentComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate );
 
     // Actions on the composante owner
     virtual void LendComposante        ( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante );
@@ -150,11 +152,6 @@ public:
     // Notification for the beneficary
     virtual void NotifyLentComposanteReceived( MIL_Agent_ABC& lender, PHY_ComposantePion& composante );
     virtual void NotifyLentComposanteReturned( MIL_Agent_ABC& lender, PHY_ComposantePion& composante );
-    //@}
-
-    //! @name Transfert de composantes
-    //@{
-    void GiveComposante( unsigned int id, int quantity, PHY_RolePion_Composantes& borrower );
     //@}
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée

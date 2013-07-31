@@ -33,7 +33,7 @@ public:
 protected:
     //! @name Types
     //@{
-    typedef boost::function< bool( PHY_ComposantePion* ) > T_ComposantePredicate;
+    typedef boost::function< bool( const PHY_ComposantePion& ) > T_ComposantePredicate;
     //@}
 
 protected:

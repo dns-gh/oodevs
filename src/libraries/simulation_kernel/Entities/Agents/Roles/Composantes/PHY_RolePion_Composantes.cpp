@@ -26,6 +26,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
@@ -1070,19 +1071,18 @@ void PHY_RolePion_Composantes::SendFullState( unsigned int context ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) const
 {
-    typedef tools::Map< std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* >, unsigned int > T_LoanCountMap;
-
+    typedef tools::Map< std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* >, unsigned int >  T_Loans;
     // Lent composantes
     {
-        T_LoanCountMap loanData;
+        T_Loans loans;
         for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
         {
             const MIL_Agent_ABC& pion = *it->first;
             for( auto itComp = it->second.begin(); itComp != it->second.end(); ++itComp )
-                ++loanData[ std::make_pair( &pion, &(*itComp)->GetType() ) ];
+                ++loans[ std::make_pair( &pion, &(*itComp)->GetType() ) ];
         }
         sword::LentEquipments& lentEquipements = *message().mutable_lent_equipments();
-        for( auto it = loanData.begin(); it != loanData.end(); ++it )
+        for( auto it = loans.begin(); it != loans.end(); ++it )
         {
             sword::LentEquipments_LentEquipment& loan = *lentEquipements.add_elem();
             loan.mutable_borrower()->set_id( it->first.first ->GetID() );
@@ -1090,19 +1090,18 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
             loan.set_quantity( it->second );
         }
     }
-
     // Borrowed composantes
     {
-        T_LoanCountMap loanData;
+        T_Loans loans;
         for( auto it = borrowedComposantes_.begin(); it != borrowedComposantes_.end(); ++it )
         {
             const MIL_Agent_ABC& pion = *it->first;
-            const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
+            const auto& composantes = it->second;
             for( auto itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
-                ++loanData[ std::make_pair( &pion, &(*itComp)->GetType() ) ];
+                ++loans[ std::make_pair( &pion, &(*itComp)->GetType() ) ];
         }
         sword::BorrowedEquipments& borrowedEquipements = *message().mutable_borrowed_equipments();
-        for( auto it = loanData.begin(); it != loanData.end(); ++it )
+        for( auto it = loans.begin(); it != loans.end(); ++it )
         {
             sword::BorrowedEquipments_BorrowedEquipment& loan = *borrowedEquipements.add_elem();
             loan.mutable_owner()->set_id( it->first.first ->GetID() );
@@ -1127,9 +1126,9 @@ void PHY_RolePion_Composantes::AddEquipmentDotation( client::UnitAttributes& msg
     value.set_repairing( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
     value.set_captured( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ] );
 
-    for( auto itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        PHY_ComposantePion& composante = **itComposante;
+        PHY_ComposantePion& composante = **it;
         if( composante.GetType() != compType || composante.GetState().GetID() != PHY_ComposanteState::repairableWithEvacuation_.GetID() )
             continue;
         const PHY_Breakdown*  breakdown = composante.GetBreakdown();
@@ -1881,26 +1880,6 @@ bool PHY_RolePion_Composantes::CanStockMoreOf( PHY_RoleInterface_Supply& supplyR
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GiveComposante
-// Created: ABR 2011-06-16
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GiveComposante( unsigned int id, int quantity, PHY_RolePion_Composantes& borrower )
-{
-    for( auto it = composantes_.rbegin(); it != composantes_.rend() && quantity; )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.CanBeLent() && composante.GetType().GetMosID().id() == id )
-        {
-            --quantity;
-            LendComposante( const_cast< MIL_Agent_ABC& >( borrower.GetPion() ), composante );
-            it = composantes_.rbegin(); // TransfertComposante modifie composantes_
-        }
-        else
-            ++it;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::CreateBreakdowns
 // Created: ABR 2011-08-10
 // -----------------------------------------------------------------------------
@@ -2073,4 +2052,88 @@ bool PHY_RolePion_Composantes::CanPerceive( const MIL_ObjectType_ABC& objectType
             return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CanLendComposantes
+// Created: MCO 2013-07-31
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::CanLendComposantes( const T_ComponentPredicate& funcPredicate ) const
+{
+    for( auto it = composantes_.rbegin(); it != composantes_.rend(); ++it )
+        if( funcPredicate( **it ) && (*it)->CanBeLent() )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::LendComposantes
+// Created: MCO 2013-07-30
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate )
+{
+    unsigned int nNbrDone = borrower.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( *owner_, nNbr, funcPredicate );
+    for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( funcPredicate( composante ) && composante.CanBeLent() )
+        {
+            ++nNbrDone;
+            LendComposante( borrower, composante );
+            it = composantes_.rbegin(); // LendComposante->TransfertComposante changes composantes_
+        }
+        else
+            ++it;
+    }
+    return nNbrDone;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetLentComposantesTravelTime
+// Created: MCO 2013-07-30
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate )
+{
+    unsigned int nNbrDone = 0;
+    unsigned int nTime = 0;
+    const MT_Vector2D& srcPos = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Vector2D& destPos = borrower.GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
+    for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( funcPredicate( composante ) && composante.CanBeLent() )
+        {
+            ++nNbrDone;
+            nTime = std::max( nTime, composante.ApproximateTravelTime( srcPos, destPos ) );
+        }
+    }
+    return nTime;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::RetrieveLentComposantes
+// Created: MCO 2013-07-30
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, const T_ComponentPredicate& funcPredicate )
+{
+    unsigned int nNbrDone = 0;
+    while( nNbrDone < nNbr )
+    {
+        auto it = lentComposantes_.find( &borrower );
+        if( it == lentComposantes_.end() )
+            return nNbrDone;
+        PHY_ComposantePion* pComposante = 0;
+        const PHY_ComposantePion::T_ComposantePionVector& lentComps = it->second;
+        for( auto it = lentComps.begin(); it != lentComps.end(); ++it )
+        {
+            PHY_ComposantePion* composante = *it;
+            if( funcPredicate( *composante ) )
+                pComposante = composante;
+        }
+        if( !pComposante )
+            return nNbrDone;
+        ++nNbrDone;
+        RetrieveLentComposante( borrower, *pComposante );
+    }
+    return nNbrDone;
 }

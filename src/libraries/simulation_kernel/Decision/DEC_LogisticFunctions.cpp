@@ -679,24 +679,24 @@ bool DEC_LogisticFunctions::ConvoyIsPushedFlow( const MIL_Agent_ABC& callerAgent
     return false;
 }
 
-// -----------------------------------------------------------------------------
-// Name: UndoLendComposantes
-// Created: NLD 2006-04-04
-// -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate )
+namespace
 {
-    if( !pTarget )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion(), nNbrToGetBack, funcPredicate );
-    if( nNbrGotBack == 0 )
-        MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPreteImpossible );
-    else
+    template< typename Pred >
+    void UndoLendComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, Pred funcPredicate )
     {
-        MIL_Report::PostEvent( pTarget->GetPion(), report::eRC_MaterielRendu );
-        if( nNbrGotBack < nNbrToGetBack )
-            MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPretePartiellementEffectuee );
+        if( !pTarget )
+            throw MASA_EXCEPTION( "invalid parameter." );
+        const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion(), nNbrToGetBack, funcPredicate );
+        if( nNbrGotBack == 0 )
+            MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPreteImpossible );
         else
-            MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPreteEffectuee );
+        {
+            MIL_Report::PostEvent( pTarget->GetPion(), report::eRC_MaterielRendu );
+            if( nNbrGotBack < nNbrToGetBack )
+                MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPretePartiellementEffectuee );
+            else
+                MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPreteEffectuee );
+        }
     }
 }
 
@@ -720,9 +720,9 @@ void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgen
 
 namespace
 {
-    bool CheckComposante( PHY_ComposantePion* composante, PHY_ComposanteTypePion* type )
+    bool CheckComposante( const PHY_ComposantePion& composante, PHY_ComposanteTypePion* type )
     {
-        return &composante->GetType() == type;
+        return &composante.GetType() == type;
     }
 } 
 
@@ -732,7 +732,7 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::UndoLendSpecificComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, PHY_ComposanteTypePion* type, const unsigned int nNbrToGetBack )
 {
-    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, boost::function< bool( PHY_ComposantePion* ) >( boost::bind( &CheckComposante, _1, type ) ) );
+    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, boost::bind( &CheckComposante, _1, type ) );
 }
 
 // -----------------------------------------------------------------------------

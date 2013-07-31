@@ -32,9 +32,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_D
 {
     PHY_RolePion_Composantes& roleDepart = pStart->GetPion().GetRole< PHY_RolePion_Composantes >();
     nTimer_ = roleDepart.GetLentComposantesTravelTime( target_, nNbrToLend_, predicate_ );
-
     MIL_Report::PostEvent( pion, report::eRC_PretMaterielEnCours );
-
     Callback( false );
 }
 
@@ -66,7 +64,6 @@ void PHY_ActionLendComposantes::Execute()
     if( !bLoanDone_ && !nTimer_-- )
     {
         const unsigned int nNbrLent = pion_.GetRole< PHY_RolePion_Composantes >().LendComposantes( target_, nNbrToLend_, predicate_ );
-        
         if( nNbrLent == 0 )
             MIL_Report::PostEvent( pion_, report::eRC_PretMaterielImpossible );
         else
@@ -77,7 +74,6 @@ void PHY_ActionLendComposantes::Execute()
             else
                 MIL_Report::PostEvent( pion_, report::eRC_PretMaterielEffectue );
         }
-
         bLoanDone_ = true;
         Callback( true );
     }
