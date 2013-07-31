@@ -33,11 +33,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Team_ABC& owner ) const;
     virtual const kernel::ObjectKnowledge_ABC* Find( unsigned long id, const kernel::Entity_ABC& owner ) const;
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base, const kernel::Team_ABC& owner ) const;
     virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base, const kernel::Entity_ABC& owner ) const;
-    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner ) const;
+    virtual const kernel::ObjectKnowledge_ABC* Find( const kernel::ObjectKnowledge_ABC& base, const kernel::Entity_ABC& owner ) const;
     //@}
 
 private:

@@ -11,7 +11,9 @@
 #include "ObjectKnowledgeConverter.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 
 using namespace kernel;
@@ -36,20 +38,55 @@ ObjectKnowledgeConverter::~ObjectKnowledgeConverter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeConverter::Find
-// Created: SBO 2007-05-24
+// Name: ObjectKnowledgeConverter::FindInKnowledgeGroups
+// Created: JSR 2013-07-31
 // -----------------------------------------------------------------------------
-const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, const kernel::Team_ABC& owner ) const
+const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::FindInKnowledgeGroups( const kernel::Entity_ABC* key, unsigned int id ) const
 {
-    CIT_Knowledges it = knowledges_.find( &owner );
+    auto it = knowledges_.find( key );
     if( it != knowledges_.end() )
     {
         const T_KnowledgeMap& knowledges = it->second;
-        for( T_KnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
+        for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
             if( it->second->GetId() == id )
                 return it->second;
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgeConverter::FindInKnowledgeGroups
+// Created: JSR 2013-07-31
+// -----------------------------------------------------------------------------
+const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::FindInKnowledgeGroups( const kernel::Entity_ABC* key, const kernel::Object_ABC* object ) const
+{
+    auto it = knowledges_.find( key );
+    if( it != knowledges_.end() )
+    {
+        auto kit = it->second.find( object );
+        if( kit != it->second.end() )
+            return kit->second;
+    }
+    return 0;
+}
+
+namespace
+{
+    const kernel::Entity_ABC* GetKnowledgeGroup( const kernel::Entity_ABC& owner, const kernel::CommunicationHierarchies& h )
+    {
+        if( owner.GetTypeName() == kernel::Agent_ABC::typeName_ )
+        {
+            if( h.CanCommunicate() )
+                return &h.GetUp( 2 );
+            else
+                return &h.GetUp();
+        }
+        else if( owner.GetTypeName() == kernel::Automat_ABC::typeName_ )
+            return &h.GetUp();
+        else if( owner.GetTypeName() == kernel::KnowledgeGroup_ABC::typeName_ )
+            return &owner;
+        return 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -58,14 +95,24 @@ const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, con
 // -----------------------------------------------------------------------------
 const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long id, const kernel::Entity_ABC& owner ) const
 {
-    return Find( id, static_cast< const kernel::Team_ABC& >( owner.Get< kernel::CommunicationHierarchies >().GetTop() ) );
+    const kernel::CommunicationHierarchies* h = owner.Retrieve< kernel::CommunicationHierarchies >();
+    if( !h )
+        return 0;
+    const kernel::Entity_ABC* team = &h->GetTop();
+    const kernel::Entity_ABC* kg = GetKnowledgeGroup( owner, *h );
+    const ObjectKnowledge_ABC* ret = 0;
+    if( kg )
+        ret = FindInKnowledgeGroups( kg, id );
+    if( !ret )
+        ret = FindInKnowledgeGroups( team, id );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgeConverter::Find
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge_ABC& base, const Team_ABC& owner ) const
+const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge_ABC& base, const kernel::Entity_ABC& owner ) const
 {
     const Object_ABC* real = base.GetEntity();
     return real ? Find( *real, owner ) : 0;
@@ -75,27 +122,19 @@ const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge
 // Name: ObjectKnowledgeConverter::Find
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const Object_ABC& base, const Team_ABC& owner ) const
-{
-    CIT_Knowledges it = knowledges_.find( &owner );
-    if( it == knowledges_.end() )
-        return 0;
-    CIT_KnowledgeMap kit = it->second.find( & base );
-    if( kit == it->second.end() )
-        return 0;
-    return kit->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeConverter::Find
-// Created: AGE 2006-09-15
-// -----------------------------------------------------------------------------
 const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& base, const kernel::Entity_ABC& owner ) const
 {
-    const kernel::Hierarchies* hierarchies = owner.Retrieve< kernel::CommunicationHierarchies >();
-    if( hierarchies )
-        return Find( base, static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() ) );
-    return 0;
+    const kernel::CommunicationHierarchies* h = owner.Retrieve< kernel::CommunicationHierarchies >();
+    if( !h )
+        return 0;
+    const kernel::Entity_ABC* team = &h->GetTop();
+    const kernel::Entity_ABC* kg = GetKnowledgeGroup( owner, *h );
+    const ObjectKnowledge_ABC* ret = 0;
+    if( kg )
+        ret = FindInKnowledgeGroups( kg, &base );
+    if( !ret )
+        ret = FindInKnowledgeGroups( team, &base );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------
