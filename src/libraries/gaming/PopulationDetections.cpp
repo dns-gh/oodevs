@@ -31,7 +31,7 @@ PopulationDetections::PopulationDetections( Controller& controller, const Coordi
     , resolver_  ( resolver )
     , entity_    ( entity )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ PopulationDetections::PopulationDetections( Controller& controller, const Coordi
 // -----------------------------------------------------------------------------
 PopulationDetections::~PopulationDetections()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,6 +67,17 @@ void PopulationDetections::DoUpdate( const sword::CrowdFlowDetection& message )
         perceived_.insert( pFlow );
     else
         perceived_.erase( pFlow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationDetections::NotifyDeleted
+// Created: JSR 2013-07-31
+// -----------------------------------------------------------------------------
+void PopulationDetections::NotifyDeleted( const kernel::PopulationPart_ABC& part )
+{
+    auto it = perceived_.find( &part );
+    if( it != perceived_.end() )
+        perceived_.erase( it );
 }
 
 // -----------------------------------------------------------------------------

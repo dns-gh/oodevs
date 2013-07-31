@@ -13,6 +13,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -40,6 +41,8 @@ class PopulationDetections : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< sword::CrowdConcentrationDetection >
                            , public kernel::Updatable_ABC< sword::CrowdFlowDetection >
                            , public gui::Drawable_ABC
+                           , public tools::Observer_ABC
+                           , public tools::ElementObserver_ABC< kernel::PopulationPart_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -64,6 +67,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::CrowdConcentrationDetection& message );
     virtual void DoUpdate( const sword::CrowdFlowDetection& message );
+    virtual void NotifyDeleted( const kernel::PopulationPart_ABC& );
     //@}
 
     //! @name Types
