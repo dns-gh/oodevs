@@ -159,10 +159,8 @@ namespace
 
     MOCK_BASE_CLASS( MockObjectKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC )
     {
-        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Team_ABC& ), FindObjectKnowledgeFromId );
         MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Entity_ABC& ), FindObjectKnowledgeFromIdWithEntity );
-        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::ObjectKnowledge_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromKnowledge );
-        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromObject );
+        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::ObjectKnowledge_ABC&, const kernel::Entity_ABC& ), FindObjectKnowledgeFromKnowledge );
         MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Entity_ABC& ), FindObjectKnowledgeFromObjectWithEntity );
     };
 
