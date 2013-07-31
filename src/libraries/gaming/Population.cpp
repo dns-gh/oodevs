@@ -201,10 +201,15 @@ void Population::DoUpdate( const sword::CrowdConcentrationCreation& message )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const sword::CrowdFlowDestruction& message )
 {
-    delete tools::Resolver< PopulationFlow_ABC >::Find( message.flow().id() );
-    tools::Resolver< PopulationFlow_ABC >::Remove( message.flow().id() );
-    ComputeCenter();
-    Touch();
+    PopulationFlow_ABC* flow = tools::Resolver< PopulationFlow_ABC >::Find( message.flow().id() );
+    if( flow )
+    {
+        controllers_.controller_.Delete( static_cast< kernel::PopulationPart_ABC& >( *flow ) );
+        delete flow;
+        tools::Resolver< PopulationFlow_ABC >::Remove( message.flow().id() );
+        ComputeCenter();
+        Touch();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -213,10 +218,15 @@ void Population::DoUpdate( const sword::CrowdFlowDestruction& message )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const sword::CrowdConcentrationDestruction& message )
 {
-    delete tools::Resolver< PopulationConcentration_ABC >::Find( message.concentration().id() );
-    tools::Resolver< PopulationConcentration_ABC >::Remove( message.concentration().id() );
-    ComputeCenter();
-    Touch();
+    PopulationConcentration_ABC* concentration = tools::Resolver< PopulationConcentration_ABC >::Find( message.concentration().id() );
+    if( concentration )
+    {
+        controllers_.controller_.Delete( static_cast< kernel::PopulationPart_ABC& >( *concentration ) );
+        delete concentration;
+        tools::Resolver< PopulationConcentration_ABC >::Remove( message.concentration().id() );
+        ComputeCenter();
+        Touch();
+    }
 }
 
 // -----------------------------------------------------------------------------
