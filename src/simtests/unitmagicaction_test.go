@@ -783,13 +783,23 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 	})
 }
 
-func MakeTransferCondition(remaining int32, lent int32) func(*swapi.ModelData) bool {
+func CheckLentEquipment(data *swapi.ModelData, from uint32, to uint32, available int32, lent int32) bool {
+	unit := data.FindUnit(from)
+	return unit.EquipmentDotations[11].Available == available &&
+		(lent == 0 && len(unit.LentEquipments) == 0 ||
+			len(unit.LentEquipments) != 0 && unit.LentEquipments[0].Borrower == to && unit.LentEquipments[0].TypeId == 11 && unit.LentEquipments[0].Quantity == lent)
+}
+
+func CheckBorrowedEquipment(data *swapi.ModelData, from uint32, to uint32, available int32, borrowed int32) bool {
+	target := data.FindUnit(to)
+	return target.EquipmentDotations[11].Available == available &&
+		(borrowed == 0 && len(target.BorrowedEquipments) == 0 ||
+			len(target.BorrowedEquipments) != 0 && target.BorrowedEquipments[0].Owner == from && target.BorrowedEquipments[0].TypeId == 11 && target.BorrowedEquipments[0].Quantity == borrowed)
+}
+
+func MakeTransferCondition(from uint32, to uint32, lent int32) func(*swapi.ModelData) bool {
 	return func(data *swapi.ModelData) bool {
-		unit := data.FindUnit(11)
-		target := data.FindUnit(12)
-		return unit.EquipmentDotations[11].Available == remaining &&
-			len(unit.LentEquipments) != 0 && unit.LentEquipments[0].Borrower == 12 && unit.LentEquipments[0].TypeId == 11 && unit.LentEquipments[0].Quantity == lent &&
-			len(target.BorrowedEquipments) != 0 && target.BorrowedEquipments[0].Owner == 11 && target.BorrowedEquipments[0].TypeId == 11 && target.BorrowedEquipments[0].Quantity == lent
+		return CheckLentEquipment(data, from, to, 4-lent, lent) && CheckBorrowedEquipment(data, from, to, 4+lent, lent)
 	}
 }
 
@@ -807,7 +817,7 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 
 	// error: target does not have equipment
 	err = client.TransferEquipment(11, 12, []swapi.Equipment{{1000, 1}})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: equipment #0 not found in source unit")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no equipment type of parameter #0 available to lend in source unit")
 
 	// error: invalid unit identifier
 	err = client.TransferEquipment(11, 1000, []swapi.Equipment{{11, 1}})
@@ -820,20 +830,34 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 	// valid: transfer equipment
 	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1}})
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, MakeTransferCondition(3, 1))
+	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 1))
 
 	// valid: transfer twice the same equipment sums the two quantities
 	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1}, {11, 1}})
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, MakeTransferCondition(1, 3))
+	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 3))
 
 	// valid: transfering more caps to the available quantity
 	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1000}})
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, MakeTransferCondition(0, 4))
+	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 4))
 
 	// valid: transfering back
 	err = client.TransferEquipment(12, 11, []swapi.Equipment{{11, 3}})
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, MakeTransferCondition(3, 1))
+	waitCondition(c, client.Model, MakeTransferCondition(11, 12, 1))
+
+	// valid: transfering to a third unit
+	err = client.TransferEquipment(12, 13, []swapi.Equipment{{11, 5}})
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckLentEquipment(data, 11, 12, 3, 1) && CheckBorrowedEquipment(data, 11, 12, 0, 1) &&
+			CheckLentEquipment(data, 12, 13, 0, 5) && CheckBorrowedEquipment(data, 12, 13, 9, 5)
+	})
+
+	//valid: destroying a unit cancels its lendings and borrowings
+	client.DeleteUnit(12)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckLentEquipment(data, 11, 13, 4, 0) && CheckBorrowedEquipment(data, 11, 13, 4, 0)
+	})
 }
