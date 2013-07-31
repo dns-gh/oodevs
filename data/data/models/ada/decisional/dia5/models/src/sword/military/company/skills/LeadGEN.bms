@@ -123,7 +123,7 @@ end
 -- @author MGD
 -- @modifier LMT
 -- @release 2010-12-03
-findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marcheRetrograde, isMain, objectif )
+findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marcheRetrograde, isMain, withReinforcement )
     local bestList = {}
     local size = 1
     local bestTask = nil
@@ -148,6 +148,8 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
                     bestTaskName = taskName
                 end
                 if efficiencyFind then
+                    local addToBestList = true
+                    local canCompleteAlone = false
                     if isMain then
                         myself.leadData.obstacles = task:getObstaclesParameter( companyTask, params )
                         myself.leadData.nbrTotalObstacle = #myself.leadData.obstacles
@@ -166,16 +168,25 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
                             platoons[ #platoons + 1 ] = entity.source
                             
                             if hasDotation and canDoIt then
+                                canCompleteAlone = true
                                 currentMap[#currentMap + 1] = entity.source
                                 myself.leadData.nbUnitsByObstacle[ obstacle ] = myself.leadData.nbUnitsByObstacle[ obstacle ] + 1
+                                
                             end
                         end
                      end
-                     bestList[size] = { entity = entity,
+                     if not withReinforcement and isMain then -- Only unit will have dotation and capability will receive the mission as main task.
+                         if not canCompleteAlone then
+                             addToBestList = false
+                         end
+                     end
+                     if addToBestList then
+                         bestList[size] = { entity = entity,
                                         task = bestTask,
                                         taskName = bestTaskName,
                                         efficiency = bestEfficiency }
-                     size = size + 1
+                         size = size + 1
+                     end
                 end
             end
         end
@@ -214,7 +225,7 @@ end
 local function issueMission ( self, tasks, nbrFront, echelon, entities, isMain )
     local tasks = explode( ";", tasks )
     entities = entities or self.entitiesWithoutMission
-    local bestUnits = findBestsGEN( entities, tasks, self.companyTask, self.parameters, nbrFront, nil, isMain ) --Save the nbrFront best couple unit/task
+    local bestUnits = findBestsGEN( entities, tasks, self.companyTask, self.parameters, nbrFront, nil, isMain, self.params.withReinforcement ) --Save the nbrFront best couple unit/task
     self.entitiesWithoutMission = removeFromListForLead( bestUnits, self.entitiesWithoutMission )
     setEchelon( bestUnits, echelon )
     for _, elem in pairs( bestUnits ) do

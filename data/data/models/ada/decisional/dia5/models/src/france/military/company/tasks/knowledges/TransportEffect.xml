@@ -61,5 +61,12 @@
                 </type>
             </return>
         </method>
+        <method name="getWithReinforcement">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

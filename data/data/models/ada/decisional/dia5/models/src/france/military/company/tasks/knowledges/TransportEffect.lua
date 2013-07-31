@@ -23,7 +23,10 @@ return
     end,
 
     getMeetingPoint = function( self, params)
-        return { params.meetingPoint }
+        if params.meetingPoint and params.meetingPoint ~= NIL then
+            return { integration.randomPositionInCircle( params.meetingPoint, 100 ) }
+        end
+        return NIL
     end,
 
     getNbrFront = function( self )

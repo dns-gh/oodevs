@@ -1,119 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.skills.LeadGEN" source-version="1.0.0">
-	<parameters>
-		<parameter name="companyTask">
-			<description>La tâche de l'automate à résoudre</description>
-			<type>
-				<simple name="string"/>
-			</type>
-		</parameter>
-		<parameter name="mainTasks">
-			<description>Les mission que va recevoir le premier échelon.</description>
-			<type>
-				<simple name="string"/>
-			</type>
-		</parameter>
-		<parameter name="supportTasks">
-			<description>Les missions que va recevoir le deuxième échelon.</description>
-			<type>
-				<simple name="string"/>
-			</type>
-		</parameter>
-		<parameter name="pcTasks" nullable="true">
-			<description>Les missions que l'on donne spécifiquement au pion PC.</description>
-			<type>
-				<simple name="string"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="pcObjective" nullable="true">
-			<description>Objectifs de la mission PC.</description>
-			<type>
-				<class name="directia.core.Object"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="peiTasks" nullable="true">
-			<description>Les missions que l'on donne spécifiquement aux pions PEI.</description>
-			<type>
-				<simple name="string"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="engineerTask" nullable="true">
-			<description>La mission que l'on donne spécifiquement aux pions GEN.</description>
-			<type>
-				<simple name="string"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="defaultTask">
-			<description>La mission que l'on donne par défaut aux pions.</description>
-			<type>
-				<simple name="string"/>
-			</type>
-		</parameter>
-		<parameter name="taskForSupporting">
-			<description>La mission que l'on donne aux pions de SE pour aider un pion de PE en difficulté.</description>
-			<type>
-				<simple name="string"/>
-			</type>
-		</parameter>
-		<parameter name="noCoordination">
-			<type>
-				<simple name="boolean"/>
-			</type>
-			<default>
-				<boolean>true</boolean>
-			</default>
-		</parameter>
-		<parameter name="allInFront" nullable="true">
-			<type>
-				<simple name="boolean"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="withPC">
-			<type>
-				<simple name="boolean"/>
-			</type>
-			<default>
-				<boolean>true</boolean>
-			</default>
-		</parameter>
-	    <parameter name="disableWhenDone">
-			<type>
-				<simple name="boolean"/>
-			</type>
-			<default>
-				<boolean>false</boolean>
-			</default>
-		</parameter>
-	</parameters>
-	<modifiers/>
-	<links>
-		<link name="supportManager" skill="sword.military.company.skills.SupportManagerForGen">
-			<description>Gère le soutien lors de l'exécution de la mission.</description>
-		</link>
-		<link name="coordinationManager" skill="sword.military.company.skills.CoordinationManager">
-			<description>Gestion de l'élongation au sien d'un échelon et entre les échelons</description>
-		</link>
-		<link name="relieveManager" skill="sword.military.company.skills.RelieveManager">
-			<description>Gère la relève au sein de l'automate.</description>
-		</link>
-		<link name="AssignSETask" skill="sword.military.company.skills.AssignSETask">
-			<description>S'occupe de redistribuer les missions au SE.</description>
-		</link>
-	</links>
-	<resources/>
+    <parameters>
+        <parameter name="companyTask">
+            <description>La tâche de l'automate à résoudre</description>
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="mainTasks">
+            <description>Les mission que va recevoir le premier échelon.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="supportTasks">
+            <description>Les missions que va recevoir le deuxième échelon.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="pcTasks" nullable="true">
+            <description>Les missions que l'on donne spécifiquement au pion PC.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="pcObjective" nullable="true">
+            <description>Objectifs de la mission PC.</description>
+            <type>
+                <class name="directia.core.Object"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="peiTasks" nullable="true">
+            <description>Les missions que l'on donne spécifiquement aux pions PEI.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="engineerTask" nullable="true">
+            <description>La mission que l'on donne spécifiquement aux pions GEN.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="defaultTask">
+            <description>La mission que l'on donne par défaut aux pions.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="taskForSupporting">
+            <description>La mission que l'on donne aux pions de SE pour aider un pion de PE en difficulté.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="noCoordination">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>true</boolean>
+            </default>
+        </parameter>
+        <parameter name="allInFront" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="withPC">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>true</boolean>
+            </default>
+        </parameter>
+        <parameter name="disableWhenDone">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+        <parameter name="withReinforcement">
+            <description>If set to 'False', only units which have dotation and capabilities will receive th main task. 'True' is default value.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>true</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <modifiers/>
+    <links>
+        <link name="supportManager" skill="sword.military.company.skills.SupportManagerForGen">
+            <description>Gère le soutien lors de l'exécution de la mission.</description>
+        </link>
+        <link name="coordinationManager" skill="sword.military.company.skills.CoordinationManager">
+            <description>Gestion de l'élongation au sien d'un échelon et entre les échelons</description>
+        </link>
+        <link name="relieveManager" skill="sword.military.company.skills.RelieveManager">
+            <description>Gère la relève au sein de l'automate.</description>
+        </link>
+        <link name="AssignSETask" skill="sword.military.company.skills.AssignSETask">
+            <description>S'occupe de redistribuer les missions au SE.</description>
+        </link>
+    </links>
+    <resources/>
 </skill>
