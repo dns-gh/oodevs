@@ -177,22 +177,22 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Entity", "identifier" );
         CreateOrderParameter( "Perception", "quantity" );
     }
-     else if( name == "automat_log_supply_push_flow" )
+     else if( name == "automat_log_supply_push_flow" || name == "formation_log_supply_push_flow" )
     {
         CreateOrderParameter( "Parameters", "pushflowparameters" );
     }
-     else if( name == "automat_log_supply_pull_flow" )
+     else if( name == "automat_log_supply_pull_flow" || name == "formation_log_supply_pull_flow" )
     {
         CreateOrderParameter( "Parameters", "pullflowparameters" );
     }
     else if( name == "automat_log_supply_change_quotas" )
     {
-        CreateOrderParameter( "Receiver", "automat" );
+        CreateOrderParameter( "Receiver", "identifier" );
         CreateOrderParameter( "Dotations", "list" );
     }
-    else if( name == "formation_log_supply_push_flow" || name == "formation_log_supply_pull_flow" || name == "formation_log_supply_change_quotas" )
+    else if( name == "formation_log_supply_change_quotas" )
     {
-        CreateOrderParameter( "Receiver", "formation" );
+        CreateOrderParameter( "Receiver", "identifier" );
         CreateOrderParameter( "Dotations", "list" );
     }
     else if( name == "create_object" )
