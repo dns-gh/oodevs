@@ -156,11 +156,11 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
     const MT_Rect bb = surface.GetBoundingBox();
     double x          = floor( bb.GetLeft()   / rCellSize_ ) * rCellSize_;
     const double xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
-    double y          = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
+    const double yMin = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
     const double yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
 
     for( ; x < xMax; x += rCellSize_ )
-        for( ; y < yMax; y += rCellSize_ )
+        for( double y = yMin; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
                  ElevationGrid::sCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
