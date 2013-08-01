@@ -59,8 +59,7 @@ public:
     template< typename T > static bool ExtractDeadFromCrowd( const T& caller, unsigned int knowledgeId, const MT_Vector2D* position );
     template< typename T > static bool HasWoundedHumans( const T& caller, int knowledgeId );
     template< typename T > static bool HasDeadHumans( const T& caller, int knowledgeId );
-    template< typename T > static bool HasOnlyWoundedHumans( const T& caller, int knowledgeId );
-    template< typename T > static bool HasOnlyDeadHumans( const T& caller, int knowledgeId );
+    template< typename T > static std::vector< unsigned int > GetHumansFromAllTypes( const T& caller, int knowledgeId );
                            static bool HealWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
                            static int GetNbreOfWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
                            static bool CanLoadCrowdConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId );

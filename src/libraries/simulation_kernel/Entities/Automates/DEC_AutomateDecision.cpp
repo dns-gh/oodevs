@@ -379,10 +379,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasDeadHumans< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Crowd_HasWoundedHumans",
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasWoundedHumans< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Crowd_HasOnlyDeadHumans",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasOnlyDeadHumans< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Crowd_HasOnlyWoundedHumans",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasOnlyWoundedHumans< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Crowd_GetHumansFromAllTypes",
+        boost::function< std::vector< unsigned int >( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
 
     // Representations
     brain.RegisterFunction( "DEC_GetOrdersCategory",
