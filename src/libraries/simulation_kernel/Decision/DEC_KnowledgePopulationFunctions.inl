@@ -154,6 +154,26 @@ bool DEC_KnowledgePopulationFunctions::HasWoundedHumans( const T& caller, int kn
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::HasOnlyWoundedHumans
+// Created: NMI 2013-08-01
+// -----------------------------------------------------------------------------
+template< typename T >
+bool DEC_KnowledgePopulationFunctions::HasOnlyWoundedHumans( const T& caller, int knowledgeId )
+{
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+        {
+            MIL_Population& population = pKnowledge->GetPopulationKnown();
+            return population.GetWoundedHumans() == population.GetAllHumans();
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::HasDeadHumans
 // Created: NMI 2013-07-29
 // -----------------------------------------------------------------------------
@@ -172,3 +192,25 @@ bool DEC_KnowledgePopulationFunctions::HasDeadHumans( const T& caller, int knowl
     }
     return false;
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::HasOnlyDeadHumans
+// Created: NMI 2013-08-01
+// -----------------------------------------------------------------------------
+template< typename T >
+bool DEC_KnowledgePopulationFunctions::HasOnlyDeadHumans( const T& caller, int knowledgeId )
+{
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+        {
+            MIL_Population& population = pKnowledge->GetPopulationKnown();
+            return population.GetDeadHumans() == population.GetAllHumans();
+        }
+    }
+    return false;
+}
+

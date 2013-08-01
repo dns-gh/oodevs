@@ -499,8 +499,16 @@ integration.crowdHasWoundHumans = function( crowd )
     return DEC_Crowd_HasWoundedHumans( crowd.source )
 end
 
+integration.crowdHasOnlyWoundedHumans = function( crowd )
+    return DEC_Crowd_HasOnlyWoundedHumans( crowd.source )
+end
+
 integration.crowdHasDeadHumans = function( crowd )
     return DEC_Crowd_HasDeadHumans( crowd.source )
+end
+
+integration.crowdHasOnlyDeadHumans = function( crowd )
+    return DEC_Crowd_HasOnlyDeadHumans( crowd.source )
 end
 
 integration.healWoundedInCrowd = function( crowd )
