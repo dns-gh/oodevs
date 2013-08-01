@@ -341,7 +341,8 @@ integration.startMoveToIt = function( objective, pathType )
     -- --------------------------------------------------------------------------------
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
     if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
-       and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) then
+       and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) 
+        and not DEC_Agent_PionCanFly( myself ) then
         local simPositions = DEC_Geometrie_CalculerTrafficablePointPourPoint( objective.initialeDestination )
         objective.destination = DEC_Geometrie_CopiePoint(  getNearestSimPoint( objective.initialeDestination, simPositions ) )
     else
