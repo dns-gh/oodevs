@@ -7,27 +7,27 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_test_pch.h"
-#include "dispatcher/RotatingLog.h"
-#include "dispatcher/Log_ABC.h"
-#include "dispatcher/LogFactory_ABC.h"
+#include "tools_test_pch.h"
+#include "tools/RotatingLog.h"
+#include "tools/Log_ABC.h"
+#include "tools/LogFactory_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 #include <ostream>
 #include <memory>
 #include <deque>
 
-using namespace dispatcher;
+using namespace tools;
 
 namespace
 {
-    MOCK_BASE_CLASS( MockLog, dispatcher::Log_ABC )
+    MOCK_BASE_CLASS( MockLog, tools::Log_ABC )
     {
         MOCK_DESTRUCTOR( MockLog, destructor )
         MOCK_METHOD( Write, 1 )
     };
 
-    MOCK_BASE_CLASS( MockLogFactory, dispatcher::LogFactory_ABC )
+    MOCK_BASE_CLASS( MockLogFactory, tools::LogFactory_ABC )
     {
         MOCK_METHOD( CreateLog, 1 )
     };

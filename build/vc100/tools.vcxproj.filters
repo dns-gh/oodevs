@@ -156,6 +156,9 @@
     <ClCompile Include="..\..\src\libraries\tools\ContourComputer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\RotatingLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
@@ -366,6 +369,15 @@
       <Filter>Source Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\ContourComputer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\RotatingLog.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Log_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\LogFactory_ABC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

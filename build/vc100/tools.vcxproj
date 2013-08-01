@@ -112,6 +112,7 @@
     <ClCompile Include="..\..\src\libraries\tools\FileWrapper.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IdManager.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IpcQueue.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\RotatingLog.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ThreadPool.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -163,8 +164,11 @@
     <ClInclude Include="..\..\src\libraries\tools\IpcHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\IpcQueue.h" />
     <ClInclude Include="..\..\src\libraries\tools\IpcWatch.h" />
+    <ClInclude Include="..\..\src\libraries\tools\LogFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Log_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\NET_AsnException.h" />
     <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\RotatingLog.h" />
     <ClInclude Include="..\..\src\libraries\tools\ThreadPool.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
     <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h" />

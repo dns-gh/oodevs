@@ -164,7 +164,6 @@
     <ClCompile Include="..\..\src\tests\dispatcher_test\MessageLoaderTest.cpp" />
     <ClCompile Include="..\..\src\tests\dispatcher_test\ObjectKnowledgeTest.cpp" />
     <ClCompile Include="..\..\src\tests\dispatcher_test\ObjectTest.cpp" />
-    <ClCompile Include="..\..\src\tests\dispatcher_test\RotatingLogTest.cpp" />
     <ClCompile Include="..\..\src\tests\dispatcher_test\TeamTest.cpp" />
     <ClCompile Include="..\..\src\tests\dispatcher_test\UrbanKnowledgeTest.cpp" />
     <ClCompile Include="..\..\src\tests\dispatcher_test\UrbanObjectTest.cpp" />

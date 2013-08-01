@@ -15,7 +15,7 @@
 #include <boost/lexical_cast.hpp>
 #include <memory>
 
-namespace dispatcher
+namespace tools
 {
     class LogFactory_ABC;
     class Log_ABC;
@@ -31,7 +31,7 @@ class RotatingLog : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    RotatingLog( dispatcher::LogFactory_ABC& factory, const tools::Path& filename, unsigned int files, unsigned int size, bool sizeInBytes = false );
+    RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, unsigned int files, unsigned int size, bool sizeInBytes = false );
     //@}
 
     //! @name Operations

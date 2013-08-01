@@ -148,6 +148,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile Include="..\..\src\tests\tools_test\MessageObserverTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\MT_InterpolatedFunctionTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\RealFileLoaderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\tools_test\RotatingLogTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\SchemaVersionExtractorTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\SchemaWriterTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\ServerNetworkerTest.cpp" />

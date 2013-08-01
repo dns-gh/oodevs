@@ -10,10 +10,10 @@
 #ifndef dispatcher_Log_h
 #define dispatcher_Log_h
 
-#include "Log_ABC.h"
-#include <ctime>
+#include "tools/Log_ABC.h"
 #include "tools/FileWrapper.h"
 #include <tools/Path.h>
+#include <ctime>
 #pragma warning( push )
 #pragma warning( disable: 4996 )
 
@@ -25,7 +25,7 @@ namespace dispatcher
 */
 // Created: MCO 2011-06-27
 // =============================================================================
-class Log : public Log_ABC
+class Log : public tools::Log_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -7,20 +7,20 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
+#include "tools_pch.h"
 #include "RotatingLog.h"
 #include "LogFactory_ABC.h"
 #include "Log_ABC.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 
-using namespace dispatcher;
+using namespace tools;
 
 // -----------------------------------------------------------------------------
 // Name: RotatingLog constructor
 // Created: MCO 2011-06-26
 // -----------------------------------------------------------------------------
-RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const tools::Path& filename,
+RotatingLog::RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename,
                           unsigned int files, unsigned int size, bool sizeInBytes /* = false */ )
     : factory_ ( factory )
     , filename_( filename )

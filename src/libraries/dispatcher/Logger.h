@@ -10,7 +10,7 @@
 #ifndef dispatcher_Logger_h
 #define dispatcher_Logger_h
 
-#include "RotatingLog.h"
+#include "tools/RotatingLog.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
@@ -37,12 +37,12 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    Logger( RotatingLog& log, const std::string& prefix, T_Callback callback )
+    Logger( tools::RotatingLog& log, const std::string& prefix, T_Callback callback )
         : log_     ( &log )
         , prefix_  ( prefix )
         , callback_( callback )
     {}
-    Logger( RotatingLog& log, const std::string& prefix, T_ConstCallback constCallback )
+    Logger( tools::RotatingLog& log, const std::string& prefix, T_ConstCallback constCallback )
         : log_          ( &log )
         , prefix_       ( prefix )
         , constCallback_( constCallback )
@@ -89,7 +89,7 @@ private:
 private:
     //! @name Member data
     //@{
-    RotatingLog* log_;
+    tools::RotatingLog* log_;
     std::string prefix_;
     T_Callback callback_;
     T_ConstCallback constCallback_;
@@ -98,7 +98,7 @@ private:
 
 template< typename C, typename T >
 boost::function< void( const std::string&, const T& ) > MakeConstLogger(
-    RotatingLog& log, const std::string& prefix,
+    tools::RotatingLog& log, const std::string& prefix,
     C& instance, void (C::*callback)( const std::string&, const T& ) )
 {
     return Logger< T >( log, prefix, Logger< T >::T_ConstCallback( boost::bind( callback, &instance, _1, _2 ) ) );
@@ -106,7 +106,7 @@ boost::function< void( const std::string&, const T& ) > MakeConstLogger(
 
 template< typename C, typename T >
 boost::function< void( const std::string&, T& ) > MakeLogger(
-    RotatingLog& log, const std::string& prefix,
+    tools::RotatingLog& log, const std::string& prefix,
     C& instance, void (C::*callback)( const std::string&, T& ) )
 {
     return Logger< T >( log, prefix, Logger< T >::T_Callback( boost::bind( callback, &instance, _1, _2 ) ) );

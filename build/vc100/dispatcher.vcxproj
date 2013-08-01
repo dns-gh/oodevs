@@ -220,7 +220,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\FileLogger.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\MemoryLogger.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Position.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\RotatingLog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\dispatcher\Config.h" />
@@ -375,16 +374,13 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\Registrable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\FileLogger.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Log.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\Log_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogFactory.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\LogFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Logger.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Logger_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\MemoryLogger.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Observable.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Observer.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Position.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\RotatingLog.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\dispatcher\EquipmentAvailability.inl" />

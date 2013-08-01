@@ -429,9 +429,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\Position.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\RotatingLog.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.cpp">
       <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClCompile>
@@ -875,13 +872,7 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\Log.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\Log_ABC.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\LogFactory.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\LogFactory_ABC.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\Logger.h">
@@ -900,9 +891,6 @@
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\Position.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\RotatingLog.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.h">

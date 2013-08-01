@@ -13,11 +13,15 @@
 #include "Plugin_ABC.h"
 #include "protocol/Protocol.h"
 
+namespace tools
+{
+    class RotatingLog;
+}
+
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
     class LinkResolver_ABC;
-    class RotatingLog;
     class OrderResolver_ABC;
     class ClientsNetworker;
 
@@ -33,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DispatcherPlugin( SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
-                               LinkResolver_ABC& links, OrderResolver_ABC& order, RotatingLog& log );
+                               LinkResolver_ABC& links, OrderResolver_ABC& order, tools::RotatingLog& log );
     virtual ~DispatcherPlugin();
     //@}
 
