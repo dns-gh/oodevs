@@ -377,8 +377,6 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< boost::shared_ptr< MT_Vector2D >( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetBarycenter< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Crowd_HasDeadHumans",
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasDeadHumans< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Crowd_HasWoundedHumans",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasWoundedHumans< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Crowd_GetHumansFromAllTypes",
         boost::function< std::vector< unsigned int >( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
 

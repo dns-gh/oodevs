@@ -133,27 +133,6 @@ bool DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const T& caller, un
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::HasWoundedHumans
-// Created: MIA 2011-01-20
-// Modified: NMI 2013-07-29
-// -----------------------------------------------------------------------------
-template< typename T >
-bool DEC_KnowledgePopulationFunctions::HasWoundedHumans( const T& caller, int knowledgeId )
-{
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-        if( pKnowledge )
-        {
-            MIL_Population& population = pKnowledge->GetPopulationKnown();
-            return population.GetWoundedHumans() > 0;
-        }
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::HasDeadHumans
 // Created: NMI 2013-07-29
 // -----------------------------------------------------------------------------
