@@ -1663,6 +1663,14 @@ Voulez-vous le supprimer?</translation>
         <source>Cancel</source>
         <translation type="unfinished">Annuler</translation>
     </message>
+    <message>
+        <source>Create nodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove nodes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>
