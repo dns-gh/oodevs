@@ -285,8 +285,14 @@ end
 
 -- Unload crowd
 integration.startUnloadCrowd = function( crowd, position )
+    local crowdId
+    if crowd == nil or crowd == NIL then
+         crowdId = 0 -- if the crowd is not issued, unload current transported crowd concentration.
+    else
+        crowdId = crowd.source
+    end
     meKnowledge:RC( eRC_TransportDebarquement )
-    myself.actionUnloadCrowd = DEC_StartDebarquerFouleSurPosition( crowd.source, position:getPosition() )
+    myself.actionUnloadCrowd = DEC_StartDebarquerFouleSurPosition( crowdId, position:getPosition() )
     actionCallbacks[ myself.actionUnloadCrowd ] = function( arg ) myself.eEtatTransportUnloadCrowd = arg end
     return false
 end
