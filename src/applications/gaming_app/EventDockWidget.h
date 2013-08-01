@@ -87,7 +87,7 @@ private:
     //@{
     void SetEventType( E_EventTypes type );
     void Commit( timeline::Event& event );
-    void Purge();
+    void Purge( bool fromTimeline = false );
     void Fill();
     virtual void closeEvent( QCloseEvent * event );
     void SetContentVisible( bool visible );
