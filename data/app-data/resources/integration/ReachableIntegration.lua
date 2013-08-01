@@ -315,8 +315,7 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
 --  pathfinding
 --  movement along computed path
 -- ****************************************************************************
-integration.startMoveToIt = function( objective, pathType )
-
+integration.startMoveToIt = function( objective, pathType, waypoints )
     objective[ myself ] = objective[ myself ] or {}
 
     -- -------------------------------------------------------------------------------- 
@@ -353,13 +352,24 @@ integration.startMoveToIt = function( objective, pathType )
     -- -------------------------------------------------------------------------------- 
     -- Compute path and start moving along.
     -- --------------------------------------------------------------------------------
-    if pathType == NIL  or pathType == nil then -- pathType can have the MASA Life 'NIL' value
+    if pathType == nil or pathType == NIL then -- pathType can have the MASA Life 'NIL' value
         pathType = eTypeItiMouvement
     end
 
-    local it = DEC_CreerItineraireBM( objective.destination, pathType )
-    F_Pion_SetitMvt( meKnowledge.source, it )
-    objective[ myself ].moveAction = DEC_StartDeplacement( it )
+    local simWaypoints = {}
+    for i = 1, #waypoints do
+        simWaypoints[ i ] = waypoints[ i ]:getPosition()
+    end
+    if #simWaypoints > 0 then
+        simWaypoints[ #simWaypoints + 1 ] = objective.destination
+        myself.movingOnPath = true
+        itinerary = DEC_CreerItineraireListe( simWaypoints, pathType )
+    else
+        itinerary = DEC_CreerItineraireBM( objective.destination, pathType )
+    end
+
+    F_Pion_SetitMvt( meKnowledge.source, itinerary )
+    objective[ myself ].moveAction = DEC_StartDeplacement( itinerary )
     local moveAction = objective[ myself ].moveAction
     actionCallbacks[ objective[ myself ].moveAction ] = function( arg )
         objective[ myself ].etat = arg
@@ -494,7 +504,7 @@ integration.updateMoveToIt = function( objective, pathType )
             DEC_Trace( "Already moving" )
             objective[ myself ].rcDone = etat
         end
-    elseif etat == eEtatActionDeplacement_Teleporte then
+    elseif etat == eEtatActionDeplacement_Teleporte and not myself.movingOnPath then
         DEC__StopAction( objective[ myself ].moveAction )
         integration.stopMoveToIt( objective )
         integration.startMoveToIt( objective, pathType )
@@ -537,6 +547,7 @@ integration.stopMoveToIt = function( objective )
             myself.mount = nil
         end
         myself.enteringNonTrafficableElement = nil
+         myself.movingOnPath = false
         return false
     end
 end
