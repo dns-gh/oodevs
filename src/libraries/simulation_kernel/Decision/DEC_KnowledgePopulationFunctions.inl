@@ -133,11 +133,11 @@ bool DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const T& caller, un
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::GetHumansFromAllTypes
+// Name: DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes
 // Created: NMI 2013-08-01
 // -----------------------------------------------------------------------------
 template< typename T >
-std::vector< unsigned int > DEC_OrdersFunctions::GetHumansFromAllTypes( const T& caller, int knowledgeId )
+std::vector< unsigned int > DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes( const T& caller, int knowledgeId )
 {
     std::vector< unsigned int > vecHumans;
     auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
@@ -151,8 +151,7 @@ std::vector< unsigned int > DEC_OrdersFunctions::GetHumansFromAllTypes( const T&
             vecHumans.push_back( population.GetWoundedHumans() );
             vecHumans.push_back( population.GetContaminatedHumans() );
             vecHumans.push_back( population.GetDeadHumans() );
-            return vecHumans;
         }
     }
-    return false;
+    return vecHumans;
 }
