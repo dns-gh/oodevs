@@ -83,7 +83,8 @@ struct SessionController_ABC : public boost::noncopyable
     virtual void        Download   ( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const = 0;
     virtual T_Session   Replay     ( const Uuid& node, const Uuid& id ) = 0;
     virtual void        NotifyNode ( const Uuid& node ) = 0;
-    virtual void        DownloadLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const = 0;
+    virtual void        DownloadLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize,
+                                     bool deflate ) const = 0;
 
     //@}
 };

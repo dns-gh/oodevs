@@ -428,11 +428,12 @@ void SessionController::NotifyNode( const Uuid& node )
 // Name: SessionController::DownloadLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-void SessionController::DownloadLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
+void SessionController::DownloadLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize,
+                                     bool deflate ) const
 {
     try
     {
-        Dispatch( node, id, boost::bind( &Session_ABC::DownloadLog, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ) ) );
+        Dispatch( node, id, boost::bind( &Session_ABC::DownloadLog, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ), boost::ref( deflate ) ) );
     }
     catch( const std::exception& err )
     {

@@ -108,7 +108,8 @@ public:
     virtual Tree                RestoreSession    ( const Uuid& node, const Uuid& id ) const;
     virtual void                DownloadSession   ( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const;
     virtual Tree                ReplaySession     ( const Uuid& node, const Uuid& id ) const;
-    virtual void                DownloadSessionLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const;
+    virtual void                DownloadSessionLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize,
+                                                    bool deflate ) const;
     //@}
 
     //! @name Exercise Methods

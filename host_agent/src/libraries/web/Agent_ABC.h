@@ -119,7 +119,8 @@ struct Agent_ABC : public boost::noncopyable
     virtual Tree                RestoreSession    ( const Uuid& node, const Uuid& id ) const = 0;
     virtual void                DownloadSession   ( const Uuid& node, const Uuid& id, Chunker_ABC& dst ) const = 0;
     virtual Tree                ReplaySession     ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual void                DownloadSessionLog( const Uuid& node, const Uuid& id, Chunker_ABC& dst, const std::string& logFile, int limitSize ) const = 0;
+    virtual void                DownloadSessionLog( const Uuid& node, const Uuid& id, Chunker_ABC& dst, const std::string& logFile, int limitSize,
+                                                    bool deflate ) const = 0;
     //@}
 
     //! @name Exercise Methods
