@@ -1145,7 +1145,7 @@ void Session::NotifyNode()
 // Name: Session::DownloadLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
+bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     dst.SetName( logFile );
@@ -1153,6 +1153,6 @@ bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, in
     if( !deps_.fs.Exists( GetOutput() / logFile ) )
         return false;
 
-    deps_.fs.ReadFileWithLimitSize( sink, GetOutput() / logFile, limitSize );
+    deps_.fs.ReadFileWithLimitSize( deflate ? *deps_.fs.MakeGzipFilter( sink ) : sink, GetOutput() / logFile, limitSize );
     return true;
 }

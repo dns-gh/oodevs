@@ -25,6 +25,7 @@
 #include <stdint.h>
 #include <fcntl.h>
 #include <iostream>
+#include <zlib/zlib.h>
 
 #ifdef WIN32
 #include <io.h>
@@ -628,6 +629,62 @@ struct Packer : public Packer_ABC
     io::Writer_ABC& writer_;
     boost::shared_ptr< Archive > dst_;
 };
+
+const size_t buffer_size = 1<<18;
+
+struct GzipWriter : public io::Writer_ABC
+{
+    GzipWriter( io::Writer_ABC& writer )
+        : writer_( writer )
+        , output_( buffer_size )
+    {
+        defstream.zalloc = Z_NULL;
+        defstream.zfree = Z_NULL;
+        defstream.opaque = Z_NULL;
+        deflateInit( &defstream, Z_DEFAULT_COMPRESSION );
+    }
+
+    ~GzipWriter()
+    {
+        Write( 0, 0, Z_FINISH );
+        deflateEnd( &defstream );
+    }
+
+    void Write( const void* data, size_t size, int flags )
+    {
+        const char* ptr = reinterpret_cast< const char* >( data );
+        const char* end = ptr + size;
+        bool last = !!( flags & Z_FINISH );
+        while( ptr < end || last )
+        {
+            defstream.next_in = (Bytef*) ptr;
+            defstream.avail_in = static_cast< uInt >( end - ptr );
+
+            defstream.next_out = (Bytef*) &output_[0];
+            defstream.avail_out = static_cast< uInt >(output_.size() );
+
+            deflate(&defstream, flags);
+
+            const size_t chunk = output_.size() - defstream.avail_out;
+            if( chunk )
+                writer_.Write( &output_[0], chunk );
+            
+            ptr = end - defstream.avail_in;
+            last = false;
+        }
+    }
+
+    virtual int Write( const void* data, size_t size )
+    {
+        Write( data, size, Z_NO_FLUSH );
+        return static_cast< int >( size );
+    }
+
+    std::vector< char > output_;
+    io::Writer_ABC& writer_;
+    z_stream defstream;
+};
+
 }
 
 // -----------------------------------------------------------------------------
@@ -637,6 +694,15 @@ struct Packer : public Packer_ABC
 FileSystem_ABC::T_Packer FileSystem::Pack( io::Writer_ABC& dst, ArchiveFormat fmt ) const
 {
     return boost::make_shared< Packer >( boost::ref( log_ ), boost::ref( dst ), fmt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::MakeGzipFilter
+// Created: LGY 2013-08-01
+// -----------------------------------------------------------------------------
+FileSystem_ABC::T_Writer FileSystem::MakeGzipFilter( io::Writer_ABC& dst ) const
+{
+    return boost::shared_ptr< GzipWriter >( new GzipWriter( boost::ref( dst ) ) );
 }
 
 // -----------------------------------------------------------------------------

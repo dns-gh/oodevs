@@ -769,10 +769,14 @@ void Controller::ReplaySession( Reply_ABC& rpy, const Request_ABC& request )
 void Controller::DownloadSessionLog( Reply_ABC& rpy, Request_ABC& request )
 {
     const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const boost::optional< std::string > encoding = request.GetHeader( "Accept-Encoding" );
+    bool deflate = encoding && encoding->find( "deflate" ) != std::string::npos;
+    if( deflate )
+        rpy.SetHeader( "Content-Encoding", "deflate" );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
     const std::string logFile = RequireParameter< std::string >( "logfile", request );
     const int limitSize = GetParameter( "limitsize", request, 0 );
-    agent_.DownloadSessionLog( node, GetId( request ), *chunker, logFile, limitSize );
+    agent_.DownloadSessionLog( node, GetId( request ), *chunker, logFile, limitSize, deflate );
 }
 
 // -----------------------------------------------------------------------------

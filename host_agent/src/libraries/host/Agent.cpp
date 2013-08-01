@@ -462,9 +462,9 @@ Tree Agent::ReplaySession( const Uuid& node, const Uuid& id ) const
 // Name: Agent::DownloadSessionLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-void Agent::DownloadSessionLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize ) const
+void Agent::DownloadSessionLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
 {
-    sessions_.DownloadLog( node, id, dst, logFile, limitSize );
+    sessions_.DownloadLog( node, id, dst, logFile, limitSize, deflate );
 }
 
 // -----------------------------------------------------------------------------

@@ -68,7 +68,6 @@ add_target( runtime libraries "libraries/runtime" )
 target_link_libraries( runtime
     shlwapi
     ${ARCHIVE_LIBRARIES}
-    ${ZLIB_LIBRARIES}
 )
 if( WIN32 )
     add_target( runtime_win32 libraries "libraries/runtime/win32" )
@@ -134,4 +133,5 @@ target_link_libraries( web_test
     runtime
     web
     ${TOOLS_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )
