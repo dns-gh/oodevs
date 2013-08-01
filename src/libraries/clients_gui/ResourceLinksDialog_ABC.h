@@ -12,19 +12,16 @@
 
 #include "ResourceNetwork_ABC.h"
 #include "RichDockWidget.h"
-
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
-
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
-
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class Model_ABC;
     class Object_ABC;
     class ResourceNetworkType;
     class UrbanObject_ABC;
@@ -32,12 +29,12 @@ namespace kernel
 
 namespace gui
 {
-    class RichPushButton;
     template< typename T > class RichWidget;
-    template< typename T > class RichWidget;
-    class RichGroupBox;
-    class RichSpinBox;
     class RichCheckBox;
+    class RichGroupBox;
+    class RichPushButton;
+    class RichSpinBox;
+
 // =============================================================================
 /** @class  ResourceLinksDialog_ABC
     @brief  ResourceLinksDialog_ABC
@@ -58,7 +55,7 @@ class ResourceLinksDialog_ABC : public RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceLinksDialog_ABC( QMainWindow* parent, kernel::Controllers& controllers, const tools::StringResolver< kernel::ResourceNetworkType >& resources );
+             ResourceLinksDialog_ABC( QMainWindow* parent, const kernel::Model_ABC& model, kernel::Controllers& controllers, const tools::StringResolver< kernel::ResourceNetworkType >& resources );
     virtual ~ResourceLinksDialog_ABC();
     //@}
 
@@ -109,6 +106,7 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const kernel::Model_ABC& model_;
     std::vector< kernel::Entity_ABC* > selected_;
     QListWidgetItem* selectedItem_;
     bool blockSlot_;

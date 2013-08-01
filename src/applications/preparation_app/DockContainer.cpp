@@ -93,7 +93,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // ResourceNetwork panel
     {
-        gui::RichDockWidget* pResourceWnd = new ResourceNetworkDialog( parent, controllers, staticModel, model );
+        gui::RichDockWidget* pResourceWnd = new ResourceNetworkDialog( parent, model, controllers, staticModel, model );
         pResourceWnd->SetModes( eModes_Default | eModes_LivingArea );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
     }

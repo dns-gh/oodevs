@@ -77,7 +77,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // -----------------------------------------------------------------------------
     // ResourceNetwork panel
     {
-        gui::RichDockWidget* pResourceWnd = new ResourceLinksDialog( parent, controllers, model.actions_, staticModel, simulation );
+        gui::RichDockWidget* pResourceWnd = new ResourceLinksDialog( parent, model, controllers, model.actions_, staticModel, simulation );
         pResourceWnd->SetModes( eModes_Default );
         pResourceWnd->SetReadOnlyModes( eModes_Replay );
 

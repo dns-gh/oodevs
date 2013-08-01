@@ -23,26 +23,27 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Model_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 
 using namespace gui;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC constructor
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
-ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::StringResolver< ResourceNetworkType >& resources )
-    : RichDockWidget   ( controllers, parent, "resource", tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ) )
-    , controllers_     ( controllers )
-    , selectedItem_    ( 0 )
-    , blockSlot_       ( false )
-    , resources_       ( resources )
-    , sourceNode_      ( 0 )
-    , id_              ( 0 )
+ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, const kernel::Model_ABC& model, kernel::Controllers& controllers, const tools::StringResolver< kernel::ResourceNetworkType >& resources )
+    : RichDockWidget( controllers, parent, "resource", tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ) )
+    , controllers_( controllers )
+    , model_( model )
+    , selectedItem_( 0 )
+    , blockSlot_( false )
+    , resources_( resources )
+    , sourceNode_( 0 )
+    , id_( 0 )
 {
     SubObjectName subObject( this->objectName() );
     Q3VBox* mainLayout = new Q3VBox( this );
@@ -374,7 +375,7 @@ void ResourceLinksDialog_ABC::Cancel()
 // Name: ResourceLinksDialog_ABC::NotifyDeleted
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::NotifyDeleted( const Entity_ABC& element )
+void ResourceLinksDialog_ABC::NotifyDeleted( const kernel::Entity_ABC& element )
 {
     std::vector< kernel::Entity_ABC* >::iterator it = std::find( selected_.begin(), selected_.end(), &element );
     if( it != selected_.end() )
@@ -398,7 +399,7 @@ void ResourceLinksDialog_ABC::NotifyUpdated( const gui::ResourceNetwork_ABC& /*e
 // Name: ResourceLinksDialog_ABC::NotifyContextMenu
 // Created: JSR 2011-02-24
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, ContextMenu& menu )
+void ResourceLinksDialog_ABC::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
 {
     DoNotifyContextMenu( object, menu );
 }
@@ -424,23 +425,32 @@ void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& ent
     if( !node || selected_.empty() || GetCurrentMode() == eModes_Replay )
         return;
     sourceNode_ = const_cast< kernel::Entity_ABC* >( &entity );
-    ContextMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
-    tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
+    tools::Iterator< const kernel::ResourceNetworkType& > it = resources_.CreateIterator();
     int resourceId = 0;
     while( it.HasMoreElements() )
     {
-        const ResourceNetworkType& resource = it.NextElement();
-        ContextMenu* resourceMenu = new ContextMenu( subMenu );
+        const kernel::ResourceNetworkType& resource = it.NextElement();
+        kernel::ContextMenu* resourceMenu = new kernel::ContextMenu( subMenu );
         subMenu->insertItem( QString::fromStdString( resource.GetName() ), resourceMenu );
         if( selected_.size() == 1 && selected_.front() == &entity )
         {
             if( !node->FindResourceNode( resource.GetName() ) )
-                resourceMenu->insertItem( tr( "Create node" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId++ );
+                resourceMenu->insertItem( tr( "Create node" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
             else
-                resourceMenu->insertItem( tr( "Remove node" ), this , SLOT( OnRemoveNode( int ) ), 0, resourceId++ );
+                resourceMenu->insertItem( tr( "Remove node" ), this , SLOT( OnRemoveNode( int ) ), 0, resourceId );
         }
         else
-            resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId++ );
+        {
+            if( std::find( selected_.begin(), selected_.end(), &entity ) == selected_.end() )
+                resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId );
+            else
+            {
+                resourceMenu->insertItem( tr( "Create nodes" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
+                resourceMenu->insertItem( tr( "Remove nodes" ), this , SLOT( OnRemoveNode( int ) ), 0, resourceId );
+            }
+        }
+        ++resourceId;
     }
 }
 
@@ -523,6 +533,40 @@ void ResourceLinksDialog_ABC::Show()
     pMainLayout_->show();
 }
 
+namespace
+{
+    template< class T >
+    bool HasIncomingLinks( unsigned int dstId, const std::string& resource, const tools::Resolver_ABC< T >& resolver )
+    {
+        auto it = resolver.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const T& object = it.NextElement();
+            if( const ResourceNetwork_ABC* srcNetwork = object.Retrieve< ResourceNetwork_ABC >() )
+            {
+                if( const ResourceNetwork_ABC::ResourceNode* srcNode = srcNetwork->FindResourceNode( resource ) )
+                {
+                    for( auto itLink = srcNode->links_.begin(); itLink != srcNode->links_.end(); ++itLink )
+                        if( itLink->id_ == dstId )
+                            return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool HasResourceLink( const ResourceNetwork_ABC& network, unsigned int dstId, const kernel::Model_ABC& model, const std::string& resource )
+    {
+        // outgoing links
+        const ResourceNetwork_ABC::ResourceNode* node = network.FindResourceNode( resource );
+        if( node && !node->links_.empty() )
+            return true;
+        // incoming links
+        return HasIncomingLinks( dstId, resource, model.GetUrbanObjectResolver() )
+            || HasIncomingLinks( dstId, resource, model.GetObjectResolver() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::OnChangeLink
 // Created: JSR 2011-03-01
@@ -531,26 +575,27 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
 {
     if( sourceNode_ == 0 )
         return;
-    auto* node = sourceNode_->Retrieve< gui::ResourceNetwork_ABC >();
+    auto* node = sourceNode_->Retrieve< ResourceNetwork_ABC >();
     if( !node )
         return;
     typedef ResourceNetwork_ABC::ResourceNode ResourceNode;
     typedef ResourceNetwork_ABC::ResourceLink ResourceLink;
     typedef ResourceNetwork_ABC::T_ResourceNodes T_ResourceNodes;
-    tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
+    tools::Iterator< const kernel::ResourceNetworkType& > it = resources_.CreateIterator();
     int index = 0;
     while( it.HasMoreElements() )
     {
-        const ResourceNetworkType& resource = it.NextElement();
+        const kernel::ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
             ResourceNode& sourceNode = node->FindOrCreateResourceNode( resource.GetName() );
             for( std::vector< kernel::Entity_ABC* >::iterator it = selected_.begin(); it != selected_.end(); ++it )
             {
                 kernel::Entity_ABC& dest = **it;
-                if( dest.Retrieve< ResourceNetwork_ABC >() == node )
+                auto destNode = dest.Retrieve< ResourceNetwork_ABC >();
+                if( destNode == 0 ||  destNode == node )
                     continue;
-                dest.Get< gui::ResourceNetwork_ABC >().FindOrCreateResourceNode( resource.GetName() );
+                destNode->FindOrCreateResourceNode( resource.GetName() );
                 bool destUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( &dest ) != 0 );
                 unsigned long destId = dest.GetId();
                 gui::ResourceNetwork_ABC::T_ResourceLinks::iterator itLink;
@@ -560,8 +605,17 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
                 if( itLink == sourceNode.links_.end() )
                     sourceNode.links_.push_back( ResourceLink( destUrban, destId ) );
                 else
+                {
                     sourceNode.links_.erase( itLink );
+                    if( !HasResourceLink( *destNode, dest.GetId(), model_, resource.GetName() ) )
+                    {
+                        destNode->RemoveNode( resource.GetName() );
+                        controllers_.controller_.Update( *destNode );
+                    }
+                }
             }
+            if( !HasResourceLink( *node, sourceNode_->GetId(), model_, resource.GetName() ) )
+                node->RemoveNode( resource.GetName() );
             controllers_.controller_.Update( *node );
             break;
         }
@@ -577,18 +631,19 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnCreateNode( int resourceId )
 {
-    if( selected_.size() != 1 )
-        return;
-    tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
+    tools::Iterator< const kernel::ResourceNetworkType& > it = resources_.CreateIterator();
     int index = 0;
-    ResourceNetwork_ABC& resourceNetwork = selected_.front()->Get< ResourceNetwork_ABC >();
     while( it.HasMoreElements() ) // $$$$ LDC RC WTF? Why not resources_.Get or Find( resourceId) ????
     {
-        const ResourceNetworkType& resource = it.NextElement();
+        const kernel::ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
-            resourceNetwork.FindOrCreateResourceNode( resource.GetName(), resource.GetDefaultProduction() );
-            controllers_.controller_.Update( resourceNetwork );
+            for( auto selectedIt = selected_.begin(); selectedIt != selected_.end(); ++selectedIt )
+            {
+                ResourceNetwork_ABC& resourceNetwork =  ( *selectedIt )->Get< ResourceNetwork_ABC >();
+                resourceNetwork.FindOrCreateResourceNode( resource.GetName(), resource.GetDefaultProduction() );
+                controllers_.controller_.Update( resourceNetwork );
+            }
             break;
         }
     }
@@ -602,25 +657,26 @@ void ResourceLinksDialog_ABC::OnCreateNode( int resourceId )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnRemoveNode( int resourceId )
 {
-    if( selected_.size() != 1 )
-        return;
-    tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
+    tools::Iterator< const kernel::ResourceNetworkType& > it = resources_.CreateIterator();
     int index = 0;
-    kernel::Entity_ABC* selected = selected_.front();
-    ResourceNetwork_ABC& resourceNetwork = selected->Get< ResourceNetwork_ABC >();
     while( it.HasMoreElements() ) // $$$$ LDC RC WTF? Why not resources_.Get or Find( resourceId ) ????
     {
-        const ResourceNetworkType& resource = it.NextElement();
+        const kernel::ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
-            bool isUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( selected ) != 0 );
-            resourceNetwork.RemoveNode( resource.GetName() );
-            controllers_.controller_.Update( resourceNetwork );
-            ResourceNetwork_ABC::Deletion deletion;
-            deletion.resource_ = resource.GetName();
-            deletion.isUrban_ = isUrban;
-            deletion.id_ = selected->GetId();
-            controllers_.controller_.Update( deletion );
+            for( auto selectedIt = selected_.begin(); selectedIt != selected_.end(); ++selectedIt )
+            {
+                kernel::Entity_ABC* selected = *selectedIt;
+                ResourceNetwork_ABC& resourceNetwork = selected->Get< ResourceNetwork_ABC >();
+                bool isUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( selected ) != 0 );
+                resourceNetwork.RemoveNode( resource.GetName() );
+                controllers_.controller_.Update( resourceNetwork );
+                ResourceNetwork_ABC::Deletion deletion;
+                deletion.resource_ = resource.GetName();
+                deletion.isUrban_ = isUrban;
+                deletion.id_ = selected->GetId();
+                controllers_.controller_.Update( deletion );
+            }
             break;
         }
     }

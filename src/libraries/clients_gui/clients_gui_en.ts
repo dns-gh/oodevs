@@ -1665,7 +1665,15 @@ Do you want to remove it?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Create nodes</source>
+        <translation>Create nodes</translation>
+    </message>
+    <message>
+        <source>Remove nodes</source>
+        <translation>Remove nodes</translation>
     </message>
 </context>
 <context>
