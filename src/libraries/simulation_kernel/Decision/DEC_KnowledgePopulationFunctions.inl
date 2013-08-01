@@ -133,33 +133,13 @@ bool DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const T& caller, un
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::HasWoundedHumans
-// Created: MIA 2011-01-20
-// Modified: NMI 2013-07-29
-// -----------------------------------------------------------------------------
-template< typename T >
-bool DEC_KnowledgePopulationFunctions::HasWoundedHumans( const T& caller, int knowledgeId )
-{
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-        if( pKnowledge )
-        {
-            MIL_Population& population = pKnowledge->GetPopulationKnown();
-            return population.GetWoundedHumans() > 0;
-        }
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::HasOnlyWoundedHumans
+// Name: DEC_OrdersFunctions::GetHumansFromAllTypes
 // Created: NMI 2013-08-01
 // -----------------------------------------------------------------------------
 template< typename T >
-bool DEC_KnowledgePopulationFunctions::HasOnlyWoundedHumans( const T& caller, int knowledgeId )
+std::vector< unsigned int > DEC_OrdersFunctions::GetHumansFromAllTypes( const T& caller, int knowledgeId )
 {
+    std::vector< unsigned int > vecHumans;
     auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
@@ -167,50 +147,12 @@ bool DEC_KnowledgePopulationFunctions::HasOnlyWoundedHumans( const T& caller, in
         if( pKnowledge )
         {
             MIL_Population& population = pKnowledge->GetPopulationKnown();
-            return population.GetWoundedHumans() == population.GetAllHumans();
+            vecHumans.push_back( population.GetHealthyHumans() );
+            vecHumans.push_back( population.GetWoundedHumans() );
+            vecHumans.push_back( population.GetContaminatedHumans() );
+            vecHumans.push_back( population.GetDeadHumans() );
+            return vecHumans;
         }
     }
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::HasDeadHumans
-// Created: NMI 2013-07-29
-// -----------------------------------------------------------------------------
-template< typename T >
-bool DEC_KnowledgePopulationFunctions::HasDeadHumans( const T& caller, int knowledgeId )
-{
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-        if( pKnowledge )
-        {
-            MIL_Population& population = pKnowledge->GetPopulationKnown();
-            return population.GetDeadHumans() > 0;
-        }
-    }
-    return false;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::HasOnlyDeadHumans
-// Created: NMI 2013-08-01
-// -----------------------------------------------------------------------------
-template< typename T >
-bool DEC_KnowledgePopulationFunctions::HasOnlyDeadHumans( const T& caller, int knowledgeId )
-{
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-        if( pKnowledge )
-        {
-            MIL_Population& population = pKnowledge->GetPopulationKnown();
-            return population.GetDeadHumans() == population.GetAllHumans();
-        }
-    }
-    return false;
-}
-

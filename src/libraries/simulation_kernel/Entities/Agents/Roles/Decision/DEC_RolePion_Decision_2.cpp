@@ -493,18 +493,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool( int, const MT_Vector2D* ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Crowd_ExtractDeadFromCrowd",
         boost::function< bool( int, const MT_Vector2D* ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
-    RegisterFunction( "DEC_Crowd_HasWoundedHumans",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasWoundedHumans< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Crowd_HasDeadHumans",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasDeadHumans< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Crowd_HasOnlyWoundedHumans",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasOnlyWoundedHumans< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Crowd_HasOnlyDeadHumans",
-        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasOnlyDeadHumans< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Crowd_GetHumansFromAllTypes",
+        boost::function< std::vector< unsigned int >( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Crowd_HealWoundedHumans",
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HealWoundedHumans, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Crowd_GetNbreOfWoundedHumans",
-        boost::function< int( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ConnaissancePopulation_Verrouiller", 
         boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Lock, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ConnaissancePopulation_Deverrouiller", 

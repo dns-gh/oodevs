@@ -496,19 +496,32 @@ integration.extractDeadFromCrowd = function( crowd )
 end
 
 integration.crowdHasWoundHumans = function( crowd )
-    return DEC_Crowd_HasWoundedHumans( crowd.source )
+    return integration.crowdGetHumansFromAllTypes( crowd )[2] > 0
 end
 
 integration.crowdHasOnlyWoundedHumans = function( crowd )
-    return DEC_Crowd_HasOnlyWoundedHumans( crowd.source )
+    local humans = integration.crowdGetHumansFromAllTypes( crowd )
+    return humans[1] == 0 -- healthy
+           and humans[2] > 0 -- wounded
+           and humans[3] == 0 -- contaminated
+           and humans[4] == 0 -- dead
 end
 
 integration.crowdHasDeadHumans = function( crowd )
-    return DEC_Crowd_HasDeadHumans( crowd.source )
+    return integration.crowdGetHumansFromAllTypes( crowd )[4] > 0
 end
 
 integration.crowdHasOnlyDeadHumans = function( crowd )
-    return DEC_Crowd_HasOnlyDeadHumans( crowd.source )
+    local humans = integration.crowdGetHumansFromAllTypes( crowd )
+    return humans[1] == 0 -- healthy
+           and humans[2] == 0 -- wounded
+           and humans[3] == 0 -- contaminated
+           and humans[4] > 0 -- dead
+end
+
+integration.crowdGetHumansFromAllTypes = function( crowd )
+    -- [1] = healthy, [2] = wounded, [3] = contaminated, [4] = dead
+    return DEC_Crowd_GetHumansFromAllTypes( crowd.source )
 end
 
 integration.healWoundedInCrowd = function( crowd )
@@ -516,7 +529,7 @@ integration.healWoundedInCrowd = function( crowd )
 end
 
 integration.getNbWoundedInCrowd = function( crowd )
-    return DEC_Crowd_GetNbreOfWoundedHumans( crowd.source )
+    return integration.crowdGetHumansFromAllTypes( crowd )[2]
 end
 
 -- Crowd point of vue. Only "Crowd" agent can use this function 

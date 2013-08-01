@@ -470,25 +470,6 @@ bool DEC_KnowledgePopulationFunctions::HealWoundedHumans( const MIL_AgentPion& c
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans
-// Created: MIA 2011-02-16
-// -----------------------------------------------------------------------------
-int DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans( const MIL_AgentPion& caller, int knowledgeId )
-{
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-        if( pKnowledge )
-        {
-            MIL_Population& population = pKnowledge->GetPopulationKnown();
-            return population.GetWoundedHumans();
-        }
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration
 // Created: JSR 2012-04-18
 // -----------------------------------------------------------------------------
