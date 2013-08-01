@@ -35,7 +35,7 @@ class ResourceLinksDialog : public gui::ResourceLinksDialog_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceLinksDialog( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation );
+             ResourceLinksDialog( QMainWindow* parent, const kernel::Model_ABC& model, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~ResourceLinksDialog();
     //@}
 

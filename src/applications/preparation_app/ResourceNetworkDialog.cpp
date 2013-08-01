@@ -30,8 +30,8 @@ using namespace kernel;
 // Name: ResourceNetworkDialog constructor
 // Created: JSR 2010-09-08
 // -----------------------------------------------------------------------------
-ResourceNetworkDialog::ResourceNetworkDialog( QMainWindow* parent, Controllers& controllers, const ::StaticModel& staticModel, const EntityResolver_ABC& resolver )
-    : gui::ResourceLinksDialog_ABC( parent, controllers, staticModel.objectTypes_ )
+ResourceNetworkDialog::ResourceNetworkDialog( QMainWindow* parent, const kernel::Model_ABC& model, Controllers& controllers, const ::StaticModel& staticModel, const EntityResolver_ABC& resolver )
+    : gui::ResourceLinksDialog_ABC( parent, model, controllers, staticModel.objectTypes_ )
     , staticModel_( staticModel )
     , resolver_   ( resolver )
 {

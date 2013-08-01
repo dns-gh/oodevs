@@ -14,8 +14,15 @@
 
 namespace kernel
 {
-class Agent_ABC;
-class UrbanObject_ABC;
+    class Team_ABC;
+    class Formation_ABC;
+    class Automat_ABC;
+    class Agent_ABC;
+    class KnowledgeGroup_ABC;
+    class Object_ABC;
+    class Population_ABC;
+    class Inhabitant_ABC;
+    class UrbanObject_ABC;
 
 // =============================================================================
 /** @class  Model_ABC

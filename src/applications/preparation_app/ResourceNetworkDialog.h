@@ -31,7 +31,7 @@ class ResourceNetworkDialog : public gui::ResourceLinksDialog_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkDialog( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const kernel::EntityResolver_ABC& resolver );
+             ResourceNetworkDialog( QMainWindow* parent, const kernel::Model_ABC& model, kernel::Controllers& controllers, const StaticModel& staticModel, const kernel::EntityResolver_ABC& resolver );
     virtual ~ResourceNetworkDialog();
     //@}
 
