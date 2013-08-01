@@ -356,9 +356,12 @@ integration.startMoveToIt = function( objective, pathType, waypoints )
         pathType = eTypeItiMouvement
     end
 
+    local itinerary
     local simWaypoints = {}
-    for i = 1, #waypoints do
-        simWaypoints[ i ] = waypoints[ i ]:getPosition()
+    if waypoints ~= nil then
+        for i = 1, #waypoints do
+            simWaypoints[ i ] = waypoints[ i ]:getPosition()
+        end
     end
     if #simWaypoints > 0 then
         simWaypoints[ #simWaypoints + 1 ] = objective.destination
