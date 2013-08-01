@@ -21,14 +21,14 @@ using namespace kernel;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types, bool isCrowd )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types, const kernel::Entity_ABC& parent, bool isCrowd )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( ResolveType( "Standard", types ) )
     , isCrowd_( isCrowd )
 {
     UpdateCommunicationDelay();
     if( isCrowd_ )
-        name_ = tools::translate( "KnowledgeGroup", "Crowd" );
+        name_ = tools::translate( "KnowledgeGroup", "Crowd" ) + " " + parent.GetName();
     else
         name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
     RegisterSelf( *this );

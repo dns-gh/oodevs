@@ -85,7 +85,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( MIL_Army_ABC& army )
     : id_                 ( idManager_.GetFreeId() )
     , type_               ( MIL_KnowledgeGroupType::FindTypeOrAny( "Standard" ) )
-    , name_               ( "Foule" ) // translation?
+    , name_               ( "Foule " + army.GetName() ) // translation?
     , army_               ( &army )
     , parent_             ( 0 )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
