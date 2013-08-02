@@ -269,7 +269,7 @@ message CrowdMagicActionAck {
     required ErrorCode error_code = 2;
 }
 
-//! Define the diplomatic relationship of party1 with party2. These
+//! Defines the diplomatic relationship of party1 with party2. These
 //! relationships are not symmetric, the relation of party1 with party2
 //! may be different from the one of party2 with party1.
 message ChangeDiplomacy {
@@ -906,41 +906,25 @@ message UnitCreation {
     optional Extension        extension   = 10;
 }
 
-/** @struct BorrowedEquipments
-    @brief A borrowed equipments message
-*/
+//! Lists equipments current unit borrowed from another unit.
 message BorrowedEquipments {
-    /** @struct BorrowedEquipment
-        @brief A borrowed equipment message
-    */
+
     message BorrowedEquipment {
-        //! The owner identifier @see UnitId
         required UnitId        owner    = 1;
-        //! The equipment type @see EquipmentType
         required EquipmentType type     = 2;
-        //! The quantity of equipment
         required int32         quantity = 3;
     }
-    //! The equipments @see BorrowedEquipment
     repeated BorrowedEquipment elem = 1;
 }
 
-/** @struct LentEquipments
-    @brief A lent equipments message
-*/
+//! Lists the equipments lent from the current unit to another.
 message LentEquipments {
-    /** @struct LentEquipment
-        @brief A lent equipment message
-    */
+
     message LentEquipment {
-        //! The borrower identifier @see UnitId
         required UnitId        borrower = 1;
-        //! The equipment type @see EquipmentType
         required EquipmentType type     = 2;
-        //! The quantity of equipment
         required int32         quantity = 3;
     }
-    //! The equipments @see LentEquipment
     repeated LentEquipment elem = 1;
 }
 
@@ -963,39 +947,31 @@ message ResourceDotations {
     repeated ResourceDotation elem = 1;
 }
 
-/** @struct EquipmentDotations
-    @brief An equipment dotations message
-*/
+//! Describes unit equipments.
 message EquipmentDotations {
-    /** @struct EquipmentDotation
-        @brief An equipment dotation message
-    */
+
     message EquipmentDotation {
-        //! The equipment type @see EquipmentType
         required EquipmentType type            = 1;
-        //! The amount of equipment available
+        //! The number of available equipments
         required int32         available       = 2;
-        //! The amount of equipment unavailable
+        //! The number of unavailable equipments
         required int32         unavailable     = 3;
-        //! The amount of equipment fixable
+        //! The number of fixable equipments
         required int32         repairable      = 4;
-        //! The amount of equipment fixable on site
+        //! The number of equipments fixable on site
         required int32         on_site_fixable = 5;
-        //! The amount of equipment under maintenance
+        //! The number of equipments under maintenance
         required int32         repairing       = 6;
-        //! The amount of equipment captured
+        //! The number of captured equipments
         required int32         captured        = 7;
-        //! The list of the breakdowns id/name. Must have
-        //! EquipmentDotation.repairable elements.
+        //! The detail of breakdowns. There is one entry per
+        //! "repairable" element, matching a breakdown identifier
+        //! defined in the physical database.
         repeated int32         breakdowns      = 8;
     }
-    //! The equipment dotations @see EquipmentDotation
     repeated EquipmentDotation elem = 1;
 }
 
-/** @enum EnumHumanRank
-    @brief Defines the different ranks
-*/
 enum EnumHumanRank {
     //! Commissioned Officer
     officer     = 0;
@@ -1005,21 +981,14 @@ enum EnumHumanRank {
     trooper     = 2;
 }
 
-/** @enum EnumHumanState
-    @brief Defines the different health state
-*/
 enum EnumHumanState {
-    //! Healthy state
     healthy = 0;
-    //! Injured state
     injured = 1;
-    //! Dead state, @todo rename
+    //! Dead state
     deadly  = 2;
 }
 
-/** @enum EnumHumanLocation
-    @brief Defines the different location
-*/
+//! Defines the status of crew members on the battlefield.
 enum EnumHumanLocation {
     //! Located on the battlefield
     battlefield = 0;
@@ -1029,9 +998,6 @@ enum EnumHumanLocation {
     medical     = 2;
 }
 
-/** @enum EnumInjuriesSeriousness
-    @brief Defines the injuries seriousness
-*/
 enum EnumInjuriesSeriousness {
     //! Wounded emergency level 1
     wounded_u1 = 0;
@@ -1043,40 +1009,29 @@ enum EnumInjuriesSeriousness {
     wounded_ue = 3;
 }
 
-/** @struct Injury
-    @brief A definition of an injury
-*/
 message Injury {
-    //! Define the type of the injury
-    required int32                   id = 1;
-    //! Define the seriousness of the injury
+    //! DEPRECATED, this identifier is set to zero.
+    required int32                   id          = 1;
     required EnumInjuriesSeriousness seriousness = 2;
 }
 
-/** @struct HumanDotations
-    @brief A human dotations message
-*/
+//! Describes the state of a unit equipments crew members.
 message HumanDotations {
-    /** @struct HumanDotation
-        @brief A human dotation message
-    */
+
     message HumanDotation {
-        //! The amount of persons
+        //! Number of persons in this set.
         required int32               quantity         = 1;
-        //! The rank @see EnumHumanRank
         required EnumHumanRank       rank             = 2;
-        //! The state @see EnumHumanState
         required EnumHumanState      state            = 3;
-        //! The location @see EnumHumanLocation
         required EnumHumanLocation   location         = 4;
-        //! The list of injuries @see Injuries
         repeated Injury              injuries         = 5;
         //! Whether the group is mentally wounded or not
         optional bool                mentally_wounded = 6;
         //! Whether the group is NBC contaminated or not
         optional bool                contaminated     = 7;
     }
-    //! The human dotations
+    //! Each element describes a set of humans sharing the same state,
+    //! that is the same attributes combination.
     repeated HumanDotation elem = 1;
 }
 
@@ -1119,46 +1074,27 @@ message Communication {
     optional KnowledgeGroupId  knowledge_group = 2;
 }
 
-/** @struct UnitAttributes
-    @brief A unit attributes message
-*/
+//! Unit attributes update notification.
 message UnitAttributes {
-    /** @enum Posture
-        @brief Posture states
-    */
+
     enum Posture {
-        //! Moving
         moving                           = 0;
-        //! Infiltrating
         infiltrating                     = 1;
-        //! Stopping
         stopping                         = 2;
-        //! Short stopping
         short_stopping                   = 3;
-        //! Parked
         parked                           = 4;
-        //! Parked on self-prepared area
         parked_on_self_prepared_area     = 5;
-        //! Parked on engineer-prepared area
         parked_on_engineer_prepared_area = 6;
     }
-    /** @enum FireAvailability
-        @brief Fire availability states
-    */
+
     enum FireAvailability {
-        //! No fire
         no_fire          = 0;
-        //! Fire ready
         fire_ready       = 1;
-        //! Fire unavailable
         fire_unavailable = 2;
-        //! Engaged
         engaged          = 3;
     }
-    /** @enum CrowdRoe
-        @brief Rules of engagement against crowds
-        @todo rename to RulesOfEngagementAgainstCrowds or something along
-    */
+
+    //! Rules of engagment against crowds.
     enum CrowdRoe {
         //! No rule
         no_rule          = 0;
@@ -1169,68 +1105,48 @@ message UnitAttributes {
         //! Lethal weapons authorized for use
         lethal_force     = 3;
     }
-    /** @enum EnumUnitTiredness
-        @brief Defines the different states of a unit's tiredness
-    */
+
     enum EnumUnitTiredness {
-        //! Rested
         rested     = 0;
-        //! Tired
         tired      = 1;
-        //! Exhausted
         exhausted  = 2;
     }
-    /** @enum EnumUnitMorale
-        @brief Defines the different states of a unit's morale
-    */
+
     enum EnumUnitMorale {
-        //! Fanatical
         fanatical = 0;
-        //! High
         high      = 1;
-        //! Standard
         standard  = 2;
-        //! Low
         low       = 3;
     }
-    /** @enum EnumUnitExperience
-        @brief Defines the different states of a unit's experience
-    */
+
     enum EnumUnitExperience {
-        //! Veteran
         veteran = 0;
-        //! Expert
         expert  = 1;
-        //! Novice
         novice  = 2;
     }
-    /** @enum EnumUnitStress
-        @brief Defines the different states of a unit' stress
-    */
+
     enum EnumUnitStress {
-        //! Calm
         calm     = 0;
-        //! Worried
         worried  = 1;
-        //! Stressed
         stressed = 2;
     }
+
     message Satisfaction {
         optional float safety                = 1;
         optional float lodging               = 2;
         optional float access_to_health_care = 3;
     }
-    //! The unit identifier @see UnitId
+
     required UnitId                      unit                       = 1;
-    //! The human dotations @see HumanDotations
+    //! Human composition of this unit, with their current states.
     optional HumanDotations              human_dotations            = 2;
-    //! The equipment dotations @see EquipmentDotations
+    //! Unit equipments, mostly vehicles or human surrogates.
     optional EquipmentDotations          equipment_dotations        = 3;
     //! The resource dotations @see ResourceDotations
     optional ResourceDotations           resource_dotations         = 4;
-    //! The lent equipments @see LentEquipments
+    //! Unit equipments lent to another unit.
     optional LentEquipments              lent_equipments            = 5;
-    //! The borrowed equipments @see BorrowedEquipments
+    //! Unit equipment borrowed from another unit.
     optional BorrowedEquipments          borrowed_equipments        = 6;
     //! The current position @see CoordLatLong
     optional CoordLatLong                position                   = 7;

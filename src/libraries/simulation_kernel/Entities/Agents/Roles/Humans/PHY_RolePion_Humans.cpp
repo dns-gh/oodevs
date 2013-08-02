@@ -397,9 +397,8 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         else
         {
             personnel.set_state( sword::injured );
-            // Injuries
             sword::Injury* injury = personnel.mutable_injuries()->Add();
-            injury->set_id( 0 ); // $$$$ ABR 2011-07-20: FIXME with http://jira.masagroup.net/browse/SWORD-660
+            injury->set_id( 0 );  // Never used but "required", default to 0.
             if( stateId == PHY_HumanWound::woundedU1_.GetID() )
                 injury->set_seriousness( sword::wounded_u1 );
             else if( stateId == PHY_HumanWound::woundedU2_.GetID() )
@@ -430,22 +429,6 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
             personnel.set_mentally_wounded( true );
         if( state.contaminated_ )
             personnel.set_contaminated( true );
-
-        // Final looks after story http://jira.masagroup.net/browse/SWORD-660 ...
-        //personnel.set_quantity( state.number_ );
-        //personnel.set_rank( state.rank_.GetAsnID() );
-        //personnel.set_state( state.state_->GetAsnID() );
-        //personnel.set_location( state.location_->GetAsnID() );
-        //for( auto it = state.injuries_.begin(); state.injuries_.end(); ++it )
-        //{
-        //    sword::Injury* injury = personnel.mutable_injuries()->Add();
-        //    injury->set_id( it->first );
-        //    injury->set_seriousness( it->second );
-        //}
-        //if( state.psyop_ )
-        //    personnel.set_mentally_wounded( true );
-        //if( state.contaminated_ )
-        //    personnel.set_contaminated( true );
     }
 }
 

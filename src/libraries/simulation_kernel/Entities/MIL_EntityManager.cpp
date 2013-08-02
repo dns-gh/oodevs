@@ -1651,10 +1651,16 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
         if( value.list_size() != 2 || !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
             throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
                 "invalid equipment parameter #" + boost::lexical_cast< std::string >( i ) );
+        const int count = value.list( 1 ).quantity();
+        if( count < 0 )
+            throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
+                "invalid negative equipment count #" + boost::lexical_cast< std::string >( i ) );
+        if( count == 0 )
+            continue;
         if( ! source.CanLendComposantes( boost::bind( &IsOfType, _1, value.list( 0 ).identifier() ) ) )
             throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
                 "no equipment type of parameter #" + boost::lexical_cast< std::string >( i ) + " available to lend in source unit" );
-        composantes[ value.list( 0 ).identifier() ] += value.list( 1 ).quantity();
+        composantes[ value.list( 0 ).identifier() ] += count;
     }
     for( auto it = composantes.begin(); it != composantes.end(); ++it )
         source.LendComposantes( *target, it->second, boost::bind( &IsOfType, _1, it->first ) );
