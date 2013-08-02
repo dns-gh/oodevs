@@ -49,3 +49,12 @@ void Fire_ABC::DoUpdate( const sword::StopCrowdFire& message )
 {
     origin_.Update( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Fire_ABC::GetOrigin
+// Created: NPT 2013-08-02
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC& Fire_ABC::GetOrigin()
+{
+    return origin_;
+}

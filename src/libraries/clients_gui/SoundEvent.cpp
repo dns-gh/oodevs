@@ -15,10 +15,10 @@ using namespace gui;
 // Name: SoundEvent constructor
 // Created: NPT 2013-07-15
 // -----------------------------------------------------------------------------
-SoundEvent::SoundEvent( const kernel::Entity_ABC* entity, const std::string& soundType, bool stop )
+SoundEvent::SoundEvent( const kernel::Entity_ABC* entity, const std::string& soundType, E_SignalType signalType )
     : entity_( entity )
     , soundType_( soundType )
-    , stopSound_( stop )
+    , signalType_( signalType )
 {
         // NOTHING
 }
@@ -53,7 +53,7 @@ const std::string& SoundEvent::GetSoundType() const
 // Name: SoundEvent::StopSound
 // Created: NPT 2013-07-22
 // -----------------------------------------------------------------------------
-bool SoundEvent::StopSound() const
+SoundEvent::E_SignalType SoundEvent::GetSignalType() const
 {
-    return stopSound_;
+    return signalType_;
 }

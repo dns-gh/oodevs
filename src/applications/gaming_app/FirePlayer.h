@@ -12,6 +12,7 @@
 
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "gaming/Simulation.h"
 
 #include <boost/noncopyable.hpp>
 
@@ -19,6 +20,7 @@ namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -26,8 +28,6 @@ namespace gui
     class SoundEvent;
     class SoundManager;
 }
-
-class Simulation;
 
 // =============================================================================
 /** @class  FirePlayer
@@ -37,6 +37,7 @@ class Simulation;
 // =============================================================================
 class FirePlayer : public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< gui::SoundEvent >
+                 , public tools::ElementObserver_ABC< Simulation::sStartTick >
                  , private boost::noncopyable
 {
 public:
@@ -57,6 +58,7 @@ private:
     //@{
     bool CanPlaySound( const std::string& channel );
     virtual void NotifyUpdated( const gui::SoundEvent& soundEvent );
+    virtual void NotifyUpdated( const Simulation::sStartTick& tick );
     //@}
 
 private:
@@ -67,6 +69,7 @@ private:
     std::auto_ptr< gui::SoundManager > soundManager_;
     const Simulation& simulation_;
     unsigned int lastTick_;
+    std::map< std::string, std::map< const kernel::Entity_ABC*, int > > loopingSounds_;
     //@}
 };
 

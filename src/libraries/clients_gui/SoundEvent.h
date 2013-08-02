@@ -26,13 +26,24 @@ namespace kernel
 namespace gui
 {
 
+
 class SoundEvent : private boost::noncopyable
 {
 
 public:
+    //! @name Types
+    //@{
+    enum E_SignalType
+    {
+        eStart,
+        eStop,
+        eSingleShot 
+    };
+    //@}
+
     //! @name Constructors/Destructor
     //@{
-             SoundEvent( const kernel::Entity_ABC* entity, const std::string& soundType, bool stopSound = false );
+             SoundEvent( const kernel::Entity_ABC* entity, const std::string& soundType, E_SignalType signalType );
     virtual ~SoundEvent();
     //@}
 
@@ -40,7 +51,7 @@ public:
     //@{
     const kernel::Entity_ABC* GetEntity() const;
     const std::string& GetSoundType() const;
-    bool StopSound() const;
+    E_SignalType GetSignalType() const;
     //@}
 
 private:
@@ -53,7 +64,7 @@ private:
     //@{
     const kernel::Entity_ABC* entity_;
     const std::string& soundType_;
-    bool stopSound_;
+    E_SignalType signalType_;
     //@}
 };
 
