@@ -23,6 +23,7 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Model_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -152,13 +153,33 @@ void ResourceLinksDialog_ABC::AfterSelection()
     Show();
 }
 
+namespace
+{
+    void AddSubUrbanObjects( const kernel::UrbanObject_ABC* object, std::set< const kernel::UrbanObject_ABC* >& objects )
+    {
+        objects.insert( object );
+        const kernel::Hierarchies* hierarchies = object->Retrieve< kernel::Hierarchies >();
+        if( hierarchies )
+        {
+            auto subIt = hierarchies->CreateSubordinateIterator();
+            while( subIt.HasMoreElements() )
+                AddSubUrbanObjects( static_cast< const kernel::UrbanObject_ABC* >( &subIt.NextElement() ), objects );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::MultipleSelect( const std::vector< const kernel::UrbanObject_ABC* >& elements )
 {
-    DoMultipleSelect( elements );
+    std::set< const kernel::UrbanObject_ABC* > selectedBlocks;
+    for( auto it = elements.begin(); it != elements.end(); ++it )
+        AddSubUrbanObjects( *it, selectedBlocks );
+    std::vector< const kernel::UrbanObject_ABC* > selectedBlocksVector;
+    std::copy( selectedBlocks.begin(), selectedBlocks.end(), std::back_inserter( selectedBlocksVector ) );
+    DoMultipleSelect( selectedBlocksVector );
 }
 
 // -----------------------------------------------------------------------------
