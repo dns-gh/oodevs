@@ -62,7 +62,7 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller&
     if( position )
         position_ = position->GetPosition();
 
-    controller_.Update( gui::SoundEvent( agentResolver.Find( message.firing_unit().id() ), "directfire" ) );
+    controller_.Update( gui::SoundEvent( &GetOrigin(), "directfire", gui::SoundEvent::eStart ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller&
 // -----------------------------------------------------------------------------
 DirectFire::~DirectFire()
 {
-    controller_.Update( gui::SoundEvent( 0, "directfire", true ) );
+    controller_.Update( gui::SoundEvent( &GetOrigin(), "directfire", gui::SoundEvent::eStop ) );
 }
 
 // -----------------------------------------------------------------------------

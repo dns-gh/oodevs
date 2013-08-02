@@ -10,10 +10,10 @@
 #include "gaming_app_pch.h"
 #include "FirePlayer.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/SoundManager.h"
 #include "clients_gui/SoundEvent.h"
-#include "gaming/Simulation.h"
 
 #include <boost/bind.hpp>
 #include <boost/assign/list_of.hpp>
@@ -36,9 +36,9 @@ namespace
 FirePlayer::FirePlayer( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const Simulation& simulation )
     : controllers_( controllers )
     , profileFilter_( profile )
-    , soundManager_ ( new gui::SoundManager( fireSoundNames ) )
-    , simulation_ ( simulation )
-    , lastTick_ ( 0 )
+    , soundManager_( new gui::SoundManager( fireSoundNames ) )
+    , simulation_( simulation )
+    , lastTick_( 0 )
 {
     controllers_.Register( *this );
 }
@@ -87,17 +87,40 @@ bool FirePlayer::CanPlaySound( const std::string& channel )
 // -----------------------------------------------------------------------------
 void FirePlayer::NotifyUpdated( const gui::SoundEvent& soundEvent )
 {
-    if( soundEvent.StopSound() )
+    if( soundEvent.GetSignalType() == gui::SoundEvent::eStop )
+    {
         soundManager_->StopSound( soundEvent.GetSoundType() );
+        if( loopingSounds_[ soundEvent.GetSoundType() ][ soundEvent.GetEntity() ] > 0 )
+            loopingSounds_[ soundEvent.GetSoundType() ][ soundEvent.GetEntity() ]-- ;
+        return;
+    }
+
+    if( soundEvent.GetSignalType() == gui::SoundEvent::eStart 
+        && ( !soundEvent.GetEntity() || profileFilter_.IsPerceived( *soundEvent.GetEntity() ) 
+                                     && profileFilter_.IsVisible( *soundEvent.GetEntity() ) ) )
+        loopingSounds_[ soundEvent.GetSoundType() ][ soundEvent.GetEntity() ]++;
 
     if( !CanPlaySound( soundEvent.GetSoundType() ) )
         return;
+
     if( !soundEvent.GetEntity() || profileFilter_.IsPerceived( *soundEvent.GetEntity() ) && profileFilter_.IsVisible( *soundEvent.GetEntity() ) )
     {
-        if( soundEvent.GetSoundType() == "directfire" )
-            soundManager_->PlayLoopSound( soundEvent.GetSoundType() );
-        else
-            soundManager_->PlaySound( soundEvent.GetSoundType() );
+        soundManager_->PlaySound( soundEvent.GetSoundType() );
         lastTick_ = simulation_.GetCurrentTick();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FirePlayer::NotifyUpdated
+// Created: NPT 2013-08-01
+// -----------------------------------------------------------------------------
+void FirePlayer::NotifyUpdated( const Simulation::sStartTick& /*tick*/ )
+{
+    for( auto it = loopingSounds_.begin(); it != loopingSounds_.end(); ++it )
+        for( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+            if( it2->second > 0 )
+            {
+                NotifyUpdated( gui::SoundEvent( it2->first, it->first, gui::SoundEvent::eSingleShot ) );
+                return;
+            }
 }
