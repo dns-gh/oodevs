@@ -9,9 +9,15 @@ local result =
         return { units = units, loadingPoint = loadingPoint, destination = destination, meetingPoint = meetingPoint[1], withEquipment = withEquipment }
     end,
     
-    canDoIt = function( self, entity, obstacle, loadable )
+    canDoIt = function( self, entity, unit, loadable )
        onlyLoadable = not loadable
-       return DEC_Agent_AgentPeutTransporterPion( entity.source, obstacle.source, onlyLoadable )
+       local agentToTransport = nil 
+       if masalife.brain.core.class.isOfType( unit, sword.military.world.Platoon) then
+           agentToTransport = integration.getAgentFromAutomatKnowledge( unit )
+       else -- PlatoonAlly
+           agentToTransport = unit
+       end
+       return DEC_Agent_AgentPeutTransporterPion( entity.source, agentToTransport.source, onlyLoadable )
     end,
     
     getObstaclesParameter = function( self, companyTask, params )
