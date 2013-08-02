@@ -171,7 +171,6 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
                                 canCompleteAlone = true
                                 currentMap[#currentMap + 1] = entity.source
                                 myself.leadData.nbUnitsByObstacle[ obstacle ] = myself.leadData.nbUnitsByObstacle[ obstacle ] + 1
-                                
                             end
                         end
                      end
@@ -202,7 +201,9 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
         end
         if isMain then
             -- methode qui rempli la liste si les aucun pion n'a de dotation pour construire un obstacle donné
-            fillWorkMap()
+            if withReinforcement then
+                fillWorkMap()
+            end
             if myself.leadData.workMap then
                 params.maxNbrFront = math.min( maxNbrFront, nbrFront )
                 if params.maxNbrFront~= 0 then
