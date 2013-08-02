@@ -356,9 +356,12 @@ integration.startMoveToIt = function( objective, pathType, waypoints )
         pathType = eTypeItiMouvement
     end
 
+    local itinerary
     local simWaypoints = {}
-    for i = 1, #waypoints do
-        simWaypoints[ i ] = waypoints[ i ]:getPosition()
+    if waypoints ~= nil then
+        for i = 1, #waypoints do
+            simWaypoints[ i ] = waypoints[ i ]:getPosition()
+        end
     end
     if #simWaypoints > 0 then
         simWaypoints[ #simWaypoints + 1 ] = objective.destination
@@ -576,7 +579,8 @@ integration.startMoveToItArea = function( objective, pathType )
     -- --------------------------------------------------------------------------------
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
     if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
-       and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) then
+       and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() )
+       and not DEC_Agent_PionCanFly( myself ) then
         local simPositions = DEC_Geometrie_CalculerTrafficablePointPourPoint( objective.initialeDestination )
         objective.destination = DEC_Geometrie_CopiePoint(  getNearestSimPoint( objective.initialeDestination, simPositions ) )
     else
@@ -614,6 +618,13 @@ integration.updateMoveToItArea = function( objective, pathType )
         -- --------------------------------------------------------------------------------
         if objective[ myself ].etat == eEtatActionDeplacement_Termine then
             local distance = DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), objective:getPosition() )
+
+            if DEC_Agent_PionCanFly( myself ) then -- simple case for flying agent.
+                if distance > 0  then
+                    integration.stopMoveToIt( objective )
+                    return integration.startMoveToItArea( objective, pathType )
+                end
+            end
             if not DEC_Geometrie_PositionsEgales( objective.initialeDestination, objective:getPosition() ) -- specific case, itinerary computed on my own poition.
             and distance > 0 and objective.destination == objective.initialeDestination then -- mean objective is accessible, no sub-objective to dismount
                 integration.stopMoveToIt( objective )
