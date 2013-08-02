@@ -56,10 +56,10 @@ void AmmoEffect::PlaySoundEffect() const
     {
         switch( type_ )
         {
-            case sword::StartFireEffect::smoke:             controller_.Update( gui::SoundEvent( 0, "indirectsmoke" ) ); break;
-            case sword::StartFireEffect::light:             controller_.Update( gui::SoundEvent( 0, "indirectillumination" ) ); break;
-            case sword::StartFireEffect::explosion:         controller_.Update( gui::SoundEvent( 0, "indirectexplosive" ) ); break;
-            case sword::StartFireEffect::neutralization:    controller_.Update( gui::SoundEvent( 0, "indirecteffect" ) ); break;
+            case sword::StartFireEffect::smoke:             controller_.Update( gui::SoundEvent( 0, "indirectsmoke", gui::SoundEvent::eSingleShot ) ); break;
+            case sword::StartFireEffect::light:             controller_.Update( gui::SoundEvent( 0, "indirectillumination", gui::SoundEvent::eSingleShot ) ); break;
+            case sword::StartFireEffect::explosion:         controller_.Update( gui::SoundEvent( 0, "indirectexplosive", gui::SoundEvent::eSingleShot ) ); break;
+            case sword::StartFireEffect::neutralization:    controller_.Update( gui::SoundEvent( 0, "indirecteffect", gui::SoundEvent::eSingleShot ) ); break;
         default:
             ;
         }

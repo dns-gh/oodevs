@@ -48,6 +48,12 @@ public:
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const = 0;
     //@}
 
+protected:
+    //! @name accessors
+    //@{
+    const kernel::Entity_ABC& GetOrigin();
+    //@}
+
 private:
     //! @name Copy / Assignment
     //@{
