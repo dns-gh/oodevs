@@ -712,7 +712,7 @@ Session::T_Process Session::StartSimulation( boost::upgrade_lock< boost::shared_
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
     return deps_.runtime.Start( Utf8( app ),
-        options, Utf8( Path( app ).remove_filename() ), Utf8( GetRoot() / "session.log" ) );
+        options, Utf8( Path( app ).remove_filename() ), "" );
 }
 
 namespace
