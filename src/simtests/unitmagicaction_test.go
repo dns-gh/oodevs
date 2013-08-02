@@ -827,6 +827,18 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 	err = client.TransferEquipment(11, 11, []swapi.Equipment{{11, 1}})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: source and target are identical")
 
+	// error: negative equipment count
+	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, -1}})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid negative equipment count #0")
+
+	// valid: transfer zero available equipments
+	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 0}})
+	c.Assert(err, IsNil)
+
+	// valid: transfer zero unavailable equipments
+	err = client.TransferEquipment(11, 12, []swapi.Equipment{{1000, 0}})
+	c.Assert(err, IsNil)
+
 	// valid: transfer equipment
 	err = client.TransferEquipment(11, 12, []swapi.Equipment{{11, 1}})
 	c.Assert(err, IsNil)
