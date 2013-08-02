@@ -54,6 +54,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , bDirectionUpdated_       ( true )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
+    , pHackedPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
     , bReconAttributesValid_   ( false )
 {
     SendMsgCreation();
@@ -81,6 +82,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , bDirectionUpdated_       ( knowledge.bDirectionUpdated_ )
     , pPreviousPerceptionLevel_( knowledge.pPreviousPerceptionLevel_ )
     , pCurrentPerceptionLevel_ ( knowledge.pCurrentPerceptionLevel_ )
+    , pHackedPerceptionLevel_  ( knowledge.pHackedPerceptionLevel_ )
     , bReconAttributesValid_   ( knowledge.bReconAttributesValid_ )
 {
     SendMsgCreation();
@@ -107,6 +109,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     , bDirectionUpdated_       ( true )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
+    , pHackedPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
     , bReconAttributesValid_   ( false )
 {
     // NOTHING
@@ -147,6 +150,9 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const un
     file >> nTmpID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
     assert( pCurrentPerceptionLevel_ );
+    file >> nTmpID;
+    pHackedPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
+    assert( pHackedPerceptionLevel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +163,8 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
 {
     unsigned attitudeId = ( pAttitude_ ? pAttitude_->GetID() : 0 ),
              previousId = pPreviousPerceptionLevel_->GetID(),
-             currentId = pCurrentPerceptionLevel_->GetID();
+             currentId = pCurrentPerceptionLevel_->GetID(),
+             hackedId = pHackedPerceptionLevel_->GetID();
     file << pPopulationKnowledge_
          << pFlowKnown_
          << nID_
@@ -169,7 +176,8 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
          << bReconAttributesValid_
          << attitudeId
          << previousId
-         << currentId;
+         << currentId
+         << hackedId;
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +221,8 @@ void DEC_Knowledge_PopulationFlow::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
 {
-    pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
+    pCurrentPerceptionLevel_ = pHackedPerceptionLevel_ == &PHY_PerceptionLevel::notSeen_ ?
+        &perception.GetCurrentPerceptionLevel() : pHackedPerceptionLevel_;
     if( flowParts_.Update( perception ) )
         bFlowPartsUpdated_ = true;
     if( direction_ != perception.GetDirection() )
@@ -329,7 +338,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
-    asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    asnMsg().set_perceived( ( *pHackedPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) || ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg().set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
@@ -359,7 +368,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
-        asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+        asnMsg().set_perceived( ( *pHackedPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) || ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     if( bRealFlowUpdated_ )
         asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     if( bDirectionUpdated_ )
@@ -383,10 +392,6 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     {
         asnMsg().mutable_parts()->clear_elem();
         asnMsg().clear_parts();
-//        for( unsigned int i = 0; i < asnMsg().parts.n; ++i )
-//            ASN_Delete::Delete( asnMsg().parts.elem[ i ].forme );
-//        if( asnMsg().parts.n > 0 )
-//            delete [] asnMsg().parts.elem;
     }
 }
 
@@ -437,6 +442,7 @@ void DEC_Knowledge_PopulationFlow::HackPerceptionLevel( const PHY_PerceptionLeve
 {
     if( *pPerceptionLevel > *pCurrentPerceptionLevel_ )
         pCurrentPerceptionLevel_ = pPerceptionLevel;
+    pHackedPerceptionLevel_ = pCurrentPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

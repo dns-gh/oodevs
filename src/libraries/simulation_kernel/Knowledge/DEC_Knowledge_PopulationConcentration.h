@@ -88,8 +88,9 @@ private:
     const MIL_PopulationAttitude* pAttitude_;
     unsigned int nNbrAliveHumans_;
     unsigned int nNbrDeadHumans_;
-    const PHY_PerceptionLevel*  pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+    const PHY_PerceptionLevel* pHackedPerceptionLevel_;
     bool bReconAttributesValid_;
     // Network
     bool bHumansUpdated_;
