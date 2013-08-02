@@ -43,7 +43,6 @@ EventBottomWidget::EventBottomWidget( const kernel::Time_ABC& simulation, kernel
     , actionController_( actionController )
     , switchAction_( 0 )
     , detailAction_( 0 )
-    , triggerAction_( 0 )
     , saveAction_( 0 )
     , editing_( false )
     , triggerText_( tr( "Trigger" ) )
@@ -75,6 +74,7 @@ EventBottomWidget::EventBottomWidget( const kernel::Time_ABC& simulation, kernel
 
     // ToolBar
     QToolBar* toolBar = new QToolBar();
+    toolBar->setStyleSheet("QToolBar { border: 0px }");
     switchAction_ = toolBar->addAction( MakePixmap( "actions_designmode" ), tr( "Planning" ), this, SLOT( OnSwitchToggled( bool ) ) );
     switchAction_->setCheckable( true );
     toolBar->addWidget( CreateStretcher() );
@@ -91,10 +91,17 @@ EventBottomWidget::EventBottomWidget( const kernel::Time_ABC& simulation, kernel
     planningActions_.push_back( saveAction_ );
     planningActions_.push_back( toolBar->addSeparator() );
     toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), tr( "Discard" ), this, SIGNAL( Discard() ) );
-    triggerAction_ = toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_MediaPlay ), triggerText_, this, SIGNAL( Trigger() ) );
-    toolBar->setIconSize( QSize( 80, 30 ) );
+    toolBar->setIconSize( QSize( 30, 30 ) );
 
-    // Layout
+    triggerButton_ = new QToolButton();
+    triggerButton_->setIcon( qApp->style()->standardIcon( QStyle::SP_MediaPlay ) );
+    triggerButton_->setToolTip( triggerText_ );
+    triggerButton_->setFixedSize( QSize( 80, 40 ) );
+    connect( triggerButton_, SIGNAL( clicked() ), this, SIGNAL( Trigger() ) );
+
+    toolBar->addWidget( triggerButton_ );
+
+    //add toolbar
     mainLayout_->addWidget( toolBar );
 
     // Initialization
@@ -117,7 +124,7 @@ EventBottomWidget::~EventBottomWidget()
 // -----------------------------------------------------------------------------
 void EventBottomWidget::Fill( const Event& event )
 {
-    triggerAction_->setText( event.GetEvent().done ? triggerAsCopyText_ : triggerText_ );
+    triggerButton_->setToolTip( event.GetEvent().done ? triggerAsCopyText_ : triggerText_ );
     saveAction_->setText( event.GetEvent().done ? saveAsCopyText_ : saveText_ );
     // $$$$ ABR 2013-07-04: TODO Change icon when "as copy"
 

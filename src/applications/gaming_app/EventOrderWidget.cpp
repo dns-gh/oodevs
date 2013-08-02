@@ -61,7 +61,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , target_( controllers )
     , missionInterface_( 0 )
     , missionCombo_( 0 )
-    , currentOrder_( 0 )
+    , lastGivenOrder_( 0 )
 {
     // Top
     missionTypeCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-type-combobox" );
@@ -69,7 +69,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     missionComboLayout_->setMargin( 0 );
     missionComboLayout_->setSpacing( 0 );
     targetLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
-    gui::RichPushButton* removeTargetButton = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_TrashIcon ), "" );
+    gui::RichPushButton* removeTargetButton = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
     connect( removeTargetButton, SIGNAL( clicked() ), this, SLOT( OnTargetRemoved() ) );
 
     for( int i = 0; i < eNbrMissionTypes; ++i )
@@ -339,12 +339,12 @@ void EventOrderWidget::FillMission()
         else
         {
             AddCompatibleOrders< kernel::Mission >( decisions->GetMissions() );
-            if( currentOrder_ && previousType_ == entityType_ )
+            if( lastGivenOrder_ && previousType_ == entityType_ )
             {
-                AddSingleOrder( *currentOrder_ );
+                AddSingleOrder( *lastGivenOrder_ );
                 missionCombo_->model()->sort( 0 );
-                missionCombo_->setCurrentIndex( missionCombo_->findText( currentOrder_->GetName().c_str() ) );
-                if( !AreTargetAndMissionCompatible( currentOrder_ ) )
+                missionCombo_->setCurrentIndex( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
+                if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
                     WarnTargetAndMission();
             }
             else
@@ -498,6 +498,8 @@ void EventOrderWidget::OnMissionChanged( int )
     BuildMissionInterface( true );
     if( !AreTargetAndMissionCompatible() )
         WarnTargetAndMission();
+    else if( lastGivenOrder_ )
+        missionCombo_->removeItem( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -537,7 +539,7 @@ void EventOrderWidget::OnPlannedMission( const actions::Action_ABC& action, time
 void EventOrderWidget::OnSelectEntity( const kernel::Entity_ABC& entity, E_MissionType type )
 {
     if( missionCombo_ && missionTypeCombo_->count() != 4 )
-        currentOrder_ = static_cast< const kernel::OrderType* >( missionCombo_->itemData( missionCombo_->currentIndex() ).value< kernel::VariantPointer >().ptr_ );
+        lastGivenOrder_ = static_cast< const kernel::OrderType* >( missionCombo_->itemData( missionCombo_->currentIndex() ).value< kernel::VariantPointer >().ptr_ );
 
     if( previousType_ != type || missionTypeCombo_->count() != 2 )
     {
@@ -545,7 +547,7 @@ void EventOrderWidget::OnSelectEntity( const kernel::Entity_ABC& entity, E_Missi
         missionTypeCombo_->addItem( QString::fromStdString( ENT_Tr::ConvertFromMissionType( type ) ) );
         missionTypeCombo_->addItem( QString::fromStdString( ENT_Tr::ConvertFromMissionType( eMissionType_FragOrder ) ) );
         missionTypeCombo_->setCurrentIndex( 0 );
-        currentOrder_ = 0;
+        lastGivenOrder_ = 0;
     }
     SetTarget( &entity );
     FillMission();
@@ -588,7 +590,10 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
                 selectedEntity_ = &agent;
                 entityType_ = eMissionType_Pawn;
             }
-            menu.InsertItem( "Mission", tr( "Order" ), this, SLOT( ActivateMissionPanel() ) );
+            QAction* action = menu.InsertItem( "Order", tr( "Order" ), 2 );
+            if( decisions->IsEmbraye() )
+                action->setIcon( MAKE_PIXMAP( lock ) );
+            connect( action, SIGNAL( triggered() ), this, SLOT( ActivateMissionPanel() ) );
         }
 }
 
@@ -602,7 +607,13 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
     previousType_ = entityType_;
     entityType_ = eMissionType_Automat;
     if( profile_.CanBeOrdered( automat ) )
-        menu.InsertItem( "Mission", tr( "Order" ), this, SLOT( ActivateMissionPanel() ) );
+    {
+        const kernel::AutomatDecisions_ABC* decisions = automat.Retrieve< kernel::AutomatDecisions_ABC >();
+        QAction* action = menu.InsertItem( "Order", tr( "Order" ), 2 );
+        if( decisions && decisions->IsEmbraye() )
+            action->setIcon( MAKE_PIXMAP( lock ) );
+        connect( action, SIGNAL( triggered() ), this, SLOT( ActivateMissionPanel() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -615,7 +626,7 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& populati
     previousType_ = entityType_;
     entityType_ = eMissionType_Population;
     if( profile_.CanBeOrdered( population ) )
-        menu.InsertItem( "Mission", tr( "Order" ), this, SLOT( ActivateMissionPanel() ) );
+        menu.InsertItem( "Mission", tr( "Order" ), this, SLOT( ActivateMissionPanel() ), false, 2 );
 }
 
 // -----------------------------------------------------------------------------
