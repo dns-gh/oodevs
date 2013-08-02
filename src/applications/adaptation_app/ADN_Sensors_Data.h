@@ -419,7 +419,7 @@ public:
     void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
-    virtual void LoadTranslations( const tools::Path& xmlFile );
+    virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
 
     T_SensorsInfos_Vector& GetSensorsInfos();
     SensorInfos* FindSensor( const std::string& strName );

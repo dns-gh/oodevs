@@ -1259,7 +1259,7 @@ void ADN_Sensors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
 // Name: ADN_Sensors_Data::GetRadars
 // Created: LGY 2013-07-23
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::LoadTranslations( const tools::Path& xmlFile )
+void ADN_Sensors_Data::LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* )
 {
     ADN_Data_ABC::LoadTranslations( xmlFile );
     radarData_->LoadTranslations( xmlFile );

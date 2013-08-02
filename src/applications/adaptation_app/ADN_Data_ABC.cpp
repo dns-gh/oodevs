@@ -81,21 +81,22 @@ void ADN_Data_ABC::LoadFile( const tools::Loader_ABC& fileLoader, const tools::P
 // -----------------------------------------------------------------------------
 void ADN_Data_ABC::ResetData()
 {
-    translations_->Purge();
     Reset();
+    translations_->Purge();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::LoadTranslations
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::LoadTranslations( const tools::Path& xmlFile )
+void ADN_Data_ABC::LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations /*= 0*/ )
 {
-    if( translations_->LoadTranslationQueries( xmlFile ) )
+    kernel::XmlTranslations* currentTranslation = ( translations ) ?  translations : translations_.get();
+    if( currentTranslation && currentTranslation->LoadTranslationQueries( xmlFile ) )
     {
         ADN_Workspace& workspace = ADN_Workspace::GetWorkspace();
-        translations_->EvaluateTranslationQueries( xmlFile, workspace.GetLanguages().GetData().languages_ );
-        translations_->LoadTranslationFiles( xmlFile, BuildLocalDirectory(), workspace.GetLanguages().GetData().languages_ );
+        currentTranslation->EvaluateTranslationQueries( xmlFile, workspace.GetLanguages().GetData().languages_ );
+        currentTranslation->LoadTranslationFiles( xmlFile, BuildLocalDirectory(), workspace.GetLanguages().GetData().languages_ );
     }
 }
 
@@ -136,10 +137,14 @@ void ADN_Data_ABC::SaveFile( const tools::Path& xmlFile, T_Saver saver )
 // Name: ADN_Data_ABC::SaveTranslations
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::SaveTranslations( const tools::Path& xmlFile )
+void ADN_Data_ABC::SaveTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations /*= 0*/ )
 {
-    translations_->SaveTranslationQueries( xmlFile );
-    translations_->SaveTranslationFiles( xmlFile, BuildLocalDirectory(), ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
+    kernel::XmlTranslations* currentTranslation = ( translations ) ?  translations : translations_.get();
+    if( currentTranslation )
+    {
+        currentTranslation->SaveTranslationQueries( xmlFile );
+        currentTranslation->SaveTranslationFiles( xmlFile, BuildLocalDirectory(), ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
