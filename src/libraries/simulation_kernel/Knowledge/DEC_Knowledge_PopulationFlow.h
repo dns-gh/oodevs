@@ -100,6 +100,7 @@ private:
     bool bDirectionUpdated_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel* pHackedPerceptionLevel_;
     static MIL_IDManager idManager_;
     //@}
 };

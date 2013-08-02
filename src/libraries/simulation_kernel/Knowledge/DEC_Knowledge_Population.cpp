@@ -19,6 +19,7 @@
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Checkpoints/SerializationTools.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -122,12 +123,45 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsig
          << criticalIntelligence_;
 }
 
+namespace
+{
+    class HackVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
+    {
+    public:
+        HackVisitor( std::vector< const MIL_PopulationElement_ABC* >& elements )
+            : elements_( elements )
+        {
+
+        }
+        virtual ~HackVisitor() {}
+        virtual void Visit( const MIL_PopulationElement_ABC& element )
+        {
+            elements_.push_back( &element );
+        }
+    private:
+        std::vector< const MIL_PopulationElement_ABC* >& elements_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::Prepare
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::Prepare()
 {
+    if( pHackedPerceptionLevel_ != &PHY_PerceptionLevel::notSeen_ && pPopulationKnown_ )
+    {
+        std::vector< const MIL_PopulationElement_ABC* > elements;
+        HackVisitor visitor( elements );
+        pPopulationKnown_->Apply( visitor );
+        for( auto it = elements.begin(); it != elements.end(); ++it )
+        {
+            if( const MIL_PopulationConcentration* concentration = dynamic_cast< const MIL_PopulationConcentration* >( *it ) )
+                GetKnowledge( *concentration ).HackPerceptionLevel( pHackedPerceptionLevel_ );
+            if( const MIL_PopulationFlow* flow = dynamic_cast< const MIL_PopulationFlow* >( *it ) )
+                GetKnowledge( *flow ).HackPerceptionLevel( pHackedPerceptionLevel_ );
+        }
+    }
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->Prepare();
     for( auto it = flows_.begin(); it != flows_.end(); ++it )

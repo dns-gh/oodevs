@@ -452,8 +452,16 @@ void DEC_Knowledge_Agent::ChangeRelevance( double rNewRelevance )
 // Name: DEC_Knowledge_Agent::UpdateRelevance
 // Created: NLD 2004-03-22
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
+void DEC_Knowledge_Agent::UpdateRelevance( int currentTimeStep )
 {
+    if( bPerceptionDistanceHacked_ )
+    {
+        dataDetection_.Extrapolate( *pAgentKnown_ );
+        ChangeRelevance( 1. );
+        nTimeLastUpdate_ = currentTimeStep;
+        return;
+    }
+
     // L'agent est percu
     if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
     {

@@ -51,6 +51,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DE
     , rRelevance_               ( 1. )
     , pPreviousPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pCurrentPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
+    , pHackedPerceptionLevel_   ( &PHY_PerceptionLevel::notSeen_ )
 {
     SendMsgCreation();
 }
@@ -75,6 +76,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration()
     , rRelevance_( 1. )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
     , pCurrentPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
+    , pHackedPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
     , bReconAttributesValid_( false )
     , rLastRelevanceSent_( 0 )
 {
@@ -101,6 +103,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DE
     , rRelevance_               ( concentration.rRelevance_ )
     , pPreviousPerceptionLevel_ ( concentration.pPreviousPerceptionLevel_ )
     , pCurrentPerceptionLevel_  ( concentration.pCurrentPerceptionLevel_ )
+    , pHackedPerceptionLevel_   ( concentration.pHackedPerceptionLevel_ )
     , bReconAttributesValid_    ( concentration.bReconAttributesValid_ )
 {
     SendMsgCreation();
@@ -145,6 +148,8 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
     assert( pCurrentPerceptionLevel_ );
     file >> nTmpID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
+    file >> nTmpID;
+    pHackedPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
     assert( pPreviousPerceptionLevel_ );
 }
 
@@ -171,9 +176,11 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
     }
     unsigned int current  = pCurrentPerceptionLevel_->GetID();
     unsigned int previous = pPreviousPerceptionLevel_->GetID();
+    unsigned int hacked = pHackedPerceptionLevel_->GetID();
     file << rRelevance_
          << current
-         << previous;
+         << previous
+         << hacked;
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +200,8 @@ void DEC_Knowledge_PopulationConcentration::Prepare()
 void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_PopulationConcentrationPerception& perception )
 {
     nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
+    pCurrentPerceptionLevel_ = pHackedPerceptionLevel_ == &PHY_PerceptionLevel::notSeen_ ? 
+                              &perception.GetCurrentPerceptionLevel() : pHackedPerceptionLevel_;
     assert( pPopulationKnowledge_ );
     if( ( pPopulationKnowledge_->IsRecon() || *pCurrentPerceptionLevel_ > PHY_PerceptionLevel::detected_ ) && ( !pAttitude_ || *pAttitude_ != perception.GetAttitude() ) )
     {
@@ -250,7 +258,7 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
 void DEC_Knowledge_PopulationConcentration::UpdateRelevance()
 {
     assert( rRelevance_ > 0. );
-    if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
+    if( *pHackedPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ || *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
     {
         assert( pConcentrationKnown_ && pConcentrationKnown_->IsValid() );
         ChangeRelevance( 1. );
@@ -314,7 +322,7 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
-    asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    asnMsg().set_perceived( ( *pHackedPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) || ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     asnMsg().set_pertinence( static_cast< unsigned int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
@@ -344,7 +352,7 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroupId() );
 
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
-        asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+        asnMsg().set_perceived( ( *pHackedPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) || ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     if( bRealConcentrationUpdated_ )
         asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     if( bRelevanceUpdated_ )
