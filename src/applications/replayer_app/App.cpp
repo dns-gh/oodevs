@@ -48,7 +48,7 @@ App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPWSTR lpCmdLine, i
     test_ = winArgs.HasOption( "--test" );
     config_->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
     if( replayLog )
-        MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Replayer.log" ), 1, -1, MT_Logger_ABC::eLogLevel_All, true ) );
+        MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Replayer.log" ), 1, 0, MT_Logger_ABC::eLogLevel_All, true ) );
 
     MT_LOG_INFO_MSG( "Loading record " << config_->GetSessionFile() );
     replayer_.reset( new Replayer( *config_ ) );

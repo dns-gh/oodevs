@@ -78,9 +78,9 @@ int main( int /*argc*/, char* /*argv*/[] )
         MT_CrashHandler::SetRootDirectory( debugDir );
         tools::InitCrashHandler( &CrashHandler );
 
-        fileLogger.reset( new MT_FileLogger( debugDir / "Sim.log", 1, -1, MT_Logger_ABC::eLogLevel_All ) );
+        fileLogger.reset( new MT_FileLogger( debugDir / "Sim.log", 1, 0, MT_Logger_ABC::eLogLevel_All ) );
         const tools::Path filename = debugDir / "Crash Version " + tools::AppProjectVersion() + ".log";
-        crashFileLogger.reset( new MT_FileLogger( filename, 1, -1,  MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError ) );
+        crashFileLogger.reset( new MT_FileLogger( filename, 1, 0, MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError ) );
         MT_LOG_REGISTER_LOGGER( *fileLogger );
         MT_LOG_REGISTER_LOGGER( *crashFileLogger );
         MT_LOG_REGISTER_LOGGER( consoleLogger );

@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Write( const std::string& ) = 0;
+    virtual std::size_t Write( const std::string& ) = 0;
     //@}
 };
 

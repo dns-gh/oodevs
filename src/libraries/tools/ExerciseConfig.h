@@ -11,6 +11,7 @@
 #define __ExerciseConfig_h_
 
 #include "GeneralConfig.h"
+#include <boost/optional.hpp>
 #include <memory>
 #include <vector>
 #include <map>
@@ -114,17 +115,17 @@ public:
     //@{
     const Loader_ABC& GetLoader() const;
 
-    virtual unsigned int GetDispatcherProtobufLogFiles() const;
-    virtual int GetDispatcherProtobufLogSize() const;
-    virtual unsigned int GetDispatcherLogFiles() const;
+    virtual std::size_t GetDispatcherProtobufLogFiles() const;
+    virtual std::size_t GetDispatcherProtobufLogSize() const;
+    virtual std::size_t GetDispatcherLogFiles() const;
     virtual int GetDispatcherLogLevel() const;
-    virtual int GetDispatcherLogSize() const;
-    virtual unsigned int GetSimLogFiles() const;
+    virtual std::size_t GetDispatcherLogSize() const;
+    virtual std::size_t GetSimLogFiles() const;
     virtual int GetSimLogLevel() const;
-    virtual int GetSimLogSize() const;
-    virtual unsigned int GetLoggerPluginLogFiles() const;
+    virtual std::size_t GetSimLogSize() const;
+    virtual std::size_t GetLoggerPluginLogFiles() const;
     virtual int GetLoggerPluginLogLevel() const;
-    virtual int GetLoggerPluginLogSize() const;
+    virtual std::size_t GetLoggerPluginLogSize() const;
 
     virtual bool IsSimLogInBytes() const;
     virtual bool IsDispatcherLogInBytes() const;
@@ -146,11 +147,14 @@ protected:
     //@{
     struct LogSettingsData
     {
-        LogSettingsData(): level_( -1 ), files_( -1 ), fileSize_( -1 ) {}
-        bool isSet() const { return level_ >= 0 || files_ >= 0 || fileSize_ >= 0; }
+        LogSettingsData()
+            : level_( static_cast< int >( LogSettings::elogLevel_all ) )
+            , files_( 1 )
+            , fileSize_( 0 )
+        {}
         int level_;
-        int files_;
-        int fileSize_;
+        std::size_t files_;
+        std::size_t fileSize_;
         std::string sizeUnit_;
     };
 
@@ -164,14 +168,19 @@ protected:
             elogLevel_all
         };
 
-        LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ), set_( false ) {}
+        LogSettings()
+            : logLevel_( elogLevel_all )
+            , maxFiles_( 1 )
+            , maxFileSize_( 0 )
+            , sizeUnit_( eLogSizeType_Lines )
+        {}
         void SetLogSettings( const std::string& name, xml::xistream& xis );
-        void SetLogSettings( int level, int files, int size, const std::string& sizeUnit );
+        void SetLogSettings( const LogSettingsData& data );
+
         eLogLevel GetLogLevel() const { return logLevel_; }
-        unsigned int GetMaxFiles() const { return maxFiles_; }
-        int GetMaxSize() const { return maxFileSize_; }
+        std::size_t GetMaxFiles() const { return maxFiles_; }
+        std::size_t GetMaxSize() const { return maxFileSize_; }
         bool IsSizeInBytes() const { return sizeUnit_ == eLogSizeType_Bytes; }
-        bool IsSet() const { return set_; }
 
     private:
         enum eLogSizeType
@@ -179,10 +188,9 @@ protected:
             eLogSizeType_Lines,
             eLogSizeType_Bytes,
         };
-        bool set_;
         eLogLevel logLevel_;
-        unsigned int maxFiles_;
-        int maxFileSize_;
+        std::size_t maxFiles_;
+        std::size_t maxFileSize_;
         eLogSizeType sizeUnit_;
     };
     //@}

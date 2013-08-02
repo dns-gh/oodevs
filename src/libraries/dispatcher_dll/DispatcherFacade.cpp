@@ -48,7 +48,7 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
         // do that and log the error, in append mode.
         MT_FileLogger logger(
             config_->BuildSessionChildFile( "Dispatcher.log" ),
-            1, -1, MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eDispatcher,
+            1, 0, MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eDispatcher,
             false );
         MT_LOG_REGISTER_LOGGER( logger );
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );

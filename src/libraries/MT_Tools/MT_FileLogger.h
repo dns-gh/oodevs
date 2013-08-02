@@ -12,60 +12,43 @@
 
 #include "MT_Logger_ABC.h"
 #include <tools/Path.h>
+#include "tools/RotatingLog.h"
+#include "tools/LogFactory_ABC.h"
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
 
 namespace tools
 {
+    class Path;
     class Ofstream;
 }
 
 //=============================================================================
 /**
     @class  MT_FileLogger
-    @brief  PUT THE COMMENTS ON THE CLASS HERE
-    @par    Using example
-    @code
-        MT_FileLogger logFile( "file.log" );
-        MT_LogManager::Instance().RegisterLogger( logFile );
-        MT_LOG_INFO_MSG( "test msg" );
-        MT_LogManager::Instance().UnregisterLogger( logFile );
-    @endcode
+    @brief  File logger implementation
 */
 // Created:  NLD 00-06-05
 //=============================================================================
-class MT_FileLogger : public MT_Logger_ABC
+class MT_FileLogger : public MT_Logger_ABC, private tools::LogFactory_ABC
 {
-
 public:
-    explicit MT_FileLogger( const tools::Path& strFileName, unsigned int maxFiles, int maxSize, int nLogLevels,
-                            bool bClearPreviousLog = false, E_Type type = eSimulation, bool sizeInBytes = false );
-
+    MT_FileLogger( const tools::Path& filename, std::size_t files, std::size_t size, int levels,
+                   bool truncate = false, E_Type type = eSimulation, bool sizeInBytes = false );
     virtual ~MT_FileLogger();
 
-protected:
-    //-------------------------------------------------------------------------
-    /** @name Main method */
-    //-------------------------------------------------------------------------
-    //@{
+private:
     virtual void WriteString( const std::string& s );
-    unsigned int OpenNewOfstream( const tools::Path& fileName, bool clearPrevious = true );
-    unsigned int GetOldestFile();
-    tools::Path GetFileName( unsigned int fileCount ) const;
-    //@}
+    virtual std::auto_ptr< tools::Log_ABC > CreateLog( const tools::Path& filename, std::size_t& size );
+
+    std::size_t ComputeSize( const tools::Path& filename ) const;
 
 private:
-    std::auto_ptr< tools::Ofstream > file_;
-    tools::Path fileName_;
-    tools::Path fileNameNoExtension_;
-    tools::Path fileNameExtension_;
-    boost::mutex mutex_;
-    const unsigned int maxFiles_;
-    unsigned int filesCount_;
-    const int maxSize_;
-    int sizeCount_;
+    bool truncate_;
     bool sizeInBytes_;
+    boost::mutex mutex_;
+    tools::RotatingLog log_;
 };
 
 #endif // __MT_FileLogger_h_

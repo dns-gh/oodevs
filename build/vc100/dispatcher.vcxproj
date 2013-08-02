@@ -113,6 +113,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignFuneral.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\PluginFactory.cpp" />

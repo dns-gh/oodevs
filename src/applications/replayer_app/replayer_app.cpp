@@ -52,7 +52,7 @@ int main( int /*argc*/, char* /*argv*/[] )
     if( !debugDir.IsEmpty() )
     {
         debugDir.CreateDirectories();
-        fileLogger.reset( new MT_FileLogger( debugDir / "replayer.log", 1, -1,
+        fileLogger.reset( new MT_FileLogger( debugDir / "replayer.log", 1, 0,
             MT_Logger_ABC::eLogLevel_All ) );
         MT_LOG_REGISTER_LOGGER( *fileLogger );
     }

@@ -17,18 +17,12 @@
 #include "PluginFactory.h"
 #include "Services.h"
 #include "StaticModel.h"
-#include "LogFactory.h"
 #include "MT_Tools/MT_Logger.h"
 #include <google/protobuf/message.h>
 
 #pragma warning( disable: 4355 )
 
 using namespace dispatcher;
-
-namespace
-{
-    LogFactory factory;
-}
 
 // -----------------------------------------------------------------------------
 // Name: Dispatcher constructor
@@ -41,7 +35,8 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , handler_            ( new CompositePlugin() )
     , registrables_       ( new CompositeRegistrable() )
     , services_           ( new Services() )
-    , log_                ( factory, config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(), config.GetDispatcherProtobufLogSize(), config.IsDispatcherProtobufLogInBytes() )
+    , logFactory_         ( config.IsDispatcherProtobufLogInBytes() )
+    , log_                ( logFactory_, config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(), config.GetDispatcherProtobufLogSize() )
     , clientsNetworker_   ( new ClientsNetworker( config, *handler_, *services_, *model_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config, log_ ) )
     , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, log_, maxConnections ) )

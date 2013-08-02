@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __dispatcher_RotatingLog_h_
-#define __dispatcher_RotatingLog_h_
+#ifndef tools_RotatingLog_h
+#define tools_RotatingLog_h
 
 #include <tools/Path.h>
 #include <boost/noncopyable.hpp>
@@ -31,7 +31,8 @@ class RotatingLog : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, unsigned int files, unsigned int size, bool sizeInBytes = false );
+     RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, std::size_t files, std::size_t size );
+    ~RotatingLog();
     //@}
 
     //! @name Operations
@@ -45,18 +46,22 @@ public:
     //@}
 
 private:
-    //! @name Operations
+    //! @name Helpers
     //@{
     void DoWrite( const std::string& line );
+
+    std::size_t FindOldestFile() const;
+    tools::Path GetFileName( std::size_t file ) const;
     //@}
 
+private:
     //! @name Member data
     //@{
     LogFactory_ABC& factory_;
     tools::Path filename_;
-    tools::Path fileNameNoExtension_;
     tools::Path extension_;
-    unsigned int file_, files_, size_, count_;
+    std::size_t file_, files_;
+    std::size_t size_, count_;
     std::auto_ptr< Log_ABC > pLog_;
     bool sizeInBytes_;
     //@}
@@ -64,4 +69,4 @@ private:
 
 }
 
-#endif // __dispatcher_RotatingLog_h_
+#endif // tools_RotatingLog_h

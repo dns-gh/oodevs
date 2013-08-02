@@ -11,7 +11,6 @@
 #define dispatcher_LogFactory_h
 
 #include "tools/LogFactory_ABC.h"
-#include "Log.h"
 
 namespace dispatcher
 {
@@ -24,14 +23,12 @@ namespace dispatcher
 class LogFactory : public tools::LogFactory_ABC
 {
 public:
-    //! @name Operations
-    //@{
-public:
-    virtual std::auto_ptr< tools::Log_ABC > CreateLog( const tools::Path& filename )
-    {
-        return std::auto_ptr< tools::Log_ABC >( new Log( filename ) );
-    }
-    //@}
+    explicit LogFactory( bool sizeInBytes );
+
+    virtual std::auto_ptr< tools::Log_ABC > CreateLog( const tools::Path& filename, std::size_t& size );
+
+private:
+    bool sizeInBytes_;
 };
 
 }

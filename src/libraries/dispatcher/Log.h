@@ -12,6 +12,7 @@
 
 #include "tools/Log_ABC.h"
 #include "tools/FileWrapper.h"
+#include <tools/Exception.h>
 #include <tools/Path.h>
 #include <ctime>
 #pragma warning( push )
@@ -30,40 +31,42 @@ class Log : public tools::Log_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Log( const tools::Path& filename )
-        : s_( filename )
+    Log( const tools::Path& filename, bool sizeInBytes )
+        : s_          ( filename )
+        , sizeInBytes_( sizeInBytes )
     {
         if( ! s_ )
             throw MASA_EXCEPTION( "Failed to open log file '" + filename.ToUTF8() + "' for writing" );
     }
-
-    virtual ~Log()
-    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Write( const std::string& s )
+    virtual std::size_t Write( const std::string& s )
     {
-        s_ << "[" << GetTime() << "] " << s << std::endl;
+        const std::string time = GetTime();
+        s_ << "[" << time << "] " << s << std::endl;
+        return sizeInBytes_ ? time.size() + s.size() + 3 : 1;
     }
     //@}
 
 private:
     //! @name Helpers
     //@{
-    const char* GetTime()
+    std::string GetTime() const
     {
-        static char buffer[256];
-        time_t nTime = time( NULL );
-        strftime( buffer, 256, "%H:%M:%S", localtime( &nTime ) );
+        char buffer[256];
+        std::time_t t = time( 0 );
+        std::strftime( buffer, sizeof( buffer ), "%H:%M:%S", std::localtime( &t ) );
         return buffer;
     }
     //@}
 
+private:
     //! @name Member data
     //@{
     tools::Ofstream s_;
+    bool sizeInBytes_;
     //@}
 };
 

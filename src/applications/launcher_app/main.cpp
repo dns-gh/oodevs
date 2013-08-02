@@ -47,7 +47,7 @@ namespace
 
         tools::Path path = argv[ 0 ];
         path.SystemComplete();
-        MT_FileLogger fileLogger( path.Parent() / "Launcher.log", 1, -1, MT_Logger_ABC::eLogLevel_All );
+        MT_FileLogger fileLogger( path.Parent() / "Launcher.log", 1, 0, MT_Logger_ABC::eLogLevel_All );
         MT_LOG_REGISTER_LOGGER( fileLogger );
         HANDLE launcherJob  = CreateJobObject( 0, "launcher-job" );
         JOBOBJECT_EXTENDED_LIMIT_INFORMATION extendedJobInfo;;

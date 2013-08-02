@@ -450,6 +450,9 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\DetectionRangeEffect.cpp">
       <Filter>Source Files\Model\Fire</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogFactory.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\dispatcher\Config.h">

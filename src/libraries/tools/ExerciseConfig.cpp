@@ -546,18 +546,13 @@ const tools::Loader_ABC& ExerciseConfig::GetLoader() const
 // Name: ExerciseConfig::LogSettings::SetLogSettings
 // Created: MMC 2012-02-27
 // -----------------------------------------------------------------------------
-void ExerciseConfig::LogSettings::SetLogSettings( int level, int files, int size, const std::string& sizeUnit )
+void ExerciseConfig::LogSettings::SetLogSettings( const LogSettingsData& data )
 {
-    set_ = true;
-    int maxLevel = static_cast< int >( LogSettings::elogLevel_all );
-    if( level < 0 || level > maxLevel )
-        level = maxLevel;
-    if( files < 1 )
-        files = 1;
-    logLevel_ = static_cast< LogSettings::eLogLevel >( level );
-    maxFiles_= static_cast< unsigned int >( files );
-    maxFileSize_ = size;
-    const std::string unit = boost::algorithm::to_lower_copy( sizeUnit );
+    const int maxLevel = static_cast< int >( LogSettings::elogLevel_all );
+    logLevel_ = static_cast< LogSettings::eLogLevel >( std::max( 0, std::min( data.level_, maxLevel ) ) );
+    maxFiles_ = std::max< std::size_t >( data.files_, 1 );
+    maxFileSize_ = data.fileSize_;
+    const std::string unit = boost::algorithm::to_lower_copy( data.sizeUnit_ );
     sizeUnit_ = ( unit == "bytes" || unit == "kbytes" || unit == "mbytes" ) ? eLogSizeType_Bytes : eLogSizeType_Lines;
     if( unit == "kbytes" )
         maxFileSize_ *= 1000;
@@ -571,17 +566,14 @@ void ExerciseConfig::LogSettings::SetLogSettings( int level, int files, int size
 // -----------------------------------------------------------------------------
 void ExerciseConfig::LogSettings::SetLogSettings( const std::string& name, xml::xistream& xis )
 {
-    if( !xis.has_child( name ) )
-        return;
-    xis >> xml::start( name );
-    std::string sizeUnit;
-    int files = 1, size = -1, logLevel = static_cast< int >( LogSettings::elogLevel_all );
-    xis >> xml::optional >> xml::attribute( "loglevel", logLevel )
-        >> xml::optional >> xml::attribute( "logfiles", files )
-        >> xml::optional >> xml::attribute( "logsize", size )
-        >> xml::optional >> xml::attribute( "sizeunit", sizeUnit);
-    SetLogSettings( logLevel, files, size, sizeUnit );
-    xis >> xml::end;
+    LogSettingsData data;
+    xis >> xml::start( name )
+            >> xml::optional >> xml::attribute( "loglevel", data.level_ )
+            >> xml::optional >> xml::attribute( "logfiles", data.files_ )
+            >> xml::optional >> xml::attribute( "logsize", data.fileSize_ )
+            >> xml::optional >> xml::attribute( "sizeunit", data.sizeUnit_ )
+        >> xml::end;
+    SetLogSettings( data );
 }
 
 // -----------------------------------------------------------------------------
@@ -590,8 +582,7 @@ void ExerciseConfig::LogSettings::SetLogSettings( const std::string& name, xml::
 // -----------------------------------------------------------------------------
 void ExerciseConfig::SetDispatcherLogSettings( const LogSettingsData& settings )
 {
-    if( settings.isSet() &&  !dispatcherLogSettings_.IsSet() )
-        dispatcherLogSettings_.SetLogSettings( settings.level_, settings.files_, settings.fileSize_, settings.sizeUnit_ );
+    dispatcherLogSettings_.SetLogSettings( settings );
 }
 
 // -----------------------------------------------------------------------------
@@ -600,8 +591,7 @@ void ExerciseConfig::SetDispatcherLogSettings( const LogSettingsData& settings )
 // -----------------------------------------------------------------------------
 void ExerciseConfig::SetSimLogSettings( const LogSettingsData& settings )
 {
-    if( settings.isSet() && !simLogSettings_.IsSet() )
-        simLogSettings_.SetLogSettings( settings.level_, settings.files_, settings.fileSize_, settings.sizeUnit_ );
+    simLogSettings_.SetLogSettings( settings );
 }
 
 // -----------------------------------------------------------------------------
@@ -610,8 +600,7 @@ void ExerciseConfig::SetSimLogSettings( const LogSettingsData& settings )
 // -----------------------------------------------------------------------------
 void ExerciseConfig::SetDispatcherProtobufLogSettings( const LogSettingsData& settings )
 {
-    if( settings.isSet() && !dispatcherProtobufLogSettings_.IsSet() )
-        dispatcherProtobufLogSettings_.SetLogSettings( -1, settings.files_, settings.fileSize_, settings.sizeUnit_ );
+    dispatcherProtobufLogSettings_.SetLogSettings( settings );
 }
 
 // -----------------------------------------------------------------------------
@@ -620,15 +609,14 @@ void ExerciseConfig::SetDispatcherProtobufLogSettings( const LogSettingsData& se
 // -----------------------------------------------------------------------------
 void ExerciseConfig::SetLoggerPluginLogSettings( const LogSettingsData& settings )
 {
-    if( settings.isSet() && !simLoggerPluginSettings_.IsSet() )
-        simLoggerPluginSettings_.SetLogSettings( settings.level_, settings.files_, settings.fileSize_, settings.sizeUnit_ );
+    simLoggerPluginSettings_.SetLogSettings( settings );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetDispatcherLogFiles
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetDispatcherProtobufLogFiles() const
+std::size_t ExerciseConfig::GetDispatcherProtobufLogFiles() const
 {
     return dispatcherProtobufLogSettings_.GetMaxFiles();
 }
@@ -637,7 +625,7 @@ unsigned int ExerciseConfig::GetDispatcherProtobufLogFiles() const
 // Name: ExerciseConfig::GetDispatcherLogSize
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-int ExerciseConfig::GetDispatcherProtobufLogSize() const
+std::size_t ExerciseConfig::GetDispatcherProtobufLogSize() const
 {
     return dispatcherProtobufLogSettings_.GetMaxSize();
 }
@@ -655,7 +643,7 @@ int ExerciseConfig::GetDispatcherLogLevel() const
 // Name: ExerciseConfig::GetDispatcherLogFiles
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetDispatcherLogFiles() const
+std::size_t ExerciseConfig::GetDispatcherLogFiles() const
 {
     return dispatcherLogSettings_.GetMaxFiles();
 }
@@ -664,7 +652,7 @@ unsigned int ExerciseConfig::GetDispatcherLogFiles() const
 // Name: ExerciseConfig::GetDispatcherLogSize
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-int ExerciseConfig::GetDispatcherLogSize() const
+std::size_t ExerciseConfig::GetDispatcherLogSize() const
 {
     return dispatcherLogSettings_.GetMaxSize();
 }
@@ -673,7 +661,7 @@ int ExerciseConfig::GetDispatcherLogSize() const
 // Name: ExerciseConfig::GetSimLogFiles
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetSimLogFiles() const
+std::size_t ExerciseConfig::GetSimLogFiles() const
 {
     return simLogSettings_.GetMaxFiles();
 }
@@ -682,7 +670,7 @@ unsigned int ExerciseConfig::GetSimLogFiles() const
 // Name: ExerciseConfig::GetSimLogSize
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-int ExerciseConfig::GetSimLogSize() const
+std::size_t ExerciseConfig::GetSimLogSize() const
 {
     return simLogSettings_.GetMaxSize();
 }
@@ -700,7 +688,7 @@ int ExerciseConfig::GetSimLogLevel() const
 // Name: ExerciseConfig::GetLoggerPluginLogFiles
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetLoggerPluginLogFiles() const
+std::size_t ExerciseConfig::GetLoggerPluginLogFiles() const
 {
     return simLoggerPluginSettings_.GetMaxFiles();
 }
@@ -709,7 +697,7 @@ unsigned int ExerciseConfig::GetLoggerPluginLogFiles() const
 // Name: ExerciseConfig::GetLoggerPluginLogSize
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-int ExerciseConfig::GetLoggerPluginLogSize() const
+std::size_t ExerciseConfig::GetLoggerPluginLogSize() const
 {
     return simLoggerPluginSettings_.GetMaxSize();
 }

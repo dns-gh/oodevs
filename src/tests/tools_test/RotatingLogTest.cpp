@@ -11,11 +11,6 @@
 #include "tools/RotatingLog.h"
 #include "tools/Log_ABC.h"
 #include "tools/LogFactory_ABC.h"
-#include <boost/noncopyable.hpp>
-#include <boost/lexical_cast.hpp>
-#include <ostream>
-#include <memory>
-#include <deque>
 
 using namespace tools;
 
@@ -29,14 +24,14 @@ namespace
 
     MOCK_BASE_CLASS( MockLogFactory, tools::LogFactory_ABC )
     {
-        MOCK_METHOD( CreateLog, 1 )
+        MOCK_METHOD( CreateLog, 2 )
     };
 }
 
 BOOST_AUTO_TEST_CASE( max_files_set_to_zero_disables_log )
 {
     MockLogFactory factory;
-    RotatingLog log( factory, "filename", 0, 42, true );
+    RotatingLog log( factory, "filename.log", 0, 42 );
     log.Write( "some text" );
 }
 
@@ -44,9 +39,9 @@ BOOST_AUTO_TEST_CASE( max_entries_set_to_zero_disables_rotation )
 {
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
-    RotatingLog log( factory, "filename", 1, 0, true );
+    RotatingLog log( factory, "filename.log", 1, 0 );
     MOCK_EXPECT( factory.CreateLog ).once().returns( pLog );
-    MOCK_EXPECT( pLog->Write ).exactly( 3 ).with( "some text" );
+    MOCK_EXPECT( pLog->Write ).exactly( 3 ).with( "some text" ).returns( 0 );
     log.Write( "some text" );
     log.Write( "some text" );
     log.Write( "some text" );
@@ -57,9 +52,9 @@ BOOST_AUTO_TEST_CASE( rotating_log_first_log_is_sent_to_log )
 {
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
-    RotatingLog log( factory, "filename", 12, 42, true );
+    RotatingLog log( factory, "filename.log", 12, 42 );
     MOCK_EXPECT( factory.CreateLog ).once().returns( pLog );
-    MOCK_EXPECT( pLog->Write ).once().with( "some text" );
+    MOCK_EXPECT( pLog->Write ).once().with( "some text" ).returns( 0 );
     log.Write( "some text" );
     MOCK_EXPECT( pLog->destructor );
 }
@@ -69,18 +64,15 @@ BOOST_AUTO_TEST_CASE( rotating_log_switches_to_next_log_when_max_entries_is_reac
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
     const unsigned int size = 3;
-    RotatingLog log( factory, "filename.log", 2, static_cast< int >( strlen( "some text" ) ) * size, true );
-    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.log" ).returns( pLog );
-    MOCK_EXPECT( pLog->Write ).exactly( size ).with( "some text" );
-    log.Write( "some text" );
-    log.Write( "some text" );
-    log.Write( "some text" );
-    mock::verify();
+    RotatingLog log( factory, "filename.log", 2, size );
+    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.log", mock::any ).returns( pLog );
+    MOCK_EXPECT( pLog->Write ).once().with( "some text" ).returns( size );
     mock::sequence s;
     MOCK_EXPECT( pLog->destructor ).in( s );
     pLog = new MockLog();
-    MOCK_EXPECT( factory.CreateLog ).in( s ).with( "filename.1.log" ).once().returns( pLog );
-    MOCK_EXPECT( pLog->Write ).once().with( "some text" );
+    MOCK_EXPECT( factory.CreateLog ).in( s ).with( "filename.1.log", mock::any ).once().returns( pLog );
+    MOCK_EXPECT( pLog->Write ).once().with( "some text" ).returns( 0 );
+    log.Write( "some text" );
     log.Write( "some text" );
     MOCK_EXPECT( pLog->destructor );
 }
@@ -90,25 +82,45 @@ BOOST_AUTO_TEST_CASE( rotating_log_goes_back_to_the_first_one_when_max_files_is_
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
     const unsigned int size = 3;
-    RotatingLog log( factory, "filename.log", 2, static_cast< int >( strlen( "some text" ) ) * size, true );
-    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.log" ).returns( pLog );
-    MOCK_EXPECT( pLog->Write ).exactly( size ).with( "some text" );
-    log.Write( "some text" );
-    log.Write( "some text" );
-    log.Write( "some text" );
-    mock::verify();
+    RotatingLog log( factory, "filename.log", 2, size );
+    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.log", mock::any ).returns( pLog );
+    MOCK_EXPECT( pLog->Write ).once().with( "some text" ).returns( size );
     MOCK_EXPECT( pLog->destructor );
     pLog = new MockLog();
-    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.1.log" ).returns( pLog );
-    MOCK_EXPECT( pLog->Write ).exactly( size ).with( "some text" );
-    log.Write( "some text" );
-    log.Write( "some text" );
-    log.Write( "some text" );
-    mock::verify();
+    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.1.log", mock::any ).returns( pLog );
+    MOCK_EXPECT( pLog->Write ).once().with( "some text" ).returns( size );
     MOCK_EXPECT( pLog->destructor );
     pLog = new MockLog();
-    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.log" ).returns( pLog );
-    MOCK_EXPECT( pLog->Write ).once().with( "some text" );
+    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.log", mock::any ).returns( pLog );
+    MOCK_EXPECT( pLog->Write ).once().with( "some text" ).returns( 0 );
+    log.Write( "some text" );
+    log.Write( "some text" );
+    log.Write( "some text" );
+    MOCK_EXPECT( pLog->destructor );
+}
+
+namespace
+{
+    struct Fixture
+    {
+        Fixture()
+        {
+            std::ofstream( "filename.log" );
+        }
+        ~Fixture()
+        {
+            std::remove( "filename.log" );
+        }
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( rotating_log_overwrites_the_oldest_log, Fixture )
+{
+    MockLogFactory factory;
+    MockLog* pLog = new MockLog();
+    RotatingLog log( factory, "filename.log", 2, 42 );
+    MOCK_EXPECT( factory.CreateLog ).once().with( "filename.1.log", mock::any ).returns( pLog );
+    MOCK_EXPECT( pLog->Write ).once().with( "some text" ).returns( 0 );
     log.Write( "some text" );
     MOCK_EXPECT( pLog->destructor );
 }

@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Config.h"
+#include "tools/XmlStreamOperators.h"
 #include "tools/FileWrapper.h"
 #include "tools/Loader.h"
 #include <xeumeuleu/xml.hpp>

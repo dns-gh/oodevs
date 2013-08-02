@@ -71,9 +71,9 @@ int main( int, char** )
     if( !debugDir.IsEmpty() )
     {
         debugDir.CreateDirectories();
-        boost::scoped_ptr< MT_FileLogger >( new MT_FileLogger(
-            debugDir / "selftraining.log", 1, -1,
-            MT_Logger_ABC::eLogLevel_All ) ).swap( logger );
+        logger.reset( new MT_FileLogger(
+            debugDir / "selftraining.log", 1, 0,
+            MT_Logger_ABC::eLogLevel_All ) );
         MT_LOG_REGISTER_LOGGER( *logger );
         MT_CrashHandler::SetRootDirectory( debugDir );
     }
