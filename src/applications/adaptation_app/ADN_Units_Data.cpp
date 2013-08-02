@@ -21,6 +21,7 @@
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_Units_Data::idManager_;
 
@@ -547,8 +548,7 @@ void ADN_Units_Data::UnitInfos::ReadPointDistance( xml::xistream& input )
 void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
     std::string strType, nbcSuit;
-    input >> xml::attribute( "name", strName_ )
-        >> xml::attribute( "type", strType )
+    input >> xml::attribute( "type", strType )
         >> xml::attribute( "decisional-model", ptrModel_ );
 
     eTypeId_ = ADN_Tr::ConvertToAgentTypePion( strType );
@@ -875,7 +875,9 @@ void ADN_Units_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Units_Data::ReadUnit( xml::xistream& input )
 {
     std::auto_ptr<UnitInfos> spNew( new UnitInfos( input.attribute< unsigned int >( "id" ) ) );
+    std::string strName = input.attribute< std::string >( "name" );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "units", strName ) );
     vUnits_.AddItem( spNew.release() );
 }
 
