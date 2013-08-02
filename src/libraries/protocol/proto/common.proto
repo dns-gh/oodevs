@@ -2048,7 +2048,21 @@ message UnitMagicAction {
         //! The tasker must be an unit identifier.
         //! parameters[0], ACharStr: critical intelligence text.
         change_critical_intelligence      = 38;
-        //! An equipment transfer magic action
+        //! Exchange equipments between units.
+        //! The tasker is set to the lending unit.
+        //! parameters[0], Identifier: borrowing unit identifier.
+        //! parameters[1], multiple List: the list of equipments to
+        //!   transfer. Each record is a two elements List made of the
+        //!   equipment Identifier and the number of items to transfer as
+        //!   a Quantity.
+        //! This action will trigger a UnitAttributes update on success.
+        //! The lender and borrower respective lent_equipments and
+        //! borrowed_equipments will be adjusted.
+        //! Trying to transfer an equipment not available in the source
+        //! unit is an error. But transfering more equipments than
+        //! available will succeed, the number of transfered equipments
+        //! will capped on the number of available ones.
+        //! Deleting a unit cancels its lendings and borrowings.
         transfer_equipment                = 39;
         //! A change equipment human size magic action
         change_equipment_human_size       = 40;
