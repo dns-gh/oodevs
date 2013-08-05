@@ -12,19 +12,14 @@
 
 #include "MT_Logger_ABC.h"
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 #include <set>
 
-//=============================================================================
-/**
-    @class  MT_LogManager
-    @brief  PUT THE COMMENTS ON THE CLASS HERE
-    @par    Using example
-    @code
-      PUT YOUR EXAMPLE CODE HERE
-    @endcode
-*/
-// Created:  NLD 00-06-05
-//=============================================================================
+namespace tools
+{
+    class Logger_ABC;
+}
+
 class MT_LogManager : private boost::noncopyable
 {
 
@@ -63,5 +58,7 @@ private:
     T_LoggerSet loggerSet_;
     static MT_LogManager* pInstance_;
 };
+
+boost::shared_ptr< tools::Logger_ABC > CreateMTLogger( const std::string& name );
 
 #endif // __MT_LogManager_h_

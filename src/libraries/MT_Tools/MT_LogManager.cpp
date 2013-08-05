@@ -8,6 +8,8 @@
 // *****************************************************************************
 
 #include "MT_LogManager.h"
+#include <tools/Logger_ABC.h>
+#include <boost/make_shared.hpp>
 
 MT_LogManager* MT_LogManager::pInstance_ = 0;
 
@@ -92,3 +94,39 @@ void MT_LogManager::Log( MT_Logger_ABC::E_LogLevel nLevel, const char* strMessag
     for( IT_LoggerSet itLogger = loggerSet_.begin(); itLogger != loggerSet_.end(); ++itLogger )
         (*itLogger)->Log( nLevel, strMessage, strContext, nCode );
 }
+
+namespace
+{
+
+MT_Logger_ABC::E_LogLevel GetLogLevel( tools::Logger_ABC::eLevel level )
+{
+    switch( level )
+    {
+        case tools::Logger_ABC::error: return MT_Logger_ABC::eLogLevel_Error;
+        case tools::Logger_ABC::warning : return MT_Logger_ABC::eLogLevel_Warning;
+        default: return MT_Logger_ABC::eLogLevel_Info;
+    }
+}
+
+class TerrainLogger : public tools::Logger_ABC
+{
+public:
+             TerrainLogger( const std::string& name ) : name_( name + ": " ) {}
+    virtual ~TerrainLogger() {}
+
+    virtual void Log( eLevel level, const char* msg )
+    {
+        MT_LogManager::Instance().Log( GetLogLevel( level ), (name_ + msg).c_str() );
+    }
+
+private:
+    const std::string name_;
+};
+
+}  // namespace
+
+boost::shared_ptr< tools::Logger_ABC > CreateMTLogger( const std::string& name )
+{
+    return boost::make_shared< TerrainLogger >( name );
+}
+
