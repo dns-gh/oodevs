@@ -186,3 +186,52 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	c.Assert(unitKnowledge.KnowledgeGroupId, Equals, kg.Id)
 	c.Assert(unitKnowledge.UnitId, Equals, unit.Id)
 }
+
+func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: no knowledge group defined
+	data := client.Model.GetData()
+	knowledgeGroups := data.ListKnowledgeGroups()
+	c.Assert(len(knowledgeGroups), Greater, 0)
+	knowledgeGroup := knowledgeGroups[0]
+
+	automat := data.ListAutomats()[0]
+
+	// error: invalid tasker (not an automat)
+	err := client.ChangeKnowledgeGroupTest(data.ListUnits()[0].Id, swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: no params
+	err = client.ChangeKnowledgeGroupTest(automat.Id, swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: parameters must be a knowledge group and a party
+	params := swapi.MakeParameters(swapi.MakeNullValue(), swapi.MakeNullValue())
+	err = client.ChangeKnowledgeGroupTest(automat.Id, params)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// creation of another knowledge group with the same army
+	params = swapi.MakeParameters(
+		swapi.MakeIdentifier(uint32(knowledgeGroup.PartyId)),
+		swapi.MakeString("Standard"))
+	var group *swapi.KnowledgeGroup
+	group, err = client.CreateKnowledgeGroupTest(params)
+	c.Assert(err, IsNil)
+
+	// invalid party
+	err = client.ChangeKnowledgeGroup(automat.Id, group.Id, 42)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid knowledge group
+	err = client.ChangeKnowledgeGroup(automat.Id, 42, automat.PartyId)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// change knowledge group
+	err = client.ChangeKnowledgeGroup(automat.Id, group.Id, automat.PartyId)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindAutomat(automat.Id).KnowledgeGroupId == group.Id
+	})
+}

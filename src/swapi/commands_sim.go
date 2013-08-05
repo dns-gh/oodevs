@@ -1147,6 +1147,18 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 	return created, err
 }
 
+func (c *Client) ChangeKnowledgeGroupTest(automatId uint32, params *sword.MissionParameters) error {
+	msg := createMagicActionMessage(params, makeAutomatTasker(automatId),
+		sword.UnitMagicAction_change_knowledge_group.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangeKnowledgeGroup(automatId, knowledgeGroupId, armyId uint32) error {
+	params := MakeParameters(MakeKnowledgeGroup(knowledgeGroupId), MakeParty(armyId))
+	return c.ChangeKnowledgeGroupTest(automatId, params)
+}
+
 func (c *Client) DebugBrainTest(id uint32, params *sword.MissionParameters) error {
 	tasker := &sword.Tasker{}
 	// Abusing the super tolerant simulation tasker parser
