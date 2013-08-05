@@ -1666,30 +1666,15 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicAction& message, unsigned int nCtx )
 {
-    client::AutomatChangeKnowledgeGroupAck ack;
-    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
-    MIL_Automate* pAutomate = 0;
-    try
-    {
-        pAutomate = TaskerToAutomat( *this, message.tasker() );
-        if( !pAutomate )
-            throw MASA_EXCEPTION_ASN( HierarchyModificationAck_ErrorCode, HierarchyModificationAck::error_invalid_automate );
-        pAutomate->OnReceiveChangeKnowledgeGroup( message, *armyFactory_ );
-    }
-    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
-
-    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
-    {
-        client::AutomatChangeKnowledgeGroup resendMessage;
-        resendMessage().mutable_automat()->set_id( pAutomate->GetID() );
-        resendMessage().mutable_party()->set_id( pAutomate->GetArmy().GetID() );
-        resendMessage().mutable_knowledge_group()->set_id( pAutomate->GetKnowledgeGroup()->GetId() );
-        resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
-    }
+    MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
+    if( !pAutomate )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid automat" );
+    pAutomate->OnReceiveChangeKnowledgeGroup( message, *armyFactory_ );
+    client::AutomatChangeKnowledgeGroup resendMessage;
+    resendMessage().mutable_automat()->set_id( pAutomate->GetID() );
+    resendMessage().mutable_party()->set_id( pAutomate->GetArmy().GetID() );
+    resendMessage().mutable_knowledge_group()->set_id( pAutomate->GetKnowledgeGroup()->GetId() );
+    resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------

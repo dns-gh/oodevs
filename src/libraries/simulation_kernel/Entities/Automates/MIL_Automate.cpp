@@ -1080,19 +1080,19 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
 void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
     if( msg.type() != sword::UnitMagicAction::change_knowledge_group )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid message type" );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid parameters count" );
     if( msg.parameters().elem( 0 ).value_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid parameter" );
     if( msg.parameters().elem( 1 ).value_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid parameter" );
 
     // Inversion possible des paramètres à gérer
     bool knowledgeGroupParamFirst   = msg.parameters().elem( 0 ).value().Get( 0 ).has_knowledgegroup() && msg.parameters().elem( 1 ).value().Get( 0 ).has_party();
     bool partyParamFirst            = msg.parameters().elem( 0 ).value().Get( 0 ).has_party() && msg.parameters().elem( 1 ).value().Get( 0 ).has_knowledgegroup();
     if( ! ( knowledgeGroupParamFirst || partyParamFirst ) )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "parameters must be a knowledge group and an party" );
 
     unsigned int knowledgeGroupId = 0, partyId = 0;
     if( partyParamFirst )
@@ -1108,10 +1108,10 @@ void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& 
 
     MIL_Army_ABC* pNewArmy = armies.Find( partyId );
     if( !pNewArmy || *pNewArmy != GetArmy() )
-        throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_invalid_party );
+        throw MASA_BADPARAM_UNIT( "invalid party" );
     boost::shared_ptr< MIL_KnowledgeGroup > pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( knowledgeGroupId );
     if( !pNewKnowledgeGroup )
-        throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_invalid_knowledge_group );
+        throw MASA_BADPARAM_UNIT( "invalid knowledge group" );
     if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
     {
         pKnowledgeGroup_->UnregisterAutomate( *this );
