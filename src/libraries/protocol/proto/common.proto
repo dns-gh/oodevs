@@ -2053,18 +2053,54 @@ message UnitMagicAction {
         //! A change equipment human size magic action
         change_equipment_human_size       = 40;
         //! A create breakdowns magic action
+        // parameters[0]: containts a breakdown list
+        //   breakdown parameters:
+        //     parameters[0]: Identifier: the equipment type identifier
+        //     parameters[1]: Quantity: the breakdown quantity
+        //     parameters[2]: Optional, Identifier: the breakdown type
+        //                    if not setted, magic action applies a random breakdown
         create_breakdowns                 = 41;
         //! A create wounds magic action
+        // parameters[0]: containts a human wound list
+        //   wound parameters:
+        //     parameters[0]: Quantity: the human wound quantity
+        //     parameters[1]: Optional, Enumeration: the human wound type
+        //                    if not setted, magic action applies a random human wound
         create_wounds                     = 42;
         //! A magic action forcing to reload the brain of the entity
         reload_brain                      = 43;
         //! No parameters, magically finish the current logistic actions
         log_finish_handlings              = 44;
         //! A change equipment state magic action
+        // parameters[0]: containts a equipment state list
+        //   equipment state parameters:
+        //     parameters[0]: Identifier: the equipment type
+        //     parameters[1]: Quantity: the undamaged quantity
+        //     parameters[2]: Quantity: the dead quantity
+        //     parameters[3]: Quantity: the repairableWithEvacuation quantity
+        //     parameters[4]: Quantity: the repairableWithoutEvacuation quantity
+        //     parameters[5]: Quantity: the maintenance quantity
+        //     parameters[6]: Quantity: the prisoner quantity
+        //     parameters[7]: Identifier list: breakdown identifiers
+        //   parameters[7] size must be equals to the parameters[3] quantity
         change_equipment_state            = 45;
         //! A change human state magic action
+        // parameters[0]: containts a human state list
+        //   human state parameters:
+        //     parameters[0]: Quantity: the human quantity
+        //     parameters[1]: Enumeration: the human rank (EnumHumanRank)
+        //     parameters[2]: Enumeration: the human state (EnumHumanState)
+        //     parameters[3]: Enumeration list: the injury state
+        //                    Just the first element is used
+        //     parameters[4]: BooleanValue: the psyop state
+        //     parameters[5]: BooleanValue: the contaminated state
         change_human_state                = 46;
         //! A create dotation magic action
+        // parameters[0]: containts a dotation list
+        //   dotation parameters:
+        //     parameters[0]: Identifier: the dotation category type
+        //     parameters[1]: Quantity: the new dotation quantity
+        //     parameters[2]: Areal: the logictic threshold (beetween 0 and 100)
         change_dotation                   = 47;
         //! A direct fire order creation magic action
         create_direct_fire_order          = 48;
