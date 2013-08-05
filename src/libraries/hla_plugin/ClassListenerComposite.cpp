@@ -101,11 +101,11 @@ void ClassListenerComposite::LocalDestroyed( const std::string& identifier )
 // Name: ClassListenerComposite::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void ClassListenerComposite::Divested( const std::string& identifier )
+void ClassListenerComposite::Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes )
 {
     std::for_each(listeners_.begin(), listeners_.end(), [&](ClassListener_ABC* listener)
         {
-            listener->Divested( identifier );
+            listener->Divested( identifier, attributes );
         });
 }
 
@@ -113,10 +113,10 @@ void ClassListenerComposite::Divested( const std::string& identifier )
 // Name: ClassListenerComposite::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void ClassListenerComposite::Acquired( const std::string& identifier )
+void ClassListenerComposite::Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes )
 {
     std::for_each(listeners_.begin(), listeners_.end(), [&](ClassListener_ABC* listener)
         {
-            listener->Acquired( identifier );
+            listener->Acquired( identifier, attributes );
         });
 }

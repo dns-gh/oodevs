@@ -129,7 +129,7 @@ void OwnershipController::LocalDestroyed( const std::string& identifier )
 // Name: OwnershipController::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void OwnershipController::Divested( const std::string& identifier )
+void OwnershipController::Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     T_OwnershipInfos::iterator it = states_.find( identifier );
     if( states_.end() == it )
@@ -143,7 +143,7 @@ void OwnershipController::Divested( const std::string& identifier )
 // Name: OwnershipController::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void OwnershipController::Acquired( const std::string& identifier )
+void OwnershipController::Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     T_OwnershipInfos::iterator it = states_.find( identifier );
     if( states_.end() == it )

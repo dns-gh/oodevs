@@ -319,7 +319,7 @@ void EquipmentUpdater::LocalDestroyed( const std::string& identifier )
 // Name: EquipmentUpdater::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::Divested( const std::string& identifier )
+void EquipmentUpdater::Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     T_HLAObjects::const_iterator itObj( hlaObjects_.find( identifier ) );
     if( hlaObjects_.end() != itObj )
@@ -330,7 +330,7 @@ void EquipmentUpdater::Divested( const std::string& identifier )
 // Name: EquipmentUpdater::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::Acquired( const std::string& identifier )
+void EquipmentUpdater::Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     T_HLAObjects::const_iterator itObj( hlaObjects_.find( identifier ) );
     if( hlaObjects_.end() != itObj )

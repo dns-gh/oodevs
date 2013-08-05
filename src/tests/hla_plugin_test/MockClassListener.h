@@ -28,8 +28,8 @@ MOCK_BASE_CLASS( MockClassListener, ClassListener_ABC )
     MOCK_METHOD( RemoteDestroyed, 1 )
     MOCK_METHOD( LocalCreated, 3 )
     MOCK_METHOD( LocalDestroyed, 1 )
-    MOCK_METHOD( Divested, 1 )
-    MOCK_METHOD( Acquired, 1 )
+    MOCK_METHOD( Divested, 2 )
+    MOCK_METHOD( Acquired, 2 )
 };
 }
 }

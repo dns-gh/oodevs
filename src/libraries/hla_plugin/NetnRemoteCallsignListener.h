@@ -52,8 +52,8 @@ private:
     virtual void RemoteDestroyed( const std::string& identifier );
     virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
     virtual void LocalDestroyed( const std::string& identifier );
-    virtual void Divested( const std::string& identifier );
-    virtual void Acquired( const std::string& identifier );
+    virtual void Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes );
+    virtual void Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& attributes );
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );

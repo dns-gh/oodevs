@@ -315,7 +315,7 @@ BOOST_FIXTURE_TEST_CASE( divested_local_object_update, LocalObjectFixture )
     remoteClassListener->LocalCreated( "id_local", hlaClass, object );
 
     MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
-    remoteClassListener->Divested( "id_local" );
+    remoteClassListener->Divested( "id_local",::hla::T_AttributeIdentifiers() );
     BOOST_REQUIRE( remoteAgentListener );
 
     const int undamaged = 2;

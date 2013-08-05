@@ -71,7 +71,7 @@ namespace
         {
             MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes );
             ownershipController.PerformDivestiture( "identifier", attributes );
-            classListener->Divested( "identifier" );
+            classListener->Divested( "identifier", attributes );
         }
     };
 }

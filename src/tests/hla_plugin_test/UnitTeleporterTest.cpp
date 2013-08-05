@@ -196,7 +196,8 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_disengage_automaton_when_divested, Fixt
     MOCK_EXPECT( contextFactory.Create ).once().returns( 18 );
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message1 ) );
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message2 ) );
-    remoteClassListener->Divested(  "identifier" );
+    ::hla::T_AttributeIdentifiers attributes; attributes.push_back( ::hla::AttributeIdentifier("Spatial"));
+    remoteClassListener->Divested(  "identifier", attributes );
     BOOST_REQUIRE( remoteAgentListener );
 
     BOOST_CHECK( message1.message().has_set_automat_mode() );
@@ -230,8 +231,6 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_ignore_automats, Fixture )
     automatCreationObserver->Notify( creationMessage, "identifier" );
 }
 
-
-
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_ignore_formations, Fixture )
 {
     UnitTeleporter teleporter( xis,missionResolver, agentSubject, unitContextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger, formationContextHandler, automatContextHandler );
@@ -251,3 +250,4 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_ignore_formations, Fixture )
     MOCK_EXPECT( object.Unregister ).once().calls([&]( ObjectListener_ABC& listener ) { BOOST_CHECK_EQUAL(&listener, remoteAgentListener); });
     formationCreationObserver->Notify( creationMessage, "identifier" );
 }
+

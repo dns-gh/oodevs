@@ -471,7 +471,7 @@ void LocationOwnershipPolicy::LocalDestroyed( const std::string& identifier )
 // Name: LocationOwnershipPolicy::Divested
 // Created: AHC 2012-03-12
 // -----------------------------------------------------------------------------
-void LocationOwnershipPolicy::Divested( const std::string& identifier )
+void LocationOwnershipPolicy::Divested( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     T_OwnershipStates::iterator it = states_.find( identifier );
     if( states_.end() == it )
@@ -483,7 +483,7 @@ void LocationOwnershipPolicy::Divested( const std::string& identifier )
 // Name: LocationOwnershipPolicy::Acquired
 // Created: AHC 2012-03-12
 // -----------------------------------------------------------------------------
-void LocationOwnershipPolicy::Acquired( const std::string& identifier )
+void LocationOwnershipPolicy::Acquired( const std::string& identifier, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     T_OwnershipStates::iterator it = states_.find( identifier );
     if( states_.end() == it )
