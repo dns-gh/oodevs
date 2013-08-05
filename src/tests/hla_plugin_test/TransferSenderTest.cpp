@@ -26,16 +26,12 @@
 #include "MockInteractionHandler.h"
 #include "MockLocalAgentResolver.h"
 #include "MockCallsignResolver.h"
+#include "SerializationFixture.h"
 #include <hla/InteractionIdentifier.h>
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
 
 using namespace plugins::hla;
-
-bool operator == (const Omt13String& lhs, const Omt13String& rhs)
-{
-    return lhs.str() == rhs.str();
-}
 
 namespace
 {
@@ -74,17 +70,6 @@ namespace
         ~RprSenderFixture()
         {
         }
-        template <typename T>
-        void FillParameter( std::list< std::vector<uint8_t> >& bufVect, ::hla::Interaction_ABC::T_Parameters& p,
-                const std::string& paramName, const T& value )
-        {
-            ::hla::Serializer ser;
-            ser << value;
-            std::vector<uint8_t> buff(ser.GetSize(), 0 );
-            ser.CopyTo( &buff[0] );
-            bufVect.push_back( buff );
-            p.push_back( std::make_pair( ::hla::ParameterIdentifier( paramName ), new ::hla::Deserializer( &(bufVect.back()[0]), ser.GetSize() ) ) );
-        }
         void ReceiveAck( uint32_t requestId, interactions::Acknowledge::ResponseFlagEnum16 resp )
         {
             std::list< std::vector<uint8_t> > bufVect;
@@ -108,29 +93,19 @@ namespace
             transferInteraction->Create( params );
             transferInteraction->Flush();
         }
-        template <typename T>
-        void CheckParameter( const ::hla::ParameterIdentifier& , ::hla::T_SerializerPtr serializer, const T& ref )
-        {
-            T value;
-            std::vector<uint8_t> buff( serializer->GetSize(), 0 );
-            serializer->CopyTo( &buff[0] );
-            ::hla::Deserializer deser( &buff[0], serializer->GetSize() );
-            deser >> value;
-            BOOST_CHECK( value == ref );
-        }
         void CheckTransfer( const std::string& agentID, TransferSender_ABC::TransferType type, uint32_t requestId )
         {
             mock::sequence s;
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "OriginatingEntity" ), mock::any ) ; 
-                //calls( boost::bind( &RprSenderFixture::CheckParameter<rpr::EntityIdentifier>, this, _1, _2, federateID ) );
+                //calls( boost::bind( &CheckParameter<rpr::EntityIdentifier>, _1, _2, federateID ) );
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "ReceivingEntity" ), mock::any );        
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RequestIdentifier" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<uint32_t>, this, _1, _2, requestId ) );
+                calls( boost::bind( &CheckParameter<uint32_t>, _1, _2, requestId ) );
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "TransferType" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<uint8_t>, this, _1, _2, 
+                calls( boost::bind( &CheckParameter<uint8_t>, _1, _2,
                     static_cast<uint8_t>(type == TransferSender_ABC::E_EntityPull ? interactions::TransferControl::E_EntityPull : interactions::TransferControl::E_EntityPush ) ) );
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "TransferEntity" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<Omt13String>, this, _1, _2, Omt13String( agentID ) ) );
+                calls( boost::bind( &CheckParameter<Omt13String>, _1, _2, Omt13String( agentID ) ) );
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RecordSetData" ), mock::any );
             MOCK_EXPECT( transferHandler->End ).once();
         }
@@ -140,10 +115,10 @@ namespace
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "OriginatingEntity" ), mock::any );
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "ReceivingEntity" ), mock::any );        
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RequestIdentifier" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<uint32_t>, this, _1, _2, requestId ) );
+                calls( boost::bind( &CheckParameter<uint32_t>, _1, _2, requestId ) );
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "AcknowledgeFlag" ), mock::any );
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "ResponseFlag" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<uint16_t>, this, _1, _2, static_cast<uint16_t>( resp ) ) );;
+                calls( boost::bind( &CheckParameter<uint16_t>, _1, _2, static_cast<uint16_t>( resp ) ) );;
             MOCK_EXPECT( ackHandler->End ).once();
         }
         typedef T SenderType;        
@@ -283,35 +258,6 @@ BOOST_FIXTURE_TEST_CASE( null_receive_push_positive, RprSenderFixture< NullTrans
     CheckAck( interactions::Acknowledge::E_AbleToComply, 42 );
     MOCK_EXPECT( ownershipController.PerformAcquisition ).once().with( "identifier", emptyAttributes );
     ReceiveTransfer(42, interactions::TransferControl::E_EntityPush, "identifier" );
-}
-
-namespace plugins
-{
-namespace hla
-{
-    bool operator==( const UnicodeString& lhs, const UnicodeString& rhs )
-    {
-        return lhs.str() == rhs.str();
-    }
-    bool operator==( const NETN_UUID& lhs, const NETN_UUID& rhs )
-    {
-        return lhs.str() == rhs.str();
-    }
-    namespace interactions
-    {
-        bool operator==( const TransactionId& lhs, const TransactionId& rhs )
-        {
-            return (std::string)lhs.federateHandle == (std::string)rhs.federateHandle &&
-                lhs.transactionCounter == rhs.transactionCounter;
-        }    
-    }
-    
-    template < typename T >
-    bool operator==( const VariableArray< T >& lhs, const VariableArray< T >& rhs )
-    {
-        return lhs.list == rhs.list;
-    }
-}
 }
 
 namespace

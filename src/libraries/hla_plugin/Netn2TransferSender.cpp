@@ -194,8 +194,9 @@ void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& age
     transfer.transactionID.federateHandle = federateHandle_;
     transfer.transactionID.transactionCounter = reqId;
     transfer.requestFederate = UnicodeString( federateName_ );
-    BOOST_FOREACH( const std::string& agentID, agentIDs )
+    for( auto it = agentIDs.begin(); agentIDs.end() != it ; ++it )
     {
+        const std::string& agentID = *it;
         std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
         if( uniqueId.size() == 0 )
         {

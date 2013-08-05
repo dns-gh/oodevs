@@ -173,6 +173,7 @@ private:
     std::auto_ptr< OwnershipPolicy_ABC > pOwnershipPolicy_;
     std::auto_ptr< EntityIdentifierResolver_ABC > pEntityIdentifierResolver_;
     std::auto_ptr< SimulationTimeManager_ABC > pSimulationTimeManager_;
+    std::auto_ptr< OwnershipPolicy_ABC > pExternalOwnershipPolicy_;
     //@}
 };
 
