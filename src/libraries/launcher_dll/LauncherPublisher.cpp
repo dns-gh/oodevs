@@ -48,7 +48,6 @@ void LauncherPublisher::Send( const sword::LauncherToAdmin& message )
     }
     catch( std::exception& e )
     {
-        std::string content = e.what();
-        MT_LOG_ERROR_MSG( MT_FormatString( "Sending message to Admin failed, error code = %d", content) );
+        MT_LOG_ERROR_MSG( MT_FormatString( "Sending message to Admin failed, error code = %s", e.what() ) );
     }
 }
