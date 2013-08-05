@@ -216,8 +216,7 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	params = swapi.MakeParameters(
 		swapi.MakeIdentifier(uint32(knowledgeGroup.PartyId)),
 		swapi.MakeString("Standard"))
-	var group *swapi.KnowledgeGroup
-	group, err = client.CreateKnowledgeGroupTest(params)
+	group, err := client.CreateKnowledgeGroupTest(params)
 	c.Assert(err, IsNil)
 
 	// invalid party
@@ -234,4 +233,8 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.FindAutomat(automat.Id).KnowledgeGroupId == group.Id
 	})
+
+	// change knowledge group to itself
+	err = client.ChangeKnowledgeGroup(automat.Id, group.Id, automat.PartyId)
+	c.Assert(err, IsNil)
 }
