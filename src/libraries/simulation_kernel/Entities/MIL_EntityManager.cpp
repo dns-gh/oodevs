@@ -1675,7 +1675,7 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
     MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
     if( !pAutomate )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid automat" );
-    pAutomate->OnReceiveChangeKnowledgeGroup( message, *armyFactory_ );
+    pAutomate->OnReceiveChangeKnowledgeGroup( message );
     client::AutomatChangeKnowledgeGroup resendMessage;
     resendMessage().mutable_automat()->set_id( pAutomate->GetID() );
     resendMessage().mutable_party()->set_id( pAutomate->GetArmy().GetID() );

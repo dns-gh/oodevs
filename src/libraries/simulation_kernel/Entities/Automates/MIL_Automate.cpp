@@ -1101,47 +1101,33 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
 // Name: MIL_Automate::OnReceiveChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies  )
+void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg )
 {
     if( msg.type() != sword::UnitMagicAction::change_knowledge_group )
         throw MASA_BADPARAM_UNIT( "invalid message type" );
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
+    if( !msg.has_parameters() || msg.parameters().elem_size() < 1 )
         throw MASA_BADPARAM_UNIT( "invalid parameters count" );
-    if( msg.parameters().elem( 0 ).value_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameter" );
-    if( msg.parameters().elem( 1 ).value_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameter" );
-
-    // Inversion possible des paramètres à gérer
-    bool knowledgeGroupParamFirst   = msg.parameters().elem( 0 ).value().Get( 0 ).has_knowledgegroup() && msg.parameters().elem( 1 ).value().Get( 0 ).has_party();
-    bool partyParamFirst            = msg.parameters().elem( 0 ).value().Get( 0 ).has_party() && msg.parameters().elem( 1 ).value().Get( 0 ).has_knowledgegroup();
-    if( ! ( knowledgeGroupParamFirst || partyParamFirst ) )
-        throw MASA_BADPARAM_UNIT( "parameters must be a knowledge group and an party" );
-
-    unsigned int knowledgeGroupId = 0, partyId = 0;
-    if( partyParamFirst )
+    // change_knowledge_group used to receive the knowledge group and its
+    // party identifier, in any order. Tolerate the former behaviour.
+    unsigned int knowledgeGroupId = 0;
+    for( int i = 0; i != msg.parameters().elem_size(); ++i )
     {
-        partyId = msg.parameters().elem( 0 ).value().Get( 0 ).party().id();
-        knowledgeGroupId = msg.parameters().elem( 1 ).value().Get( 0 ).knowledgegroup().id();
+        const auto& elem = msg.parameters().elem( i );
+        if( elem.value_size() != 1 || !elem.value().Get( 0 ).has_knowledgegroup() )
+            continue;
+        knowledgeGroupId = elem.value().Get( 0 ).knowledgegroup().id();
+        break;
     }
-    else
-    {
-        knowledgeGroupId = msg.parameters().elem( 0 ).value().Get( 0 ).knowledgegroup().id();
-        partyId = msg.parameters().elem( 1 ).value().Get(0).party().id();
-    }
-
-    MIL_Army_ABC* pNewArmy = armies.Find( partyId );
-    if( !pNewArmy || *pNewArmy != GetArmy() )
-        throw MASA_BADPARAM_UNIT( "invalid party" );
-    boost::shared_ptr< MIL_KnowledgeGroup > pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( knowledgeGroupId );
+    if( !knowledgeGroupId )
+        throw MASA_BADPARAM_UNIT( "missing knowledge group identifier" );
+    auto pNewKnowledgeGroup = GetArmy().FindKnowledgeGroup( knowledgeGroupId );
     if( !pNewKnowledgeGroup )
-        throw MASA_BADPARAM_UNIT( "invalid knowledge group" );
-    if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
-    {
-        pKnowledgeGroup_->UnregisterAutomate( *this );
-        pKnowledgeGroup_ = pNewKnowledgeGroup;
-        pKnowledgeGroup_->RegisterAutomate( *this );
-    }
+        throw MASA_BADPARAM_UNIT( "unknown or disallowed knowledge group identifier" );
+    if( *pKnowledgeGroup_ == *pNewKnowledgeGroup )
+        return;
+    pKnowledgeGroup_->UnregisterAutomate( *this );
+    pKnowledgeGroup_ = pNewKnowledgeGroup;
+    pKnowledgeGroup_->RegisterAutomate( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -197,7 +197,7 @@ public:
     unsigned int OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx );
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg );
-    void OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg );
     void OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations );
     virtual void OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& msg, MIL_AutomateLOG& supplier );
     void OnReloadBrain( const sword::MissionParameters& msg );

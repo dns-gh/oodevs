@@ -1978,8 +1978,10 @@ message UnitMagicAction {
         //! Change an automat knowledge group
         //! The tasker must be an automat identifier.
         //! parameters[0], KnowledgeGroup: the new parent knowledge group.
-        //! parameters[1], Party: the army
-        //! The party must be the same for the group and the automat.
+        //! The automat must belong to the same party than its knowledge
+        //! group.
+        //! An AutomatChangeKnowledgeGroup message is triggered on
+        //! successful update.
         change_knowledge_group            = 19;
         //! A change logistic links magic action
         //! parameters with each parameter has value(0) for 
