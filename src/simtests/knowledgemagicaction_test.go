@@ -213,24 +213,36 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// creation of another knowledge group with the same army
-	params = swapi.MakeParameters(
-		swapi.MakeIdentifier(uint32(knowledgeGroup.PartyId)),
-		swapi.MakeString("Standard"))
-	group, err := client.CreateKnowledgeGroupTest(params)
+	group, err := client.CreateKnowledgeGroup(knowledgeGroup.PartyId, "Standard")
 	c.Assert(err, IsNil)
 
+	// ... and one belonging to the other party
+	otherParty := uint32(0)
+	for _, p := range data.Parties {
+		if p.Id != knowledgeGroup.PartyId {
+			otherParty = p.Id
+			break
+		}
+	}
+	c.Assert(otherParty, Greater, uint32(0))
+	otherGroup, err := client.CreateKnowledgeGroup(otherParty, "Standard")
+	c.Assert(err, IsNil)
 	// invalid knowledge group
-	err = client.ChangeKnowledgeGroup(automat.Id, 42, automat.PartyId)
+	err = client.ChangeKnowledgeGroup(automat.Id, 42)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid knowledgegroup party
+	err = client.ChangeKnowledgeGroup(automat.Id, otherGroup.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// change knowledge group
-	err = client.ChangeKnowledgeGroup(automat.Id, group.Id, automat.PartyId)
+	err = client.ChangeKnowledgeGroup(automat.Id, group.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.FindAutomat(automat.Id).KnowledgeGroupId == group.Id
 	})
 
 	// change knowledge group to itself
-	err = client.ChangeKnowledgeGroup(automat.Id, group.Id, automat.PartyId)
+	err = client.ChangeKnowledgeGroup(automat.Id, group.Id)
 	c.Assert(err, IsNil)
 }

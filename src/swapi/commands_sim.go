@@ -1072,6 +1072,13 @@ func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*Kno
 	return group, nil
 }
 
+func (c *Client) CreateKnowledgeGroup(partyId uint32,
+	kind string) (*KnowledgeGroup, error) {
+
+	params := MakeParameters(MakeIdentifier(partyId), MakeString(kind))
+	return c.CreateKnowledgeGroupTest(params)
+}
+
 func (c *Client) ChangeUnitSuperior(unitId, automatId uint32) error {
 	params := MakeParameters()
 	tasker := &sword.Tasker{}
@@ -1187,15 +1194,17 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 	return created, err
 }
 
-func (c *Client) ChangeKnowledgeGroupTest(automatId uint32, params *sword.MissionParameters) error {
+func (c *Client) ChangeKnowledgeGroupTest(automatId uint32,
+	params *sword.MissionParameters) error {
+
 	msg := createMagicActionMessage(params, makeAutomatTasker(automatId),
 		sword.UnitMagicAction_change_knowledge_group.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) ChangeKnowledgeGroup(automatId, knowledgeGroupId, armyId uint32) error {
-	params := MakeParameters(MakeKnowledgeGroup(knowledgeGroupId), MakeParty(armyId))
+func (c *Client) ChangeKnowledgeGroup(automatId, knowledgeGroupId uint32) error {
+	params := MakeParameters(MakeKnowledgeGroup(knowledgeGroupId))
 	return c.ChangeKnowledgeGroupTest(automatId, params)
 }
 
