@@ -417,12 +417,10 @@ namespace
 // -----------------------------------------------------------------------------
 double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double costPerMeter ) const
 {
-    if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathFinderSlope() )
-    {
-        auto f = boost::bind( &IsSlopeTooSteep, boost::cref( data_ ), from, _1, squareSlope_ );
-        if( Elevation( data_.GetCellSize() ).FindPath( from, to, f ) )
-            return -1;
-    }
+    auto elevationChecker = boost::bind( &IsSlopeTooSteep, boost::cref( data_ ),
+            from, _1, squareSlope_ );
+    if( Elevation( data_.GetCellSize() ).FindPath( from, to, elevationChecker ) )
+        return -1;
     const double altitudeTo = data_.GetAltitude( to );
     const double altitude = costPerMeter > 0 ? data_.GetMaxAltitude() : data_.GetMinAltitude();
     return ( altitude - altitudeTo ) * costPerMeter;
