@@ -101,7 +101,7 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
     transfer.transferType = type == E_EntityPush ? static_cast< uint32_t >( interactions::TMR::Divest )
                                                  : static_cast< uint32_t >( interactions::TMR::Acquire );
     pRequestSender_->Send( transfer );
-    callbacks_.insert( std::make_pair( reqId, std::make_pair( agentID, callback ) ) );
+    callbacks_.insert( std::make_pair( reqId, callback ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,8 +178,40 @@ void Netn2TransferSender::Receive( interactions::TMR_OfferTransferModellingRespo
     if( offer.requestFederate.str() == federateName_ &&
         ( it=callbacks_.find( offer.transactionID.transactionCounter ) ) != callbacks_.end() )
     {
-        (it->second.second)( offer.isOffering );
+        (it->second)( offer.isOffering );
         callbacks_.erase( offer.transactionID.transactionCounter );
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Netn2TransferSender::RequestTransfer
+// Created: AHC 2013-07-03
+// -----------------------------------------------------------------------------
+void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& agentIDs, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes )
+{
+    unsigned int reqId = ctxtFactory_.Create();
+    interactions::TMR_RequestTransferModellingResponsibility transfer;
+    transfer.transactionID.federateHandle = federateHandle_;
+    transfer.transactionID.transactionCounter = reqId;
+    transfer.requestFederate = UnicodeString( federateName_ );
+    BOOST_FOREACH( const std::string& agentID, agentIDs )
+    {
+        std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
+        if( uniqueId.size() == 0 )
+        {
+            logger_.LogError( std::string( "Trying to transfer unknown entity " ) + agentID );
+            return;
+        }
+        transfer.instances.list.push_back( NETN_UUID( uniqueId ) );
+    }
+    for( auto it=attributes.begin(); attributes.end()!=it; ++it )
+    {
+        const ::hla::AttributeIdentifier& attr = *it;
+        transfer.attributes.list.push_back( UnicodeString( attr.ToString() ) );
+    }
+    transfer.capabilityType = static_cast< uint32_t >( interactions::TMR::TotalTransfer );
+    transfer.transferType = type == E_EntityPush ? static_cast< uint32_t >( interactions::TMR::Divest )
+                                                 : static_cast< uint32_t >( interactions::TMR::Acquire );
+    pRequestSender_->Send( transfer );
+    callbacks_.insert( std::make_pair( reqId, callback ) );
+}
