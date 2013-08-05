@@ -114,7 +114,7 @@ private:
     std::vector< QAction* > planningActions_;
     QAction* switchAction_;
     QAction* detailAction_;
-    QAction* triggerAction_;
+    QToolButton* triggerButton_;
     QAction* saveAction_;
 
     QString triggerText_;

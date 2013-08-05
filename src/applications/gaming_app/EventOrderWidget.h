@@ -169,7 +169,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     kernel::SafePointer< kernel::Entity_ABC > target_;
 
-    const kernel::OrderType* currentOrder_;
+    const kernel::OrderType* lastGivenOrder_;
     //@}
 };
 
