@@ -10,7 +10,7 @@
 #ifndef SIMULATION_TERRAIN_TER_LOGGER_H
 #define SIMULATION_TERRAIN_TER_LOGGER_H
 
-// Plug pathfind library log4cxx facility into Sword MT_Logger.
+// Plug pathfind library logging facility into Sword MT_Logger.
 void InitializeTerrainLogger();
 
 #endif // SIMULATION_TERRAIN_TER_LOGGER_H

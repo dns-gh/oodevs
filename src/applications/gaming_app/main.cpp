@@ -15,6 +15,7 @@
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
+#include <gdal_ogr/GdalLogging.h>
 #include <tools/win32/CrashHandler.h>
 #include <boost/scoped_ptr.hpp>
 
@@ -63,6 +64,7 @@ int main( int, char** )
         MT_CrashHandler::SetRootDirectory( debugDir );
         tools::InitCrashHandler( &CrashHandler );
     }
+    gdal_ogr::SetLogger( CreateMTLogger( "gdal_ogr" ) );
 
     int ret = appMain( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
     if( logger )

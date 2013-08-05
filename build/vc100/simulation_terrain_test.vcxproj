@@ -57,7 +57,6 @@
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
-    <Import Project="Property sheets\link_log4cxx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -78,7 +77,6 @@
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
-    <Import Project="Property sheets\link_log4cxx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -99,7 +97,6 @@
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
-    <Import Project="Property sheets\link_log4cxx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -120,7 +117,6 @@
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
-    <Import Project="Property sheets\link_log4cxx.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -131,7 +127,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxxd.lib;psapi.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
@@ -143,7 +139,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxxd.lib;psapi.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
@@ -159,7 +155,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxx.lib;psapi.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
@@ -171,7 +167,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxx.lib;psapi.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>

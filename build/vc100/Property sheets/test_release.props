@@ -15,7 +15,6 @@
     <libDirectIA>directia-$(CurrentPlatform)-mt-4_6.lib</libDirectIA>
     <libGdal>gdal_i.lib;libgdal_ogr-$(CurrentPlatform)-mt.lib</libGdal>
     <libGraphics>libgraphics-$(CurrentPlatform)-mt.lib</libGraphics>
-    <libLog4cxx>log4cxx.lib</libLog4cxx>
     <libGlu>glu32.lib</libGlu>
     <libGeoStore>geostore.lib</libGeoStore>
     <libGeoData>libgeodata-$(CurrentPlatform)-mt.lib</libGeoData>

@@ -55,7 +55,6 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_graphics.props" />
-    <Import Project="Property sheets\link_log4cxx.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
@@ -76,7 +75,6 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_graphics.props" />
-    <Import Project="Property sheets\link_log4cxx.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
@@ -97,7 +95,6 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_graphics.props" />
-    <Import Project="Property sheets\link_log4cxx.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
@@ -118,7 +115,6 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_graphics.props" />
-    <Import Project="Property sheets\link_log4cxx.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />

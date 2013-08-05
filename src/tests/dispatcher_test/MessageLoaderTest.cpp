@@ -30,7 +30,7 @@ namespace
         }
         ~Fixture()
         {
-            MT_LogManager::Cleanup();
+            MT_LogManager::Instance().Reset();
         }
     };
 
