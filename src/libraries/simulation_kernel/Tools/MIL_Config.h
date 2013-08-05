@@ -71,7 +71,6 @@ public:
     bool               GetPausedAtStartup          () const;
     unsigned int       GetPathFinderThreads        () const;
     boost::optional< unsigned int > GetPathFinderMaxComputationTime() const;
-    bool               UsePathFinderSlope          () const;
     const tools::Path& GetCheckpointNameTestMode   () const;
     const tools::Path& GetIntegrationDir           () const;
     const tools::Path& GetPathfindDir              () const;
@@ -144,7 +143,6 @@ private:
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
     bool           bLegacy_;
-    bool           pathfinderSlope_;
     tools::Path    strCheckPointNameTestMode_;
     T_CRCMap       CRCMap_;
     int            randomSeed_;
