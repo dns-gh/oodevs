@@ -53,7 +53,6 @@ masa_set_external_library( GEOS_I_LIBRARIES           geos_i_d geos_i )
 masa_set_external_library( HLA_LIBRARIES              hla_d hla )
 masa_set_external_library( ICONV_LIBRARIES            libiconv_d libiconv )
 masa_set_external_library( LICENSE_GUI_LIBRARIES      license_gui_d license_gui )
-masa_set_external_library( LOG4CXX_LIBRARIES          log4cxxd log4cxx )
 masa_set_external_library( MONGOOSE_LIBRARIES         mongoose_d mongoose )
 masa_set_external_library( PROJ_I_LIBRARIES           proj_i_d proj_i )
 masa_set_external_library( PROTOBUF_LIBRARIES         libprotobufd libprotobuf )
@@ -462,7 +461,6 @@ target_link_libraries( simulation_kernel
     simulation_terrain
     ${CORE_LIBRARIES}
     ${GEODATA_LIBRARIES}
-    ${LOG4CXX_LIBRARIES}
     ${TERRAIN_LIBRARIES}
 )
 
