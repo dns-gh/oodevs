@@ -14,10 +14,11 @@
 #include <boost/smart_ptr/make_shared.hpp>
 #include <deque>
 
-using namespace tools;
-
 #define XSECT( p1, p2 ) ( h[ p2 ] * xh[ p1 ] - h[ p1 ] * xh[ p2 ] ) / ( h[ p2 ] - h[ p1 ] )
 #define YSECT( p1, p2 ) ( h[ p2 ] * yh[ p1 ] - h[ p1 ] * yh[ p2 ] ) / ( h[ p2 ] - h[ p1 ] )
+
+namespace tools
+{
 
 namespace
 {
@@ -117,10 +118,14 @@ namespace
 
 }
 
-bool ContourComputer::Compute( const unsigned int width,  const unsigned int height, const int linesHeight, const float cellSize,
-            boost::function< short(int, int) > DATA, boost::function< void(short) > progress, boost::function< bool() > valid,
-            boost::function< void( boost::shared_ptr< T_PointVector >, int, bool )> loop, boost::function< bool() > checkStop,
-            const int nc )
+bool ComputeContour( const unsigned int width,  const unsigned int height,
+    const int linesHeight, const float cellSize,
+    boost::function< short(int, int) > data,
+    boost::function< void(short) > progress,
+    boost::function< bool() > valid,
+    boost::function< void( boost::shared_ptr< T_PointVector >, int, bool )> loop,
+    boost::function< bool() > checkStop,
+    const int nc )
 {
     // Adapted from http://paulbourke.net/papers/conrec/
     int sh[ 5 ];
@@ -162,11 +167,11 @@ bool ContourComputer::Compute( const unsigned int width,  const unsigned int hei
         {
             short temp1;
             short temp2;
-            temp1 = std::min( DATA( i    , j ), DATA( i    , j + 1 ) );
-            temp2 = std::min( DATA( i + 1, j ), DATA( i + 1, j + 1 ) );
+            temp1 = std::min( data( i    , j ), data( i    , j + 1 ) );
+            temp2 = std::min( data( i + 1, j ), data( i + 1, j + 1 ) );
             float dmin = std::min( temp1, temp2 );
-            temp1 = std::max( DATA( i    , j ), DATA( i    , j + 1 ) );
-            temp2 = std::max( DATA( i + 1, j ), DATA( i + 1, j + 1 ) );
+            temp1 = std::max( data( i    , j ), data( i    , j + 1 ) );
+            temp2 = std::max( data( i + 1, j ), data( i + 1, j + 1 ) );
             float dmax = std::max( temp1, temp2 );
             if( dmax >= linesHeight + 0.1 && dmin <= nc * linesHeight  + 0.1 )
             {
@@ -179,7 +184,7 @@ bool ContourComputer::Compute( const unsigned int width,  const unsigned int hei
                         {
                             if( m > 0 )
                             {
-                                h[ m ] = DATA( i + im [ m - 1 ], j + jm[ m - 1 ] ) - alt;
+                                h[ m ] = data( i + im [ m - 1 ], j + jm[ m - 1 ] ) - alt;
                                 xh[ m ] = ( i + im[ m - 1 ] ) * cellSize;
                                 yh[ m ] = ( j + jm[ m - 1 ] ) * cellSize;
                             }
@@ -335,3 +340,5 @@ bool ContourComputer::Compute( const unsigned int width,  const unsigned int hei
     }
     return true;
 }
+
+} // namespace tools
