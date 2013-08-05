@@ -1968,7 +1968,11 @@ message UnitMagicAction {
         //! parameters[0], Quantity: a number between
         //!    0 and 100.
         crowd_change_armed_individuals    = 18;
-        //! A change knowledge group magic action
+        //! Change knowledge group
+        //! The tasker must be an automat identifier.
+        //! parameters[0], KnowledgeGroup: the new parent knowledge group.
+        //! parameters[1], Party: the army
+        //! The party must be the same for the group and the automat.
         change_knowledge_group            = 19;
         //! A change logistic links magic action
         //! parameters with each parameter has value(0) for 
