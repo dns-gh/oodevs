@@ -1257,3 +1257,58 @@ func (c *Client) CancelSurrender(automatId uint32) error {
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) CreateWounds(unitId uint32, humans map[int32]int32) error {
+	params := MakeParameters()
+	if len(humans) != 0 {
+		params = MakeParameters(MakeHumans(humans))
+	}
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_create_wounds.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangeHumanState(unitId uint32, humans []*HumanDotation) error {
+	params := MakeParameters()
+	if len(humans) != 0 {
+		params = MakeParameters(MakeHumansDotation(humans))
+	}
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_change_human_state.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangeDotation(unitId uint32, resources []*ResourceDotation) error {
+	params := MakeParameters()
+	if len(resources) != 0 {
+		params = MakeParameters(MakeResourcesDotation(resources))
+	}
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_change_dotation.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*EquipmentDotation) error {
+	params := MakeParameters()
+	if len(equipments) != 0 {
+		params = MakeParameters(MakeEquipmentDotation(equipments))
+	}
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_change_equipment_state.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) CreateBreakdowns(unitId uint32, equipments map[uint32]*EquipmentDotation) error {
+	params := MakeParameters()
+	if len(equipments) != 0 {
+		params = MakeParameters(MakeBreakdowns(equipments))
+	}
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_create_breakdowns.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}

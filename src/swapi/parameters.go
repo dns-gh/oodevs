@@ -287,6 +287,106 @@ func MakeResourceType(value uint32) *sword.MissionParameter {
 		})
 }
 
+func MakeHumans(humans map[int32]int32) *sword.MissionParameter {
+	list := []*sword.MissionParameter_Value{}
+	for k, v := range humans {
+		params := []*sword.MissionParameter_Value{
+			{Quantity: proto.Int32(v)},
+			{Enumeration: proto.Int32(k)},
+		}
+		list = append(list, &sword.MissionParameter_Value{
+			List: params,
+		})
+	}
+	return MakeParameter(list...)
+}
+
+func MakeHumansDotation(humans []*HumanDotation) *sword.MissionParameter {
+	list := []*sword.MissionParameter_Value{}
+	for _, v := range humans {
+		injury := []*sword.MissionParameter_Value{
+			{Identifier: proto.Uint32(0)}, // not used
+			{Enumeration: proto.Int32(v.Injury)},
+		}
+		injuries := []*sword.MissionParameter_Value{
+			{List: injury},
+		}
+
+		params := []*sword.MissionParameter_Value{
+			{Quantity: proto.Int32(v.Quantity)},
+			{Enumeration: proto.Int32(v.Rank)},
+			{Enumeration: proto.Int32(v.State)},
+			{List: injuries},
+			{BooleanValue: proto.Bool(v.Psyop)},
+			{BooleanValue: proto.Bool(v.Contaminated)},
+		}
+		list = append(list, &sword.MissionParameter_Value{
+			List: params,
+		})
+	}
+	return MakeParameter(list...)
+}
+
+func MakeResourcesDotation(resources []*ResourceDotation) *sword.MissionParameter {
+	list := []*sword.MissionParameter_Value{}
+	for _, v := range resources {
+		params := []*sword.MissionParameter_Value{
+			{Identifier: proto.Uint32(v.Type)},
+			{Quantity: proto.Int32(v.Quantity)},
+			{AReal: proto.Float32(v.Threshold)},
+		}
+		list = append(list, &sword.MissionParameter_Value{
+			List: params,
+		})
+	}
+	return MakeParameter(list...)
+}
+
+func MakeEquipmentDotation(equipments map[uint32]*EquipmentDotation) *sword.MissionParameter {
+	list := []*sword.MissionParameter_Value{}
+	for k, v := range equipments {
+		breakdown := []*sword.MissionParameter_Value{}
+		if v.Breakdowns != nil {
+			for _, u := range v.Breakdowns {
+				breakdown = append(breakdown, &sword.MissionParameter_Value{
+					Identifier: proto.Uint32(uint32(u)),
+				})
+			}
+		}
+		params := []*sword.MissionParameter_Value{
+			{Identifier: proto.Uint32(k)},
+			{Quantity: proto.Int32(v.Available)},
+			{Quantity: proto.Int32(v.Unavailable)},
+			{Quantity: proto.Int32(v.Repairable)},
+			{Quantity: proto.Int32(v.OnSiteFixable)},
+			{Quantity: proto.Int32(v.Repairing)},
+			{Quantity: proto.Int32(v.Captured)},
+			{List: breakdown},
+		}
+		list = append(list, &sword.MissionParameter_Value{
+			List: params,
+		})
+	}
+	return MakeParameter(list...)
+}
+
+func MakeBreakdowns(equipments map[uint32]*EquipmentDotation) *sword.MissionParameter {
+	list := []*sword.MissionParameter_Value{}
+	for k, v := range equipments {
+		if len(v.Breakdowns) != 0 {
+			params := []*sword.MissionParameter_Value{
+				{Identifier: proto.Uint32(k)},
+				{Quantity: proto.Int32(v.Repairable)},
+				{Identifier: proto.Uint32(uint32(v.Breakdowns[0]))},
+			}
+			list = append(list, &sword.MissionParameter_Value{
+				List: params,
+			})
+		}
+	}
+	return MakeParameter(list...)
+}
+
 func GetTime(value *sword.DateTime) (time.Time, error) {
 	if value == nil {
 		return time.Time{}, ErrInvalidTime

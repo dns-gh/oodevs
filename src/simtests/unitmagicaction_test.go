@@ -13,6 +13,7 @@ import (
 	"fmt"
 	. "launchpad.net/gocheck"
 	"math"
+	"reflect"
 	"strings"
 	"swapi"
 	"sword"
@@ -1080,5 +1081,466 @@ func (s *TestSuite) TestSurrender(c *C) {
 			}
 		}
 		return true
+	})
+}
+
+func CheckHumanQuantity(actual []*swapi.HumanDotation, expected map[int32]int32) bool {
+	for _, human := range actual {
+		if human.Quantity != expected[human.Rank] {
+			return false
+		}
+	}
+	return true
+}
+
+func CheckHumanTotalState(actual []*swapi.HumanDotation, rank, state, quantity,
+	injury int32, psyop, contaminated bool) bool {
+	expected := swapi.HumanDotation{quantity, rank, state, injury, psyop, contaminated}
+	for _, human := range actual {
+		if *human == expected {
+			return true
+		}
+	}
+	return false
+}
+
+func CheckHumanState(actual []*swapi.HumanDotation, rank, state, quantity,
+	injury int32) bool {
+	return CheckHumanTotalState(actual, rank, state, quantity,
+		injury, false, false)
+}
+
+const (
+	// HumanRank
+	eOfficer        = 0
+	eWarrantOfficer = 1
+	eTrooper        = 2
+	// HumanState
+	eHealthy = 0
+	eInjured = 1
+	eDead    = 2
+	// InjuriesSeriousness
+	eInjuryU1 = 0
+	eInjuryU2 = 1
+	eInjuryU3 = 2
+	eInjuryUe = 3
+)
+
+// Deprecated
+func (s *TestSuite) TestUnitCreateWounds(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	u1 := CreateUnit(c, client, a1.Id)
+
+	// Check initial humans state
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumanQuantity(data.FindUnit(u1.Id).HumanDotations,
+			map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7})
+	})
+
+	// Error: Invalid parameters count
+	err := client.CreateWounds(u1.Id, map[int32]int32{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
+
+	// Error: Quantity must be non-zero positive
+	err = client.CreateWounds(u1.Id, map[int32]int32{0: 0})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be positive a non-zero positive number`)
+	err = client.CreateWounds(u1.Id, map[int32]int32{0: -10})
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Error: Invalid wound
+	err = client.CreateWounds(u1.Id, map[int32]int32{123: 10})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] invalid, bad wound enumeration`)
+
+	// Unit create wounds
+	// Magical action apply primarily to Tropper then WarrantOfficer and Officer
+	quantity := int32(3)
+	notWounded := int32(0)
+	woundedU1 := int32(2)
+	woundedU2 := int32(3)
+	dead := int32(5)
+
+	err = client.CreateWounds(u1.Id, map[int32]int32{woundedU2: quantity})
+	err = client.CreateWounds(u1.Id, map[int32]int32{woundedU1: quantity})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eHealthy, 1, notWounded) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eHealthy, 4, notWounded) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eHealthy, 1, notWounded) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, quantity, eInjuryU2) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, quantity, eInjuryU1)
+	})
+
+	// Kill all humans
+	err = client.CreateWounds(u1.Id, map[int32]int32{dead: 1234})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eDead, 1, notWounded) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eDead, 4, notWounded) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eDead, 1, notWounded) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, quantity, eInjuryU2) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, quantity, eInjuryU1)
+	})
+
+	// Heal humans
+	err = client.CreateWounds(u1.Id, map[int32]int32{notWounded: 7})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eDead, 1, notWounded) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eDead, 4, notWounded) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eHealthy, 7, notWounded)
+	})
+}
+
+func (s *TestSuite) TestUnitChangeHumanState(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	u1 := CreateUnit(c, client, a1.Id)
+
+	// Check initial humans state
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumanQuantity(data.FindUnit(u1.Id).HumanDotations,
+			map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7})
+	})
+
+	// Error: Invalid parameters count
+	err := client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
+
+	human := swapi.HumanDotation{
+		Quantity:     -10,
+		Rank:         eOfficer,
+		State:        eHealthy,
+		Injury:       eInjuryU2,
+		Psyop:        false,
+		Contaminated: false}
+
+	// Error: Quantity must be non-zero positive
+	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be positive a non-zero positive number`)
+	human.Quantity = 0
+	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	human.Quantity = 1
+
+	// Error: Invalid rank enumeration
+	human.Rank = 123
+	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] invalid, bad human rank enumeration`)
+	human.Rank = eTrooper
+
+	// Error: Invalid state enumeration
+	human.State = 123
+	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[2\] invalid, bad human state enumeration`)
+
+	// Change human state
+	human.State = eInjured
+	human.Injury = eInjuryU3
+	human.Psyop = true
+	human.Contaminated = true
+	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
+	c.Assert(err, IsNil)
+
+	// Check human composition
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eHealthy, 1, 0) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eHealthy, 4, 0) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eHealthy, 6, 0) &&
+			CheckHumanTotalState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, 1, eInjuryU3, true, true)
+	})
+
+	// Heal tropper, kill officer and wound 1245 warrant officers
+	human.State = eHealthy
+	human.Injury = 0
+	human.Psyop = false
+	human.Contaminated = false
+
+	officer := swapi.HumanDotation{
+		Quantity:     1,
+		Rank:         eOfficer,
+		State:        eDead,
+		Injury:       0,
+		Psyop:        false,
+		Contaminated: false}
+
+	warrantOfficer := swapi.HumanDotation{
+		Quantity:     1245,
+		Rank:         eWarrantOfficer,
+		State:        eInjured,
+		Injury:       eInjuryUe,
+		Psyop:        false,
+		Contaminated: false}
+
+	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human, &officer, &warrantOfficer})
+	c.Assert(err, IsNil)
+
+	// Check human composition
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eDead, 1, 0) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eInjured, 4, eInjuryUe) &&
+			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eHealthy, 7, 0)
+	})
+}
+
+func (s *TestSuite) TestUnitChangeDotation(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	u1 := CreateUnit(c, client, a1.Id)
+
+	// Check initial state
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindUnit(u1.Id).ResourceDotations) > 1
+	})
+
+	u1 = client.Model.GetData().FindUnit(u1.Id)
+	firstDotation := u1.ResourceDotations[0]
+	secondDotation := u1.ResourceDotations[1]
+
+	c.Assert(firstDotation, DeepEquals, &swapi.ResourceDotation{1, 3200, 10})
+	c.Assert(secondDotation, DeepEquals, &swapi.ResourceDotation{3, 8000, 10})
+
+	// Error: Invalid parameters count
+	err := client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
+
+	resource := swapi.ResourceDotation{
+		Type:      1245,
+		Quantity:  0,
+		Threshold: 0}
+
+	// Error: Invalid dotation category
+	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be a valid dotation category identifier`)
+	resource.Type = 1
+
+	// Error: Quantity must be positive
+	resource.Quantity = -123
+	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be a positive number`)
+	resource.Quantity = 1000
+
+	// Error: Threshold must be a number between 0 and 100
+	resource.Threshold = 123
+	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[2\] must be a number between 0 and 100`)
+	resource.Threshold = 50
+
+	// Change dotation
+	resource2 := swapi.ResourceDotation{
+		Type:      3,
+		Quantity:  0,
+		Threshold: 100}
+
+	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource, &resource2})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return *data.FindUnit(u1.Id).ResourceDotations[0] == resource &&
+			*data.FindUnit(u1.Id).ResourceDotations[1] == resource2
+	})
+
+	// Change dotation with a huge quantity
+	resource.Quantity = 123456789
+	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		dotation := *data.FindUnit(u1.Id).ResourceDotations[0]
+		return dotation.Quantity == int32(1000)
+	})
+}
+
+func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	u1 := CreateUnit(c, client, a1.Id)
+	equipmentId := uint32(11)
+	equipment := swapi.EquipmentDotation{
+		Available:     4,
+		Unavailable:   0,
+		Repairable:    0,
+		OnSiteFixable: 0,
+		Repairing:     0,
+		Captured:      0,
+		Breakdowns:    nil}
+
+	// Check initial state
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindUnit(u1.Id).EquipmentDotations) != 0
+	})
+
+	c.Assert(*client.Model.GetData().FindUnit(u1.Id).EquipmentDotations[equipmentId], DeepEquals, equipment)
+
+	// Error: Invalid parameters count
+	err := client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
+
+	// Error: Invalid negative parameters
+	equipment.Available = -1
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be a positive number`)
+
+	// Can't exceed the initial quantity
+	equipment = swapi.EquipmentDotation{
+		Available:     0,
+		Unavailable:   10,
+		Repairable:    0,
+		OnSiteFixable: 0,
+		Repairing:     0,
+		Captured:      0,
+		Breakdowns:    nil}
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, IsNil)
+
+	equipment.Unavailable = 4
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &equipment)
+	})
+
+	// Change equipments
+	equipment = swapi.EquipmentDotation{
+		Available:     1,
+		Unavailable:   1,
+		Repairable:    0,
+		OnSiteFixable: 0,
+		Repairing:     1,
+		Captured:      1,
+		Breakdowns:    nil}
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &equipment)
+	})
+
+	// Error: breakdown missing
+	equipment = swapi.EquipmentDotation{
+		Available:     1,
+		Unavailable:   1,
+		Repairable:    1,
+		OnSiteFixable: 0,
+		Repairing:     1,
+		Captured:      0,
+		Breakdowns:    nil}
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] size must be equal to parameters\[0\]\[0\]\[3\]`)
+
+	// Error: invalid breakdown
+	equipment.Breakdowns = []int32{1523}
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] must be a breakdown identifier`)
+
+	// Error: invalid breakdown for the composante
+	equipment.Breakdowns = []int32{1}
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] invalid breakdown identifier for the composante`)
+
+	// Change equipments
+	equipment.Breakdowns = []int32{82}
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &equipment)
+	})
+}
+
+func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	u1 := CreateUnit(c, client, a1.Id)
+	equipmentId := uint32(11)
+
+	initial := swapi.EquipmentDotation{
+		Available:     4,
+		Unavailable:   0,
+		Repairable:    0,
+		OnSiteFixable: 0,
+		Repairing:     0,
+		Captured:      0,
+		Breakdowns:    nil}
+
+	// Error: Invalid parameters count
+	err := client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
+
+	equipment := swapi.EquipmentDotation{
+		Available:     0,
+		Unavailable:   0,
+		Repairable:    1,
+		OnSiteFixable: 0,
+		Repairing:     0,
+		Captured:      0,
+		Breakdowns:    []int32{82}}
+
+	// Error: Invalid equipment type
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{123: &equipment})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be an composante type which can have breakdown`)
+
+	// Error: Quantity must be non-zero positive
+	equipment.Repairable = -1
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be positive a non-zero positive number`)
+	equipment.Repairable = 0
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be positive a non-zero positive number`)
+
+	equipment.Repairable = 1
+	// Error: invalid breakdown
+	equipment.Breakdowns = []int32{1523}
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[2\] must be a breakdown type identifier`)
+
+	// Create breakdown
+	equipment.Breakdowns = []int32{82}
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, IsNil)
+
+	initial.Repairable = 1
+	initial.Available = 3
+	initial.Breakdowns = []int32{82}
+	// Check breakdown
+	initial.Breakdowns = equipment.Breakdowns
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &initial)
+	})
+
+	// Create 5 breakdowns but 3 available
+	equipment = swapi.EquipmentDotation{
+		Available:     0,
+		Unavailable:   0,
+		Repairable:    5,
+		OnSiteFixable: 0,
+		Repairing:     0,
+		Captured:      0,
+		Breakdowns:    []int32{82}}
+	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, IsNil)
+
+	// Check breakdown
+	initial.Repairable = 4
+	initial.Available = 0
+	initial.Breakdowns = []int32{82, 82, 82, 82}
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &initial)
 	})
 }

@@ -79,7 +79,13 @@ func NewCrowd(id, partyId uint32, name string) *Crowd {
 }
 
 type EquipmentDotation struct {
-	Available int32
+	Available     int32
+	Unavailable   int32
+	Repairable    int32
+	OnSiteFixable int32
+	Repairing     int32
+	Captured      int32
+	Breakdowns    []int32
 }
 
 type LentEquipment struct {
@@ -94,6 +100,21 @@ type BorrowedEquipment struct {
 	Quantity int32
 }
 
+type HumanDotation struct {
+	Quantity     int32
+	Rank         int32
+	State        int32
+	Injury       int32
+	Psyop        bool
+	Contaminated bool
+}
+
+type ResourceDotation struct {
+	Type      uint32
+	Quantity  int32
+	Threshold float32
+}
+
 type Unit struct {
 	Id                 uint32
 	AutomatId          uint32
@@ -106,6 +127,8 @@ type Unit struct {
 	LentEquipments     []*LentEquipment
 	BorrowedEquipments []*BorrowedEquipment
 	PartySurrenderedTo uint32
+	HumanDotations     []*HumanDotation
+	ResourceDotations  []*ResourceDotation
 }
 
 type Automat struct {

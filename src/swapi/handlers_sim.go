@@ -96,21 +96,57 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	}
 	if dotations := mm.GetEquipmentDotations(); dotations != nil {
 		for _, dotation := range dotations.GetElem() {
-			unit.EquipmentDotations[dotation.GetType().GetId()] = &EquipmentDotation{dotation.GetAvailable()}
+			unit.EquipmentDotations[dotation.GetType().GetId()] = &EquipmentDotation{
+				Available:     dotation.GetAvailable(),
+				Unavailable:   dotation.GetUnavailable(),
+				Repairable:    dotation.GetRepairable(),
+				OnSiteFixable: dotation.GetOnSiteFixable(),
+				Repairing:     dotation.GetRepairing(),
+				Captured:      dotation.GetCaptured(),
+				Breakdowns:    dotation.GetBreakdowns()}
 		}
 	}
 	if lentEquipments := mm.GetLentEquipments(); lentEquipments != nil {
 		unit.LentEquipments = []*LentEquipment{}
 		for _, equipment := range lentEquipments.GetElem() {
-			unit.LentEquipments = append(unit.LentEquipments, &LentEquipment{equipment.GetBorrower().GetId(),
-				equipment.GetType().GetId(), equipment.GetQuantity()})
+			unit.LentEquipments = append(unit.LentEquipments, &LentEquipment{
+				Borrower: equipment.GetBorrower().GetId(),
+				TypeId:   equipment.GetType().GetId(),
+				Quantity: equipment.GetQuantity()})
 		}
 	}
 	if borrowedEquipments := mm.GetBorrowedEquipments(); borrowedEquipments != nil {
 		unit.BorrowedEquipments = []*BorrowedEquipment{}
 		for _, equipment := range borrowedEquipments.GetElem() {
-			unit.BorrowedEquipments = append(unit.BorrowedEquipments, &BorrowedEquipment{equipment.GetOwner().GetId(),
-				equipment.GetType().GetId(), equipment.GetQuantity()})
+			unit.BorrowedEquipments = append(unit.BorrowedEquipments, &BorrowedEquipment{
+				Owner:    equipment.GetOwner().GetId(),
+				TypeId:   equipment.GetType().GetId(),
+				Quantity: equipment.GetQuantity()})
+		}
+	}
+	if humanDotations := mm.GetHumanDotations(); humanDotations != nil {
+		unit.HumanDotations = []*HumanDotation{}
+		for _, human := range humanDotations.GetElem() {
+			injury := int32(0)
+			if injuries := human.GetInjuries(); len(injuries) != 0 {
+				injury = int32(injuries[0].GetSeriousness())
+			}
+			unit.HumanDotations = append(unit.HumanDotations, &HumanDotation{
+				Quantity:     human.GetQuantity(),
+				Rank:         int32(human.GetRank()),
+				State:        int32(human.GetState()),
+				Injury:       injury,
+				Psyop:        human.GetMentallyWounded(),
+				Contaminated: human.GetContaminated()})
+		}
+	}
+	if resourceDotations := mm.GetResourceDotations(); resourceDotations != nil {
+		unit.ResourceDotations = []*ResourceDotation{}
+		for _, dotation := range resourceDotations.GetElem() {
+			unit.ResourceDotations = append(unit.ResourceDotations, &ResourceDotation{
+				Type:      dotation.GetType().GetId(),
+				Quantity:  dotation.GetQuantity(),
+				Threshold: dotation.GetThreshold()})
 		}
 	}
 	if surrenderedTo := mm.GetSurrenderedUnit(); surrenderedTo != nil {
