@@ -343,33 +343,23 @@ message HierarchyModificationAck {
 
 //! DEPRECATED in 5.3
 //!
-/** @struct AutomatChangeKnowledgeGroupAck
-    @brief Acknowledges an automat knowledge group change request
-    @see UnitMagicAction of type "change_knowledge_group"
-    @todo gather magic action acks
-*/
+//! This message was sent upon a successful UnitMagicAction changing an
+//! automat knowledgegroup. Look for a regular UnitMagicActionAck
+//! instead.
 message AutomatChangeKnowledgeGroupAck {
-    //! Reason for the failure of the automat knowledge group change
-    //! operation @see HierarchyModificationAck.ErrorCode
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @struct AutomatChangeKnowledgeGroup
-    @brief Notifies of an automat knowledge group change
-*/
+//! Notifies an automat belongs to a new knowledge group.
 message AutomatChangeKnowledgeGroup {
-    //! The automat identifier
     required AutomatId        automat         = 1;
-    //! The party identifier
     required PartyId          party           = 2;
-    //! The knowledge group identifier
     required KnowledgeGroupId knowledge_group = 3;
 }
 
 //! DEPRECATED in 5.3
 //!
-//! This message was sent on an
-//! automat logistic links change request 
+//! This message was sent on an automat logistic links change request
 message ChangeLogisticLinksAck {
     //! Reason for the failure of the automat logistic links change
     //! operation @see HierarchyModificationAck.ErrorCode
