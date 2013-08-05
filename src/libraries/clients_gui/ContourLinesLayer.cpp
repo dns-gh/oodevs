@@ -238,7 +238,10 @@ void ContourLinesLayer::Conrec()
     ValidFunc validFunc( valid_ );
     LoopFunc loopFunc( loops_ );
     CheckStopFunc checkStopFunc( stopThread_, threadRunning_, observer_, controllers_.controller_, mutex_, loops_ );
-    if( !tools::ContourComputer::Compute( width, height, linesHeight_, cellSize, boost::ref( dataFunc ), boost::ref( progressFunc ), boost::ref( validFunc ), boost::ref( loopFunc ), boost::ref( checkStopFunc ), nc ) )
+    if( !tools::ComputeContour( width, height, linesHeight_, cellSize,
+            boost::ref( dataFunc ), boost::ref( progressFunc ),
+            boost::ref( validFunc ), boost::ref( loopFunc ),
+            boost::ref( checkStopFunc ), nc ) )
         return;
 
     observer_.SetPercentage( 0 );
