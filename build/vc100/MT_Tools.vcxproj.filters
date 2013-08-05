@@ -176,9 +176,6 @@
     <None Include="..\..\src\libraries\MT_Tools\RoleContainer.inl">
       <Filter>Source Files\Role</Filter>
     </None>
-    <None Include="..\..\src\libraries\MT_Tools\MT_LogManager.inl">
-      <Filter>Source Files\Logger</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_FormatString.cpp">

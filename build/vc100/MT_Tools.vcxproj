@@ -142,7 +142,6 @@
     <None Include="..\..\src\libraries\MT_Tools\MT_Vector2D.inl" />
     <None Include="..\..\src\libraries\MT_Tools\MT_Vector3D.inl" />
     <None Include="..\..\src\libraries\MT_Tools\RoleContainer.inl" />
-    <None Include="..\..\src\libraries\MT_Tools\MT_LogManager.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_FormatString.cpp" />
