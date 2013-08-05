@@ -64,6 +64,4 @@ private:
     static MT_LogManager* pInstance_;
 };
 
-#include "MT_LogManager.inl"
-
 #endif // __MT_LogManager_h_
