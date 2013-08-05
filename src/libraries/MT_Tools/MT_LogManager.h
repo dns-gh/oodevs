@@ -35,6 +35,7 @@ public:
     bool UnregisterLogger( MT_Logger_ABC& logger );
 
     void Log( MT_Logger_ABC::E_LogLevel nLevel, const char* strMessage, const char* strContext = 0, int nCode = -1 );
+    void Reset();
     //@}
 
     //-------------------------------------------------------------------------
@@ -42,7 +43,6 @@ public:
     //-------------------------------------------------------------------------
     //@{
     static MT_LogManager& Instance();
-    static void Cleanup();
     //@}
 
 private:
@@ -56,7 +56,6 @@ private:
 
 private:
     T_LoggerSet loggerSet_;
-    static MT_LogManager* pInstance_;
 };
 
 boost::shared_ptr< tools::Logger_ABC > CreateMTLogger( const std::string& name );

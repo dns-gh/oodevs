@@ -11,8 +11,6 @@
 #include <tools/Logger_ABC.h>
 #include <boost/make_shared.hpp>
 
-MT_LogManager* MT_LogManager::pInstance_ = 0;
-
 //-----------------------------------------------------------------------------
 // Name: MT_LogManager constructor
 // Created: NLD 2002-03-25
@@ -28,8 +26,6 @@ MT_LogManager::MT_LogManager()
 //-----------------------------------------------------------------------------
 MT_LogManager::~MT_LogManager()
 {
-    if( pInstance_ == this )
-        pInstance_ = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -38,19 +34,13 @@ MT_LogManager::~MT_LogManager()
 //-----------------------------------------------------------------------------
 MT_LogManager& MT_LogManager::Instance()
 {
-    if( pInstance_ == 0 )
-        pInstance_ = new MT_LogManager();
-    return *pInstance_;
+    static MT_LogManager instance;
+    return instance;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MT_LogManager::Cleanup
-// Created: BAX 2012-11-20
-//-----------------------------------------------------------------------------
-void MT_LogManager::Cleanup()
+void MT_LogManager::Reset()
 {
-    delete pInstance_;
-    pInstance_ = 0;
+    loggerSet_.clear();
 }
 
 //-----------------------------------------------------------------------------
