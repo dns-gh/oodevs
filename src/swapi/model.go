@@ -534,6 +534,25 @@ func (model *Model) update(msg *SwordMessage) error {
 					}
 				}
 			}
+		} else if mm := m.GetAutomatChangeKnowledgeGroup(); mm != nil {
+			if mm.GetAutomat() != nil && mm.GetParty() != nil && mm.GetKnowledgeGroup() != nil {
+				_, ok := d.Parties[mm.GetParty().GetId()]
+				if !ok {
+					return fmt.Errorf("unknown party: %d", mm.GetParty().GetId())
+				}
+				automat := d.FindAutomat(mm.GetAutomat().GetId())
+				if automat == nil {
+					return fmt.Errorf("unknown automat: %d", mm.GetAutomat().GetId())
+				}
+				knowledgeGroup := d.FindKnowledgeGroup(mm.GetKnowledgeGroup().GetId())
+				if knowledgeGroup == nil {
+					return fmt.Errorf("unknown knowledge group: %d", mm.GetKnowledgeGroup().GetId())
+				}
+				if knowledgeGroup.PartyId != mm.GetParty().GetId() {
+					return fmt.Errorf("bad party %d for knowledge group %d", mm.GetParty().GetId(), mm.GetKnowledgeGroup().GetId())
+				}
+				automat.KnowledgeGroupId = mm.GetKnowledgeGroup().GetId()
+			}
 		} else if mm := m.GetLogSupplyQuotas(); mm != nil {
 			quotas := map[uint32]int32{}
 			if mm.GetQuotas() != nil {
