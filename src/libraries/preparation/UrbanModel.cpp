@@ -470,6 +470,7 @@ void UrbanModel::DeleteBlock( const kernel::UrbanObject_ABC& urbanObject )
         const kernel::Entity_ABC& child = it.NextElement();
         DeleteBlock( static_cast< const kernel::UrbanObject_ABC& >( child ) );
     }
+    quadTree_->Erase( &urbanObject );
     Remove( urbanObject.GetId() );
     delete &urbanObject;
 }
