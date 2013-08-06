@@ -72,6 +72,7 @@ private:
     QDialog loadEventsDialog_;
     QTextEdit loadEventsText_;
     std::string command_;
+    bool usePopups_;
 };
 
 class OnSignal_ABC : public QObject
