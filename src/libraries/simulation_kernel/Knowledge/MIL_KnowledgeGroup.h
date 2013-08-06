@@ -199,6 +199,19 @@ public:
         if( jammedPion_ )
             jammedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( fct );
     }
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesPopulationPerception( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( fct );
+    }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesPopulationCollision( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( fct );
+    }
     //@}
 
 private:

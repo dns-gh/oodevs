@@ -1158,6 +1158,19 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
                     ApplyPopulationPerception( pion, currentTimeStep );
             }
         }
+
+        // acquisition des connaissances des groupes fils
+        for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
+        {
+            const MIL_KnowledgeGroup& innerKg = **itKG;
+            if( innerKg.IsEnabled() && IsEnabled() && innerKg.IsJammed() && innerKg.CanReport() && innerKg.GetKnowledge() )
+            {
+                boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+                innerKg.ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
+                boost::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+                innerKg.ApplyOnKnowledgesPopulationCollision( functorPopulationCollision );
+            }
+        }
     }
     else if( jammedPion_ )
             ApplyPopulationPerception( *jammedPion_, currentTimeStep );
