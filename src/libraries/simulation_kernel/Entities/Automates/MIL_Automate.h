@@ -119,7 +119,7 @@ public:
     const MT_Vector2D& GetPosition () const;
     logistic::LogisticHierarchy_ABC& GetLogisticHierarchy() const;
     virtual bool CanEmitReports() const;
-
+    bool IsMasaLife() const;
 
     MIL_StockSupplyManager& GetStockSupplyManager() const;
     MIL_DotationSupplyManager& GetDotationSupplyManager() const;

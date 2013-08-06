@@ -704,6 +704,16 @@ bool MIL_AgentPion::HasBeenTeleported() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsMasaLife
+// Created: MMC 2013-08-01
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsMasaLife() const
+{
+    const DEC_RolePion_Decision* roleDec = RetrieveRole< DEC_RolePion_Decision >();
+    return ( roleDec && roleDec->GetModel().IsMasalife() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::HasBeenTeleported
 // Created: MMC 2013-07-24
 // -----------------------------------------------------------------------------
@@ -926,7 +936,11 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
     CallRole( &PHY_RoleAction_MovingUnderground::GetOutFromUndergroundNetwork );
     CallRole( &PHY_RoleInterface_Location::MagicMove, vNewPos );
     CallRole( &PHY_RolePion_UrbanLocation::MagicMove, vNewPos );
-    teleported_ = true;
+
+    if( IsMasaLife() && GetAutomate().IsMasaLife() )
+        teleported_ = true;
+    else
+        CancelCurrentMission();
 }
 
 // -----------------------------------------------------------------------------

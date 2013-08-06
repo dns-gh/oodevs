@@ -116,6 +116,7 @@ public:
     virtual bool IsJammed() const;
     virtual bool IsLogisticJammed() const;
     virtual bool HasBeenTeleported() const;
+            bool IsMasaLife() const;
     //@}
 
     //! @name logistic

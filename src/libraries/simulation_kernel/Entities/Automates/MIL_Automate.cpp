@@ -1069,8 +1069,15 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
     if( !pPionPC_ )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    bool bCancelMission = !IsMasaLife();
     for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+    {
         ( **itPion ).OnReceiveMagicActionMoveTo( ( **itPion ).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
+        if( !(*itPion)->IsMasaLife() )
+            bCancelMission = true;
+    }
+    if( bCancelMission )
+        pOrderManager_->CancelMission();
 }
 
 // -----------------------------------------------------------------------------
@@ -1424,6 +1431,16 @@ bool MIL_Automate::IsEngaged() const
 bool MIL_Automate::CanEmitReports() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::IsMasaLife
+// Created: MMC 2013-08-01
+// -----------------------------------------------------------------------------
+bool MIL_Automate::IsMasaLife() const
+{
+    const DEC_AutomateDecision* roleDec = RetrieveRole< DEC_AutomateDecision >();
+    return roleDec && roleDec->GetModel().IsMasalife();
 }
 
 // -----------------------------------------------------------------------------
