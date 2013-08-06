@@ -745,7 +745,8 @@ func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) 
 	newParty := d.Parties[mm.GetSuperior().GetParty().GetId()]
 	err := d.changeFormationSuperior(formation, newFormation, newParty)
 	if err != nil {
-		return fmt.Errorf("cannot change %d formation superior: %s", err)
+		return fmt.Errorf("cannot change %d formation superior: %s",
+			formation.Id, err)
 	}
 	return nil
 }
