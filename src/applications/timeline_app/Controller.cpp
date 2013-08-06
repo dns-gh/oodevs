@@ -254,11 +254,8 @@ void Controller::OnGetEvents( const timeline::Events& events, const timeline::Er
     QVBoxLayout layout( &dialog );
     QListWidget list;
     layout.addWidget( &list );
-    int i = 0;
     for( auto it = events.begin(); it != events.end(); ++it )
-    {
-        list.addItem( QString( "Event %1: %2: %3" ).arg( i++ ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
-    }
+        list.addItem( QString( "Event %1: %2: %3" ).arg( list.count() ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
     dialog.exec();
 }
 
