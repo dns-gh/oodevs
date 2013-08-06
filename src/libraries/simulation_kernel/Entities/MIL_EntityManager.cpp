@@ -1957,7 +1957,9 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
+    tools::SchemaWriter schemaWriter;
     xos << xml::start( "orbat" );
+    schemaWriter.WriteExerciseSchema( xos, "orbat" );
     if ( infiniteDotations_ )
         xos << xml::start( "resources" )
                 << xml::attribute( "infinite", infiniteDotations_ )
@@ -1979,7 +1981,7 @@ void MIL_EntityManager::WriteUrban( xml::xostream& xos ) const
 {
     tools::SchemaWriter schemaWriter;
     xos << xml::start( "urban-state" );
-        schemaWriter.WriteSchema( xos, "exercise", "urbanstate" );
+        schemaWriter.WriteExerciseSchema( xos, "urbanstate" );
         pObjectManager_->WriteUrban( xos );
     xos << xml::end;
 }
