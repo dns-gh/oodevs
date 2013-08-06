@@ -65,6 +65,8 @@ type Client struct {
 	// events. Set if before running the client to have any effect.
 	EnableModel bool
 	PostTimeout time.Duration
+	// Receive input binary payloads, must be registered before calling Run()
+	RawMessageHandler RawMessageHandler
 
 	// context and clientId are only read and set by the serve goroutine
 	context     int32
@@ -260,6 +262,7 @@ func (c *Client) serve() {
 
 func (c *Client) listen(errors chan<- error) {
 	reader := NewReader(c.link)
+	reader.SetHandler(c.RawMessageHandler)
 	for {
 		msg := SwordMessage{}
 		err := reader.Decode(&msg)

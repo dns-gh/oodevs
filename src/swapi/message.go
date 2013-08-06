@@ -135,13 +135,20 @@ func (w *Writer) Encode(tag uint32, msg proto.Message) error {
 	return err
 }
 
+type RawMessageHandler func(size, tag uint32, data []byte)
+
 type Reader struct {
-	io    io.Reader
-	cache []uint8
+	io      io.Reader
+	cache   []uint8
+	handler RawMessageHandler
 }
 
 func NewReader(r io.Reader) *Reader {
-	return &Reader{r, make([]uint8, 64)}
+	return &Reader{io: r, cache: make([]uint8, 64)}
+}
+
+func (r *Reader) SetHandler(handler RawMessageHandler) {
+	r.handler = handler
 }
 
 func decode(msg *SwordMessage, tag uint32, data []uint8) error {
@@ -198,6 +205,9 @@ func (r *Reader) Decode(msg *SwordMessage) error {
 	n, err := r.io.Read(r.cache[:size])
 	if err != nil {
 		return err
+	}
+	if r.handler != nil {
+		r.handler(header.Size, header.Tag, r.cache[:n])
 	}
 	return decode(msg, header.Tag, r.cache[:n])
 }
