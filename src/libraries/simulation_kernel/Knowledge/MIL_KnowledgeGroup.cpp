@@ -22,6 +22,8 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Knowledge/DEC_Knowledge_ObjectCollision.h"
+#include "Knowledge/DEC_Knowledge_ObjectPerception.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
@@ -1380,8 +1382,10 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
             const MIL_KnowledgeGroup& innerKg = **itKG;
             if( innerKg.IsEnabled() && IsEnabled() && innerKg.IsJammed() && innerKg.CanReport() && innerKg.GetKnowledge() )
             {
-                boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >) > functorObject = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
-                innerKg.knowledgeBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( functorObject );
+                boost::function< void( DEC_Knowledge_ObjectPerception& ) > functorPerception = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+                innerKg.ApplyOnKnowledgesObjectPerception( functorPerception );
+                boost::function< void( DEC_Knowledge_ObjectCollision& ) > functorCollision = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+                innerKg.ApplyOnKnowledgesObjectCollision( functorCollision );
             }
         }
     }
@@ -1433,6 +1437,24 @@ void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception( const DEC_Know
 void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision, int /*currentTimeStep*/  )
 {
     GetPopulationKnowledgeToUpdate( collision.GetPopulation() ).Update( collision );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision
+// Created: LGY 2013-08-06
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision( const DEC_Knowledge_ObjectCollision& collision, int /*currentTimeStep*/ )
+{
+    GetObjectKnowledgeToUpdate( collision.GetObject() )->Update( collision );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception
+// Created: LGY 2013-08-06
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception( const DEC_Knowledge_ObjectPerception& perception, int /*currentTimeStep*/ )
+{
+    GetObjectKnowledgeToUpdate( perception.GetObjectPerceived() )->Update( perception );
 }
 
 // -----------------------------------------------------------------------------
