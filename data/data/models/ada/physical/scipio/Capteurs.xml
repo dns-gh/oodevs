@@ -5612,80 +5612,6 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor detection-delay="0h" name="Radar RASIT">
-      <unit-detection angle="120" firer-detection-distance="0" scanning="false">
-        <base-distances close-range="1">
-          <base-distance distance="0" level="identification"/>
-          <base-distance distance="0" level="recognition"/>
-          <base-distance distance="40000" level="detection"/>
-        </base-distances>
-        <distance-modifiers>
-          <population-modifier density="0" modifier="0"/>
-          <size-modifiers>
-            <distance-modifier type="Drone" value="0"/>
-            <distance-modifier type="Gros" value="1"/>
-            <distance-modifier type="Moyen" value="0.9"/>
-            <distance-modifier type="Petit" value="0.7"/>
-            <distance-modifier type="Personnel" value="0.5"/>
-          </size-modifiers>
-          <precipitation-modifiers>
-            <distance-modifier type="PasDePrecipitation" value="1"/>
-            <distance-modifier type="TempeteDeSable" value="0.5"/>
-            <distance-modifier type="Brouillard" value="0.7"/>
-            <distance-modifier type="Crachin" value="0.9"/>
-            <distance-modifier type="Pluie" value="0.8"/>
-            <distance-modifier type="Neige" value="0.8"/>
-            <distance-modifier type="Fumigene" value="0.8"/>
-          </precipitation-modifiers>
-          <visibility-modifiers>
-            <distance-modifier type="JourSansNuage" value="1"/>
-            <distance-modifier type="JourPeuNuageux" value="1"/>
-            <distance-modifier type="JourMoyennementNuageux" value="1"/>
-            <distance-modifier type="JourAssezNuageux" value="1"/>
-            <distance-modifier type="JourTresNuageux" value="1"/>
-            <distance-modifier type="NuitPleineLune" value="1"/>
-            <distance-modifier type="NuitTroisQuartDeLune" value="1"/>
-            <distance-modifier type="NuitDemiLune" value="1"/>
-            <distance-modifier type="NuitQuartDeLune" value="1"/>
-            <distance-modifier type="NuitNouvelleLune" value="1"/>
-            <distance-modifier type="Eclairant" value="1"/>
-          </visibility-modifiers>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="0"/>
-            <distance-modifier type="MouvementDiscret" value="0"/>
-            <distance-modifier type="Arret" value="0"/>
-            <distance-modifier type="PosteReflexe" value="0"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-          <target-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="0.5"/>
-            <distance-modifier type="Arret" value="0"/>
-            <distance-modifier type="PosteReflexe" value="0"/>
-            <distance-modifier type="Poste" value="0"/>
-            <distance-modifier type="PosteAmenage" value="0"/>
-            <distance-modifier type="PostePrepareGenie" value="0"/>
-          </target-posture-modifiers>
-          <terrain-modifiers>
-            <distance-modifier type="Sol" value="0.2"/>
-            <distance-modifier type="Vide" value="1"/>
-            <distance-modifier type="Foret" value="0"/>
-            <distance-modifier type="Urbain" value="0.3"/>
-          </terrain-modifiers>
-          <urbanBlock-material-modifiers>
-            <distance-modifier type="Bois" value="0"/>
-            <distance-modifier type="Beton" value="0"/>
-            <distance-modifier type="Brique" value="0"/>
-            <distance-modifier type="Metal" value="0"/>
-            <distance-modifier type="Torchis" value="0"/>
-            <distance-modifier type="Prefabrique" value="0"/>
-            <distance-modifier type="Vegetation" value="0"/>
-          </urbanBlock-material-modifiers>
-        </distance-modifiers>
-      </unit-detection>
-    </sensor>
     <sensor detection-delay="0h" name="Lunette Tir XL">
       <unit-detection angle="60" firer-detection-distance="0" scanning="true">
         <base-distances close-range="800">
@@ -9408,4 +9334,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="0321941899" -->
+<!-- signature="3145882145" -->
