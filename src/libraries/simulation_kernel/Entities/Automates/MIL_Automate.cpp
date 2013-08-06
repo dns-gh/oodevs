@@ -1022,18 +1022,18 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
                 throw MASA_BADPARAM_UNIT( "parameters[0] must be a Party" );
             const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parameters().elem( 0 ).value( 0 ).party().id() );
             if( !pSurrenderedToArmy )
-                throw MASA_BADPARAM_UNIT( "Party not found" );
+                throw MASA_BADPARAM_UNIT( "party not found" );
             else if( *pSurrenderedToArmy == GetArmy() )
-                throw MASA_BADPARAM_UNIT( "Cannot surrender to your own party" );
+                throw MASA_BADPARAM_UNIT( "cannot surrender to your own party" );
             else if( IsSurrendered() )
-                throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered, "Automat already surrendered" );
+                throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered, "automat already surrendered" );
             else
                 SurrenderWithUnits( *pSurrenderedToArmy );
         }
         break;
     case sword::UnitMagicAction::cancel_surrender:
         if( !IsSurrendered() )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered, "Automat not surrendered" );
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered, "automat not surrendered" );
         CancelSurrender();
         for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             ( **itPion ).OnReceiveMagicCancelSurrender();
