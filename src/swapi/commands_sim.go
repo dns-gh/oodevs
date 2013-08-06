@@ -51,6 +51,14 @@ func makeAutomatTasker(automatId uint32) *sword.Tasker {
 	}
 }
 
+func makeFormationTasker(formationId uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Formation: &sword.FormationId{
+			Id: proto.Uint32(formationId),
+		},
+	}
+}
+
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	code := msg.GetErrorCode()
 	if code == sword.UnitActionAck_no_error {
@@ -1064,7 +1072,7 @@ func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*Kno
 	return group, nil
 }
 
-func (c *Client) ChangeSuperior(unitId, automatId uint32) error {
+func (c *Client) ChangeUnitSuperior(unitId, automatId uint32) error {
 	params := MakeParameters()
 	tasker := &sword.Tasker{}
 	if unitId != 0 {
@@ -1075,6 +1083,38 @@ func (c *Client) ChangeSuperior(unitId, automatId uint32) error {
 	}
 	msg := createMagicActionMessage(params, tasker,
 		sword.UnitMagicAction_unit_change_superior.Enum())
+	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
+}
+
+func (c *Client) ChangeAutomatSuperior(automatId, formationId uint32) error {
+	params := MakeParameters()
+	tasker := &sword.Tasker{}
+	if automatId != 0 {
+		tasker = makeAutomatTasker(automatId)
+	}
+	if formationId != 0 {
+		params = MakeParameters(MakeFormation(formationId))
+	}
+	msg := createMagicActionMessage(params, tasker,
+		sword.UnitMagicAction_change_formation_superior.Enum())
+	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
+}
+
+func (c *Client) ChangeFormationSuperior(formationId, parentId uint32, isTeam bool ) error {
+	params := MakeParameters()
+	tasker := &sword.Tasker{}
+	if formationId != 0 {
+		tasker = makeFormationTasker(formationId)
+	}
+	if parentId != 0 {
+		if isTeam {
+			params = MakeParameters(MakeParty(parentId))	
+		}else{
+			params = MakeParameters(MakeFormation(parentId))
+		}
+	}
+	msg := createMagicActionMessage(params, tasker,
+		sword.UnitMagicAction_change_formation_superior.Enum())
 	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
 }
 

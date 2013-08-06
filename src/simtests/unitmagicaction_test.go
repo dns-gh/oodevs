@@ -573,7 +573,7 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	c.Assert(err, IsNil)
 }
 
-func CheckSuperior(model *swapi.Model, c *C,
+func CheckUnitSuperior(model *swapi.Model, c *C,
 	unitId, newAutomatId, oldAutomatId uint32) {
 	// Check AutomatId attribute in Unit
 	unit := model.GetData().FindUnit(unitId)
@@ -589,6 +589,43 @@ func CheckSuperior(model *swapi.Model, c *C,
 	newAutomat := model.GetData().FindAutomat(newAutomatId)
 	c.Assert(newAutomat, NotNil)
 	c.Assert(newAutomat.Units, HasLen, 1)
+}
+
+func CheckAutomatSuperior(model *swapi.Model, c *C,
+	automatId, newFormationId, oldFormationId uint32) {
+	// Check AutomatId attribute in Unit
+	automat := model.GetData().FindAutomat(automatId)
+	c.Assert(automat, NotNil)
+	c.Assert(automat.FormationId, Equals, newFormationId)
+
+	// Check oldFormation is empty
+	oldFormation := model.GetData().FindFormation(oldFormationId)
+	c.Assert(oldFormation, NotNil)
+	c.Assert(oldFormation.Automats, HasLen, 0)
+
+	// Check newFormation contains one element
+	newFormation := model.GetData().FindFormation(newFormationId)
+	c.Assert(newFormation, NotNil)
+	c.Assert(newFormation.Automats, HasLen, 1)
+}
+
+func CheckFormationSuperior(model *swapi.Model, c *C,
+	formationId, newParentId uint32) {
+	// Check AutomatId attribute in Unit
+	formation := model.GetData().FindFormation(formationId)
+	c.Assert(formation, NotNil)
+
+	// Check newFormation or newParty contains one element
+	newFormation := model.GetData().FindFormation(newParentId)
+	if newFormation == nil {
+		newParty := model.GetData().FindPartyById(newParentId)
+		c.Assert(newParty, NotNil)
+		c.Assert(formation.ParentId, Equals, uint32(0) )
+	}else{
+		c.Assert(newFormation, NotNil)
+		c.Assert(newFormation.Formations, HasLen, 1)
+		c.Assert(formation.ParentId, Equals, newParentId)
+	}
 }
 
 func CreateFormation(c *C, client *swapi.Client, partyId uint32) *swapi.Formation {
@@ -627,43 +664,43 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 	u2 := CreateUnit(c, client, a2.Id)
 
 	// error: no tasker
-	err := client.ChangeSuperior(0, a1.Id)
+	err := client.ChangeUnitSuperior(0, a1.Id)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// error: invalid tasker
-	err = client.ChangeSuperior(12345, a1.Id)
+	err = client.ChangeUnitSuperior(12345, a1.Id)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// error: missing parameter
-	err = client.ChangeSuperior(u2.Id, 0)
+	err = client.ChangeUnitSuperior(u2.Id, 0)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid automat identifier
-	err = client.ChangeSuperior(u2.Id, 12345)
+	err = client.ChangeUnitSuperior(u2.Id, 12345)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: automat parameter isn't in the same side
 	f2 := CreateFormation(c, client, 2)
 	a3 := CreateAutomat(c, client, f2.Id, 2)
 
-	err = client.ChangeSuperior(u2.Id, a3.Id)
+	err = client.ChangeUnitSuperior(u2.Id, a3.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change superior u2 -> a1
-	err = client.ChangeSuperior(u2.Id, a1.Id)
+	err = client.ChangeUnitSuperior(u2.Id, a1.Id)
 	c.Assert(err, IsNil)
 
 	// Wait unit update
 	client.Model.WaitTicks(1)
-	CheckSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
+	CheckUnitSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
 
 	// Change superior u2 -> a1 again, does nothing
-	err = client.ChangeSuperior(u2.Id, a1.Id)
+	err = client.ChangeUnitSuperior(u2.Id, a1.Id)
 	c.Assert(err, IsNil)
 
 	// Wait unit update
 	client.Model.WaitTicks(1)
-	CheckSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
+	CheckUnitSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
 }
 
 func (s *TestSuite) TestPcChangeSuperior(c *C) {
@@ -683,7 +720,7 @@ func (s *TestSuite) TestPcChangeSuperior(c *C) {
 	c.Assert(u2.Pc, Equals, false)
 
 	// Change superior u2 -> a2
-	err := client.ChangeSuperior(u2.Id, a2.Id)
+	err := client.ChangeUnitSuperior(u2.Id, a2.Id)
 	c.Assert(err, IsNil)
 
 	// Check u2 is PC
@@ -692,13 +729,104 @@ func (s *TestSuite) TestPcChangeSuperior(c *C) {
 	})
 
 	// Change superior u1 -> a2
-	err = client.ChangeSuperior(u1.Id, a2.Id)
+	err = client.ChangeUnitSuperior(u1.Id, a2.Id)
 	c.Assert(err, IsNil)
 
 	// Check u1 is not PC
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return !data.FindUnit(u1.Id).Pc
 	})
+}
+
+func (s *TestSuite) TestAutomatChangeSuperior(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	
+	f1 := CreateFormation(c, client, 1)
+	f2 := CreateFormation(c, client, 1)
+
+	// Create 1 automat
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+
+	// error: invalid tasker
+	err := client.ChangeAutomatSuperior(12345, f2.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: missing parameter
+	err = client.ChangeAutomatSuperior(a1.Id, 0)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: invalid formation identifier
+	err = client.ChangeAutomatSuperior(a1.Id, 12345)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: formation parameter isn't in the same side
+	f3 := CreateFormation(c, client, 2)
+
+	err = client.ChangeAutomatSuperior(a1.Id, f3.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Change superior u2 -> a1
+	err = client.ChangeAutomatSuperior(a1.Id, f2.Id)
+	c.Assert(err, IsNil)
+
+	// Wait unit update
+	client.Model.WaitTicks(1)
+	//waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+	//	return data.FindAutomat(a1.Id).FormationId == f2.Id
+	//})
+	CheckAutomatSuperior(client.Model, c, a1.Id, f2.Id, f1.Id)
+
+	// Change superior u2 -> a1 again, does nothing
+	err = client.ChangeAutomatSuperior(a1.Id, f1.Id)
+	c.Assert(err, IsNil)
+
+	// Wait unit update
+	client.Model.WaitTicks(1)
+	CheckAutomatSuperior(client.Model, c, a1.Id, f1.Id, f2.Id)
+}
+
+func (s *TestSuite) TestFormationChangeSuperior(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	//create 2 formations 
+	f1 := CreateFormation(c, client, 1)
+	f2 := CreateFormation(c, client, 1)
+
+	// error: invalid tasker
+	err := client.ChangeFormationSuperior(12345, f2.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_parameter" )
+
+	// error: missing parameter
+	err = client.ChangeFormationSuperior(f1.Id, 0, false)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: invalid formation identifier
+	err = client.ChangeFormationSuperior(f1.Id, 12345, false)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: formation parameter isn't in the same side
+	f3 := CreateFormation(c, client, 2)
+
+	err = client.ChangeFormationSuperior(f1.Id, f3.Id, false)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Change superior f1 -> f2
+	err = client.ChangeFormationSuperior(f1.Id, f2.Id, false)
+	c.Assert(err, IsNil)
+
+	// Wait unit update
+	client.Model.WaitTicks(1)
+	CheckFormationSuperior(client.Model, c, f1.Id, f2.Id )
+
+	// Change superior f1 -> party1
+	err = client.ChangeFormationSuperior(f1.Id, 1, true)
+	c.Assert(err, IsNil)
+
+	// Wait unit update
+	client.Model.WaitTicks(1)
+	CheckFormationSuperior(client.Model, c, f1.Id, 1 )
 }
 
 func (s *TestSuite) TestDebugBrain(c *C) {

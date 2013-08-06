@@ -110,6 +110,7 @@ type Unit struct {
 type Automat struct {
 	Id               uint32
 	PartyId          uint32
+	FormationId      uint32
 	Name             string
 	Automats         map[uint32]*Automat
 	Units            map[uint32]*Unit
@@ -120,10 +121,11 @@ type Automat struct {
 	SuperiorQuotas   map[uint32]int32
 }
 
-func NewAutomat(id, partyId, knowledgeGroupId uint32, name string) *Automat {
+func NewAutomat(id, partyId, formationId, knowledgeGroupId uint32, name string) *Automat {
 	return &Automat{
 		Id:               id,
 		PartyId:          partyId,
+		FormationId:      formationId,
 		Name:             name,
 		Automats:         map[uint32]*Automat{},
 		Units:            map[uint32]*Unit{},
@@ -315,6 +317,15 @@ func (model *ModelData) FindPartyByName(name string) *Party {
 	return nil
 }
 
+func (model *ModelData) FindPartyById(partyId uint32) *Party {
+	for _, party := range model.Parties {
+		if party.Id == partyId {
+			return party
+		}
+	}
+	return nil
+}
+
 func (model *ModelData) ListFormations() []*Formation {
 	formations := []*Formation{}
 	pendings := []*Formation{}
@@ -470,17 +481,104 @@ func (model *ModelData) removeUnit(unitId uint32) bool {
 	return false
 }
 
-func (model *ModelData) changeSuperior(unit *Unit, newSuperior *Automat) error {
+func (model *ModelData) changeUnitSuperior(unit *Unit, newSuperior *Automat) error {
 	oldAutomat := model.FindAutomat(unit.AutomatId)
 	if oldAutomat == nil {
 		return fmt.Errorf("invalid automat identifier: %v", unit.AutomatId)
 	}
 	if !model.removeUnit(unit.Id) {
-		return fmt.Errorf("impossible to remove the unit: %v", unit.Id)
+		return fmt.Errorf("impossible to remove the automat: %v", unit.Id)
 	}
 	unit.AutomatId = newSuperior.Id
 	if !model.addUnit(unit) {
-		return fmt.Errorf("impossible to add the unit: %v", unit.Id)
+		return fmt.Errorf("impossible to add the automat: %v", unit.Id)
+	}
+	return nil
+}
+
+func (model *ModelData) removeAutomat(automatId uint32) bool {
+	a := model.FindAutomat(automatId)
+	if a == nil {
+		return false
+	}
+	f := model.FindFormation(a.FormationId)
+	if f == nil {
+		return false
+	}
+	if _, ok := f.Automats[automatId]; ok {
+		delete(f.Automats, automatId)
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) addAutomatToFormation(automat *Automat) bool {
+	f := model.FindFormation(automat.FormationId)
+	if f != nil {
+		f.Automats[automat.Id] = automat
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) changeAutomatSuperior(automat *Automat, newSuperior *Formation) error {
+	oldFormation := model.FindFormation(automat.FormationId)
+	if oldFormation == nil {
+		return fmt.Errorf("invalid automat identifier: %v", automat.FormationId)
+	}
+	if !model.removeAutomat(automat.Id) {
+		return fmt.Errorf("impossible to remove the unit: %v", automat.Id)
+	}
+	automat.FormationId = newSuperior.Id
+	if !model.addAutomatToFormation( automat ) {
+		return fmt.Errorf("impossible to add the automat: %v", automat.Id)
+	}
+	return nil
+}
+
+func (model *ModelData) removeFormation(formationId uint32) bool {
+	f := model.FindFormation(formationId)
+	if f == nil {
+		return false
+	}
+	if f.ParentId != 0 {
+		supf := model.FindFormation(f.ParentId)
+		if supf != nil {
+			if _, ok := supf.Formations[formationId]; ok {
+				delete(supf.Formations, formationId)
+				return true
+			}
+		} else {
+			return false
+		}
+	} else {
+		p := model.FindPartyById(f.PartyId)
+		if _, ok := p.Formations[formationId]; ok {
+			delete(p.Formations, formationId)
+			return true
+		}
+	}
+	return false
+}
+
+func (model *ModelData) changeFormationSuperiorWithParty(formation *Formation, newSuperior *Party) error {
+	if !model.removeFormation(formation.Id) {
+		return fmt.Errorf("impossible to remove the formation: %v", formation.Id)
+	}
+	formation.ParentId = 0
+	if !model.addFormation(formation) {
+		return fmt.Errorf("impossible to add the formation: %v", formation.Id)
+	}
+	return nil
+}
+
+func (model *ModelData) changeFormationSuperiorWithFormation(formation *Formation, newSuperior *Formation) error {
+	if !model.removeFormation(formation.Id) {
+		return fmt.Errorf("impossible to remove the formation: %v", formation.Id)
+	}
+	formation.ParentId = newSuperior.Id
+	if !model.addFormation(formation) {
+		return fmt.Errorf("impossible to add the formation: %v", formation.Id)
 	}
 	return nil
 }

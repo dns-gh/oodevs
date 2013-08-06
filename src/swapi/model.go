@@ -204,17 +204,18 @@ func (model *Model) update(msg *SwordMessage) error {
 				}
 			}
 		} else if mm := m.GetAutomatCreation(); mm != nil {
-			automat := NewAutomat(
-				mm.GetAutomat().GetId(),
-				mm.GetParty().GetId(),
-				mm.GetKnowledgeGroup().GetId(),
-				mm.GetName())
 			automatId, formationId := uint32(0), uint32(0)
 			if parent := mm.GetParent().GetAutomat(); parent != nil {
 				automatId = parent.GetId()
 			} else if parent := mm.GetParent().GetFormation(); parent != nil {
 				formationId = parent.GetId()
 			}
+			automat := NewAutomat(
+				mm.GetAutomat().GetId(),
+				mm.GetParty().GetId(),
+				formationId,
+				mm.GetKnowledgeGroup().GetId(),
+				mm.GetName())
 			if !d.addAutomat(automatId, formationId, automat) {
 				return fmt.Errorf("cannot insert created automat: %d", automat.Id)
 			}
@@ -565,9 +566,44 @@ func (model *Model) update(msg *SwordMessage) error {
 				return fmt.Errorf("cannot find unit new parent automat: %d",
 					mm.GetParent().GetId())
 			}
-			if err := d.changeSuperior(unit, newAutomat); err != nil {
+			if err := d.changeUnitSuperior(unit, newAutomat); err != nil {
 				return fmt.Errorf("cannot change %d unit superior to %d: %s",
 					unit.Id, newAutomat.Id, err)
+			}
+		} else if mm := m.GetAutomatChangeSuperior(); mm != nil {
+			automat := d.FindAutomat(mm.GetAutomat().GetId())
+			if automat == nil {
+				return fmt.Errorf("cannot find automat which superior must be updated: %d",
+					mm.GetAutomat().GetId())
+			}
+			newFormation := d.FindFormation(mm.GetSuperior().GetFormation().GetId())
+			if newFormation == nil {
+				return fmt.Errorf("cannot find automata new parent formation: %d",
+					mm.GetSuperior().GetFormation().GetId())
+			}
+			if err := d.changeAutomatSuperior(automat, newFormation); err != nil {
+				return fmt.Errorf("cannot change %d automat superior to %d: %s",
+					automat.Id, newFormation.Id, err)
+			}
+		} else if mm := m.GetFormationChangeSuperior(); mm != nil {
+			formation := d.FindFormation(mm.GetFormation().GetId())
+			if formation == nil {
+				return fmt.Errorf("cannot find formation which superior must be updated: %d",
+					mm.GetFormation().GetId())
+			}
+			newFormation := d.FindFormation(mm.GetSuperior().GetFormation().GetId())
+			if newFormation == nil {
+				newParty := d.FindPartyById(mm.GetSuperior().GetParty().GetId())
+				if newParty == nil {
+					return fmt.Errorf("cannot find formation new parent : %d",
+						mm.GetSuperior().GetFormation().GetId())
+				} else if err := d.changeFormationSuperiorWithParty(formation, newParty); err != nil {
+						return fmt.Errorf("cannot change %d formation superior to %d: %s",
+							formation.Id, newParty.Id, err)
+				}
+			} else if err := d.changeFormationSuperiorWithFormation(formation, newFormation); err != nil {
+					return fmt.Errorf("cannot change %d formation superior to %d: %s",
+						formation.Id, newFormation.Id, err)
 			}
 		}
 	} else if msg.AuthenticationToClient != nil {
