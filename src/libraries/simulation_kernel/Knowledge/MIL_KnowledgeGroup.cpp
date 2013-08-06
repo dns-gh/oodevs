@@ -1365,6 +1365,17 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
             }
             bDiffuseToKnowledgeGroup_ = true;
         }
+
+        // acquisition des connaissances des groupes fils /!\ Transfert de connaissance appui
+        for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
+        {
+            const MIL_KnowledgeGroup& innerKg = **itKG;
+            if( innerKg.IsEnabled() && IsEnabled() && innerKg.IsJammed() && innerKg.CanReport() && innerKg.GetKnowledge() )
+            {
+                boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >) > functorObject = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
+                innerKg.knowledgeBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( functorObject );
+            }
+        }
     }
 
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
