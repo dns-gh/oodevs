@@ -198,5 +198,7 @@
     <upgrade schema="schemas/5.2.1/physical/Launchers.xsd" apply="schemas/5.3.0/xsl/launchers_5.2.1-5.3.0.xsl"/>
     <upgrade schema="schemas/5.2.1/physical/ResourceNetworks.xsd" apply="schemas/5.3.0/xsl/resourceNetworks_5.2.1-5.3.0.xsl"/>
     <upgrade schema="schemas/5.2.1/physical/Resources.xsd" apply="schemas/5.3.0/xsl/resources_5.2.1-5.3.0.xsl"/>
+    <upgrade schema="schemas/5.2.1/physical/UrbanTypes.xsd" apply="schemas/5.3.0/xsl/urban_5.2.1-5.3.0.xsl"/>
+    <upgrade schema="schemas/5.2.1/physical/UrbanTemplates.xsd" apply="schemas/5.3.0/xsl/urban_template_5.2.1-5.3.0.xsl"/>
   </migration>
 </migrations>

@@ -14,6 +14,7 @@
 #include "ADN_Workspace.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
+#include "clients_kernel/XmlTranslations.h"
 
 using namespace helpers;
 
@@ -30,6 +31,7 @@ ADN_Urban_Data::ADN_Urban_Data()
     , vTemplates_            ()
     , defaultNominalCapacity_( 0.1 )
     , defaultMaxCapacity_    ( 1 )
+    , templateTranslations_  ( new kernel::XmlTranslations() )
 {
     vMaterials_.AddUniquenessChecker( eError, duplicateName_ );
     vRoofShapes_.AddUniquenessChecker( eError, duplicateName_ );
@@ -44,7 +46,7 @@ ADN_Urban_Data::ADN_Urban_Data()
 //-----------------------------------------------------------------------------
 ADN_Urban_Data::~ADN_Urban_Data()
 {
-    // NOTHING
+    Reset();
 }
 
 //-----------------------------------------------------------------------------
@@ -82,13 +84,16 @@ void ADN_Urban_Data::Save()
     FilesNeeded( fileList );
     for( auto it = fileList.begin(); it != fileList.end(); ++it )
     {
-        tools::Path file = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() / *it;
-        file.Parent().CreateDirectories();
-        tools::Xofstream output( file );
+        const tools::Path file = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() / *it;
         if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_ )
-            WriteArchive( output );
+            SaveFile( file, boost::bind( &ADN_Urban_Data::WriteArchive, this, _1 ) );
         if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_ )
+        {
+            file.Parent().CreateDirectories();
+            tools::Xofstream output( file );
             WriteTemplates( output );
+            SaveTranslations( file, templateTranslations_.get() );
+        }
     }
 }
 
@@ -104,9 +109,12 @@ void ADN_Urban_Data::Load( const tools::Loader_ABC& fileLoader )
     {
         const tools::Path file = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / (*it);
         if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_ )
-            fileLoader.LoadFile( file, boost::bind( &ADN_Urban_Data::ReadArchive, this, _1 ) );
+            LoadFile( fileLoader, file, boost::bind( &ADN_Urban_Data::ReadArchive, this, _1 ) );
         if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_ )
+        {
+            LoadTranslations( file, templateTranslations_.get() );
             fileLoader.LoadFile( file, boost::bind( &ADN_Urban_Data::ReadTemplates, this, _1 ) );
+        }
     }
 }
 
@@ -188,7 +196,7 @@ void ADN_Urban_Data::WriteTemplates( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::ReadTemplate( xml::xistream& input )
 {
-    vTemplates_.AddItem( new UrbanTemplateInfos( input ) );
+    vTemplates_.AddItem( new UrbanTemplateInfos( input, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,9 +214,9 @@ void ADN_Urban_Data::ReadMaterials( xml::xistream& input )
 // Name: ADN_Urban_Data::ReadMaterial
 // Created: SLG 2010-07-01
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::ReadMaterial( xml::xistream& input  )
+void ADN_Urban_Data::ReadMaterial( xml::xistream& input )
 {
-    vMaterials_.AddItem( new UrbanMaterialInfos( input ) );
+    vMaterials_.AddItem( new UrbanMaterialInfos( input, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,13 +264,14 @@ ADN_Urban_Data::UrbanMaterialInfos* ADN_Urban_Data::UrbanMaterialInfos::CreateCo
 // Name: ADN_Urban_Data::UrbanMaterialInfos constructor
 // Created: SLG 2010-07-01
 // -----------------------------------------------------------------------------
-ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
+ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input, const ADN_Urban_Data& parent )
     : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::start( "attritions" )
+    std::string strName = input.attribute< std::string >( "name" );
+    input >> xml::start( "attritions" )
               >> xml::list( "attrition", *this, &ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition )
           >> xml::end;
+    strName_.SetTranslation( strName, parent.GetTranslation( "material-composition-types", strName ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,7 +323,7 @@ void ADN_Urban_Data::ReadRoofShapes( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::ReadRoofShape( xml::xistream& input )
 {
-    vRoofShapes_.AddItem( new RoofShapeInfos( input ) );
+    vRoofShapes_.AddItem( new RoofShapeInfos( input, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,7 +361,7 @@ void ADN_Urban_Data::ReadAccommodation( xml::xistream& input  )
         input >> xml::attribute( "nominal-capacity", defaultNominalCapacity_ )
               >> xml::attribute( "max-capacity", defaultMaxCapacity_ );
     else
-        vAccommodations_.AddItem( new AccommodationInfos( input, role ) );
+        vAccommodations_.AddItem( new AccommodationInfos( input, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -402,13 +411,14 @@ ADN_Urban_Data::AccommodationInfos* ADN_Urban_Data::AccommodationInfos::CreateCo
 // Name: ADN_Urban_Data::AccommodationInfos constructor
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
-ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input, const std::string& role )
-    : ADN_RefWithName( role )
-    , nominalCapacity_( 0 )
+ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input, const ADN_Urban_Data& parent )
+    : nominalCapacity_( 0 )
     , maxCapacity_    ( 0 )
 {
+    std::string strName = input.attribute< std::string >( "role" );
     input >> xml::attribute( "nominal-capacity", nominalCapacity_ )
           >> xml::attribute( "max-capacity", maxCapacity_ );
+    strName_.SetTranslation( strName, parent.GetTranslation( "accomodations", strName ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -447,9 +457,9 @@ void ADN_Urban_Data::ReadInfrastructures( xml::xistream& input )
 // Name: ADN_Urban_Data::ReadInfrastructure
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::ReadInfrastructure( xml::xistream& input  )
+void ADN_Urban_Data::ReadInfrastructure( xml::xistream& input )
 {
-    vInfrastructures_.AddItem( new InfrastructureInfos( input ) );
+    vInfrastructures_.AddItem( new InfrastructureInfos( input, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -498,13 +508,14 @@ ADN_Urban_Data::InfrastructureInfos* ADN_Urban_Data::InfrastructureInfos::Create
 // Name: ADN_Urban_Data::InfrastructureInfos constructor
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
-ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
+ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input, const ADN_Urban_Data& parent )
     : pSymbol_( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsInfras(), 0 )
     , bMedical_( false )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "symbol", pSymbol_ )
+    std::string strName = input.attribute< std::string >( "name" );
+    input >> xml::attribute( "symbol", pSymbol_ )
           >> xml::optional >> xml::attribute( "medical", bMedical_ );
+    strName_.SetTranslation( strName, parent.GetTranslation( "infrastructures", strName ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -581,12 +592,12 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos()
 // Name: ADN_Urban_Data::UrbanTemplateInfos
 // Created: LGY 2011-09-20
 // -----------------------------------------------------------------------------
-ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
-    : ADN_RefWithName( input.attribute< std::string >( "name" ) )
-    , ptrMaterial_ ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), 0 )
+ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input, const ADN_Urban_Data& parent )
+    : ptrMaterial_ ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), 0 )
     , ptrRoofShape_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetRoofShapesInfos(), 0 )
     , usages_      ( this )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     BindExistenceTo( &ptrMaterial_ );
     BindExistenceTo( &ptrRoofShape_ );
     unsigned int red, green, blue;
@@ -614,6 +625,7 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
     color.setAlphaF( alpha );
     color_ = color.name().toStdString();
     alpha_ = color.alpha();
+    strName_.SetTranslation( strName, parent.GetTemplateTranslation( "templates", strName ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -704,10 +716,10 @@ ADN_Urban_Data::RoofShapeInfos::RoofShapeInfos()
 // Name: ADN_Urban_Data::UrbanInfos
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-ADN_Urban_Data::RoofShapeInfos::RoofShapeInfos( xml::xistream& input )
-    : ADN_RefWithName( input.attribute< std::string >( "name" ) )
+ADN_Urban_Data::RoofShapeInfos::RoofShapeInfos( xml::xistream& input, const ADN_Urban_Data& parent )
 {
-    // NOTHING
+    std::string strName = input.attribute< std::string >( "name" );
+    strName_.SetTranslation( strName, parent.GetTranslation( "roof-shapes", strName ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -849,6 +861,24 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( AccommodationInfos& infos )
                 result << ( *it )->strName_.GetData().c_str();
         }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetTranslation
+// Created: MMC 2013-07-26
+// -----------------------------------------------------------------------------
+kernel::Translation* ADN_Urban_Data::GetTranslation( const std::string& context, const std::string& key ) const
+{
+    return translations_->GetTranslation( context, key );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetTemplateTranslation
+// Created: MMC 2013-07-26
+// -----------------------------------------------------------------------------
+kernel::Translation* ADN_Urban_Data::GetTemplateTranslation( const std::string& context, const std::string& key ) const
+{
+    return templateTranslations_->GetTranslation( context, key );
 }
 
 // -----------------------------------------------------------------------------

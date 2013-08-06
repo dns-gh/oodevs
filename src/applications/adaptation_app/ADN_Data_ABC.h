@@ -51,7 +51,7 @@ public:
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
-    virtual void LoadTranslations( const tools::Path& xmlFile );
+    virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
     virtual std::string GetInvalidDataErrorMsg() const;
     //@}
 
@@ -71,7 +71,7 @@ protected:
     //@{
     virtual void LoadFile( const tools::Loader_ABC& fileLoader, const tools::Path& xmlFile, T_Loader loader );
     virtual void SaveFile( const tools::Path& xmlFile, T_Saver saver );
-    virtual void SaveTranslations( const tools::Path& xmlFile );
+    virtual void SaveTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
     //@}
 
 protected:

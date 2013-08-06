@@ -17,15 +17,20 @@
 #include "ADN_Symbols_Data.h"
 #include "ADN_RefWithName.h"
 
+namespace kernel
+{
+    struct Translation;
+}
+
 class ADN_Urban_Data : public ADN_Data_ABC
 {
 //*****************************************************************************
 public:
-    class AccommodationInfos : public ADN_RefWithName
+    class AccommodationInfos : public ADN_RefWithLocalizedName
     {
     public:
                  AccommodationInfos();
-        explicit AccommodationInfos( xml::xistream& input, const std::string& role );
+        explicit AccommodationInfos( xml::xistream& input, const ADN_Urban_Data& parent );
         virtual ~AccommodationInfos();
 
         bool operator==( const std::string& str );
@@ -44,11 +49,11 @@ public:
 
 //*****************************************************************************
 public:
-    class InfrastructureInfos : public ADN_RefWithName
+    class InfrastructureInfos : public ADN_RefWithLocalizedName
     {
     public:
                  InfrastructureInfos();
-        explicit InfrastructureInfos( xml::xistream& input );
+        explicit InfrastructureInfos( xml::xistream& input, const ADN_Urban_Data& parent );
         virtual ~InfrastructureInfos();
 
         bool operator==( const std::string& str );
@@ -72,11 +77,11 @@ public:
 
 //*****************************************************************************
 public:
-    class UrbanMaterialInfos : public ADN_RefWithName
+    class UrbanMaterialInfos : public ADN_RefWithLocalizedName
     {
     public:
                  UrbanMaterialInfos();
-        explicit UrbanMaterialInfos( xml::xistream& input );
+        explicit UrbanMaterialInfos( xml::xistream& input, const ADN_Urban_Data& parent );
         virtual ~UrbanMaterialInfos();
 
         bool operator==( const std::string& str );
@@ -102,11 +107,11 @@ public:
 //*****************************************************************************
 
 public:
-    class RoofShapeInfos : public ADN_RefWithName
+    class RoofShapeInfos : public ADN_RefWithLocalizedName
     {
     public:
                  RoofShapeInfos();
-        explicit RoofShapeInfos( xml::xistream& input );
+        explicit RoofShapeInfos( xml::xistream& input, const ADN_Urban_Data& parent );
         virtual ~RoofShapeInfos();
 
         bool operator==( const std::string& str );
@@ -165,11 +170,11 @@ public:
 //*****************************************************************************
 
 public:
-    class UrbanTemplateInfos : public ADN_RefWithName
+    class UrbanTemplateInfos : public ADN_RefWithLocalizedName
     {
     public:
                  UrbanTemplateInfos();
-        explicit UrbanTemplateInfos( xml::xistream& input );
+        explicit UrbanTemplateInfos( xml::xistream& input, const ADN_Urban_Data& parent );
         virtual ~UrbanTemplateInfos();
 
         void Write( xml::xostream& output );
@@ -226,6 +231,9 @@ public:
     QStringList GetUrbanTemplateThatUse( RoofShapeInfos& infos );
     QStringList GetUrbanTemplateThatUse( AccommodationInfos& infos );
 
+    kernel::Translation* GetTranslation( const std::string& context, const std::string& key ) const;
+    kernel::Translation* GetTemplateTranslation( const std::string& context, const std::string& key ) const;
+
 private:
     //! @name Helpers
     //@{
@@ -256,6 +264,7 @@ private:
     T_AccommodationInfos_Vector vAccommodations_;
     T_InfrastructureInfos_Vector vInfrastructures_;
     T_UrbanTemplateInfos_Vector vTemplates_;
+    std::auto_ptr< kernel::XmlTranslations > templateTranslations_;
     //@}
 
 public:
