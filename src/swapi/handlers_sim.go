@@ -610,10 +610,6 @@ func (model *Model) handleAutomatChangeLogisticLinks(m *sword.SimToClient_Conten
 		return ErrSkipHandler
 	}
 	requester := mm.GetRequester()
-	if requester == nil {
-		// fixme error
-		return nil
-	}
 	superiors := []uint32{}
 	for _, s := range mm.GetSuperior() {
 		if s.GetAutomat() != nil {
@@ -641,10 +637,6 @@ func (model *Model) handleAutomatChangeKnowledgeGroup(m *sword.SimToClient_Conte
 	mm := m.GetAutomatChangeKnowledgeGroup()
 	if mm == nil {
 		return ErrSkipHandler
-	}
-	if mm.GetAutomat() == nil || mm.GetParty() == nil || mm.GetKnowledgeGroup() == nil {
-		// fixme error
-		return nil
 	}
 	d := model.data
 	_, ok := d.Parties[mm.GetParty().GetId()]
@@ -676,10 +668,6 @@ func (model *Model) handleLogSupplyQuotas(m *sword.SimToClient_Content) error {
 		for _, quota := range mm.GetQuotas().GetElem() {
 			quotas[quota.GetResource().GetId()] = quota.GetQuantity()
 		}
-	}
-	if mm.GetSupplied() == nil {
-		// fixme return error
-		return nil
 	}
 	d := model.data
 	if mm.GetSupplied().GetAutomat() != nil {
