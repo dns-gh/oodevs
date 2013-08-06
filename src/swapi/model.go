@@ -10,7 +10,6 @@ package swapi
 
 import (
 	"errors"
-	"fmt"
 	"sword"
 	"time"
 )
@@ -135,482 +134,66 @@ func (model *Model) run() error {
 	return nil
 }
 
+var (
+	simToClientHandlers = []func(model *Model, m *sword.SimToClient_Content) error{
+		(*Model).handleAutomatAttributes,
+		(*Model).handleAutomatChangeKnowledgeGroup,
+		(*Model).handleAutomatChangeLogisticLinks,
+		(*Model).handleAutomatCreation,
+		(*Model).handleChangeDiplomacy,
+		(*Model).handleControlBeginTick,
+		(*Model).handleControlGlobalWeather,
+		(*Model).handleControlLocalWeatherCreation,
+		(*Model).handleControlLocalWeatherDestruction,
+		(*Model).handleControlSendCurrentStateEnd,
+		(*Model).handleCrowdConcentrationCreation,
+		(*Model).handleCrowdConcentrationDestruction,
+		(*Model).handleCrowdConcentrationUpdate,
+		(*Model).handleCrowdCreation,
+		(*Model).handleCrowdFlowCreation,
+		(*Model).handleCrowdFlowDestruction,
+		(*Model).handleCrowdFlowUpdate,
+		(*Model).handleCrowdKnowledgeCreation,
+		(*Model).handleCrowdUpdate,
+		(*Model).handleFormationCreation,
+		(*Model).handleKnowledgeGroupCreation,
+		(*Model).handleKnowledgeGroupUpdate,
+		(*Model).handleLogSupplyQuotas,
+		(*Model).handleObjectKnowledgeCreation,
+		(*Model).handlePartyCreation,
+		(*Model).handlePopulationCreation,
+		(*Model).handleUnitAttributes,
+		(*Model).handleUnitChangeSuperior,
+		(*Model).handleUnitCreation,
+		(*Model).handleUnitDestruction,
+		(*Model).handleUnitKnowledgeCreation,
+		(*Model).handleUnitPathfind,
+		(*Model).handleUrbanCreation,
+		(*Model).handleUrbanUpdate,
+	}
+	authToClientHandlers = []func(model *Model, m *sword.AuthenticationToClient_Content) error{
+		(*Model).handleProfileCreation,
+		(*Model).handleProfileDestruction,
+		(*Model).handleProfileUpdate,
+	}
+)
+
 func (model *Model) update(msg *SwordMessage) error {
-	d := model.data
 	if msg.SimulationToClient != nil {
 		m := msg.SimulationToClient.GetMessage()
-		if m.GetControlSendCurrentStateEnd() != nil {
-			model.ready = true
-		} else if mm := m.GetControlBeginTick(); mm != nil {
-			t, err := GetTime(mm.GetDateTime())
-			if err != nil {
+		for _, handler := range simToClientHandlers {
+			err := handler(model, m)
+			if err != ErrSkipHandler {
 				return err
 			}
-			d.Time = t
-			d.Tick = mm.GetCurrentTick()
-		} else if mm := m.GetPartyCreation(); mm != nil {
-			party := NewParty(
-				mm.GetParty().GetId(),
-				mm.GetName())
-			d.Parties[party.Id] = party
-		} else if mm := m.GetUnitCreation(); mm != nil {
-			unit := &Unit{
-				Id:                 mm.GetUnit().GetId(),
-				AutomatId:          mm.GetAutomat().GetId(),
-				Name:               mm.GetName(),
-				Pc:                 mm.GetPc(),
-				Position:           Point{},
-				PathPoints:         0,
-				DebugBrain:         false,
-				EquipmentDotations: map[uint32]*EquipmentDotation{},
-				LentEquipments:     []*LentEquipment{},
-				BorrowedEquipments: []*BorrowedEquipment{}}
-
-			if !d.addUnit(unit) {
-				return fmt.Errorf("cannot insert created unit: %d", unit.Id)
-			}
-		} else if mm := m.GetUnitAttributes(); mm != nil {
-			unit := d.FindUnit(mm.GetUnit().GetId())
-			if unit == nil {
-				return fmt.Errorf("cannot find unit to update: %d",
-					mm.GetUnit().GetId())
-			}
-			if mm.Headquarters != nil {
-				unit.Pc = *mm.Headquarters
-			}
-			if mm.Position != nil {
-				unit.Position = ReadPoint(mm.GetPosition())
-			}
-			if mm.BrainDebug != nil {
-				unit.DebugBrain = *mm.BrainDebug
-			}
-			if dotations := mm.GetEquipmentDotations(); dotations != nil {
-				for _, dotation := range dotations.GetElem() {
-					unit.EquipmentDotations[dotation.GetType().GetId()] = &EquipmentDotation{dotation.GetAvailable()}
-				}
-			}
-			if lentEquipments := mm.GetLentEquipments(); lentEquipments != nil {
-				unit.LentEquipments = []*LentEquipment{}
-				for _, equipment := range lentEquipments.GetElem() {
-					unit.LentEquipments = append(unit.LentEquipments, &LentEquipment{equipment.GetBorrower().GetId(),
-						equipment.GetType().GetId(), equipment.GetQuantity()})
-				}
-			}
-			if borrowedEquipments := mm.GetBorrowedEquipments(); borrowedEquipments != nil {
-				unit.BorrowedEquipments = []*BorrowedEquipment{}
-				for _, equipment := range borrowedEquipments.GetElem() {
-					unit.BorrowedEquipments = append(unit.BorrowedEquipments, &BorrowedEquipment{equipment.GetOwner().GetId(),
-						equipment.GetType().GetId(), equipment.GetQuantity()})
-				}
-			}
-		} else if mm := m.GetAutomatCreation(); mm != nil {
-			automat := NewAutomat(
-				mm.GetAutomat().GetId(),
-				mm.GetParty().GetId(),
-				mm.GetKnowledgeGroup().GetId(),
-				mm.GetName())
-			automatId, formationId := uint32(0), uint32(0)
-			if parent := mm.GetParent().GetAutomat(); parent != nil {
-				automatId = parent.GetId()
-			} else if parent := mm.GetParent().GetFormation(); parent != nil {
-				formationId = parent.GetId()
-			}
-			if !d.addAutomat(automatId, formationId, automat) {
-				return fmt.Errorf("cannot insert created automat: %d", automat.Id)
-			}
-		} else if mm := m.GetAutomatAttributes(); mm != nil {
-			automat := d.FindAutomat(mm.GetAutomat().GetId())
-			if automat == nil {
-				return fmt.Errorf("cannot find automat to update: %d",
-					mm.GetAutomat().GetId())
-			}
-			if mm.Mode != nil {
-				mode := mm.GetMode()
-				if mode == sword.EnumAutomatMode_engaged {
-					automat.Engaged = true
-				} else if mode == sword.EnumAutomatMode_disengaged {
-					automat.Engaged = false
-				}
-			}
-			if mm.BrainDebug != nil {
-				automat.DebugBrain = mm.GetBrainDebug()
-			}
-		} else if mm := m.GetFormationCreation(); mm != nil {
-			level, ok := sword.EnumNatureLevel_name[int32(mm.GetLevel())]
-			if !ok {
-				level = "unknown"
-			}
-			logLevel, ok := sword.EnumLogisticLevel_name[int32(mm.GetLogisticLevel())]
-			if !ok {
-				logLevel = "unknown"
-			}
-			formation := NewFormation(
-				mm.GetFormation().GetId(),
-				mm.GetName(),
-				mm.GetParent().GetId(),
-				mm.GetParty().GetId(),
-				level, logLevel)
-			if !d.addFormation(formation) {
-				return fmt.Errorf("cannot create formation %v with unknown"+
-					"parent party=%v/parent=%v", formation.Id, formation.PartyId,
-					formation.ParentId)
-			}
-		} else if mm := m.GetCrowdCreation(); mm != nil {
-			crowd := NewCrowd(
-				mm.GetCrowd().GetId(),
-				mm.GetParty().GetId(),
-				mm.GetName())
-			if !d.addCrowd(crowd) {
-				return fmt.Errorf("cannot insert created crowd: %d", crowd.Id)
-			}
-		} else if mm := m.GetCrowdUpdate(); mm != nil {
-			crowd := d.FindCrowd(mm.GetCrowd().GetId())
-			if crowd == nil {
-				return fmt.Errorf("cannot find crowd to update: %d",
-					mm.GetCrowd().GetId())
-			}
-			if mm.CriticalIntelligence != nil {
-				crowd.CriticalIntelligence = *mm.CriticalIntelligence
-			}
-			if mm.Healthy != nil {
-				crowd.Healthy = *mm.Healthy
-			}
-			if mm.Wounded != nil {
-				crowd.Wounded = *mm.Wounded
-			}
-			if mm.Dead != nil {
-				crowd.Dead = *mm.Dead
-			}
-			if mm.Contaminated != nil {
-				crowd.Contaminated = *mm.Contaminated
-			}
-			if mm.ArmedIndividuals != nil {
-				crowd.ArmedIndividuals = *mm.ArmedIndividuals
-			}
-			if mm.Adhesions != nil {
-				crowd.Adhesions = map[uint32]float32{}
-				for _, value := range mm.Adhesions.Adhesion {
-					crowd.Adhesions[value.GetParty().GetId()] = value.GetValue()
-				}
-			}
-			if mm.Extension != nil {
-				for i := 0; i < len(mm.Extension.Entries); i++ {
-					entry := mm.Extension.Entries[i]
-					crowd.Extensions[entry.GetName()] = entry.GetValue()
-				}
-			}
-		} else if mm := m.GetCrowdFlowCreation(); mm != nil {
-			if !d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
-				return fmt.Errorf("cannot insert crowd flow %d into crowd %d",
-					mm.GetFlow().GetId(), mm.GetCrowd().GetId())
-			}
-		} else if mm := m.GetCrowdFlowDestruction(); mm != nil {
-			if !d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
-				return fmt.Errorf("cannot remove crowd flow %d from crowd %d",
-					mm.GetFlow().GetId(), mm.GetCrowd().GetId())
-			}
-		} else if mm := m.GetCrowdFlowUpdate(); mm != nil {
-			crowd := d.FindCrowd(mm.GetCrowd().GetId())
-			if crowd == nil {
-				return fmt.Errorf("cannot find crowd to update: %d",
-					mm.GetCrowd().GetId())
-			}
-			element := crowd.CrowdElements[mm.GetFlow().GetId()]
-			if element == nil {
-				return fmt.Errorf("cannot find crowd flow to update: %d",
-					mm.GetFlow().GetId())
-			}
-			element.Attitude = int32(mm.GetAttitude())
-		} else if mm := m.GetCrowdConcentrationCreation(); mm != nil {
-			if !d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
-				return fmt.Errorf("cannot insert crowd concentration %d into crowd %d",
-					mm.GetConcentration().GetId(), mm.GetCrowd().GetId())
-			}
-		} else if mm := m.GetCrowdConcentrationDestruction(); mm != nil {
-			if !d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
-				return fmt.Errorf("cannot remove crowd concentration %d from crowd %d",
-					mm.GetConcentration().GetId(), mm.GetCrowd().GetId())
-			}
-		} else if mm := m.GetCrowdConcentrationUpdate(); mm != nil {
-			crowd := d.FindCrowd(mm.GetCrowd().GetId())
-			if crowd == nil {
-				return fmt.Errorf("cannot find crowd to update: %d",
-					mm.GetCrowd().GetId())
-			}
-			element := crowd.CrowdElements[mm.GetConcentration().GetId()]
-			if element == nil {
-				return fmt.Errorf("cannot find crowd concentration to update: %d",
-					mm.GetConcentration().GetId())
-			}
-			element.Attitude = int32(mm.GetAttitude())
-		} else if mm := m.GetPopulationCreation(); mm != nil {
-			population := &Population{
-				mm.GetId().GetId(),
-				mm.GetParty().GetId(),
-				mm.GetName()}
-			if !d.addPopulation(population) {
-				return fmt.Errorf("cannot insert population: %d", population.Id)
-			}
-		} else if mm := m.GetUnitPathfind(); mm != nil {
-			unit := d.FindUnit(mm.GetUnit().GetId())
-			if unit == nil {
-				return fmt.Errorf("cannot find pathfind source unit: %d",
-					mm.GetUnit().GetId())
-			}
-			if mm.Path != nil && mm.Path.Location != nil {
-				unit.PathPoints = uint32(0)
-				if mm.Path.Location.Coordinates != nil {
-					unit.PathPoints = uint32(len(mm.Path.Location.Coordinates.Elem))
-				}
-			}
-		} else if mm := m.GetUnitDestruction(); mm != nil {
-			if !d.removeUnit(mm.GetUnit().GetId()) {
-				return fmt.Errorf("cannot find unit to destroy: %d",
-					mm.GetUnit().GetId())
-			}
-		} else if mm := m.GetKnowledgeGroupCreation(); mm != nil {
-			group := &KnowledgeGroup{
-				Id:                  mm.GetKnowledgeGroup().GetId(),
-				Name:                mm.GetName(),
-				PartyId:             mm.GetParty().GetId(),
-				ParentId:            mm.GetParent().GetId(),
-				Type:                mm.GetType(),
-				IsCrowdDefaultGroup: mm.GetCrowd(),
-				Enabled:             true,
-				UnitKnowledges:      map[uint32]*UnitKnowledge{},
-				ObjectKnowledges:    map[uint32]*ObjectKnowledge{},
-				CrowdKnowledges:     map[uint32]*CrowdKnowledge{},
-			}
-			if !d.addKnowledgeGroup(group) {
-				return fmt.Errorf("cannot insert knowledge group: %d", group.Id)
-			}
-		} else if mm := m.GetUnitKnowledgeCreation(); mm != nil {
-			knowledge := &UnitKnowledge{
-				Id:               mm.GetKnowledge().GetId(),
-				KnowledgeGroupId: mm.GetKnowledgeGroup().GetId(),
-				UnitId:           mm.GetUnit().GetId(),
-				UnitType:         mm.GetType().GetId(),
-			}
-			if !d.addUnitKnowledge(knowledge) {
-				return fmt.Errorf("cannot insert unit knowledge %d into group %d",
-					knowledge.Id, knowledge.KnowledgeGroupId)
-			}
-		} else if mm := m.GetObjectKnowledgeCreation(); mm != nil {
-			knowledge := &ObjectKnowledge{
-				Id:               mm.GetKnowledge().GetId(),
-				PartyId:          mm.GetParty().GetId(),
-				ObjectId:         mm.GetObject().GetId(),
-				ObjectType:       mm.GetType().GetId(),
-				KnowledgeGroupId: mm.GetKnowledgeGroup().GetId(),
-				ObjectPartyId:    mm.GetObjectParty().GetId(),
-				ObjectName:       mm.GetObjectName(),
-			}
-			if !d.addObjectKnowledge(knowledge) {
-				return fmt.Errorf("cannot insert object knowledge %d into group %d",
-					knowledge.Id, knowledge.KnowledgeGroupId)
-			}
-		} else if mm := m.GetCrowdKnowledgeCreation(); mm != nil {
-			knowledge := &CrowdKnowledge{
-				Id:               mm.GetKnowledge().GetId(),
-				KnowledgeGroupId: mm.GetKnowledgeGroup().GetId(),
-				CrowdId:          mm.GetCrowd().GetId(),
-				PartyId:          mm.GetParty().GetId(),
-			}
-			if !d.addCrowdKnowledge(knowledge) {
-				return fmt.Errorf("cannot insert crowd knowledge %d into group %d",
-					knowledge.Id, knowledge.KnowledgeGroupId)
-			}
-		} else if mm := m.GetKnowledgeGroupUpdate(); mm != nil {
-			knowledgeGroup := d.FindKnowledgeGroup(mm.GetKnowledgeGroup().GetId())
-			if knowledgeGroup == nil {
-				return fmt.Errorf("cannot find knowledge group to update: %d",
-					mm.GetKnowledgeGroup().GetId())
-			}
-			if mm.Party != nil {
-				knowledgeGroup.PartyId = mm.GetParty().GetId()
-			}
-			if mm.Parent != nil {
-				knowledgeGroup.ParentId = mm.GetParent().GetId()
-			}
-			if mm.Enabled != nil {
-				knowledgeGroup.Enabled = *mm.Enabled
-			}
-			if mm.Type != nil {
-				knowledgeGroup.Type = *mm.Type
-			}
-		} else if mm := m.GetControlGlobalWeather(); mm != nil {
-			attributes := mm.GetAttributes()
-			weather := &d.GlobalWeather
-			weather.Temperature = float32(attributes.GetTemperature())
-			weather.WindSpeed = float32(attributes.GetWindSpeed())
-			weather.WindDirection = attributes.GetWindDirection().GetHeading()
-			weather.CloudFloor = float32(attributes.GetCloudFloor())
-			weather.CloudCeil = float32(attributes.GetCloudCeiling())
-			weather.CloudDensity = float32(attributes.GetCloudDensity())
-			weather.Precipitation = attributes.GetPrecipitation()
-			weather.Lightning = attributes.GetLighting()
-		} else if mm := m.GetControlLocalWeatherCreation(); mm != nil {
-			start, err := GetTime(mm.GetStartDate())
-			if err != nil {
-				return fmt.Errorf("cannot parse local weather start time: %v",
-					mm.GetStartDate())
-			}
-			end, err := GetTime(mm.GetEndDate())
-			if err != nil {
-				return fmt.Errorf("cannot parse local weather end time: %v",
-					mm.GetEndDate())
-			}
-			attr := mm.GetAttributes()
-			// most attributes are truncated here...
-			w := &LocalWeather{
-				Weather: Weather{
-					Temperature:   float32(attr.GetTemperature()),
-					WindSpeed:     float32(attr.GetWindSpeed()),
-					WindDirection: attr.GetWindDirection().GetHeading(),
-					CloudFloor:    float32(attr.GetCloudFloor()),
-					CloudCeil:     float32(attr.GetCloudCeiling()),
-					CloudDensity:  float32(attr.GetCloudDensity()),
-					Precipitation: attr.GetPrecipitation(),
-					//Lighting:      attr.GetLighting(),
-				},
-				StartTime:   start,
-				EndTime:     end,
-				TopLeft:     ReadPoint(mm.GetTopLeft()),
-				BottomRight: ReadPoint(mm.GetBottomRight()),
-				Id:          mm.GetWeather().GetId(),
-			}
-			d.addLocalWeather(w)
-		} else if mm := m.GetControlLocalWeatherDestruction(); mm != nil {
-			if !d.removeLocalWeather(mm.GetWeather().GetId()) {
-				return fmt.Errorf("cannot find local weather to destroy: %d",
-					mm.GetWeather().GetId())
-			}
-		} else if mm := m.GetChangeDiplomacy(); mm != nil {
-			party1 := d.Parties[mm.GetParty1().GetId()]
-			if party1 == nil {
-				return fmt.Errorf("cannot resolve diplomacy change first party: %d",
-					mm.GetParty1().GetId())
-			}
-			party2 := d.Parties[mm.GetParty2().GetId()]
-			if party2 == nil {
-				return fmt.Errorf("cannot resolve diplomacy change second party: %d",
-					mm.GetParty2().GetId())
-			}
-			party1.Diplomacies[party2.Id] = mm.GetDiplomacy()
-		} else if mm := m.GetUrbanCreation(); mm != nil {
-			urban := NewUrban(
-				mm.GetObject().GetId(),
-				mm.GetName(),
-				NewResourceNetworks(mm.GetAttributes()))
-			if !d.addUrban(urban) {
-				return fmt.Errorf("cannot insert urban block: %d", urban.Id)
-			}
-		} else if mm := m.GetUrbanUpdate(); mm != nil {
-			if !d.updateUrban(mm.GetObject().GetId(), NewResourceNetworks(mm.GetAttributes())) {
-				return fmt.Errorf("cannot update urban block: %d",
-					mm.GetObject().GetId())
-			}
-		} else if mm := m.GetAutomatChangeLogisticLinks(); mm != nil {
-			if mm.GetRequester() != nil {
-				requester := mm.GetRequester()
-				superiors := []uint32{}
-				for _, s := range mm.GetSuperior() {
-					if s.GetAutomat() != nil {
-						superiors = append(superiors, s.GetAutomat().GetId())
-					}
-					if s.GetFormation() != nil {
-						superiors = append(superiors, s.GetFormation().GetId())
-					}
-				}
-				if requester.GetAutomat() != nil {
-					if !d.changeLogisticsLinks(requester.GetAutomat().GetId(), superiors) {
-						return fmt.Errorf("cannot update logistic links on automat: %d",
-							requester.GetAutomat().GetId())
-					}
-				} else if requester.GetFormation() != nil {
-					if !d.changeLogisticsLinks(requester.GetFormation().GetId(), superiors) {
-						return fmt.Errorf("cannot update logistic links on formation: %d",
-							requester.GetFormation().GetId())
-					}
-				}
-			}
-		} else if mm := m.GetAutomatChangeKnowledgeGroup(); mm != nil {
-			if mm.GetAutomat() != nil && mm.GetParty() != nil && mm.GetKnowledgeGroup() != nil {
-				_, ok := d.Parties[mm.GetParty().GetId()]
-				if !ok {
-					return fmt.Errorf("unknown party: %d", mm.GetParty().GetId())
-				}
-				automat := d.FindAutomat(mm.GetAutomat().GetId())
-				if automat == nil {
-					return fmt.Errorf("unknown automat: %d", mm.GetAutomat().GetId())
-				}
-				knowledgeGroup := d.FindKnowledgeGroup(mm.GetKnowledgeGroup().GetId())
-				if knowledgeGroup == nil {
-					return fmt.Errorf("unknown knowledge group: %d", mm.GetKnowledgeGroup().GetId())
-				}
-				if knowledgeGroup.PartyId != mm.GetParty().GetId() {
-					return fmt.Errorf("bad party %d for knowledge group %d", mm.GetParty().GetId(), mm.GetKnowledgeGroup().GetId())
-				}
-				automat.KnowledgeGroupId = mm.GetKnowledgeGroup().GetId()
-			}
-		} else if mm := m.GetLogSupplyQuotas(); mm != nil {
-			quotas := map[uint32]int32{}
-			if mm.GetQuotas() != nil {
-				for _, quota := range mm.GetQuotas().GetElem() {
-					quotas[quota.GetResource().GetId()] = quota.GetQuantity()
-				}
-			}
-			if mm.GetSupplied() != nil {
-				if mm.GetSupplied().GetAutomat() != nil {
-					if !d.changeSupplyQuotas(mm.GetSupplied().GetAutomat().GetId(), quotas) {
-						return fmt.Errorf("cannot update supply quotas on automat: %d",
-							mm.GetSupplied().GetAutomat().GetId())
-					}
-				} else if mm.GetSupplied().GetFormation() != nil {
-					if !d.changeSupplyQuotas(mm.GetSupplied().GetFormation().GetId(), quotas) {
-						return fmt.Errorf("cannot update supply quotas on formation: %d",
-							mm.GetSupplied().GetFormation().GetId())
-					}
-				}
-			}
-		} else if mm := m.GetUnitChangeSuperior(); mm != nil {
-			unit := d.FindUnit(mm.GetUnit().GetId())
-			if unit == nil {
-				return fmt.Errorf("cannot find unit which superior must be updated: %d",
-					mm.GetUnit().GetId())
-			}
-			newAutomat := d.FindAutomat(mm.GetParent().GetId())
-			if newAutomat == nil {
-				return fmt.Errorf("cannot find unit new parent automat: %d",
-					mm.GetParent().GetId())
-			}
-			if err := d.changeSuperior(unit, newAutomat); err != nil {
-				return fmt.Errorf("cannot change %d unit superior to %d: %s",
-					unit.Id, newAutomat.Id, err)
-			}
 		}
-	} else if msg.AuthenticationToClient != nil {
+	}
+	if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()
-		if mm := m.GetProfileCreation(); mm != nil {
-			profile := &Profile{
-				mm.GetProfile().GetLogin(),
-				mm.GetProfile().GetPassword(),
-				mm.GetProfile().GetSupervisor()}
-			if !d.addProfile(profile) {
-				return fmt.Errorf("cannot insert profile: %s", profile.Login)
-			}
-		} else if mm := m.GetProfileUpdate(); mm != nil {
-			profile := &Profile{
-				mm.GetProfile().GetLogin(),
-				mm.GetProfile().GetPassword(),
-				mm.GetProfile().GetSupervisor()}
-			if !d.updateProfile(mm.GetLogin(), profile) {
-				return fmt.Errorf("cannot find profile to update: %s", profile.Login)
-			}
-		} else if mm := m.GetProfileDestruction(); mm != nil {
-			if !d.removeProfile(mm.GetLogin()) {
-				return fmt.Errorf("cannot find profile to remove: %s",
-					mm.GetLogin())
+		for _, handler := range authToClientHandlers {
+			err := handler(model, m)
+			if err != ErrSkipHandler {
+				return err
 			}
 		}
 	}
