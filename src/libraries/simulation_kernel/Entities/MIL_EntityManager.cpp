@@ -1729,31 +1729,35 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& message, unsigned int nCtx )
 {
-    client::AutomatChangeSuperiorAck ack;
-    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
-    try
-    {
-        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
-        if( !pAutomate )
-            throw MASA_EXCEPTION_ASN( HierarchyModificationAck_ErrorCode, HierarchyModificationAck::error_invalid_automate );
-        pAutomate->OnReceiveChangeSuperior( message, *formationFactory_ );
-    }
-    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    if( message.type() != UnitMagicAction::change_automat_superior && message.type() != UnitMagicAction::change_formation_superior )
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
-    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
+    MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
+    if( !pAutomate )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid automat" );
+
+    if( !message.parameters().elem_size() && !message.parameters().elem( 0 ).value_size() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "wrong parameters number" );
+
+    client::AutomatChangeSuperior resendMessage;
+    resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
+    
+    if( message.parameters().elem( 0 ).value().Get( 0 ).has_formation() )
     {
-        client::AutomatChangeSuperior resendMessage;
-        resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-        if( message.type() == UnitMagicAction::change_formation_superior )
-            resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
-        else if( message.type() == UnitMagicAction::change_automat_superior )
-            resendMessage().mutable_superior()->mutable_automat()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).automat().id() );
-        resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
+        MIL_Formation* pFormation = FindFormation( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
+        if( !pFormation )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new parent formation" );
+        resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
     }
+    else if( message.parameters().elem( 0 ).value().Get( 0 ).has_automat() )
+    {
+        MIL_Automate* pAutomat = FindAutomate( message.parameters().elem( 0 ).value().Get( 0 ).automat().id() );
+        if( !pAutomat )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new parent automat" );
+        resendMessage().mutable_superior()->mutable_automat()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).automat().id() );
+    }
+    pAutomate->OnReceiveChangeSuperior( message, *formationFactory_ );
+    resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -2650,7 +2654,7 @@ void MIL_EntityManager::SetToTasker( Tasker& tasker, unsigned int id ) const
     else throw MASA_EXCEPTION( "Misformed tasker in protocol message." );
 }
 
-// -----------------------------------------------5------------------------------
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateCrowd
 // Created: BCI 2011-03-16
 // -----------------------------------------------------------------------------
@@ -2697,30 +2701,34 @@ void MIL_EntityManager::VisitUniversalObjects( const boost::function< void( MIL_
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessFormationChangeSuperior( const UnitMagicAction& message, unsigned int nCtx )
 {
-    client::AutomatChangeSuperiorAck ack;
-    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
-    try
+    MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
+    if( !pFormation )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid formation" );
+
+    if( !message.parameters().elem_size() && !message.parameters().elem( 0 ).value_size() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "wrong parameters number" );
+
+    if( !message.parameters().elem( 0 ).value().Get( 0 ).has_formation() && !message.parameters().elem( 0 ).value().Get( 0 ).has_party() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new superior" );
+
+    client::FormationChangeSuperior resendMessage;
+    resendMessage().mutable_formation()->set_id( message.tasker().formation().id() );
+    if( !message.parameters().elem( 0 ).value().Get( 0 ).has_formation() )
     {
-        MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
+        MIL_Formation* pFormation = FindFormation( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
         if( !pFormation )
-            throw MASA_EXCEPTION_ASN( HierarchyModificationAck_ErrorCode, HierarchyModificationAck::error_invalid_formation );
-        pFormation->OnReceiveChangeSuperior( message, *formationFactory_ );
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new parent formation" );
+        resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
     }
-    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
-    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
+    if( message.parameters().elem( 0 ).value().Get( 0 ).has_party() )
     {
-
-        client::FormationChangeSuperior resendMessage;
-        resendMessage().mutable_formation()->set_id( message.tasker().formation().id() );
-        if( message.parameters().elem( 0 ).value().Get( 0 ).has_formation() )
-            resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
-        else
-            resendMessage().mutable_superior()->mutable_party()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).party().id() );
-        resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
+        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parameters().elem( 0 ).value().Get( 0 ).party().id() );
+        if( !pArmy1 )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new parent army" );
+        resendMessage().mutable_superior()->mutable_party()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).party().id() );
     }
+
+    pFormation->OnReceiveChangeSuperior( message, *formationFactory_ );
+    resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }

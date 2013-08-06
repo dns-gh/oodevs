@@ -1978,9 +1978,15 @@ message UnitMagicAction {
         //!  The tasker must be an unit identifier.
         //! parameters[0], Automat: the new automat
         unit_change_superior              = 21;
-        //! A change automate superior magic action
+        //! Change superior of an automat
+        //! The tasker must be an automat identifier
+        //! parameters[0], Formation: the new formation
+        //! This message triggers a AutomatChangeSuperior on success.
         change_automat_superior           = 22;
-        //! A change formation superior magic action
+        //! Change superior of a formation
+        //! The tasker must be a formation identifier
+        //! parameters[0], Formation or Party: the new formation or party
+        //! This message triggers a FormationChangeSuperior on success.
         change_formation_superior         = 23;
         //! A knowledge group update magic action
         //! @deprecated never used
