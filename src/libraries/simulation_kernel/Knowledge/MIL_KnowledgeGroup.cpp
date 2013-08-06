@@ -1378,6 +1378,14 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
         }
     }
 
+    // Acquisition des connaissances parents /!\ Transfert de connaissance appui
+    if( IsJammed() && IsEnabled() && CanReport( ) && parent_ &&  parent_->GetKnowledge() )
+    {
+        boost::function< void( DEC_Knowledge_Object& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+        parent_->GetKnowledge()->GetKnowledgeObjectContainer().ApplyOnPreviousKnowledgesObject( functorObject );
+        parent_->GetKnowledge()->GetKnowledgeObjectContainer().SaveAllCurrentKnowledgeObject();
+    }
+
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
     for( auto it = pions_.begin(); it != pions_.end(); ++it )
     {
