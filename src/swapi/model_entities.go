@@ -105,6 +105,7 @@ type Unit struct {
 	EquipmentDotations map[uint32]*EquipmentDotation
 	LentEquipments     []*LentEquipment
 	BorrowedEquipments []*BorrowedEquipment
+	PartySurrenderedTo uint32
 }
 
 type Automat struct {

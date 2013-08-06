@@ -1189,3 +1189,22 @@ func (c *Client) TransferEquipment(unitId uint32, targetId uint32, equipments []
 	}
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) SurrenderTest(automatId uint32, params *sword.MissionParameters) error {
+	msg := createMagicActionMessage(params, makeAutomatTasker(automatId),
+		sword.UnitMagicAction_surrender_to.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) Surrender(automatId, partyId uint32) error {
+	return c.SurrenderTest(automatId, MakeParameters(MakeParty(partyId)))
+}
+
+func (c *Client) CancelSurrender(automatId uint32) error {
+	params := MakeParameters()
+	msg := createMagicActionMessage(params, makeAutomatTasker(automatId),
+		sword.UnitMagicAction_cancel_surrender.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}

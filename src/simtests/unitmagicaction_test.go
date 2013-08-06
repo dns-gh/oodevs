@@ -873,3 +873,74 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 		return CheckLentEquipment(data, 11, 13, 4, 0) && CheckBorrowedEquipment(data, 11, 13, 4, 0)
 	})
 }
+
+func (s *TestSuite) TestSurrender(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	data := client.Model.GetData()
+	automats := data.ListAutomats()
+	c.Assert(len(automats), Greater, 0)
+	automat := automats[0]
+
+	// find another party Id
+	armies := data.Parties
+	c.Assert(len(armies), Greater, 1)
+	var otherPartyId uint32
+	for otherPartyId = range armies {
+		if otherPartyId != automat.PartyId {
+			break
+		}
+	}
+
+	// error: cancel surrender while not surrendered
+	err := client.CancelSurrender(automat.Id)
+	c.Assert(err, IsSwordError, "error_unit_surrendered")
+
+	// error: no parameters
+	err = client.SurrenderTest(automat.Id, swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: parameter not a party
+	err = client.SurrenderTest(automat.Id, swapi.MakeParameters(swapi.MakeNullValue()))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: bad number of parameters
+	err = client.SurrenderTest(automat.Id, swapi.MakeParameters(swapi.MakeNullValue(), swapi.MakeNullValue()))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: surrender to own party
+	err = client.Surrender(automat.Id, automat.PartyId)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// surrender to other party
+	err = client.Surrender(automat.Id, otherPartyId)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for unitId := range automat.Units {
+			unit := data.FindUnit(unitId)
+			if unit.PartySurrenderedTo != otherPartyId {
+				return false
+			}
+		}
+		return true
+	})
+
+	// error: already surrendered
+	err = client.Surrender(automat.Id, otherPartyId)
+	c.Assert(err, IsSwordError, "error_unit_surrendered")
+
+	// cancel surrender
+	err = client.CancelSurrender(automat.Id)
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for unitId := range automat.Units {
+			unit := data.FindUnit(unitId)
+			if unit.PartySurrenderedTo != 0 {
+				return false
+			}
+		}
+		return true
+	})
+}

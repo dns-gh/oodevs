@@ -113,6 +113,9 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 				equipment.GetType().GetId(), equipment.GetQuantity()})
 		}
 	}
+	if surrenderedTo := mm.GetSurrenderedUnit(); surrenderedTo != nil {
+		unit.PartySurrenderedTo = *surrenderedTo.Id
+	}
 	return nil
 }
 
