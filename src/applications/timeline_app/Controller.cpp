@@ -24,6 +24,7 @@ using namespace timeline;
 Controller::Controller( const Configuration& cfg )
     : ui_ ( new Ui::Main() )
     , command_( "" )
+    , usePopups_( true )
 {
     ui_->setupUi( &main_ );
     ui_->toolBar->addWidget( &url_ );
@@ -187,9 +188,11 @@ void Controller::OnDeletedEvent( const std::string& uuid, const Error& error )
 
 void Controller::OnTestCrud()
 {
+    const bool popups = usePopups_;
     const std::string uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     try
     {
+        usePopups_ = false;
         Create( boost::assign::list_of( uuid ) );
         Delete( boost::assign::list_of( uuid ) );
         Read( boost::assign::list_of( uuid ) );
@@ -199,6 +202,7 @@ void Controller::OnTestCrud()
     {
         ui_->statusBar->showMessage( err.what() );
     }
+    usePopups_ = popups;
 }
 
 void Controller::OnActivatedEvent( const timeline::Event& event )
@@ -244,21 +248,17 @@ void Controller::OnKeyUp( int key )
 
 void Controller::OnGetEvents( const timeline::Events& events, const timeline::Error& error )
 {
-    if( !command_.empty() )
-        return;
     if( error.code != EC_OK )
         ui_->statusBar->showMessage( QString( "An error occured during while receiving GetEvents: %1" ).arg( error.text.c_str() ) );
-
+    if( !usePopups_ )
+        return;
     QDialog dialog( &main_ );
     dialog.setMinimumSize( 400, 500 );
     QVBoxLayout layout( &dialog );
     QListWidget list;
     layout.addWidget( &list );
-    int i = 0;
     for( auto it = events.begin(); it != events.end(); ++it )
-    {
-        list.addItem( QString( "Event %1: %2: %3" ).arg( i++ ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
-    }
+        list.addItem( QString( "Event %1: %2: %3" ).arg( list.count() ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
     dialog.exec();
 }
 
@@ -270,7 +270,7 @@ void Controller::OnLoadEvents()
 
 void Controller::OnLoadActionTriggered()
 {
-    if( !command_.empty() )
+    if( !usePopups_ )
         return;
     loadEventsDialog_.show();
 }
@@ -284,12 +284,12 @@ void Controller::OnLoadedEvents( const timeline::Error& error )
 
 void Controller::OnSavedEvents( const std::string& events, const timeline::Error& error )
 {
-    if( !command_.empty() )
-        return;
     if( error.code != EC_OK )
         ui_->statusBar->showMessage( QString( "An error occured during while receiving GetEvents: %1" ).arg( error.text.c_str() ) );
     ui_->statusBar->showMessage( "Events successfully saved" );
 
+    if( !usePopups_ )
+        return;
     QDialog dialog( &main_ );
     dialog.setMinimumSize( 400, 500 );
     QVBoxLayout layout( &dialog );
@@ -685,6 +685,7 @@ int Controller::SaveLoad( const std::vector< std::string >& args )
 
 int Controller::Execute( const std::string& command, const std::vector< std::string >& args )
 {
+    usePopups_ = false;
     command_ = command;
     WaitReady();
     if( command == "ready" )
