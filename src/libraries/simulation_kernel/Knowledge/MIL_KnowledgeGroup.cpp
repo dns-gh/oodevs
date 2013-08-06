@@ -1159,7 +1159,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
             }
         }
 
-        // acquisition des connaissances des groupes fils
+        // acquisition des connaissances des groupes fils /!\ Transfert de connaissance appui
         for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
         {
             const MIL_KnowledgeGroup& innerKg = **itKG;
@@ -1174,6 +1174,14 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
     }
     else if( jammedPion_ )
             ApplyPopulationPerception( *jammedPion_, currentTimeStep );
+
+
+    // Acquisition des connaissances parents /!\ Transfert de connaissance appui
+    if( IsJammed() && IsEnabled() && CanReport( ) && parent_ && parent_->GetKnowledge() )
+    {
+        boost::function< void( DEC_Knowledge_Population& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+        parent_->GetKnowledge()->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( functorObject );
+    }
 
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
     for( auto it = pions_.begin(); it != pions_.end(); ++it )
@@ -1447,6 +1455,16 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC
 {
     if( agentKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
         GetAgentKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromParentKnowledgeGroup
+// Created: LGY 2013-08-06
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Population& pKnowledge, int currentTimeStep )
+{
+    if( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep )
+        GetPopulationKnowledgeToUpdate( pKnowledge.GetPopulationKnown() ).Update( pKnowledge, currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
