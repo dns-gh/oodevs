@@ -110,6 +110,7 @@ type Unit struct {
 type Automat struct {
 	Id               uint32
 	PartyId          uint32
+	FormationId      uint32
 	Name             string
 	Automats         map[uint32]*Automat
 	Units            map[uint32]*Unit
@@ -120,10 +121,11 @@ type Automat struct {
 	SuperiorQuotas   map[uint32]int32
 }
 
-func NewAutomat(id, partyId, knowledgeGroupId uint32, name string) *Automat {
+func NewAutomat(id, partyId, formationId, knowledgeGroupId uint32, name string) *Automat {
 	return &Automat{
 		Id:               id,
 		PartyId:          partyId,
+		FormationId:      formationId,
 		Name:             name,
 		Automats:         map[uint32]*Automat{},
 		Units:            map[uint32]*Unit{},
@@ -357,6 +359,31 @@ func (model *ModelData) addFormation(f *Formation) bool {
 	return false
 }
 
+func (model *ModelData) removeFormation(formationId uint32) bool {
+	f := model.FindFormation(formationId)
+	if f == nil {
+		return false
+	}
+	if f.ParentId != 0 {
+		supf := model.FindFormation(f.ParentId)
+		if supf != nil {
+			if _, ok := supf.Formations[formationId]; ok {
+				delete(supf.Formations, formationId)
+				return true
+			}
+		}
+	} else {
+		p := model.Parties[f.PartyId]
+		if p != nil {
+			if _, ok := p.Formations[formationId]; ok {
+				delete(p.Formations, formationId)
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func (model *ModelData) ListAutomats() []*Automat {
 	automats := []*Automat{}
 	pendings := []*Automat{}
@@ -392,6 +419,22 @@ func (model *ModelData) addAutomat(automatId, formationId uint32, a *Automat) bo
 	}
 	if parent := model.FindFormation(formationId); parent != nil {
 		parent.Automats[a.Id] = a
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) removeAutomat(automatId uint32) bool {
+	a := model.FindAutomat(automatId)
+	if a == nil {
+		return false
+	}
+	f := model.FindFormation(a.FormationId)
+	if f == nil {
+		return false
+	}
+	if _, ok := f.Automats[automatId]; ok {
+		delete(f.Automats, automatId)
 		return true
 	}
 	return false
@@ -470,17 +513,43 @@ func (model *ModelData) removeUnit(unitId uint32) bool {
 	return false
 }
 
-func (model *ModelData) changeSuperior(unit *Unit, newSuperior *Automat) error {
+func (model *ModelData) changeUnitSuperior(unit *Unit, newSuperior *Automat) error {
 	oldAutomat := model.FindAutomat(unit.AutomatId)
 	if oldAutomat == nil {
 		return fmt.Errorf("invalid automat identifier: %v", unit.AutomatId)
 	}
 	if !model.removeUnit(unit.Id) {
-		return fmt.Errorf("impossible to remove the unit: %v", unit.Id)
+		return fmt.Errorf("impossible to remove the automat: %v", unit.Id)
 	}
 	unit.AutomatId = newSuperior.Id
 	if !model.addUnit(unit) {
-		return fmt.Errorf("impossible to add the unit: %v", unit.Id)
+		return fmt.Errorf("impossible to add the automat: %v", unit.Id)
+	}
+	return nil
+}
+
+func (model *ModelData) changeAutomatSuperior(automat *Automat, newSuperior *Formation) error {
+	if !model.removeAutomat(automat.Id) {
+		return fmt.Errorf("impossible to remove the unit: %v", automat.Id)
+	}
+	automat.FormationId = newSuperior.Id
+	if !model.addAutomat(0, automat.FormationId, automat) {
+		return fmt.Errorf("impossible to add the automat: %v", automat.Id)
+	}
+	return nil
+}
+
+func (model *ModelData) changeFormationSuperior(formation, parent *Formation, party *Party) error {
+	if !model.removeFormation(formation.Id) {
+		return fmt.Errorf("impossible to remove the formation: %v", formation.Id)
+	}
+	if parent != nil {
+		formation.ParentId = parent.Id
+	} else {
+		formation.ParentId = 0
+	}
+	if !model.addFormation(formation) {
+		return fmt.Errorf("impossible to add the formation: %v", formation.Id)
 	}
 	return nil
 }

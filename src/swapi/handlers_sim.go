@@ -121,18 +121,18 @@ func (model *Model) handleAutomatCreation(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	automat := NewAutomat(
-		mm.GetAutomat().GetId(),
-		mm.GetParty().GetId(),
-		mm.GetKnowledgeGroup().GetId(),
-		mm.GetName(),
-	)
 	automatId, formationId := uint32(0), uint32(0)
 	if parent := mm.GetParent().GetAutomat(); parent != nil {
 		automatId = parent.GetId()
 	} else if parent := mm.GetParent().GetFormation(); parent != nil {
 		formationId = parent.GetId()
 	}
+	automat := NewAutomat(
+		mm.GetAutomat().GetId(),
+		mm.GetParty().GetId(),
+		formationId,
+		mm.GetKnowledgeGroup().GetId(),
+		mm.GetName())
 	if !model.data.addAutomat(automatId, formationId, automat) {
 		return fmt.Errorf("cannot insert created automat: %d", automat.Id)
 	}
@@ -712,9 +712,52 @@ func (model *Model) handleUnitChangeSuperior(m *sword.SimToClient_Content) error
 		return fmt.Errorf("cannot find unit new parent automat: %d",
 			mm.GetParent().GetId())
 	}
-	if err := d.changeSuperior(unit, newAutomat); err != nil {
+	if err := d.changeUnitSuperior(unit, newAutomat); err != nil {
 		return fmt.Errorf("cannot change %d unit superior to %d: %s",
 			unit.Id, newAutomat.Id, err)
+	}
+	return nil
+}
+
+func (model *Model) handleAutomatChangeSuperior(m *sword.SimToClient_Content) error {
+	mm := m.GetAutomatChangeSuperior()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	d := model.data
+	automat := d.FindAutomat(mm.GetAutomat().GetId())
+	if automat == nil {
+		return fmt.Errorf("cannot find automat which superior must be updated: %d",
+			mm.GetAutomat().GetId())
+	}
+	newFormation := d.FindFormation(mm.GetSuperior().GetFormation().GetId())
+	if newFormation == nil {
+		return fmt.Errorf("cannot find automata new parent formation: %d",
+			mm.GetSuperior().GetFormation().GetId())
+	}
+	if err := d.changeAutomatSuperior(automat, newFormation); err != nil {
+		return fmt.Errorf("cannot change %d automat superior to %d: %s",
+			automat.Id, newFormation.Id, err)
+	}
+	return nil
+}
+
+func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) error {
+	mm := m.GetFormationChangeSuperior()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	d := model.data
+	formation := d.FindFormation(mm.GetFormation().GetId())
+	if formation == nil {
+		return fmt.Errorf("cannot find formation which superior must be updated: %d",
+			mm.GetFormation().GetId())
+	}
+	newFormation := d.FindFormation(mm.GetSuperior().GetFormation().GetId())
+	newParty := d.Parties[mm.GetSuperior().GetParty().GetId()]
+	err := d.changeFormationSuperior(formation, newFormation, newParty)
+	if err != nil {
+		return fmt.Errorf("cannot change %d formation superior: %s", err)
 	}
 	return nil
 }
