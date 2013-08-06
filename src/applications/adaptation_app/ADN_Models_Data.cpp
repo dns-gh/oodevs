@@ -18,6 +18,7 @@
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
 #include "ENT/ENT_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 // =============================================================================
 // OrderInfos
@@ -277,8 +278,7 @@ void ADN_Models_Data::ModelInfos::ReadOrder( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "dia-type", strDiaType_ )
+    input >> xml::attribute( "dia-type", strDiaType_ )
           >> xml::attribute( "file", strFile_ )
           >> xml::attribute( "masalife", isMasalife_ )
           >> xml::start( "missions" )
@@ -401,8 +401,10 @@ void ADN_Models_Data::FilesNeeded(tools::Path::T_Paths& files) const
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadUnit( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Pawn ) ) );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "units", strName ) );
     vUnitModels_.AddItem( spNew.release() );
 }
 
@@ -412,8 +414,10 @@ void ADN_Models_Data::ReadUnit( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadAutomat( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Automat ) ) );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "crowd", strName ) );
     vAutomataModels_.AddItem( spNew.release() );
 }
 

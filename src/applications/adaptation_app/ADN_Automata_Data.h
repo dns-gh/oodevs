@@ -44,7 +44,7 @@ public:
     typedef ADN_Type_Vector_ABC< UnitInfos > T_UnitInfosVector;
 
 // *****************************************************************************
-    class AutomatonInfos : public ADN_RefWithName
+    class AutomatonInfos : public ADN_RefWithLocalizedName
     {
     public:
                  AutomatonInfos();

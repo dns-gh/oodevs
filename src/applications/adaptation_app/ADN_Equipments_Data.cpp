@@ -14,8 +14,10 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
+#include "ADN_Weapons_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_Equipments_Data::idManager_;
 
@@ -1349,7 +1351,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output
 //-----------------------------------------------------------------------------
 ADN_Equipments_Data::EquipmentInfos::EquipmentInfos()
     : nId_                           ( ADN_Equipments_Data::idManager_.GetNextId() )
-    , equipmentCategory_             ( "Autres" )
+    , equipmentCategory_             ( "Other" )
     , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), 0 )
     , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), 0 )
     , rWeight_                       ( 100 )
@@ -1389,7 +1391,7 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos()
 //-----------------------------------------------------------------------------
 ADN_Equipments_Data::EquipmentInfos::EquipmentInfos( unsigned int id )
     : nId_                           ( id )
-    , equipmentCategory_             ( "Autres" )
+    , equipmentCategory_             ( "Other" )
     , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), 0 )
     , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), 0 )
     , rWeight_                       ( 100 )
@@ -1655,9 +1657,6 @@ void ADN_Equipments_Data::EquipmentInfos::ReadObject( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "comment", strAdditionalComments_ )
-          >> xml::attribute( "name", strName_ );
-
     strCodeEMAT6_ = strName_.GetData();
     strCodeEMAT8_ = strName_.GetData();
     strCodeLFRIL_ = strName_.GetData();
@@ -1670,7 +1669,6 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "protection", ptrArmor_ )
           >> xml::attribute( "size", ptrSize_ )
           >> xml::attribute( "weight", rWeight_ );
-    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
 
     input >> xml::start( "speeds" )
             >> xml::attribute( "max", rMaxSpeed_ )
@@ -1753,10 +1751,8 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
     input >> xml::optional >> xml::attribute( "speed-safety-distance", speedSafetyDistance_ );
 
     input >> xml::optional >> xml::start( "operational-information" )
-            >> xml::optional >> xml::attribute( "native-country", strNativeCountry_ )
             >> xml::optional >> xml::attribute( "starting-country", strStartingCountry_ )
             >> xml::optional >> xml::attribute( "starting-date", strStartingDate_ )
-            >> xml::optional >> xml::attribute( "information-origin", strInformationOrigin_ )
           >> xml::end;
 
     for( auto it = vWeapons_.begin(); it != vWeapons_.end(); ++it )
@@ -1980,7 +1976,7 @@ void ADN_Equipments_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Equipments_Data::Reset()
 {
     idManager_.Reset();
-    vEquipments_.Reset();
+    vEquipments_.Delete();
 }
 
 // -----------------------------------------------------------------------------
@@ -1989,8 +1985,24 @@ void ADN_Equipments_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ReadElement( xml::xistream& input )
 {
+    std::string strAdditionalComments = input.attribute< std::string >( "comment" );
+    std::string strName = input.attribute< std::string >( "name" );
+    std::string strNativeCountry, strInformationOrigin, equipmentCategory;
+    input >> xml::optional >> xml::start( "operational-information" )
+        >> xml::optional >> xml::attribute( "native-country", strNativeCountry )
+        >> xml::optional >> xml::attribute( "information-origin", strInformationOrigin )
+        >> xml::end;
+    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory );
+
     std::auto_ptr<EquipmentInfos> spNew( new EquipmentInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
+
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "equipments", strName ) );
+    spNew->strAdditionalComments_.SetTranslation( strAdditionalComments, translations_->GetTranslation( "comment", strName ) );
+    spNew->strNativeCountry_.SetTranslation( strNativeCountry, translations_->GetTranslation( "native-country", strName ) );
+    spNew->strInformationOrigin_.SetTranslation( strInformationOrigin, translations_->GetTranslation( "information-origin", strName ) );
+    spNew->equipmentCategory_.SetTranslation( equipmentCategory, translations_->GetTranslation( "equipment-category", equipmentCategory ) );
+
     vEquipments_.AddItem( spNew.release() );
 }
 

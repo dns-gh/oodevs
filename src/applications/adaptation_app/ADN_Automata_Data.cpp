@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
+#include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_Automata_Data::idManager_;
 
@@ -103,7 +104,7 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::AutomatonInfos::~AutomatonInfos()
 {
-    // NOTHING
+    vSubUnits_.Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +154,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 {
     std::string strType;
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "type", strType )
+    input >> xml::attribute( "type", strType )
           >> xml::attribute( "decisional-model", ptrModel_ )
           >> xml::optional >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
@@ -265,8 +265,10 @@ void ADN_Automata_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< AutomatonInfos > spNew( new AutomatonInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "automats", strName ) );
     vAutomata_.AddItem( spNew.release() );
 }
 

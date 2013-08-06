@@ -49,7 +49,7 @@ public:
         class Cmp : public std::unary_function< ComposanteInfos* , bool >
         {
         public:
-             Cmp( const std::string& val ) : val_( val ) {}
+            Cmp( const std::string& val ) : val_(val) {}
             ~Cmp() {}
 
             bool operator()( ComposanteInfos* tgtnfos ) const
@@ -148,7 +148,7 @@ public:
     typedef ADN_Type_Vector_ABC< PointInfos > T_PointInfos_Vector;
 
     //*****************************************************************************
-    class UnitInfos : public ADN_RefWithName
+    class UnitInfos : public ADN_RefWithLocalizedName
     {
     public:
                  UnitInfos();

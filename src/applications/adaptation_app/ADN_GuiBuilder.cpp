@@ -289,3 +289,27 @@ ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( QWidget* pParent, const cha
     applyButton->Connect( field );
     return field;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddLocalizedOptionalField
+// Created: MMC 2013-08-01
+// -----------------------------------------------------------------------------
+ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedOptionalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, T_optionalWidgets& optionalFields, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
+{
+    ADN_ApplyButton* applyButton = new ADN_ApplyButton();
+    ADN_EditLine_ABC* field = AddOptionalField< ADN_EditLine_LocalizedString >( pParent, objectName, szName, pGuiConnector, optionalFields, szUnit, nValidator, applyButton );
+    applyButton->Connect( field );
+    return field;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddLocalizedOptionalField
+// Created: MMC 2013-08-01
+// -----------------------------------------------------------------------------
+ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedOptionalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, T_optionalWidgets& optionalFields, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
+{
+    ADN_ApplyButton* applyButton = new ADN_ApplyButton();
+    ADN_EditLine_ABC* field = AddOptionalField< ADN_EditLine_LocalizedString >( pParent, objectName, szName, itemConnector, optionalFields, szUnit, nValidator, applyButton );
+    applyButton->Connect( field );
+    return field;
+}

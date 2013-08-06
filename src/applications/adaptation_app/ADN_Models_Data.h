@@ -62,7 +62,7 @@ public:
     typedef ADN_Type_Vector_ABC< MissionInfos > T_MissionInfos_Vector;
 
 //*****************************************************************************
-    class ModelInfos : public ADN_RefWithName
+    class ModelInfos : public ADN_RefWithLocalizedName
     {
 
     public:

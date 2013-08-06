@@ -14,15 +14,16 @@
 #include "ADN_CrossedRef.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Sensors_Data.h"
+#include "ADN_Launchers_Data.h"
+#include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Resources_Data.h"
+#include "ADN_Weapons_Data_WeaponInfos.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_Natures_Data.h"
 #include "ADN_Breakdowns_Data.h"
-#include "ADN_Weapons_Data.h"
 #include "ADN_Tr.h"
-
-class ADN_Objects_Data_ObjectInfos;
 
 // =============================================================================
 /** @class  ADN_Equipments_Data
@@ -452,7 +453,7 @@ public:
     };
 
     //*****************************************************************************
-    class EquipmentInfos : public ADN_RefWithName
+    class EquipmentInfos : public ADN_RefWithLocalizedName
     {
     public:
                  EquipmentInfos();
@@ -474,16 +475,17 @@ public:
 
     public:
         ADN_Type_Int nId_;
-        ADN_Type_String strAdditionalComments_;
+        ADN_Type_LocalizedString strAdditionalComments_;
         ADN_Type_String strCodeEMAT6_;
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
-        ADN_Type_String strNativeCountry_;
+        ADN_Type_LocalizedString strNativeCountry_;
+
         ADN_Type_String strStartingCountry_;
         ADN_Type_String strStartingDate_;
-        ADN_Type_String strInformationOrigin_;
-        ADN_Type_String equipmentCategory_;
+        ADN_Type_LocalizedString strInformationOrigin_;
+        ADN_Type_LocalizedString equipmentCategory_;
         ADN_TypePtr_InVector_ABC< ADN_Armors_Data::ArmorInfos > ptrArmor_;
         ADN_TypePtr_InVector_ABC< ADN_Volumes_Data::VolumeInfos > ptrSize_;
         ADN_Type_Double rWeight_;
