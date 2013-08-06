@@ -1015,16 +1015,25 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
     {
     case sword::UnitMagicAction::surrender_to:
         {
-            const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parameters().elem( 0 ).value().Get(0).party().id() );
-            if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+            if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+                throw MASA_BADPARAM_UNIT( "invalid parameters count" );
+            const sword::MissionParameter& id = msg.parameters().elem( 0 );
+            if( id.value_size() != 1 || !id.value( 0 ).has_party() )
+                throw MASA_BADPARAM_UNIT( "parameters[0] must be a Party" );
+            const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parameters().elem( 0 ).value( 0 ).party().id() );
+            if( !pSurrenderedToArmy )
+                throw MASA_BADPARAM_UNIT( "Party not found" );
+            else if( *pSurrenderedToArmy == GetArmy() )
+                throw MASA_BADPARAM_UNIT( "Cannot surrender to your own party" );
             else if( IsSurrendered() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered );
+                throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered, "Automat already surrendered" );
             else
                 SurrenderWithUnits( *pSurrenderedToArmy );
         }
         break;
     case sword::UnitMagicAction::cancel_surrender:
+        if( !IsSurrendered() )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered, "Automat not surrendered" );
         CancelSurrender();
         for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             ( **itPion ).OnReceiveMagicCancelSurrender();
