@@ -579,21 +579,13 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
     if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
         if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
         {
-            previousType_ = entityType_;
             if( decisions->IsEmbraye() && profile_.CanBeOrdered( *automat ) )
-            {
                 selectedEntity_ = automat;
-                entityType_ = eMissionType_Automat;
-            }
             else if( profile_.CanBeOrdered( agent ) )
-            {
                 selectedEntity_ = &agent;
-                entityType_ = eMissionType_Pawn;
-            }
-            QAction* action = menu.InsertItem( "Order", tr( "Order" ), 2 );
+            QAction* action = menu.InsertItem( "Order", tr( "Order" ), this, SLOT( ActivateMissionPanel() ), false, 2 );
             if( decisions->IsEmbraye() )
                 action->setIcon( MAKE_PIXMAP( lock ) );
-            connect( action, SIGNAL( triggered() ), this, SLOT( ActivateMissionPanel() ) );
         }
 }
 
@@ -604,15 +596,12 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
 void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
 {
     selectedEntity_ = &automat;
-    previousType_ = entityType_;
-    entityType_ = eMissionType_Automat;
     if( profile_.CanBeOrdered( automat ) )
     {
         const kernel::AutomatDecisions_ABC* decisions = automat.Retrieve< kernel::AutomatDecisions_ABC >();
-        QAction* action = menu.InsertItem( "Order", tr( "Order" ), 2 );
+        QAction* action = menu.InsertItem( "Order", tr( "Order" ), this, SLOT( ActivateMissionPanel() ), false, 2 );
         if( decisions && decisions->IsEmbraye() )
             action->setIcon( MAKE_PIXMAP( lock ) );
-        connect( action, SIGNAL( triggered() ), this, SLOT( ActivateMissionPanel() ) );
     }
 }
 
@@ -623,8 +612,6 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
 void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& population, kernel::ContextMenu& menu )
 {
     selectedEntity_ = &population;
-    previousType_ = entityType_;
-    entityType_ = eMissionType_Population;
     if( profile_.CanBeOrdered( population ) )
         menu.InsertItem( "Mission", tr( "Order" ), this, SLOT( ActivateMissionPanel() ), false, 2 );
 }
@@ -662,8 +649,10 @@ void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
 void EventOrderWidget::ActivateMissionPanel()
 {
     assert( selectedEntity_ );
-    E_MissionType missionType = entityType_;
+    previousType_ = entityType_;
+    entityType_ = selectedEntity_->GetTypeName() == kernel::Population_ABC::typeName_? eMissionType_Population : selectedEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ ? eMissionType_Automat : eMissionType_Pawn ;
     const kernel::Entity_ABC& entity = *selectedEntity_;
+    E_MissionType missionType = entityType_;
     emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     emit SelectEntity( entity, missionType );
 }
