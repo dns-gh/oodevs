@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/orbat.xsd">
   <parties>
     <party id="1" name="party" type="friend">
       <objects/>
       <tactical>
         <formation id="5" level="xxxxx" name="formation-1" symbol="symbols/sfgpu">
           <formation id="7" level="xxxx" name="formation-1.1" symbol="symbols/sfgpu"/>
-          <formation id="8" level="xxxx" name="formation-1.2" symbol="symbols/sfgpucath">
+          <formation id="8" level="xxxx" name="formation-1.2" symbol="symbols/sfgpuss">
             <automat engaged="true" id="9" knowledge-group="3" name="ARMOR.MBT squadron" symbol="symbols/sfgpucath" type="ARMOR.MBT squadron">
               <unit command-post="true" id="10" name="ARMOR.Armored squadron CP" position="28RDS1997435740" type="ARMOR.Armored squadron CP"/>
               <unit command-post="false" id="11" name="ARMOR.MBT platoon" position="28RDS1997535840" type="ARMOR.MBT platoon"/>
@@ -19,12 +19,12 @@
             </automat>
             <automat engaged="true" id="31" knowledge-group="3" logistic-level="logistic-base" name="Logistic combat train [31]" symbol="symbols/sfgpuss" type="LOG.Logistic combat train">
               <unit command-post="true" id="32" name="Logistic CT" position="28RDS0777321908" type="LOG.Logistic CT"/>
-            </automat>            
+            </automat>
           </formation>
         </formation>
         <formation id="6" level="xxxxx" name="empty" symbol="symbols/sfgpu"/>
-        <formation id="25" level="x" logistic-level="logistic-base" name="BLD" symbol="symbols/sfgpust">
-          <automat engaged="true" id="26" knowledge-group="3" name="Supply logistic area  (corps) [26]" symbol="symbols/sfgpust" type="LOG.Supply logistic area  (corps)">
+        <formation id="25" level="x" logistic-level="logistic-base" name="BLD" symbol="symbols/sfgpuss">
+          <automat engaged="true" id="26" knowledge-group="3" name="Supply logistic area  (corps) [26]" symbol="symbols/sfgpuss" type="LOG.Supply logistic area  (corps)">
             <unit command-post="true" id="27" name="Supply CP (division)" position="28RDS0777321908" type="LOG.Supply CP (division)"/>
           </automat>
         </formation>
@@ -39,6 +39,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="33" value="0"/>
           </adhesions>
         </population>
       </populations>
@@ -53,6 +54,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="33" value="0"/>
           </adhesions>
         </inhabitant>
       </inhabitants>
@@ -75,13 +77,29 @@
       <inhabitants/>
       <logistics/>
     </party>
+    <party id="33" name="another-party" type="friend">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="34" name="Groupe de connaissance [34]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
   </parties>
   <diplomacy>
     <party id="1">
       <relationship diplomacy="neutral" party="2"/>
+      <relationship diplomacy="neutral" party="33"/>
     </party>
     <party id="2">
       <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="33"/>
+    </party>
+    <party id="33">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
     </party>
   </diplomacy>
 </orbat>

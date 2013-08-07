@@ -48,8 +48,6 @@ func (s *TestSuite) TestChangeDiplomacy(c *C) {
 	//check with all parameters
 	model := client.Model.GetData()
 	parties := model.Parties
-	c.Assert(parties, HasLen, 2)
-
 	party1 := parties[1]
 	party2 := parties[2]
 	c.Assert(party1, NotNil)

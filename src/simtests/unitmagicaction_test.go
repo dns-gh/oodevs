@@ -1000,3 +1000,85 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 		return CheckLentEquipment(data, 11, 13, 4, 0) && CheckBorrowedEquipment(data, 11, 13, 4, 0)
 	})
 }
+
+func (s *TestSuite) TestSurrender(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	data := client.Model.GetData()
+	automats := data.ListAutomats()
+	c.Assert(len(automats), Greater, 0)
+	automat := automats[0]
+
+	// find another party Id
+	armies := data.Parties
+	c.Assert(len(armies), Greater, 1)
+	var otherPartyId, otherPartyId2 uint32
+	for p := range armies {
+		if p != automat.PartyId {
+			if otherPartyId == 0 {
+				otherPartyId = p
+			} else {
+				otherPartyId2 = p
+				break
+			}
+		}
+	}
+	c.Assert(otherPartyId, Greater, uint32(0))
+	c.Assert(otherPartyId2, Greater, uint32(0))
+
+	// Cancelling a surrender while free is a no-op
+	err := client.CancelSurrender(automat.Id)
+	c.Assert(err, IsNil)
+
+	// error: no parameters
+	err = client.SurrenderTest(automat.Id, swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: parameter not a party
+	err = client.SurrenderTest(automat.Id, swapi.MakeParameters(swapi.MakeNullValue()))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: bad number of parameters
+	err = client.SurrenderTest(automat.Id, swapi.MakeParameters(swapi.MakeNullValue(), swapi.MakeNullValue()))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: surrender to own party
+	err = client.Surrender(automat.Id, automat.PartyId)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// surrender to other party
+	err = client.Surrender(automat.Id, otherPartyId)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		automat := data.FindAutomat(automat.Id)
+		for _, unit := range automat.Units {
+			if unit.PartySurrenderedTo != otherPartyId {
+				return false
+			}
+		}
+		return true
+	})
+
+	// Surrendering again to the same party is a no-op
+	err = client.Surrender(automat.Id, otherPartyId)
+	c.Assert(err, IsNil)
+
+	// error: surrender again to another party
+	err = client.Surrender(automat.Id, otherPartyId2)
+	c.Assert(err, IsSwordError, "error_unit_surrendered")
+
+	// cancel surrender
+	err = client.CancelSurrender(automat.Id)
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		automat := data.FindAutomat(automat.Id)
+		for _, unit := range automat.Units {
+			if unit.PartySurrenderedTo != 0 {
+				return false
+			}
+		}
+		return true
+	})
+}
