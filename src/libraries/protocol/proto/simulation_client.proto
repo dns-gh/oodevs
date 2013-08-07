@@ -920,22 +920,15 @@ message LentEquipments {
     repeated LentEquipment elem = 1;
 }
 
-/** @struct ResourceDotations
-    @brief A resource dotations message
-*/
+//! Describes unit resources
 message ResourceDotations {
-    /** @struct ResourceDotation
-        @brief A resource dotation message
-    */
+
     message ResourceDotation {
-        //! The resource type @see ResourceType
         required ResourceType type      = 1;
-        //! The quantity available
         required int32        quantity  = 2;
-        //! The logistic threshold on the first tick, then if needed
+        //! The logistic threshold between 0 and 100.
         optional float        threshold = 3;
     }
-    //! The resource dotations @see ResourceDotation
     repeated ResourceDotation elem = 1;
 }
 
