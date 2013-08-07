@@ -127,8 +127,8 @@ public:
     virtual void DestroyAllComposantes();
     virtual void KillAllHumans();
     unsigned int GetNbrUsableHumans() const;
-    void CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, unsigned int breakdownId );
-    void CreateWounds( unsigned int quantity, bool randomWound, sword::EnumHumanWound wound );
+    void CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, const PHY_BreakdownType* breakdown );
+    void CreateWounds( unsigned int quantity, const PHY_HumanWound* pHumanWound );
     void ChangeEquipmentState( const PHY_ComposanteTypePion& composanteType, const sword::MissionParameter_Value& message );
     void ChangeHumanState( const sword::MissionParameters& msg );
     bool CanEvacuateCasualties() const;

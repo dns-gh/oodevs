@@ -66,6 +66,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h" 
+#include "Entities/Agents/Units/Logistic/PHY_BreakdownType.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Workspace.h"
@@ -86,8 +87,11 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <boost/serialization/vector.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
+#include <vector>
+#include <tuple>
 
 #include "Adapters/RoleAdapterInterface.h"
 
@@ -1744,37 +1748,77 @@ void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visito
         itf->Apply( visitor );
 }
 
+#define CHECK_PARAM( PARAMETER, INDEX, SUBINDEX, TYPE, TEXT )                                                    \
+    if( !PARAMETER.list( SUBINDEX ).has_##TYPE##() )                                                             \
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, \
+            "parameters[0][" + boost::lexical_cast< std::string >( INDEX ) +                                     \
+            "]["+ boost::lexical_cast< std::string >( SUBINDEX ) +"] " + TEXT );
+
+namespace
+{
+    void CheckNoNegativeQuantity( unsigned int index, unsigned int subIndex, const sword::MissionParameter_Value& elem )
+    {
+        if( elem.list( subIndex ).quantity() < 0 )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                "parameters[0][" + boost::lexical_cast< std::string >( index ) + "][" +
+                    boost::lexical_cast< std::string >( subIndex ) +"] must be a positive number" );
+    }
+    void CheckParameterCount( bool invalid, const std::string& text )
+    {
+        if( invalid )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, text );
+    }
+    void CheckSubParameterCount( bool invalid, unsigned int i, const std::string& text )
+    {
+        if( invalid )
+            CheckParameterCount( invalid, "parameters[0][" + boost::lexical_cast< std::string >( i ) + "] " + text );
+    }
+    void CheckSubSubParameterCount( bool invalid, unsigned int i, unsigned int j, const std::string& text )
+    {
+        if( invalid )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                "parameters[0][" + boost::lexical_cast< std::string >( i ) + "][" +
+                boost::lexical_cast< std::string >( j ) + "] " + text );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveCreateBreakdowns
 // Created: ABR 2011-08-09
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& msg )
 {
-    if( msg.elem( 0 ).value_size() < 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
+    std::vector< std::tuple< const PHY_ComposanteTypePion*, unsigned int, const PHY_BreakdownType* > > content;
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
-        if( elem.list_size() < 2 || elem.list_size() > 3 || !elem.list( 0 ).has_identifier() || !elem.list( 1 ).has_quantity() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        CheckSubParameterCount( elem.list_size() != 2 && elem.list_size() != 3, i, "must have 2 or 3 parameters" );
+
+        CHECK_PARAM( elem, i, 0, identifier, "must be an Identifer" );
+        CHECK_PARAM( elem, i, 1, quantity, "must be a Quantity" );
+        if( elem.list_size() == 3 )
+            CHECK_PARAM( elem, i, 2, identifier, "must be an Identifer" );
 
         sword::EquipmentType type;
         type.set_id( elem.list( 0 ).identifier() );
         int number = elem.list( 1 ).quantity();
-        unsigned int breakdownId = 0;
+        const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
+        CheckSubSubParameterCount( !pComposanteType || !pComposanteType->CanHaveBreakdown(), i, 0,
+            "must be an composante type which can have breakdown" );
+        CheckSubSubParameterCount( number <= 0, i, 1, "must be positive a non-zero positive number" );
+
+        const PHY_BreakdownType* breakdown = 0;
         if( elem.list_size() == 3 )
         {
-            if( !elem.list( 2 ).has_identifier() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            breakdownId = elem.list( 2 ).identifier();
+            breakdown = PHY_BreakdownType::Find( elem.list( 2 ).identifier() );
+            CheckSubSubParameterCount( !breakdown, i, 2, "must be a breakdown type identifier" );
         }
-        const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
-        if( !pComposanteType || !pComposanteType->CanHaveBreakdown() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        roleComposantes.CreateBreakdowns( *pComposanteType, static_cast< unsigned int >( number ), breakdownId );
+        content.push_back( std::make_tuple( pComposanteType, number, breakdown ) );
     }
+    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    for( auto it = content.begin(); it != content.end(); ++it )
+        roleComposantes.CreateBreakdowns( *std::get< 0 >(*it), std::get< 1 >(*it), std::get< 2 >(*it) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1783,27 +1827,34 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveCreateWounds( const sword::MissionParameters& msg )
 {
-    if( msg.elem( 0 ).value_size() < 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
+    std::vector< std::pair< unsigned int, const PHY_HumanWound* > > content;
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
-        if( elem.list_size() < 1 || elem.list_size() > 2 || !elem.list( 0 ).has_quantity() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        CheckSubParameterCount( elem.list_size() != 1 && elem.list_size() != 2, i, "must have 1 or 2 parameters" );
+
+        CHECK_PARAM( elem, i, 0, quantity, "must be a Quantity" );
+        if( elem.list_size() == 2 )
+            CHECK_PARAM( elem, i, 1, enumeration, "must be an Enumeration" );
 
         int number = elem.list( 0 ).quantity();
-        sword::EnumHumanWound wound = sword::unwounded;
-        bool randomWound = ( elem.list_size() != 2 );
-        if( !randomWound )
+        CheckSubSubParameterCount( number <= 0, i, 0, "must be positive a non-zero positive number" );
+
+        const PHY_HumanWound* pHumanWound = 0;
+        if( elem.list_size() == 2 )
         {
-            if( !elem.list( 1 ).has_enumeration() )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            wound = static_cast< sword::EnumHumanWound >( elem.list( 1 ).enumeration() );
+            pHumanWound = PHY_HumanWound::Find( elem.list( 1 ).enumeration() );
+            CheckSubSubParameterCount( !pHumanWound, i, 1, "invalid, bad wound enumeration" );
         }
-        roleComposantes.CreateWounds( static_cast< unsigned int >( number ), randomWound, wound );
+        else
+            pHumanWound = PHY_HumanWound::GetRandomWoundSeriousness();
+
+        content.push_back( std::make_pair( number, pHumanWound ) );
     }
+    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    for( auto it = content.begin(); it != content.end(); ++it )
+        roleComposantes.CreateWounds( std::get< 0 >( *it ), std::get< 1 >( *it ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1812,26 +1863,53 @@ void MIL_AgentPion::OnReceiveCreateWounds( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameters& msg )
 {
-    if( msg.elem( 0 ).value_size() < 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
+    std::vector< std::pair< const PHY_ComposanteTypePion*, const sword::MissionParameter_Value > > content;
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
-        if( elem.list_size() != 8 || !elem.list( 0 ).has_identifier() ||
-            !elem.list( 1 ).has_quantity() || !elem.list( 2 ).has_quantity() || !elem.list( 3 ).has_quantity() ||
-            !elem.list( 4 ).has_quantity() || !elem.list( 5 ).has_quantity() || !elem.list( 6 ).has_quantity() ||
-            elem.list( 7 ).list_size() != elem.list( 3 ).quantity() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        CheckSubParameterCount( elem.list_size() != 8, i, "must have 8 parameters" );
+
+        CHECK_PARAM( elem, i, 0, identifier, "must be an Identifer" );
+        CHECK_PARAM( elem, i, 1, quantity, "must be a Quantity" );
+        CheckNoNegativeQuantity( i, 1, elem );
+        CHECK_PARAM( elem, i, 2, quantity, "must be a Quantity" );
+        CheckNoNegativeQuantity( i, 2, elem );
+        CHECK_PARAM( elem, i, 3, quantity, "must be a Quantity" );
+        CheckNoNegativeQuantity( i, 3, elem );
+        CHECK_PARAM( elem, i, 4, quantity, "must be a Quantity" );
+        CheckNoNegativeQuantity( i, 4, elem );
+        CHECK_PARAM( elem, i, 5, quantity, "must be a Quantity" );
+        CheckNoNegativeQuantity( i, 5, elem );
+        CHECK_PARAM( elem, i, 6, quantity, "must be a Quantity" );
+        CheckNoNegativeQuantity( i, 6, elem );
+
+        if( elem.list( 7 ).list_size() != elem.list( 3 ).quantity() )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                "parameters[0][" + boost::lexical_cast< std::string >( i ) + "][7] size must be equal to parameters[0]["
+                + boost::lexical_cast< std::string >( i ) + "][3]" );
 
         sword::EquipmentType type;
         type.set_id( elem.list( 0 ).identifier() );
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
-        if( !pComposanteType )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        roleComposantes.ChangeEquipmentState( *pComposanteType, elem );
+        CheckSubSubParameterCount( !pComposanteType, i, 0, "must be a valid dotation category identifier" );
+
+        for( int i = 0; i < elem.list( 7 ).list_size(); ++i )
+        {
+            CheckSubSubParameterCount( !elem.list( 7 ).list( i ).has_identifier(), i, 7, "must be an Identifier list" );
+
+            unsigned int identifier = elem.list( 7 ).list( i ).identifier();
+            const PHY_BreakdownType* breakdownType = PHY_BreakdownType::Find( identifier );
+            CheckSubSubParameterCount( identifier != 0 && !breakdownType, i, 7, "must be a breakdown identifier" );
+            CheckSubSubParameterCount( breakdownType && !pComposanteType->CanHaveBreakdown( breakdownType ), i, 7,
+                "invalid breakdown identifier for the composante" );
+        }
+        content.push_back( std::make_pair( pComposanteType, elem ) );
     }
+
+    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    for( auto it = content.begin(); it != content.end(); ++it )
+        roleComposantes.ChangeEquipmentState( *it->first, it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -1840,36 +1918,38 @@ void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameter
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& msg )
 {
-    if( msg.elem( 0 ).value_size() < 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+    CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
     for( int i = 0 ; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
-        if( elem.list_size() != 6 || !elem.list( 0 ).has_quantity() || !elem.list( 1 ).has_enumeration() || !elem.list( 2 ).has_enumeration() ||
-            !elem.list( 4 ).has_booleanvalue() || !elem.list( 5 ).has_booleanvalue() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        // rank
-        if( elem.list( 1 ).enumeration() < sword::EnumHumanRank_MIN || elem.list( 1 ).enumeration() > sword::EnumHumanRank_MAX )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        CheckSubParameterCount( elem.list_size() != 6, i, "must have 6 parameters" );
+
+        CHECK_PARAM( elem, i, 0, quantity, "must be a Quantity" );
+        CheckSubSubParameterCount( elem.list( 0 ).quantity() <= 0, i, 0, "must be positive a non-zero positive number" );
+
+        CHECK_PARAM( elem, i, 1, enumeration, "must be an Enumeration" );
+        CHECK_PARAM( elem, i, 2, enumeration, "must be an Enumeration" );
+        CHECK_PARAM( elem, i, 4, booleanvalue, "must be a Boolean" );
+        CHECK_PARAM( elem, i, 5, booleanvalue, "must be a Boolean" );
         const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
-        if( !pHumanRank )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        // state
-        if( elem.list( 2 ).enumeration() < sword::EnumHumanState_MIN || elem.list( 2 ).enumeration() > sword::EnumHumanState_MAX )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        CheckSubSubParameterCount( !pHumanRank, i, 1, "invalid, bad human rank enumeration" );
+
+        CheckSubSubParameterCount( elem.list( 2 ).enumeration() < sword::EnumHumanState_MIN ||
+                                   elem.list( 2 ).enumeration() > sword::EnumHumanState_MAX,
+                                   i, 2, "invalid, bad human state enumeration" );
+
         sword::EnumHumanState state = static_cast< sword::EnumHumanState >( elem.list( 2 ).enumeration() );
         if( state == sword::injured )
         {
-            // $$$$ ABR 2011-08-10: waiting story 660, for each injury check the following
-            if( elem.list( 3 ).list_size() != 1 || elem.list( 3 ).list( 0 ).list_size() != 2 ||
-                !elem.list( 3 ).list( 0 ).list( 1 ).has_enumeration() ||
-                elem.list( 3 ).list( 0 ).list( 1 ).enumeration() < sword::EnumInjuriesSeriousness_MIN ||
-                elem.list( 3 ).list( 0 ).list( 1 ).enumeration() > sword::EnumInjuriesSeriousness_MAX )
-                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+            CheckSubSubParameterCount( elem.list( 3 ).list_size() != 1 || elem.list( 3 ).list( 0 ).list_size() != 2 ||
+                                       !elem.list( 3 ).list( 0 ).list( 1 ).has_enumeration() ||
+                                       elem.list( 3 ).list( 0 ).list( 1 ).enumeration() < sword::EnumInjuriesSeriousness_MIN ||
+                                       elem.list( 3 ).list( 0 ).list( 1 ).enumeration() > sword::EnumInjuriesSeriousness_MAX,
+                                       i, 3, "invalid injuries seriousness" );
         }
     }
-    roleComposantes.ChangeHumanState( msg );
+
+    GetRole< PHY_RolePion_Composantes >().ChangeHumanState( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1878,23 +1958,32 @@ void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& m
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg )
 {
-    if( msg.elem( 0 ).value_size() < 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
+    CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
+    std::vector< std::tuple< const PHY_DotationCategory*, unsigned int, float > > content;
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
-        if( elem.list_size() != 3 || !elem.list( 0 ).has_identifier() || !elem.list( 1 ).has_quantity() || !elem.list( 2 ).has_areal() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        unsigned int dotationId = elem.list( 0 ).identifier();
+        CheckSubParameterCount( elem.list_size() != 3, i, "must have 3 parameters" );
+
+        CHECK_PARAM( elem, i, 0, identifier, "must be an Identifer" );
+        CHECK_PARAM( elem, i, 1, quantity, "must be a Quantity" );
+        CHECK_PARAM( elem, i, 2, areal, "must be an Real" );
+
         int number = elem.list( 1 ).quantity();
         float thresholdPercentage = elem.list( 2 ).areal();
 
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( dotationId );
-        if( !pDotationCategory || number < 0 || thresholdPercentage < 0.f || thresholdPercentage > 100.f )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        roleDotations.ChangeDotation( *pDotationCategory, static_cast< unsigned int >( number ), thresholdPercentage );
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( elem.list( 0 ).identifier() );
+        CheckSubSubParameterCount( !pDotationCategory, i, 0, "must be a valid dotation category identifier" );
+        CheckSubSubParameterCount( number < 0, i, 1, "must be a positive number" );
+        CheckSubSubParameterCount( thresholdPercentage < 0.f || thresholdPercentage > 100.f, i, 2,
+            "must be a number between 0 and 100" );
+
+        content.push_back( std::make_tuple( pDotationCategory, number, thresholdPercentage ) );
     }
+
+    dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
+    for( auto it = content.begin(); it != content.end(); ++it )
+        roleDotations.ChangeDotation( *std::get< 0 >( *it ), std::get< 1 >( *it ), std::get< 2 >( *it ) );
 }
 
 // -----------------------------------------------------------------------------
