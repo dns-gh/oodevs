@@ -41,6 +41,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="Custom Build Rules\protoc.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -174,232 +175,25 @@
     <ClCompile Include="protocol\Version.pb.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\aar_client.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\admin_launcher.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\authentication_client.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_aar.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_authentication.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_messenger.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_replay.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_simulation.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\common.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_client.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_simulation.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\launcher_admin.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\messenger_client.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\replay_client.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\simulation_client.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\version.proto">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">protoc%27ing %(Filename).proto</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">protoc%27ing %(Filename).proto</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
-    </CustomBuild>
+    <Protocing Include="..\..\src\libraries\protocol\proto\aar_client.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\admin_launcher.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\authentication_client.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_aar.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_authentication.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_messenger.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_replay.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_simulation.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\common.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\dispatcher_client.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\dispatcher_simulation.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\launcher_admin.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\messenger_client.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\replay_client.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\simulation_client.proto"/>
+    <Protocing Include="..\..\src\libraries\protocol\proto\version.proto"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="Custom Build Rules\protoc.targets" />
   </ImportGroup>
 </Project>
