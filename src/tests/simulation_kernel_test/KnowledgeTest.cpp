@@ -29,6 +29,28 @@
 
 namespace
 {
+    const double timeFactor = 0.5f;
+
+    struct Fixture
+    {
+        Fixture()
+        {
+            const std::string initialisation =
+                "<knowledge-groups>"
+                "<knowledge-group name='GTIA' communication-delay='01m'>"
+                "<unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000' interpolation-time='010m'/>"
+                "<population-knowledge max-lifetime='2m'/>"
+                "</knowledge-group>"
+                "</knowledge-groups>";
+            xml::xistringstream xis( initialisation );
+            MIL_KnowledgeGroupType::InitializeWithTime( xis, timeFactor );
+        }
+        ~Fixture()
+        {
+            MIL_KnowledgeGroupType::Terminate();
+        }
+    };
+
     class MockAgentWithPerceiver : public MockAgent
     {
     public:
@@ -38,24 +60,14 @@ namespace
         }
         virtual ~MockAgentWithPerceiver() {}
     };
-    const double timeFactor = 0.5f;
 }
 
 // -----------------------------------------------------------------------------
 // Name: TestKnowledgeGroupType
 // Created: LDC 2009-12-10
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
+BOOST_FIXTURE_TEST_CASE( TestKnowledgeGroupType, Fixture )
 {
-    const std::string initialisation =
-        "<knowledge-groups>"
-            "<knowledge-group name='GTIA' communication-delay='01m'>"
-                "<unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000' interpolation-time='010m'/>"
-                "<population-knowledge max-lifetime='2m'/>"
-            "</knowledge-group>"
-        "</knowledge-groups>";
-    xml::xistringstream xis( initialisation );
-    MIL_KnowledgeGroupType::InitializeWithTime( xis, timeFactor );
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("GTIA");
     BOOST_CHECK_EQUAL( 60 * timeFactor, kgType.GetKnowledgeCommunicationDelay() );
     BOOST_CHECK_EQUAL( 3 * 60 * 60 * timeFactor, kgType.GetKnowledgeAgentMaxLifeTime() );
@@ -92,7 +104,7 @@ namespace
 // Name: TestPropagationInKnowledgeGroups
 // Created: HBD 2009-12-10
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
+BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, Fixture )
 {
     MockArmy army;
     MOCK_EXPECT( army, GetID ).returns( 42u );
@@ -213,7 +225,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
 // Name: TestExtrapolationTimeInKnowledgeGroup
 // Created: FDS 2010-04-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
+BOOST_FIXTURE_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup, Fixture )
 {
     MockArmy army;
     MOCK_EXPECT( army, GetID ).returns( 42u );
@@ -225,7 +237,7 @@ BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
 // Name: TestLatentRelevance
 // Created: FDS 2010-04-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestLatentRelevance )
+BOOST_FIXTURE_TEST_CASE( TestLatentRelevance, Fixture )
 {
     MockArmy army;
     MOCK_EXPECT( army, GetID ).returns( 42u );

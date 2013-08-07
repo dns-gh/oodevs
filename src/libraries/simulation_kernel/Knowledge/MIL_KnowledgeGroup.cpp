@@ -1676,5 +1676,7 @@ bool MIL_KnowledgeGroup::CanReport() const
 {
     if( !jammedPion_ )
         return false;
-    return jammedPion_->GetRole< PHY_RolePion_Communications >().CanReport();
+    if( const PHY_RolePion_Communications* pCommunication = jammedPion_->RetrieveRole< PHY_RolePion_Communications >() )
+        return pCommunication->CanReport();
+    return false;
 }
