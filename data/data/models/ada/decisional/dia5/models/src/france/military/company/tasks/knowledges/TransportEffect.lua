@@ -4,10 +4,15 @@ return
         local result = {}
         for task, taskTargetMap in pairs( myself.leadData.workMap ) do
             if task == taskKnowledge then
+                local unitToTransport = nil
                 for target, units in pairs( taskTargetMap ) do
                     if units[1] == entity.source then
                         result[ #result + 1] = target
                     end
+                    unitToTransport = target
+                end
+                if #result == 0 then
+                    result[ #result + 1 ] = unitToTransport -- this unit cannot be transported but force assignement beacause of no reinforcement
                 end
             end
         end
