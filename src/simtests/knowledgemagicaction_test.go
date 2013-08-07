@@ -219,10 +219,6 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	group, err := client.CreateKnowledgeGroupTest(params)
 	c.Assert(err, IsNil)
 
-	// invalid party
-	err = client.ChangeKnowledgeGroup(automat.Id, group.Id, 42)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-
 	// invalid knowledge group
 	err = client.ChangeKnowledgeGroup(automat.Id, 42, automat.PartyId)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
