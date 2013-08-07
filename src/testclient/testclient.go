@@ -19,6 +19,7 @@ import (
 	"log"
 	"os"
 	"swapi"
+	"time"
 )
 
 // Writer implementation counting bytes passing through.
@@ -168,14 +169,21 @@ used to exercise swapi.Model update against real world scenarii.
 	// Consolidate compression and tick information and print it.
 	go func() {
 		c := &compressionInfo{1, 1, 1}
+		prevc := c
+		prevNow := time.Now()
 		for {
 			select {
 			case t := <-tickCh:
+				now := time.Now()
+				dtime := now.Sub(prevNow)
+				bitrate := float64(c.Size-prevc.Size) / (float64(dtime) / float64(time.Second))
 				log.Printf("Tick %d, %d units, %d automats\n", t.Tick, t.Units,
 					t.Automats)
 				ratio := 100.0 * float32(c.Compressed) / float32(c.Size)
-				fmt.Printf("  messages: %d, size: %dkb, compressed: %dkb (%.2f%%)\n",
-					c.Seen, c.Size/1024, c.Compressed/1024, ratio)
+				fmt.Printf("  messages: %d, size: %dkb, compressed: %dkb (%.2f%%), %.2fkb/s\n",
+					c.Seen, c.Size/1024, c.Compressed/1024, ratio, bitrate/1024.0)
+				prevNow = now
+				prevc = c
 			case cc := <-compressionCh:
 				c = cc
 			}
