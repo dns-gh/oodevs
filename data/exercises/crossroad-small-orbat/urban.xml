@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<urban model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/exercise/urban.xsd">
+<urban model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/urban.xsd">
   <urban-objects>
     <urban-object id="18" name="Ville [18]">
-      <color alpha="0.705882" blue="80" green="80" red="80"/>
+      <color alpha="0.701961" blue="80" green="80" red="80"/>
       <urban-objects>
         <urban-object id="20" name="Quartier [20]">
-          <color alpha="0.705882" blue="80" green="80" red="80"/>
+          <color alpha="0.701961" blue="80" green="80" red="80"/>
           <urban-objects>
             <urban-object id="21" name="Bloc urbain [21]">
               <footprint>
-                <point location="28RDS1931736137"/>
                 <point location="28RDS1954136230"/>
                 <point location="28RDS1942136419"/>
                 <point location="28RDS1935236317"/>
+                <point location="28RDS1931736137"/>
               </footprint>
-              <color alpha="0.705882" blue="80" green="80" red="80"/>
+              <color alpha="0.701961" blue="80" green="80" red="80"/>
               <resources>
                 <node resource-type="Running Water"/>
               </resources>
