@@ -11,7 +11,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Protocing>
-      <CommandLineTemplate>..\..\bin\python\python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</CommandLineTemplate>
+      <CommandLineTemplate>..\..\bin\python\python $(ProjectDir)../../bin/buildtools/cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</CommandLineTemplate>
       <Outputs>$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <ExecutionDescription>protoc%27ing %(Filename).proto</ExecutionDescription>
     </Protocing>

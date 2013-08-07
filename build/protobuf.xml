@@ -20,7 +20,7 @@
                 executable="${python}"
                 failonerror="true"
                 timeout="60000">
-                <arg value="${root.dir}/build/cppproto.py" />
+                <arg value="${root.dir}/bin/buildtools/cppproto.py" />
                 <arg value="@{file}"/>
                 <arg value="@{builddir}"/>
                 <arg value="@{outdir}"/>
