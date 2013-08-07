@@ -1026,17 +1026,25 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
             else if( *pSurrenderedToArmy == GetArmy() )
                 throw MASA_BADPARAM_UNIT( "cannot surrender to your own party" );
             else if( IsSurrendered() )
-                throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered, "automat already surrendered" );
+            {
+                // Surrendering to the same party again is a no-op
+                if( pArmySurrenderedTo_->GetID() != pSurrenderedToArmy->GetID()  )
+                    throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode,
+                        sword::UnitActionAck::error_unit_surrendered,
+                        "automat already surrendered" );
+            }
             else
                 SurrenderWithUnits( *pSurrenderedToArmy );
         }
         break;
     case sword::UnitMagicAction::cancel_surrender:
-        if( !IsSurrendered() )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered, "automat not surrendered" );
-        CancelSurrender();
-        for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-            ( **itPion ).OnReceiveMagicCancelSurrender();
+        // Cancelling the surrender of a free automat is a no-op
+        if( IsSurrendered() )
+        {
+            CancelSurrender();
+            for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+                ( **itPion ).OnReceiveMagicCancelSurrender();
+        }
         break;
     case sword::UnitMagicAction::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
