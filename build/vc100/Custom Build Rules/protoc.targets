@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PropertyPageSchema
+      Include="$(MSBuildThisFileDirectory)$(MSBuildThisFileName).xml" />
+    <AvailableItemName
+      Include="Protocing">
+      <Targets>_Protocing</Targets>
+    </AvailableItemName>
+  </ItemGroup>
+  <UsingTask
+    TaskName="Protocing"
+    TaskFactory="XamlTaskFactory"
+    AssemblyName="Microsoft.Build.Tasks.v4.0">
+    <Task>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).xml</Task>
+  </UsingTask>
+  <Target
+    Name="_Protocing"
+    BeforeTargets="$(ProtocingBeforeTargets)"
+    AfterTargets="$(ProtocingAfterTargets)"
+    Condition="'@(Protocing)' != ''"
+    DependsOnTargets="$(ProtocingDependsOn);ComputeProtocingOutput"
+    Outputs="@(Protocing-&gt;Metadata('Outputs')-&gt;Distinct())"
+    Inputs="@(Protocing);%(Protocing.AdditionalDependencies);$(MSBuildProjectFile)">
+    <ItemGroup
+      Condition="'@(SelectedFiles)' != ''">
+      <Protocing
+        Remove="@(Protocing)"
+        Condition="'%(Identity)' != '@(SelectedFiles)'" />
+    </ItemGroup>
+    <ItemGroup>
+      <Protocing_tlog
+        Include="%(Protocing.Outputs)"
+        Condition="'%(Protocing.Outputs)' != '' and '%(Protocing.ExcludedFromBuild)' != 'true'">
+        <Source>@(Protocing, '|')</Source>
+      </Protocing_tlog>
+    </ItemGroup>
+    <Message
+      Importance="High"
+      Text="%(Protocing.ExecutionDescription)" />
+    <WriteLinesToFile
+      Condition="'@(Protocing_tlog)' != '' and '%(Protocing_tlog.ExcludedFromBuild)' != 'true'"
+      File="$(IntDir)$(ProjectName).write.1.tlog"
+      Lines="^%(Protocing_tlog.Source);@(Protocing_tlog-&gt;'%(Fullpath)')" />
+    <Protocing
+      Condition="'@(Protocing)' != '' and '%(Protocing.ExcludedFromBuild)' != 'true'"
+      CommandLineTemplate="%(Protocing.CommandLineTemplate)"
+      AdditionalOptions="%(Protocing.AdditionalOptions)"
+      Inputs="@(Protocing)" />
+  </Target>
+  <PropertyGroup>
+    <ComputeLinkInputsTargets>
+            $(ComputeLinkInputsTargets);
+            ComputeProtocingOutput;
+          </ComputeLinkInputsTargets>
+    <ComputeLibInputsTargets>
+            $(ComputeLibInputsTargets);
+            ComputeProtocingOutput;
+          </ComputeLibInputsTargets>
+  </PropertyGroup>
+  <Target
+    Name="ComputeProtocingOutput"
+    Condition="'@(Protocing)' != ''">
+    <ItemGroup>
+      <ProtocingDirsToMake
+        Condition="'@(Protocing)' != '' and '%(Protocing.ExcludedFromBuild)' != 'true'"
+        Include="%(Protocing.Outputs)" />
+      <Link
+        Include="%(ProtocingDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+      <Lib
+        Include="%(ProtocingDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+      <ImpLib
+        Include="%(ProtocingDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+    </ItemGroup>
+    <MakeDir
+      Directories="@(ProtocingDirsToMake-&gt;'%(RootDir)%(Directory)')" />
+  </Target>
+</Project>

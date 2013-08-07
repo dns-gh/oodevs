@@ -154,53 +154,53 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\aar_client.proto">
+    <Protocing Include="..\..\src\libraries\protocol\proto\common.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\admin_launcher.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\aar_client.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\authentication_client.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\admin_launcher.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_aar.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\authentication_client.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_authentication.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_aar.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_messenger.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_authentication.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_replay.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_messenger.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\client_simulation.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_replay.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\common.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\client_simulation.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_client.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\dispatcher_client.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_simulation.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\dispatcher_simulation.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\launcher_admin.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\launcher_admin.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\messenger_client.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\messenger_client.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\replay_client.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\replay_client.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\simulation_client.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\simulation_client.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\protocol\proto\version.proto">
+    </Protocing>
+    <Protocing Include="..\..\src\libraries\protocol\proto\version.proto">
       <Filter>Source Files\Protocol</Filter>
-    </CustomBuild>
+    </Protocing>
   </ItemGroup>
 </Project>
