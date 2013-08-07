@@ -44,6 +44,7 @@ type header struct {
 
 type SwordMessage struct {
 	tag      uint32
+	Size     uint32
 	Context  int32
 	ClientId int32
 	// * -> client
@@ -92,6 +93,24 @@ func (m *SwordMessage) SetContext(context int32) {
 }
 
 func (m *SwordMessage) GetMessage() proto.Message {
+	if m.SimulationToClient != nil {
+		return m.SimulationToClient
+	}
+	if m.ReplayToClient != nil {
+		return m.ReplayToClient
+	}
+	if m.AarToClient != nil {
+		return m.AarToClient
+	}
+	if m.AuthenticationToClient != nil {
+		return m.AuthenticationToClient
+	}
+	if m.DispatcherToClient != nil {
+		return m.DispatcherToClient
+	}
+	if m.MessengerToClient != nil {
+		return m.MessengerToClient
+	}
 	if m.ClientToAar != nil {
 		return m.ClientToAar
 	}
@@ -195,6 +214,7 @@ func (r *Reader) Decode(msg *SwordMessage) error {
 	if err != nil {
 		return err
 	}
+	msg.Size = header.Size
 	size := int(header.Size - 4)
 	if size > MaxMessageSize {
 		return fmt.Errorf("packet size too big %d", size)

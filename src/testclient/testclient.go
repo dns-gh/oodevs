@@ -9,9 +9,11 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"compress/zlib"
 	"encoding/binary"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -92,8 +94,9 @@ used to exercise swapi.Model update against real world scenarii.
 	user := flag.String("user", "", "user name")
 	resume := flag.Bool("resume", false, "resume the simulation once logged in")
 	password := flag.String("password", "", "user password")
-
+	logfile := flag.String("logfile", "", "write messages to this log file")
 	flag.Parse()
+
 	addr := fmt.Sprintf("%s:%d", *host, *port)
 	log.Printf("connecting to %s\n", addr)
 	client, err := swapi.NewClient(addr)
@@ -106,11 +109,41 @@ used to exercise swapi.Model update against real world scenarii.
 	addRawMessageHandler(client, compressionCh)
 	go client.Run()
 
+	var logWriter *bufio.Writer
+	if len(*logfile) > 0 {
+		logfp, err := os.Create(*logfile)
+		if err != nil {
+			log.Fatalf("error: cannot open log file: %s", err)
+		}
+		defer logfp.Close()
+		logWriter = bufio.NewWriterSize(logfp, 1024)
+		defer logWriter.Flush()
+	}
 	termination := make(chan int)
 	client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
 		if err != nil {
 			close(termination)
 			return true
+		}
+		if msg != nil && logWriter != nil {
+			s, err := json.MarshalIndent(msg.GetMessage(), "", "")
+			if err != nil {
+				log.Fatalf("error: cannot serialize message to json: %s", err)
+			}
+			eol, space := byte('\n'), byte(' ')
+			for i, c := range s {
+				if c == eol {
+					s[i] = space
+				}
+			}
+			prefix := []byte(fmt.Sprintf("in %6d bytes ", msg.Size))
+			parts := [][]byte{prefix, s, []byte("\n")}
+			for _, part := range parts {
+				_, err := logWriter.Write(part)
+				if err != nil {
+					log.Fatalf("error: cannot write message to log file: %s", err)
+				}
+			}
 		}
 		return false
 	})
