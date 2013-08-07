@@ -65,6 +65,7 @@ public:
     void Update( const DEC_Knowledge_PopulationCollision& collision );
     void Update( const DEC_Knowledge_PopulationCollision& collision, const MIL_PopulationFlow& flow ); // Called by DEC_Knowledge_PopulationCollision
     void Update( const DEC_Knowledge_PopulationCollision& collision, const MIL_PopulationConcentration& concentration ); // Called by DEC_Knowledge_PopulationCollision
+    void Update( const DEC_Knowledge_Population& pKnowledge, int currentTimeStep );
     void UpdateRelevance();
     bool Clean();
     void Recon();

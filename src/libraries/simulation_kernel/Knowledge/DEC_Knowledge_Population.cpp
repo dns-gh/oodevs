@@ -244,6 +244,15 @@ void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationFlowPercept
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Update
+// Created: LGY 2013-08-06
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Update( const DEC_Knowledge_Population& pKnowledge, int /*currentTimeStep*/ )
+{
+    CopyFrom( pKnowledge );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::UpdateRelevance
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------

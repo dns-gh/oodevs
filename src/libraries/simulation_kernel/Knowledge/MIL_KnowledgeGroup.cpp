@@ -22,6 +22,8 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Knowledge/DEC_Knowledge_ObjectCollision.h"
+#include "Knowledge/DEC_Knowledge_ObjectPerception.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
@@ -1159,7 +1161,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
             }
         }
 
-        // acquisition des connaissances des groupes fils
+        // acquisition des connaissances des groupes fils /!\ Transfert de connaissance appui
         for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
         {
             const MIL_KnowledgeGroup& innerKg = **itKG;
@@ -1174,6 +1176,14 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
     }
     else if( jammedPion_ )
             ApplyPopulationPerception( *jammedPion_, currentTimeStep );
+
+
+    // Acquisition des connaissances parents /!\ Transfert de connaissance appui
+    if( IsJammed() && IsEnabled() && CanReport( ) && parent_ && parent_->GetKnowledge() )
+    {
+        boost::function< void( DEC_Knowledge_Population& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+        parent_->GetKnowledge()->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( functorObject );
+    }
 
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
     for( auto it = pions_.begin(); it != pions_.end(); ++it )
@@ -1365,6 +1375,27 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
             }
             bDiffuseToKnowledgeGroup_ = true;
         }
+
+        // acquisition des connaissances des groupes fils /!\ Transfert de connaissance appui
+        for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
+        {
+            const MIL_KnowledgeGroup& innerKg = **itKG;
+            if( innerKg.IsEnabled() && IsEnabled() && innerKg.IsJammed() && innerKg.CanReport() && innerKg.GetKnowledge() )
+            {
+                boost::function< void( DEC_Knowledge_ObjectPerception& ) > functorPerception = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+                innerKg.ApplyOnKnowledgesObjectPerception( functorPerception );
+                boost::function< void( DEC_Knowledge_ObjectCollision& ) > functorCollision = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+                innerKg.ApplyOnKnowledgesObjectCollision( functorCollision );
+            }
+        }
+    }
+
+    // Acquisition des connaissances parents /!\ Transfert de connaissance appui
+    if( IsJammed() && IsEnabled() && CanReport( ) && parent_ &&  parent_->GetKnowledge() )
+    {
+        boost::function< void( DEC_Knowledge_Object& ) > functorObject = boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+        parent_->GetKnowledge()->GetKnowledgeObjectContainer().ApplyOnPreviousKnowledgesObject( functorObject );
+        parent_->GetKnowledge()->GetKnowledgeObjectContainer().SaveAllCurrentKnowledgeObject();
     }
 
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
@@ -1409,6 +1440,24 @@ void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision( const DEC_Knowl
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision
+// Created: LGY 2013-08-06
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision( const DEC_Knowledge_ObjectCollision& collision, int /*currentTimeStep*/ )
+{
+    GetObjectKnowledgeToUpdate( collision.GetObject() )->Update( collision );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception
+// Created: LGY 2013-08-06
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception( const DEC_Knowledge_ObjectPerception& perception, int /*currentTimeStep*/ )
+{
+    GetObjectKnowledgeToUpdate( perception.GetObjectPerceived() )->Update( perception );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
@@ -1428,6 +1477,16 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC
 {
     if( agentKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
         GetAgentKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromParentKnowledgeGroup
+// Created: LGY 2013-08-06
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Population& pKnowledge, int currentTimeStep )
+{
+    if( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep )
+        GetPopulationKnowledgeToUpdate( pKnowledge.GetPopulationKnown() ).Update( pKnowledge, currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------

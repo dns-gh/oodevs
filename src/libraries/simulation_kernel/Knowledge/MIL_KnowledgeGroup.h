@@ -16,6 +16,8 @@
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_Object_ABC.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "Tools/MIL_IDManager.h"
 #include "tools/Resolver.h"
 #include <boost/enable_shared_from_this.hpp>
@@ -44,6 +46,9 @@ class MIL_Object_ABC;
 class MIL_Population;
 class PHY_PerceptionLevel;
 class KnowledgesVisitor_ABC;
+class DEC_Knowledge_ObjectCollision;
+class DEC_Knowledge_ObjectPerception;
+class DEC_BlackBoard_CanContainKnowledgeObjectPerception;
 
 namespace sword
 {
@@ -212,6 +217,19 @@ public:
         if( jammedPion_ )
             jammedPion_->GetKnowledge().GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( fct );
     }
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObjectPerception( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( fct );
+    }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesObjectCollision( UnaryFunction& fct ) const
+    {
+        if( jammedPion_ )
+            jammedPion_->GetKnowledge().GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( fct );
+    }
     //@}
 
 private:
@@ -230,8 +248,10 @@ private:
     void ApplyOnKnowledgesAgentPerception( int currentTimeStep );
     void ApplyOnKnowledgesObjectPerception( int currentTimeStep );
     DEC_Knowledge_Population& GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown );
-    void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision, int currentTimeStep  );
-    void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception, int currentTimeStep  );
+    void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision, int currentTimeStep );
+    void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception, int currentTimeStep );
+    void UpdateObjectKnowledgeFromCollision( const DEC_Knowledge_ObjectCollision& collision, int currentTimeStep );
+    void UpdateObjectKnowledgeFromPerception( const DEC_Knowledge_ObjectPerception& perception, int currentTimeStep );
     DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( const MIL_Agent_ABC& agentKnown );
     void UpdateAgentKnowledgeFromCrowdPerception( const MIL_Agent_ABC& agent, const MIL_Population& population, int currentTimeStep );
     void UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& agent, const MIL_Population& population );
@@ -239,6 +259,7 @@ private:
     void UpdateObjectKnowledgeFromAgent( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     void UpdateObjectKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Object& objectKnowledge, int currentTimeStep );
+    void UpdatePopulationKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Population& pnowledge, int currentTimeStep );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception );
