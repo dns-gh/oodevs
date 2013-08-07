@@ -417,7 +417,7 @@ void ADN_Models_Data::ReadAutomat( xml::xistream& input )
     std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Automat ) ) );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "crowd", strName ) );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "automats", strName ) );
     vAutomataModels_.AddItem( spNew.release() );
 }
 
@@ -427,8 +427,10 @@ void ADN_Models_Data::ReadAutomat( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadPopulation( xml::xistream& input )
 {
+    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Population ) ) );
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "crowd", strName ) );
     vPopulationModels_.AddItem( spNew.release() );
 }
 
