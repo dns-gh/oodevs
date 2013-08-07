@@ -917,8 +917,8 @@ func (s *TestSuite) TestSurrender(c *C) {
 	err = client.Surrender(automat.Id, otherPartyId)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for unitId := range automat.Units {
-			unit := data.FindUnit(unitId)
+		automat := data.FindAutomat(automat.Id)
+		for _, unit := range automat.Units {
 			if unit.PartySurrenderedTo != otherPartyId {
 				return false
 			}
@@ -935,8 +935,8 @@ func (s *TestSuite) TestSurrender(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for unitId := range automat.Units {
-			unit := data.FindUnit(unitId)
+		automat := data.FindAutomat(automat.Id)
+		for _, unit := range automat.Units {
 			if unit.PartySurrenderedTo != 0 {
 				return false
 			}
