@@ -886,16 +886,23 @@ func (s *TestSuite) TestSurrender(c *C) {
 	// find another party Id
 	armies := data.Parties
 	c.Assert(len(armies), Greater, 1)
-	var otherPartyId uint32
-	for otherPartyId = range armies {
-		if otherPartyId != automat.PartyId {
-			break
+	var otherPartyId, otherPartyId2 uint32
+	for p := range armies {
+		if p != automat.PartyId {
+			if otherPartyId == 0 {
+				otherPartyId = p
+			} else {
+				otherPartyId2 = p
+				break
+			}
 		}
 	}
+	c.Assert(otherPartyId, Greater, uint32(0))
+	c.Assert(otherPartyId2, Greater, uint32(0))
 
-	// error: cancel surrender while not surrendered
+	// Cancelling a surrender while free is a no-op
 	err := client.CancelSurrender(automat.Id)
-	c.Assert(err, IsSwordError, "error_unit_surrendered")
+	c.Assert(err, IsNil)
 
 	// error: no parameters
 	err = client.SurrenderTest(automat.Id, swapi.MakeParameters())
@@ -926,8 +933,12 @@ func (s *TestSuite) TestSurrender(c *C) {
 		return true
 	})
 
-	// error: already surrendered
+	// Surrendering again to the same party is a no-op
 	err = client.Surrender(automat.Id, otherPartyId)
+	c.Assert(err, IsNil)
+
+	// error: surrender again to another party
+	err = client.Surrender(automat.Id, otherPartyId2)
 	c.Assert(err, IsSwordError, "error_unit_surrendered")
 
 	// cancel surrender
