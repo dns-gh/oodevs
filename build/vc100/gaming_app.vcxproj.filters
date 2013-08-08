@@ -1533,5 +1533,8 @@
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventDockWidget.h">
       <Filter>Source Files\Dialogs\Events</Filter>
     </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\FirePlayer.h">
+      <Filter>Source Files\Tools</Filter>
+    </Qt_file_Mocing>
   </ItemGroup>
 </Project>

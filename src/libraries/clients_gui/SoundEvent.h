@@ -27,7 +27,7 @@ namespace gui
 {
 
 
-class SoundEvent : private boost::noncopyable
+class SoundEvent
 {
 
 public:
@@ -54,6 +54,11 @@ public:
     E_SignalType GetSignalType() const;
     //@}
 
+    //! @name Copy/Assignment
+    //@{
+    SoundEvent( const SoundEvent& );            //!< Copy constructor
+    SoundEvent& operator=( const SoundEvent& ); //!< Assignment operator
+    //@}
 private:
     //! @name Helpers
     //@{
@@ -63,7 +68,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC* entity_;
-    const std::string& soundType_;
+    std::string soundType_;
     E_SignalType signalType_;
     //@}
 };

@@ -13,8 +13,10 @@
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
+#include "clients_gui/SoundPanel.h"
 
 #include <boost/noncopyable.hpp>
+#include <boost/thread/mutex.hpp>
 
 namespace kernel
 {
@@ -35,11 +37,15 @@ namespace gui
 */
 // Created: NPT 2013-07-16
 // =============================================================================
-class FirePlayer : public tools::Observer_ABC
+class FirePlayer : public QObject
+                 , public gui::SoundPlayer
+                 , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< gui::SoundEvent >
                  , public tools::ElementObserver_ABC< Simulation::sStartTick >
                  , private boost::noncopyable
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -49,17 +55,22 @@ public:
 
     //! @name Operations
     //@{
-    gui::SoundManager& GetSoundManager();
     void PlayPauseSoundControl( bool play );
+    virtual void SetVolume( const std::string& channel, double value );
+    virtual void ChangeSoundsDirectory( const tools::Path& path );
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void PlaySound( const gui::SoundEvent& soundEvent );
     bool CanPlaySound( const std::string& channel );
     virtual void NotifyUpdated( const gui::SoundEvent& soundEvent );
     virtual void NotifyUpdated( const Simulation::sStartTick& tick );
     //@}
+
+private slots:
+    void OnManageSounds();
 
 private:
     //! @name Member data
@@ -70,6 +81,9 @@ private:
     const Simulation& simulation_;
     unsigned int lastTick_;
     std::map< std::string, std::map< const kernel::Entity_ABC*, int > > loopingSounds_;
+    boost::mutex mutex_;
+    std::vector< gui::SoundEvent > currentEvents_;
+    bool isTimerLaunched_;
     //@}
 };
 

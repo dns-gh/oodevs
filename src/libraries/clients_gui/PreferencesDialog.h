@@ -34,6 +34,8 @@ namespace gui
     class PreferencePanel_ABC;
     class CoordinateSystemsPanel;
     class Painter_ABC;
+    class SoundPlayer;
+
 // =============================================================================
 /** @class  PreferencesDialog
     @brief  PreferencesDialog
@@ -50,7 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, SoundManager& soundManager );
+                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, SoundPlayer* soundPlayer );
     virtual ~PreferencesDialog();
     //@}
 
@@ -105,7 +107,7 @@ private:
     E_Modes oldMode_;
     LightingProxy& lighting_;
     Elevation2dLayer& elevation2dLayer_;
-    SoundManager& soundManager_;
+    SoundPlayer* soundPlayer_;
     //@}
 };
 

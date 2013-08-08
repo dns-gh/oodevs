@@ -462,7 +462,7 @@
     <ClInclude Include="..\..\src\applications\gaming_app\EventTopWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventWidget_ABC.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\FirePlayer.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\FirePlayer.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\gaming_app_pch.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantPanel.h">

@@ -60,10 +60,10 @@ namespace
 // Name: SoundPanel constructor
 // Created: NPT 2013-07-05
 // -----------------------------------------------------------------------------
-SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers, SoundManager& soundManager )
+SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers, SoundPlayer& soundPlayer )
     : PreferencePanel_ABC( parent, "SoundPanel" )
     , controllers_( controllers )
-    , soundManager_( soundManager )
+    , soundPlayer_( soundPlayer )
 {
     QLabel* coordinateLabel = new QLabel( tools::translate( "SoundPanel", "Ajust all sound volumes:" ) );
     RichGroupBox* box = new RichGroupBox( "soundControl", tools::translate( "SoundPanel", "Sound control" ), this );
@@ -184,7 +184,7 @@ void SoundPanel::OnSliderChanged( int value )
 // -----------------------------------------------------------------------------
 void SoundPanel::OnChangeVolume( const std::string& name, int value )
 {
-    soundManager_.SetVolume( name, double( value )/ 100. );
+    soundPlayer_.SetVolume( name, double( value )/ 100. );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void SoundPanel::OnChooseSoundsDirectory()
     if( !newDirectory.IsEmpty() )
     {
         soundDirectoryEditor_->setText( QString::fromStdWString( newDirectory.ToUnicode() ) );
-        soundManager_.ChangeSoundsDirectory( soundDirectoryEditor_->text().toStdString().c_str() );
+        soundPlayer_.ChangeSoundsDirectory( soundDirectoryEditor_->text().toStdString().c_str() );
     }
 }
 
