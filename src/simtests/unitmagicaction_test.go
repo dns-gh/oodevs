@@ -1006,6 +1006,16 @@ func (s *TestSuite) TestSurrender(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
 
+	isSurrendered := func(data *swapi.ModelData, automatId, partyId uint32) bool {
+		automat := data.FindAutomat(automatId)
+		for _, unit := range automat.Units {
+			if unit.PartySurrenderedTo != partyId {
+				return false
+			}
+		}
+		return true
+	}
+
 	data := client.Model.GetData()
 	automats := data.ListAutomats()
 	c.Assert(len(automats), Greater, 0)
@@ -1052,13 +1062,7 @@ func (s *TestSuite) TestSurrender(c *C) {
 	err = client.Surrender(automat.Id, otherPartyId)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		automat := data.FindAutomat(automat.Id)
-		for _, unit := range automat.Units {
-			if unit.PartySurrenderedTo != otherPartyId {
-				return false
-			}
-		}
-		return true
+		return isSurrendered(data, automat.Id, otherPartyId)
 	})
 
 	// Surrendering again to the same party is a no-op
@@ -1072,15 +1076,33 @@ func (s *TestSuite) TestSurrender(c *C) {
 	// cancel surrender
 	err = client.CancelSurrender(automat.Id)
 	c.Assert(err, IsNil)
-
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		automat := data.FindAutomat(automat.Id)
-		for _, unit := range automat.Units {
-			if unit.PartySurrenderedTo != 0 {
-				return false
-			}
-		}
-		return true
+		return !isSurrendered(data, automat.Id, 0)
+	})
+
+	// Move a normal unit into a surrendered automat
+	err = client.Surrender(automat.Id, otherPartyId)
+	c.Assert(err, IsNil)
+	a2 := CreateAutomat(c, client, automat.FormationId, 0)
+	u2 := CreateUnit(c, client, a2.Id)
+    // Wait for the unit to be fully generated, there is an update race
+    // otherwise masking the previous failure.
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindUnit(u2.Id).EquipmentDotations) > 0
+	})
+	err = client.ChangeUnitSuperior(u2.Id, automat.Id)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindUnit(u2.Id).AutomatId == automat.Id &&
+			isSurrendered(data, automat.Id, otherPartyId)
+	})
+
+	// Move it back to a free automat
+	err = client.ChangeUnitSuperior(u2.Id, a2.Id)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindUnit(u2.Id).AutomatId == a2.Id &&
+			isSurrendered(data, a2.Id, 0)
 	})
 }
 
