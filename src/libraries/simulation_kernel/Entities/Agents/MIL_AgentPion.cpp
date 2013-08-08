@@ -1296,25 +1296,15 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
     UpdatePhysicalState();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMagicSurrender
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMagicSurrender()
+void MIL_AgentPion::UpdateSurrenderedState()
 {
-    GetRole< surrender::PHY_RoleInterface_Surrender >().NotifySurrendered();
-    pOrderManager_->CancelMission();
-    UpdatePhysicalState();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMagicCancelSurrender
-// Created: NLD 2007-02-15
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMagicCancelSurrender()
-{
-    GetRole< surrender::PHY_RoleInterface_Surrender >().NotifySurrenderCanceled();
-    UpdatePhysicalState();
+    auto& role = GetRole< surrender::PHY_RoleInterface_Surrender >();
+    if( role.UpdateSurrenderedState() )
+    {
+        if( role.IsSurrendered() )
+            pOrderManager_->CancelMission();
+        UpdatePhysicalState();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1348,6 +1338,7 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = &newAutomate;
     pAutomate_->RegisterPion( *this );
+    UpdateSurrenderedState();
     const MIL_AutomateLOG* after = GetLogisticHierarchy().GetPrimarySuperior();
     if( before != after )
     {

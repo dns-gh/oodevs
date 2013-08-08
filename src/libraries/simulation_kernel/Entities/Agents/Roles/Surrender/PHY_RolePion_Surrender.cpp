@@ -28,7 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( surrender::PHY_RolePion_Surrender )
 
 namespace surrender
 {
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender constructor
 // Created: LDC 2013-01-09
@@ -38,7 +38,7 @@ PHY_RolePion_Surrender::PHY_RolePion_Surrender()
     , pPrison_                   ( 0 )
     , bPrisoner_                 ( false )
     , bHasChanged_               ( true )
-    , bSurrendered_              ( false )
+    , surrenderedToId_           ( 0 )
     , nbrHumansLodgingManaged_   ( 0 )
 {
     // NOTHING
@@ -53,7 +53,7 @@ PHY_RolePion_Surrender::PHY_RolePion_Surrender( MIL_AgentPion& pion )
     , pPrison_                   ( 0 )
     , bPrisoner_                 ( false )
     , bHasChanged_               ( true )
-    , bSurrendered_              ( false )
+    , surrenderedToId_           ( 0 )
     , nbrHumansLodgingManaged_   ( 0 )
 {
     // NOTHING
@@ -112,35 +112,27 @@ void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::NotifySurrendered
-// Created: NLD 2007-02-14
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Surrender::NotifySurrendered()
+bool PHY_RolePion_Surrender::UpdateSurrenderedState()
 {
-    if( !bSurrendered_ )
+    const MIL_Army_ABC* army = GetArmySurrenderedTo();
+    if( army && army->GetID() != surrenderedToId_ )
     {
         MIL_Report::PostEvent( *owner_, report::eRC_Rendu );
         bHasChanged_ = true;
         owner_->Apply(&SurrenderNotificationHandler_ABC::NotifySurrendered);
-        bSurrendered_ = true;
+        surrenderedToId_ = army->GetID();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Surrender::NotifySurrenderCanceled
-// Created: NLD 2007-02-15
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Surrender::NotifySurrenderCanceled()
-{
-    if( bSurrendered_ )
+    else if( !army && surrenderedToId_ != 0 )
     {
         Release();
         MIL_Report::PostEvent( *owner_, report::eRC_RedditionAnnulee );
         bHasChanged_ = true;
         owner_->Apply(&SurrenderNotificationHandler_ABC::NotifySurrenderCanceled);
-        bSurrendered_ = false;
+        surrenderedToId_ = 0;
     }
+    else
+        return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

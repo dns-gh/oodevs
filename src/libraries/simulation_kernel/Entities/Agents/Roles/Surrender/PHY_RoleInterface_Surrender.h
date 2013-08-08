@@ -58,8 +58,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifySurrendered() = 0;
-    virtual void NotifySurrenderCanceled() = 0;
+    // Notifies the unit its surrendered state has changed and it should
+    // refresh its internal state from its parent automat. Return true upon
+    // changed state.
+    virtual bool UpdateSurrenderedState() = 0;
     virtual bool Capture( const MIL_AgentPion& pionTakingPrisoner ) = 0;
     virtual bool Release() = 0;
     virtual bool Imprison( const MIL_Object_ABC& camp, MIL_AgentPion& transporter ) = 0;
