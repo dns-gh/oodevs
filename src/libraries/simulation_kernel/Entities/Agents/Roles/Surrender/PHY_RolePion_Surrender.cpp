@@ -34,14 +34,8 @@ namespace surrender
 // Created: LDC 2013-01-09
 // -----------------------------------------------------------------------------
 PHY_RolePion_Surrender::PHY_RolePion_Surrender()
-    : owner_                     ( 0 )
-    , pPrison_                   ( 0 )
-    , bPrisoner_                 ( false )
-    , bHasChanged_               ( true )
-    , surrenderedToId_           ( 0 )
-    , nbrHumansLodgingManaged_   ( 0 )
 {
-    // NOTHING
+    Init( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,14 +43,18 @@ PHY_RolePion_Surrender::PHY_RolePion_Surrender()
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Surrender::PHY_RolePion_Surrender( MIL_AgentPion& pion )
-    : owner_                     ( &pion )
-    , pPrison_                   ( 0 )
-    , bPrisoner_                 ( false )
-    , bHasChanged_               ( true )
-    , surrenderedToId_           ( 0 )
-    , nbrHumansLodgingManaged_   ( 0 )
 {
-    // NOTHING
+    Init( &pion );
+}
+
+void PHY_RolePion_Surrender::Init( MIL_AgentPion* pion )
+{
+    owner_ = pion;
+    pPrison_ = 0;
+    bPrisoner_ = false;
+    bHasChanged_ = true;
+    surrenderedToId_ = 0;
+    nbrHumansLodgingManaged_ = 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -83,6 +83,7 @@ private:
     //! @name Tools
     //@{
     virtual bool HasChanged() const;
+    void Init( MIL_AgentPion* pion );
     //@}
 
 private:
