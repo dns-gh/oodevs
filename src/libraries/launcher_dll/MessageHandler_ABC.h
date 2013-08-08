@@ -44,6 +44,7 @@ public:
     virtual bool OnReceiveMessage( const sword::AuthenticationToClient& message ) = 0;
     virtual bool OnReceiveMessage( const sword::DispatcherToClient& message ) = 0;
     // TODO gérer le nouveau message unhandled DIspatcherToClient
+    virtual void ResetCache() {}
     //@}
 };
 

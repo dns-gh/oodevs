@@ -66,6 +66,7 @@ public:
     //@{
     virtual void Update();
     virtual void HandleConnectionToAdmin( const std::string& endpoint );
+    virtual void HandleConnectionToAdminLost();
     virtual void HandleAdminToLauncher( const std::string& endpoint, const sword::AdminToLauncher& message );
     //@}
 

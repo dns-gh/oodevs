@@ -344,3 +344,13 @@ void SwordFacade::SetEndpoint( const std::string&  endpoint )
     if( !process_.expired() )
         process_.lock()->SetEndpoint( endpoint );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::ResetCache
+// Created: MMC 2013-08-08
+// -----------------------------------------------------------------------------
+void SwordFacade::ResetCache()
+{
+    BOOST_FOREACH( T_Handler handler, permanentHandler_ )
+        handler->ResetCache();
+}
