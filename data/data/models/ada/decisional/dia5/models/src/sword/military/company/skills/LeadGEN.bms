@@ -87,8 +87,10 @@ local function optimizeWorkMap( nbrFront, nbrTotalObstacle )
         for obstacle, builders in pairs( taskWorkMap ) do
             nbObstacleDistribue = nbObstacleDistribue +1
             local chosenBuilder = builders[1]
-            nombreAffectation[chosenBuilder] = nombreAffectation[chosenBuilder] or 0
-            nombreAffectation[chosenBuilder] = nombreAffectation[chosenBuilder] + 1
+            if chosenBuilder then 
+                nombreAffectation[chosenBuilder] = nombreAffectation[chosenBuilder] or 0
+                nombreAffectation[chosenBuilder] = nombreAffectation[chosenBuilder] + 1
+            end
             local nextObstacle = obstacle
             nextObstacle = next(taskWorkMap, nextObstacle ) -- car on ne veut pas toucher au builders[obstacle]
             while ( nextObstacle ) do
@@ -125,11 +127,13 @@ end
 -- @release 2010-12-03
 findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marcheRetrograde, isMain, withReinforcement )
     local bestList = {}
+    local secondList = {}
     local size = 1
     local bestTask = nil
     local bestTaskName = nil
     local bestParams = nil
     local noEntityHaveMainTask = true
+    local noEntityCanDoItAndHaveDotation = true
     myself.leadData.nbUnitsByObstacle ={}
     myself.leadData.platoonHasTask = {}
     for _, entity in pairs( entities ) do
@@ -174,8 +178,9 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
                             end
                         end
                      end
-                     if not withReinforcement and isMain then -- Only unit will have dotation and capability will receive the mission as main task.
+                     if not withReinforcement and isMain then
                          if not canCompleteAlone then
+                             noEntityCanDoItAndHaveDotation = false
                              addToBestList = false
                          end
                      end
@@ -185,6 +190,11 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
                                         taskName = bestTaskName,
                                         efficiency = bestEfficiency }
                          size = size + 1
+                     else -- use if no unit have dotation/capacity to do the job and there is no reinforcement possible : at least 1 unit should receive mainTask (we don't want "no unit can do the main tasks")
+                         secondList[ #secondList + 1 ] = { entity = entity,
+                                        task = bestTask,
+                                        taskName = bestTaskName,
+                                        efficiency = bestEfficiency }
                      end
                 end
             end
@@ -201,8 +211,8 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
         end
         if isMain then
             -- methode qui rempli la liste si les aucun pion n'a de dotation pour construire un obstacle donné
-            if withReinforcement then
-                fillWorkMap()
+            if noEntityCanDoItAndHaveDotation then
+                fillWorkMap( )
             end
             if myself.leadData.workMap then
                 params.maxNbrFront = math.min( maxNbrFront, nbrFront )
@@ -211,7 +221,11 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
                 end
             end
         end
-        return fillParameters( bestList, companyTask, params, nbrFront, marcheRetrograde, isMain, objectif )
+        if not withReinforcement and #bestList < 1 then
+            return fillParameters( secondList, companyTask, params, nbrFront, marcheRetrograde, isMain, objectif )
+        else
+            return fillParameters( bestList, companyTask, params, nbrFront, marcheRetrograde, isMain, objectif )
+        end
     end
     return {}
 end
