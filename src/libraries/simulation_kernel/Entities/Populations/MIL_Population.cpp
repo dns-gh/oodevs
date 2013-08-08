@@ -1204,6 +1204,8 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicActi
     DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
     if( roleDec )
         roleDec->Reset();
+    UpdateState();
+    UpdateBarycenter();
     orderManager_.CancelMission();
     bHasDoneMagicMove_ = true;
 }
