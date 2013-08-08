@@ -41,6 +41,7 @@ public:
     double GetDefaultLowThreshold() const;
     double GetHighThreshold() const;
     double GetDefaultHighThreshold() const;
+    double GetNormalizedConsumption() const;
     //@}
 
 private:
@@ -58,6 +59,7 @@ private:
     double                      rLowThresholdPercentage_;
     double                      rHighThreshold_;
     double                      rHighThresholdPercentage_;
+    double normalizedConsumption_;
     //@}
 };
 

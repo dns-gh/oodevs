@@ -23,6 +23,7 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
     , rLowThresholdPercentage_ ( xis.attribute< double >( "low-threshold" ) )
     , rHighThreshold_          ( 0. )
     , rHighThresholdPercentage_( xis.attribute< double >( "high-threshold" ) )
+    , normalizedConsumption_( xis.attribute< double >( "normalized-consumption" ) )
 {
     ComputeThreshold();
 }
@@ -111,6 +112,15 @@ double PHY_DotationCapacity::GetHighThreshold() const
 double PHY_DotationCapacity::GetDefaultHighThreshold() const
 {
     return rHighThresholdPercentage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacity::GetNormalizedConsumption
+// Created: JSR 2013-08-07
+// -----------------------------------------------------------------------------
+double PHY_DotationCapacity::GetNormalizedConsumption() const
+{
+    return normalizedConsumption_;
 }
 
 // -----------------------------------------------------------------------------

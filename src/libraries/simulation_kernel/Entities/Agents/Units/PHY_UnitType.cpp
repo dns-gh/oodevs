@@ -403,6 +403,18 @@ double PHY_UnitType::GetDefaultHighThreshold( const PHY_DotationCategory& catego
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetNormalizedConsumption
+// Created: JSR 2013-08-07
+// -----------------------------------------------------------------------------
+double PHY_UnitType::GetNormalizedConsumption( const PHY_DotationCategory& category ) const
+{
+    double normalizedConsumption = 0;
+    for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+        normalizedConsumption += it->first->GetDotationCapacities().GetNormalizedConsumption( category );
+    return normalizedConsumption;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InstanciateComposantes
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------

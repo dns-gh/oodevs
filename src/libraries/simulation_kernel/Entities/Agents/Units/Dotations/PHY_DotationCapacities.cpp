@@ -139,3 +139,15 @@ double PHY_DotationCapacities::GetCapacity( const PHY_DotationCategory& category
         return it->second->GetCapacity();
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacities::GetNormalizedConsumption
+// Created: JSR 2013-08-07
+// -----------------------------------------------------------------------------
+double PHY_DotationCapacities::GetNormalizedConsumption( const PHY_DotationCategory& category ) const
+{
+    auto it = dotationCapacities_.find( &category );
+    if( it != dotationCapacities_.end() )
+        return it->second->GetNormalizedConsumption();
+    return 0;
+}

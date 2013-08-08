@@ -44,6 +44,7 @@ public:
     double GetDefaultLowThreshold( const PHY_DotationCategory& category ) const;
     double GetDefaultHighThreshold( const PHY_DotationCategory& category ) const;
     double GetCapacity( const PHY_DotationCategory& category ) const;
+    double GetNormalizedConsumption( const PHY_DotationCategory& category ) const;
     //@}
 
 private:

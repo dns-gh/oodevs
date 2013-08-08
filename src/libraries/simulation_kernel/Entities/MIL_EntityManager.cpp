@@ -46,12 +46,14 @@
 #include "Agents/Units/Categories/PHY_Volume.h"
 #include "Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "Agents/Units/Dotations/PHY_AmmoDotationClass.h"
+#include "Agents/Units/Dotations/PHY_Dotation.h"
 #include "Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Agents/Units/Dotations/PHY_DotationType.h"
 #include "Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
+#include "Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Agents/Units/HumanFactors/PHY_Stress.h"
@@ -60,6 +62,7 @@
 #include "Agents/Units/Humans/PHY_HumanWound.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
+#include "Agents/Roles/Logistic/PHY_RolePionLOG_Supply.h"
 #include "Agents/Units/Radars/PHY_RadarClass.h"
 #include "Agents/Units/Radars/PHY_RadarType.h"
 #include "Agents/Units/Sensors/PHY_SensorType.h"
@@ -70,6 +73,7 @@
 #include "CheckPoints/SerializationTools.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Effects/MIL_EffectManager.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Logistic/ConsignHelper.h"
@@ -78,6 +82,7 @@
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
 #include "Entities/Objects/MIL_DisasterType.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
@@ -1696,6 +1701,106 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
     resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
+namespace
+{
+    class DotationVisitor : private boost::noncopyable
+    {
+    public:
+        explicit DotationVisitor( std::set< const PHY_DotationCategory* >& dotations )
+            : dotations_( dotations )
+        {
+            // NOTHING
+        }
+
+        virtual ~DotationVisitor()
+        {
+            // NOTHING
+        }
+
+        void Visit( const MIL_AgentPion& /*pion*/, PHY_Dotation& dotation )
+        {
+            dotations_.insert( &dotation.GetCategory() );
+        }
+
+    private:
+        std::set< const PHY_DotationCategory* >& dotations_;
+    };
+
+    class NormalizedConsumptionVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+    {
+    public:
+        explicit NormalizedConsumptionVisitor( const PHY_DotationCategory& category )
+            : category_( category )
+            , normalizedConsumption_( 0 )
+        {
+            // NOTHING
+        }
+
+        virtual ~NormalizedConsumptionVisitor()
+        {
+            // NOTHING
+        }
+
+        virtual void Visit( const MIL_AgentPion& element )
+        {
+            normalizedConsumption_ += element.GetType().GetUnitType().GetNormalizedConsumption( category_ );
+        }
+
+        double GetNormalizedConsumption() const
+        {
+            return normalizedConsumption_;
+        }
+
+    private:
+        const PHY_DotationCategory& category_;
+        double normalizedConsumption_;
+    };
+
+    PHY_RolePionLOG_Supply* GetRoleSupply( MIL_AutomateLOG* automatLog )
+    {
+        if( automatLog )
+            if( MIL_AgentPion* pc = const_cast< MIL_AgentPion* >( automatLog->GetPC() ) )
+                return pc->RetrieveRole< PHY_RolePionLOG_Supply >();
+        return 0;
+    }
+
+    void TransferMissingSpecificStocksBetweenTC2s( const MIL_Automate* transferedAutomat, MIL_AutomateLOG* oldSuperior, MIL_AutomateLOG* newSuperior )
+    {
+        if( !transferedAutomat )
+            return;
+        PHY_RolePionLOG_Supply* oldSupplyer = GetRoleSupply( oldSuperior );
+        PHY_RolePionLOG_Supply* newSupplyer = GetRoleSupply( newSuperior );
+        if( !oldSupplyer || !newSupplyer )
+            return;
+        std::set< const PHY_DotationCategory* > dotations;
+        DotationVisitor visitor( dotations );
+        typedef boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > T_Functor;
+        std::function< void( const MIL_AgentPion&, PHY_Dotation& ) > fun = [&] ( const MIL_AgentPion& pion, PHY_Dotation& dotation ) { visitor.Visit( pion, dotation ); };
+        transferedAutomat->Apply2( fun );
+        for( auto it = dotations.begin(); it != dotations.end(); ++it )
+        {
+            const PHY_DotationCategory& category = **it;
+            NormalizedConsumptionVisitor visitor( category );
+            transferedAutomat->Apply( visitor );
+            double normalizedConsumption = visitor.GetNormalizedConsumption();
+            PHY_DotationStock* dotationStockSrc = oldSupplyer->GetStock( category );
+            PHY_DotationStock* dotationStockDst = newSupplyer->GetStock( category );
+            double dstValue = dotationStockDst ? dotationStockDst->GetValue() : 0;
+            double complement = normalizedConsumption - dstValue;
+            if( dotationStockSrc && complement > 0 )
+            {
+                double srcValue = dotationStockSrc->GetValue();
+                complement = std::min( srcValue, complement );
+                if( complement > 0 )
+                {
+                    oldSupplyer->ResupplyStocks( category, srcValue - complement );
+                    newSupplyer->ResupplyStocks( category, dstValue + complement );
+                }
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessChangeLogisticLinks
 // Created: NLD 2004-10-25
@@ -1721,7 +1826,9 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
             superiors.push_back( pSuperior );
         }
     }
+    MIL_AutomateLOG* oldSuperior = pSubordinate->GetPrimarySuperior();
     pSubordinate->ChangeLinks( superiors );
+    TransferMissingSpecificStocksBetweenTC2s( TaskerToAutomat( *this, message.tasker() ), oldSuperior, pSubordinate->GetPrimarySuperior() );
 }
 
 // -----------------------------------------------------------------------------
