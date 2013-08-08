@@ -1206,7 +1206,8 @@ message UnitAttributes {
     optional EnumUnitMorale              morale                     = 41;
     //! The experience @see EnumUnitExperience
     optional EnumUnitExperience          experience                 = 42;
-    //! The unit to which this unit has surrendered @see UnitId
+    //! The identifier of the party the unit surrendered to. This field
+    //! remains as a UnitId for backward compatibility reasons.
     optional UnitId                      surrendered_unit           = 43;
     //! Whether the unit has been made prisoner or not
     optional bool                        prisoner                   = 44;
