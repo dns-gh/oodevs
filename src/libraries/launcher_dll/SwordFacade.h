@@ -101,6 +101,7 @@ public:
     void Update() const;
     const frontend::ProcessWrapper* GetProcess();
     void SetEndpoint( const std::string&  endpoint );
+    void ResetCache();
     //@}
 
 private:

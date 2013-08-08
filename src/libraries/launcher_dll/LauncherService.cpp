@@ -52,6 +52,7 @@ void LauncherService::ConnectionSucceeded( const std::string& endpoint )
 void LauncherService::ConnectionFailed( const std::string& address, const std::string& error )
 {
     clients_.erase( address );
+    launcher_.HandleConnectionToAdminLost();
     tools::ServerNetworker::ConnectionFailed( address, error );
 }
 
@@ -62,6 +63,7 @@ void LauncherService::ConnectionFailed( const std::string& address, const std::s
 void LauncherService::ConnectionError( const std::string& address, const std::string& error )
 {
     clients_.erase( address );
+    launcher_.HandleConnectionToAdminLost();
     tools::ServerNetworker::ConnectionError( address, error );
 }
 

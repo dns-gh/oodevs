@@ -101,6 +101,15 @@ void Launcher::HandleConnectionToAdmin( const std::string& endpoint )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Launcher::HandleConnectionToAdminLost
+// Created: MMC 2013-08-08
+// -----------------------------------------------------------------------------
+void Launcher::HandleConnectionToAdminLost()
+{
+   processes_->ResetCache();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Launcher::HandleAdminToLauncher
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
