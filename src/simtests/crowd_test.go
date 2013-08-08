@@ -232,11 +232,17 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 	})
 
 	// Reset movement, the flow is destroyed
+	knownElements := client.Model.GetData().FindCrowd(crowd.Id).CrowdElements
 	err = client.TeleportCrowd(crowd.Id, to)
 	c.Assert(err, IsNil)
-
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindCrowd(crowd.Id).CrowdElements) == 1
+		elements := data.FindCrowd(crowd.Id).CrowdElements
+		for id, _ := range elements {
+			if knownElements[id] != nil {
+				return false
+			}
+		}
+		return len(elements) == 1
 	})
 }
 
