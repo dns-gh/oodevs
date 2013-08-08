@@ -92,8 +92,10 @@ node "ApplyFire"
     acquire = { [ skill.resources.indirectFire ] = 1 };
 
     select = function( self )
-        if( self.params.entity:applyFireOnIt( self.params.munition, self.params.interventionType ) ) then
-            Feedback( self.feedbacks.done, { state = "finish" } )
+        if self.params.entity:firePermitted() then
+            if( self.params.entity:applyFireOnIt( self.params.munition, self.params.interventionType ) ) then
+                Feedback( self.feedbacks.done, { state = "finish" } )
+            end
         end
     end
 }
