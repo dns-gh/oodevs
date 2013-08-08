@@ -57,7 +57,7 @@ public:
     bool HasObjectsAtInteractionHeightCache( double rHeight ) const;
     void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight ) const;
     void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
-    void UpdateUniversalObjects();
+    void UpdateUniversalObjects( const MIL_Army_ABC* army );
     void SaveAllCurrentKnowledgeObject();
     //@}
 

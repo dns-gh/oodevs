@@ -371,8 +371,6 @@ void MIL_KnowledgeGroup::UpdateKnowledges( int currentTimeStep )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateObjectKnowledges( int currentTimeStep )
 {
-    if( knowledgeBlackBoard_ )
-        knowledgeBlackBoard_->UpdateUniversalObjects();
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).UpdateObjectKnowledges( currentTimeStep );
     if( knowledgeBlackBoard_ )

@@ -524,6 +524,7 @@ void MIL_Army::UpdateKnowledges(int currentTimeStep)
     assert( pKnowledgeBlackBoard_ );
     // Update objects (at army level plus those in jammed groups)
     pKnowledgeBlackBoard_->Update( currentTimeStep );
+    pKnowledgeBlackBoard_->UpdateUniversalObjects( this );
     for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
         itKnowledgeGroup->second->UpdateObjectKnowledges(currentTimeStep);
 }

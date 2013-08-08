@@ -52,7 +52,7 @@ public:
     void SendFullState( unsigned int nCtx ) const;
     void SendObjectChangedState() const;
     virtual void Accept( KnowledgesVisitor_ABC& visitor ) const;
-    void UpdateUniversalObjects();
+    void UpdateUniversalObjects( const MIL_Army_ABC* army );
 
     void SetKnowledgeGroup( MIL_KnowledgeGroup* group );
     boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;

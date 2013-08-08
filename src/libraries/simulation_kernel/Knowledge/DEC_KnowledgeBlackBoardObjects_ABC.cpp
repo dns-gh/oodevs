@@ -124,10 +124,10 @@ void DEC_KnowledgeBlackBoardObjects_ABC::Accept( KnowledgesVisitor_ABC& visitor 
 // Name: DEC_KnowledgeBlackBoardObjects_ABC::UpdateUniversalObjects
 // Created: JSR 2013-06-25
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoardObjects_ABC::UpdateUniversalObjects()
+void DEC_KnowledgeBlackBoardObjects_ABC::UpdateUniversalObjects( const MIL_Army_ABC* army )
 {
-    if( pKnowledgeGroup_ )
-        pKnowledgeObjectContainer_->UpdateUniversalObjects();
+    if( !pKnowledgeGroup_ )
+        pKnowledgeObjectContainer_->UpdateUniversalObjects( army );
 }
 
 // -----------------------------------------------------------------------------

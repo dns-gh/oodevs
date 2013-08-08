@@ -103,7 +103,7 @@ inline
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
 {
     boost::shared_ptr< MIL_KnowledgeGroup > kg = pBlackBoard_->GetKnowledgeGroup();
-    if( kg.get() == 0 && perception.GetObjectPerceived().IsUniversal() )
+    if( perception.GetObjectPerceived().IsUniversal() && ( kg.get() == 0 || !kg->IsJammed() ) )
         return;
     if( kg.get() && &kg.get()->GetArmy() == perception.GetObjectPerceived().GetArmy() )
         return;
@@ -120,7 +120,7 @@ inline
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision )
 {
     boost::shared_ptr< MIL_KnowledgeGroup > kg = pBlackBoard_->GetKnowledgeGroup();
-    if( kg.get() == 0 && collision.GetObject().IsUniversal() )
+    if( collision.GetObject().IsUniversal() && ( kg.get() == 0 || !kg->IsJammed() ) )
         return;
     if( kg.get() && &kg.get()->GetArmy() == collision.GetObject().GetArmy() )
         return;

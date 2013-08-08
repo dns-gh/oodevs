@@ -155,8 +155,8 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
         boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = pKnowledgeGroup_->shared_from_this();
         knowledge = objectKnown.CreateKnowledge( knowledgeGroup );
     }
-    else if ( army == objectKnown.GetArmy() )
-        knowledge = objectKnown.CreateKnowledge( *objectKnown.GetArmy() );
+    else if ( army == objectKnown.GetArmy() || objectKnown.IsUniversal() )
+        knowledge = objectKnown.CreateKnowledge( *army );
 
     if( knowledge )
     {
@@ -310,14 +310,14 @@ void DEC_BlackBoard_CanContainKnowledgeObject::SetCachedObjectsAtInteractionHeig
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects
 // Created: LDC 2012-02-07
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects()
+void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects( const MIL_Army_ABC* army )
 {
     const std::set< MIL_Object_ABC* >& universalObjects = MIL_EntityManager_ABC::GetSingleton().GetUniversalObjects();
     for( std::set< MIL_Object_ABC* >::const_iterator it = universalObjects.begin(); it != universalObjects.end(); ++it )
     {
         if( !HasKnowledgeObject( **it ) && !(*it)->IsMarkedForDestruction() )
         {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( ( *it )->GetArmy(), **it );
+            boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( army, **it );
             knowledge->Update( PHY_PerceptionLevel::identified_ );
             knowledge->SkipPreparation();
         }
