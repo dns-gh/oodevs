@@ -467,8 +467,29 @@ void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& ent
                 resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId );
             else
             {
-                resourceMenu->insertItem( tr( "Create nodes" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
-                resourceMenu->insertItem( tr( "Remove nodes" ), this , SLOT( OnRemoveNode( int ) ), 0, resourceId );
+                bool displayCreate = false;
+                bool displayRemove = false;
+                for( auto it = selected_.begin(); it != selected_.end(); ++it )
+                {
+                    kernel::Entity_ABC* selected = *it;
+                    ResourceNetwork_ABC& resourceNetwork = selected->Get< ResourceNetwork_ABC >();
+                    if( resourceNetwork.FindResourceNode( resource.GetName() ) )
+                    {
+                        displayRemove = true;
+                        if( displayCreate )
+                            break;
+                    }
+                    else
+                    {
+                        displayCreate = true;
+                        if( displayRemove )
+                            break;
+                    }
+                }
+                if( displayCreate )
+                    resourceMenu->insertItem( tr( "Create nodes" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
+                if( displayRemove )
+                    resourceMenu->insertItem( tr( "Remove nodes" ), this , SLOT( OnRemoveNode( int ) ), 0, resourceId );
             }
         }
         ++resourceId;
