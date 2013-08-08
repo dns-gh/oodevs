@@ -39,6 +39,7 @@ public:
     double GetCapacity() const;
     double GetSupplyThreshold() const;
     double GetDefaultThreshold() const;
+    double GetNormalizedConsumption() const;
     //@}
 
 private:
@@ -51,9 +52,10 @@ private:
     //! @name Member data
     //@{
     const PHY_DotationCategory& category_;
-    double                      rCapacity_;
-    double                      rSupplyThreshold_;
-    double                      rSupplyThresholdPercentage_;
+    double rCapacity_;
+    double rSupplyThreshold_;
+    double rSupplyThresholdPercentage_;
+    double normalizedConsumption_;
     //@}
 };
 

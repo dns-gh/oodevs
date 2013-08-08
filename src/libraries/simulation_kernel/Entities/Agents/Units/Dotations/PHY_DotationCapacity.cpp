@@ -22,6 +22,7 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
     , rCapacity_       ( xis.attribute< double >( "capacity" ) )
     , rSupplyThreshold_( 0. )
     , rSupplyThresholdPercentage_( xis.attribute< double >( "logistic-threshold" ) )
+    , normalizedConsumption_( xis.attribute< double >( "normalized-consumption" ) )
 {
     ComputeThreshold();
 }
@@ -86,6 +87,15 @@ double PHY_DotationCapacity::GetSupplyThreshold() const
 double PHY_DotationCapacity::GetDefaultThreshold() const
 {
     return rSupplyThresholdPercentage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacity::GetNormalizedConsumption
+// Created: JSR 2013-08-07
+// -----------------------------------------------------------------------------
+double PHY_DotationCapacity::GetNormalizedConsumption() const
+{
+    return normalizedConsumption_;
 }
 
 // -----------------------------------------------------------------------------

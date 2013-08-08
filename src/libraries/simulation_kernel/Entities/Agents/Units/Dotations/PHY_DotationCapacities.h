@@ -37,6 +37,7 @@ public:
     void RegisterCapacities ( PHY_DotationGroupContainer& container, std::map< const PHY_DotationCategory*, double >* dotations ) const;
     std::map< const PHY_DotationCategory*, double > UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
     double GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const;
+    double GetNormalizedConsumption( const PHY_DotationCategory& category ) const;
     //@}
 
 private:

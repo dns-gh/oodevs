@@ -66,6 +66,7 @@ public:
     double GetCoefDecontaminationPerTimeStep() const;
     double GetStockLogisticThresholdRatio( const PHY_DotationLogisticType& type ) const;
     double GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const;
+    double GetNormalizedConsumption( const PHY_DotationCategory& category ) const;
     bool CanFly() const;
     bool IsAutonomous() const;
     unsigned int GetPionEfficiency( E_PionEfficiency pionEfficiency ) const;
