@@ -79,7 +79,7 @@ MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel
     , planned_( false )
 {
     setObjectName( name );
-    setMinimumSize( 280, 100 );
+    setMinimumSize( 280, 50 );
     mainTab_ = CreateTab( this, tr( "Mandatory" ) );
     optionalTab_ = CreateTab( this, tr( "Optional" ) );
     helpTab_ = CreateTab( this, tr( "Help" ) );
