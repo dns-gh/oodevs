@@ -107,7 +107,7 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& mes
             }
         }
     }
-    if( message.message().has_automat_attributes() && message.message().automat_attributes().has_extension() )
+    if( message.message().has_automat_attributes() )
     {
         unsigned int automatId = message.message().automat_attributes().automat().id();
         auto it = automatCreationChecker_.find( automatId );
