@@ -361,4 +361,7 @@ return
         started = integration.updateAttackIt, 
         stop = integration.stopAttackIt
     } ),
+   firePermitted = function( self )
+        return integration.firePermittedForPoint( self )
+    end,
 }

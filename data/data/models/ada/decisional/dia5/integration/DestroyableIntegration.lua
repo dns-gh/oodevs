@@ -84,6 +84,21 @@ integration.firePermitted = function( target )
     return false
 end
 
+integration.firePermittedForPoint = function( target )
+    local stateROE = integration.getROE()
+    local localisation = DEC_Geometrie_CreerLocalisationCercle( target:getPosition(), 10 )
+    local object = integration.obtenirObjetProcheDe( localisation, eTypeObjectFiringForbiddenArea, 10000 )
+    if object then    
+        local area = DEC_GenObject_Localisation( object.source )
+        if (not integration.isPointInLocalisation(target, area)) and ( stateROE == eRoeStateFreeFire ) then
+            return true
+        else
+            return false
+        end
+    end
+    return true
+end
+
 integration.fireNotForbbiden = function( target )
     local stateROE = integration.getROE()
     if (not integration.isInForbiddenFireArea( target ) ) and ( stateROE ~= eRoeStateFireByOrder ) then
