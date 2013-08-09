@@ -127,6 +127,16 @@ masalife.brain.communication.setMessageTreatment( "SendClearBuildingObstacleList
     function( content, sender )
         myself.buildingByOther = {}
     end )
+    
+masalife.brain.communication.setMessageTreatment( "startBuildingSealOffArea",
+    function( content, sender )
+       myself.buildingObjectSealOffArea = true
+    end )
+    
+masalife.brain.communication.setMessageTreatment( "clearBuildingSealOffArea",
+    function( content, sender )
+        myself.buildingObjectSealOffArea = false
+    end )
 
 -- -------------------------------------------------------------------------------- 
 -- Predicates
@@ -446,6 +456,12 @@ return
     end,
     SendClearBuildingObstacleList = function( self, receiver )
         integration.SendMessage( "clearBuildingObstacleList", receiver, { }, { type = "dynamic" } )
+    end,
+    sendStartBuildingSealOffArea = function( self, receiver, unit )
+        integration.SendMessage( "startBuildingSealOffArea", receiver, { unit = unit }, { type = "dynamic" } )
+    end,
+    sendClearBuildingSealOffArea = function( self, receiver )
+        integration.SendMessage( "clearBuildingSealOffArea", receiver, { }, { type = "dynamic" } )
     end,
     getObstaclesOnAllyPath = function( self )
         return myself.engineerObjectsOnPath
