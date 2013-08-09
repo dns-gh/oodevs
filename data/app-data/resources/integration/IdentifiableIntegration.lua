@@ -8,10 +8,10 @@ local eRadarType_EcouteRadar = 2
 -- @release 2010-02-03
 integration.getAgentIdentificationLevel = function( unit )
     local identificationLevel = DEC_ConnaissanceAgent_NiveauPerceptionMax( unit.source )
-    if identificationLevel == 1 then return 30
-    elseif identificationLevel == 2 then return 60
-    elseif identificationLevel == 3 then return 100
-    else return 0
+    if identificationLevel == 1 then return 30 -- The unit is detected
+    elseif identificationLevel == 2 then return 60 -- The unit is recognized
+    elseif identificationLevel == 3 then return 100 -- The unit is identified
+    else return 0 -- The unit is not detected
     end
 end
 
