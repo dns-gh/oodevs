@@ -44,7 +44,7 @@ public:
                            static bool IsEnemy( const MIL_AgentPion& caller, int knowledgeId );
                            static int Exterminate( MIL_AgentPion& caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation );
                            static std::string GetCriticalIntelligence( const MIL_AgentPion& caller, int knowledgeId );
-                           static bool HasFlow( const MIL_AgentPion& caller, int knowledgeId );
+                           static bool IsFlowKnown( const DEC_Decision_ABC& caller, int knowledgeId );;
                            static void ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals );
                            static float GetCrowdAffinity( const MIL_AgentPion& callerAgent, int knowledgeId );
                            static int GetCrowdAttitude( const MIL_AgentPion& callerAgent, int knowledgeId );

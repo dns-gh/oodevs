@@ -234,22 +234,6 @@ std::string DEC_KnowledgePopulationFunctions::GetCriticalIntelligence( const MIL
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::HasFlow
-// Created: EVH 2011-04-07
-// -----------------------------------------------------------------------------
-bool DEC_KnowledgePopulationFunctions::HasFlow( const MIL_AgentPion& caller, int knowledgeId )
-{
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-        if( pKnowledge )
-            return pKnowledge->GetPopulationKnown().HasFlow();
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals
 // Created: LMT 2011-04-01
 // -----------------------------------------------------------------------------
@@ -500,6 +484,23 @@ bool DEC_KnowledgePopulationFunctions::IsValid( const DEC_Decision_ABC& callerAg
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
             return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::IsFlowKnown
+// Created: EVH 2011-04-07
+// Modified: NMI 2013-08-09
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::IsFlowKnown( const DEC_Decision_ABC& caller, int knowledgeId )
+{
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return pKnowledge->GetPopulationKnown().HasFlow();
     }
     return false;
 }
