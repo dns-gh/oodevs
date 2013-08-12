@@ -2001,8 +2001,9 @@ message UnitMagicAction {
         //! parameters[0], Formation or Party: the new formation or party
         //! This message triggers a FormationChangeSuperior on success.
         change_formation_superior         = 23;
-        //! A knowledge group update magic action
-        //! @deprecated never used
+        //! DEPRECATED
+        //!
+        //! This message is ignored by the simulation.
         knowledge_group_update            = 24;
         //! A log supply push flow magic action
         //! tasker must match a logistics automat/formation/unit
@@ -2098,6 +2099,11 @@ message UnitMagicAction {
         //! The breakdowns are described in a following UnitAttributes
         //! equipment_dotations fields.
         create_breakdowns                 = 41;
+        //! DEPRECATED
+        //!
+        //! You can achieve the same effect with change_human_state
+        //! magic action, except for the random part.
+        //!
         //! Applies wounds on unit crew members.
         //! The tasker is set to target unit.
         //! parameters[0], multiple List: a sequence of wound records as

@@ -71,6 +71,8 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     EventMultimediaWidget* multimediaWidget = new EventMultimediaWidget();
     detailWidget_ = new EventDetailWidget();
 
+    //stack
+
     stack_ = new QStackedWidget();
     stack_->insertWidget( eEventTypes_Order,            orderWidget );
     stack_->insertWidget( eEventTypes_SupervisorAction, supervisorWidget );
@@ -79,13 +81,20 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     stack_->insertWidget( eEventTypes_Multimedia,       multimediaWidget );
     stack_->insertWidget( eNbrEventTypes,               detailWidget_ );
 
+    QScrollArea* stackArea = new QScrollArea();
+    QHBoxLayout* stackAreaLayout = new QHBoxLayout( stackArea );
+    stackArea->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    stackArea->setWidgetResizable( true );
+    stackArea->setMinimumSize( 300, 160 );
+    stackAreaLayout->addWidget( stack_ );
+
     // Layout
     QWidget* mainWidget = new QWidget();
     QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
     mainLayout->setMargin( 5 );
     mainLayout->setSpacing( 5 );
     mainLayout->addWidget( topWidget_ );
-    mainLayout->addWidget( stack_, 1 );
+    mainLayout->addWidget( stackArea, 1 );
     mainLayout->addWidget( bottomWidget_ );
     setWidget( mainWidget );
     SetContentVisible( false );

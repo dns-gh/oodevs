@@ -738,7 +738,7 @@ void MIL_Automate::SurrenderWithUnits( const MIL_Army_ABC& armySurrenderedTo )
 {
     Surrender( armySurrenderedTo );
     for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        ( **itPion ).OnReceiveMagicSurrender();
+        ( **itPion ).UpdateSurrenderedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1043,7 +1043,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         {
             CancelSurrender();
             for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-                ( **itPion ).OnReceiveMagicCancelSurrender();
+                ( **itPion ).UpdateSurrenderedState();
         }
         break;
     case sword::UnitMagicAction::change_extension:

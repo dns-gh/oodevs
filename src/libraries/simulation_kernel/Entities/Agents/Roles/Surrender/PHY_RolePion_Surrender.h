@@ -57,8 +57,7 @@ public:
 
     //! @name Main
     //@{
-    virtual void NotifySurrendered      ();
-    virtual void NotifySurrenderCanceled();
+    virtual bool UpdateSurrenderedState();
     virtual bool Capture                ( const MIL_AgentPion& pionTakingPrisoner );
     virtual bool Release                ();
     virtual bool Imprison               ( const MIL_Object_ABC& camp, MIL_AgentPion& transporter );
@@ -84,6 +83,7 @@ private:
     //! @name Tools
     //@{
     virtual bool HasChanged() const;
+    void Init( MIL_AgentPion* pion );
     //@}
 
 private:
@@ -93,7 +93,7 @@ private:
     const MIL_Object_ABC* pPrison_;
     bool bPrisoner_;
     bool bHasChanged_;
-    bool bSurrendered_;
+    unsigned int surrenderedToId_;
     unsigned int nbrHumansLodgingManaged_;
     //@}
 };

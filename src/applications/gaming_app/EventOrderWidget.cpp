@@ -342,17 +342,17 @@ void EventOrderWidget::FillMission()
             if( lastGivenOrder_ && previousType_ == entityType_ )
             {
                 AddSingleOrder( *lastGivenOrder_ );
-                missionCombo_->model()->sort( 0 );
                 missionCombo_->setCurrentIndex( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
+                missionCombo_->setItemData( missionCombo_->currentIndex(), 0, Qt::UserRole - 1 );
                 if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
                     WarnTargetAndMission();
             }
             else
             {
-                missionCombo_->model()->sort( 0 );
                 missionCombo_->setCurrentIndex( 0 );
             }
         }
+        missionCombo_->model()->sort( 0 );
     }
     else
     {
@@ -538,6 +538,8 @@ void EventOrderWidget::OnPlannedMission( const actions::Action_ABC& action, time
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnSelectEntity( const kernel::Entity_ABC& entity, E_MissionType type )
 {
+    if( !missionInterface_ )
+        return;
     if( missionCombo_ && missionTypeCombo_->count() != 4 )
         lastGivenOrder_ = static_cast< const kernel::OrderType* >( missionCombo_->itemData( missionCombo_->currentIndex() ).value< kernel::VariantPointer >().ptr_ );
 

@@ -166,14 +166,13 @@ public:
     void OnReceiveOrder( const sword::UnitOrder& msg );
     void OnReceiveFragOrder( const sword::FragOrder& msg );
     void OnReceiveChangeSuperior( const MIL_EntityManager& manager, unsigned int automatId );
-    void OnReceiveMagicSurrender();
-    void OnReceiveMagicCancelSurrender();
     void OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
     void SetExtensions( const MIL_DictionaryExtensions& ext );
     //@}
 
     //! @name Misc operations
     //@{
+    void UpdateSurrenderedState();
     virtual void MagicMove( const MT_Vector2D& vNewPos );
     void NotifyAttacking( MIL_Agent_ABC& target, bool mustReport ) const;
     void NotifyAttacking( MIL_Population& target ) const;

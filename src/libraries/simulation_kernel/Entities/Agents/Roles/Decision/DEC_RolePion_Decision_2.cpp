@@ -473,8 +473,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool (int) >(boost::bind( &DEC_KnowledgePopulationFunctions::IsEnemy, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ConnaissancePopulation_Exterminer",
         boost::function< int (int, float, const PHY_DotationCategory*) >(boost::bind( &DEC_KnowledgePopulationFunctions::Exterminate, boost::ref( GetPion() ), _1, _2, _3 ) ) );
-    RegisterFunction( "DEC_ConnaissancePopulation_HasFlow",
-        boost::function< bool (int) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasFlow, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_GetAdhesionPopulation",
         boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_GetAttitudePopulation",
