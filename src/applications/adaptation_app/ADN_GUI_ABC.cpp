@@ -142,7 +142,10 @@ void ADN_GUI_ABC::UpdateOptionalFieldsVisibility( bool show )
 void ADN_GUI_ABC::DisconnectListView()
 {
     if( pListView_ )
+    {
         pListView_->ConnectItem( false );
+        pListView_->Clear();
+    }
 }
 
 // -----------------------------------------------------------------------------
