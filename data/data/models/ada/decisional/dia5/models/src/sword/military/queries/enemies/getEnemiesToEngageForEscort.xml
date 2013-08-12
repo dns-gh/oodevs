@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.queries.enemies.getEnemiesToEngageForEscort" source-version="1.0.0">
+    <description>Retourne les ennemies dans un cercle définie par la distance maximum de tir possible, correspondant au PH (compris ici en 0 et 1)  passé en paramètre. Plus le PH est bas, plus le cercle sera grand.</description>
+    <parameters>
+        <parameter name="probabilityToHit">
+            <description>The probability to hit that will be taking into account to define the maximum range to get the enemies.</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+        <parameter name="unitToEscort">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <target name="enemyInRange">
+        <type>
+            <class name="sword.military.world.Platoon"/>
+        </type>
+    </target>
+</query>
