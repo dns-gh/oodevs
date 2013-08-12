@@ -21,10 +21,15 @@
                 <skill name="sword.military.platoon.coercition.skills.Engage" priority="10000.0">
                     <parameter name="entities">
                         <value>
-                            <call method="sword.military.queries.enemies.getEnemiesInRange">
+                            <call method="sword.military.queries.enemies.getEnemiesToEngageForEscort">
                                 <parameter name="probabilityToHit">
                                     <value>
                                         <number>0.0010</number>
+                                    </value>
+                                </parameter>
+                                <parameter name="unitToEscort">
+                                    <value>
+                                        <parameter>objective</parameter>
                                     </value>
                                 </parameter>
                             </call>
