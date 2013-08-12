@@ -104,6 +104,18 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( NotifyUnitExtension, ExerciseFixture )
 {
+    client::UnitCreation creation;
+    creation().mutable_unit()->set_id( 42 );
+    creation().mutable_automat()->set_id( 41 );
+    creation().mutable_type()->set_id( 1 );
+    creation().set_name( "name" );
+    creation().set_pc( 10 );
+    creation.Send( dispatcher, 11 );
+
+    sword::SessionNotification launcherCreationResponse;
+    Wait( launcherCreationResponse );
+    LAUNCHER_CHECK_MESSAGE( launcherCreationResponse, "" );
+
     client::UnitAttributes attributes;
     attributes().mutable_unit()->set_id( 42 );
     sword::Extension_Entry* entry = attributes().mutable_extension()->add_entries();
@@ -113,9 +125,8 @@ BOOST_FIXTURE_TEST_CASE( NotifyUnitExtension, ExerciseFixture )
 
     sword::SessionNotification launcherResponse;
     MOCK_EXPECT( handler, HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
-
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { unit_update { unit { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { unit_update { unit { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } entity_creation { long_name: \"\" id { unit { id: 42 } } superior { automat { id: 41 } } } }" );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,13 +143,24 @@ BOOST_FIXTURE_TEST_CASE( NotifyAutomatLongName, ExerciseFixture )
     creation().mutable_party()->set_id( 4 );
     creation().set_app6symbol( "xxx" );
     creation().set_logistic_level( (sword::EnumLogisticLevel)1 );
-    creation.Send( dispatcher, 12 );
+    creation.Send( dispatcher, 11 );
+
+    sword::SessionNotification launcherCreationResponse;
+    Wait( launcherCreationResponse );
+    LAUNCHER_CHECK_MESSAGE( launcherCreationResponse, "" );
+
+    client::AutomatAttributes attributes;
+    attributes().mutable_automat()->set_id( 1 );
+    sword::Extension_Entry* entry = attributes().mutable_extension()->add_entries();
+    entry->set_name( "NomLong" );
+    entry->set_value( "LongNameValue" );
+    attributes.Send( dispatcher, 12 );
 
     sword::SessionNotification launcherResponse;
     MOCK_EXPECT( handler, HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { entity_creation { long_name: \"\" id { automat { id: 1 } } superior { formation { id: 3 } } } }" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { entity_creation { long_name: \"LongNameValue\" id { automat { id: 1 } } superior { formation { id: 3 } } } }" );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,18 +169,29 @@ BOOST_FIXTURE_TEST_CASE( NotifyAutomatLongName, ExerciseFixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( NotifyAutomatCreation, ExerciseFixture )
 {
+    client::AutomatCreation creation;
+    creation().mutable_automat()->set_id( 1 );
+    creation().mutable_type()->set_id( 2 );
+    creation().set_name( "name" );
+    creation().mutable_parent()->mutable_formation()->set_id( 3 );
+    creation().mutable_party()->set_id( 4 );
+    creation().set_app6symbol( "xxx" );
+    creation().set_logistic_level( (sword::EnumLogisticLevel)1 );
+    creation.Send( dispatcher, 11 );
+
+    sword::SessionNotification launcherCreationResponse;
+    Wait( launcherCreationResponse );
+    LAUNCHER_CHECK_MESSAGE( launcherCreationResponse, "" );
+
     client::AutomatAttributes attributes;
-    attributes().mutable_automat()->set_id( 42 );
-    sword::Extension_Entry* entry = attributes().mutable_extension()->add_entries();
-    entry->set_name( "NomLong" );
-    entry->set_value( "value" );
+    attributes().mutable_automat()->set_id( 1 );
     attributes.Send( dispatcher, 12 );
 
     sword::SessionNotification launcherResponse;
     MOCK_EXPECT( handler, HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { entity_creation { long_name: \"value\" id { automat { id: 42 } } superior { } } }" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { entity_creation { long_name: \"\" id { automat { id: 1 } } superior { formation { id: 3 } } } }" );
 }
 
 // -----------------------------------------------------------------------------

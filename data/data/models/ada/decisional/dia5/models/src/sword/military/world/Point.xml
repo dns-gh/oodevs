@@ -586,6 +586,15 @@ Par défaut, toute position est une position potentielle de couverture.</descrip
                 </type>
             </return>
         </method>
+        <method name="firePermitted">
+            <description>Retourne vrai si l'autorisation est donnée de tirer sur la position. </description>
+            <return>
+                <description>__INTEGRATION. Retourne vrai si l'autorisation est donnée de tirer sur la position, faux sinon.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isIdentifyingFor">

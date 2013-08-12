@@ -98,6 +98,21 @@ void ProcessService::CreatePermanentHandlers( const std::string& endpoint )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProcessService::ResetCache
+// Created: MMC 2013-08-08
+// -----------------------------------------------------------------------------
+void ProcessService::ResetCache()
+{
+    boost::recursive_mutex::scoped_lock locker( mutex_ );
+    for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
+    {
+        boost::shared_ptr< SwordFacade >& facade = it->second;
+        if( facade.get() )
+            facade->ResetCache();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProcessService::SendExerciseList
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------

@@ -47,6 +47,25 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: NotificationMessageHandler::EntityCreationChecker::AddCreation
+// Created: MMC 2013-08-08
+// -----------------------------------------------------------------------------
+void NotificationMessageHandler::EntityCreationChecker::AddEntityCreation( bool isAutomat, SessionNotification& response, unsigned int id, const std::string& longName )
+{
+    longName_ = longName;
+    sword::SessionNotification_EntityCreation* creation = response().mutable_notification()->mutable_entity_creation();
+    creation->set_long_name( longName );
+    if( isAutomat )
+        creation->mutable_id()->mutable_automat()->set_id( id );
+    else
+        creation->mutable_id()->mutable_unit()->set_id( id );
+    if( superiorAutomat_ != 0 )
+        creation->mutable_superior()->mutable_automat()->set_id( superiorAutomat_ );
+    else if( superiorFormation_ != 0 )
+        creation->mutable_superior()->mutable_formation()->set_id( superiorFormation_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NotificationMessageHandler::OnReceiveMessage
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
@@ -54,56 +73,56 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& mes
 {
     if( message.message().has_unit_creation() )
     {
-        SessionNotification response;
-        sword::SessionNotification_UnitUpdate* unit = response().mutable_notification()->mutable_unit_update();
-        unit->mutable_unit()->set_id( message.message().unit_creation().unit().id() );
-        sword::SessionNotification_EntityCreation* creation = response().mutable_notification()->mutable_entity_creation();
-        creation->set_long_name( "" );
-        creation->mutable_id()->mutable_unit()->set_id( message.message().unit_creation().unit().id() );
-        creation->mutable_superior()->mutable_automat()->set_id( message.message().unit_creation().automat().id() );
-        Send( response );
+        unitsCreationChecker_[ message.message().unit_creation().unit().id() ]
+            = EntityCreationChecker( message.message().unit_creation().automat().id(), 0 );
     }
     if( message.message().has_automat_creation() )
     {
-        SessionNotification response;
-        sword::SessionNotification_EntityCreation* creation = response().mutable_notification()->mutable_entity_creation();
-        creation->set_long_name( "" );
-        creation->mutable_id()->mutable_automat()->set_id( message.message().automat_creation().automat().id() );
+        unsigned int automatId = message.message().automat_creation().automat().id();
         if( message.message().automat_creation().parent().has_automat() )
-            creation->mutable_superior()->mutable_automat()->set_id( message.message().automat_creation().parent().automat().id() );
+            automatCreationChecker_[ automatId ] = EntityCreationChecker( message.message().automat_creation().parent().automat().id(), 0 );
         else if( message.message().automat_creation().parent().has_formation() )
-            creation->mutable_superior()->mutable_formation()->set_id( message.message().automat_creation().parent().formation().id() );
-        Send( response );
+            automatCreationChecker_[ automatId ] = EntityCreationChecker( 0, message.message().automat_creation().parent().formation().id() );
     }
-    if( message.message().has_unit_attributes() && message.message().unit_attributes().has_extension() )
+    if( message.message().has_unit_attributes() )
     {
-        SessionNotification response;
-        sword::SessionNotification_UnitUpdate* unit = response().mutable_notification()->mutable_unit_update();
-        unit->mutable_unit()->set_id( message.message().unit_attributes().unit().id() );
-        const sword::Extension& extension = message.message().unit_attributes().extension();
-        *unit->mutable_extensions() = extension;
-        std::string longName = GetLongName( extension );
-        if( !longName.empty() )
+        unsigned int unitId = message.message().unit_attributes().unit().id();
+        auto it = unitsCreationChecker_.find( unitId );
+        if( it != unitsCreationChecker_.end() )
         {
-            sword::SessionNotification_EntityCreation* creation = response().mutable_notification()->mutable_entity_creation();
-            creation->set_long_name( longName );
-            creation->mutable_id()->mutable_unit()->set_id( message.message().unit_attributes().unit().id() );
-            creation->mutable_superior();
+            std::string longName;
+            bool hasExtension = message.message().unit_attributes().has_extension();
+            if( hasExtension )
+                longName = GetLongName( message.message().unit_attributes().extension() );
+            if( !it->second.bSent_ || ( hasExtension && longName != it->second.longName_ ) )
+            {
+                SessionNotification response;
+                sword::SessionNotification_UnitUpdate* unit = response().mutable_notification()->mutable_unit_update();
+                unit->mutable_unit()->set_id( unitId );
+                if( hasExtension )
+                    *unit->mutable_extensions() = message.message().unit_attributes().extension();
+                it->second.AddEntityCreation( false, response, unitId, longName );
+                it->second.bSent_ = true;
+                Send( response );
+            }
         }
-        Send( response );
     }
-    if( message.message().has_automat_attributes() && message.message().automat_attributes().has_extension() )
+    if( message.message().has_automat_attributes() )
     {
-        const sword::Extension& extension = message.message().automat_attributes().extension();
-        std::string longName = GetLongName( extension );
-        if( !longName.empty() )
+        unsigned int automatId = message.message().automat_attributes().automat().id();
+        auto it = automatCreationChecker_.find( automatId );
+        if( it != automatCreationChecker_.end() )
         {
-            SessionNotification response;
-            sword::SessionNotification_EntityCreation* creation = response().mutable_notification()->mutable_entity_creation();
-            creation->set_long_name( longName );
-            creation->mutable_id()->mutable_automat()->set_id( message.message().automat_attributes().automat().id() );
-            creation->mutable_superior();
-            Send( response );
+            std::string longName;
+            if( message.message().automat_attributes().has_extension() )
+                longName = GetLongName( message.message().automat_attributes().extension() );
+            if( !it->second.bSent_ || ( it->second.bSent_ && longName != it->second.longName_ ) )
+            {
+                SessionNotification response;
+                it->second.AddEntityCreation( true, response, automatId, longName );
+                it->second.bSent_ = true;
+                Send( response );
+            }
         }
     }
     if( message.message().has_formation_creation() )
@@ -187,4 +206,14 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::MessengerToClien
         SendWithContext( adminMessage, 0 );
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotificationMessageHandler::ResetCache
+// Created: MMC 2013-08-08
+// -----------------------------------------------------------------------------
+void NotificationMessageHandler::ResetCache()
+{
+    unitsCreationChecker_.clear();
+    automatCreationChecker_.clear();
 }

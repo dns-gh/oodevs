@@ -73,6 +73,7 @@ public:
     void SendSessionNotification( const sword::SessionNotificationRequest& message ) const;
 
     bool IsRunning( const std::string& exercise ) const;
+    void ResetCache();
     //@}
 
 private:

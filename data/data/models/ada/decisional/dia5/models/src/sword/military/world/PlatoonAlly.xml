@@ -1543,6 +1543,20 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </argument>
         </method>
+        <method name="sendStartBuildingSealOffArea">
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendClearBuildingSealOffArea">
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
         <method name="switchOnRadio">
             <description>Switch on radio</description>
         </method>
