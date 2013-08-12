@@ -557,8 +557,7 @@ void ExerciseConfig::LogSettings::SetLogSettings( int level, int files, int size
     logLevel_ = static_cast< LogSettings::eLogLevel >( level );
     maxFiles_= static_cast< unsigned int >( files );
     maxFileSize_ = size;
-    std::string unit( sizeUnit );
-    boost::algorithm::to_lower( unit );
+    const std::string unit = boost::algorithm::to_lower_copy( sizeUnit );
     sizeUnit_ = ( unit == "bytes" || unit == "kbytes" || unit == "mbytes" ) ? eLogSizeType_Bytes : eLogSizeType_Lines;
     if( unit == "kbytes" )
         maxFileSize_ *= 1000;
