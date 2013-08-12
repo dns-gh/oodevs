@@ -218,10 +218,8 @@ void ChangeLogisticLinksDialog::Validate()
         UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Change Logistic Links"), true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
-        if( nominalSuperiorCombo_->GetValue() )
-            action->AddParameter( Serialize( *nominalSuperiorCombo_, it.NextElement() ) );
-        if( currentSuperiorCombo_->GetValue() && currentSuperiorCombo_->GetValue() != nominalSuperiorCombo_->GetValue() )
-            action->AddParameter( Serialize( *currentSuperiorCombo_, it.NextElement() ) );
+        action->AddParameter( Serialize( *nominalSuperiorCombo_, it.NextElement() ) );
+        action->AddParameter( Serialize( *currentSuperiorCombo_, it.NextElement() ) );
 
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selected_, false ) );
