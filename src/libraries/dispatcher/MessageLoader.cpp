@@ -486,17 +486,6 @@ void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& ha
     sword::SimToClient message;
     if( ! message.ParseFromArray( input, messageSize ) )
         throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
-    // $$$$ JSR 2010-07-01: In synchronisation mode, we must not send order messages, as they were already sent,
-    // to avoid them to be displayed several times in timeline (mantis 3725)
-    if( synchronisation_ && message.has_message() )
-    {
-        if( message.message().has_unit_order() )
-            message.mutable_message()->mutable_unit_order()->mutable_type()->set_id( 0 );
-        else if( message.message().has_automat_order() )
-            message.mutable_message()->mutable_automat_order()->mutable_type()->set_id( 0 );
-        else if( message.message().has_crowd_order() )
-            message.mutable_message()->mutable_crowd_order()->mutable_type()->set_id( 0 );
-    }
     handler.Receive( message );
     input += messageSize;
 }
