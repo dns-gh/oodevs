@@ -81,6 +81,13 @@ struct Profile
     std::string password;
 };
 
+enum LogLevel
+{
+    LOG_LEVEL_ERROR = 0,
+    LOG_LEVEL_INFO,
+    LOG_LEVEL_ALL
+};
+
 // -----------------------------------------------------------------------------
 // Name: session::Config
 // Created: BAX 2012-08-02
@@ -114,6 +121,13 @@ struct Config
         RngConfig   perception;
         RngConfig   breakdown;
     }               rng;
+    struct
+    {
+        LogLevel    level;
+        int         max_files;
+        int         max_size;
+        std::string size_unit;
+    }               logs;
     struct
     {
         int         threads;

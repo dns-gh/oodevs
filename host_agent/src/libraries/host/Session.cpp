@@ -501,6 +501,14 @@ void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConf
     }
 }
 
+void WriteLogConfiguration( Tree& tree, const std::string& prefix, const Config& cfg )
+{
+    tree.put( prefix + "loglevel", cfg.logs.level );
+    tree.put( prefix + "logfiles", cfg.logs.max_files );
+    tree.put( prefix + "logsize", cfg.logs.max_size );
+    tree.put( prefix + "sizeunit", cfg.logs.size_unit );
+}
+
 void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
 {
     const std::string prefix = "session.config.simulation.";
@@ -512,6 +520,7 @@ void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
     tree.put( prefix + "checkpoint.<xmlattr>.frequency", frequency );
     tree.put( prefix + "checkpoint.<xmlattr>.keep", cfg.checkpoints.keep );
     tree.put( prefix + "checkpoint.<xmlattr>.usecrc", true );
+    WriteLogConfiguration( tree, prefix + "debug.<xmlattr>.", cfg );
     tree.put( prefix + "debug.<xmlattr>.decisional", false );
     tree.put( prefix + "debug.<xmlattr>.diadebugger", false );
     tree.put( prefix + "debug.<xmlattr>.diadebuggerport", base + DIA_DEBUGGER_PORT );

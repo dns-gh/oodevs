@@ -53,6 +53,43 @@
 {{/each_pair}}
 [[ template "input_checkbox" sub "id" "no_side_object_creation" "label" "Create objects without sides" "value" "{{#bool sides.no_side_objects}} checked=\"checked\"{{/bool}}" ]]
 [[ end ]]
+<!-- logs settings -->
+[[ define "logs_session_settings" ]]
+<div class="control-group">
+    <label class="control-label" for="logs_size">Keep</label>
+    <div class="controls">
+        <div class="input-append">
+            <input type="number" id="logs_size" value="{{logs.max_size}}">
+            <div id="size_unit" class="btn-group">
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-label">
+                       {{#equal logs.size_unit "kbytes"}} KB {{/equal}}
+                       {{#equal logs.size_unit "mbytes"}} MB {{/equal}}
+                       {{#equal logs.size_unit "lines"}} Lines {{/equal}}
+                    </span>
+                    <span class="caret"/>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a> KB </a></li>
+                    <li><a> MB </a></li>
+                    <li><a> Lines </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+[[ template "input_number" sub "id" "logs_files" "label" "Rotate" "append" "Files" "value" "{{logs.max_files}}" ]]
+<div class="control-group">
+    <label class="control-label">Level</label>
+    <div class="controls">
+        <select id="logs_level">
+            <option type="error"{{#equal logs.level "error"}} selected="selected"{{/equal}} value="error">Error</option>
+            <option type="info"{{#equal logs.level "info"}} selected="selected"{{/equal}} value="info">Info</option>
+            <option type="all"{{#equal logs.level "all"}} selected="selected"{{/equal}} value="all">All</option>
+        </select>
+    </div>
+</div>
+[[ end ]]
 <!-- advanced settings -->
 [[ define "advanced_session_settings" ]]
 [[ template "input_number" sub "id" "pathfind_threads" "label" "Path Find" "append" "Threads" "value" "{{pathfind.threads}}" ]]
@@ -114,6 +151,7 @@
                             <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
                             <li><a href="#tab_rng" data-toggle="tab"> Random </a></li>
                             <li><a href="#tab_orbat" data-toggle="tab"> Orbat </a></li>
+                            <li><a href="#tab_logs" data-toggle="tab"> Logs </a></li>
                             <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
                             {{#if ui_plugins}}
                             <li><a href="#tab_plugins" data-toggle="tab"> Plugins </a></li>
@@ -127,6 +165,7 @@
                             <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_orbat"> [[ template "orbat_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_logs"> [[ template "logs_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
                             {{#if ui_plugins}}
                             <div class="tab-pane" id="tab_plugins">
