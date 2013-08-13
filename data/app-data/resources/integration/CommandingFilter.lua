@@ -46,7 +46,7 @@ end
 integration.filterPionWithEchelon = function( listPlatoonAlly, echelon )
     local _res =  {}
     for _,x in pairs( listPlatoonAlly or emptyTable ) do
-        if F_Pion_GeteEtatEchelon( x.source ) == echelon then
+        if F_Pion_GeteEtatEchelon( x.source ) == echelon and x:isOperational() then
             _res[ #_res + 1 ] = x
         end
     end

@@ -206,6 +206,7 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
     for i = 1, nBestUnits do
         local elem = bestUnits[i]
         if not integration.isLogisticConvoy( elem.entity.source ) then
+            myself.paramsGiven[ elem.entity ] = elem.params
             meKnowledge:sendTaskToPion( elem.entity, elem.taskName, elem.params, echelon ) -- Send the task to the unit
         end
     end
@@ -219,14 +220,42 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
+    local echelons = integration.getPionsInEchelons( newEntities )
+    local pionsPE =  echelons[1]
+    local pionsSE =  echelons[2]
+    local pionsEE =  echelons[3]
+
+    -- if their is a unit in the first echelon that end his mission, we considere him like a SE unit
+    for _, entity in pairs( pionsPE ) do
+        if not integration.hasMission(entity.source) and entity:isOperational() then
+            pionsSE[#pionsSE + 1] = entity
+        end
+    end
+
+    local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask
+
     -- Si un pion a été supprimé de l'automate, on redistribue les missions
     for i, entity in pairs( oldEntities ) do
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
+            myself.leadData.addedOrDeletedUnit = true
+            for element, params in pairs (myself.paramsGiven) do
+                for _, param in pairs (params) do
+                    if type(param) == "table" then
+                        for _, paramElement in pairs (param) do
+                            if paramElement == entity then
+                              integration.issueMission ( self, tasksForSE, 1, integration.getEchelonState(entity.source), {element}, false, findBestsFunction, disengageTask )
+                            end
+                        end
+                    elseif params == entity then
+                        integration.issueMission ( self, tasksForSE, 1, integration.getEchelonState(entity.source), {element}, false, findBestsFunction, disengageTask )
+                    end
+                end
+            end
             if meKnowledge.pionsToAwaitSource then
                 meKnowledge.pionsToAwaitSource[ entity.source ] = nil
             end
-            self:create()
             redone = true
+            integration.issueMission ( self, self.params.mainTasks, 1, eEtatEchelon_First, pionsSE, false, findBestsFunction, disengageTask )
             self.listenFrontElementInitialized = true
             integration.initializeListenFrontElement()
             break
@@ -250,13 +279,15 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
     end
 
     -- Si un pion est de nouveau operationnel et/ou un pion a été ajouté à l'automate
-   if #newOperationnalEntities > #self.operationnalEntities and not redone then
+   if #newOperationnalEntities > #self.operationnalEntities then
         for i, entity in pairs( newOperationnalEntities ) do
             if not exists( self.operationnalEntities, entity ) then
                 -- Si le pion n'a pas de mission ou si c'est de la LOG on donne Se deployer; si c'est un pion Convoi, il ne faut pas le prendre en compte
                 if not integration.isLogisticAutomat() and not integration.isLogisticConvoy( entity.source ) then 
+                    myself.leadData.addedOrDeletedUnit = true
+                    redone = true
                     local tasksForNewEntity = ""
-                    if myself.taskParams.echelonNumber == 1 then
+                    if myself.taskParams.echelonNumber == nil or myself.taskParams.echelonNumber == 1 then
                           tasksForNewEntity = self.params.mainTasks..";"..self.params.supportTasks..";"..self.params.defaultTask
                           integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_First, { entity }, false, findBestsFunction, disengageTask )
                     else
@@ -266,6 +297,9 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
                 end
             end
         end
+    end
+    if not redone then
+        myself.leadData.addedOrDeletedUnit = false
     end
 
     self.operationnalEntities = newOperationnalEntities -- on enregistre la liste pour le tic suivant
@@ -438,6 +472,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     -- Init
     local Activate = Activate
     myself.tasksGiven = {}
+    myself.paramsGiven = {}
     myself.leadData = {}
     myself.leadData.workMap = {}
     myself.leadData.taskError = false
@@ -646,16 +681,6 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
         -- Gestion de la relève
         Activate( self.skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE})
     end
-
-    if not ( not manageSecondEchelonWhenNoCoordination and self.params.noCoordination ) then
-        -- Gestion du SE (car les objectifs ne sont plus les m�mes)
-        local tasksForSE = self.params.supportTasks
-        if assignDefaultTaskToSE then
-            tasksForSE = tasksForSE .. ";" .. self.params.defaultTask
-        end
-        Activate( self.skill.links.AssignSETask, 1, { SE = pionsSE, tasks = tasksForSE, parameters = self.parameters, companyTask = self.companyTask })
-    end
-
 
     if not endMissionBeforeCoordination then
         integration.manageEndMission( self )
