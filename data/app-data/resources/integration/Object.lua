@@ -149,3 +149,7 @@ end
 integration.objectNeedsImprovement = function( kObject )
     return DEC_ObjectKnowledge_MustBeMined( kObject.source )
 end
+
+integration.automatGetObjectsKnowledgeInZoneWithCapacity = function( area, capacity )
+    return DEC_ObjectKnowledgesInZoneWithCapacity( area.source, capacity  )
+end

@@ -237,6 +237,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const MT_Vector2D*, double, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInCircle< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2, _3, false ) ) );
     brain.RegisterFunction( "DEC_ObjectKnowledgesInZone",
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZone< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_ObjectKnowledgesInZoneWithCapacity",
+        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::string& capacity ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZoneWithCapacity< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_ObjetsDansFuseau",
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInFuseau< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion",
