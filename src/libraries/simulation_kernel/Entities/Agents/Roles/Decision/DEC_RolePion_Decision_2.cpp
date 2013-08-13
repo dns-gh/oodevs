@@ -561,6 +561,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const MT_Vector2D*, double, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInCircle< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3, true ) ) );
     RegisterFunction( "DEC_ObjectKnowledgesInZone",
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZone< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
+    RegisterFunction( "DEC_ObjectKnowledgesInZoneWithCapacity",
+        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZoneWithCapacity< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_ObjectKnowledgesIntersectingInZone",
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsIntersectingInZone< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Connaissances_ObjetsDansFuseau",
