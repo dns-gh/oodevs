@@ -359,12 +359,12 @@ bool Session::HasReplays() const
 
 namespace
 {
-    const std::vector< std::string > logFiles = boost::assign::list_of< std::string >
-        ( "Sim.log" )
-        ( "Dispatcher.log" )
-        ( "Messages.log" )
-        ( "Protobuf.log" )
-        ( "web_control_plugin.log" );
+    bool AddLogFile( const FileSystem_ABC& fs, const runtime::Path& path, Tree& tree )
+    {
+        if( fs.IsFile( path ) && path.extension() == ".log" )
+            tree.put( runtime::Utf8( path.filename() ), true );
+        return true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -374,9 +374,8 @@ namespace
 Tree Session::AvailableLogs() const
 {
     Tree tree;
-    for( auto it = ::logFiles.begin(); it != ::logFiles.end(); ++it )
-        if( deps_.fs.Exists( GetOutput() / *it ) )
-            tree.put( *it, true );
+    deps_.fs.Walk( GetOutput(), false,
+        boost::bind( &AddLogFile, boost::cref( deps_.fs ), _1, boost::ref( tree ) ) );
     return tree;
 }
 
