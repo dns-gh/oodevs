@@ -392,7 +392,7 @@ integration.affinityLevel = function( crowd )
 end
 
 integration.crowdHasFlow = function( crowd )
-    return DEC_ConnaissancePopulation_HasFlow( crowd.source )
+    return DEC_ConnaissancePopulation_HasFlow( myself, crowd.source )
 end
 
 -- -------------------------------------------------------------------------------- 

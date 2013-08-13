@@ -37,7 +37,7 @@ integration.getPlatoonAllyPosition = function( platoon )
 end
 
 integration.getHeadPosition = function( crowd )
-    if DEC_ConnaissancePopulation_HasFlow( crowd.source ) then
+    if DEC_ConnaissancePopulation_HasFlow( myself, crowd.source ) then
         local pointEnTete = DEC_ConnaissancePopulation_PointEnTeteDeFlux( myself, crowd.source )
         crowd.getPointEnTeteResult = crowd.getPointEnTeteResult or pointEnTete
         if DEC_Geometrie_DistanceBetweenPoints( crowd.getPointEnTeteResult,  pointEnTete) > 30 then
