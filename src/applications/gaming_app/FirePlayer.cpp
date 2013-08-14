@@ -12,9 +12,11 @@
 #include "moc_FirePlayer.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/SoundManager.h"
 #include "clients_gui/SoundEvent.h"
+#include "MT_Tools/MT_Logger.h"
 
 #include <boost/bind.hpp>
 #include <boost/assign/list_of.hpp>
@@ -163,9 +165,19 @@ void FirePlayer::PlaySound( const gui::SoundEvent& soundEvent )
     if( !CanPlaySound( soundEvent.GetSoundType() ) )
         return;
 
-    if( !soundEvent.GetEntity() || profileFilter_.IsPerceived( *soundEvent.GetEntity() ) && profileFilter_.IsVisible( *soundEvent.GetEntity() ) )
+    const kernel::Entity_ABC* entity = soundEvent.GetEntity();
+    if( !entity || profileFilter_.IsPerceived( *entity ) && profileFilter_.IsVisible( *entity ) )
     {
-        soundManager_->PlaySound( soundEvent.GetSoundType() );
+        if( soundManager_->PlaySound( soundEvent.GetSoundType() ))
+        {
+            if( entity )
+                MT_LOG_INFO_MSG( "playing sound '" << soundEvent.GetSoundType()
+                        << "' for '" << entity->GetTypeName()
+                        << " [" << entity->GetId() << "]'" );
+            else
+
+                MT_LOG_INFO_MSG( "playing sound '" << soundEvent.GetSoundType() << "'");
+        }
         lastTick_ = simulation_.GetCurrentTick();
     }
 }

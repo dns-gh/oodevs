@@ -87,7 +87,7 @@ void SoundManager::PlayPauseAllChannels( bool play )
 // Name: SoundManager::PlaySound
 // Created: NPT 2013-07-03
 // -----------------------------------------------------------------------------
-void SoundManager::PlaySound( const std::string& soundName )
+bool SoundManager::PlaySound( const std::string& soundName )
 {
     auto it = medias_.find( soundName );
     auto& media = medias_[ soundName ]; // leave a NULL entry if we cannot load
@@ -102,22 +102,19 @@ void SoundManager::PlaySound( const std::string& soundName )
             media->setCurrentSource( QString( path.Normalize().ToUTF8().c_str() ) );
         }
     }
-    if( !media )
-        // We tried to load it already, and failed.
-        return;
-
-    if( !IsPlaying( soundName ) )
+    if( !media || IsPlaying( soundName ))
+        // We tried to load it already, and failed, or already playing.
+        return false;
+    auto& channel = channels_[ soundName ];
+    if( !channel )
     {
-        auto& channel = channels_[ soundName ];
-        if( !channel )
-        {
-            channel.reset( new Phonon::AudioOutput( Phonon::MusicCategory ));
-            Phonon::createPath( media.get(), channel.get() );
-        }
-        media->play();
-        media->seek( 0 );
-        channel->setVolume( volume_[ soundName ] );
+        channel.reset( new Phonon::AudioOutput( Phonon::MusicCategory ));
+        Phonon::createPath( media.get(), channel.get() );
     }
+    media->play();
+    media->seek( 0 );
+    channel->setVolume( volume_[ soundName ] );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

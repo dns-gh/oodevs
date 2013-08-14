@@ -48,7 +48,7 @@ public:
     //@{
     void ChangeSoundsDirectory( const tools::Path& path );
     bool IsPlaying( const std::string& channel );
-    void PlaySound( const std::string& soundName );
+    bool PlaySound( const std::string& soundName );
     void SetVolume( const std::string& channel, double value );
     void StopSound( const std::string& channel );
     //@}
