@@ -44,7 +44,6 @@ public:
     void ChangeSoundsDirectory( const tools::Path& path );
     bool FindFile( const tools::Path& path, const std::string& name );
     bool IsPlaying( const std::string& channel );
-    void PlayLoopSound( const std::string& soundName );
     void PlaySound( const std::string& soundName );
     void SetVolume( const std::string& channel, double value );
     void StopSound( const std::string& channel );
@@ -54,7 +53,6 @@ public slots:
     void PlayPauseAllChannels( bool play );
 
 private slots:
-    void ReplaySound();
     void KillCurrentMediaObject();
 
 private:

@@ -87,16 +87,6 @@ void SoundManager::PlaySound( const std::string& soundName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SoundManager::PlayLoopSound
-// Created: NPT 2013-07-22
-// -----------------------------------------------------------------------------
-void SoundManager::PlayLoopSound( const std::string& soundName )
-{
-    PlaySound( soundName );
-    connect( medias_[ soundName ], SIGNAL( finished() ), SLOT( ReplaySound() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SoundManager::SetVolume
 // Created: NPT 2013-07-05
 // -----------------------------------------------------------------------------
@@ -151,19 +141,6 @@ bool SoundManager::IsPlaying( const std::string& channel )
 void SoundManager::StopSound( const std::string& channel )
 {
     connect( medias_[ channel ], SIGNAL( finished() ), SLOT( KillCurrentMediaObject() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SoundManager::ReplaySound
-// Created: NPT 2013-07-22
-// -----------------------------------------------------------------------------
-void SoundManager::ReplaySound()
-{
-    if( Phonon::MediaObject* mediaObject = dynamic_cast< Phonon::MediaObject* >( QObject::sender() ) )
-    {
-        mediaObject->stop();
-        mediaObject->play();
-    }
 }
 
 // -----------------------------------------------------------------------------
