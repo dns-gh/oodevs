@@ -11,6 +11,8 @@
 #include "Simulation.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
+#include "MT_Tools/MT_FormatString.h"
+#include "MT_Tools/MT_Logger.h"
 #include "Network.h"
 #include "protocol/ReplaySenders.h"
 
@@ -148,6 +150,12 @@ void Simulation::Update( const sword::ControlBeginTick& message )
     currentTick_ = message.current_tick();
     date_ = message.date_time().data();
     profiling_.Tick();
+    MT_LOG_INFO_MSG( MT_FormatString( "**** End tick %d %.2fms - %.3f MB / %.3f MB (VM)",
+        currentTick_,
+        1000.0*profiling_.ActualTickDuration(),
+        profiling_.GetMemory() / 1048576.,
+        profiling_.GetVirtualMemory() / 1048576.
+        ));
     time_ = currentTick_ * tickDuration_;
     controller_.Update( startTick_ );
     controller_.Update( *this );
