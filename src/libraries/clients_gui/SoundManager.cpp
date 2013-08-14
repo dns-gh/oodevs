@@ -14,6 +14,7 @@
 
 #pragma warning( push, 0 )
 #include <Qt/qapplication.h>
+#include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
 #pragma warning( pop )
 
@@ -51,9 +52,9 @@ void SoundManager::PlayPauseAllChannels( bool play )
 {
     for( auto it = medias_.begin(); it != medias_.end(); ++it )
     {
-        if( it->second && play )
+        if( play )
             it->second->play();
-        if( it->second && !play )
+        else
             it->second->pause();
     }
 }
@@ -70,19 +71,22 @@ void SoundManager::PlaySound( const std::string& soundName )
         defaultSoundsPath_.Apply( boost::bind( &SoundManager::FindFile, this, _1, boost::cref( soundName ) ), false );
     if( !currentSound_.Exists() )
         return;
-    if( !medias_[ soundName ] )
-        medias_[ soundName ] = new Phonon::MediaObject();
+
+    auto& media = medias_[ soundName ];
+    if( !media )
+        media.reset( new Phonon::MediaObject() );
+
     if( !IsPlaying( soundName ) )
     {
-        medias_[ soundName ]->setCurrentSource( QString( currentSound_.Normalize().ToUTF8().c_str() ) );
-        if( !canals_[ soundName ] )
+        media->setCurrentSource( QString( currentSound_.Normalize().ToUTF8().c_str() ) );
+        auto& canal = canals_[ soundName ];
+        if( !canal )
         {
-            Phonon::AudioOutput* audio = new Phonon::AudioOutput( Phonon::MusicCategory );
-            Phonon::createPath( medias_[ soundName ], audio );
-            canals_[ soundName ] = audio;
+            canal.reset( new Phonon::AudioOutput( Phonon::MusicCategory ));
+            Phonon::createPath( media.get(), canal.get() );
         }
-        medias_[ soundName ]->play();
-        canals_[ soundName ]->setVolume( volume_[ soundName ] );
+        media->play();
+        canal->setVolume( volume_[ soundName ] );
     }
 }
 
@@ -92,8 +96,9 @@ void SoundManager::PlaySound( const std::string& soundName )
 // -----------------------------------------------------------------------------
 void SoundManager::SetVolume( const std::string& channel, double value )
 {
-    if( canals_[ channel ] )
-        canals_[ channel ]->setVolume( value );
+    auto it = canals_.find( channel );
+    if( it != canals_.end() )
+        it->second->setVolume( value );
     volume_[ channel ] = value;
 }
 
@@ -140,7 +145,10 @@ bool SoundManager::IsPlaying( const std::string& channel )
 // -----------------------------------------------------------------------------
 void SoundManager::StopSound( const std::string& channel )
 {
-    connect( medias_[ channel ], SIGNAL( finished() ), SLOT( KillCurrentMediaObject() ) );
+    auto it = medias_.find( channel );
+    if( it == medias_.end() )
+        return;
+    connect( it->second.get(), SIGNAL( finished() ), SLOT( KillCurrentMediaObject() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,10 +13,15 @@
 #include <boost/noncopyable.hpp>
 #include <tools/Path.h>
 
-#pragma warning( push, 0 )
-#include <phonon/audiooutput.h>
-#include <phonon/mediaobject.h>
-#pragma warning( pop )
+#include <boost/shared_ptr.hpp>
+
+namespace Phonon
+{
+
+class AudioOutput;
+class MediaObject;
+
+}
 
 namespace gui
 {
@@ -59,8 +64,8 @@ private:
     //! @name Member data
     //@{
     std::map< std::string, double > volume_;
-    std::map< std::string, Phonon::AudioOutput* > canals_;
-    std::map< std::string, Phonon::MediaObject* > medias_;
+    std::map< std::string, boost::shared_ptr< Phonon::AudioOutput > > canals_;
+    std::map< std::string, boost::shared_ptr< Phonon::MediaObject > > medias_;
     tools::Path defaultSoundsPath_;
     tools::Path currentSoundsPath_;
     tools::Path currentSound_;
