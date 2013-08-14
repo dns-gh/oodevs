@@ -556,8 +556,9 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsWithCapacityInZon
 {
     if( !pLoc || !callerAgent )
         throw MASA_EXCEPTION( "invalid parameter." );
+
     T_KnowledgeObjectDiaIDVector knowledges;
-    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
         container->GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
     return knowledges;
 }
