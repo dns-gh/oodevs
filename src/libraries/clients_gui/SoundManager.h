@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     std::map< std::string, double > volume_;
-    std::map< std::string, boost::shared_ptr< Phonon::AudioOutput > > canals_;
+    std::map< std::string, boost::shared_ptr< Phonon::AudioOutput > > channels_;
     // NULL entries mean we tried to load the sound but failed to do
     // so. They are used to avoid future lookups.
     std::map< std::string, boost::shared_ptr< Phonon::MediaObject > > medias_;

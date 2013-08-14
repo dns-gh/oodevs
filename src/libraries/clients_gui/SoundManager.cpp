@@ -108,15 +108,15 @@ void SoundManager::PlaySound( const std::string& soundName )
 
     if( !IsPlaying( soundName ) )
     {
-        auto& canal = canals_[ soundName ];
-        if( !canal )
+        auto& channel = channels_[ soundName ];
+        if( !channel )
         {
-            canal.reset( new Phonon::AudioOutput( Phonon::MusicCategory ));
-            Phonon::createPath( media.get(), canal.get() );
+            channel.reset( new Phonon::AudioOutput( Phonon::MusicCategory ));
+            Phonon::createPath( media.get(), channel.get() );
         }
         media->play();
         media->seek( 0 );
-        canal->setVolume( volume_[ soundName ] );
+        channel->setVolume( volume_[ soundName ] );
     }
 }
 
@@ -126,8 +126,8 @@ void SoundManager::PlaySound( const std::string& soundName )
 // -----------------------------------------------------------------------------
 void SoundManager::SetVolume( const std::string& channel, double value )
 {
-    auto it = canals_.find( channel );
-    if( it != canals_.end() )
+    auto it = channels_.find( channel );
+    if( it != channels_.end() )
         it->second->setVolume( value );
     volume_[ channel ] = value;
 }
@@ -138,7 +138,7 @@ void SoundManager::SetVolume( const std::string& channel, double value )
 // -----------------------------------------------------------------------------
 void SoundManager::ChangeSoundsDirectory( const tools::Path& path )
 {
-    canals_.clear();
+    channels_.clear();
     medias_.clear();
     currentSoundsPath_ = path;
 }
