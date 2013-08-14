@@ -74,6 +74,8 @@ void SoundManager::PlayPauseAllChannels( bool play )
 {
     for( auto it = medias_.begin(); it != medias_.end(); ++it )
     {
+        if( !it->second )
+            continue;
         if( play )
             it->second->play();
         else
@@ -87,19 +89,25 @@ void SoundManager::PlayPauseAllChannels( bool play )
 // -----------------------------------------------------------------------------
 void SoundManager::PlaySound( const std::string& soundName )
 {
-    tools::Path path = FindSoundFile( currentSoundsPath_, soundName );
-    if( path.IsEmpty() )
-        path = FindSoundFile( defaultSoundsPath_, soundName );
-    if( path.IsEmpty() )
-        return;
-
-    auto& media = medias_[ soundName ];
+    auto it = medias_.find( soundName );
+    auto& media = medias_[ soundName ]; // leave a NULL entry if we cannot load
+    if( it == medias_.end() )
+    {
+        tools::Path path = FindSoundFile( currentSoundsPath_, soundName );
+        if( path.IsEmpty() )
+            path = FindSoundFile( defaultSoundsPath_, soundName );
+        if( !path.IsEmpty() )
+        {
+            media.reset( new Phonon::MediaObject() );
+            media->setCurrentSource( QString( path.Normalize().ToUTF8().c_str() ) );
+        }
+    }
     if( !media )
-        media.reset( new Phonon::MediaObject() );
+        // We tried to load it already, and failed.
+        return;
 
     if( !IsPlaying( soundName ) )
     {
-        media->setCurrentSource( QString( path.Normalize().ToUTF8().c_str() ) );
         auto& canal = canals_[ soundName ];
         if( !canal )
         {
@@ -107,6 +115,7 @@ void SoundManager::PlaySound( const std::string& soundName )
             Phonon::createPath( media.get(), canal.get() );
         }
         media->play();
+        media->seek( 0 );
         canal->setVolume( volume_[ soundName ] );
     }
 }
@@ -129,6 +138,8 @@ void SoundManager::SetVolume( const std::string& channel, double value )
 // -----------------------------------------------------------------------------
 void SoundManager::ChangeSoundsDirectory( const tools::Path& path )
 {
+    canals_.clear();
+    medias_.clear();
     currentSoundsPath_ = path;
 }
 
@@ -139,7 +150,7 @@ void SoundManager::ChangeSoundsDirectory( const tools::Path& path )
 bool SoundManager::IsPlaying( const std::string& channel )
 {
     auto it = medias_.find( channel );
-    if( it == medias_.end() )
+    if( it == medias_.end() || !it->second )
         return false;
     return it->second->state() == Phonon::PlayingState || it->second->state() == Phonon::BufferingState;
 }
@@ -151,21 +162,7 @@ bool SoundManager::IsPlaying( const std::string& channel )
 void SoundManager::StopSound( const std::string& channel )
 {
     auto it = medias_.find( channel );
-    if( it == medias_.end() )
+    if( it == medias_.end() || !it->second )
         return;
-    connect( it->second.get(), SIGNAL( finished() ), SLOT( KillCurrentMediaObject() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SoundManager::KillCurrentMediaObject
-// Created: NPT 2013-07-22
-// -----------------------------------------------------------------------------
-void SoundManager::KillCurrentMediaObject()
-{
-
-    if( Phonon::MediaObject* mediaObject = dynamic_cast< Phonon::MediaObject* >( QObject::sender() ) )
-    {
-        mediaObject->clearQueue();
-        mediaObject->clear();
-    }
+    it->second->stop();
 }

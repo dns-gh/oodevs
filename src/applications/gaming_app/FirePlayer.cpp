@@ -147,7 +147,8 @@ void FirePlayer::PlaySound( const gui::SoundEvent& soundEvent )
 {
     if( soundEvent.GetSignalType() == gui::SoundEvent::eStop )
     {
-        soundManager_->StopSound( soundEvent.GetSoundType() );
+        // Do not call StopSound() here, stopping a playing sound is annoying,
+        // let it just finish.
         int& count = loopingSounds_[ soundEvent.GetSoundType() ][ soundEvent.GetEntity() ];
         if( count > 0 )
             --count;
