@@ -22,6 +22,28 @@
 
 using namespace gui;
 
+namespace
+{
+
+bool CheckSoundFile( const tools::Path& path, const std::string& sound, tools::Path& found )
+{
+    if( path.Exists() && path.BaseName().ToUTF8() == sound )
+    {
+        found = path;
+        return true;
+    }
+    return false;
+}
+
+tools::Path FindSoundFile( const tools::Path& dir, const std::string& sound )
+{
+    tools::Path found;
+    dir.Apply( boost::bind( &CheckSoundFile, _1, boost::cref( sound ), boost::ref( found )));
+    return found;
+}
+
+}  // namespace
+
 // -----------------------------------------------------------------------------
 // Name: SoundManager constructor
 // Created: NPT 2013-07-03
@@ -65,11 +87,10 @@ void SoundManager::PlayPauseAllChannels( bool play )
 // -----------------------------------------------------------------------------
 void SoundManager::PlaySound( const std::string& soundName )
 {
-    currentSound_ = tools::Path();
-    currentSoundsPath_.Apply( boost::bind( &SoundManager::FindFile, this, _1, boost::cref( soundName ) ), false );
-    if( currentSound_.IsEmpty() )
-        defaultSoundsPath_.Apply( boost::bind( &SoundManager::FindFile, this, _1, boost::cref( soundName ) ), false );
-    if( !currentSound_.Exists() )
+    tools::Path path = FindSoundFile( currentSoundsPath_, soundName );
+    if( path.IsEmpty() )
+        path = FindSoundFile( defaultSoundsPath_, soundName );
+    if( path.IsEmpty() )
         return;
 
     auto& media = medias_[ soundName ];
@@ -78,7 +99,7 @@ void SoundManager::PlaySound( const std::string& soundName )
 
     if( !IsPlaying( soundName ) )
     {
-        media->setCurrentSource( QString( currentSound_.Normalize().ToUTF8().c_str() ) );
+        media->setCurrentSource( QString( path.Normalize().ToUTF8().c_str() ) );
         auto& canal = canals_[ soundName ];
         if( !canal )
         {
@@ -109,22 +130,6 @@ void SoundManager::SetVolume( const std::string& channel, double value )
 void SoundManager::ChangeSoundsDirectory( const tools::Path& path )
 {
     currentSoundsPath_ = path;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SoundManager::FindFile
-// Created: NPT 2013-07-12
-// -----------------------------------------------------------------------------
-bool SoundManager::FindFile( const tools::Path& path, const std::string& name )
-{
-    if( !path.Exists() )
-        return false;
-    if( path.BaseName().ToUTF8() == name )
-    {
-        currentSound_ = path;
-        return true;
-    }
-    return false;
 }
 
 // -----------------------------------------------------------------------------

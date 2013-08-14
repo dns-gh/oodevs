@@ -47,7 +47,6 @@ public:
     //! @name Operations
     //@{
     void ChangeSoundsDirectory( const tools::Path& path );
-    bool FindFile( const tools::Path& path, const std::string& name );
     bool IsPlaying( const std::string& channel );
     void PlaySound( const std::string& soundName );
     void SetVolume( const std::string& channel, double value );
@@ -68,7 +67,6 @@ private:
     std::map< std::string, boost::shared_ptr< Phonon::MediaObject > > medias_;
     tools::Path defaultSoundsPath_;
     tools::Path currentSoundsPath_;
-    tools::Path currentSound_;
     const std::vector< std::string > sounds_;
     //@}
 };
