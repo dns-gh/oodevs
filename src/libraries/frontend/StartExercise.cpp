@@ -60,7 +60,12 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const tools::P
 
     for( auto it = arguments.begin(); it != arguments.end(); ++it )
         if( it->second != "" )
-            AddArgument( std::string( "--" + it->first + "=" + it->second ).c_str() );
+        {
+            if( it->first == "checkpoint" )
+                AddArgument( std::string( "--" + it->first + "=\"" + it->second + "\"" ).c_str() );
+            else
+                AddArgument( std::string( "--" + it->first + "=" + it->second ).c_str() );
+        }
 }
 
 // -----------------------------------------------------------------------------
