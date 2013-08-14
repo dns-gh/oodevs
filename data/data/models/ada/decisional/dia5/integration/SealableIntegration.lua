@@ -47,14 +47,16 @@ local stopSealOffLocation = function( knowledge )
             DEC__StopAction( knowledge.constructedObject.actionAnimation )
             meKnowledge:RC( eRC_FinAnimationObjet, knowledge.constructedObject )
         end
-        if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) == 0 then
-            DEC_DetruireObjetSansDelais( knowledge.constructedObject ) -- destroy it
-            DEC_Perception_DesactiverReconnaissanceLocalisation( knowledge.sealPerceptionID )
-            meKnowledge:RC( eRC_FinBouclageZone )
-            knowledge.constructedObject = nil
+        if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) < 0.1 then
+            if myself.buildingObjectSealOffArea then
+                DEC_DetruireObjetSansDelais( knowledge.constructedObject ) -- destroy it
+                DEC_Perception_DesactiverReconnaissanceLocalisation( knowledge.sealPerceptionID )
+                meKnowledge:RC( eRC_FinBouclageZone )
+                warnFriendsForBuildingSealOffArea( true )
+                knowledge.constructedObject = nil
+            end
         end
     end
-    warnFriendsForBuildingSealOffArea( true )
     return true
 end
 
