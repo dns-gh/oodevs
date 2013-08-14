@@ -34,7 +34,7 @@
 #include "UnitStateDialog.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/PreferencesDialog.h"
-#include "clients_gui/SoundManager.h"
+#include "clients_gui/SoundPanel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
@@ -68,8 +68,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LongNameEditor( parent, controllers, staticModel );
 
     std::vector< std::string > sounds;
-    gui::SoundManager soundManager( sounds );
-    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer, soundManager );
+    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer, 0 );
     prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );

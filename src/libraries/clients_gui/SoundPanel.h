@@ -24,6 +24,14 @@ namespace gui
     class RichSlider;
     class RichLineEdit;
 
+class SoundPlayer
+{
+public:
+    virtual ~SoundPlayer() {}
+    virtual void SetVolume( const std::string& channel, double value ) = 0;
+    virtual void ChangeSoundsDirectory( const tools::Path& path ) = 0;
+};
+
 // =============================================================================
 /** @class  SoundPanel
     @brief  SoundPanel
@@ -39,7 +47,7 @@ Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-    SoundPanel( QWidget* parent, kernel::Controllers& controllers, SoundManager& soundManager );
+    SoundPanel( QWidget* parent, kernel::Controllers& controllers, SoundPlayer& soundPlayer );
     virtual ~SoundPanel();
     //@}
 
@@ -71,7 +79,7 @@ private:
     std::map< std::string, int > soundValues_;
     tools::Path soundDirectory_;
     kernel::Controllers& controllers_;
-    SoundManager& soundManager_;
+    SoundPlayer& soundPlayer_;
     //@}
 };
 

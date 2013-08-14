@@ -32,6 +32,26 @@ SoundEvent::~SoundEvent()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SoundEvent constructor
+// Created: NPT 2013-08-12
+// -----------------------------------------------------------------------------
+SoundEvent::SoundEvent( const SoundEvent& event )
+{
+    *this = event;
+}
+// -----------------------------------------------------------------------------
+// Name: SoundEvent::operator=
+// Created: NPT 2013-08-12
+// -----------------------------------------------------------------------------
+SoundEvent& SoundEvent::operator=( const SoundEvent& event )
+{
+    entity_ = event.entity_;
+    soundType_ = event.soundType_;
+    signalType_ = event.signalType_;
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SoundEvent::GetEntity
 // Created: NPT 2013-07-15
 // -----------------------------------------------------------------------------

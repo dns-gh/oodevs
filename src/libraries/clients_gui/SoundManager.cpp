@@ -138,9 +138,10 @@ bool SoundManager::FindFile( const tools::Path& path, const std::string& name )
 // -----------------------------------------------------------------------------
 bool SoundManager::IsPlaying( const std::string& channel )
 {
-    return medias_[ channel ] && 
-        ( medias_[ channel ]->state() == Phonon::PlayingState ||
-          medias_[ channel ]->state() == Phonon::BufferingState );
+    auto it = medias_.find( channel );
+    if( it == medias_.end() )
+        return false;
+    return it->second->state() == Phonon::PlayingState || it->second->state() == Phonon::BufferingState;
 }
 
 // -----------------------------------------------------------------------------
@@ -171,6 +172,7 @@ void SoundManager::ReplaySound()
 // -----------------------------------------------------------------------------
 void SoundManager::KillCurrentMediaObject()
 {
+
     if( Phonon::MediaObject* mediaObject = dynamic_cast< Phonon::MediaObject* >( QObject::sender() ) )
     {
         mediaObject->clearQueue();
