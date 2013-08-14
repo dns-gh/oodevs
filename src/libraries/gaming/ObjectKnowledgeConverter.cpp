@@ -15,6 +15,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 
 using namespace kernel;
 
@@ -81,7 +82,7 @@ namespace
             else
                 return &h.GetUp();
         }
-        else if( owner.GetTypeName() == kernel::Automat_ABC::typeName_ )
+        else if( owner.GetTypeName() == kernel::Automat_ABC::typeName_ || owner.GetTypeName() == kernel::Population_ABC::typeName_ )
             return &h.GetUp();
         else if( owner.GetTypeName() == kernel::KnowledgeGroup_ABC::typeName_ )
             return &owner;
