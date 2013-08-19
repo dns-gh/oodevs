@@ -52,6 +52,7 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ui_->actionSave, SIGNAL( triggered() ), ctx_.get(), SLOT( SaveEvents() ) );
 
     QObject::connect( &url_, SIGNAL( editingFinished() ), this, SLOT( OnLoad() ) );
+    QObject::connect( ctx_.get(), SIGNAL( Ready() ), this, SLOT( OnReady() ) );
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
@@ -127,6 +128,11 @@ void Controller::OnReload()
 void Controller::OnLoad()
 {
     ctx_->Load( url_.text().toStdString() );
+}
+
+void Controller::OnReady()
+{
+    ui_->statusBar->showMessage( "Ready!" );
 }
 
 void Controller::OnCenter()
