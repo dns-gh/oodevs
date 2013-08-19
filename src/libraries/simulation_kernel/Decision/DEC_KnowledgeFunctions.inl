@@ -116,21 +116,6 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetObjectsInZoneWithCapacity
-// Created: MIA 2013-08-13
-// -----------------------------------------------------------------------------
-template< typename T > 
-T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZoneWithCapacity( const T& caller, const TER_Localisation* pLoc, const std::string& capacity )
-{
-    if( !pLoc )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    T_KnowledgeObjectDiaIDVector knowledges;
-    if( DEC_BlackBoard_CanContainKnowledgeObject* container = caller.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
-        container->GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
-    return knowledges;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetObjectsIntersectingInZone
 // Created: ABR 2013-01-18
 // -----------------------------------------------------------------------------
