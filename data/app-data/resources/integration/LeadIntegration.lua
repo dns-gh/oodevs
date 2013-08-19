@@ -206,11 +206,28 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
     for i = 1, nBestUnits do
         local elem = bestUnits[i]
         if not integration.isLogisticConvoy( elem.entity.source ) then
-            myself.paramsGiven[ elem.entity ] = elem.params
+            myself.leadData.paramsGiven[ elem.entity ] = elem.params
             meKnowledge:sendTaskToPion( elem.entity, elem.taskName, elem.params, echelon ) -- Send the task to the unit
         end
     end
     return bestUnits
+end
+
+integration.findDynamicEchelonTask = function( echelon )
+    local EchelonTasks = ""
+    for entity,tasks in pairs (myself.leadData.dynamicEntityTasks) do
+        if integration.getEchelonState(entity.source) == echelon then
+            if string.len(EchelonTasks) ~= 0 then
+                EchelonTasks = EchelonTasks..";"
+            end
+            EchelonTasks = EchelonTasks..tasks
+        end
+    end
+    if string.len( EchelonTasks ) == 0 then
+        return nil
+    else
+        return EchelonTasks
+    end
 end
 
 integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
@@ -238,16 +255,19 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
     for i, entity in pairs( oldEntities ) do
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
             myself.leadData.addedOrDeletedUnit = true
-            for element, params in pairs (myself.paramsGiven) do
+            for element, params in pairs (myself.leadData.paramsGiven) do
                 for _, param in pairs (params) do
                     if type(param) == "table" then
                         for _, paramElement in pairs (param) do
                             if paramElement == entity then
-                              integration.issueMission ( self, tasksForSE, 1, integration.getEchelonState(entity.source), {element}, false, findBestsFunction, disengageTask )
+                                local tasks = myself.leadData.dynamicEntityTasks[entity] or tasksForSE
+                                integration.issueMission ( self, tasks, 1, integration.getEchelonState(element.source), {element}, false, findBestsFunction, disengageTask )
                             end
                         end
-                    elseif params == entity then
-                        integration.issueMission ( self, tasksForSE, 1, integration.getEchelonState(entity.source), {element}, false, findBestsFunction, disengageTask )
+                    end
+                    if param == entity then
+                        local tasks = myself.leadData.dynamicEntityTasks[entity] or tasksForSE
+                        integration.issueMission ( self, tasks, 1, integration.getEchelonState(element.source), {element}, false, findBestsFunction, disengageTask )
                     end
                 end
             end
@@ -255,6 +275,7 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
                 meKnowledge.pionsToAwaitSource[ entity.source ] = nil
             end
             redone = true
+            local tasks = myself.leadData.dynamicEntityTasks[entity] or self.params.mainTasks
             integration.issueMission ( self, self.params.mainTasks, 1, eEtatEchelon_First, pionsSE, false, findBestsFunction, disengageTask )
             self.listenFrontElementInitialized = true
             integration.initializeListenFrontElement()
@@ -287,11 +308,11 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
                     myself.leadData.addedOrDeletedUnit = true
                     redone = true
                     local tasksForNewEntity = ""
-                    if myself.taskParams.echelonNumber == nil or myself.taskParams.echelonNumber == 1 then
-                          tasksForNewEntity = self.params.mainTasks..";"..self.params.supportTasks..";"..self.params.defaultTask
+                    if myself.taskParams.echelonNumber == 1 or self.nbrFront > #echelons[1] then
+                          tasksForNewEntity = myself.leadData.dynamicEchelonTasks[eEtatEchelon_First] or self.params.mainTasks..";"..self.params.supportTasks..";"..self.params.defaultTask
                           integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_First, { entity }, false, findBestsFunction, disengageTask )
                     else
-                          tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
+                          tasksForNewEntity = myself.leadData.dynamicEchelonTasks[eEtatEchelon_Second] or self.params.supportTasks..";"..self.params.defaultTask
                           integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity }, false, findBestsFunction, disengageTask )
                     end
                 end
@@ -472,8 +493,8 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     -- Init
     local Activate = Activate
     myself.tasksGiven = {}
-    myself.paramsGiven = {}
     myself.leadData = {}
+    myself.leadData.paramsGiven = {}
     myself.leadData.workMap = {}
     myself.leadData.taskError = false
     self.bestUnits = {}
@@ -552,13 +573,50 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     end
 end
 
+--- Manage dynamic tasks for Lead skills
+-- @param self: The leading skill
+-- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
+-- @param disengageTask : the name of the disengage task given to the non operational entities
+-- @author LMT
+-- @release 2013-08-13
+integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
+    myself.leadData.dynamicEchelonTasks = myself.leadData.dynamicEchelonTasks or {}
+    if self.companyTask.isDynamic and self.companyTask:isDynamic() then
+        if self.companyTask.readyToGiveDynamicTasks then
+            local dynamicEntitiesAndTasks = self.companyTask:readyToGiveDynamicTasks( self )
+            if dynamicEntitiesAndTasks then
+                for i=1, #dynamicEntitiesAndTasks do
+                    local dynamicEntities = dynamicEntitiesAndTasks[i].entities
+                    local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
+
+                    for _, entity in pairs( dynamicEntities or emptyTable ) do
+                        integration.ListenFrontElement( entity )
+                        if not myself.leadData.dynamicEntityTasks[entity] then
+                            myself.leadData.dynamicEntityTasks[entity] = dynamicTasks
+                        end
+                    end
+                    
+                    local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
+                                             or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
+                                             or eEtatEchelon_None
+                    integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
+                    if myself.leadData.dynamicEchelonTasks[dynamicEchelon] then
+                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = myself.leadData.dynamicEchelonTasks[dynamicEchelon]..";"..dynamicTasks
+                    else
+                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = dynamicTasks
+                    end
+                end
+            end
+        end
+    end
+end
 
 --- Generic activate for Lead skills
 -- @param self: The leading skill
 -- @param listenFrontElement : Whether or not there should be a call to integration.ListenFrontElement at the beginning of the function
 -- @param endMissionBeforeCoordination : Whether the managing of the end of the mission should be done before or after the managing of the coordination
 -- @param manageRelieveBeforeCoordination : Whether the managing of the relieve units should be done before or after the managing of the coordination
--- @param manageSecondEchelonWhenNoCoordination : Whether or not the second echelon should be managed when there is no coordination management
 -- @param manageRCnoPEInAutomatWhenNoCoordination : Whether or not the RC "No PE In Automat" should be managed when there is no coordination management
 -- @param assignDefaultTaskToSE : Whether or not the default task should be assigned to the second echelon (along with the support tasks)
 -- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
@@ -566,7 +624,7 @@ end
 -- @author NMI
 -- @release 2013-07-05
 integration.leadActivate = function( self, listenFrontElement, endMissionBeforeCoordination, manageRelieveBeforeCoordination,
-                            manageSecondEchelonWhenNoCoordination, manageRCnoPEInAutomatWhenNoCoordination, assignDefaultTaskToSE,
+                            manageRCnoPEInAutomatWhenNoCoordination, assignDefaultTaskToSE,
                             findBestsFunction, disengageTask )
                                    
     if myself.newTask then
@@ -587,26 +645,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     local Activate = Activate
     
     -- Dynamicity managing
-    if self.companyTask.isDynamic and self.companyTask:isDynamic() then
-        if self.companyTask.readyToGiveDynamicTasks then
-            local dynamicEntitiesAndTasks = self.companyTask:readyToGiveDynamicTasks( self )
-            if dynamicEntitiesAndTasks then
-                for i=1, #dynamicEntitiesAndTasks do
-                    local dynamicEntities = dynamicEntitiesAndTasks[i].entities
-                    local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
-                    
-                    for _, entity in pairs( dynamicEntities or emptyTable ) do
-                        integration.ListenFrontElement( entity )
-                    end
-                    
-                    local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
-                                             or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
-                                             or eEtatEchelon_None
-                    integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
-                end
-            end
-        end
-    end
+    integration.manageDynamicTask( self, findBestsFunction, disengageTask )
     
     -- Communication between the company and the subordinates
     if self.companyTask.communicateWithSubordinates then
