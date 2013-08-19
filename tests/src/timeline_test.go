@@ -31,12 +31,13 @@ func Test(t *testing.T) { TestingT(t) }
 type TestSuite struct{}
 
 var (
-	_            = Suite(&TestSuite{})
-	Port         = flag.Int("port", 35000, "base port for spawned processes")
-	RunDir       = flag.String("rundir", ".", "run directory")
-	OutDir       = flag.String("outdir", ".", "output directory")
-	ClientBinary = flag.String("client", "", "timeline client binary")
-	TempDir      string
+	_              = Suite(&TestSuite{})
+	Port           = flag.Int("port", 35000, "base port for spawned processes")
+	RunDir         = flag.String("rundir", ".", "run directory")
+	OutDir         = flag.String("outdir", ".", "output directory")
+	ClientBinary   = flag.String("client", "", "timeline client binary")
+	DefaultTimeout = 30 * time.Second
+	TempDir        string
 )
 
 const (
@@ -181,7 +182,7 @@ func WaitCommand(c *C, client *exec.Cmd) {
 		errors <- client.Wait()
 	}()
 	select {
-	case <-time.After(4 * time.Minute):
+	case <-time.After(DefaultTimeout):
 		c.Fatal("client timeout")
 	case err := <-errors:
 		c.Assert(err, IsNil)
