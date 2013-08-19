@@ -610,6 +610,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="100" type="seal off area">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Oeil ALAT Vers Sol">
@@ -9334,4 +9346,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="3145882145" -->
+<!-- signature="3173313056" -->
