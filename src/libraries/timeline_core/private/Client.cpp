@@ -123,6 +123,11 @@ namespace
     }
 }
 
+void Client::OnCenterClient()
+{
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CenterClient ) );
+}
+
 void Client::OnCreateEvent( const timeline::Event& event )
 {
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CreateEvent, event ) );

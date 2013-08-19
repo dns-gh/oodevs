@@ -28,6 +28,7 @@
      <string>Connection</string>
     </property>
     <addaction name="actionReload"/>
+    <addaction name="actionCenter"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -101,6 +102,11 @@
   <action name="actionSave">
    <property name="text">
     <string>Save</string>
+   </property>
+  </action>
+  <action name="actionCenter">
+   <property name="text">
+    <string>Center</string>
    </property>
   </action>
  </widget>

@@ -43,6 +43,7 @@ Controller::Controller( const Configuration& cfg )
     next.widget = ui_->centralwidget;
     ctx_ = timeline::MakeServer( next );
     QObject::connect( ui_->actionReload, SIGNAL( triggered() ), this, SLOT( OnReload() ) );
+    QObject::connect( ui_->actionCenter, SIGNAL( triggered() ), this, SLOT( OnCenter() ) );
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
     QObject::connect( ui_->actionTest, SIGNAL( triggered() ), this, SLOT( OnTestCrud() ) );
@@ -126,6 +127,11 @@ void Controller::OnReload()
 void Controller::OnLoad()
 {
     ctx_->Load( url_.text().toStdString() );
+}
+
+void Controller::OnCenter()
+{
+    ctx_->Center();
 }
 
 void Controller::OnCreateEvent()

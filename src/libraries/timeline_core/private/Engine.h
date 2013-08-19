@@ -46,6 +46,7 @@ public:
     /// Public methods
     void Register   ( CefRefPtr< CefV8Context > context );
     void Unregister ();
+    void CenterClient();
     void CreateEvent( const Event& event );
     void ReadEvents ();
     void ReadEvent  ( const std::string& uuid );

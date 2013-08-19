@@ -38,6 +38,7 @@ public:
 public slots:
     void OnReload();
     void OnLoad();
+    void OnCenter();
     void OnCreateEvent();
     void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
     void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );

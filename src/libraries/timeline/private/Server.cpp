@@ -125,6 +125,11 @@ void Server::Load( const std::string& url )
     Write( *write_, boost::bind( &controls::LoadClient, _1, _2, url ) );
 }
 
+void Server::Center()
+{
+    Write( *write_, &controls::CenterClient );
+}
+
 bool Server::CreateEvent( const Event& event )
 {
     if( !event.IsValid() )

@@ -258,6 +258,14 @@ namespace
     }
 }
 
+void Engine::CenterClient()
+{
+    Gate gate;
+    if( gate.Acquire( ctx_ ) )
+        if( auto center = GetValue( ctx_, "gaming.center_view" ) )
+            gate.Execute( center, CefV8ValueList() );
+}
+
 void Engine::CreateEvent( const timeline::Event& event )
 {
     Gate gate;

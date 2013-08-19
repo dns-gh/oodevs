@@ -16,6 +16,7 @@ enum ClientType
     CLIENT_QUIT           = 0x101;
     CLIENT_RELOAD         = 0x102;
     CLIENT_LOAD           = 0x103;
+    CLIENT_CENTER         = 0x104;
     // event commands
     CLIENT_EVENT_CREATE   = 0x200;
     CLIENT_EVENT_READ_ALL = 0x201;
