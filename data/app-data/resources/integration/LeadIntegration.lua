@@ -832,9 +832,6 @@ integration.leadDelayActivate = function( self )
 
       integration.manageEndMission( self )
 
-      -- Gestion du SE (car les objectifs ne sont plus les mêmes)
-      local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask
-      Activate( self.skill.links.AssignSETask, 1, { SE = pionsSE, tasks = tasksForSE, parameters = self.parameters, companyTask = self.companyTask })
       if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
         Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
       end
