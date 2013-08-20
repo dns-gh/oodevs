@@ -359,12 +359,12 @@ bool Session::HasReplays() const
 
 namespace
 {
-    const std::vector< std::string > logFiles = boost::assign::list_of< std::string >
-        ( "Sim.log" )
-        ( "Dispatcher.log" )
-        ( "Messages.log" )
-        ( "Protobuf.log" )
-        ( "web_control_plugin.log" );
+    bool AddLogFile( const FileSystem_ABC& fs, const runtime::Path& path, Tree& tree )
+    {
+        if( fs.IsFile( path ) && path.extension() == ".log" )
+            tree.put( runtime::Utf8( path.filename() ), true );
+        return true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -374,9 +374,8 @@ namespace
 Tree Session::AvailableLogs() const
 {
     Tree tree;
-    for( auto it = ::logFiles.begin(); it != ::logFiles.end(); ++it )
-        if( deps_.fs.Exists( GetOutput() / *it ) )
-            tree.put( *it, true );
+    deps_.fs.Walk( GetOutput(), false,
+        boost::bind( &AddLogFile, boost::cref( deps_.fs ), _1, boost::ref( tree ) ) );
     return tree;
 }
 
@@ -501,6 +500,14 @@ void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConf
     }
 }
 
+void WriteLogConfiguration( Tree& tree, const std::string& prefix, const Config& cfg )
+{
+    tree.put( prefix + "loglevel", cfg.logs.level );
+    tree.put( prefix + "logfiles", cfg.logs.max_files );
+    tree.put( prefix + "logsize", cfg.logs.max_size );
+    tree.put( prefix + "sizeunit", cfg.logs.size_unit );
+}
+
 void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
 {
     const std::string prefix = "session.config.simulation.";
@@ -512,6 +519,7 @@ void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
     tree.put( prefix + "checkpoint.<xmlattr>.frequency", frequency );
     tree.put( prefix + "checkpoint.<xmlattr>.keep", cfg.checkpoints.keep );
     tree.put( prefix + "checkpoint.<xmlattr>.usecrc", true );
+    WriteLogConfiguration( tree, prefix + "debug.<xmlattr>.", cfg );
     tree.put( prefix + "debug.<xmlattr>.decisional", false );
     tree.put( prefix + "debug.<xmlattr>.diadebugger", false );
     tree.put( prefix + "debug.<xmlattr>.diadebuggerport", base + DIA_DEBUGGER_PORT );
@@ -712,7 +720,7 @@ Session::T_Process Session::StartSimulation( boost::upgrade_lock< boost::shared_
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
     return deps_.runtime.Start( Utf8( app ),
-        options, Utf8( Path( app ).remove_filename() ), Utf8( GetRoot() / "session.log" ) );
+        options, Utf8( Path( app ).remove_filename() ), "" );
 }
 
 namespace

@@ -125,6 +125,11 @@ attach_button_to_checkbox = (button, cbox) ->
         link_button_to_checkbox button, e
     link_button_to_checkbox button, target: cbox.get 0
 
+attach_click_to_dropdown = (ui) ->
+    ui.find("a").click (e) ->
+        btn = ui.find ".dropdown-label"
+        btn.text( $(e.target).text() )
+
 bind_ui_plugins = (ui) ->
     box = ui.find ".carousel"
     box.carousel interval: false
@@ -148,6 +153,7 @@ pop_settings = (ui, data) ->
     force_input_regexp /[\d.]/, ui.find "input[data-type='float']"
     attach_checkbox_and_input $("#time_end_tick"), $("#time_end_tick_check")
     attach_checkbox_and_input $("#rng_seed"), $("#rng_seed_check")
+    attach_click_to_dropdown $("#size_unit")
     mod = ui.find ".modal"
     mod.modal "show"
     return [ui, mod]
@@ -249,6 +255,16 @@ validate_settings = (ui) ->
         next = data.timeline = {}
         next.enabled = get_ui_option ui.find "#timeline_enabled"
 
+    if has_element ui, "#tab_logs"
+        next = data.logs = {}
+        return unless validate_number next, "max_size", ui, "#logs_size", 0, Number.MAX_VALUE, "Invalid"
+        return unless validate_number next, "max_files", ui, "#logs_files", 0, Number.MAX_VALUE, "Invalid"
+        unit = ui.find(".dropdown-toggle").text().trim()
+        next.size_unit = "kbytes" if unit == "KB"
+        next.size_unit = "mbytes" if unit == "MB"
+        next.size_unit = "lines" if unit == "Lines"
+        next.level = get_ui_option ui.find "#logs_level"
+
     if has_element ui, "#tab_orbat"
         next = data.sides = {}
         next.no_side_objects = ui.find("#no_side_object_creation").is ":checked"
@@ -267,7 +283,7 @@ class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
-        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline"]
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline", "logs"]
 
         if method == "create"
             data = select_attributes model.attributes, _.union cfg_attributes, ["exercise", "license"]

@@ -107,6 +107,10 @@ session::Config::Config()
     checkpoints.enabled = true;
     checkpoints.frequency = 3600;
     checkpoints.keep = 1;
+    logs.level = LOG_LEVEL_ALL;
+    logs.max_files = 5;
+    logs.max_size = 10;
+    logs.size_unit = "mbytes";
     pathfind.threads = 1;
     recorder.frequency = 200;
     time.end_tick = 0;
@@ -175,10 +179,7 @@ bool TryReadSet( T& dst, const Tree& src, const std::string& key )
     dst = next;
     return true;
 }
-}
 
-namespace
-{
 // -----------------------------------------------------------------------------
 // Name: ReadRngConfig
 // Created: BAX 2012-08-02
@@ -203,6 +204,39 @@ void WriteRngConfig( Tree& dst, const std::string& prefix, const session::RngCon
     dst.put( prefix + "distribution", ConvertRngDistribution( cfg.distribution ) );
     dst.put( prefix + "deviation", cfg.deviation );
     dst.put( prefix + "mean", cfg.mean );
+}
+
+session::LogLevel ConvertLogLevel( const std::string& src )
+{
+    if( src == "error" ) return session::LOG_LEVEL_ERROR;
+    if( src == "info" ) return session::LOG_LEVEL_INFO;
+    return session::LOG_LEVEL_ALL;
+}
+
+std::string ConvertLogLevel( session::LogLevel src )
+{
+    if( src == session::LOG_LEVEL_ERROR ) return "error";
+    if( src == session::LOG_LEVEL_INFO ) return "info";
+    return "all";
+}
+
+bool ReadLogConfig( session::Config& dst, const Tree& src, const std::string& prefix )
+{
+    std::string level = ConvertLogLevel( dst.logs.level );
+    bool modified = ::TryRead( level, src, prefix + "level" );
+    dst.logs.level = ConvertLogLevel( level );
+    modified |= ::TryRead( dst.logs.max_files, src, prefix + "max_files" );
+    modified |= ::TryRead( dst.logs.max_size, src, prefix + "max_size" );
+    modified |= ::TryRead( dst.logs.size_unit, src, prefix + "size_unit" );
+    return modified;
+}
+
+void WriteLogConfig( Tree& dst, const std::string& prefix, const session::Config& cfg )
+{
+    dst.put( prefix + "level", ConvertLogLevel( cfg.logs.level ) );
+    dst.put( prefix + "max_files", cfg.logs.max_files );
+    dst.put( prefix + "max_size", cfg.logs.max_size );
+    dst.put( prefix + "size_unit", cfg.logs.size_unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,6 +377,7 @@ bool session::ReadConfig( session::Config& dst, const Plugins& plugins, const Tr
     modified |= TryRead( dst.checkpoints.enabled, src, "checkpoints.enabled" );
     modified |= TryRead( dst.checkpoints.frequency, src, "checkpoints.frequency" );
     modified |= TryRead( dst.checkpoints.keep, src, "checkpoints.keep" );
+    modified |= ReadLogConfig( dst, src, "logs." );
     modified |= TryRead( dst.time.end_tick, src, "time.end_tick" );
     modified |= TryRead( dst.time.factor, src, "time.factor" );
     modified |= TryRead( dst.time.paused, src, "time.paused" );
@@ -373,6 +408,7 @@ void session::WriteConfig( Tree& dst, const session::Config& cfg )
     dst.put( "checkpoints.enabled", cfg.checkpoints.enabled );
     dst.put( "checkpoints.frequency", cfg.checkpoints.frequency );
     dst.put( "checkpoints.keep", cfg.checkpoints.keep );
+    WriteLogConfig( dst, "logs.", cfg );
     dst.put( "time.end_tick", cfg.time.end_tick );
     dst.put( "time.factor", cfg.time.factor );
     dst.put( "time.paused", cfg.time.paused );
