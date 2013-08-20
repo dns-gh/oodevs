@@ -34,6 +34,8 @@ public:
     virtual ~App();
 
     /// CefApp methods
+    virtual void OnBeforeCommandLineProcessing( const CefString& process_type,
+                                                CefRefPtr< CefCommandLine > command_line );
     virtual CefRefPtr< CefRenderProcessHandler > GetRenderProcessHandler();
 
     /// CefRenderProcessHandler methods
