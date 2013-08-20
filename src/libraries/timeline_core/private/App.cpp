@@ -12,6 +12,8 @@
 #include "Engine.h"
 #include "timeline_core/api.h"
 
+#include <stdlib.h>
+
 using namespace timeline::core;
 
 App::App( const Configuration& cfg, CefRefPtr< Engine > engine )
@@ -32,6 +34,15 @@ App::App( const Configuration& cfg, CefRefPtr< Engine > engine )
 App::~App()
 {
     // NOTHING
+}
+
+void App::OnBeforeCommandLineProcessing( const CefString& /*process_type*/,
+                                         CefRefPtr< CefCommandLine > command_line )
+{
+    // see http://www.magpcss.org/ceforum/viewtopic.php?f=14&t=10760
+    // unfortunately winhttp-proxy-resolver does not work
+    if( getenv( "TIMELINE_DISABLE_PROXY" ) )
+        command_line->AppendSwitch( "no-proxy-server" );
 }
 
 CefRefPtr< CefRenderProcessHandler > App::GetRenderProcessHandler()

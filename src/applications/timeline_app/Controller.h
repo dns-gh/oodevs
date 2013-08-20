@@ -38,6 +38,7 @@ public:
 public slots:
     void OnReload();
     void OnLoad();
+    void OnReady();
     void OnCenter();
     void OnCreateEvent();
     void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
