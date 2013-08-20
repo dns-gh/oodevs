@@ -18,18 +18,15 @@
 
 // -----------------------------------------------------------------------------
 // Name: FilterManager constructor
-// Created: ABR 2011-06-20
+// Created: ABR 2013-08-20
 // -----------------------------------------------------------------------------
-FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, gui::RichWidget< QListWidget >& list, QStackedWidget& stack, QWidget& parent )
-    : description_( xis, tools::readLang() )
-    , config_     ( config )
-    , id_         ( xis.attribute< std::string >( "id" ) )
+FilterManager::FilterManager( const std::string& id, const std::string& name, const tools::ExerciseConfig& config, QWidget& parent )
+    : config_     ( config )
+    , id_         ( id )
+    , name_       ( name )
     , parent_     ( parent )
 {
-    assert( !id_.empty() );
-    xis >> xml::start( "filters" )
-            >> xml::list( "filter", *this, &FilterManager::ReadFilter, list, stack )
-        >> xml::end;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,13 +39,23 @@ FilterManager::~FilterManager()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FilterManager::Load
+// Created: ABR 2013-08-20
+// -----------------------------------------------------------------------------
+void FilterManager::Load( xml::xistream& xis, gui::RichWidget< QListWidget >& list, QStackedWidget& stack )
+{
+    xis >> xml::start( "filters" )
+            >> xml::list( "filter", *this, &FilterManager::ReadFilter, list, stack )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FilterManager::GetName
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
 const std::string FilterManager::GetName() const
 {
-    std::string name = description_.GetName();
-    return ( name.empty() ) ? id_ : name;
+    return name_;
 }
 
 // -----------------------------------------------------------------------------

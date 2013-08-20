@@ -44,13 +44,13 @@ class FilterDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterDialog( const QString& objectName, QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config );
+             FilterDialog( const QString& objectName, QWidget* parent, const QString& name, const tools::ExerciseConfig& config );
     virtual ~FilterDialog();
     //@}
 
     //! @name Operations
     //@{
-    void Load();
+    void Load( xml::xistream& xis );
     void AddFilter( Filter_ABC& filter );
     void InsertMenuEntry( Menu& menu );
     const QString GetName() const;

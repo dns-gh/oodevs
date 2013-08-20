@@ -22,11 +22,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: FilterDialog constructor
-// Created: ABR 2011-06-20
+// Created: ABR 2013-08-20
 // -----------------------------------------------------------------------------
-FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config )
-    : QDialog       ( parent, "FilterDialog" )
-    , filterManager_( 0 )
+FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, const QString& name, const tools::ExerciseConfig& config )
+    : QDialog( parent, "FilterDialog" )
+    , filterManager_( new FilterManager( objectName.toStdString(), name.toStdString(), config, *parent ) )
 {
     gui::SubObjectName subObject( objectName + "FilterDialog" );
 
@@ -37,7 +37,7 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
     gui::RichGroupBox* selectFilterBox = new gui::RichGroupBox( "selectFilter", tools::translate( "FilterDialog", "Select filter:" ), this );
     QHBoxLayout* selectFilterBoxLayout = new QHBoxLayout( selectFilterBox );
     selectFilterBoxLayout->addWidget( list_ );
-    
+
     // Descriptions
     description_ = new QLabel();
     description_->setWordWrap( true );
@@ -46,11 +46,11 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
     descriptionBox->setMinimumHeight( 80 );
     QHBoxLayout* descriptionBoxLayout = new QHBoxLayout( descriptionBox );
     descriptionBoxLayout->addWidget( description_ );
-    
+
     // Parameters
     stack_ = new QStackedWidget( this );
     connect( list_, SIGNAL( currentRowChanged( int ) ), stack_, SLOT( setCurrentIndex( int ) ) );
-    
+
     // Buttons
     Q3HBox* box = new Q3HBox( this, "FilterDialog_ButtonsHBox" );
     box->setSpacing( 5 );
@@ -60,7 +60,7 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
     gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tools::translate( "FilterDialog", "Cancel" ), box );
     connect( okButton_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
-    
+
     //  Main Layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this, 5, 5, "FilterDialog_MainLayout" );
     mainLayout->addWidget( selectFilterBox, 100 );
@@ -68,18 +68,11 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
     mainLayout->addWidget( stack_, 1 );
     mainLayout->addWidget( box );
 
-    // Manager
-    {
-        filterManager_.reset( new FilterManager( xis, config, *list_, *stack_, *parent ) );
-    }
     // Dialog setting
-    {
-        setCaption( filterManager_->GetName().c_str() );
-        setMinimumSize( 500, 500 );
-        connect( this, SIGNAL( reloadExercise() ), parent, SLOT( ReloadExercise() ) );
-        hide();
-    }
-
+    setCaption( GetName() );
+    setMinimumSize( 500, 500 );
+    connect( this, SIGNAL( reloadExercise() ), parent, SLOT( ReloadExercise() ) );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +82,15 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
 FilterDialog::~FilterDialog()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterDialog::Load
+// Created: ABR 2013-08-20
+// -----------------------------------------------------------------------------
+void FilterDialog::Load( xml::xistream& xis )
+{
+    filterManager_->Load( xis, *list_, *stack_ );
 }
 
 // -----------------------------------------------------------------------------
