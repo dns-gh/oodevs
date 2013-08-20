@@ -844,3 +844,33 @@ func (model *Model) handleFragOrder(m *sword.SimToClient_Content) error {
 	}
 	return model.addOrder(mm.GetId(), mm.GetType().GetId(), FragOrder)
 }
+
+func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
+	mm := m.GetUnitVisionCones()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	d := model.data
+	unit := d.FindUnit(mm.GetUnit().GetId())
+	if unit == nil {
+		return fmt.Errorf("cannot find unit for which vision cones must be updated: %d",
+			mm.GetUnit().GetId())
+	}
+	unit.VisionCones.Elongation = mm.GetElongation()
+	unit.VisionCones.Cones = nil
+	for _, cone := range mm.GetCones().GetElem() {
+		headings := []int32{}
+		for _, heading := range cone.GetDirections().GetElem() {
+			headings = append(headings, heading.GetHeading())
+		}
+		unit.VisionCones.Cones = append(unit.VisionCones.Cones,
+			&VisionCone{
+				Origin: Point{
+					X: cone.GetOrigin().GetLatitude(),
+					Y: cone.GetOrigin().GetLongitude()},
+				Height:   cone.GetHeight(),
+				Sensor:   cone.GetSensor(),
+				Headings: headings})
+	}
+	return nil
+}

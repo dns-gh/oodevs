@@ -1340,3 +1340,65 @@ func (c *Client) ChangePosture(unitId uint32, params *sword.MissionParameters) e
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func controlVisionConesAckHandler(msg *sword.SimToClient_Content) error {
+	reply := msg.GetControlEnableVisionConesAck()
+	if reply == nil {
+		return unexpected(msg)
+	}
+	code := reply.GetErrorCode()
+	if code != sword.ControlEnableVisionConesAck_no_error {
+		return makeError(reply, int32(code), sword.ControlEnableVisionConesAck_ErrorCode_name)
+	}
+	return nil
+}
+
+func (c *Client) SendControlEnableAllVisionCones(enabled bool) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlToggleVisionCones: &sword.ControlEnableVisionCones{
+					VisionCones: proto.Bool(enabled),
+				},
+			},
+		},
+	}
+	return <-c.postSimRequest(msg, controlVisionConesAckHandler)
+}
+
+func (c *Client) SendControlEnableVisionCones(unitId uint32, enabled bool) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlToggleVisionCones: &sword.ControlEnableVisionCones{
+					VisionCones: proto.Bool(enabled),
+					Units:       []*sword.UnitId{&sword.UnitId{Id: proto.Uint32(unitId)}},
+				},
+			},
+		},
+	}
+	return <-c.postSimRequest(msg, controlVisionConesAckHandler)
+}
+
+func (c *Client) SendListEnabledVisionCones(start uint32, count uint32) (*sword.ListEnabledVisionConesAck, error) {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ListEnabledVisionCones: &sword.ListEnabledVisionCones{
+					Start: &sword.UnitId{Id: proto.Uint32(start)},
+					Count: proto.Uint32(count),
+				},
+			},
+		},
+	}
+	var reply *sword.ListEnabledVisionConesAck
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply = msg.GetListEnabledVisionConesAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return reply, err
+}

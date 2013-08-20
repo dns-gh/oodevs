@@ -174,6 +174,7 @@ var (
 		(*Model).handleUnitKnowledgeCreation,
 		(*Model).handleUnitOrder,
 		(*Model).handleUnitPathfind,
+		(*Model).handleUnitVisionCones,
 		(*Model).handleUrbanCreation,
 		(*Model).handleUrbanUpdate,
 	}

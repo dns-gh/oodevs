@@ -121,6 +121,18 @@ type Posture struct {
 	Transition int32
 }
 
+type VisionCone struct {
+	Origin   Point
+	Height   int32
+	Sensor   string
+	Headings []int32
+}
+
+type VisionCones struct {
+	Cones      []*VisionCone
+	Elongation float32
+}
+
 type Unit struct {
 	Id                 uint32
 	AutomatId          uint32
@@ -136,6 +148,7 @@ type Unit struct {
 	HumanDotations     []*HumanDotation
 	ResourceDotations  []*ResourceDotation
 	Posture            Posture
+	VisionCones        VisionCones
 }
 
 type Automat struct {
