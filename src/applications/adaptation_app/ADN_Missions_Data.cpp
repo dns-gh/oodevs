@@ -16,6 +16,7 @@
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
+#include "clients_kernel/XmlTranslations.h"
 #include "ENT/ENT_Tr.h"
 #include "tools/Loader_ABC.h"
 #include <xeuseuleu/xsl.hpp>
@@ -240,11 +241,14 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 void ADN_Missions_Data::ReadMission( xml::xistream& xis, E_MissionType modelType )
 {
     const tools::Path& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
+    const std::string strName = xis.attribute< std::string >( "name" );
+    const std::string context = ENT_Tr::ConvertFromMissionType( modelType, ENT_Tr_ABC::eToSim );
 
     if( modelType == eMissionType_FragOrder )
     {
         std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
         spNew->ReadArchive( xis, missionPath );
+        spNew->strName_.SetTranslation( strName, translations_->GetTranslation( context, strName ) );
         missionsVector_[ modelType ].second.AddItem( spNew.release() );
     }
     else
@@ -252,6 +256,7 @@ void ADN_Missions_Data::ReadMission( xml::xistream& xis, E_MissionType modelType
         std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( xis.attribute< unsigned int >( "id" ) ) );
         ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
         spNew->ReadArchive( xis, drawings, missionPath );
+        spNew->strName_.SetTranslation( strName, translations_->GetTranslation( context + "-missions", strName ) );
         missionsVector_[ modelType ].second.AddItem( spNew.release() );
     }
 }

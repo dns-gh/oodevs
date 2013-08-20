@@ -403,8 +403,7 @@ void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_M
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::ReadArchive( xml::xistream& input, const tools::Path& )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "dia-type", diaType_ );
+    input >> xml::attribute( "dia-type", diaType_ );
 }
 
 // -----------------------------------------------------------------------------

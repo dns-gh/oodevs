@@ -84,12 +84,12 @@ private:
 private:
     //! @name Member data
     //@{
-    ADN_EditLine_ABC* nameFields_[ 4 ];
-    QTabWidget* missionTabs_[ 4 ];
+    ADN_EditLine_ABC* nameFields_[ eNbrMissionTypes ];
+    QTabWidget* missionTabs_[ eNbrMissionTypes ];
     ADN_Missions_Data& data_;
-    ADN_HtmlViewer* missionViewers_[ 4 ];
+    ADN_HtmlViewer* missionViewers_[ eNbrMissionTypes ];
     QCheckBox* availableState_;
-    QGroupBox* helpPanel_[ 4 ];
+    QGroupBox* helpPanel_[ eNbrMissionTypes ];
     QSignalMapper* generateMapper_;
     QSignalMapper* helpMapper_;
     QSignalMapper* missionChangedMapper_;

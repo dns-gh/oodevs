@@ -21,7 +21,7 @@
 */
 // Created: NPT 2013-02-14
 // =============================================================================
-class ADN_Missions_ABC : public ADN_RefWithName
+class ADN_Missions_ABC : public ADN_RefWithLocalizedName
     {
     public:
         class ADN_Missions_Attachment : public ADN_RefWithName
