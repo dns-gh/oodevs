@@ -43,12 +43,13 @@ class FilterManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, gui::RichListWidget& list, QStackedWidget& stack, QWidget& parent );
+             FilterManager( const std::string& id, const std::string& name, const tools::ExerciseConfig& config, QWidget& parent );
     virtual ~FilterManager();
     //@}
 
     //! @name Operations
     //@{
+    void Load( xml::xistream& xis, gui::RichListWidget& list, QStackedWidget& stack );
     const std::string GetName() const;
     const std::string GetId() const;
     void AddFilter( Filter_ABC& filter, gui::RichListWidget& list, QStackedWidget& stack );
@@ -76,8 +77,8 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     const std::string            id_;
+    const std::string            name_;
     QWidget&                     parent_;
-    kernel::XmlDescription       description_;
     T_Filters                    filters_;
     //@}
 };

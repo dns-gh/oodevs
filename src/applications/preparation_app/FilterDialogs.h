@@ -66,8 +66,6 @@ private:
     //@{
     void Load( xml::xistream& xis );
     void ReadSection( xml::xistream& xis );
-    void CreateImportDialog();
-    void CreateExportDialog();
     //@}
 
 private:

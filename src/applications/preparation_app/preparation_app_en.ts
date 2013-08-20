@@ -565,6 +565,14 @@
         <source>Unknown section: %1.</source>
         <translation>Unknown section: %1.</translation>
     </message>
+    <message>
+        <source>Import...</source>
+        <translation>Import...</translation>
+    </message>
+    <message>
+        <source>Export...</source>
+        <translation>Export...</translation>
+    </message>
 </context>
 <context>
     <name>FilterInputArgument</name>

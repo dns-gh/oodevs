@@ -43,6 +43,17 @@ FilterDialogs::~FilterDialogs()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FilterDialogs::Purge
+// Created: ABR 2011-06-24
+// -----------------------------------------------------------------------------
+void FilterDialogs::Purge()
+{
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        emit RemoveFilterMenuEntry( it->second->GetName() );
+    DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
 // Name: FilterDialogs::Load
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
@@ -50,13 +61,11 @@ void FilterDialogs::Load()
 {
     gui::SubObjectName subObject( "FilterDialogs" );
     assert( elements_.empty() );
-    config_.GetLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );
-    if( !Find( "import" ) )
-        CreateImportDialog();
-    if( !Find( "export" ) )
-        CreateExportDialog();
+    Register( "import", *new FilterDialog( "import", parent_, tools::translate( "FilterDialogs", "Import..." ), config_ ) );
+    Register( "export", *new FilterDialog( "export", parent_, tools::translate( "FilterDialogs", "Export..." ), config_ ) );
     Get( "export" ).AddFilter( *new FilterCsv( &Get( "export" ), config_, model_, converter_ ) );
     Get( "import" ).AddFilter( *new FilterOrbatReIndexer( parent_, config_, model_ ) );
+    config_.GetLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         emit AddFilterMenuEntry( it->second->GetName(), it->second, SLOT( exec() ), it->second->GetKeySequence() );
 }
@@ -80,17 +89,6 @@ void FilterDialogs::Load( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDialogs::Purge
-// Created: ABR 2011-06-24
-// -----------------------------------------------------------------------------
-void FilterDialogs::Purge()
-{
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        emit RemoveFilterMenuEntry( it->second->GetName() );
-    DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
 // Name: FilterDialogs::ReadSection
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
@@ -100,25 +98,5 @@ void FilterDialogs::ReadSection( xml::xistream& xis )
     std::transform( name.begin(), name.end(), name.begin(), std::tolower );
     if( name != "export" && name != "import" )
         throw MASA_EXCEPTION( tools::translate( "FilterDialogs", "Unknown section: %1." ).arg( name.c_str() ).toStdString() );
-    Register( name, *new FilterDialog( name.c_str(), parent_, xis, config_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterDialogs::CreateImportDialog
-// Created: ABR 2011-06-22
-// -----------------------------------------------------------------------------
-void FilterDialogs::CreateImportDialog()
-{
-    xml::xistringstream xis( "<sections><section id=\"import\"><descriptions><description xml:lang=\"en\" name=\"Import...\"/><description xml:lang=\"fr\" name=\"Importer...\"/></descriptions><filters></filters> </section></sections>" );
-    Load( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterDialogs::CreateExportDialog
-// Created: LGY 2011-10-17
-// -----------------------------------------------------------------------------
-void FilterDialogs::CreateExportDialog()
-{
-    xml::xistringstream xis( "<sections><section id=\"export\"><descriptions><description xml:lang=\"en\" name=\"Export...\"/><description xml:lang=\"fr\" name=\"Exporter...\"/></descriptions><filters></filters> </section></sections>" );
-    Load( xis );
+    Get( name ).Load( xis );
 }
