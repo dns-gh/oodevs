@@ -1341,8 +1341,18 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	firstDotation := u1.ResourceDotations[0]
 	secondDotation := u1.ResourceDotations[1]
 
-	c.Assert(firstDotation, DeepEquals, &swapi.ResourceDotation{Type: 1, Quantity: 3200, Threshold: 10})
-	c.Assert(secondDotation, DeepEquals, &swapi.ResourceDotation{Type: 3, Quantity: 8000, Threshold: 10})
+	c.Assert(firstDotation, DeepEquals,
+		&swapi.ResourceDotation{
+			Type:      1,
+			Quantity:  3200,
+			Threshold: 10,
+		})
+	c.Assert(secondDotation, DeepEquals,
+		&swapi.ResourceDotation{
+			Type:      3,
+			Quantity:  8000,
+			Threshold: 10,
+		})
 
 	// Error: Invalid parameters count
 	err := client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{})
