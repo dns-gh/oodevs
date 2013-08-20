@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< Log_ABC > CreateLog( const Path& filename, std::size_t& size ) = 0;
+    virtual std::auto_ptr< Log_ABC > CreateLog( const Path& filename, std::streamoff& size ) = 0;
     //@}
 };
 }

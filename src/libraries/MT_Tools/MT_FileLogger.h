@@ -40,9 +40,9 @@ public:
 
 private:
     virtual void WriteString( const std::string& s );
-    virtual std::auto_ptr< tools::Log_ABC > CreateLog( const tools::Path& filename, std::size_t& size );
+    virtual std::auto_ptr< tools::Log_ABC > CreateLog( const tools::Path& filename, std::streamoff& size );
 
-    std::size_t ComputeSize( const tools::Path& filename ) const;
+    std::streamoff ComputeSize( const tools::Path& filename ) const;
 
 private:
     bool truncate_;

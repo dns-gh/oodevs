@@ -61,7 +61,7 @@ private:
     tools::Path filename_;
     tools::Path extension_;
     std::size_t file_, files_;
-    std::size_t size_, count_;
+    std::streamoff size_, count_;
     std::auto_ptr< Log_ABC > pLog_;
     bool sizeInBytes_;
     //@}

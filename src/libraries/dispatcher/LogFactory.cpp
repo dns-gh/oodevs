@@ -19,7 +19,7 @@ LogFactory::LogFactory( bool sizeInBytes )
     // NOTHING
 }
 
-std::auto_ptr< tools::Log_ABC > LogFactory::CreateLog( const tools::Path& filename, std::size_t& /*size*/ )
+std::auto_ptr< tools::Log_ABC > LogFactory::CreateLog( const tools::Path& filename, std::streamoff& /*size*/ )
 {
     return std::auto_ptr< tools::Log_ABC >( new Log( filename, sizeInBytes_ ) );
 }

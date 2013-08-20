@@ -61,7 +61,7 @@ namespace
     };
 }
 
-std::auto_ptr< tools::Log_ABC > MT_FileLogger::CreateLog( const tools::Path& filename, std::size_t& size )
+std::auto_ptr< tools::Log_ABC > MT_FileLogger::CreateLog( const tools::Path& filename, std::streamoff& size )
 {
     if( truncate_ )
         filename.Remove();
@@ -70,7 +70,7 @@ std::auto_ptr< tools::Log_ABC > MT_FileLogger::CreateLog( const tools::Path& fil
     return std::auto_ptr< tools::Log_ABC >( new LogFile( filename, sizeInBytes_ ) );
 }
 
-std::size_t MT_FileLogger::ComputeSize( const tools::Path& filename ) const
+std::streamoff MT_FileLogger::ComputeSize( const tools::Path& filename ) const
 {
     if( sizeInBytes_ )
         return filename.FileSize();
