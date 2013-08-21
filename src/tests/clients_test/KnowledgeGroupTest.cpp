@@ -243,17 +243,17 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
     MockKnowledgeGroupTypeResolver types;
     std::auto_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
     MOCK_EXPECT( types, Find ).with( mock::any ).returns( standardType.get() );
-    kernel::Controller controller;
+    kernel::Controllers controllers;
     MockTeam team;
     {
         const std::string expected = "<knowledge-group id='1' name='test' type='Standard'/>";
         xml::xistringstream xis( expected );
         xis >> xml::start( "knowledge-group" );
-        KnowledgeGroup kg( xis, controller, idManager, types );
-        kg.Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controller, kg, &team ) );
+        KnowledgeGroup kg( xis, controllers, idManager, types );
+        kg.Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers.controller_, kg, &team ) );
         xml::xostringstream xos;
         xos << xml::start( "knowledge-group" );
-            kg.SerializeAttributes( xos );
+        kg.SerializeAttributes( xos );
         xos << xml::end;
         BOOST_CHECK_XML_EQUAL( expected, xos.str() );
     }
