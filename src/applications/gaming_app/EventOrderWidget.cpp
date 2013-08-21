@@ -498,7 +498,7 @@ void EventOrderWidget::OnMissionChanged( int )
     BuildMissionInterface( true );
     if( !AreTargetAndMissionCompatible() )
         WarnTargetAndMission();
-    else if( lastGivenOrder_ )
+    else if( lastGivenOrder_ && !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
         missionCombo_->removeItem( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
 }
 
