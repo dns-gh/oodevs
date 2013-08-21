@@ -28,6 +28,7 @@ namespace dispatcher
     class PluginFactory;
     class Services;
     class SimulationNetworker;
+
 // =============================================================================
 /** @class  Dispatcher
     @brief  Dispatcher
@@ -46,7 +47,7 @@ public:
     //! @name Operations
     //@{
     void Update();
-    void RegisterPluginFactory( PluginFactory_ABC& factory );
+    void Register( PluginFactory_ABC& factory );
     void CreatePlugins();
     //@}
 
