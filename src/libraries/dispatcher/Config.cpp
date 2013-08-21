@@ -81,23 +81,9 @@ void Config::Parse( int argc, char** argv )
                         >> xml::attribute( "server", dispatcherAddress )
                         >> xml::optional >> xml::attribute( "timeout", networkTimeout_ )
                     >> xml::end
-                    >> xml::optional >> xml::start( "log" )
-                        >> xml::optional >> xml::attribute( "loglevel", logDispatcher.level_ )
-                        >> xml::optional >> xml::attribute( "logfiles", logDispatcher.files_ )
-                        >> xml::optional >> xml::attribute( "logsize",  logDispatcher.fileSize_ )
-                        >> xml::optional >> xml::attribute( "sizeunit", logDispatcher.sizeUnit_ )
-                    >> xml::end
-                    >> xml::optional >> xml::start( "messages" )
-                        >> xml::optional >> xml::attribute( "loglevel", logLoggerPlugin.level_ )
-                        >> xml::optional >> xml::attribute( "logfiles", logLoggerPlugin.files_ )
-                        >> xml::optional >> xml::attribute( "logsize",  logLoggerPlugin.fileSize_ )
-                        >> xml::optional >> xml::attribute( "sizeunit", logLoggerPlugin.sizeUnit_ )
-                    >> xml::end
-                    >> xml::optional >> xml::start( "debug" )
-                        >> xml::optional >> xml::attribute( "logfiles", logDispatcherProtobuf.files_ )
-                        >> xml::optional >> xml::attribute( "logsize",  logDispatcherProtobuf.fileSize_ )
-                        >> xml::optional >> xml::attribute( "sizeunit", logDispatcherProtobuf.sizeUnit_ )
-                    >> xml::end
+                    >> xml::optional >> xml::content( "log", logDispatcher )
+                    >> xml::optional >> xml::content( "messages", logLoggerPlugin )
+                    >> xml::optional >> xml::content( "debug", logDispatcherProtobuf )
                     >> xml::start( "plugins" )
                         >> xml::optional >>xml::start( "recorder" )
                             >> xml::optional >> xml::attribute( "fragmentfreq", replayFragmentsFrequency_ )
@@ -113,6 +99,7 @@ void Config::Parse( int argc, char** argv )
         networkSimulationParameters_ = simulationAddress;
     if( networkClientsParameters_.empty() )
         networkClientsParameters_ = dispatcherAddress;
+    logDispatcherProtobuf.level_ = LogSettings::elogLevel_all;
     SetDispatcherProtobufLogSettings( logDispatcherProtobuf );
     SetDispatcherLogSettings( logDispatcher );
     SetLoggerPluginLogSettings( logLoggerPlugin );

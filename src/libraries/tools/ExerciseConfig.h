@@ -36,6 +36,20 @@ namespace tools
 class ExerciseConfig : public GeneralConfig
 {
 public:
+    struct LogSettingsData
+    {
+        LogSettingsData()
+            : level_( static_cast< int >( LogSettings::elogLevel_all ) )
+            , files_( 1 )
+            , fileSize_( 0 )
+        {}
+
+        int level_;
+        std::size_t files_;
+        std::size_t fileSize_;
+        std::string sizeUnit_;
+    };
+
     //! @name Constructors/Destructor
     //@{
     explicit ExerciseConfig( RealFileLoaderObserver_ABC& observer );
@@ -145,19 +159,6 @@ private:
 protected:
     //! @name Types
     //@{
-    struct LogSettingsData
-    {
-        LogSettingsData()
-            : level_( static_cast< int >( LogSettings::elogLevel_all ) )
-            , files_( 1 )
-            , fileSize_( 0 )
-        {}
-        int level_;
-        std::size_t files_;
-        std::size_t fileSize_;
-        std::string sizeUnit_;
-    };
-
     class LogSettings
     {
     public:
@@ -237,6 +238,8 @@ private:
     LogSettings simLoggerPluginSettings_;
     //@}
 };
+
+xml::xistream& operator>>( xml::xistream& xis, ExerciseConfig::LogSettingsData& settings );
 
 }
 
