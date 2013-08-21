@@ -381,6 +381,14 @@
                 <xs:documentation xml:lang="en">Defines whether the simulation starts paused or not.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="latency" type="xs:nonNegativeInteger" use="optional"
+              default="1">
+              <xs:annotation>
+                  <xs:documentation xml:lang="en">The maximum number of ticks
+                      the simulation can be ahead of the dispatcher before pausing
+                      and waiting for the latter to catch up.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
           </xs:complexType>
         </xs:element>
       </xs:all>
