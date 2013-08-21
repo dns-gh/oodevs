@@ -74,7 +74,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSwitchToggled( bool checked );
-    void OnEditingChanged( bool editing, bool fromTimeline );
+    void OnEditingChanged( bool editing );
 
     void OnBeginDateTimeChanged( const QDateTime& dateTime );
     void OnHasEndTimeChanged( int state );

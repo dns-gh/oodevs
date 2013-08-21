@@ -74,7 +74,7 @@ signals:
     void EditEventSignal( const timeline::Event& event );
     void DeleteEventSignal( const std::string& uuid );
 
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
     //@}
 
 private slots:

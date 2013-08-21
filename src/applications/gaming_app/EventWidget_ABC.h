@@ -40,7 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Purge( bool forcePurge = false );
+    virtual void Purge();
+    virtual void Update();
     virtual bool IsValid() const;
     virtual void Warn() const;
     virtual void Trigger() const;

@@ -85,7 +85,7 @@ public:
 private:
     //! @name EventWidget_ABC implementation
     //@{
-    virtual void Purge( bool forcePurge = false );
+    virtual void Purge();
     virtual void Fill( const Event& event );
     virtual void Commit( timeline::Event& event ) const;
     virtual void Trigger() const;
@@ -126,7 +126,8 @@ private:
 signals:
     //! @name Signals
     //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool fromTimeline );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void UpdateCreation( E_EventTypes type, const QDateTime& dateTime );
     void SelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
     //@}
 

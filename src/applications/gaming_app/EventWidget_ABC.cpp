@@ -54,7 +54,16 @@ void EventWidget_ABC::Trigger() const
 // Name: EventWidget_ABC::Purge
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventWidget_ABC::Purge( bool /*forcePurge*/ )
+void EventWidget_ABC::Purge()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventWidget_ABC::Update
+// Created: LGY 2013-08-20
+// -----------------------------------------------------------------------------
+void EventWidget_ABC::Update()
 {
     // NOTHING
 }
