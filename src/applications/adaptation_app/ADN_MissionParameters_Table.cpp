@@ -43,7 +43,7 @@ ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectN
     for( unsigned int i = 0; i < unsigned int( eNbrMissionParameterType ); ++i )
         parameterTypes_ << ADN_Tr::ConvertFromMissionParameterType( static_cast< E_MissionParameterType >( i ), ENT_Tr_ABC::eToTr ).c_str();
 
-    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddLocalizedLineEditOnColumn( 0 );
     delegate_.AddLineEditOnColumn( 1, "[A-Za-z0-9_]*" );
     delegate_.AddComboBoxOnColumn( 2, parameterTypes_ );
     delegate_.AddCheckBoxOnColumn( 3 );
@@ -80,7 +80,7 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
     addingRow_ = true;
     QStandardItem* item = 0;
 
-    item = AddItem( row, 0, data, &pMissionParameter->strName_, ADN_StandardItem::eString, Qt::ItemIsEditable );
+    item = AddItem( row, 0, data, &pMissionParameter->strName_, ADN_StandardItem::eLocalizedString, Qt::ItemIsEditable );
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable ); // always editable
     item->setBackground( brush );
 

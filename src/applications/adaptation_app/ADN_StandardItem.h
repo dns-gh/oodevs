@@ -29,15 +29,16 @@ public:
     //@{
     enum E_Type
     {
-        eBool        = 0,
-        eInt         = 1,
-        eDouble      = 2,
-        eEnum        = 3,
-        eString      = 4,
-        ePtrInVector = 5,
-        eDelay       = 6,
-        eTime        = 7,
-        eColor       = 8
+        eBool            = 0,
+        eInt             = 1,
+        eDouble          = 2,
+        eEnum            = 3,
+        eString          = 4,
+        eLocalizedString = 5,
+        ePtrInVector     = 6,
+        eDelay           = 7,
+        eTime            = 8,
+        eColor           = 9
     };
 
 public:

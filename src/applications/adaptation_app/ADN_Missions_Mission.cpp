@@ -89,7 +89,7 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 // Name: ADN_Missions_Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir )
+void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir, E_MissionType type, kernel::XmlTranslations& translations )
 {
     std::string missionSheetDesc, symbol;
     ADN_Missions_ABC::ReadArchive( input, missionDir );
@@ -103,7 +103,7 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data&
             >> xml::optional >> xml::attribute( "doctrine", doctrine_ )
             >> xml::optional >> xml::attribute( "usage", usage_ )
           >> xml ::end
-          >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1 ) );
+          >> xml::list( "parameter", boost::bind( &ADN_Missions_ABC::ReadParameter, this, _1, type, boost::ref( translations ) ) );
     const std::string code = symbol.empty() ? " - " : symbol;
     symbol_.SetVector( drawings.GetCategoryDrawings( "tasks" ) );
     symbol_.SetData( drawings.GetDrawing( code ) );

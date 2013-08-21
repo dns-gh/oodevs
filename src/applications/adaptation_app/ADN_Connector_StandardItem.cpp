@@ -76,6 +76,13 @@ void ADN_Connector_StandardItem::SetDataPrivate( void* data )
             item_.setData( text->c_str(), gui::Roles::DataRole );
             break;
         }
+    case ADN_StandardItem::eLocalizedString:
+        {
+            std::string* text = static_cast< std::string* >( data );
+            item_.setData( text->c_str(), Qt::EditRole );
+            item_.setData( text->c_str(), gui::Roles::DataRole );
+            break;
+        }
     case ADN_StandardItem::eEnum:
         {
             assert( enumContent_ );
@@ -123,6 +130,12 @@ void ADN_Connector_StandardItem::SetDataChanged( const QString& text )
     case ADN_StandardItem::eDelay:
     case ADN_StandardItem::eColor:
     case ADN_StandardItem::eString:
+        {
+            std::string newval = text.toStdString();
+            emit DataChanged( &newval );
+            break;
+        }
+    case ADN_StandardItem::eLocalizedString:
         {
             std::string newval = text.toStdString();
             emit DataChanged( &newval );

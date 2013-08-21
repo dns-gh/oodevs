@@ -14,9 +14,9 @@
 template< typename T >
 ADN_LocalizedType< T >::ADN_LocalizedType()
     : translation_( nullptr )
-    , language_( kernel::Language::default_ )
 {
     AddTranslationChecker();
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -27,9 +27,9 @@ template< typename T >
 ADN_LocalizedType< T >::ADN_LocalizedType( const T& val )
     : ADN_Type_ABC< T >( val )
     , translation_( nullptr )
-    , language_( kernel::Language::default_ )
 {
     AddTranslationChecker();
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ ADN_LocalizedType< T >::~ADN_LocalizedType()
 template< typename T >
 bool ADN_LocalizedType< T >::HasTranslation() const
 {
-    return translation_ && language_ != kernel::Language::default_;
+    return translation_ && kernel::Language::CurrentIsValid();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,14 +57,10 @@ bool ADN_LocalizedType< T >::HasTranslation() const
 // Created: ABR 2013-07-12
 // -----------------------------------------------------------------------------
 template< typename T >
-void ADN_LocalizedType< T >::OnLanguageChanged( const std::string& language )
+void ADN_LocalizedType< T >::OnLanguageChanged()
 {
-    if( language_ != language )
-    {
-        language_ = language;
-        SetData( GetData() );
-        SetType( HasTranslation() ? translation_->values_[ language_ ].type_ : kernel::eTranslationType_None );
-    }
+    SetData( GetData() );
+    SetType( HasTranslation() ? translation_->values_[ kernel::Language::GetCurrent() ].type_ : kernel::eTranslationType_None );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +70,7 @@ void ADN_LocalizedType< T >::OnLanguageChanged( const std::string& language )
 template< typename T >
 const T& ADN_LocalizedType< T >::GetData() const
 {
-    return HasTranslation() ? translation_->values_.at( language_ ).value_ : GetKey() ;
+    return HasTranslation() ? translation_->values_.at( kernel::Language::GetCurrent() ).value_ : GetKey() ;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +82,7 @@ void ADN_LocalizedType< T >::SetData( const T& data )
 {
     if( HasTranslation() )
     {
-        std::string& value = translation_->values_[ language_ ].value_;
+        std::string& value = translation_->values_[ kernel::Language::GetCurrent() ].value_;
         value = data;
         emit DataChanged( ( void* ) &value );
     }
@@ -154,7 +150,7 @@ void ADN_LocalizedType< T >::SetTranslation( const std::string& key, kernel::Tra
 template< class T >
 kernel::E_TranslationType ADN_LocalizedType< T >::GetType() const
 {
-    kernel::E_TranslationType type = HasTranslation() ? translation_->values_[ language_ ].type_ : kernel::eTranslationType_None;
+    kernel::E_TranslationType type = HasTranslation() ? translation_->values_[ kernel::Language::GetCurrent() ].type_ : kernel::eTranslationType_None;
     emit TypeChanged( type );
     return type;
 }
@@ -169,7 +165,7 @@ void ADN_LocalizedType< T >::SetType( kernel::E_TranslationType type )
     kernel::E_TranslationType newType = kernel::eTranslationType_None;
     if( HasTranslation() )
     {
-        translation_->values_[ language_ ].type_ = type;
+        translation_->values_[ kernel::Language::GetCurrent() ].type_ = type;
         newType = type;
     }
     emit TypeChanged( newType );

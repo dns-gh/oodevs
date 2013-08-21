@@ -47,7 +47,6 @@ public:
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const = 0;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
-    virtual void OnLanguageChanged( const std::string& language );
     virtual void Save();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     virtual void ReadArchive( xml::xistream& input );

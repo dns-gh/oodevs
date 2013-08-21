@@ -99,13 +99,3 @@ void ADN_Data_Container::WriteArchive( xml::xostream& output )
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->WriteArchive( output );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Data_Container::OnLanguageChanged
-// Created: ABR 2013-07-15
-// -----------------------------------------------------------------------------
-void ADN_Data_Container::OnLanguageChanged( const std::string& language )
-{
-    for( auto it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->OnLanguageChanged( language );
-}

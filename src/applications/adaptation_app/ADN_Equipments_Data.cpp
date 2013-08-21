@@ -1930,6 +1930,19 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output )
     output << xml::end;
 }
 
+// -----------------------------------------------------------------------------
+// Name: EquipmentInfos::CheckValidity
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::EquipmentInfos::CheckValidity()
+{
+    ADN_RefWithLocalizedName::CheckValidity();
+    CheckTypeValidity( strAdditionalComments_ );
+    CheckTypeValidity( strNativeCountry_ );
+    CheckTypeValidity( strInformationOrigin_ );
+    CheckTypeValidity( equipmentCategory_ );
+}
+
 //=============================================================================
 //
 //=============================================================================

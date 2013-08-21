@@ -81,7 +81,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
 
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( SetCurrentItem() ) );
     connect( &usedByMapper_, SIGNAL( mapped( int ) ), this, SLOT( ContextMenuSearchElements( int ) ) );
-    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged( const std::string& ) ), this, SLOT( OnLanguageChanged( const std::string& ) ) );
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( PostLanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -885,7 +885,6 @@ void ADN_ListView::GoToOnDoubleClicked( const QModelIndex& index )
 void ADN_ListView::Warn( ADN_ErrorStatus /* errorStatus = eNoError */, const QString& /* = "" */ )
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
-    {
         if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
             if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
             {
@@ -905,7 +904,6 @@ void ADN_ListView::Warn( ADN_ErrorStatus /* errorStatus = eNoError */, const QSt
                 }
                 item->setBackground( brush );
             }
-    }
     // $$$$ ABR 2013-01-15: ListView Border color depending on errorStatus ??
 }
 
@@ -924,17 +922,12 @@ void ADN_ListView::RemoveCurrentElement()
 // Name: ADN_ListView::OnLanguageChanged
 // Created: ABR 2013-07-17
 // -----------------------------------------------------------------------------
-void ADN_ListView::OnLanguageChanged( const std::string& language )
+void ADN_ListView::OnLanguageChanged()
 {
-    bEditionEnabled_ = language == kernel::Language::default_;
+    bEditionEnabled_ = kernel::Language::CurrentIsDefault();
     for( int row = 0; row < dataModel_.rowCount(); ++row )
-    {
         if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
-            if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
-            {
-                pData->OnLanguageChanged( language );
-                pData->CheckValidity();
-            }
-    }
+                if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
+                    pData->CheckValidity();
     Warn();
 }

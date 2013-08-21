@@ -262,6 +262,8 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
                 << xml::start( "name" ) << itContext->first << xml::end;
             for( auto itTranslation = itContext->second.begin(); itTranslation != itContext->second.end(); ++itTranslation )
             {
+                if( itTranslation->key_.empty() )
+                    continue;
                 auto localizedText = itTranslation->values_.at( itLanguage->GetShortName() );
                 xos << xml::start( "message" )
                         << xml::start( "source" ) << itTranslation->key_ << xml::end

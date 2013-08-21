@@ -12,6 +12,13 @@
 
 #include "ADN_Missions_ABC.h"
 
+namespace kernel
+{
+    class XmlTranslations;
+}
+
+enum E_EntityType;
+
 class ADN_Missions_FragOrder : public ADN_Missions_ABC
 {
 public:
@@ -21,7 +28,7 @@ public:
 
     ADN_Missions_FragOrder* CreateCopy();
 
-    void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
+    void ReadArchive( xml::xistream& input, const tools::Path& missionDir, E_MissionType type, kernel::XmlTranslations& translations );
     void WriteArchive( xml::xostream& output, E_MissionType type );
 
 public:

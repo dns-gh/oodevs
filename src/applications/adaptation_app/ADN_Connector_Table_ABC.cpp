@@ -84,6 +84,7 @@ bool ADN_Connector_Table_ABC::AddItemPrivate( void* obj )
         tab_.setNumRows( 0 );
         for( unsigned i = 0; i < vDatas_.size(); ++i )
             AddSubItems( i, vDatas_[ i ] );
+        tab_.CheckValidity();
     }
     return true;
 }
@@ -106,7 +107,7 @@ bool ADN_Connector_Table_ABC::RemItemPrivate( void* pItem )
 
     // Remove it from the table (which can be user sorted, and thus not match the order of vData_
     tab_.RemoveItem( pItem );
-    
+
     ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }

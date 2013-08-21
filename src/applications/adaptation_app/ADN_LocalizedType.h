@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     void Initialize( ADN_Connector_ABC& dest ) const;
-    virtual void OnLanguageChanged( const std::string& language );
+    virtual void OnLanguageChanged();
     virtual void OnTypeChanged( int );
     //@}
 
@@ -93,7 +93,6 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string language_;
     kernel::Translation* translation_;
     //@}
 };

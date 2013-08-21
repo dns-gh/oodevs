@@ -55,7 +55,7 @@ public:
     virtual void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
     virtual void WriteArchive( xml::xostream& output, E_MissionType type );
 
-    void ReadParameter( xml::xistream& input );
+    void ReadParameter( xml::xistream& input, E_MissionType type, kernel::XmlTranslations& translations );
     void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type );
     void CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker, E_MissionType type );
     void ReadMissionSheetParametersDescriptions( xml::xistream& xis );

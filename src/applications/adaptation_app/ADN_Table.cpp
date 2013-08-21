@@ -14,6 +14,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Connector_StandardItem.h"
 #include "ADN_Connector_Table_ABC.h"
+#include "ADN_Languages_GUI.h"
 #include "excel/ExcelFormat.h"
 #include "clients_kernel/VariantPointer.h"
 
@@ -87,6 +88,7 @@ void ADN_Table::Initialize( const QString& objectName )
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), &delegate_, SLOT( OnItemChanged( QStandardItem* ) ) );
     connect( &delegate_, SIGNAL( CheckedStateChanged( const QStandardItem& ) ), this, SLOT( OnCheckedStateChanged( const QStandardItem& ) ) );
     connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( PrivateOnContextMenu( const QPoint& ) ) );
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( PostLanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -632,4 +634,68 @@ QString ADN_Table::GetToolTips( int nRow, int nCol ) const
 void ADN_Table::Sort( int column, Qt::SortOrder order )
 {
     proxyModel_.sort( column, order );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::CheckValidity
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Table::CheckValidity()
+{
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+        for( int col = 0; col < dataModel_.columnCount(); ++col )
+            if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row, col ) ) )
+                if( item->GetType() == ADN_StandardItem::eLocalizedString )
+                    if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
+                        pData->CheckValidity();
+    Warn();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::Warn
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Table::Warn( ADN_ErrorStatus /*errorStatus*/ /*= eNoError*/, const QString& /*errorMsg*/ /*= ""*/ )
+{
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+        for( int col = 0; col < dataModel_.columnCount(); ++col )
+            if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row, col ) ) )
+            {
+                ADN_Connector_ABC* data = const_cast< ADN_Connector_ABC* >( static_cast< const ADN_Connector_ABC* >( item->data( gui::Roles::SafeRole ).value< kernel::VariantPointer >().ptr_ ) );
+                if( data )
+                {
+                    ADN_ErrorStatus elementStatus = data->GetErrorStatus();
+                    QColor registeredColor = item->data( gui::Roles::OtherRole ).value< QColor >();
+                    if( !registeredColor.isValid() )
+                    {
+                        registeredColor = item->background().color();
+                        item->setData( registeredColor, gui::Roles::OtherRole );
+                    }
+                    QBrush brush = registeredColor;
+                    switch( elementStatus )
+                    {
+                    case eWarning:
+                        brush = registeredColor == Qt::gray ? Qt::darkYellow : Qt::yellow;
+                        break;
+                    case eError:
+                        brush = registeredColor == Qt::gray ? Qt::darkRed : Qt::red;
+                        break;
+                    case eNoError:
+                    default:
+                        break;
+                    }
+                    item->setBackground( brush );
+                }
+            }
+    // $$$$ ABR 2013-01-15: Row borders color depending on parent's errorStatus ?? (parent is item->GetData(), the data linked with the row)
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::OnLanguageChanged
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Table::OnLanguageChanged()
+{
+    proxyModel_.invalidate();
+    CheckValidity();
 }

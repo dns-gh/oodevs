@@ -182,12 +182,3 @@ void ADN_Data_ABC::InitQtTranslations()
     duplicateName_ = qApp->translate( "ADN_Data_ABC", duplicateName_ );
     invalidDataOntab_ = qApp->translate( "ADN_Data_ABC", invalidDataOntab_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Data_ABC::OnLanguageChanged
-// Created: ABR 2013-07-15
-// -----------------------------------------------------------------------------
-void ADN_Data_ABC::OnLanguageChanged( const std::string& )
-{
-    // NOTHING
-}

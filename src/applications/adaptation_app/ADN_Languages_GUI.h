@@ -35,13 +35,13 @@ public:
     //@{
     virtual void Build();
     void FillMenu( QMenu* menu );
-    const std::string& GetCurrentLanguage() const;
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void LanguageChanged( const std::string& shortName );
+    void LanguageChanged();
+    void PostLanguageChanged();
     //@}
 
 private slots:
@@ -63,7 +63,6 @@ private:
     ADN_Languages_Data& data_;
     std::vector< QAction* > actions_;
     QSignalMapper* mapper_;
-    std::string currentLanguage_;
     QAction* currentAction_;
     QAction* defaultAction_;
     //@}

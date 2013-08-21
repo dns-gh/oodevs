@@ -43,9 +43,8 @@ private slots:
     //@{
     void OnClicked( bool );
     void OnTypeChanged( int newType );
-    void OnLanguageChanged( const std::string& language );
+    void OnLanguageChanged();
     //@}
-
 };
 
 #endif // __ADN_ApplyButton_h_

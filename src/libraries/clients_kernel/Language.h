@@ -43,6 +43,14 @@ public:
     const std::string& GetShortName() const;
     //@}
 
+    //! @name Static methods
+    //@{
+    static const std::string& GetCurrent();
+    static void SetCurrent( const std::string& language );
+    static bool CurrentIsDefault();
+    static bool CurrentIsValid();
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -50,10 +58,12 @@ private:
     std::string shortname_;
     //@}
 
-public:
     //! @name Static member data
     //@{
+public:
     static const std::string default_;
+private:
+    static std::string current_;
     //@}
 };
 

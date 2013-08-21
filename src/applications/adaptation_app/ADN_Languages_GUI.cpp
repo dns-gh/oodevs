@@ -36,11 +36,9 @@ ADN_Languages_GUI::ADN_Languages_GUI( ADN_Languages_Data& data )
     , mapper_( 0 )
     , currentAction_( 0 )
     , defaultAction_( 0 )
-    , currentLanguage_( kernel::Language::default_ )
 {
     mapper_ = new QSignalMapper( this );
     connect( mapper_, SIGNAL( mapped( const QString& ) ), this, SLOT( OnLanguageChanged( const QString& ) ) );
-    connect( this, SIGNAL( LanguageChanged( const std::string& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnLanguageChanged( const std::string& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,22 +113,14 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Languages_GUI::GetCurrentLanguage
-// Created: ABR 2013-07-15
-// -----------------------------------------------------------------------------
-const std::string& ADN_Languages_GUI::GetCurrentLanguage() const
-{
-    return currentLanguage_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Languages_GUI::ChangeLanguage
 // Created: ABR 2013-07-17
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::ChangeLanguage( const std::string& language )
 {
-    currentLanguage_ = language;
-    emit LanguageChanged( currentLanguage_ );
+    kernel::Language::SetCurrent( language );
+    emit LanguageChanged();
+    emit PostLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------

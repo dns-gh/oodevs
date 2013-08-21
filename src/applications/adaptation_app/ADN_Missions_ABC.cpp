@@ -11,6 +11,8 @@
 #include "ADN_Missions_ABC.h"
 #include "ADN_Missions_Data.h"
 #include "clients_gui/WikiXmlConverter.h"
+#include "clients_kernel/XmlTranslations.h"
+#include "ENT/ENT_Tr.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 #include <xeuseuleu/xsl.hpp>
@@ -50,10 +52,16 @@ ADN_Missions_ABC::~ADN_Missions_ABC()
 // Name: ADN_Missions_ABC::ReadParameter
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
+void ADN_Missions_ABC::ReadParameter( xml::xistream& input, E_MissionType type, kernel::XmlTranslations& translations )
 {
+    const std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter() );
+    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr_ABC::eToSim );
+    if( type != eMissionType_FragOrder )
+        context += "-missions";
+    context += "-parameters";
     spNew->ReadArchive( input );
+    spNew->strName_.SetTranslation( strName, translations.GetTranslation( context, strName ) );
     parameters_.AddItem( spNew.release() );
 }
 

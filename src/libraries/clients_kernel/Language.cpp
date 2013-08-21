@@ -14,6 +14,7 @@
 using namespace kernel;
 
 const std::string Language::default_ = "default";
+std::string Language::current_ = "default";
 
 // -----------------------------------------------------------------------------
 // Name: Language constructor
@@ -122,4 +123,40 @@ xml::xostream& kernel::operator<<( xml::xostream& xos, const Language& language 
     language.Write( xos );
     xos << xml::end;
     return xos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Language::GetCurrent
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+const std::string& Language::GetCurrent()
+{
+    return current_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Language::SetCurrent
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void Language::SetCurrent( const std::string& language )
+{
+    current_ = language;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Language::CurrentIsDefault
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+bool Language::CurrentIsDefault()
+{
+    return current_ == default_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Language::CurrentIsValid
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+bool Language::CurrentIsValid()
+{
+    return !current_.empty() && !CurrentIsDefault();
 }

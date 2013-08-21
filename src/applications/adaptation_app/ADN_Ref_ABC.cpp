@@ -252,3 +252,16 @@ void ADN_Ref_ABC::SetErrorStatus( ADN_ErrorStatus errorStatus, const QString& er
     emit SendErrorStatus( errorStatus, errorMsg );
     errorStatus_ = errorStatus;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Ref_ABC::CheckTypeValidity
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Ref_ABC::CheckTypeValidity( ADN_Ref_ABC& type )
+{
+    ADN_ErrorStatus oldStatus = GetErrorStatus();
+    type.CheckValidity();
+    ADN_ErrorStatus newStatus = type.GetErrorStatus();
+    if( oldStatus != newStatus )
+        SetErrorStatus( std::max< ADN_ErrorStatus >( oldStatus, newStatus ) );
+}

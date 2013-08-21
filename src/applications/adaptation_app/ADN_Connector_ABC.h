@@ -48,6 +48,7 @@ public:
 public slots:
    virtual void SetData( void* pData );
    virtual void OnTypeChanged( int ) {}
+   virtual void OnLanguageChanged() {}
 
 signals:
     void DataChanged( void* pData );

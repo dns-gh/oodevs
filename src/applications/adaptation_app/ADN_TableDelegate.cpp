@@ -9,10 +9,13 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_TableDelegate.h"
+
+#include "ADN_ApplyButton.h"
 #include "ADN_ComboBox_Enum.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_EditLine.h"
 #include "ADN_StandardItem.h"
+#include "ADN_Table.h"
 #include "ADN_TimeEdit.h"
 #include "ADN_TimeField.h"
 #include "ADN_ColorSelector.h"
@@ -193,6 +196,33 @@ unsigned int ADN_TableDelegate::AddComboPtrInVector( int fromRow, int toRow, int
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddLocalizedLineEditOnRow
+// Created: ABR 2013-08-20
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddLocalizedLineEditOnRow( int row )
+{
+    return AddLocalizedLineEdit( row, row, -1, -1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddLocalizedLineEditOnColumn
+// Created: ABR 2013-08-20
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddLocalizedLineEditOnColumn( int col )
+{
+    return AddLocalizedLineEdit( -1, -1, col, col );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddLocalizedLineEdit
+// Created: ABR 2013-08-20
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddLocalizedLineEdit( int fromRow, int toRow, int fromCol, int toCol )
+{
+    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, localizedEditLines_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_TableDelegate::AddNewRowIndex
 // Created: NPT 2012-11-08
 // -----------------------------------------------------------------------------
@@ -234,6 +264,36 @@ const std::set<int>& ADN_TableDelegate::GetBoldColumnIndexes() const
 void ADN_TableDelegate::SetGridPen( QPen gridPen )
 {
     gridPen_ = gridPen;
+}
+
+namespace
+{
+    class ADN_LocalizedEditor : public QWidget
+    {
+    public:
+        explicit ADN_LocalizedEditor( QWidget* parent )
+            : QWidget( parent )
+        {
+            editLine_ = new ADN_EditLine_LocalizedString( this );
+            applyButton_ = new ADN_ApplyButton( this );
+            applyButton_->Connect( editLine_ );
+            QHBoxLayout* layout = new QHBoxLayout( this );
+            layout->setMargin( 0 );
+            layout->setSpacing( 0 );
+            layout->addWidget( editLine_, 1 );
+            layout->addWidget( applyButton_, 0 );
+        }
+        virtual ~ADN_LocalizedEditor() {}
+
+        ADN_EditLine_LocalizedString* GetEditLine()
+        {
+            return editLine_;
+        }
+
+    private:
+        ADN_EditLine_LocalizedString* editLine_;
+        ADN_ApplyButton* applyButton_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -317,6 +377,16 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
         editor->GetConnector().Connect( data );
         return editor;
     }
+    else if( std::find( localizedEditLines_.begin(), localizedEditLines_.end(), position->id_ ) != localizedEditLines_.end() )
+    {
+        ADN_LocalizedEditor* editor = new ADN_LocalizedEditor( parent );
+        ADN_Table* table = static_cast< ADN_Table* >( this->parent() );
+        ADN_StandardItem* standardItem = static_cast< ADN_StandardItem* >( table->GetItemFromIndex( index ) );
+        editor->GetEditLine()->ConnectWithRefValidity( *reinterpret_cast< const ADN_Ref_ABC* >( standardItem->GetData() ) );
+        editor->GetEditLine()->GetConnector().Connect( data );
+        editor->GetEditLine()->setAlignment( qApp->isRightToLeft() ? Qt::AlignRight : Qt::AlignLeft );
+        return editor;
+    }
     assert( false );
     return 0;
 }
@@ -358,8 +428,11 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnector = &static_cast< ADN_TimeEdit* >( editor )->GetConnector();
     else if( std::find( colorEdits_.begin(), colorEdits_.end(), position->id_ ) != colorEdits_.end() )
         guiConnector = &static_cast< ADN_ColorSelector* >( editor )->GetConnector();
+    else if( std::find( localizedEditLines_.begin(), localizedEditLines_.end(), position->id_ ) != localizedEditLines_.end() )
+        guiConnector = &static_cast< ADN_EditLine_LocalizedString* >( static_cast< ADN_LocalizedEditor* >( editor )->GetEditLine() )->GetConnector();
     if( guiConnector )
         guiConnector->Disconnect( data );
+    static_cast< ADN_Table* >( this->parent() )->CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -396,7 +469,7 @@ void ADN_TableDelegate::paint( QPainter* painter, const QStyleOptionViewItem& op
              if( std::find( colorEdits_.begin(), colorEdits_.end(), position->id_ ) != colorEdits_.end() )
                  tempOption.state &= ~QStyle::State_Selected;
         QItemDelegate::paint( painter, tempOption, index );
-}
+    }
 
      // To draw a border on selected cells
      if( option.state & QStyle::State_Selected )

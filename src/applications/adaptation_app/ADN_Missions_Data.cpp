@@ -247,7 +247,7 @@ void ADN_Missions_Data::ReadMission( xml::xistream& xis, E_MissionType modelType
     if( modelType == eMissionType_FragOrder )
     {
         std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
-        spNew->ReadArchive( xis, missionPath );
+        spNew->ReadArchive( xis, missionPath, modelType, *translations_ );
         spNew->strName_.SetTranslation( strName, translations_->GetTranslation( context, strName ) );
         missionsVector_[ modelType ].second.AddItem( spNew.release() );
     }
@@ -255,7 +255,7 @@ void ADN_Missions_Data::ReadMission( xml::xistream& xis, E_MissionType modelType
     {
         std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( xis.attribute< unsigned int >( "id" ) ) );
         ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-        spNew->ReadArchive( xis, drawings, missionPath );
+        spNew->ReadArchive( xis, drawings, missionPath, modelType, *translations_ );
         spNew->strName_.SetTranslation( strName, translations_->GetTranslation( context + "-missions", strName ) );
         missionsVector_[ modelType ].second.AddItem( spNew.release() );
     }

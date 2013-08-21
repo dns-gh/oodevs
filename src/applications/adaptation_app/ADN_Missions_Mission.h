@@ -12,6 +12,11 @@
 
 #include "ADN_Missions_ABC.h"
 
+namespace kernel
+{
+    class XmlTranslations;
+}
+
 enum E_EntityType;
 
 namespace xml { class xistream; }
@@ -25,7 +30,7 @@ public:
 
     virtual ADN_Missions_Mission* CreateCopy();
 
-    virtual void ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir );
+    virtual void ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir, E_MissionType type, kernel::XmlTranslations& translations );
     virtual void WriteArchive( xml::xostream& output, E_MissionType type );
 
 public:

@@ -27,7 +27,7 @@ namespace xml
     class xostream;
 }
 
-class ADN_Missions_Parameter : public ADN_RefWithName
+class ADN_Missions_Parameter : public ADN_RefWithLocalizedName
 {
 public:
     typedef ADN_Type_Vector_ABC<ADN_Missions_ParameterValue>  T_MissionParameterValue_Vector;

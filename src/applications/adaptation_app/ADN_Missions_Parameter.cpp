@@ -95,15 +95,14 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
 {
     std::string type;
     std::string max;
-    input >> xml::attribute( "name", strName_ )
-            >> xml::attribute( "type", type )
-            >> xml::optional >> xml::attribute( "optional", isOptional_ )
-            >> xml::attribute( "dia-name", diaName_ )
-            >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
-            >> xml::optional >> xml::attribute( "max-occurs", max )
-            >> xml::optional >> xml::attribute( "min-value", minValue_ )
-            >> xml::optional >> xml::attribute( "max-value", maxValue_ )
-            >> xml::optional >> xml::attribute( "is-context", isContext_ );
+    input >> xml::attribute( "type", type )
+          >> xml::optional >> xml::attribute( "optional", isOptional_ )
+          >> xml::attribute( "dia-name", diaName_ )
+          >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
+          >> xml::optional >> xml::attribute( "max-occurs", max )
+          >> xml::optional >> xml::attribute( "min-value", minValue_ )
+          >> xml::optional >> xml::attribute( "max-value", maxValue_ )
+          >> xml::optional >> xml::attribute( "is-context", isContext_ );
     if( max == "unbounded" )
         maxOccurs_ = std::numeric_limits< int >::max();
     else
