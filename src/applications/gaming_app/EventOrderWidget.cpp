@@ -343,9 +343,11 @@ void EventOrderWidget::FillMission()
             {
                 AddSingleOrder( *lastGivenOrder_ );
                 missionCombo_->setCurrentIndex( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
-                missionCombo_->setItemData( missionCombo_->currentIndex(), 0, Qt::UserRole - 1 );
                 if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
+                {
+                    missionCombo_->setItemData( missionCombo_->currentIndex(), 0, Qt::UserRole - 1 );
                     WarnTargetAndMission();
+                }
             }
             else
             {
