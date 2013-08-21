@@ -14,7 +14,6 @@
 #include "protocol/MessengerSenders.h"
 #include "tools/Resolver.h"
 #include <tools/Path.h>
-#include <boost/noncopyable.hpp>
 #include <ostream>
 #include <list>
 
@@ -41,8 +40,7 @@ namespace messenger
 */
 // Created: HBD 2010-01-15
 // =============================================================================
-class NotesModel : private boost::noncopyable
-                 , private tools::Resolver< Note >
+class NotesModel : private tools::Resolver< Note >
                  , public dispatcher::Registrable_ABC
 {
 public:

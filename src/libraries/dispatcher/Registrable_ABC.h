@@ -10,12 +10,14 @@
 #ifndef __Registrable_ABC_h_
 #define __Registrable_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace directia
 {
-    namespace brain
-    {
-        class Brain;
-    }
+namespace brain
+{
+    class Brain;
+}
 }
 
 namespace dispatcher
@@ -26,7 +28,7 @@ namespace dispatcher
 */
 // Created: AGE 2008-06-12
 // =============================================================================
-class Registrable_ABC
+class Registrable_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

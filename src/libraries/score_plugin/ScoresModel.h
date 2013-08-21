@@ -16,7 +16,6 @@
 #pragma warning( disable : 4996 )
 #include <QtCore/qdatetime.h>
 #pragma warning( pop )
-#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <map>
@@ -84,7 +83,6 @@ namespace score
 // Created: SBO 2009-08-20
 // =============================================================================
 class ScoresModel : public dispatcher::Registrable_ABC
-                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

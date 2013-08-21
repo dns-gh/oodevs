@@ -12,7 +12,6 @@
 
 #include "tools/Resolver.h"
 #include "dispatcher/Registrable_ABC.h"
-#include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 
 namespace dispatcher
@@ -61,7 +60,6 @@ namespace messenger
 // =============================================================================
 class DrawingsModel : public tools::Resolver< Drawing >
                     , public dispatcher::Registrable_ABC
-                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
