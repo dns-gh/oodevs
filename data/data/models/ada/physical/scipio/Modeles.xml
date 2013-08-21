@@ -61,6 +61,7 @@
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -110,6 +111,7 @@
         <mission name="PION MELEE Mortier Appuyer En Mouvement">
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -228,6 +230,7 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1917,6 +1920,7 @@
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Harceler"/>
         <mission name="PION MELEE Barrer"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1975,6 +1979,7 @@
         <mission name="PION MELEE Couvrir"/>
         <mission name="PION MELEE Harceler"/>
         <mission name="PION MELEE Defendre"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2028,6 +2033,7 @@
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION MELEE Detruire Embuscade"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2091,6 +2097,7 @@
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2155,6 +2162,7 @@
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2217,6 +2225,7 @@
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Barrer"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2298,6 +2307,7 @@
         <mission name="PION MELEE Renseigner Sur"/>
         <mission name="PION MELEE Tenir"/>
         <mission name="PION MELEE Eclairer"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2374,6 +2384,7 @@
         <mission name="PION MELEE Renseigner Sur"/>
         <mission name="PION MELEE Tenir"/>
         <mission name="PION MELEE Eclairer"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2421,6 +2432,7 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2475,6 +2487,9 @@
         <mission name="PION MELEE Controler foule"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="PION MELEE Reconnaitre"/>
+        <mission name="PION MELEE Defendre"/>
+        <mission name="PION MELEE Tenir"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2537,6 +2552,7 @@
         <mission name="PION MELEE Interdire"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="PION MELEE Reconnaitre"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2583,6 +2599,7 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Controler"/>
         <mission name="PION MELEE Flanc-Garder"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2621,6 +2638,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2663,6 +2681,7 @@
           <fragorder name="Arreter Silence Radar"/>
         </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2702,6 +2721,7 @@
         <mission name="PION MELEE Renseigner Sur"/>
         <mission name="PION MELEE Surveiller"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -3506,6 +3526,7 @@
         <mission name="PION TRANS Preparer bascule"/>
         <mission name="PION TRANS Se Deployer"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION COMMUNES Renforcer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7605,4 +7626,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3875609531" -->
+<!-- signature="1435926353" -->
