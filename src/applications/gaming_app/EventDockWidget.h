@@ -102,6 +102,11 @@ private:
     virtual void NotifyUpdated( const Event& event );
     //@}
 
+    //! @name RichDockWidget implementation
+    //@{
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
+    //@}
+
 signals:
     //! @name Signals
     //@{

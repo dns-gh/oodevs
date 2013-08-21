@@ -367,3 +367,14 @@ void EventDockWidget::SetEditing( bool editing, bool fromTimeline )
     editing_ = editing;
     emit EditingChanged( editing, fromTimeline );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::SetEditing
+// Created: LGY 2013-08-21
+// -----------------------------------------------------------------------------
+void EventDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
+{
+    if( newMode == eModes_Default )
+        Purge();
+    gui::RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+}
