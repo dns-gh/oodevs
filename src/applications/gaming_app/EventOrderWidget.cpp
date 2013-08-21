@@ -367,7 +367,7 @@ void EventOrderWidget::FillMission()
     }
     connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
     missionChoosed_ = false;
-    BuildMissionInterface( previousType_ != entityType_ );
+    BuildMissionInterface( previousType_ != entityType_ || currentType_ == eMissionType_FragOrder );
 }
 
 // -----------------------------------------------------------------------------
