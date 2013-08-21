@@ -251,10 +251,12 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
 
     local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask
 
-    -- Si un pion a été supprimé de l'automate, on redistribue les missions
+    -- if a unit has been removed from automaton, we dispatch again the missions
     for i, entity in pairs( oldEntities ) do
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
             myself.leadData.addedOrDeletedUnit = true
+            local tasks = myself.leadData.dynamicEntityTasks[entity] or self.params.mainTasks -- main tasks have to be given before support tasks
+            integration.issueMission ( self, self.params.mainTasks, 1, eEtatEchelon_First, pionsSE, false, findBestsFunction, disengageTask )
             for element, params in pairs (myself.leadData.paramsGiven) do
                 for _, param in pairs (params) do
                     if type(param) == "table" then
@@ -275,8 +277,6 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
                 meKnowledge.pionsToAwaitSource[ entity.source ] = nil
             end
             redone = true
-            local tasks = myself.leadData.dynamicEntityTasks[entity] or self.params.mainTasks
-            integration.issueMission ( self, self.params.mainTasks, 1, eEtatEchelon_First, pionsSE, false, findBestsFunction, disengageTask )
             self.listenFrontElementInitialized = true
             integration.initializeListenFrontElement()
             break
