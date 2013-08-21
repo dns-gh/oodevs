@@ -49,8 +49,7 @@ SimulationNetworker::~SimulationNetworker()
 // Name: SimulationNetworker::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void SimulationNetworker::ConnectionSucceeded( const std::string& local,
-        const std::string& remote )
+void SimulationNetworker::ConnectionSucceeded( const std::string& local, const std::string& remote )
 {
     MT_LOG_INFO_MSG( "Connected from '" << local << "' to '" << remote << "'" );
     ClientNetworker::ConnectionSucceeded( local, remote );
