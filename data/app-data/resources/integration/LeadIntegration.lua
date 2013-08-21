@@ -580,7 +580,6 @@ end
 -- @author LMT
 -- @release 2013-08-13
 integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
-    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     myself.leadData.dynamicEchelonTasks = myself.leadData.dynamicEchelonTasks or {}
     if self.companyTask.isDynamic and self.companyTask:isDynamic() then
         if self.companyTask.readyToGiveDynamicTasks then
@@ -627,6 +626,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
                             manageRCnoPEInAutomatWhenNoCoordination, assignDefaultTaskToSE,
                             findBestsFunction, disengageTask )
                                    
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     if myself.newTask then
       self:create()
     end
@@ -736,8 +736,9 @@ end
 -- @param self: The leading skill
 -- @author NMI
 -- @release 2013-07-05
-integration.leadDelayActivate = function( self )  
-      integration.manageAddedAndDeletedUnits( self, findBests, true )
+integration.leadDelayActivate = function( self, disengageTask )  
+      myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
+      integration.manageAddedAndDeletedUnits( self, findBests, disengageTask )
     
         -- Mis à jour des echelons
       integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
