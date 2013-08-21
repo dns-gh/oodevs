@@ -49,7 +49,7 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::Team_ABC& team, bool isCrowd )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( controllers_.controller_, idManager_, staticModel_.types_, team, isCrowd );
+    KnowledgeGroup* result = new KnowledgeGroup( controllers_, idManager_, staticModel_.types_, team, isCrowd );
     result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &team ) );
     result->Polish();
     return result;
@@ -61,7 +61,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::Team_ABC& tea
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::Team_ABC& team )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
+    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_, idManager_, staticModel_.types_ );
     result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &team ) );
     result->Polish();
     return result;
@@ -73,7 +73,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, k
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::KnowledgeGroup_ABC& kgparent )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( controllers_.controller_, idManager_, staticModel_.types_, kgparent, false );
+    KnowledgeGroup* result = new KnowledgeGroup( controllers_, idManager_, staticModel_.types_, kgparent, false );
     result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &kgparent ) );
     result->Polish();
     return result;
@@ -85,7 +85,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::KnowledgeGrou
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& kgparent )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
+    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_, idManager_, staticModel_.types_ );
     result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &kgparent ) );
     result->Polish();
     return result;

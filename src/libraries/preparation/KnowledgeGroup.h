@@ -13,7 +13,11 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "tools/ElementObserver_ABC.h"
+#include "tools/Observer_ABC.h"
 #include "tools/Resolver_ABC.h"
+
+#include <boost/optional.hpp>
 
 namespace xml
 {
@@ -23,6 +27,8 @@ namespace xml
 namespace kernel
 {
     class KnowledgeGroupType;
+    class Controllers;
+    class Team_ABC;
 }
 
 namespace tools
@@ -39,12 +45,14 @@ namespace tools
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
                      , public kernel::Extension_ABC
                      , public kernel::Serializable_ABC
+                     , public tools::Observer_ABC 
+                     , public tools::ElementObserver_ABC< kernel::Team_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types, const kernel::Entity_ABC& parent, bool isCrowd );
-             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( kernel::Controllers& controllers, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types, const kernel::Entity_ABC& parent, bool isCrowd );
+             KnowledgeGroup( xml::xistream& xis, kernel::Controllers& controllers, tools::IdManager& idManager, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -63,6 +71,7 @@ private:
     void CreateDictionary( kernel::Controller& controller );
     void UpdateCommunicationDelay();
     kernel::KnowledgeGroupType* ResolveType( const std::string& typeName, tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+    virtual void NotifyUpdated( const kernel::Team_ABC& team );
     //@}
 
 private:
@@ -71,6 +80,8 @@ private:
     kernel::KnowledgeGroupType* type_;
     std::string communicationDelay_;
     bool isCrowd_;
+    const boost::optional< unsigned int > parentId_;
+    kernel::Controllers& controllers_;
     //@}
 };
 

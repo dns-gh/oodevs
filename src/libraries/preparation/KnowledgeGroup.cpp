@@ -10,6 +10,8 @@
 #include "preparation_pch.h"
 #include "KnowledgeGroup.h"
 #include "tools/IdManager.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/KnowledgeGroupType.h" // LTO
 #include "clients_kernel/PropertiesDictionary.h"
@@ -21,10 +23,12 @@ using namespace kernel;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types, const kernel::Entity_ABC& parent, bool isCrowd )
-    : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
+KnowledgeGroup::KnowledgeGroup( kernel::Controllers& controllers, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types, const kernel::Entity_ABC& parent, bool isCrowd )
+    : EntityImplementation< KnowledgeGroup_ABC >( controllers.controller_, idManager.GetNextId(), "" )
     , type_( ResolveType( "Standard", types ) )
     , isCrowd_( isCrowd )
+    , parentId_( parent.GetId() )
+    , controllers_( controllers )
 {
     UpdateCommunicationDelay();
     if( isCrowd_ )
@@ -32,17 +36,19 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idMana
     else
         name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary( controllers_.controller_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
-    : EntityImplementation< KnowledgeGroup_ABC >( controller, xis.attribute< unsigned int >( "id" ), "" )
+KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controllers& controllers, tools::IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
+    : EntityImplementation< KnowledgeGroup_ABC >( controllers.controller_, xis.attribute< unsigned int >( "id" ), "" )
     , type_( ResolveType( xis.attribute< std::string >( "type" ), types ) )
     , isCrowd_( xis.has_attribute( "crowd" ) && xis.attribute< bool >( "crowd" ) == true )
+    , controllers_( controllers )
 {
     name_ = xis.attribute< std::string >( "name", "" ).c_str();
     if( name_.isEmpty() )
@@ -50,7 +56,8 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, tool
     UpdateCommunicationDelay(); // LTO
     idManager.Lock( id_ );
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    CreateDictionary( controllers_.controller_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,6 +66,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, tool
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
+    controllers_.Unregister( *this );
     Destroy();
 }
 
@@ -77,6 +85,16 @@ KnowledgeGroupType* KnowledgeGroup::ResolveType( const std::string& typeName, to
         ret = const_cast< KnowledgeGroupType* >( &it.NextElement() );
     }
     return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::NotifyUpdated
+// Created: NPT 2013-08-20
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::NotifyUpdated( const kernel::Team_ABC& team )
+{
+    if( isCrowd_ && parentId_ && team.GetId() == *parentId_ )
+        name_ = tools::translate( "KnowledgeGroup", "Crowd" ) + " " + team.GetName();
 }
 
 // -----------------------------------------------------------------------------
