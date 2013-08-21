@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:complexType name="T_LogSettings">
+    <xs:attribute name="loglevel" use="optional" default="2">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">The minimum gravity of logged messages,
+          0 for error, 1 for informative, 2 for debug.</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer">
+          <xs:enumeration value="0"/>
+          <xs:enumeration value="1"/>
+          <xs:enumeration value="2"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="logfiles" type="xs:nonNegativeInteger" use="optional"
+        default="1">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Set the number of rotating log files.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional"
+        default="0">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Set log files maximum size, in lines
+            or bytes depending on the sizeunit attribute.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="sizeunit" use="optional">
+      <xs:annotation>
+          <xs:documentation xml:lang="en">The log file size unit. If not set,
+            the maximum log size is measured in lines.</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="bytes"/>
+          <xs:enumeration value="kbytes"/>
+          <xs:enumeration value="mbytes"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
   <xs:element name="session">
     <xs:complexType>
       <xs:all>
@@ -98,22 +141,20 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
-        <xs:element name="debug" minOccurs="0">
+        <xs:element name="log" minOccurs="0" type="T_LogSettings">
           <xs:annotation>
-            <xs:documentation xml:lang="en">Enables message debugging.</xs:documentation>
+            <xs:documentation xml:lang="en">Dispatcher log file configuration</xs:documentation>
           </xs:annotation>
-          <xs:complexType>
-            <xs:attribute name="logfiles" type="xs:nonNegativeInteger" use="optional">
-              <xs:annotation>
-                <xs:documentation xml:lang="en">Set the number of rotating log files.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional">
-              <xs:annotation>
-                <xs:documentation xml:lang="en">Set the maximum number of messages to log in each log file.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-          </xs:complexType>
+        </xs:element>
+        <xs:element name="messages" minOccurs="0" type="T_LogSettings">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Messages log file configuration</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="debug" minOccurs="0" type="T_LogSettings">
+          <xs:annotation>
+              <xs:documentation xml:lang="en">Protobuf log file configuration</xs:documentation>
+          </xs:annotation>
         </xs:element>
         <xs:element name="plugins">
           <xs:annotation>
