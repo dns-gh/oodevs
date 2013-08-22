@@ -215,8 +215,8 @@ namespace
         void Changed()
         {
             modified_ = true;
-            owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
             owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+            owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
         }
     private:
         MIL_AgentPion& owner_;
