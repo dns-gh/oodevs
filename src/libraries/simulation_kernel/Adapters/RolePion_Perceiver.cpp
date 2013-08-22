@@ -539,9 +539,8 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const MT_Vecto
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Update( bool /*bIsDead*/ )
 {
-    // Debug - Cones de vision
     if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
-        SendDebugState();
+        SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -721,10 +720,10 @@ bool RolePion_Perceiver::HasDelayedPerceptions() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::SendDebugState
+// Name: RolePion_Perceiver::SendVisionCones
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::SendDebugState() const
+void RolePion_Perceiver::SendVisionCones() const
 {
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );
