@@ -363,3 +363,12 @@ unsigned int Population::GetDeadHumans() const
     }
     return nbr;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetDeadHumans
+// Created: LGY 2013-08-22
+// -----------------------------------------------------------------------------
+dispatcher::Team_ABC& Population::GetTeam() const
+{
+    return side_;
+}
