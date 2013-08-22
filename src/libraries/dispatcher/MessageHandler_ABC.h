@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const sword::SimToClient& message ) = 0;
+    virtual void Receive( const sword::SimToClient& /*message*/ ) {}
     virtual void Receive( const sword::AarToClient& /*message*/ ) {}
     virtual void Receive( const sword::MessengerToClient& /*message*/ ) {}
     //@}
