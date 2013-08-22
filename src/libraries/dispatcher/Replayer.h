@@ -13,6 +13,7 @@
 #include "CompositePlugin.h"
 #include "CompositeRegistrable.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 #include <memory>
 
 namespace kernel
@@ -50,7 +51,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class Replayer
+class Replayer : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -63,13 +64,6 @@ public:
     //@{
     void Update();
     void OnWebControl( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Replayer( const Replayer& );            //!< Copy constructor
-    Replayer& operator=( const Replayer& ); //!< Assignment operator
     //@}
 
 private:
