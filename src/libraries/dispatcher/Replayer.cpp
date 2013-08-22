@@ -38,31 +38,20 @@ namespace
         return result;
     }
 
-    class NullMemoryLogger : public MemoryLogger_ABC
+    struct NullMemoryLogger : MemoryLogger_ABC
     {
-    public:
-        NullMemoryLogger()
-        {
-            // NOTHING
-        }
-        virtual ~NullMemoryLogger()
-        {
-            // NOTHING
-        }
-        virtual void Update( const sword::ControlEndTick& /*message*/ )
-        {
-            // NOTHING
-        }
+        virtual void Update( const sword::ControlEndTick& )
+        {}
         virtual void Update()
-        {
-            // NOTHING
-        }
+        {}
     };
 
-    struct NullPublisher : public SimulationPublisher_ABC
+    struct NullPublisher : SimulationPublisher_ABC
     {
-        virtual void Send( const sword::ClientToSim& ) {}
-        virtual void Send( const sword::DispatcherToSim& ) {}
+        virtual void Send( const sword::ClientToSim& )
+        {}
+        virtual void Send( const sword::DispatcherToSim& )
+        {}
     };
 }
 
