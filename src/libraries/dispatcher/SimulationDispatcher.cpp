@@ -74,12 +74,12 @@ bool SimulationDispatcher::IsDestruction( const sword::SimToClient& wrapper ) co
 // Name: SimulationDispatcher::Receive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SimulationDispatcher::Receive( const sword::SimToClient& asnMsg )
+void SimulationDispatcher::Receive( const sword::SimToClient& wrapper )
 {
-    if( !synching_ || IsDestruction( asnMsg )
-        || ( asnMsg.message().has_control_begin_tick() && asnMsg.message().control_begin_tick().current_tick() == 0 )
-        || ( asnMsg.message().has_control_end_tick() && asnMsg.message().control_end_tick().current_tick() == 0 ) )
-        clientsPublisher_.Send( asnMsg );
+    if( !synching_ || IsDestruction( wrapper )
+        || ( wrapper.message().has_control_begin_tick() && wrapper.message().control_begin_tick().current_tick() == 0 )
+        || ( wrapper.message().has_control_end_tick() && wrapper.message().control_end_tick().current_tick() == 0 ) )
+        clientsPublisher_.Send( wrapper );
 }
 
 namespace
