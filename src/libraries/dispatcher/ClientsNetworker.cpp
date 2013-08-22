@@ -126,8 +126,7 @@ void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*clie
 // Name: ClientsNetworker::ConnectionSucceeded
 // Created: NLD 2002-07-12
 // -----------------------------------------------------------------------------
-void ClientsNetworker::ConnectionSucceeded( const std::string& local,
-        const std::string& remote )
+void ClientsNetworker::ConnectionSucceeded( const std::string& local, const std::string& remote )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << remote << "'" );
     ServerNetworker::ConnectionSucceeded( local, remote );

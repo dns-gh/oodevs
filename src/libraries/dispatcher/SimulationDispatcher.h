@@ -15,8 +15,8 @@
 
 namespace dispatcher
 {
-    class Model;
     class ClientPublisher_ABC;
+    class Model;
 
 // =============================================================================
 /** @class  SimulationDispatcher
@@ -42,12 +42,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SimulationDispatcher( const SimulationDispatcher& );            //!< Copy constructor
-    SimulationDispatcher& operator=( const SimulationDispatcher& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     bool IsDestruction( const sword::SimToClient& asnMsg ) const;
@@ -56,7 +50,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ClientPublisher_ABC& clientsPublisher_;
+    ClientPublisher_ABC& publisher_;
     Model&               model_;
     bool                 synching_;
     //@}

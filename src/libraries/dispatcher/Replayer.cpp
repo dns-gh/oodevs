@@ -37,10 +37,7 @@ namespace
         handler.AddHandler( result );
         return result;
     }
-}
 
-namespace
-{
     class NullMemoryLogger : public MemoryLogger_ABC
     {
     public:

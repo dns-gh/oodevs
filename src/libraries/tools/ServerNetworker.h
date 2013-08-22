@@ -83,12 +83,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ServerNetworker( const ServerNetworker& );            //!< Copy constructor
-    ServerNetworker& operator=( const ServerNetworker& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual void Send( const std::string& endpoint, unsigned long tag, Message& message );
