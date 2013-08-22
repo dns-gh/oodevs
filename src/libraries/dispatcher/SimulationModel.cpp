@@ -70,30 +70,30 @@ void SimulationModel::Update( const sword::ControlInformation& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationModel::Update_Stop
+// Name: SimulationModel::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Stop( const sword::ControlStopAck& msg )
+void SimulationModel::Update( const sword::ControlStopAck& msg )
 {
     if( msg.error_code() == sword::ControlAck::no_error )
         nSimState_ = sword::stopped;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationModel::Update_Pause
+// Name: SimulationModel::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Pause( const sword::ControlPauseAck& msg )
+void SimulationModel::Update( const sword::ControlPauseAck& msg )
 {
     if( msg.error_code() == sword::ControlAck::no_error )
         nSimState_ = sword::paused;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationModel::Update_Resume
+// Name: SimulationModel::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Resume( const sword::ControlResumeAck& msg )
+void SimulationModel::Update( const sword::ControlResumeAck& msg )
 {
     if( msg.error_code() == sword::ControlAck::no_error )
         nSimState_ = sword::running;
