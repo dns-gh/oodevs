@@ -233,10 +233,7 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> xml::attribute( "networklogger", bUseNetworkLogger_ )
             >> xml::optional >> xml::attribute( "decisional-logger", bDecisionalLoggerEnabled_ )
             >> xml::optional >> xml::attribute( "networkloggerport", networkLoggerPort_ )
-            >> xml::optional >> xml::attribute( "loglevel", logSim.level_ )
-            >> xml::optional >> xml::attribute( "logfiles", logSim.files_ )
-            >> xml::optional >> xml::attribute( "logsize", logSim.fileSize_ )
-            >> xml::optional >> xml::attribute( "sizeunit", logSim.sizeUnit_ )
+            >> logSim
         >> xml::end;
     SetSimLogSettings( logSim );
 }

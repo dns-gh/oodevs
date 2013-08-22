@@ -20,8 +20,10 @@
 #pragma warning( pop )
 #include <boost/bind.hpp>
 
-using namespace tools;
 namespace po = boost::program_options;
+
+namespace tools
+{
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig constructor
@@ -567,12 +569,7 @@ void ExerciseConfig::LogSettings::SetLogSettings( const LogSettingsData& data )
 void ExerciseConfig::LogSettings::SetLogSettings( const std::string& name, xml::xistream& xis )
 {
     LogSettingsData data;
-    xis >> xml::start( name )
-            >> xml::optional >> xml::attribute( "loglevel", data.level_ )
-            >> xml::optional >> xml::attribute( "logfiles", data.files_ )
-            >> xml::optional >> xml::attribute( "logsize", data.fileSize_ )
-            >> xml::optional >> xml::attribute( "sizeunit", data.sizeUnit_ )
-        >> xml::end;
+    xis >> xml::content( name, data );
     SetLogSettings( data );
 }
 
@@ -881,3 +878,14 @@ bool ExerciseConfig::HasTimeline() const
 {
     return false;
 }
+
+xml::xistream& operator>>( xml::xistream& xis, ExerciseConfig::LogSettingsData& settings )
+{
+    xis >> xml::optional >> xml::attribute( "loglevel", settings.level_ )
+        >> xml::optional >> xml::attribute( "logfiles", settings.files_ )
+        >> xml::optional >> xml::attribute( "logsize", settings.fileSize_ )
+        >> xml::optional >> xml::attribute( "sizeunit", settings.sizeUnit_ );
+    return xis;
+}
+
+}  // namespace tools
