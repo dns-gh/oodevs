@@ -270,11 +270,12 @@ QString ADN_GuiBuilder::GetChildName( QString childName ) const
 // Name: ADN_GuiBuilder::AddLocalizedField
 // Created: ABR 2013-07-18
 // -----------------------------------------------------------------------------
-ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
+ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( ADN_Ref_ABC& ref, QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
 {
     ADN_ApplyButton* applyButton = new ADN_ApplyButton();
     ADN_EditLine_ABC* field = AddField< ADN_EditLine_LocalizedString >( pParent, objectName, szName, pGuiConnector, szUnit, nValidator, applyButton );
     applyButton->Connect( field );
+    field->ConnectWithRefValidity( ref );
     return field;
 }
 
@@ -282,11 +283,12 @@ ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( QWidget* pParent, const cha
 // Name: ADN_GuiBuilder::AddLocalizedField
 // Created: ABR 2013-07-18
 // -----------------------------------------------------------------------------
-ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
+ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( ADN_Ref_ABC& ref, QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
 {
     ADN_ApplyButton* applyButton = new ADN_ApplyButton();
     ADN_EditLine_ABC* field = AddField< ADN_EditLine_LocalizedString >( pParent, objectName, szName, itemConnector, szUnit, nValidator, applyButton );
     applyButton->Connect( field );
+    field->ConnectWithRefValidity( ref );
     return field;
 }
 
@@ -294,11 +296,12 @@ ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedField( QWidget* pParent, const cha
 // Name: ADN_GuiBuilder::AddLocalizedOptionalField
 // Created: MMC 2013-08-01
 // -----------------------------------------------------------------------------
-ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedOptionalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, T_optionalWidgets& optionalFields, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
+ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedOptionalField( ADN_Ref_ABC& ref, QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, T_optionalWidgets& optionalFields, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
 {
     ADN_ApplyButton* applyButton = new ADN_ApplyButton();
     ADN_EditLine_ABC* field = AddOptionalField< ADN_EditLine_LocalizedString >( pParent, objectName, szName, pGuiConnector, optionalFields, szUnit, nValidator, applyButton );
     applyButton->Connect( field );
+    field->ConnectWithRefValidity( ref );
     return field;
 }
 
@@ -306,10 +309,11 @@ ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedOptionalField( QWidget* pParent, c
 // Name: ADN_GuiBuilder::AddLocalizedOptionalField
 // Created: MMC 2013-08-01
 // -----------------------------------------------------------------------------
-ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedOptionalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, T_optionalWidgets& optionalFields, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
+ADN_EditLine_ABC* ADN_GuiBuilder::AddLocalizedOptionalField( ADN_Ref_ABC& ref, QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, T_optionalWidgets& optionalFields, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/ )
 {
     ADN_ApplyButton* applyButton = new ADN_ApplyButton();
     ADN_EditLine_ABC* field = AddOptionalField< ADN_EditLine_LocalizedString >( pParent, objectName, szName, itemConnector, optionalFields, szUnit, nValidator, applyButton );
     applyButton->Connect( field );
+    field->ConnectWithRefValidity( ref );
     return field;
 }

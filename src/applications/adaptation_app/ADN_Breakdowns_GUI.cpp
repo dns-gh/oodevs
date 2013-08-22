@@ -58,8 +58,7 @@ void ADN_Breakdowns_GUI::Build()
     // Specific parameter
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
-    nameField->ConnectWithRefValidity( data_.GetBreakdowns() );
+    builder.AddLocalizedField( data_.GetBreakdowns(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
     builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[eType] );
     builder.AddEnumField( pInfoHolder, "seriousness", tr( "Seriousness" ), vInfosConnectors[eNTI] );
     builder.AddField< ADN_TimeField >( pInfoHolder, "repair-duration", tr( "Repair duration" ), vInfosConnectors[eRepairTime] );

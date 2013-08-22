@@ -62,8 +62,7 @@ void ADN_Fires_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
 
-    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->ConnectWithRefValidity( data_.GetFireClassesInfos() );
+    builder.AddLocalizedField( data_.GetFireClassesInfos(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
 
     builder.AddField< ADN_EditLine_Int >( pInfoHolder, "initial-heat", tr( "Initial heat" ), vInfosConnectors[ eInitialHeat ] );
     builder.AddField< ADN_EditLine_Int >( pInfoHolder, "max-heat", tr( "Max heat" ), vInfosConnectors[ eMaxHeat ] );

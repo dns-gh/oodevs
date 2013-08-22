@@ -153,9 +153,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    nameFields_[ eMissionType ] = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
+    nameFields_[ eMissionType ] = builder.AddLocalizedField( missions, pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     nameFields_[ eMissionType ]->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
-    nameFields_[ eMissionType ]->ConnectWithRefValidity( missions );
 
     builder.SetValidator( new MissionNameValidator() );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[ eDiaType ] );
