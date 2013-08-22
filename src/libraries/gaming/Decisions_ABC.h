@@ -41,6 +41,7 @@ public:
     virtual tools::Iterator< const kernel::Mission& > GetMissions() const = 0;
     virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const = 0;
     virtual const kernel::Mission* GetCurrentMission() const = 0;
+    virtual const kernel::Entity_ABC& GetAgent() const = 0;
     //@}
 };
 

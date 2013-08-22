@@ -29,6 +29,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
+#include "gaming/Decisions_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "ENT/ENT_Tr_Gen.h"
 
@@ -98,9 +99,10 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& entity, kernel
 // Name: TacticalTreeView::NotifyUpdated
 // Created: JSR 2012-09-27
 // -----------------------------------------------------------------------------
-void TacticalTreeView::NotifyUpdated( const kernel::AutomatDecisions_ABC& /*decisions*/ )
+void TacticalTreeView::NotifyUpdated( const Decisions_ABC& decisions )
 {
-    proxyModel_->invalidate();
+    if( decisions.GetAgent().GetTypeName() == kernel::Automat_ABC::typeName_ )
+        proxyModel_->invalidate();
 }
 
 // -----------------------------------------------------------------------------

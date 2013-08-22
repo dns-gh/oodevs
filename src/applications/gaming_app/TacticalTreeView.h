@@ -21,7 +21,6 @@ namespace actions
 
 namespace kernel
 {
-    class AutomatDecisions_ABC;
     class Time_ABC;
 }
 
@@ -31,6 +30,7 @@ namespace gui
 }
 
 class StaticModel;
+class Decisions_ABC;
 
 // =============================================================================
 /** @class  TacticalTreeView
@@ -40,7 +40,7 @@ class StaticModel;
 // =============================================================================
 class TacticalTreeView  : public gui::TacticalTreeView
                         , public gui::ChangeSuperior_ABC
-                        , public tools::ElementObserver_ABC< kernel::AutomatDecisions_ABC >
+                        , public tools::ElementObserver_ABC< Decisions_ABC >
                         , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                         , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
@@ -58,7 +58,7 @@ public:
     //@{
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
-    virtual void NotifyUpdated( const kernel::AutomatDecisions_ABC& decisions );
+    virtual void NotifyUpdated( const Decisions_ABC& decisions );
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
     virtual void Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );

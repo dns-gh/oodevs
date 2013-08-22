@@ -57,6 +57,7 @@ namespace tools
 class Decisions_ABC;
 class EventAction;
 class Model;
+class Decisions_ABC;
 
 // =============================================================================
 /** @class  EventOrderWidget
@@ -70,6 +71,7 @@ class EventOrderWidget : public EventWidget_ABC
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                       , public tools::ElementObserver_ABC< Decisions_ABC >
 {
     Q_OBJECT
 
@@ -100,6 +102,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    virtual void NotifyUpdated( const Decisions_ABC& decisions );
     //@}
 
     //! @name Helpers
@@ -115,7 +118,7 @@ private:
     void Publish( timeline::Event* event = 0 ) const;
 
     template< typename T >
-    void AddSingleOrder( const T& mission );
+    void AddSingleOrder( const T& mission, bool disabled = false );
     template< typename T >
     void AddAllOrders();
     template< typename T >

@@ -35,7 +35,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Automat_ABC& GetAgent() const = 0;
     virtual bool CanBeOrdered() const = 0;
     virtual bool IsEmbraye() const = 0;
     virtual void Engage() = 0;

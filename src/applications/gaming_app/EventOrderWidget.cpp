@@ -222,18 +222,30 @@ void EventOrderWidget::Publish( timeline::Event* event /* = 0 */ ) const
         missionInterface_->Publish< kernel::MissionType >( model_.actions_, event );
 }
 
+namespace
+{
+    void DisableItem( gui::RichWarnWidget< QComboBox >* comboBox, int index )
+    {
+        comboBox->setItemData( index, Qt::NoItemFlags, Qt::UserRole - 1 );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::AddSingleMission
 // Created: ABR 2013-06-07
 // -----------------------------------------------------------------------------
 template< typename T >
-void EventOrderWidget::AddSingleOrder( const T& mission )
+void EventOrderWidget::AddSingleOrder( const T& mission, bool disable )
 {
     QVariant* variant = new QVariant();
     variant->setValue( kernel::VariantPointer( &mission ) );
     QString missionName = QString::fromStdString( mission.GetName() );
     if( missionCombo_->findText( missionName ) == -1 )
+    {
         missionCombo_->insertItem( mission.GetId(), missionName, *variant );
+        if( disable )
+            DisableItem( missionCombo_, missionCombo_->findText( missionName ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -269,14 +281,15 @@ void EventOrderWidget::AddCompatibleOrders( tools::Iterator< const T& > it )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::AddCompatibleFragOrders( const Decisions_ABC& decisions )
 {
+    const kernel::Mission* currentMission = decisions.GetCurrentMission();
     AddCompatibleOrders< kernel::FragOrder >( decisions.GetFragOrders() );
-
     auto it = decisions.GetMissions();
     while( it.HasMoreElements() )
     {
-        auto itFragO = it.NextElement().CreateIterator();
+        const kernel::Mission& mission = it.NextElement();
+        auto itFragO = mission.CreateIterator();
         while( itFragO.HasMoreElements() )
-            AddSingleOrder( itFragO.NextElement().GetType() );
+            AddSingleOrder( itFragO.NextElement().GetType(), !currentMission || currentMission->GetType().GetId() != mission.GetType().GetId() );
     }
 }
 
@@ -332,7 +345,7 @@ void EventOrderWidget::FillMission()
                 missionCombo_->setCurrentIndex( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
                 if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
                 {
-                    missionCombo_->setItemData( missionCombo_->currentIndex(), 0, Qt::UserRole - 1 );
+                    DisableItem( missionCombo_, missionCombo_->currentIndex() );
                     WarnTargetAndMission();
                 }
             }
@@ -641,4 +654,15 @@ void EventOrderWidget::ActivateMissionPanel()
         emit UpdateCreation( eEventTypes_Order, simulation_.GetDateTime() );
 
     emit SelectEntity( *selectedEntity_, entityType_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::ActivateMissionPanel
+// Created: LGY 2013-08-22
+// -----------------------------------------------------------------------------
+void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
+{
+    if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() &&
+        currentType_ == eMissionType_FragOrder )
+        OnMissionTypeChanged( missionCombo_->currentIndex() );
 }
