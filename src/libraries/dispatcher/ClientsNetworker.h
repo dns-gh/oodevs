@@ -63,11 +63,7 @@ public:
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& link );
 
     virtual void Update();
-    //@}
 
-protected:
-    //! @name Operations
-    //@{
     virtual void Receive( const sword::SimToClient& message );
     //@}
 
