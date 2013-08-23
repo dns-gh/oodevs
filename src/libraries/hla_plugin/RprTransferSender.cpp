@@ -17,6 +17,7 @@
 #include "InteractionSender.h"
 #include <hla/Interaction.h>
 #include <hla/AttributeIdentifier.h>
+#include <hla/VariableLengthData.h>
 
 using namespace plugins::hla;
 
@@ -68,7 +69,7 @@ RprTransferSender::~RprTransferSender()
 // Name: RprTransferSender::RequestTransfer
 // Created: AHC 2012-02-23
 // -----------------------------------------------------------------------------
-void RprTransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/ )
+void RprTransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/, ::hla::VariableLengthData& tag )
 {
     unsigned int reqId = ctxtFactory_.Create();
     interactions::TransferControl transfer;
@@ -80,6 +81,7 @@ void RprTransferSender::RequestTransfer(const std::string& agentID, const Transf
                                                  : static_cast<uint8_t>( interactions::TransferControl::E_EntityPull );
     pTransferSender_->Send( transfer );
     callbacks_.insert( std::make_pair( reqId, T_RequestInfo( agentID, callback ) ) );
+    tag=::hla::VariableLengthData(reqId);
 }
 
 // -----------------------------------------------------------------------------
@@ -106,10 +108,11 @@ void RprTransferSender::Receive( interactions::TransferControl& interaction )
                         interactions::Acknowledge::E_UnableToComply );
         pAcknowledgeSender_->Send( reply );
         std::vector< ::hla::AttributeIdentifier > attributes;
+        ::hla::VariableLengthData tag( interaction.requestIdentifier );
         if( resp && transferType == interactions::TransferControl::E_EntityPull )
-            ownershipController_.PerformDivestiture( interaction.transferEntity.str(), attributes );
+            ownershipController_.PerformDivestiture( interaction.transferEntity.str(), attributes, tag );
         else if( resp && transferType == interactions::TransferControl::E_EntityPush )
-            ownershipController_.PerformAcquisition( interaction.transferEntity.str(), attributes );
+            ownershipController_.PerformAcquisition( interaction.transferEntity.str(), attributes, tag );
     }
 }
 
@@ -132,7 +135,8 @@ void RprTransferSender::Receive( interactions::Acknowledge& interaction )
 // Name: RprTransferSender::RequestTransfer
 // Created: AHC 2013-07-03
 // -----------------------------------------------------------------------------
-void RprTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& , TransferType , const std::vector< ::hla::AttributeIdentifier >&  )
+void RprTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& , TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& tag )
 {
+    tag=::hla::VariableLengthData( ctxtFactory_.Create() );
     logger_.LogWarning("Attempting to perform multiple ownership transfers using RPR.");
 }

@@ -22,8 +22,8 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockOwnershipController, OwnershipController_ABC )
 {
-    MOCK_METHOD( PerformDivestiture, 2 )
-    MOCK_METHOD( PerformAcquisition, 2 )
+    MOCK_METHOD( PerformDivestiture, 3 )
+    MOCK_METHOD( PerformAcquisition, 3 )
 };
 }
 }

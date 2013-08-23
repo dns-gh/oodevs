@@ -197,7 +197,7 @@ BOOST_FIXTURE_TEST_CASE( external_ownership_policy_divest_local, StrategyFixture
     MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).returns( 43 );
     MOCK_EXPECT( agentResolver.ResolveIdentifier ).returns( std::string( "identifier" ) );
     CheckOffer( true, transactionId );
-    MOCK_EXPECT( transferSender.RequestTransferList ).once().with( mock::any, mock::any, TransferSender_ABC::E_EntityPush, mock::any );
+    MOCK_EXPECT( transferSender.RequestTransferList ).once().with( mock::any, mock::any, TransferSender_ABC::E_EntityPush, mock::any, mock::any );
     ReceiveInitiate( "federateName", transactionId.transactionCounter, instances, attributes, interactions::TMR::Divest );
 }
 
@@ -242,7 +242,7 @@ BOOST_FIXTURE_TEST_CASE( external_ownership_policy_acquire_remote, StrategyFixtu
     MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).returns( 43 );
     MOCK_EXPECT( agentResolver.ResolveIdentifier ).returns( std::string( "identifier" ) );
     CheckOffer( true, transactionId );
-    MOCK_EXPECT( transferSender.RequestTransferList ).once().with( mock::any, mock::any, TransferSender_ABC::E_EntityPull, mock::any );
+    MOCK_EXPECT( transferSender.RequestTransferList ).once().with( mock::any, mock::any, TransferSender_ABC::E_EntityPull, mock::any, mock::any );
     ReceiveInitiate( "federateName", transactionId.transactionCounter, instances, attributes, interactions::TMR::Acquire );
 }
 
@@ -278,7 +278,7 @@ namespace
             MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).returns( 43 );
             MOCK_EXPECT( agentResolver.ResolveIdentifier ).returns( identifier );
             CheckOffer( true, transactionId );
-            MOCK_EXPECT( transferSender.RequestTransferList ).once().with( mock::any, mock::any, type, mock::any ).
+            MOCK_EXPECT( transferSender.RequestTransferList ).once().with( mock::any, mock::any, type, mock::any, mock::any ).
                     calls( boost::bind( &Callback::Capture, boost::ref(callback), _2 ) );
             ReceiveInitiate( "federateName", transactionId.transactionCounter, instances, attributesTransfered, transferType );
         }

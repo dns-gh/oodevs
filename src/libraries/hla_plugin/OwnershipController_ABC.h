@@ -14,6 +14,7 @@
 namespace hla
 {
     class AttributeIdentifier;
+    class VariableLengthData;
 }
 
 namespace plugins
@@ -31,8 +32,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void PerformDivestiture( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes ) = 0;
-    virtual void PerformAcquisition( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes ) = 0;
+    virtual void PerformDivestiture( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes, const ::hla::VariableLengthData& tag ) = 0;
+    virtual void PerformAcquisition( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes, const ::hla::VariableLengthData& tag ) = 0;
     //@}
 };
 }

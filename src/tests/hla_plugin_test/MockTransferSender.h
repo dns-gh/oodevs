@@ -22,9 +22,8 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockTransferSender, TransferSender_ABC )
 {
-    MOCK_METHOD( RequestTransfer, 4, void ( const std::string& , const TransferSender_ABC::TransferRequestCallback& , TransferSender_ABC::TransferType , const std::vector< ::hla::AttributeIdentifier >&  ), RequestTransfer );
-    MOCK_METHOD( RequestTransfer, 4, void ( const std::vector< std::string >& , const TransferSender_ABC::TransferRequestCallback& , TransferSender_ABC::TransferType , const std::vector< ::hla::AttributeIdentifier >&  ), RequestTransferList );
-
+    MOCK_METHOD( RequestTransfer, 5, void ( const std::string& , const TransferSender_ABC::TransferRequestCallback& , TransferSender_ABC::TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& ), RequestTransfer );
+    MOCK_METHOD( RequestTransfer, 5, void ( const std::vector< std::string >& , const TransferSender_ABC::TransferRequestCallback& , TransferSender_ABC::TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& ), RequestTransferList );
 };
 }
 }

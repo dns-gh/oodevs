@@ -21,8 +21,11 @@
 #include "dispatcher/Logger_ABC.h"
 #include <hla/Interaction.h>
 #include <hla/AttributeIdentifier.h>
+#include <hla/VariableLengthData.h>
+#include <hla/Serializer.h>
 #include <boost/noncopyable.hpp>
 #include <boost/bind.hpp>
+#include <boost/scoped_array.hpp>
 #include <algorithm>
 
 using namespace plugins::hla;
@@ -73,7 +76,7 @@ struct ExternalOwnershipPolicy::PendingRequest : boost::noncopyable
 {
     PendingRequest( ExternalOwnershipPolicy& policy, OwnershipController_ABC& controller,
                 std::vector< std::string >& instances, std::vector< ::hla::AttributeIdentifier >& attributes,
-                TransferSender_ABC::TransferType transfer, const interactions::TMR& tmr )
+                TransferSender_ABC::TransferType transfer, const interactions::TMR& tmr, const ::hla::VariableLengthData& tag )
             : policy_( policy )
             , ownershipController_( controller )
             , instances_( instances )
@@ -84,6 +87,7 @@ struct ExternalOwnershipPolicy::PendingRequest : boost::noncopyable
             , responseFederate_( tmr.responseFederate )
             , pendings_( instances.begin(), instances.end() )
             , completed_( false )
+            , tag_( tag )
             {}
     void Callback( bool reply )
     {
@@ -92,12 +96,12 @@ struct ExternalOwnershipPolicy::PendingRequest : boost::noncopyable
             if( transfer_ == TransferSender_ABC::E_EntityPull )
                 std::for_each( instances_.begin(), instances_.end(), [&](const std::string& id)
                     {
-                        ownershipController_.PerformAcquisition( id, attributes_ );
+                        ownershipController_.PerformAcquisition( id, attributes_, tag_ );
                     });
             else
                 std::for_each( instances_.begin(), instances_.end(), [&](const std::string& id)
                     {
-                        ownershipController_.PerformDivestiture( id, attributes_ );
+                        ownershipController_.PerformDivestiture( id, attributes_, tag_ );
                     });
         }
         else
@@ -142,6 +146,7 @@ private:
     UnicodeString responseFederate_;
     std::set< std::string > pendings_;
     bool completed_;
+    ::hla::VariableLengthData tag_;
 };
 ExternalOwnershipPolicy::ExternalOwnershipPolicy(const std::string& federateName, const InteractionBuilder& builder,
         OwnershipController_ABC& controller, dispatcher::Logger_ABC& logger, RemoteAgentSubject_ABC& subject,
@@ -243,6 +248,12 @@ void ExternalOwnershipPolicy::Receive( interactions::TMR_InitiateTransferModelli
     pOfferSender_->Send( reply );
     if( reply.isOffering )
     {
+        ::hla::Serializer ser;
+        interaction.transactionID.Serialize( ser );
+        boost::scoped_array< uint8_t > buff( new uint8_t[ ser.GetSize() ] );
+        ser.CopyTo( buff.get() );
+        ::hla::VariableLengthData tag( buff.get(), ser.GetSize() );
+
         std::vector< std::string > candidates;
         GetAgents( interaction.instances.list, agentResolver_, callsignResolver_, candidates, logger_);
         std::vector< ::hla::AttributeIdentifier > attributes( interaction.attributes.list.size(), ::hla::AttributeIdentifier("") );
@@ -254,17 +265,17 @@ void ExternalOwnershipPolicy::Receive( interactions::TMR_InitiateTransferModelli
             {
                 logger_.LogInfo("Negotiating external request with other federate");
                 const TransferSender_ABC::TransferType transferType = (type == interactions::TMR::Acquire ? TransferSender_ABC::E_EntityPull: TransferSender_ABC::E_EntityPush );
-                T_PendingRequestPtr request( new PendingRequest( *this, ownershipController_, candidates, attributes, transferType, interaction ) );
+                T_PendingRequestPtr request( new PendingRequest( *this, ownershipController_, candidates, attributes, transferType, interaction, tag ) );
                 requests_[ interaction.transactionID.transactionCounter ] = request;
                 transferSender_.RequestTransfer( candidates, boost::bind( &ExternalOwnershipPolicy::PendingRequest::Callback, request.get(), _1 ),
-                        transferType, attributes );
+                        transferType, attributes, tag );
             }
             break;
         case interactions::TMR::AcquireWithoutNegotiating:
             {
                 std::for_each( candidates.begin(), candidates.end(), [&](const std::string& id)
                     {
-                        ownershipController_.PerformAcquisition( id, attributes );
+                        ownershipController_.PerformAcquisition( id, attributes, tag );
                     });
             }
             break;

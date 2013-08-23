@@ -18,6 +18,11 @@
 #include "InteractionSender.h"
 #include <hla/Interaction.h>
 #include <hla/AttributeIdentifier.h>
+#include <hla/VariableLengthData.h>
+#include <hla/Serializer.h>
+#include <hla/Deserializer.h>
+
+#include <boost/scoped_array.hpp>
 #include <cassert>
 #include <algorithm>
 
@@ -74,17 +79,36 @@ Netn2TransferSender::~Netn2TransferSender()
     // NOTHING
 }
 
+namespace
+{
+    unsigned int CreateTransactionID( ::hla::VariableLengthData& tag, interactions::TransactionId& transactionID, const ::hla::FederateIdentifier federateHandle,
+           const ContextFactory_ABC& ctxtFactory )
+    {
+        unsigned int retval = 0;
+        if( tag.Size() == 0 )
+        {
+            retval = ctxtFactory.Create();
+            transactionID.federateHandle = federateHandle;
+            transactionID.transactionCounter = retval;
+        }
+        else
+        {
+            ::hla::Deserializer deser( tag.Buffer(), tag.Size() );
+            transactionID.Deserialize( deser );
+            retval = transactionID.transactionCounter;
+        }
+        return retval;
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: Netn2TransferSender::RequestTransfer
 // Created: AHC 2012-10-25
 // -----------------------------------------------------------------------------
-void Netn2TransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes )
+void Netn2TransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes, ::hla::VariableLengthData& tag)
 {
-    unsigned int reqId = ctxtFactory_.Create();
     interactions::TMR_RequestTransferModellingResponsibility transfer;
-    transfer.transactionID.federateHandle = federateHandle_;
-    transfer.transactionID.transactionCounter = reqId;
     transfer.requestFederate = UnicodeString( federateName_ );
+    const unsigned int reqId = CreateTransactionID( tag, transfer.transactionID, federateHandle_, ctxtFactory_ );
     std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
     if( uniqueId.size() == 0 )
     {
@@ -160,10 +184,15 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
         {
             const NETN_UUID& uniqueId = *it;
             std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
+            ::hla::Serializer ser;
+            request.transactionID.Serialize( ser );
+            boost::scoped_array< uint8_t > buff( new uint8_t[ ser.GetSize() ] );
+            ser.CopyTo( buff.get() );
+            ::hla::VariableLengthData tag( buff.get(), ser.GetSize() );
             if( transferType == interactions::TMR::Acquire )
-                ownershipController_.PerformDivestiture( agentId, attributes );
+                ownershipController_.PerformDivestiture( agentId, attributes, tag );
             else if( transferType == interactions::TMR::Divest )
-                ownershipController_.PerformAcquisition( agentId, attributes );
+                ownershipController_.PerformAcquisition( agentId, attributes, tag );
         }
     }
 }
@@ -187,13 +216,11 @@ void Netn2TransferSender::Receive( interactions::TMR_OfferTransferModellingRespo
 // Name: Netn2TransferSender::RequestTransfer
 // Created: AHC 2013-07-03
 // -----------------------------------------------------------------------------
-void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& agentIDs, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes )
+void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& agentIDs, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes, ::hla::VariableLengthData& tag )
 {
-    unsigned int reqId = ctxtFactory_.Create();
     interactions::TMR_RequestTransferModellingResponsibility transfer;
-    transfer.transactionID.federateHandle = federateHandle_;
-    transfer.transactionID.transactionCounter = reqId;
     transfer.requestFederate = UnicodeString( federateName_ );
+    const unsigned int reqId = CreateTransactionID( tag, transfer.transactionID, federateHandle_, ctxtFactory_ );
     for( auto it = agentIDs.begin(); agentIDs.end() != it ; ++it )
     {
         const std::string& agentID = *it;

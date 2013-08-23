@@ -16,6 +16,7 @@
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
 #include "MockLogger.h"
+#include <hla/VariableLengthData.h>
 
 using namespace plugins::hla;
 
@@ -59,8 +60,9 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( ownership_push, ControllerFixture )
 {
-    MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes );
-    ownershipController.PerformDivestiture( "identifier", attributes );
+    const ::hla::VariableLengthData sentTag((uint32_t)42);
+    MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes, mock::any );
+    ownershipController.PerformDivestiture( "identifier", attributes, sentTag );
 }
 
 namespace
@@ -69,8 +71,9 @@ namespace
     {
         DivestedFixture()
         {
-            MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes );
-            ownershipController.PerformDivestiture( "identifier", attributes );
+            const ::hla::VariableLengthData sentTag((uint32_t)42);
+            MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes, mock::any );
+            ownershipController.PerformDivestiture( "identifier", attributes, sentTag );
             classListener->Divested( "identifier", attributes );
         }
     };
@@ -78,6 +81,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( ownership_pull, DivestedFixture )
 {
-    MOCK_EXPECT( hlaClass.Acquire ).once().with( "identifier", attributes );
-    ownershipController.PerformAcquisition( "identifier", attributes );
+    const ::hla::VariableLengthData sentTag((uint32_t)42);
+    MOCK_EXPECT( hlaClass.Acquire ).once().with( "identifier", attributes, mock::any );
+    ownershipController.PerformAcquisition( "identifier", attributes, sentTag );
 }
