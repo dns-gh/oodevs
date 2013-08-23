@@ -2425,13 +2425,6 @@ PNG (*.png)</translation>
     </message>
 </context>
 <context>
-    <name>ADN_LocalizedType</name>
-    <message>
-        <source>Unfinished translation</source>
-        <translation>Traduction non terminée</translation>
-    </message>
-</context>
-<context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
         <source>Logistic resource categories</source>
@@ -2874,18 +2867,6 @@ PNG (*.png)</translation>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
-    </message>
-    <message>
-        <source>Unit models</source>
-        <translation>Modèles de pions</translation>
-    </message>
-    <message>
-        <source>Automata models</source>
-        <translation>Modèles d&apos;automates</translation>
-    </message>
-    <message>
-        <source>Crowds models</source>
-        <translation>Modèles de foules</translation>
     </message>
     <message>
         <source>Missions</source>
@@ -5497,7 +5478,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <name>ADN_Type_LocalizedString</name>
     <message>
         <source>Unfinished translation</source>
-        <translation type="unfinished">Traduction non termin??e</translation>
+        <translation type="unfinished">Traduction non terminée</translation>
     </message>
 </context>
 <context>

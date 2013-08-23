@@ -81,13 +81,13 @@
 #include "ADN_Weapons_GUI.h"
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
-#include <boost/foreach.hpp>
+#include "clients_kernel/Context.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "tools/ZipExtractor.h"
+#include <boost/foreach.hpp>
 
 ADN_Workspace* ADN_Workspace::pWorkspace_ = 0;
-
 
 #define INITIALIZE_ADN_ENUMTYPE( TypeName )                                                                                 \
     ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ADN_Tr::ConvertFrom##TypeName );                          \
@@ -835,4 +835,24 @@ void ADN_Workspace::SetMainWindowModified( bool isModified )
 {
     if( mainWindow_.IsLoaded() )
         mainWindow_.setWindowModified( isModified );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< kernel::Context > ADN_Workspace::GetContext
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+//inline
+boost::shared_ptr< kernel::Context > ADN_Workspace::GetContext( E_WorkspaceElements element, const std::string& context )
+{
+    return GetWorkspaceElement( element ).GetDataABC().GetContext( context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< kernel::Context > ADN_Workspace::GetContext
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+//inline
+boost::shared_ptr< kernel::Context > ADN_Workspace::GetContext( E_WorkspaceElements element, int subElement, const std::string& context )
+{
+    return static_cast< ADN_Data_Container& >( GetWorkspaceElement( element ).GetDataABC() ).GetElementABC( subElement ).GetContext( context );
 }

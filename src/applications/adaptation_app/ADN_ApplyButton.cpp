@@ -11,7 +11,7 @@
 #include "ADN_ApplyButton.h"
 #include "moc_ADN_ApplyButton.cpp"
 #include "clients_kernel/Language.h"
-#include "clients_kernel/Translations.h"
+#include "clients_kernel/LocalizedString.h"
 #include "ADN_Workspace.h"
 #include "ADN_Languages_GUI.h"
 
@@ -73,5 +73,5 @@ void ADN_ApplyButton::OnTypeChanged( int newType )
 // -----------------------------------------------------------------------------
 void ADN_ApplyButton::OnLanguageChanged()
 {
-    setVisible( !kernel::Language::CurrentIsDefault() );
+    setVisible( !kernel::Language::IsCurrentDefault() );
 }

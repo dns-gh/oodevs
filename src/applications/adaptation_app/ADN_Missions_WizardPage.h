@@ -25,7 +25,7 @@ class ADN_Missions_WizardPage : public ADN_WizardPage< ADN_Missions_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Missions_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, E_EntityType entityType = eNbrEntityTypes )
+             ADN_Missions_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, E_MissionType entityType = eNbrMissionTypes )
                  : ADN_WizardPage< ADN_Missions_ABC >( existingItems, pageTitle, pParent )
                  , entityType_( entityType )
              {
@@ -41,16 +41,14 @@ public:
     //@{
     virtual ADN_Missions_ABC* NewT()
     {
-        ADN_Missions_Mission* mission = new ADN_Missions_Mission();
-        mission->FillContextParameters( entityType_ );
-        return mission;
+        return new ADN_Missions_Mission( entityType_ );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    E_EntityType entityType_;
+    E_MissionType entityType_;
     //@}
 };
 

@@ -22,6 +22,7 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos::ResourceNetworkInfos()
     , nProduction_( 0 )
     , ptrCategory_( ADN_Workspace::GetWorkspace().GetResources().GetData().GetNetworkUsableResources(), 0 )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eResourceNetworks, "networks" ) );
     BindExistenceTo( &ptrCategory_ );
 }
 
@@ -55,7 +56,8 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::Reso
 void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream& input )
 {
     int id;
-    input >> xml::start( "resource" )
+    input >> xml::attribute( "name", strName_ )
+          >> xml::start( "resource" )
               >> xml::attribute( "id", id )
           >> xml::end
           >> xml::start( "color" )
@@ -164,10 +166,8 @@ void ADN_ResourceNetworks_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_ResourceNetworks_Data::ReadResourceNetwork( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< ResourceNetworkInfos > spNew( new ResourceNetworkInfos() );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "networks", strName ) );
     resourceNetworks_.AddItem( spNew.release() );
 }
 

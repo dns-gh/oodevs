@@ -19,24 +19,47 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::Mission
+//
 // Created: SBO 2009-11-16
 // -----------------------------------------------------------------------------
 ADN_Missions_ABC::ADN_Missions_ABC()
     : id_( ADN_Missions_Data::idManager_.GetNextId() )
     , needSheetSaving_( false )
+    , type_( eNbrMissionTypes )
 {
-    // NOTHING
+    assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_ABC constructor
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+ADN_Missions_ABC::ADN_Missions_ABC( E_MissionType type )
+    : id_( ADN_Missions_Data::idManager_.GetNextId() )
+    , type_( type )
+{
+    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr_ABC::eToSim );
+    if( type != eMissionType_FragOrder )
+        context += "-missions";
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
+    FillContextParameters();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::Mission
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_ABC::ADN_Missions_ABC( unsigned int id )
+ADN_Missions_ABC::ADN_Missions_ABC( E_MissionType type, unsigned int id )
     : id_( id )
     , needSheetSaving_ ( false )
+    , type_( type )
 {
+    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr_ABC::eToSim );
+    if( type != eMissionType_FragOrder )
+        context += "-missions";
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
     ADN_Missions_Data::idManager_.Lock( id );
+    FillContextParameters();
 }
 
 // -----------------------------------------------------------------------------
@@ -52,16 +75,10 @@ ADN_Missions_ABC::~ADN_Missions_ABC()
 // Name: ADN_Missions_ABC::ReadParameter
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::ReadParameter( xml::xistream& input, E_MissionType type, kernel::XmlTranslations& translations )
+void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
 {
-    const std::string strName = input.attribute< std::string >( "name" );
-    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter() );
-    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr_ABC::eToSim );
-    if( type != eMissionType_FragOrder )
-        context += "-missions";
-    context += "-parameters";
+    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter( type_ ) );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations.GetTranslation( context, strName ) );
     parameters_.AddItem( spNew.release() );
 }
 
@@ -69,29 +86,29 @@ void ADN_Missions_ABC::ReadParameter( xml::xistream& input, E_MissionType type, 
 // Name: ADN_Missions_ABC::CheckDataConsistency
 // Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type )
+void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker )
 {
-    CheckFieldDataConsistency( descriptionContext_.GetData(), checker, type );
+    CheckFieldDataConsistency( descriptionContext_.GetData(), checker );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
-        CheckFieldDataConsistency( (*it)->description_.GetData(), checker, type );
-    CheckFieldDataConsistency( descriptionBehavior_.GetData(), checker, type );
-    CheckFieldDataConsistency( descriptionSpecific_.GetData(), checker, type );
-    CheckFieldDataConsistency( descriptionComment_.GetData(), checker, type );
-    CheckFieldDataConsistency( descriptionMissionEnd_.GetData(), checker, type );
+        CheckFieldDataConsistency( (*it)->description_.GetData(), checker );
+    CheckFieldDataConsistency( descriptionBehavior_.GetData(), checker );
+    CheckFieldDataConsistency( descriptionSpecific_.GetData(), checker );
+    CheckFieldDataConsistency( descriptionComment_.GetData(), checker );
+    CheckFieldDataConsistency( descriptionMissionEnd_.GetData(), checker );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::CheckFieldDataConsistency
 // Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker, E_MissionType type )
+void ADN_Missions_ABC::CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker )
 {
     std::string str = fieldData;
     boost::smatch match;
     while( boost::regex_search( str, match, boost::regex( "\\$\\$(.*?)\\$\\$(.*)" ) ) )
     {
         if( !IsFileInAttachmentList( match[ 1 ].str() ) )
-            checker.AddError( eMissionAttachmentInvalid, strName_.GetData(), eMissions, type , match[ 1 ].str() );
+            checker.AddError( eMissionAttachmentInvalid, strName_.GetData(), eMissions, type_, match[ 1 ].str() );
         str = match[ 2 ];
     }
 }
@@ -389,7 +406,7 @@ void ADN_Missions_ABC::ParseImagesInImageDirectory( const tools::Path& imageDir 
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs /* = 1 */, int maxOccurs /* = 1 */ )
 {
-    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter() );
+    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter( type_ ) );
 
     spNew->strName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr_ABC::eToTr );
     spNew->diaName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr_ABC::eToSim );
@@ -411,14 +428,15 @@ void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_M
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::ReadArchive( xml::xistream& input, const tools::Path& )
 {
-    input >> xml::attribute( "dia-type", diaType_ );
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "dia-type", diaType_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::WriteArchive
 // Created: NPT 2013-02-18
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::WriteArchive( xml::xostream& output, E_MissionType )
+void ADN_Missions_ABC::WriteArchive( xml::xostream& output )
 {
     output << xml::attribute( "name", strName_ )
            << xml::attribute( "dia-type", diaType_ )
@@ -429,17 +447,17 @@ void ADN_Missions_ABC::WriteArchive( xml::xostream& output, E_MissionType )
 // Name: ADN_Missions_ABC::FillContextParameters
 // Created: ABR 2013-01-07
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::FillContextParameters( E_EntityType entityType )
+void ADN_Missions_ABC::FillContextParameters()
 {
-    switch( entityType )
+    switch( type_ )
     {
-    case eEntityType_Pawn:
+    case eMissionType_Pawn:
         AddContextParameter( eContextParameters_Heading,    eMissionParameterTypeDirection, false );
         AddContextParameter( eContextParameters_Limas,      eMissionParameterTypePhaseLine, true, 1, std::numeric_limits< int >::max() );
         AddContextParameter( eContextParameters_Limit1,     eMissionParameterTypeLimit,     true );
         AddContextParameter( eContextParameters_Limit2,     eMissionParameterTypeLimit,     true );
         break;
-    case eEntityType_Automat:
+    case eMissionType_Automat:
         AddContextParameter( eContextParameters_Heading,    eMissionParameterTypeDirection, false );
         AddContextParameter( eContextParameters_Limas,      eMissionParameterTypePhaseLine, true, 1, std::numeric_limits< int >::max() );
         AddContextParameter( eContextParameters_Limit1,     eMissionParameterTypeLimit,     false );

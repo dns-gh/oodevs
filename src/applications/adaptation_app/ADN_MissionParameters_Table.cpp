@@ -18,9 +18,9 @@
 // Name: ADN_MissionParameters_Table::ADN_MissionParameters_Table
 // Created: ABR 2012-10-25
 // -----------------------------------------------------------------------------
-ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, int entityType /*= -1*/, QWidget* pParent /* = 0 */ )
+ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, E_MissionType missionType, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
-    , entityType_( entityType )
+    , missionType_( missionType )
     , addingRow_( false )
 {
     dataModel_.setColumnCount( 6 );
@@ -72,7 +72,7 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
     if( !pMissionParameter )
         return;
 
-    const Qt::ItemFlags contextFlag = ( pMissionParameter->isContext_ && ( entityType_ == eEntityType_Pawn || entityType_ == eEntityType_Automat ) )
+    const Qt::ItemFlags contextFlag = ( pMissionParameter->isContext_ && ( missionType_ == eEntityType_Pawn || missionType_ == eEntityType_Automat ) )
         ? Qt::ItemIsSelectable
         : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
     const QBrush brush = pMissionParameter->isContext_ ? QBrush( Qt::gray ) : QBrush( Qt::transparent );
@@ -93,7 +93,7 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
     item->setBackground( brush );
 
     item = AddItem( row, 3, data, &pMissionParameter->isOptional_, ADN_StandardItem::eBool );
-    if( entityType_ == eEntityType_Automat && pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeLimit ||
+    if( missionType_ == eEntityType_Automat && pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeLimit ||
         pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeDirection )
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
     else
@@ -151,7 +151,7 @@ void ADN_MissionParameters_Table::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::AddNewElement()
 {
-    ADN_Missions_Parameter* newElement = new ADN_Missions_Parameter();
+    ADN_Missions_Parameter* newElement = new ADN_Missions_Parameter( missionType_ );
     newElement->strName_ = tr( "New parameter" ).toStdString();
 
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );

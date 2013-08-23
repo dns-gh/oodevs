@@ -17,6 +17,7 @@
 
 namespace kernel
 {
+    class Context;
     class XmlTranslations;
 }
 
@@ -53,6 +54,7 @@ public:
     virtual void WriteArchive( xml::xostream& output );
     virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
     virtual std::string GetInvalidDataErrorMsg() const;
+    boost::shared_ptr< kernel::Context > GetContext( const std::string& context ) const;
     //@}
 
     //! @name Initializer

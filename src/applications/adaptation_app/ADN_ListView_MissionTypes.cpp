@@ -20,23 +20,6 @@
 
 typedef ADN_Missions_Mission Mission;
 
-namespace
-{
-    E_EntityType ConvertMissionToEntityType( E_MissionType type )
-    {
-        switch( type )
-        {
-            case eMissionType_Pawn:
-                return eEntityType_Pawn;
-            case eMissionType_Automat:
-                return eEntityType_Automat;
-            case eMissionType_Population:
-                return eEntityType_Population;
-            default:
-                return eNbrEntityTypes;
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_MissionTypes constructor
@@ -100,8 +83,7 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
 void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-
-    ADN_Missions_Wizard wizard( ConvertMissionToEntityType( eMissionType_ ), ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_ ), this );
+    ADN_Missions_Wizard wizard( eMissionType_, ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_ ), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
@@ -109,7 +91,7 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
         assert( pCastData != 0 );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                       ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(),
-                                      ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ConvertMissionToEntityType( eMissionType_ ), *pCastData ), eModels, static_cast< int >( eMissionType_ ) );
+                                      ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Tools::ConvertMissionToEntityType( eMissionType_ ), *pCastData ), eModels, static_cast< int >( eMissionType_ ) );
     }
     popupMenu.exec( pt );
 }
@@ -143,5 +125,5 @@ std::string ADN_ListView_MissionTypes::GetToolTipFor( const QModelIndex& index )
     Mission* pCastData = static_cast< Mission* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(),
-                            ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ConvertMissionToEntityType( eMissionType_ ), *pCastData ) );
+                            ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ADN_Tools::ConvertMissionToEntityType( eMissionType_ ), *pCastData ) );
 }

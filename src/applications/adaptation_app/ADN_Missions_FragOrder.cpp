@@ -28,11 +28,18 @@ ADN_Missions_FragOrder::ADN_Missions_FragOrder()
     : ADN_Missions_ABC()
     , isAvailableWithoutMission_( false )
 {
+    assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
+}
+
+ADN_Missions_FragOrder::ADN_Missions_FragOrder( E_MissionType type )
+    : ADN_Missions_ABC( type )
+    , isAvailableWithoutMission_( false )
+{
     // NOTHING
 }
 
-ADN_Missions_FragOrder::ADN_Missions_FragOrder( unsigned int id )
-    : ADN_Missions_ABC( id )
+ADN_Missions_FragOrder::ADN_Missions_FragOrder( E_MissionType type, unsigned int id )
+    : ADN_Missions_ABC( type, id )
     , isAvailableWithoutMission_( false )
 {
     //NOTHING
@@ -45,7 +52,7 @@ ADN_Missions_FragOrder::~ADN_Missions_FragOrder()
 
 ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
 {
-    ADN_Missions_FragOrder* newFragOrder = new ADN_Missions_FragOrder();
+    ADN_Missions_FragOrder* newFragOrder = new ADN_Missions_FragOrder( type_ );
     newFragOrder->strName_ = strName_.GetData();
     newFragOrder->missionSheetPath_ = missionSheetPath_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
@@ -63,11 +70,11 @@ ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
     return newFragOrder;
 }
 
-void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input, const tools::Path& missionDir, E_MissionType type, kernel::XmlTranslations& translations )
+void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input, const tools::Path& missionDir )
 {
     ADN_Missions_ABC::ReadArchive( input, missionDir );
     input >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
-          >> xml::list( "parameter", boost::bind( &ADN_Missions_ABC::ReadParameter, this, _1, type, boost::ref( translations ) ) );
+          >> xml::list( "parameter", boost::bind( &ADN_Missions_ABC::ReadParameter, this, _1 ) );
     ReadMissionSheet( missionDir );
 }
 
@@ -85,13 +92,13 @@ namespace
     }
 }
 
-void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output, E_MissionType type )
+void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output )
 {
     if( diaType_.GetData().empty() )
         diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toStdString();
 
     output << xml::start( "fragorder" );
-    ADN_Missions_ABC::WriteArchive( output, type );
+    ADN_Missions_ABC::WriteArchive( output );
     output << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
 
     for( unsigned int i = 0; i < parameters_.size(); ++i )

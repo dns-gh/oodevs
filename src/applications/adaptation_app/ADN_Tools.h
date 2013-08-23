@@ -124,6 +124,10 @@ namespace ADN_Tools
 
     void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
     void SortMenu( Q3PopupMenu& menu );
+
+    // -----------------------------------------------------------------------------
+    E_EntityType ConvertMissionToEntityType( E_MissionType type );
+    E_MissionType ConvertEntityTypeToMissionType( E_EntityType type );
 }
 
 #endif // __ADN_Tools_h_

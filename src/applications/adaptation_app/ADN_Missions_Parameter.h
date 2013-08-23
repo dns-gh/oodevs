@@ -33,7 +33,7 @@ public:
     typedef ADN_Type_Vector_ABC<ADN_Missions_ParameterValue>  T_MissionParameterValue_Vector;
     typedef ADN_Type_Vector_ABC<ADN_Missions_Type>            T_Choice_Vector;
 
-             ADN_Missions_Parameter();
+             ADN_Missions_Parameter( E_MissionType type );
     virtual ~ADN_Missions_Parameter();
 
     std::string GetItemName();
@@ -64,6 +64,7 @@ public:
     ADN_Type_String                                                   diaName_;
     bool                                                              isContext_;
     ADN_Type_String                                                   description_;
+    E_MissionType                                                     missionType_;
 };
 
 #endif // ADAPTATIONS_ADN_MISSIONS_PARAMETER_H

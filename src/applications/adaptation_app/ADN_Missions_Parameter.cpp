@@ -13,17 +13,23 @@
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
 #include "ADN_Objects_Data.h"
+#include "ENT/ENT_Tr.h"
 
 #include <boost/bind.hpp>
 
-ADN_Missions_Parameter::ADN_Missions_Parameter()
+ADN_Missions_Parameter::ADN_Missions_Parameter(E_MissionType type)
     : isOptional_( false )
     , minOccurs_ ( 1 )
     , maxOccurs_ ( 1 )
     , minValue_  ( std::numeric_limits< int >::min() )
     , maxValue_  ( std::numeric_limits< int >::max() )
     , isContext_( false )
+    , missionType_( type )
 {
+    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr_ABC::eToSim );
+    if( type != eMissionType_FragOrder )
+        context += "-missions";
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context + "-parameters" ) );
     FillChoices();
 }
 
@@ -39,7 +45,7 @@ std::string ADN_Missions_Parameter::GetItemName()
 
 ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
 {
-    ADN_Missions_Parameter* newParam = new ADN_Missions_Parameter();
+    ADN_Missions_Parameter* newParam = new ADN_Missions_Parameter( missionType_ );
     newParam->strName_    = strName_.GetData();
     newParam->type_       = type_.GetData();
     newParam->isOptional_ = isOptional_.GetData();
@@ -95,7 +101,8 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
 {
     std::string type;
     std::string max;
-    input >> xml::attribute( "type", type )
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", type )
           >> xml::optional >> xml::attribute( "optional", isOptional_ )
           >> xml::attribute( "dia-name", diaName_ )
           >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )

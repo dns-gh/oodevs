@@ -238,26 +238,21 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadMission( xml::xistream& xis, E_MissionType modelType )
+void ADN_Missions_Data::ReadMission( xml::xistream& xis, E_MissionType type )
 {
-    const tools::Path& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
-    const std::string strName = xis.attribute< std::string >( "name" );
-    const std::string context = ENT_Tr::ConvertFromMissionType( modelType, ENT_Tr_ABC::eToSim );
-
-    if( modelType == eMissionType_FragOrder )
+    const tools::Path& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
+    if( type == eMissionType_FragOrder )
     {
-        std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
-        spNew->ReadArchive( xis, missionPath, modelType, *translations_ );
-        spNew->strName_.SetTranslation( strName, translations_->GetTranslation( context, strName ) );
-        missionsVector_[ modelType ].second.AddItem( spNew.release() );
+        std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( type, xis.attribute< unsigned int >( "id" ) ) );
+        spNew->ReadArchive( xis, missionPath );
+        missionsVector_[ type ].second.AddItem( spNew.release() );
     }
     else
     {
-        std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( xis.attribute< unsigned int >( "id" ) ) );
+        std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( type, xis.attribute< unsigned int >( "id" ) ) );
         ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-        spNew->ReadArchive( xis, drawings, missionPath, modelType, *translations_ );
-        spNew->strName_.SetTranslation( strName, translations_->GetTranslation( context + "-missions", strName ) );
-        missionsVector_[ modelType ].second.AddItem( spNew.release() );
+        spNew->ReadArchive( xis, drawings, missionPath );
+        missionsVector_[ type ].second.AddItem( spNew.release() );
     }
 }
 
@@ -277,7 +272,7 @@ namespace
         //xml datas saving
         output << xml::start( name );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteArchive( output, type );
+            missions[i]->WriteArchive( output );
 
         //save mission sheets
         WriteMissionSheets( type, missions );
@@ -445,7 +440,7 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
             if( type != eMissionType_FragOrder )
                 CheckMissionTypeUniqueness( checker, it, missionsVector_[ type ].second, 0 );
             CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 0 );
-            ( *it )->CheckMissionDataConsistency( checker, static_cast< E_MissionType >( type ) );
+            ( *it )->CheckMissionDataConsistency( checker );
         }
 }
 

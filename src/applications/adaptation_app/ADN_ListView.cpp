@@ -924,7 +924,7 @@ void ADN_ListView::RemoveCurrentElement()
 // -----------------------------------------------------------------------------
 void ADN_ListView::OnLanguageChanged()
 {
-    bEditionEnabled_ = kernel::Language::CurrentIsDefault();
+    bEditionEnabled_ = kernel::Language::IsCurrentDefault();
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
                 if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )

@@ -26,7 +26,7 @@ class ADN_Missions_Wizard : public ADN_Wizard< ADN_Missions_ABC, ADN_Missions_Wi
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Missions_Wizard( E_EntityType entityType, const QString& elementName, ADN_Missions_Data::T_Mission_Vector& vector, QWidget* pParent = 0 )
+    explicit ADN_Missions_Wizard( E_MissionType entityType, const QString& elementName, ADN_Missions_Data::T_Mission_Vector& vector, QWidget* pParent = 0 )
         : ADN_Wizard< ADN_Missions_ABC, ADN_Missions_WizardPage >( elementName, vector, pParent )
         , entityType_( entityType )
     {
@@ -50,7 +50,7 @@ public:
 private:
     //! @name Member data
     //@{
-    E_EntityType entityType_;
+    E_MissionType entityType_;
     //@}
 };
 

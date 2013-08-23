@@ -50,9 +50,9 @@ void ADN_Models_GUI::Build()
 
     // Tab management
     pTabWidget_ = new QTabWidget( pMainWidget_ );
-    pTabWidget_->addTab( BuildPage( eEntityType_Pawn, data_.GetUnitModelsInfos() ), tr( "Unit models" ) );
-    pTabWidget_->addTab( BuildPage( eEntityType_Automat, data_.GetAutomataModelsInfos() ), tr( "Automata models" ) );
-    pTabWidget_->addTab( BuildPage( eEntityType_Population, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Pawn, data_.GetModels( eEntityType_Pawn ) ), tr( "Unit models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Automat, data_.GetModels( eEntityType_Automat ) ), tr( "Automata models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Population, data_.GetModels( eEntityType_Population ) ), tr( "Crowds models" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();

@@ -42,7 +42,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ADN_Missions_ABC();
-             ADN_Missions_ABC( unsigned int id );
+    explicit ADN_Missions_ABC( E_MissionType type );
+             ADN_Missions_ABC( E_MissionType type, unsigned int id );
     virtual ~ADN_Missions_ABC();
     //@}
 
@@ -50,14 +51,14 @@ public:
     //@{
     virtual ADN_Missions_ABC* CreateCopy() { return 0; }
 
-    void FillContextParameters( E_EntityType entityType );
+    void FillContextParameters();
 
     virtual void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
-    virtual void WriteArchive( xml::xostream& output, E_MissionType type );
+    virtual void WriteArchive( xml::xostream& output );
 
-    void ReadParameter( xml::xistream& input, E_MissionType type, kernel::XmlTranslations& translations );
-    void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type );
-    void CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker, E_MissionType type );
+    void ReadParameter( xml::xistream& input );
+    void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker );
+    void CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker );
     void ReadMissionSheetParametersDescriptions( xml::xistream& xis );
     void ReadMissionSheetAttachments( xml::xistream& xis );
     void WriteMissionSheetParametersDescriptions( xml::xostream& xos );
@@ -82,6 +83,7 @@ public:
     ADN_Type_Int              id_;
     T_MissionParameter_Vector parameters_;
     ADN_Type_String           diaType_;
+    E_MissionType             type_;
 
     //Missions sheets descriptions data
     ADN_Type_String missionSheetPath_;

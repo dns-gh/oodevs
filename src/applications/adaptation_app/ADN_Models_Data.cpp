@@ -19,6 +19,17 @@
 #include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
 
+namespace
+{
+    std::string MakePluralFromEntityType( E_EntityType type )
+    {
+        std::string result = ADN_Tr::ConvertFromEntityType( type, ADN_Tr::eToSim );
+        if( type != eEntityType_Population )
+            result += 's';
+        return result;
+    }
+}
+
 // =============================================================================
 // OrderInfos
 // =============================================================================
@@ -167,21 +178,21 @@ namespace
 ADN_Models_Data::ModelInfos::ModelInfos()
     : missions_ ( dummy )
     , isMasalife_( false )
+    , type_( eNbrEntityTypes )
 {
-    // NOTHING
+    assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
 }
 
-//-----------------------------------------------------------------------------
-// Name: ModelInfos::ModelInfos
-// Created: JDY 03-07-24
-//-----------------------------------------------------------------------------
-ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions )
-    : missions_( missions )
-    , strDiaType_( "T_Pion" )
-    , strFile_( "DEC\\For Tests\\Empty\\Files.hal" )
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::ModelInfos
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+ADN_Models_Data::ModelInfos::ModelInfos( E_EntityType type )
+    : missions_ ( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( ADN_Tools::ConvertEntityTypeToMissionType( type ) ) )
     , isMasalife_( false )
+    , type_( type )
 {
-    // NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eModels, MakePluralFromEntityType( type ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +234,7 @@ void ADN_Models_Data::ModelInfos::RemoveFragOder( const std::string& order )
 // -----------------------------------------------------------------------------
 ADN_Models_Data::ModelInfos* ADN_Models_Data::ModelInfos::CreateCopy()
 {
-    ModelInfos* pNewInfo = new ModelInfos( missions_ );
+    ModelInfos* pNewInfo = new ModelInfos( type_ );
     pNewInfo->strDiaType_ = strDiaType_.GetData();
     pNewInfo->strFile_ = strFile_.GetData();
     pNewInfo->isMasalife_ = isMasalife_.GetData();
@@ -277,7 +288,8 @@ void ADN_Models_Data::ModelInfos::ReadOrder( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "dia-type", strDiaType_ )
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "dia-type", strDiaType_ )
           >> xml::attribute( "file", strFile_ )
           >> xml::attribute( "masalife", isMasalife_ )
           >> xml::start( "missions" )
@@ -318,9 +330,8 @@ void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xo
 ADN_Models_Data::ADN_Models_Data()
     : ADN_Data_ABC( eModels )
 {
-    vUnitModels_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
-    vAutomataModels_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
-    vPopulationModels_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    for( int i = 0; i < eNbrEntityTypes; ++i )
+        vModels_[ i ].AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------
@@ -372,42 +383,14 @@ void ADN_Models_Data::FilesNeeded(tools::Path::T_Paths& files) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::ReadUnit
-// Created: AGE 2007-08-17
+// Name: ADN_Models_Data::ReadModels
+// Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::ReadUnit( xml::xistream& input )
+void ADN_Models_Data::ReadModels( xml::xistream& input, E_EntityType type )
 {
-    std::string strName = input.attribute< std::string >( "name" );
-    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Pawn ) ) );
+    std::auto_ptr< ModelInfos > spNew( new ModelInfos( type ) );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "units", strName ) );
-    vUnitModels_.AddItem( spNew.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::ReadAutomat
-// Created: AGE 2007-08-17
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::ReadAutomat( xml::xistream& input )
-{
-    std::string strName = input.attribute< std::string >( "name" );
-    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Automat ) ) );
-    spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "automats", strName ) );
-    vAutomataModels_.AddItem( spNew.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::ReadPopulation
-// Created: AGE 2007-08-17
-// -----------------------------------------------------------------------------
-void ADN_Models_Data::ReadPopulation( xml::xistream& input )
-{
-    std::string strName = input.attribute< std::string >( "name" );
-    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Population ) ) );
-    spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "crowd", strName ) );
-    vPopulationModels_.AddItem( spNew.release() );
+    vModels_[ type ].AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,20 +399,16 @@ void ADN_Models_Data::ReadPopulation( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadArchive( xml::xistream& input )
 {
-    input >> xml::start( "models" )
-            >> xml::start( "units" )
-                >> xml::list( "unit", *this, &ADN_Models_Data::ReadUnit )
-            >> xml::end
-            >> xml::start( "automats" )
-                >> xml::list( "automat", *this, &ADN_Models_Data::ReadAutomat )
-            >> xml::end
-            >> xml::start( "crowd" )
-                >> xml::list( "crowd", *this, &ADN_Models_Data::ReadPopulation )
-            >> xml::end
-          >> xml::end;
-    vUnitModels_.CheckValidity();
-    vAutomataModels_.CheckValidity();
-    vPopulationModels_.CheckValidity();
+    input >> xml::start( "models" );
+    for( int i = 0; i < eNbrEntityTypes; ++i )
+    {
+        E_EntityType type = static_cast< E_EntityType >( i );
+        input >> xml::start( MakePluralFromEntityType( type ) )
+                >> xml::list( ADN_Tr::ConvertFromEntityType( type, ADN_Tr::eToSim ), boost::bind( &ADN_Models_Data::ReadModels, this, _1, type ) )
+              >> xml::end;
+        vModels_[ i ].CheckValidity();
+    }
+    input >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -438,32 +417,22 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::WriteArchive( xml::xostream& output )
 {
-    if( vUnitModels_.GetErrorStatus() == eError )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Models_Data", "Invalid data on tab '%1', subtab '%2'" )
-                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Models_Data", "Unit models" ) ).toStdString() );
-    if( vAutomataModels_.GetErrorStatus() == eError )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Models_Data", "Invalid data on tab '%1', subtab '%2'" )
-                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Models_Data", "Automata models" ) ).toStdString() );
-    if( vPopulationModels_.GetErrorStatus() == eError )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Models_Data", "Invalid data on tab '%1', subtab '%2'" )
-                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Models_Data", "Crowds models" ) ).toStdString() );
-
+    for( int i = 0; i < eNbrEntityTypes; ++i )
+        if( vModels_[ i ].GetErrorStatus() == eError )
+            throw MASA_EXCEPTION( tools::translate( "ADN_Models_Data", "Invalid data on tab '%1', subtab '%2'" )
+                                  .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ADN_Tr::ConvertFromEntityType( static_cast< E_EntityType >( i ) ).c_str() ).toStdString() );
     output << xml::start( "models" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Models" );
-    output  << xml::start( "units" );
-    for( auto  it1 = vUnitModels_.begin(); it1 != vUnitModels_.end(); ++it1 )
-        ( *it1 )->WriteArchive( "unit", output );
-    output << xml::end
-            << xml::start( "automats" );
-    for( auto it2 = vAutomataModels_.begin(); it2 != vAutomataModels_.end(); ++it2 )
-        ( *it2 )->WriteArchive( "automat", output );
-    output << xml::end
-            << xml::start( "crowd" );
-    for( auto it2 = vPopulationModels_.begin(); it2 != vPopulationModels_.end(); ++it2 )
-        ( *it2 )->WriteArchive( "crowd", output );
-    output << xml::end
-          << xml::end;
+    for( int i = 0; i < eNbrEntityTypes; ++i )
+    {
+        E_EntityType type = static_cast< E_EntityType >( i );
+        output << xml::start( MakePluralFromEntityType( type ) );
+        for( auto it = vModels_[ i ].begin(); it != vModels_[ i ].end(); ++it )
+            ( *it )->WriteArchive( ADN_Tr::ConvertFromEntityType( type, ADN_Tr::eToSim ), output );
+        output << xml::end;
+    }
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -473,25 +442,14 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& mission )
 {
     QStringList result;
-    T_ModelInfos_Vector* currentVector = 0;
-    if( type == eEntityType_Pawn )
-        currentVector = &vUnitModels_;
-    else if( type == eEntityType_Automat )
-        currentVector = &vAutomataModels_;
-    else
-        currentVector = &vPopulationModels_;
-    for( auto it = currentVector->begin(); it != currentVector->end(); ++it )
-    {
-        ModelInfos* pModel = *it;
-        if( !pModel )
-            continue;
-        for( auto missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
-            if( ( *missionIt )->GetCrossedElement() == &mission )
-            {
-                result << pModel->strName_.GetData().c_str();
-                break;
-            }
-    }
+    for( auto it = vModels_[ type ].begin(); it != vModels_[ type ].end(); ++it )
+        if( ModelInfos* pModel = *it )
+            for( auto missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
+                if( ( *missionIt )->GetCrossedElement() == &mission )
+                {
+                    result << pModel->strName_.GetData().c_str();
+                    break;
+                }
     return result;
 }
 
@@ -502,14 +460,7 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_M
 QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder )
 {
     QStringList result;
-    T_ModelInfos_Vector* currentVector = 0;
-    if( type == eEntityType_Pawn )
-        currentVector = &vUnitModels_;
-    else if( type == eEntityType_Automat )
-        currentVector = &vAutomataModels_;
-    else
-        currentVector = &vPopulationModels_;
-    for( auto it = currentVector->begin(); it != currentVector->end(); ++it )
+    for( auto it = vModels_[ type ].begin(); it != vModels_[ type ].end(); ++it )
     {
         bool added = false;
         for( auto itOrder = ( *it )->vFragOrders_.begin(); !added && itOrder != ( *it )->vFragOrders_.end(); ++itOrder )
@@ -541,10 +492,7 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_F
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( auto it = vUnitModels_.begin(); it != vUnitModels_.end(); ++it )
-        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, eEntityType_Pawn );
-    for( auto it = vAutomataModels_.begin(); it != vAutomataModels_.end(); ++it )
-        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, eEntityType_Automat );
-    for( auto it = vPopulationModels_.begin(); it != vPopulationModels_.end(); ++it )
-        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, eEntityType_Population );
+    for( int i = 0; i < eNbrEntityTypes; ++i )
+        for( auto it = vModels_[ i ].begin(); it != vModels_[ i ].end(); ++it )
+            ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, i );
 }

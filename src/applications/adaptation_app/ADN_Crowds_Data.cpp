@@ -380,7 +380,7 @@ void ADN_Crowds_Data::UrbanEffectInfos::WriteArchive( xml::xostream& output ) co
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::CrowdsInfos::CrowdsInfos()
     : nId_( ADN_Crowds_Data::idManager_.GetNextId() )
-    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Population ), 0 )
     , rConcentrationDensity_( 0. )
     , rMoveDensity_( 0. )
     , rMoveSpeed_( 0. )
@@ -401,7 +401,7 @@ ADN_Crowds_Data::CrowdsInfos::CrowdsInfos()
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::CrowdsInfos::CrowdsInfos( unsigned int id )
     : nId_( id )
-    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Population ), 0 )
     , rConcentrationDensity_( 0. )
     , rMoveDensity_( 0. )
     , rMoveSpeed_( 0. )

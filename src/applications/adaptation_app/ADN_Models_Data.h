@@ -67,7 +67,7 @@ public:
 
     public:
                  ModelInfos();
-        explicit ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions );
+        explicit ModelInfos( E_EntityType type );
         virtual ~ModelInfos();
 
         ModelInfos* CreateCopy();
@@ -85,6 +85,7 @@ public:
         ADN_Type_Bool isMasalife_;
         T_MissionInfos_Vector vMissions_;
         T_OrderInfos_Vector vFragOrders_;
+        E_EntityType type_;
     };
 
     typedef ADN_Type_Vector_ABC<ModelInfos> T_ModelInfos_Vector;
@@ -105,95 +106,39 @@ public:
     QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );
     QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder );
 
-    T_ModelInfos_Vector& GetUnitModelsInfos();
-    ModelInfos* FindUnitModel( const std::string& strName );
-
-    T_ModelInfos_Vector& GetAutomataModelsInfos();
-    ModelInfos* FindAutomataModel( const std::string& strName );
-
-    T_ModelInfos_Vector& GetPopulationModelsInfos();
-    ModelInfos* FindPopulationModel( const std::string& strName );
+    T_ModelInfos_Vector& GetModels( E_EntityType type );
+    ModelInfos* FindModel( E_EntityType type, const std::string& strName );
 
 private:
     void ReadArchive( xml::xistream& input );
-    void ReadAutomat( xml::xistream& input );
-    void ReadPopulation( xml::xistream& input );
-    void ReadUnit( xml::xistream& input );
+    void ReadModels( xml::xistream& input, E_EntityType type );
     void ReadSourcePath( xml::xistream& xis );
     void WriteArchive( xml::xostream& output );
 
 private:
-    T_ModelInfos_Vector vUnitModels_;
-    T_ModelInfos_Vector vAutomataModels_;
-    T_ModelInfos_Vector vPopulationModels_;
+    T_ModelInfos_Vector vModels_[ eNbrEntityTypes ];
     std::vector< std::wstring > sourcePaths_;
 };
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Models_Data::GetUnitModelsInfos
-// Created: JDY 03-07-24
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::GetModels
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
 inline
-ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetUnitModelsInfos()
+ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetModels( E_EntityType type )
 {
-    return vUnitModels_;
+    return vModels_[ type ];
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::FindUnitModel
-// Created: APE 2004-12-01
+// Name: ADN_Models_Data::FindModel
+// Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
 inline
-ADN_Models_Data::ModelInfos* ADN_Models_Data::FindUnitModel( const std::string& strName )
+ADN_Models_Data::ModelInfos* ADN_Models_Data::FindModel( E_EntityType type, const std::string& strName )
 {
-    auto it = std::find_if( vUnitModels_.begin(), vUnitModels_.end(), ADN_Tools::NameCmp( strName ) );
-    if( it == vUnitModels_.end() )
-        return 0;
-    return *it;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::GetAutomataModelsInfos
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-inline
-ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetAutomataModelsInfos()
-{
-    return vAutomataModels_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::FindAutomataModel
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-inline
-ADN_Models_Data::ModelInfos* ADN_Models_Data::FindAutomataModel( const std::string& strName )
-{
-    auto it = std::find_if( vAutomataModels_.begin(), vAutomataModels_.end(), ADN_Tools::NameCmp( strName ) );
-    if( it == vAutomataModels_.end() )
-        return 0;
-    return *it;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::GetPopulationModelsInfos
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-inline
-ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetPopulationModelsInfos()
-{
-    return vPopulationModels_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::FindPopulationModel
-// Created: APE 2004-12-01
-// -----------------------------------------------------------------------------
-inline
-ADN_Models_Data::ModelInfos* ADN_Models_Data::FindPopulationModel( const std::string& strName )
-{
-    auto it = std::find_if( vPopulationModels_.begin(), vPopulationModels_.end(), ADN_Tools::NameCmp( strName ) );
-    if( it == vPopulationModels_.end() )
+    auto it = std::find_if( vModels_[ type ].begin(), vModels_[ type ].end(), ADN_Tools::NameCmp( strName ) );
+    if( it == vModels_[ type ].end() )
         return 0;
     return *it;
 }

@@ -34,6 +34,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo()
     , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), 0 )
     , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), 0 )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eResources, "resources" ) );
     assert( 0 );
 }
 
@@ -56,6 +57,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     , rPackageWeight_        ( 1. )
     , bNetworkUsable_        ( false )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eResources, "resources" ) );
     BindExistenceTo( &ptrResourceNature_ );
 }
 
@@ -78,6 +80,7 @@ ADN_Resources_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, u
     , rPackageWeight_        ( 1. )
     , bNetworkUsable_        ( false )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eResources, "resources" ) );
     BindExistenceTo( &ptrResourceNature_ );
     ADN_Resources_Data::idManager_.Lock( id );
 }
@@ -117,12 +120,12 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::CategoryInfo::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::CategoryInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "category", category_ );
     strCodeEMAT6_ = strName_.GetData();
     strCodeEMAT8_ = strName_.GetData();
     strCodeLFRIL_ = strName_.GetData();
     strCodeNNO_   = strName_.GetData();
-    input >> xml::attribute( "category", category_ );
     std::string dotationNature, logisticSupplyClass;
     input >> xml::optional >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
           >> xml::optional >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
@@ -707,16 +710,14 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::ResourceInfos::FindCategor
 // Name: ResourceInfos::ReadArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::ResourceInfos::ReadArchive( xml::xistream& input, kernel::XmlTranslations& xmlTranslations )
+void ADN_Resources_Data::ResourceInfos::ReadArchive( xml::xistream& input, kernel::XmlTranslations& /*xmlTranslations*/ )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< CategoryInfo > spNew;
     if( strName_.GetData() == "munition" || strName_.GetData() == "explosif" || strName_.GetData() == "mine" )
         spNew.reset( new AmmoCategoryInfo( *this, input.attribute< unsigned int >( "id" ) ) );
     else
         spNew.reset( new CategoryInfo( *this, input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, xmlTranslations.GetTranslation( "resources", strName ) );
     categories_.AddItem( spNew.release() );
 }
 

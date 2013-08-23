@@ -179,6 +179,8 @@ ADN_Fires_Data::FireClassInfos::FireClassInfos()
     , isSurface_       ( false )
     , surfaceInfos_    ( "surfaces" )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eFires, "fires" ) );
+
     for( int i= 0 ; i< eNbrSensorWeatherModifiers ; ++i)
     {
         ADN_WeatherFireEffects* pEffect = new ADN_WeatherFireEffects((E_SensorWeatherModifiers)i);
@@ -231,7 +233,8 @@ ADN_Fires_Data::FireClassInfos* ADN_Fires_Data::FireClassInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Fires_Data::FireClassInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "initial-heat", initialHeat_ )
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "initial-heat", initialHeat_ )
           >> xml::attribute( "max-heat", maxHeat_ )
           >> xml::attribute( "increase-rate", increaseRate_ )
           >> xml::attribute( "decrease-rate", decreaseRate_ )
@@ -394,10 +397,8 @@ void ADN_Fires_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Fires_Data::ReadFireClass( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< FireClassInfos > spNew( new FireClassInfos() );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "fires", strName ) );
     fireClasses_.AddItem( spNew.release() );
 }
 

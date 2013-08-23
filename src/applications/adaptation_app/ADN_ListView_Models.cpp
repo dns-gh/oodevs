@@ -72,11 +72,11 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Models_Data::T_ModelInfos_Vector* pUnitsList;
     if( eEntityType_ == eEntityType_Automat )
-        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
+        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Automat );
     else if( eEntityType_ == eEntityType_Pawn )
-        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
+        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Pawn );
     else
-        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
+        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Population );
 
     ADN_Wizard< ModelInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(), *pUnitsList, this );
     FillContextMenuWithDefault( popupMenu, wizard );

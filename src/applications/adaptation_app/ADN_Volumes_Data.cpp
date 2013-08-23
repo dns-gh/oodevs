@@ -18,7 +18,7 @@
 // -----------------------------------------------------------------------------
 ADN_Volumes_Data::VolumeInfos::VolumeInfos()
 {
-    // NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eCategories, eVolumes, "volumes" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,9 +76,8 @@ void ADN_Volumes_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Volumes_Data::ReadVolume( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     VolumeInfos* pNew = new VolumeInfos();
-    pNew->strName_.SetTranslation( strName, translations_->GetTranslation( "volumes", strName ) );
+    input >> xml::attribute( "name", pNew->strName_ );
     vSizes_.AddItem( pNew );
 }
 

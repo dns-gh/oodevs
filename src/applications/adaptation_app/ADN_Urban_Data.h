@@ -17,11 +17,6 @@
 #include "ADN_Symbols_Data.h"
 #include "ADN_RefWithName.h"
 
-namespace kernel
-{
-    struct Translation;
-}
-
 class ADN_Urban_Data : public ADN_Data_ABC
 {
 //*****************************************************************************
@@ -30,7 +25,7 @@ public:
     {
     public:
                  AccommodationInfos();
-        explicit AccommodationInfos( xml::xistream& input, const ADN_Urban_Data& parent );
+        explicit AccommodationInfos( xml::xistream& input );
         virtual ~AccommodationInfos();
 
         bool operator==( const std::string& str );
@@ -53,7 +48,7 @@ public:
     {
     public:
                  InfrastructureInfos();
-        explicit InfrastructureInfos( xml::xistream& input, const ADN_Urban_Data& parent );
+        explicit InfrastructureInfos( xml::xistream& input );
         virtual ~InfrastructureInfos();
 
         bool operator==( const std::string& str );
@@ -81,7 +76,7 @@ public:
     {
     public:
                  UrbanMaterialInfos();
-        explicit UrbanMaterialInfos( xml::xistream& input, const ADN_Urban_Data& parent );
+        explicit UrbanMaterialInfos( xml::xistream& input );
         virtual ~UrbanMaterialInfos();
 
         bool operator==( const std::string& str );
@@ -111,7 +106,7 @@ public:
     {
     public:
                  RoofShapeInfos();
-        explicit RoofShapeInfos( xml::xistream& input, const ADN_Urban_Data& parent );
+        explicit RoofShapeInfos( xml::xistream& input );
         virtual ~RoofShapeInfos();
 
         bool operator==( const std::string& str );
@@ -174,7 +169,7 @@ public:
     {
     public:
                  UrbanTemplateInfos();
-        explicit UrbanTemplateInfos( xml::xistream& input, const ADN_Urban_Data& parent );
+        explicit UrbanTemplateInfos( xml::xistream& input );
         virtual ~UrbanTemplateInfos();
 
         void Write( xml::xostream& output );
@@ -229,9 +224,6 @@ public:
     QStringList GetUrbanTemplateThatUse( UrbanMaterialInfos& infos );
     QStringList GetUrbanTemplateThatUse( RoofShapeInfos& infos );
     QStringList GetUrbanTemplateThatUse( AccommodationInfos& infos );
-
-    kernel::Translation* GetTranslation( const std::string& context, const std::string& key ) const;
-    kernel::Translation* GetTemplateTranslation( const std::string& context, const std::string& key ) const;
 
 private:
     //! @name Helpers

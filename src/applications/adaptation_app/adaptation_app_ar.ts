@@ -2401,13 +2401,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>ADN_LocalizedType</name>
-    <message>
-        <source>Unfinished translation</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
         <source>Logistic resource categories</source>
@@ -2847,18 +2840,6 @@ PNG (*.png)
 </context>
 <context>
     <name>ADN_Models_Data</name>
-    <message>
-        <source>Unit models</source>
-        <translation type="unfinished">نماذج وحدة</translation>
-    </message>
-    <message>
-        <source>Automata models</source>
-        <translation type="unfinished">نماذج الآلات</translation>
-    </message>
-    <message>
-        <source>Crowds models</source>
-        <translation type="unfinished">نماذج الحشود</translation>
-    </message>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>

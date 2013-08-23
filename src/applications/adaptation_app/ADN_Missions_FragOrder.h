@@ -23,13 +23,14 @@ class ADN_Missions_FragOrder : public ADN_Missions_ABC
 {
 public:
              ADN_Missions_FragOrder();
-    explicit ADN_Missions_FragOrder( unsigned int id );
+    explicit ADN_Missions_FragOrder( E_MissionType type );
+             ADN_Missions_FragOrder( E_MissionType type, unsigned int id );
     virtual ~ADN_Missions_FragOrder();
 
     ADN_Missions_FragOrder* CreateCopy();
 
-    void ReadArchive( xml::xistream& input, const tools::Path& missionDir, E_MissionType type, kernel::XmlTranslations& translations );
-    void WriteArchive( xml::xostream& output, E_MissionType type );
+    void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
+    void WriteArchive( xml::xostream& output );
 
 public:
     ADN_Type_Bool isAvailableWithoutMission_;

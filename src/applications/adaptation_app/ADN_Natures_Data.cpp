@@ -21,7 +21,7 @@ tools::IdManager ADN_Natures_Data::idManager_;
 ADN_Natures_Data::NatureInfos::NatureInfos()
     : nId_( ADN_Natures_Data::idManager_.GetNextId() )
 {
-    //NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eCategories, eNatures, "natures" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ ADN_Natures_Data::NatureInfos::NatureInfos()
 ADN_Natures_Data::NatureInfos::NatureInfos( int id )
     : nId_( id )
 {
-    //NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eCategories, eNatures, "natures" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,12 +98,11 @@ void ADN_Natures_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Natures_Data::ReadNature( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "type" );
     int id = input.attribute< int >( "id", 0 );
     if( !id )
         id = idManager_.GetNextId();
     ADN_Natures_Data::NatureInfos* pNew = new ADN_Natures_Data::NatureInfos( id );
-    pNew->strName_.SetTranslation( strName, translations_->GetTranslation( "natures", strName ) );
+    input >> xml::attribute( "type", pNew->strName_ );
     vDotationNatures_.AddItem( pNew );
     idManager_.Lock( id );
 }

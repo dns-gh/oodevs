@@ -182,3 +182,12 @@ void ADN_Data_ABC::InitQtTranslations()
     duplicateName_ = qApp->translate( "ADN_Data_ABC", duplicateName_ );
     invalidDataOntab_ = qApp->translate( "ADN_Data_ABC", invalidDataOntab_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< kernel::Context > ADN_Data_ABC::GetContext
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+boost::shared_ptr< kernel::Context > ADN_Data_ABC::GetContext( const std::string& context ) const
+{
+    return translations_->GetContext( context );
+}
