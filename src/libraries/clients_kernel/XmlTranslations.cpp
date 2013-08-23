@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "XmlTranslations.h"
+#include "Context.h"
 #include "Language.h"
 #include "TranslationQuery.h"
 #include "Tools.h"
@@ -16,6 +17,7 @@
 #include "tools/SchemaWriter.h"
 #include "tools/XmlStreamOperators.h"
 #include <boost/bind.hpp>
+#include <boost/make_shared.hpp>
 #include <tools/Path.h>
 
 using namespace kernel;
@@ -158,7 +160,7 @@ void XmlTranslations::SaveTranslationQueries( xml::xostream& xos ) const
 
 
 // -----------------------------------------------------------------------------
-// Translations operations
+// Context operations
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
@@ -175,15 +177,16 @@ void XmlTranslations::LoadTranslationFiles( const tools::Path& xmlFile, const to
 // Name: XmlTranslations::LoadTranslation
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& language /* = "" */ )
+void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& language )
 {
-    const std::string lang = language.empty() ? currentLanguage_ : language;
-    const tools::Path translationPath = localesDirectory / tools::Path::FromUTF8( lang ) / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( lang ) + ".ts";
+    if( language.size() != 2 )
+        throw MASA_EXCEPTION( "Invalid language " + language );
+    const tools::Path translationPath = localesDirectory / tools::Path::FromUTF8( language ) / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( language ) + ".ts";
     if( !translationPath.Exists() )
         return;
     tools::Xifstream xis( translationPath );
     xis >> xml::start( "TS" )
-            >> xml::list( "context", *this, &XmlTranslations::ReadContext, lang )
+            >> xml::list( "context", *this, &XmlTranslations::ReadContext, language )
         >> xml::end;
 }
 
@@ -211,26 +214,13 @@ void XmlTranslations::ReadMessage( xml::xistream& xis, const std::string& langua
 {
     std::string source = "";
     xis >> xml::start( "source" ) >> source >> xml::end;
-    if( source.empty() )
-        return;
-
-    Translations& translations = contexts_[ context ];
-    auto itTranslation = translations.find( source );
-    if( itTranslation != translations.end() )
-    {
-        auto itLocalizedText = itTranslation->values_.find( language );
-        if( itLocalizedText == itTranslation->values_.end() )
-            throw MASA_EXCEPTION( QString( "Invalid translation map, language: '%1' and key: '%2'" ).arg( language.c_str() ).arg( source.c_str() ).toStdString() );
-
-        std::string translation = "";
-        E_TranslationType type = eTranslationType_None;
-        xis >> xml::start( "translation" )
-            >> xml::optional >> translation
-            >> type
-            >> xml::end;
-        SetTranslation( context, source, language, translation, type );
-    }
-    // else this is an old translation, forget it
+    std::string translation = "";
+    E_TranslationType type = eTranslationType_None;
+    xis >> xml::start( "translation" )
+        >> xml::optional >> translation
+        >> type
+        >> xml::end;
+    SetTranslation( context, source, language, translation, type );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,6 +232,7 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
     if( contexts_.empty() )
         return;
 
+    // $$$$ ABR 2013-08-23: Use shared_ptr used count to see if save is needed for each context/message.
     for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
     {
         const tools::Path languageDirectory = localesDirectory / tools::Path::FromUTF8( itLanguage->GetShortName() );
@@ -256,20 +247,19 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
             << xml::attribute( "language", itLanguage->GetShortName() );
         for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         {
-            if( itContext->second.empty() )
+            if(  itContext->second->empty() )
                 continue;
             xos << xml::start( "context" )
                 << xml::start( "name" ) << itContext->first << xml::end;
-            for( auto itTranslation = itContext->second.begin(); itTranslation != itContext->second.end(); ++itTranslation )
+            for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
             {
-                if( itTranslation->key_.empty() )
+                if( ( *itTranslation )->Key().empty() )
                     continue;
-                auto localizedText = itTranslation->values_.at( itLanguage->GetShortName() );
                 xos << xml::start( "message" )
-                        << xml::start( "source" ) << itTranslation->key_ << xml::end
+                        << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
                         << xml::start( "translation" )
-                            << localizedText.value_
-                            << localizedText.type_
+                            << ( *itTranslation )->Value( itLanguage->GetShortName() )
+                            << ( *itTranslation )->Type( itLanguage->GetShortName() )
                         << xml::end //! translation
                     << xml::end; //! message
             }
@@ -306,7 +296,7 @@ const std::string XmlTranslations::Translate( const std::string& key, const std:
         return "";
     }
 
-    const std::string& translation = contexts_.at( context ).at( key ).at( lang ).value_;
+    const std::string& translation = contexts_.at( context )->at( key )->Value( lang );
     return ( !translation.empty() ) ? translation : key;
 }
 
@@ -316,16 +306,30 @@ const std::string XmlTranslations::Translate( const std::string& key, const std:
 // -----------------------------------------------------------------------------
 void XmlTranslations::SetTranslation( const std::string& context, const std::string& key, const std::string& language, const std::string& translation, E_TranslationType type /* = kernel::eTranslationType_Unfinished */ )
 {
-    contexts_[ context ][ key ][ language ] = TranslationText( translation, type );
+    auto it = contexts_.find( context );
+    if( it == contexts_.end() )
+        contexts_[ context ] = boost::make_shared< Context >();
+    boost::shared_ptr< LocalizedString > string = ( *contexts_[ context ] )[ key ];
+    string->SetValue( language, translation );
+    string->SetType( language, type );
 }
 
 // -----------------------------------------------------------------------------
 // Name: XmlTranslations::GetTranslation
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-Translation* XmlTranslations::GetTranslation( const std::string& context, const std::string& key )
+boost::shared_ptr< LocalizedString > XmlTranslations::GetTranslation( const std::string& context, const std::string& key ) const
 {
-    Translations& translations = contexts_[ context ];
-    auto it = translations.find( key );
-    return ( it != translations.end() ) ? &*it : nullptr;
+    return contexts_.at( context )->at( key );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< Context > XmlTranslations::GetContext
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Context > XmlTranslations::GetContext( const std::string& context )
+{
+    if( contexts_.find( context ) == contexts_.end() )
+        contexts_[ context ] = boost::make_shared< Context >();
+    return contexts_.at( context );
 }

@@ -126,10 +126,10 @@ xml::xostream& kernel::operator<<( xml::xostream& xos, const Language& language 
 }
 
 // -----------------------------------------------------------------------------
-// Name: Language::GetCurrent
+// Name: Language::Current
 // Created: ABR 2013-08-21
 // -----------------------------------------------------------------------------
-const std::string& Language::GetCurrent()
+const std::string& Language::Current()
 {
     return current_;
 }
@@ -144,19 +144,19 @@ void Language::SetCurrent( const std::string& language )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Language::CurrentIsDefault
-// Created: ABR 2013-08-21
+// Name: Language::IsDefault
+// Created: ABR 2013-08-22
 // -----------------------------------------------------------------------------
-bool Language::CurrentIsDefault()
+bool Language::IsDefault( const std::string& language )
 {
-    return current_ == default_;
+    return language == default_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Language::CurrentIsValid
+// Name: Language::IsCurrentDefault
 // Created: ABR 2013-08-21
 // -----------------------------------------------------------------------------
-bool Language::CurrentIsValid()
+bool Language::IsCurrentDefault()
 {
-    return !current_.empty() && !CurrentIsDefault();
+    return IsDefault( current_ );
 }

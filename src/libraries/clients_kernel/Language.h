@@ -45,10 +45,10 @@ public:
 
     //! @name Static methods
     //@{
-    static const std::string& GetCurrent();
+    static const std::string& Current();
     static void SetCurrent( const std::string& language );
-    static bool CurrentIsDefault();
-    static bool CurrentIsValid();
+    static bool IsDefault( const std::string& language );
+    static bool IsCurrentDefault();
     //@}
 
 private:

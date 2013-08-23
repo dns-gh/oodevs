@@ -8,105 +8,84 @@
 // *****************************************************************************
 
 #include "clients_kernel_pch.h"
-#include "Translations.h"
+#include "Context.h"
+#include "LocalizedString.h"
+#include <boost/make_shared.hpp>
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: Translations constructor
+// Name: Context constructor
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-Translations::Translations()
+Context::Context()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Translations destructor
+// Name: Context destructor
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-Translations::~Translations()
+Context::~Context()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< Translation >::iterator& Translations::find
+// Name: Context::find
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-std::vector< Translation >::iterator Translations::find( const std::string& key )
+std::vector< boost::shared_ptr< LocalizedString > >::iterator Context::find( const std::string& key )
 {
     for( auto it = begin(); it != end(); ++it )
-        if( it->key_ == key )
+        if( ( *it )->Key() == key )
             return it;
     return end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< Translation >::const_iterator& Translations::find
+// Name: Context::find
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-const std::vector< Translation >::const_iterator Translations::find( const std::string& key ) const
+const std::vector< boost::shared_ptr< LocalizedString > >::const_iterator Context::find( const std::string& key ) const
 {
     for( auto it = begin(); it != end(); ++it )
-        if( it->key_ == key )
+        if( ( *it )->Key() == key )
             return it;
     return end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Translations::operator[]
+// Name: Context::operator[]
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-T_LocalizedTexts& Translations::operator[]( const std::string& key )
+boost::shared_ptr< LocalizedString > Context::operator[]( const std::string& key )
 {
     for( auto it = begin(); it != end(); ++it )
-        if( it->key_ == key )
-            return it->values_;
-    push_back( Translation( key ) );
-    return back().values_;
+        if( ( *it )->Key() == key )
+            return *it;
+    push_back( boost::make_shared< LocalizedString >( key ) );
+    return back();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Translations::operator[]
+// Name: Context::operator[]
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-const T_LocalizedTexts& Translations::operator[]( const std::string& key ) const
+const boost::shared_ptr< LocalizedString >& Context::operator[]( const std::string& key ) const
 {
     for( auto it = begin(); it != end(); ++it )
-        if( it->key_ == key )
-            return it->values_;
+        if( ( *it )->Key() == key )
+            return *it;
     throw MASA_EXCEPTION( std::string( "Key not found: " ) + key );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Translations::at
+// Name: Context::at
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-const T_LocalizedTexts& Translations::at( const std::string& key ) const
+const boost::shared_ptr< LocalizedString >& Context::at( const std::string& key ) const
 {
     return ( *this )[ key ];
-}
-
-// -----------------------------------------------------------------------------
-// Name: E_TranslationType::operator<<
-// Created: ABR 2013-07-18
-// -----------------------------------------------------------------------------
-xml::xostream& kernel::operator<<( xml::xostream& xos, const E_TranslationType& type )
-{
-    if( type == eTranslationType_Unfinished )
-        xos << xml::attribute( "type", "unfinished" );
-    return xos;
-}
-
-// -----------------------------------------------------------------------------
-// Name: E_TranslationType::operator>>
-// Created: ABR 2013-07-18
-// -----------------------------------------------------------------------------
-xml::xistream& kernel::operator>>( xml::xistream& xis, E_TranslationType& type )
-{
-    std::string typeStr = "";
-    xis >> xml::optional >> xml::attribute( "type", typeStr );
-    type = ( typeStr.empty() ) ? eTranslationType_None : eTranslationType_Unfinished;
-    return xis;
 }

@@ -11,7 +11,9 @@
 #define __XmlTranslations_h_
 
 #include <boost/noncopyable.hpp>
-#include "Translations.h"
+#include <boost/shared_ptr.hpp>
+
+#include "LocalizedString.h"
 
 namespace tools
 {
@@ -20,9 +22,10 @@ namespace tools
 
 namespace kernel
 {
-
-class Language;
-class TranslationQuery;
+    class Context;
+    class Language;
+    class LocalizedString;
+    class TranslationQuery;
 
 // =============================================================================
 /** @class  XmlTranslations
@@ -36,9 +39,9 @@ class XmlTranslations : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::vector< Language >                 T_Languages;
-    typedef std::vector< TranslationQuery >         T_TranslationQueries;
-    typedef std::map< std::string, Translations >   T_Contexts;
+    typedef std::vector< Language >                               T_Languages;
+    typedef std::vector< TranslationQuery >                       T_TranslationQueries;
+    typedef std::map< std::string, boost::shared_ptr< Context > > T_Contexts;
     //@}
 
     //! @name Constructors/Destructor
@@ -58,7 +61,7 @@ public:
 
     //! @name Translations operations
     //@{
-    void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& language = "" );
+    void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& language );
     void LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages );
     void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages ) const;
     //@}
@@ -66,14 +69,14 @@ public:
     //! @name Accessors
     //@{
     const std::string Translate( const std::string& key, const std::string& context = "", const std::string& language = "" ) const;
-
-    void SetTranslation( const std::string& context, const std::string& key, const std::string& language, const std::string& translation, E_TranslationType type = kernel::eTranslationType_Unfinished );
-    Translation* GetTranslation( const std::string& context, const std::string& key );
+    boost::shared_ptr< Context > GetContext( const std::string& context );
+    boost::shared_ptr< LocalizedString > GetTranslation( const std::string& context, const std::string& key ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void SetTranslation( const std::string& context, const std::string& key, const std::string& language, const std::string& translation, E_TranslationType type = kernel::eTranslationType_Unfinished );
     void CopyAndAddTranslationQueries( const std::string& name, xml::xistream& xis, xml::xostream& xos ) const;
 
     void ReadTranslationQueries( const std::string& name, xml::xistream& xis, int depthMax );
@@ -86,7 +89,7 @@ private:
     //! @name Member data
     //@{
     T_TranslationQueries queries_;
-    T_Contexts contexts_; // translation = contexts_[ context ][ sourceText ][ language ]
+    T_Contexts contexts_;
     bool loadAllLanguages_;
     std::string currentLanguage_;
     //@}
