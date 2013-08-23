@@ -261,28 +261,10 @@ void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::GetProfile
-// Created: AGE 2007-09-05
-// -----------------------------------------------------------------------------
-Profile_ABC& ClientsNetworker::GetProfile( const std::string& )
-{
-    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::GetClientID
-// Created: LGY 2013-04-18
-// -----------------------------------------------------------------------------
-unsigned int ClientsNetworker::GetClientID( const std::string& /*link*/ ) const
-{
-    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ClientsNetworker::GetPublisher
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
+ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link ) const
 {
     auto it = clients_.find( link );
     if( it == clients_.end() || !it->second )

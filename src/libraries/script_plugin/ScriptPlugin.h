@@ -22,7 +22,7 @@ namespace dispatcher
     class Config;
     class Model_ABC;
     class SimulationPublisher_ABC;
-    class LinkResolver_ABC;
+    class AuthenticatedLinkResolver_ABC;
     class Registrable_ABC;
     class CompositeRegistrable;
 }
@@ -30,7 +30,6 @@ namespace dispatcher
 namespace kernel
 {
     class Controller;
-    class CoordinateConverter_ABC;
     class CoordinateConverter;
 }
 
@@ -64,7 +63,7 @@ public:
                            dispatcher::SimulationPublisher_ABC& publisher,
                            tools::MessageDispatcher_ABC& dispatcher,
                            dispatcher::ClientPublisher_ABC& clients,
-                           dispatcher::LinkResolver_ABC& resolver,
+                           dispatcher::AuthenticatedLinkResolver_ABC& resolver,
                            dispatcher::CompositeRegistrable& registrables );
     virtual ~ScriptPlugin();
     //@}

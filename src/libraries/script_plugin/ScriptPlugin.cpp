@@ -52,7 +52,7 @@ ScriptPlugin::ScriptPlugin( Model_ABC& model,
                             SimulationPublisher_ABC& publisher,
                             tools::MessageDispatcher_ABC& dispatcher,
                             ClientPublisher_ABC& clients,
-                            LinkResolver_ABC& resolver,
+                            AuthenticatedLinkResolver_ABC& resolver,
                             CompositeRegistrable& registrables )
     : model_       ( model )
     , config_      ( config )

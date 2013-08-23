@@ -31,7 +31,7 @@ namespace dispatcher
 {
     class Config;
     class MessageLoader;
-    class LinkResolver_ABC;
+    class AuthenticatedLinkResolver_ABC;
 }
 
 namespace aar
@@ -55,7 +55,7 @@ class AarPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, const dispatcher::Config& config );
+             AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::AuthenticatedLinkResolver_ABC& resolver, const dispatcher::Config& config );
     virtual ~AarPlugin();
     //@}
 
@@ -84,7 +84,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::LinkResolver_ABC& resolver_;
+    dispatcher::AuthenticatedLinkResolver_ABC& resolver_;
     std::auto_ptr< dispatcher::MessageLoader > messages_;
     std::auto_ptr< ::aar::StaticModel > model_;
     //@}

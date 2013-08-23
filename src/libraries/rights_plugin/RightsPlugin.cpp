@@ -10,6 +10,7 @@
 #include "RightsPlugin.h"
 #include "dispatcher/CompositeRegistrable.h"
 #include "dispatcher/NullClientPublisher.h"
+#include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Profile.h"
 #include "dispatcher/ProfileManager.h"
 #include "dispatcher/DefaultProfile.h"
@@ -66,12 +67,13 @@ private:
 // Name: RightsPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables, int maxConnections )
+RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands,
+                            Plugin_ABC& container, const LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables, int maxConnections )
     : clients_           ( clients )
     , config_            ( config )
     , profiles_          ( new ProfileManager( model, clients, config ) )
     , container_         ( container )
-    , base_              ( base )
+    , resolver_          ( resolver )
     , maxConnections_    ( maxConnections )
     , currentConnections_( 0 )
     , countID_           ( 1 ) // non-nul client identifier
@@ -147,13 +149,13 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 {
     if( wrapper.message().has_disconnection_request() )
     {
-        Logout( base_.GetPublisher( link ) );
+        Logout( resolver_.GetPublisher( link ) );
         MT_LOG_INFO_MSG( "Logged out " + link );
         throw tools::DisconnectionRequest( __FILE__, __FUNCTION__, __LINE__, "disconnection request from " + link );
     }
 
     unsigned int ctx = wrapper.has_context() ? wrapper.context() : 0;
-    AuthenticationSender sender( base_.GetPublisher( link ), clients_, ctx );
+    AuthenticationSender sender( resolver_.GetPublisher( link ), clients_, ctx );
     if( wrapper.message().has_authentication_request() )
     {
         // Cannot forbid an authentication request
@@ -320,24 +322,24 @@ bool RightsPlugin::IsAuthenticated( const std::string& login ) const
 // Name: RightsPlugin::GetProfile
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-Profile_ABC& RightsPlugin::GetProfile( const std::string& link )
+Profile_ABC& RightsPlugin::GetProfile( const std::string& link ) const
 {
-    static DefaultProfile def;
     auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
-        return *(it->second);
-    return def;
+        return *it->second;
+    static DefaultProfile profile;
+    return profile;
 }
 
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::GetPublisher
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link )
+ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link ) const
 {
     auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
-        return base_.GetPublisher( link );
+        return resolver_.GetPublisher( link );
     static NullClientPublisher publisher;
     return publisher;
 }

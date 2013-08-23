@@ -13,7 +13,7 @@
 #include "3a/StaticModel.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/MessageLoader.h"
-#include "dispatcher/LinkResolver_ABC.h"
+#include "dispatcher/AuthenticatedLinkResolver_ABC.h"
 #include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -33,7 +33,7 @@ namespace sword
 // Name: AarPlugin constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, const dispatcher::Config& config )
+AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::AuthenticatedLinkResolver_ABC& resolver, const dispatcher::Config& config )
     : resolver_( resolver )
     , messages_( new dispatcher::MessageLoader( config.GetRecordDirectory(), true ) )
     , model_   ( new ::aar::StaticModel( config ) )

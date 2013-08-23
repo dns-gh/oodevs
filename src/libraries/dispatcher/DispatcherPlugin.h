@@ -21,7 +21,7 @@ namespace tools
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
-    class LinkResolver_ABC;
+    class AuthenticatedLinkResolver_ABC;
     class OrderResolver_ABC;
     class ClientsNetworker;
 
@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DispatcherPlugin( SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
-                               LinkResolver_ABC& links, OrderResolver_ABC& order, tools::RotatingLog& log );
+                               AuthenticatedLinkResolver_ABC& resolver, OrderResolver_ABC& order, tools::RotatingLog& log );
     virtual ~DispatcherPlugin();
     //@}
 
@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     SimulationPublisher_ABC& simulation_;
-    LinkResolver_ABC& links_;
+    AuthenticatedLinkResolver_ABC& resolver_;
     OrderResolver_ABC& order_;
     ClientsNetworker& clients_;
     //@}
