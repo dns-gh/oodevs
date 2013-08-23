@@ -717,5 +717,8 @@
   <report category="operational" id="769" message="Evacuating %1">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="770" message="Armed crowd detected, %1% armed civilians">
+    <parameter type="Integer"/>
+  </report>
 </reports>
-<!-- signature="3342552578" -->
+<!-- signature="3047309690" -->

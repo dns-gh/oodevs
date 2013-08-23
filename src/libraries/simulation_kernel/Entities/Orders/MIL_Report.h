@@ -180,6 +180,7 @@ public:
         eRC_MilitaryEquipmentPlundered = 518,
         eRC_UnitCrossedLimaLIA = 519,
         eRC_CorpseTransported = 769,
+        eRC_ArmedCiviliansDetected = 770
     };
     //@}
 
@@ -204,6 +205,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_DotationCategory& parameter, const MIL_AgentPion& pion );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, double nParam1, double nParam2 );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, int nParam );
+    template< typename T > static void PostEventInteger( const T& receiver, E_DecisionalReport nReport, int nParam );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const std::string& nParam );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, int nParam1, int nParam2, int nParam3 );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const MIL_Effect_IndirectFire& flyingShell );

@@ -717,5 +717,8 @@
   <report category="operational" id="769" message="Evacuation de %1">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="770" message="Foule armée détectée, %1% d'individus armés">
+    <parameter type="Integer"/>
+  </report>
 </reports>
-<!-- signature="1336005479" -->
+<!-- signature="1279342284" -->

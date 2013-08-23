@@ -488,7 +488,8 @@ eRC_stopHidingInTheCrowd = 516
 eRC_CloseCrowdDemonstration = 517
 eRC_MilitaryEquipmentPlundered = 518
 eRC_CorpseTransported = 769
-eNbr = 770
+eRC_ArmedCiviliansDetected = 770
+eNbr = 771
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
