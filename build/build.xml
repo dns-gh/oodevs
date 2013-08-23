@@ -40,6 +40,7 @@
     <condition property="go.race" value="-race" else="">
         <equals arg1="${platform}" arg2="vc100_x64"/>
     </condition>
+    <property name="application" value="${run.dir}/simulation_app.exe"/>
     <macrodef name="runtests">
         <element name="args" implicit="true" optional="true"/>
         <sequential>
@@ -60,7 +61,8 @@
                 <arg value="-test.parallel=1"/>
                 <arg value="${gocheck.verbose}"/>
                 <arg line="${gocheck.filter}"/>
-                <arg value="--application=${run.dir}/simulation_app.exe"/>
+                <arg value="--application=${application}"/>
+                <arg value="--run-dir=${run.dir}"/>
                 <arg value="--root-dir=${data.dir}"/>
                 <arg value="--test-port=${test.port}"/>
                 <args/>
