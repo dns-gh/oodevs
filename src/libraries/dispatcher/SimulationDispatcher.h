@@ -29,7 +29,7 @@ class SimulationDispatcher : public ReplayModel_ABC, public MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationDispatcher( ClientPublisher_ABC& clientsPublisher, Model& model );
+             SimulationDispatcher( ClientPublisher_ABC& publisher, Model& model );
     virtual ~SimulationDispatcher();
     //@}
 

@@ -127,7 +127,7 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::str
 
 void RightsPlugin::Logout( ClientPublisher_ABC& client )
 {
-    for( IT_Profiles it = authenticated_.begin(); it != authenticated_.end(); ++it )
+    for( auto it = authenticated_.begin(); it != authenticated_.end(); ++it )
         if( &GetPublisher( it->first ) == &client )
         {
             authenticated_.erase( it );
@@ -203,7 +203,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         sender.Send( reply );
         return;
     }
-    CIT_Profiles it = authenticated_.find( link );
+    auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
         container_.NotifyClientLeft( sender.GetClient(), link );
     if( maxConnections_ && maxConnections_ <= currentConnections_ )
@@ -288,7 +288,7 @@ void RightsPlugin::OnReceiveConnectedProfilesRequest( const sword::ConnectedProf
 {
     sword::AuthenticationToClient reply;
     auto response = reply.mutable_message()->mutable_connected_profile_list();
-    for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
+    for( auto it = authenticated_.begin(); it != authenticated_.end(); ++it )
         it->second->Send( *response->add_elem() );
     SendReponse( reply, sender, link );
 }
@@ -323,7 +323,7 @@ bool RightsPlugin::IsAuthenticated( const std::string& login ) const
 Profile_ABC& RightsPlugin::GetProfile( const std::string& link )
 {
     static DefaultProfile def;
-    CIT_Profiles it = authenticated_.find( link );
+    auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
         return *(it->second);
     return def;
@@ -335,7 +335,7 @@ Profile_ABC& RightsPlugin::GetProfile( const std::string& link )
 // -----------------------------------------------------------------------------
 ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link )
 {
-    CIT_Profiles it = authenticated_.find( link );
+    auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
         return base_.GetPublisher( link );
     static NullClientPublisher publisher;

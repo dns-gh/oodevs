@@ -75,16 +75,10 @@ public:
 
     virtual dispatcher::Profile_ABC& GetProfile( const std::string& link );
     virtual dispatcher::ClientPublisher_ABC& GetPublisher( const std::string& link );
-    virtual unsigned int GetClientID ( const std::string& link ) const;
+    virtual unsigned int GetClientID( const std::string& link ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    RightsPlugin( const RightsPlugin& );            //!< Copy constructor
-    RightsPlugin& operator=( const RightsPlugin& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void OnReceive( const std::string& link, const sword::ClientToAuthentication& message );
@@ -104,8 +98,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< dispatcher::Profile > > T_Profiles;
-    typedef T_Profiles::iterator                         IT_Profiles;
-    typedef T_Profiles::const_iterator                  CIT_Profiles;
 
     typedef std::map< std::string, unsigned int > T_ClientsID;
     //@}
