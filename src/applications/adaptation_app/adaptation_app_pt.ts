@@ -5461,6 +5461,13 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Type_LocalizedString</name>
+    <message>
+        <source>Unfinished translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Type_Repartition</name>
     <message>
         <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>

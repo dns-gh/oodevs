@@ -11,7 +11,7 @@
 #define __ADN_Connector_LocalizedString_h_
 
 #include "ADN_Connector_String.h"
-#include "ADN_LocalizedTypes.h"
+#include "ADN_Type_LocalizedString.h"
 
 // =============================================================================
 /** @class  ADN_Connector_LocalizedString

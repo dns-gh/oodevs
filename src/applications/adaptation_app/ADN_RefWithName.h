@@ -12,7 +12,7 @@
 
 #include "ADN_Ref_ABC.h"
 #include "ADN_Types.h"
-#include "ADN_LocalizedTypes.h"
+#include "ADN_Type_LocalizedString.h"
 
 // =============================================================================
 /** @class  ADN_RefWithName
