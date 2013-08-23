@@ -13,6 +13,7 @@
 #include "ObjectKnowledge.h"
 #include "Agent_ABC.h"
 #include "Automat_ABC.h"
+#include "Population_ABC.h"
 #include "Team_ABC.h"
 #include "tools/Resolver.h"
 
@@ -48,6 +49,8 @@ const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel:
         team = &agent->GetSuperior().GetTeam();
     else if( const dispatcher::Automat_ABC* automat = dynamic_cast< const dispatcher::Automat_ABC* >( &owner ) )
         team = &automat->GetTeam();
+    else if( const dispatcher::Population_ABC* population = dynamic_cast< const dispatcher::Population_ABC* >( &owner ) )
+        team = &population->GetTeam();
     else
         team = dynamic_cast< const kernel::Team_ABC* >( &owner );
     if( team )

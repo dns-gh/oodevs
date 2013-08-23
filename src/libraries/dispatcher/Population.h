@@ -80,6 +80,7 @@ public:
 
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
+    virtual dispatcher::Team_ABC& GetTeam() const;
     virtual const kernel::PopulationType& GetType() const;
     virtual unsigned int GetHealthyHumans() const;
     virtual unsigned int GetWoundedHumans() const;
