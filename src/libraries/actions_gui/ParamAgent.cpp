@@ -21,6 +21,8 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
+#include <boost/algorithm/string/predicate.hpp>
+
 using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
@@ -124,7 +126,8 @@ void ParamAgent::AddHierarchy( const kernel::Entity_ABC& superior )
 // -----------------------------------------------------------------------------
 void ParamAgent::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< kernel::Agent_ABC > > param( new actions::parameters::Agent( parameter_, controller_ ) );
+    const bool isKnowledge = boost::iequals( parameter_.GetType(), "agentknowledge" );
+    std::auto_ptr< actions::parameters::Entity< kernel::Agent_ABC > > param( new actions::parameters::Agent( parameter_, controller_, isKnowledge ) );
     EntityParameter< kernel::Agent_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

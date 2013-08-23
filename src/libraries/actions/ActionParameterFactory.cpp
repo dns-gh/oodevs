@@ -112,7 +112,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_acharstr() )
         return ( nullValue ) ? new parameters::String( parameter )                          : new parameters::String( parameter, message.acharstr().c_str() );
     if( message.has_agent() )
-        return ( nullValue ) ? new parameters::Agent( parameter, controller_ )              : new parameters::Agent( parameter, message.agent().id(), entities_, controller_ );
+        return ( nullValue ) ? new parameters::Agent( parameter, controller_, false )       : new parameters::Agent( parameter, message.agent().id(), entities_, controller_, false );
     if( message.has_areal() )
         return ( nullValue ) ? new parameters::Numeric( parameter )                         : new parameters::Numeric( parameter, message.areal() );
     if( message.has_intvalue() )
@@ -318,7 +318,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else if( type == "enumeration" )
         param.reset( new parameters::Enumeration( parameter, xis ) );
     else if( type == "agent" )
-        param.reset( new parameters::Agent( parameter, xis, entities_, controller_ ) );
+        param.reset( new parameters::Agent( parameter, xis, entities_, controller_, false ) );
     else if( type == "automate" || type == "automat" )
         param.reset( new parameters::Automat( parameter, xis, entities_, controller_ ) );
     else if( type == "army" )
