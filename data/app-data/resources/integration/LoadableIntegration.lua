@@ -267,7 +267,7 @@ integration.startLoadCrowd = function( crowd, concentration )
     return false
 end
 
-integration.startedLoadCrowd = function( crowd, concentration )
+integration.startedLoadCrowd = function()
     if myself.eEtatTransportCrowd == eActionTransport_Finished then
         return true
     elseif myself.eEtatTransportCrowd == eActionTransport_Impossible then
@@ -278,13 +278,13 @@ integration.startedLoadCrowd = function( crowd, concentration )
     return false
 end
 
-integration.stopLoadCrowd = function( crowd, concentration )
+integration.stopLoadCrowd = function()
     myself.actionLoadCrowd = DEC__StopAction( myself.actionLoadCrowd )
     myself.eEtatTransportCrowd = nil
 end
 
 -- Unload crowd
-integration.startUnloadCrowd = function( crowd, position )
+integration.startUnloadCrowd = function( crowd )
     local crowdId
     if crowd == nil or crowd == NIL then
          crowdId = 0 -- if the crowd is not issued, unload current transported crowd concentration.
@@ -292,12 +292,12 @@ integration.startUnloadCrowd = function( crowd, position )
         crowdId = crowd.source
     end
     meKnowledge:RC( eRC_TransportDebarquement )
-    myself.actionUnloadCrowd = DEC_StartDebarquerFouleSurPosition( crowdId, position:getPosition() )
+    myself.actionUnloadCrowd = DEC_StartDebarquerFouleSurPosition( crowdId, meKnowledge:getPosition() )
     actionCallbacks[ myself.actionUnloadCrowd ] = function( arg ) myself.eEtatTransportUnloadCrowd = arg end
     return false
 end
 
-integration.startedUnloadCrowd = function( crowd )
+integration.startedUnloadCrowd = function()
     if myself.eEtatTransportUnloadCrowd == eActionTransport_Finished then
         return true
     elseif myself.eEtatTransportUnloadCrowd == eActionTransport_Impossible then
@@ -307,7 +307,7 @@ integration.startedUnloadCrowd = function( crowd )
     return false
 end
 
-integration.stopUnloadCrowd = function( crowd )
+integration.stopUnloadCrowd = function()
     if myself.actionUnloadCrowd ~= nil then
         myself.actionUnloadCrowd = DEC__StopAction( myself.actionUnloadCrowd )
     end
