@@ -50,9 +50,10 @@ private:
     struct sTransportData
     {
         sTransportData();
-        sTransportData( double rTotalWeight, bool bTransportOnlyLoadable );
+        sTransportData( double rTotalWeight, bool bTransportOnlyLoadable, bool bMagic );
 
-        bool     bTransportOnlyLoadable_;
+        bool   bTransportOnlyLoadable_;
+        bool   bMagicLoad_;
         double rTotalWeight_;
         double rRemainingWeight_;
         double rTransportedWeight_;
@@ -61,9 +62,10 @@ private:
         void serialize( Archive & ar, unsigned int /*version*/ )
         {
             ar & bTransportOnlyLoadable_
-                & rTotalWeight_
-                & rRemainingWeight_
-                & rTransportedWeight_;
+               & bMagicLoad_
+               & rTotalWeight_
+               & rRemainingWeight_
+               & rTransportedWeight_;
         }
     };
 
