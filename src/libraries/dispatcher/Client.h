@@ -20,8 +20,6 @@ namespace tools
 
 namespace dispatcher
 {
-    class ClientBroadcaster_ABC;
-
 // =============================================================================
 /** @class  Client
     @brief  Client
@@ -33,15 +31,12 @@ class Client : public ClientPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Client( tools::MessageSender_ABC& sender, ClientBroadcaster_ABC& broadcaster, const std::string& endpoint );
+             Client( tools::MessageSender_ABC& sender, const std::string& endpoint );
     virtual ~Client();
     //@}
 
     //! @name Operations
     //@{
-    void Activate();
-    void Deactivate();
-
     virtual void Send( const sword::AuthenticationToClient& msg );
     virtual void Send( const sword::SimToClient& msg );
     virtual void Send( const sword::ReplayToClient& msg );
@@ -55,18 +50,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Client( const Client& );            //!< Copy constructor
-    Client& operator=( const Client& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     tools::MessageSender_ABC& sender_;
-    ClientBroadcaster_ABC& broadcaster_;
-    std::string endpoint_;
+    const std::string endpoint_;
     //@}
 };
 

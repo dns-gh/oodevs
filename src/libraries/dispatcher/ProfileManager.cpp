@@ -11,7 +11,6 @@
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "Config.h"
-#include "Client.h"
 #include "Model.h"
 #include "Automat.h"
 #include "MT_Tools/MT_Logger.h"

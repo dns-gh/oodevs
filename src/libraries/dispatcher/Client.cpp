@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 #include "Client.h"
 #include "protocol/Protocol.h"
-#include "protocol/ClientBroadcaster_ABC.h"
 #include "tools/MessageSender_ABC.h"
 
 using namespace dispatcher;
@@ -19,10 +18,9 @@ using namespace dispatcher;
 // Name: Client constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-Client::Client( tools::MessageSender_ABC& sender, ClientBroadcaster_ABC& broadcaster, const std::string& endpoint )
-    : sender_     ( sender )
-    , broadcaster_( broadcaster )
-    , endpoint_   ( endpoint )
+Client::Client( tools::MessageSender_ABC& sender, const std::string& endpoint )
+    : sender_  ( sender )
+    , endpoint_( endpoint )
 {
     // NOTHING
 }
@@ -34,24 +32,6 @@ Client::Client( tools::MessageSender_ABC& sender, ClientBroadcaster_ABC& broadca
 Client::~Client()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Activate
-// Created: MCO 2011-11-07
-// -----------------------------------------------------------------------------
-void Client::Activate()
-{
-    broadcaster_.Activate( endpoint_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Deactivate
-// Created: MCO 2011-11-07
-// -----------------------------------------------------------------------------
-void Client::Deactivate()
-{
-    broadcaster_.Deactivate( endpoint_ );
 }
 
 // -----------------------------------------------------------------------------

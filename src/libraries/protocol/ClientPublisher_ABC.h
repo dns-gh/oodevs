@@ -10,7 +10,7 @@
 #ifndef __ClientPublisher_ABC_h_
 #define __ClientPublisher_ABC_h_
 
-#include <string>
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -30,7 +30,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class ClientPublisher_ABC
+class ClientPublisher_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
