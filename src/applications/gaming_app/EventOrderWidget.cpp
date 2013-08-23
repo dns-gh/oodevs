@@ -396,11 +396,11 @@ bool EventOrderWidget::AreTargetAndMissionCompatible() const
 // -----------------------------------------------------------------------------
 bool EventOrderWidget::AreTargetAndMissionCompatible( const kernel::OrderType* currentOrder ) const
 {
-    if( target_ )
+    if( target_ && currentOrder )
     {
         bool needWarning = true;
         const Decisions_ABC* decisions = GetTargetDecision();
-        assert( decisions != 0 && currentOrder != 0 );
+        assert( decisions != 0 );
         if( currentType_ == eMissionType_FragOrder )
         {
             auto it = decisions->GetFragOrders();
