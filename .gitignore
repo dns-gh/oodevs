@@ -11,7 +11,9 @@ tags
 *.user
 *.sdf
 *.qix
+*.qm
 /build/parser.out
+/build/vc100/ipch/
 /data/data/
 /data/exercises/
 /data/tests/protocol_test/
