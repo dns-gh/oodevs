@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
     MockEntityResolver resolver;
     MOCK_EXPECT( resolver.GetAgent ).with( 42u ).returns( boost::ref( agent ) );
     std::auto_ptr< sword::MissionParameter > message( Serialize( "agent", input,
-        bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
+        bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ), false ) ) );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).agent().id() );
 }
@@ -578,7 +578,7 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_AgentKnowledge, KnowledgeFixtur
     MockEntityResolver resolver;
     MOCK_EXPECT( resolver.GetAgent ).with( 42u ).returns( boost::ref( agent ) );
     std::auto_ptr< sword::MissionParameter > message( Serialize( "agentknowledge", input,
-        bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
+        bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ), false ) ) );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).agent().id() );
 }

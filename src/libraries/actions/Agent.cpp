@@ -21,7 +21,7 @@ using namespace parameters;
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller, bool isKnowledge /*= false*/ )
+Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller, bool isKnowledge )
     : Entity< Agent_ABC >( parameter, controller )
     , isKnowledge_( isKnowledge )
 {
@@ -32,7 +32,8 @@ Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller, b
 // Name: Agent constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge /* = false */  )
+Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver,
+              kernel::Controller& controller, bool isKnowledge )
     : Entity< Agent_ABC >( parameter, controller )
     , isKnowledge_( isKnowledge )
 {
@@ -44,7 +45,8 @@ Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel:
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge /* = false */ )
+Agent::Agent( const OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver,
+              kernel::Controller& controller, bool isKnowledge )
     : Entity< Agent_ABC >( parameter, &resolver.GetAgent( id ), controller )
     , isKnowledge_( isKnowledge )
 {
@@ -55,8 +57,8 @@ Agent::Agent( const OrderParameter& parameter, unsigned int id, const kernel::En
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge /* = false */ )
-    : Entity< Agent_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "agent", false ), controller )
+Agent::Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge )
+    : Entity< Agent_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), isKnowledge ? "agentknowledge" : "agent", false ), controller )
     , isKnowledge_( isKnowledge )
 {
     if( xis.has_attribute( "value" ) )
