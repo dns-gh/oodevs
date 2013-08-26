@@ -228,12 +228,14 @@ namespace
 {
     void ConvertUnitUpdate( const sword::SessionNotification::UnitUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::UnitUpdate* to )
     {
+        CONVERT_ID( unit );
         if( from.has_extensions() )
             for( int j = 0; j < from.extensions().entries().size(); ++j )
                 ConvertExtensionEntry( from.extensions().entries( j ), to->mutable_extensions()->add_entries() );
     }
     void ConvertFormationUpdate( const sword::SessionNotification::FormationUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::FormationUpdate* to )
     {
+        CONVERT_ID( formation );
         if( from.has_extensions() )
             for( int j = 0; j < from.extensions().entries().size(); ++j )
                 ConvertExtensionEntry( from.extensions().entries( j ), to->mutable_extensions()->add_entries() );
