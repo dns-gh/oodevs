@@ -61,7 +61,7 @@ public:
     virtual tools::Iterator< const kernel::Mission& > GetMissions() const;
     virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const;
     virtual const kernel::Mission* GetCurrentMission() const;
-    virtual const kernel::Automat_ABC& GetAgent() const;
+    virtual const kernel::Entity_ABC& GetAgent() const;
 
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14:
     bool IsDebugActivated() const;

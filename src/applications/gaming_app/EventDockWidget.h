@@ -87,11 +87,12 @@ private:
     //@{
     void SetEventType( E_EventTypes type );
     void Commit( timeline::Event& event );
-    void Purge( bool fromTimeline = false );
+    void Purge();
     void Fill();
     virtual void closeEvent( QCloseEvent * event );
     void SetContentVisible( bool visible );
-    void SetEditing( bool editing, bool fromTimeline );
+    void SetEditing( bool editing );
+    void Configure( E_EventTypes type, bool editing, bool purge );
     //@}
 
     //! @name Observers implementation
@@ -102,6 +103,11 @@ private:
     virtual void NotifyUpdated( const Event& event );
     //@}
 
+    //! @name RichDockWidget implementation
+    //@{
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
+    //@}
+
 signals:
     //! @name Signals
     //@{
@@ -109,13 +115,14 @@ signals:
     void DeleteEvent( const std::string& uuid );
     void EditEvent( const timeline::Event& );
     void BeginDateChanged( const QDateTime& );
-    void EditingChanged( bool, bool );
+    void EditingChanged( bool );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool fromTimeline );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void UpdateCreation( E_EventTypes type, const QDateTime& dateTime );
     void StartEdition( const Event& event );
 
     void OnEditClicked();

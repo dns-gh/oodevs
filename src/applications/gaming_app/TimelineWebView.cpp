@@ -310,7 +310,7 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
 void TimelineWebView::OnCreateClicked( int type )
 {
     assert( type >= 0 && type < eNbrEventTypes );
-    emit StartCreation( static_cast< E_EventTypes >( type ), selectedDateTime_, true );
+    emit StartCreation( static_cast< E_EventTypes >( type ), selectedDateTime_ );
 }
 
 // -----------------------------------------------------------------------------

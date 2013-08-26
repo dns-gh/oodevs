@@ -57,7 +57,7 @@ void PopulationDecisions::DoUpdate( const sword::CrowdOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.type().id() );
-    controller_.Update( *this );
+    controller_.Update( static_cast< Decisions_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

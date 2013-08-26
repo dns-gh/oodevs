@@ -59,7 +59,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , simulation_( simulation )
     , selectedEntity_( controllers )
     , target_( controllers )
-    , missionInterface_( 0 )
+    , missionInterface_( new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config ) )
     , missionCombo_( 0 )
     , lastGivenOrder_( 0 )
 {
@@ -95,8 +95,6 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     topLayout->addWidget( missionTypeCombo_ );
     topLayout->addLayout( missionComboLayout_ );
 
-    // Body
-    missionInterface_ = new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config );
     // Layout
     mainLayout_->setSpacing( 5 );
     mainLayout_->addLayout( targetLayout );
@@ -123,21 +121,17 @@ EventOrderWidget::~EventOrderWidget()
 // Name: EventOrderWidget::Purge
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventOrderWidget::Purge( bool forcePurge )
+void EventOrderWidget::Purge()
 {
     selectedEntity_ = 0;
-        SetTarget( 0 );
-    missionTypeCombo_->setCurrentIndex( eMissionType_Pawn );
-    currentType_ = eMissionType_Pawn;
-    if( missionInterface_ && previousType_ != entityType_ || forcePurge )
-    {
-        missionInterface_->Purge();
-        missionTypeCombo_->clear();
-        for( int i = 0; i < eNbrMissionTypes; ++i )
-            missionTypeCombo_->insertItem( i, QString::fromStdString( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( i ) ) ) );
-        previousType_ = eNbrMissionTypes;
-        FillMission();
-    }
+    SetTarget( 0 );
+    missionInterface_->Purge();
+    lastGivenOrder_ = 0;
+
+    previousType_ = eNbrMissionTypes;
+    missionTypeCombo_->clear();
+    for( int i = 0; i < eNbrMissionTypes; ++i )
+        missionTypeCombo_->insertItem( i, QString::fromStdString( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( i ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,8 +169,6 @@ void EventOrderWidget::Fill( const Event& event )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Commit( timeline::Event& event ) const
 {
-    if( !missionInterface_ )
-        return;
     missionInterface_->SetPlanned( true );
     Publish( &event );
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
@@ -189,8 +181,6 @@ void EventOrderWidget::Commit( timeline::Event& event ) const
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Trigger() const
 {
-    if( !missionInterface_ )
-        return;
     missionInterface_->SetPlanned( false );
     Publish();
 }
@@ -201,7 +191,7 @@ void EventOrderWidget::Trigger() const
 // -----------------------------------------------------------------------------
 bool EventOrderWidget::IsValid() const
 {
-    return target_ && AreTargetAndMissionCompatible() && missionInterface_ && missionInterface_->CheckValidity();
+    return target_ && AreTargetAndMissionCompatible() && missionInterface_->CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -217,8 +207,7 @@ void EventOrderWidget::Warn() const
     }
     else if( !AreTargetAndMissionCompatible() )
         WarnTargetAndMission();
-    if( missionInterface_ )
-        missionInterface_->CheckValidity(); // $$$$ ABR 2013-06-14: TODO Use missionInterface_->Warn() when ready
+    missionInterface_->CheckValidity(); // $$$$ ABR 2013-06-14: TODO Use missionInterface_->Warn() when ready
 }
 
 // -----------------------------------------------------------------------------
@@ -227,12 +216,18 @@ void EventOrderWidget::Warn() const
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Publish( timeline::Event* event /* = 0 */ ) const
 {
-    if( !missionInterface_ )
-        return;
     if( currentType_ == eMissionType_FragOrder )
         missionInterface_->Publish< kernel::FragOrderType >( model_.actions_, event );
     else
         missionInterface_->Publish< kernel::MissionType >( model_.actions_, event );
+}
+
+namespace
+{
+    void DisableItem( gui::RichWarnWidget< QComboBox >* comboBox, int index )
+    {
+        comboBox->setItemData( index, Qt::NoItemFlags, Qt::UserRole - 1 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -240,13 +235,17 @@ void EventOrderWidget::Publish( timeline::Event* event /* = 0 */ ) const
 // Created: ABR 2013-06-07
 // -----------------------------------------------------------------------------
 template< typename T >
-void EventOrderWidget::AddSingleOrder( const T& mission )
+void EventOrderWidget::AddSingleOrder( const T& mission, bool disable )
 {
     QVariant* variant = new QVariant();
     variant->setValue( kernel::VariantPointer( &mission ) );
     QString missionName = QString::fromStdString( mission.GetName() );
     if( missionCombo_->findText( missionName ) == -1 )
+    {
         missionCombo_->insertItem( mission.GetId(), missionName, *variant );
+        if( disable )
+            DisableItem( missionCombo_, missionCombo_->findText( missionName ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -282,14 +281,15 @@ void EventOrderWidget::AddCompatibleOrders( tools::Iterator< const T& > it )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::AddCompatibleFragOrders( const Decisions_ABC& decisions )
 {
+    const kernel::Mission* currentMission = decisions.GetCurrentMission();
     AddCompatibleOrders< kernel::FragOrder >( decisions.GetFragOrders() );
-
     auto it = decisions.GetMissions();
     while( it.HasMoreElements() )
     {
-        auto itFragO = it.NextElement().CreateIterator();
+        const kernel::Mission& mission = it.NextElement();
+        auto itFragO = mission.CreateIterator();
         while( itFragO.HasMoreElements() )
-            AddSingleOrder( itFragO.NextElement().GetType() );
+            AddSingleOrder( itFragO.NextElement().GetType(), !currentMission || currentMission->GetType().GetId() != mission.GetType().GetId() );
     }
 }
 
@@ -343,9 +343,11 @@ void EventOrderWidget::FillMission()
             {
                 AddSingleOrder( *lastGivenOrder_ );
                 missionCombo_->setCurrentIndex( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
-                missionCombo_->setItemData( missionCombo_->currentIndex(), 0, Qt::UserRole - 1 );
                 if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
+                {
+                    DisableItem( missionCombo_, missionCombo_->currentIndex() );
                     WarnTargetAndMission();
+                }
             }
             else
             {
@@ -365,7 +367,7 @@ void EventOrderWidget::FillMission()
     }
     connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
     missionChoosed_ = false;
-    BuildMissionInterface( previousType_ != entityType_ );
+    BuildMissionInterface( previousType_ != entityType_ || currentType_ == eMissionType_FragOrder );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,8 +378,7 @@ void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
 {
     target_ = entity;
     targetLabel_->setText( ( target_ ) ? target_->GetName() : "---" );
-    if( missionInterface_ )
-        missionInterface_->SetEntity( entity );
+    missionInterface_->SetEntity( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -433,8 +434,7 @@ bool EventOrderWidget::AreTargetAndMissionCompatible( const kernel::OrderType* c
 // -----------------------------------------------------------------------------
 void EventOrderWidget::WarnTargetAndMission() const
 {
-    if( missionInterface_ )
-        missionInterface_->SetEntity( 0 );
+    missionInterface_->SetEntity( 0 );
     missionCombo_->Warn();
     targetGroupBox_->Warn();
     targetLabel_->Warn();
@@ -446,8 +446,6 @@ void EventOrderWidget::WarnTargetAndMission() const
 // -----------------------------------------------------------------------------
 void EventOrderWidget::BuildMissionInterface( bool resetAll )
 {
-    if( !missionInterface_ )
-        return;
     int tabIndex = missionInterface_->currentIndex();
     if( resetAll )
     {
@@ -476,8 +474,6 @@ void EventOrderWidget::FillMissionInterface( const EventAction& event )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnMissionTypeChanged( int value )
 {
-    if( !missionInterface_ )
-        return;
     missionChoosed_ = false;
     if( entityType_ == eNbrMissionTypes )
         entityType_ = eMissionType_Pawn;
@@ -498,7 +494,7 @@ void EventOrderWidget::OnMissionChanged( int )
     BuildMissionInterface( true );
     if( !AreTargetAndMissionCompatible() )
         WarnTargetAndMission();
-    else if( lastGivenOrder_ )
+    else if( lastGivenOrder_ && !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
         missionCombo_->removeItem( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
 }
 
@@ -538,8 +534,6 @@ void EventOrderWidget::OnPlannedMission( const actions::Action_ABC& action, time
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnSelectEntity( const kernel::Entity_ABC& entity, E_MissionType type )
 {
-    if( !missionInterface_ )
-        return;
     if( missionCombo_ && missionTypeCombo_->count() != 4 )
         lastGivenOrder_ = static_cast< const kernel::OrderType* >( missionCombo_->itemData( missionCombo_->currentIndex() ).value< kernel::VariantPointer >().ptr_ );
 
@@ -566,7 +560,7 @@ void EventOrderWidget::OnTargetRemoved()
     missionTypeCombo_->clear();
     for( int i = 0; i < eNbrMissionTypes; ++i )
         missionTypeCombo_->insertItem( i, QString::fromStdString( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( i ) ) ) );
-    Purge( true );
+    Purge();
     FillMission();
     entityType_ = eNbrMissionTypes;
     previousType_ = eNbrMissionTypes;
@@ -625,7 +619,7 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& populati
 void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     if( target_ == &entity || selectedEntity_ == &entity )
-        Purge( true );
+        Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -634,7 +628,7 @@ void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
 {
-    if( isVisible() && missionInterface_ )
+    if( isVisible() )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 2.f );
@@ -653,8 +647,22 @@ void EventOrderWidget::ActivateMissionPanel()
     assert( selectedEntity_ );
     previousType_ = entityType_;
     entityType_ = selectedEntity_->GetTypeName() == kernel::Population_ABC::typeName_? eMissionType_Population : selectedEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ ? eMissionType_Automat : eMissionType_Pawn ;
-    const kernel::Entity_ABC& entity = *selectedEntity_;
-    E_MissionType missionType = entityType_;
-    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
-    emit SelectEntity( entity, missionType );
+
+    if( previousType_ != entityType_ )
+        emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    else
+        emit UpdateCreation( eEventTypes_Order, simulation_.GetDateTime() );
+
+    emit SelectEntity( *selectedEntity_, entityType_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::ActivateMissionPanel
+// Created: LGY 2013-08-22
+// -----------------------------------------------------------------------------
+void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
+{
+    if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() &&
+        currentType_ == eMissionType_FragOrder )
+        OnMissionTypeChanged( missionCombo_->currentIndex() );
 }

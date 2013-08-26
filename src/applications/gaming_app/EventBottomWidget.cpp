@@ -181,11 +181,11 @@ void EventBottomWidget::OnSwitchToggled( bool checked )
 // Name: EventBottomWidget::OnEditingChanged
 // Created: ABR 2013-07-04
 // -----------------------------------------------------------------------------
-void EventBottomWidget::OnEditingChanged( bool editing, bool fromTimeline )
+void EventBottomWidget::OnEditingChanged( bool editing )
 {
     editing_ = editing;
-    switchAction_->setChecked( editing || fromTimeline );
-    OnSwitchToggled( editing || fromTimeline );
+    switchAction_->setChecked( editing );
+    OnSwitchToggled( editing );
 }
 
 // -----------------------------------------------------------------------------

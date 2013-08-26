@@ -101,12 +101,13 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
 
     // Connections
     connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), bottomWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
-    connect( this, SIGNAL( EditingChanged( bool, bool ) ), bottomWidget_, SLOT( OnEditingChanged( bool, bool ) ) );
+    connect( this, SIGNAL( EditingChanged( bool ) ), bottomWidget_, SLOT( OnEditingChanged( bool ) ) );
     connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
     connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
     connect( bottomWidget_, SIGNAL( Save() ),           this, SLOT( OnSave() ) );
     connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
-    connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
+    connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
+    connect( orderWidget, SIGNAL( UpdateCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( UpdateCreation( E_EventTypes, const QDateTime& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,32 +120,50 @@ EventDockWidget::~EventDockWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDockWidget::Create
+// Name: EventDockWidget::StartCreation
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime, bool fromTimeline )
+void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime )
 {
     event_.reset( factory_.Create( type ) );
-    SetEventType( type );
-    Purge( fromTimeline );
-    SetEditing( false, fromTimeline );
-    Fill();
     if( dateTime.isValid() )
         emit BeginDateChanged( dateTime );
-    SetContentVisible( true );
-    setVisible( true );
+    Configure( type, false, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDockWidget::Edit
+// Name: EventDockWidget::UpdateCreation
+// Created: LGY 2013-08-20
+// -----------------------------------------------------------------------------
+void EventDockWidget::UpdateCreation( E_EventTypes type, const QDateTime& dateTime )
+{
+    event_.reset( factory_.Create( type ) );
+    if( dateTime.isValid() )
+        emit BeginDateChanged( dateTime );
+    Configure( type, false, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::StartEdition
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
 void EventDockWidget::StartEdition( const Event& event )
 {
     event_.reset( event.Clone() );
-    SetEventType( event.GetType() );
-    Purge();
-    SetEditing( true, false );
+    Configure( event.GetType(), true, true );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::Configure
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void EventDockWidget::Configure( E_EventTypes type, bool editing, bool purge )
+{
+    SetEventType( type );
+    if( purge )
+        Purge();
+    SetEditing( editing );
     Fill();
     SetContentVisible( true );
     setVisible( true );
@@ -185,11 +204,11 @@ void EventDockWidget::SetContentVisible( bool visible )
 // Name: EventDockWidget::Purge
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventDockWidget::Purge( bool fromTimeline )
+void EventDockWidget::Purge()
 {
     topWidget_->Purge();
     if( currentWidget_ )
-        currentWidget_->Purge( fromTimeline );
+        currentWidget_->Purge();
     bottomWidget_->Purge();
     detailWidget_->Purge();
     SetContentVisible( false );
@@ -262,7 +281,7 @@ void EventDockWidget::OnDiscard()
     if( editing_ )
         Fill();
     else
-        currentWidget_->Purge( true );
+        currentWidget_->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -283,7 +302,7 @@ void EventDockWidget::OnSave()
         emit EditEvent( event );
 
     if( !editing_ )
-        SetEditing( true, false );
+        SetEditing( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -362,8 +381,19 @@ void EventDockWidget::NotifyUpdated( const Event& event )
 // Name: EventDockWidget::SetEditing
 // Created: ABR 2013-07-04
 // -----------------------------------------------------------------------------
-void EventDockWidget::SetEditing( bool editing, bool fromTimeline )
+void EventDockWidget::SetEditing( bool editing )
 {
     editing_ = editing;
-    emit EditingChanged( editing, fromTimeline );
+    emit EditingChanged( editing );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::SetEditing
+// Created: LGY 2013-08-21
+// -----------------------------------------------------------------------------
+void EventDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
+{
+    if( newMode == eModes_Default )
+        Purge();
+    gui::RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
 }
