@@ -59,6 +59,13 @@ public:
     //! @name Operations
     //@{
     void InitEmptyValues( const std::vector< Language >& languages );
+    void CopyValues( const LocalizedString& other );
+    //@}
+
+    //! @name Operators
+    //@{
+    virtual bool operator==( const LocalizedString& other ) const;
+    virtual bool operator!=( const LocalizedString& other ) const;
     //@}
 
     //! @name Accessors

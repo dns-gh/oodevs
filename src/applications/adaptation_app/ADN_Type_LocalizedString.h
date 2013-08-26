@@ -43,6 +43,19 @@ public:
             return static_cast< const ADN_Type_LocalizedString& >( data ).GetType() != kernel::eTranslationType_Unfinished;
         }
     };
+    class TranslationUniquenessChecker : public TypeChecker
+    {
+    public:
+        TranslationUniquenessChecker( ADN_ErrorStatus status, const QString& errorMsg )
+            : TypeChecker( status, errorMsg )
+        {}
+        virtual ~TranslationUniquenessChecker() {}
+
+        virtual bool IsValid( const ADN_Type_ABC< std::string >& data ) const
+        {
+            return static_cast< const ADN_Type_LocalizedString& >( data ).CheckUniqueTranslation();
+        }
+    };
     //@}
 
     //! @name Constructors/Destructor
@@ -57,13 +70,14 @@ public:
     void Initialize( ADN_Connector_ABC& dest ) const;
     virtual void OnLanguageChanged();
     virtual void OnTypeChanged( int );
+    bool CheckUniqueTranslation() const;
     //@}
 
     //! @name Operators
     //@{
     ADN_Type_LocalizedString& operator=( const std::string& val );
-    virtual bool operator ==(const std::string& val) const;
-    virtual bool operator !=(const std::string& val) const;
+    virtual bool operator==( const std::string& val ) const;
+    virtual bool operator!=( const std::string& val ) const;
     //@}
 
     //! @name Accessors
@@ -83,8 +97,9 @@ private:
     //! @name Helpers
     //@{
     void Initialize();
+    void InitTranslation( const std::string& data );
     void CheckTranslation() const;
-    void AddTranslationChecker();
+    void AddTranslationCheckers();
     //@}
 
 private:
@@ -92,6 +107,7 @@ private:
     //@{
     boost::shared_ptr< kernel::LocalizedString > translation_;
     boost::shared_ptr< kernel::Context > context_;
+    bool swappingLanguage_;
     //@}
 };
 

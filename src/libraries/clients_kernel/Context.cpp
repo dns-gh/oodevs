@@ -65,8 +65,7 @@ boost::shared_ptr< LocalizedString > Context::operator[]( const std::string& key
     for( auto it = begin(); it != end(); ++it )
         if( ( *it )->Key() == key )
             return *it;
-    push_back( boost::make_shared< LocalizedString >( key ) );
-    return back();
+    return CreateNew( key );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,4 +87,14 @@ const boost::shared_ptr< LocalizedString >& Context::operator[]( const std::stri
 const boost::shared_ptr< LocalizedString >& Context::at( const std::string& key ) const
 {
     return ( *this )[ key ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< LocalizedString > Context::CreateNew
+// Created: ABR 2013-08-26
+// -----------------------------------------------------------------------------
+boost::shared_ptr< LocalizedString > Context::CreateNew( const std::string& key )
+{
+    push_back( boost::make_shared< LocalizedString >( key ) );
+    return back();
 }

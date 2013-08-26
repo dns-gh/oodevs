@@ -5452,6 +5452,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Unfinished translation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Duplicate translation key with different translation values</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

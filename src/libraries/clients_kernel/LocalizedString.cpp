@@ -171,10 +171,41 @@ void LocalizedString::InitEmptyValues( const std::vector< Language >& languages 
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
         auto valueIt = values_.find( it->GetShortName() );
-        if( valueIt == values_.end() || valueIt->second.value_.empty() )
+        if( valueIt == values_.end() /*|| valueIt->second.value_.empty()*/ )
         {
-            values_[ it->GetShortName() ].value_ = key_;
+            values_[ it->GetShortName() ].value_ = "";
             values_[ it->GetShortName() ].type_ = eTranslationType_Unfinished;
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalizedString::CopyValues
+// Created: ABR 2013-08-26
+// -----------------------------------------------------------------------------
+void LocalizedString::CopyValues( const LocalizedString& other )
+{
+    for( auto it = other.values_.begin(); it != other.values_.end(); ++it )
+        values_[ it->first ] = it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalizedString::operator ==
+// Created: ABR 2013-08-26
+// -----------------------------------------------------------------------------
+bool LocalizedString::operator==( const LocalizedString& other ) const
+{
+    bool result = Key() == other.Key();
+    for( auto it = values_.begin(); result && it != values_.end(); ++it )
+        result = result && it->second.value_ == other.Value( it->first ) && it->second.type_ == other.Type( it->first );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalizedString::operator !=
+// Created: ABR 2013-08-26
+// -----------------------------------------------------------------------------
+bool LocalizedString::operator!=( const LocalizedString& other ) const
+{
+    return !( *this == other );
 }

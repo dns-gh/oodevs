@@ -5469,6 +5469,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Unfinished translation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Duplicate translation key with different translation values</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
