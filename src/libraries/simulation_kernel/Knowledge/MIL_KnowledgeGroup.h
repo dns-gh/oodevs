@@ -266,6 +266,7 @@ private:
     boost::shared_ptr< DEC_Knowledge_Object > GetObjectKnowledgeToUpdate( MIL_Object_ABC& objectKnown );
     void ApplyAgentPerception( const MIL_Agent_ABC& pion, int currentTimeStep );
     void ApplyPopulationPerception( const MIL_Agent_ABC& pion, int currentTimeStep );
+    void UpdateObjectPerception( const MIL_KnowledgeGroup& group, int currentTimeStep );
     //@}
 
 private:
