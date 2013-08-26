@@ -303,7 +303,13 @@ integration.getEntitiesFromAutomatCommunication = function ( automat, role, with
     for i = 1, nTemp do
         local pion = temp[i]
         local knowledge = CreateKnowledge( integration.ontology.types.agent, pion )
-        if not knowledge:isDestroyed() then
+        local fun = function() return knowledge:isDestroyed() end
+        local ok, isDestroyed = pcall( fun )
+        if ok then
+            if not isDestroyed then
+                knowledges[ #knowledges + 1 ] = knowledge
+            end
+        else
             knowledges[ #knowledges + 1 ] = knowledge
         end
     end
