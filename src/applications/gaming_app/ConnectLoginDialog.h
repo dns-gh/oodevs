@@ -50,7 +50,7 @@ private:
     //@{
     virtual void showEvent( QShowEvent* ev );
     virtual void OnAccept();
-    virtual void OnReject();
+    virtual void reject();
     virtual void OnSelectItem();
     //@}
 
