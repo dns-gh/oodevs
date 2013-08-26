@@ -24,6 +24,15 @@ struct SpawnCommand::InternalData
     InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
 };
 
+tools::Path frontend::MakeBinaryName( const tools::Path& prefix )
+{
+#ifdef _DEBUG
+    return prefix + tools::Path::FromUTF8( "_d.exe" );
+#else
+    return prefix + tools::Path::FromUTF8( ".exe" );
+#endif
+}
+
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand constructor
 // Created: AGE 2007-10-04

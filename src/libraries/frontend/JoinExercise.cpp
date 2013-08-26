@@ -23,7 +23,7 @@ using namespace frontend;
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, bool attach )
-    : SpawnCommand( config, "gaming_app.exe", attach, "" )
+    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), attach, "" )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
@@ -35,7 +35,7 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
 JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile, bool attach /* = false*/ )
-    : SpawnCommand( config, "gaming_app.exe", attach, "" )
+    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), attach, "" )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );

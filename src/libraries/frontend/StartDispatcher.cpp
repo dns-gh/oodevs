@@ -26,7 +26,7 @@ StartDispatcher::StartDispatcher( const tools::GeneralConfig& config,
                                   const tools::Path& dispatcher_path /*= ""*/,
                                   std::string commanderEndpoint /*= ""*/,
                                   std::string processJobName /*= ""*/ )
-    : SpawnCommand( config, "dispatcher_app.exe", attach, commanderEndpoint, processJobName )
+    : SpawnCommand( config, MakeBinaryName( "dispatcher_app" ), attach, commanderEndpoint, processJobName )
 {
     if( !dispatcher_path.IsEmpty() )
         SetWorkingDirectory( dispatcher_path );

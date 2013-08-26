@@ -18,7 +18,7 @@ using namespace frontend;
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile, bool attach )
-    : SpawnCommand( config, "gaming_app.exe", attach, "" )
+    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), attach, "" )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );

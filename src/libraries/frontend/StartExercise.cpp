@@ -40,7 +40,7 @@ namespace
 StartExercise::StartExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session,
                               const std::map< std::string, std::string >& arguments, bool attach, bool launchDispatchedIfNotEmbedded /* = true*/,
                               std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
-    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
+    : SpawnCommand( config, MakeBinaryName( "simulation_app" ), attach, commanderEndpoint, processJobName )
     , exercise_ ( exercise )
     , session_ ( session )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
