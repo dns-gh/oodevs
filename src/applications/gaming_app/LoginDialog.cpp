@@ -57,7 +57,7 @@ LoginDialog::LoginDialog( QWidget* pParent )
     QPushButton* ok = new QPushButton( tools::translate( "LoginDialog", "Ok" ) );
     QPushButton* cancel = new QPushButton( tools::translate( "LoginDialog", "Cancel" ) );
     connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
-    connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
+    connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
     buttonBox->addWidget( ok );
     buttonBox->addWidget( cancel );
     mainLayout->addLayout( buttonBox );
@@ -79,15 +79,6 @@ LoginDialog::~LoginDialog()
 void LoginDialog::OnAccept()
 {
     accept();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LoginDialog::OnReject
-// Created: SBO 2009-06-10
-// -----------------------------------------------------------------------------
-void LoginDialog::OnReject()
-{
-    reject();
 }
 
 // -----------------------------------------------------------------------------

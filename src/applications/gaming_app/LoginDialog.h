@@ -31,7 +31,6 @@ private slots:
     //! @name Slots
     //@{
     virtual void OnAccept();
-    virtual void OnReject();
     virtual void OnSelectItem();
     //@}
 

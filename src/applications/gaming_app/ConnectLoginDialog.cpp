@@ -102,14 +102,14 @@ void ConnectLoginDialog::OnAccept()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConnectLoginDialog::OnReject
-// Created: LGY 2011-11-23
+// Name: ConnectLoginDialog::reject
+// Created: LGY 2013-08-26
 // -----------------------------------------------------------------------------
-void ConnectLoginDialog::OnReject()
+void ConnectLoginDialog::reject()
 {
     profiles_.clear();
     network_.Disconnect();
-    reject();
+    LoginDialog::reject();
 }
 
 // -----------------------------------------------------------------------------
