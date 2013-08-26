@@ -80,6 +80,8 @@ signals:
 private slots:
     //! @name Slots
     //@{
+    void OnCenterView();
+
     void CreateEvent( const timeline::Event& event );
     void EditEvent( const timeline::Event& event );
     void DeleteEvent( const std::string& uuid );

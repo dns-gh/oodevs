@@ -106,6 +106,7 @@ void TimelineDockWidget::Disconnect()
 void TimelineDockWidget::AddView()
 {
     TimelineToolBar* toolBar = new TimelineToolBar( 0, config_, ++maxTabNumber_ == 0 );
+    connect( toolBar, SIGNAL( CenterView() ), webView_, SLOT( OnCenterView() ) );
     connect( toolBar, SIGNAL( AddView() ), this, SLOT( AddView() ) );
     connect( toolBar, SIGNAL( RemoveCurrentView() ), this, SLOT( RemoveCurrentView() ) );
     connect( toolBar, SIGNAL( LoadOrderFileRequest( const tools::Path& ) ), webView_, SLOT( OnLoadOrderFileRequested( const tools::Path& ) ) );

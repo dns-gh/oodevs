@@ -22,7 +22,7 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     : QToolBar( parent )
     , config_( config )
 {
-    addAction( qApp->style()->standardIcon( QStyle::SP_BrowserReload ), tr( "Center the view on the simulation time" ), this, SLOT( OnCenterView() ) );
+    addAction( qApp->style()->standardIcon( QStyle::SP_BrowserReload ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/eye.png" ) ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
     addSeparator();
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load actions file" ), this, SLOT( OnLoadOrderFile() ) );
@@ -43,18 +43,6 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
 TimelineToolBar::~TimelineToolBar()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineToolBar::OnCenterView
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineToolBar::OnCenterView()
-{
-    // Center the view !
-    QMenu menu( this );
-    menu.addAction( "Center the view" );
-    menu.exec( QCursor::pos() );
 }
 
 // -----------------------------------------------------------------------------
