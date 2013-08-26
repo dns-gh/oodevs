@@ -1348,6 +1348,18 @@ void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_AB
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateObjectPerception
+// Created: LGY 2013-08-26
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateObjectPerception( const MIL_KnowledgeGroup& group, int currentTimeStep )
+{
+    boost::function< void( DEC_Knowledge_ObjectPerception& ) > functorPerception = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+    group.ApplyOnKnowledgesObjectPerception( functorPerception );
+    boost::function< void( DEC_Knowledge_ObjectCollision& ) > functorCollision = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+    group.ApplyOnKnowledgesObjectCollision( functorCollision );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception
 // Created: MMC 2013-07-03
 // -----------------------------------------------------------------------------
@@ -1379,12 +1391,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
         {
             const MIL_KnowledgeGroup& innerKg = **itKG;
             if( innerKg.IsEnabled() && IsEnabled() && innerKg.IsJammed() && innerKg.CanReport() && innerKg.GetKnowledge() )
-            {
-                boost::function< void( DEC_Knowledge_ObjectPerception& ) > functorPerception = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
-                innerKg.ApplyOnKnowledgesObjectPerception( functorPerception );
-                boost::function< void( DEC_Knowledge_ObjectCollision& ) > functorCollision = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
-                innerKg.ApplyOnKnowledgesObjectCollision( functorCollision );
-            }
+                UpdateObjectPerception( innerKg, currentTimeStep );
         }
     }
 
@@ -1398,10 +1405,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
 
     // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
     for( auto it = pions_.begin(); it != pions_.end(); ++it )
-    {
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object >) > functorObject = boost::bind( & MIL_KnowledgeGroup::UpdateObjectKnowledgeFromAgent, this, _1, boost::ref( currentTimeStep ) );
-        (*it)->GetKnowledgeGroup()->knowledgeBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( functorObject );
-    }
+        UpdateObjectPerception( *(*it)->GetKnowledgeGroup(), currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
