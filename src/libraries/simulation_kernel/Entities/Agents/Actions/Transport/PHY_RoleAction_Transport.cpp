@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
+#include "LocationActionNotificationHandler_ABC.h"
 #include "TransportCapacityComputerFactory_ABC.h"
 #include "TransportCapacityComputer_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
@@ -39,6 +40,7 @@ using namespace transport;
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Transport::sTransportData::sTransportData()
     : bTransportOnlyLoadable_( false )
+    , bMagicLoad_            ( false )
     , rTotalWeight_          ( 0. )
     , rRemainingWeight_      ( 0. )
     , rTransportedWeight_    ( 0. )
@@ -50,8 +52,11 @@ PHY_RoleAction_Transport::sTransportData::sTransportData()
 // Name: PHY_RoleAction_Transport::sTransportData::sTransportData
 // Created: NLD 2005-04-18
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Transport::sTransportData::sTransportData( double rTotalWeight, bool bTransportOnlyLoadable )
+PHY_RoleAction_Transport::sTransportData::sTransportData( double rTotalWeight,
+                                                          bool   bTransportOnlyLoadable,
+                                                          bool   bMagicLoad )
     : bTransportOnlyLoadable_( bTransportOnlyLoadable )
+    , bMagicLoad_            ( bMagicLoad )
     , rTotalWeight_          ( rTotalWeight )
     , rRemainingWeight_      ( rTotalWeight )
     , rTransportedWeight_    ( 0. )
@@ -333,7 +338,7 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
         owner_->Execute( *capacityComputer ).MaxComposanteTransportedWeight() )
         return false;
 
-    transportedPions_[ &transported ] = sTransportData( weightComp->TotalTransportedWeight(), bTransportOnlyLoadable );
+    transportedPions_[ &transported ] = sTransportData( weightComp->TotalTransportedWeight(), bTransportOnlyLoadable, false );
 
     bHasChanged_ = true;
     return true;
@@ -360,7 +365,7 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
     sTransportData& data = transportedPions_[ &transported ] =
         sTransportData(
             transported.Execute( *weightComputer ).TotalTransportedWeight(),
-            bTransportOnlyLoadable );
+            bTransportOnlyLoadable, true );
     data.rRemainingWeight_   = 0.;
     data.rTransportedWeight_ = data.rTotalWeight_;
     rWeightTransported_ += data.rTotalWeight_;
@@ -396,6 +401,8 @@ void PHY_RoleAction_Transport::Cancel()
     {
         it->first->Apply(&TransportNotificationHandler_ABC::CancelTransport, *owner_);
         it->second.rTransportedWeight_ = 0;
+        if( it->second.bMagicLoad_ )
+            it->first->Apply( &location::LocationActionNotificationHandler_ABC::Follow, *owner_ );
     }
     transportedPions_.clear();
     rWeightTransported_ = 0.;
