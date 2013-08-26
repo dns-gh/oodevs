@@ -247,13 +247,13 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
             << xml::attribute( "language", itLanguage->GetShortName() );
         for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         {
-            if(  itContext->second->empty() )
+            if( itContext->second->empty() || itContext->second.unique() )
                 continue;
             xos << xml::start( "context" )
                 << xml::start( "name" ) << itContext->first << xml::end;
             for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
             {
-                if( ( *itTranslation )->Key().empty() )
+                if( ( *itTranslation )->Key().empty() || itTranslation->unique() )
                     continue;
                 xos << xml::start( "message" )
                         << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
