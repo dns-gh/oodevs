@@ -41,7 +41,9 @@ public:
     //@{
     virtual ADN_Missions_ABC* NewT()
     {
-        return new ADN_Missions_Mission( entityType_ );
+        ADN_Missions_Mission* mission = new ADN_Missions_Mission( entityType_ );
+        mission->FillContextParameters();
+        return mission;
     }
     //@}
 

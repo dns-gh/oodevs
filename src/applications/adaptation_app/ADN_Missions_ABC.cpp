@@ -42,7 +42,6 @@ ADN_Missions_ABC::ADN_Missions_ABC( E_MissionType type )
     if( type != eMissionType_FragOrder )
         context += "-missions";
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
-    FillContextParameters();
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +58,6 @@ ADN_Missions_ABC::ADN_Missions_ABC( E_MissionType type, unsigned int id )
         context += "-missions";
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
     ADN_Missions_Data::idManager_.Lock( id );
-    FillContextParameters();
 }
 
 // -----------------------------------------------------------------------------
