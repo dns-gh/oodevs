@@ -155,6 +155,8 @@ void ADN_Table::RemoveCurrentElement()
     void* data = GetSelectedData();
     if( data )
         static_cast< ADN_Connector_Vector_ABC& >( GetConnector() ).RemItem( data );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
+    delete static_cast< ADN_Ref_ABC* >( data );
 }
 
 // -----------------------------------------------------------------------------

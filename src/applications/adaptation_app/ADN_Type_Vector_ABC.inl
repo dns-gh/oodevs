@@ -95,7 +95,7 @@ bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem )
     // rem ref
     if( bAutoRef_ )
         disconnect( static_cast< ADN_Ref_ABC* >( pItem ), SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
-    
+
     ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
