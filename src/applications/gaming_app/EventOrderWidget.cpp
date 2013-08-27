@@ -648,12 +648,14 @@ void EventOrderWidget::ActivateMissionPanel()
     previousType_ = entityType_;
     entityType_ = selectedEntity_->GetTypeName() == kernel::Population_ABC::typeName_? eMissionType_Population : selectedEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ ? eMissionType_Automat : eMissionType_Pawn ;
 
+    const kernel::Entity_ABC& entity = *selectedEntity_;
+    E_MissionType missionType = entityType_;
     if( previousType_ != entityType_ )
         emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
     else
         emit UpdateCreation( eEventTypes_Order, simulation_.GetDateTime() );
 
-    emit SelectEntity( *selectedEntity_, entityType_ );
+    emit SelectEntity( entity, missionType );
 }
 
 // -----------------------------------------------------------------------------
