@@ -372,11 +372,12 @@ void ADN_Missions_GUI::OnNotifyElementDeleted( std::string elementName, E_Missio
 // Name: ADN_Missions_GUI::OnGenerate
 // Created: NPT 2013-01-30
 // -----------------------------------------------------------------------------
-void ADN_Missions_GUI::OnGenerate( int index )
+void ADN_Missions_GUI::OnGenerate( int index, bool changeTab /* = true */ )
 {
     assert( index >= 0 && index < 4 );
     tools::Path missionPath = data_.GenerateMissionSheet( index, nameFields_[ index ]->text() );
-    missionTabs_[ index ]->setCurrentIndex( 2 );
+    if( changeTab )
+        missionTabs_[ index ]->setCurrentIndex( 2 );
     missionViewers_[ index ]->setText( missionPath.Normalize().ToUTF8().c_str() );
 }
 
@@ -396,6 +397,6 @@ void ADN_Missions_GUI::OnHelpNeeded( int type )
 void ADN_Missions_GUI::OnChangeMission( int type )
 {
     if( ADN_Missions_ABC* mission = data_.FindMission( type, nameFields_[ type ]->text().toStdString() ) )
-        if ( mission->NeedsSaving() )
-            OnGenerate( type );
+        if( mission->NeedsSaving() )
+            OnGenerate( type, false );
 }

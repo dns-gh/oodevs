@@ -99,7 +99,7 @@ private slots:
     //! @name slots
     //@{
     void OnNotifyElementDeleted( std::string elementName, E_MissionType missionType );
-    void OnGenerate( int );
+    void OnGenerate( int, bool changeTab = true );
     void OnHelpNeeded( int );
     void OnChangeMission( int );
     //@}
