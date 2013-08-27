@@ -24,7 +24,7 @@ rootnode
 
     activate = function( self )
         Activate( skill.nodes.ScoutElement, 1, { entity  = self.params.objectives[ self.nextTargetIndex ],
-                                                 positions = self.params.objectives[ self.nextTargetIndex ]:getPositionsToReconnoiter(), NBCmove = self.params.NBCmove } )
+                                                 positions = self.params.objectives[ self.nextTargetIndex ]:getPositionsToReconnoiter() } )
     end
 }
 
@@ -70,7 +70,7 @@ node "ScoutElement"
         for _, position in pairs( self.params.positions ) do
             Activate( skill.links.moveToward,
                 position:reconnaissanceEfficiency( self.params.entity ), { entities = { position },
-                                                                           nbcMove = self.params.NBCmove } )
+                                                                           infiltrationMode = true } )
         end
         self.movementDone = false
     end
