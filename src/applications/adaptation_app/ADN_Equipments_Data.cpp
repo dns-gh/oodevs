@@ -1810,6 +1810,7 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
         (*it)->CheckDatabaseValidity( checker );
 }

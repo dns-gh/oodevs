@@ -158,6 +158,7 @@ int ADN_Weapons_Data::GetIndex( ADN_Weapons_Data_WeaponInfos& weapon )
 // -----------------------------------------------------------------------------
 void ADN_Weapons_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
     {
         ( *it )->ptrLauncher_.CheckValidity( checker, ( *it )->strName_.GetData(), eWeapons, -1, tools::translate( "ADN_Weapons_Data", "Launcher" ).toStdString() );

@@ -325,5 +325,6 @@ void ADN_Supply_Data::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     infos_.CheckDatabaseValidity( checker );
 }

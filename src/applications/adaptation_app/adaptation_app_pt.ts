@@ -694,6 +694,10 @@ Parked engine running</source>
         <source> and &apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Some translations on tab &apos;%1&apos; have the same key and different translation values. Only one will be used by the simulation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

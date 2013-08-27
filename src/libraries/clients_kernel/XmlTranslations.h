@@ -63,11 +63,14 @@ public:
     //@{
     void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& language );
     void LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages );
+    void MergeDuplicateTranslations();
     void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages ) const;
     //@}
 
     //! @name Accessors
     //@{
+    bool HasDuplicateErrors() const;
+
     const std::string Translate( const std::string& key, const std::string& context = "", const std::string& language = "" ) const;
     boost::shared_ptr< Context > GetContext( const std::string& context );
     boost::shared_ptr< LocalizedString > GetTranslation( const std::string& context, const std::string& key ) const;
@@ -78,6 +81,7 @@ private:
     //@{
     void SetTranslation( const std::string& context, const std::string& key, const std::string& language, const std::string& translation, E_TranslationType type = kernel::eTranslationType_Unfinished );
     void CopyAndAddTranslationQueries( const std::string& name, xml::xistream& xis, xml::xostream& xos ) const;
+    void CleanTranslations();
 
     void ReadTranslationQueries( const std::string& name, xml::xistream& xis, int depthMax );
     void ReadTranslationQuery( xml::xistream& xis );

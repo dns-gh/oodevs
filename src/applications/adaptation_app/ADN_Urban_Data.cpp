@@ -855,6 +855,7 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( AccommodationInfos& infos )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
     {
         ( *it )->ptrMaterial_.CheckValidity( checker, ( *it )->strName_.GetData(), eUrban, -1, tools::translate( "ADN_Urban_Data", "Material" ).toStdString() );

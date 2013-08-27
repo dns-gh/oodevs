@@ -488,6 +488,7 @@ QStringList ADN_Inhabitants_Data::GetSchedulesThatUse( ADN_Urban_Data::Accommoda
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
         ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eInhabitants );
 }

@@ -289,6 +289,7 @@ QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resourc
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eActiveProtections );
 }

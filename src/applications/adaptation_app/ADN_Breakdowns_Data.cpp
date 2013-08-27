@@ -300,6 +300,7 @@ QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Resources_Data::Categ
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
     {
         if( ( *it )->vRepairParts_.size() == 0 )

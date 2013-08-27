@@ -791,6 +791,7 @@ QStringList ADN_Crowds_Data::GetCrowdsThatUse( ADN_Models_Data::ModelInfos& mode
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vCrowds_.begin(); it != vCrowds_.end(); ++it )
         ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eCrowds );
 }

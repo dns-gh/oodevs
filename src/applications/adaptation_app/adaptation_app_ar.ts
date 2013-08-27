@@ -694,6 +694,10 @@ Parked engine running</source>
         <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Some translations on tab &apos;%1&apos; have the same key and different translation values. Only one will be used by the simulation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

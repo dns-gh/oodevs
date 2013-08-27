@@ -710,6 +710,10 @@ Arrêt moteur allumé</translation>
         <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
         <translation>&apos;%1&apos; possèdent le même identifiant. Ces identifiants seront remplacés à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>Some translations on tab &apos;%1&apos; have the same key and different translation values. Only one will be used by the simulation.</source>
+        <translation>Des traductions de l&apos;onglet &apos;%1&apos; ont la meme clef et des valeurs de traduction différentes. La simulation n&apos;en utilisera qu&apos;une.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

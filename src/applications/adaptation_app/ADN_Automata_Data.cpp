@@ -351,6 +351,7 @@ QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& 
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
         ( *it )->CheckDatabaseValidity( checker );
 }

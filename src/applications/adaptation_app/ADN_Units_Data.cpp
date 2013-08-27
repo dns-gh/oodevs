@@ -960,6 +960,7 @@ QStringList ADN_Units_Data::GetUnitsThatUse( ADN_LogisticSupplyClasses_Data::Log
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
         (*it)->CheckDatabaseValidity( checker );
 }

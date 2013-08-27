@@ -222,6 +222,7 @@ void ADN_Armors_Data::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_Armors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     if( vArmors_.size() == 0 )
         checker.AddError( eMissingArmor, "", eCategories );
 }

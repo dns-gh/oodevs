@@ -434,6 +434,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( int type = 0; type < eNbrMissionTypes; ++type )
         for( auto it = missionsVector_[ type ].second.begin(); it != missionsVector_[ type ].second.end(); ++it )
         {

@@ -339,6 +339,7 @@ ADN_Symbols_Data::SymbolsUnit* ADN_Symbols_Data::FindSymbolUnit( const std::stri
 // -----------------------------------------------------------------------------
 void ADN_Symbols_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     const std::vector< std::string >& missingSymbols = glSymbols_->GetNotFoundSymbol();
     if( !missingSymbols.empty() )
     {

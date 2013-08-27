@@ -1043,6 +1043,7 @@ void ADN_Resources_Data::T_ResourceInfos_Vector::CheckValidity()
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
         ( *it )->CheckDatabaseValidity( checker );
 }

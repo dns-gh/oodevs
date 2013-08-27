@@ -1234,6 +1234,7 @@ QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Disasters_Data::DisasterInf
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vSensors_.begin(); it != vSensors_.end(); ++it )
         ( *it )->CheckDatabaseValidity( checker );
 }

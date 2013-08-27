@@ -203,7 +203,6 @@ void XmlTranslations::ReadContext( xml::xistream& xis, const std::string& langua
     auto it = contexts_.find( context );
     if( it != contexts_.end() )
         xis >> xml::list( "message", *this, &XmlTranslations::ReadMessage, language, context );
-    // else this is an old context, forget it
 }
 
 // -----------------------------------------------------------------------------
@@ -224,6 +223,51 @@ void XmlTranslations::ReadMessage( xml::xistream& xis, const std::string& langua
 }
 
 // -----------------------------------------------------------------------------
+// Name: XmlTranslations::CleanTranslations
+// Created: ABR 2013-08-27
+// -----------------------------------------------------------------------------
+void XmlTranslations::CleanTranslations()
+{
+    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); )
+    {
+        if( itContext->second->empty() || itContext->second.unique() )
+        {
+            auto toDelete = itContext;
+            ++itContext;
+            contexts_.erase( toDelete );
+            continue;
+        }
+
+        for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); )
+        {
+            if( ( *itTranslation )->Key().empty() || itTranslation->unique()  )
+            {
+                itTranslation = itContext->second->erase( itTranslation );
+                continue;
+            }
+            ++itTranslation;
+        }
+        ++itContext;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlTranslations::MergeDuplicateTranslations
+// Created: ABR 2013-08-27
+// -----------------------------------------------------------------------------
+void XmlTranslations::MergeDuplicateTranslations()
+{
+    CleanTranslations();
+    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
+        for( auto lhs = itContext->second->begin(); lhs != itContext->second->end(); ++lhs )
+            for( auto rhs = lhs + 1; rhs != itContext->second->end(); )
+                if( ( *lhs )->Key() == ( *rhs )->Key() && **lhs == **rhs )
+                    rhs = itContext->second->erase( rhs );
+                else
+                    ++rhs;
+}
+
+// -----------------------------------------------------------------------------
 // Name: XmlTranslations::SaveTranslations
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
@@ -231,8 +275,6 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
 {
     if( contexts_.empty() )
         return;
-
-    // $$$$ ABR 2013-08-23: Use shared_ptr used count to see if save is needed for each context/message.
     for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
     {
         const tools::Path languageDirectory = localesDirectory / tools::Path::FromUTF8( itLanguage->GetShortName() );
@@ -247,14 +289,10 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
             << xml::attribute( "language", itLanguage->GetShortName() );
         for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         {
-            if( itContext->second->empty() || itContext->second.unique() )
-                continue;
             xos << xml::start( "context" )
                 << xml::start( "name" ) << itContext->first << xml::end;
             for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
             {
-                if( ( *itTranslation )->Key().empty() || itTranslation->unique() )
-                    continue;
                 xos << xml::start( "message" )
                         << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
                         << xml::start( "translation" )
@@ -332,4 +370,18 @@ boost::shared_ptr< Context > XmlTranslations::GetContext( const std::string& con
     if( contexts_.find( context ) == contexts_.end() )
         contexts_[ context ] = boost::make_shared< Context >();
     return contexts_.at( context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlTranslations::HasDuplicateErrors
+// Created: ABR 2013-08-27
+// -----------------------------------------------------------------------------
+bool XmlTranslations::HasDuplicateErrors() const
+{
+    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
+        for( auto lhs = itContext->second->begin(); lhs != itContext->second->end(); ++lhs )
+            for( auto rhs = lhs + 1; rhs != itContext->second->end(); ++rhs )
+                if( ( *lhs )->Key() == ( *rhs )->Key() && **lhs != **rhs )
+                    return true;
+    return false;
 }

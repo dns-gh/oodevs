@@ -207,6 +207,7 @@ QStringList ADN_ResourceNetworks_Data::GetResourceNetworksThatUse( ADN_Resources
 // -----------------------------------------------------------------------------
 void ADN_ResourceNetworks_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
         ( *it )->ptrCategory_.CheckValidity( checker, ( *it )->strName_.GetData(), eResourceNetworks, -1, tools::translate( "ADN_ResourceNetworks_Data", "Resource" ).toStdString() );
 }

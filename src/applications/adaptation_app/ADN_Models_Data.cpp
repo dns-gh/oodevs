@@ -492,6 +492,7 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_F
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( int i = 0; i < eNbrEntityTypes; ++i )
         for( auto it = vModels_[ i ].begin(); it != vModels_[ i ].end(); ++it )
             ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, i );
