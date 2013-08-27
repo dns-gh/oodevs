@@ -21,14 +21,6 @@
                 <nil/>
             </default>
         </parameter>
-        <parameter name="NBCmove">
-            <type>
-                <simple name="boolean"/>
-            </type>
-            <default>
-                <boolean>false</boolean>
-            </default>
-        </parameter>
     </parameters>
     <goal>
         <description>Eclairer les entités.</description>

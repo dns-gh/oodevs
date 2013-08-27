@@ -87,7 +87,7 @@
       <object-costs avoid="true" threshold="10000">
         <object-cost type="checkpoint" value="10000"/>
       </object-costs>
-      <enemies cost-at-security-range="25" cost-on-contact="10"/>
+      <enemies cost-at-security-range="2500" cost-on-contact="10000000" maximum-cost="10000000"/>
       <population-costs maximum="100" outside-of-population="100" security-range="50">
         <population-cost attitude="calme" contact-cost="0"/>
         <population-cost attitude="agitee" contact-cost="0"/>

@@ -62,7 +62,7 @@ node "TakeCoverAgainstElement"
         -- Move toward best covered position
         for _, position in pairs( self.params.positions ) do
             Activate( skill.links.moveAndTakePosition,
-                position:safetyEfficiency( self.params.entity ), { entity = position } )
+                position:safetyEfficiency( self.params.entity ), { entity = position, pathType = eTypeItiInfiltration } )
         end
     end
 }
