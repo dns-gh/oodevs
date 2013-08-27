@@ -581,7 +581,8 @@ void DEC_Knowledge_Agent::SendFullState()
 void DEC_Knowledge_Agent::UpdateOnNetwork()
 {
     assert( pAgentKnown_ );
-    if( pAgentKnown_->GetKnowledgeGroup()->GetId() == pKnowledgeGroup_->GetId() )
+    if( pAgentKnown_->GetKnowledgeGroup()->GetId() == pKnowledgeGroup_->GetId() ||
+        pKnowledgeGroup_->FindKnowledgeGroup( pAgentKnown_->GetKnowledgeGroup()->GetId() ) )
     {
         if( bCreatedOnNetwork_ )
         {
