@@ -63,7 +63,7 @@ void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized type: " + data );
     translation_ = ( *context_ )[ data ];
-    translation_->InitEmptyValues( ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
+    translation_->Initialize( ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
 }
 
 // -----------------------------------------------------------------------------

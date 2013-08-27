@@ -58,7 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    void InitEmptyValues( const std::vector< Language >& languages );
+    void Initialize( const std::vector< Language >& languages );
     void CopyValues( const LocalizedString& other );
     //@}
 

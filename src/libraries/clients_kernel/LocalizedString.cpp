@@ -166,7 +166,7 @@ void LocalizedString::SetType( const std::string& language, E_TranslationType ty
 // Name: LocalizedString::InitEmptyValues
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-void LocalizedString::InitEmptyValues( const std::vector< Language >& languages )
+void LocalizedString::Initialize( const std::vector< Language >& languages )
 {
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
