@@ -115,6 +115,12 @@ type ResourceDotation struct {
 	Threshold float32
 }
 
+type Posture struct {
+	Old        int32
+	New        int32
+	Transition int32
+}
+
 type Unit struct {
 	Id                 uint32
 	AutomatId          uint32
@@ -129,6 +135,7 @@ type Unit struct {
 	PartySurrenderedTo uint32
 	HumanDotations     []*HumanDotation
 	ResourceDotations  []*ResourceDotation
+	Posture            Posture
 }
 
 type Automat struct {

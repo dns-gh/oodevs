@@ -1333,3 +1333,10 @@ func (c *Client) CreateBreakdowns(unitId uint32, equipments map[uint32]*Equipmen
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) ChangePosture(unitId uint32, params *sword.MissionParameters) error {
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_change_posture.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}

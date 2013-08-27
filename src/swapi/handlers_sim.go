@@ -152,6 +152,15 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	if surrenderedTo := mm.GetSurrenderedUnit(); surrenderedTo != nil {
 		unit.PartySurrenderedTo = *surrenderedTo.Id
 	}
+	if mm.OldPosture != nil {
+		unit.Posture.Old = int32(*mm.OldPosture)
+	}
+	if mm.NewPosture != nil {
+		unit.Posture.New = int32(*mm.NewPosture)
+	}
+	if mm.PostureTransition != nil {
+		unit.Posture.Transition = *mm.PostureTransition
+	}
 	return nil
 }
 

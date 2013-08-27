@@ -1595,3 +1595,32 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &initial)
 	})
 }
+
+func (s *TestSuite) TestUnitChangePosture(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// Error: invalid parameter count
+	err := client.ChangePosture(11, swapi.MakeParameters())
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid parameter count, 1 parameter expected`)
+
+	// Error: invalid parameter type
+	err = client.ChangePosture(11, swapi.MakeParameters(swapi.MakeString("invalid")))
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\] must be an enumeration`)
+
+	// Error: invalid enumeration value
+	err = client.ChangePosture(11, swapi.MakeParameters(swapi.MakeEnumeration(1000)))
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\] must be a valid posture enumeration value`)
+
+	// Valid: change posture
+	c.Assert(client.Model.GetUnit(11).Posture.Old, Not(Equals), 3)
+	c.Assert(client.Model.GetUnit(11).Posture.New, Not(Equals), 4)
+	c.Assert(client.Model.GetUnit(11).Posture.Transition, Not(Equals), 100)
+	err = client.ChangePosture(11, swapi.MakeParameters(swapi.MakeEnumeration(3)))
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(11)
+		return unit.Posture.Old == 3 && unit.Posture.New == 4 &&
+			unit.Posture.Transition == 0
+	})
+}
