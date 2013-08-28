@@ -1570,71 +1570,7 @@
   <launcher indirect-fire="true" name="Avion"/>
   <launcher indirect-fire="true" name="Lanceur DREB"/>
   <launcher indirect-fire="true" name="Lanceur Bombardier"/>
-  <launcher indirect-fire="true" name="Main">
-    <ph-modifiers posture="Mouvement">
-      <ph-modifier target-posture="Mouvement" value="0.8"/>
-      <ph-modifier target-posture="MouvementDiscret" value="0.8"/>
-      <ph-modifier target-posture="Arret" value="0.8"/>
-      <ph-modifier target-posture="PosteReflexe" value="0.8"/>
-      <ph-modifier target-posture="Poste" value="0.8"/>
-      <ph-modifier target-posture="PosteAmenage" value="0.8"/>
-      <ph-modifier target-posture="PostePrepareGenie" value="0.8"/>
-    </ph-modifiers>
-    <ph-modifiers posture="MouvementDiscret">
-      <ph-modifier target-posture="Mouvement" value="0.8"/>
-      <ph-modifier target-posture="MouvementDiscret" value="0.8"/>
-      <ph-modifier target-posture="Arret" value="0.8"/>
-      <ph-modifier target-posture="PosteReflexe" value="0.8"/>
-      <ph-modifier target-posture="Poste" value="0.8"/>
-      <ph-modifier target-posture="PosteAmenage" value="0.8"/>
-      <ph-modifier target-posture="PostePrepareGenie" value="0.8"/>
-    </ph-modifiers>
-    <ph-modifiers posture="Arret">
-      <ph-modifier target-posture="Mouvement" value="0.8"/>
-      <ph-modifier target-posture="MouvementDiscret" value="0.8"/>
-      <ph-modifier target-posture="Arret" value="0.8"/>
-      <ph-modifier target-posture="PosteReflexe" value="0.8"/>
-      <ph-modifier target-posture="Poste" value="0.8"/>
-      <ph-modifier target-posture="PosteAmenage" value="0.8"/>
-      <ph-modifier target-posture="PostePrepareGenie" value="0.8"/>
-    </ph-modifiers>
-    <ph-modifiers posture="PosteReflexe">
-      <ph-modifier target-posture="Mouvement" value="0.8"/>
-      <ph-modifier target-posture="MouvementDiscret" value="0.8"/>
-      <ph-modifier target-posture="Arret" value="0.8"/>
-      <ph-modifier target-posture="PosteReflexe" value="0.8"/>
-      <ph-modifier target-posture="Poste" value="0.8"/>
-      <ph-modifier target-posture="PosteAmenage" value="0.8"/>
-      <ph-modifier target-posture="PostePrepareGenie" value="0.8"/>
-    </ph-modifiers>
-    <ph-modifiers posture="Poste">
-      <ph-modifier target-posture="Mouvement" value="0.8"/>
-      <ph-modifier target-posture="MouvementDiscret" value="0.8"/>
-      <ph-modifier target-posture="Arret" value="0.8"/>
-      <ph-modifier target-posture="PosteReflexe" value="0.8"/>
-      <ph-modifier target-posture="Poste" value="0.8"/>
-      <ph-modifier target-posture="PosteAmenage" value="0.8"/>
-      <ph-modifier target-posture="PostePrepareGenie" value="0.8"/>
-    </ph-modifiers>
-    <ph-modifiers posture="PosteAmenage">
-      <ph-modifier target-posture="Mouvement" value="0.8"/>
-      <ph-modifier target-posture="MouvementDiscret" value="0.8"/>
-      <ph-modifier target-posture="Arret" value="0.8"/>
-      <ph-modifier target-posture="PosteReflexe" value="0.8"/>
-      <ph-modifier target-posture="Poste" value="0.8"/>
-      <ph-modifier target-posture="PosteAmenage" value="0.8"/>
-      <ph-modifier target-posture="PostePrepareGenie" value="0.8"/>
-    </ph-modifiers>
-    <ph-modifiers posture="PostePrepareGenie">
-      <ph-modifier target-posture="Mouvement" value="0.8"/>
-      <ph-modifier target-posture="MouvementDiscret" value="0.8"/>
-      <ph-modifier target-posture="Arret" value="0.8"/>
-      <ph-modifier target-posture="PosteReflexe" value="0.8"/>
-      <ph-modifier target-posture="Poste" value="0.8"/>
-      <ph-modifier target-posture="PosteAmenage" value="0.8"/>
-      <ph-modifier target-posture="PostePrepareGenie" value="0.8"/>
-    </ph-modifiers>
-  </launcher>
+  <launcher indirect-fire="true" name="Main"/>
   <launcher indirect-fire="true" name="Canon 155 Animation"/>
   <launcher indirect-fire="true" name="Lance Roquette LRM Animation"/>
   <launcher indirect-fire="true" name="Canon 115">
@@ -2560,4 +2496,4 @@
     </ph-modifiers>
   </launcher>
 </launchers>
-<!-- signature="1539541688" -->
+<!-- signature="0090420169" -->
