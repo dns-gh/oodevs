@@ -437,7 +437,7 @@ void PHY_RolePion_Location::Update( bool bIsDead )
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
     if( locationChanged )
-        owner_->Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
+        owner_->Apply( &location::MovementHandler_ABC::NotifyHasMoved, GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
