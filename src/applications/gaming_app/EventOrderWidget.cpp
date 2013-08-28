@@ -474,13 +474,17 @@ void EventOrderWidget::FillMissionInterface( const EventAction& event )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnMissionTypeChanged( int value )
 {
+    // Mission comboBox is empty
+    if( value == -1 )
+        return;
+
     missionChoosed_ = false;
     if( entityType_ == eNbrMissionTypes )
         entityType_ = eMissionType_Pawn;
     if( missionTypeCombo_->count() == 4 )
         currentType_ = static_cast< E_MissionType >( value );
     else
-        currentType_ = static_cast< E_MissionType >( missionTypeCombo_->currentIndex() == 0? entityType_ : eMissionType_FragOrder );
+        currentType_ = static_cast< E_MissionType >( value == 0 ? entityType_ : eMissionType_FragOrder );
     FillMission();
 }
 
