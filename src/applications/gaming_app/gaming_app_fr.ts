@@ -2115,10 +2115,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>&amp;Préférences...</translation>
     </message>
     <message>
-        <source>&amp;Display</source>
-        <translation>&amp;Affichage</translation>
-    </message>
-    <message>
         <source>Profiles...</source>
         <translation>Profils...</translation>
     </message>
@@ -2197,6 +2193,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Unit detail</source>
         <translation>Détails des unités</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>&amp;Réglages</translation>
     </message>
 </context>
 <context>

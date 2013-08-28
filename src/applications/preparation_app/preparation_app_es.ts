@@ -1125,10 +1125,6 @@ This data can&apos;t be projected.</source>
         <translation>&amp;Preferencias...</translation>
     </message>
     <message>
-        <source>&amp;Display</source>
-        <translation>&amp;Mostrar</translation>
-    </message>
-    <message>
         <source>View/Edit...</source>
         <translation>Ver/Editar...</translation>
     </message>
@@ -1230,6 +1226,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>&amp;Export...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

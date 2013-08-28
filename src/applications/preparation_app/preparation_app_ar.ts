@@ -1086,10 +1086,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">معالج إنشاء...</translation>
     </message>
     <message>
-        <source>&amp;Display</source>
-        <translation type="unfinished">آند عرض</translation>
-    </message>
-    <message>
         <source>Links</source>
         <translation type="unfinished">روابط</translation>
     </message>
@@ -1232,6 +1228,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>About</source>
         <translation type="unfinished">حول</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

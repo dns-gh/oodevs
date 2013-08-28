@@ -51,7 +51,8 @@ tools::Path FindSoundFile( const tools::Path& dir, const std::string& sound )
 SoundManager::SoundManager( const std::vector< std::string >& sounds )
     : sounds_( sounds )
     , defaultSoundsPath_( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) )
-    , currentSoundsPath_( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) )
+    , currentSoundsPath_( defaultSoundsPath_ )
+    , enabled_( true )
 {
     for( auto it = sounds.begin(); it != sounds.end(); ++it )
         volume_[ *it ] = 0.5;
@@ -89,6 +90,9 @@ void SoundManager::PlayPauseAllChannels( bool play )
 // -----------------------------------------------------------------------------
 bool SoundManager::PlaySound( const std::string& soundName )
 {
+    if( !enabled_ )
+        return false;
+
     auto it = medias_.find( soundName );
     auto& media = medias_[ soundName ]; // leave a NULL entry if we cannot load
     if( it == medias_.end() )
@@ -162,4 +166,24 @@ void SoundManager::StopSound( const std::string& channel )
     if( it == medias_.end() || !it->second )
         return;
     it->second->stop();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SoundManager::SetSoundState
+// Created: LGY 2013-08-28
+// -----------------------------------------------------------------------------
+void SoundManager::SetSoundState( bool enable )
+{
+    enabled_ = enable;
+    if( !enabled_ )
+    {
+        for( auto it = medias_.begin(); it != medias_.end(); ++it )
+        {
+            if( !it->second )
+                continue;
+            it->second->stop();
+        }
+        channels_.clear();
+        medias_.clear();
+    }
 }

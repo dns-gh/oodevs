@@ -1085,10 +1085,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Links</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1230,6 +1226,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

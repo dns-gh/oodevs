@@ -155,7 +155,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     addMenu( menu );
 
     // Display
-    menu = new gui::RichMenu( "display", this, controllers_, tools::translate( "Menu", "&Display" ) );
+    menu = new gui::RichMenu( "Settings", this, controllers_, tools::translate( "Menu", "&Settings" ) );
     menu->SetModes( eModes_None, eModes_All, true );
     kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
     gui::RichToolBar* toolBar = new gui::RichToolBar( controllers, pParent, "units toolbar" );

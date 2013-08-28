@@ -294,6 +294,18 @@
 <context>
     <name>SoundPanel</name>
     <message>
+        <source>Sound control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound directory :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ajust all sound volumes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Direct fires</source>
         <translation type="unfinished"></translation>
     </message>
@@ -314,19 +326,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ajust all sound volumes:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sound control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sound directory :</source>
+        <source>Mute sounds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

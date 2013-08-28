@@ -122,7 +122,7 @@ Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers
     }
     // Display
     {
-        gui::RichMenu* menu = new gui::RichMenu( "Display", this, controllers, tools::translate( "Menu", "&Display" ) );
+        gui::RichMenu* menu = new gui::RichMenu( "Settings", this, controllers, tools::translate( "Menu", "&Settings" ) );
         menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
         kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
         AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );

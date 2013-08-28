@@ -182,3 +182,12 @@ void FirePlayer::PlaySound( const gui::SoundEvent& soundEvent )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: FirePlayer::SetSoundState
+// Created: LGY 2013-08-27
+// -----------------------------------------------------------------------------
+void FirePlayer::SetSoundState( bool enabled )
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    soundManager_->SetSoundState( enabled );
+}
