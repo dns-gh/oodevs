@@ -171,7 +171,7 @@ namespace
             }
             catch( const ::hla::HLAException& e )
             {
-                logger.LogError( "Unable to create RPR transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );
+                logger.LogError( "Unable to create NETN transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );
             }
         }
 

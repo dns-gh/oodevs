@@ -36,31 +36,17 @@ using namespace plugins::hla;
 // =============================================================================
 struct OwnershipController::OwnershipInfo : private boost::noncopyable
 {
-    enum State
-    {
-        S_Local = 0,
-        S_DivestPending,
-        S_DivestRefused,
-        S_Remote,
-        S_AcquisitionPending,
-        S_AcquisitionRefused
-    };
-    OwnershipInfo( const std::string& agentID, HlaClass_ABC& hlaClass, HlaObject_ABC& object,
-            bool isLocal );
+    OwnershipInfo( const std::string& agentID, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
 
     std::string agentID_;
     HlaClass_ABC& hlaClass_;
     HlaObject_ABC& object_;
-    State state_;
-    const bool localObject_;
 };
 
-OwnershipController::OwnershipInfo::OwnershipInfo( const std::string& agentID, HlaClass_ABC& hlaClass, HlaObject_ABC& object, bool isLocal )
+OwnershipController::OwnershipInfo::OwnershipInfo( const std::string& agentID, HlaClass_ABC& hlaClass, HlaObject_ABC& object )
     : agentID_( agentID )
     , hlaClass_( hlaClass )
     , object_( object )
-    , state_( isLocal ? S_Local : S_Remote )
-    , localObject_( isLocal )
 {
 
 }
@@ -93,7 +79,7 @@ OwnershipController::~OwnershipController()
 // -----------------------------------------------------------------------------
 void OwnershipController::RemoteCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object )
 {
-    OwnershipInfo* ptr = new OwnershipInfo( identifier, hlaClass, object, false );
+    OwnershipInfo* ptr = new OwnershipInfo( identifier, hlaClass, object );
     states_[identifier] = OwnershipInfoPtr(ptr);
 }
 
@@ -112,7 +98,7 @@ void OwnershipController::RemoteDestroyed( const std::string& identifier )
 // -----------------------------------------------------------------------------
 void OwnershipController::LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object )
 {
-    OwnershipInfo* ptr = new OwnershipInfo( identifier, hlaClass, object, true );
+    OwnershipInfo* ptr = new OwnershipInfo( identifier, hlaClass, object );
     states_[identifier] = OwnershipInfoPtr(ptr);
 }
 
@@ -136,7 +122,6 @@ void OwnershipController::Divested( const std::string& identifier, const ::hla::
         return;
 
     logger_.LogInfo( "Divestiture complete for object " + identifier );
-    it->second->state_ = OwnershipInfo::S_Remote;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,29 +135,6 @@ void OwnershipController::Acquired( const std::string& identifier, const ::hla::
         return;
 
     logger_.LogInfo( "Acquisition complete for object " + identifier );
-    it->second->state_ = OwnershipInfo::S_Local;
-}
-
-namespace
-{
-    struct TransferCallback
-    {
-        typedef void( OwnershipController::* CallbackType )(bool, const std::string&);
-        TransferCallback( const std::string& identifier , CallbackType cb, OwnershipController* target )
-            : identifier_( identifier )
-            , target_( target )
-            , callback_( cb )
-        {
-            // NOTHING
-        }
-        void operator()( bool v )
-        {
-            (target_->*callback_)( v, identifier_ );
-        }
-        std::string identifier_;
-        OwnershipController* target_;
-        CallbackType callback_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +148,6 @@ void OwnershipController::PerformDivestiture( const std::string& identifier, con
         return;
 
     logger_.LogInfo( "Starting divestiture for object " + identifier );
-    it->second->state_ = OwnershipInfo::S_DivestPending;
     it->second->hlaClass_.Divest( identifier, attributes, tag );
 }
 
@@ -201,7 +162,6 @@ void OwnershipController::PerformAcquisition( const std::string& identifier, con
         return;
 
     logger_.LogInfo( "Starting acquisition for object " + identifier );
-    it->second->state_ = OwnershipInfo::S_AcquisitionPending;
     it->second->hlaClass_.Acquire( identifier, attributes, tag );
 }
 
