@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="sensors" type="T_RootSensors">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">TODO</xs:documentation>
+			<xs:documentation xml:lang="fr">Deux familles de capteurs sont modélisées : les senseurs « classiques », pour lesquels un lancer de rayon est effectué entre la source et la cible, et les radars.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="T_RootSensors">
+		<xs:sequence>
+			<xs:element name="alat-monitoring-times" type="T_Alat">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Capacité de détection des unités de l'ALAT en reconnaissance.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cobra-radar" type="T_Cobra">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Ce mode de perception est utilisé notamment par le radar cobra, afin de détecter les tirs d’artillerie.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="radars">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit les radars, systèmes d’écoute, et détecteurs radars des pions.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="radar" type="T_Radar" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit un type de radar</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="sensors">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit les capteurs « classiques », pour lesquels un lancer de rayon est effectué entre la source et la cible pour calculer la qualité de détection.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="sensor" type="T_Sensor" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit un type de capteur</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="model-version" type="T_Version"/>			
+	</xs:complexType>
+	<xs:complexType name="T_Alat">
+		<xs:sequence>
+			<xs:element name="alat-monitoring-time" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Ce mode de perception permet de simuler la « surveillance » d’une zone par les unités de l’ALAT. Les performances de détection des agents sont fonction de la nature de la zone reconnue.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="terrain" type="xs:string">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">TODO</xs:documentation>
+							<xs:documentation xml:lang="fr">Type de terrain sur lequel les unités à détecter se trouvent</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="time" type="T_Time">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">TODO</xs:documentation>
+							<xs:documentation xml:lang="fr">Délai de détection des unités</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_Cobra">
+		<xs:attribute name="action-range" type="xs:nonNegativeInteger">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Rayon de la zone dans laquelle les obus d’artillerie en vol seront détectés</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="T_Radar">
+		<xs:sequence>
+			<xs:element name="detectable-activities" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Détection des pions en fonction de leur type d'activité au moment de la détection (mouvement, arrêté moteur allumé, arrêté moteur éteint, etc.)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="detectable-activity" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit si la détection est possible pour le type d'activité donné pour la cible</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="type" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">TODO</xs:documentation>
+										<xs:documentation xml:lang="fr">Type d'activité</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="value" type="xs:boolean" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">TODO</xs:documentation>
+										<xs:documentation xml:lang="fr">Vrai si la détection est possible</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="acquisition-times" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit les délais d’acquisition</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="acquisition-time" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit un délai d'acquisition pour un degré de précision donné</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="level" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">TODO</xs:documentation>
+										<xs:documentation xml:lang="fr">Degré de précision (détecté, reconnu ou identifié)</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="base-time" type="T_Time" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">TODO</xs:documentation>
+										<xs:documentation xml:lang="fr">Délai d'acquisition pour une unité quelconque</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="command-post-time" type="T_Time" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">TODO</xs:documentation>
+										<xs:documentation xml:lang="fr">Délai d'acquisition pour un poste de commande</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="type" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Classe du radar (radar, écoute, écoute radar...)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Nom du radar</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="action-range" type="xs:nonNegativeInteger" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Rayon d’action du radar</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="min-height" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Hauteur minimum de détection du radar</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="max-height" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Hauteur maximum de détection du radar</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="T_Sensor">
+		<xs:sequence>
+			<xs:element name="unit-detection" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Capacité de détection des unités</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="limited-to-sensors" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Champ indiquant que le capteur est limité à la détection d'autres capteurs</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="sensor"  maxOccurs="unbounded">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">TODO</xs:documentation>
+                                            <xs:documentation xml:lang="fr">Liste des capteurs pouvant être détectés.</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                            <xs:attribute name="name" type="xs:string" use="required">
+                                                <xs:annotation>
+                                                    <xs:documentation xml:lang="en">TODO</xs:documentation>
+                                                    <xs:documentation xml:lang="fr">Nom d'un capteur détecté</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+							</xs:complexType>
+						</xs:element>
+                        <xs:element name="base-distances">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Rayon d'action maximum en fonction du dégré de précision recherché</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="base-distance" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Rayon d'action maximum pour le dégré de précision donné</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="level" type="xs:string" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">TODO</xs:documentation>
+													<xs:documentation xml:lang="fr">Degré de précision (détecté, reconnu ou identifié)</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="distance" type="xs:nonNegativeInteger" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">TODO</xs:documentation>
+													<xs:documentation xml:lang="fr">Rayon d'action</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="close-range" type="xs:nonNegativeInteger" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">TODO</xs:documentation>
+										<xs:documentation xml:lang="fr">Distance de proximité du capteur</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="distance-modifiers">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit les coefficients de réduction de portée en fonction des conditions d'observation</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="population-modifier" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction de la densité de population dans laquelle l'unité observante se trouve</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="density" type="T_NonNegativeDouble" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">TODO</xs:documentation>
+													<xs:documentation xml:lang="fr">Densité de la population</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="modifier" type="T_NonNegativeDouble" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">TODO</xs:documentation>
+													<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="size-modifiers">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction du volume de la cible</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="distance-modifier" type="T_Modifier" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="precipitation-modifiers">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction des conditions météorologique</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="distance-modifier" type="T_Modifier" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="visibility-modifiers">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction de l’éclairement</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="distance-modifier" type="T_Modifier" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="source-posture-modifiers">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction de la posture de l'unité observante</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="distance-modifier" type="T_Modifier" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="target-posture-modifiers">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction  de la posture de l'unité observée</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="distance-modifier" type="T_Modifier" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="terrain-modifiers">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction du type de terrain ou se situe l'unité observée</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="distance-modifier" type="T_Modifier" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="urbanBlock-material-modifiers">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction du type de bloc urbain rencontré</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="distance-modifier" type="T_Modifier" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="scanning" type="xs:boolean" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">TODO</xs:documentation>
+							<xs:documentation xml:lang="fr">Vrai si vision périphérique tous les n pas de temps</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="firer-detection-distance" type="xs:nonNegativeInteger" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">TODO</xs:documentation>
+							<xs:documentation xml:lang="fr">Vrai si possibilité de détecter le tirer</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="angle" type="xs:nonNegativeInteger" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">TODO</xs:documentation>
+							<xs:documentation xml:lang="fr">Angle du cône de vision du capteur</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="object-detection" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">TODO</xs:documentation>
+					<xs:documentation xml:lang="fr">Capacité de détection des objects tactiques</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="object" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit les capacités de détection pour un type d'objet donné</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="population-modifier">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction de la densité de population dans laquelle l'unité observante se trouve</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="density" type="xs:nonNegativeInteger" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">TODO</xs:documentation>
+													<xs:documentation xml:lang="fr">Densité de population</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="modifier" type="T_NonNegativeDouble" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">TODO</xs:documentation>
+													<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="source-posture-modifiers">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Coefficient de réduction de portée en fonction de la posture de l'unité observante</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="distance-modifier" type="T_Modifier" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="type" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">TODO</xs:documentation>
+										<xs:documentation xml:lang="fr">Type d'objet (référence Objects.xml)</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="detection-distance" type="xs:nonNegativeInteger" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">TODO</xs:documentation>
+										<xs:documentation xml:lang="fr">Distance de détection</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="disaster-detection" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="disaster" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="type" type="xs:string" use="required"/>
+								<xs:attribute name="detection-threshold" type="T_NonNegativeDouble" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Nom du capteur</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="detection-delay" type="T_Time" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Detection delay</xs:documentation>
+				<xs:documentation xml:lang="fr">Délai de détection</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="activation-on-request" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="T_Modifier">
+		<xs:attribute name="type" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Type sur lequel est défini la réduction de portée</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="value" type="T_NonNegativeDouble" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">TODO</xs:documentation>
+				<xs:documentation xml:lang="fr">Coefficient de réduction de portée</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>
