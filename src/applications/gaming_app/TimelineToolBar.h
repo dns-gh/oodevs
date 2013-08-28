@@ -36,6 +36,7 @@ signals:
     //! @name Signals
     //@{
     void AddView();
+    void CenterView();
     void RemoveCurrentView();
 
     void LoadOrderFileRequest( const tools::Path& path );
@@ -48,7 +49,6 @@ signals:
 public slots:
     //! @name Slots
     //@{
-    void OnCenterView();
     void OnFilterSelection();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
