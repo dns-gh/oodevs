@@ -223,7 +223,7 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 	// Send moveTo mission on the crowd
 	to := swapi.Point{X: -15.8193, Y: 28.3456}
 	params := swapi.MakeParameters(swapi.MakePointParam(to))
-	err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
+	_, err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)
 
 	// Check crowd begin its movement, a flow is created
@@ -333,7 +333,7 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	// Send moveTo mission on the crowd
 	to := swapi.Point{X: -15.8193, Y: 28.3456}
 	params := swapi.MakeParameters(swapi.MakePointParam(to))
-	err = client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
+	_, err = client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)
 
 	// Check crowd begin its movement, a flow is created

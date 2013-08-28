@@ -312,12 +312,27 @@ func NewUrban(id uint32, name string,
 	}
 }
 
+type OrderType int
+
+const (
+	UnitOrder OrderType = iota
+	AutomatOrder
+	CrowdOrder
+	FragOrder
+)
+
+type Order struct {
+	Id   uint32
+	Type OrderType
+}
+
 type ModelData struct {
 	Parties       map[uint32]*Party
 	Profiles      map[string]*Profile
 	GlobalWeather Weather
 	LocalWeathers map[uint32]*LocalWeather
 	Urbans        map[uint32]*Urban
+	Orders        map[uint32]*Order
 	// Tick and time of the most recent started tick
 	Tick int32
 	Time time.Time
@@ -329,6 +344,7 @@ func NewModelData() *ModelData {
 		Profiles:      map[string]*Profile{},
 		LocalWeathers: map[uint32]*LocalWeather{},
 		Urbans:        map[uint32]*Urban{},
+		Orders:        map[uint32]*Order{},
 	}
 }
 
@@ -726,6 +742,15 @@ func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*Reso
 	}
 	return false
 }
+
+func (model *ModelData) addOrder(order *Order) bool {
+	if _, ok := model.Orders[order.Id]; !ok {
+		model.Orders[order.Id] = order
+		return true
+	}
+	return false
+}
+
 func (model *ModelData) changeLogisticsLinks(entityId uint32, superiors []uint32) bool {
 	automat := model.FindAutomat(entityId)
 	if automat != nil {

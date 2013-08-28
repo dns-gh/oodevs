@@ -890,7 +890,7 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 		swapi.MakeNullValue(),
 		swapi.MakeNullValue(),
 		swapi.MakePointParam(to))
-	err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
 
 	select {

@@ -789,3 +789,49 @@ func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) 
 	}
 	return nil
 }
+
+func (model *Model) addOrder(id, idType uint32, orderType OrderType) error {
+	if idType == 0 {
+		return nil
+	}
+	order := &Order{
+		Id:   id,
+		Type: orderType,
+	}
+	if !model.data.addOrder(order) {
+		return fmt.Errorf("cannot insert order %d", order.Id)
+	}
+	return nil
+}
+
+func (model *Model) handleUnitOrder(m *sword.SimToClient_Content) error {
+	mm := m.GetUnitOrder()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	return model.addOrder(mm.GetId(), mm.GetType().GetId(), UnitOrder)
+}
+
+func (model *Model) handleAutomatOrder(m *sword.SimToClient_Content) error {
+	mm := m.GetAutomatOrder()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	return model.addOrder(mm.GetId(), mm.GetType().GetId(), AutomatOrder)
+}
+
+func (model *Model) handleCrowdOrder(m *sword.SimToClient_Content) error {
+	mm := m.GetCrowdOrder()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	return model.addOrder(mm.GetId(), mm.GetType().GetId(), CrowdOrder)
+}
+
+func (model *Model) handleFragOrder(m *sword.SimToClient_Content) error {
+	mm := m.GetFragOrder()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	return model.addOrder(mm.GetId(), mm.GetType().GetId(), FragOrder)
+}

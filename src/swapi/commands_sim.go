@@ -17,6 +17,7 @@ import (
 
 var (
 	ErrContinue = errors.New("continue")
+	ErrNotFound = errors.New("not found")
 )
 
 func mismatch(name string, a, b interface{}) error {
@@ -250,21 +251,41 @@ func (c *Client) CreateUnitWithName(automatId, unitType uint32, location Point,
 	return c.createUnit(automatId, unitType, location, &name, &pc)
 }
 
-func orderAckHandler(msg *sword.SimToClient_Content) error {
-	reply := msg.GetOrderAck()
-	if reply == nil {
-		return unexpected(msg)
+func (c *Client) waitOrder(id uint32) (*Order, error) {
+	done := c.Model.WaitCondition(func(data *ModelData) bool {
+		_, found := data.Orders[id]
+		return found
+	})
+	if !done {
+		return nil, ErrNotFound
 	}
-	code := reply.GetErrorCode()
-	if code != sword.OrderAck_no_error {
-		return makeError(reply, int32(code), sword.OrderAck_ErrorCode_name)
+	return c.Model.GetOrder(id), nil
+}
+
+func (c *Client) sendOrder(msg SwordMessage) (*Order, error) {
+	id := uint32(0)
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetOrderAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.OrderAck_no_error {
+			return makeError(reply, int32(code), sword.OrderAck_ErrorCode_name)
+		}
+		id = reply.GetId()
+		return nil
 	}
-	return nil
+	err := <-c.postSimRequest(msg, handler)
+	if err != nil {
+		return nil, err
+	}
+	return c.waitOrder(id)
 }
 
 func (c *Client) SendUnitOrder(unitId, missionType uint32,
-	params *sword.MissionParameters) error {
-	msg := SwordMessage{
+	params *sword.MissionParameters) (*Order, error) {
+	return c.sendOrder(SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitOrder: &sword.UnitOrder{
@@ -278,14 +299,12 @@ func (c *Client) SendUnitOrder(unitId, missionType uint32,
 				},
 			},
 		},
-	}
-	handler := orderAckHandler
-	return <-c.postSimRequest(msg, handler)
+	})
 }
 
 func (c *Client) SendAutomatOrder(unitId, missionType uint32,
-	params *sword.MissionParameters) error {
-	msg := SwordMessage{
+	params *sword.MissionParameters) (*Order, error) {
+	return c.sendOrder(SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				AutomatOrder: &sword.AutomatOrder{
@@ -299,9 +318,7 @@ func (c *Client) SendAutomatOrder(unitId, missionType uint32,
 				},
 			},
 		},
-	}
-	handler := orderAckHandler
-	return <-c.postSimRequest(msg, handler)
+	})
 }
 
 func (c *Client) DeleteUnit(unitId uint32) error {
@@ -457,8 +474,8 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 }
 
 func (c *Client) SendCrowdOrder(unitId, missionType uint32,
-	params *sword.MissionParameters) error {
-	msg := SwordMessage{
+	params *sword.MissionParameters) (*Order, error) {
+	return c.sendOrder(SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				CrowdOrder: &sword.CrowdOrder{
@@ -472,9 +489,7 @@ func (c *Client) SendCrowdOrder(unitId, missionType uint32,
 				},
 			},
 		},
-	}
-	handler := orderAckHandler
-	return <-c.postSimRequest(msg, handler)
+	})
 }
 
 func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {
@@ -579,7 +594,7 @@ func (c *Client) Stop() error {
 }
 
 func (c *Client) SendFragOrder(automatId, crowdId, unitId, fragOrderType uint32,
-	params *sword.MissionParameters) error {
+	params *sword.MissionParameters) (*Order, error) {
 	tasker := &sword.Tasker{}
 	if automatId != 0 {
 		tasker.Automat = &sword.AutomatId{
@@ -607,6 +622,7 @@ func (c *Client) SendFragOrder(automatId, crowdId, unitId, fragOrderType uint32,
 			},
 		},
 	}
+	id := uint32(0)
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetFragOrderAck()
 		if reply == nil {
@@ -616,23 +632,28 @@ func (c *Client) SendFragOrder(automatId, crowdId, unitId, fragOrderType uint32,
 		if code != sword.OrderAck_no_error {
 			return makeError(reply, int32(code), sword.OrderAck_ErrorCode_name)
 		}
+		id = reply.GetId()
 		return nil
 	}
-	return <-c.postSimRequest(msg, handler)
+	err := <-c.postSimRequest(msg, handler)
+	if err != nil {
+		return nil, err
+	}
+	return c.waitOrder(id)
 }
 
 func (c *Client) SendAutomatFragOrder(unitId, fragOrderType uint32,
-	params *sword.MissionParameters) error {
+	params *sword.MissionParameters) (*Order, error) {
 	return c.SendFragOrder(unitId, 0, 0, fragOrderType, params)
 }
 
 func (c *Client) SendCrowdFragOrder(unitId, fragOrderType uint32,
-	params *sword.MissionParameters) error {
+	params *sword.MissionParameters) (*Order, error) {
 	return c.SendFragOrder(0, unitId, 0, fragOrderType, params)
 }
 
 func (c *Client) SendUnitFragOrder(unitId, fragOrderType uint32,
-	params *sword.MissionParameters) error {
+	params *sword.MissionParameters) (*Order, error) {
 	return c.SendFragOrder(0, 0, unitId, fragOrderType, params)
 }
 
