@@ -38,18 +38,24 @@ MIL_AgentTypePionLOGSupply::~MIL_AgentTypePionLOGSupply()
 // Name: MIL_AgentTypePionLOGSupply::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
+                                                            MissionController_ABC& controller,
+                                                            MIL_Automate& automate,
+                                                            xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGSupply( *this, automate, algorithmFactories, xis );
+    return new MIL_AgentPionLOGSupply( *this, algorithmFactories, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGSupply::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const
+MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
+                                                            MissionController_ABC& controller,
+                                                            MIL_Automate& automate,
+                                                            const std::string& name ) const
 {
-    return new MIL_AgentPionLOGSupply( *this, automate, algorithmFactories, name );
+    return new MIL_AgentPionLOGSupply( *this, algorithmFactories, controller, automate, name );
 }
 
 // -----------------------------------------------------------------------------

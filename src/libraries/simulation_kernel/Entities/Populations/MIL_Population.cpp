@@ -9,32 +9,35 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Population.h"
-#include "MIL_PopulationType.h"
-#include "MIL_PopulationConcentration.h"
-#include "MIL_PopulationFlow.h"
-#include "MIL_PopulationAttitude.h"
+
 #include "DEC_PopulationDecision.h"
 #include "DEC_PopulationKnowledge.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Workspace.h"
-#include "Entities/MIL_Army_ABC.h"
-#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Orders/MIL_Report.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "MIL_PopulationAttitude.h"
+#include "MIL_PopulationConcentration.h"
+#include "MIL_PopulationFlow.h"
+#include "MIL_PopulationType.h"
+#include "MissionController_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/NET_AsnException.h"
 #include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_Geometry.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/MIL_Geometry.h"
+#include "Tools/NET_AsnException.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
+
 #include <boost/foreach.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
@@ -55,17 +58,21 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ )
 {
     unsigned int nTypeID = population->GetType().GetID();
-    archive << nTypeID;
+    const MissionController_ABC* const controller = &population->orderManager_.GetController();
+    archive << nTypeID
+            << controller;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_Population* population, const unsigned int /*version*/ )
 {
     unsigned int nTypeID;
-    archive >> nTypeID;
+    MissionController_ABC* controller = 0;
+    archive >> nTypeID
+            >> controller;
     const MIL_PopulationType* pType = MIL_PopulationType::Find( nTypeID );
     assert( pType );
-    ::new( population )MIL_Population( *pType);
+    ::new( population ) MIL_Population( *pType, *controller );
 }
 
 #define MASA_BADPARAM_UNIT( name ) MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, name )
@@ -74,8 +81,13 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause,
-                                unsigned int gcMult, sword::DEC_Logger* logger )
+MIL_Population::MIL_Population( const MIL_PopulationType& type,
+                                xml::xistream& xis,
+                                MIL_Army_ABC& army,
+                                MissionController_ABC& controller,
+                                unsigned int gcPause,
+                                unsigned int gcMult,
+                                sword::DEC_Logger* logger )
     : MIL_Entity_ABC( xis )
     , pType_                      ( &type )
     , nID_                        ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
@@ -87,7 +99,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( *this )
+    , orderManager_               ( controller, *this )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -130,7 +142,8 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
 // Name: MIL_Population constructor
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population(const MIL_PopulationType& type )
+MIL_Population::MIL_Population( const MIL_PopulationType& type,
+                                MissionController_ABC& controller )
     : MIL_Entity_ABC( type.GetName() )
     , pType_                      ( &type )
     , nID_                        ( 0 )
@@ -141,7 +154,7 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( *this )
+    , orderManager_               ( controller, *this )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -162,7 +175,16 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
 // Name: MIL_Population constructor
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context )
+MIL_Population::MIL_Population( const MIL_PopulationType& type,
+                                MIL_Army_ABC& army,
+                                MissionController_ABC& controller,
+                                const MT_Vector2D& point,
+                                int number,
+                                const std::string& name,
+                                unsigned int gcPause,
+                                unsigned int gcMult,
+                                sword::DEC_Logger* logger,
+                                unsigned int context )
     : MIL_Entity_ABC( name )
     , pType_                      ( &type )
     , nID_                        ( idManager_.GetId() )
@@ -174,7 +196,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( *this )
+    , orderManager_               ( controller, *this )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -1123,18 +1145,18 @@ double MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, 
 // Name: MIL_Population::OnReceiveOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveOrder( const sword::CrowdOrder& msg )
+uint32_t MIL_Population::OnReceiveOrder( const sword::CrowdOrder& msg )
 {
-    orderManager_.OnReceiveMission( msg );
+    return orderManager_.OnReceiveMission( msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveFragOrder
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveFragOrder( const sword::FragOrder& msg )
+uint32_t MIL_Population::OnReceiveFragOrder( const sword::FragOrder& msg )
 {
-    orderManager_.OnReceiveFragOrder( msg );
+    return orderManager_.OnReceiveFragOrder( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1890,15 +1912,6 @@ void MIL_Population::OnChangeBrainDebug( const sword::MissionParameters& msg )
         GetRole< DEC_PopulationDecision >().ActivateBrainDebug();
     else
         GetRole< DEC_PopulationDecision >().DeactivateBrainDebug();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Population::Register
-// Created: ABR 2012-02-13
-// -----------------------------------------------------------------------------
-void MIL_Population::Register( MissionController_ABC& pController )
-{
-    orderManager_.Register( pController );
 }
 
 // -----------------------------------------------------------------------------

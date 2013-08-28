@@ -12,6 +12,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "MissionController.h"
 #include "StubMIL_AgentPion.h"
 #include "MockRoleLocation.h"
 #include "MockAgent.h"
@@ -20,8 +21,9 @@
 
 BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive )
 {
+    MissionController controller;
     MIL_EffectManager effectManager;
-    FixturePion fixture( effectManager );
+    FixturePion fixture( controller, effectManager );
 
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10u );

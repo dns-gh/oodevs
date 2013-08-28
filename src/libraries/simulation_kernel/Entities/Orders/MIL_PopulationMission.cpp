@@ -27,24 +27,15 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationMission )
 // Name: MIL_PopulationMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const sword::CrowdOrder& asn )
-    : MIL_Mission_ABC       ( type, population.GetKnowledge(), asn.parameters() )
+MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type,
+                                              MIL_Population& population,
+                                              uint32_t id,
+                                              const sword::MissionParameters& parameters )
+    : MIL_Mission_ABC       ( type, population.GetKnowledge(), id, parameters, boost::none )
     , population_           ( population )
     , bDIABehaviorActivated_( false )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationMission constructor
-// Created: ABR 2012-02-13
-// -----------------------------------------------------------------------------
-MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population )
-    : MIL_Mission_ABC       ( type, population.GetKnowledge() )
-    , population_           ( population )
-    , bDIABehaviorActivated_( false )
-{
-        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +108,7 @@ void MIL_PopulationMission::Send() const
     Serialize( *asn().mutable_parameters() );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *asn().mutable_start_time() );
     asn().set_name( GetName() );
+    asn().set_id( GetId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -133,8 +125,10 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PopulationMission* mission, const unsigned int /*version*/ )
 {
     const MIL_Population* const population = &mission->population_;
-    unsigned int id = mission->type_.GetID();
+    unsigned int idType = mission->type_.GetID();
+    uint32_t id = mission->GetId();
     archive << population
+            << idType
             << id;
 }
 
@@ -142,12 +136,14 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_PopulationMission* mission, const unsigned int /*version*/ )
 {
     MIL_Population* population = 0;
-    unsigned int id = 0;
+    unsigned int idType = 0;
+    uint32_t id = 0;
     archive >> population
+            >> idType
             >> id;
-    const MIL_MissionType_ABC* type = MIL_PopulationMissionType::Find( id );
+    const MIL_MissionType_ABC* type = MIL_PopulationMissionType::Find( idType );
     assert( type );
-    ::new( mission )MIL_PopulationMission( *type, *population );
+    ::new( mission ) MIL_PopulationMission( *type, *population, id, sword::MissionParameters() );
 }
 
 // -----------------------------------------------------------------------------

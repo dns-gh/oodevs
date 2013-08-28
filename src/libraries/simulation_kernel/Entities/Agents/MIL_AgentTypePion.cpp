@@ -317,18 +317,24 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
+                                                   MissionController_ABC& controller,
+                                                   MIL_Automate& automate,
+                                                   xml::xistream& xis ) const
 {
-    return new MIL_AgentPion( *this, automate, algorithmFactories, xis );
+    return new MIL_AgentPion( *this, algorithmFactories, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::InstanciatePion
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
+                                                   MissionController_ABC& controller,
+                                                   MIL_Automate& automate,
+                                                   const std::string& name ) const
 {
-    return new MIL_AgentPion( *this, automate, algorithmFactories, name );
+    return new MIL_AgentPion( *this, algorithmFactories, controller, automate, name );
 }
 
 // -----------------------------------------------------------------------------

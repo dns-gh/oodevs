@@ -18,9 +18,9 @@
 // Name: MIL_OrderManager_ABC constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_OrderManager_ABC::MIL_OrderManager_ABC()
-    : bNewMissionStarted_( false )
-    , pController_       ( 0 )
+MIL_OrderManager_ABC::MIL_OrderManager_ABC( MissionController_ABC& controller )
+    : controller_        ( controller )
+    , bNewMissionStarted_( false )
 {
     // NOTHING
 }
@@ -41,36 +41,32 @@ MIL_OrderManager_ABC::~MIL_OrderManager_ABC()
 void MIL_OrderManager_ABC::Update()
 {
     bNewMissionStarted_ = false;
+    if( pNextMission_ == pMission_ )
+        return;
 
-    if( pNextMission_ != pMission_ )
+    boost::shared_ptr< MIL_Mission_ABC > pNewMission = pNextMission_;
+    pNextMission_.reset();
+    StopAllMissions();
+    assert( !pMission_ );
+    pNextMission_ = pNewMission;
+    pMission_ = pNewMission;
+    if( !pNewMission )
+        return;
+
+    try
     {
-        boost::shared_ptr< MIL_Mission_ABC > pNewMission = pNextMission_;
+        pMission_->Start( pMission_ );
+        controller_.Start( pMission_ );
+        bNewMissionStarted_ = true;
+    }
+    catch( const std::exception& )
+    {
+        if( pMission_  )
+            controller_.Stop( pMission_ );
         pNextMission_.reset();
-
-        StopAllMissions();
-        assert( !pMission_ );
-
-        pNextMission_ = pNewMission;
-        pMission_ = pNewMission;
-        if( pNewMission )
-        {
-            try
-            {
-                pMission_->Start( pMission_ );
-                if( pController_ )
-                    pController_->Start( pMission_ );
-                bNewMissionStarted_ = true;
-            }
-            catch( const std::exception& )
-            {
-                if( pController_ && pMission_.get() )
-                    pController_->Stop( pMission_ );
-                pNextMission_.reset();
-                pMission_.reset();
-                bNewMissionStarted_ = false;
-                throw;
-            }
-        }
+        pMission_.reset();
+        bNewMissionStarted_ = false;
+        throw;
     }
 }
 
@@ -89,8 +85,8 @@ void MIL_OrderManager_ABC::ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > 
 // -----------------------------------------------------------------------------
 void MIL_OrderManager_ABC::CancelMission()
 {
-    if( pController_ && pMission_.get() )
-        pController_->Stop( pMission_ );
+    if( pMission_ )
+        controller_.Stop( pMission_ );
     pNextMission_.reset();
 }
 
@@ -100,9 +96,9 @@ void MIL_OrderManager_ABC::CancelMission()
 //-----------------------------------------------------------------------------
 void MIL_OrderManager_ABC::StopAllMissions()
 {
-    if( pNextMission_.get() )
+    if( pNextMission_ )
         pNextMission_->Stop( pNextMission_ );
-    if( pMission_.get() )
+    if( pMission_ )
         pMission_->Stop( pMission_ );
 
     pNextMission_.reset();
@@ -217,10 +213,19 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_OrderManager_ABC::GetCurrentMission() c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderManager_ABC::Register
-// Created: LGY 2011-06-15
+// Name: MIL_OrderManager_ABC::GetController
+// Created: BAX 2013-08-30
 // -----------------------------------------------------------------------------
-void MIL_OrderManager_ABC::Register( MissionController_ABC& pController )
+const MissionController_ABC& MIL_OrderManager_ABC::GetController() const
 {
-    pController_ = &pController;
+    return controller_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderManager_ABC::AcquireId
+// Created: BAX 2013-08-27
+// -----------------------------------------------------------------------------
+uint32_t MIL_OrderManager_ABC::AcquireId() const
+{
+    return controller_.AcquireId();
 }

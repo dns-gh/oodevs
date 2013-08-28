@@ -27,41 +27,29 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::FragOrder& asn )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, uint32_t id )
     : type_( type )
-{
-    const sword::MissionParameters& parameters = asn.parameters();
-    if( (int)type.GetParameters().size() != parameters.elem_size() )
-    {
-        MT_LOG_ERROR_MSG( std::string( "Frag Order " ) + type_.GetName() + " invalid parameters" );
-        throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
-    }
-    MIL_MissionParameterFactory::Copy( type, parameters, parameters_, knowledgeResolver );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FragOrder constructor
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, const MIL_FragOrder& rhs )
-    : type_      ( type )
-    , parameters_( rhs.parameters_ )
+    , id_  ( id )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder constructor
-// Created: DDA 2011-01-17
+// Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type,
+                              const MIL_FragOrder& rhs,
+                              uint32_t id )
     : type_      ( type )
-    , parameters_()
+    , id_        ( id )
+    , parameters_( rhs.parameters_ )
 {
     // NOTHING
 }
@@ -73,6 +61,21 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type )
 MIL_FragOrder::~MIL_FragOrder()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::SetParameters
+// Created: BAX 2013-08-29
+// -----------------------------------------------------------------------------
+void MIL_FragOrder::SetParameters( const DEC_KnowledgeResolver_ABC& resolver,
+                                   const sword::MissionParameters& parameters )
+{
+    if( type_.GetParameters().size() != parameters.elem_size() )
+    {
+        MT_LOG_ERROR_MSG( "Frag Order " << type_.GetName() << " invalid parameters" );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
+    }
+    MIL_MissionParameterFactory::Copy( type_, parameters, parameters_, resolver );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,13 +129,13 @@ void MIL_FragOrder::Register( sword::Brain& brain )
 // Name: MIL_FragOrder::CreateFragOrder
 // Created: DDA 2011-01-17
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_FragOrder > MIL_FragOrder::CreateFragOrder( std::string type )
+boost::shared_ptr< MIL_FragOrder > MIL_FragOrder::CreateFragOrder( std::string typeText )
 {
-    const MIL_FragOrderType* fragOrderType = MIL_FragOrderType::FindByDiaType( type );
-    if( fragOrderType )
-        return boost::shared_ptr< MIL_FragOrder >( new MIL_FragOrder( *fragOrderType ) );
-    else
+    const MIL_FragOrderType* type = MIL_FragOrderType::FindByDiaType( typeText );
+    if( !type )
         return boost::shared_ptr< MIL_FragOrder >();
+    // incomplete order
+    return boost::make_shared< MIL_FragOrder >( *type, 0 );
 }
 
 namespace
@@ -584,6 +587,7 @@ void MIL_FragOrder::Send( MIL_AgentPion& pion ) const
     MIL_Report::PostEvent( pion, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_unit()->set_id( pion.GetID() );
+    message().set_id( id_ );
     Send( message );
 }
 
@@ -596,6 +600,7 @@ void MIL_FragOrder::Send( MIL_Automate& automat ) const
     MIL_Report::PostEvent( automat, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_automat()->set_id( automat.GetID() );
+    message().set_id( id_ );
     Send( message );
 }
 
@@ -608,6 +613,7 @@ void MIL_FragOrder::Send( MIL_Population& population ) const
     MIL_Report::PostEvent( population, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_crowd()->set_id( population.GetID() );
+    message().set_id( id_ );
     Send( message );
 }
 
@@ -620,6 +626,7 @@ void MIL_FragOrder::Send( client::FragOrder& message ) const
     message().mutable_type()->set_id( type_.GetID() );
     Serialize( *message().mutable_parameters() );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_start_time() );
+    message().set_id( id_ );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

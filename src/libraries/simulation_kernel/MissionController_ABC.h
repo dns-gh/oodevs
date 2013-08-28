@@ -39,14 +39,12 @@ public:
     virtual void SendFullState() = 0;
     virtual void Start( boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
+    virtual uint32_t AcquireId() = 0;
     //@}
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int )
-    {
-        // NOTHING
-    }
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 };
 

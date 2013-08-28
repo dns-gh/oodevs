@@ -12,11 +12,6 @@
 
 #include "MIL_Mission_ABC.h"
 
-namespace sword
-{
-    class UnitOrder;
-}
-
 class MIL_MissionType_ABC;
 class MIL_AgentPion;
 class MIL_AutomateMission;
@@ -32,9 +27,9 @@ class MIL_PionMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const sword::UnitOrder& asn );
-             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > parent );
-             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion );
+             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, uint32_t id, const boost::shared_ptr< MIL_Mission_ABC >& parent );
+             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, uint32_t id, const sword::MissionParameters& parameters );
+             MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs, uint32_t id );
     virtual ~MIL_PionMission();
     //@}
 
@@ -53,7 +48,7 @@ public:
 
     virtual void Send() const;
 
-    boost::shared_ptr< MIL_Mission_ABC > CreateCopy( MIL_AgentPion& target ) const;
+    boost::shared_ptr< MIL_Mission_ABC > CreateCopy( MIL_AgentPion& target, uint32_t id ) const;
     //@}
 
     //! @name Serialization
@@ -61,12 +56,6 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive& file, const unsigned int );
     void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
-    //@}
-
-private:
-    //! @name Constructors/Destructor
-    //@{
-    MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs );
     //@}
 
 private:

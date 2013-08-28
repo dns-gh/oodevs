@@ -32,13 +32,13 @@ class MIL_PionMission;
 class MIL_AutomateOrderManager : public MIL_OrderManager_ABC
 {
 public:
-    explicit MIL_AutomateOrderManager( MIL_Automate& automate );
+             MIL_AutomateOrderManager( MissionController_ABC& controller, MIL_Automate& automate );
     virtual ~MIL_AutomateOrderManager();
 
     // @name Events
     //@{
-    virtual void OnReceiveFragOrder( const sword::FragOrder& asn );
-            void OnReceiveMission  ( const sword::AutomatOrder& asn );
+    virtual uint32_t OnReceiveFragOrder( const sword::FragOrder& asn );
+            uint32_t OnReceiveMission  ( const sword::AutomatOrder& asn );
             void OnReceiveMission  ( const MIL_MissionType_ABC& type );
     //@}
 

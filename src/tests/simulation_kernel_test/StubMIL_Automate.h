@@ -7,7 +7,8 @@
 class StubMIL_Automate : public MIL_Automate
 {
 public:
-    explicit StubMIL_Automate( MIL_AutomateType& type ) : MIL_Automate( type )
+    StubMIL_Automate( MIL_AutomateType& type, MissionController_ABC& controller )
+        : MIL_Automate( type, 0, controller )
     {
         RegisterRole( *new DEC_AutomateDecision( *this, 100, 100, false ) ) ;
     }

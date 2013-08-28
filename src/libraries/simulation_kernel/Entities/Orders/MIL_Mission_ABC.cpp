@@ -23,45 +23,42 @@
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "CheckPoints/SerializationTools.h"
 #include <boost/make_shared.hpp>
+#include <boost/optional.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Mission_ABC )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
-// Created: NLD 2006-11-24
+// Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
+                                  const DEC_KnowledgeResolver_ABC& knowledgeResolver,
+                                  uint32_t id,
+                                  const boost::shared_ptr< MIL_Mission_ABC >& parent )
     : type_             ( type )
-    , context_          ( true ) // $$$$ SBO 2008-12-11: Context must be present!
+    , id_               ( id )
+    , context_          ( parent ? parent->context_ : MIL_OrderContext( true ) )
     , knowledgeResolver_( knowledgeResolver )
 {
-    // No parameters $$$
+    // $$$$ LMT 2010-04-19: set default to NullParameter
+    // Parameters will be filled by DIA $$$
+    // $$$$ LDC: TODO Fill parameters_ from DIA....
+    if( parent )
+        type.InitializeDefault( parameters_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const boost::shared_ptr< MIL_Mission_ABC >& parent )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
+                                  const DEC_KnowledgeResolver_ABC& knowledgeResolver,
+                                  uint32_t id,
+                                  const sword::MissionParameters& parameters,
+                                  const boost::optional< MT_Vector2D >& orientation )
     : type_             ( type )
-    , context_          ( parent ? parent->context_ : MIL_OrderContext( true ) )
-    , knowledgeResolver_( knowledgeResolver )
-{
-    if( parent )
-    {
-        // $$$$ LMT 2010-04-19: set default to NullParameter
-        // Parameters will be filled by DIA $$$
-            // $$$$ LDC: TODO Fill parameters_ from DIA....
-        type.InitializeDefault( parameters_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Mission_ABC constructor
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MissionParameters& parameters )
-    : type_             ( type )
+    , id_               ( id )
+    , context_          ( orientation ? MIL_OrderContext( parameters, *orientation ) : MIL_OrderContext( false ) )
     , knowledgeResolver_( knowledgeResolver )
 {
     FillParameters( context_.Length(), parameters );
@@ -71,20 +68,11 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MissionParameters& parameters, const MT_Vector2D& refPosition )
-    : type_             ( type )
-    , context_          ( parameters, refPosition )
-    , knowledgeResolver_( knowledgeResolver )
-{
-    FillParameters( context_.Length(), parameters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Mission_ABC constructor
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& rhs )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_Mission_ABC& rhs,
+                                  const DEC_KnowledgeResolver_ABC& knowledgeResolver,
+                                  uint32_t id )
     : type_             ( rhs.type_ )
+    , id_               ( id )
     , context_          ( rhs.context_ )
     , knowledgeResolver_( knowledgeResolver )
     , parameters_       ( rhs.parameters_ )
@@ -380,13 +368,23 @@ unsigned int MIL_Mission_ABC::GetOwnerId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::GetId
+// Created: BAX 2013-08-28
+// -----------------------------------------------------------------------------
+uint32_t MIL_Mission_ABC::GetId() const
+{
+    return id_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::load
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> context_
-         >> parameters_;
+         >> parameters_
+         >> const_cast< uint32_t& >( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -396,5 +394,6 @@ void MIL_Mission_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Mission_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << context_
-         << parameters_;
+         << parameters_
+         << id_;
 }

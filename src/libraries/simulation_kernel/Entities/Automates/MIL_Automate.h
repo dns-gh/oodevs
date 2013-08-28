@@ -59,6 +59,7 @@ class MIL_StockSupplyManager;
 class MIL_Color;
 class PHY_Dotation;
 class PHY_DotationStock;
+class MissionController_ABC;
 template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
@@ -79,8 +80,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context, const MIL_DictionaryExtensions& extensions );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MissionController_ABC& controller, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MissionController_ABC& controller, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context, const MIL_DictionaryExtensions& extensions );
     virtual ~MIL_Automate();
     //@}
 
@@ -190,8 +191,8 @@ public:
     virtual void SendFullState( unsigned int context = 0 ) const;
     void SendKnowledge( unsigned int context = 0 ) const;
 
-    void OnReceiveOrder( const sword::AutomatOrder& msg );
-    void OnReceiveFragOrder( const sword::FragOrder& msg );
+    uint32_t OnReceiveOrder( const sword::AutomatOrder& msg );
+    uint32_t OnReceiveFragOrder( const sword::FragOrder& msg );
     void OnReceiveSetAutomateMode( const sword::SetAutomatMode& msg );
     void OnReceiveUnitCreationRequest( const sword::UnitCreationRequest& msg, unsigned int nCtx );
     unsigned int OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx );
@@ -236,7 +237,7 @@ public:
 protected:
     //! @name Constructor
     //@{
-    MIL_Automate( const MIL_AutomateType& type, unsigned int nID = 0 );
+    MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MissionController_ABC& controller );
     //@}
 
     //! @name Tools

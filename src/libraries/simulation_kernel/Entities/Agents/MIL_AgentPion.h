@@ -60,9 +60,9 @@ class MIL_AgentPion : public MIL_Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
-             MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
-             MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
+             MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
+             MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, const std::string& name );
+             MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller );
     virtual ~MIL_AgentPion();
     //@}
 
@@ -136,7 +136,6 @@ public:
     void UpdateState();
     void UpdateNetwork();
     void Clean();
-    void Register( MissionController_ABC& pController );
     virtual void RegisterPath( const DEC_Agent_Path& agentPath );
     virtual void UnregisterPath( const DEC_Agent_Path& agentPath );
     virtual bool HasPath() const;
@@ -163,8 +162,8 @@ public:
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies, unsigned int nCtx,
                                    unsigned int clientId );
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn );
-    void OnReceiveOrder( const sword::UnitOrder& msg );
-    void OnReceiveFragOrder( const sword::FragOrder& msg );
+    uint32_t OnReceiveOrder( const sword::UnitOrder& msg );
+    uint32_t OnReceiveFragOrder( const sword::FragOrder& msg );
     void OnReceiveChangeSuperior( const MIL_EntityManager& manager, unsigned int automatId );
     void OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
     void SetExtensions( const MIL_DictionaryExtensions& ext );
@@ -242,6 +241,7 @@ protected:
     void SetAffinities( std::auto_ptr< MIL_AffinitiesMap > affinities );
     void SetKnowledge( DEC_KnowledgeBlackBoard_AgentPion* knowledge );
     void SetAutomate( MIL_Automate* automate );
+    const MissionController_ABC& GetController() const;
     //@}
 
 private:

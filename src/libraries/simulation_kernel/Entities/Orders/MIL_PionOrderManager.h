@@ -19,7 +19,6 @@ namespace sword
 }
 
 class MIL_AgentPion;
-class MissionController_ABC;
 class MIL_MissionType_ABC;
 
 //=============================================================================
@@ -30,14 +29,14 @@ class MIL_PionOrderManager : public MIL_OrderManager_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_PionOrderManager( MIL_AgentPion& pion );
+             MIL_PionOrderManager( MissionController_ABC& controller, MIL_AgentPion& pion );
     virtual ~MIL_PionOrderManager();
     //@}
 
     // @name Events
     //@{
-    virtual void OnReceiveFragOrder( const sword::FragOrder& asn );
-    void OnReceiveMission( const sword::UnitOrder& asn );
+    virtual uint32_t OnReceiveFragOrder( const sword::FragOrder& asn );
+    uint32_t OnReceiveMission( const sword::UnitOrder& asn );
     void OnReceiveMission( const MIL_MissionType_ABC& type );
     //@}
 

@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Network/NET_RoleInterface_Dotations.h"
 
 #include "AlgorithmsFactories.h"
+#include "MissionController_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Tools/MIL_AffinitiesMap.h"
@@ -31,8 +32,10 @@ void save_construct_data( Archive& archive, const MIL_AgentPion_Remote* pion, co
 {
     unsigned int nTypeID = pion->GetType().GetID();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
+    const MissionController_ABC* const controller= &pion->GetController();
     archive << nTypeID
-            << algorithmFactories;
+            << algorithmFactories
+            << controller;
 }
 
 template< typename Archive >
@@ -40,28 +43,40 @@ void load_construct_data( Archive& archive, MIL_AgentPion_Remote* pion, const un
 {
     unsigned int nTypeID;
     AlgorithmsFactories* algorithmFactories = 0;
+    MissionController_ABC* controller = 0;
     std::string name;
     archive >> nTypeID
-            >> algorithmFactories;
+            >> algorithmFactories
+            >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPion_Remote( *pType, *algorithmFactories );
+    ::new( pion ) MIL_AgentPion_Remote( *pType, *algorithmFactories, *controller );
 }
 
-MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_AgentPion( type, automate, algorithmFactories, xis )
+MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
+                                            const AlgorithmsFactories& algorithmFactories,
+                                            MissionController_ABC& controller,
+                                            MIL_Automate& automate,
+                                            xml::xistream& xis )
+    : MIL_AgentPion( type, algorithmFactories, controller, automate, xis )
 {
     // NOTHING
 }
 
-MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name )
-    : MIL_AgentPion( type, automate, algorithmFactories, name )
+MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
+                                            const AlgorithmsFactories& algorithmFactories,
+                                            MissionController_ABC& controller,
+                                            MIL_Automate& automate,
+                                            const std::string& name )
+    : MIL_AgentPion( type, algorithmFactories, controller, automate, name )
 {
     // NOTHING
 }
 
-MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
-    : MIL_AgentPion( type, algorithmFactories)
+MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type,
+                                            const AlgorithmsFactories& algorithmFactories,
+                                            MissionController_ABC& controller )
+    : MIL_AgentPion( type, algorithmFactories, controller )
 {
     // NOTHING
 }

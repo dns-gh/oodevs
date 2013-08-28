@@ -13,6 +13,7 @@
 #include "MIL_OrderContext.h"
 #include "MIL.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/optional/optional_fwd.hpp>
 
 class DEC_Gen_Object;
 class DEC_KnowledgeResolver_ABC;
@@ -92,17 +93,17 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const boost::shared_ptr< MIL_Mission_ABC >& parent );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MissionParameters& parameters );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MissionParameters& parameters, const MT_Vector2D& refPosition );
-    MIL_Mission_ABC( const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& rhs );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, uint32_t id, const boost::shared_ptr< MIL_Mission_ABC >& parent );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, uint32_t id, const sword::MissionParameters& parameters,
+                     const boost::optional< MT_Vector2D >& orientation );
+    MIL_Mission_ABC( const MIL_Mission_ABC& rhs, const DEC_KnowledgeResolver_ABC& knowledgeResolver, uint32_t id );
     //@}
 
     //! @name Helpers
     //@{
     void FillParameters( int firstIndex, const sword::MissionParameters& parameters );
     void Serialize( sword::MissionParameters& asn ) const;
+    uint32_t GetId() const;
     //@}
 
     //! @name Member Data
@@ -126,6 +127,7 @@ private:
     //! @name Member data
     //@{
     const DEC_KnowledgeResolver_ABC& knowledgeResolver_;
+    const uint32_t id_;
     MIL_OrderContext context_;
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
     //@}

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "MockArmy.h"
+#include "simulation_kernel/MissionController.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
@@ -55,9 +56,10 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
             BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
         }
         MockArmy army;
+        MissionController controller;
         MIL_EffectManager effectManager;
         MockNET_Publisher_ABC publisher;
-        FixturePion pion( effectManager );
+        FixturePion pion( controller, effectManager );
         flux >> xml::start( "urban-object" );
         MockSink sink;
         std::auto_ptr< MIL_UrbanObject_ABC > pObject( factory.CreateUrbanObject( sink, flux, 0 ) );

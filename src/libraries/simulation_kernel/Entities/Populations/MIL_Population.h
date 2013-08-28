@@ -52,9 +52,8 @@ class MIL_Population : public MIL_Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause,
-                             unsigned int gcMult, sword::DEC_Logger* logger );
-             MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context = 0 );
+             MIL_Population( const MIL_PopulationType& type, xml::xistream& xis, MIL_Army_ABC& army, MissionController_ABC& controller, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
+             MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, MissionController_ABC& controller, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context = 0 );
     virtual ~MIL_Population();
     //@}
 
@@ -135,7 +134,6 @@ public:
     void UpdateDecision( float duration );
     void UpdateState();
     void Clean();
-    void Register( MissionController_ABC& pController );
 
     void AddHidden( MIL_Agent_ABC& agent );
     void RemoveHidden( MIL_Agent_ABC& agent );
@@ -175,8 +173,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveOrder( const sword::CrowdOrder& msg );
-    void OnReceiveFragOrder( const sword::FragOrder& msg );
+    uint32_t OnReceiveOrder( const sword::CrowdOrder& msg );
+    uint32_t OnReceiveFragOrder( const sword::FragOrder& msg );
     void SendCreation( unsigned int context = 0 ) const;
     void SendFullState() const;
     void UpdateNetwork();
@@ -202,7 +200,7 @@ public:
 protected:
     //! @name Constructor
     //@{
-    MIL_Population( const MIL_PopulationType& type );
+    MIL_Population( const MIL_PopulationType& type, MissionController_ABC& controller );
     //@}
 
 private:

@@ -23,6 +23,7 @@
 #include "MockMIL_Object_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "StubTER_World.h"
+#include "MissionController.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -375,6 +376,7 @@ namespace
         }
         DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup1;
         DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup2;
+        MissionController controller;
         MockAgent agent;
         xml::xistringstream xis;
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
@@ -628,7 +630,7 @@ BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_empty_knowledge_gro
     mock::verify();
 
     // knowledge creation in group2
-    StubMIL_Population population( type, army );
+    StubMIL_Population population( type, controller, army );
     DEC_Knowledge_Population& knowledge = blackBoardGroup2.CreateKnowledgePopulation( *group2, population );
     BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgePopulations().size(), 1u );
     mock::verify();
@@ -657,13 +659,13 @@ BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_knowledge_group, Po
     mock::verify();
 
     // knowledge creation in group2
-    StubMIL_Population population2( type, army );
+    StubMIL_Population population2( type, controller, army );
     DEC_Knowledge_Population& knowledge2 = blackBoardGroup2.CreateKnowledgePopulation( *group2, population2 );
     BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgePopulations().size(), 1u );
     mock::verify();
 
     // knowledge creation in group1
-    StubMIL_Population population1( type, army );
+    StubMIL_Population population1( type, controller, army );
     DEC_Knowledge_Population& knowledge1 = blackBoardGroup1.CreateKnowledgePopulation( *group1, population1 );
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 1u );
     mock::verify();
@@ -698,8 +700,8 @@ BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_knowledge_group_wit
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 0u );
     mock::verify();
 
-    StubMIL_Population population1( type, army );
-    StubMIL_Population population2( type, army );
+    StubMIL_Population population1( type, controller, army );
+    StubMIL_Population population2( type, controller, army );
 
     // knowledge creation in group2
     DEC_Knowledge_Population& knowledge21 = blackBoardGroup2.CreateKnowledgePopulation( *group2, population1 );

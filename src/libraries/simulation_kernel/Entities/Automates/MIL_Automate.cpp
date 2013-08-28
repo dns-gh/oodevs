@@ -9,42 +9,45 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Automate.h"
-#include "MIL_AutomateType.h"
-#include "DEC_AutomateDecision.h"
+
 #include "CheckPoints/SerializationTools.h"
+#include "DEC_AutomateDecision.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Workspace.h"
-#include "Entities/MIL_Army_ABC.h"
-#include "Entities/MIL_EntityVisitor_ABC.h"
-#include "Entities/MIL_Formation.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
-#include "Entities/Agents/MIL_AgentTypePion.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
-#include "Entities/Automates/MIL_DotationSupplyManager.h"
-#include "Entities/Automates/MIL_StockSupplyManager.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Automates/MIL_DotationSupplyManager.h"
+#include "Entities/Automates/MIL_StockSupplyManager.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
+#include "Entities/MIL_Formation.h"
 #include "Entities/Objects/LogisticAttribute.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "MIL_AutomateType.h"
+#include "MissionController_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
-#include "Tools/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Tools/MIL_DictionaryExtensions.h"
-#include "Tools/MIL_Tools.h"
-#include "Tools/MIL_Color.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
+#include "Tools/MIL_Color.h"
+#include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_Tools.h"
+#include "Tools/NET_AsnException.h"
+
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
@@ -70,8 +73,10 @@ void save_construct_data( Archive& archive, const MIL_Automate* automat, const u
 {
     assert( automat->pType_ );
     unsigned int type = automat->pType_->GetID();
+    const MissionController_ABC* const controller = &automat->pOrderManager_->GetController();
     archive << type
-            << automat->nID_;
+            << automat->nID_
+            << controller;
 }
 
 template< typename Archive >
@@ -79,24 +84,33 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 {
     unsigned int type;
     unsigned int nID;
+    MissionController_ABC* controller = 0;
     archive >> type
-            >> nID;
+            >> nID
+            >> controller;
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( type );
     assert( pType );
-    ::new( automat )MIL_Automate( *pType, nID );
+    ::new( automat ) MIL_Automate( *pType, nID, *controller );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
+                            unsigned int nID,
+                            MissionController_ABC& controller,
+                            MIL_Entity_ABC& parent,
+                            xml::xistream& xis,
+                            unsigned int gcPause,
+                            unsigned int gcMult,
+                            sword::DEC_Logger* logger )
     : MIL_Entity_ABC         ( xis )
     , pType_                 ( &type )
     , nID_                   ( nID )
     , pParentFormation_      ( dynamic_cast< MIL_Formation* >( &parent ) )
     , pParentAutomate_       ( dynamic_cast< MIL_Automate* >( &parent ) )
-    , pOrderManager_         ( new MIL_AutomateOrderManager( *this ) )
+    , pOrderManager_         ( new MIL_AutomateOrderManager( controller, *this ) )
     , pPionPC_               ( 0 )
     , bEngaged_              ( true )
     , bAutomateModeChanged_  ( true )
@@ -120,14 +134,16 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 // Name: MIL_Automate constructor
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
+                            unsigned int nID,
+                            MissionController_ABC& controller )
     : MIL_Entity_ABC         ( "" )
     , pType_                 ( &type )
     , nID_                   ( nID )
     , pParentFormation_      ( 0 )
     , pParentAutomate_       ( 0 )
     , bEngaged_              ( true )
-    , pOrderManager_         ( new MIL_AutomateOrderManager( *this ) )
+    , pOrderManager_         ( new MIL_AutomateOrderManager( controller, *this ) )
     , pPionPC_               ( 0 )
     , bAutomateModeChanged_  ( true )
     , pKnowledgeBlackBoard_  ( 0 )
@@ -146,15 +162,24 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
 // Name: MIL_Automate constructor
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name,
-                            unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context, const MIL_DictionaryExtensions& extensions )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
+                            unsigned int nID,
+                            MissionController_ABC& controller,
+                            MIL_Entity_ABC& parent,
+                            unsigned int knowledgeGroup,
+                            const std::string& name,
+                            unsigned int gcPause,
+                            unsigned int gcMult,
+                            sword::DEC_Logger* logger,
+                            unsigned int context,
+                            const MIL_DictionaryExtensions& extensions )
     : MIL_Entity_ABC         ( name )
     , pType_                 ( &type )
     , nID_                   ( nID )
     , pParentFormation_      ( dynamic_cast< MIL_Formation* >( &parent ) )
     , pParentAutomate_       ( dynamic_cast< MIL_Automate* >( &parent ) )
     , bEngaged_              ( true )
-    , pOrderManager_         ( new MIL_AutomateOrderManager( *this ) )
+    , pOrderManager_         ( new MIL_AutomateOrderManager( controller, *this ) )
     , pPionPC_               ( 0 )
     , bAutomateModeChanged_  ( true )
     , pLogisticHierarchy_    ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
@@ -1183,18 +1208,18 @@ void MIL_Automate::OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& 
 // Name: MIL_Automate::OnReceiveOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveOrder( const sword::AutomatOrder& msg )
+uint32_t MIL_Automate::OnReceiveOrder( const sword::AutomatOrder& msg )
 {
-    pOrderManager_->OnReceiveMission( msg );
+    return pOrderManager_->OnReceiveMission( msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveFragOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveFragOrder( const sword::FragOrder& msg )
+uint32_t MIL_Automate::OnReceiveFragOrder( const sword::FragOrder& msg )
 {
-    pOrderManager_->OnReceiveFragOrder( msg );
+    return pOrderManager_->OnReceiveFragOrder( msg );
 }
 
 // -----------------------------------------------------------------------------
