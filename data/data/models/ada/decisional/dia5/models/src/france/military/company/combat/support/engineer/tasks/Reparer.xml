@@ -84,6 +84,11 @@
                             <boolean>true</boolean>
                         </value>
                     </parameter>
+                    <parameter name="disableWhenDone">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
                 </skill>
             </skills>
         </stage>
