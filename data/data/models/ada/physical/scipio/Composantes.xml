@@ -19378,8 +19378,8 @@
       </consumption>
     </consumptions>
     <weapon-systems>
-      <weapon-system launcher="Main" munition="IED"/>
       <weapon-system launcher="Fusil Precision FRF2" munition="CART CAL 308 168 GRS"/>
+      <weapon-system launcher="Main" munition="IED"/>
     </weapon-systems>
     <human-protections/>
     <objects/>
@@ -35898,4 +35898,4 @@
     <operational-information native-country="USA"/>
   </equipment>
 </equipments>
-<!-- signature="3410978012" -->
+<!-- signature="3024211475" -->
