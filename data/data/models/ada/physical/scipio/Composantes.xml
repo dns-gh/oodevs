@@ -34285,6 +34285,7 @@
     <objects>
       <object type="mrls deployment area"/>
       <object initial-construction-time="1200s" initial-destruction-time="1000s" type="cobra deployment area"/>
+      <object initial-construction-time="1200s" initial-destruction-time="1000s" type="gun artillery deployment area"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
@@ -35897,4 +35898,4 @@
     <operational-information native-country="USA"/>
   </equipment>
 </equipments>
-<!-- signature="3781198449" -->
+<!-- signature="3410978012" -->
