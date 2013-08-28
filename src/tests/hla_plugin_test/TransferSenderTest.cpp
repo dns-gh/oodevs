@@ -417,7 +417,7 @@ BOOST_FIXTURE_TEST_CASE( netn_pull_negative, NetnTransferFixture )
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
     MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( MakeNetnUid ("uniqueId" ).data() );
     CheckTransfer( NETN_UUID( MakeUniqueId( "uniqueId" ) ), TransferSender_ABC::E_EntityPull, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes, tag );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes, tag, static_cast< uint32_t >( interactions::TMR::TotalTransfer ) );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( false );
@@ -433,7 +433,7 @@ BOOST_FIXTURE_TEST_CASE( netn_pull_positive, NetnTransferFixture )
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
     MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( MakeNetnUid( "uniqueId" ).data() );
     CheckTransfer( MakeNetnUid( "uniqueId" ), TransferSender_ABC::E_EntityPull, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes, tag );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes, tag, static_cast< uint32_t >( interactions::TMR::TotalTransfer ) );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( true );
@@ -449,7 +449,7 @@ BOOST_FIXTURE_TEST_CASE( netn_push_negative, NetnTransferFixture )
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
     MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( MakeNetnUid( "uniqueId" ).data() );
     CheckTransfer( MakeNetnUid( "uniqueId" ), TransferSender_ABC::E_EntityPush, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes, tag );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes, tag, static_cast< uint32_t >( interactions::TMR::TotalTransfer ) );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( false );
@@ -465,7 +465,7 @@ BOOST_FIXTURE_TEST_CASE( netn_push_positive, NetnTransferFixture )
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
     MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( MakeNetnUid( "uniqueId" ).data() );
     CheckTransfer( MakeNetnUid( "uniqueId" ), TransferSender_ABC::E_EntityPush, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes, tag );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes, tag, static_cast< uint32_t >( interactions::TMR::TotalTransfer ) );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( true );

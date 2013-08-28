@@ -268,7 +268,7 @@ void ExternalOwnershipPolicy::Receive( interactions::TMR_InitiateTransferModelli
                 T_PendingRequestPtr request( new PendingRequest( *this, ownershipController_, candidates, attributes, transferType, interaction, tag ) );
                 requests_[ interaction.transactionID.transactionCounter ] = request;
                 transferSender_.RequestTransfer( candidates, boost::bind( &ExternalOwnershipPolicy::PendingRequest::Callback, request.get(), _1 ),
-                        transferType, attributes, tag );
+                        transferType, attributes, tag, interaction.capabilityType );
             }
             break;
         case interactions::TMR::AcquireWithoutNegotiating:

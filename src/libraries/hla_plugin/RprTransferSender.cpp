@@ -69,7 +69,7 @@ RprTransferSender::~RprTransferSender()
 // Name: RprTransferSender::RequestTransfer
 // Created: AHC 2012-02-23
 // -----------------------------------------------------------------------------
-void RprTransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/, ::hla::VariableLengthData& tag )
+void RprTransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/, ::hla::VariableLengthData& tag, uint32_t )
 {
     unsigned int reqId = ctxtFactory_.Create();
     interactions::TransferControl transfer;
@@ -135,7 +135,7 @@ void RprTransferSender::Receive( interactions::Acknowledge& interaction )
 // Name: RprTransferSender::RequestTransfer
 // Created: AHC 2013-07-03
 // -----------------------------------------------------------------------------
-void RprTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& , TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& tag )
+void RprTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& , TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& tag, uint32_t )
 {
     tag=::hla::VariableLengthData( ctxtFactory_.Create() );
     logger_.LogWarning("Attempting to perform multiple ownership transfers using RPR.");

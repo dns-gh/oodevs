@@ -104,7 +104,7 @@ namespace
 // Name: Netn2TransferSender::RequestTransfer
 // Created: AHC 2012-10-25
 // -----------------------------------------------------------------------------
-void Netn2TransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes, ::hla::VariableLengthData& tag)
+void Netn2TransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes, ::hla::VariableLengthData& tag, uint32_t capability )
 {
     interactions::TMR_RequestTransferModellingResponsibility transfer;
     transfer.requestFederate = UnicodeString( federateName_ );
@@ -121,7 +121,7 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
         const ::hla::AttributeIdentifier& attr = *it;
         transfer.attributes.list.push_back( UnicodeString( attr.ToString() ) );
     }
-    transfer.capabilityType = static_cast< uint32_t >( interactions::TMR::TotalTransfer );
+    transfer.capabilityType = capability;
     transfer.transferType = type == E_EntityPush ? static_cast< uint32_t >( interactions::TMR::Divest )
                                                  : static_cast< uint32_t >( interactions::TMR::Acquire );
     pRequestSender_->Send( transfer );
@@ -216,7 +216,7 @@ void Netn2TransferSender::Receive( interactions::TMR_OfferTransferModellingRespo
 // Name: Netn2TransferSender::RequestTransfer
 // Created: AHC 2013-07-03
 // -----------------------------------------------------------------------------
-void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& agentIDs, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes, ::hla::VariableLengthData& tag )
+void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& agentIDs, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes, ::hla::VariableLengthData& tag, uint32_t capability )
 {
     interactions::TMR_RequestTransferModellingResponsibility transfer;
     transfer.requestFederate = UnicodeString( federateName_ );
@@ -237,7 +237,7 @@ void Netn2TransferSender::RequestTransfer( const std::vector< std::string >& age
         const ::hla::AttributeIdentifier& attr = *it;
         transfer.attributes.list.push_back( UnicodeString( attr.ToString() ) );
     }
-    transfer.capabilityType = static_cast< uint32_t >( interactions::TMR::TotalTransfer );
+    transfer.capabilityType = capability;
     transfer.transferType = type == E_EntityPush ? static_cast< uint32_t >( interactions::TMR::Divest )
                                                  : static_cast< uint32_t >( interactions::TMR::Acquire );
     pRequestSender_->Send( transfer );

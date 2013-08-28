@@ -53,7 +53,7 @@ NullTransferSender::~NullTransferSender()
 // Name: NullTransferSender::RequestTransfer
 // Created: AHC 2012-03-22
 // -----------------------------------------------------------------------------
-void NullTransferSender::RequestTransfer(const std::string& /*agentID*/, const TransferRequestCallback& callback, TransferType /*type*/, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/, ::hla::VariableLengthData& tag )
+void NullTransferSender::RequestTransfer(const std::string& /*agentID*/, const TransferRequestCallback& callback, TransferType /*type*/, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/, ::hla::VariableLengthData& tag, uint32_t )
 {
     tag=::hla::VariableLengthData( ctxtFactory_.Create() );
     callback( true );
@@ -105,7 +105,7 @@ void NullTransferSender::Receive( interactions::Acknowledge& /*interaction*/ )
 // Name: NullTransferSender::RequestTransfer
 // Created: AHC 2013-07-03
 // -----------------------------------------------------------------------------
-void NullTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& callback, TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& tag )
+void NullTransferSender::RequestTransfer( const std::vector< std::string >& , const TransferRequestCallback& callback, TransferType , const std::vector< ::hla::AttributeIdentifier >&, ::hla::VariableLengthData& tag, uint32_t )
 {
     tag=::hla::VariableLengthData( ctxtFactory_.Create() );
     callback( true );

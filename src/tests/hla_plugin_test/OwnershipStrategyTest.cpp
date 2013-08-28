@@ -159,7 +159,7 @@ BOOST_FIXTURE_TEST_CASE( location_ownership_stategy_move_transfer_negative_ack, 
 {
     Callback callback;
     MOCK_EXPECT( hlaClass.GetAttributes ).once().returns( attributes );
-    MOCK_EXPECT( transferSender.RequestTransfer ).once().with( "identifier", mock::any, TransferSender_ABC::E_EntityPush, attributes, mock::any ).calls( boost::bind( &Callback::Capture, boost::ref(callback), _1, _2 ) );
+    MOCK_EXPECT( transferSender.RequestTransfer ).once().with( "identifier", mock::any, TransferSender_ABC::E_EntityPush, attributes, mock::any, mock::any ).calls( boost::bind( &Callback::Capture, boost::ref(callback), _1, _2 ) );
     objectListener->Moved( "identifier", 42, 43 );
     callback( false );
 }
