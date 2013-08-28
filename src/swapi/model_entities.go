@@ -715,10 +715,6 @@ func (model *ModelData) addLocalWeather(weather *LocalWeather) {
 	model.LocalWeathers[weather.Id] = weather
 }
 
-func (model *ModelData) FindLocalWeather(id uint32) *LocalWeather {
-	return model.LocalWeathers[id]
-}
-
 func (model *ModelData) removeLocalWeather(id uint32) bool {
 	if _, ok := model.LocalWeathers[id]; ok {
 		delete(model.LocalWeathers, id)
