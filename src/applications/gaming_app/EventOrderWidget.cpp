@@ -367,7 +367,7 @@ void EventOrderWidget::FillMission()
     }
     connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
     missionChoosed_ = false;
-    BuildMissionInterface( previousType_ != entityType_ || currentType_ == eMissionType_FragOrder );
+    BuildMissionInterface( previousType_ != currentType_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -479,6 +479,7 @@ void EventOrderWidget::OnMissionTypeChanged( int value )
         return;
 
     missionChoosed_ = false;
+    previousType_ = currentType_;
     if( entityType_ == eNbrMissionTypes )
         entityType_ = eMissionType_Pawn;
     if( missionTypeCombo_->count() == 4 )
@@ -649,7 +650,6 @@ void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
 void EventOrderWidget::ActivateMissionPanel()
 {
     assert( selectedEntity_ );
-    previousType_ = entityType_;
     entityType_ = selectedEntity_->GetTypeName() == kernel::Population_ABC::typeName_? eMissionType_Population : selectedEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ ? eMissionType_Automat : eMissionType_Pawn ;
 
     const kernel::Entity_ABC& entity = *selectedEntity_;
@@ -663,7 +663,7 @@ void EventOrderWidget::ActivateMissionPanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::ActivateMissionPanel
+// Name: EventOrderWidget::NotifyUpdated
 // Created: LGY 2013-08-22
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
