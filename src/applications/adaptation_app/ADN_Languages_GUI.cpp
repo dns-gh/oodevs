@@ -109,7 +109,7 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
             ChangeLanguage( it->GetShortName() );
             return;
         }
-    ChangeLanguage( kernel::Language::default_ );
+    ChangeLanguage( kernel::Language::Default() );
 }
 
 // -----------------------------------------------------------------------------

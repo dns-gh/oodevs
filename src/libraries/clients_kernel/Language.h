@@ -46,6 +46,7 @@ public:
     //! @name Static methods
     //@{
     static const std::string& Current();
+    static const std::string& Default();
     static void SetCurrent( const std::string& language );
     static bool IsDefault( const std::string& language );
     static bool IsCurrentDefault();
@@ -60,9 +61,7 @@ private:
 
     //! @name Static member data
     //@{
-public:
     static const std::string default_;
-private:
     static std::string current_;
     //@}
 };
