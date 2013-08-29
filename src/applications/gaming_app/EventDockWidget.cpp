@@ -65,6 +65,8 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
 
     // Content
     EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools, simulation_ );
+    connect( bottomWidget_, SIGNAL( PlanningModeToggled( bool ) ), orderWidget, SLOT( OnPlanningModeToggled( bool ) ) );
+
     EventSupervisorActionWidget* supervisorWidget = new EventSupervisorActionWidget();
     EventReportWidget* reportWidget = new EventReportWidget();
     EventTaskWidget* taskWidget = new EventTaskWidget();

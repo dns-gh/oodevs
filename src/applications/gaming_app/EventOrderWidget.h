@@ -134,6 +134,12 @@ signals:
     void SelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
     //@}
 
+public slots:
+    //! @name Slots
+    //@{
+    void OnPlanningModeToggled( bool );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -174,6 +180,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > target_;
 
     const kernel::OrderType* lastGivenOrder_;
+    bool planningMode_;
     //@}
 };
 
