@@ -64,6 +64,7 @@ end,
             if( self.arrived ) then
                 self.arrived = false
                 integration.deplacementVersDestinataireEffectue()
+                self.itineraryToSupplyRecipient = nil
             end
          else
             Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivreConvoi } )
