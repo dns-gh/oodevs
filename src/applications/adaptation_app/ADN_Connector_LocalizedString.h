@@ -12,6 +12,7 @@
 
 #include "ADN_Connector_String.h"
 #include "ADN_Type_LocalizedString.h"
+#include "clients_kernel/Language.h"
 
 // =============================================================================
 /** @class  ADN_Connector_LocalizedString
@@ -36,8 +37,14 @@ private:
     virtual void SetDataPrivate(void *data);
     virtual void ConnectPrivateSub( ADN_Connector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_ABC* pTarget );
+    virtual bool ShouldEnableGfx() const;
     //@}
 
+private:
+    //! @name Member data
+    //@{
+    ADN_Type_LocalizedString* pTarget_;
+    //@}
 };
 
 #include "ADN_Connector_LocalizedString.inl"

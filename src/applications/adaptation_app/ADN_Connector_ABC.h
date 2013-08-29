@@ -65,6 +65,8 @@ protected:
 
     virtual void ConnectPrivateSub( ADN_Connector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_ABC* pTarget );
+
+    virtual bool ShouldEnableGfx() const;
     //@}
 
     virtual void SetDataPrivate( void* pData ) = 0;

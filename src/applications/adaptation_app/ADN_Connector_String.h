@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-08 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Connector_String.h $
-// $Author: Ape $
-// $Modtime: 16/12/04 10:15 $
-// $Revision: 2 $
-// $Workfile: ADN_Connector_String.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2013 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __ADN_Connector_String_h_
 #define __ADN_Connector_String_h_
@@ -17,28 +15,25 @@
 //*****************************************************************************
 // Created: JDY 03-07-08
 //*****************************************************************************
-template <class T>
-class ADN_Connector_String
-: public ADN_Connector_ABC
+template< class T >
+class ADN_Connector_String : public ADN_Connector_ABC
 {
 public:
-    explicit ADN_Connector_String(T* gfx);
+    explicit ADN_Connector_String( T* gfx );
     virtual ~ADN_Connector_String();
 
-    void  SetDataChanged(const QString& string);
+    void SetDataChanged( const QString& string );
     bool IsConnected() const;
 
 protected:
-    void  SetDataPrivate(void *data);
+    void SetDataPrivate( void *data );
     virtual void ConnectPrivateSub( ADN_Connector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_ABC* pTarget );
-
-private:
-    void  connectNotify(const char *signal);
-    void  disconnectNotify(const char *signal);
+    virtual void connectNotify( const char *signal );
+    virtual void disconnectNotify( const char *signal );
 
 protected:
-    T*  pGfx_;
+    T* pGfx_;
     bool bIsConnected_;
 };
 

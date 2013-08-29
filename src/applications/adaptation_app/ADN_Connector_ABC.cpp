@@ -162,3 +162,12 @@ void ADN_Connector_ABC::SetData( void* pData )
         BlockSlots( false );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Connector_ABC::ShouldEnableGfx
+// Created: ABR 2013-08-29
+// -----------------------------------------------------------------------------
+bool ADN_Connector_ABC::ShouldEnableGfx() const
+{
+    return true;
+}

@@ -74,7 +74,7 @@ template <class T>
 void  ADN_Connector_Int<T>::connectNotify(const char *signal)
 {
     if (pGfx_->IsAutoEnabled() && signal != 0 && !strcmp(signal,SIGNAL(DataChanged(void*))))
-        pGfx_->setEnabled(true);
+        pGfx_->setEnabled( ShouldEnableGfx() );
     bIsConnected_ = true;
 }
 
