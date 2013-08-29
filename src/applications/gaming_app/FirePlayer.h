@@ -58,6 +58,7 @@ public:
     void PlayPauseSoundControl( bool play );
     virtual void SetVolume( const std::string& channel, double value );
     virtual void ChangeSoundsDirectory( const tools::Path& path );
+    virtual void SetSoundState( bool enabled );
     //@}
 
 private:

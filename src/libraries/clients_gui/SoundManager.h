@@ -46,6 +46,7 @@ public:
 
     //! @name Operations
     //@{
+    void SetSoundState( bool enabled );
     void ChangeSoundsDirectory( const tools::Path& path );
     bool IsPlaying( const std::string& channel );
     bool PlaySound( const std::string& soundName );
@@ -67,6 +68,7 @@ private:
     tools::Path defaultSoundsPath_;
     tools::Path currentSoundsPath_;
     const std::vector< std::string > sounds_;
+    bool enabled_;
     //@}
 };
 

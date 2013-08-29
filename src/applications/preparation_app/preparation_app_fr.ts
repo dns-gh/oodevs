@@ -1126,10 +1126,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>&amp;Préférences...</translation>
     </message>
     <message>
-        <source>&amp;Display</source>
-        <translation>&amp;Affichage</translation>
-    </message>
-    <message>
         <source>View/Edit...</source>
         <translation>Voir/Editer...</translation>
     </message>
@@ -1232,6 +1228,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>&amp;Export...</source>
         <translation>&amp;Exporter...</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>&amp;Réglages</translation>
     </message>
 </context>
 <context>

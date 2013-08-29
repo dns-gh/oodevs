@@ -17,6 +17,7 @@
 #include "RichSlider.h"
 #include "SoundManager.h"
 #include "Tools.h"
+#include "CheckBox.h"
 #include "tools/GeneralConfig.h"
 
 #include "clients_kernel/Controllers.h"
@@ -33,7 +34,7 @@ namespace
     {
         QLabel* label = new QLabel( labelName );
 
-        gui::RichSlider* slider = new RichSlider( name );
+        RichSlider* slider = new RichSlider( name );
         slider->setRange( 0, 100 );
         slider->setOrientation( Qt::Horizontal );
         slider->setMaximumWidth( 200 );
@@ -65,15 +66,14 @@ SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers, Sound
     , controllers_( controllers )
     , soundPlayer_( soundPlayer )
 {
-    QLabel* coordinateLabel = new QLabel( tools::translate( "SoundPanel", "Ajust all sound volumes:" ) );
     RichGroupBox* box = new RichGroupBox( "soundControl", tools::translate( "SoundPanel", "Sound control" ), this );
 
     QLabel* soundDirectoryLabel = new QLabel( tools::translate( "SoundPanel", "Sound directory :" ) );
     tools::Path soundPath;
     soundPath = soundPath.Absolute( tools::GeneralConfig::BuildResourceChildFile( "sounds" ) );
     soundDirectory_ = controllers_.options_.GetOption( "soundDirectory", QString( soundPath.Normalize().ToUTF8().c_str() ) ).To< QString >().toStdString().c_str();
-    soundDirectoryEditor_ = new gui::RichLineEdit( "soundDirectoryEditor", soundPath.Normalize().ToUTF8().c_str() );
-    QPushButton* soundDirectoryButton = new gui::RichPushButton( "soundDirectoryButton", tools::translate( "SoundPanel", "..." ) );
+    soundDirectoryEditor_ = new RichLineEdit( "soundDirectoryEditor", soundPath.Normalize().ToUTF8().c_str() );
+    QPushButton* soundDirectoryButton = new RichPushButton( "soundDirectoryButton", "..." );
     connect( soundDirectoryButton, SIGNAL( clicked( bool ) ), this, SLOT( OnChooseSoundsDirectory() ) );
 
     QWidget* soundBrowseWidget = new QWidget();
@@ -85,15 +85,22 @@ SoundPanel::SoundPanel( QWidget* parent, kernel::Controllers& controllers, Sound
     for( auto it = ::soundList.begin(); it != ::soundList.end(); ++it )
         soundValues_[ *it ] = controllers_.options_.GetOption( *it + "volume", 50 ).To< int >();
 
+    activated_ = new CheckBox( "MuteSounds", tools::translate( "SoundPanel", "Mute sounds" ) );
+    connect( activated_, SIGNAL( toggled( bool ) ), SLOT( OnStateChanged( bool ) ) );
+
+    RichGroupBox* coordinateBox = new RichGroupBox( "soundControl", tools::translate( "SoundPanel", "Ajust all sound volumes" ), box );
+    QVBoxLayout* subBoxLayout = new QVBoxLayout( coordinateBox );
+    subBoxLayout->addWidget( CreateSlider( "directfire", tools::translate( "SoundPanel", "Direct fires" ), this, soundValues_[ "directfire" ] ) );
+    subBoxLayout->addWidget( CreateSlider( "indirectsmoke", tools::translate( "SoundPanel", "Fumigen fires" ), this, soundValues_[ "indirectsmoke" ] ) );
+    subBoxLayout->addWidget( CreateSlider( "indirectexplosive", tools::translate( "SoundPanel", "Explosive fires" ), this, soundValues_[ "indirectexplosive" ] ) );
+    subBoxLayout->addWidget( CreateSlider( "indirectillumination", tools::translate( "SoundPanel", "Illumination fires" ), this, soundValues_[ "indirectillumination" ] ) );
+    subBoxLayout->addWidget( CreateSlider( "indirecteffect", tools::translate( "SoundPanel", "Neutralisation fires" ), this, soundValues_[ "indirecteffect" ] ) );
+    subBoxLayout->addWidget( soundBrowseWidget );
+    subBoxLayout->addStretch( 1 );
+
     QVBoxLayout* boxLayout = new QVBoxLayout( box );
-    boxLayout->addWidget( coordinateLabel );
-    boxLayout->addWidget( CreateSlider( "directfire", tools::translate( "SoundPanel", "Direct fires" ), this, soundValues_[ "directfire" ] ) );
-    boxLayout->addWidget( CreateSlider( "indirectsmoke", tools::translate( "SoundPanel", "Fumigen fires" ), this, soundValues_[ "indirectsmoke" ] ) );
-    boxLayout->addWidget( CreateSlider( "indirectexplosive", tools::translate( "SoundPanel", "Explosive fires" ), this, soundValues_[ "indirectexplosive" ] ) );
-    boxLayout->addWidget( CreateSlider( "indirectillumination", tools::translate( "SoundPanel", "Illumination fires" ), this, soundValues_[ "indirectillumination" ] ) );
-    boxLayout->addWidget( CreateSlider( "indirecteffect", tools::translate( "SoundPanel", "Neutralisation fires" ), this, soundValues_[ "indirecteffect" ] ) );
-    boxLayout->addWidget( soundBrowseWidget );
-    boxLayout->addStretch( 1 );
+    boxLayout->addWidget( activated_ );
+    boxLayout->addWidget( coordinateBox );
     connect( this, SIGNAL( soundSliderUpdated( std::string, int ) ), this, SLOT( OnChangeVolume( std::string, int ) ) );
     setWidget( box );
     controllers_.Register( *this );
@@ -123,7 +130,9 @@ void SoundPanel::Reset()
     }
     controllers_.options_.Change( "soundDirectory", QString( soundDirectory_.Normalize().ToUTF8().c_str() ) );
     soundDirectoryEditor_->setText( soundDirectory_.Normalize().ToUTF8().c_str() );
+    activated_->Revert();
 }
+
 // -----------------------------------------------------------------------------
 // Name: SoundPanel::Commit
 // Created: NPT 2013-07-12
@@ -136,6 +145,7 @@ void SoundPanel::Commit()
         OnChangeVolume( *it, soundSliders_[ *it ]->value() );
     }
     controllers_.options_.Change( "soundDirectory", soundDirectoryEditor_->text() );
+    activated_->Commit();
 }
 
 // -----------------------------------------------------------------------------
@@ -149,6 +159,8 @@ void SoundPanel::OptionChanged( const std::string& name, const kernel::OptionVar
         soundDirectory_ = value.To< QString >().toStdString().c_str();
         soundDirectoryEditor_->setText( soundDirectory_.Normalize().ToUTF8().c_str() );
     }
+    else if( name == "soundActivated" )
+        activated_->setChecked( value.To< bool >() );
     else
     {
         QString soundName = name.c_str();
@@ -193,7 +205,7 @@ void SoundPanel::OnChangeVolume( const std::string& name, int value )
 // -----------------------------------------------------------------------------
 void SoundPanel::OnChooseSoundsDirectory()
 {
-    tools::Path newDirectory = gui::FileDialog::getExistingDirectory( this, tr( "Select sounds directory" ), tools::Path::FromUnicode( soundDirectoryEditor_->text().toStdWString() ) );
+    tools::Path newDirectory = FileDialog::getExistingDirectory( this, tr( "Select sounds directory" ), tools::Path::FromUnicode( soundDirectoryEditor_->text().toStdWString() ) );
     if( !newDirectory.IsEmpty() )
     {
         soundDirectoryEditor_->setText( QString::fromStdWString( newDirectory.ToUnicode() ) );
@@ -208,4 +220,14 @@ void SoundPanel::OnChooseSoundsDirectory()
 std::map< std::string, RichSlider*>& SoundPanel::GetSoundSliders()
 {
     return soundSliders_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SoundPanel::OnStateChanged
+// Created: LGY 2013-08-27
+// -----------------------------------------------------------------------------
+void SoundPanel::OnStateChanged( bool state )
+{
+    soundPlayer_.SetSoundState( !state );
+    controllers_.options_.Change( "soundActivated", state );
 }

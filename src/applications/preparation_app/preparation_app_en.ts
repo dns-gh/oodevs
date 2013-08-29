@@ -1089,10 +1089,6 @@ This data can&apos;t be projected.</translation>
         <translation>Creation wizard...</translation>
     </message>
     <message>
-        <source>&amp;Display</source>
-        <translation>&amp;Display</translation>
-    </message>
-    <message>
         <source>Links</source>
         <translation>Links</translation>
     </message>
@@ -1235,6 +1231,10 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>About</source>
         <translation>About</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2159,10 +2159,6 @@ This data can&apos;t be projected.</source>
         <translation>&amp;Preferences...</translation>
     </message>
     <message>
-        <source>&amp;Display</source>
-        <translation>&amp;Display</translation>
-    </message>
-    <message>
         <source>Profiles...</source>
         <translation>Profiles...</translation>
     </message>
@@ -2192,6 +2188,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Unit detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -296,6 +296,18 @@
 <context>
     <name>SoundPanel</name>
     <message>
+        <source>Sound control</source>
+        <translation>Contrôle du son</translation>
+    </message>
+    <message>
+        <source>Sound directory :</source>
+        <translation>Répertoire du son :</translation>
+    </message>
+    <message>
+        <source>Ajust all sound volumes</source>
+        <translation>Ajuster tous les sons</translation>
+    </message>
+    <message>
         <source>Direct fires</source>
         <translation>Tirs directs</translation>
     </message>
@@ -316,20 +328,8 @@
         <translation>Tirs de neutralisation</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <source>Ajust all sound volumes:</source>
-        <translation type="unfinished">Ajuster tous les sons :</translation>
-    </message>
-    <message>
-        <source>Sound control</source>
-        <translation type="unfinished">Contrôle du son</translation>
-    </message>
-    <message>
-        <source>Sound directory :</source>
-        <translation>Répertoire du son :</translation>
+        <source>Mute sounds</source>
+        <translation>Déactiver les sons</translation>
     </message>
 </context>
 <context>

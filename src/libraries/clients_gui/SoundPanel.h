@@ -23,6 +23,7 @@ namespace gui
 {
     class RichSlider;
     class RichLineEdit;
+    class CheckBox;
 
 class SoundPlayer
 {
@@ -30,6 +31,7 @@ public:
     virtual ~SoundPlayer() {}
     virtual void SetVolume( const std::string& channel, double value ) = 0;
     virtual void ChangeSoundsDirectory( const tools::Path& path ) = 0;
+    virtual void SetSoundState( bool enabled ) = 0;
 };
 
 // =============================================================================
@@ -71,11 +73,14 @@ public slots:
     void OnSliderChanged( int value );
     void OnChangeVolume( const std::string& name, int value );
     void OnChooseSoundsDirectory();
+    void OnStateChanged( bool );
+
 private:
     //! @name Member data
     //@{
     std::map< std::string, RichSlider*> soundSliders_;
-    gui::RichLineEdit*  soundDirectoryEditor_;
+    RichLineEdit* soundDirectoryEditor_;
+    CheckBox* activated_;
     std::map< std::string, int > soundValues_;
     tools::Path soundDirectory_;
     kernel::Controllers& controllers_;
