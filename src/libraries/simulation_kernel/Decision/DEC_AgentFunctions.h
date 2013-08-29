@@ -139,7 +139,6 @@ public:
     // Etats du pion
     static bool IsFlying( const MIL_Agent_ABC& callerAgent );
     static void SetFlyingHeight( MIL_Agent_ABC& callerAgent, double height );
-    static void SetElongationFactor( MIL_Agent_ABC& callerAgent, double factor );
     static float TimeLeftForMoving( const MIL_Agent_ABC& callerAgent );
     static float TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance );
     static void Suicide( MIL_Agent_ABC& callerAgent );

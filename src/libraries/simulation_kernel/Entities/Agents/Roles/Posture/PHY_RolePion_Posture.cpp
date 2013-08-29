@@ -21,7 +21,6 @@
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "MIL_Random_ABC.h"
@@ -42,7 +41,6 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )
     , rPostureCompletionPercentage_        ( 0. )
-    , rElongationFactor_                   ( 1. )
     , rTimingFactor_                       ( 1. )
     , rStealthFactor_                      ( 1. ) // 1. == Non furtif
     , rInstallationState_                  ( 0. )
@@ -84,7 +82,6 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
     file >> rPostureCompletionPercentage_
-         >> rElongationFactor_
          >> bDiscreteModeEnabled_
          >> rTimingFactor_
          >> rStealthFactor_
@@ -108,7 +105,6 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << current
          << last
          << rPostureCompletionPercentage_
-         << rElongationFactor_
          << bDiscreteModeEnabled_
          << rTimingFactor_
          << rStealthFactor_
@@ -406,26 +402,6 @@ void PHY_RolePion_Posture::SetPosture( const PHY_Posture& posture )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::SetElongationFactor
-// Created: JVT 2004-11-03
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SetElongationFactor( double rFactor )
-{
-    assert( rFactor > 0. );
-    if( rFactor > 0. )
-        rElongationFactor_ = rFactor;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::GetElongationFactor
-// Created: JVT 2004-11-03
-// -----------------------------------------------------------------------------
-double PHY_RolePion_Posture::GetElongationFactor() const
-{
-    return rElongationFactor_;//@TODO REMOVE
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::IsStealth
 // Created: AGE 2004-12-08
 // -----------------------------------------------------------------------------
@@ -479,16 +455,6 @@ void PHY_RolePion_Posture::Execute( detection::DetectionComputer_ABC& algorithm 
 {
     if( bIsStealth_ && algorithm.GetTarget() == owner_ )
         algorithm.NotifyStealth();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::Execute
-// Created: MGD 2009-10-06
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const
-{
-    //algorithm.AddModifier( rElongationFactor_ );
-    algorithm.AddElongationFactor( rElongationFactor_ );
 }
 
 // -----------------------------------------------------------------------------

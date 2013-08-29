@@ -147,8 +147,7 @@ double PHY_WeaponDataType_DirectFire::GetMinDistanceForPH( double rPH, const PHY
 // -----------------------------------------------------------------------------
 double PHY_WeaponDataType_DirectFire::GetMaxDistanceForPH( double rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const
 {
-    assert( firerPosture.GetElongationFactor() > 0. );
-    return weaponType_.GetPHModificator( firerPosture, targetPosture ) * phs_[ targetVolume.GetID() ].GetMaxYForX( rPH ) * firerPosture.GetElongationFactor();
+    return weaponType_.GetPHModificator( firerPosture, targetPosture ) * phs_[ targetVolume.GetID() ].GetMaxYForX( rPH );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,8 +156,7 @@ double PHY_WeaponDataType_DirectFire::GetMaxDistanceForPH( double rPH, const PHY
 // -----------------------------------------------------------------------------
 double PHY_WeaponDataType_DirectFire::GetMinDistanceForPH( double rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const
 {
-    assert( firerPosture.GetElongationFactor() > 0. );
-    return weaponType_.GetPHModificator( firerPosture, targetPosture ) * phs_[ targetVolume.GetID() ].GetMinYForX( rPH ) * firerPosture.GetElongationFactor();
+    return weaponType_.GetPHModificator( firerPosture, targetPosture ) * phs_[ targetVolume.GetID() ].GetMinYForX( rPH );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,9 +170,6 @@ double PHY_WeaponDataType_DirectFire::GetPH( const MIL_Agent_ABC& firer, const M
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
     double rDistance = firer.Distance( target );
     assert( phs_.size() > targetVolume.GetID() );
-
-    assert( firerPosture.GetElongationFactor() > 0. );
-    rDistance /= firerPosture.GetElongationFactor();
 
     const double rPHModificator = weaponType_.GetPHModificator( firerPosture, targetPosture );
     if( rPHModificator <= 0. )

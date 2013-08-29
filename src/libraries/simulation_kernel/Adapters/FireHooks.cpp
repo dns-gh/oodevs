@@ -183,7 +183,7 @@ namespace
         }
         const PHY_RoleInterface_Posture& firerPosture  = GET_CHILD_DATA( firer, "posture", PHY_RoleInterface_Posture );
         const PHY_RoleInterface_Posture& targetPosture = GET_CHILD_DATA( target, "posture", PHY_RoleInterface_Posture );
-        return type->GetPHModificator( firerPosture, targetPosture ) * firerPosture.GetElongationFactor();
+        return type->GetPHModificator( firerPosture, targetPosture );
     }
     DEFINE_HOOK( GetPhModificator2, 1, double, ( const char* launcher ) )
     {

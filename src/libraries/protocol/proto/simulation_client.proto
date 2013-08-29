@@ -1797,7 +1797,9 @@ message UnitVisionCones {
     required UnitId          unit       = 1;
     //! The vision cones
     required SeqOfVisionCone cones      = 2;
-    //! The elongation
+    //! DEPRECATED in 5.3
+    //! There is no replacement, the concept was experimental and never
+    //! fully supported.
     required float           elongation = 3;
 }
 

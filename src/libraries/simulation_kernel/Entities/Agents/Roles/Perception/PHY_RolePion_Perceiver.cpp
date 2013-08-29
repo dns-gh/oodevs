@@ -1264,7 +1264,8 @@ void PHY_RolePion_Perceiver::SendVisionCones() const
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
-    message().set_elongation( static_cast< float >( owner_->Execute( *algorithm ).GetElongationFactor() ) ); //@TODO MGD share
+    // Elongation factor is deprecated, its value was 1.0 for relevant cases
+    message().set_elongation( 1.0 );
     message().mutable_cones();
     for( auto it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
         it->second.SendFullState( *message().mutable_cones()->add_elem() );

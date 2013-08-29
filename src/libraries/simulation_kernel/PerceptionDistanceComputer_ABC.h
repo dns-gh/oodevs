@@ -35,8 +35,6 @@ public:
     //! @name Operations
     //@{
     virtual void AddModifier( double modifier ) = 0;
-    virtual void AddElongationFactor( double modifier ) = 0;
-    virtual double GetElongationFactor() const = 0;
     virtual double GetFactor() const = 0;
     //@}
 };
