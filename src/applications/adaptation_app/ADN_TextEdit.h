@@ -29,6 +29,7 @@ protected:
 
 #include "ADN_TextEdit.inl"
 
-typedef ADN_TextEdit< ADN_Connector_String< ADN_TextEdit_ABC > >    ADN_TextEdit_String;
+typedef ADN_TextEdit< ADN_Connector_String< ADN_TextEdit_ABC > >          ADN_TextEdit_String;
+typedef ADN_TextEdit< ADN_Connector_LocalizedString< ADN_TextEdit_ABC > > ADN_TextEdit_LocalizedString;
 
 #endif // __ADN_TextEdit_h_

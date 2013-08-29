@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_Data.h"
+#include "moc_ADN_Missions_Data.cpp"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
@@ -16,60 +17,23 @@
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
+#include "ADN_Languages_Data.h"
+#include "clients_kernel/Context.h"
+#include "clients_kernel/Language.h"
 #include "clients_kernel/XmlTranslations.h"
 #include "ENT/ENT_Tr.h"
 #include "tools/Loader_ABC.h"
 #include <xeuseuleu/xsl.hpp>
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
 
 tools::IdManager ADN_Missions_Data::idManager_;
 tools::Path ADN_Missions_Data::imagePath_ = "Images";
-tools::Path ADN_Missions_Data::imageTemporaryPath_ = "_MissionSheets/ImagesTemp";
+tools::Path ADN_Missions_Data::temporaryPath_ = "tempMissionSheets";
 tools::Path ADN_Missions_Data::xslTemporaryFile_ = "_adnTempXslt.xsl";
-tools::Path ADN_Missions_Data::missionSheetTemporaryFile_ = "tempMissionSheet";
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data constructor
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::ADN_Missions_Data()
-    : ADN_Data_ABC( eMissions )
-{
-    // $$$$ ABR 2013-04-23: Must be in E_MissionType order
-    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "units", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "automats", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "populations", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "fragorders", T_Mission_Vector() ) );
-
-    for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
-        it->second.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data destructor
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::~ADN_Missions_Data()
-{
-    try
-    {
-        ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ ).Parent().RemoveAll();
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FilesNeeded
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::FilesNeeded( tools::Path::T_Paths& files ) const
-{
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissions_ );
-}
+tools::Path ADN_Missions_Data::cssFile_ = "missionSheets.css";
+tools::Path ADN_Missions_Data::obsoletePath_ = "obsolete";
 
 namespace
 {
@@ -93,6 +57,120 @@ namespace
             }
         }
     }
+    tools::Path CreateMissionDirectory( const std::string& language, const tools::Path& basePath )
+    {
+        return kernel::Language::IsDefault( language ) ? basePath : basePath / "locale" / tools::Path::FromUTF8( language );
+    }
+    void PurgePath( const tools::Path& path )
+    {
+        try
+        {
+            path.RemoveAll();
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data constructor
+// Created: APE 2005-03-14
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::ADN_Missions_Data()
+    : ADN_Data_ABC( eMissions )
+    , missionSheetContext_( boost::make_shared< kernel::Context >() )
+{
+    // $$$$ ABR 2013-04-23: Must be in E_MissionType order
+    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "units", T_Mission_Vector() ) );
+    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "automats", T_Mission_Vector() ) );
+    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "populations", T_Mission_Vector() ) );
+    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "fragorders", T_Mission_Vector() ) );
+
+    for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
+        it->second.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data destructor
+// Created: APE 2005-03-14
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::~ADN_Missions_Data()
+{
+    PurgePath( GetTemporaryPath() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetMissionSheetsPath
+// Created: ABR 2013-08-27
+// -----------------------------------------------------------------------------
+tools::Path ADN_Missions_Data::GetMissionSheetsPath( int index )
+{
+    return ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetMissionSheetsImagesPath
+// Created: ABR 2013-08-27
+// -----------------------------------------------------------------------------
+tools::Path ADN_Missions_Data::GetMissionSheetsImagesPath( int index )
+{
+    return GetMissionSheetsPath( index ) / imagePath_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetCssFile
+// Created: ABR 2013-08-28
+// -----------------------------------------------------------------------------
+tools::Path ADN_Missions_Data::GetCssFile()
+{
+    return GetMissionSheetsPath( 0 ) / ".." / cssFile_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetTemporaryPath
+// Created: ABR 2013-08-27
+// -----------------------------------------------------------------------------
+tools::Path ADN_Missions_Data::GetTemporaryPath()
+{
+    return tools::Path::TemporaryPath() / ADN_Missions_Data::temporaryPath_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetTemporaryPath
+// Created: ABR 2013-08-27
+// -----------------------------------------------------------------------------
+tools::Path ADN_Missions_Data::GetTemporaryPath( int index )
+{
+    return GetTemporaryPath() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetTemporaryImagesPath
+// Created: ABR 2013-08-27
+// -----------------------------------------------------------------------------
+tools::Path ADN_Missions_Data::GetTemporaryImagesPath( int index )
+{
+    return GetTemporaryPath( index ) / imagePath_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetTemporaryCssFile
+// Created: ABR 2013-08-28
+// -----------------------------------------------------------------------------
+tools::Path ADN_Missions_Data::GetTemporaryCssFile()
+{
+    return GetTemporaryPath( 0 ) / ".." / cssFile_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::FilesNeeded
+// Created: APE 2005-03-14
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::FilesNeeded( tools::Path::T_Paths& files ) const
+{
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,78 +184,68 @@ void ADN_Missions_Data::Initialize()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::NotifyElementDeleted
-// Created: NPT 2012-07-31
+// Name: ADN_Missions_Data::DeleteMissionSheet
+// Created: ABR 2013-08-28
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_MissionType missionType )
+void ADN_Missions_Data::DeleteMissionSheet( const tools::Path& filename )
 {
-    const tools::Path missionDirectoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( missionType );
-    tools::Path xmlFileName = missionDirectoryPath / tools::Path::FromUTF8( elementName ) + ".xml";
-    tools::Path htmlFileName = missionDirectoryPath / tools::Path::FromUTF8( elementName ) + ".html";
-    toDeleteMissionSheets_.push_back( xmlFileName );
-    toDeleteMissionSheets_.push_back( htmlFileName );
+    toDeleteMissionSheets_.push_back( filename + ".xml" );
+    toDeleteMissionSheets_.push_back( filename + ".html" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::OnElementDeleted
+// Created: ABR 2013-08-28
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::OnElementDeleted( boost::shared_ptr< kernel::LocalizedString > name, E_MissionType missionType )
+{
+    const tools::Path missionPath = GetMissionSheetsPath( missionType );
+    DeleteMissionSheet( CreateMissionDirectory( kernel::Language::default_, missionPath ) / tools::Path::FromUTF8( name->Key() ) );
+    const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
+    for( auto it = languages.begin(); it != languages.end(); ++it )
+    {
+        const std::string& value = name->Value( it->GetShortName() );
+        DeleteMissionSheet( CreateMissionDirectory( it->GetShortName(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::GenerateMissionSheet
 // Created: NPT 2013-01-30
 // -----------------------------------------------------------------------------
-tools::Path ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
+tools::Path ADN_Missions_Data::GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text )
 {
     assert( index >= 0 && index < 4 );
-    const tools::Path missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
-    tools::Path tempFileName = missionSheetTemporaryFile_;
-    ADN_Missions_ABC* mission = FindMission( index, text.toStdString() );
-    if( mission )
-    {
-        mission->WriteMissionSheet( missionDir, tempFileName, index );
-        mission->SetNeedsSaving( true );
-    }
-    return missionDir / tempFileName + ".html";
+    ADN_Missions_ABC* mission = FindMission( index, text->Key() );
+    if( !mission )
+        throw MASA_EXCEPTION( "Mission not found: " + text->Key() );
+    const tools::Path tempDir = CreateMissionDirectory( kernel::Language::Current(), GetTemporaryPath( index ) );
+    GetCssFile().Copy( GetTemporaryCssFile(), tools::Path::OverwriteIfExists );
+    tempDir.CreateDirectories();
+    mission->WriteMissionSheet( tempDir, kernel::Language::Current() );
+    mission->SetNeedsSaving( true );
+    return tempDir / tools::Path::FromUTF8( mission->strName_.GetData() ) + ".html";
 }
 
 namespace
 {
-    void CopyImageToTempDir( E_MissionType modelType )
+    void CopyImageToTempDir( E_MissionType type )
     {
-        //get mission dir
-        const tools::Path missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
-        const tools::Path tempDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( modelType ).c_str();
-        //copy images in temp directory for image temp save
-        if( ( missionPath / ADN_Missions_Data::imagePath_ ).Exists() )
-        {
-            if( tempDir.Exists() )
-            {
-                try
-                {
-                    tempDir.RemoveAll();
-                }
-                catch( ... )
-                {
-                    // NOTHING
-                }
-            }
-            ( missionPath / ADN_Missions_Data::imagePath_ ).Copy( tempDir, tools::Path::OverwriteIfExists );
-        }
+        const tools::Path imagePath = ADN_Missions_Data::GetMissionSheetsImagesPath( type );
+        const tools::Path tempImagePath = ADN_Missions_Data::GetTemporaryImagesPath( type );
+        if( imagePath.Exists() )
+            imagePath.Copy( tempImagePath, tools::Path::OverwriteIfExists );
         else
-            tempDir.CreateDirectories();
+            tempImagePath.CreateDirectories();
     }
 
     void CopyImageFromTempDir( E_MissionType type )
     {
-        const tools::Path missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
-        const tools::Path tempDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( type ).c_str();
-        //copy images from temp directory for image temp reset
-        if( tempDir.Exists() )
+        const tools::Path imagePath = ADN_Missions_Data::GetMissionSheetsImagesPath( type );
+        const tools::Path tempImagePath = ADN_Missions_Data::GetTemporaryImagesPath( type );
+        if( tempImagePath.Exists() )
         {
-            try
-            {
-                ( missionPath / ADN_Missions_Data::imagePath_ ).RemoveAll();
-            }
-            catch( ... )
-            {
-                // NOTHING
-            }
+            PurgePath( imagePath );
             bool copyDone = false;
             int attemptNumber = 0;
             while( !copyDone )
@@ -185,7 +253,7 @@ namespace
                 try
                 {
                     ++attemptNumber;
-                    tempDir.Copy( missionPath / ADN_Missions_Data::imagePath_, tools::Path::OverwriteIfExists );
+                    tempImagePath.Copy( imagePath, tools::Path::OverwriteIfExists );
                     copyDone = true;
                 }
                 catch( std::exception& )
@@ -204,20 +272,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 {
-    try
-    {
-        ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ ).Parent().RemoveAll();
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
-    for( int type = 0; type != eNbrMissionTypes; ++type )
-    {
-        const tools::Path missionDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( type ).c_str();
-        if( !missionDir.Exists() )
-            missionDir.CreateDirectories();
-    }
+    PurgePath( GetTemporaryPath() );
 
     input >> xml::start( "missions" );
     for( int type = 0; type < eNbrMissionTypes; ++type )
@@ -234,52 +289,52 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
         CopyImageToTempDir( static_cast< E_MissionType >( type ) );
 }
 
+namespace
+{
+    template< typename T >
+    void ReadFullMission( xml::xistream& xis, E_MissionType type, ADN_Missions_Data::T_Mission_Vector& missions )
+    {
+        const tools::Path missionPath = ADN_Missions_Data::GetMissionSheetsPath( type );
+        const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
+        std::auto_ptr< T > spNew( new T( type, xis.attribute< unsigned int >( "id" ) ) );
+        spNew->ReadArchive( xis );
+        spNew->ReadMissionSheet( missionPath, kernel::Language::default_ );
+        for( auto it = languages.begin(); it != languages.end(); ++it )
+            spNew->ReadMissionSheet( CreateMissionDirectory( it->GetShortName(), missionPath ), it->GetShortName() );
+        missions.AddItem( spNew.release() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadMission( xml::xistream& xis, E_MissionType type )
 {
-    const tools::Path& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
     if( type == eMissionType_FragOrder )
-    {
-        std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( type, xis.attribute< unsigned int >( "id" ) ) );
-        spNew->ReadArchive( xis, missionPath );
-        missionsVector_[ type ].second.AddItem( spNew.release() );
-    }
+        ReadFullMission< ADN_Missions_FragOrder >( xis, type, missionsVector_[ type ].second );
     else
-    {
-        std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( type, xis.attribute< unsigned int >( "id" ) ) );
-        ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-        spNew->ReadArchive( xis, drawings, missionPath );
-        missionsVector_[ type ].second.AddItem( spNew.release() );
-    }
+        ReadFullMission< ADN_Missions_Mission >( xis, type, missionsVector_[ type ].second );
 }
 
 namespace
 {
-    void WriteMissionSheets( E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions )
+    void WriteMissionSheets( E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions, const std::string& language )
     {
-        const tools::Path missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
+        const tools::Path missionDir = CreateMissionDirectory( language, ADN_Missions_Data::GetMissionSheetsPath( type ) );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->RenameDifferentNamedMissionSheet( missionDir );
+            missions[i]->RenameDifferentNamedMissionSheet( missionDir, language );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteMissionSheet( missionDir, tools::Path::FromUTF8( missions[i]->strName_.GetData() ), type );
+            missions[i]->WriteMissionSheet( missionDir, language );
     }
 
-    void WriteMissions( xml::xostream& output, const std::string& name, E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions )
+    void WriteMissions( xml::xostream& output, const std::string& name, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
-        //xml datas saving
         output << xml::start( name );
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->WriteArchive( output );
-
-        //save mission sheets
-        WriteMissionSheets( type, missions );
-
         output << xml::end;
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -293,22 +348,31 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
             throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Data", "Invalid data on tab '%1', subtab '%2'" )
                                   .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str() ).toStdString() );
 
+    // save xml
     output << xml::start( "missions" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Missions" );
-
     for( int type = 0; type < eNbrMissionTypes; ++type )
-        WriteMissions( output, missionsVector_[ type ].first, static_cast< E_MissionType >( type ), missionsVector_[ type ].second );
+        WriteMissions( output, missionsVector_[ type ].first, missionsVector_[ type ].second );
+    output << xml::end;
 
-    //move mission sheets to obsolete directory when mission is deleted
+    // save mission sheets
+    const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
+    for( int type = 0; type < eNbrMissionTypes; ++type )
+    {
+        WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, kernel::Language::default_ );
+        for( auto it = languages.begin(); it != languages.end(); ++it )
+            WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, it->GetShortName() );
+    }
+
+    // move mission sheets to obsolete directory when mission is deleted
     for( auto it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )
        MoveMissionSheetsToObsolete( *it );
+    toDeleteMissionSheets_.clear();
 
-    //save Images in temp directory
+    // save Images in temp directory
     for( int type = 0; type < eNbrMissionTypes; ++type )
         CopyImageFromTempDir( static_cast< E_MissionType >( type ) );
-
-    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -318,7 +382,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 void ADN_Missions_Data::MoveMissionSheetsToObsolete( const tools::Path& fileName ) const
 {
     if( fileName.Exists() )
-        fileName.Rename( fileName.Parent() / "obsolete" / fileName.FileName() );
+        fileName.Rename( fileName.Parent() / ADN_Missions_Data::obsoletePath_ / fileName.FileName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -404,7 +468,7 @@ namespace
     void CheckMissionTypeUniqueness( ADN_ConsistencyChecker& checker, const ADN_Missions_Data::T_Mission_Vector::const_iterator& rhs, const ADN_Missions_Data::T_Mission_Vector& missions, int subTab )
     {
         for( auto lhs = rhs + 1; lhs != missions.end(); ++lhs )
-            if( (*lhs)->strName_.GetData() != (*rhs)->strName_.GetData() &&
+            if( (*lhs)->strName_.GetKey() != (*rhs)->strName_.GetKey() &&
                 (*lhs)->diaType_.GetData() == (*rhs)->diaType_.GetData() )
             {
                 ADN_ConsistencyChecker::ConsistencyError error( eMissionTypeUniqueness );
@@ -440,8 +504,12 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
         {
             if( type != eMissionType_FragOrder )
                 CheckMissionTypeUniqueness( checker, it, missionsVector_[ type ].second, 0 );
-            CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 0 );
-            ( *it )->CheckMissionDataConsistency( checker );
+            CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetKey(), 0 );
+
+            const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
+            ( *it )->CheckMissionDataConsistency( checker, kernel::Language::default_ );
+            for( auto itLang = languages.begin(); itLang != languages.end(); ++itLang )
+                ( *it )->CheckMissionDataConsistency( checker, itLang->GetShortName() );
         }
 }
 
@@ -496,4 +564,13 @@ void ADN_Missions_Data::CheckAndFixLoadingErrors() const
     // Fix ids
     for( auto it = missionThatNeedANewId.begin(); it != missionThatNeedANewId.end(); ++it )
         ( *it )->id_ = ADN_Missions_Data::idManager_.GetNextId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetMissionSheetContext
+// Created: ABR 2013-08-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< kernel::Context > ADN_Missions_Data::GetMissionSheetContext() const
+{
+    return missionSheetContext_;
 }

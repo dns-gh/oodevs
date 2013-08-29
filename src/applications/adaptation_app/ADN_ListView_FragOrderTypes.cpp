@@ -188,7 +188,7 @@ bool ADN_ListView_FragOrderTypes::ContextMenuDelete()
 {
     if( pCurData_ == 0 )
         return false;
-    std::string name = static_cast< FragOrder* >( pCurData_ )->strName_.GetData();
+    boost::shared_ptr< kernel::LocalizedString > name = static_cast< ADN_Missions_ABC* >( pCurData_ )->strName_.GetTranslation();
     if( ADN_ListView::ContextMenuDelete() )
     {
         emit NotifyElementDeleted( name, eMissionType_FragOrder );

@@ -85,12 +85,17 @@ public:
     virtual const std::string& GetData() const;
     virtual void SetData( const std::string& data );
 
+    const std::string& GetValue( const std::string& language ) const;
+    void SetValue( const std::string& language, const std::string& data );
+
     kernel::E_TranslationType GetType() const;
     void SetType( kernel::E_TranslationType type );
 
     const std::string& GetKey() const;
+    void SetKey( const std::string& key );
 
     void SetContext( boost::shared_ptr< kernel::Context > context );
+    boost::shared_ptr< kernel::LocalizedString > GetTranslation() const;;
     //@}
 
 private:

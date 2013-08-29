@@ -31,7 +31,7 @@ public:
 
     virtual ADN_Missions_Mission* CreateCopy();
 
-    virtual void ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir );
+    virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
 
 public:

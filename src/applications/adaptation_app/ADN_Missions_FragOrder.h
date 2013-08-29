@@ -29,7 +29,7 @@ public:
 
     ADN_Missions_FragOrder* CreateCopy();
 
-    void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
+    void ReadArchive( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
 
 public:

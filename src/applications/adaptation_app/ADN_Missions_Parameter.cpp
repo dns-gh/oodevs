@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_Parameter.h"
-
+#include "ADN_Missions_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
 #include "ADN_Objects_Data.h"
@@ -30,6 +30,7 @@ ADN_Missions_Parameter::ADN_Missions_Parameter(E_MissionType type)
     if( type != eMissionType_FragOrder )
         context += "-missions";
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context + "-parameters" ) );
+    description_.SetContext( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetContext() );
     FillChoices();
 }
 

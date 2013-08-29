@@ -11,11 +11,23 @@
 #include "ADN_Missions_ABC.h"
 #include "ADN_Missions_Data.h"
 #include "clients_gui/WikiXmlConverter.h"
+#include "clients_kernel/Language.h"
 #include "clients_kernel/XmlTranslations.h"
 #include "ENT/ENT_Tr.h"
+#include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 #include <xeuseuleu/xsl.hpp>
+
+namespace
+{
+    const std::string& GetValueOrEmptyIfNoTranslation( ADN_Type_LocalizedString& text, const std::string& language )
+    {
+        if( !text.GetTranslation() )
+            return text.ADN_Type_ABC< std::string >::GetData();
+        return text.GetTranslation()->Value( language );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::Mission
@@ -38,10 +50,8 @@ ADN_Missions_ABC::ADN_Missions_ABC( E_MissionType type )
     : id_( ADN_Missions_Data::idManager_.GetNextId() )
     , type_( type )
 {
-    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr_ABC::eToSim );
-    if( type != eMissionType_FragOrder )
-        context += "-missions";
-    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
+    Initialize();
+    missionSheetPath_ = "";
 }
 
 // -----------------------------------------------------------------------------
@@ -53,10 +63,7 @@ ADN_Missions_ABC::ADN_Missions_ABC( E_MissionType type, unsigned int id )
     , needSheetSaving_ ( false )
     , type_( type )
 {
-    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr_ABC::eToSim );
-    if( type != eMissionType_FragOrder )
-        context += "-missions";
-    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
+    Initialize();
     ADN_Missions_Data::idManager_.Lock( id );
 }
 
@@ -67,6 +74,25 @@ ADN_Missions_ABC::ADN_Missions_ABC( E_MissionType type, unsigned int id )
 ADN_Missions_ABC::~ADN_Missions_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_ABC::Initialize
+// Created: ABR 2013-08-28
+// -----------------------------------------------------------------------------
+void ADN_Missions_ABC::Initialize()
+{
+    std::string context = ENT_Tr::ConvertFromMissionType( type_, ENT_Tr_ABC::eToSim );
+    if( type_ != eMissionType_FragOrder )
+        context += "-missions";
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
+    boost::shared_ptr< kernel::Context > missionSheetContext = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetContext();
+    missionSheetPath_.SetContext( missionSheetContext );
+    descriptionContext_.SetContext( missionSheetContext );
+    descriptionBehavior_.SetContext( missionSheetContext );
+    descriptionSpecific_.SetContext( missionSheetContext );
+    descriptionComment_.SetContext( missionSheetContext );
+    descriptionMissionEnd_.SetContext( missionSheetContext );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,15 +110,15 @@ void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
 // Name: ADN_Missions_ABC::CheckDataConsistency
 // Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker )
+void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, const std::string& language )
 {
-    CheckFieldDataConsistency( descriptionContext_.GetData(), checker );
+    CheckFieldDataConsistency( GetValueOrEmptyIfNoTranslation( descriptionContext_, language ), checker );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
-        CheckFieldDataConsistency( (*it)->description_.GetData(), checker );
-    CheckFieldDataConsistency( descriptionBehavior_.GetData(), checker );
-    CheckFieldDataConsistency( descriptionSpecific_.GetData(), checker );
-    CheckFieldDataConsistency( descriptionComment_.GetData(), checker );
-    CheckFieldDataConsistency( descriptionMissionEnd_.GetData(), checker );
+        CheckFieldDataConsistency( GetValueOrEmptyIfNoTranslation( (*it)->description_, language ), checker );
+    CheckFieldDataConsistency( GetValueOrEmptyIfNoTranslation( descriptionBehavior_, language ), checker );
+    CheckFieldDataConsistency( GetValueOrEmptyIfNoTranslation( descriptionSpecific_, language ), checker );
+    CheckFieldDataConsistency( GetValueOrEmptyIfNoTranslation( descriptionComment_, language ), checker );
+    CheckFieldDataConsistency( GetValueOrEmptyIfNoTranslation( descriptionMissionEnd_, language ), checker );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +141,7 @@ void ADN_Missions_ABC::CheckFieldDataConsistency( const std::string& fieldData, 
 // Name: ADN_Missions_ABC::ReadMissionSheetDescriptionsParameters
 // Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::ReadMissionSheetParametersDescriptions( xml::xistream& xis )
+void ADN_Missions_ABC::ReadMissionSheetParametersDescriptions( xml::xistream& xis, const std::string& language )
 {
     std::string parameterData;
     xml::xisubstream sub( xis );
@@ -124,7 +150,7 @@ void ADN_Missions_ABC::ReadMissionSheetParametersDescriptions( xml::xistream& xi
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         if( (*it)->strName_ == parameterName )
         {
-            (*it)->description_ = parameterData;
+            (*it)->description_.SetValue( language, parameterData );
             break;
         }
 }
@@ -135,27 +161,30 @@ void ADN_Missions_ABC::ReadMissionSheetParametersDescriptions( xml::xistream& xi
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::ReadMissionSheetAttachments( xml::xistream& xis )
 {
-    attachments_.AddItem( new ADN_Missions_Attachment( xis.attribute< tools::Path >( "name" ) ) );
+    const std::string name = xis.attribute< std::string >( "name" );
+    auto it = std::find_if( attachments_.begin(), attachments_.end(), ADN_Tools::NameCmp( name ) );
+    if( it == attachments_.end() )
+        attachments_.AddItem( new ADN_Missions_Attachment( tools::Path::FromUTF8( name ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::WriteMissionSheetParametersDescriptions
 // Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::WriteMissionSheetParametersDescriptions( xml::xostream& xos )
+void ADN_Missions_ABC::WriteMissionSheetParametersDescriptions( xml::xostream& xos, const std::string& language )
 {
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         xos << xml::start( "parameter" )
             << xml::attribute( "name", (*it)->strName_ )
             << xml::attribute( "optional", (*it)->isOptional_ );
-        FromWikiToXml( xos, (*it)->description_.GetData() );
+        FromWikiToXml( xos, GetValueOrEmptyIfNoTranslation( (*it)->description_, language ) );
         xos << xml::end;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_ABC::ReadMissionSheetAttachments
+// Name: ADN_Missions_ABC::WriteMissionSheetAttachments
 // Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::WriteMissionSheetAttachments( xml::xostream& xos )
@@ -182,9 +211,10 @@ bool ADN_Missions_ABC::IsFileInAttachmentList( const std::string& fileName )
 // Name: ADN_Missions_ABC::ReadMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::ReadMissionSheet( const tools::Path& missionDir )
+void ADN_Missions_ABC::ReadMissionSheet( const tools::Path& missionDir, const std::string& language )
 {
-    const tools::Path fileName = missionDir / tools::Path::FromUTF8( strName_.GetData() );
+    tools::Path fileName = missionDir / tools::Path::FromUTF8( strName_.GetValue( language ) );
+
     if( !missionDir.IsDirectory() )
         missionDir.CreateDirectories();
 
@@ -201,7 +231,7 @@ void ADN_Missions_ABC::ReadMissionSheet( const tools::Path& missionDir )
         FromXmlToWiki( xis, descriptionContext );
         xis     >> xml::end
             >> xml::optional >> xml::start( "parameters" )
-            >> xml::list( "parameter", *this, &ADN_Missions_ABC::ReadMissionSheetParametersDescriptions )
+            >> xml::list( "parameter", boost::bind( &ADN_Missions_ABC::ReadMissionSheetParametersDescriptions, this, _1, boost::cref( language ) ) )
             >> xml::end
             >> xml::optional >> xml::start( "behavior" );
         FromXmlToWiki( xis, descriptionBehavior );
@@ -219,32 +249,34 @@ void ADN_Missions_ABC::ReadMissionSheet( const tools::Path& missionDir )
             >> xml::list( "attachment", *this, &ADN_Missions_ABC::ReadMissionSheetAttachments )
             >> xml::end
             >> xml::end;
-        descriptionContext_ = descriptionContext;
-        descriptionBehavior_ = descriptionBehavior;
-        descriptionSpecific_ = descriptionSpecific;
-        descriptionComment_ = descriptionComment;
-        descriptionMissionEnd_ = descriptionMissionEnd;
-        tools::Path namePath = missionDir / "Images" / tools::Path::FromUTF8( QString( strName_.GetData().c_str() ).replace( "\'", " " ).toStdString() );
+        descriptionContext_.SetValue( language, descriptionContext );
+        descriptionBehavior_.SetValue( language, descriptionBehavior );
+        descriptionSpecific_.SetValue( language, descriptionSpecific );
+        descriptionComment_.SetValue( language, descriptionComment );
+        descriptionMissionEnd_.SetValue( language, descriptionMissionEnd );
+        const tools::Path namePath = missionDir / "Images" / tools::Path::FromUTF8( QString( strName_.GetKey().c_str() ).replace( "\'", " " ).toStdString() );
         ParseImagesInImageDirectory( namePath );
     }
-    missionSheetPath_ = fileName.ToUTF8() + ".html";
+    missionSheetPath_.SetValue( language, fileName.ToUTF8() + ".html" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::RemoveMissionSheet
 // Created: NPT 2012-07-31
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const tools::Path& missionDir )
+void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const tools::Path& missionDir, const std::string& language )
 {
-    const tools::Path newPath = missionDir / tools::Path::FromUTF8( strName_.GetData() );
-    const tools::Path oldPath = missionDir / tools::Path::FromUTF8( missionSheetPath_.GetData() ).BaseName();
-    if( !missionSheetPath_.GetData().empty() && newPath != oldPath )
+    const std::string& newValue = strName_.GetValue( language );
+    const std::string& oldValue = tools::Path::FromUTF8( GetValueOrEmptyIfNoTranslation( missionSheetPath_, language ) ).BaseName().ToUTF8();
+    if( !oldValue.empty() && newValue != oldValue )
     {
+        const tools::Path newPath = missionDir / tools::Path::FromUTF8( newValue );
+        const tools::Path oldPath = missionDir / tools::Path::FromUTF8( oldValue );
         if( ( oldPath + ".xml" ).Exists() && ( oldPath + ".html" ).Exists() )
         {
             ( oldPath + ".xml" ).Rename( newPath + ".xml" );
             ( oldPath + ".html" ).Rename( newPath + ".html" );
-            missionSheetPath_ = newPath.ToUTF8() + ".html";
+            missionSheetPath_.SetValue( language, newPath.ToUTF8() + ".html" );
         }
     }
 }
@@ -253,86 +285,72 @@ void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const tools::Path& miss
 // Name: ADN_Missions_ABC::WriteMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-bool ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const tools::Path& fileName, int type )
+void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const std::string& language )
 {
-    bool result = false;
-    tools::Path filePath = missionDir / fileName;
-    if( !( missionDir / "obsolete" ).IsDirectory() )
-        ( missionDir / "obsolete" ).CreateDirectories();
-    if( !IsEmptyMissionSheet() || fileName == ADN_Missions_Data::missionSheetTemporaryFile_ )
-    {
-        //mission sheet xml creation
-        tools::Xofstream xos( filePath + ".xml" );
-        xos << xml::start( "mission-sheet" )
-            << xml::attribute( "name", strName_.GetData() )
-            << xml::start( "context" );
-        FromWikiToXml( xos, descriptionContext_.GetData() );
-        xos << xml::end
-            << xml::start( "parameters" );
-        WriteMissionSheetParametersDescriptions( xos );
-        xos << xml::end
-            << xml::start( "behavior" );
-        FromWikiToXml( xos,descriptionBehavior_.GetData() );
-        xos << xml::end
-            << xml::start( "specific-cases" );
-        FromWikiToXml( xos, descriptionSpecific_.GetData() );
-        xos << xml::end
-            << xml::start( "comments" );
-        FromWikiToXml( xos, descriptionComment_.GetData() );
-        xos << xml::end
-            << xml::start( "mission-end" );
-        FromWikiToXml( xos, descriptionMissionEnd_.GetData() );
-        xos << xml::end
-            << xml::start( "attachments" );
-        WriteMissionSheetAttachments( xos );
-        xos << xml::end
-            << xml::end;
+    const std::string& name = strName_.GetValue( language );
+    tools::Path filePath = missionDir / tools::Path::FromUTF8( name );
+    if( !( missionDir / ADN_Missions_Data::obsoletePath_ ).IsDirectory() )
+        ( missionDir / ADN_Missions_Data::obsoletePath_ ).CreateDirectories();
+    if( IsEmptyMissionSheet( language ) && filePath.ToUTF8().find( tools::Path::TemporaryPath().ToUTF8() ) == std::string::npos )
+        return;
 
-        //mission sheet html creation
-        tools::Xifstream xisXML( filePath + ".xml" );
-        xsl::xstringtransform xst( ( tools::Path::TemporaryPath() / ADN_Missions_Data::xslTemporaryFile_ ).ToUTF8() );
-        QString directoryName = ( fileName == ADN_Missions_Data::missionSheetTemporaryFile_ )? strName_.GetData().c_str() : fileName.ToUTF8().c_str();
-        tools::Path namePath =  tools::Path::FromUTF8( directoryName.replace( "\'", " " ).toStdString() );
-        if( fileName == ADN_Missions_Data::missionSheetTemporaryFile_ )
-        {
-            tools::Path parameterValue = ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( type ).c_str() ) / namePath + "/";
-            xst.parameter( "imageDirectory", parameterValue.Normalize().ToUTF8() );
-        }
-        else
-        {
-            tools::Path parameterValue = tools::Path( "Images" ) / namePath + "/";
-            xst.parameter( "imageDirectory", parameterValue.Normalize().ToUTF8() );
-        }
-        xst << xisXML;
-        tools::Ofstream fileStream( filePath + ".html", std::ios::out | std::ios::trunc );
-        fileStream << xst.str();
-        fileStream.close();
-        if( missionSheetPath_.GetData().empty() )
-            missionSheetPath_ = filePath.ToUTF8() + ".html";
-        result = true;
-    }
-    if( fileName.ToUTF8() == strName_.GetData() )
-    {
-        needSheetSaving_ = false;
-        tools::Path tempXML = missionDir / ADN_Missions_Data::missionSheetTemporaryFile_ + ".xml";
-        tools::Path tempHTML = missionDir / ADN_Missions_Data::missionSheetTemporaryFile_ + ".html";
-        if( tempXML.Exists() || tempHTML.Exists() )
-        {
-            tempXML.Remove();
-            tempHTML.Remove();
-        }
-    }
-    return result;
+    //mission sheet xml creation
+    tools::Xofstream xos( filePath + ".xml" );
+    xos << xml::start( "mission-sheet" )
+        << xml::attribute( "name", name )
+        << xml::start( "context" );
+    FromWikiToXml( xos, GetValueOrEmptyIfNoTranslation( descriptionContext_, language ) );
+    xos << xml::end
+        << xml::start( "parameters" );
+    WriteMissionSheetParametersDescriptions( xos, language );
+    xos << xml::end
+        << xml::start( "behavior" );
+    FromWikiToXml( xos, GetValueOrEmptyIfNoTranslation( descriptionBehavior_, language ) );
+    xos << xml::end
+        << xml::start( "specific-cases" );
+    FromWikiToXml( xos, GetValueOrEmptyIfNoTranslation( descriptionSpecific_, language ) );
+    xos << xml::end
+        << xml::start( "comments" );
+    FromWikiToXml( xos, GetValueOrEmptyIfNoTranslation( descriptionComment_, language ) );
+    xos << xml::end
+        << xml::start( "mission-end" );
+    FromWikiToXml( xos, GetValueOrEmptyIfNoTranslation( descriptionMissionEnd_, language ) );
+    xos << xml::end
+        << xml::start( "attachments" );
+    WriteMissionSheetAttachments( xos );
+    xos << xml::end
+        << xml::end;
+
+    //mission sheet html creation
+    tools::Xifstream xisXML( filePath + ".xml" );
+    xsl::xstringtransform xst( ( tools::Path::TemporaryPath() / ADN_Missions_Data::xslTemporaryFile_ ).ToUTF8() );
+
+    std::string directoryName = strName_.GetKey();
+    boost::replace_all( directoryName, "\'", " " );
+    const tools::Path relativePath = kernel::Language::IsDefault( language ) ? "./" : "./../..";
+
+    const tools::Path imageDirectory = relativePath / ADN_Missions_Data::imagePath_ / tools::Path::FromUTF8( directoryName ) + "/";
+    xst.parameter( "imageDirectory", imageDirectory.Normalize().ToUTF8() );
+
+    const tools::Path cssFile = relativePath / ".." / ADN_Missions_Data::cssFile_;
+    xst.parameter( "cssFile", cssFile.Normalize().ToUTF8() );
+
+    xst << xisXML;
+    tools::Ofstream fileStream( filePath + ".html", std::ios::out | std::ios::trunc );
+    fileStream << xst.str();
+    fileStream.close();
+    if( GetValueOrEmptyIfNoTranslation( missionSheetPath_, language ).empty() )
+        missionSheetPath_.SetValue( language, filePath.ToUTF8() + ".html" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::IsEmptyParameterList
 // Created: NPT 2013-02-04
 // -----------------------------------------------------------------------------
-bool ADN_Missions_ABC::IsEmptyParameterList()
+bool ADN_Missions_ABC::IsEmptyParameterList( const std::string& language )
 {
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
-        if( !(*it)->description_.GetData().empty() )
+        if( !GetValueOrEmptyIfNoTranslation( ( *it )->description_, language ).empty() )
             return false;
     return true;
 }
@@ -341,14 +359,14 @@ bool ADN_Missions_ABC::IsEmptyParameterList()
 // Name: ADN_Missions_ABC::IsEmptyMissionSheet
 // Created: NPT 2013-02-04
 // -----------------------------------------------------------------------------
-bool ADN_Missions_ABC::IsEmptyMissionSheet()
+bool ADN_Missions_ABC::IsEmptyMissionSheet( const std::string& language )
 {
-    return  descriptionContext_.GetData().empty()
-        && descriptionBehavior_.GetData().empty()
-        && descriptionMissionEnd_.GetData().empty()
-        && descriptionSpecific_.GetData().empty()
-        && descriptionComment_.GetData().empty()
-        && IsEmptyParameterList();
+    return GetValueOrEmptyIfNoTranslation( descriptionContext_, language ).empty() &&
+           GetValueOrEmptyIfNoTranslation( descriptionBehavior_, language ).empty() &&
+           GetValueOrEmptyIfNoTranslation( descriptionMissionEnd_, language ).empty() &&
+           GetValueOrEmptyIfNoTranslation( descriptionSpecific_, language ).empty() &&
+           GetValueOrEmptyIfNoTranslation( descriptionComment_, language ).empty() &&
+           IsEmptyParameterList( language );
 }
 
 // -----------------------------------------------------------------------------
@@ -424,7 +442,7 @@ void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_M
 // Name: ADN_Missions_ABC::ReadArchive
 // Created: NPT 2013-02-14
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::ReadArchive( xml::xistream& input, const tools::Path& )
+void ADN_Missions_ABC::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ );

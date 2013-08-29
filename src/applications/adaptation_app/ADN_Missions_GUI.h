@@ -84,7 +84,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ADN_EditLine_ABC* nameFields_[ eNbrMissionTypes ];
+    ADN_ListView* listViews_[ eNbrMissionTypes ];
     QTabWidget* missionTabs_[ eNbrMissionTypes ];
     ADN_Missions_Data& data_;
     ADN_HtmlViewer* missionViewers_[ eNbrMissionTypes ];
@@ -98,7 +98,6 @@ private:
 private slots:
     //! @name slots
     //@{
-    void OnNotifyElementDeleted( std::string elementName, E_MissionType missionType );
     void OnGenerate( int, bool changeTab = true );
     void OnHelpNeeded( int );
     void OnChangeMission( int );

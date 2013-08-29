@@ -119,7 +119,7 @@ protected slots:
     void GoToOnDoubleClicked( const QModelIndex& index );
     bool SetCurrentItem();
 
-    void Warn( ADN_ErrorStatus errorStatus = eNoError, const QString& errorMsg = "" );
+    virtual void Warn( ADN_ErrorStatus errorStatus = eNoError, const QString& errorMsg = "" );
 
 signals:
     void ItemSelected( void* pData );

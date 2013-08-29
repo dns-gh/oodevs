@@ -63,7 +63,7 @@ public:
     helpers::T_MissionGenObjectTypes_Infos_Vector                     knowledgeObjects_;
     ADN_Type_String                                                   diaName_;
     bool                                                              isContext_;
-    ADN_Type_String                                                   description_;
+    ADN_Type_LocalizedString                                          description_;
     E_MissionType                                                     missionType_;
 };
 

@@ -70,12 +70,11 @@ ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
     return newFragOrder;
 }
 
-void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input, const tools::Path& missionDir )
+void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input )
 {
-    ADN_Missions_ABC::ReadArchive( input, missionDir );
+    ADN_Missions_ABC::ReadArchive( input );
     input >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
           >> xml::list( "parameter", boost::bind( &ADN_Missions_ABC::ReadParameter, this, _1 ) );
-    ReadMissionSheet( missionDir );
 }
 
 namespace

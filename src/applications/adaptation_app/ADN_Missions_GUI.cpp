@@ -113,14 +113,24 @@ void ADN_Missions_GUI::Build()
 
 namespace
 {
-    void AddTextEditField( QVBoxLayout* layout, const char* objectName, const QString& name, ADN_Connector_ABC*& pGuiConnector )
+    class TextEditWithoutWarning : public ADN_TextEdit_LocalizedString
+    {
+    public:
+        TextEditWithoutWarning( QWidget* parent = 0 ) : ADN_TextEdit_LocalizedString( parent ) {}
+        ~TextEditWithoutWarning(){}
+
+        virtual void Warn( ADN_ErrorStatus , const QString& ) {}
+    };
+
+    QWidget* AddTextEditField( QVBoxLayout* layout, const char* objectName, const QString& name, ADN_Connector_ABC*& pGuiConnector )
     {
         QLabel* label= new QLabel( name );
-        ADN_TextEdit_String* textEdit = new ADN_TextEdit_String( 0 );
+        TextEditWithoutWarning* textEdit = new TextEditWithoutWarning( 0 );
         textEdit->setObjectName( objectName );
         pGuiConnector = &textEdit->GetConnector();
         layout->addWidget( label );
         layout->addWidget( textEdit );
+        return textEdit;
     }
 
     class SelectableLabel : public QLabel
@@ -153,8 +163,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    nameFields_[ eMissionType ] = builder.AddLocalizedField( missions, pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameFields_[ eMissionType ]->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
+    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( missions, pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
+    nameField->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
 
     builder.SetValidator( new MissionNameValidator() );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[ eDiaType ] );
@@ -258,16 +268,14 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         QGroupBox* parameterGroupBox = new QGroupBox( tr( "Parameters" ) );
         QHBoxLayout* parameterLayout = new QHBoxLayout( parameterGroupBox );
         ADN_ListView* parametersListView = builder.AddWidget< ADN_ListView_DescriptionParameter >( "parameters-list" );
-        ADN_TextEdit_String* parametersField = builder.AddWidget< ADN_TextEdit_String >( "parameter" );
+        TextEditWithoutWarning* parametersField = builder.AddWidget< TextEditWithoutWarning >( "parameter" );
         vInfosConnectors[ eDescriptionParameters ] = &parametersListView->GetConnector();
         vInfosConnectors[ eDescriptionParametersText ] = &parametersField->GetConnector();
         parametersListView->SetItemConnectors( vInfosConnectors );
-        parameterLayout->addWidget( parametersListView );
-        parameterLayout->addWidget( parametersField );
-        parameterLayout->setStretch( 0, 1 );
-        parameterLayout->setStretch( 1, 4 );
+        parameterLayout->addWidget( parametersListView, 1 );
+        parameterLayout->addWidget( parametersField, 4 );
 
-        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType, nameFields_[ eMissionType ] );
+        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType, nameField );
         vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();
 
         QGroupBox* attachmentGroupBox = new QGroupBox( tr( "Attachments" ) );
@@ -350,35 +358,29 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), paramList, SLOT( OnMissionSelectionChanged() ) );
         generateMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
     }
+    listViews_[ eMissionType ] = pSearchListView->GetListView();
     // Main page
     builder.PopSubName(); //! eMissionType-tab
     connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), missionChangedMapper_, SLOT( map() ) );
     missionChangedMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
 
-    connect( pSearchListView->GetListView(), SIGNAL( NotifyElementDeleted( std::string, E_MissionType ) ), this, SLOT( OnNotifyElementDeleted( std::string, E_MissionType ) ) );
+    connect( pSearchListView->GetListView(), SIGNAL( NotifyElementDeleted( boost::shared_ptr< kernel::LocalizedString >, E_MissionType ) ), &data_, SLOT( OnElementDeleted( boost::shared_ptr< kernel::LocalizedString >, E_MissionType ) ) );
     return CreateScrollArea( builder.GetName(), *missionTabs_[ eMissionType ], pSearchListView );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_GUI::NotifyElementDeleted
-// Created: NPT 2012-07-31
-// -----------------------------------------------------------------------------
-void ADN_Missions_GUI::OnNotifyElementDeleted( std::string elementName, E_MissionType missionType )
-{
-    data_.NotifyElementDeleted( elementName, missionType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::OnGenerate
 // Created: NPT 2013-01-30
 // -----------------------------------------------------------------------------
-void ADN_Missions_GUI::OnGenerate( int index, bool changeTab /* = true */ )
+void ADN_Missions_GUI::OnGenerate( int type, bool changeTab /* = true */ )
 {
-    assert( index >= 0 && index < 4 );
-    tools::Path missionPath = data_.GenerateMissionSheet( index, nameFields_[ index ]->text() );
+    assert( type >= 0 && type < 4 );
+    ADN_RefWithLocalizedName* ref = static_cast< ADN_RefWithLocalizedName* >( listViews_[ type ]->GetCurrentData() );
+    assert( ref != 0 );
+    tools::Path missionPath = data_.GenerateMissionSheet( type, ref->strName_.GetTranslation() );
     if( changeTab )
-        missionTabs_[ index ]->setCurrentIndex( 2 );
-    missionViewers_[ index ]->setText( missionPath.Normalize().ToUTF8().c_str() );
+        missionTabs_[ type ]->setCurrentIndex( 2 );
+    missionViewers_[ type ]->setText( missionPath.Normalize().ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -396,7 +398,8 @@ void ADN_Missions_GUI::OnHelpNeeded( int type )
 // -----------------------------------------------------------------------------
 void ADN_Missions_GUI::OnChangeMission( int type )
 {
-    if( ADN_Missions_ABC* mission = data_.FindMission( type, nameFields_[ type ]->text().toStdString() ) )
-        if( mission->NeedsSaving() )
-            OnGenerate( type, false );
+    ADN_Missions_ABC* mission = static_cast< ADN_Missions_ABC* >( listViews_[ type ]->GetCurrentData() );
+    assert( mission != 0 );
+    if( mission->NeedsSaving() )
+        OnGenerate( type, false );
 }
