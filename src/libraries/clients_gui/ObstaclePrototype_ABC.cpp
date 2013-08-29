@@ -49,18 +49,13 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         Q3HBox* activationBox = new Q3HBox( vbox );
         QLabel* activationLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), activationBox );
         activationTime_ = new LoadableTimeEdit( activationBox );
-        activationLabel->hide();
-        activationTime_->hide();
+        activationLabel->show();
+        activationTime_->show();
         Q3HBox* activityBox = new Q3HBox( vbox );
         QLabel* activityLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ), activityBox );
         activityTime_ = new LoadableTimeEdit( activityBox );
-        activityLabel->hide();
-        activityTime_->hide();
-
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activationLabel, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activityLabel, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activityTime_, SLOT( setShown( bool ) ) );
+        activityLabel->show();
+        activityTime_->show();
 
     }
     connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
@@ -105,7 +100,6 @@ void ObstaclePrototype_ABC::OnObstacleTypeChanged()
         activationTime_->GetDefaultValueWidget()->setTime( QTime() );
     if( activityTime_ && activityTime_->GetDefaultValueWidget() )
         activityTime_->GetDefaultValueWidget()->setTime( QTime() );
-    emit ToggleActivable( types_->GetValue() != eDemolitionTargetType_Reserved );
 }
 
 // -----------------------------------------------------------------------------

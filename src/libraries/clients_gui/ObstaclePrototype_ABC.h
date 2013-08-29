@@ -43,12 +43,6 @@ public:
     virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
-signals:
-    //! @name signals
-    //@{
-    void ToggleActivable( bool );
-    //@}
-
 private slots:
     //! @name slots
     //@{
