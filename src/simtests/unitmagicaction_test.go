@@ -1085,8 +1085,8 @@ func (s *TestSuite) TestSurrender(c *C) {
 	c.Assert(err, IsNil)
 	a2 := CreateAutomat(c, client, automat.FormationId, 0)
 	u2 := CreateUnit(c, client, a2.Id)
-    // Wait for the unit to be fully generated, there is an update race
-    // otherwise masking the previous failure.
+	// Wait for the unit to be fully generated, there is an update race
+	// otherwise masking the previous failure.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.FindUnit(u2.Id).EquipmentDotations) > 0
 	})
