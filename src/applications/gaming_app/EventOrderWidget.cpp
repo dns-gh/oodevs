@@ -312,6 +312,15 @@ const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
     return decisions;
 }
 
+namespace
+{
+    void SortAndSelect( QComboBox* combo, const std::string& name )
+    {
+        combo->model()->sort( 0 );
+        combo->setCurrentIndex( name.empty() ? 0 : combo->findText( name.c_str() ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::FillMission
 // Created: ABR 2013-06-06
@@ -335,14 +344,17 @@ void EventOrderWidget::FillMission()
         // if( !decisions->CanBeOrdered() )
         //     return;
         if( currentType_ == eMissionType_FragOrder )
+        {
             AddCompatibleFragOrders( *decisions );
+            SortAndSelect( missionCombo_, "" );
+        }
         else
         {
             AddCompatibleOrders< kernel::Mission >( decisions->GetMissions() );
             if( lastGivenOrder_ && previousType_ == entityType_ )
             {
                 AddSingleOrder( *lastGivenOrder_ );
-                missionCombo_->setCurrentIndex( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
+                SortAndSelect( missionCombo_, lastGivenOrder_->GetName().c_str() );
                 if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
                 {
                     DisableItem( missionCombo_, missionCombo_->currentIndex() );
@@ -350,11 +362,8 @@ void EventOrderWidget::FillMission()
                 }
             }
             else
-            {
-                missionCombo_->setCurrentIndex( 0 );
-            }
+                SortAndSelect( missionCombo_, "" );
         }
-        missionCombo_->model()->sort( 0 );
     }
     else
     {
@@ -362,8 +371,7 @@ void EventOrderWidget::FillMission()
             AddAllOrders< kernel::FragOrderType >();
         else
             AddAllOrders< kernel::MissionType >();
-        missionCombo_->model()->sort( 0 );
-        missionCombo_->setCurrentIndex( 0 );
+        SortAndSelect( missionCombo_, "" );
     }
     connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
     missionChoosed_ = false;
