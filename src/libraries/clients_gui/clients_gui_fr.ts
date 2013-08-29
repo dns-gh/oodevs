@@ -329,7 +329,7 @@
     </message>
     <message>
         <source>Mute sounds</source>
-        <translation>Déactiver les sons</translation>
+        <translation>Désactiver les sons</translation>
     </message>
 </context>
 <context>
