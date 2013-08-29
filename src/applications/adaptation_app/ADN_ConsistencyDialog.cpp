@@ -120,8 +120,6 @@ void ADN_ConsistencyDialog::UpdateDataModel()
 // -----------------------------------------------------------------------------
 void ADN_ConsistencyDialog::DoUpdateDataModel( const ADN_ConsistencyChecker::T_ConsistencyErrors& errors )
 {
-    T_Parent::UpdateDataModel();
-
     for( ADN_ConsistencyChecker::CIT_ConsistencyErrors it = errors.begin(); it != errors.end(); ++it )
     {
         const ADN_ConsistencyChecker::ConsistencyError& error = *it;
