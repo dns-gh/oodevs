@@ -202,7 +202,7 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                     if( attributes.list_size() > 1 && attributes.list( 1 ).has_quantity() )
                     {
                         unsigned int duration = attributes.list( 1 ).quantity();
-                        if( firstActivityTime && obstacle && !obstacle->IsActivable() )
+                        if( firstActivityTime && obstacle )
                             obstacle->SetActivityTime( duration );
                         else if( duration > 0 )
                             object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
