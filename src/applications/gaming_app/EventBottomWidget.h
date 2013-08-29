@@ -62,6 +62,7 @@ signals:
     void Cancel();
     void Discard();
     void Save();
+    void PlanningModeToggled( bool );
     //@}
 
 public slots:

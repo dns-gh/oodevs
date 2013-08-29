@@ -175,6 +175,7 @@ void EventBottomWidget::OnSwitchToggled( bool checked )
         for( auto it = planningActions_.begin(); it != planningActions_.end(); ++it )
             if( *it )
                 ( *it )->setVisible( checked );
+    emit PlanningModeToggled( checked );
 }
 
 // -----------------------------------------------------------------------------

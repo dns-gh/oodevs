@@ -62,6 +62,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , missionInterface_( new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config ) )
     , missionCombo_( 0 )
     , lastGivenOrder_( 0 )
+    , planningMode_( false )
 {
     // Top
     missionTypeCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-type-combobox" );
@@ -228,6 +229,10 @@ namespace
     {
         comboBox->setItemData( index, Qt::NoItemFlags, Qt::UserRole - 1 );
     }
+    void EnableItem( gui::RichWarnWidget< QComboBox >* comboBox, int index )
+    {
+        comboBox->setItemData( index, QVariant( Qt::ItemIsSelectable | Qt::ItemIsEnabled ), Qt::UserRole - 1 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -289,7 +294,8 @@ void EventOrderWidget::AddCompatibleFragOrders( const Decisions_ABC& decisions )
         const kernel::Mission& mission = it.NextElement();
         auto itFragO = mission.CreateIterator();
         while( itFragO.HasMoreElements() )
-            AddSingleOrder( itFragO.NextElement().GetType(), !currentMission || currentMission->GetType().GetId() != mission.GetType().GetId() );
+            AddSingleOrder( itFragO.NextElement().GetType(),
+            ( !currentMission || currentMission->GetType().GetId() != mission.GetType().GetId() ) && !planningMode_ );
     }
 }
 
@@ -310,6 +316,30 @@ const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
             decisions = target_->Retrieve< PopulationDecisions >();
     }
     return decisions;
+}
+
+namespace
+{
+
+    void SortAndSelect( QComboBox* combo, const std::string& name )
+    {
+        // Sort
+        combo->model()->sort( 0 );
+        // Select
+        if( !name.empty() )
+            combo->setCurrentIndex( combo->findText( name.c_str() ) );
+        else
+        {
+            // Select first item enabled
+            QVariant disabled( Qt::NoItemFlags );
+            for( int index = 0; index < combo->count(); ++index )
+                if( combo->itemData( index, Qt::UserRole - 1 ) != disabled )
+                {
+                    combo->setCurrentIndex( index );
+                    return;
+                }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -335,14 +365,17 @@ void EventOrderWidget::FillMission()
         // if( !decisions->CanBeOrdered() )
         //     return;
         if( currentType_ == eMissionType_FragOrder )
+        {
             AddCompatibleFragOrders( *decisions );
+            SortAndSelect( missionCombo_, "" );
+        }
         else
         {
             AddCompatibleOrders< kernel::Mission >( decisions->GetMissions() );
             if( lastGivenOrder_ && previousType_ == entityType_ )
             {
                 AddSingleOrder( *lastGivenOrder_ );
-                missionCombo_->setCurrentIndex( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
+                SortAndSelect( missionCombo_, lastGivenOrder_->GetName().c_str() );
                 if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
                 {
                     DisableItem( missionCombo_, missionCombo_->currentIndex() );
@@ -350,11 +383,8 @@ void EventOrderWidget::FillMission()
                 }
             }
             else
-            {
-                missionCombo_->setCurrentIndex( 0 );
-            }
+                SortAndSelect( missionCombo_, "" );
         }
-        missionCombo_->model()->sort( 0 );
     }
     else
     {
@@ -362,8 +392,7 @@ void EventOrderWidget::FillMission()
             AddAllOrders< kernel::FragOrderType >();
         else
             AddAllOrders< kernel::MissionType >();
-        missionCombo_->model()->sort( 0 );
-        missionCombo_->setCurrentIndex( 0 );
+        SortAndSelect( missionCombo_, "" );
     }
     connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
     missionChoosed_ = false;
@@ -670,5 +699,28 @@ void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
 {
     if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() &&
         currentType_ == eMissionType_FragOrder )
-        OnMissionTypeChanged( missionCombo_->currentIndex() );
+    {
+        FillMission();
+        SortAndSelect( missionCombo_, "" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::OnPlanningModeToggled
+// Created: LGY 2013-08-29
+// -----------------------------------------------------------------------------
+void EventOrderWidget::OnPlanningModeToggled( bool value )
+{
+    planningMode_ = value;
+    if( currentType_ == eMissionType_FragOrder )
+    {
+        if( value )
+            for( int index = 0; index < missionCombo_->count(); ++index )
+                EnableItem( missionCombo_, index );
+        else
+        {
+            FillMission();
+            SortAndSelect( missionCombo_, "" );
+        }
+    }
 }

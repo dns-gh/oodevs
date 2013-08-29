@@ -51,9 +51,11 @@ Event* EventsModel::Create( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void EventsModel::Update( const timeline::Event& event )
 {
-    Event& gamingEvent = Get( event.uuid );
-    gamingEvent.Update( event );
-    controller_.Update( gamingEvent );
+    if( Event* gamingEvent = Find( event.uuid ) )
+    {
+        gamingEvent->Update( event );
+        controller_.Update( *gamingEvent );
+    }
 }
 
 // -----------------------------------------------------------------------------
