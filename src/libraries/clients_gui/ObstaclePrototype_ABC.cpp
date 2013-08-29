@@ -100,7 +100,6 @@ void ObstaclePrototype_ABC::OnObstacleTypeChanged()
         activationTime_->GetDefaultValueWidget()->setTime( QTime() );
     if( activityTime_ && activityTime_->GetDefaultValueWidget() )
         activityTime_->GetDefaultValueWidget()->setTime( QTime() );
-    emit ToggleActivable( types_->GetValue() != eDemolitionTargetType_Reserved );
 }
 
 // -----------------------------------------------------------------------------
