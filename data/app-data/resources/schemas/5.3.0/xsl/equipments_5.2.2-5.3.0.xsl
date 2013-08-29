@@ -25,7 +25,7 @@
             <xsl:attribute name="context">information-origin</xsl:attribute>
           </xsl:element>
           <xsl:element name="translation-query">
-            <xsl:attribute name="query">/equipments/equipment/string(@equipment-category)</xsl:attribute>
+            <xsl:attribute name="query">/equipments/equipment/equipment-category/string()</xsl:attribute>
             <xsl:attribute name="context">equipment-category</xsl:attribute>
           </xsl:element>          
         </xsl:element>
