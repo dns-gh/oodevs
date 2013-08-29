@@ -1734,6 +1734,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetworksLayer.h">
       <Filter>Source Files\gl\Layers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LocaleAwareSortFilterProxyModel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">

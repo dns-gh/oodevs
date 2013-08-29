@@ -15,6 +15,7 @@
 #include "ADN_TableDelegate.h"
 #include "ADN_Types.h"
 #include "ADN_StandardItem.h"
+#include "clients_gui/LocaleAwareSortFilterProxyModel.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/VariantPointer.h"
 
@@ -113,7 +114,7 @@ protected:
     //@{
     QStandardItemModel dataModel_;
     ADN_TableDelegate delegate_;
-    QSortFilterProxyModel proxyModel_;
+    gui::LocaleAwareSortFilterProxyModel proxyModel_;
     ADN_NavigationInfos::GoTo goToInfo_;
     //@}
 };
