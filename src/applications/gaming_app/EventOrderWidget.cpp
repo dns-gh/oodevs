@@ -296,13 +296,18 @@ void EventOrderWidget::AddCompatibleFragOrders( const Decisions_ABC& decisions )
         const kernel::Mission& mission = it.NextElement();
         auto itFragO = mission.CreateIterator();
         while( itFragO.HasMoreElements() )
-            AddSingleOrder( itFragO.NextElement().GetType(),
-            ( !currentMission || currentMission->GetType().GetId() != mission.GetType().GetId() ) && !planningMode_ );
+        {
+            const kernel::OrderType& order = itFragO.NextElement().GetType();
+            bool active = ( !currentMission || currentMission->GetType().GetId() != mission.GetType().GetId() ) && !planningMode_;
+            if( !active && missionCombo_->findText( order.GetName().c_str() ) != -1 )
+                missionCombo_->removeItem( missionCombo_->findText( order.GetName().c_str() ) );
+            AddSingleOrder( order, active );
+        }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::GetTargetDecision
+// Name: EventOrerWidget::GetTargetDecision
 // Created: ABR 2013-06-07
 // -----------------------------------------------------------------------------
 const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
