@@ -38,12 +38,12 @@ public:
               Message();
      explicit Message( std::size_t size );
               Message( const Message& rhs );
-     Message& operator=( const Message& rhs );
              ~Message();
     //@}
 
     //! @name Operations
     //@{
+    Message& operator=( const Message& rhs );
     Message& operator >>( unsigned long& n );
 
     std::size_t Size() const;
