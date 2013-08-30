@@ -91,6 +91,7 @@ void NewProfileDialog::UpdateText()
 void NewProfileDialog::Exec()
 {
     value_->setText( BuildUniqueLogin() );
+    value_->selectAll();
     exec();
 }
 
