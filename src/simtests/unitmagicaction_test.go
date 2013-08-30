@@ -1117,7 +1117,14 @@ func CheckHumanQuantity(actual []*swapi.HumanDotation, expected map[int32]int32)
 
 func CheckHumanTotalState(actual []*swapi.HumanDotation, rank, state, quantity,
 	injury int32, psyop, contaminated bool) bool {
-	expected := swapi.HumanDotation{quantity, rank, state, injury, psyop, contaminated}
+	expected := swapi.HumanDotation{
+		Quantity:     quantity,
+		Rank:         rank,
+		State:        state,
+		Injury:       injury,
+		Psyop:        psyop,
+		Contaminated: contaminated,
+	}
 	for _, human := range actual {
 		if *human == expected {
 			return true
@@ -1244,7 +1251,8 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 		State:        eHealthy,
 		Injury:       eInjuryU2,
 		Psyop:        false,
-		Contaminated: false}
+		Contaminated: false,
+	}
 
 	// Error: Quantity must be non-zero positive
 	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human})
@@ -1293,7 +1301,8 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 		State:        eDead,
 		Injury:       0,
 		Psyop:        false,
-		Contaminated: false}
+		Contaminated: false,
+	}
 
 	warrantOfficer := swapi.HumanDotation{
 		Quantity:     1245,
@@ -1301,7 +1310,8 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 		State:        eInjured,
 		Injury:       eInjuryUe,
 		Psyop:        false,
-		Contaminated: false}
+		Contaminated: false,
+	}
 
 	err = client.ChangeHumanState(u1.Id, []*swapi.HumanDotation{&human, &officer, &warrantOfficer})
 	c.Assert(err, IsNil)
@@ -1331,8 +1341,8 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	firstDotation := u1.ResourceDotations[0]
 	secondDotation := u1.ResourceDotations[1]
 
-	c.Assert(firstDotation, DeepEquals, &swapi.ResourceDotation{1, 3200, 10})
-	c.Assert(secondDotation, DeepEquals, &swapi.ResourceDotation{3, 8000, 10})
+	c.Assert(firstDotation, DeepEquals, &swapi.ResourceDotation{Type: 1, Quantity: 3200, Threshold: 10})
+	c.Assert(secondDotation, DeepEquals, &swapi.ResourceDotation{Type: 3, Quantity: 8000, Threshold: 10})
 
 	// Error: Invalid parameters count
 	err := client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{})
@@ -1341,7 +1351,8 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	resource := swapi.ResourceDotation{
 		Type:      1245,
 		Quantity:  0,
-		Threshold: 0}
+		Threshold: 0,
+	}
 
 	// Error: Invalid dotation category
 	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
@@ -1364,7 +1375,8 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	resource2 := swapi.ResourceDotation{
 		Type:      3,
 		Quantity:  0,
-		Threshold: 100}
+		Threshold: 100,
+	}
 
 	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource, &resource2})
 	c.Assert(err, IsNil)
@@ -1400,7 +1412,8 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		OnSiteFixable: 0,
 		Repairing:     0,
 		Captured:      0,
-		Breakdowns:    nil}
+		Breakdowns:    nil,
+	}
 
 	// Check initial state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -1426,7 +1439,8 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		OnSiteFixable: 0,
 		Repairing:     0,
 		Captured:      0,
-		Breakdowns:    nil}
+		Breakdowns:    nil,
+	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
@@ -1443,7 +1457,8 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		OnSiteFixable: 0,
 		Repairing:     1,
 		Captured:      1,
-		Breakdowns:    nil}
+		Breakdowns:    nil,
+	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
@@ -1459,7 +1474,8 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		OnSiteFixable: 0,
 		Repairing:     1,
 		Captured:      0,
-		Breakdowns:    nil}
+		Breakdowns:    nil,
+	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] size must be equal to parameters\[0\]\[0\]\[3\]`)
 
@@ -1499,7 +1515,8 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 		OnSiteFixable: 0,
 		Repairing:     0,
 		Captured:      0,
-		Breakdowns:    nil}
+		Breakdowns:    nil,
+	}
 
 	// Error: Invalid parameters count
 	err := client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{})
@@ -1512,7 +1529,8 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 		OnSiteFixable: 0,
 		Repairing:     0,
 		Captured:      0,
-		Breakdowns:    []int32{82}}
+		Breakdowns:    []int32{82},
+	}
 
 	// Error: Invalid equipment type
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{123: &equipment})
@@ -1554,7 +1572,8 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 		OnSiteFixable: 0,
 		Repairing:     0,
 		Captured:      0,
-		Breakdowns:    []int32{82}}
+		Breakdowns:    []int32{82},
+	}
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 
