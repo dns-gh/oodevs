@@ -39,7 +39,7 @@ public:
      explicit Message( std::size_t size );
               Message( const Message& rhs );
      Message& operator=( const Message& rhs );
-     virtual ~Message();
+             ~Message();
     //@}
 
     //! @name Operations
