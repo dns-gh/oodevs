@@ -391,16 +391,18 @@ func (model *ModelData) removeFormation(formationId uint32) bool {
 	if f.ParentId != 0 {
 		supf := model.FindFormation(f.ParentId)
 		if supf != nil {
-			if _, ok := supf.Formations[formationId]; ok {
-				delete(supf.Formations, formationId)
+			size := len(supf.Formations)
+			delete(supf.Formations, formationId)
+			if size != len(supf.Formations) {
 				return true
 			}
 		}
 	} else {
 		p := model.Parties[f.PartyId]
 		if p != nil {
-			if _, ok := p.Formations[formationId]; ok {
-				delete(p.Formations, formationId)
+			size := len(p.Formations)
+			delete(p.Formations, formationId)
+			if size != len(p.Formations) {
 				return true
 			}
 		}
@@ -457,11 +459,9 @@ func (model *ModelData) removeAutomat(automatId uint32) bool {
 	if f == nil {
 		return false
 	}
-	if _, ok := f.Automats[automatId]; ok {
-		delete(f.Automats, automatId)
-		return true
-	}
-	return false
+	size := len(f.Automats)
+	delete(f.Automats, automatId)
+	return size != len(f.Automats)
 }
 
 func (model *ModelData) ListUnits() []*Unit {
@@ -503,13 +503,13 @@ func (model *ModelData) addCrowdElement(crowdId, elementId uint32) bool {
 }
 
 func (model *ModelData) removeCrowdElement(crowdId, elementId uint32) bool {
-	if crowd := model.FindCrowd(crowdId); crowd != nil {
-		if element := crowd.CrowdElements[elementId]; element != nil {
-			delete(crowd.CrowdElements, elementId)
-			return true
-		}
+	crowd := model.FindCrowd(crowdId)
+	if crowd == nil {
+		return false
 	}
-	return false
+	size := len(crowd.CrowdElements)
+	delete(crowd.CrowdElements, elementId)
+	return size != len(crowd.CrowdElements)
 }
 
 func (model *ModelData) addUnit(unit *Unit) bool {
@@ -530,11 +530,9 @@ func (model *ModelData) removeUnit(unitId uint32) bool {
 	if a == nil {
 		return false
 	}
-	if _, ok := a.Units[unitId]; ok {
-		delete(a.Units, unitId)
-		return true
-	}
-	return false
+	size := len(a.Units)
+	delete(a.Units, unitId)
+	return size != len(a.Units)
 }
 
 func (model *ModelData) changeUnitSuperior(unit *Unit, newSuperior *Automat) error {
@@ -633,11 +631,9 @@ func (model *ModelData) updateProfile(login string, profile *Profile) bool {
 }
 
 func (model *ModelData) removeProfile(login string) bool {
-	_, ok := model.Profiles[login]
-	if ok {
-		delete(model.Profiles, login)
-	}
-	return ok
+	size := len(model.Profiles)
+	delete(model.Profiles, login)
+	return size != len(model.Profiles)
 }
 
 func (model *ModelData) ListKnowledgeGroups() []*KnowledgeGroup {
@@ -704,11 +700,9 @@ func (model *ModelData) FindLocalWeather(id uint32) *LocalWeather {
 }
 
 func (model *ModelData) removeLocalWeather(id uint32) bool {
-	if _, ok := model.LocalWeathers[id]; ok {
-		delete(model.LocalWeathers, id)
-		return true
-	}
-	return false
+	size := len(model.LocalWeathers)
+	delete(model.LocalWeathers, id)
+	return size != len(model.LocalWeathers)
 }
 
 func (model *ModelData) addUrban(urban *Urban) bool {
