@@ -908,3 +908,14 @@ end
 integration.findSafetyPositions = function( radius, safetyDistance )
     return DEC_FindSafetyPositions( radius, safetyDistance )
 end
+
+-- Return the list without element from list
+removeListElementWithSameLocation = function( position, list )
+    local result = {}
+    for i, elemListReturn in pairs( list ) do
+        if position ~= elemListReturn:getPosition() then
+            result[#result+1] = elemListReturn
+        end
+    end
+    return result
+end

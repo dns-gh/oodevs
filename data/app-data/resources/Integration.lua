@@ -1,4 +1,4 @@
-include "integration/ToolsFunctions.lua"
+include "integration/SimulationIntegration.lua"
 include "integration/KnowledgeManager.lua"
 include "integration/Types.lua"
 include "integration/BaseTaskKnowledge.lua"
@@ -6,6 +6,8 @@ include "integration/BaseTaskKnowledge.lua"
 
 integration = {}
 
+include "integration/ToolsFunctions.lua"
+include "integration/TableIntegration.lua"
 include "integration/GetDestructionState.lua"
 include "integration/GetIdentificationState.lua"
 include "integration/GetOperationalCapacity.lua"
