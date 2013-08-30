@@ -129,10 +129,12 @@ void EventOrderWidget::Purge()
     missionInterface_->Purge();
     lastGivenOrder_ = 0;
 
-    previousType_ = eNbrMissionTypes;
     missionTypeCombo_->clear();
+    missionTypeCombo_->blockSignals( true );
     for( int i = 0; i < eNbrMissionTypes; ++i )
         missionTypeCombo_->insertItem( i, QString::fromStdString( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( i ) ) ) );
+    missionTypeCombo_->blockSignals( false );
+    previousType_ = eNbrMissionTypes;
 }
 
 // -----------------------------------------------------------------------------
@@ -574,9 +576,11 @@ void EventOrderWidget::OnSelectEntity( const kernel::Entity_ABC& entity, E_Missi
     if( previousType_ != type || missionTypeCombo_->count() != 2 )
     {
         missionTypeCombo_->clear();
+        missionTypeCombo_->blockSignals( true );
         missionTypeCombo_->addItem( QString::fromStdString( ENT_Tr::ConvertFromMissionType( type ) ) );
         missionTypeCombo_->addItem( QString::fromStdString( ENT_Tr::ConvertFromMissionType( eMissionType_FragOrder ) ) );
-        missionTypeCombo_->setCurrentIndex( 0 );
+        missionTypeCombo_->blockSignals( false );
+        OnMissionTypeChanged( 0 );
         lastGivenOrder_ = 0;
     }
     SetTarget( &entity );
@@ -679,6 +683,7 @@ void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
 void EventOrderWidget::ActivateMissionPanel()
 {
     assert( selectedEntity_ );
+    previousType_ = entityType_;
     entityType_ = selectedEntity_->GetTypeName() == kernel::Population_ABC::typeName_? eMissionType_Population : selectedEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ ? eMissionType_Automat : eMissionType_Pawn ;
 
     const kernel::Entity_ABC& entity = *selectedEntity_;
