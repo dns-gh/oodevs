@@ -1665,6 +1665,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\RichToolBar.h">
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LocaleAwareSortFilterProxyModel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichAction.h">
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>

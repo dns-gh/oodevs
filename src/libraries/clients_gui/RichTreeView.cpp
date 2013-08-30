@@ -10,27 +10,23 @@
 #include "clients_gui_pch.h"
 #include "RichTreeView.h"
 #include "moc_RichTreeView.cpp"
+#include "LocaleAwareSortFilterProxyModel.h"
+#include "ObjectNameManager.h"
 #include "StandardModelVisitor_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_gui/ObjectNameManager.h"
 
 using namespace gui;
 
 namespace
 {
-    class CustomSortFilterProxyModel : public QSortFilterProxyModel
+    class CustomSortFilterProxyModel : public LocaleAwareSortFilterProxyModel
     {
     public:
         CustomSortFilterProxyModel( RichTreeView& parent )
-            : QSortFilterProxyModel( &parent )
+            : LocaleAwareSortFilterProxyModel( &parent )
             , parent_( parent )
-        {
-            // NOTHING
-        }
-        ~CustomSortFilterProxyModel()
-        {
-            // NOTHING
-        }
+        {}
+
     protected:
         virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
         {
@@ -38,9 +34,7 @@ namespace
             bool ret = parent_.LessThan( left, right, valid );
             if( valid )
                 return ret;
-            QString txt1 = sourceModel()->data( left ).toString();
-            QString txt2 = sourceModel()->data( right ).toString();
-            return txt1.localeAwareCompare( txt2 ) > 0;
+            return LocaleAwareSortFilterProxyModel::lessThan( left, right );
         }
 
     public:

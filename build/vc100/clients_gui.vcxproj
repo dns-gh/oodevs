@@ -408,6 +408,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SoundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\clients_gui\LocaleAwareSortFilterProxyModel.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\OrbatPanel.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
