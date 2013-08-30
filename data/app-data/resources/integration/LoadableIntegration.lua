@@ -177,45 +177,45 @@ integration.unitHasTransportationMission = function( unit, missionName )
     return false
 end
 
+local isAMissionForTransport = function( mission )
+        -- $$$$ LDC FIXME This should ask the mission task knowledge or something...
+        -- Except T_Mission_XXX: In order to be able to load directia 4 units
+        -- We should rather do something like :
+        -- local taskKnowledge = integration.taskKnowledge[ missionType ]
+        -- return taskKnowledge.isLoadMission and taskKnowledge:isLoadMission()
+    if not mission then return false end
+    local missionType =  integration.getAnyType( mission )
+    return mission ~= nil and ( 
+           missionType == "T_Task_Pion_SeFaireTransporter" 
+        or missionType == "T_Mission_Pion_SeFaireTransporter" 
+        or missionType == "platoon.tasks.SeFaireTransporter"
+        or missionType == "worldwide.agent.tasks.GetTransported"
+        or missionType == "france.military.platoon.tasks.SeFaireTransporter" )
+end
+
 -- distanceMin is equal to -1 if the unit is ready to load when it is into an area.
-integration.readyForLoad = function( unit, distanceMin, area )
+local readyForLoad = function( knowledge, distanceMin, area, mission )
     if not distanceMin then
         distanceMin = 100
     end
-    local unitSrc = unit.source
-    local mission = DEC_GetRawMission( unitSrc )
-    if mission ~= nil and ( 
-           integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
-        or integration.getAnyType( mission ) == "T_Mission_Pion_SeFaireTransporter" 
-        or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
-        or integration.getAnyType( mission ) == "worldwide.agent.tasks.GetTransported"
-        or integration.getAnyType( mission ) == "france.military.platoon.tasks.SeFaireTransporter" ) then
-        if ( distanceMin == -1 and integration.isPointInLocalisation( unit , area ) ) or 
-           ( DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin ) then
+    if isTransportMission( mission ) then
+        if ( distanceMin == -1 and integration.isPointInLocalisation( unit, area ) ) or 
+           ( DEC_Geometrie_Distance( meKnowledge:getPosition(), knowledge:getPosition() ) < distanceMin ) then
             return true 
         end
     end
     return false
 end
 
+integration.readyForLoad = function( unit, distanceMin, area )
+    local mission = DEC_GetRawMission( unit.source )
+    return readyForLoad( unit, distanceMin, area, mission )
+end
+
 -- distanceMin is equal to -1 if the knowledge is ready to load when it is into an area.
 integration.knowledgeReadyForLoad = function( knowledge, distanceMin, area )
-    if not distanceMin then
-        distanceMin = 100
-    end
-    local knowledgeSrc = knowledge.source
-    local mission = DEC_Connaissance_GetRawMission( knowledgeSrc )
-    if mission ~= nil and ( integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
-                         or integration.getAnyType( mission ) == "T_Mission_Pion_SeFaireTransporter" 
-                         or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
-                         or integration.getAnyType( mission ) == "worldwide.agent.tasks.GetTransported"
-                         or integration.getAnyType( mission ) == "france.military.platoon.tasks.SeFaireTransporter" ) then
-         if ( distanceMin == -1 and integration.isPointInLocalisation( knowledge , area ) ) or 
-           ( DEC_Geometrie_Distance( meKnowledge:getPosition() , knowledge:getPosition() ) < distanceMin ) then
-            return true 
-        end
-    end
-    return false
+    local mission = DEC_Connaissance_GetRawMission( knowledge.source )
+    return readyForLoad( knowledge, distanceMin, area, mission )
 end
 
 integration.isTransportFinished = function()

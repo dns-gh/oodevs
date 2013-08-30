@@ -95,24 +95,30 @@ end
 integration.getAreaPerimeterPositions = function( area )
     return DEC_Geometrie_ListePointsLocalisation( area.source )
 end
+
 integration.getUrbanBlockPosition = function( urbanBlock )
   urbanBlock.getUrbanBlockPosition = urbanBlock.getUrbanBlockPosition or DEC_ConnaissanceUrbanBlock_BarycentreDansBU( urbanBlock.source )
   return urbanBlock.getUrbanBlockPosition
 end
+
 integration.getUrbanBlockPositions = function( urbanBlock )
   urbanBlock.getUrbanBlockPositionsResult = urbanBlock.getUrbanBlockPositionsResult or DEC_Geometrie_CalculerLocalisationsBU( urbanBlock.source )
   return urbanBlock.getUrbanBlockPositionsResult
 end
+
 integration.getUrbanBlockNearestBorder = function( position, urbanBlock )
     urbanBlock.getUrbanBlockNearestBorderResult = urbanBlock.getUrbanBlockNearestBorderResult or DEC_Geometrie_ComputeNearestBorder( position, urbanBlock:getLocalisation() )
     return urbanBlock.getUrbanBlockNearestBorderResult
 end
+
 integration.getAreaPositions = function( area )
     area.getAreaPositionsResult = area.getAreaPositionsResult or DEC_Geometrie_CalculerTrafficablePointPourPoint( integration.getCentralAreaPosition( area ) )
     area.getTrafficableAreaPositionsResult = area.getTrafficableAreaPositionsResult or {}
     if #area.getTrafficableAreaPositionsResult == 0 then
+        local integration = integration
+        local CreateKnowledge = CreateKnowledge
         for i = 1, #area.getAreaPositionsResult do -- On ne veut que les positions qui sont dans la zone
-            if integration.isPointInLocalisation(CreateKnowledge( integration.ontology.types.point, area.getAreaPositionsResult[i] ), area) then
+            if integration.isPointInLocalisation( CreateKnowledge( integration.ontology.types.point, area.getAreaPositionsResult[i] ), area ) then
                area.getTrafficableAreaPositionsResult[#area.getTrafficableAreaPositionsResult] = area.getAreaPositionsResult[i]
             end
         end
@@ -123,22 +129,23 @@ integration.getAreaPositions = function( area )
         return area.getAreaPositionsResult
     end
 end
+
 integration.getPointPositions = function( point )
   point.getPointPositionsResult = point.getPointPositionsResult or DEC_Geometrie_CalculerTrafficablePointPourPoint( point.source )
   return point.getPointPositionsResult
 end
 
 integration.getPointPositionsForProxy = function( point )
-  local urbanblock = DEC_Connaissances_BlocUrbainPourPosition( point.source )
-  if urbanblock and ( point.getPointPositionsResultBlock == urbanblock ) then
+    local urbanblock = DEC_Connaissances_BlocUrbainPourPosition( point.source )
+    if urbanblock and ( point.getPointPositionsResultBlock == urbanblock ) then
+        return point.getPointPositionsResult
+    end
+    point.getPointPositionsResultBlock = urbanblock
+    if not point.getPointPositionsResultBlock then
+        return { point.source }
+    end
+    point.getPointPositionsResult = DEC_Geometrie_CalculerTrafficablePointPourPoint( point.source )
     return point.getPointPositionsResult
-  end
-  point.getPointPositionsResultBlock = urbanblock
-  if not point.getPointPositionsResultBlock then
-    return { point.source }
-  end
-  point.getPointPositionsResult = DEC_Geometrie_CalculerTrafficablePointPourPoint( point.source )
-  return point.getPointPositionsResult
 end
 
 integration.pointIsInCity = function( position )
@@ -195,6 +202,8 @@ end
 -- ****************************************************************************
 integration.setMovementPace = function( modulation, maxSpeed ) -- maxSpeed TRUE/FALSE 
 
+    local myself = myself
+    local integration = integration
     -- -------------------------------------------------------------------------------- 
     -- Urgency, moves at maximum.
     -- --------------------------------------------------------------------------------
@@ -225,7 +234,7 @@ integration.setMovementPace = function( modulation, maxSpeed ) -- maxSpeed TRUE/
         myself.speedModulations.safetyModulation = currentModulation
     end
 
-    -- integration.getForceRatio: 0 signifie very good, 1 very bad
+    -- integration.getForceRatio: 0 means very good, 1 very bad
     if myself.coverMode then
         myself.speedModulations.coverModulation = math.min( currentModulation / 2, 
                                                             integration.getForceRatio() )
@@ -390,6 +399,9 @@ end
 -- ****************************************************************************
 integration.updateMoveToIt = function( objective, pathType )
     local etat = objective[ myself ].etat
+    local integration = integration
+    local myself = myself
+    local meKnowledge = meKnowledge
 
     -- --------------------------------------------------------------------------------
     -- End of movement, check if objective is traficable
@@ -425,8 +437,8 @@ integration.updateMoveToIt = function( objective, pathType )
                     pathType = eTypeItiMouvement
                 end
                 local it = DEC_CreerItineraireBM( objective.destination, pathType )
-                F_Pion_SetitMvt( meKnowledge.source, it )
-                local escort = integration.getAgentEscort( meKnowledge.source )
+                F_Pion_SetitMvt( myself, it )
+                local escort = integration.getAgentEscort( myself )
                 if escort then -- Une unité m'escorte, la mission MoveToward devient StayClose
                     local escortUnit = CreateKnowledge( integration.ontology.types.agent, escort )
                     escortUnit:sendNeedRoute( meKnowledge, true )

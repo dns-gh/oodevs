@@ -3,6 +3,7 @@ function integration.getAvoidingPositionsFor( entity )
 end
 
 function integration.getObjectsInArea( localisation, objectTypes )
+    local integration = integration
     local lstObjects = DEC_ObjectKnowledgesInZone( localisation, objectTypes )
     if not lstObjects then
         return {}
@@ -81,6 +82,10 @@ integration.getImplantationObjects = function( area, nbAreas )
     local positions = {}
     local index = 0
     local subAreas = DEC_Geometry_SplitLocalisation( area.source, nbAreas, nil )
+    local DEC_Geometrie_ConvertirPointEnLocalisation = DEC_Geometrie_ConvertirPointEnLocalisation
+    local CreateKnowledge = CreateKnowledge
+    local DEC_CreateDynamicGenObject = DEC_CreateDynamicGenObject
+    local integration = integration
     for _, subArea in pairs( subAreas.first ) do
         index = index + 1
         barycentre = DEC_Geometrie_CalculerBarycentreLocalisation( subArea )
@@ -91,10 +96,10 @@ integration.getImplantationObjects = function( area, nbAreas )
             end
         end
         if nonTrafficablePosition then -- Ce point n'est pas trafficable pour au moins un pion de l'automate.
-            positions = integration.getPointPositions(CreateKnowledge( integration.ontology.types.point, barycentre ))
+            positions = integration.getPointPositions( CreateKnowledge( integration.ontology.types.point, barycentre ) )
             local positionInLocalisation = {}
             for j = 1, #positions do
-                if integration.isPointInLocalisation(CreateKnowledge( integration.ontology.types.point, positions[j] ), area) then
+                if integration.isPointInLocalisation( CreateKnowledge( integration.ontology.types.point, positions[j] ), area ) then
                     positionInLocalisation[#positionInLocalisation + 1] = positions[j]
                 end
             end
@@ -139,6 +144,7 @@ function integration.getCollidingObjectsFromType( type)
     
     local res = {}
     local nObjects = #lstObjects
+    local integration = integration
     local CreateKnowledge = CreateKnowledge
     for i = 1, nObjects do
         local object = lstObjects[ i ]

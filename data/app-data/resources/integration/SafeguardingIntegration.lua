@@ -43,8 +43,13 @@ end
 
 integration.getSafetyPositionsFromFireObjects = function( objects, distance )
     local points = {}
-    local nObjects = #objects
     local positionNextTo = meKnowledge:getPosition()
+    local DEC_Geometrie_AgrandirLocalisation = DEC_Geometrie_AgrandirLocalisation
+    local DEC_Geometrie_ComputeNearestBorder = DEC_Geometrie_ComputeNearestBorder
+    local CreateKnowledge = CreateKnowledge
+    local integration = integration
+    local nObjects = #objects
+
     for i = 1, nObjects do
         local object = objects[ i ]
         scaledObject = DEC_Geometrie_AgrandirLocalisation(  object:getLocalisation() , distance )
@@ -60,6 +65,8 @@ integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, d
 
     -- security: verifying the 'knowledgeAgents' is not empty. If yes return a nil value.
     if not next( knowledgeAgents ) then return nil end
+
+    local DEC_Geometrie_Distance = DEC_Geometrie_Distance
 
     -- Computing to average distance between the agent and the given agents
     local totalDistance = 0
