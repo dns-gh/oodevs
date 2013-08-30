@@ -15,6 +15,9 @@
 
 #include "tools/MessageSender_ABC.h"
 
+#pragma warning( push, 0 )
+#include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
 using namespace protocol;

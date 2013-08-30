@@ -11,16 +11,22 @@
 #define __MessageSender_ABC_h_
 
 #include "MessageIdentifierFactory.h"
-#include "Message.h"
-#include <tools/Exception.h>
-#pragma warning( push, 0 )
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/message.h>
-#pragma warning( pop )
-#include <boost/shared_array.hpp>
+
+namespace google
+{
+namespace protobuf
+{
+
+class Message;
+
+}
+}
 
 namespace tools
 {
+
+class Message;
+
 // =============================================================================
 /** @class  MessageSender_ABC
     @brief  Message sender
@@ -44,25 +50,8 @@ public:
         static const unsigned long tag = MessageIdentifierFactory::GetIdentifier< Message >();
         Send( link, tag, message );
     }
-    virtual void Send( const std::string& link, unsigned long tag, const google::protobuf::Message& message )
-    {
-        Message toolsMessage;
-        Serialize( message, toolsMessage );
-        Send( link, tag, toolsMessage );
-    }
-    void Serialize( const google::protobuf::Message& m, Message& message ) const
-    {
-        if( !m.IsInitialized() )
-            throw MASA_EXCEPTION(  "Message \"" + m.ShortDebugString()
-                + "\" of type \"" + m.GetDescriptor()->full_name()
-                + "\" is missing required fields: " + m.InitializationErrorString() );
-
-        boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ m.ByteSize() ] );
-        if( !m.SerializeWithCachedSizesToArray( buffer.get() ) )
-            throw MASA_EXCEPTION( "Error serializing message of type \"" + m.GetDescriptor()->full_name() + '"' );
-        message.Write( (const char*)buffer.get(), m.GetCachedSize() );
-    }
-
+    virtual void Send( const std::string& link, unsigned long tag, const google::protobuf::Message& message );
+    void Serialize( const google::protobuf::Message& m, Message& message ) const;
     virtual void Send( const std::string& link, unsigned long tag, Message& message ) = 0;
     //@}
 
