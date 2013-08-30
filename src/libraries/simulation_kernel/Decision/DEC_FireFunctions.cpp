@@ -215,6 +215,16 @@ void DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent( MIL_AgentPion& callerAgent, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::ThrowSmokeOnPosition
+// Created: LDC 2013-08-29
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::ThrowSmokeOnPosition( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > pTarget )
+{
+    if( pTarget )
+        callerAgent.GetPion().GetRole< PHY_RoleAction_IndirectFiring >().ThrowSmoke( *pTarget, 2 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::GetMunitionForIndirectFire
 // Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
