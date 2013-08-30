@@ -18,14 +18,6 @@
 PHY_Volume::T_VolumeMap PHY_Volume::volumes_;
 unsigned int                    PHY_Volume::nNextID_ = 0;
 
-struct PHY_Volume::LoadingWrapper
-{
-    void ReadVolume( xml::xistream& xis )
-    {
-        PHY_Volume::ReadVolume( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Volume::Initialize
 // Created: NLD 2004-08-04
@@ -33,9 +25,8 @@ struct PHY_Volume::LoadingWrapper
 void PHY_Volume::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing volumes" );
-    LoadingWrapper loader;
     xis >> xml::start( "volumes" )
-            >> xml::list( "volume", loader, &LoadingWrapper::ReadVolume )
+            >> xml::list( "volume", &PHY_Volume::ReadVolume )
         >> xml::end;
 }
 

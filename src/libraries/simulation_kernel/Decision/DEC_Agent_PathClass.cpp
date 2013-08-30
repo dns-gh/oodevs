@@ -21,14 +21,6 @@
 
 DEC_Agent_PathClass::T_Rules DEC_Agent_PathClass::rules_;
 
-struct DEC_Agent_PathClass::LoadingWrapper
-{
-    void ReadUnitRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
-    {
-        DEC_Agent_PathClass::ReadUnitRule( xis, dangerousObjects );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::CheckRulesExistence
 // Created: NLD 2006-01-30
@@ -55,9 +47,8 @@ void DEC_Agent_PathClass::CheckRulesExistence()
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::Initialize( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
-    LoadingWrapper loader;
     xis >> xml::start( "unit-rules" )
-            >> xml::list( "rule", loader, &LoadingWrapper::ReadUnitRule, dangerousObjects )
+            >> xml::list( "rule", boost::bind( DEC_Agent_PathClass::ReadUnitRule, _1, boost::cref( dangerousObjects ) ) )
         >> xml::end;
     CheckRulesExistence();
 }

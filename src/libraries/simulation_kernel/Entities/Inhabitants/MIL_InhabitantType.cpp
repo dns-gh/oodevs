@@ -18,14 +18,6 @@
 
 MIL_InhabitantType::T_InhabitantMap MIL_InhabitantType::inhabitants_;
 
-struct MIL_InhabitantType::LoadingWrapper
-{
-    void ReadInhabitant( xml::xistream& xis )
-    {
-        MIL_InhabitantType::ReadInhabitant( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: MIL_InhabitantType::Initialize
 // Created: SLG 2010-11-29
@@ -33,9 +25,8 @@ struct MIL_InhabitantType::LoadingWrapper
 void MIL_InhabitantType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing inhabitant types" );
-    LoadingWrapper loader;
     xis >> xml::start( "populations" )
-            >> xml::list( "population", loader, &LoadingWrapper::ReadInhabitant )
+            >> xml::list( "population", &MIL_InhabitantType::ReadInhabitant )
         >> xml::end;
 }
 

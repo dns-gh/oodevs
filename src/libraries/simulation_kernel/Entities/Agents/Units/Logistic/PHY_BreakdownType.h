@@ -74,7 +74,6 @@ private:
     //@}
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadCategory ( xml::xistream& xis );
     static void ReadBreakdown( xml::xistream& xis, const PHY_MaintenanceLevel& maintenanceLevel );
            void ReadPart     ( xml::xistream& xis );

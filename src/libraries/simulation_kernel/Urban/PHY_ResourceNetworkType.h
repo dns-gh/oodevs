@@ -61,7 +61,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadResourceNetwork( xml::xistream& xis );
     //@}
 

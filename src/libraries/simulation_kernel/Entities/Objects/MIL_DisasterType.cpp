@@ -18,14 +18,6 @@
 MIL_DisasterType::T_DisasterTypes MIL_DisasterType::disasterTypes_;
 unsigned int MIL_DisasterType::thresholdIds_ = 0;
 
-struct MIL_DisasterType::LoadingWrapper
-{
-    void ReadDisaster( xml::xistream& xis )
-    {
-        MIL_DisasterType::ReadDisaster( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: MIL_DisasterType::Initialize
 // Created: LGY 2012-11-21
@@ -33,9 +25,8 @@ struct MIL_DisasterType::LoadingWrapper
 void MIL_DisasterType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing disaster types" );
-    LoadingWrapper loader;
     xis >> xml::start( "disasters" )
-            >> xml::list( "disaster", loader, &LoadingWrapper::ReadDisaster )
+            >> xml::list( "disaster", &MIL_DisasterType::ReadDisaster )
         >> xml::end;
 }
 

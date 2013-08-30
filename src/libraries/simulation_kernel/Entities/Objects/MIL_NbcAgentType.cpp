@@ -26,14 +26,6 @@ double MIL_NbcAgentType::rContaminationDistance_        = 100.;
 double MIL_NbcAgentType::rContaminationQuantityGiven_   = 0.5;
 double MIL_NbcAgentType::rMinPropagationSpeed_          = 0.;
 
-struct MIL_NbcAgentType::LoadingWrapper
-{
-    void ReadAgent( xml::xistream& xis )
-    {
-        MIL_NbcAgentType::ReadAgent( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: MIL_NbcAgentType::Initialize
 // Created: NLD 2004-04-30
@@ -60,10 +52,8 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
     if( rContaminationDistance_ < 0 )
         xis.error( "propagation: contamination-distance < 0" );
 
-    LoadingWrapper loader;
-
     xis >> xml::start( "agents" )
-            >> xml::list( "agent", loader, &LoadingWrapper::ReadAgent )
+            >> xml::list( "agent", &MIL_NbcAgentType::ReadAgent )
         >> xml::end
     >> xml::end;
 }

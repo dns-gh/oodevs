@@ -17,23 +17,14 @@
 
 DEC_Population_PathClass::T_Rules DEC_Population_PathClass::rules_;
 
-struct DEC_Population_PathClass::LoadingWrapper
-{
-    void ReadPopulationRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
-    {
-        DEC_Population_PathClass::ReadPopulationRule( xis, dangerousObjects );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathClass::Initialize
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
 void DEC_Population_PathClass::Initialize( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
 {
-    LoadingWrapper loader;
     xis >> xml::start( "population-rules" )
-            >> xml::list( "rule", loader, &LoadingWrapper::ReadPopulationRule, dangerousObjects )
+            >> xml::list( "rule", boost::bind( DEC_Population_PathClass::ReadPopulationRule, _1, boost::cref( dangerousObjects ) ) )
         >> xml::end;
 }
 

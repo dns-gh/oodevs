@@ -22,14 +22,6 @@ const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , 0, sword::Unit
 const PHY_Experience PHY_Experience::experimente_( "Experimente", 1, sword::UnitAttributes::expert );
 const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , 2, sword::UnitAttributes::novice );
 
-struct PHY_Experience::LoadingWrapper
-{
-    void ReadExperience( xml::xistream& xis )
-    {
-        PHY_Experience::ReadExperience( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Experience::Initialize
 // Created: NLD 2004-08-05
@@ -40,10 +32,9 @@ void PHY_Experience::Initialize( xml::xistream& xis )
     experiences_[ veteran_    .GetName() ] = &veteran_;
     experiences_[ experimente_.GetName() ] = &experimente_;
     experiences_[ conscrit_   .GetName() ] = &conscrit_;
-    LoadingWrapper loader;
     xis >> xml::start( "humans-factors" )
             >> xml::start( "experience-factor" )
-                >> xml::list( "modifier", loader, &LoadingWrapper::ReadExperience )
+                >> xml::list( "modifier", &PHY_Experience::ReadExperience )
             >> xml::end
         >> xml::end;
 }

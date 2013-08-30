@@ -82,7 +82,6 @@ private:
 private:
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadDisaster( xml::xistream& xis );
     void ReadProtection( xml::xistream& xis );
     void ReadThreshold( xml::xistream& xis );

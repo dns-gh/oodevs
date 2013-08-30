@@ -70,7 +70,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadProtection( xml::xistream& xis );
     void ReadAttrition ( xml::xistream& xis );
     //@}

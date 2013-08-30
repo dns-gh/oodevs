@@ -78,7 +78,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadInhabitant( xml::xistream& xis );
     void ReadConsumption( xml::xistream& xis );
     //@}

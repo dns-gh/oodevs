@@ -61,7 +61,6 @@ private:
     //@}
     //! @name Hepers
     //@{
-    struct LoadingWrapper;
     static void ReadPosture( xml::xistream& xis, const PHY_Posture::T_PostureMap& container, T_FactorVector& factors );
     //@}
 

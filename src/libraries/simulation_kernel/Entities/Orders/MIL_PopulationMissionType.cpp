@@ -15,14 +15,6 @@
 MIL_MissionType_ABC::T_MissionIDMap MIL_PopulationMissionType::missionIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_PopulationMissionType::missionNames_;
 
-struct MIL_PopulationMissionType::LoadingWrapper
-{
-    void ReadMission( xml::xistream& xis )
-    {
-        MIL_MissionType_ABC::ReadMission< MIL_PopulationMissionType >( xis, missionIDs_, 0, missionNames_ );
-    }
-};
-
 //-----------------------------------------------------------------------------
 // Name: MIL_PopulationMissionType::Initialize
 // Created: NLD 2006-11-19
@@ -30,10 +22,10 @@ struct MIL_PopulationMissionType::LoadingWrapper
 void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing population mission types" );
-    LoadingWrapper loader;
     xis >> xml::start( "missions" )
             >> xml::start( "populations" )
-                >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
+            >> xml::list( "mission", boost::bind( &MIL_MissionType_ABC::ReadMission< MIL_PopulationMissionType >, _1, boost::ref( missionIDs_ ),
+                static_cast< MIL_MissionType_ABC::T_MissionNameMap* >( 0 ), boost::ref( missionNames_ ) ) )
             >> xml::end
         >> xml::end;
 }

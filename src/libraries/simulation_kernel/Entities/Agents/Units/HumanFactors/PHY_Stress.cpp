@@ -22,14 +22,6 @@ const PHY_Stress PHY_Stress::calm_ ( "Calm", 0 , sword::UnitAttributes::calm  );
 const PHY_Stress PHY_Stress::worried_( "Worried", 1, sword::UnitAttributes::worried );
 const PHY_Stress PHY_Stress::stressed_ ( "Stressed", 2 , sword::UnitAttributes::stressed );
 
-struct PHY_Stress::LoadingWrapper
-{
-    void ReadStress( xml::xistream& xis )
-    {
-        PHY_Stress::ReadStress( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Stress::Initialize
 // Created: LDC 2011-06-17
@@ -40,10 +32,9 @@ void PHY_Stress::Initialize( xml::xistream& xis )
     stresses_[ calm_.GetName() ] = &calm_;
     stresses_[ worried_.GetName() ] = &worried_;
     stresses_[ stressed_.GetName() ] = &stressed_;
-    LoadingWrapper loader;
     xis >> xml::start( "humans-factors" )
             >> xml::start( "stress-factor" )
-                >> xml::list( "modifier", loader, &LoadingWrapper::ReadStress )
+                >> xml::list( "modifier", &PHY_Stress::ReadStress )
             >> xml::end
             >> xml::start( "automatic-evolution" )
                 >> xml::start( "stress-evolution" )

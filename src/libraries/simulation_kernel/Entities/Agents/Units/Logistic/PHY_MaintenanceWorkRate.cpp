@@ -24,14 +24,6 @@ PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", sword::rate_2 )
 PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", sword::rate_3 );
 PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", sword::rate_4 );
 
-struct PHY_MaintenanceWorkRate::LoadingWrapper
-{
-    void ReadWorkRate( xml::xistream& xis )
-    {
-        PHY_MaintenanceWorkRate::ReadWorkRate( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceWorkRate::Initialize
 // Created: NLD 2004-12-20
@@ -42,10 +34,9 @@ void PHY_MaintenanceWorkRate::Initialize( xml::xistream& xis )
     workRates_[ r2_.GetName() ] = &r2_;
     workRates_[ r3_.GetName() ] = &r3_;
     workRates_[ r4_.GetName() ] = &r4_;
-    LoadingWrapper loader;
     xis >> xml::start( "maintenance" )
             >> xml::start( "working-schemes" )
-                >> xml::list( "working-scheme", loader, &LoadingWrapper::ReadWorkRate )
+                >> xml::list( "working-scheme", &PHY_MaintenanceWorkRate::ReadWorkRate )
             >> xml::end
         >> xml::end;
 }

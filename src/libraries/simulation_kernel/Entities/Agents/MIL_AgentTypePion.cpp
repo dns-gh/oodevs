@@ -85,14 +85,6 @@ const MIL_AgentTypePion* MIL_AgentTypePion::Create( const std::string& strName, 
     return new MIL_AgentTypePion( strName, strType, xis );
 }
 
-struct MIL_AgentTypePion::LoadingWrapper
-{
-    void ReadUnit( xml::xistream& xis )
-    {
-        MIL_AgentTypePion::ReadUnit( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::Initialize
 // Created: NLD 2004-08-09
@@ -129,9 +121,8 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion Civilian"               ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Remote"                 ] = &MIL_AgentTypePion_Remote        ::Create;
 
-    LoadingWrapper loader;
     xis >> xml::start( "units" )
-            >> xml::list( "unit", loader, &LoadingWrapper::ReadUnit )
+            >> xml::list( "unit", &MIL_AgentTypePion::ReadUnit )
         >> xml::end;
 }
 

@@ -52,7 +52,6 @@ public:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadPopulationRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     //@}
 

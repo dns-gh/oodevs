@@ -73,7 +73,6 @@ private:
     //@}
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadLauncher( xml::xistream& xis );
     void ReadDirect         ( xml::xistream& xis );
     void ReadModifier       ( xml::xistream& xis, const PHY_Posture& postureSource );

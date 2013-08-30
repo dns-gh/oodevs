@@ -73,7 +73,6 @@ private:
     //! @name Statics
     //@{
     static T_ExperienceMap experiences_;
-    struct LoadingWrapper;
     static void ReadExperience( xml::xistream& xis );
     //@}
 };

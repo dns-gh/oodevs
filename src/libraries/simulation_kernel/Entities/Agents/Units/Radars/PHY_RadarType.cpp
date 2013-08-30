@@ -26,14 +26,6 @@
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
 unsigned int                          PHY_RadarType::nNextID_ = 0;
 
-struct PHY_RadarType::LoadingWrapper
-{
-    void ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time )
-    {
-        PHY_RadarType::ReadRadar( xis, time );
-    }
-};
-
 namespace
 {
     template< typename T >
@@ -57,10 +49,8 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RadarType::Initialize( xml::xistream& xis, const MIL_Time_ABC& time )
 {
-    LoadingWrapper loader;
-
     xis >> xml::start( "radars" )
-            >> xml::list( "radar", loader, &LoadingWrapper::ReadRadar, time )
+            >> xml::list( "radar", boost::bind( &PHY_RadarType::ReadRadar, _1, boost::cref( time ) ) )
         >> xml::end;
 }
 

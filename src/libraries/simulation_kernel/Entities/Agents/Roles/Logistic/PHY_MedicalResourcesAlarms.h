@@ -42,7 +42,6 @@ private:
     //@}
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadResourceLevel( xml::xistream& xis );
     //@}
 

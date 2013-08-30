@@ -117,7 +117,6 @@ private:
     //@}
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadUnit ( xml::xistream& xis );
     void ReadPoint       ( xml::xistream& xis );
     void ReadFeedback    ( xml::xistream& xis );

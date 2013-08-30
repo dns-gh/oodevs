@@ -47,11 +47,6 @@ private:
     virtual ~MIL_PopulationMissionType();
     //@}
 
-    //! @name Heplers
-    //@{
-    struct LoadingWrapper;
-    //@}
-
 private:
     std::string strDIABehavior_;
 

@@ -24,14 +24,6 @@ const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , 0, sword::UnitAttributes
 const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", 1, sword::UnitAttributes::tired );
 const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , 2, sword::UnitAttributes::exhausted );
 
-struct PHY_Tiredness::LoadingWrapper
-{
-    void ReadTiredness( xml::xistream& xis )
-    {
-        PHY_Tiredness::ReadTiredness( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Tiredness::Initialize
 // Created: NLD 2004-08-05
@@ -42,10 +34,9 @@ void PHY_Tiredness::Initialize( xml::xistream& xis )
     tirednesses_[ normal_  .GetName() ] = &normal_;
     tirednesses_[ fatigue_ .GetName() ] = &fatigue_;
     tirednesses_[ epuise_  .GetName() ] = &epuise_;
-    LoadingWrapper loader;
     xis >> xml::start( "humans-factors" )
             >> xml::start( "tiredness-factor" )
-                >> xml::list( "modifier", loader, &LoadingWrapper::ReadTiredness )
+                >> xml::list( "modifier", &PHY_Tiredness::ReadTiredness )
             >> xml::end
             >> xml::start( "automatic-evolution" )
                 >> xml::start( "tiredness-evolution" )

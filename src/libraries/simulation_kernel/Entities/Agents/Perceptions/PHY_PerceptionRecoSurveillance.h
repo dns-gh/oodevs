@@ -74,7 +74,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadAlatTime( xml::xistream& xis );
     //@}
 };

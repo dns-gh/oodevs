@@ -79,7 +79,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time );
     //@}
 

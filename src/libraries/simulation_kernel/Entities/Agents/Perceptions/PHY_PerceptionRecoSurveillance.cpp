@@ -54,24 +54,14 @@ PHY_PerceptionRecoSurveillanceReco::PHY_PerceptionRecoSurveillanceReco( const TE
     const_cast< unsigned int& >( nUrbanDetectionTimeStep_  ) += (unsigned int)( nUrbanSurface  * rUrbanSurveillanceTime_ );
 }
 
-struct PHY_PerceptionRecoSurveillance::LoadingWrapper
-{
-    void ReadAlatTime( xml::xistream& xis )
-    {
-        PHY_PerceptionRecoSurveillance::ReadAlatTime( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoSurveillance::Initialize
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoSurveillance::Initialize( xml::xistream& xis )
 {
-    LoadingWrapper loader;
-
     xis >> xml::start( "alat-monitoring-times" )
-            >> xml::list( "alat-monitoring-time", loader, &LoadingWrapper::ReadAlatTime )
+            >> xml::list( "alat-monitoring-time", &PHY_PerceptionRecoSurveillance::ReadAlatTime )
         >> xml::end;
 }
 

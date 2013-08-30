@@ -92,7 +92,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadAgent( xml::xistream& xis );
     void SortEffectType  ( xml::xistream& xis );
     void ReadLiquid      ( xml::xistream& xis );

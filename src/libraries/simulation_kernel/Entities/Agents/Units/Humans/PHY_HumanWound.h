@@ -90,7 +90,6 @@ public:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadInjury( xml::xistream& xis, double& rFactorSum );
     //@}
 
