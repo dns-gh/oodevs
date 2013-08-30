@@ -21,31 +21,11 @@
 
 namespace
 {
-
-int __cdecl NoMoreMemoryHandler( std::size_t nSize )
-{
-    int nResult = MessageBox( 0, MT_FormatString( "No more memory (%d bytes requested) - Retry ?", nSize ).c_str(), "SWORD - Memory error", MB_ICONERROR | MB_RETRYCANCEL | MB_TOPMOST );
-    switch( nResult )
-    {
-    case IDRETRY:
-        return 1;
-    case IDCANCEL:
-    default:
-        throw std::bad_alloc();
-    }
-}
-
-int __cdecl SilentNoMoreMemoryHandler( std::size_t /*nSize*/ )
-{
-    throw std::bad_alloc();
-}
-
 void CrashHandler( EXCEPTION_POINTERS* exception )
 {
     MT_CrashHandler::ExecuteHandler( exception );
 }
-
-}  // namespace
+}
 
 //-----------------------------------------------------------------------------
 // Name: SetLowFragmentationHeapAlgorithm
@@ -118,10 +98,6 @@ int main( int /*argc*/, char* /*argv*/[] )
         // Float exceptions
         unsigned int control_word;
         _controlfp_s( &control_word, _EM_OVERFLOW | _EM_UNDERFLOW | _EM_INEXACT | _EM_INVALID, _MCW_EM ); // Exception raised for _EM_DENORMAL and _EM_ZERODIVIDE
-
-        // Memory handlers
-        _set_new_mode   ( 1 );
-        _set_new_handler( verbose ? NoMoreMemoryHandler : SilentNoMoreMemoryHandler );
 
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
