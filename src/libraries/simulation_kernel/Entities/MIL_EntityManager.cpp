@@ -1721,7 +1721,7 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
     if( !pAutomate )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid automat" );
 
-    if( !message.parameters().elem_size() && !message.parameters().elem( 0 ).value_size() )
+    if( !message.parameters().elem_size() || !message.parameters().elem( 0 ).value_size() )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "wrong parameters number" );
 
     client::AutomatChangeSuperior resendMessage;
@@ -2690,7 +2690,7 @@ void MIL_EntityManager::ProcessFormationChangeSuperior( const UnitMagicAction& m
     if( !pFormation )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid formation" );
 
-    if( !message.parameters().elem_size() && !message.parameters().elem( 0 ).value_size() )
+    if( !message.parameters().elem_size() || !message.parameters().elem( 0 ).value_size() )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "wrong parameters number" );
 
     client::FormationChangeSuperior resendMessage;
