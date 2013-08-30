@@ -61,6 +61,7 @@ public:
     bool CanBeUsedForDirectFire  () const;
     bool CanBeUsedForIndirectFire() const;
     bool HasAttritions           () const;
+    double GetSmokeDuration() const;
 
     const PHY_AttritionData& GetAttritionData( const PHY_Protection& protectionTarget ) const;
     double GetAttritionScore( const PHY_Protection& protectionTarget ) const;

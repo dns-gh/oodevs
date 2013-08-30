@@ -208,20 +208,22 @@ float DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck( const MIL_Ag
 // Name: DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pTarget )
+double DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pTarget )
 {
     if( pTarget && pTarget->IsValid() )
-        callerAgent.GetRole< PHY_RoleAction_IndirectFiring >().ThrowSmoke( pTarget->GetPosition(), 2 ); //$$$
+        return callerAgent.GetRole< PHY_RoleAction_IndirectFiring >().ThrowSmoke( pTarget->GetPosition(), 2 ); //$$$
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::ThrowSmokeOnPosition
 // Created: LDC 2013-08-29
 // -----------------------------------------------------------------------------
-void DEC_FireFunctions::ThrowSmokeOnPosition( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > pTarget )
+double DEC_FireFunctions::ThrowSmokeOnPosition( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > pTarget )
 {
     if( pTarget )
-        callerAgent.GetPion().GetRole< PHY_RoleAction_IndirectFiring >().ThrowSmoke( *pTarget, 2 );
+        return callerAgent.GetPion().GetRole< PHY_RoleAction_IndirectFiring >().ThrowSmoke( *pTarget, 2 );
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------

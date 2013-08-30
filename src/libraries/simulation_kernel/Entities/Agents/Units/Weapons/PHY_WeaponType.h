@@ -75,6 +75,7 @@ public:
     void     DirectFire         ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     void     DirectFire         ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
     void     ThrowSmoke         ( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
+    double   GetSmokeDuration() const;
 
     double GetDangerosity     ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& compTarget, bool bUsePH, bool bUseAmmo ) const;
     double GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget, bool bUseAmmo ) const;
