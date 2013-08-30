@@ -159,6 +159,9 @@
     <ClCompile Include="..\..\src\libraries\tools\RotatingLog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\MessageSender_ABC.cpp">
+      <Filter>Source Files\Network\abc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">

@@ -112,6 +112,7 @@
     <ClCompile Include="..\..\src\libraries\tools\FileWrapper.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IdManager.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IpcQueue.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\MessageSender_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\RotatingLog.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ThreadPool.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
