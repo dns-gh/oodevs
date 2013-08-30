@@ -405,7 +405,8 @@ func (model *Model) GetUnitKnowledge(groupId, id uint32) *UnitKnowledge {
 	model.waitCommand(func(model *Model) {
 		group := model.data.FindKnowledgeGroup(groupId)
 		if group != nil {
-			k = group.UnitKnowledges[id]
+			k = &UnitKnowledge{}
+			DeepCopy(k, group.UnitKnowledges[id])
 		}
 	})
 	return k
