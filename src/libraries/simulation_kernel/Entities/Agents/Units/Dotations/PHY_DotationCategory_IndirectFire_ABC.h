@@ -37,6 +37,7 @@ public:
     //@{
     const PHY_IndirectFireDotationClass& GetIndirectFireDotationCategory() const;
     const PHY_DotationCategory& GetDotationCategory() const;
+    virtual double GetEffectDuration() const;
     //@}
 
     //! @name Operations

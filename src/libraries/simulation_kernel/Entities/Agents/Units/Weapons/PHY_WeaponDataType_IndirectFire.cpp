@@ -71,6 +71,15 @@ void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_Agent_ABC& firer, const MT
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_IndirectFire::GetSmokeDuration
+// Created: LDC 2013-08-30
+// -----------------------------------------------------------------------------
+double PHY_WeaponDataType_IndirectFire::GetSmokeDuration() const
+{
+    return weaponType_.GetDotationCategory().GetSmokeDuration();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_IndirectFire::GetAverageSpeed
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
