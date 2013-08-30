@@ -102,5 +102,5 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
 // -----------------------------------------------------------------------------
 double PHY_DotationCategory_IndirectWeatherFire::GetEffectDuration() const
 {
-    return rDeploymentDuration_ + rLifeDuration_;
+    return MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ + rLifeDuration_ );
 }

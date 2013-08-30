@@ -1009,7 +1009,9 @@ return
         return integration.isUnderIndirectFire()
     end,
     launchDREB = function( self )
-        return integration.launchDREB()
+        if myself.activityDREBTime < 1 then -- if the last smoke doesn't exist anymore
+            myself.activityDREBTime = integration.launchDREB()
+        end
     end,
     allowCarriers = function( self )
         integration.allowCarriers()
