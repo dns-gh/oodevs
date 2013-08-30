@@ -258,6 +258,9 @@ return
     slowDownSyncronisation = function( self, receiver )
         integration.SendMessage( "SlowDownSyncronisation", receiver, emptyTable, { type = "dynamic" } )
     end,
+    stopMovingInFrontOfPE = function( self, receiver )
+        integration.SendMessage( "StopMovingInFrontOfPE", receiver, emptyTable, { type = "dynamic" } )
+    end,
     continueSyncronisation = function( self, receiver )
         integration.SendMessage( "ContinueSyncronisation", receiver, emptyTable, { type = "dynamic" } )
     end,

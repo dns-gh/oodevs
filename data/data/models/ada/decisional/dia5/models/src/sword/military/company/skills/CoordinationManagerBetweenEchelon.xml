@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.skills.CoordinationManagerBetweenEchelon" source-version="1.0.0">
+	<parameters>
+		<parameter name="FirstEchelon">
+			<description>First Echelon units</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Commanding"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="SecondEchelon">
+			<description>Second Echelon units</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Commanding"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="progressionInDangerDirection">
+			<description>Return a list of all units with their position (projection on the danger direction vector).</description>
+			<type>
+				<list>
+					<simple name="numeric"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+</skill>

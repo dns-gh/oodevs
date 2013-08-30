@@ -23,6 +23,7 @@
 		<skill name="sword.military.company.skills.SupportManagerForGen"/>
 		<skill name="sword.military.company.skills.LeadWithOrder"/>
 		<skill name="sword.military.company.skills.LeadDrone"/>
+		<skill name="sword.military.company.skills.CoordinationManagerBetweenEchelon"/>
 	</skills>
 	<default-task label="Prise en compte des ordres de conduite et de la sauvegarde." permanent="true">
 		<description>Gestion par défaut des ordres de conduite</description>

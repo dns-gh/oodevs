@@ -44,11 +44,11 @@ local function manageFeedback ( frontElement )
     for _, elem in pairs (frontElement) do
       integration.ListenFrontElement( elem.entity )
       if DEC_GetAutomate( elem.entity.source ) == meKnowledge then
-      -- On vérifie que le pion est toujours sous l'automate
+      -- On verifie que le pion est toujours sous l'automate
           nbUnitInOtherAutomat = nbUnitInOtherAutomat + 1
       end
     end
-    -- si tous les pions ont changé d'automate (par exemple pour la mission preparer bascule), on remonte une fin de mission
+    -- si tous les pions ont change d'automate (par exemple pour la mission preparer bascule), on remonte une fin de mission
     if nbUnitInOtherAutomat == #frontElement then
         myself.feedback = true
     end
@@ -71,7 +71,7 @@ local function manageAddedAndDeletedUnits( self )
         end
     end
     
-    -- Si un pion a été supprimé de l'automate, on redistribue les missions
+    -- Si un pion a ete supprime de l'automate, on redistribue les missions
     for i, entity in pairs( oldEntities ) do
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
              -- faut tester si le ou les pion au moins est operationnel et brouille
@@ -83,7 +83,7 @@ local function manageAddedAndDeletedUnits( self )
         end
     end
 
-    -- Si un pion est de nouveau operationnel et/ou un pion a été ajouté à l'automate
+    -- Si un pion est de nouveau operationnel et/ou un pion a ete ajoute à l'automate
    if #newOperationnalEntities > #self.operationnalEntities and not redone then
         for i, entity in pairs( newOperationnalEntities ) do
             if not exists( self.operationnalEntities, entity ) then
@@ -109,7 +109,8 @@ end
 rootnode {
 
 connections = { skill.links.supportManager, skill.links.coordinationManager, skill.links.relieveManager, 
-                skill.links.AssignSETask, skill.links.synchronizeRC, skill.nodes.RC },
+                skill.links.AssignSETask, skill.links.synchronizeRC, skill.nodes.RC,
+                skill.links.coordinationManagerBetweenEchelon },
 
 done = function( self ) end,
 
@@ -145,6 +146,7 @@ create = function( self )
             self.nbrFront = self.companyTask:getNbrFront() -- Ask how many platoon will be in the front group. Number giving by the user or by default.
         end
         self.progressionInAOR = {}
+        self.progressionInDangerDirection = {}
 
         -- Initialisation des missions pion
         -- Le pion PC rejoint le meetingPoint
@@ -176,7 +178,7 @@ create = function( self )
             issueMission ( self, self.params.peiTasks, self.nbrFront, eEtatEchelon_Scout )
         end
 
-        -- Ceux qui n'ont toujours pas de mission recoivent la mission par défaut
+        -- Ceux qui n'ont toujours pas de mission recoivent la mission par defaut
         issueMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_Reserve )
 end,
 
@@ -213,8 +215,8 @@ activate = function( self )
         local fuseau = meKnowledge:getFuseau()
         
 
-        -- Gestion de l'élongation   
-        -- tous les pions sont projeté sur un des deux fuseaux de l'automate
+        -- Gestion de l'elongation   
+        -- tous les pions sont projete sur un des deux fuseaux de l'automate
         -- self.progressionInAOR: contient les valeurs de progression sur l'axe de progression
         -- plus la valeur est grande, plus le pion est en avant dans le fuseau
         -- Effet de bord indesirable : en cas d'aller retour dans le fuseau la coordination est completement inutilisable 
@@ -244,18 +246,26 @@ activate = function( self )
           maxsupportDistance = maxsupportDistance/2
         end
        
-        -- Gestion de l'élongation intra echelon   
+        -- Gestion de l'elongation intra echelon   
         Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = pionsPE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
         Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = pionsEE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
         
-        -- Gestion de l'élongation inter echelon
+        -- Gestion de l'elongation inter echelon
         Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = fusionList( pionsPE, pionsSE ), progressionInAOR = self.progressionInAOR, distance = maxsupportDistance } )
-    end
+        
+   end
+   if not self.params.SECanBeFirst then
+       for _, entity in pairs( self.parameters.commandingEntities ) do
+            self.progressionInDangerDirection[entity] = integration.getPositionAlongDangerDirection(entity, entity:getPosition())
+        end
+         -- Gestion des echelons : le SE ne doit pas depasser le PE
+        Activate( skill.links.coordinationManagerBetweenEchelon , 1, { FirstEchelon = pionsPE, SecondEchelon = pionsSE, progressionInDangerDirection = self.progressionInDangerDirection } )
+   end
 
-    -- Gestion de la rélève
+    -- Gestion de la releve
     Activate( skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE })
 
-    -- Gestion du SE (car les objectifs ne sont plus les mêmes)
+    -- Gestion du SE (car les objectifs ne sont plus les memes)
     local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask
     Activate( skill.links.AssignSETask, 1, { SE = pionsSE, tasks = tasksForSE, parameters = self.parameters, companyTask = self.companyTask })
     

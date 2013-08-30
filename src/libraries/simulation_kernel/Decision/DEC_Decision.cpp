@@ -246,6 +246,8 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion" ] = &DEC_GeometryFunctions::StartComputingFrontAndBackLinesForPlatoon;
     brain.Register( "DEC_Geometrie_X", &MT_Vector2D::GetX );
     brain.Register( "DEC_Geometrie_Y", &MT_Vector2D::GetY );    
+    brain[ "DEC_Geometrie_PositionAdvanceAlongDangerDirection" ] = &DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection;
+    
 }
 
 // -----------------------------------------------------------------------------

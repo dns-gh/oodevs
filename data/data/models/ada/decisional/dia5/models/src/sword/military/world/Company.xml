@@ -89,6 +89,14 @@
                 </type>
             </argument>
         </method>
+        <method name="stopMovingInFrontOfPE">
+            <description>Envoie d'un signal vers un pion de s'arreter pour synchroniser la vitesse des pions</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Commanding"/>
+                </type>
+            </argument>
+        </method>
         <method name="continueSyncronisation">
             <description>Envoie d'un signal vers un pion de reprendre vitesse pour syncroniser la vitesse des pions</description>
             <argument name="receiver">

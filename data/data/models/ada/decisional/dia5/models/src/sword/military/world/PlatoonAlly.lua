@@ -2,6 +2,7 @@ masalife.brain.communication.setMessageTreatment( "CreateMissionPion", integrati
 masalife.brain.communication.setMessageTreatment( "CreateMissionPionVersPion", integration.communication.StartMissionPionVersPion )
 masalife.brain.communication.setMessageTreatment( "ContinueSyncronisation", integration.communication.Continue )
 masalife.brain.communication.setMessageTreatment( "SlowDownSyncronisation", integration.communication.SlowDown )
+masalife.brain.communication.setMessageTreatment( "StopMovingInFrontOfPE", integration.communication.StopMovingInFrontOfPE )
 
 -- Store engineerObject to manage by EnginnerMobilitySupport task
 masalife.brain.communication.setMessageTreatment( "needEngineerSupport",
