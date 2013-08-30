@@ -104,7 +104,19 @@ integration.clipperLocalisation = function( area, fuseau )
     return DEC_Geometrie_ClipperLocalisation( area.source, fuseau.source )
 end
 
--- NMI
 integration.convertAORtoLocalisation = function ( fuseau ) 
     return DEC_Geometrie_ConvertirFuseauEnLocalisation( fuseau.source )
+end
+
+startSettleCalcul = function()
+    local listePions = integration.getAgentsWithHQ()
+    return DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion( DEC_GetAutomate( meKnowledge.source ), listePions )
+end
+
+settleDistance = function( line )
+    return DEC_Geometrie_CalculerDistanceLigneAvant( line, meKnowledge.source )
+end
+
+stopSettleCalcul = function( line )
+    DEC_Geometrie_StopCalculLignesAvantEtArriere( line )
 end

@@ -8,6 +8,23 @@ local function comp( w1,w2 )
     return ( w1.efficiency > w2.efficiency )
 end
 
+-- Return the returnList without element from list
+-- @param list : element to remove
+-- @param returnList : list where we want to remove
+-- @author LMT
+-- @release 2011-01-13
+removeFromListForLead = function( list, returnList )
+    for _, listElement in pairs( list ) do
+        for i, elemListReturn in pairs( returnList ) do
+            if listElement.entity == elemListReturn then
+                table.remove( returnList, i )
+                break
+            end
+        end
+    end
+    return returnList
+end
+
 -- set echelon for elements in bestUnits
 -- @params bestUnits : list of element
 -- @params echelon
@@ -65,6 +82,133 @@ integration.fillWorkMap = function()
             end
         end
     end
+end
+
+--- Fill the unit task parameter
+-- @param bestList Units sorted by efficiency
+-- @param companyTask The company's task
+-- @param params Parameters from the company's task
+-- @param nbrFront The number of element that we want in this echelon
+-- @author MGD
+-- @release 2010-12-03
+fillParameters = function( bestList, companyTask, params, nbrFront, context, isMain, objectif )
+    local bestListNbrFront = {}
+    local findFront = 1
+    local current = 1
+    params.maxNbrFront = math.min( #bestList, nbrFront )
+    while findFront <= nbrFront and current <= params.maxNbrFront do
+       local paramsPion = bestList[current].task:fillParameters( companyTask, params, bestList[current].entity, context, objectif, bestList[current].taskName ) -- Save the parameter needed for the platoon task
+       if paramsPion then
+          if isMain then          
+              F_Pion_SeteEtatEchelon( bestList[current].entity.source, eEtatEchelon_First )
+          end   
+          bestListNbrFront[findFront] = bestList[current]
+          bestListNbrFront[findFront].params = paramsPion
+          findFront = findFront+1
+       end
+       current = current+1
+    end
+    return bestListNbrFront
+end
+
+-- @param entities A list of PlatoonAlly
+-- @param tasks A list of Task that we want to give
+-- @param companyTask The company's task
+-- @param effect The effect of the company's task
+-- @param params Parameters from the company's task
+-- @param isMain True if tasks are for the first echelon
+-- @return List of entities than can do tasks, sorted by efficiency
+-- @author MGD
+-- @modifier LMT
+-- @release 2010-12-03
+findBests = function( entities, tasks, companyTask , params, nbrFront, context, isMain, objectif )
+    local bestList = {}
+    local size = 1
+    local bestTask = nil
+    local bestTaskName = nil
+    local bestParams = nil
+    for _, entity in pairs( entities ) do
+        local efficiencyFind = false
+        local bestEfficiency = -1
+        local efficiency  = -1
+        local nTasks = #tasks
+        for i = 1, nTasks do
+            local taskName = tasks[i]
+            local task = integration.RetrievePionTask( entity, taskName ) -- Save the task object if  the entity can do it
+            if task then
+                efficiency = entity:computePhysicalEfficiencyForEffect( task:getPionEfficiency() ) -- Efficiency for this entity to do this task
+                if efficiency > bestEfficiency then
+                    efficiencyFind = true
+                    bestEfficiency = efficiency
+                    bestTask = task
+                    bestTaskName = taskName
+                end
+            end
+        end
+        if efficiencyFind then
+            bestList[size] = { entity = entity,
+                               task = bestTask,
+                               taskName = bestTaskName,
+                               efficiency = bestEfficiency }
+            size = size + 1
+        end
+    end
+    table.sort( bestList, comp ) -- Sort the list in order to have the couple entity/task with the best efficiency in first
+    if isMain then
+        if companyTask.distributeObjectives then
+            companyTask:distributeObjectives( bestList, params )
+        end
+        myself.leadData.nbrWithMainTask = #bestList
+    end
+    return fillParameters( bestList, companyTask, params, nbrFront, context, isMain, objectif )
+end
+
+-- @param entities A list of Company
+-- @param tasks A list of Task that we want to give
+-- @param companyTask The batallion's task
+-- @param params Parameters from the batallion's task
+-- @author LMT
+-- @release 2011-12-15
+fillParametersAutomat = function( bestList, companyTask, params, nbrFront )
+    local bestListNbrFront = {}
+    local findFront = 1
+    local current = 1
+    params.maxNbrFront = math.min( #bestList, nbrFront )
+    while findFront <= nbrFront and current <= params.maxNbrFront do
+       local paramsPion = bestList[current].task:fillParameters( companyTask, params, bestList[current].entity ) -- Save the parameter needed for the platoon task
+       if paramsPion then
+          bestListNbrFront[findFront] = bestList[current]
+          bestListNbrFront[findFront].params = paramsPion
+          findFront = findFront+1
+       end
+       current = current+1
+    end
+    return bestListNbrFront
+end
+
+-- @param entities A list of Company
+-- @param tasks A list of Task that we want to give
+-- @param companyTask The batallion's task
+-- @param params Parameters from the batallion's task
+-- @author LMT
+-- @release 2011-12-15
+findBestsAutomat = function( entities, tasks, companyTask , params, nbrFront )
+    local bestList = {}
+    local size = 1
+    for _, entity in pairs( entities ) do
+        local nTasks = #tasks
+        for i = 1, nTasks do
+            local taskName = tasks[i]
+            local task = integration.RetrieveAutomatInBatallionTask( entity, taskName ) -- Save the task object if  the entity can do it
+            if task then
+                bestList[size] = { entity = entity,
+                               task = task,
+                               taskName = taskName }
+                size = size + 1
+            end
+        end
+    end
+    return fillParametersAutomat( bestList, companyTask, params, nbrFront )
 end
 
 -- @param entities A list of PlatoonAlly

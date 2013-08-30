@@ -7,3 +7,20 @@ end
 
 integration.isReachingFor = function( self, objective )
 end
+
+getBetterReachingEfficiencyInList = function( elements, entity )
+    local nPosition = #elements
+    local bestPosition = -1
+    local currentPositionReach = -1 
+    local bestReturnPosition = nil
+    for i = 1, nPosition do
+        local position = elements[i]
+        currentPositionReach = position:reachEfficiency( entity )
+        local distance = integration.distance( position, entity)
+        if currentPositionReach > bestPosition then
+            bestPosition = currentPositionReach
+            bestReturnPosition = position
+        end
+    end
+    return bestReturnPosition
+end
