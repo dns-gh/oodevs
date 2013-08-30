@@ -178,13 +178,12 @@ integration.unitHasTransportationMission = function( unit, missionName )
 end
 
 local isAMissionForTransport = function( mission )
-        -- $$$$ LDC FIXME This should ask the mission task knowledge or something...
-        -- Except T_Mission_XXX: In order to be able to load directia 4 units
-        -- We should rather do something like :
-        -- local taskKnowledge = integration.taskKnowledge[ missionType ]
-        -- return taskKnowledge.isLoadMission and taskKnowledge:isLoadMission()
     if not mission then return false end
     local missionType =  integration.getAnyType( mission )
+    local taskKnowledge = integration.taskKnowledge[ missionType ]
+    if taskKnowledge and taskKnowledge.isLoadMission then
+        return taskKnowledge:isLoadMission()
+    end
     return mission ~= nil and ( 
            missionType == "T_Task_Pion_SeFaireTransporter" 
         or missionType == "T_Mission_Pion_SeFaireTransporter" 
