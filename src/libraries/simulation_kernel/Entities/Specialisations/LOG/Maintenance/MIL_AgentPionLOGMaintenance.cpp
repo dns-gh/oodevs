@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGMaintenance.h"
+#include "MissionController_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
@@ -21,8 +22,10 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGMaintenance* p
 {
     unsigned int nTypeID = pion->GetType().GetID();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
+    const MissionController_ABC* const controller = &pion->GetController();
     archive << nTypeID
-            << algorithmFactories;
+            << algorithmFactories
+            << controller;
 }
 
 template< typename Archive >
@@ -30,19 +33,25 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGMaintenance* pion, c
 {
     unsigned int nTypeID;
     AlgorithmsFactories* algorithmFactories = 0;
+    MissionController_ABC* controller = 0;
     archive >> nTypeID
-            >> algorithmFactories;
+            >> algorithmFactories
+            >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPionLOGMaintenance( *pType, *algorithmFactories );
+    ::new( pion ) MIL_AgentPionLOGMaintenance( *pType, *algorithmFactories, *controller );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOGMaintenance constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_AgentPionLOG_ABC( type,automate, algorithmFactories, xis )
+MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type,
+                                                          const AlgorithmsFactories& algorithmFactories,
+                                                          MissionController_ABC& controller,
+                                                          MIL_Automate& automate,
+                                                          xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, xis )
 {
 }
 
@@ -50,8 +59,12 @@ MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePio
 // Name: MIL_AgentPionLOGMaintenance constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name )
-    : MIL_AgentPionLOG_ABC( type,automate, algorithmFactories, name )
+MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type,
+                                                          const AlgorithmsFactories& algorithmFactories,
+                                                          MissionController_ABC& controller,
+                                                          MIL_Automate& automate,
+                                                          const std::string& name )
+    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller, automate, name )
 {
 }
 
@@ -59,8 +72,10 @@ MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePio
 // Name: MIL_AgentPionLOGMaintenance constructor
 // Created: JSR 2010-03-09
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
-    : MIL_AgentPionLOG_ABC( type, algorithmFactories )
+MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type,
+                                                          const AlgorithmsFactories& algorithmFactories,
+                                                          MissionController_ABC& controller )
+    : MIL_AgentPionLOG_ABC( type, algorithmFactories, controller )
 {
     // NOTHING
 }

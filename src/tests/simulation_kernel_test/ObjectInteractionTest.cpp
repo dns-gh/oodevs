@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "simulation_kernel/MissionController.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Decision/DEC_Model.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
@@ -89,6 +90,7 @@ namespace
             TER_World::DestroyWorld();
         }
         MIL_ObjectFactory factory;
+        MissionController controller;
         MockArmy army;
         MIL_Color color;
 
@@ -417,7 +419,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, Objec
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
     StubMIL_PopulationType popuType( model );
-    StubMIL_Population population( popuType, army );
+    StubMIL_Population population( popuType, controller, army );
 
     xml::xistringstream xisConcentration( "<population attitude='calme' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );
@@ -454,7 +456,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionPerception, ObjectCapac
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
     StubMIL_PopulationType popuType( model );
-    StubMIL_Population population( popuType, army );
+    StubMIL_Population population( popuType, controller, army );
 
     xml::xistringstream xisConcentration( "<population attitude='agressive' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );
@@ -491,7 +493,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionScattering, ObjectCapac
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
     StubMIL_PopulationType popuType( model );
-    StubMIL_Population population( popuType, army );
+    StubMIL_Population population( popuType, controller, army );
 
     xml::xistringstream xisConcentration( "<population attitude='agressive' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );

@@ -30,9 +30,10 @@
 // Name: MIL_PopulationOrderManager constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_AutomateOrderManager::MIL_AutomateOrderManager( MIL_Automate& automate )
-    : MIL_OrderManager_ABC()
-    , automate_( automate )
+MIL_AutomateOrderManager::MIL_AutomateOrderManager( MissionController_ABC& controller,
+                                                    MIL_Automate& automate )
+    : MIL_OrderManager_ABC( controller )
+    , automate_           ( automate )
 {
     // NOTHING
 }
@@ -50,7 +51,7 @@ MIL_AutomateOrderManager::~MIL_AutomateOrderManager()
 // Name: MIL_AutomateOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::OnReceiveMission( const sword::AutomatOrder& asnMsg )
+uint32_t MIL_AutomateOrderManager::OnReceiveMission( const sword::AutomatOrder& asnMsg )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( !automate_.IsEngaged() )
@@ -61,8 +62,10 @@ void MIL_AutomateOrderManager::OnReceiveMission( const sword::AutomatOrder& asnM
     const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::Find( asnMsg.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_mission );
-    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_AutomateMission( *pMissionType, automate_, asnMsg ) );
-    MIL_OrderManager_ABC::ReplaceMission( pMission );
+    uint32_t id = AcquireId();
+    auto mission = boost::make_shared< MIL_AutomateMission >( *pMissionType, automate_, id, asnMsg.parameters() );
+    MIL_OrderManager_ABC::ReplaceMission( mission );
+    return id;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,15 +74,15 @@ void MIL_AutomateOrderManager::OnReceiveMission( const sword::AutomatOrder& asnM
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 {
-    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_AutomateMission( type, automate_ ) );
-    MIL_OrderManager_ABC::ReplaceMission( pMission );
+    auto mission = boost::make_shared< MIL_AutomateMission >( type, automate_, AcquireId(), sword::MissionParameters() );
+    MIL_OrderManager_ABC::ReplaceMission( mission );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
+uint32_t MIL_AutomateOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
 {
     if( automate_.IsSurrendered() )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_surrendered );
@@ -90,10 +93,13 @@ void MIL_AutomateOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
+    uint32_t id = AcquireId();
     DEC_Representations& representation = automate_.GetRole<DEC_Representations>();
-    boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, automate_.GetKnowledge(), asn ) );
-    representation.AddToOrdersCategory( pFragOrder );
-    pFragOrder->Send( automate_ );
+    auto frag = boost::make_shared< MIL_FragOrder >( *pType, id );
+    frag->SetParameters( automate_.GetKnowledge(), asn.parameters() );
+    representation.AddToOrdersCategory( frag );
+    frag->Send( automate_ );
+    return id;
 }
 
 // -----------------------------------------------------------------------------
@@ -180,9 +186,9 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::MRT_CreatePionMis
         MT_LOG_ERROR( "MRT already activated for automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') - Mission '" << missionType.GetName() << "'", 4, __FUNCTION__ );
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
-    mrt_.SetMissionForPion( pion, pPionMission );
-    return pPionMission;
+    auto mission = boost::make_shared< MIL_PionMission >( missionType, pion, AcquireId(), pCurrentMission );
+    mrt_.SetMissionForPion( pion, mission );
+    return mission;
 }
 
 // -----------------------------------------------------------------------------
@@ -230,9 +236,9 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CDT_CreatePionMis
         MT_LOG_ERROR( "MRT not activated for automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "')", 4, __FUNCTION__ );
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission( new MIL_PionMission( missionType, pion, pCurrentMission ) );
-    preparedMissions_.insert( pPionMission );
-    return pPionMission;
+    auto mission = boost::make_shared< MIL_PionMission >( missionType, pion, AcquireId(), pCurrentMission );
+    preparedMissions_.insert( mission );
+    return mission;
 }
 
 // -----------------------------------------------------------------------------
@@ -254,9 +260,9 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
         MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission( new MIL_PionMission( missionType, pion, pCurrentMission ) );
-    preparedMissions_.insert( pPionMission );
-    return pPionMission;
+    auto mission = boost::make_shared< MIL_PionMission >( missionType, pion, AcquireId(), pCurrentMission );
+    preparedMissions_.insert( mission );
+    return mission;
 }
 
 // -----------------------------------------------------------------------------
@@ -273,9 +279,9 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
     //GGE pCurrentMission enlevé
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission( new MIL_PionMission( missionType, pion ) );
-    preparedMissions_.insert( pPionMission );
-    return pPionMission;
+    auto mission = boost::make_shared< MIL_PionMission >( missionType, pion, AcquireId(), sword::MissionParameters() );
+    preparedMissions_.insert( mission );
+    return mission;
 }
 
 // -----------------------------------------------------------------------------
@@ -307,10 +313,9 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMis
 {
     if( !automate.GetOrderManager().IsMissionAvailable( missionType ) )
         return boost::shared_ptr< MIL_Mission_ABC >();
-    auto pAutomateMission = boost::make_shared< MIL_AutomateMission >(
-        missionType, automate, GetCurrentMission() );
-    preparedMissions_.insert( pAutomateMission );
-    return pAutomateMission;
+    auto mission = boost::make_shared< MIL_AutomateMission >( missionType, automate, AcquireId(), GetCurrentMission() );
+    preparedMissions_.insert( mission );
+    return mission;
 }
 
 // -----------------------------------------------------------------------------
@@ -329,7 +334,7 @@ void MIL_AutomateOrderManager::GiveAutomateMission( boost::shared_ptr< MIL_Missi
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::GiveMissionToNewAutomat( MIL_Automate& automate, boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    boost::shared_ptr< MIL_Mission_ABC > newMission = static_cast< MIL_AutomateMission* >( mission.get() )->CreateCopy( automate );
+    auto newMission = static_cast< MIL_AutomateMission* >( mission.get() )->CreateCopy( automate, AcquireId() );
     mission->GetAutomate().GetOrderManager().CancelMission();
     automate.GetOrderManager().ReplaceMission( newMission );
 }

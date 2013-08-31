@@ -24,8 +24,12 @@
 // Name: MIL_AgentPionLOG_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_AgentPion   ( type, automate, algorithmFactories, xis )
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type,
+                                            const AlgorithmsFactories& algorithmFactories,
+                                            MissionController_ABC& controller,
+                                            MIL_Automate& automate,
+                                            xml::xistream& xis )
+    : MIL_AgentPion   ( type, algorithmFactories, controller, automate, xis )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     this->RegisterAction( pLogisticAction_ );
@@ -35,8 +39,12 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_A
 // Name: MIL_AgentPionLOG_ABC constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name )
-    : MIL_AgentPion   ( type, automate, algorithmFactories, name )
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type,
+                                            const AlgorithmsFactories& algorithmFactories,
+                                            MissionController_ABC& controller,
+                                            MIL_Automate& automate,
+                                            const std::string& name )
+    : MIL_AgentPion   ( type, algorithmFactories, controller, automate, name )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     this->RegisterAction( pLogisticAction_ );
@@ -46,8 +54,10 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_A
 // Name: MIL_AgentPionLOG_ABC constructor
 // Created: JSR 2010-03-09
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
-    : MIL_AgentPion   ( type, algorithmFactories )
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type,
+                                            const AlgorithmsFactories& algorithmFactories,
+                                            MissionController_ABC& controller )
+    : MIL_AgentPion   ( type, algorithmFactories, controller )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     this->RegisterAction( pLogisticAction_ );

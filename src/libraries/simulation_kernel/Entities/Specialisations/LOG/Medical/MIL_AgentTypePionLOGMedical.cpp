@@ -39,18 +39,24 @@ MIL_AgentTypePionLOGMedical::~MIL_AgentTypePionLOGMedical()
 // Name: MIL_AgentTypePionLOGMedical::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion(MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
+                                                             MissionController_ABC& controller,
+                                                             MIL_Automate& automate,
+                                                             xml::xistream& xis ) const
 {
-    return new MIL_AgentPionLOGMedical( *this, automate, algorithmFactories, xis );
+    return new MIL_AgentPionLOGMedical( *this, algorithmFactories, controller, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionLOGMedical::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( const AlgorithmsFactories& algorithmFactories,
+                                                             MissionController_ABC& controller,
+                                                             MIL_Automate& automate,
+                                                             const std::string& name ) const
 {
-    return new MIL_AgentPionLOGMedical( *this, automate, algorithmFactories, name );
+    return new MIL_AgentPionLOGMedical( *this, algorithmFactories, controller, automate, name );
 }
 
 // -----------------------------------------------------------------------------

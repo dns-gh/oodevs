@@ -12,6 +12,7 @@
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Ellipse.h"
+#include "MissionController.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
@@ -52,8 +53,8 @@ namespace
     struct Fixture : WorldFixture
     {
         Fixture()
-            : firerFixture ( effectManager )
-            , targetFixture( effectManager )
+            : firerFixture ( controller, effectManager )
+            , targetFixture( controller, effectManager )
             , vertices     ( boost::assign::list_of( MT_Vector2D( 0, 0 ) )( MT_Vector2D( 0, 2 ) )
                                                    ( MT_Vector2D( 2, 2 ) )( MT_Vector2D( 2, 0 ) ) )
             , xis          ( "<objects>"
@@ -78,6 +79,7 @@ namespace
             TER_Localisation localisation( TER_Localisation::ePolygon, vertices );
             urbanBlock->UpdateLocalisation( localisation );
         }
+        MissionController controller;
         MIL_EffectManager effectManager;
         FixturePion firerFixture;
         FixturePion targetFixture;

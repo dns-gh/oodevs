@@ -28,8 +28,8 @@ namespace xml
 class MIL_AgentPionLOGConvoy : public MIL_AgentPionLOG_ABC
 {
 public:
-             MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
-             MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
+             MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, const std::string& name );
+             MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller );
     virtual ~MIL_AgentPionLOGConvoy();
 
     //! @name CheckPoints

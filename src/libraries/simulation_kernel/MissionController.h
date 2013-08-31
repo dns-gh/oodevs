@@ -38,6 +38,7 @@ public:
     virtual void SendFullState();
     virtual void Start( boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > mission );
+    virtual uint32_t AcquireId();
     //@}
 
     //! @name CheckPoints
@@ -59,6 +60,7 @@ private:
     //@{
     T_Missions missions_;
     bool loaded_;
+    uint32_t counter_;
     //@}
 };
 

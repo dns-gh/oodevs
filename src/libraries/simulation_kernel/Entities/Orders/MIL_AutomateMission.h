@@ -12,11 +12,6 @@
 
 #include "MIL_Mission_ABC.h"
 
-namespace sword
-{
-    class AutomatOrder;
-}
-
 class MIL_Automate;
 
 // =============================================================================
@@ -30,9 +25,9 @@ class MIL_AutomateMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const sword::AutomatOrder& asn );
-             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const boost::shared_ptr< MIL_Mission_ABC > parent );
-             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, uint32_t id, const boost::shared_ptr< MIL_Mission_ABC >& parent );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, uint32_t id, const sword::MissionParameters& parameters );
+             MIL_AutomateMission( MIL_Automate& automate, const MIL_AutomateMission& rhs, uint32_t id );
     virtual ~MIL_AutomateMission();
     //@}
 
@@ -47,18 +42,13 @@ public:
     virtual void                 Stop                ( boost::shared_ptr< MIL_Mission_ABC > self );
             void                 GoToCdt             ( boost::shared_ptr< MIL_Mission_ABC > self );
     virtual bool                 IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
-    boost::shared_ptr< MIL_Mission_ABC > CreateCopy  ( MIL_Automate& target ) const;
+    boost::shared_ptr< MIL_Mission_ABC > CreateCopy  ( MIL_Automate& target, uint32_t id ) const;
     virtual void                 AffectDirection     ( const MT_Vector2D& direction );
 
     virtual void Send() const;
     //@}
 
 private:
-    //! @name Constructors/Destructor
-    //@{
-    MIL_AutomateMission( MIL_Automate& automate, const MIL_AutomateMission& rhs );
-    //@}
-
     //! @name Tools
     //@{
     void StartMrtBehavior();

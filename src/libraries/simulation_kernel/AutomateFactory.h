@@ -19,6 +19,7 @@ namespace sword
 }
 
 class MIL_IDManager;
+class MissionController_ABC;
 
 // =============================================================================
 /** @class  AutomateFactory
@@ -31,7 +32,7 @@ class AutomateFactory : public AutomateFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+             AutomateFactory( MIL_IDManager& idManager, MissionController_ABC& controller, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
     virtual ~AutomateFactory();
     //@}
 
@@ -51,7 +52,7 @@ private:
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ );
-    AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
+    AutomateFactory( MIL_IDManager& idManager, MissionController_ABC& controller, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
     //@}
 
 private:
@@ -61,33 +62,10 @@ private:
     unsigned int gcMult_;
     std::auto_ptr< sword::DEC_Logger > logger_;
     MIL_IDManager& idManager_;
+    MissionController_ABC& controller_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( AutomateFactory )
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ )
-{
-    const MIL_IDManager* const idManager = &factory->idManager_;
-    archive << idManager
-            << factory->gcPause_
-            << factory->gcMult_
-            << factory->logger_;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ )
-{
-    MIL_IDManager* idManager;
-    unsigned int gcPause;
-    unsigned int gcMult;
-    std::auto_ptr< sword::DEC_Logger > logger;
-    archive >> idManager
-            >> gcPause
-            >> gcMult
-            >> logger;
-    ::new( factory )AutomateFactory( *idManager, gcPause, gcMult, logger );
-}
 
 #endif // __AutomateFactory_h_

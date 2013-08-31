@@ -20,39 +20,17 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const sword::AutomatOrder& asn )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parameters(), automate.GetPosition() )
-    , automate_                ( automate )
-    , bDIAMrtBehaviorActivated_( false )
-    , bDIACdtBehaviorActivated_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateMission constructor
-// Created: NLD 2006-11-24
-// -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge() )
-    , automate_                ( automate )
-    , bDIAMrtBehaviorActivated_( false )
-    , bDIACdtBehaviorActivated_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateMission constructor
-// Created: NLD 2006-11-23
-// -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const boost::shared_ptr< MIL_Mission_ABC > parent )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), parent )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type,
+                                          MIL_Automate& automate,
+                                          uint32_t id,
+                                          const boost::shared_ptr< MIL_Mission_ABC >& parent )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), id, parent )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -64,8 +42,26 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate, const MIL_AutomateMission& rhs )
-    : MIL_Mission_ABC          ( automate.GetKnowledge(), rhs )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type,
+                                          MIL_Automate& automate,
+                                          uint32_t id,
+                                          const sword::MissionParameters& parameters )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), id, parameters, automate.GetPosition() )
+    , automate_                ( automate )
+    , bDIAMrtBehaviorActivated_( false )
+    , bDIACdtBehaviorActivated_( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateMission constructor
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate,
+                                          const MIL_AutomateMission& rhs,
+                                          uint32_t id )
+    : MIL_Mission_ABC          ( rhs, automate.GetKnowledge(), id )
     , automate_                ( automate)
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -86,9 +82,9 @@ MIL_AutomateMission::~MIL_AutomateMission()
 // Name: MIL_AutomateMission::CreateCopy
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateMission::CreateCopy( MIL_Automate& target ) const
+boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateMission::CreateCopy( MIL_Automate& target, uint32_t id ) const
 {
-    return boost::shared_ptr< MIL_Mission_ABC >( new MIL_AutomateMission( target, *this ) );
+    return boost::make_shared< MIL_AutomateMission >( target, *this, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,6 +169,7 @@ void MIL_AutomateMission::Send() const
     MIL_Mission_ABC::Serialize( *asn().mutable_parameters() );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *asn().mutable_start_time() );
     asn().set_name( GetName() );
+    asn().set_id( GetId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

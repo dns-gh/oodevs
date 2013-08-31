@@ -17,9 +17,9 @@ class MIL_AgentPion_Remote : public MIL_AgentPion
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
-             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
-             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
+             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, xml::xistream& xis );
+             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller, MIL_Automate& automate, const std::string& name );
+             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories, MissionController_ABC& controller );
     virtual ~MIL_AgentPion_Remote();
     //@}
     //! @name CheckPoints

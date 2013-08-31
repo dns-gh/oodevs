@@ -31,7 +31,7 @@ class MIL_OrderManager_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderManager_ABC();
+    explicit MIL_OrderManager_ABC( MissionController_ABC& controller );
     virtual ~MIL_OrderManager_ABC();
     //@}
 
@@ -47,13 +47,9 @@ public:
     virtual void StopAllMissions(); // synchronous
     //@}
 
-    //! @name Register
-    //@{
-    void Register( MissionController_ABC& pController );
-    //@}
-
     // @name Accessors
     //@{
+    virtual const MissionController_ABC& GetController() const;
     virtual MIL_LimaOrder* FindLima( const MIL_LimaFunction& function ) const;
     virtual MIL_LimaOrder* FindLima( unsigned int nID ) const;
     virtual std::vector< MIL_LimaOrder* > FindAllLimas( const MIL_LimaFunction& function ) const;
@@ -73,14 +69,15 @@ protected:
     //! @name Accessors
     //@{
     boost::shared_ptr< MIL_Mission_ABC > GetCurrentMission() const;
+    virtual uint32_t AcquireId() const;
     //@}
 
 private:
     //! @name Member Data
     //@{
+    MissionController_ABC& controller_;
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     boost::shared_ptr< MIL_Mission_ABC > pNextMission_;
-    MissionController_ABC* pController_;
     bool bNewMissionStarted_;
     //@}
 };

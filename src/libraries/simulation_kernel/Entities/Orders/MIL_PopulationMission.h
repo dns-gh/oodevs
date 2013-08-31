@@ -12,11 +12,6 @@
 
 #include "MIL_Mission_ABC.h"
 
-namespace sword
-{
-    class CrowdOrder;
-}
-
 class MIL_Population;
 
 // =============================================================================
@@ -30,8 +25,7 @@ class MIL_PopulationMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const sword::CrowdOrder& asn );
-            MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population );
+             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, uint32_t id, const sword::MissionParameters& parameters );
     virtual ~MIL_PopulationMission();
     //@}
 

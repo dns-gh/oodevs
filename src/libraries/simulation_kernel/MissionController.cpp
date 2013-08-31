@@ -23,7 +23,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MissionController )
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
 MissionController::MissionController()
-    : loaded_( false )
+    : loaded_ ( false )
+    , counter_( 1 )
 {
     // NOTHING
 }
@@ -44,7 +45,8 @@ MissionController::~MissionController()
 void MissionController::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MissionController_ABC >( *this )
-         >> missions_;
+         >> missions_
+         >> counter_;
     loaded_ = true;
 }
 
@@ -55,7 +57,8 @@ void MissionController::load( MIL_CheckPointInArchive& file, const unsigned int 
 void MissionController::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MissionController_ABC >( *this )
-         << missions_;
+         << missions_
+         << counter_;
 }
 
 // -----------------------------------------------------------------------------
@@ -112,4 +115,13 @@ void MissionController::SendFullState()
         BOOST_FOREACH( const T_Missions::value_type& mission, missions_ )
             if( mission.second )
                  mission.second->Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionController::AcquireId
+// Created: BAX 2013-08-27
+// -----------------------------------------------------------------------------
+uint32_t MissionController::AcquireId()
+{
+    return counter_++;
 }

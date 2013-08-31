@@ -23,10 +23,13 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
 
+class MissionController_ABC;
+
 struct FixturePion : private boost::noncopyable
 {
-    FixturePion( MIL_EffectManager& effectManager )
-        : effectManager_( effectManager )
+    FixturePion( MissionController_ABC& controller, MIL_EffectManager& effectManager )
+        : controller_   ( controller )
+        , effectManager_( effectManager )
     {
         PHY_RoePopulation::Initialize();
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
@@ -38,15 +41,16 @@ struct FixturePion : private boost::noncopyable
         MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
-        pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );
-        pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_, algorithmsFactories_, xis ) );
+        pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_, controller_ ) );
+        pPion_.reset( new StubMIL_AgentPion( *pType_, algorithmsFactories_, controller_, *pAutomat_, xis ) );
     }
     ~FixturePion()
     {
         PHY_RoePopulation::Terminate();
     }
-    AlgorithmsFactories                    algorithmsFactories_;
+    MissionController_ABC&                 controller_;
     MIL_EffectManager&                     effectManager_;
+    AlgorithmsFactories                    algorithmsFactories_;
     std::auto_ptr< DEC_Model >             pModel_;
     std::auto_ptr< StubMIL_AgentTypePion > pType_;
     std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;
@@ -56,7 +60,8 @@ struct FixturePion : private boost::noncopyable
 
 struct FixtureAutomate : private boost::noncopyable
 {
-    FixtureAutomate()
+    FixtureAutomate( MissionController_ABC& controller )
+        : controller_( controller )
     {
         PHY_RoePopulation::Initialize();
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
@@ -64,12 +69,13 @@ struct FixtureAutomate : private boost::noncopyable
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) ) );
         pType_.reset( new StubMIL_AutomateType( *pModel_ ) );
-        pAutomat_.reset( new StubMIL_Automate( *pType_ ) );
+        pAutomat_.reset( new StubMIL_Automate( *pType_, controller_ ) );
     }
     ~FixtureAutomate()
     {
         PHY_RoePopulation::Terminate();
     }
+    MissionController_ABC&                controller_;
     MIL_EffectManager                     effectManager_;
     std::auto_ptr< DEC_Model >            pModel_;
     std::auto_ptr< StubMIL_AutomateType > pType_;

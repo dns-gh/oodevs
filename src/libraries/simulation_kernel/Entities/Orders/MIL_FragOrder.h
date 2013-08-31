@@ -12,7 +12,6 @@
 
 namespace sword
 {
-    class FragOrder;
     class MissionParameters;
 }
 
@@ -55,14 +54,14 @@ class MIL_FragOrder : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::FragOrder& asn );
-             MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
-             MIL_FragOrder( const MIL_FragOrderType& type );
+             MIL_FragOrder( const MIL_FragOrderType& type, uint32_t id );
+             MIL_FragOrder( const MIL_FragOrderType& type, const MIL_FragOrder& rhs, uint32_t id );
     virtual ~MIL_FragOrder();
     //@}
 
     //! @name Operations
     //@{
+    void SetParameters( const DEC_KnowledgeResolver_ABC& resolver, const sword::MissionParameters& parameters );
     static void Register( sword::Brain& brain );
     static boost::shared_ptr< MIL_FragOrder > CreateFragOrder( std::string );
     void Send( MIL_AgentPion& pion ) const;
@@ -121,6 +120,7 @@ private:
     //! @name Member data
     //@{
     const MIL_FragOrderType& type_;
+    const uint32_t id_;
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
     //@}
 };

@@ -1205,6 +1205,8 @@ message UnitOrder {
     optional DateTime          start_time     = 6;
     //! optional name
     optional string            name           = 7;
+    //! unique order id
+    optional uint32            id             = 8;
 }
 
 /** @struct AutomatOrder
@@ -1225,6 +1227,8 @@ message AutomatOrder {
     optional DateTime          start_time     = 6;
     //! optional name
     optional string            name           = 7;
+    //! unique order id
+    optional uint32            id             = 8;
 }
 
 /** @struct CrowdOrder
@@ -1245,6 +1249,8 @@ message CrowdOrder {
     optional DateTime          start_time     = 6;
     //! optional name
     optional string            name           = 7;
+    //! unique order id
+    optional uint32            id             = 8;
 }
 
 /** @struct FragOrder
@@ -1265,6 +1271,8 @@ message FragOrder {
     optional DateTime          start_time     = 6;
     //! optional name
     optional string            name           = 7;
+    //! unique order id
+    optional uint32            id             = 8;
 }
 
 /** @struct ClientObjectProperty

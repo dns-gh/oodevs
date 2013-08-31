@@ -11,89 +11,91 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPion.h"
-#include "Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Roles/Humans/PHY_RolePion_Humans.h"
-#include "Roles/Dotations/PHY_RolePion_Dotations.h"
-#include "Roles/Network/NET_RolePion_Dotations.h"
-#include "Roles/Decision/DEC_RolePion_Decision.h"
-#include "Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Roles/Posture/PHY_RolePion_Posture.h"
-#include "Roles/Location/PHY_RoleInterface_Location.h"
-#include "Roles/Protection/PHY_RolePion_ActiveProtection.h"
-#include "Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
-#include "Roles/NBC/PHY_RolePion_NBC.h"
-#include "Roles/Communications/PHY_RolePion_Communications.h"
-#include "Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
-#include "Roles/Transported/PHY_RolePion_Transported.h"
-#include "Roles/Surrender/PHY_RolePion_Surrender.h"
-#include "Roles/Refugee/PHY_RolePion_Refugee.h"
-#include "Roles/Population/PHY_RolePion_Population.h"
-#include "Roles/Logistic/PHY_RoleInterface_Supply.h"
-#include "Roles/Logistic/PHY_RoleInterface_Maintenance.h"
-#include "Roles/Logistic/PHY_RoleInterface_Medical.h"
-#include "Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
-#include "Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
-#include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
-#include "Roles/Deployment/PHY_RoleInterface_Deployment.h"
-#include "Actions/Loading/PHY_RoleAction_Loading.h"
-#include "Actions/Objects/PHY_RoleAction_Objects.h"
-#include "Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
-#include "Actions/Flying/PHY_RoleAction_Flying.h"
+
+#include "Actions/CrowdTransport/PHY_RoleAction_CrowdTransport.h"
+#include "Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 #include "Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 #include "Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
+#include "Actions/Flying/PHY_RoleAction_Flying.h"
+#include "Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
+#include "Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
-#include "Actions/CrowdTransport/PHY_RoleAction_CrowdTransport.h"
 #include "Actions/Underground/PHY_RoleAction_MovingUnderground.h"
-#include "Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
-#include "Decision/DEC_PathFind_Manager.h"
-#include "Entities/Orders/MIL_Report.h"
-#include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
-#include "Entities/Agents/Units/PHY_UnitType.h"
-#include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
-#include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
-#include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
-#include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
-#include "Entities/Agents/Units/HumanFactors/PHY_Stress.h"
-#include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Entities/MIL_Army_ABC.h"
-#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h" 
-#include "Entities/Agents/Units/Logistic/PHY_BreakdownType.h"
+#include "Adapters/RoleAdapterInterface.h"
 #include "Decision/DEC_Model_ABC.h"
+#include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Workspace.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
+#include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
+#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
+#include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
+#include "Entities/Agents/Units/HumanFactors/PHY_Stress.h"
+#include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Agents/Units/Logistic/PHY_BreakdownType.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Entities/Orders/MIL_Report.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_Fire.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "MissionController_ABC.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Tools/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
-#include "Tools/MIL_AffinitiesMap.h"
-#include "Tools/MIL_DictionaryExtensions.h"
-#include "Tools/MIL_Tools.h"
-#include "Tools/MIL_Color.h"
-#include "Tools/MIL_HumanRepartition.h"
-#include "Tools/MIL_IDManager.h"
+#include "Roles/Communications/PHY_RolePion_Communications.h"
+#include "Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Roles/Decision/DEC_RolePion_Decision.h"
+#include "Roles/Deployment/PHY_RoleInterface_Deployment.h"
+#include "Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Roles/Humans/PHY_RolePion_Humans.h"
+#include "Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
+#include "Roles/Location/PHY_RoleInterface_Location.h"
+#include "Roles/Logistic/PHY_RoleInterface_Maintenance.h"
+#include "Roles/Logistic/PHY_RoleInterface_Medical.h"
+#include "Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Roles/NBC/PHY_RolePion_NBC.h"
+#include "Roles/Network/NET_RolePion_Dotations.h"
+#include "Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Roles/Population/PHY_RolePion_Population.h"
+#include "Roles/Posture/PHY_RolePion_Posture.h"
+#include "Roles/Protection/PHY_RolePion_ActiveProtection.h"
+#include "Roles/Refugee/PHY_RolePion_Refugee.h"
+#include "Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
+#include "Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
+#include "Roles/Transported/PHY_RolePion_Transported.h"
+#include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "MT_Tools/MT_FormatString.h"
-#include <boost/serialization/vector.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/foreach.hpp>
-#include <boost/make_shared.hpp>
-#include <vector>
-#include <tuple>
+#include "Tools/MIL_AffinitiesMap.h"
+#include "Tools/MIL_Color.h"
+#include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_HumanRepartition.h"
+#include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_Tools.h"
+#include "Tools/NET_AsnException.h"
 
-#include "Adapters/RoleAdapterInterface.h"
+#include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/serialization/vector.hpp>
+#include <tuple>
+#include <vector>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
@@ -101,7 +103,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 // Name: MIL_AgentPion constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories,
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
+                              const AlgorithmsFactories& algorithmFactories,
+                              MissionController_ABC& controller,
+                              MIL_Automate& automate,
                               xml::xistream& xis )
     : MIL_Agent_ABC( xis )
     , pType_               ( &type )
@@ -110,7 +115,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , brainDeleted_        ( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
+    , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
@@ -137,7 +142,11 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 // Name: MIL_AgentPion constructor
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
+                              const AlgorithmsFactories& algorithmFactories,
+                              MissionController_ABC& controller,
+                              MIL_Automate& automate,
+                              const std::string& name )
     : MIL_Agent_ABC( name )
     , pType_               ( &type )
     , bHasChanged_         ( false )
@@ -145,7 +154,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , brainDeleted_        ( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
+    , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap() )
     , pExtensions_         ( new MIL_DictionaryExtensions() )
@@ -161,7 +170,9 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 // Name: MIL_AgentPion constructor
 // Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type,
+                              const AlgorithmsFactories& algorithmFactories,
+                              MissionController_ABC& controller )
     : MIL_Agent_ABC( type.GetName() )
     , pType_               ( &type )
     , bHasChanged_         ( false )
@@ -169,7 +180,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , brainDeleted_        ( false )
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
+    , pOrderManager_       ( new MIL_PionOrderManager( controller, *this ) )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( 0 )
     , pExtensions_         ( 0 )
@@ -207,8 +218,10 @@ void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const uns
 {
     unsigned int nTypeID = pion->GetType().GetID();
     const AlgorithmsFactories* const algorithmFactories = &pion->algorithmFactories_;
+    const MissionController_ABC* const controller = &pion->GetController();
     archive << nTypeID
-            << algorithmFactories;
+            << algorithmFactories
+            << controller;
 }
 
 template< typename Archive >
@@ -216,11 +229,13 @@ void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned 
 {
     unsigned int nTypeID;
     AlgorithmsFactories* algorithmFactories = 0;
+    MissionController_ABC* controller = 0;
     archive >> nTypeID
-            >> algorithmFactories;
+            >> algorithmFactories
+            >> controller;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPion( *pType, *algorithmFactories );
+    ::new( pion ) MIL_AgentPion( *pType, *algorithmFactories, *controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -852,18 +867,18 @@ void MIL_AgentPion::SendKnowledge( unsigned int nCtx ) const
 // Name: MIL_AgentPion::OnReceiveOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveOrder( const sword::UnitOrder& msg )
+uint32_t MIL_AgentPion::OnReceiveOrder( const sword::UnitOrder& msg )
 {
-    pOrderManager_->OnReceiveMission( msg );
+    return pOrderManager_->OnReceiveMission( msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveFragOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveFragOrder( const sword::FragOrder& msg )
+uint32_t MIL_AgentPion::OnReceiveFragOrder( const sword::FragOrder& msg )
 {
-    pOrderManager_->OnReceiveFragOrder( msg );
+    return pOrderManager_->OnReceiveFragOrder( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1671,15 +1686,6 @@ void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::UnitMagicAction&
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::Register
-// Created: LGY 2011-06-14
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::Register( MissionController_ABC& pController )
-{
-    pOrderManager_->Register( pController );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::RegisterPath
 // Created: MMC 2013-05-22
 // -----------------------------------------------------------------------------
@@ -2237,4 +2243,13 @@ void MIL_AgentPion::SetKnowledge( DEC_KnowledgeBlackBoard_AgentPion* knowledge )
 void MIL_AgentPion::SetAutomate( MIL_Automate* automate )
 {
     pAutomate_ = automate;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetController
+// Created: BAX 2013-08-30
+// -----------------------------------------------------------------------------
+const MissionController_ABC& MIL_AgentPion::GetController() const
+{
+    return pOrderManager_->GetController();
 }

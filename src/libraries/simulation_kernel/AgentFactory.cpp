@@ -62,9 +62,8 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext )
 {
-    MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
+    MIL_AgentPion* pPion = type.InstanciatePion( *algorithmsFactories_, missionController_, automate, xis );
     type.RegisterRoles( *pPion, ext );
-    pPion->Register( missionController_ );
     return pPion;
 }
 
@@ -83,9 +82,8 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string& name, sword::RoleExtender_ABC* ext )
 {
-    MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, name );
+    MIL_AgentPion* pPion = type.InstanciatePion( *algorithmsFactories_, missionController_, automate, name );
     type.RegisterRoles( *pPion, ext );
-    pPion->Register( missionController_ );
     return pPion;
 }
 

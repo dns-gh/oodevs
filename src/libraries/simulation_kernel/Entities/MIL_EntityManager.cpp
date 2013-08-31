@@ -294,7 +294,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
                                                         : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, *populationFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), objectFactory.GetDangerousObjects() ) ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
-    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
+    , automateFactory_              ( new AutomateFactory( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
@@ -1068,7 +1068,7 @@ void MIL_EntityManager::OnReceiveUnitOrder( const UnitOrder& message, unsigned i
         MIL_AgentPion* pPion = FindAgentPion( message.tasker().id() );
         if( !pPion )
             throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
-        pPion->OnReceiveOrder( message );
+        ack().set_id( pPion->OnReceiveOrder( message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
@@ -1091,7 +1091,7 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
         MIL_Automate* pAutomate = FindAutomate( message.tasker().id() );
         if( !pAutomate )
             throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
-        pAutomate->OnReceiveOrder( message );
+        ack().set_id( pAutomate->OnReceiveOrder( message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
@@ -1444,7 +1444,7 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned
         MIL_Population* pPopulation = populationFactory_->Find( message.tasker().id() );
         if( !pPopulation )
             throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
-        pPopulation->OnReceiveOrder( message );
+        ack().set_id( pPopulation->OnReceiveOrder( message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
@@ -1468,17 +1468,17 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
         if( MIL_Automate* pAutomate = FindAutomate( taskerId ) )
         {
             ack().mutable_tasker()->mutable_automat()->set_id( taskerId );
-            pAutomate->OnReceiveFragOrder( message );
+            ack().set_id( pAutomate->OnReceiveFragOrder( message ) );
         }
         else if( MIL_Population* pPopulation = populationFactory_->Find( taskerId ) )
         {
             ack().mutable_tasker()->mutable_crowd()->set_id( taskerId );
-            pPopulation->OnReceiveFragOrder( message );
+            ack().set_id( pPopulation->OnReceiveFragOrder( message ) );
         }
         else if( MIL_AgentPion* pPion = FindAgentPion ( taskerId ) )
         {
             ack().mutable_tasker()->mutable_unit()->set_id( taskerId );
-            pPion->OnReceiveFragOrder( message );
+            ack().set_id( pPion->OnReceiveFragOrder( message ) );
         }
         else
             throw MASA_EXCEPTION_ASN( OrderAck::ErrorCode, OrderAck::error_invalid_unit );
@@ -2307,8 +2307,6 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     pObjectManager_->FinalizeObjects( *pFloodModel_ );
     missionController_.reset( missionController );
     missionController_->Initialize( *sink_, *populationFactory );
-    sink_->Apply( boost::bind( &MIL_AgentPion::Register, _1, boost::ref( *missionController_ ) ) );
-    populationFactory_->Apply( boost::bind( &MIL_Population::Register, _1, boost::ref( *missionController_ ) ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , sink_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );

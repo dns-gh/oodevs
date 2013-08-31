@@ -27,13 +27,13 @@ class MIL_MissionType_ABC;
 class MIL_PopulationOrderManager : public MIL_OrderManager_ABC
 {
 public:
-    explicit MIL_PopulationOrderManager( MIL_Population& population );
+    explicit MIL_PopulationOrderManager( MissionController_ABC& controller, MIL_Population& population );
     virtual ~MIL_PopulationOrderManager();
 
     // @name Events
     //@{
-    virtual void OnReceiveFragOrder( const sword::FragOrder& asn );
-            void OnReceiveMission  ( const sword::CrowdOrder& asn );
+    virtual uint32_t OnReceiveFragOrder( const sword::FragOrder& asn );
+            uint32_t OnReceiveMission  ( const sword::CrowdOrder& asn );
     //@}
 
     //! @name Operations

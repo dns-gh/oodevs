@@ -21,6 +21,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PionMission )
 
@@ -28,32 +29,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PionMission )
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const sword::UnitOrder& asn )
-    : MIL_Mission_ABC( type, pion.GetKnowledge(), asn.parameters(), pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
-    , pion_                 ( pion )
-    , bDIABehaviorActivated_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PionMission constructor
-// Created: NLD 2006-11-23
-// -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > parent )
-    : MIL_Mission_ABC( type, pion.GetKnowledge(), parent )
-    , pion_                 ( pion )
-    , bDIABehaviorActivated_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PionMission constructor
-// Created: NLD 2006-11-24
-// -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion )
-    : MIL_Mission_ABC( type, pion.GetKnowledge() )
+MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type,
+                                  MIL_AgentPion& pion,
+                                  uint32_t id,
+                                  const boost::shared_ptr< MIL_Mission_ABC >& parent )
+    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), id, parent )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -64,8 +44,26 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs )
-    : MIL_Mission_ABC( pion.GetKnowledge(), rhs )
+MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type,
+                                  MIL_AgentPion& pion,
+                                  uint32_t id,
+                                  const sword::MissionParameters& parameters )
+    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), id, parameters,
+                              pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
+    , pion_                 ( pion )
+    , bDIABehaviorActivated_( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission constructor
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion,
+                                 const MIL_PionMission& rhs,
+                                 uint32_t id )
+    : MIL_Mission_ABC       ( rhs, pion.GetKnowledge(), id )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -85,9 +83,9 @@ MIL_PionMission::~MIL_PionMission()
 // Name: MIL_PionMission::CreateCopy
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_Mission_ABC > MIL_PionMission::CreateCopy( MIL_AgentPion& target ) const
+boost::shared_ptr< MIL_Mission_ABC > MIL_PionMission::CreateCopy( MIL_AgentPion& target, uint32_t id ) const
 {
-    return boost::shared_ptr< MIL_Mission_ABC >( new MIL_PionMission( target, *this ) );
+    return boost::make_shared< MIL_PionMission >( target, *this, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,6 +154,7 @@ void MIL_PionMission::Send() const
     Serialize( *asn().mutable_parameters() );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *asn().mutable_start_time() );
     asn().set_name( GetName() );
+    asn().set_id( GetId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -190,8 +189,10 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PionMission* mission, const unsigned int /*version*/ )
 {
     const MIL_AgentPion* const pion = &mission->pion_;
-    unsigned int id = mission->type_.GetID();
+    unsigned int idType = mission->type_.GetID();
+    uint32_t id = mission->GetId();
     archive << pion
+            << idType
             << id;
 }
 
@@ -199,12 +200,14 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_PionMission* mission, const unsigned int /*version*/ )
 {
     MIL_AgentPion* pion = 0;
-    unsigned int id = 0;
+    unsigned int idType = 0;
+    uint32_t id = 0;
     archive >> pion
+            >> idType
             >> id;
-    const MIL_MissionType_ABC* type = MIL_PionMissionType::Find( id );
+    const MIL_MissionType_ABC* type = MIL_PionMissionType::Find( idType );
     assert( type );
-    ::new( mission )MIL_PionMission( *type, *pion );
+    ::new( mission ) MIL_PionMission( *type, *pion, id, boost::shared_ptr< MIL_Mission_ABC >() );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,10 +11,9 @@ class StubMIL_Mission_ABC : public MIL_Mission_ABC
 {
 public:
     StubMIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const std::string& param ="" )
-        : MIL_Mission_ABC( type, knowledgeResolver )
+        : MIL_Mission_ABC( type, knowledgeResolver, 0, boost::shared_ptr< MIL_Mission_ABC >() )
         , param_( param )
     {}
-    virtual ~StubMIL_Mission_ABC() {}
 
     virtual void Start( boost::shared_ptr< MIL_Mission_ABC > self ){};
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > self ){};

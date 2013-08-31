@@ -26,6 +26,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "StubTER_World.h"
 #include "MockAgent.h"
+#include "MissionController.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -87,6 +88,7 @@ namespace
         }
         xml::xistringstream xis;
         MockNET_Publisher_ABC publisher;
+        MissionController controller;
         MockArmy army;
         MockDEC_KnowledgeResolver_ABC resolver;
         MockMIL_EntityManager_ABC manager;
@@ -106,7 +108,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_AgentKnowledgeParameter, Fixture )
     DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
     StubMIL_AgentTypePion type( model );
     AlgorithmsFactories algorithmsFactories;
-    MIL_AgentPion pion( type, algorithmsFactories );
+    MIL_AgentPion pion( type, algorithmsFactories, controller );
     xml::xistringstream xisID( "<root id='35'/>" );
     MockAgent agent( xisID >> xml::start( "root" ) );
     MOCK_EXPECT( manager.FindAgentPion ).once().returns( &pion );
@@ -159,7 +161,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_PopulationKnowledgeParameter, Fixture )
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
     StubMIL_PopulationType type( model );
-    StubMIL_Population population( type, army );
+    StubMIL_Population population( type, controller, army );
     MOCK_EXPECT( manager.FindPopulation ).once().returns( &population );
     boost::shared_ptr< MIL_KnowledgeGroup > group(
         new MIL_KnowledgeGroup(
@@ -184,8 +186,9 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter )
     UnitId in;
     in.set_id( 12 );
     MockMIL_EntityManager_ABC entityManager;
+    MissionController controller;
     MIL_EffectManager effectManager;
-    FixturePion fixture( effectManager );
+    FixturePion fixture( controller, effectManager );
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, 100, 100, false ) );
     MOCK_EXPECT( entityManager.FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( in, entityManager );
@@ -204,7 +207,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter )
     AutomatId in;
     in.set_id( 0 );
     MockMIL_EntityManager_ABC entityManager;
-    FixtureAutomate fixture;
+    MissionController controller;
+    FixtureAutomate fixture( controller );
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
     MOCK_EXPECT( entityManager.FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_AutomatParameter param( in, entityManager );

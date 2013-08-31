@@ -26,6 +26,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
+#include <boost/make_shared.hpp>
 
 #define MASA_ORDER_EXCEPTION( ErrorId ) \
     MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::##ErrorId )
@@ -34,9 +35,10 @@
 // Name: MIL_PopulationOrderManager constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_PionOrderManager::MIL_PionOrderManager( MIL_AgentPion& pion )
-    : MIL_OrderManager_ABC()
-    , pion_             ( pion )
+MIL_PionOrderManager::MIL_PionOrderManager( MissionController_ABC& controller,
+                                            MIL_AgentPion& pion )
+    : MIL_OrderManager_ABC( controller )
+    , pion_               ( pion )
 {
     // NOTHING
 }
@@ -54,7 +56,7 @@ MIL_PionOrderManager::~MIL_PionOrderManager()
 // Name: MIL_PionOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
+uint32_t MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
@@ -72,8 +74,10 @@ void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( message.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw MASA_ORDER_EXCEPTION( error_invalid_mission );
-    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( *pMissionType, pion_, message ) );
-    MIL_OrderManager_ABC::ReplaceMission( pMission );
+    uint32_t id = AcquireId();
+    auto mission = boost::make_shared< MIL_PionMission >( *pMissionType, pion_, id, message.parameters() );
+    MIL_OrderManager_ABC::ReplaceMission( mission );
+    return id;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,15 +86,15 @@ void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
 // -----------------------------------------------------------------------------
 void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 {
-    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( type, pion_ ) );
-    MIL_OrderManager_ABC::ReplaceMission( pMission );
+    auto mission = boost::make_shared< MIL_PionMission >( type, pion_, AcquireId(), sword::MissionParameters() );
+    MIL_OrderManager_ABC::ReplaceMission( mission );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
+uint32_t MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
 {
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw MASA_ORDER_EXCEPTION( error_unit_surrendered );
@@ -102,9 +106,12 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw MASA_ORDER_EXCEPTION( error_invalid_frag_order );
     DEC_Representations& representation = pion_.GetRole<DEC_Representations>();
-    boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, pion_.GetKnowledge(), asn ) );
-    representation.AddToOrdersCategory( pFragOrder );
-    pFragOrder->Send( pion_ );
+    uint32_t id = AcquireId();
+    auto frag = boost::make_shared< MIL_FragOrder >( *pType, id );
+    frag->SetParameters( pion_.GetKnowledge(), asn.parameters() );
+    representation.AddToOrdersCategory( frag );
+    frag->Send( pion_ );
+    return id;
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +210,7 @@ bool MIL_PionOrderManager::RelievePion( const MIL_AgentPion& pion )
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = pion.GetOrderManager().GetCurrentMission();
     if( !pPionMission )
         return false;
-    boost::shared_ptr< MIL_Mission_ABC > newMission = static_cast< MIL_PionMission* >( pPionMission.get() )->CreateCopy( pion_ );
+    auto newMission = static_cast< MIL_PionMission* >( pPionMission.get() )->CreateCopy( pion_, AcquireId() );
     MIL_OrderManager_ABC::ReplaceMission( newMission );
     return true;
 }

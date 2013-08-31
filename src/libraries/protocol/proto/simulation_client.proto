@@ -87,6 +87,8 @@ message TaskCreationRequestAck {
     required Tasker             tasker     = 1;
     //! Reason for the failure of an agent order execution operation
     required OrderAck.ErrorCode error_code = 2;
+    //! Unique order identifier
+    optional uint32             id         = 3;
 }
 
 /** @struct FragOrderAck
@@ -104,6 +106,8 @@ message FragOrderAck {
     required OrderAck.ErrorCode error_code = 2;
     //! More detailed account of the returned error
     optional string             error_msg  = 3;
+    //! Unique order identifier
+    optional uint32             id         = 4;
 }
 
 //! Acknowledges an automat being engaged or disengaged.
