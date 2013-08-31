@@ -169,6 +169,7 @@ void EventDockWidget::Configure( E_EventTypes type, bool editing, bool purge )
     Fill();
     SetContentVisible( true );
     setVisible( true );
+    raise();
 }
 
 // -----------------------------------------------------------------------------
