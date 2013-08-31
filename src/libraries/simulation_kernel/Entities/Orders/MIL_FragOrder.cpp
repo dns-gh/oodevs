@@ -70,7 +70,7 @@ MIL_FragOrder::~MIL_FragOrder()
 void MIL_FragOrder::SetParameters( const DEC_KnowledgeResolver_ABC& resolver,
                                    const sword::MissionParameters& parameters )
 {
-    if( type_.GetParameters().size() != parameters.elem_size() )
+    if( static_cast< int >( type_.GetParameters().size() ) != parameters.elem_size() )
     {
         MT_LOG_ERROR_MSG( "Frag Order " << type_.GetName() << " invalid parameters" );
         throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
