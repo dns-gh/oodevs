@@ -94,8 +94,10 @@ func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	client.PostTimeout = 10 * time.Second
 	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
 		err error) error {
-		c.Fatal(err)
-		return err
+		if !c.Failed() {
+			c.Check(err, IsNil)
+		}
+		return nil
 	})
 	c.Assert(err, IsNil) // failed to connect to simulation
 	return client

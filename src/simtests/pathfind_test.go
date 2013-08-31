@@ -40,7 +40,7 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 	c.Assert(unit.PathPoints, Equals, uint32(0))
 
 	// Send moveTo mission
-	err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
 
 	// Check unit path is sent

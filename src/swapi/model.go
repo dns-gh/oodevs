@@ -141,6 +141,7 @@ var (
 		(*Model).handleAutomatChangeLogisticLinks,
 		(*Model).handleAutomatChangeSuperior,
 		(*Model).handleAutomatCreation,
+		(*Model).handleAutomatOrder,
 		(*Model).handleChangeDiplomacy,
 		(*Model).handleControlBeginTick,
 		(*Model).handleControlGlobalWeather,
@@ -155,9 +156,11 @@ var (
 		(*Model).handleCrowdFlowDestruction,
 		(*Model).handleCrowdFlowUpdate,
 		(*Model).handleCrowdKnowledgeCreation,
+		(*Model).handleCrowdOrder,
 		(*Model).handleCrowdUpdate,
 		(*Model).handleFormationChangeSuperior,
 		(*Model).handleFormationCreation,
+		(*Model).handleFragOrder,
 		(*Model).handleKnowledgeGroupCreation,
 		(*Model).handleKnowledgeGroupUpdate,
 		(*Model).handleLogSupplyQuotas,
@@ -169,6 +172,7 @@ var (
 		(*Model).handleUnitCreation,
 		(*Model).handleUnitDestruction,
 		(*Model).handleUnitKnowledgeCreation,
+		(*Model).handleUnitOrder,
 		(*Model).handleUnitPathfind,
 		(*Model).handleUrbanCreation,
 		(*Model).handleUrbanUpdate,
@@ -384,12 +388,25 @@ func (model *Model) GetUrban(id uint32) *Urban {
 	return u
 }
 
+func (model *Model) GetOrder(id uint32) *Order {
+	var o *Order
+	model.waitCommand(func(model *Model) {
+		order, ok := model.data.Orders[id]
+		if ok {
+			o = &Order{}
+			DeepCopy(o, order)
+		}
+	})
+	return o
+}
+
 func (model *Model) GetUnitKnowledge(groupId, id uint32) *UnitKnowledge {
 	var k *UnitKnowledge
 	model.waitCommand(func(model *Model) {
 		group := model.data.FindKnowledgeGroup(groupId)
 		if group != nil {
-			k = group.UnitKnowledges[id]
+			k = &UnitKnowledge{}
+			DeepCopy(k, group.UnitKnowledges[id])
 		}
 	})
 	return k

@@ -41,11 +41,11 @@ func (s *TestSuite) TestGenericMission(c *C) {
 		swapi.MakePointParam(to))
 
 	// Cannot send order with an invalid unit identifier
-	err = client.SendUnitOrder(InvalidIdentifier, MissionMoveId, params)
+	_, err = client.SendUnitOrder(InvalidIdentifier, MissionMoveId, params)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot send order to an engaged unit
-	err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsSwordError, "error_unit_cannot_receive_order")
 
 	// Should work with disengaged unit
@@ -56,11 +56,12 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	})
 
 	// Cannot order with an invalid mission identifier
-	err = client.SendUnitOrder(unit.Id, InvalidIdentifier, params)
+	_, err = client.SendUnitOrder(unit.Id, InvalidIdentifier, params)
 	c.Assert(err, IsSwordError, "error_invalid_mission")
 
-	err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	order, err := client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
+	c.Assert(order.Type, Equals, swapi.UnitOrder)
 }
 
 // Test we can send a automat mission and get a successful acknowledgement.
@@ -86,11 +87,11 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 		swapi.MakeNullValue())
 
 	// Cannot send order with an invalid unit identifier
-	err = client.SendAutomatOrder(InvalidIdentifier, MissionAutomatAttackId, params)
+	_, err = client.SendAutomatOrder(InvalidIdentifier, MissionAutomatAttackId, params)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot order with an invalid mission identifier
-	err = client.SendAutomatOrder(automat.Id, InvalidIdentifier, params)
+	_, err = client.SendAutomatOrder(automat.Id, InvalidIdentifier, params)
 	c.Assert(err, IsSwordError, "error_invalid_mission")
 
 	err = client.SetAutomatMode(automat.Id, false)
@@ -100,7 +101,7 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	})
 
 	// Cannot send order to an disengaged automat
-	err = client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
+	_, err = client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
 	c.Assert(err, IsSwordError, "error_unit_cannot_receive_order")
 
 	err = client.SetAutomatMode(automat.Id, true)
@@ -109,8 +110,9 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 		return !data.FindAutomat(automat.Id).Engaged
 	})
 
-	err = client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
+	order, err := client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
 	c.Assert(err, IsNil)
+	c.Assert(order.Type, Equals, swapi.AutomatOrder)
 }
 
 // Test we can send a crowd mission and get a successful acknowledgement.
@@ -132,13 +134,14 @@ func (s *TestSuite) TestCrowdMission(c *C) {
 		swapi.MakePointParam(to))
 
 	// Cannot send order with an invalid unit identifier
-	err = client.SendCrowdOrder(InvalidIdentifier, MissionMoveCrowdId, params)
+	_, err = client.SendCrowdOrder(InvalidIdentifier, MissionMoveCrowdId, params)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot order with an invalid mission identifier
-	err = client.SendCrowdOrder(crowd.Id, InvalidIdentifier, params)
+	_, err = client.SendCrowdOrder(crowd.Id, InvalidIdentifier, params)
 	c.Assert(err, IsSwordError, "error_invalid_mission")
 
-	err = client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
+	order, err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)
+	c.Assert(order.Type, Equals, swapi.CrowdOrder)
 }
