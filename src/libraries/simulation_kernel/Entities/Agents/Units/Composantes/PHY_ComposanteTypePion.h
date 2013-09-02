@@ -281,7 +281,6 @@ private:
     //@}
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadElement      ( xml::xistream& xis, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
     void InitializeBreakdownTypes( xml::xistream& xis );
     void ReadWeaponSystem        ( xml::xistream& xis );

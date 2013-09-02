@@ -16,14 +16,6 @@
 PHY_ResourceNetworkType::T_ResourceNetworkMap PHY_ResourceNetworkType::resourceNetworks_;
 unsigned int PHY_ResourceNetworkType::nNextId_ = 0;
 
-struct PHY_ResourceNetworkType::LoadingWrapper
-{
-    void ReadResourceNetwork( xml::xistream& xis )
-    {
-        PHY_ResourceNetworkType::ReadResourceNetwork( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ResourceNetworkType::Initialize
 // Created: JSR 2010-09-10
@@ -31,9 +23,8 @@ struct PHY_ResourceNetworkType::LoadingWrapper
 void PHY_ResourceNetworkType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing resource networks" );
-    LoadingWrapper loader;
     xis >> xml::start( "resource-networks" )
-            >> xml::list( "resource-network", loader, &LoadingWrapper::ReadResourceNetwork )
+            >> xml::list( "resource-network", &PHY_ResourceNetworkType::ReadResourceNetwork )
         >> xml::end;
 }
 

@@ -34,7 +34,6 @@ public:
 private:
     //! @name Ugly static initialization
     //@{
-    struct LoadingWrapper;
     static void InitializeConvoyUnitType( xml::xistream& xis );
     static void InitializeConvoyMission ( xml::xistream& xis );
     static void InitializeConvoyType    ( xml::xistream& xis );

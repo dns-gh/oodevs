@@ -37,14 +37,6 @@ const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "u1"     , eWoundedU1 , sword:
 const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "ue"     , eWoundedUE , sword::wounded_extreme_urgency );
 const PHY_HumanWound PHY_HumanWound::killed_    ( "dead"   , eKilled    , sword::dead                   );
 
-struct PHY_HumanWound::LoadingWrapper
-{
-    void ReadInjury( xml::xistream& xis, double& rFactorSum )
-    {
-        PHY_HumanWound::ReadInjury( xis, rFactorSum );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanWound::Initialize
 // Created: NLD 2004-08-13
@@ -86,9 +78,8 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
     xis >> xml::end;
 
     double rFactorSum = 0.;
-    LoadingWrapper loader;
     xis >> xml::start( "injuries" )
-            >> xml::list( "injury", loader, &LoadingWrapper::ReadInjury, rFactorSum )
+            >> xml::list( "injury", boost::bind( &PHY_HumanWound::ReadInjury, _1, boost::ref( rFactorSum ) ) )
         >> xml::end;
 
     if( std::fabs( 1. - rFactorSum ) > 0.01 )

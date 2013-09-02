@@ -16,14 +16,6 @@ PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::evacuationRes
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::collectionResourcesLevels_;
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::doctorsResourcesLevels_;
 
-struct PHY_MedicalResourcesAlarms::LoadingWrapper
-{
-    void ReadResourceLevel( xml::xistream& xis )
-    {
-        PHY_MedicalResourcesAlarms::ReadResourceLevel( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalResourcesAlarms::Initialize
 // Created: NLD 2006-08-02
@@ -31,10 +23,9 @@ struct PHY_MedicalResourcesAlarms::LoadingWrapper
 void PHY_MedicalResourcesAlarms::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing medical resources alarms" );
-    LoadingWrapper loader;
     xis >> xml::start( "health" )
             >> xml::start( "resource-availability-alerts" )
-                >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceLevel )
+                >> xml::list( "resource-availability-alert", &PHY_MedicalResourcesAlarms::ReadResourceLevel )
             >> xml::end
         >> xml::end;
 }

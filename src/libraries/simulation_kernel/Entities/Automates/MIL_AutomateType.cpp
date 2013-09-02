@@ -38,14 +38,6 @@ const MIL_AutomateType* MIL_AutomateType::Create( const std::string& strName, xm
     return new MIL_AutomateType( strName, xis );
 }
 
-struct MIL_AutomateType::LoadingWrapper
-{
-    void ReadAutomat( xml::xistream& xis )
-    {
-        MIL_AutomateType::ReadAutomat( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::Initialize
 // Created: NLD 2004-08-09
@@ -81,10 +73,8 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     automateTypeAllocators_[ "Automate Journalist"             ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Civilian"               ] = &MIL_AutomateType       ::Create;
 
-    LoadingWrapper loader;
-
     xis >> xml::start( "automats" )
-            >> xml::list( "automat", loader, &LoadingWrapper::ReadAutomat )
+            >> xml::list( "automat", &MIL_AutomateType::ReadAutomat )
         >> xml::end;
 }
 

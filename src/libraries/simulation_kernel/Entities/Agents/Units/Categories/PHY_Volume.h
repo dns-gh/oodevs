@@ -63,7 +63,6 @@ private:
     static unsigned int        nNextID_;
 
 private:
-    struct LoadingWrapper;
     static void ReadVolume( xml::xistream& xis );
 };
 

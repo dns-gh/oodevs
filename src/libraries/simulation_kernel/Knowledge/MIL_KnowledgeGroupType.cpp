@@ -19,14 +19,6 @@
 MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;
 unsigned int MIL_KnowledgeGroupType::nNextID_ = 0;
 
-struct MIL_KnowledgeGroupType::LoadingWrapper
-{
-    void ReadKnowledgeGroup( xml::xistream& xis, double timeFactor )
-    {
-        MIL_KnowledgeGroupType::ReadKnowledgeGroup( xis, timeFactor );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::InitializeWithTime
 // Created: NLD 2004-08-09
@@ -34,9 +26,8 @@ struct MIL_KnowledgeGroupType::LoadingWrapper
 void MIL_KnowledgeGroupType::InitializeWithTime( xml::xistream& xis, double timeFactor )
 {
     MT_LOG_INFO_MSG( "Initializing knowledge groups types" );
-    LoadingWrapper loader;
     xis >> xml::start( "knowledge-groups" )
-            >> xml::list( "knowledge-group", loader, &LoadingWrapper::ReadKnowledgeGroup, timeFactor )
+            >> xml::list( "knowledge-group", boost::bind( &MIL_KnowledgeGroupType::ReadKnowledgeGroup, _1, timeFactor ) )
         >> xml::end;
 }
 

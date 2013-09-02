@@ -16,18 +16,6 @@ MIL_MissionType_ABC::T_MissionIDMap   MIL_PionMissionType::missionIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_PionMissionType::missionDiaIDs_;
 MIL_MissionType_ABC::T_MissionNameMap MIL_PionMissionType::missionNames_;
 
-// =============================================================================
-// FACTORY
-// =============================================================================
-
-struct MIL_PionMissionType::LoadingWrapper
-{
-    void ReadMission( xml::xistream& xis )
-    {
-        MIL_MissionType_ABC::ReadMission< MIL_PionMissionType >( xis, missionIDs_, &missionDiaIDs_, missionNames_ );
-    }
-};
-
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMissionType::Initialize
 // Created: NLD 2006-11-19
@@ -35,10 +23,9 @@ struct MIL_PionMissionType::LoadingWrapper
 void MIL_PionMissionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing pion mission types" );
-    LoadingWrapper loader;
     xis >> xml::start( "missions" )
             >> xml::start( "units" )
-                >> xml::list( "mission", loader, &LoadingWrapper::ReadMission )
+                >> xml::list( "mission", boost::bind( &MIL_MissionType_ABC::ReadMission< MIL_PionMissionType >, _1, boost::ref( missionIDs_ ), &missionDiaIDs_, boost::ref( missionNames_ ) ) )
             >> xml::end
         >> xml::end;
 }

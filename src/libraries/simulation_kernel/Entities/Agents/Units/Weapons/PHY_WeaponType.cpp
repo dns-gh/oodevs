@@ -31,14 +31,6 @@
 
 PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 
-struct PHY_WeaponType::LoadingWrapper
-{
-    void ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time )
-    {
-        PHY_WeaponType::ReadWeapon( xis, time );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::Initialize
 // Created: NLD 2004-08-05
@@ -46,9 +38,8 @@ struct PHY_WeaponType::LoadingWrapper
 void PHY_WeaponType::Initialize( const MIL_Time_ABC& time, xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing weapon types" );
-    LoadingWrapper loader;
     xis >> xml::start( "weapons" )
-            >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, time )
+            >> xml::list( "weapon-system", boost::bind( &PHY_WeaponType::ReadWeapon, _1, boost::cref( time ) ) )
         >> xml::end;
 }
 

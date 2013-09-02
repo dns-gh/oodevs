@@ -70,7 +70,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadSensor    ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     void newSensorTypeAgent   ( xml::xistream& xis );
     void newSensorTypeObject  ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );

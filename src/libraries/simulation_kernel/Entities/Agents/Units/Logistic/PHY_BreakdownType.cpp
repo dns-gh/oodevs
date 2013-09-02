@@ -23,18 +23,6 @@
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
 unsigned int                      PHY_BreakdownType::nDiagnosticTime_ = 0;
 
-struct PHY_BreakdownType::LoadingWrapper
-{
-    void ReadCategory( xml::xistream& xis )
-    {
-        PHY_BreakdownType::ReadCategory( xis );
-    }
-    void ReadBreakdown( xml::xistream& xis, const PHY_MaintenanceLevel& maintenanceLevel )
-    {
-        PHY_BreakdownType::ReadBreakdown( xis, maintenanceLevel );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_BreakdownType::ConvertType
 // Created: NLD 2004-12-20
@@ -58,7 +46,6 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
     MT_LOG_INFO_MSG( "Initializing breakdown types" );
     double rTimeVal;
     std::string timeVal;
-    LoadingWrapper loader;
     xis >> xml::start( "breakdowns" )
             >> xml::start( "diagnosis" )
                 >> xml::attribute( "time", timeVal )
@@ -66,7 +53,7 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
     if( ! tools::DecodeTime( timeVal, rTimeVal ) || rTimeVal < 0 )
         xis.error( "diagnosis: time < 0" );
     nDiagnosticTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTimeVal );
-    xis >> xml::list( "category", loader, &LoadingWrapper::ReadCategory )
+    xis >> xml::list( "category", &PHY_BreakdownType::ReadCategory )
         >> xml::end;
 }
 
@@ -83,8 +70,7 @@ void PHY_BreakdownType::ReadCategory( xml::xistream& xis )
     PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.find( categoryType );
     const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
 
-    LoadingWrapper loader;
-    xis >> xml::list( "breakdown", loader, &LoadingWrapper::ReadBreakdown, maintenanceLevel );
+    xis >> xml::list( "breakdown", boost::bind( &PHY_BreakdownType::ReadBreakdown, _1, boost::cref( maintenanceLevel ) ) );
 }
 
 // -----------------------------------------------------------------------------

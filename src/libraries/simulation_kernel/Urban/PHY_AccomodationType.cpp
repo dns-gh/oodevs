@@ -13,14 +13,6 @@
 
 PHY_AccomodationType::T_AccomodationMap PHY_AccomodationType::accomodations_;
 
-struct PHY_AccomodationType::LoadingWrapper
-{
-    void ReadAccomodation( xml::xistream& xis )
-    {
-        PHY_AccomodationType::ReadAccomodation( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_AccomodationType::Initialize
 // Created: JSR 2011-02-17
@@ -28,10 +20,9 @@ struct PHY_AccomodationType::LoadingWrapper
 void PHY_AccomodationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing accomodations" );
-    LoadingWrapper loader;
     xis >> xml::start( "urban" )
             >> xml::optional >> xml::start( "accommodations" )
-                >> xml::list( "accommodation", loader, &LoadingWrapper::ReadAccomodation )
+                >> xml::list( "accommodation", &PHY_AccomodationType::ReadAccomodation )
             >> xml::end
         >> xml::end;
 }

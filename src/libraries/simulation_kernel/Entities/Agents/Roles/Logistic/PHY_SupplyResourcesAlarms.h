@@ -49,7 +49,6 @@ private:
     //@}
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadResourceAvailabilityAlert ( xml::xistream& xis );
     //@}
 

@@ -135,7 +135,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadPopulation( xml::xistream& xis );
     void ReadSlowingEffect    ( xml::xistream& xis );
     void ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlowDownData& volumeSlowDownData );

@@ -50,7 +50,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadFragorder( xml::xistream& xis );
     //@}
 

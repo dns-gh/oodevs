@@ -65,7 +65,6 @@ private:
 
     //! @name Helper
     //@{
-    struct LoadingWrapper;
     static void ReadKnowledgeGroup( xml::xistream& xis, double timeFactor );
     //@}
 

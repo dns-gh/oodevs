@@ -28,14 +28,6 @@ double MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
 double MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
 double MIL_PopulationType::delay_                       = 0u;
 
-struct MIL_PopulationType::LoadingWrapper
-{
-    void ReadPopulation( xml::xistream& xis )
-    {
-        MIL_PopulationType::ReadPopulation( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::Initialize
 // Created: NLD 2004-08-05
@@ -61,8 +53,7 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
     if( rEffectReloadingTimeFactor_ < 1 )
         xis.error( "reloading-time-effect: modifier < 1" );
 
-    LoadingWrapper loader;
-    xis     >> xml::list( "population", loader, &LoadingWrapper::ReadPopulation )
+    xis >> xml::list( "population", &MIL_PopulationType::ReadPopulation )
         >> xml::end;
 }
 

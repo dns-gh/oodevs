@@ -51,7 +51,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadAccomodation( xml::xistream& xis );
     //@}
 

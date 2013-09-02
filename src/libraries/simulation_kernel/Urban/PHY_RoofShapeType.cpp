@@ -13,14 +13,6 @@
 
 PHY_RoofShapeType::T_RoofShapeMap PHY_RoofShapeType::roofShapes_;
 
-struct PHY_RoofShapeType::LoadingWrapper
-{
-    void ReadRoofShape( xml::xistream& xis )
-    {
-        PHY_RoofShapeType::ReadRoofShape( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoofShapeType::Initialize
 // Created: JSR 2011-02-17
@@ -28,11 +20,10 @@ struct PHY_RoofShapeType::LoadingWrapper
 void PHY_RoofShapeType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing roof shapes" );
-    LoadingWrapper loader;
     xis >> xml::start( "urban" )
             >> xml::start( "urban-block-types" )
                 >> xml::start( "roof-shape-types" )
-                    >> xml::list( "roof-shape-type", loader, &LoadingWrapper::ReadRoofShape )
+                    >> xml::list( "roof-shape-type", &PHY_RoofShapeType::ReadRoofShape )
                 >> xml::end
             >> xml::end
         >> xml::end;

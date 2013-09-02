@@ -84,7 +84,6 @@ private:
 private:
     //! @name Static Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadStress( xml::xistream& xis );
     //@}
 

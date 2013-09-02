@@ -48,11 +48,6 @@ private:
     virtual ~MIL_AutomateMissionType();
     //@}
 
-    //! @name Helpers
-    //@{
-    struct LoadingWrapper;
-    //@}
-
 private:
     std::string strDIAMrtBehavior_;
     std::string strDIACdtBehavior_;

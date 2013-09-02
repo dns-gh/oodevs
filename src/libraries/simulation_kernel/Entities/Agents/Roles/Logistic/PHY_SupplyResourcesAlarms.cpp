@@ -14,14 +14,6 @@
 
 PHY_SupplyResourcesAlarms::T_LevelSet PHY_SupplyResourcesAlarms::convoyTransporterResourcesLevels_;
 
-struct PHY_SupplyResourcesAlarms::LoadingWrapper
-{
-    void ReadResourceAvailabilityAlert ( xml::xistream& xis )
-    {
-        PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyResourcesAlarms::Initialize
 // Created: NLD 2006-08-02
@@ -29,10 +21,9 @@ struct PHY_SupplyResourcesAlarms::LoadingWrapper
 void PHY_SupplyResourcesAlarms::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing supply resources alarms" );
-    LoadingWrapper loader;
     xis >> xml::start( "supply" )
             >> xml::start( "resource-availability-alerts" )
-                >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceAvailabilityAlert )
+                >> xml::list( "resource-availability-alert", &PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert )
             >> xml::end
         >> xml::end;
 }

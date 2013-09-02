@@ -114,7 +114,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadUnitRule( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
     void ReadObject         ( xml::xistream& xis );
     void ReadTerrain        ( xml::xistream& xis, TerrainData& data );

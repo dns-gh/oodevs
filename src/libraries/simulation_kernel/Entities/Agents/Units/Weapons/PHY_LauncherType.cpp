@@ -18,14 +18,6 @@
 
 PHY_LauncherType::T_LauncherTypeMap PHY_LauncherType::launcherTypes_;
 
-struct PHY_LauncherType::LoadingWrapper
-{
-    void ReadLauncher( xml::xistream& xis )
-    {
-        PHY_LauncherType::ReadLauncher( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_LauncherType::Initialize
 // Created: NLD 2004-08-04
@@ -33,9 +25,8 @@ struct PHY_LauncherType::LoadingWrapper
 void PHY_LauncherType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing launcher types" );
-    LoadingWrapper loader;
     xis >> xml::start( "launchers" )
-            >> xml::list( "launcher", loader, &LoadingWrapper::ReadLauncher )
+            >> xml::list( "launcher", &PHY_LauncherType::ReadLauncher )
         >> xml::end;
 }
 

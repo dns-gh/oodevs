@@ -49,11 +49,6 @@ public:
 private:
     friend class MIL_MissionType_ABC;
 
-    //! @name Helpers
-    //@{
-    struct LoadingWrapper;
-    //@}
-
 private:
     std::string strDIABehavior_;
 

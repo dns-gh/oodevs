@@ -23,24 +23,14 @@
 PHY_SensorType::T_SensorTypeMap PHY_SensorType::sensorTypes_;
 unsigned int PHY_SensorType::nNextID_ = 0;
 
-struct PHY_SensorType::LoadingWrapper
-{
-    void ReadSensor( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
-    {
-        PHY_SensorType::ReadSensor( xis, resolver );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorType::Initialize
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 void PHY_SensorType::Initialize( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
-    LoadingWrapper loader;
-
     xis >> xml::start( "sensors" )
-            >> xml::list( "sensor", loader, &LoadingWrapper::ReadSensor, resolver )
+            >> xml::list( "sensor", boost::bind( &PHY_SensorType::ReadSensor, _1, boost::cref( resolver ) ) )
         >> xml::end;
 }
 

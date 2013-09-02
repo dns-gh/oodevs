@@ -30,22 +30,6 @@ const MIL_MissionType_ABC* SupplyConvoyConfig::convoyMissionType_ = 0;
 const SupplyConvoyFactory_ABC* SupplyConvoyConfig::stockSupplyConvoyFactory_    = &SupplyConvoyRealFactory::Instance();
 const SupplyConvoyFactory_ABC* SupplyConvoyConfig::dotationSupplyConvoyFactory_ = &SupplyConvoyVirtualFactory::Instance();
 
-// =============================================================================
-// Ugly static initialization
-// =============================================================================
-
-struct SupplyConvoyConfig::LoadingWrapper
-{
-    void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction& data, std::pair< unsigned int, double >& upperBound )
-    {
-        SupplyConvoyConfig::ReadInterpolatedTime( xis, data, upperBound );
-    }
-    void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, double >& upperBound )
-    {
-        SupplyConvoyConfig::ReadSpeedModifier( xis, upperBound );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoyConfig::Initialize
 // Created: NLD 2005-01-27
@@ -139,11 +123,10 @@ void SupplyConvoyConfig::InitializeConvoyType( xml::xistream& xis )
 void SupplyConvoyConfig::InitializeInterpolatedTime( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction& data )
 {
     data.AddNewPoint( 0., 0. );
-    LoadingWrapper loader;
 
     std::pair< unsigned int, double > upperBound( 0, 0.f );
     xis >> xml::start( strTagName )
-            >> xml::list( "unit-time", loader, &LoadingWrapper::ReadInterpolatedTime, data, upperBound )
+            >> xml::list( "unit-time", boost::bind( &SupplyConvoyConfig::ReadInterpolatedTime, _1, boost::ref( data ), boost::ref( upperBound ) ) )
         >> xml::end;
 
     data.SetAfterValue( upperBound.second );
@@ -183,12 +166,11 @@ void SupplyConvoyConfig::ReadInterpolatedTime( xml::xistream& xis, MT_Interpolat
 void SupplyConvoyConfig::InitializeSpeedModificators( xml::xistream& xis )
 {
     coefSpeedModificator_.AddNewPoint( 0., 0. );
-    LoadingWrapper loader;
 
     std::pair< unsigned int, double > upperBound( 0, 0.f );
 
     xis >> xml::start( "speed-modifiers" )
-            >> xml::list( "speed-modifier", loader, &LoadingWrapper::ReadSpeedModifier, upperBound )
+            >> xml::list( "speed-modifier", boost::bind( &SupplyConvoyConfig::ReadSpeedModifier, _1, boost::ref( upperBound ) ) )
         >> xml::end;
 
     coefSpeedModificator_.SetAfterValue( upperBound.second );

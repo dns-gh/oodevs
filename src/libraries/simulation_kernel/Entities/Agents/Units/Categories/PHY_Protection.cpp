@@ -32,14 +32,6 @@ PHY_Protection::T_HumanEffect::T_HumanEffect()
     // NOTHING
 }
 
-struct PHY_Protection::LoadingWrapper
-{
-    void ReadProtection( xml::xistream& xis )
-    {
-        PHY_Protection::ReadProtection( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Protection::Initialize
 // Created: NLD 2004-08-04
@@ -47,9 +39,8 @@ struct PHY_Protection::LoadingWrapper
 void PHY_Protection::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing protections" );
-    LoadingWrapper loader;
     xis >> xml::start( "protections" )
-            >> xml::list( "protection", loader, &LoadingWrapper::ReadProtection )
+            >> xml::list( "protection", &PHY_Protection::ReadProtection )
         >> xml::end;
 }
 

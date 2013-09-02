@@ -14,14 +14,6 @@
 PHY_MaterialCompositionType::T_MaterialCompositionMap PHY_MaterialCompositionType::materialCompositions_;
 unsigned int PHY_MaterialCompositionType::nNextId_ = 0;
 
-struct PHY_MaterialCompositionType::LoadingWrapper
-{
-    void ReadMaterialComposition( xml::xistream& xis )
-    {
-        PHY_MaterialCompositionType::ReadMaterialComposition( xis );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MaterialCompositionType::AttritionData constructor
 // Created: JSR 2011-02-17
@@ -42,11 +34,10 @@ PHY_MaterialCompositionType::AttritionData::AttritionData( const std::string& pr
 void PHY_MaterialCompositionType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing material compositions" );
-    LoadingWrapper loader;
     xis >> xml::start( "urban" )
             >> xml::start( "urban-block-types" )
                 >> xml::start( "material-composition-types" )
-                    >> xml::list( "material-composition-type", loader, &LoadingWrapper::ReadMaterialComposition )
+                    >> xml::list( "material-composition-type", &PHY_MaterialCompositionType::ReadMaterialComposition )
                 >> xml::end
             >> xml::end
         >> xml::end;

@@ -41,14 +41,6 @@
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 
-struct PHY_ComposanteTypePion::LoadingWrapper
-{
-    void ReadElement( xml::xistream& xis, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
-    {
-        PHY_ComposanteTypePion::ReadElement( xis, time, resolver );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::sNTICapability::CanRepair
 // Created: NLD 2004-12-23
@@ -74,9 +66,8 @@ bool PHY_ComposanteTypePion::sNTICapability::CanRepair( const PHY_Breakdown& bre
 void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
     MT_LOG_INFO_MSG( "Initializing composante types" );
-    LoadingWrapper loader;
     xis >> xml::start( "equipments" )
-            >> xml::list( "equipment", loader, &LoadingWrapper::ReadElement, time, resolver )
+            >> xml::list( "equipment", boost::bind( &PHY_ComposanteTypePion::ReadElement, _1, boost::cref( time ), boost::cref( resolver ) ) )
         >> xml::end;
 }
 

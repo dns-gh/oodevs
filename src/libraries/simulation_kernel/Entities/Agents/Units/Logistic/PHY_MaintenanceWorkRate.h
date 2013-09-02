@@ -68,7 +68,6 @@ private:
 
     //! @name Init
     //@{
-    struct LoadingWrapper;
     static void ReadWorkRate( xml::xistream& xis );
     //@}
 

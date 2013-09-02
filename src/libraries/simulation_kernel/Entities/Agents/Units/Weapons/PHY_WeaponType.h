@@ -117,7 +117,6 @@ private:
 
     //! @name Helpers
     //@{
-    struct LoadingWrapper;
     static void ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time );
     void ReadDirect       ( xml::xistream& xis );
     void ReadIndirect     ( xml::xistream& xis, double timeFactor );

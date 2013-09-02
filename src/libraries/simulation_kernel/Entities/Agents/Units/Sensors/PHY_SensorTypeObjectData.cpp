@@ -27,14 +27,6 @@
 
 #include <xeumeuleu/xml.hpp>
 
-struct PHY_SensorTypeObjectData::LoadingWrapper
-{
-    void ReadPosture( xml::xistream& xis, const PHY_Posture::T_PostureMap& container, PHY_SensorTypeObjectData::T_FactorVector& factors )
-    {
-        PHY_SensorTypeObjectData::ReadPosture( xis, container, factors );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObjectData::InitializeFactors
 // Created: NLD 2004-08-06
@@ -42,10 +34,8 @@ struct PHY_SensorTypeObjectData::LoadingWrapper
 template<>
 void PHY_SensorTypeObjectData::InitializeFactors( const PHY_Posture::T_PostureMap& container, const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis )
 {
-    LoadingWrapper loader;
-
     xis >> xml::start( strTagName )
-            >> xml::list( "distance-modifier", loader, &LoadingWrapper::ReadPosture, container, factors )
+            >> xml::list( "distance-modifier", boost::bind( &PHY_SensorTypeObjectData::ReadPosture, _1, boost::cref( container ), boost::ref( factors ) ) )
         >> xml::end;
 }
 
