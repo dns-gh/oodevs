@@ -78,5 +78,5 @@ end
 
 integration.stopSealOffUrbanBlock = function( urbanBlock )
     local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
-    return startedSealOffLocation( buArea, urbanBlock )
+    return stopSealOffLocation( buArea, urbanBlock )
 end

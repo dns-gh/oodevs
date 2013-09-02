@@ -77,15 +77,25 @@ local treatIndirectFireFragOrder = function ( )
     return params
 end
 
+local isApplyFireOrder = function( order )
+    local orderType = integration.getAnyType( order )
+    local taskKnowledge = integration.taskKnowledge[ orderType ]
+    if taskKnowledge and taskKnowledge.isApplyFire then
+        return taskKnowledge:isApplyFire()
+    end
+    if orderType == "platoon.combat.support.art.tasks.AppliquerFeux" 
+        or orderType == "Rep_OrderConduite_Pion_AppliquerFeux" 
+        or orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
+        return true
+    end
+    return false
+end
+
 integration.query.getFirstFireOrder = function( )
     local ordres_recus = DEC_GetOrdersCategory()
     local integration = integration
     for _, x in pairs( ordres_recus or emptyTable ) do
-        local orderType = integration.getAnyType( x )
-        -- $$$$ LDC FIXME We should query the task knowledge if possible
-        if orderType == "platoon.combat.support.art.tasks.AppliquerFeux" 
-           or orderType == "Rep_OrderConduite_Pion_AppliquerFeux" 
-           or orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
+        if isApplyFireOrder( x ) then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
             DEC_RemoveFromOrdersCategory( x )
             DEC_DeleteRepresentation( x )

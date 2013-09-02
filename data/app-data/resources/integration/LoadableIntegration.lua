@@ -197,7 +197,7 @@ local readyForLoad = function( knowledge, distanceMin, area, mission )
     if not distanceMin then
         distanceMin = 100
     end
-    if isTransportMission( mission ) then
+    if isAMissionForTransport( mission ) then
         if ( distanceMin == -1 and integration.isPointInLocalisation( unit, area ) ) or 
            ( DEC_Geometrie_Distance( meKnowledge:getPosition(), knowledge:getPosition() ) < distanceMin ) then
             return true 
