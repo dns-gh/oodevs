@@ -48,16 +48,6 @@ void CrashHandler( EXCEPTION_POINTERS* exception )
 }  // namespace
 
 //-----------------------------------------------------------------------------
-// Name: SetLowFragmentationHeapAlgorithm
-// Created: NLD 2006-01-20
-// -----------------------------------------------------------------------------
-void SetLowFragmentationHeapAlgorithm()
-{
-    ULONG ulHeapCompatibilityInformation = 2;
-    HeapSetInformation( GetProcessHeap(), HeapCompatibilityInformation, &ulHeapCompatibilityInformation, sizeof(ulHeapCompatibilityInformation) );
-}
-
-//-----------------------------------------------------------------------------
 // Name: Run()
 // Created: NLD 2004-02-04
 //-----------------------------------------------------------------------------
@@ -111,9 +101,6 @@ int main( int /*argc*/, char* /*argv*/[] )
             maxConnections = 1;
         }
 #endif
-
-        // Fragmentation heap
-        SetLowFragmentationHeapAlgorithm();
 
         // Float exceptions
         unsigned int control_word;
