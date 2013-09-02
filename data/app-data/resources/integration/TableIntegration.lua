@@ -126,3 +126,18 @@ function clearTable ( table )
         table[ k ] = nil
     end
 end
+
+--- Returns the inverse of the table given in parameter
+-- For instance : if tableFrom = { 1 = "a", 2 = "b", 3 = "a" },
+-- then the function returns { "a" = { 1, 3 }, "b" = { 2 } }
+-- @param tableFrom: the table
+-- @author NMI
+-- @release 2013-09-02 
+integration.inverseTable = function ( tableFrom )
+    local tableTo = {}
+    for k, v in pairs( tableFrom ) do
+        tableTo[ v ] = tableTo[ v ] or {}
+        tableTo[ v ][ #tableTo[ v ] + 1 ] = k
+    end
+    return tableTo
+end
