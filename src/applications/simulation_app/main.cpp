@@ -63,11 +63,12 @@ int main( int /*argc*/, char* /*argv*/[] )
 
     boost::scoped_ptr< SIM_App > app;
     int nResult = EXIT_FAILURE;
-    int maxConnections = 1;
+
     // verbose mode
     bool verbose = winArgs.HasOption( "--verbose" ) || winArgs.HasOption( "--verbose=true" ) ;
     try
     {
+        int maxConnections = 0;
         // Check license
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         license_gui::LicenseDialog::CheckLicense( "sword-runtime", !verbose );
