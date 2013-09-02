@@ -21,8 +21,8 @@
 #include "protocol/proto/common.pb.h"
 #pragma warning( pop )
 
-#include <geocoord/Geodetic.h>
-#include <geocoord/PlanarCartesian.h>
+#include <geometry/Types.h>
+
 #include <hla/Deserializer_ABC.h>
 #include <hla/Serializer_ABC.h>
 #include <hla/AttributeIdentifier.h>
@@ -60,6 +60,41 @@ void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& 
 void ReadSpatial( ::hla::Deserializer_ABC& , const std::string& , ObjectListener_ABC& , Spatial&  )
 {
 }
+void ReadMaterial( ::hla::Deserializer_ABC& deserializer, const std::string& , ObjectListener_ABC& , uint32_t& material)
+{
+    deserializer >> material;
+}
+void ReadTime( ::hla::Deserializer_ABC& deserializer, const std::string& , ObjectListener_ABC& , uint64_t& time)
+{
+    deserializer >> time;
+}
+void ReadHazardType(::hla::Deserializer_ABC& deserializer, const std::string& , ObjectListener_ABC& , uint8_t hazardType )
+{
+    deserializer >> hazardType;
+}
+void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, std::vector< RawDataHazardContour >& contours )
+{
+    contours.clear();
+    uint32_t sz=0;
+    deserializer >> sz;
+    contours.resize( sz );
+    deserializer >> contours;
+    if( contours.size() == 0 )
+        return;
+    std::vector< geometry::Polygon2d > polys( contours.size() );
+    geometry::Rectangle2d box;
+    for( std::size_t i=0;i<contours.size(); ++i)
+    {
+        const std::vector< rpr::WorldLocation >& locs=contours[i].locations;
+        for( std::size_t j=0; j<locs.size(); ++j )
+        {
+            polys[i].Add(geometry::Point2d(locs[i].Longitude(), locs[i].Latitude()));
+        }
+        if( box.IsEmpty() ) // assumes first is largest
+            box  = polys[i].BoundingBox();
+    }
+}
+
 }
 
 // -----------------------------------------------------------------------------
@@ -151,6 +186,10 @@ void RawDataHazardContourGroup::Unregister( ObjectListener_ABC& listener )
 // -----------------------------------------------------------------------------
 void RawDataHazardContourGroup::RegisterAttributes()
 {
+    attributes_->Register( "Time", boost::bind( &ReadTime, _1, _2, _3, boost::ref( time_ ) ), Wrapper< uint64_t >( time_ ) );
+    attributes_->Register( "Material", boost::bind( &ReadMaterial, _1, _2, _3, boost::ref( material_ ) ), Wrapper< uint32_t >( material_ ) );
+    attributes_->Register( "HazardType", boost::bind( &ReadHazardType, _1, _2, _3, boost::ref( hazardType_ ) ), Wrapper< uint8_t >( hazardType_ ) );
+    attributes_->Register( "Contours", boost::bind( &ReadContours, _1, _2, _3, boost::ref( contours_ ) ), Wrapper< std::vector< RawDataHazardContour > >( contours_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +200,6 @@ void RawDataHazardContourGroup::SpatialChanged( const ObjectLocationEventListene
 {
     if( pos.size() == 0 )
         return;
-
 }
 
 // -----------------------------------------------------------------------------

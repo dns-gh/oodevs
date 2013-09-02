@@ -378,7 +378,7 @@ namespace hla
         RawDataHazardContourGroupBuilder( bool isHla13 = false )
             : ClassBuilder( "RawDataHazardContourGroup", true, true
             , details::BuildAttributeList( isHla13, boost::assign::list_of( "Time" )
-                                                                          ( "Materiel" )
+                                                                          ( "Material" )
                                                                           ( "HazardType" )
                                                                           ( "Contours" ) ) )
         {}

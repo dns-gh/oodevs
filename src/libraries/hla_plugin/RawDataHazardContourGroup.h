@@ -82,6 +82,10 @@ private:
     TacticalObject_ABC* object_;
     std::string identifier_;
     std::auto_ptr< AttributesUpdater > attributes_;
+    uint64_t time_;
+    uint32_t material_;
+    uint8_t hazardType_;
+    std::vector< RawDataHazardContour > contours_;
     //@}
 };
 
