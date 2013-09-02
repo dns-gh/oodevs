@@ -31,38 +31,24 @@
 
 #include <algorithm>
 #include <numeric>
+#include <sstream>
 
 using namespace plugins::hla;
 
 namespace
 {
 
-void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
-{
-    int8_t tmpForce;
-    deserializer >> tmpForce;
-    listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( tmpForce ) );
-    force = static_cast< rpr::ForceIdentifier >( tmpForce );
-}
-void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::EntityType& type )
-{
-    type.Deserialize( deserializer );
-    listener.TypeChanged( identifier, type );
-}
-void ReadEntityIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, rpr::EntityIdentifier& entityId )
-{
-    entityId.Deserialize( deserializer );
-}
 void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/ )
 {
     // NOTHING
 }
-void ReadSpatial( ::hla::Deserializer_ABC& , const std::string& , ObjectListener_ABC& , Spatial&  )
-{
-}
-void ReadMaterial( ::hla::Deserializer_ABC& deserializer, const std::string& , ObjectListener_ABC& , uint32_t& material)
+void ReadMaterial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, uint16_t& material)
 {
     deserializer >> material;
+    std::stringstream ss;
+    ss << "4 0 225 1 120 " << material / 250 << " " << material % 250; // FIXME AHC : configure DIS prefix
+    rpr::EntityType type( ss.str() );
+    listener.TypeChanged( identifier, type );
 }
 void ReadTime( ::hla::Deserializer_ABC& deserializer, const std::string& , ObjectListener_ABC& , uint64_t& time)
 {
@@ -72,15 +58,17 @@ void ReadHazardType(::hla::Deserializer_ABC& deserializer, const std::string& , 
 {
     deserializer >> hazardType;
 }
-void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, std::vector< RawDataHazardContour >& contours )
+void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< RawDataHazardContour >& contours )
 {
     contours.clear();
     uint32_t sz=0;
     deserializer >> sz;
     contours.resize( sz );
-    deserializer >> contours;
     if( contours.size() == 0 )
         return;
+    uint32_t padd;
+    deserializer >> padd;
+    deserializer >> contours;
     std::vector< geometry::Polygon2d > polys( contours.size() );
     geometry::Rectangle2d box;
     for( std::size_t i=0;i<contours.size(); ++i)
@@ -88,11 +76,39 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& /*i
         const std::vector< rpr::WorldLocation >& locs=contours[i].locations;
         for( std::size_t j=0; j<locs.size(); ++j )
         {
-            polys[i].Add(geometry::Point2d(locs[i].Longitude(), locs[i].Latitude()));
+            const rpr::WorldLocation& loc = locs[j];
+            polys[i].Add( geometry::Point2d( loc.Longitude(), loc.Latitude() ) );
         }
         if( box.IsEmpty() ) // assumes first is largest
             box  = polys[i].BoundingBox();
     }
+    const int mx = 100, my=100;
+    const double incx = (box.Right() - box.Left())/mx;
+    const double incy = (box.Top() - box.Bottom())/my;
+    std::vector< ObjectListener_ABC::PropagationData > data;
+    for( int i=0; i<my; ++i )
+    {
+		const double y = box.Top() - i * incy;
+        for( int j=0; j<mx; ++j )
+        {
+			const double x = box.Left() + j * incx;
+            bool found=false;
+            for(int32_t j=static_cast<int32_t>(contours.size()-1); j>=0; --j)
+            {
+                const geometry::Point2d pt(x,y);
+                if( polys[j].IsInside(pt) )
+                {
+                    data.push_back( ObjectListener_ABC::PropagationData( y, x, contours[j].exposureLevel ) );
+                    found = true;
+                    break;
+                }
+            }
+            if( !found )
+                data.push_back( ObjectListener_ABC::PropagationData(y,x,-9999));
+        }
+    }
+    listener.PropagationChanged( identifier, data, (int)mx, (int)my, box.Left(), box.Bottom(), incx, incy );
+
 }
 
 }
@@ -187,7 +203,7 @@ void RawDataHazardContourGroup::Unregister( ObjectListener_ABC& listener )
 void RawDataHazardContourGroup::RegisterAttributes()
 {
     attributes_->Register( "Time", boost::bind( &ReadTime, _1, _2, _3, boost::ref( time_ ) ), Wrapper< uint64_t >( time_ ) );
-    attributes_->Register( "Material", boost::bind( &ReadMaterial, _1, _2, _3, boost::ref( material_ ) ), Wrapper< uint32_t >( material_ ) );
+    attributes_->Register( "Material", boost::bind( &ReadMaterial, _1, _2, _3, boost::ref( material_ ) ), Wrapper< uint16_t >( material_ ) );
     attributes_->Register( "HazardType", boost::bind( &ReadHazardType, _1, _2, _3, boost::ref( hazardType_ ) ), Wrapper< uint8_t >( hazardType_ ) );
     attributes_->Register( "Contours", boost::bind( &ReadContours, _1, _2, _3, boost::ref( contours_ ) ), Wrapper< std::vector< RawDataHazardContour > >( contours_ ) );
 }

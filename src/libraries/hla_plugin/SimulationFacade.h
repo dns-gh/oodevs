@@ -15,6 +15,7 @@
 namespace tools
 {
     template< typename Category > class MessageController_ABC;
+    class ExerciseConfig;
 }
 
 namespace sword
@@ -24,6 +25,7 @@ namespace sword
     class AutomatCreation;
     class UnitCreation;
     class SimToClient_Content;
+    class ObjectMagicActionAck;
 }
 
 namespace dispatcher
@@ -69,6 +71,9 @@ namespace hla
     class RemoteTacticalObjectSubject_ABC;
     class RemoteOrbatShaper;
     class MissionResolver_ABC;
+    class TacticalObjectUpdater;
+    class PropagationManager_ABC;
+    
 
 // =============================================================================
 /** @class  SimulationFacade
@@ -87,7 +92,7 @@ public:
                                RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
                                const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject,
-                               const MissionResolver_ABC& missionResolver );
+                               const MissionResolver_ABC& missionResolver, const tools::ExerciseConfig& config );
     virtual ~SimulationFacade();
     //@}
 
@@ -96,6 +101,7 @@ public:
     virtual void Register( ResponseObserver_ABC< sword::UnitCreation >& observer );
     virtual void Unregister( ResponseObserver_ABC< sword::UnitCreation >& observer );
     virtual void Send( simulation::UnitMagicAction& message, const std::string& identifier );
+    virtual void Send( simulation::ObjectMagicAction& message, const std::string& identifier );
     //@}
 
 private:
@@ -105,6 +111,7 @@ private:
     std::auto_ptr< ContextHandler_ABC< sword::FormationCreation > > pFormationHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::AutomatCreation > > pAutomatHandler_;
     std::auto_ptr< ContextHandler_ABC< sword::UnitCreation > > pUnitHandler_;
+    std::auto_ptr< ContextHandler_ABC< sword::ObjectMagicActionAck > > pObjectHandler_;
     std::auto_ptr< AutomatDisengager > pAutomatDisengager_;
     std::auto_ptr< FormationCreater > pFormationCreater_;
     std::auto_ptr< AutomatCreater > pAutomatCreater_;
@@ -112,8 +119,10 @@ private:
     std::auto_ptr< EquipmentUpdater > pEquipmentUpdater_;
     std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
     std::auto_ptr< NetnRemoteCallsignListener > pNetnRemoteCallsignListener_;
+    std::auto_ptr< PropagationManager_ABC > pPropagationManager_;
     std::auto_ptr< RemoteTacticalObjectController > pRemoteTacticalObjectController_;
     std::auto_ptr< RemoteOrbatShaper > pRemoteOrbatShaper_;
+    std::auto_ptr< TacticalObjectUpdater > pTacticalObjectUpdater_;
     //@}
 };
 

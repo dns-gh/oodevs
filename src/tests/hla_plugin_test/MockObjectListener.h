@@ -38,6 +38,7 @@ MOCK_BASE_CLASS( MockObjectListener, ObjectListener_ABC )
     MOCK_METHOD( ParentChanged, 2 )
     MOCK_METHOD( SubAgregatesChanged, 2 )
     MOCK_METHOD( SubEntitiesChanged, 2 )
+    MOCK_METHOD( PropagationChanged, 8 )
 };
 }
 }

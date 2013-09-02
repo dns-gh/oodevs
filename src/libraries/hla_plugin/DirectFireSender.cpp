@@ -421,3 +421,13 @@ void DirectFireSender::DoPlatformsFire( unsigned long fireIdentifier, const std:
         ++targetIndex;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void DirectFireSender::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
+{
+    // NOTHING
+}

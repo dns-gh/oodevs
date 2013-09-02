@@ -83,6 +83,8 @@ private:
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
+    virtual void PropagationChanged( const std::string& rtiIdentifier, const std::vector< ObjectListener_ABC::PropagationData >& data,
+                int col, int lig, double xll, double yll, double dx, double dy );
     void DoCheck();
     //@}
 
@@ -339,6 +341,16 @@ void LocationOwnershipPolicy::OwnershipState::SubAgregatesChanged( const std::st
 // Created: AHC 2012-10-04
 // -----------------------------------------------------------------------------
 void LocationOwnershipPolicy::OwnershipState::SubEntitiesChanged(const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationOwnershipPolicy::OwnershipState::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void LocationOwnershipPolicy::OwnershipState::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
 {
     // NOTHING
 }

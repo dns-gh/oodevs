@@ -448,6 +448,10 @@ void FederateFacade::RegisterTactical( ClassListener_ABC& listener )
         otherPointObjectClass_->Register( listener );
     if( otherArealObjectClass_.get() )
         otherArealObjectClass_->Register( listener );
+    if( rawDataHazardContourGroupClass_.get() )
+        rawDataHazardContourGroupClass_->Register( listener );
+    if( atp45HazardAreaClass_.get() )
+        atp45HazardAreaClass_->Register( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -466,6 +470,10 @@ void FederateFacade::UnregisterTactical( ClassListener_ABC& listener )
         otherPointObjectClass_->Unregister( listener );
     if( otherArealObjectClass_.get() )
         otherArealObjectClass_->Unregister( listener );
+    if( rawDataHazardContourGroupClass_.get() )
+        rawDataHazardContourGroupClass_->Unregister( listener );
+    if( atp45HazardAreaClass_.get() )
+        atp45HazardAreaClass_->Unregister( listener );
 }
 
 // -----------------------------------------------------------------------------

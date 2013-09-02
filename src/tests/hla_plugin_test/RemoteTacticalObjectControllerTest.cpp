@@ -19,6 +19,8 @@
 #include "MockHlaClass.h"
 #include "MockTeam.h"
 #include "MockLogger.h"
+#include "MockContextHandler.h"
+#include "MockPropagationManager.h"
 
 #include "protocol/SimulationSenders.h"
 
@@ -36,10 +38,13 @@ struct Fixture
         MOCK_EXPECT( remoteSubject.RegisterTactical ).once().with( mock::retrieve( remoteListener ) );
         MOCK_EXPECT( remoteSubject.UnregisterTactical ).once();
     }
+    ~Fixture()
+    {
+    }
     MockExtentResolver extent;
     MockSideResolver sideResolver;
     rpr::MockEntityTypeResolver objectTypeResolver;
-    dispatcher::MockSimulationPublisher publisher;
+    MockContextHandler< sword::ObjectMagicActionAck > ctxHandler;
     MockRemoteTacticalObjectSubject remoteSubject;
     ClassListener_ABC* remoteListener;
     dispatcher::MockLogger logger;
@@ -48,10 +53,11 @@ struct Fixture
 struct ControllerFixture : Fixture
 {
     ControllerFixture()
-        : controller( extent, sideResolver, objectTypeResolver, publisher, remoteSubject, logger )
+        : controller( extent, sideResolver, objectTypeResolver, ctxHandler, remoteSubject, logger, propagationManager )
     {
         BOOST_CHECK( remoteListener );
     }
+    MockPropagationManager propagationManager;
     RemoteTacticalObjectController controller;
 };
 
@@ -79,12 +85,11 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
     objectListener->SideChanged( "an_object", rpr::Friendly );
     objectListener->NameChanged( "an_object", "an_object_name");
     
-    sword::ClientToSim actual;
-    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( actual ) );
+    simulation::ObjectMagicAction actual;
+    MOCK_EXPECT( ctxHandler.SendObject ).once().with( mock::retrieve( actual ), mock::any );
     objectListener->Moved( "an_object", 42.0, 42.1 );
 
-    BOOST_ASSERT( actual.message().has_object_magic_action() );
-    const sword::ObjectMagicAction& action = actual.message().object_magic_action();
+    const sword::ObjectMagicAction& action=actual();
     BOOST_CHECK_EQUAL( action.type(), sword::ObjectMagicAction::create );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 6 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).acharstr(), std::string( "an_object_type" ) );
@@ -123,12 +128,11 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
     objectListener->SideChanged( "an_object", rpr::Friendly );
     objectListener->NameChanged( "an_object", "an_object_name");
     
-    sword::ClientToSim actual;
-    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( actual ) );
+    simulation::ObjectMagicAction actual;
+    MOCK_EXPECT( ctxHandler.SendObject ).once().with( mock::retrieve( actual ), mock::any );
     objectListener->GeometryChanged( "an_object", v, ObjectListener_ABC::eGeometryType_Polygon );
 
-    BOOST_ASSERT( actual.message().has_object_magic_action() );
-    const sword::ObjectMagicAction& action = actual.message().object_magic_action();
+    const sword::ObjectMagicAction& action=actual();
     BOOST_CHECK_EQUAL( action.type(), sword::ObjectMagicAction::create );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 6 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).acharstr(), std::string( "an_object_type" ) );
@@ -164,12 +168,11 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_line_object, 
     objectListener->SideChanged( "an_object", rpr::Friendly );
     objectListener->NameChanged( "an_object", "an_object_name");
 
-    sword::ClientToSim actual;
-    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( actual ) );
+    simulation::ObjectMagicAction actual;
+    MOCK_EXPECT( ctxHandler.SendObject ).once().with( mock::retrieve( actual ), mock::any );
     objectListener->GeometryChanged( "an_object", v, ObjectListener_ABC::eGeometryType_Line );
 
-    BOOST_ASSERT( actual.message().has_object_magic_action() );
-    const sword::ObjectMagicAction& action = actual.message().object_magic_action();
+    const sword::ObjectMagicAction& action=actual();
     BOOST_CHECK_EQUAL( action.type(), sword::ObjectMagicAction::create );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 6 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).acharstr(), std::string( "an_object_type" ) );
@@ -178,4 +181,35 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_line_object, 
     const sword::Location& loc = action.parameters().elem( 1 ).value( 0 ).location();
     BOOST_CHECK_EQUAL( loc.type(), sword::Location_Geometry_line );
     BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), (int)v.size() );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_disaster_object, ControllerFixture )
+{
+    MockHlaClass clazz;
+    MockHlaObject object;
+    dispatcher::MockTeam team( 18 );
+    ObjectListener_ABC* objectListener = 0;
+    rpr::EntityType objectType("1 2 3 4 5 6 7");
+
+    MOCK_EXPECT( logger.LogInfo );
+
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( objectListener ) );
+    remoteListener->RemoteCreated( "an_object", clazz, object );
+    BOOST_CHECK( objectListener );
+
+    MOCK_EXPECT( objectTypeResolver.Resolve ).once().with( mock::same( objectType ), mock::assign( "an_object_type" ) ).returns( true );
+    objectListener->TypeChanged( "an_object", objectType );
+
+    std::vector< ObjectListener_ABC::PropagationData > datas;
+    int col=5, lig=5;
+    for( int l = 0; l< lig; ++l)
+        for( int c = 0; c < col; ++c)
+        {
+            ObjectListener_ABC::PropagationData data(3+c*1./10, 42+l*1./10, 1+(l+c*1.)/100.);
+            datas.push_back( data );
+        }
+    simulation::ObjectMagicAction actual;
+    MOCK_EXPECT( ctxHandler.SendObject ).once();
+    MOCK_EXPECT( propagationManager.saveDataFile ).once();
+    objectListener->PropagationChanged( "an_object", datas, col, lig, 3, 42, 1, 2 );
 }

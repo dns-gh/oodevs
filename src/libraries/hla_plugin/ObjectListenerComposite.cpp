@@ -171,3 +171,13 @@ void ObjectListenerComposite::SubEntitiesChanged(const std::string& rtiIdentifie
 {
     copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::SubEntitiesChanged, _1, rtiIdentifier, children ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListenerComposite::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void ObjectListenerComposite::PropagationChanged( const std::string& rtiIdentifier, const std::vector< ObjectListener_ABC::PropagationData >& data,
+        int col, int lig, double xll, double yll, double dx, double dy )
+{
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::PropagationChanged, _1, rtiIdentifier, data, col, lig, xll, yll, dx, dy ) );
+}

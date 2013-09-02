@@ -44,6 +44,13 @@ public:
         eGeometryType_Line,
         eGeometryType_Polygon,
     };
+    struct PropagationData
+    {
+        PropagationData( double lat, double lon, double concent ) : latitude(lat), longitude(lon), concentration(concent){}
+        double latitude;
+        double longitude;
+        double concentration;
+    };
     //@}
 
     //! @name Constructors/Destructor
@@ -66,7 +73,8 @@ public:
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId ) = 0;
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const T_EntityIDs& children ) = 0;
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const T_EntityIDs& children ) = 0;
-
+    virtual void PropagationChanged( const std::string& rtiIdentifier, const std::vector< ObjectListener_ABC::PropagationData >& data,
+            int col, int lig, double xll, double yll, double dx, double dy ) = 0;
     //@}
 };
 }

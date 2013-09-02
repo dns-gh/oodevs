@@ -27,7 +27,8 @@ MOCK_BASE_CLASS( MockContextHandler, ContextHandler_ABC< MessageResponse > )
 {
     MOCK_METHOD_TPL( Register, 1, void( ResponseObserver_ABC< MessageResponse >& ) );
     MOCK_METHOD_TPL( Unregister, 1, void( ResponseObserver_ABC< MessageResponse >& ) );
-    MOCK_METHOD_TPL( Send, 2, void( simulation::UnitMagicAction&, const std::string& ) );
+    MOCK_METHOD_TPL( Send, 2, void( simulation::UnitMagicAction&, const std::string& ), Send );
+    MOCK_METHOD_TPL( Send, 2, void( simulation::ObjectMagicAction&, const std::string& ), SendObject );
 };
 
 }
