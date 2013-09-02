@@ -19356,7 +19356,7 @@
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="2" logistic-threshold="0" name="IED" normalized-consumption="0"/>
+        <resource capacity="10" logistic-threshold="0" name="IED" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="CART CAL 308 168 GRS" normalized-consumption="1"/>
       </category>
       <category name="ration">
@@ -35898,4 +35898,4 @@
     <operational-information native-country="USA"/>
   </equipment>
 </equipments>
-<!-- signature="3024211475" -->
+<!-- signature="0130415579" -->
