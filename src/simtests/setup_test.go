@@ -15,6 +15,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 	"swapi"
 	"swapi/simu"
 	"testing"
@@ -29,6 +30,7 @@ var (
 	testPort    int
 	legacy      bool
 	showLog     bool
+	platform    string
 )
 
 func init() {
@@ -44,6 +46,11 @@ func init() {
 		"base port for spawned simulations")
 	flag.BoolVar(&legacy, "legacy", false, "run in legacy mode")
 	flag.BoolVar(&showLog, "show-log", false, "print simulation log files")
+
+	platform = "vc100_x64"
+	if runtime.GOARCH == "386" {
+		platform = "vc100"
+	}
 }
 
 const ExCrossroadSmallOrbat = "crossroad-small-orbat"
@@ -54,7 +61,7 @@ func MakeOpts() *simu.SimOpts {
 	if len(application) > 0 {
 		opts.Executable = application
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run/vc100_x64/simulation_app.exe")
+		opts.Executable = filepath.Join(projectRoot, "run", platform, "simulation_app.exe")
 	}
 	if len(rootdir) > 0 {
 		opts.RootDir = rootdir
@@ -171,4 +178,5 @@ func (t *TestSuite) SetUpSuite(c *C) {
 	log.Println("rundir", rundir)
 	log.Println("testPort", testPort)
 	log.Println("legacy", legacy)
+	log.Println("platform", platform)
 }
