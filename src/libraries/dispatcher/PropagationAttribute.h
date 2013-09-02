@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "protocol/Protocol.h"
+#include <string>
 
 namespace dispatcher
 {
@@ -35,6 +36,8 @@ public:
     //@{
     virtual void Update( const sword::ObjectAttributes& message );
     virtual void Send( sword::ObjectAttributes& message ) const;
+    const std::string& GetModel() const;
+    const std::string& GetDate() const;
     //@}
 
 private:
