@@ -11,13 +11,12 @@
 #define plugins_hla_PropagationManager_h
 
 #include "PropagationManager_ABC.h"
-#include "tools/MessageObserver.h"
 #include "ObjectListener_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
     class ExerciseConfig;
-    template< typename T > class MessageController_ABC;
 }
 namespace dispatcher
 {
@@ -27,7 +26,6 @@ namespace dispatcher
 namespace sword
 {
     class SimToClient_Content;
-    class ControlBeginTick;
 }
 
 namespace plugins
@@ -35,15 +33,15 @@ namespace plugins
 namespace hla
 {
 
+class SimulationTimeManager_ABC;
 class PropagationManager
     : public PropagationManager_ABC
-    , private tools::MessageObserver< sword::ControlBeginTick >
+    , private boost::noncopyable
 {
 public:
     //! @name Contructors destructors
     //@{
-    PropagationManager( dispatcher::Logger_ABC& logger, const tools::ExerciseConfig& conf,
-            tools::MessageController_ABC< sword::SimToClient_Content >& messageController );
+    PropagationManager( dispatcher::Logger_ABC& logger, const tools::ExerciseConfig& conf, const SimulationTimeManager_ABC& timeManager );
     virtual ~PropagationManager();
     //@}
 
@@ -56,7 +54,6 @@ public:
 private://! @name Operations
     //@{
     void saveProjectionFile( const std::string& identifier );
-    virtual void Notify( const sword::ControlBeginTick& message, int  );
     //@}
 
 private:
@@ -68,8 +65,8 @@ private:
     //! @name Attributes
     //@{
     dispatcher::Logger_ABC& logger_;
+    const SimulationTimeManager_ABC& timeManager_;
     const tools::ExerciseConfig& exerciseConfig_;
-    std::string simulationTime_;
     T_PropagationTimes propagationTimes_;
     //@}
 };

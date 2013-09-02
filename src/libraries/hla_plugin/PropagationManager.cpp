@@ -9,6 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "PropagationManager.h"
+#include "SimulationTimeManager_ABC.h"
 
 #include "dispatcher/Logger_ABC.h"
 #include "tools/ExerciseConfig.h"
@@ -62,21 +63,17 @@ namespace
 }
 
 PropagationManager::PropagationManager( dispatcher::Logger_ABC& logger, const tools::ExerciseConfig& conf,
-        tools::MessageController_ABC< sword::SimToClient_Content >& messageController )
+        const SimulationTimeManager_ABC& timeManager )
     : logger_( logger )
+    , timeManager_( timeManager )
     , exerciseConfig_( conf )
 {
-    CONNECT( messageController, *this, control_begin_tick );
+    // NOTHING
 }
 
 PropagationManager::~PropagationManager()
 {
     // NOTHING
-}
-
-void PropagationManager::Notify( const sword::ControlBeginTick& message, int  )
-{
-   simulationTime_ = message.date_time().data();
 }
 
 void PropagationManager::saveProjectionFile( const std::string& identifier )
@@ -85,16 +82,18 @@ void PropagationManager::saveProjectionFile( const std::string& identifier )
     projFile.Parent().CreateDirectories();
     std::ofstream ofs(projFile.ToUnicode());
     ofs << "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9108\"]],AUTHORITY[\"EPSG\",\"4326\"]]";
-         // GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]]
 }
 
 void PropagationManager::saveDataFile( const std::string& identifier, const std::vector< ObjectListener_ABC::PropagationData >& data,
             int col, int lig, double xll, double yll, double cellsize )
 {
+    const std::string simTime = timeManager_.getSimulationTime();
+    if( simTime.empty() )
+        return;
     std::vector< std::string >& times = propagationTimes_[ identifier ];
     if( times.empty() )
         saveProjectionFile( identifier );
     writeDataFile( identifier, data, col, lig, xll, yll, exerciseConfig_, times.size(), cellsize );
-    times.push_back( simulationTime_ );
+    times.push_back( simTime );
     writePropagationFile( identifier, exerciseConfig_, times );
 }

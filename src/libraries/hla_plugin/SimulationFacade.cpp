@@ -85,7 +85,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
                                     RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                     dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
                                     const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject,
-                                    const MissionResolver_ABC& missionResolver, const tools::ExerciseConfig& config )
+                                    const MissionResolver_ABC& missionResolver, const tools::ExerciseConfig& config, const SimulationTimeManager_ABC& timeManager )
     : sideResolver_( sideResolver )
     , pFormationHandler_          ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_            ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
@@ -99,7 +99,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController, logger ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
-    , pPropagationManager_        ( new PropagationManager( logger, config, messageController ) )
+    , pPropagationManager_        ( new PropagationManager( logger, config, timeManager ) )
     , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, *pObjectHandler_, remoteTacticalSubject, logger, *pPropagationManager_ ) )
     , pRemoteOrbatShaper_         ( xis.attribute< bool >( "send-full-orbat", false ) ?
                                     new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher, automatTypeResolver ) : 0 )

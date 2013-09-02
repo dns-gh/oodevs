@@ -26,7 +26,9 @@
 #include <hla/Deserializer_ABC.h>
 #include <hla/Serializer_ABC.h>
 #include <hla/AttributeIdentifier.h>
+#include "tools/ContourComputer.h"
 
+#include <boost/ref.hpp>
 #include <boost/bind.hpp>
 
 #include <algorithm>
@@ -42,11 +44,11 @@ void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& 
 {
     // NOTHING
 }
-void ReadMaterial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, uint16_t& material)
+void ReadMaterial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, uint16_t& material )
 {
     deserializer >> material;
     std::stringstream ss;
-    ss << "4 0 225 1 120 " << material / 250 << " " << material % 250; // FIXME AHC : configure DIS prefix
+    ss << "100 0 0 0 0 " << (material >> 8) << " " << (material % 256); // FIXME AHC : configure DIS prefix
     rpr::EntityType type( ss.str() );
     listener.TypeChanged( identifier, type );
 }
@@ -70,7 +72,8 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
     deserializer >> padd;
     deserializer >> contours;
     std::vector< geometry::Polygon2d > polys( contours.size() );
-    geometry::Rectangle2d box;
+    double bottom = 0., top = 0., left = 0., right = 0.;
+    bool first = true;
     for( std::size_t i=0;i<contours.size(); ++i)
     {
         const std::vector< rpr::WorldLocation >& locs=contours[i].locations;
@@ -79,26 +82,42 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
             const rpr::WorldLocation& loc = locs[j];
             polys[i].Add( geometry::Point2d( loc.Longitude(), loc.Latitude() ) );
         }
-        if( box.IsEmpty() ) // assumes first is largest
-            box  = polys[i].BoundingBox();
+        geometry::Rectangle2d bbox = polys[i].BoundingBox();
+        if( first )
+        {
+            bottom = bbox.Bottom();
+            top = bbox.Top();
+            left = bbox.Left();
+            right = bbox.Right();
+            first = false;
+        }
+        else
+        {
+            bottom = std::min( bottom, bbox.Bottom());
+            top = std::max( top, bbox.Top());
+            left = std::min( left, bbox.Left());
+            right = std::max( right, bbox.Right());
+        }
     }
+    geometry::Rectangle2d box(left,bottom,right,top);
     const int mx = 100, my=100;
     const double incx = (box.Right() - box.Left())/mx;
     const double incy = (box.Top() - box.Bottom())/my;
     std::vector< ObjectListener_ABC::PropagationData > data;
     for( int i=0; i<my; ++i )
     {
-		const double y = box.Top() - i * incy;
+        const double y = box.Top() - i * incy;
         for( int j=0; j<mx; ++j )
         {
-			const double x = box.Left() + j * incx;
+            const double x = box.Left() + j * incx;
             bool found=false;
-            for(int32_t j=static_cast<int32_t>(contours.size()-1); j>=0; --j)
+            for(int32_t k=static_cast<int32_t>(contours.size()-1); k>=0; --k)
             {
                 const geometry::Point2d pt(x,y);
-                if( polys[j].IsInside(pt) )
+                const bool isInside = polys[k].IsInside(pt);
+                if( isInside )
                 {
-                    data.push_back( ObjectListener_ABC::PropagationData( y, x, contours[j].exposureLevel ) );
+                    data.push_back( ObjectListener_ABC::PropagationData( y, x, contours[k].exposureLevel ) );
                     found = true;
                     break;
                 }
@@ -108,7 +127,6 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
         }
     }
     listener.PropagationChanged( identifier, data, (int)mx, (int)my, box.Left(), box.Bottom(), incx, incy );
-
 }
 
 }
@@ -117,12 +135,14 @@ void ReadContours( ::hla::Deserializer_ABC& deserializer, const std::string& ide
 // Name: RawDataHazardContourGroup constructor
 // Created: AHC 2013-06-28
 // -----------------------------------------------------------------------------
-RawDataHazardContourGroup::RawDataHazardContourGroup( TacticalObject_ABC& object, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/,
-        const rpr::EntityIdentifier& /*entityId*/, const std::string& rtiId )
+RawDataHazardContourGroup::RawDataHazardContourGroup( TacticalObject_ABC& object, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/,
+        const rpr::EntityType& type, const rpr::EntityIdentifier& /*entityId*/, const std::string& rtiId )
     : object_( &object )
     , listeners_ ( new ObjectListenerComposite() )
     , identifier_( rtiId )
     , attributes_( new AttributesUpdater( identifier_, *listeners_ ) )
+    , material_( type.Specific()*256 +  type.Extra() )
+    , hazardType_( 1 ) // aTP45HazardAreaTypeEnum8_Detailed
 {
     RegisterAttributes();
     object_->Register( *this );
@@ -137,6 +157,8 @@ RawDataHazardContourGroup::RawDataHazardContourGroup( const std::string& identif
     , listeners_ ( new ObjectListenerComposite() )
     , identifier_( identifier )
     , attributes_( new AttributesUpdater( identifier_, *listeners_ ) )
+    , material_( 1000 ) // agentTypeEnum16_Chemical
+    , hazardType_( 1 ) // aTP45HazardAreaTypeEnum8_Detailed
 {
     RegisterAttributes();
 }
@@ -209,16 +231,6 @@ void RawDataHazardContourGroup::RegisterAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RawDataHazardContourGroup::SpatialChanged
-// Created: AHC 2013-06-28
-// -----------------------------------------------------------------------------
-void RawDataHazardContourGroup::SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos )
-{
-    if( pos.size() == 0 )
-        return;
-}
-
-// -----------------------------------------------------------------------------
 // Name: RawDataHazardContourGroup::ResetAttributes
 // Created: AHC 2013-06-28
 // -----------------------------------------------------------------------------
@@ -237,10 +249,42 @@ void RawDataHazardContourGroup::Attach( Agent_ABC* /*agent*/, unsigned long /*si
 }
 
 // -----------------------------------------------------------------------------
-// Name: RawDataHazardContourGroup::ResourcesChanged
-// Created: AHC 2013-06-28
+// Name: RawDataHazardContourGroup::PropagationChanged
+// Created: AHC 2014-01-23
 // -----------------------------------------------------------------------------
-void RawDataHazardContourGroup::ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& /*res*/ )
+void RawDataHazardContourGroup::PropagationChanged( const ObjectPropagationEventListener_ABC::T_DataVector& data )
 {
-    // NOTHING
+    if( data.size() == 0 )
+        return;
+
+    contours_.clear();
+    const short MAX = 100;
+    const int HEIGHT = 10;
+    for( ObjectPropagationEventListener_ABC::T_DataVector::const_iterator it = data.begin(); data.end() != it; ++it )
+    {
+        const ObjectPropagationEventListener_ABC::Data& propagationData = *it;
+        const float cellsize = static_cast< float >( ( propagationData.extent.Right() - propagationData.extent.Left() ) / propagationData.cols );
+
+        tools::ComputeContour( propagationData.cols, propagationData.rows, HEIGHT, cellsize,
+            [&]( int c, int l )->short { return static_cast< short >( propagationData.concentrations[ l * propagationData.cols + c] / propagationData.maxValue * MAX ) ; }, // data
+            []( short ) {}, // progress
+            []() -> bool { return true; }, // valid
+            [&]( boost::shared_ptr< tools::T_PointVector > pts, int k, bool closed ) // loop
+                {
+                    if( closed && pts->size() != 0 )
+                    {
+                        float v = static_cast< float >( k * propagationData.maxValue / HEIGHT );
+                        RawDataHazardContour contour;
+                        contour.exposureLevel = v;
+                        std::for_each( pts->begin(), pts->end(), [&]( const geometry::Point2f& pt )
+                            {
+                                contour.locations.push_back( rpr::WorldLocation( propagationData.extent.Bottom() + pt.Y() * cellsize, propagationData.extent.Left() + pt.X() * cellsize, 0 ) );
+                            });
+                        contours_.push_back( contour );
+                    }
+                },
+            []() -> bool { return false; }, // checkStop
+            MAX / HEIGHT );
+    }
+    attributes_->Update( "Contours", Wrapper< std::vector< RawDataHazardContour > >( contours_ ) );
 }

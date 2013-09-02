@@ -72,6 +72,10 @@ public:
     std::string str() const;
     unsigned char Domain() const { return domain_; }
     unsigned char Kind() const { return entityKind_; }
+    unsigned char Category() const { return category_; }
+    unsigned char Subcategory() const { return subcategory_; }
+    unsigned char Specific() const { return specific_; }
+    unsigned char Extra() const { return extra_; }
     //@}
 
     //! @name Operators

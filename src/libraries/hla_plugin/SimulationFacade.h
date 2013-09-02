@@ -73,6 +73,7 @@ namespace hla
     class MissionResolver_ABC;
     class TacticalObjectUpdater;
     class PropagationManager_ABC;
+    class SimulationTimeManager_ABC;
     
 
 // =============================================================================
@@ -92,7 +93,7 @@ public:
                                RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
                                const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject,
-                               const MissionResolver_ABC& missionResolver, const tools::ExerciseConfig& config );
+                               const MissionResolver_ABC& missionResolver, const tools::ExerciseConfig& config, const SimulationTimeManager_ABC& timeManager );
     virtual ~SimulationFacade();
     //@}
 

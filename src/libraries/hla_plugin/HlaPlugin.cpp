@@ -46,6 +46,7 @@
 #include "EntityIdentifierResolver.h"
 #include "FOM_Serializer.h"
 #include "SideResolver.h"
+#include "SimulationTimeManager.h"
 #include "tools/FileWrapper.h"
 #include "tools/MessageController.h"
 #include "tools/XmlStreamOperators.h"
@@ -263,12 +264,14 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         pMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
         if( message.message().has_control_end_tick() && !pSimulationFacade_.get() )
         {
+
+            pSimulationTimeManager_.reset( new SimulationTimeManager( *pMessageController_ ) );
             pSideResolver_.reset( new SideResolver( dynamicModel_, logger_ ) );
             pFomSerializer_.reset( new FOM_Serializer( pXis_->attribute< int >( "netn-version", 1 ) ) );
             pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_,
                                                     *platforms_, *pConverter_, pXis_->attribute< bool >( "disaggregate", false ), 
                                                     *pSideResolver_, *pLocalAgentResolver_, pXis_->attribute< bool >( "send-full-orbat", false ), logger_, *pAggregateTypeResolver_, pXis_->attribute< int >( "netn-version", 1 ) ) );
-            pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_, *pEntityObjectTypeResolver_, *pEntityMunitionTypeResolver_, logger_ ) );
+            pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_, *pEntityObjectTypeResolver_, *pEntityMunitionTypeResolver_, logger_, *pSimulationTimeManager_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
@@ -280,7 +283,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pInteractionBuilder_.reset( new InteractionBuilder( logger_, *pFederate_, *pNetnInteractionBuilder_ ) );
             pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_,
                     *pComponentTypeResolver_, *pUnitTypeResolver_, *pAutomatTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_,
-                    *pExtentResolver_, *pSubject_, *pLocalAgentResolver_, *pSideResolver_, *pEntityObjectTypeResolver_, *pFederate_, *pMissionResolver_, config_ ) );
+                    *pExtentResolver_, *pSubject_, *pLocalAgentResolver_, *pSideResolver_, *pEntityObjectTypeResolver_, *pFederate_, *pMissionResolver_, config_, *pSimulationTimeManager_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_, *pSubject_ ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
