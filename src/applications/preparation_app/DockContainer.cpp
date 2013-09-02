@@ -48,6 +48,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfileLayer )
     : pCreationPanel_  ( 0 )
     , pLivingAreaPanel_( 0 )
+    , pExtensionsPanel_( 0 )
 {
     // Agent list panel
     {
@@ -81,9 +82,9 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Extensions panel
     {
-        gui::RichDockWidget* pExtensionsPanel = new ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.formations_ );
-        pExtensionsPanel->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Terrain );
-        parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel );
+        pExtensionsPanel_ = new ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.formations_ );
+        pExtensionsPanel_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Terrain );
+        parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
     }
     // Urban informations
     {
@@ -130,6 +131,7 @@ void DockContainer::Purge()
         if( *it )
             ( *it )->Purge();
     pCreationPanel_->Purge();
+    pExtensionsPanel_->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +155,7 @@ void DockContainer::Load()
         if( *it )
             ( *it )->Load();
     pCreationPanel_->Load();
+    pExtensionsPanel_->Load();
     pUsagesPanel_->Initialize();
 }
 

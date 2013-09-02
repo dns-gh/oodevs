@@ -222,7 +222,7 @@ namespace
         mutable unsigned int trailing_;
     };
 
-    void FillCombo( QComboBox& combo, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver, bool addAlias )
+    void FillCombo( QComboBox& combo, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver, bool addAlias, QStringList& result )
     {
         std::string dictionary;
         std::string kind;
@@ -234,6 +234,7 @@ namespace
             QStringList list;
             dico->GetStringList( list, kind, language, addAlias );
             combo.insertStringList( list );
+            result = list;
         }
     }
 
@@ -341,7 +342,9 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int cur
             QComboBox* combo = new QComboBox();
             combo->setName( attribute.GetName().c_str() );
             bool nationality = attribute.GetName() == "Nationalite";
-            FillCombo( *combo, attribute, extensions_, nationality );
+            bool typeSioc = attribute.GetName() == "TypeSIOC";
+            QStringList result;
+            FillCombo( *combo, attribute, extensions_, nationality, result );
             try
             {
                 const std::string& selected = GetDictionaryString( value, attribute, extensions_, nationality );
@@ -357,6 +360,8 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int cur
             connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
             if( nationality )
                 connect( combo, SIGNAL( activated( int ) ), SLOT( OnChangeNationality() ) );
+            if( typeSioc )
+                connect( combo, SIGNAL( activated( int ) ), SLOT( OnChangeTypeSIOC() ) );
         }
         break;
     case AttributeType::ETypeLoosyDictionary:
@@ -364,7 +369,10 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int cur
             QComboBox* combo = new QComboBox();
             combo->setEditable( true );
             combo->setName( attribute.GetName().c_str() );
-            FillCombo( *combo, attribute, extensions_, false );
+            QStringList result;
+            FillCombo( *combo, attribute, extensions_, false, result );
+            if( attribute.GetName() == "IdCDB" )
+                SetAllIdCDB( result );
             if( min != -1 || max != 1 )
             {
                 QMinMaxValidator* validator = new QMinMaxValidator( combo, min, max );
@@ -493,7 +501,11 @@ void ExtensionsPanel::Commit()
                     int pos = 0;
                     if( !combo->validator() || combo->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
-                        ext->SetValue( ( *it )->name(), enabled ? text.toAscii().constData() : "" );
+                        std::string curName = ( *it )->name();
+                        std::string newValue = enabled ? text.toAscii().constData() : "";
+                        if( curName == "IdCDB" && curName != newValue )
+                            OnChangeIdCDB( newValue );
+                        ext->SetValue( curName, newValue );
                         combo->setPaletteBackgroundColor( Qt::white );
                     }
                     else
