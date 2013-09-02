@@ -53,10 +53,10 @@ int main( int /*argc*/, char* /*argv*/[] )
     tools::InitPureCallHandler();
     tools::InitCrashHandler( &CrashHandler );
 
-    int maxConnections = 1;
     int nResult = EXIT_FAILURE;
     try
     {
+        int maxConnections = 0;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         // verbose mode
         const bool verbose = winArgs.HasOption( "--verbose" );
