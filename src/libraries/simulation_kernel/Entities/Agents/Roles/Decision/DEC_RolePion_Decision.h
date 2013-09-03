@@ -80,7 +80,7 @@ public:
     const PHY_RoePopulation&      GetRoePopulation() const;
 
     virtual std::string           GetName         () const;
-    virtual DEC_AutomateDecision* GetDecAutomate  () const;
+    virtual DEC_AutomateDecision* GetDecAutomate  ();
 
     virtual const std::string& GetDIAType() const;
 

@@ -59,7 +59,7 @@ public:
     virtual void UpdateDecision( float duration ) = 0;
     virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission ) = 0;
     virtual boost::shared_ptr< MIL_Mission_ABC > GetMission() = 0;
-    virtual DEC_AutomateDecision* GetDecAutomate() const = 0;
+    virtual DEC_AutomateDecision* GetDecAutomate() = 0;
     virtual std::string GetName() const = 0;
     virtual void RemoveCallback( unsigned int actionId ) = 0;
     template< typename T > void Callback( unsigned int actionId, T value );

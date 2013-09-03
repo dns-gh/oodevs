@@ -67,7 +67,7 @@ public:
     MIL_Population& GetPopulation() const;
     double GetDominationState() const;
     bool HasStateChanged() const; // Etat decisionnel
-    virtual DEC_AutomateDecision* GetDecAutomate() const;
+    virtual DEC_AutomateDecision* GetDecAutomate();
     virtual std::string GetName() const;
     //@}
 

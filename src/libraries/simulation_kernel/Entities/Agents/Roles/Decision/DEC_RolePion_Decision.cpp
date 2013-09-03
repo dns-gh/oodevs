@@ -1113,10 +1113,10 @@ std::string DEC_RolePion_Decision::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::GetDecAutomatez
+// Name: DEC_RolePion_Decision::GetDecAutomate
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
-DEC_AutomateDecision* DEC_RolePion_Decision::GetDecAutomate() const
+DEC_AutomateDecision* DEC_RolePion_Decision::GetDecAutomate()
 {
     return dynamic_cast< DEC_AutomateDecision* >( &pion_.GetAutomate().GetDecision() );
 }

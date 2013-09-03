@@ -24,7 +24,7 @@ public:
     {
         InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubAutomate", false, false, model.GetIntegrationDir() );
     }
-    virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
+    virtual DEC_AutomateDecision* GetDecAutomate() { return 0; }
     virtual std::string GetName() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual std::string GetGroupName() { return std::string(); }
     virtual void EndCleanStateAfterCrash() {}

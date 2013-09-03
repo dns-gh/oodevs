@@ -90,7 +90,7 @@ public:
         const std::string& strBehavior = mission->GetType().GetDIABehavior();
         ActivateOrder( strBehavior, mission );
     }
-    virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
+    virtual DEC_AutomateDecision* GetDecAutomate() { return 0; }
     virtual std::string GetName() const { return "Test Decision"; }
     virtual void EndCleanStateAfterCrash() {}
     virtual std::string GetGroupName() { return std::string(); };
