@@ -279,7 +279,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
     //GGE pCurrentMission enlevé
-    auto mission = boost::make_shared< MIL_PionMission >( missionType, pion, AcquireId(), sword::MissionParameters() );
+    auto mission = boost::make_shared< MIL_PionMission >( missionType, pion, AcquireId(), boost::shared_ptr< MIL_Mission_ABC >() );
     preparedMissions_.insert( mission );
     return mission;
 }

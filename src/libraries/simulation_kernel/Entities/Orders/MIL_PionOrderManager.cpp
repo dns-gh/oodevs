@@ -86,7 +86,7 @@ uint32_t MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message
 // -----------------------------------------------------------------------------
 void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 {
-    auto mission = boost::make_shared< MIL_PionMission >( type, pion_, AcquireId(), sword::MissionParameters() );
+    auto mission = boost::make_shared< MIL_PionMission >( type, pion_, AcquireId(), boost::shared_ptr< MIL_Mission_ABC >() );
     MIL_OrderManager_ABC::ReplaceMission( mission );
 }
 
