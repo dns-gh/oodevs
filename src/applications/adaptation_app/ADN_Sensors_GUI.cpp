@@ -459,7 +459,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 
         ++nRow;
     }
-    pTable->Sort( 0, Qt::AscendingOrder );
+    pTable->Sort( 0, Qt::DescendingOrder );
     return pTable;
 }
 
@@ -535,7 +535,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
         }
         nRow += static_cast< int >( sensor.vTargets_.size() );
     }
-    pTable->Sort( 0, Qt::AscendingOrder );
+    pTable->Sort( 0, Qt::DescendingOrder );
     return pTable;
 }
 
