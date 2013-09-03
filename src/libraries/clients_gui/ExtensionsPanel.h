@@ -77,8 +77,7 @@ protected slots:
 private:
     //! @name Types
     //@{
-    typedef std::vector< QWidget* >       T_Widgets;
-    typedef T_Widgets::const_iterator   CIT_Widgets;
+    typedef std::map< std::string, QWidget* > T_Widgets;
     //@}
 
 protected:
