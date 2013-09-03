@@ -48,6 +48,7 @@
         <object-cost type="refugees camp" value="10"/>
         <object-cost type="dropping area" value="10"/>
         <object-cost type="movement forbidden area" value="10000"/>
+        <object-cost type="fire forbidden area" value="0"/>
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
@@ -206,6 +207,7 @@
         <object-cost type="refugees camp" value="10"/>
         <object-cost type="dropping area" value="10"/>
         <object-cost type="movement forbidden area" value="10000"/>
+        <object-cost type="fire forbidden area" value="0"/>
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
@@ -315,6 +317,7 @@
         <object-cost type="refugees camp" value="10"/>
         <object-cost type="dropping area" value="10"/>
         <object-cost type="movement forbidden area" value="10000"/>
+        <object-cost type="fire forbidden area" value="0"/>
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
