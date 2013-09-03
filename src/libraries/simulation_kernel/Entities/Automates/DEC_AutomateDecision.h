@@ -80,7 +80,7 @@ public:
     //@{
     virtual MIL_Automate& GetAutomate() const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
-    virtual DEC_AutomateDecision* GetDecAutomate() const;
+    virtual DEC_AutomateDecision* GetDecAutomate();
     virtual std::string GetName() const;
 
     virtual int GeteEtatPhaseMission() const;

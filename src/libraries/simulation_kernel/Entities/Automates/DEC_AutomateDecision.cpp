@@ -462,11 +462,11 @@ void DEC_AutomateDecision::SendChangedState( client::AutomatAttributes& msg ) co
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetDecAutomate
 // Created: LDC 2009-04-10
+// Modified: NMI 2013-09-03
 // -----------------------------------------------------------------------------
-DEC_AutomateDecision* DEC_AutomateDecision::GetDecAutomate() const
+DEC_AutomateDecision* DEC_AutomateDecision::GetDecAutomate()
 {
-    assert( false );
-    throw MASA_EXCEPTION( "Unexpected call to DEC_GetAutomate on automate" );
+    return this;
 }
 
 // -----------------------------------------------------------------------------

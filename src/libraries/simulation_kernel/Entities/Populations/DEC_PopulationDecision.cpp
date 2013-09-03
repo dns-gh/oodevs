@@ -381,7 +381,7 @@ bool DEC_PopulationDecision::HasStateChanged() const
 // Name: DEC_PopulationDecision::GetDecAutomate
 // Created: LDC 2009-04-10
 // -----------------------------------------------------------------------------
-DEC_AutomateDecision* DEC_PopulationDecision::GetDecAutomate() const
+DEC_AutomateDecision* DEC_PopulationDecision::GetDecAutomate()
 {
     throw MASA_EXCEPTION( "DEC_GetAutomate unexpected on population" );
 }
