@@ -611,6 +611,94 @@ integration.distributeObstacles = function( self )
 end
 
 
+
+-- Returns an allocation of elements to be assigned to other elements to assign to, with respect to
+-- a criterion to be defined (for example, distance) and under certain additional constraints
+-- (for example, dotations).
+-- Please note that for each element in elementsToAssignTo, only one element from elementsToBeAssigned
+-- will be allocated, but for each element in elementsToBeAssigned, it is possible to have multiple elements
+-- from elementsToAssignTo allocated. Usually, elementsToAssignTo is larger than elementsToBeAssigned.
+-- For example, if one wants to allocate positions to subordinates, so that every subordinate can have only
+-- one position, and positions can be shared by multiple subordinates, then this function can be called with
+-- elementsToAssignTo being the list of subordinates and elementsToBeAssigned being the list of positions.
+-- Please note that in this type of situation (subordinates being given parameters of a company mission),
+-- calling the function with the list of subordinates in elementsToBeAssigned instead of elementsToAssignTo
+-- can be pertinent.
+-- For example, if one wants to allocate urban blocks to subordinates so that the subordinates can have
+-- multiple urban blocks assigned but the urban block can not have multiple subordinates assigned to them, then
+-- this function can be called with elementsToAssignTo being the list of urban blocks and elementsToBeAssigned
+-- the list of subordinates.
+-- Please also note that the algorithm implemented in this function is obviously NOT optimal and can even in
+-- extremely rare cases (i.e. not obtained in SWORD) fail to deal correctly with constraint satisfaction.
+-- Resource allocation and automatic scheduling are indeed hard problems needing complex algorithms to be
+-- solved optimally.
+-- @param elementsToAssignTo : The elements to assign to
+-- @param elementsToBeAssigned : The elements to be assigned
+-- @param maximization : Optional, defines whether the function to optimize must be maximized or minimized.
+-- It is minimized by default.
+-- @param functionToOptimize : Optional, defines the criterion used to decide which elements to be assigned are
+-- best for a given element. Returns a numeric value that is then compared to previously obtained values.
+-- By default, returns the distance between the two elements.
+-- @param additionalConstraints : Optional, a function that defines additional constraints for an assignment
+-- between two elements to be possible. By default, there is no constraint.
+-- @author NMI
+-- @release 2013-08-30
+integration.allocateElements = function( elementsToAssignTo, elementsToBeAssigned, maximization, functionToOptimize, additionalConstraints )
+    if not functionToOptimize then
+        functionToOptimize = function(a,b) return integration.computeDistance( a:getPosition(), b:getPosition() ) end
+    end
+    
+    if not additionalConstraints then
+        additionalConstraints = function(a,b) return true end
+    end
+    
+    -- A copy is made of elementsToBeAssigned because the copy will be modified
+    -- and the parameter need to remain intact for it may be copied again
+    local elementsToBeAssignedCopy = copyTable( elementsToBeAssigned )
+    
+    -- The table containing the final allocation.
+    -- It will be returned at the end of the function.
+    local allocation = {}
+    
+    -- For each element, find the closest objective
+    for i=1, #elementsToAssignTo do
+        -- bestValue will keep track of the value returned by the
+        -- function to optimize when called with the current best element
+        local bestValue = maximization and -math.huge or math.huge
+        local currentValue
+        local bestElement
+        local bestIndex
+        
+        -- If the copy of elementsToBeAssigned has been completely emptied, then
+        -- copy the original parameter again
+        if #elementsToBeAssignedCopy == 0 then
+            elementsToBeAssignedCopy = copyTable( elementsToBeAssigned )
+        end
+        
+        for j=1, #elementsToBeAssignedCopy do
+            if additionalConstraints( elementsToAssignTo[i], elementsToBeAssignedCopy[j] ) then
+                -- For each element to be assigned, compute the function to optimize
+                currentValue = functionToOptimize( elementsToAssignTo[i], elementsToBeAssignedCopy[j] )
+                -- If the current value beats the bestValue, then the bestElement changes.
+                -- This test depends on whether we are minimizing or maximizing the function to optimize.
+                if maximisation and currentValue > bestValue or currentValue < bestValue then
+                    bestValue = currentValue
+                    bestElement = elementsToBeAssignedCopy[ j ]
+                    bestIndex = j
+                end
+            end
+        end
+        -- The current entity is assigned the best objective
+        allocation[ elementsToAssignTo[i] ] = bestElement
+        
+        -- The assigned objective is removed from elementsToBeAssignedCopy
+        -- to make sure that the objectives are fairly allocated.
+        table.remove( elementsToBeAssignedCopy, bestIndex )
+    end
+    
+    return allocation
+end
+
 --- Generic create for Lead skills
 -- @param self: The leading skill
 -- @param functionsToExecute: A table of potential functions to execute if needed (with self as the only parameter)
