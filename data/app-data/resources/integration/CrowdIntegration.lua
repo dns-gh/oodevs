@@ -151,9 +151,11 @@ end
 -- @author DDA
 -- @release 2011-05-13
 -- --------------------------------------------------------------------------------
-integration.isKwoledgeInCrowd = function( target )
+integration.isKnowledgeInCrowd = function( target )
     return DEC_ConnaissanceAgent_EstDansFoule( target.source )
 end
+
+integration.isKwoledgeInCrowd = integration.isKnowledgeInCrowd -- To ensure backward compatibility
 
 integration.hasReachUrbanBlock = function( target )
     return DEC_Population_HasReachedBlockBorder( target.source )
