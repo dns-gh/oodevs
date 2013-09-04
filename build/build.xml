@@ -788,18 +788,6 @@
     various project/source checks
     ============================================================================
     -->
-    <target name="checkproject" description="check project configuration">
-        <python>
-            <arg value="${bin.dir}/buildtools/checkproject.py"/>
-            <arg value="${root.dir}"/>
-            <arg value="${root.dir}/build/vc100/sword.sln"/>
-            <arg value="--exclude=module_tester"/>
-            <arg value="--toolchain=cmake"/>
-            <arg value="--optional-target=*cmake.msvc"/>
-            <arg value="--optional-target=update-test-databases"/>
-        </python>
-    </target>
-
     <target name="checkreports" description="check simulation reports">
         <python>
             <arg value="${root.dir}/build/checkreports.py"/>
@@ -832,7 +820,7 @@
         </python>
     </target>
 
-    <target name="check" depends="checkproject,checkreports,checkdec,checkproto"
+    <target name="check" depends="checkreports,checkdec,checkproto"
         description="perform various static checks on codebase"/>
 
     <!--
