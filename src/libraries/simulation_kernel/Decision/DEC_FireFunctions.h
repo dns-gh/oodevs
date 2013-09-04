@@ -41,7 +41,8 @@ public:
     static float GetMinRangeToIndirectFire( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );
     static float GetMaxRangeToIndirectFireWithoutAmmoCheck( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory  );
     static float GetMinRangeToIndirectFireWithoutAmmoCheck( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory  );
-    static void ThrowSmokeOnKnowledgeAgent( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );
+    static double ThrowSmokeOnKnowledgeAgent( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );
+    static double ThrowSmokeOnPosition( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > pTarget );
     static const PHY_DotationCategory* GetMunitionForIndirectFire( MIL_AgentPion& callerAgent, int indirectFireDotationClassID, const MT_Vector2D* pTarget );
     static void ForbidAmmunition( MIL_AgentPion& callerAgent, const std::vector< const PHY_DotationCategory* >& dotationCategories );
     static void AllowAmmunition( MIL_AgentPion& callerAgent, const std::vector< const PHY_DotationCategory* >& dotationCategories );

@@ -727,7 +727,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions" ] =
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Tir_LancerFumigeneSurConnaissance" ] =
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent, boost::ref( GetPion() ), _1 ) );
+        boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_Tir_LancerFumigeneSurPosition" ] = DEC_FireFunctions::ThrowSmokeOnPosition;
     brain[ "DEC_Tir_MunitionPourTirIndirect" ] =
         boost::function< const PHY_DotationCategory* ( int, const MT_Vector2D* ) >( boost::bind( &DEC_FireFunctions::GetMunitionForIndirectFire, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Pion_InterdireMunition" ] =

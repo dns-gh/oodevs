@@ -9,10 +9,7 @@ rootnode
     {
         skill.links.takeCover, 
         skill.links.dismount,
-        skill.links.respond,
-        skill.nodes.CoverAttitude,
-        skill.nodes.SafetyAttitude,
-        skill.nodes.LaunchDREB
+        skill.links.respond
     },
 
     -- --------------------------------------------------------------------------------
@@ -67,7 +64,7 @@ rootnode
 
         -- AMBIANCE VITESSE (zone sûre) OU SURETE (ennemi probable)
         if myself.safetyAttitude == eAmbianceMission_Safety then
-            Activate( skill.nodes.SafetyAttitude, skill.modifiers.importance )
+            meKnowledge:adoptSafetyAttitude()
             Activate( skill.links.dismount, 1 )
         else -- POSTURE VITESSE
             myself.speedModulation.switchOnCoverMode = 1
@@ -102,7 +99,7 @@ rootnode
 
         -- If detected by elements to safeguard from and agent is not surrendered, active cover posture and dismount 
         if self.detected then
-            Activate( skill.nodes.CoverAttitude, skill.modifiers.importance )
+            meKnowledge:adoptCoverAttitude()
             Activate( skill.links.dismount, 1 )
 
             -- if the force ratio is bad or if agent is no longer operationnal, get
@@ -114,39 +111,8 @@ rootnode
 
         -- Coover from entities
         if self.needToTakeCover then
-            Activate( skill.nodes.LaunchDREB, 1)
+            meKnowledge:launchDREB()
             Activate( skill.links.takeCover, skill.modifiers.importance, { entities = self.entitiesToSafeguardFrom } )
         end
-    end
-}
-
-
--- ****************************************************************************
--- Activate particular posture to protect oneself.
--- ****************************************************************************
-node "CoverAttitude"
-{
-    select = function( self )
-        meKnowledge:adoptCoverAttitude()
-    end
-}
-
--- **************************************************************************** 
--- SafetyAttitude
--- ****************************************************************************
-node "SafetyAttitude"
-{
-    select = function( self )
-        meKnowledge:adoptSafetyAttitude()
-    end
-}
-
--- ****************************************************************************
--- Launch DREB.
--- ****************************************************************************
-node "LaunchDREB"
-{
-    select = function( self )
-        meKnowledge:launchDREB()
     end
 }

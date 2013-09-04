@@ -199,13 +199,8 @@ integration.findEnemyToMortarIndirectFire = function( targets )
     end
 end
 
+-- Launch a smoke and return the activity time (number of tick) of it
+-- LMT 30/08/2013
 integration.launchDREB = function()
-    local DEC_ConnaissanceAgent_EstValide = DEC_ConnaissanceAgent_EstValide
-    local DEC_Tir_LancerFumigeneSurConnaissance = DEC_Tir_LancerFumigeneSurConnaissance
-    local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-    for _, eni in pairs( listeConnaissances or emptyTable ) do
-        if DEC_ConnaissanceAgent_EstValide( eni ) then
-            DEC_Tir_LancerFumigeneSurConnaissance( eni )
-        end
-    end
+    return DEC_Tir_LancerFumigeneSurPosition(myself, meKnowledge:getPosition())
 end

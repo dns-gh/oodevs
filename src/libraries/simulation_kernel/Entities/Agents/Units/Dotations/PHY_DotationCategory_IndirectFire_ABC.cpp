@@ -135,3 +135,12 @@ void PHY_DotationCategory_IndirectFire_ABC::ApplyDetectionRangeEffect( const MT_
         unitsIds.push_back( static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent().GetID() );
     MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_DetectionRange( unitsIds, dotationCategory_.GetMosID(), fireEffectsIds, deploymentDuration ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::GetEffectDuration
+// Created: LDC 2013-08-30
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory_IndirectFire_ABC::GetEffectDuration() const
+{
+    return 0.;
+}

@@ -135,7 +135,7 @@ void PHY_RoleAction_IndirectFiring::FireSuspended()
 // Name: PHY_RoleAction_IndirectFiring::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo )
+double PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo )
 {
     PHY_SmokeData smokeData( *pion_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
@@ -143,11 +143,10 @@ int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPositio
 
     PHY_Weapon* pWeapon = smokeData.GetWeapon();
     if( !pWeapon )
-        return eNoCapacity;
+        return 0.;
 
     PHY_FireResults_Default fireResult; //$$$ POURRI
-    pWeapon->ThrowSmoke( *pion_, vTargetPosition, nNbrAmmo, fireResult );
-    return eFinished;
+    return pWeapon->ThrowSmoke( *pion_, vTargetPosition, nNbrAmmo, fireResult );
 }
 
 // -----------------------------------------------------------------------------

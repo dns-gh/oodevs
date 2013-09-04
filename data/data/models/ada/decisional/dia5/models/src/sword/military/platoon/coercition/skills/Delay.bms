@@ -25,15 +25,15 @@ rootnode
               integration.SendMessage( "ArrivedOnLima", integration.GetSuperiorKnowledge( meKnowledge), { arrived = true, me = meKnowledge }, { type = "dynamic" } )
             end
             if fragorderReceived then
-              meKnowledge:launchDREB()
-              self.nextTargetIndex = self.nextTargetIndex + 1 
-              self.arrived = false    
+                meKnowledge:launchDREB()
+                self.nextTargetIndex = self.nextTargetIndex + 1 
+                self.arrived = false    
             end
         else
             if self.fireStarted or fragorderReceived or meKnowledge:hasBadForceRatio() then
-                meKnowledge:launchDREB()  
+                meKnowledge:launchDREB()
                 self.nextTargetIndex = self.nextTargetIndex + 1
-                self.arrived = false    
+                self.arrived = false
             end
         end
         if self.nextTargetIndex > #self.params.positions then

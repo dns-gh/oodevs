@@ -363,6 +363,17 @@ bool PHY_DotationCategory::HasAttritions() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetSmokeDuration
+// Created: LDC 2013-08-30
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory::GetSmokeDuration() const
+{
+    if( pIndirectFireData_ )
+        return pIndirectFireData_->GetEffectDuration();
+    return 0.;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::CanBeUsedForIndirectFire
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------

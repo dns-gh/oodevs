@@ -23,9 +23,17 @@ rootnode
     done = function( self, params, additionalParams ) -- skill moveTo
         self.isMoving = false
     end,
+    
+    create = function( self )
+        myself.activityDREBTime = 0
+    end,
 
     activate = function( self )
         local Activate = Activate
+
+        if myself.activityDREBTime > 0 then
+            myself.activityDREBTime = myself.activityDREBTime - 1
+        end
 
         -- Debarquement sur magic move
         if integration.shouldDismount() then
