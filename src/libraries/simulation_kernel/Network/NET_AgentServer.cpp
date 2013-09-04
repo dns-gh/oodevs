@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-12 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Network/NET_AgentServer.cpp $
-// $Author: Nld $
-// $Modtime: 17/06/05 21:32 $
-// $Revision: 11 $
-// $Workfile: NET_AgentServer.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "NET_AgentServer.h"
@@ -23,11 +21,9 @@ using namespace tools;
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation )
-    : ServerNetworker                ( config.GetNetworkAddress(), config.GetNetworkTimeout() )
-    , time_                          ( time )
-    , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
-    , nUnitVisionConesChangeTimeStep_( 0 )
-    , bSendUnitVisionCones_          ( false )
+    : ServerNetworker( config.GetNetworkAddress(), config.GetNetworkTimeout() )
+    , time_   ( time )
+    , manager_( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
 {
     MT_LOG_INFO_MSG( "Starting simulation server on address " << config.GetNetworkAddress() );
     AllowConnections();
@@ -39,7 +35,7 @@ NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& 
 //-----------------------------------------------------------------------------
 NET_AgentServer::~NET_AgentServer()
 {
-    delete pMsgMgr_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -76,7 +72,7 @@ void NET_AgentServer::ConnectionFailed( const std::string& address, const std::s
 {
     MT_LOG_INFO_MSG( "Bad connection received from client '" << address << "' (" << error << ")" );
     ServerNetworker::ConnectionFailed( address, error );
-    pMsgMgr_->RemoveClient( address );
+    manager_->RemoveClient( address );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +83,7 @@ void NET_AgentServer::ConnectionError( const std::string& address, const std::st
 {
     MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );
     ServerNetworker::ConnectionError( address, error );
-    if( pMsgMgr_->RemoveClient( address ) )
+    if( manager_->RemoveClient( address ) )
         AllowConnections();
 }
 
@@ -99,32 +95,4 @@ void NET_AgentServer::ConnectionWarning( const std::string& address , const std:
 {
     MT_LOG_INFO_MSG( "Connection to '" << address << "' warning (" << warning << ")" );
     ServerNetworker::ConnectionWarning( address, warning );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AgentServer::SetMustSendUnitVisionCones
-// Created: NLD 2003-10-24
-// -----------------------------------------------------------------------------
-void NET_AgentServer::SetMustSendUnitVisionCones( bool bEnable )
-{
-    nUnitVisionConesChangeTimeStep_ = time_.GetCurrentTimeStep();
-    bSendUnitVisionCones_           = bEnable;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AgentServer::MustInitUnitVisionCones
-// Created: NLD 2004-11-30
-// -----------------------------------------------------------------------------
-bool NET_AgentServer::MustInitUnitVisionCones() const
-{
-    return bSendUnitVisionCones_ && time_.GetCurrentTimeStep() == nUnitVisionConesChangeTimeStep_ + 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AgentServer::MustSendUnitVisionCones
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-bool NET_AgentServer::MustSendUnitVisionCones() const
-{
-    return bSendUnitVisionCones_;
 }

@@ -311,6 +311,7 @@ add_plugin( rpr )
 add_plugin( saver_plugin )
 add_plugin( score_plugin )
 add_plugin( script_plugin )
+add_plugin( vision_plugin )
 add_plugin( tic )
 add_plugin( timeline_plugin )
 target_link_libraries( timeline_plugin
@@ -360,6 +361,7 @@ target_link_libraries( dispatcher
     saver_plugin
     score_plugin
     script_plugin
+    vision_plugin
     web_control_plugin
     ${DIRECTIA_LIBRARIES}
 )

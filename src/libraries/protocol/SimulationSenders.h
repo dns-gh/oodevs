@@ -28,6 +28,7 @@ namespace simulation
     GENERATE_MESSAGE( sword::ClientToSim, sword, ControlCheckPointSaveNow     , control_checkpoint_save_now )
     GENERATE_MESSAGE( sword::ClientToSim, sword, ControlCheckPointSetFrequency, control_checkpoint_set_frequency )
     GENERATE_MESSAGE( sword::ClientToSim, sword, ControlEnableVisionCones     , control_toggle_vision_cones )
+    GENERATE_MESSAGE( sword::ClientToSim, sword, ListEnabledVisionCones       , list_enabled_vision_cones )
     GENERATE_MESSAGE( sword::ClientToSim, sword, KnowledgeMagicAction         , knowledge_magic_action )
     GENERATE_MESSAGE( sword::ClientToSim, sword, ObjectMagicAction            , object_magic_action )
     GENERATE_MESSAGE( sword::ClientToSim, sword, UnitMagicAction              , unit_magic_action )

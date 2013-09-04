@@ -98,6 +98,14 @@ public:
         for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->Close();
     }
+
+    virtual bool Filter( const sword::SimToClient& message )
+    {
+        for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
+            if( (*it)->Filter( message ) )
+                return true;
+        return false;
+    }
     //@}
 
 private:

@@ -70,11 +70,12 @@ void DispatcherPlugin::OnReceive( const std::string& link, sword::ClientToSim& m
     {
         sword::SimToClient error;
         error.set_context( message.context() );
-        if( !protocol::GetForbiddenError( message, error ))
+        if( !protocol::GetForbiddenError( message, error ) )
         {
             // Irrelevant but better than no error
             auto m = error.mutable_message()->mutable_magic_action_ack();
             m->set_error_code( sword::MagicActionAck::error_invalid_parameter );
+            m->set_error_msg( "rights check failed" );
         }
         if( unsigned int clientID = resolver_.GetClientID( link ) )
             error.set_client_id( clientID );

@@ -539,14 +539,15 @@ message ControlInformation {
     required int32               tick_duration        = 4;
     //! The simulation time multiplier @see ControlChangeTimeFactor
     required int32               time_factor          = 5;
-    //! The number of seconds between automatic checkpoints saves @see
-    //! ControlCheckPointSetFrequency @see ControlCheckPointSaveNow
+    //! The number of seconds between automatic checkpoints saves
+    //! @see ControlCheckPointSetFrequency @see ControlCheckPointSaveNow
     required int32               checkpoint_frequency = 6;
     //! The current status of the simulation @see EnumSimulationState
     //! @see ControlStop ControlPause ControlResume
     required EnumSimulationState status               = 7;
-    //! Whether the vision cones for units is currently being sent or
-    //! not @see SimToClient::Content::unit_vision_cones
+    //! Whether the vision cones for units is currently being sent or not
+    //! @see SimToClient::Content::unit_vision_cones
+    //! @deprecated
     required bool                send_vision_cones    = 8;
     //! Whether the profiling information is currently being sent or not
     //! @see SimToClient::Content::control_profiling_information
@@ -1652,6 +1653,37 @@ message IndirectFirePerception {
     required ResourceType ammunition   = 2;
     //! The fire effects (list cannot be empty)
     repeated FireEffectId fire_effects = 3;
+}
+
+/** @struct ControlEnableVisionConesAck
+    @brief Acknowledges a request to toggle the vision cones updates
+    @see ControlEnableVisionCones
+*/
+message ControlEnableVisionConesAck {
+    enum ErrorCode {
+        no_error = 0;
+        error_invalid_unit = 1;
+    }
+    required ErrorCode error_code = 1;
+    optional string error_msg = 2;
+}
+
+/** @struct ListEnabledVisionConesAck
+    @brief Acknowledges a request to list the units for which vision cones are
+           being listened to
+    @see ListEnabledVisionCones
+*/
+message ListEnabledVisionConesAck {
+    //! Whether vision cones are enabled for all units or not
+    optional bool all     = 1;
+    //! List of unit identifiers in ascending order for which vision cone
+    //! updates are being sent
+    repeated UnitId units = 2;
+    //! Identifier to start from (included), if ommitted it starts from the
+    //! beginning
+    optional UnitId start = 3;
+    //! Total number of units listened to
+    optional uint32 count = 4;
 }
 
 /** @struct Report
@@ -3682,8 +3714,12 @@ message SimToClient {
             log_funeral_handling_destruction = 145;
         //! @copybrief AutomatChangeSuperior
         optional FormationChangeSuperior formation_change_superior = 146;
-        //! < @copybrief IndirectFirePerception
+        //! @copybrief IndirectFirePerception
         optional IndirectFirePerception indirect_fire_perception = 147;
+        //! @copybrief ControlEnableVisionConesAck
+        optional ControlEnableVisionConesAck control_enable_vision_cones_ack = 148;
+        //! @copybrief ListEnabledVisionConesAck
+        optional ListEnabledVisionConesAck list_enabled_vision_cones_ack = 149;
     }
     /** @property context
         @brief Identifies the request matching the response

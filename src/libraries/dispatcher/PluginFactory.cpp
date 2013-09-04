@@ -26,6 +26,7 @@
 #include "script_plugin/ScriptPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include "order_plugin/OrderPlugin.h"
+#include "vision_plugin/VisionPlugin.h"
 #include "tools/FileWrapper.h"
 #include "tools/XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
@@ -86,7 +87,7 @@ void PluginFactory::Instanciate()
     handler_.Add( new script::ScriptPlugin( model_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
     handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
     handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );
-    handler_.Add( new vision::VisionPlugin( clients_, *rights_, clients_, config_, registrables_ ) );
+    handler_.Add( new vision::VisionPlugin( model_, clients_, *rights_ ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

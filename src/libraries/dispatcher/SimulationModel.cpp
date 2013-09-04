@@ -26,7 +26,6 @@ SimulationModel::SimulationModel( const Config& config )
     , nTimeFactor_         ( 0 )
     , nCheckpointFrequency_( 0 )
     , nSimState_           ( sword::stopped )
-    , bSendVisionCones_    ( false )
     , bProfilingEnabled_   ( false )
 {
     // NOTHING
@@ -63,7 +62,6 @@ void SimulationModel::Update( const sword::ControlInformation& msg )
     nTimeFactor_          = msg.time_factor();
     nCheckpointFrequency_ = msg.checkpoint_frequency();
     nSimState_            = msg.status();
-    bSendVisionCones_     = msg.send_vision_cones() != 0;
     bProfilingEnabled_    = msg.profiling_enabled() != 0;
     if( msg.has_checkpoint_real_time() )
         localTime_ = msg.checkpoint_real_time().data();
@@ -150,7 +148,7 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
     msg().set_time_factor( nTimeFactor_);
     msg().set_checkpoint_frequency( nCheckpointFrequency_ );
     msg().set_status( nSimState_);
-    msg().set_send_vision_cones( bSendVisionCones_ );
+    msg().set_send_vision_cones( false );
     msg().set_profiling_enabled( bProfilingEnabled_ );
     if( localTime_ != "" )
         msg().mutable_checkpoint_real_time()->set_data( localTime_ );

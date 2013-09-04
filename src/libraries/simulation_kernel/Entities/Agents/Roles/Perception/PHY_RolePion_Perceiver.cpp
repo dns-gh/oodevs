@@ -1074,12 +1074,7 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
             owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
-    if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
-    {
-        if( bExternalMustUpdateVisionCones_
-            || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
-            SendVisionCones();
-    }
+    SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -1263,6 +1258,8 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendVisionCones() const
 {
+    if( ! bExternalMustUpdateVisionCones_ )
+        return;
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
@@ -1377,7 +1374,7 @@ bool PHY_RolePion_Perceiver::HasRadarStateChanged() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::Clean()
 {
-    bHasChanged_           = false;
+    bHasChanged_ = false;
     bExternalMustChangePerception_ = false;
     bExternalMustChangeRadar_ = false;
     bRadarStateHasChanged_ = false;
@@ -1477,6 +1474,7 @@ void PHY_RolePion_Perceiver::NotifyReleased()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifySurrendered()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1485,6 +1483,7 @@ void PHY_RolePion_Perceiver::NotifySurrendered()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifySurrenderCanceled()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1495,6 +1494,7 @@ void PHY_RolePion_Perceiver::NotifyVisionConeDataHasChanged()
 {
     bExternalMustUpdateVisionCones_ = true;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::NotifyIsLoaded
 // Created: MGD 2009-10-15
@@ -1505,6 +1505,7 @@ void PHY_RolePion_Perceiver::NotifyIsLoadedForTransport()
     bExternalMustChangePerception_ = true;
     bExternalMustChangeRadar_ = true;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::NotifyIsUnLoaded
 // Created: MGD 2009-10-15
@@ -1591,9 +1592,7 @@ bool PHY_RolePion_Perceiver::CanPerceive( const MIL_ObjectType_ABC& objectType )
     if( !owner_ )
         return false;
     const PHY_RolePion_Composantes* pComposantes = owner_->RetrieveRole< PHY_RolePion_Composantes >();
-    if( pComposantes && pComposantes->CanPerceive( objectType ) )
-        return true;
-    return false;
+    return pComposantes && pComposantes->CanPerceive( objectType );
 }
 
 namespace
@@ -1606,8 +1605,6 @@ namespace
             , point_    ( point )
             , target_   ( target )
             , energy_   ( 0 )
-        {}
-        ~SensorFunctor()
         {}
         void operator()( const PHY_Sensor& sensor )
         {
@@ -1635,8 +1632,6 @@ namespace
             , point_    ( point )
             , target_   ( target )
             , energy_   ( 0 )
-        {}
-        ~Functor()
         {}
         void operator()( PHY_ComposantePion& composante )
         {

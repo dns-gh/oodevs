@@ -36,12 +36,19 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/, dispatcher::Profile_ABC& /*profile*/ ) {}
-    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/ ) {}
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/, dispatcher::Profile_ABC& /*profile*/ )
+    {}
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/ )
+    {}
 
     virtual void Register( dispatcher::Services& ) {}
     virtual void Update() {}
     virtual void Close() {}
+
+    virtual bool Filter( const sword::SimToClient& /*message*/ )
+    {
+        return false;
+    }
     //@}
 };
 

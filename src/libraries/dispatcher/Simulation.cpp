@@ -21,10 +21,10 @@ using namespace tools;
 // Name: Simulation constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-Simulation::Simulation( MessageHandler_ABC& handler, MessageSender_ABC& messageService, const std::string& endpoint )
-    : handler_       ( handler )
-    , messageService_( messageService )
-    , endpoint_      ( endpoint )
+Simulation::Simulation( MessageHandler_ABC& handler, MessageSender_ABC& sender, const std::string& endpoint )
+    : handler_ ( handler )
+    , sender_  ( sender )
+    , endpoint_( endpoint )
 {
     dispatcher::CtrlClientAnnouncement msg;
     msg().set_announce( true );
@@ -72,7 +72,7 @@ void Simulation::OnReceive( const sword::SimToClient& msg )
 // -----------------------------------------------------------------------------
 void Simulation::Send( const sword::DispatcherToSim& msg )
 {
-    messageService_.Send( endpoint_, msg );
+    sender_.Send( endpoint_, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,5 +81,5 @@ void Simulation::Send( const sword::DispatcherToSim& msg )
 // -----------------------------------------------------------------------------
 void Simulation::Send( const sword::ClientToSim& msg )
 {
-    messageService_.Send( endpoint_, msg );
+    sender_.Send( endpoint_, msg );
 }

@@ -539,8 +539,7 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const MT_Vecto
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Update( bool /*bIsDead*/ )
 {
-    if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
-        SendVisionCones();
+    SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
