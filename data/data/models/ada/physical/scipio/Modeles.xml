@@ -2023,8 +2023,6 @@
         <mission name="PION MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="PION MELEE Detruire"/>
-        <mission name="PION MELEE Surveiller"/>
         <mission name="PION Entrer dans un reseau souterrain"/>
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
@@ -2032,8 +2030,10 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION Sortir du reseau souterrain"/>
-        <mission name="PION MELEE Detruire Embuscade"/>
         <mission name="PION COMMUNES Renforcer"/>
+        <mission name="PION MELEE Commandos Detruire"/>
+        <mission name="PION MELEE Commandos Detruire Embuscade"/>
+        <mission name="PION MELEE Commandos Surveiller"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7626,4 +7626,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1435926353" -->
+<!-- signature="1577434346" -->

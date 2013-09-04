@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.tasks.CommandoMonitor" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Monitor">
+    <description>Mission de surveillance (par l'observation) des entités passées en paramètre. Les unités commandos sont furtives pendant la mission.</description>
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="sword.military.knowledge.decisional.Observable"/>
+            </type>
+        </parameter>
+        <parameter name="positions">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Observing"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Observation" permanent="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.primitives.ObserveToward">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>objective</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.skills.primitives.Stealthy"/>
+            </skills>
+        </stage>
+    </stages>
+</task>

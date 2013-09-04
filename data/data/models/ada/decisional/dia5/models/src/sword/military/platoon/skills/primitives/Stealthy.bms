@@ -1,0 +1,14 @@
+-- ****************************************************************************
+-- become stealthy during skill life
+-- ****************************************************************************
+rootnode
+{
+    create = function( self )
+        meKnowledge:becomeStealthy( true )
+        meKnowledge:RC( eRC_EnInfiltration )
+    end,
+
+    destroy = function( self )
+         meKnowledge:becomeStealthy( false )
+    end,
+}

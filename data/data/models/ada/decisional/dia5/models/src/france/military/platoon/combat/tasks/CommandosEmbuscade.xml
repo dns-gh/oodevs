@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.CommandosEmbuscade" source-version="1.0.0" knowledge-class="france.military.platoon.combat.tasks.knowledges.Harass">
+    <description>&#xD;
+    Cette mission est une mise en oeuvre particulière de la capacité de destruction de l'agent. L'agent rejoint une position d'observation d'ou il observe les unités ennemies. Quand celles-ci sont identifiées, il entreprend de les détruire. Puis revient vers le point d'observation. Cette mission continue tant qu'un ordre explcite d'interruption n'est pas donné. &#xD;
+    On passe volontairement une seule position dans cette mission.&#xD;
+    Les commandos sont furtifs pendant la mission.</description>
+    <parameters>
+        <parameter name="objective">
+            <description>Position d'embuscade. Tout ennemi qui passe près de cette élement sera, si possible, engagé.&#xD;
+L'agent va donc observer cette position en mesure d'engager les éléments ennemis identifiés.&#xD;
+</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Positionable"/>
+            </type>
+        </parameter>
+        <parameter name="meetingPoint">
+            <description>Le point de regroupement à rejoindre en fin de mission.</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Positionable"/>
+            </type>
+        </parameter>
+        <parameter name="destroyingPosition" nullable="true">
+            <description>Position d'observation de la poition ou harceler.</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Neutralizing"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="obstacles" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.world.Object"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="entity" nullable="true">
+            <type>
+                <class name="sword.military.knowledge.decisional.Neutralizable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="withImprovement">
+            <description>Si la valeur est vraie, on continue la construction en valorisant l'objectif.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Prepare obstacles, observe enemies and engage them if they approach of the objective.</description>
+    </goal>
+    <stages>
+        <stage label="Preparation du terrain">
+            <description>Mise en place du plan d'obstacle.</description>
+            <goal>
+                <description>Construire le plan d'obstacle.</description>
+            </goal>
+            <skills>
+                <skill name="sword.military.platoon.skills.BuildWithReinforcement" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>obstacles</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="withImprovement">
+                        <value>
+                            <parameter>withImprovement</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Observe et détruire les ennemis sur la position">
+            <description>Observer dans la zone et engager les ennemis.</description>
+            <goal>
+                <description>Engagement des objectifs.</description>
+            </goal>
+            <skills>
+                <skill name="france.military.platoon.skills.Ambush" main="true">
+                    <parameter name="entity">
+                        <value>
+                            <parameter>entity</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="ambushObjective">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="destroyingPosition">
+                        <value>
+                            <parameter>destroyingPosition</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.skills.primitives.Stealthy"/>
+            </skills>
+        </stage>
+        <stage label="Repli vers la position de regroupement">
+            <description>Déplacement vers le point de regroupement</description>
+            <goal>
+                <description>Faire mouvement et se poster sur la position de regroupement.</description>
+            </goal>
+            <skills>
+                <skill name="sword.military.platoon.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>meetingPoint</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.skills.primitives.Stealthy"/>
+            </skills>
+        </stage>
+    </stages>
+</task>

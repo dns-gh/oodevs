@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.tasks.CommandoDestroy" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Destroy">
+    <description>Become stealthy and destroy agent </description>
+    <parameters>
+        <parameter name="entities">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroyable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Destruction" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.platoon.coercition.skills.primitives.Destroy" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.skills.primitives.Stealthy"/>
+            </skills>
+        </stage>
+    </stages>
+</task>

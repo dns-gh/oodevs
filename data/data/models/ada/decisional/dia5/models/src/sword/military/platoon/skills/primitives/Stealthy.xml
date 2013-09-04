@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.primitives.Stealthy" source-version="1.0.0">
+    <description>Become stealthy during skill is alive. </description>
+    <parameters/>
+    <modifiers/>
+    <links/>
+</skill>
