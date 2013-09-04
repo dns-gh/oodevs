@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.CommandosDetruire" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Destroy">
+    <description>Detruire les objectifs en étant furtif.</description>
+    <parameters>
+        <parameter name="entities">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroyable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Détruire les objectifs.</description>
+    </goal>
+    <stages/>
+    <next-task name="sword.military.platoon.coercition.tasks.CommandoDestroy">
+        <parameter name="entities">
+            <value>
+                <parameter>entities</parameter>
+            </value>
+        </parameter>
+        <parameter name="positions">
+            <value>
+                <parameter>positions</parameter>
+            </value>
+        </parameter>
+    </next-task>
+</task>

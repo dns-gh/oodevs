@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.CommandosSurveiller" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Monitor">
+    <description>Surveiller un objectif afin de renseigner. Les unités commandos sont furtives le temps de la mission</description>
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="sword.military.knowledge.decisional.Observable"/>
+            </type>
+        </parameter>
+        <parameter name="positions">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Observing"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages/>
+    <next-task name="sword.military.platoon.coercition.tasks.CommandoMonitor">
+        <parameter name="objective">
+            <value>
+                <parameter>objective</parameter>
+            </value>
+        </parameter>
+        <parameter name="positions">
+            <value>
+                <parameter>positions</parameter>
+            </value>
+        </parameter>
+    </next-task>
+</task>
