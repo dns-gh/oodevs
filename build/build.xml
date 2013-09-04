@@ -19,9 +19,6 @@
 
     <propertyregex property="platform32" input="${platform}" regexp="(\w+)_x64" select="\1" defaultvalue="${platform}"/>
 
-    <!-- local extensions -->
-    <import file="protobuf.xml" />
-
     <!-- generate random ports -->
     <math result="test.portnumber2">
         <op op="+" datatype="int">
