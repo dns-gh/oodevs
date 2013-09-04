@@ -1009,7 +1009,7 @@ void RolePion_Decision::RegisterFire()
     RegisterFunction( "DEC_Tir_PorteeTheoriqueMinTirIndirect",
         boost::function< double( const PHY_DotationCategory* ) >( boost::bind( &GetTheoricMinRangeToIndirectFire, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
     RegisterFunction( "DEC_Tir_LancerFumigeneSurConnaissance", // $$$$ MCO 2012-06-25: should be a command
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Tir_MunitionPourTirIndirect",
         boost::function< const PHY_DotationCategory* ( int, const MT_Vector2D* ) >( boost::bind( &GetAmmunitionForIndirectFire, boost::ref( GetPion() ), boost::ref( model_ ), _1, _2 ) ) );
     RegisterFunction( "DEC_Pion_InterdireMunition",
@@ -1018,6 +1018,7 @@ void RolePion_Decision::RegisterFire()
         boost::function< void( const std::vector< const PHY_DotationCategory* >& ) >( boost::bind( &DEC_FireFunctions::AllowAmmunition, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Pion_AutoriserToutesMunitions",
         boost::bind( &DEC_FireFunctions::AllowAllAmmunitions, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Tir_LancerFumigeneSurPosition", &DEC_FireFunctions::ThrowSmokeOnPosition );
 }
 
 namespace

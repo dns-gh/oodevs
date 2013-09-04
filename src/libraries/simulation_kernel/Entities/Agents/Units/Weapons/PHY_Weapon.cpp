@@ -296,7 +296,7 @@ bool PHY_Weapon::IndirectFire( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& ef
 // Name: PHY_Weapon::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_Weapon::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, PHY_FireResults_ABC& fireResult )
+double PHY_Weapon::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, PHY_FireResults_ABC& fireResult )
 {
     const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
     const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
@@ -325,4 +325,5 @@ void PHY_Weapon::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPos
         else
             break;
     }
+    return type_.GetSmokeDuration();
 }

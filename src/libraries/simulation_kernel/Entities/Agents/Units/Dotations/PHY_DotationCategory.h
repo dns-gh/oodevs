@@ -64,6 +64,7 @@ public:
     bool CanBeUsedForIndirectFire() const;
     bool HasAttritions           () const;
     bool HasIndirectWeaponCategory( const PHY_IndirectFireDotationClass& indirectWeaponCategory ) const;
+    double GetSmokeDuration() const;
 
     const PHY_AttritionData& GetAttritionData( const PHY_Protection& protectionTarget ) const;
     double GetAttritionScore( const PHY_Protection& protectionTarget ) const;

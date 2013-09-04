@@ -389,6 +389,18 @@ bool PHY_DotationCategory::HasAttritions() const
 }
 
 // -----------------------------------------------------------------------------
+
+// Name: PHY_DotationCategory::GetSmokeDuration
+// Created: LDC 2013-08-30
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory::GetSmokeDuration() const
+{
+    double result = 0.;
+    for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+        result = std::max( result, (*it)->GetSmokeDuration() );
+    return result;
+}
+
 // Name: PHY_DotationCategory::HasIndirectWeaponCategory
 // Created: LGY 2012-02-24
 // -----------------------------------------------------------------------------

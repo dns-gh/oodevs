@@ -263,6 +263,15 @@ void PHY_WeaponType::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourc
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetSmokeDuration
+// Created: LDC 2013-08-30
+// -----------------------------------------------------------------------------
+double PHY_WeaponType::GetSmokeDuration() const
+{
+    return pDotationCategory_->GetSmokeDuration();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
