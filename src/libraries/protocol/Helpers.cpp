@@ -76,6 +76,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "unit_change_superior",               sword::UnitMagicAction::unit_change_superior },
     { "unit_creation",                      sword::UnitMagicAction::unit_creation },
     { "unload_unit",                        sword::UnitMagicAction::unload_unit },
+    { "change_posture",                     sword::UnitMagicAction::change_posture },
 };
 const size_t mapping::MagicUnitAction::size_ = COUNT_OF( mapping::MagicUnitAction::data_ );
 

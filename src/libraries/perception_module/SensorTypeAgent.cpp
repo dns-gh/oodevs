@@ -74,7 +74,7 @@ namespace
                     xis.error( "distance-modifier: value not in [0..1]" );
             }
             else
-                xis.error( "distance-modifier: unknow type" );
+                xis.error( "distance-modifier: unknown type" );
         }
    private:
        Hook hook_;
@@ -100,7 +100,7 @@ namespace
                    xis.error( "distance-modifier: value not in [0..1]" );
            }
            else
-               xis.error( "distance-modifier: unknow type" );
+               xis.error( "distance-modifier: unknown type" );
        }
    };
 

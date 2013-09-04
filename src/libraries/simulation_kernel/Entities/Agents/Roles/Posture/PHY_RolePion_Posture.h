@@ -34,11 +34,6 @@ namespace detection
     class PerceptionDistanceComputer_ABC;
 }
 
-namespace moving
-{
-    class MoveComputer_ABC;
-}
-
 namespace urbanLocation
 {
     class UrbanLocationComputer_ABC;
@@ -74,6 +69,7 @@ public:
     //@{
     void Update( bool bIsDead );
     void Clean();
+
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
@@ -82,27 +78,29 @@ public:
     // Override automatic postures
     virtual void SetPosturePostePrepareGenie();
     virtual void UnsetPosturePostePrepareGenie();
-    void EnableDiscreteMode();
-    void DisableDiscreteMode();
-    void SetTimingFactor( double rFactor ); //$$$ A GICLER
+    virtual void SetTimingFactor( double rFactor ); //$$$ A GICLER
+    virtual void SetPosture( const PHY_Posture& posture );
+
+    virtual void EnableDiscreteMode();
+    virtual void DisableDiscreteMode();
     //@}
 
     //! @name Installation
     //@{
-    bool IsInstalled() const;
-    bool IsUninstalled() const;
-    void Install();
+    virtual bool IsInstalled() const;
+    virtual bool IsUninstalled() const;
+    virtual void Install();
     //@}
 
     //! @name Perception
     //@{
-    void SetStealthFactor( double rValue );
+    virtual void SetStealthFactor( double rValue );
     //@}
 
     //! @name Elongation
     //@{
-    void SetElongationFactor( double );
-    double GetElongationFactor() const;
+    virtual void SetElongationFactor( double );
+    virtual double GetElongationFactor() const;
     //@}
 
     //! @name Accessors
@@ -110,6 +108,7 @@ public:
     virtual const PHY_Posture& GetLastPosture() const;
     virtual const PHY_Posture& GetCurrentPosture() const;
     virtual double GetPostureCompletionPercentage() const;
+
     virtual bool IsStealth() const;
     virtual void SetAmbianceSafety( bool safety );
     virtual bool IsMovingPosture() const;

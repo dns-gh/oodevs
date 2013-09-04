@@ -52,16 +52,12 @@ private:
     //@}
 
 private:
-    //! @name Tools
+    //! @name Helpers
     //@{
-    template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis );
-    double GetPopulationFactor        ( double rDensity ) const;
-    double GetSourceFactor            ( const MIL_Agent_ABC& source ) const;
-    void     InitializePopulationFactors( xml::xistream& xis );
-    //@}
-    //! @name Hepers
-    //@{
-    static void ReadPosture( xml::xistream& xis, const PHY_Posture::T_PostureMap& container, T_FactorVector& factors );
+    double GetPopulationFactor( double rDensity ) const;
+    double GetSourceFactor( const MIL_Agent_ABC& source ) const;
+    void InitializePopulationFactors( xml::xistream& xis );
+    void ReadPosture( xml::xistream& xis );
     //@}
 
 private:

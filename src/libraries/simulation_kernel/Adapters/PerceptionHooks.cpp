@@ -273,21 +273,21 @@ namespace
     }
     DEFINE_HOOK( GetPostureSize, 0, size_t, () )
     {
-        return PHY_Posture::GetPostures().size();
+        return PHY_Posture::GetPostureCount();
     }
     DEFINE_HOOK( GetPostureIdentifier, 2, bool, ( const char* type, size_t* identifier ) )
     {
-        auto it = PHY_Posture::GetPostures().find( type );
-        if( it == PHY_Posture::GetPostures().end() )
+        const PHY_Posture* posture = PHY_Posture::FindPosture( type );
+        if( ! posture )
             return false;
-        *identifier = it->second->GetID();
+        *identifier = posture->GetID();
         return true;
     }
     DEFINE_HOOK( PostureCanModifyDetection, 1, bool, ( const char* type ) )
     {
-        auto it = PHY_Posture::GetPostures().find( type );
-        if( it != PHY_Posture::GetPostures().end() )
-            return it->second->CanModifyDetection();
+        const PHY_Posture* posture = PHY_Posture::FindPosture( type );
+        if( posture )
+            return posture->CanModifyDetection();
         return false;
     }
     DEFINE_HOOK( GetLastPostureIdentifier, 1, size_t, ( const SWORD_Model* entity ) )

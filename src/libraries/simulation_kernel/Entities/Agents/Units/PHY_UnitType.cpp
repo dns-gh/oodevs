@@ -42,7 +42,7 @@ PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
 // -----------------------------------------------------------------------------
 PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     : dotationCapacitiesTC1_            ( "logistics", xis )
-    , postureTimes_                     ( PHY_Posture::GetPostures().size(), std::make_pair( 0, 0 ) )
+    , postureTimes_                     ( PHY_Posture::GetPostureCount(), std::make_pair( 0, 0 ) )
     , rInstallationTime_                ( 0. )
     , rUninstallationTime_              ( 0. )
     , footprintRadius_                  ( 0 )
@@ -262,18 +262,19 @@ void PHY_UnitType::InitializePostureTimes( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::ReadPosture( xml::xistream& xis )
 {
-    const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    auto it = postures.find( xis.attribute< std::string >( "name" ) );
-    const PHY_Posture& posture = *it->second;
-    assert( postureTimes_.size() > posture.GetID() );
+    const std::string name = xis.attribute< std::string >( "name" );
+    const PHY_Posture* posture = PHY_Posture::FindPosture( name );
+    if( ! posture )
+        throw MASA_EXCEPTION( xis.context() + "unknown posture name '" + name +"'" );
+    assert( postureTimes_.size() > posture->GetID() );
     double setupTime;
     double tearDownTime;
     if( ! tools::ReadTimeAttribute( xis, "setup-time", setupTime ) )
         throw MASA_EXCEPTION( xis.context() + "invalid posture setup time" );
     if( ! tools::ReadTimeAttribute( xis, "tear-down-time", tearDownTime ) )
         throw MASA_EXCEPTION( xis.context() + "invalid posture tear down time" );
-    postureTimes_[ posture.GetID() ] = std::make_pair( static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( setupTime ) ),
-                                                       static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( tearDownTime ) ) );
+    postureTimes_[ posture->GetID() ] = std::make_pair( static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( setupTime ) ),
+                                                        static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( tearDownTime ) ) );
 }
 
 // -----------------------------------------------------------------------------

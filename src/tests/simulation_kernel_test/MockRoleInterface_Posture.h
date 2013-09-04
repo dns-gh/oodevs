@@ -27,6 +27,7 @@ MOCK_BASE_CLASS( MockRoleInterface_Posture, PHY_RoleInterface_Posture )
     MOCK_METHOD( SetPosturePostePrepareGenie, 0 );
     MOCK_METHOD( UnsetPosturePostePrepareGenie, 0 );
     MOCK_METHOD( SetTimingFactor, 1 );
+    MOCK_METHOD( SetPosture, 1 );
 
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );

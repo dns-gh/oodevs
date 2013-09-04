@@ -69,43 +69,10 @@ namespace
                     xis.error( "distance-modifier: value not in [0..1]" );
             }
             else
-                xis.error( "distance-modifier: unknow type" );
+                xis.error( "distance-modifier: unknown type" );
         }
    private:
        const C& container_;
-    };
-
-   template<>
-   class Loader< PHY_Posture::T_PostureMap > : private boost::noncopyable
-   {
-   public:
-        explicit Loader( const PHY_Posture::T_PostureMap& container )
-            : container_( container )
-        {}
-
-        void ReadFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
-        {
-            std::string containerType;
-            xis >> xml::attribute( "type", containerType );
-
-            auto it = container_.find( containerType );
-            if( it != container_.end() )
-            {
-                if( !it->second->CanModifyDetection() )
-                    return;
-                assert( factors.size() > it->second->GetID() );
-                double& rFactor = factors[ it->second->GetID() ];
-
-                xis >> xml::attribute( "value", rFactor );
-                if( rFactor < 0 || rFactor > 1 )
-                    xis.error( "distance-modifier: value not in [0..1]" );
-            }
-            else
-                xis.error( "distance-modifier: unknow type" );
-        }
-
-   private:
-       const PHY_Posture::T_PostureMap& container_;
     };
 
     template< typename C >
@@ -126,6 +93,22 @@ namespace
         environmentAssociation[ "Foret"  ] = PHY_RawVisionData::eVisionForest;
         environmentAssociation[ "Urbain" ] = PHY_RawVisionData::eVisionUrban;
     }
+    void ReadPostureFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
+    {
+        std::string type;
+        xis >> xml::attribute( "type", type );
+        const PHY_Posture* posture = PHY_Posture::FindPosture( type );
+        if( ! posture )
+            xis.error( "distance-modifier: unknown type" );
+        if( ! posture->CanModifyDetection() )
+            return;
+        assert( factors.size() > posture->GetID() );
+        double factor;
+        xis >> xml::attribute( "value", factor );
+        if( factor < 0 || factor > 1 )
+            xis.error( "distance-modifier: value not in [0..1]" );
+         factors[ posture->GetID() ] = factor;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -133,23 +116,23 @@ namespace
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis )
-    : type_( type )
-    , rAngle_( 0. )
-    , bScanningAllowed_( false )
-    , rRecognitionFirerDist_( 0. )
-    , rSquareProximityDist_( 0. )
-    , rIdentificationDist_( 0. )
-    , rRecognitionDist_( 0. )
-    , rDetectionDist_( 0. )
-    , volumeFactors_( PHY_Volume       ::GetVolumes       ().size(), 0. )
-    , precipitationFactors_( weather::PHY_Precipitation::GetPrecipitations().size(), 0. )
-    , lightingFactors_( weather::PHY_Lighting     ::GetLightings     ().size(), 0. )
-    , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
-    , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
-    , urbanBlockFactors_   ( PHY_MaterialCompositionType::Count(), 1. )
-    , rPopulationDensity_  ( 1. )
-    , rPopulationFactor_   ( 1. )
-    , isLimitedToSensors_  ( false ) // LTO
+    : type_                 ( type )
+    , rAngle_               ( 0 )
+    , bScanningAllowed_     ( false )
+    , rRecognitionFirerDist_( 0 )
+    , rSquareProximityDist_ ( 0 )
+    , rIdentificationDist_  ( 0 )
+    , rRecognitionDist_     ( 0 )
+    , rDetectionDist_       ( 0 )
+    , volumeFactors_        ( PHY_Volume::GetVolumes().size(), 0. )
+    , precipitationFactors_ ( weather::PHY_Precipitation::GetPrecipitations().size(), 0. )
+    , lightingFactors_      ( weather::PHY_Lighting::GetLightings().size(), 0. )
+    , postureSourceFactors_ ( PHY_Posture::GetPostureCount(), 0. )
+    , postureTargetFactors_ ( PHY_Posture::GetPostureCount(), 0. )
+    , urbanBlockFactors_    ( PHY_MaterialCompositionType::Count(), 1. )
+    , rPopulationDensity_   ( 1. )
+    , rPopulationFactor_    ( 1. )
+    , isLimitedToSensors_   ( false ) // LTO
 {
     InitializeAngle           ( xis );
     InitializeLimitedToSensors( xis ); // LTO
@@ -157,15 +140,18 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
 
     xis >> xml::start( "distance-modifiers" );
 
-    InitializeFactors( PHY_Volume       ::GetVolumes        (), "size-modifiers"  , volumeFactors_       , xis );
+    InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
     InitializeFactors( weather::PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
-    InitializeFactors( weather::PHY_Lighting     ::GetLightings      (), "visibility-modifiers"  , lightingFactors_     , xis );
-    InitializeFactors( PHY_Posture      ::GetPostures       (), "source-posture-modifiers", postureSourceFactors_, xis );
-    InitializeFactors( PHY_Posture      ::GetPostures       (), "target-posture-modifiers" , postureTargetFactors_, xis );
-
+    InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
+    xis >> xml::start( "source-posture-modifiers" )
+            >> xml::list( "distance-modifier", boost::bind( &ReadPostureFactor, _1, boost::ref( postureSourceFactors_ ) ) )
+        >> xml::end
+        >> xml::start( "target-posture-modifiers" )
+            >> xml::list( "distance-modifier", boost::bind( &ReadPostureFactor, _1, boost::ref( postureTargetFactors_ ) ) )
+        >> xml::end;
     InitializeEnvironmentAssociation();
     InitializeEnvironmentFactors( xis );
-    InitializePopulationFactors ( xis );
+    InitializePopulationFactors( xis );
     InitializeUrbanBlockFactors( xis );
 
     xis >> xml::end;

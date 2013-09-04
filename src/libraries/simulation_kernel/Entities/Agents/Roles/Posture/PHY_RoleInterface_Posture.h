@@ -45,6 +45,7 @@ public:
     virtual void SetPosturePostePrepareGenie() = 0;
     virtual void UnsetPosturePostePrepareGenie() = 0;
     virtual void SetTimingFactor( double rFactor ) = 0;
+    virtual void SetPosture( const PHY_Posture& posture ) = 0;
     //@}
 
     //! @name Operations

@@ -247,7 +247,7 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location::Move
+// Name: PHY_RolePion_Location::MagicMove
 // Created: NLD 2004-11-24
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
