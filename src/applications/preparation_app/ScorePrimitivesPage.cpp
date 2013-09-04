@@ -90,7 +90,7 @@ void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelLoaded& )
 // -----------------------------------------------------------------------------
 void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
-    list_->model()->removeRows( 0, list_->model()->columnCount() );
+    list_->model()->removeRows( 0, list_->model()->rowCount() );
 }
 
 // -----------------------------------------------------------------------------
