@@ -22,6 +22,7 @@
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Adapters/RoleAdapterInterface.h"
+#include "AlgorithmsFactories.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Representations.h"
@@ -54,6 +55,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MissionController_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "NetworkNotificationHandler_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Roles/Communications/PHY_RolePion_Communications.h"
@@ -80,8 +82,6 @@
 #include "Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Roles/Transported/PHY_RolePion_Transported.h"
 #include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_Color.h"
 #include "Tools/MIL_DictionaryExtensions.h"
@@ -93,8 +93,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/serialization/vector.hpp>
-#include <vector>
 #include <tuple>
+#include <vector>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 

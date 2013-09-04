@@ -14,6 +14,9 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
+#pragma warning( push, 0 )
+#include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 
 namespace
 {
@@ -42,8 +45,9 @@ void PHY_Posture::Initialize()
     postures[ poste_            .GetName() ] = &poste_;
     postures[ posteAmenage_     .GetName() ] = &posteAmenage_;
     postures[ postePrepareGenie_.GetName() ] = &postePrepareGenie_;
-    for( int i = 0; i < sword::UnitAttributes_Posture_Posture_ARRAYSIZE; ++i )
-        FindPosture( static_cast< sword::UnitAttributes_Posture >( i ) );
+    const auto descriptor = sword::UnitAttributes_Posture_descriptor();
+    for( int i = 0; i < descriptor->value_count(); ++i )
+        FindPosture( static_cast< sword::UnitAttributes_Posture >( descriptor->value( i )->number() ) );
 }
 
 // -----------------------------------------------------------------------------

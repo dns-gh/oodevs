@@ -1679,7 +1679,7 @@ message ListEnabledVisionConesAck {
     //! List of unit identifiers in ascending order for which vision cone
     //! updates are being sent
     repeated UnitId units = 2;
-    //! Identifier to start from (included), if ommitted it starts from the
+    //! Identifier to start from (included), if omitted it starts from the
     //! beginning
     optional UnitId start = 3;
     //! Total number of units listened to

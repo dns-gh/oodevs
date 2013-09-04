@@ -345,7 +345,7 @@ message OrderStream {
     @see ControlEnableVisionCones
 */
 message ListEnabledVisionCones {
-    //! Identifier to start from (included), if ommitted start from the
+    //! Identifier to start from (included), if omitted start from the
     //! beginning
     optional UnitId start = 1;
     //! Maximum number of identifiers to send
