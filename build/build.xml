@@ -63,17 +63,9 @@
         </sequential>
     </macrodef>
 
-    <target name="test-legacy">
-        <runtests>
-            <arg value="--legacy"/>
-        </runtests>
-    </target>
-
-    <target name="test-nonlegacy">
+    <target name="test">
         <runtests/>
     </target>
-
-    <target name="test" depends="test-legacy,test-nonlegacy"/>
 
     <target name="package">
         <go_package/>

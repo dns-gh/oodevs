@@ -28,7 +28,6 @@ var (
 	rootdir     string
 	rundir      string
 	testPort    int
-	legacy      bool
 	showLog     bool
 	platform    string
 )
@@ -44,7 +43,6 @@ func init() {
 		"path application run directory, default to application directory")
 	flag.IntVar(&testPort, "test-port", 35000,
 		"base port for spawned simulations")
-	flag.BoolVar(&legacy, "legacy", false, "run in legacy mode")
 	flag.BoolVar(&showLog, "show-log", false, "print simulation log files")
 
 	platform = "vc100_x64"
@@ -75,7 +73,6 @@ func MakeOpts() *simu.SimOpts {
 	opts.ExerciseName = "crossroad-small-empty"
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
-	opts.Legacy = legacy
 	opts.EnableTailing = showLog
 	return &opts
 }
@@ -177,6 +174,5 @@ func (t *TestSuite) SetUpSuite(c *C) {
 	log.Println("rootdir", rootdir)
 	log.Println("rundir", rundir)
 	log.Println("testPort", testPort)
-	log.Println("legacy", legacy)
 	log.Println("platform", platform)
 }
