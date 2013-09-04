@@ -108,6 +108,7 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
     connect( bottomWidget_, SIGNAL( Save() ),           this, SLOT( OnSave() ) );
     connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
+    connect( orderWidget, SIGNAL( EnableTriggerEvent( bool ) ), bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
     connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
     connect( orderWidget, SIGNAL( UpdateCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( UpdateCreation( E_EventTypes, const QDateTime& ) ) );
 }

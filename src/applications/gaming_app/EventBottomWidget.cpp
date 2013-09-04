@@ -244,6 +244,15 @@ void EventBottomWidget::OnEndDateTimeSelected()
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventBottomWidget::OnEnableTriggerEvent
+// Created: NPT 2013-09-04
+// -----------------------------------------------------------------------------
+void EventBottomWidget::OnEnableTriggerEvent( bool enable )
+{
+    triggerButton_->setEnabled( enable );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventBottomWidget::SetBeginDateTime
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------

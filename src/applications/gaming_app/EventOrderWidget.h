@@ -132,6 +132,7 @@ signals:
     void StartCreation( E_EventTypes type, const QDateTime& dateTime );
     void UpdateCreation( E_EventTypes type, const QDateTime& dateTime );
     void SelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
+    void EnableTriggerEvent( bool enable );
     //@}
 
 public slots:

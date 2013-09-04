@@ -81,6 +81,7 @@ private slots:
     void OnHasEndTimeChanged( int state );
     void OnBeginDateTimeSelected();
     void OnEndDateTimeSelected();
+    void OnEnableTriggerEvent( bool enable );
     //@}
 
 private:

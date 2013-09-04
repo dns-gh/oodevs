@@ -43,6 +43,8 @@
 #include "gaming/TimelinePublisher.h"
 #include "timeline/api.h"
 
+const QColor disableColor_ = Qt::gray;
+
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget constructor
 // Created: ABR 2013-05-30
@@ -227,9 +229,17 @@ void EventOrderWidget::Publish( timeline::Event* event /* = 0 */ ) const
 
 namespace
 {
-    void DisableItem( gui::RichWarnWidget< QComboBox >* comboBox, int index )
+    void DisableItem( gui::RichWarnWidget< QComboBox >* comboBox, int index, bool isMission )
     {
-        comboBox->setItemData( index, Qt::NoItemFlags, Qt::UserRole - 1 );
+        if( isMission )
+            comboBox->setItemData( index, Qt::NoItemFlags, Qt::UserRole - 1 );
+        else
+        {
+            QFont italicFont;
+            italicFont.setItalic( true );
+            comboBox->setItemData( index, QVariant( italicFont ), Qt::FontRole );
+            comboBox->setItemData( index, disableColor_, Qt::TextColorRole);
+        }
     }
     void EnableItem( gui::RichWarnWidget< QComboBox >* comboBox, int index )
     {
@@ -251,7 +261,7 @@ void EventOrderWidget::AddSingleOrder( const T& mission, bool disable )
     {
         missionCombo_->insertItem( mission.GetId(), missionName, *variant );
         if( disable )
-            DisableItem( missionCombo_, missionCombo_->findText( missionName ) );
+            DisableItem( missionCombo_, missionCombo_->findText( missionName ), currentType_ != eMissionType_FragOrder );
     }
 }
 
@@ -377,21 +387,20 @@ void EventOrderWidget::FillMission()
             SortAndSelect( missionCombo_, "" );
         }
         else
-        {
             AddCompatibleOrders< kernel::Mission >( decisions->GetMissions() );
-            if( lastGivenOrder_ && previousType_ == entityType_ )
+
+        if( lastGivenOrder_ && previousType_ == currentType_ )
+        {
+            AddSingleOrder( *lastGivenOrder_ );
+            SortAndSelect( missionCombo_, lastGivenOrder_->GetName().c_str() );
+            if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
             {
-                AddSingleOrder( *lastGivenOrder_ );
-                SortAndSelect( missionCombo_, lastGivenOrder_->GetName().c_str() );
-                if( !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
-                {
-                    DisableItem( missionCombo_, missionCombo_->currentIndex() );
-                    WarnTargetAndMission();
-                }
+                DisableItem( missionCombo_, missionCombo_->currentIndex(), currentType_ != eMissionType_FragOrder );
+                WarnTargetAndMission();
             }
-            else
-                SortAndSelect( missionCombo_, "" );
         }
+        else
+            SortAndSelect( missionCombo_, "" );
     }
     else
     {
@@ -523,6 +532,7 @@ void EventOrderWidget::OnMissionTypeChanged( int value )
     else
         currentType_ = static_cast< E_MissionType >( value == 0 ? entityType_ : eMissionType_FragOrder );
     FillMission();
+    emit EnableTriggerEvent( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -537,6 +547,8 @@ void EventOrderWidget::OnMissionChanged( int )
         WarnTargetAndMission();
     else if( lastGivenOrder_ && !AreTargetAndMissionCompatible( lastGivenOrder_ ) )
         missionCombo_->removeItem( missionCombo_->findText( lastGivenOrder_->GetName().c_str() ) );
+    QColor itemColor = missionCombo_->itemData( missionCombo_->currentIndex(), Qt::TextColorRole ).value< QColor >();
+    emit EnableTriggerEvent( currentType_ != eMissionType_FragOrder || itemColor != disableColor_ );
 }
 
 // -----------------------------------------------------------------------------
