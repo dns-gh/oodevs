@@ -28,6 +28,7 @@ rootnode
         self.detected = false
         self.needToTakeCover = false
         self.entitiesToSafeguardFrom = {}
+        myself.desactiveSelfProtection = false
     end,
 
     -- -------------------------------------------------------------------------------- 
