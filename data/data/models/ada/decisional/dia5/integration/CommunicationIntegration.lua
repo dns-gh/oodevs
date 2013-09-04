@@ -131,8 +131,14 @@ integration.communication.SlowDown = function( content )
     myself.speedModulation.coordination = 0.1
 end
 
+-- Coordination Manager
+integration.communication.StopMovingInFrontOfPE = function( content )
+    myself.inFrontOfPE = true
+end
+
 integration.communication.Continue = function( content )
     myself.speedModulation.coordination = 1
+    myself.inFrontOfPE = false
 end
 
 integration.RetrieveAutomateTask = function( entity, targetTask )

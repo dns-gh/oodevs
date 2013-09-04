@@ -107,6 +107,15 @@
 				<boolean>true</boolean>
 			</default>
 		</parameter>
+		<parameter name="SECanBeFirst">
+			<description>True means that the Second Echelon can be in front of the First Echelon.</description>
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
+		</parameter>
 	</parameters>
 	<modifiers/>
 	<links>
@@ -125,6 +134,7 @@
 		<link name="synchronizeRC" skill="sword.military.company.skills.SynchronizeRC">
 			<description>Chargé d'envoyer un CR lorsque tous les pions en paramètres sont arrivés sur une lima (LC ou LD)</description>
 		</link>
+		<link name="coordinationManagerBetweenEchelon" skill="sword.military.company.skills.CoordinationManagerBetweenEchelon"/>
 	</links>
 	<resources/>
 </skill>

@@ -30,8 +30,17 @@ rootnode
         if self.params.entity:canTakePosition() or myself.blocked or myself.blockForcesContinue then
             Activate( skill.nodes.TakePosition, 1, { position = self.params.entity } )
         else -- underway
-            Activate( skill.nodes.MoveTo, 1, { 
-                position = self.params.entity, pathType = self.params.pathType } )
+          if myself.inFrontOfPE then -- The unit is a SE unit and he is in front of a SE
+              local myPosition = integration.getPositionAlongDangerDirection(meKnowledge, meKnowledge:getPosition())
+              local myNewPosition = integration.getPositionAlongDangerDirection(meKnowledge, self.params.entity:getPosition())
+              if myPosition > myNewPosition then -- I want to move in the opposite direction than the danger direction
+                  Activate( skill.nodes.MoveTo, 1, { 
+                      position = self.params.entity, pathType = self.params.pathType } )
+              end            
+          else
+              Activate( skill.nodes.MoveTo, 1, { 
+                    position = self.params.entity, pathType = self.params.pathType } )
+          end
         end
     end
 }

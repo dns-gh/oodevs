@@ -1,0 +1,52 @@
+-- **********************************************************************************************
+-- skill CoordinationManagerBetweenEchelon: the second echelon cannont move in front of the first echelon
+-- self.params.FirstEchelon: units from first echelon
+-- self.params.SecondEchelon: units from second echelon
+-- self.params.progressionInDangerDirection: progression of all units in danger direction
+-- **********************************************************************************************
+rootnode {
+
+    connections = { skill.nodes.Stop },
+
+    done = function( self ) end,
+
+    activate = function( self )
+        local Activate = Activate        
+        local current
+        self.firstPE = -math.huge
+        for _, entity in pairs( self.params.FirstEchelon ) do
+            if entity:isOperational() then
+                current = self.params.progressionInDangerDirection[ entity ]
+                if current > self.firstPE then
+                    self.firstPE = current
+                end
+            end
+        end
+
+        -- automate sends a wait activation to all  second echelon units who are in front of first echelon
+        for _, entity in pairs( self.params.SecondEchelon ) do
+            if entity:isOperational() then
+                current = self.params.progressionInDangerDirection[ entity ]
+                if current > self.firstPE then
+                    Activate( skill.nodes.Stop, 1, { entity = entity } )
+                end
+            end
+        end
+    end
+}
+
+-- ****************************************************************************************** 
+-- node Stop: unit must slow down when node created or continue its moving when node destroyed
+-- self.params.entity: unit to slow down or continue moving
+-- ******************************************************************************************
+
+node "Stop"
+{
+    select = function( self )
+        meKnowledge:stopMovingInFrontOfPE( self.params.entity )
+    end,
+    
+    deselect = function( self )
+        meKnowledge:continueSyncronisation( self.params.entity )
+    end,
+}
