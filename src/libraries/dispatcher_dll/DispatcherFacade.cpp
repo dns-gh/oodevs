@@ -59,14 +59,14 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
 
     file_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ),
                                     config_->GetDispatcherLogFiles(), config_->GetDispatcherLogSize(),
-                                    config_->GetDispatcherLogLevel(), bClearPreviousLog, MT_Logger_ABC::eDispatcher, config_->IsDispatcherLogInBytes() ) );
+                                    config_->GetDispatcherLogLevel(), bClearPreviousLog,
+                                    MT_Logger_ABC::eDispatcher, config_->IsDispatcherLogInBytes() ) );
     MT_LOG_REGISTER_LOGGER( *file_ );
     try
     {
-        MT_LOG_INFO_MSG( "Setting max-connections="
-                + boost::lexical_cast< std::string >( maxConnections ));
+        MT_LOG_INFO_MSG( "Setting max-connections=" + boost::lexical_cast< std::string >( maxConnections ) );
         dispatcher_.reset( new dispatcher::Dispatcher( *config_, maxConnections ) );
-        dispatcher_->RegisterPluginFactory( *new positions::PositionsPluginFactory() );
+        dispatcher_->Register( *new positions::PositionsPluginFactory() );
         dispatcher_->CreatePlugins();
     }
     catch( const std::exception& e )

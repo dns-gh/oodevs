@@ -11,11 +11,11 @@
 #include "SimulationDispatcher.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "Model.h"
-#include "Synchroniser.h"
-#include "ReplaySynchronisations.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include "ReplaySynchronisations.h"
+#include "Synchroniser.h"
+#include "Model.h"
 
 using namespace dispatcher;
 
@@ -23,10 +23,10 @@ using namespace dispatcher;
 // Name: SimulationDispatcher constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-SimulationDispatcher::SimulationDispatcher( ClientPublisher_ABC& clientsPublisher, Model& model )
-    : clientsPublisher_( clientsPublisher )
-    , model_           ( model )
-    , synching_        ( false )
+SimulationDispatcher::SimulationDispatcher( ClientPublisher_ABC& publisher, Model& model )
+    : publisher_( publisher )
+    , model_    ( model )
+    , synching_ ( false )
 {
     // NOTHING
 }
@@ -40,17 +40,13 @@ SimulationDispatcher::~SimulationDispatcher()
     // NOTHING
 }
 
-// =============================================================================
-// MESSAGES
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SimulationDispatcher::IsDestruction
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
 bool SimulationDispatcher::IsDestruction( const sword::SimToClient& wrapper ) const
 {
-    if( wrapper.message().has_unit_knowledge_destruction() ||
+    return wrapper.message().has_unit_knowledge_destruction() ||
         wrapper.message().has_object_destruction() ||
         wrapper.message().has_unit_destruction() ||
         wrapper.message().has_object_knowledge_destruction() ||
@@ -65,21 +61,19 @@ bool SimulationDispatcher::IsDestruction( const sword::SimToClient& wrapper ) co
         wrapper.message().has_stop_fire_effect() ||
         wrapper.message().has_stop_unit_fire() ||
         wrapper.message().has_stop_crowd_fire() ||
-        wrapper.message().has_invalidate_report() )
-        return true;
-    return false;
+        wrapper.message().has_invalidate_report();
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationDispatcher::Receive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SimulationDispatcher::Receive( const sword::SimToClient& asnMsg )
+void SimulationDispatcher::Receive( const sword::SimToClient& wrapper )
 {
-    if( !synching_ || IsDestruction( asnMsg )
-        || ( asnMsg.message().has_control_begin_tick() && asnMsg.message().control_begin_tick().current_tick() == 0 )
-        || ( asnMsg.message().has_control_end_tick() && asnMsg.message().control_end_tick().current_tick() == 0 ) )
-        clientsPublisher_.Send( asnMsg );
+    if( !synching_ || IsDestruction( wrapper )
+        || ( wrapper.message().has_control_begin_tick() && wrapper.message().control_begin_tick().current_tick() == 0 )
+        || ( wrapper.message().has_control_end_tick() && wrapper.message().control_end_tick().current_tick() == 0 ) )
+        publisher_.Send( wrapper );
 }
 
 namespace
@@ -127,7 +121,7 @@ void SimulationDispatcher::EndSynchronisation()
     Synchroniser synch;
     EndSynchVisitor visitor( synch );
     model_.Accept( visitor );
-    synch.Commit( clientsPublisher_, model_ );
+    synch.Commit( publisher_, model_ );
     synching_ = false;
 
     // $$$$ AGE 2007-04-24: Le commit va Update le Model et donc supprimer l'entité en question

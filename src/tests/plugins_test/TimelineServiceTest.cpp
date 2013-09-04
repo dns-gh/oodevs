@@ -16,9 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <iostream>
 
-
-
-
 MOCK_BASE_CLASS( MockPublisher, plugins::timeline::Publisher_ABC )
 {
     MOCK_METHOD( PullSituation, 3 )
@@ -28,13 +25,14 @@ MOCK_BASE_CLASS( MockPublisher, plugins::timeline::Publisher_ABC )
 
 namespace dispatcher
 {
-	MOCK_BASE_CLASS( MockLogger, Logger_ABC )
-	{
-		MOCK_METHOD( LogInfo, 1 )
-		MOCK_METHOD( LogError, 1 )
-		MOCK_METHOD( LogWarning, 1 )
-	};
+    MOCK_BASE_CLASS( MockLogger, Logger_ABC )
+    {
+        MOCK_METHOD( LogInfo, 1 )
+        MOCK_METHOD( LogError, 1 )
+        MOCK_METHOD( LogWarning, 1 )
+    };
 }
+
 namespace
 {
     std::string Expect( const std::string& data )

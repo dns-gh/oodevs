@@ -75,10 +75,10 @@ void Dispatcher::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Dispatcher::RegisterPluginFactory
+// Name: Dispatcher::Register
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-void Dispatcher::RegisterPluginFactory( PluginFactory_ABC& factory )
+void Dispatcher::Register( PluginFactory_ABC& factory )
 {
     factory_->Register( factory );
 }

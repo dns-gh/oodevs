@@ -27,21 +27,15 @@ namespace dispatcher
 class CompositePlugin : public Plugin_ABC
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-             CompositePlugin() {}
-    virtual ~CompositePlugin() {}
-    //@}
-
     //! @name Operations
     //@{
-    void Add( boost::shared_ptr< Plugin_ABC > plugin )
+    void Add( const boost::shared_ptr< Plugin_ABC >& plugin )
     {
         plugins_.push_back( plugin );
         handlers_.push_back( plugin );
     }
 
-    void Add( boost::shared_ptr< Plugin_ABC > plugin, boost::shared_ptr< Logger_ABC > logger )
+    void Add( const boost::shared_ptr< Plugin_ABC >& plugin, const boost::shared_ptr< Logger_ABC >& logger )
     {
         Add( plugin );
         loggers_.push_back( logger );
@@ -52,14 +46,9 @@ public:
         Add( boost::shared_ptr< Plugin_ABC >( plugin ) );
     }
 
-    void AddHandler( boost::shared_ptr< MessageHandler_ABC > handler )
+    void AddHandler( const boost::shared_ptr< MessageHandler_ABC >& handler )
     {
         handlers_.push_back( handler );
-    }
-
-    void AddHandler( MessageHandler_ABC* handler )
-    {
-        handlers_.push_back( boost::shared_ptr< MessageHandler_ABC >( handler ) );
     }
 
     virtual void Receive( const sword::SimToClient& message )
@@ -112,23 +101,11 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< boost::shared_ptr< Plugin_ABC > > T_Plugins;
-    typedef T_Plugins::const_iterator                    CIT_Plugins;
-
-    typedef std::vector< boost::shared_ptr< MessageHandler_ABC > > T_Handlers;
-    typedef T_Handlers::const_iterator                           CIT_Handlers;
-
-    typedef std::vector< boost::shared_ptr< Logger_ABC > > T_Loggers;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    T_Loggers loggers_;
-    T_Plugins plugins_;
-    T_Handlers handlers_;
+    std::vector< boost::shared_ptr< Logger_ABC > > loggers_;
+    std::vector< boost::shared_ptr< Plugin_ABC > > plugins_;
+    std::vector< boost::shared_ptr< MessageHandler_ABC > > handlers_;
     //@}
 };
 

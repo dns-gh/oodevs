@@ -149,7 +149,7 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
     {
         Logout( base_.GetPublisher( link ) );
         MT_LOG_INFO_MSG( "Logged out " + link );
-        throw MASA_DISCONNECTION_REQUEST( "disconnection request from " + link );
+        throw tools::DisconnectionRequest( __FILE__, __FUNCTION__, __LINE__, "disconnection request from " + link );
     }
 
     unsigned int ctx = wrapper.has_context() ? wrapper.context() : 0;

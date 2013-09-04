@@ -126,8 +126,7 @@ void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*clie
 // Name: ClientsNetworker::ConnectionSucceeded
 // Created: NLD 2002-07-12
 // -----------------------------------------------------------------------------
-void ClientsNetworker::ConnectionSucceeded( const std::string& local,
-        const std::string& remote )
+void ClientsNetworker::ConnectionSucceeded( const std::string& local, const std::string& remote )
 {
     MT_LOG_INFO_MSG( "Connection received from client '" << remote << "'" );
     ServerNetworker::ConnectionSucceeded( local, remote );
@@ -323,12 +322,8 @@ void ClientsNetworker::OnNewTick()
 {
     std::vector< std::string > errors;
     for( auto it = clients_.begin(); it != clients_.end(); ++it )
-    {
-        if( false == it->second->HasAnsweredSinceLastTick() )
+        if( ! it->second->HasAnsweredSinceLastTick() )
             errors.push_back( it->first );
-    }
-    for( std::vector< std::string >::const_iterator it = errors.begin(); it != errors.end(); ++it )
-    {
+    for( auto it = errors.begin(); it != errors.end(); ++it )
         MT_LOG_ERROR_MSG( "Client hasn't answered messages from last tick! Client should be checked or disconnected: " << *it );
-    }
 }

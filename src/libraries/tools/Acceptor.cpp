@@ -52,6 +52,8 @@ void Acceptor::DenyConnections()
     acceptor_.close( code );
 }
 
+#define MASA_CONNECTION_ERROR( what ) tools::ConnectionError( __FILE__, __FUNCTION__, __LINE__, what )
+
 // -----------------------------------------------------------------------------
 // Name: Acceptor::AllowConnections
 // Created: AGE 2007-09-06

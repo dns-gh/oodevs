@@ -47,9 +47,9 @@ public:
     void Update( const sword::ControlInformation& msg );
     void Update( const sword::ControlBeginTick& msg );
     void Update( const sword::ControlEndTick& msg );
-    void Update_Stop( const sword::ControlStopAck& msg );
-    void Update_Pause( const sword::ControlPauseAck& msg );
-    void Update_Resume( const sword::ControlResumeAck& msg );
+    void Update( const sword::ControlStopAck& msg );
+    void Update( const sword::ControlPauseAck& msg );
+    void Update( const sword::ControlResumeAck& msg );
     void Update( const sword::ControlChangeTimeFactorAck& msg );
     void Send( ClientPublisher_ABC& publisher ) const;
     void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned int totalTicks, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick = 1 ) const;

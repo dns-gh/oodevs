@@ -10,6 +10,7 @@
 #ifndef __LinkResolver_ABC_h_
 #define __LinkResolver_ABC_h_
 
+#include <boost/noncopyable.hpp>
 #include <string>
 
 namespace dispatcher
@@ -23,7 +24,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class LinkResolver_ABC
+class LinkResolver_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

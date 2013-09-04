@@ -24,9 +24,9 @@ using namespace plugins::timeline;
 // Created: JCR 2010-09-07
 // -----------------------------------------------------------------------------
 ActionPublisher::ActionPublisher( const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& sim )
-    : publisher_        ( sim )
-    , entities_         ( new dispatcher::ModelAdapter( model ) )
-    , converter_        ( new kernel::CoordinateConverter( config ) )
+    : publisher_( sim )
+    , entities_ ( new dispatcher::ModelAdapter( model ) )
+    , converter_( new kernel::CoordinateConverter( config ) )
 {
     // NOTHING
 }
@@ -54,7 +54,6 @@ void ActionPublisher::Execute( xml::xistream& xis )
             *msg.mutable_message(), xis );
         publisher_.Send( msg );
     }
-
     catch( const std::exception& err )
     {
         MT_LOG_ERROR_MSG( "Unable to process action: " << tools::GetExceptionMsg( err ) );

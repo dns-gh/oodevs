@@ -54,15 +54,6 @@ void DispatcherPlugin::Register( dispatcher::Services& services )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DispatcherPlugin::Receive
-// Created: AGE 2007-08-24
-// -----------------------------------------------------------------------------
-void DispatcherPlugin::Receive( const sword::SimToClient& /*message*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: DispatcherPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------

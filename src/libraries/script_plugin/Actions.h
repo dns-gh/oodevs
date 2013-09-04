@@ -11,7 +11,6 @@
 #define __Actions_h_
 
 #include "dispatcher/Registrable_ABC.h"
-#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace kernel
@@ -49,7 +48,6 @@ namespace script
 // Created: AGE 2008-07-16
 // =============================================================================
 class Actions : public dispatcher::Registrable_ABC
-              , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

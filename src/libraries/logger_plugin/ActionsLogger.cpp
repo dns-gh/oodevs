@@ -69,7 +69,7 @@ namespace
             // NOTHING
         }
 
-        std::string Convert( double x, double y ) const
+        virtual std::string Convert( double x, double y ) const
         {
             const auto p2d = geometry::Point2d( x, y );
             const auto p2f = converter_.ConvertFromGeo( p2d );
@@ -268,8 +268,7 @@ void ActionsLogger::Close()
 
 namespace
 {
-    bool ActiveFilter( const kernel::EntityResolver_ABC& resolver,
-                       const sword::ClientToSim& pkt )
+    bool ActiveFilter( const kernel::EntityResolver_ABC& resolver, const sword::ClientToSim& pkt )
     {
         if( !pkt.has_message() )
             return false;
@@ -288,7 +287,7 @@ namespace
 // Name: ActionsLogger::SaveCheckpointActiveMissions
 // Created: NPT 2012-09-12
 // -----------------------------------------------------------------------------
-void ActionsLogger::SaveCheckpointActiveMissions( std::string name )
+void ActionsLogger::SaveCheckpointActiveMissions( const std::string& name )
 {
     const auto filename = config_.BuildOnLocalCheckpointChildFile( tools::Path::FromUTF8( name ), "current.ord" );
     SaveTo( filename, boost::bind( &ActiveFilter, boost::cref( *entities_ ), _1 ) );

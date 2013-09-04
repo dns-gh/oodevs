@@ -243,11 +243,11 @@ void Model::Update( const sword::SimToClient& wrapper )
         simulation_->Update( endTick );
     }
     else if( message.has_control_stop_ack() )
-        simulation_->Update_Stop( message.control_stop_ack() );
+        simulation_->Update( message.control_stop_ack() );
     else if( message.has_control_pause_ack() )
-        simulation_->Update_Pause( message.control_pause_ack() );
+        simulation_->Update( message.control_pause_ack() );
     else if( message.has_control_resume_ack() )
-        simulation_->Update_Resume( message.control_resume_ack() );
+        simulation_->Update( message.control_resume_ack() );
     else if( message.has_control_change_time_factor_ack() )
         simulation_->Update( message.control_change_time_factor_ack() );
     else if( message.has_control_date_time_change_ack() ||

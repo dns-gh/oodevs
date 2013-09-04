@@ -1074,18 +1074,13 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
             owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
-    // Debug - Cones de vision
     if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
     {
         if( bExternalMustUpdateVisionCones_
             || MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() )
-            SendDebugState();
+            SendVisionCones();
     }
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::GetKnowledgeGroup
@@ -1262,15 +1257,11 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
     return owner_->GetKnowledge().GetKsPerception().HasDelayedPerceptions();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::SendDebugState
+// Name: PHY_RolePion_Perceiver::SendVisionCones
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::SendDebugState() const
+void PHY_RolePion_Perceiver::SendVisionCones() const
 {
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );

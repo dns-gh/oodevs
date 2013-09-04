@@ -86,7 +86,7 @@ public:
 
     //! @name Checkpoint
     //@{
-    void SaveCheckpointActiveMissions( std::string name );
+    void SaveCheckpointActiveMissions( const std::string& name );
     //@}
 
     //! @name Typedef helpers

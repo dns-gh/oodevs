@@ -10,7 +10,6 @@
 #ifndef __ClientsNetworker_h_
 #define __ClientsNetworker_h_
 
-#include "MessageHandler_ABC.h"
 #include "LinkResolver_ABC.h"
 #include "Plugin_ABC.h"
 #include "tools/ServerNetworker.h"
@@ -63,21 +62,11 @@ public:
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& link );
 
     virtual void Update();
-    //@}
 
-protected:
-    //! @name Operations
-    //@{
     virtual void Receive( const sword::SimToClient& message );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ClientsNetworker( const ClientsNetworker& );            //!< Copy constructor
-    ClientsNetworker& operator=( const ClientsNetworker& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual void ConnectionSucceeded( const std::string& local, const std::string& remote );

@@ -56,12 +56,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SimulationNetworker( const SimulationNetworker& );            //!< Copy constructor
-    SimulationNetworker& operator=( const SimulationNetworker& ); //!< Assignment operator
-    //@}
-
     //! @name Connection callbacks
     //@{
     virtual void ConnectionSucceeded( const std::string& local, const std::string& remote );

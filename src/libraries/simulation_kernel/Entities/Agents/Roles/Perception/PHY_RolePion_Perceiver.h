@@ -189,7 +189,6 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendDebugState  () const;
     virtual void SendChangedState( client::UnitAttributes& msg ) const;
     virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
@@ -224,6 +223,7 @@ private:
     void UpdatePeriphericalVisionState();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
     void EnsurePerceptionRecoLocalisation();
+    void SendVisionCones() const;
     //@}
 
 private:

@@ -63,8 +63,7 @@ PluginFactory::PluginFactory( const Config& config, Model& model, const dispatch
 // -----------------------------------------------------------------------------
 PluginFactory::~PluginFactory()
 {
-    for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -116,9 +115,9 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
         handler_.Add( new plugins::saver::SaverPlugin( clients_, model_, config_ ) );
     else
     {
-        for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
+        for( auto it = factories_.begin(); it != factories_.end(); ++it )
         {
-            std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, staticModel_, simulation_, clients_, clients_ , clients_, registrables_ ) );
+            std::auto_ptr< Plugin_ABC > plugin = it->Create( name, xis, config_, model_, staticModel_, simulation_, clients_, clients_ , clients_, registrables_ );
             if( plugin.get() )
                 handler_.Add( plugin.release() );
         }

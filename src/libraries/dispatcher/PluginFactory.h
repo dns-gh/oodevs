@@ -12,6 +12,7 @@
 
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace xml
 {
@@ -81,11 +82,6 @@ private:
     void LoadPlugin( const tools::Path& name, xml::xistream& xis );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< PluginFactory_ABC* > T_Factories;
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -96,7 +92,7 @@ private:
     ClientsNetworker& clients_;
     CompositePlugin& handler_;
     CompositeRegistrable& registrables_;
-    T_Factories factories_;
+    boost::ptr_vector< PluginFactory_ABC > factories_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
     boost::shared_ptr< plugins::order::OrderPlugin > pOrder_;
     const Services& services_;
