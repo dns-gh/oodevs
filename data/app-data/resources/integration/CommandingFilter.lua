@@ -17,6 +17,7 @@ integration.defaultPlatoonInCompany = function( )
     local allRes = {}
     local listPlatoon = DEC_Automate_PionsAvecPCCommunication()
     local CreateKnowledge = CreateKnowledge
+    local integration = integration
     for _,pion in pairs( listPlatoon ) do
         allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.agent, pion )
     end

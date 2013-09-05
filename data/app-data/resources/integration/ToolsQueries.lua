@@ -77,14 +77,25 @@ local treatIndirectFireFragOrder = function ( )
     return params
 end
 
+local isApplyFireOrder = function( order )
+    local orderType = integration.getAnyType( order )
+    local taskKnowledge = integration.taskKnowledge[ orderType ]
+    if taskKnowledge and taskKnowledge.isApplyFire then
+        return taskKnowledge:isApplyFire()
+    end
+    if orderType == "platoon.combat.support.art.tasks.AppliquerFeux" 
+        or orderType == "Rep_OrderConduite_Pion_AppliquerFeux" 
+        or orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
+        return true
+    end
+    return false
+end
+
 integration.query.getFirstFireOrder = function( )
     local ordres_recus = DEC_GetOrdersCategory()
-    local DEC_RemoveFromOrdersCategory = DEC_RemoveFromOrdersCategory
-    local DEC_DeleteRepresentation = DEC_DeleteRepresentation
-    for _,x in pairs( ordres_recus or emptyTable ) do
-        if integration.getAnyType( x ) == "platoon.combat.support.art.tasks.AppliquerFeux" 
-           or integration.getAnyType( x ) == "Rep_OrderConduite_Pion_AppliquerFeux" 
-           or integration.getAnyType( x ) == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
+    local integration = integration
+    for _, x in pairs( ordres_recus or emptyTable ) do
+        if isApplyFireOrder( x ) then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
             DEC_RemoveFromOrdersCategory( x )
             DEC_DeleteRepresentation( x )
@@ -129,10 +140,8 @@ end
 -- TODO MGD clean all fragOrder queries
 integration.query.getFirstFragOrderFromType = function( fragOrderType )
     local ordres_recus = DEC_GetOrdersCategory()
-    local CreateKnowledge = CreateKnowledge
-    local DEC_RemoveFromOrdersCategory = DEC_RemoveFromOrdersCategory
-    local DEC_DeleteRepresentation = DEC_DeleteRepresentation
-    for _,x in pairs( ordres_recus or emptyTable ) do
+    local integration = integration
+    for _, x in pairs( ordres_recus or emptyTable ) do
         if integration.getAnyType( x ) == fragOrderType then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
             DEC_RemoveFromOrdersCategory( x )
@@ -205,6 +214,7 @@ end
 -- --------------------------------------------------------------------------------
 integration.query.getPositionsToReach = function( reachableElements )
     local currentPositions = {}
+    local CreateKnowledge = CreateKnowledge
     for _, element in pairs ( reachableElements ) do
         local point = element:getMyPosition() -- reaching element
         if point:isReachingFor( element ) then
@@ -269,6 +279,8 @@ end
 -- @release 2011-01-28
 -- --------------------------------------------------------------------------------
 integration.getEntitiesFromAutomat = function ( automat, role, withPC)
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
     local temp = {}
     if withPC then
         temp = integration.getSubordinateAgentsFromCommander( automat )
@@ -305,6 +317,8 @@ integration.getEntitiesFromAutomat = function ( automat, role, withPC)
 -- @release 2012-07-17
 -- --------------------------------------------------------------------------------
 integration.getEntitiesFromAutomatCommunication = function ( automat, role, withPC )
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
     local temp = {}
     if withPC then
         temp = DEC_Automate_PionsDeAutomateAvecPCCommunication(automat.source)
@@ -343,6 +357,8 @@ integration.getEntitiesFromAutomatCommunication = function ( automat, role, with
 integration.getEntitiesFromBatallion = function ()
     local temp = {}
     temp = DEC_Automate_AutomatesSubordonnes()
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
     
     local knowledges = {}
     local nTemp = #temp
@@ -360,7 +376,7 @@ integration.getEntitiesFromBatallion = function ()
 -- @release 2011-10-12
 -- --------------------------------------------------------------------------------
 integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withPC)
-    local entities = integration.getEntitiesFromAutomatCommunication( automat, role, withPC)
+    local entities = integration.getEntitiesFromAutomatCommunication( automat, role, withPC )
     local operationnalEntities = {}
     for i = 1, #entities do
         if entities[i]:isOperational() then
@@ -377,6 +393,8 @@ integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withP
 -- @release 2011-03-08
 -- --------------------------------------------------------------------------------
 integration.getDestroyableInObjective = function( objective )
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
     local res = {}
     local enemies = {}
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.area ) then
@@ -402,6 +420,8 @@ end
 -- @release 2012-03-12
 -- --------------------------------------------------------------------------------
 integration.getTerroristsInObjective = function( objective )
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
     local res = {}
     local enemies = {}
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.area ) then
@@ -412,6 +432,7 @@ integration.getTerroristsInObjective = function( objective )
         enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), 600 )
     end
     
+    local DEC_ConnaissanceAgent_EstTerroriste = DEC_ConnaissanceAgent_EstTerroriste
     local nEnemies = #enemies
     for i = 1,nEnemies do
         local enemy = enemies[i]
@@ -443,6 +464,8 @@ integration.query.getPositionsToFollow = function( elementToFollow, distanceMin,
 end
 
 integration.query.getSiteFranchissementDansZone = function ( zone )
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
     local allRes={}
     local obstacles = {}
     obstacles = DEC_ObjectKnowledgesInZone( zone.source, { eTypeObjectCrossingSite } )
@@ -467,6 +490,8 @@ end
 -- @release 2011-12-05
 -- --------------------------------------------------------------------------------
 integration.getFirePositions = function( modeDeploiement, zone, angle )
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
     local nombrePositions = #( integration.getUnitsWithoutHQCommunication() )
     local directionEnnemi = DEC_GetDirectionEnnemi( DEC_GetRawMission( meKnowledge.source ) )
     local firePositions = {}
@@ -499,6 +524,8 @@ end
 -- @release 2011-08-29
 -- --------------------------------------------------------------------------------
 integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
     local enemies = {}
     for i = 1, #friends do
         local simEnemies = integration.getMortarUnitsToNeutralize( friends[i] )
@@ -528,6 +555,7 @@ end
 -- @release 2012-10-30
 -- --------------------------------------------------------------------------------
 integration.query.getEntitiesToCombatSupportTask = function( commander, oldSupportedPlatoonList )
+    local integration = integration
     local platoonToSupport = {}
     local index = 0
     -- Platoon ally in first echelon

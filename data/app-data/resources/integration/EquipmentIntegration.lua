@@ -454,6 +454,7 @@ end
 
 integration.setAvailableDrones = function ( self )
     myself.droneAvailable  = nil
+    local integration = integration
     local listePions = integration.getAgentsWithoutHQ()
     for _,pion in pairs( listePions or emptyTable ) do
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
@@ -497,6 +498,8 @@ end
 integration.splitArea = function( area, numberOfParts )
     local subAreas = DEC_Geometry_SplitLocalisation( area.source, numberOfParts, nil )
     subAreas = subAreas.first
+    local integration = integration
+    local myself = myself
     myself.leadData.subAreas = {}
     for _, localArea in pairs( subAreas ) do
         myself.leadData.subAreas[#myself.leadData.subAreas + 1] = CreateKnowledge( integration.ontology.types.area, localArea )

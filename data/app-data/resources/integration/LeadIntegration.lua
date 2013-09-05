@@ -31,6 +31,7 @@ end
 -- @author LMT
 -- @release 2011-01-13
 integration.setEchelon = function( bestUnits, echelon )
+    local integration = integration
     for i = 1, #bestUnits do
         integration.setEchelonState( bestUnits[i].entity.source, echelon )
     end
@@ -42,6 +43,7 @@ end
 -- @release 2011-01-14
 integration.manageFeedback = function( frontElement )
     local nbUnitInOtherAutomat = 0
+    local integration = integration
     for _, elem in pairs (frontElement) do
       integration.ListenFrontElement( elem.entity )
       if integration.getCommander( elem.entity.source ) == meKnowledge then
@@ -59,6 +61,9 @@ end
 -- @author LMT
 -- @release 2010-08-26
 integration.fillWorkMap = function()
+    local integration = integration
+    local myself = myself
+    local CreateKnowledge = CreateKnowledge
     for taskName, taskWorkMap in pairs( myself.leadData.workMap ) do
         local platoonHasTask = myself.leadData.platoonHasTask[taskName]
         for obstacle, builders in pairs( taskWorkMap ) do
@@ -68,9 +73,9 @@ integration.fillWorkMap = function()
                     builders[ #builders + 1 ] = platoon
                 end
             end
-            -- Trier builders
+            -- Sort builders
             for i=1, #builders-1 do
-                local builderI = CreateKnowledge(integration.ontology.types.body, builders[i] )
+                local builderI = CreateKnowledge( integration.ontology.types.body, builders[i] )
                 for j=i+1, #builders do
                     local builderJ = CreateKnowledge(integration.ontology.types.body, builders[j] )
                     if integration.distance(obstacle, builderI ) > integration.distance(obstacle, builderJ ) then
@@ -228,6 +233,8 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
     local bestTaskName = nil
     local bestParams = nil
     local noEntityHaveMainTask = true 
+    local integration = integration
+    local myself = myself
     myself.leadData.nbUnitsByObstacle ={}
     myself.leadData.platoonHasTask = {}
     for _, entity in pairs( entities ) do
@@ -251,15 +258,15 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
                         myself.leadData.nbrTotalObstacle = #myself.leadData.obstacles
                         for _, obstacle in pairs ( myself.leadData.obstacles) do
                             myself.leadData.nbUnitsByObstacle[ obstacle ] = myself.leadData.nbUnitsByObstacle[ obstacle ] or 0
-                            myself.leadData.workMap[taskName] =  myself.leadData.workMap[taskName] or {}
-                            local workMap =  myself.leadData.workMap[taskName]
+                            myself.leadData.workMap[taskName] = myself.leadData.workMap[taskName] or {}
+                            local workMap = myself.leadData.workMap[taskName]
                             workMap[obstacle] = workMap[obstacle] or {}
                             local currentMap = workMap[obstacle]
                             local hasDotation = task:hasDotation( entity, obstacle )
                             local canDoIt = task:canDoIt( entity, obstacle )
 
                             myself.leadData.platoonHasTask[taskName] = myself.leadData.platoonHasTask[taskName] or {}
-                            local platoonHasTask =  myself.leadData.platoonHasTask[taskName]
+                            local platoonHasTask = myself.leadData.platoonHasTask[taskName]
                             platoonHasTask[obstacle] = platoonHasTask[obstacle] or {}
                             local platoons = platoonHasTask[obstacle]
                             platoons[ #platoons + 1 ] = entity.source
@@ -320,6 +327,9 @@ end
 integration.issueMission = function( self, tasks, nbrFront, echelon, entities, isMain, findBestsFunction, disengageTask )
     local tasks = explode( ";", tasks )
     entities = entities or self.entitiesWithoutMission
+    local integration = integration
+    local myself = myself
+    local meKnowledge = meKnowledge
     
     if disengageTask then
         -- NMI whenever a mission is given, non operational entities should not receive the mission,
@@ -359,6 +369,7 @@ end
 
 integration.findDynamicEchelonTask = function( echelon )
     local EchelonTasks = ""
+    local integration = integration
     for entity,tasks in pairs (myself.leadData.dynamicEntityTasks) do
         if integration.getEchelonState(entity.source) == echelon then
             if string.len(EchelonTasks) ~= 0 then
@@ -375,6 +386,9 @@ integration.findDynamicEchelonTask = function( echelon )
 end
 
 integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
+    local integration = integration
+    local myself = myself
+    local meKnowledge = meKnowledge
     local redone = false
     self.listenFrontElementInitialized = false
     local oldEntities = self.parameters.commandingEntities
@@ -382,9 +396,9 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
     local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
     local echelons = integration.getPionsInEchelons( newEntities )
-    local pionsPE =  echelons[1]
-    local pionsSE =  echelons[2]
-    local pionsEE =  echelons[3]
+    local pionsPE = echelons[1]
+    local pionsSE = echelons[2]
+    local pionsEE = echelons[3]
 
     -- if their is a unit in the first echelon that end his mission, we considere him like a SE unit
     for _, entity in pairs( pionsPE ) do
@@ -518,6 +532,7 @@ integration.manageEndMission = function( self )
         else
            meKnowledge:RC( eRC_FinMission )
         end
+        local integration = integration
         for i = 1, #self.parameters.commandingEntities do
            integration.setEchelonState( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
         end
@@ -536,6 +551,8 @@ integration.distributeObstacles = function( self )
     local secondTime = false
     local thirdTime = false
     local noGEN = true
+    local integration = integration
+    local myself = myself
     
     -- The engineer units will build the obstacles.
     -- If they didn't build all the obstacles (for some reason), the other units will build
@@ -714,6 +731,8 @@ end
 -- @release 2013-07-05
 integration.leadCreate = function( self, functionsToExecute, findBestsFunction, disengageTask,
                                     givePCTask, giveEngineerTask, giveMainTask, giveSupportTask, givePEITask, giveDefaultTask )
+    local integration = integration
+    local myself = myself
     integration.initializeListenFrontElement()
     myself.newTask = false
     self.parameters = myself.taskParams
@@ -812,6 +831,8 @@ end
 -- @author LMT
 -- @release 2013-08-13
 integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
+    local integration = integration
+    local myself = myself
     myself.leadData.dynamicEchelonTasks = myself.leadData.dynamicEchelonTasks or {}
     if self.companyTask.isDynamic and self.companyTask:isDynamic() then
         if self.companyTask.readyToGiveDynamicTasks then
@@ -858,6 +879,9 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
                             manageRCnoPEInAutomatWhenNoCoordination, assignDefaultTaskToSE,
                             findBestsFunction, disengageTask )
                                    
+    local integration = integration
+    local myself = myself
+
     myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     if myself.newTask then
       self:create()
@@ -884,9 +908,9 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
         self.companyTask:communicateWithSubordinates()
     end
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
-    local pionsPE =  echelons[1]
-    local pionsSE =  echelons[2]
-    local pionsEE =  echelons[3]
+    local pionsPE = echelons[1]
+    local pionsSE = echelons[2]
+    local pionsEE = echelons[3]
 
     -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
     Activate( self.skill.links.synchronizeRC, 1, { entities = pionsPE } )
@@ -907,10 +931,9 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
 
     if not self.params.noCoordination then
         local fuseau = meKnowledge:getFuseau()
-        
 
         -- Gestion de l'elongation   
-        -- tous les pions sont projet� sur un des deux fuseaux de l'automate
+        -- tous les pions sont projete sur un des deux fuseaux de l'automate
         -- self.progressionInAOR: contient les valeurs de progression sur l'axe de progression
         -- plus la valeur est grande, plus le pion est en avant dans le fuseau
         -- Effet de bord indesirable : en cas d'aller retour dans le fuseau la coordination est compl鴥ment inutilisable 
@@ -940,16 +963,16 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
           maxsupportDistance = maxsupportDistance/2
         end
        
-        -- Gestion de l'�longation intra echelon   
+        -- Gestion de l'elongation intra echelon   
         Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = pionsPE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
         Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = pionsEE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
         
-        -- Gestion de l'�longation inter echelon
+        -- Gestion de l'elongation inter echelon
         Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = fusionList( pionsPE, pionsSE ), progressionInAOR = self.progressionInAOR, distance = maxsupportDistance } )
     end
 
     if not manageRelieveBeforeCoordination and self.params.relieveManager then
-        -- Gestion de la relève
+        -- Gestion de la releve
         Activate( self.skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE})
     end
 
@@ -969,105 +992,110 @@ end
 -- @author NMI
 -- @release 2013-07-05
 integration.leadDelayActivate = function( self, disengageTask )  
-      myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
-      integration.manageAddedAndDeletedUnits( self, findBests, disengageTask )
+    local integration = integration
+    local myself = myself
+    local meKnowledge = meKnowledge
+    local Activate = Activate
+
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
+    integration.manageAddedAndDeletedUnits( self, findBests, disengageTask )
     
-        -- Mis à jour des echelons
-      integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
-      integration.setPionsEchelons( myself.leadData.pionsLima2, eEtatEchelon_Second )
+    -- Mis à jour des echelons
+    integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
+    integration.setPionsEchelons( myself.leadData.pionsLima2, eEtatEchelon_Second )
       
-      -- Changement d'échelons lorsque l'ordre de conduite Decrocher a été donné et que tous le deuxième échelon est en place, prêt à appuyer
-      if self.decrocher and not next( meKnowledge.pionsToAwaitSource ) then
+    -- Changement d'echelons lorsque l'ordre de conduite Decrocher a ete donne et que tous le deuxieme echelon est en place, pret a appuyer
+    if self.decrocher and not next( meKnowledge.pionsToAwaitSource ) then
         if next(myself.leadData.pionsLima2) ~= nil then
-          self.pionsLimaTmp = copyTable( myself.leadData.pionsLima1 )
-          myself.leadData.pionsLima1 = copyTable( myself.leadData.pionsLima2 )
-          myself.leadData.pionsLima2 = copyTable( self.pionsLimaTmp )
+            self.pionsLimaTmp = copyTable( myself.leadData.pionsLima1 )
+            myself.leadData.pionsLima1 = copyTable( myself.leadData.pionsLima2 )
+            myself.leadData.pionsLima2 = copyTable( self.pionsLimaTmp )
         end
         self.sendSupport = true
         self.decrocher = false
         myself.screenUnitDisengage = nil
         return 
-      end
-      
-      -- L'automate donne l'ordre de conduite Decrocher à tout le premier echelon si au moins 1 pion du premier échelon est en danger
-      -- Decrocher comporte l'embarquement du premier echelon et le débarquement à l'arrivée
-      if ( not self.decrocher and meKnowledge:hasPionsInDanger( myself.leadData.pionsLima1 ) ) 
-                and meKnowledge.arrivedUnits
-                and #meKnowledge.arrivedUnits >= tableSize( myself.leadData.pionsLima1 ) then
-              local fragOrder = integration.createFragOrder("Disengage")
-              local fragOrderKn = CreateKnowledge( military.world.FragOrder, fragOrder )
+    end
 
-              meKnowledge.pionsToAwait = copyTable( myself.leadData.pionsLima1 )
-              
-              -- Keep only the operational units
-              
-              for index, entity in pairs( meKnowledge.pionsToAwait ) do
-                  if not exists( self.operationnalEntities, entity ) then
-                      meKnowledge.pionsToAwait[ index ] = nil
-                  end
-              end
-              
-              for k,v in pairs( meKnowledge.arrivedUnits ) do meKnowledge.arrivedUnits[ k ] = nil end
-              
-              meKnowledge.pionsToAwaitSource = {}
-              for i,k in pairs( meKnowledge.pionsToAwait ) do
-                  meKnowledge.pionsToAwaitSource[i.source] = k.source
-              end
+    -- L'automate donne l'ordre de conduite Decrocher à tout le premier echelon si au moins 1 pion du premier échelon est en danger
+    -- Decrocher comporte l'embarquement du premier echelon et le débarquement à l'arrivée
+    if ( not self.decrocher and meKnowledge:hasPionsInDanger( myself.leadData.pionsLima1 ) ) 
+        and meKnowledge.arrivedUnits
+        and #meKnowledge.arrivedUnits >= tableSize( myself.leadData.pionsLima1 ) then
+        local fragOrder = integration.createFragOrder("Disengage")
+        local fragOrderKn = CreateKnowledge( military.world.FragOrder, fragOrder )
 
-              Activate( self.skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = myself.leadData.pionsLima1 } )
-              self.decrocher = true
-              self.screenPosition = false
-              myself.screenUnitDisengage = nil
-      end
-      local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
-    
-      -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
-      Activate( self.skill.links.synchronizeRC, 1, { entities = echelons[1] } )
-    
-       -- Gestion de l'appui: les pions d'appui, appuient toujours le premier échelon  
-      local tableObjectives = {}
-      if not next( tableObjectives ) then
-          tableObjectives = echelons[1]
-      else
-          for _, entity in pairs( myself.leadData.pionsLima1 ) do
-              tableObjectives[ #tableObjectives + 1 ] = entity
-          end
-      end
-      
-      if self.sendSupport then 
+        meKnowledge.pionsToAwait = copyTable( myself.leadData.pionsLima1 )
+
+        -- Keep only the operational units
+
+        for index, entity in pairs( meKnowledge.pionsToAwait ) do
+            if not exists( self.operationnalEntities, entity ) then
+                meKnowledge.pionsToAwait[ index ] = nil
+            end
+        end
+
+        for k,v in pairs( meKnowledge.arrivedUnits ) do 
+            meKnowledge.arrivedUnits[ k ] = nil
+        end
+
+        meKnowledge.pionsToAwaitSource = {}
+        for k,v in pairs( meKnowledge.pionsToAwait ) do
+            meKnowledge.pionsToAwaitSource[k.source] = v.source
+        end
+
+        Activate( self.skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = myself.leadData.pionsLima1 } )
+        self.decrocher = true
+        self.screenPosition = false
+        myself.screenUnitDisengage = nil
+    end
+    local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
+
+    -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
+    Activate( self.skill.links.synchronizeRC, 1, { entities = echelons[1] } )
+
+    -- Gestion de l'appui: les pions d'appui, appuient toujours le premier échelon  
+    local tableObjectives = {}
+    if not next( tableObjectives ) then
+        tableObjectives = echelons[1]
+    else
+        for _, entity in pairs( myself.leadData.pionsLima1 ) do
+            tableObjectives[ #tableObjectives + 1 ] = entity
+        end
+    end
+
+    if self.sendSupport then 
         local tasksForSupporting = explode( ";", self.params.taskForSupporting )
         for _, supportingEntity in pairs( echelons[4] ) do
-          for _, taskForSupporting in pairs( tasksForSupporting ) do
-            if integration.RetrievePionTask( supportingEntity, taskForSupporting ) then
-              meKnowledge:sendTaskToPion( supportingEntity , taskForSupporting , { objectives = tableObjectives, retrogradeContext = true } , eEtatEchelon_Reserve )  
+            for _, taskForSupporting in pairs( tasksForSupporting ) do
+                if integration.RetrievePionTask( supportingEntity, taskForSupporting ) then
+                    meKnowledge:sendTaskToPion( supportingEntity, taskForSupporting , { objectives = tableObjectives, retrogradeContext = true } , eEtatEchelon_Reserve )  
+                end
             end
-          end
         end
         self.sendSupport = false
-      end
-     
-         
-      -- Coordination intra echelon
-      -- tous les pions sont projeté sur un des deux fuseaux de l'automate
-      -- self.progressionInAOR: contient les valeurs de progression sur l'axe de progression
-      -- plus la valeur est grande, plus le pion est en avant dans le fuseau
-      local proj
-      for _, entity in pairs( self.parameters.commandingEntities ) do
-          proj = integration.advanceAlongAOR( entity.source ) 
-          self.progressionInAOR[ entity ] = proj
-      end
+    end
 
-      local fuseau = meKnowledge:getFuseau()
+    -- Coordination intra echelon
+    -- tous les pions sont projeté sur un des deux fuseaux de l'automate
+    -- self.progressionInAOR: contient les valeurs de progression sur l'axe de progression
+    -- plus la valeur est grande, plus le pion est en avant dans le fuseau
+    local proj
+    for _, entity in pairs( self.parameters.commandingEntities ) do
+        proj = integration.advanceAlongAOR( entity.source ) 
+        self.progressionInAOR[ entity ] = proj
+    end
 
-      largeurFuseau = fuseau:getWidth()
+    local fuseau = meKnowledge:getFuseau()
+    local largeurFuseau = fuseau:getWidth()
 
-      Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = myself.leadData.pionsLima1, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
+    Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = myself.leadData.pionsLima1, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
 
-      integration.manageEndMission( self )
+    integration.manageEndMission( self )
 
-      if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
+    if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
         Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
-      end
+    end
 end
 
 --- Specific activate method for LeadDrone skill
@@ -1076,10 +1104,11 @@ end
 -- @release 2013-07-05
 integration.leadDroneActivate = function( self )
     local Activate = Activate
+    local integration = integration
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
-    local pionsPE =  echelons[1]
-    local pionsSE =  echelons[2]
-    local pionsEE =  echelons[3]
+    local pionsPE = echelons[1]
+    local pionsSE = echelons[2]
+    local pionsEE = echelons[3]
     
     if meKnowledge.availableDrone then
         local drones = { meKnowledge.availableDrone }
@@ -1100,9 +1129,11 @@ end
 -- @author NMI
 -- @release 2013-07-05
 integration.leadDestroy = function ( self, setEchelonNone )
+    local integration = integration
+    local entities = self.parameters.commandingEntities
     if setEchelonNone then
-        for i = 1, #self.parameters.commandingEntities do
-           integration.setEchelonState( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
+        for i = 1, #entities do
+           integration.setEchelonState( entities[i].source, eEtatEchelon_None )
         end
     end
     self.parameters.pcObjective = nil

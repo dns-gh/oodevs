@@ -14,37 +14,35 @@ local startSealOffLocation = function( location, knowledge )
     return true
 end
 
-integration.startSealOffArea = function( area )
-    startSealOffLocation( area.source, area )
-end
-
-integration.startedSealOffArea = function( area )
-    local SealOffArea = nil
-    SealOffArea = integration.obtenirObjetProcheDe( area.source, eTypeObjectSealOffArea, 10 )
+local startedSealOffLocation = function( location, knowledge )
+    local SealOffArea = integration.obtenirObjetProcheDe( location, eTypeObjectSealOffArea, 10 )
     if SealOffArea then
-        if not area.constructedObject then
-            area.constructedObject = SealOffArea
-            area.constructedObject.actionAnimation = DEC__StartAnimerObjet( area.constructedObject )
-            meKnowledge:RC( eRC_DebutAnimationObjet, area.constructedObject )
+        if not knowledge.constructedObject then
+            knowledge.constructedObject = SealOffArea
+            knowledge.constructedObject.actionAnimation = DEC__StartAnimerObjet( knowledge.constructedObject )
+            meKnowledge:RC( eRC_DebutAnimationObjet, knowledge.constructedObject )
         end
     end
     return true
 end
 
-integration.stopSealOffArea  = function( area )
-    if area.constructedObject  then 
-        if DEC_ConnaissanceObjet_NiveauAnimation( area.constructedObject  ) > 0 then
-            DEC__StopAction( area.constructedObject.actionAnimation )
-            meKnowledge:RC( eRC_FinAnimationObjet, area.constructedObject )
+local stopSealOffLocation = function( location, knowledge )
+    local DEC_ConnaissanceObjet_NiveauAnimation = DEC_ConnaissanceObjet_NiveauAnimation
+    local DEC_DetruireObjetSansDelais = DEC_DetruireObjetSansDelais
+
+    if knowledge.constructedObject  then 
+        if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) > 0 then
+            DEC__StopAction( knowledge.constructedObject.actionAnimation )
+            meKnowledge:RC( eRC_FinAnimationObjet, knowledge.constructedObject )
         end
-        if DEC_ConnaissanceObjet_NiveauAnimation( area.constructedObject  ) == 0 then
-            DEC_DetruireObjetSansDelais( area.constructedObject ) -- destroy it
-            DEC_Perception_DesactiverReconnaissanceLocalisation( area.sealPerceptionID )
+        if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) == 0 then
+            DEC_DetruireObjetSansDelais( knowledge.constructedObject ) -- destroy it
+            DEC_Perception_DesactiverReconnaissanceLocalisation( knowledge.sealPerceptionID )
             meKnowledge:RC( eRC_FinBouclageZone )
-            area.constructedObject = nil
+            knowledge.constructedObject = nil
         end
     end
-    local ptRef = integration.getBarycentreZoneFromLocalisation( area.source )
+    local ptRef = integration.getBarycentreZoneFromLocalisation( location )
     local lstObjets = integration.getKnowledgesObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
     if #lstObjets > 0 then
         for i = 1, #lstObjets do
@@ -56,47 +54,29 @@ integration.stopSealOffArea  = function( area )
     return true
 end
 
+integration.startSealOffArea = function( area )
+    startSealOffLocation( area.source, area )
+end
+
+integration.startedSealOffArea = function( area )
+    return startedSealOffLocation( area.source, area )
+end
+
+integration.stopSealOffArea  = function( area )
+    return stopSealOffLocation( area.source, area )
+end
+
 integration.startSealOffUrbanBlock = function( urbanBlock )
     local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
     return startSealOffLocation( buArea, urbanBlock )
 end
 
 integration.startedSealOffUrbanBlock = function( urbanBlock )
-    local SealOffArea = nil
     local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
-    SealOffArea = integration.obtenirObjetProcheDe( buArea, eTypeObjectSealOffArea, 10 )
-    if SealOffArea then
-        if not urbanBlock.constructedObject then
-            urbanBlock.constructedObject = SealOffArea
-            urbanBlock.constructedObject.actionAnimation = DEC__StartAnimerObjet( urbanBlock.constructedObject )
-            meKnowledge:RC( eRC_DebutAnimationObjet, urbanBlock.constructedObject )
-        end
-    end	
-    return true
+    return startedSealOffLocation( buArea, urbanBlock )
 end
 
 integration.stopSealOffUrbanBlock = function( urbanBlock )
-    if urbanBlock.constructedObject  then 
-        if DEC_ConnaissanceObjet_NiveauAnimation( urbanBlock.constructedObject  ) > 0 then
-            DEC__StopAction( urbanBlock.constructedObject.actionAnimation )
-            meKnowledge:RC( eRC_FinAnimationObjet, urbanBlock.constructedObject )
-        end
-        if DEC_ConnaissanceObjet_NiveauAnimation( urbanBlock.constructedObject  ) == 0 then
-            DEC_DetruireObjetSansDelais( urbanBlock.constructedObject ) -- destroy it
-            DEC_Perception_DesactiverReconnaissanceLocalisation( urbanBlock.sealPerceptionID )
-            meKnowledge:RC( eRC_FinBouclageZone )
-            urbanBlock.constructedObject = nil
-        end
-        local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
-        local ptRef = integration.getBarycentreZoneFromLocalisation( buArea )
-        local lstObjets = integration.getKnowledgesObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
-        if #lstObjets > 0 then
-            for i = 1, #lstObjets do
-                if DEC_ConnaissanceObjet_NiveauAnimation( lstObjets[i] ) == 0 then
-                    DEC_DetruireObjetSansDelais( lstObjets[i] ) -- destroy it
-                end
-            end
-        end
-    end
-    return true
+    local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
+    return stopSealOffLocation( buArea, urbanBlock )
 end

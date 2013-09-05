@@ -15,8 +15,9 @@ integration.taskKnowledge = {}
 integration.communication = {}
 
 initializeAssignMissions = function()
-    myself = myself or {}
+    local myself = myself
     myself.ParameterRegistrationFunctor = {}
+    local integration = integration
     myself.ParameterRegistrationFunctor[integration.ontology.types.area] = DEC_AssignMissionLocationParameter
     myself.ParameterRegistrationFunctor[integration.ontology.types.automat] = DEC_AssignMissionAutomatParameter
     myself.ParameterRegistrationFunctor[integration.ontology.types.population] = DEC_AssignMissionCrowdParameter
@@ -62,9 +63,11 @@ local AssignMissionParameter = function ( missionPion, parameterName, parameterT
 end
 
 local AssignMissionParameterList = function ( missionPion, parameterName, value )
+    local myself = myself
     if not myself.ParameterListRegistrationFunctor then initializeAssignMissions() end
     local listParams = {}
     local nValues = #value
+    local integration = integration
     if DEC_Mission_IsPath( missionPion, parameterName ) then
         for i = 1, nValues do
             local currentValue = value[i]
@@ -89,6 +92,7 @@ local AssignMissionParameterList = function ( missionPion, parameterName, value 
 end
 
 local function fillParameters( mission, params )
+    local masalife = masalife
     for parameterName, parameterValue in pairs( params ) do
         if type(parameterValue) == "table" then
             if existsIndex(parameterValue , "__tag" ) then
