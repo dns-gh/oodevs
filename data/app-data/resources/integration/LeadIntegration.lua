@@ -353,7 +353,7 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
         end
     end
     
-    local bestUnits = findBestsFunction( entities, tasks, self.companyTask, self.parameters, nbrFront, context, isMain ) --Save the nbrFront best couple unit/task
+    local bestUnits = findBestsFunction( entities, tasks, self.companyTask, self.parameters, nbrFront, context, isMain ) --Save the nbrFront best couple unit/tasks
     self.entitiesWithoutMission = removeFromListForLead( bestUnits, self.entitiesWithoutMission )
     integration.setEchelon( bestUnits, echelon )
     local nBestUnits = #bestUnits
@@ -798,7 +798,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     -- Le premier echelon recoit les missions principales ("mainTasks")
     if giveMainTask then
         local bestUnits = integration.issueMission ( self, self.params.mainTasks, self.nbrFront, eEtatEchelon_First, nil, true, findBestsFunction, disengageTask )
-        if #bestUnits == 0 then
+        if not self.params.continueIfNoMainTask and #bestUnits == 0 then
             Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
             myself.feedback = true
             return
@@ -981,7 +981,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     end
     
     if not( not manageRCnoPEInAutomatWhenNoCoordination and self.params.noCoordination ) then
-        if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
+        if not self.params.continueIfNoMainTask and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
             Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
         end
     end
