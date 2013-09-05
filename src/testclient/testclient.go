@@ -83,7 +83,7 @@ type tickInfo struct {
 func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, ""+
-			`testclient creates an swapi.Client, connects it to a simulation, logs in
+			`testclient creates a swapi.Client, connects it to a simulation, logs in
 with supplied credentials and waits for connection termination. It is mostly
 used to exercise swapi.Model update against real world scenarii.
 
@@ -96,6 +96,7 @@ used to exercise swapi.Model update against real world scenarii.
 	resume := flag.Bool("resume", false, "resume the simulation once logged in")
 	password := flag.String("password", "", "user password")
 	logfile := flag.String("logfile", "", "write messages to this log file")
+	quit := flag.Int("quit", 0, "automatically disconnect and quit at given tick")
 	flag.Parse()
 
 	addr := fmt.Sprintf("%s:%d", *host, *port)
@@ -184,6 +185,9 @@ used to exercise swapi.Model update against real world scenarii.
 					c.Seen, c.Size/1024, c.Compressed/1024, ratio, bitrate/1024.0)
 				prevNow = now
 				prevc = c
+				if t.Tick == *quit {
+					close(termination)
+				}
 			case cc := <-compressionCh:
 				c = cc
 			}
