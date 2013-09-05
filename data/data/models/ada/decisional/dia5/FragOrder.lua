@@ -46,7 +46,8 @@ integration.isTask = function( self )
          orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" or
          orderType == "Rep_OrderConduite_MiseAFeuIED" or
          orderType == "Rep_OrderConduite_ROEM_ArreterSilenceRadar" or
-         orderType == "Rep_OrderConduite_ROEM_PasserEnSilenceRadar"
+         orderType == "Rep_OrderConduite_ROEM_PasserEnSilenceRadar" or
+         orderType == "Rep_OrderConduite_Desactiverlasauvegarde"
 end
 
 integration.mustBePropagate = function( self )
@@ -85,7 +86,8 @@ integration.mustBePropagate = function( self )
          orderType == "Rep_OrderConduite_ModifierPrioritesBlesses" or
          orderType == "Rep_OrderConduite_RejoindrePointLancement" or
          orderType == "Rep_OrderConduite_ROEM_ArreterSilenceRadar" or
-         orderType == "Rep_OrderConduite_ROEM_PasserEnSilenceRadar"		 
+         orderType == "Rep_OrderConduite_ROEM_PasserEnSilenceRadar" or
+         orderType == "Rep_OrderConduite_Desactiverlasauvegarde"		 
 end
 
 integration.setAutomatFragOrder = function( self )
@@ -430,6 +432,10 @@ integration.startFragOrderTask = function( self )
   elseif orderType == "Rep_OrderConduite_Deboucher" then
     return
   elseif orderType == "Rep_OrderConduite_MiseAFeuIED" then
+    return
+  elseif orderType == "Rep_OrderConduite_Desactiverlasauvegarde" then
+    myself.desactiveSelfProtection = true
+    integration.cleanFragOrder( self )
     return
   end
 

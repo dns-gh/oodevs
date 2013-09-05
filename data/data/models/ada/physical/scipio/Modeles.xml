@@ -2796,6 +2796,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Desactiver la sauvegarde"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.PC">
@@ -7626,4 +7627,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1577434346" -->
+<!-- signature="1456321900" -->

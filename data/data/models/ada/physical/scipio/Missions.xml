@@ -3721,6 +3721,7 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28809" name="Pion Mise A Feu IED"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_PasserEnSilenceRadar" id="28808" name="Passer En Silence Radar"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28810" name="Arreter Silence Radar"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Desactiverlasauvegarde" id="28811" name="Desactiver la sauvegarde"/>
   </fragorders>
 </missions>
-<!-- signature="1833819527" -->
+<!-- signature="3003798189" -->
