@@ -82,7 +82,7 @@ void PHY_Speeds::ReadSpeed( xml::xistream& xis )
 {
     rMaxSpeed_ = xis.attribute< double >( "max" ); // km/h
     if( rMaxSpeed_ <= 0 )
-        xis.error( "speeds: max <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "speeds: max <= 0" );
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ ); // m/tick
     xis >> xml::list( "speed", *this, &PHY_Speeds::ReadTerrain );
 }
@@ -96,11 +96,11 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
     std::string strTerrainType = xis.attribute< std::string >( "terrain" );
     const TerrainData data = TerrainData::FromString( strTerrainType );
     if( data.Area() == 0xFF )
-        xis.error( "Unknown terrain type '" + strTerrainType + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown terrain type '" + strTerrainType + "'" );
     double& speed = SpeedFor( data );
     speed = xis.attribute< double >( "value" ); // km/h
     if( speed < 0 )
-        xis.error( "speed: terrain < 0" );
+        throw MASA_EXCEPTION( xis.context() + "speed: terrain < 0" );
     speed = MIL_Tools::ConvertSpeedMosToSim( speed ); // m/tick
     rMaxSpeed_ = std::max( rMaxSpeed_, speed );
     if( xis.has_attribute( "construction-speed" ) )
@@ -146,7 +146,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis )
 
     }
     if( rMaxSpeed_ == 0. )
-        xis.error( "Composante's max speed is 0 km/h ..." );
+        throw MASA_EXCEPTION( xis.context() + "Composante's max speed is 0 km/h ..." );
 }
 
 // -----------------------------------------------------------------------------

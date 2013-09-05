@@ -41,7 +41,7 @@ void PHY_DotationNature::ReadNature( xml::xistream& xis )
 
     const PHY_DotationNature*& pDotationNature = natures_[ strName ];
     if( pDotationNature )
-        xis.error( "Dotation nature '" + strName + "' already registered" );
+        throw MASA_EXCEPTION( xis.context() + "Dotation nature '" + strName + "' already registered" );
     pDotationNature = new PHY_DotationNature( strName );
 }
 

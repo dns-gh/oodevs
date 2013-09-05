@@ -35,7 +35,7 @@ void PerceptionFlyingShell::Initialize( xml::xistream& xis )
             >> xml::attribute( "action-range", rRadius_ )
         >> xml::end;
     if( rRadius_ < 0 )
-        xis.error( "cobra-radar: action-range < 0" );
+        throw xml::exception( xis.context() + "cobra-radar: action-range < 0" );
 }
 
 // -----------------------------------------------------------------------------

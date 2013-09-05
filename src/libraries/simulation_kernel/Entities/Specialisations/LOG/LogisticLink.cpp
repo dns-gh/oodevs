@@ -85,15 +85,15 @@ void LogisticLink::ReadQuota( xml::xistream& xis )
 
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
-        xis.error( "Unknown dotation type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation type" );
 
     if( quotas_.find( pDotationCategory ) != quotas_.end() )
-        xis.error( "Quota already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Quota already defined" );
 
     double quantity;
     xis >> xml::attribute( "quantity", quantity );
     if( quantity < 0 )
-        xis.error( "quantity is not greater or equal to 0" );
+        throw MASA_EXCEPTION( xis.context() + "quantity is not greater or equal to 0" );
 
     sDotationQuota quota;
     quota.quota_          = quantity;

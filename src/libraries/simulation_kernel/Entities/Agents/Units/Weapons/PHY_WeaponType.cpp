@@ -57,7 +57,7 @@ void PHY_WeaponType::ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time )
 
     const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
     if( pWeaponType )
-        xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
+        throw MASA_EXCEPTION( xis.context() + "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
     pWeaponType = new PHY_WeaponType( time, strLauncher, strAmmunition,
         weaponTypes_.size() - 1, xis );
 }
@@ -90,9 +90,9 @@ PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& str
     , identifier_         ( identifier )
 {
     if( !pLauncherType_ )
-        xis.error( "Unknown launcher type '" + strLauncher + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown launcher type '" + strLauncher + "'" );
     if( !pDotationCategory_ )
-        xis.error( "Unknown dotation category '" + strAmmunition + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation category '" + strAmmunition + "'" );
     std::string burstTime, reloadingTime;
 
     xis >> xml::start( "burst" )
@@ -105,20 +105,20 @@ PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& str
         >> xml::end;
     if( ! tools::DecodeTime( burstTime,     rBurstDuration_ )
      || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
-        xis.error( "Invalid burst or reloading durations" );
+        throw MASA_EXCEPTION( xis.context() + "Invalid burst or reloading durations" );
 
     const double timeFactor = time.GetTickDuration();
     rBurstDuration_     /= timeFactor;
     rReloadingDuration_ /= timeFactor;
 
     if( nNbrAmmoPerBurst_ <= 0 )
-        xis.error( "burst: munition <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "burst: munition <= 0" );
     if( rBurstDuration_ <= 0 )
-        xis.error( "burst: duration <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "burst: duration <= 0" );
     if( nNbrAmmoPerLoader_ <= 0 )
-        xis.error( "reloading: munition <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "reloading: munition <= 0" );
     if( rReloadingDuration_ <= 0 )
-        xis.error( "reloading: duration <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "reloading: duration <= 0" );
 
     InitializeDirectFireData  ( xis );
     InitializeIndirectFireData( xis, timeFactor );
@@ -159,9 +159,9 @@ void PHY_WeaponType::ReadDirect( xml::xistream& xis )
     assert( pDotationCategory_ );
 
     if( !pLauncherType_->CanDirectFire() )
-        xis.error( "Associated launcher cannot direct fire" );
+        throw MASA_EXCEPTION( xis.context() + "Associated launcher cannot direct fire" );
     if( !pDotationCategory_->CanBeUsedForDirectFire() )
-        xis.error( "Associated ammunition cannot direct fire" );
+        throw MASA_EXCEPTION( xis.context() + "Associated ammunition cannot direct fire" );
 
     pDirectFireData_ = new PHY_WeaponDataType_DirectFire( *this, xis );
 }
@@ -186,9 +186,9 @@ void PHY_WeaponType::ReadIndirect( xml::xistream& xis, double timeFactor )
     assert( pDotationCategory_ );
 
     if( !pLauncherType_->CanIndirectFire() )
-        xis.error( "Associated launcher cannot indirect fire" );
+        throw MASA_EXCEPTION( xis.context() + "Associated launcher cannot indirect fire" );
     if( !pDotationCategory_->CanBeUsedForIndirectFire() )
-        xis.error( "Associated ammunition cannot indirect fire" );
+        throw MASA_EXCEPTION( xis.context() + "Associated ammunition cannot indirect fire" );
 
     pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, xis, timeFactor );
 }

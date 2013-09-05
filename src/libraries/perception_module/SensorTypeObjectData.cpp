@@ -50,10 +50,10 @@ void SensorTypeObjectData::ReadPosture( xml::xistream& xis, T_FactorVector& fact
     xis >> xml::attribute( "type", postureType )
         >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
-        xis.error( "distance-modifier: value not in [0..1]" );
+        throw xml::exception( xis.context() + "distance-modifier: value not in [0..1]" );
     size_t postureId = 0;
     if( !GET_HOOK( GetPostureIdentifier )( postureType.c_str(), &postureId ) )
-        xis.error( "distance-modifier: unknow type" );
+        throw xml::exception( xis.context() + "distance-modifier: unknow type" );
     if( !GET_HOOK( PostureCanModifyDetection )( postureType.c_str() ) )
         return;
     assert( factors.size() > postureId );
@@ -97,9 +97,9 @@ void SensorTypeObjectData::InitializePopulationFactors( xml::xistream& xis )
         >> xml::end;
 
     if( rPopulationDensity_ < 0 )
-        xis.error( "population-modifier: density < 0" );
+        throw xml::exception( xis.context() + "population-modifier: density < 0" );
     if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
-        xis.error( "population-modifier: modifier not in [0..1]" );
+        throw xml::exception( xis.context() + "population-modifier: modifier not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------

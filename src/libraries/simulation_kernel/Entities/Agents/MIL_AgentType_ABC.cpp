@@ -61,11 +61,11 @@ void MIL_AgentType_ABC::InitializeNature( xml::xistream& xis )
         >> xml::attribute( "level", strBuf );
     pNatureLevel_ = PHY_NatureLevel::Find( strBuf );
     if( !pNatureLevel_ )
-        xis.error( "Unknown nature level type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown nature level type" );
     xis >> xml::attribute( "atlas-nature", strBuf );
     pNatureAtlas_ = PHY_NatureAtlas::Find( strBuf );
     if( !pNatureAtlas_ )
-        xis.error( "Unknown atlas qualificatif" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown atlas qualificatif" );
     xis >> xml::end;
 }
 

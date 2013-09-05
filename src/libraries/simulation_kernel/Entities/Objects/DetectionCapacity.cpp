@@ -74,7 +74,7 @@ void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
         if( ReadTime( xis, "time", rDetectionTime_ ) )
         {
             if( rDetectionTime_ < 0 )
-                xis.error( "detection acquisition-time: base-time < 0" );
+                throw MASA_EXCEPTION( xis.context() + "detection acquisition-time: base-time < 0" );
             else
                 rDetectionTime_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( rDetectionTime_ ) );
         }
@@ -84,7 +84,7 @@ void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
         if( ReadTime( xis, "time", rRecognitionTime_ ) )
         {
             if( rRecognitionTime_ < 0 )
-                xis.error( "recognition acquisition-time: base-time < 0" );
+                throw MASA_EXCEPTION( xis.context() + "recognition acquisition-time: base-time < 0" );
             else
                 rRecognitionTime_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( rRecognitionTime_ ) );
         }
@@ -94,13 +94,13 @@ void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
         if( ReadTime( xis, "time", rIdentificationTime_ ) )
         {
             if( rIdentificationTime_ < 0 )
-                xis.error( "identification acquisition-time: base-time < 0" );
+                throw MASA_EXCEPTION( xis.context() + "identification acquisition-time: base-time < 0" );
             else
                 rIdentificationTime_ = static_cast< float >( MIL_Tools::ConvertSecondsToSim( rIdentificationTime_ ) );
         }
     }
     else
-        xis.error( "Unknown acquisition-time: " + acquisitionType );
+        throw MASA_EXCEPTION( xis.context() + "Unknown acquisition-time: " + acquisitionType );
 }
 
 // -----------------------------------------------------------------------------

@@ -66,10 +66,10 @@ namespace
 
                 xis >> xml::attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
-                    xis.error( "distance-modifier: value not in [0..1]" );
+                    throw MASA_EXCEPTION( xis.context() + "distance-modifier: value not in [0..1]" );
             }
             else
-                xis.error( "distance-modifier: unknow type" );
+                throw MASA_EXCEPTION( xis.context() + "distance-modifier: unknow type" );
         }
    private:
        const C& container_;
@@ -98,10 +98,10 @@ namespace
 
                 xis >> xml::attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
-                    xis.error( "distance-modifier: value not in [0..1]" );
+                    throw MASA_EXCEPTION( xis.context() + "distance-modifier: value not in [0..1]" );
             }
             else
-                xis.error( "distance-modifier: unknow type" );
+                throw MASA_EXCEPTION( xis.context() + "distance-modifier: unknow type" );
         }
 
    private:
@@ -233,25 +233,25 @@ void PHY_SensorTypeAgent::ReadDistance( xml::xistream& xis )
     {
         xis >> xml::attribute( "distance", rIdentificationDist_ );
         if( rIdentificationDist_ < 0 )
-            xis.error( "base-distance: identification distance < 0" );
+            throw MASA_EXCEPTION( xis.context() + "base-distance: identification distance < 0" );
         rIdentificationDist_ = MIL_Tools::ConvertMeterToSim( rIdentificationDist_ );
     }
     else if( distanceType == "recognition" )
     {
         xis >> xml::attribute( "distance", rRecognitionDist_ );
         if( rRecognitionDist_ < rIdentificationDist_ )
-            xis.error( "base-distance: recognition distance < identification distance" );
+            throw MASA_EXCEPTION( xis.context() + "base-distance: recognition distance < identification distance" );
         rRecognitionDist_ = MIL_Tools::ConvertMeterToSim( rRecognitionDist_ );
     }
     else if( distanceType == "detection" )
     {
         xis >> xml::attribute( "distance", rDetectionDist_ );
         if( rDetectionDist_ < rRecognitionDist_ )
-            xis.error( "base-distance: detection distance < recognition distance" );
+            throw MASA_EXCEPTION( xis.context() + "base-distance: detection distance < recognition distance" );
         rDetectionDist_ = MIL_Tools::ConvertMeterToSim( rDetectionDist_ );
     }
     else
-        xis.error( "base-distance: unknow distance level" );
+        throw MASA_EXCEPTION( xis.context() + "base-distance: unknow distance level" );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,7 +265,7 @@ void PHY_SensorTypeAgent::ReadLimitedToSensorsList( xml::xistream& xis )
     std::string sensorTypeString;
     xis >> xml::attribute( "name", sensorTypeString );
     if( sensorTypeString == "" )
-        xis.error( "No sensor defined in limited-to-sensor list" );
+        throw MASA_EXCEPTION( xis.context() + "No sensor defined in limited-to-sensor list" );
     limitedToSensorsList_.push_back( sensorTypeString );
 }
 
@@ -291,7 +291,7 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis )
     double rFactor;
     xis >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
-        xis.error( "terrain-modifier: value not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "terrain-modifier: value not in [0..1]" );
     environmentFactors_.insert( std::pair< unsigned, double >( environmentAssociation[ terrainType ], rFactor ) );
 }
 
@@ -307,9 +307,9 @@ void PHY_SensorTypeAgent::InitializePopulationFactors( xml::xistream& xis )
         >> xml::end;
 
     if( rPopulationDensity_ < 0 )
-        xis.error( "population-modifier: density < 0" );
+        throw MASA_EXCEPTION( xis.context() + "population-modifier: density < 0" );
     if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
-        xis.error( "population-modifier: modifier not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "population-modifier: modifier not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------
@@ -336,9 +336,9 @@ void PHY_SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned i
     xis >> xml::attribute( "type", materialType )
         >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
-        xis.error( "urbanBlock-modifier: value not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "urbanBlock-modifier: value not in [0..1]" );
     if( !PHY_MaterialCompositionType::Find( materialType ) )
-        xis.error( "material type doesn't exist" );
+        throw MASA_EXCEPTION( xis.context() + "material type doesn't exist" );
     ++visionUrbanBlockMaterial;
 }
 

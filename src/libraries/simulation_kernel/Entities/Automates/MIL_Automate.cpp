@@ -441,7 +441,7 @@ void MIL_Automate::ReadOverloading( xml::xistream& /*refMission*/ )
 void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
 {
     if( pBrainLogistic_.get() )
-        xis.error( "The logistic link of a logistic automat (usually a TC2) must not be overwritten: it should always be itself" );
+        throw MASA_EXCEPTION( xis.context() + "The logistic link of a logistic automat (usually a TC2) must not be overwritten: it should always be itself" );
     pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, superior, false /* no quotas*/, xis ) );
 }
 

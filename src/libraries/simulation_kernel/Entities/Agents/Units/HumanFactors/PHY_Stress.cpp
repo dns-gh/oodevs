@@ -59,7 +59,7 @@ void PHY_Stress::ReadStress( xml::xistream& xis )
     xis >> xml::attribute( "state", type );
     T_StressMap::iterator it = stresses_.find( type );
     if( it == stresses_.end() )
-        xis.error( "Undefined Stress state" );
+        throw MASA_EXCEPTION( xis.context() + "Undefined Stress state" );
     const_cast< PHY_Stress* >( it->second )->Read( xis );
 }
 

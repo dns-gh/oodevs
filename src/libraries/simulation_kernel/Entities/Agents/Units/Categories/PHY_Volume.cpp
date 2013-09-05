@@ -40,7 +40,7 @@ void PHY_Volume::ReadVolume( xml::xistream& xis )
     xis >> xml::attribute( "name", strVolume );
     const PHY_Volume*& pVolume = volumes_[ strVolume ];
     if( pVolume )
-        xis.error( "Volume '" + strVolume + "' already registered" );
+        throw MASA_EXCEPTION( xis.context() + "Volume '" + strVolume + "' already registered" );
     pVolume = new PHY_Volume( strVolume );
 }
 

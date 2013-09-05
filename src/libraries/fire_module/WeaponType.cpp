@@ -47,9 +47,9 @@ WeaponType::WeaponType( const std::string& launcher, const std::string& ammuniti
     , rReloadingDuration_( 1. )
 {
     if( ! pLauncherType_ )
-        xis.error( "Unknown launcher type '" + launcher + "'" );
+        throw xml::exception( xis.context() + "Unknown launcher type '" + launcher + "'" );
     if( ! dotation_ )
-        xis.error( "Unknown dotation category '" + ammunition + "'" );
+        throw xml::exception( xis.context() + "Unknown dotation category '" + ammunition + "'" );
     std::string burstTime, reloadingTime;
     xis >> xml::start( "burst" )
             >> xml::attribute( "munition", nNbrAmmoPerBurst_ )
@@ -61,17 +61,17 @@ WeaponType::WeaponType( const std::string& launcher, const std::string& ammuniti
         >> xml::end;
     if( ! tools::DecodeTime( burstTime,     rBurstDuration_ )
      || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
-        xis.error( "Invalid burst or reloading durations" );
+        throw xml::exception( xis.context() + "Invalid burst or reloading durations" );
     rBurstDuration_     /= tickDuration;
     rReloadingDuration_ /= tickDuration;
     if( nNbrAmmoPerBurst_ <= 0 )
-        xis.error( "burst: munition <= 0" );
+        throw xml::exception( xis.context() + "burst: munition <= 0" );
     if( rBurstDuration_ <= 0 )
-        xis.error( "burst: duration <= 0" );
+        throw xml::exception( xis.context() + "burst: duration <= 0" );
     if( nNbrAmmoPerLoader_ <= 0 )
-        xis.error( "reloading: munition <= 0" );
+        throw xml::exception( xis.context() + "reloading: munition <= 0" );
     if( rReloadingDuration_ <= 0 )
-        xis.error( "reloading: duration <= 0" );
+        throw xml::exception( xis.context() + "reloading: duration <= 0" );
     xis >> xml::list( "direct-fire", *this, &WeaponType::ReadDirect )
         >> xml::list( "indirect-fire", *this, &WeaponType::ReadIndirect, tickDuration );
 }
@@ -124,9 +124,9 @@ void WeaponType::ReadDirect( xml::xistream& xis )
     assert( pLauncherType_ );
     assert( dotation_ );
     if( ! pLauncherType_->CanDirectFire() )
-        xis.error( "Associated launcher cannot direct fire" );
+        throw xml::exception( xis.context() + "Associated launcher cannot direct fire" );
     if( ! dotation_->CanBeUsedForDirectFire() )
-        xis.error( "Associated ammunition cannot direct fire" );
+        throw xml::exception( xis.context() + "Associated ammunition cannot direct fire" );
     pDirectFireData_.reset( new WeaponDataType_DirectFire( *pLauncherType_, *dotation_, xis ) );
 }
 
@@ -139,9 +139,9 @@ void WeaponType::ReadIndirect( xml::xistream& xis, double tickDuration )
     assert( pLauncherType_ );
     assert( dotation_ );
     if( ! pLauncherType_->CanIndirectFire() )
-        xis.error( "Associated launcher cannot indirect fire" );
+        throw xml::exception( xis.context() + "Associated launcher cannot indirect fire" );
     if( ! dotation_->CanBeUsedForIndirectFire() )
-        xis.error( "Associated ammunition cannot indirect fire" );
+        throw xml::exception( xis.context() + "Associated ammunition cannot indirect fire" );
     pIndirectFireData_.reset( new WeaponDataType_IndirectFire( xis, tickDuration ) );
 }
 

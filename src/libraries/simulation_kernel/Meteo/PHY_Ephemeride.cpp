@@ -53,7 +53,7 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         pNightBase_ = weather::PHY_Lighting::FindLighting( xis.attribute< std::string >( "night-lighting" ) );
     }
     if( !pDayBase_ || !pNightBase_ )
-        xis.error( "Unknown lighting" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown lighting" );
     std::string date;
     xis >> xml::end
         >> xml::start( "exercise-date" )
@@ -66,17 +66,17 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
         std::istringstream strTmp( sunRise );
         strTmp >> sunriseTime_.first >> tmp >> sunriseTime_.second;
         if( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
-            xis.error( "Bad time format (use 00h00)" );
+            throw MASA_EXCEPTION( xis.context() + "Bad time format (use 00h00)" );
     }
     {
         char tmp = 0;
         std::istringstream strTmp( sunSet );
         strTmp >> sunsetTime_.first >> tmp >> sunsetTime_.second;
         if( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
-            xis.error( "Bad time format (use 00h00)" );
+            throw MASA_EXCEPTION( xis.context() + "Bad time format (use 00h00)" );
     }
     if( sunriseTime_ >= sunsetTime_  )
-        xis.error( "Sunrise time should be before sunset time" );
+        throw MASA_EXCEPTION( xis.context() + "Sunrise time should be before sunset time" );
     UpdateNight( MIL_Time_ABC::GetTime().GetRealTime() );
 }
 

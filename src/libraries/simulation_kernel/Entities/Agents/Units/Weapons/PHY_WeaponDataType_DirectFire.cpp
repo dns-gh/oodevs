@@ -110,9 +110,9 @@ void PHY_WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_I
         >> xml::attribute( "percentage", rPH );
 
     if( rDistance < 0 )
-        xis.error( "hit-probability: distance <  0" );
+        throw MASA_EXCEPTION( xis.context() + "hit-probability: distance <  0" );
     if( rPH < 0 || rPH > 1 )
-        xis.error( "hit-probability: percentage not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "hit-probability: percentage not in [0..1]" );
 
     phFunction.AddNewPoint( MIL_Tools::ConvertMeterToSim( rDistance ), rPH );
 }

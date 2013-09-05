@@ -68,9 +68,9 @@ void WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_Inter
     xis >> xml::attribute( "distance", distance )
         >> xml::attribute( "percentage", ph );
     if( distance < 0 )
-        xis.error( "hit-probability: distance <  0" );
+        throw xml::exception( xis.context() + "hit-probability: distance <  0" );
     if( ph < 0 || ph > 1 )
-        xis.error( "hit-probability: percentage not in [0.1]" );
+        throw xml::exception( xis.context() + "hit-probability: percentage not in [0.1]" );
     function.AddNewPoint( distance, ph );
 }
 

@@ -32,7 +32,7 @@ void FuneralConfig::Initialize( xml::xistream& xis, unsigned tickDuration )
         >> xml::end;
 
     if( fakeTransporterSpeed_ <= 0 )
-        xis.error( "invalid speed" );
+        throw MASA_EXCEPTION( xis.context() + "invalid speed" );
 
     fakeTransporterSpeed_ *= 1000. * tickDuration / 3600.;
 }

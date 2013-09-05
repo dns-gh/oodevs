@@ -44,7 +44,7 @@ FireAttribute::FireAttribute( xml::xistream& xis )
     std::string className( xml::attribute( xis, "class", std::string() ) );
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
-        xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown 'Fire class' '" + className + "' for fire object attribute" );
     xis >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
 }
 

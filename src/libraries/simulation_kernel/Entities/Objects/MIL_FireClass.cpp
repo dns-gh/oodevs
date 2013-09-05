@@ -102,11 +102,11 @@ void MIL_FireClass::ReadExtinguisherAgent( xml::xistream& xis )
 
     effect.pExtinguisherAgent_ = PHY_DotationType::FindDotationCategory( agent );
     if( !effect.pExtinguisherAgent_ )
-        xis.error( "Unknown extinguisher agent " + agent );
+        throw MASA_EXCEPTION( xis.context() + "Unknown extinguisher agent " + agent );
 
     for( T_ExtinguisherAgentEffectVector::const_iterator it = extinguisherAgentEffects_.begin(); it != extinguisherAgentEffects_.end(); ++it )
         if( it->pExtinguisherAgent_ == effect.pExtinguisherAgent_ )
-            xis.error( "Duplicate extinguisher agent data: " + agent );
+            throw MASA_EXCEPTION( xis.context() + "Duplicate extinguisher agent data: " + agent );
 
     extinguisherAgentEffects_.push_back( effect );
 }
@@ -140,7 +140,7 @@ void MIL_FireClass::ReadInjury( xml::xistream& xis )
 
     const PHY_HumanWound* pType = PHY_HumanWound::Find( type );
     if( !pType )
-        xis.error( "Unknown injury type " + type );
+        throw MASA_EXCEPTION( xis.context() + "Unknown injury type " + type );
 
     injuries_.insert( std::make_pair( pType, injury ) );
 }
@@ -170,7 +170,7 @@ void MIL_FireClass::ReadSurface( xml::xistream& xis )
 
     surface.terrainData_ = TerrainData::FromString( strTerrainType );
     if( surface.terrainData_.Area() == 0xFF )
-        xis.error( "Unknown terrain type '" + strTerrainType + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown terrain type '" + strTerrainType + "'" );
 
     surfaces_.push_back( surface );
 }

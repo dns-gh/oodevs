@@ -163,7 +163,7 @@ void PHY_RolePion_HumanFactors::ReadFatigue( xml::xistream& xis )
     xis >> strTmp;
     pTiredness_ = PHY_Tiredness::Find( strTmp );
     if( !pTiredness_ )
-        xis.error( "Unknown tiredness type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown tiredness type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +176,7 @@ void PHY_RolePion_HumanFactors::ReadStress( xml::xistream& xis )
     xis >> strTmp;
     pStress_ = PHY_Stress::Find( strTmp );
     if( !pStress_ )
-        xis.error( "Unknown stress type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown stress type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +189,7 @@ void PHY_RolePion_HumanFactors::ReadMoral( xml::xistream& xis )
     xis >> strTmp;
     pMorale_ = PHY_Morale::Find( strTmp );
     if( !pMorale_)
-        xis.error( "Unknown morale type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown morale type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +202,7 @@ void PHY_RolePion_HumanFactors::ReadExperience( xml::xistream& xis )
     xis >> strTmp;
     pExperience_ = PHY_Experience::Find( strTmp );
     if( !pExperience_ )
-        xis.error( "Unknown experience type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown experience type" );
 }
 
 // -----------------------------------------------------------------------------

@@ -38,7 +38,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( const xml::xistream& xis )
     : height_( xis.attribute< int >( "height" ) )
 {
     if( height_ < 0 )
-        xis.error( "height_ is not greater than or equal to 0" );
+        throw MASA_EXCEPTION( xis.context() + "height_ is not greater than or equal to 0" );
 }
 
 // -----------------------------------------------------------------------------

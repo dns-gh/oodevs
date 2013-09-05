@@ -46,11 +46,11 @@ void DEC_Population_PathClass::ReadPopulationRule( xml::xistream& xis, const std
     {
         pBase  = rules_[ strBase ];
         if( !pBase )
-            xis.error( "base rule '" + strBase + "' is undefined" );
+            throw MASA_EXCEPTION( xis.context() + "base rule '" + strBase + "' is undefined" );
     }
     DEC_Population_PathClass*& pRule = rules_[ strType ];
     if( pRule )
-        xis.error( "Rule '" + strType + "' already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Rule '" + strType + "' already defined" );
     pRule = new DEC_Population_PathClass( xis, dangerousObjects, pBase );
 }
 

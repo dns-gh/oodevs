@@ -39,7 +39,7 @@ void MIL_InhabitantType::ReadInhabitant( xml::xistream& xis )
     std::string strName = xis.attribute< std::string >( "name" );
     const MIL_InhabitantType*& pInhabitant = inhabitants_[ strName ];
     if( pInhabitant )
-        xis.error( "Inhabitant type already exists" );
+        throw MASA_EXCEPTION( xis.context() + "Inhabitant type already exists" );
     pInhabitant = new MIL_InhabitantType( strName, xis );
 }
 
@@ -64,7 +64,7 @@ MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistrea
     nID_ = xis.attribute< unsigned int >( "id" );
     pModel_ = MIL_PopulationType::Find( xis.attribute< std::string >( "associated-crowd" ) );
     if( !pModel_ )
-        xis.error( "Unknown crowd type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown crowd type" );
     xis >> xml::optional >> xml::attribute( "angry-crowd-mission", angryCrowdMissionType_ )
         >> xml::start( "safety-level" )
                 >> xml::attribute( "gain-per-hour", safetyGainPerHour_ )
@@ -86,7 +86,7 @@ void MIL_InhabitantType::ReadConsumption( xml::xistream& xis )
 {
     const PHY_ResourceNetworkType* resource = PHY_ResourceNetworkType::Find( xis.attribute< std::string >( "type" ) );
     if( !resource )
-        xis.error( "Unknown resource network type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown resource network type" );
     consumptions_[ resource ] = xis.attribute< double >( "need" );
 }
 

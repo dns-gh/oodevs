@@ -63,7 +63,7 @@ void MIL_PopulationPionAttritionData::ReadAttritionEffect( xml::xistream& xis )
     std::string strAttitude = xis.attribute< std::string >( "population-attitude" );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
-        xis.error( "Unknown attitude '" + strAttitude + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown attitude '" + strAttitude + "'" );
     ReadAttitudeData( *pAttitude, xis );
 }
 
@@ -78,9 +78,9 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
     xis >> xml::attribute( "population-density", attitudeData.rPopulationDensity_ )
         >> xml::attribute( "intensity", attitudeData.rIntensity_ );
     if( attitudeData.rPopulationDensity_ < 0 )
-        xis.error( "attrition-effect: population-density < 0" );
+        throw MASA_EXCEPTION( xis.context() + "attrition-effect: population-density < 0" );
     if( attitudeData.rIntensity_ < 0 || attitudeData.rIntensity_ > 1 )
-        xis.error( "attrition-effect: intensity not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "attrition-effect: intensity not in [0..1]" );
     xis >> xml::list( "protection", *this, &MIL_PopulationPionAttritionData::ReadAttritionUnitEffect, attitudeData );
 }
 
@@ -94,7 +94,7 @@ void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xi
 
     const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
     if( !pProtection )
-        xis.error( "Unknown protection '" + strProtection + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown protection '" + strProtection + "'" );
 
     xis >> xml::start( "armed" );
     assert( attitudeData.armedAttritions_.size() > pProtection->GetID() );

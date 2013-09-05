@@ -23,7 +23,7 @@ PHY_DotationConsumption::PHY_DotationConsumption( const PHY_DotationCategory& ca
     , rConsumption_( xis.attribute< double >( "value" ) )
 {
     if( rConsumption_ < 0 )
-        xis.error( "dotation: value < 0" );
+        throw MASA_EXCEPTION( xis.context() + "dotation: value < 0" );
     if( rConsumption_ != 0. )
         rConsumption_ = 1. / MIL_Tools::ConvertHoursToSim( 1. / rConsumption_ );
 }

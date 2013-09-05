@@ -51,7 +51,7 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
                 >> xml::attribute( "time", timeVal )
             >> xml::end;
     if( ! tools::DecodeTime( timeVal, rTimeVal ) || rTimeVal < 0 )
-        xis.error( "diagnosis: time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "diagnosis: time < 0" );
     nDiagnosticTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTimeVal );
     xis >> xml::list( "category", &PHY_BreakdownType::ReadCategory )
         >> xml::end;
@@ -87,15 +87,15 @@ void PHY_BreakdownType::ReadBreakdown( xml::xistream& xis, const PHY_Maintenance
 
     const E_Type nType = ConvertType( strType );
     if( nType == eUnknown )
-        xis.error( "Unkown breakdown type" );
+        throw MASA_EXCEPTION( xis.context() + "Unkown breakdown type" );
 
     const PHY_BreakdownType*& pBreakdown = breakdowns_[ strBreakdown ];
     if( pBreakdown )
-        xis.error( "Breakdown already exists" );
+        throw MASA_EXCEPTION( xis.context() + "Breakdown already exists" );
 
     pBreakdown = new PHY_BreakdownType( strBreakdown, maintenanceLevel, nType, xis );
     if( !ids_.insert( pBreakdown->GetID() ).second )
-        xis.error( "Breakdown ID already used" );
+        throw MASA_EXCEPTION( xis.context() + "Breakdown ID already used" );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,10 +126,10 @@ PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_Main
         >> xml::attribute( "variance", variance );
 
     if( !tools::DecodeTime( repairTime, nTheoricRepairTime_ ) || nTheoricRepairTime_ < 0 )
-        xis.error( "average-repairing-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "average-repairing-time < 0" );
     nTheoricRepairTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( nTheoricRepairTime_ );
     if( !tools::DecodeTime( variance, rVariance ) )
-        xis.error( "variance < 0" );
+        throw MASA_EXCEPTION( xis.context() + "variance < 0" );
     rVariance = fabs( MIL_Tools::ConvertSecondsToSim( rVariance ) );
 
     repairTime_ = MT_GaussianRandom( nTheoricRepairTime_, rVariance );
@@ -149,14 +149,14 @@ void PHY_BreakdownType::ReadPart( xml::xistream& xis )
 
     const PHY_DotationCategory* pCategory = PHY_DotationType::piece_->FindDotationCategory( strCategory );
     if( !pCategory )
-        xis.error( "Unknown part category" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown part category" );
 
     unsigned int& nNbr = parts_[ pCategory ];
     if( nNbr > 0 )
-        xis.error( "Part already initialized" );
+        throw MASA_EXCEPTION( xis.context() + "Part already initialized" );
     xis >> xml::attribute( "quantity", nNbr );
     if( nNbr < 1 )
-        xis.error( "part: quantity < 1" );
+        throw MASA_EXCEPTION( xis.context() + "part: quantity < 1" );
 }
 
 // -----------------------------------------------------------------------------

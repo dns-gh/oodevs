@@ -73,11 +73,11 @@ void DEC_Agent_PathClass::ReadUnitRule( xml::xistream& xis, const std::vector< u
     {
         pBase  = rules_[ T_RuleType( strBase, T_BooleanPair( bFlying, bAutonomous ) ) ];
         if( !pBase )
-            xis.error( "base rule '" + strBase + "' is undefined" );
+            throw MASA_EXCEPTION( xis.context() + "base rule '" + strBase + "' is undefined" );
     }
     DEC_Agent_PathClass*& pRule = rules_[ T_RuleType( strType, T_BooleanPair( bFlying, bAutonomous ) ) ];
     if( pRule )
-        xis.error( "Rule '" + strType + "' already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Rule '" + strType + "' already defined" );
     pRule = new DEC_Agent_PathClass( xis, dangerousObjects, pBase );
 }
 
@@ -231,7 +231,7 @@ void DEC_Agent_PathClass::ReadTerrain( xml::xistream& xis, TerrainData& destinat
     xis >> xml::attribute( "type", strType );
     const TerrainData data = TerrainData( strType );
     if( data.Area() == 0xFF )
-        xis.error( "Unknown terrain type '" + strType + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown terrain type '" + strType + "'" );
     destinationData.Merge( data );
 }
 

@@ -44,7 +44,7 @@ PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectOb
         >> xml::attribute( "life-time", lifeTime );
 
     if( ! tools::DecodeTime( lifeTime, nLifeDuration_ ) || nLifeDuration_ < 0 )
-      xis.error( "indirect-fire: life-time < 0" );
+      throw MASA_EXCEPTION( xis.context() + "indirect-fire: life-time < 0" );
 }
 
 // -----------------------------------------------------------------------------

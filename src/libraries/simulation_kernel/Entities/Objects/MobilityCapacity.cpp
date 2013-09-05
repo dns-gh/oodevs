@@ -66,7 +66,7 @@ void MobilityCapacity::InitializeSpeedPolicy( xml::xistream& xis )
         nSpeedPolicy_ = eSpeedPolicy_AgentMaxSpeed;
         xis >> xml::attribute( "max-unit-percentage-speed", rSpeedPolicyMaxSpeedAgentFactor_ );
         if( rSpeedPolicyMaxSpeedAgentFactor_ < 0 || rSpeedPolicyMaxSpeedAgentFactor_ > 100 )
-            xis.error( "max-unit-percentage-speed not in [0..100]" );
+            throw MASA_EXCEPTION( xis.context() + "max-unit-percentage-speed not in [0..100]" );
         rSpeedPolicyMaxSpeedAgentFactor_ /= 100.;
     }
     else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseBlocUrbain" ) )

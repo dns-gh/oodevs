@@ -176,7 +176,7 @@ void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
 
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
-        xis.error( "Unknown dotation type '" + strType + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation type '" + strType + "'" );
 
     AddStock( *pDotationCategory, xis );
 }
@@ -239,7 +239,7 @@ PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCateg
     double rValue;
     xis >> xml::attribute( "quantity", rValue );
     if( rValue < 0 )
-        xis.error( "stock: quantity < 0" );
+        throw MASA_EXCEPTION( xis.context() + "stock: quantity < 0" );
 
     const double rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
 

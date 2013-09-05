@@ -72,7 +72,7 @@ void PHY_UrbanAttritionData::ReadModifier( xml::xistream& xis )
         >> xml::attribute( "value", rFactor );
 
     if( rFactor < 0 || rFactor > 1 )
-        xis.error( "urbanBlock-modifier: value not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "urbanBlock-modifier: value not in [0..1]" );
     const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( materialType );
     if( !material || static_cast< int >( attritionFactors_.size() ) < material->GetId() )
         throw MASA_EXCEPTION( "Error when loading material type: " + materialType );

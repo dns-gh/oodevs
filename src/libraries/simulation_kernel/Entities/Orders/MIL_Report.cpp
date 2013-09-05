@@ -53,7 +53,7 @@ void MIL_Report::ReadReport( xml::xistream& xis )
         >> xml::optional >> xml::attribute( "key", key );
     const MIL_Report*& pReport = reports_[ id ];
     if( pReport )
-        xis.error( "Report id already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Report id already defined" );
     pReport = new MIL_Report( id, xis );
     if( !key.empty() )
         keys_[ key ] = id;
@@ -104,7 +104,7 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
     xis >> xml::attribute( "type", strType );
     const MIL_ParameterType_ABC* pParameter = MIL_ParameterType_ABC::Find( strType );
     if( !pParameter )
-        xis.error( "Unknown parameter type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown parameter type" );
     parameters_.push_back( pParameter );
 }
 

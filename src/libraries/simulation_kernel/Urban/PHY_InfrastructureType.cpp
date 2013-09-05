@@ -98,6 +98,6 @@ void PHY_InfrastructureType::ReadInfrastructure( xml::xistream& xis )
     std::string strName = xis.attribute< std::string >( "name" );
     const PHY_InfrastructureType*& pInfrastructure = infrastructures_[ strName ];
     if( pInfrastructure )
-        xis.error( "Infrastructure " + strName + " already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Infrastructure " + strName + " already defined" );
     pInfrastructure = new PHY_InfrastructureType( strName, xis );
 }

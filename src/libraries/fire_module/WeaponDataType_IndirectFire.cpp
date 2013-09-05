@@ -22,11 +22,11 @@ WeaponDataType_IndirectFire::WeaponDataType_IndirectFire( xml::xistream& xis, do
         >> xml::attribute( "min-range", rMinRange_ )
         >> xml::attribute( "max-range", rMaxRange_ );
     if( rAverageSpeed_ < 0 )
-        xis.error( "indirect-fire: average-speed < 0" );
+        throw xml::exception( xis.context() + "indirect-fire: average-speed < 0" );
     if( rMinRange_ < 0 )
-        xis.error( "indirect-fire: min-range < 0" );
+        throw xml::exception( xis.context() + "indirect-fire: min-range < 0" );
     if( rMaxRange_ < rMinRange_ )
-        xis.error( "indirect-fire: max-range < min-range" );
+        throw xml::exception( xis.context() + "indirect-fire: max-range < min-range" );
     rAverageSpeed_ = rAverageSpeed_ * timeFactor; /* m/s -> km/h */
 }
 

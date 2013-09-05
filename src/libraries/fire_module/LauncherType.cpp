@@ -50,7 +50,7 @@ void LauncherType::ReadLauncher( xml::xistream& xis )
     xis >> xml::attribute( "name", name );
     boost::shared_ptr< LauncherType >& pType = launcherTypes_[ name ];
     if( pType )
-        xis.error( "Launcher type already registered" );
+        throw xml::exception( xis.context() + "Launcher type already registered" );
     pType.reset( new LauncherType( name, xis ) );
 }
 

@@ -107,6 +107,6 @@ void PHY_AccomodationType::ReadAccomodation( xml::xistream& xis )
     std::string strRole = xis.attribute< std::string >( "role" );
     const PHY_AccomodationType*& pAccomodation = accomodations_[ strRole ];
     if( pAccomodation )
-        xis.error( "Accomodation " + strRole + " already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Accomodation " + strRole + " already defined" );
     pAccomodation = new PHY_AccomodationType( strRole, xis.attribute< float >( "nominal-capacity" ), xis.attribute< float >( "max-capacity" ) );
 }

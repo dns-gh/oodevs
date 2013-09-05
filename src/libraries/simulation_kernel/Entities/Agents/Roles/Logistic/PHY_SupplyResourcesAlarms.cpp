@@ -37,7 +37,7 @@ void PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert( xml::xistream& xi
     double rRatio;
     xis >> xml::attribute( "availability-threshold", rRatio );
     if( rRatio < 0 || rRatio > 100 )
-        xis.error( "resource-availabilty-alert: availability-threshold not in [0..100]" );
+        throw MASA_EXCEPTION( xis.context() + "resource-availabilty-alert: availability-threshold not in [0..100]" );
     rRatio /= 100.;
     convoyTransporterResourcesLevels_.insert( rRatio );
 }

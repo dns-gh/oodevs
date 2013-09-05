@@ -71,10 +71,10 @@ namespace
                 double& rFactor = factors[ identifier ];
                 xis >> xml::attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
-                    xis.error( "distance-modifier: value not in [0..1]" );
+                    throw xml::exception( xis.context() + "distance-modifier: value not in [0..1]" );
             }
             else
-                xis.error( "distance-modifier: unknow type" );
+                throw xml::exception( xis.context() + "distance-modifier: unknow type" );
         }
    private:
        Hook hook_;
@@ -97,10 +97,10 @@ namespace
 
                xis >> xml::attribute( "value", rFactor );
                if( rFactor < 0 || rFactor > 1 )
-                   xis.error( "distance-modifier: value not in [0..1]" );
+                   throw xml::exception( xis.context() + "distance-modifier: value not in [0..1]" );
            }
            else
-               xis.error( "distance-modifier: unknow type" );
+               throw xml::exception( xis.context() + "distance-modifier: unknow type" );
        }
    };
 
@@ -216,22 +216,22 @@ void SensorTypeAgent::ReadDistance( xml::xistream& xis )
     {
         xis >> xml::attribute( "distance", rIdentificationDist_ );
         if( rIdentificationDist_ < 0 )
-            xis.error( "base-distance: identification distance < 0" );
+            throw xml::exception( xis.context() + "base-distance: identification distance < 0" );
     }
     else if( distanceType == "recognition" )
     {
         xis >> xml::attribute( "distance", rRecognitionDist_ );
         if( rRecognitionDist_ < rIdentificationDist_ )
-            xis.error( "base-distance: recognition distance < identification distance" );
+            throw xml::exception( xis.context() + "base-distance: recognition distance < identification distance" );
     }
     else if( distanceType == "detection" )
     {
         xis >> xml::attribute( "distance", rDetectionDist_ );
         if( rDetectionDist_ < rRecognitionDist_ )
-            xis.error( "base-distance: detection distance < recognition distance" );
+            throw xml::exception( xis.context() + "base-distance: detection distance < recognition distance" );
     }
     else
-        xis.error( "base-distance: unknow distance level" );
+        throw xml::exception( xis.context() + "base-distance: unknow distance level" );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,7 +245,7 @@ void SensorTypeAgent::ReadLimitedToSensorsList( xml::xistream& xis )
     std::string sensorTypeString;
     xis >> xml::attribute( "name", sensorTypeString );
     if( sensorTypeString == "" )
-        xis.error( "No sensor defined in limited-to-sensor list" );
+        throw xml::exception( xis.context() + "No sensor defined in limited-to-sensor list" );
     limitedToSensorsList_.push_back( sensorTypeString );
 }
 
@@ -271,7 +271,7 @@ void SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis )
     double rFactor;
     xis >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
-        xis.error( "terrain-modifier: value not in [0..1]" );
+        throw xml::exception( xis.context() + "terrain-modifier: value not in [0..1]" );
     environmentFactors_.insert( std::pair< std::size_t, double >( GET_HOOK( GetEnvironmentAssociation )( terrainType.c_str() ), rFactor ) );
 }
 
@@ -287,9 +287,9 @@ void SensorTypeAgent::InitializePopulationFactors( xml::xistream& xis )
         >> xml::end;
 
     if( rPopulationDensity_ < 0 )
-        xis.error( "population-modifier: density < 0" );
+        throw xml::exception( xis.context() + "population-modifier: density < 0" );
     if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
-        xis.error( "population-modifier: modifier not in [0..1]" );
+        throw xml::exception( xis.context() + "population-modifier: modifier not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,9 +316,9 @@ void SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned int& 
     xis >> xml::attribute( "type", materialType )
         >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
-        xis.error( "urbanBlock-modifier: value not in [0..1]" );
+        throw xml::exception( xis.context() + "urbanBlock-modifier: value not in [0..1]" );
     if( ! GET_HOOK( IsMaterialType )( materialType.c_str() ) )
-        xis.error( "material type doesn't exist" );
+        throw xml::exception( xis.context() + "material type doesn't exist" );
     ++visionUrbanBlockMaterial;
 }
 

@@ -49,9 +49,9 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
         >> xml::end;
 
     if( rCoefSpeedModificator_ < 0 )
-        xis.error( "communication-breakdown: speed-modifier < 0" );
+        throw MASA_EXCEPTION( xis.context() + "communication-breakdown: speed-modifier < 0" );
     if( rCoefReloadingTimeModificator_ <= 0 )
-        xis.error( "communication-breakdown: reloading-time-modifier <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "communication-breakdown: reloading-time-modifier <= 0" );
 }
 
 // -----------------------------------------------------------------------------

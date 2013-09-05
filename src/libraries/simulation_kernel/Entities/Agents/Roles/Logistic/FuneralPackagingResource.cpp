@@ -25,11 +25,11 @@ FuneralPackagingResource::FuneralPackagingResource( xml::xistream& xis )
     xis >> xml::attribute( "resource", resource );
     dotationCategory_ = PHY_DotationType::FindDotationCategory( resource );
     if( !dotationCategory_ )
-        xis.error( "Invalid resource " );
+        throw MASA_EXCEPTION( xis.context() + "Invalid resource " );
 
     tools::ReadTimeAttribute( xis, "process-duration", processDuration_ );
     if( processDuration_ < 0 )
-        xis.error( "Invalid process duration" );
+        throw MASA_EXCEPTION( xis.context() + "Invalid process duration" );
     processDuration_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( processDuration_ ) );
 
     xis >> xml::attribute( "terminal", terminal_ );

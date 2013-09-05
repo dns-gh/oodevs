@@ -49,7 +49,7 @@ void PHY_Experience::ReadExperience( xml::xistream& xis )
     xis >> xml::attribute( "state", type );
     T_ExperienceMap::iterator it = experiences_.find( type );
     if( it == experiences_.end() )
-        xis.error( "Undefined experience state" );
+        throw MASA_EXCEPTION( xis.context() + "Undefined experience state" );
     const_cast< PHY_Experience* >( it->second )->Read( xis );
 }
 

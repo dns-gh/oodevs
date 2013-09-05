@@ -115,7 +115,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     xis >> xml::attribute( "attitude", strAttitude );
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
     if( !pDefaultAttitude_ )
-        xis.error( "Unknown attitude" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown attitude" );
     xis >> xml::optional >> xml::start( "armed-individuals" )
             >> xml::attribute( "value", rArmedIndividuals_ )
         >> xml::end

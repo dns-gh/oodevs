@@ -84,18 +84,18 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
 
     T_WorkRateMap::iterator it = workRates_.find( name );
     if( it == workRates_.end() )
-        xis.error( "Undefined working scheme" );
+        throw MASA_EXCEPTION( xis.context() + "Undefined working scheme" );
 
     PHY_MaintenanceWorkRate& workRate = const_cast< PHY_MaintenanceWorkRate& >( *it->second );
     xis >> xml::attribute( "working-time", workRate.rWorkTime_ );
     if( workRate.rWorkTime_ <= 0 )
-        xis.error( "Working time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "Working time <= 0" );
     workRate.rWorkerRatio_ = workRate.rWorkTime_ / 24.;
 
     std::string time;
     xis >> xml::optional >> xml::attribute( "time-before-warning", time );
     if( tools::DecodeTime( time, workRate.nDelayBeforeWarningRC_ ) && workRate.nDelayBeforeWarningRC_ == 0 )
-        xis.error( "Time before warning is null" );
+        throw MASA_EXCEPTION( xis.context() + "Time before warning is null" );
 }
 
 // -----------------------------------------------------------------------------

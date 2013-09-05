@@ -145,7 +145,7 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, const PHY_Uni
 {
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "name" ) );
     if( !pDotationCategory )
-        xis.error( "Unknown resource type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown resource type" );
     PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
     if( !pGroup )
     {

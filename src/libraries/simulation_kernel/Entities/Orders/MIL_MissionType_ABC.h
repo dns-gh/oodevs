@@ -78,20 +78,20 @@ void MIL_MissionType_ABC::ReadMission( xml::xistream& xis, MIL_MissionType_ABC::
 
     const MIL_MissionType_ABC*& pMission = missionIDs[ nID ];
     if( pMission )
-        xis.error( "Mission id already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Mission id already defined" );
     pMission = new T( nID, xis );
 
     if( pMissionDiaIDs )
     {
         const MIL_MissionType_ABC*& pMissionDiaID = (*pMissionDiaIDs)[ pMission->GetDIAType() ];
         if( pMissionDiaID )
-            xis.error( "Mission DIA ID already defined" );
+            throw MASA_EXCEPTION( xis.context() + "Mission DIA ID already defined" );
         pMissionDiaID = pMission;
     }
 
     const MIL_MissionType_ABC*& pMissionName = missionNames[ pMission->GetName() ];
     if( pMissionName )
-        xis.error( "Mission name already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Mission name already defined" );
     pMissionName = pMission;
 }
 

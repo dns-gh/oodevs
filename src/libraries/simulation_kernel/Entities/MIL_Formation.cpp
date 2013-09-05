@@ -53,7 +53,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
 {
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
-        xis.error( "Unknown level" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown level" );
     if( pParent_ )
         pParent_->RegisterFormation( *this );
     else
@@ -64,7 +64,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     xis >> xml::optional >> xml::attribute("logistic-level", logLevelStr);
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
     if( !logLevel )
-        xis.error( "Invalid logistic level" );
+        throw MASA_EXCEPTION( xis.context() + "Invalid logistic level" );
     if( *logLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );

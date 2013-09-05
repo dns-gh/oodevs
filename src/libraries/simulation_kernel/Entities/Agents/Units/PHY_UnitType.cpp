@@ -147,10 +147,10 @@ void PHY_UnitType::ReadStock( xml::xistream& xis )
 {
     const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( xis.attribute< std::string >( "logistic-supply-class" ) );
     if( !pType )
-        xis.error( "Unknown logistic dotation type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown logistic dotation type" );
     double rThreshold = xis.attribute< double >( "threshold" );
     if( rThreshold < 0 || rThreshold > 100 )
-        xis.error( "stock: threshold not in [0..100]" );
+        throw MASA_EXCEPTION( xis.context() + "stock: threshold not in [0..100]" );
     rThreshold /= 100.;
     stockLogisticThresholdRatios_[ pType ] = rThreshold;
     definedStockLogisticTypes_.insert( pType );
@@ -194,9 +194,9 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
 {
     const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pComposanteType )
-        xis.error( "Unknown composante type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown composante type" );
     if( composanteTypes_.find( pComposanteType ) != composanteTypes_.end() )
-        xis.error( "Composante type already exist" );
+        throw MASA_EXCEPTION( xis.context() + "Composante type already exist" );
     sComposanteTypeData& compData = composanteTypes_[ pComposanteType ];
     compData.bMajor_ = false;
     compData.bLoadable_ = false;
@@ -210,9 +210,9 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
             >> xml::attribute( "convoyer", compData.bCanBePartOfConvoy_ )
         >> xml::attribute( "crew", compData.nNbrHumanInCrew_ );
     if( compData.nNbrHumanInCrew_ < 0 )
-        xis.error( "equipment: crew < 0" );
+        throw MASA_EXCEPTION( xis.context() + "equipment: crew < 0" );
     if( compData.nNbrHumanInCrew_ == 0 && !IsAutonomous() )
-        xis.error( "Composante not viable : no humans in crew" );
+        throw MASA_EXCEPTION( xis.context() + "Composante not viable : no humans in crew" );
     xis >> xml::attribute( "count", compData.nNbr_ );
 }
 
@@ -239,7 +239,7 @@ void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
     if( !rank.IsCommander() )
         return;
     if( commandersRepartition_.find( &rank ) != commandersRepartition_.end() )
-        xis.error( "crew-rank: type undefined" );
+        throw MASA_EXCEPTION( xis.context() + "crew-rank: type undefined" );
     unsigned int nValue = xis.attribute< unsigned int >( "count" );
     if( nValue > 0 )
         commandersRepartition_[ &rank ] = nValue;
@@ -294,18 +294,18 @@ void PHY_UnitType::ReadSetup( xml::xistream& xis )
     if( tools::ReadTimeAttribute( xis, "installation-time", rInstallationTime_ ) && tools::ReadTimeAttribute( xis, "uninstallation-time", rUninstallationTime_ ) )
     {
         if( rInstallationTime_ < 0 )
-            xis.error( "setup: installation-time < 0" );
+            throw MASA_EXCEPTION( xis.context() + "setup: installation-time < 0" );
         if( rUninstallationTime_ < 0 )
-            xis.error( "setup: uninstallation-time < 0" );
+            throw MASA_EXCEPTION( xis.context() + "setup: uninstallation-time < 0" );
         rInstallationTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rInstallationTime_ ) );
         rUninstallationTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ ) );
     }
     xis >> xml::optional >> xml::attribute( "footprint-radius", footprintRadius_ )
         >> xml::optional >> xml::attribute( "speed-modifier", rSpeedModifier_ );
     if( footprintRadius_ < 0 )
-        xis.error( "setup: footprint-radius < 0" );
+        throw MASA_EXCEPTION( xis.context() + "setup: footprint-radius < 0" );
     if( rSpeedModifier_ < 0 || rSpeedModifier_ > 1 )
-        xis.error( "setup: speed-modifier not in [0,1]" );
+        throw MASA_EXCEPTION( xis.context() + "setup: speed-modifier not in [0,1]" );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,7 +328,7 @@ void PHY_UnitType::ReadDrill( xml::xistream& xis )
     xis >> xml::attribute( "width", rCoupDeSondeWidth_ )
         >> xml::attribute( "length", rCoupDeSondeLength_ );
     if( rCoupDeSondeLength_ < rCoupDeSondeWidth_ )
-        xis.error( "Length should be greater than width" );
+        throw MASA_EXCEPTION( xis.context() + "Length should be greater than width" );
     rCoupDeSondeLength_ = MIL_Tools::ConvertMeterToSim( rCoupDeSondeLength_ );
     rCoupDeSondeWidth_  = MIL_Tools::ConvertMeterToSim( rCoupDeSondeWidth_  );
 }
