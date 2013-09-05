@@ -174,6 +174,27 @@ func decode(msg *SwordMessage, tag uint32, data []uint8) error {
 	var err error
 	msg.tag = tag
 	switch tag {
+	case ClientToAarTag:
+		msg.ClientToAar = &sword.ClientToAar{}
+		err = proto.Unmarshal(data, msg.ClientToAar)
+		msg.Context = msg.ClientToAar.GetContext()
+	case ClientToAuthenticationTag:
+		msg.ClientToAuthentication = &sword.ClientToAuthentication{}
+		err = proto.Unmarshal(data, msg.ClientToAuthentication)
+		msg.Context = msg.ClientToAuthentication.GetContext()
+	case ClientToMessengerTag:
+		msg.ClientToMessenger = &sword.ClientToMessenger{}
+		err = proto.Unmarshal(data, msg.ClientToMessenger)
+		msg.Context = msg.ClientToMessenger.GetContext()
+	case ClientToReplayTag:
+		msg.ClientToReplay = &sword.ClientToReplay{}
+		err = proto.Unmarshal(data, msg.ClientToReplay)
+		msg.Context = msg.ClientToReplay.GetContext()
+	case ClientToSimulationTag:
+		msg.ClientToSimulation = &sword.ClientToSim{}
+		err = proto.Unmarshal(data, msg.ClientToSimulation)
+		msg.ClientId = msg.ClientToSimulation.GetClientId()
+		msg.Context = msg.ClientToSimulation.GetContext()
 	case AarToClientTag:
 		msg.AarToClient = &sword.AarToClient{}
 		err = proto.Unmarshal(data, msg.AarToClient)
