@@ -44,6 +44,7 @@
             <go cmd="vet"/>
             <go cmd="test">
                 <arg value="-i"/>
+                <arg value="-race"/>
             </go>
             <go cmd="test">
                 <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
@@ -52,6 +53,7 @@
                      tests belonging to different modules to run concurrently. We
                      need a port allocation solution instead.
                 -->
+                <arg value="-race"/>
                 <arg value="-test.parallel=1"/>
                 <arg value="${gocheck.verbose}"/>
                 <arg line="${gocheck.filter}"/>
