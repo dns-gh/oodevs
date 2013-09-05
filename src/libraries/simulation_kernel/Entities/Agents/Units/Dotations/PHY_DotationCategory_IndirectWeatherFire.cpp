@@ -97,3 +97,15 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
             MIL_Report::PostEvent( target, report::eRC_PrisSousTirFumigene );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectWeatherFire::GetSmokeDuration
+// Created: LDC 2013-08-30
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory_IndirectWeatherFire::GetSmokeDuration() const
+{
+    if( category_ == PHY_IndirectFireDotationClass::fumigene_  )
+        return MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ + rLifeDuration_ );
+    else
+        return 0.;
+}

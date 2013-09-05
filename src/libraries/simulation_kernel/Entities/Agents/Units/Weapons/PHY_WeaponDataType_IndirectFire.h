@@ -42,6 +42,7 @@ public:
     double GetAverageSpeed() const;
     double GetMinRange() const;
     double GetMaxRange() const;
+    double GetSmokeDuration() const;
     //@}
 
     //! @name Operations
