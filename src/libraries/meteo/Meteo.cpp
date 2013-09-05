@@ -82,9 +82,9 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
             >> xml::attribute( "direction", wind_.eAngle_ )
         >> xml::end;
     if( wind_.rSpeed_ < 0 )
-        xis.error( "meteo: VitesseVent < 0" );
+        throw MASA_EXCEPTION( xis.context() + "meteo: VitesseVent < 0" );
     if( wind_.eAngle_ < 0 || wind_.eAngle_ >= 360 )
-        xis.error( "meteo: DirectionVent not in [0..360[" );
+        throw MASA_EXCEPTION( xis.context() + "meteo: DirectionVent not in [0..360[" );
     wind_.vDirection_ = ReadDirection( wind_.eAngle_ );
     xis >> xml::optional
         >> xml::start( "temperature" )
@@ -96,7 +96,7 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
         >> xml::end;
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( strVal );
     if( !pPrecipitation_ )
-        xis.error( "Unknown Precipitation type '" + strVal + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown Precipitation type '" + strVal + "'" );
 
     wind_.rSpeed_ *= conversionFactor_;
     Update( *pLighting_ );

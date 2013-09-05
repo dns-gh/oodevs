@@ -70,10 +70,10 @@ PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_
 {
     rNeutralizationCoef_ = xis.attribute< double >( "neutralization-ratio" );
     if( rNeutralizationCoef_ < 1. )
-        xis.error( "neutralization-ratio < 1" );
+        throw MASA_EXCEPTION( xis.context() + "neutralization-ratio < 1" );
     rDispersionCoef_ = xis.attribute< double >( "dispersion-factor" );
     if( !dotationCategory.HasAttritions() )
-        xis.error( "Dotation has no attritions defined" );
+        throw MASA_EXCEPTION( xis.context() + "Dotation has no attritions defined" );
     xis >> xml::list( "ph", *this, &PHY_DotationCategory_IndirectFire::ReadPh );
 }
 

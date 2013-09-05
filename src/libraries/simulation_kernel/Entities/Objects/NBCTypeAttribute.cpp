@@ -34,7 +34,7 @@ NBCTypeAttribute::NBCTypeAttribute( xml::xistream& xis )
     std::string agentType( xis.attribute< std::string >( "type", std::string() ) );
     pAgent_ = MIL_NBCType::Find( agentType );
     if( !pAgent_ )
-        xis.error( "Unknown 'AgentNBC' '" + agentType + "' for NBC object" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown 'AgentNBC' '" + agentType + "' for NBC object" );
 }
 
 // -----------------------------------------------------------------------------

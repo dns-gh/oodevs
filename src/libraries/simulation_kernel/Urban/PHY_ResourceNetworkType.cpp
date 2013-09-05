@@ -142,13 +142,13 @@ void PHY_ResourceNetworkType::ReadResourceNetwork( xml::xistream& xis )
     std::string strResourceNetwork = xis.attribute< std::string >( "name" );
     const PHY_ResourceNetworkType*& pResourceNetwork = resourceNetworks_[ strResourceNetwork ];
     if( pResourceNetwork )
-        xis.error( "Resource network " + strResourceNetwork + " already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Resource network " + strResourceNetwork + " already defined" );
     unsigned int resourceId;
     xis >> xml::start( "resource" )
         >> xml::attribute( "id", resourceId )
         >> xml::end;
     const PHY_DotationCategory* dotationCategory = PHY_DotationType::FindDotationCategory( resourceId );
     if( !dotationCategory )
-        xis.error( "Unknown dotation category Id: " + boost::lexical_cast< std::string >( resourceId ) );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation category Id: " + boost::lexical_cast< std::string >( resourceId ) );
     pResourceNetwork = new PHY_ResourceNetworkType( strResourceNetwork, *dotationCategory );
 }

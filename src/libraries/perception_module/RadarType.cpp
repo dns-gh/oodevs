@@ -72,11 +72,11 @@ void RadarType::ReadRadar( xml::xistream& xis )
               strType;
     const RadarClass* pType = RadarClass::Find( strType );
     if( !pType )
-        xis.error( "Unknown radar type " + strType );
+        throw xml::exception( xis.context() + "Unknown radar type " + strType );
 
     const RadarType*& pRadarType = radarTypes_[ strRadarName ];
     if( pRadarType )
-        xis.error( "Radar " + strRadarName + " already exists" );
+        throw xml::exception( xis.context() + "Radar " + strRadarName + " already exists" );
     pRadarType = new RadarType( strRadarName, *pType, xis );
 }
 
@@ -135,12 +135,12 @@ void RadarType::InitializeRange( xml::xistream& xis )
         >> xml::optional >> xml::attribute( "max-height", rMaxHeight_ );
 
     if( rRadius_ < 0 )
-        xis.error( "radar: action-range < 0" );
+        throw xml::exception( xis.context() + "radar: action-range < 0" );
 
     if( rMinHeight_ != -std::numeric_limits< double >::max() && rMinHeight_ < 0 )
-        xis.error( "radar: min-height < 0" );
+        throw xml::exception( xis.context() + "radar: min-height < 0" );
     if( rMaxHeight_ != std::numeric_limits< double >::max() && rMaxHeight_ < rMinHeight_ )
-        xis.error( "radar: max-height < min-height" );
+        throw xml::exception( xis.context() + "radar: max-height < min-height" );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,13 +253,13 @@ void RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rDetectionTime_ ) )
             if( rDetectionTime_ < 0 )
-                xis.error( "detection acquisition-time: base-time < 0" );
+                throw xml::exception( xis.context() + "detection acquisition-time: base-time < 0" );
             else
                 rDetectionTime_ = GET_HOOK( ConvertSecondsToSim )( rDetectionTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcDetectionTime_ ) )
             if( rPcDetectionTime_ < 0 )
-                xis.error( "detection acquisition-time: command-post-time < 0" );
+                throw xml::exception( xis.context() + "detection acquisition-time: command-post-time < 0" );
             else
             {
                 bIsPCTime = true;
@@ -270,13 +270,13 @@ void RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rRecognitionTime_ ) )
             if( rRecognitionTime_ < rDetectionTime_ )
-                xis.error( "recognition acquisition-time: base-time < detection base-time" );
+                throw xml::exception( xis.context() + "recognition acquisition-time: base-time < detection base-time" );
             else
                 rRecognitionTime_ = GET_HOOK( ConvertSecondsToSim )( rRecognitionTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcRecognitionTime_ ) )
             if( rPcRecognitionTime_ < rPcDetectionTime_ )
-                xis.error( "recognition acquisition-time: command-post-time < detection command-post-time" );
+                throw xml::exception( xis.context() + "recognition acquisition-time: command-post-time < detection command-post-time" );
             else
                 rPcRecognitionTime_ = GET_HOOK( ConvertSecondsToSim )( rPcRecognitionTime_ );
     }
@@ -284,18 +284,18 @@ void RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rIdentificationTime_ ) )
             if( rIdentificationTime_ < rRecognitionTime_ )
-                xis.error( "identification acquisition-time: base-time < recognition base-time" );
+                throw xml::exception( xis.context() + "identification acquisition-time: base-time < recognition base-time" );
             else
                 rIdentificationTime_ = GET_HOOK( ConvertSecondsToSim )( rIdentificationTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcIdentificationTime_ ) )
             if( rPcIdentificationTime_ < rPcRecognitionTime_ )
-                xis.error( "identification acquisition-time: command-post-time < recognition command-post-time" );
+                throw xml::exception( xis.context() + "identification acquisition-time: command-post-time < recognition command-post-time" );
             else
                 rPcIdentificationTime_ = GET_HOOK( ConvertSecondsToSim )( rPcIdentificationTime_ );
     }
     else
-        xis.error( "Unknown acquisition-time: " + acquisitionType );
+        throw xml::exception( xis.context() + "Unknown acquisition-time: " + acquisitionType );
 }
 
 // -----------------------------------------------------------------------------

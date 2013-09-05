@@ -64,7 +64,7 @@ void TerrainHeuristicCapacity::ReadTerrain( xml::xistream& xis )
 
     TerrainData nLandType = TerrainData::FromString( strTerrainType );
     if( nLandType.Area() == 0xFF )
-        xis.error( "Unknown land type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown land type" );
 
     environmentScores_.push_back( std::make_pair( nLandType, nScore ) );
 }

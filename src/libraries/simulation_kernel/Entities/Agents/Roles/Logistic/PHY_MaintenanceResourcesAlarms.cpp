@@ -26,14 +26,14 @@ namespace
         xis >> xml::attribute( "resource", strType )
             >> xml::attribute( "availability-threshold", rRation );
         if( rRation < 0 || rRation > 100 )
-            xis.error( "availability-threshold not in [0..100]" );
+            throw MASA_EXCEPTION( xis.context() + "availability-threshold not in [0..100]" );
         rRation /= 100.;
         if( strType == "AlerteDisponibiliteReparateurs" || strType == "repairer" )
             repairerResourcesLevels_.insert( rRation );
         else if( strType == "AlerteDisponibiliteRemorqueurs" || strType == "tug" )
             haulerResourcesLevels_.insert( rRation );
         else
-            xis.error( "invalid resource type for maintenance resource-availability-alert" );
+            throw MASA_EXCEPTION( xis.context() + "invalid resource type for maintenance resource-availability-alert" );
     }
 }
 

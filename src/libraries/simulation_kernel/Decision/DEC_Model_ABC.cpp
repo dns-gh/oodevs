@@ -89,14 +89,14 @@ void DEC_Model_ABC::ReadMission( xml::xistream& xis, const std::map< std::string
     xis >> xml::attribute( "name", strMission );
     std::map< std::string, const MIL_MissionType_ABC* >::const_iterator it = missionTypes.find( strMission );
     if( it == missionTypes.end() )
-        xis.error( "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
     const MIL_MissionType_ABC* pType = it->second;
     if( !pType )
-        xis.error( "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
     availableMissions_.insert( pType ) ;
     // Check if the DIA behavior is present
     if( !IsMissionAvailable( *pType ) )
-        xis.error( "Missing behaviors for mission" );
+        throw MASA_EXCEPTION( xis.context() + "Missing behaviors for mission" );
     InitializeMissionFragOrders( xis, *pType );
 }
 
@@ -119,7 +119,7 @@ void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC
     xis >> xml::attribute( "name", strOrdreConduite );
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
     if( !pType )
-        xis.error( "Unknown orderConduite type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown orderConduite type" );
     availableFragOrdersPerMission_[ &missionType ].insert( pType ) ;
 }
 
@@ -133,7 +133,7 @@ void DEC_Model_ABC::ReadFragOrder( xml::xistream& xis )
     xis >> xml::attribute( "name", strOrdreConduite );
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( strOrdreConduite );
     if( !pType )
-        xis.error( "Unknown orderConduite type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown orderConduite type" );
     availableFragOrders_.insert( pType ) ;
 }
 

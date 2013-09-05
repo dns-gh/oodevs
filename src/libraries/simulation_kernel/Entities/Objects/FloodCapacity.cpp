@@ -189,6 +189,6 @@ void FloodCapacity::ReadInjury( xml::xistream& xis )
         >> xml::attribute( "percentage", percentage );
     const PHY_HumanWound* pType = PHY_HumanWound::Find( type );
     if( !pType )
-        xis.error( "Unknown injury type " + type );
+        throw MASA_EXCEPTION( xis.context() + "Unknown injury type " + type );
     injuries_.insert( std::make_pair( pType, percentage ) );
 }

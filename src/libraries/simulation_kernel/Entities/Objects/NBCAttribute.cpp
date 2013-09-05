@@ -98,7 +98,7 @@ void NBCAttribute::ReadNBCAgent( xml::xistream& xis )
 {
     std::string type( xis.attribute< std::string >( "type", std::string() ) );
     if( ! Insert( type ) )
-        xis.error( "Unknown 'AgentNBC' '" + type + "' for NBC object" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown 'AgentNBC' '" + type + "' for NBC object" );
 }
 
 // -----------------------------------------------------------------------------

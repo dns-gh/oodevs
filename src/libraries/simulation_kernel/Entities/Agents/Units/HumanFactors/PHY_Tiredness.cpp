@@ -66,7 +66,7 @@ void PHY_Tiredness::ReadTiredness( xml::xistream& xis )
     xis >> xml::attribute( "state", type );
     T_TirednessMap::iterator it = tirednesses_.find( type );
     if( it == tirednesses_.end() )
-        xis.error( "Undefined tiredness state" );
+        throw MASA_EXCEPTION( xis.context() + "Undefined tiredness state" );
     const_cast< PHY_Tiredness* >( it->second )->Read( xis );
 }
 

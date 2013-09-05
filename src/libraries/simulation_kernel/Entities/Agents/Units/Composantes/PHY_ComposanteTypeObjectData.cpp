@@ -61,7 +61,7 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     {
         pConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( strConsumptionMode );
         if( !pConsumptionMode_ )
-            xis.error( "Unknown consumption mode '" + strConsumptionMode + "'" );
+            throw MASA_EXCEPTION( xis.context() + "Unknown consumption mode '" + strConsumptionMode + "'" );
     }
 }
 

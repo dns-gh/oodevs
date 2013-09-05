@@ -46,7 +46,7 @@ void SensorType::ReadSensor( xml::xistream& xis )
 
     const SensorType*& pSensorType = sensorTypes_[ strSensorName ];
     if( pSensorType )
-        xis.error( "Unknown sensor type" );
+        throw xml::exception( xis.context() + "Unknown sensor type" );
     pSensorType = new SensorType( strSensorName, xis );
 }
 

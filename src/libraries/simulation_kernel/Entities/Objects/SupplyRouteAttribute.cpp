@@ -37,13 +37,13 @@ SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis )
         >> xml::content( "equipped", bEquipped_ );
 
     if( rWeightSupported_ <= 0. )
-        xis.error( "max-weight is not greater than 0" );
+        throw MASA_EXCEPTION( xis.context() + "max-weight is not greater than 0" );
     if( rWidth_ <= 0. )
-        xis.error( "width is not greater than 0" );
+        throw MASA_EXCEPTION( xis.context() + "width is not greater than 0" );
     if( rLength_ <= 0. )
-        xis.error( "length is not greater than 0" );
+        throw MASA_EXCEPTION( xis.context() + "length is not greater than 0" );
     if( rFlow_ <= 0. )
-        xis.error( "flow is not greater than 0" );
+        throw MASA_EXCEPTION( xis.context() + "flow is not greater than 0" );
 }
 
 // -----------------------------------------------------------------------------

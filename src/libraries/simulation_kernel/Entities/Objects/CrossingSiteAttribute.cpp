@@ -35,13 +35,13 @@ CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis )
         >> xml::content( "construction-needed", bBanksToFitOut_ );
 
     if( rWidth_ <= 0. )
-        xis.error( "rWidth_ is not greater than 0 " );
+        throw MASA_EXCEPTION( xis.context() + "rWidth_ is not greater than 0 " );
 
     if( rDepth_ <= 0 )
-        xis.error( "rDepth_ is not greater than 0 " );
+        throw MASA_EXCEPTION( xis.context() + "rDepth_ is not greater than 0 " );
 
     if( rCurrentSpeed_ < 0 )
-        xis.error( "rCurrentSpeed_ is not greater or equal to 0 " );
+        throw MASA_EXCEPTION( xis.context() + "rCurrentSpeed_ is not greater or equal to 0 " );
 }
 
 // -----------------------------------------------------------------------------

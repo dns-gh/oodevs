@@ -357,17 +357,17 @@ void PHY_RolePion_Composantes::ReadEquipment( xml::xistream& xis )
 
     const PHY_ComposanteState* pState = PHY_ComposanteState::Find( xis.attribute< std::string >( "state" ) );
     if( !pState )
-        xis.error( "Unknown composante state" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown composante state" );
     if( *pState == PHY_ComposanteState::undamaged_ && borrowerId == 0 )
         return;
 
     const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
-        xis.error( "Unknown composante type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown composante type" );
 
     const PHY_BreakdownType* pBreakdownType = PHY_BreakdownType::Find( xis.attribute( "breakdown", "" ) );
     if( *pState == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdownType )
-        xis.error( "Unknown breakdown type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown breakdown type" );
 
     for( auto itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
@@ -407,10 +407,10 @@ void PHY_RolePion_Composantes::ReadHuman( xml::xistream& xis )
 {
     const PHY_HumanRank* pRank = PHY_HumanRank::Find( xis.attribute< std::string >( "rank" ) );
     if( !pRank )
-        xis.error( "Unknown human rank" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown human rank" );
     const PHY_HumanWound* pWound = PHY_HumanWound::Find( xis.attribute< std::string >( "state" ) );
     if( !pWound )
-        xis.error( "Unknown human wound" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown human wound" );
     bool contaminated = xis.attribute< bool >( "contaminated", false );
     bool psyop = xis.attribute< bool >( "psyop", false );
     unsigned int number = xis.attribute< unsigned int >( "number" );

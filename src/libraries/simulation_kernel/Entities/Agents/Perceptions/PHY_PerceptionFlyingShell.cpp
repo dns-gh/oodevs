@@ -33,7 +33,7 @@ void PHY_PerceptionFlyingShell::Initialize( xml::xistream& xis )
         >> xml::end;
 
     if( rRadius_ < 0 )
-        xis.error( "cobra-radar: action-range < 0" );
+        throw MASA_EXCEPTION( xis.context() + "cobra-radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
 }
 

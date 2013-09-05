@@ -45,12 +45,12 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
             >> xml::end;
 
     if( rCoefMaxSpeedModificator_ < 0 )
-        xis.error( "nbc-suit: max-speed-modifier < 0" );
+        throw MASA_EXCEPTION( xis.context() + "nbc-suit: max-speed-modifier < 0" );
     if( rCoefReloadingTimeModificator_ <= 0 )
-        xis.error( "nbc-suit: reloading-time-modifier <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "nbc-suit: reloading-time-modifier <= 0" );
 
     if( rContaminationDistance_ < 0 )
-        xis.error( "propagation: contamination-distance < 0" );
+        throw MASA_EXCEPTION( xis.context() + "propagation: contamination-distance < 0" );
 
     xis >> xml::start( "agents" )
             >> xml::list( "agent", &MIL_NbcAgentType::ReadAgent )
@@ -71,11 +71,11 @@ void MIL_NbcAgentType::ReadAgent( xml::xistream& xis )
 
     const MIL_NbcAgentType*& pNbcAgentType = nbcAgentTypes_[ strName ];
     if( pNbcAgentType )
-        xis.error( "Unknown NBC agent type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown NBC agent type" );
     pNbcAgentType = new MIL_NbcAgentType( strName, xis );
 
     if( !ids_.insert( pNbcAgentType->GetID() ).second )
-        xis.error( "NBC agent type ID already used" );
+        throw MASA_EXCEPTION( xis.context() + "NBC agent type ID already used" );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,11 +153,11 @@ void MIL_NbcAgentType::ReadGaz( xml::xistream& xis )
     tools::DecodeTime( nGasLifeTime, nGasLifeTime_ );
     nGasLifeTime_ = MIL_Tools::ConvertSecondsToSim( nGasLifeTime_ );
     if( nGasLifeTime_ <= 0 )
-        xis.error( "effects: life-time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "effects: life-time <= 0" );
 
     xis >> xml::attribute( "propagation", rGasPropagationAngle_ );
     if( rGasPropagationAngle_ <= 0 )
-        xis.error( "effects: propagation <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "effects: propagation <= 0" );
     rGasPropagationAngle_ *= ( MT_PI / 180. );
 }
 
@@ -184,7 +184,7 @@ bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVe
 
     const double total = std::accumulate( data.begin(), data.end(), 0. );
     if( std::fabs( 1. - total ) > 0.01 )
-        xis.error( "Sum of poisonous percentage is out of bound for NBC Agent type" );
+        throw MASA_EXCEPTION( xis.context() + "Sum of poisonous percentage is out of bound for NBC Agent type" );
     return true;
 }
 
@@ -202,7 +202,7 @@ void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& d
         double percentage;
         xis >> xml::attribute( "percentage", percentage );
         if( percentage < 0.f || percentage > 1.f )
-            xis.error( "Poisonous percentage is out of bound for NBC Agent type" );
+            throw MASA_EXCEPTION( xis.context() + "Poisonous percentage is out of bound for NBC Agent type" );
         data[ it->second->GetID() ] = percentage;
     }
 }

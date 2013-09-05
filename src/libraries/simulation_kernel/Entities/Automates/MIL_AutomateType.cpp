@@ -93,11 +93,11 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
 
     auto itAutomateAllocator = automateTypeAllocators_.find( strType );
     if( itAutomateAllocator == automateTypeAllocators_.end() )
-        xis.error( "Unknown automate type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown automate type" );
 
     const MIL_AutomateType*& pType = automateTypes_[ strName ];
     if( pType )
-        xis.error( "Automate type already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Automate type already defined" );
 
     try
     {
@@ -105,14 +105,14 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
     }
     catch( const std::exception& e )
     {
-        xis.error( tools::GetExceptionMsg( e ) );
+        throw MASA_EXCEPTION( xis.context() + tools::GetExceptionMsg( e ) );
         pType = 0;
     }
 
     if( pType )
     {
         if( !ids_.insert( pType->GetID() ).second )
-            xis.error( "Automate type ID already used" );
+            throw MASA_EXCEPTION( xis.context() + "Automate type ID already used" );
     }
 }
 
@@ -144,7 +144,7 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& x
     xis >> xml::attribute( "id", nID_ )
         >> xml::list( "unit", *this, &MIL_AutomateType::ReadUnit );
     if( !pTypePC_ )
-        xis.error( "No command-post defined for automat type: " + strName_ );
+        throw MASA_EXCEPTION( xis.context() + "No command-post defined for automat type: " + strName_ );
     InitializeModel( xis );
 }
 
@@ -179,10 +179,10 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
 
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strPionType );
     if( !pType )
-        xis.error( "Unknown pawn type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown pawn type" );
 
     if( composition_.find( pType ) != composition_.end() )
-        xis.error( "Pawn type already defined in composition" );
+        throw MASA_EXCEPTION( xis.context() + "Pawn type already defined in composition" );
 
     composition_[ pType ].nMax_ = std::numeric_limits< unsigned int >::max();
     composition_[ pType ].nMin_ = 0;
@@ -196,7 +196,7 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
         if( !pTypePC_ )
             pTypePC_ = pType;
         else
-            xis.error( "Multiple command-post defined in automat type: " + strName_ );
+            throw MASA_EXCEPTION( xis.context() + "Multiple command-post defined in automat type: " + strName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +209,7 @@ void MIL_AutomateType::InitializeModel( xml::xistream& xis )
     xis >> xml::attribute( "decisional-model", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( strModel );
     if( !pModel_ )
-        xis.error( "Unknown automata model" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown automata model" );
 }
 
 // -----------------------------------------------------------------------------

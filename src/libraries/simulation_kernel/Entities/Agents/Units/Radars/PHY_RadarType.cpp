@@ -67,11 +67,11 @@ void PHY_RadarType::ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time )
     xis >> xml::attribute( "type", strType );
     const PHY_RadarClass* pType = PHY_RadarClass::Find( strType );
     if( !pType )
-        xis.error( "Unknown radar type " + strType );
+        throw MASA_EXCEPTION( xis.context() + "Unknown radar type " + strType );
 
     const PHY_RadarType*& pRadarType = radarTypes_[ strRadarName ];
     if( pRadarType )
-        xis.error( "Radar " + strRadarName + " already exists" );
+        throw MASA_EXCEPTION( xis.context() + "Radar " + strRadarName + " already exists" );
     pRadarType = new PHY_RadarType( strRadarName, *pType, time, xis );
 }
 
@@ -131,13 +131,13 @@ void PHY_RadarType::InitializeRange( xml::xistream& xis )
         >> xml::optional >> xml::attribute( "max-height", rMaxHeight_ );
 
     if( rRadius_ < 0 )
-        xis.error( "radar: action-range < 0" );
+        throw MASA_EXCEPTION( xis.context() + "radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
 
     if( rMinHeight_ != -std::numeric_limits< double >::max() && rMinHeight_ < 0 )
-        xis.error( "radar: min-height < 0" );
+        throw MASA_EXCEPTION( xis.context() + "radar: min-height < 0" );
     if( rMaxHeight_ != std::numeric_limits< double >::max() && rMaxHeight_ < rMinHeight_ )
-        xis.error( "radar: max-height < min-height" );
+        throw MASA_EXCEPTION( xis.context() + "radar: max-height < min-height" );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,13 +237,13 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rDetectionTime_ ) )
             if( rDetectionTime_ < 0 )
-                xis.error( "detection acquisition-time: base-time < 0" );
+                throw MASA_EXCEPTION( xis.context() + "detection acquisition-time: base-time < 0" );
             else
                 rDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rDetectionTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcDetectionTime_ ) )
             if( rPcDetectionTime_ < 0 )
-                xis.error( "detection acquisition-time: command-post-time < 0" );
+                throw MASA_EXCEPTION( xis.context() + "detection acquisition-time: command-post-time < 0" );
             else
             {
                 bIsPCTime = true;
@@ -254,13 +254,13 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rRecognitionTime_ ) )
             if( rRecognitionTime_ < rDetectionTime_ )
-                xis.error( "recoginition acquisition-time: base-time < detection base-time" );
+                throw MASA_EXCEPTION( xis.context() + "recoginition acquisition-time: base-time < detection base-time" );
             else
                 rRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rRecognitionTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcRecognitionTime_ ) )
             if( rPcRecognitionTime_ < rPcDetectionTime_ )
-                xis.error( "recognition acquisition-time: command-post-time < detection command-post-time" );
+                throw MASA_EXCEPTION( xis.context() + "recognition acquisition-time: command-post-time < detection command-post-time" );
             else
                 rPcRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rPcRecognitionTime_ );
     }
@@ -268,18 +268,18 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rIdentificationTime_ ) )
             if( rIdentificationTime_ < rRecognitionTime_ )
-                xis.error( "identification acquisition-time: base-time < recognition base-time" );
+                throw MASA_EXCEPTION( xis.context() + "identification acquisition-time: base-time < recognition base-time" );
             else
                 rIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rIdentificationTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcIdentificationTime_ ) )
             if( rPcIdentificationTime_ < rPcRecognitionTime_ )
-                xis.error( "identification acquisition-time: command-post-time < recognition command-post-time" );
+                throw MASA_EXCEPTION( xis.context() + "identification acquisition-time: command-post-time < recognition command-post-time" );
             else
                 rPcIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rPcIdentificationTime_ );
     }
     else
-        xis.error( "Unknown acquisition-time: " + acquisitionType );
+        throw MASA_EXCEPTION( xis.context() + "Unknown acquisition-time: " + acquisitionType );
 }
 
 // -----------------------------------------------------------------------------

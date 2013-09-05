@@ -70,11 +70,11 @@ namespace
             xis >> xml::attribute( "volume", volume );
             const PHY_Volume* pVolume = PHY_Volume::FindVolume( volume );
             if( !pVolume )
-                xis.error( "Unknown volume name - " + volume );
+                throw MASA_EXCEPTION( xis.context() + "Unknown volume name - " + volume );
 
             xis >> xml::attribute( "percentage", rFirePercentage );
             if( rFirePercentage < 0 || rFirePercentage > 100 )
-                xis.error( "percentage not in [0..100]" );
+                throw MASA_EXCEPTION( xis.context() + "percentage not in [0..100]" );
 
             rFirePercentage *= 10000.;                                               // hectare => m2
             rFirePercentage = MIL_Tools::ConvertMeterSquareToSim( rFirePercentage ); // m2 => px2

@@ -36,7 +36,7 @@ void PHY_DotationCapacities::ReadCategory( xml::xistream& xis )
 {
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( xis.attribute< std::string >( "name" ) );
     if( !pDotationType )
-        xis.error( "Unknown dotation type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation type" );
     ReadDotationCategories( xis, *pDotationType );
 }
 
@@ -57,10 +57,10 @@ void PHY_DotationCapacities::ReadDotation( xml::xistream& xis, const PHY_Dotatio
 {
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "name" ) );
     if( !pDotationCategory )
-        xis.error( "Unknown dotation category" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation category" );
     PHY_DotationCapacity*& pDotation = dotationCapacities_[ pDotationCategory ];
     if( pDotation )
-        xis.error( "Dotation already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Dotation already defined" );
     pDotation = new PHY_DotationCapacity( *pDotationCategory, xis );
 }
 

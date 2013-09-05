@@ -39,7 +39,7 @@ FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< ker
         >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
     fireClass_ = FireClasses.Find( className );
     if( !fireClass_ )
-        xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown 'Fire class' '" + className + "' for fire object attribute" );
     CreateDictionary( dictionary, entity );
 }
 

@@ -50,7 +50,7 @@ void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis, double time
     xis >> xml::attribute( "name", strName );
     const MIL_KnowledgeGroupType*& pType = knowledgeGroupTypes_[ strName ];
     if( pType )
-        xis.error( "Type already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Type already defined" );
     pType = new MIL_KnowledgeGroupType( strName, xis, timeFactor );
 }
 
@@ -80,22 +80,22 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
 {
     tools::ReadTimeAttribute( xis, "communication-delay", rCommunicationDelay_ ); // LTO
     if( rCommunicationDelay_ < 0 ) // LTO
-        xis.error( "unit-knowledge: max-lifetime <= 0" ); // LTO
+        throw MASA_EXCEPTION( xis.context() + "unit-knowledge: max-lifetime <= 0" ); // LTO
     rCommunicationDelay_ *= timeFactor; // LTO
     // Connaissances agent
     xis >> xml::start( "unit-knowledge" );
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgeAgentMaxLifeTime_ );
     if( rKnowledgeAgentMaxLifeTime_ <= 0 )
-        xis.error( "unit-knowledge: max-lifetime <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit-knowledge: max-lifetime <= 0" );
     rKnowledgeAgentMaxLifeTime_ = timeFactor * rKnowledgeAgentMaxLifeTime_; // LTO
     unsigned int nTmp = std::numeric_limits< unsigned int >::max();
     xis >> xml::optional >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
     if( nTmp <= 0 )
-        xis.error( "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
     rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_ = MIL_Tools::ConvertMeterToSim( nTmp );
     if( tools::ReadTimeAttribute(xis, "interpolation-time", rKnowledgeAgentExtrapolationTime_ ) )
         if( rKnowledgeAgentExtrapolationTime_ <= 0 )
-            xis.error( "unit-knowledge: interpolation-time <= 0" );
+            throw MASA_EXCEPTION( xis.context() + "unit-knowledge: interpolation-time <= 0" );
     rKnowledgeAgentExtrapolationTime_ = std::max( 1., timeFactor * rKnowledgeAgentExtrapolationTime_ );
     // JVT : 1 car lorsque l'on perd de vue une unité, on veux au moins que l'emplacement de la connaissance soit celle au pas de temps suivant le non vu
     xis >> xml::end;
@@ -103,7 +103,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
     xis >> xml::start( "population-knowledge" );
     tools::ReadTimeAttribute( xis, "max-lifetime", rKnowledgePopulationMaxLifeTime_ );
     if( rKnowledgePopulationMaxLifeTime_ <= 0 )
-        xis.error( "population-knowledge: max-lifetime <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "population-knowledge: max-lifetime <= 0" );
     rKnowledgePopulationMaxLifeTime_ = timeFactor * rKnowledgePopulationMaxLifeTime_;
     xis >> xml::end;
 }

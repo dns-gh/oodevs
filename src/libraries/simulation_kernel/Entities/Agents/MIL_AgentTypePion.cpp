@@ -139,10 +139,10 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
         >> xml::attribute( "type", strType );
     CIT_PionTypeAllocatorMap itPionAllocator = pionTypeAllocators_.find( strType );
     if( itPionAllocator == pionTypeAllocators_.end() )
-        xis.error( "Unknown pion type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown pion type" );
     const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
     if( pType )
-        xis.error( "Pion type already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Pion type already defined" );
     try
     {
         pType = (*itPionAllocator->second)( strName, strType, xis );
@@ -156,7 +156,7 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     if( pType )
     {
         if( !ids_.insert( pType->GetID() ).second )
-            xis.error( "Pion type ID already used" );
+            throw MASA_EXCEPTION( xis.context() + "Pion type ID already used" );
     }
 }
 
@@ -264,7 +264,7 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
     {
         const TerrainData nType = KeypointToTerrainData( MIL_Tools::ConvertLandType( strTypePoint ) );
         if( distancesAvantPoints_.find( nType ) != distancesAvantPoints_.end() )
-            xis.error( "Unknown 'distance avant point'" );
+            throw MASA_EXCEPTION( xis.context() + "Unknown 'distance avant point'" );
         double& rDistance = distancesAvantPoints_[ nType ];
         xis >> xml::attribute( "value", rDistance );
         rDistance = MIL_Tools::ConvertMeterToSim( rDistance );
@@ -301,7 +301,7 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
     xis >> xml::attribute( "decisional-model", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( strModel );
     if( !pModel_ )
-        xis.error( "Unknown pawn model " + strModel );
+        throw MASA_EXCEPTION( xis.context() + "Unknown pawn model " + strModel );
 }
 
 // -----------------------------------------------------------------------------

@@ -49,9 +49,9 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
     delay_ = MIL_Tools::ConvertSecondsToSim( delay_ );
 
     if( rEffectReloadingTimeDensity_ < 0 )
-        xis.error( "reloading-time-effet: population-density < 0" );
+        throw MASA_EXCEPTION( xis.context() + "reloading-time-effet: population-density < 0" );
     if( rEffectReloadingTimeFactor_ < 1 )
-        xis.error( "reloading-time-effect: modifier < 1" );
+        throw MASA_EXCEPTION( xis.context() + "reloading-time-effect: modifier < 1" );
 
     xis >> xml::list( "population", &MIL_PopulationType::ReadPopulation )
         >> xml::end;
@@ -66,7 +66,7 @@ void MIL_PopulationType::ReadPopulation( xml::xistream& xis )
     std::string strName = xis.attribute< std::string >( "name" );
     const MIL_PopulationType*& pPopulation = populations_[ strName ];
     if( pPopulation )
-        xis.error( "Population type already exists" );
+        throw MASA_EXCEPTION( xis.context() + "Population type already exists" );
     pPopulation = new MIL_PopulationType( strName, xis );
 }
 
@@ -107,11 +107,11 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
         >> xml::optional >> xml::attribute( "armed-individuals", rArmedIndividuals_ );
 
     if( rConcentrationDensity_ <= 0 )
-        xis.error( "population: concentration-density <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "population: concentration-density <= 0" );
     if( rDefaultFlowDensity_ <= 0 )
-        xis.error( "population: moving-base-density <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "population: moving-base-density <= 0" );
     if( rMaxSpeed_ <= 0 )
-        xis.error( "population: moving-speed" );
+        throw MASA_EXCEPTION( xis.context() + "population: moving-speed" );
 
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
 
@@ -133,7 +133,7 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
 
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( xis.attribute< std::string >( "decisional-model" ) );
     if( !pModel_ )
-        xis.error( "Unknown population model" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown population model" );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +184,7 @@ void MIL_PopulationType::ReadSlowingEffect( xml::xistream& xis )
     std::string strAttitude = xis.attribute< std::string >( "population-attitude" );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
-        xis.error( "Unknown attitude '" + strAttitude + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown attitude '" + strAttitude + "'" );
     assert( slowDownData_.size() > pAttitude->GetID() );
     T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ pAttitude->GetID() ];
     xis >> xml::list( "unit", *this, &MIL_PopulationType::ReadSlowingUnitEffect, volumeSlowDownData );
@@ -205,15 +205,15 @@ void MIL_PopulationType::ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlow
         >> xml::attribute( "max-speed", rMaxSpeed );
 
     if( rPopulationDensity <= 0 )
-        xis.error( "unit: population-density <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit: population-density <= 0" );
     if( rMaxSpeed < 0 )
-        xis.error( "unit: max-speed < 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit: max-speed < 0" );
 
     rMaxSpeed = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed );
 
     const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
     if( !pVolume )
-        xis.error( "Unknown volume '" + strVolume + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown volume '" + strVolume + "'" );
 
     assert( volumeSlowDownData.size() > pVolume->GetID() );
     volumeSlowDownData[ pVolume->GetID() ] = sSlowDownData( rPopulationDensity, rMaxSpeed );
@@ -247,7 +247,7 @@ void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
     std::string strRoe = xis.attribute< std::string >( "rule-of-engagment" );
     const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( strRoe );
     if( !pRoe )
-        xis.error( "Unknown population roe '" + strRoe + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown population roe '" + strRoe + "'" );
 
     assert( damageData_.size() > pRoe->GetID() );
 
@@ -255,9 +255,9 @@ void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
         >> xml::attribute( "ph", damageData_[ pRoe->GetID() ].rPH_ );
 
     if( damageData_[ pRoe->GetID() ].rAttritionSurface_ < 0 )
-        xis.error( "unit-fire-effect: rule-of-engagment < 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit-fire-effect: rule-of-engagment < 0" );
     if( damageData_[ pRoe->GetID() ].rPH_ < 0 )
-        xis.error( "unit-fire-effect: ph < 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit-fire-effect: ph < 0" );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,17 +269,17 @@ void MIL_PopulationType::ReadUrbanDestructionEffect( xml::xistream& xis )
     std::string strAttitude = xis.attribute< std::string >( "attitude" );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
-        xis.error( "Unknown attitude '" + strAttitude + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown attitude '" + strAttitude + "'" );
     assert( urbanDestructionData_.size() > pAttitude->GetID() );
 
     urbanDestructionData_[ pAttitude->GetID() ].rDensity_ = xis.attribute< double >( "density" );
     if( urbanDestructionData_[ pAttitude->GetID() ].rDensity_ < 0 )
-        xis.error( "urban-destruction-effect: density < 0" );
+        throw MASA_EXCEPTION( xis.context() + "urban-destruction-effect: density < 0" );
 
     double rTime;
     tools::ReadTimeAttribute( xis, "time", rTime );
     if( rTime < 0 )
-        xis.error( "urban-destruction-effect: time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "urban-destruction-effect: time < 0" );
     urbanDestructionData_[ pAttitude->GetID() ].rTime_ = MIL_Tools::ConvertSecondsToSim( rTime );
 }
 

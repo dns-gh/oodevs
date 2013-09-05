@@ -60,7 +60,7 @@ void SupplyConvoyConfig::InitializeConvoyUnitType( xml::xistream& xis )
     xis >> xml::attribute( "unit-type", strConvoyAgentType );
     convoyAgentType_ = MIL_AgentTypePion::Find( strConvoyAgentType );
     if( !convoyAgentType_ )
-        xis.error( "Unknown type for convoy" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown type for convoy" );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,10 +74,10 @@ void SupplyConvoyConfig::InitializeConvoyMission( xml::xistream& xis )
 
     convoyMissionType_ = MIL_PionMissionType::Find( strMission );
     if( !convoyMissionType_ )
-        xis.error( "Invalid mission name for convoy" );
+        throw MASA_EXCEPTION( xis.context() + "Invalid mission name for convoy" );
     assert( convoyAgentType_ );
     if( !convoyAgentType_->GetModel().IsMissionAvailable( *convoyMissionType_ ) )
-        xis.error( "Convoy type pion cannot receive convoy mission" );
+        throw MASA_EXCEPTION( xis.context() + "Convoy type pion cannot receive convoy mission" );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ const SupplyConvoyFactory_ABC& SupplyConvoyConfig::GetConvoyFactory( xml::xistre
         return SupplyConvoyRealFactory::Instance();
     else if( type == "virtual" )
         return SupplyConvoyVirtualFactory::Instance();
-    xis.error( "Invalid convoy type" ); // Throw
+    throw MASA_EXCEPTION( xis.context() + "Invalid convoy type" ); // Throw
     return SupplyConvoyVirtualFactory::Instance(); //$$ Stupid warning
 }
 
@@ -143,11 +143,11 @@ void SupplyConvoyConfig::ReadInterpolatedTime( xml::xistream& xis, MT_Interpolat
 
     xis >> xml::attribute( "truck-count", nNbrCamions );
     if( nNbrCamions <= 0 )
-        xis.error( "time: truck-count <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "time: truck-count <= 0" );
 
     tools::ReadTimeAttribute( xis, "time", rTime );
     if( rTime <= 0 )
-        xis.error( "time: time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "time: time <= 0" );
     rTime = MIL_Tools::ConvertSecondsToSim( rTime );
 
     data.AddNewPoint( nNbrCamions, rTime );
@@ -189,9 +189,9 @@ void SupplyConvoyConfig::ReadSpeedModifier( xml::xistream& xis, std::pair< unsig
         >> xml::attribute( "value", rValue );
 
     if( nNbrCamions <= 0 )
-        xis.error( "speed-modifier: truck-count <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "speed-modifier: truck-count <= 0" );
     if( rValue <= 0 )
-        xis.error( "speed-modifier: value <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "speed-modifier: value <= 0" );
 
     coefSpeedModificator_.AddNewPoint( nNbrCamions, rValue );
 

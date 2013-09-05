@@ -109,7 +109,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& paren
 
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
     if( !pType )
-        xis.error( "Unknown automat type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown automat type" );
 
     MIL_Automate& automate = pType->InstanciateAutomate( id, parent, controller_, xis, gcPause_, gcMult_, logger_.get() );
     automate.ReadOverloading( xis );

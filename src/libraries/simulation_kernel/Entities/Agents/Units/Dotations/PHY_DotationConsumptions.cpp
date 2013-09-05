@@ -38,15 +38,15 @@ void PHY_DotationConsumptions::ReadDotation( xml::xistream& xis )
 
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( category );
     if( !pDotationType )
-        xis.error( "Unknown dotation type " + category );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation type " + category );
 
     const PHY_DotationCategory* pDotationCategory = pDotationType->FindDotationCategory( name );
     if( !pDotationCategory )
-        xis.error( "Unknown dotation category" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation category" );
 
     PHY_DotationConsumption*& pDotation = dotationConsumptions_[ pDotationCategory ];
     if( pDotation )
-        xis.error( "Dotation category already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Dotation category already defined" );
     pDotation = new PHY_DotationConsumption( *pDotationCategory, xis );
 }
 

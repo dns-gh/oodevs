@@ -58,11 +58,11 @@ void PHY_SensorTypeObjectData::ReadPosture( xml::xistream& xis, const PHY_Postur
         double rFactor = 0;
         xis >> xml::attribute( "value", rFactor );
         if( rFactor < 0 || rFactor > 1 )
-            xis.error( "distance-modifier: value not in [0..1]" );
+            throw MASA_EXCEPTION( xis.context() + "distance-modifier: value not in [0..1]" );
         factors[ it->second->GetID() ] = rFactor;
     }
     else
-        xis.error( "distance-modifier: unknow type" );
+        throw MASA_EXCEPTION( xis.context() + "distance-modifier: unknow type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,9 +103,9 @@ void PHY_SensorTypeObjectData::InitializePopulationFactors( xml::xistream& xis )
         >> xml::end;
 
     if( rPopulationDensity_ < 0 )
-        xis.error( "population-modifier: density < 0" );
+        throw MASA_EXCEPTION( xis.context() + "population-modifier: density < 0" );
     if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
-        xis.error( "population-modifier: modifier not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "population-modifier: modifier not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------

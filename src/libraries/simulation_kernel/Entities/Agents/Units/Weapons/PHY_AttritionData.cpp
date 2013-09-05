@@ -42,13 +42,13 @@ PHY_AttritionData::PHY_AttritionData( xml::xistream& xis )
         >> xml::attribute( "repairable-without-evacuation", rReparableWithoutEvacuation_ );
 
     if( rDestroyed_ < 0. || rDestroyed_ > 1. )
-        xis.error( "rDestroyed not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "rDestroyed not in [0..1]" );
     if( rReparableWithEvacuation_ < 0. || rReparableWithEvacuation_ > 1. )
-        xis.error( "rReparableWithEvacuation not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "rReparableWithEvacuation not in [0..1]" );
     if( rReparableWithoutEvacuation_ < 0. || rReparableWithoutEvacuation_ > 1. )
-        xis.error( "rReparableWithoutEvacuation not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "rReparableWithoutEvacuation not in [0..1]" );
     if( rDestroyed_ + rReparableWithEvacuation_ + rReparableWithoutEvacuation_ > 1. )
-        xis.error( "Sum of attrition percentages is out of bound" );
+        throw MASA_EXCEPTION( xis.context() + "Sum of attrition percentages is out of bound" );
 
     // Score
     rScore_ = rDestroyed_ + ( rReparableWithEvacuation_ / 2. ) + ( rReparableWithoutEvacuation_ / 4. );

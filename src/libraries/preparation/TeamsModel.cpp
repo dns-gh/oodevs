@@ -198,7 +198,7 @@ void TeamsModel::ReadTeam( const std::string& tag, xml::xistream& xis, Model& mo
         team = noSideTeam_.get();
     }
     else
-        xis.error( "Unknown tag in \"parties\"" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown tag in \"parties\"" );
 
     // $$$$ SBO 2006-10-05: forward to communications extension?
     xis >> xml::optional >> xml::start( "communication" )

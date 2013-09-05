@@ -99,7 +99,7 @@ void AgentType::ReadCrewRank( xml::xistream& xis )
     else if( type == "SousOfficier" )
         nbrWarrantOfficers_ = xis.attribute< unsigned int >( "count");
     else
-        xis.error( "crew-rank: type \'" + type + "\' undefined" );
+        throw MASA_EXCEPTION( xis.context() + "crew-rank: type \'" + type + "\' undefined" );
 }
 
 // -----------------------------------------------------------------------------

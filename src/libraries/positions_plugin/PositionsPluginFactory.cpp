@@ -48,7 +48,7 @@ std::auto_ptr< dispatcher::Plugin_ABC > PositionsPluginFactory::Create( const st
     {
         unsigned int frequency;
         if( !tools::DecodeTime( xis.attribute< std::string >( "frequency" ), frequency ) )
-            xis.error( "Invalid time specified for position export frequency" );
+            throw MASA_EXCEPTION( xis.context() + "Invalid time specified for position export frequency" );
         result.reset( new PositionsPlugin( config.BuildSessionChildFile( "positions.csv" ), frequency ) );
     }
     return result;

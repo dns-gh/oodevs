@@ -82,11 +82,11 @@ void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC
     xis >> xml::attribute( "name", strComposanteType );
     PHY_ComposanteTypePion*& pComposanteType = composantesTypes_[ strComposanteType ];
     if( pComposanteType )
-        xis.error( "Composante type '" + strComposanteType + "' already registered" );
+        throw MASA_EXCEPTION( xis.context() + "Composante type '" + strComposanteType + "' already registered" );
     pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, xis, resolver );
 
     if( !ids_.insert( pComposanteType->GetMosID().id() ).second )
-        xis.error( "Composante ID already used" );
+        throw MASA_EXCEPTION( xis.context() + "Composante ID already used" );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,9 +152,9 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
             >> xml::attribute( "max-slope", rMaxSlope_ )
         >> xml::attribute( "weight", rWeight_ );
     if( rMaxSlope_ < 0 || rMaxSlope_ > 1 )
-        xis.error( "element: max-slope not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "element: max-slope not in [0..1]" );
     if( rWeight_ <= 0 )
-        xis.error( "element: weight <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "element: weight <= 0" );
     InitializeWeapons         ( xis );
     InitializeSensors         ( xis );
     InitializeRadars          ( xis );
@@ -195,10 +195,10 @@ void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
     xis >> xml::end;
     if( randomBreakdownTypeProbabilities_.empty()
         || std::fabs( 1. - randomBreakdownTypeProbabilities_.back().rProbabilityBound_ ) > 0.01 )
-        xis.error( "Total probability of random breakdowns is less than 100%" );
+        throw MASA_EXCEPTION( xis.context() + "Total probability of random breakdowns is less than 100%" );
     if( attritionBreakdownTypeProbabilities_.empty()
         || std::fabs( 1. - attritionBreakdownTypeProbabilities_.back().rProbabilityBound_  ) > 0.01 )
-        xis.error( "Total probability of attrition breakdowns is less than 100%" );
+        throw MASA_EXCEPTION( xis.context() + "Total probability of attrition breakdowns is less than 100%" );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,11 +225,11 @@ void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( xml::xistream& xis 
     xis >> xml::attribute( "type", strBuf );
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if( !pType )
-        xis.error( "Unknown breakdown type '" + strBuf + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown breakdown type '" + strBuf + "'" );
     double rPercentage;
     xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
-        xis.error( "random breakdown: percentage not in [0..100]" );
+        throw MASA_EXCEPTION( xis.context() + "random breakdown: percentage not in [0..100]" );
     rPercentage *= 0.01;
     if( !randomBreakdownTypeProbabilities_.empty() )
         rPercentage += randomBreakdownTypeProbabilities_.back().rProbabilityBound_;
@@ -246,11 +246,11 @@ void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( xml::xistream& x
     xis >> xml::attribute( "type", strBuf );
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if( !pType )
-        xis.error( "Unknown breakdown type '" + strBuf + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown breakdown type '" + strBuf + "'" );
     double rPercentage;
     xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
-        xis.error( "attrition breakdown: percentage not in [0..100]" );
+        throw MASA_EXCEPTION( xis.context() + "attrition breakdown: percentage not in [0..100]" );
     rPercentage *= 0.01;
     if( !attritionBreakdownTypeProbabilities_.empty() )
         rPercentage += attritionBreakdownTypeProbabilities_.back().rProbabilityBound_;
@@ -283,9 +283,9 @@ void PHY_ComposanteTypePion::ReadWeaponSystem( xml::xistream& xis )
             >> xml::attribute( "major", bMajor );
     const PHY_WeaponType* pWeaponType = PHY_WeaponType::FindWeaponType( strLauncher, strAmmunition );
     if( !pWeaponType )
-        xis.error( "Unknown weapon type (" + strLauncher + ", " + strAmmunition + ")" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown weapon type (" + strLauncher + ", " + strAmmunition + ")" );
     if( weaponTypes_.find( pWeaponType ) != weaponTypes_.end() )
-        xis.error( "Weapon type (" + strLauncher + ", " + strAmmunition + ") already initialized" );
+        throw MASA_EXCEPTION( xis.context() + "Weapon type (" + strLauncher + ", " + strAmmunition + ") already initialized" );
     weaponTypes_[ pWeaponType ] = bMajor;
 }
 
@@ -310,7 +310,7 @@ void PHY_ComposanteTypePion::ReadActiveProtection( xml::xistream& xis )
     xis >> xml::attribute( "name", strProtectionName );
     const PHY_ActiveProtection* pProtection = PHY_ActiveProtection::Find( strProtectionName );
     if( !pProtection )
-        xis.error( "Unknow active protection which name is " + strProtectionName );
+        throw MASA_EXCEPTION( xis.context() + "Unknow active protection which name is " + strProtectionName );
     activeProtections_.push_back( pProtection );
 }
 
@@ -341,9 +341,9 @@ void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
     xis >> xml::attribute( "type", strSensor );
     const PHY_SensorType* pSensorType = PHY_SensorType::FindSensorType( strSensor );
     if( !pSensorType )
-        xis.error( "Unknown sensor type '" + strSensor + "'" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown sensor type '" + strSensor + "'" );
     if( sensorTypes_.find( pSensorType ) != sensorTypes_.end() )
-        xis.error( "Sensor type '" + strSensor + "' already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Sensor type '" + strSensor + "' already defined" );
     xis >> xml::attribute( "height", sensorTypes_[ pSensorType ] );
     if( pSensorType->GetTypeAgent() )
         rSensorRotationAngle_ = std::min( rSensorRotationAngle_, pSensorType->GetTypeAgent()->GetAngle() );
@@ -371,9 +371,9 @@ void PHY_ComposanteTypePion::ReadRadar( xml::xistream& xis )
     xis >> xml::attribute( "type", strRadar );
     const PHY_RadarType* pRadarType = PHY_RadarType::Find( strRadar );
     if( !pRadarType )
-        xis.error( "Unknown radar type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown radar type" );
     if( radarTypes_.find( pRadarType ) != radarTypes_.end() )
-        xis.error( "Radar type already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Radar type already defined" );
     xis >> xml::attribute( "height", radarTypes_[ pRadarType ] );
 }
 
@@ -397,9 +397,9 @@ void PHY_ComposanteTypePion::InitializeTransport( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
 {
     if( !tools::ReadTimeAttribute( xis, "man-boarding-time", rNbrHumansLoadedPerTimeStep_ ) || rNbrHumansLoadedPerTimeStep_ <= 0 )
-        xis.error( "crew: man-boarding-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "crew: man-boarding-time < 0" );
     if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedPerTimeStep_ ) || rNbrHumansUnloadedPerTimeStep_ <= 0 )
-        xis.error( "crew: man-unloading-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "crew: man-unloading-time < 0" );
     rNbrHumansLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedPerTimeStep_   );
     rNbrHumansUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedPerTimeStep_ );
 }
@@ -412,17 +412,17 @@ void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
 {
     rPionTransporterWeightCapacity_ = xis.attribute< double >( "capacity" );
     if( rPionTransporterWeightCapacity_ <= 0 )
-        xis.error( "unit: capacity <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit: capacity <= 0" );
     if( !tools::ReadTimeAttribute( xis, "ton-loading-time", rPionTransporterWeightLoadedPerTimeStep_ )
       || rPionTransporterWeightLoadedPerTimeStep_ < 0 )
-        xis.error( "unit: ton-loading-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit: ton-loading-time < 0" );
     if( rPionTransporterWeightLoadedPerTimeStep_ > 0 )
         rPionTransporterWeightLoadedPerTimeStep_  = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_ );
     else
         rPionTransporterWeightLoadedPerTimeStep_ = std::numeric_limits< double >::max();
     if( !tools::ReadTimeAttribute( xis, "ton-unloading-time", rPionTransporterWeightUnloadedPerTimeStep_ )
       || rPionTransporterWeightUnloadedPerTimeStep_ < 0 )
-        xis.error( "unit: ton-unloading-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit: ton-unloading-time < 0" );
     if( rPionTransporterWeightUnloadedPerTimeStep_ > 0 )
         rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
     else
@@ -437,17 +437,17 @@ void PHY_ComposanteTypePion::ReadTransportCrowd( xml::xistream& xis )
 {
     nCrowdTransporterCapacity_ = xis.attribute< unsigned int >( "capacity" );
     if( nCrowdTransporterCapacity_ == 0 )
-        xis.error( "unit: capacity == 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit: capacity == 0" );
     if( !tools::ReadTimeAttribute( xis, "man-boarding-time", rCrowdTransporterLoadedPerTimeStep_ )
       || rCrowdTransporterLoadedPerTimeStep_ < 0 )
-        xis.error( "unit: man-boarding-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit: man-boarding-time < 0" );
     if( rCrowdTransporterLoadedPerTimeStep_ > 0 )
         rCrowdTransporterLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rCrowdTransporterLoadedPerTimeStep_ );
     else
         rCrowdTransporterLoadedPerTimeStep_ = std::numeric_limits< double >::max();
     if( !tools::ReadTimeAttribute( xis, "man-unloading-time", rCrowdTransporterUnloadedPerTimeStep_ )
       || rCrowdTransporterUnloadedPerTimeStep_ < 0 )
-        xis.error( "unit: man-unloading-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "unit: man-unloading-time < 0" );
     if( rCrowdTransporterUnloadedPerTimeStep_ > 0 )
         rCrowdTransporterUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rCrowdTransporterUnloadedPerTimeStep_ );
     else
@@ -480,7 +480,7 @@ void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis, const ObjectTypeRes
             objectData_.resize( objectType.GetID() + 1, 0 );
         const PHY_ComposanteTypeObjectData*& pObject = objectData_[ objectType.GetID() ];
         if( pObject )
-            xis.error( "Object type '" + strType + "' already instanciated" );
+            throw MASA_EXCEPTION( xis.context() + "Object type '" + strType + "' already instanciated" );
         pObject = new PHY_ComposanteTypeObjectData( xis );
     }
     catch( const std::exception& e )
@@ -574,15 +574,15 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
     if( tools::ReadTimeAttribute( xis, "max-reparation-time", rTime ) )
     {
         if( rTime <= 0 )
-            xis.error( "category: max-reparation-time <= 0" );
+            throw MASA_EXCEPTION( xis.context() + "category: max-reparation-time <= 0" );
         ntiCapability.nMaxTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTime );
     }
 
     if( !ntiCapability.bMobility_ && !ntiCapability.bElectronic_ )
-        xis.error( "NTI has not 'EA' nor 'M'" );
+        throw MASA_EXCEPTION( xis.context() + "NTI has not 'EA' nor 'M'" );
 
     if( !ntiCapabilities_.insert( ntiCapability ).second )
-        xis.error( "NTI already defined" );
+        throw MASA_EXCEPTION( xis.context() + "NTI already defined" );
 }
 
 // -----------------------------------------------------------------------------
@@ -596,9 +596,9 @@ void PHY_ComposanteTypePion::ReadTowing( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "unloading-time", rHaulerUnloadingTime_ );
 
     if( rHaulerWeightCapacity_ <= 0 )
-        xis.error( "towing: capacity <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "towing: capacity <= 0" );
     if( rHaulerLoadingTime_ < 0 )
-        xis.error( "towing: loading-time" );
+        throw MASA_EXCEPTION( xis.context() + "towing: loading-time" );
 
     rHaulerLoadingTime_   = MIL_Tools::ConvertSecondsToSim( rHaulerLoadingTime_ );
     rHaulerUnloadingTime_ = MIL_Tools::ConvertSecondsToSim( rHaulerUnloadingTime_ );
@@ -661,11 +661,11 @@ void PHY_ComposanteTypePion::ReadRelieving( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForEvacuationPerTimeStep_ );
 
     if( nAmbulanceEvacuationCapacity_ <= 0 )
-        xis.error( "relieving: capacity <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "relieving: capacity <= 0" );
     if( rNbrHumansLoadedForEvacuationPerTimeStep_ <= 0 )
-        xis.error( "relieving: man-loading-time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "relieving: man-loading-time <= 0" );
     if( rNbrHumansUnloadedForEvacuationPerTimeStep_ <= 0 )
-        xis.error( "relieving: man-unloading-time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "relieving: man-unloading-time <= 0" );
 
     rNbrHumansLoadedForEvacuationPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForEvacuationPerTimeStep_   );
     rNbrHumansUnloadedForEvacuationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForEvacuationPerTimeStep_ );
@@ -689,11 +689,11 @@ void PHY_ComposanteTypePion::ReadCollecting( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "man-unloading-time", rNbrHumansUnloadedForCollectionPerTimeStep_ );
 
     if( nAmbulanceCollectionCapacity_ <= 0 )
-        xis.error( "collecting: capacity <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "collecting: capacity <= 0" );
     if( rNbrHumansLoadedForCollectionPerTimeStep_ <= 0 )
-        xis.error( "collecting: man-loading-time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "collecting: man-loading-time <= 0" );
     if( rNbrHumansUnloadedForCollectionPerTimeStep_ <= 0 )
-        xis.error( "collecting: man-unloading-time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "collecting: man-unloading-time <= 0" );
 
     rNbrHumansLoadedForCollectionPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansLoadedForCollectionPerTimeStep_   );
     rNbrHumansUnloadedForCollectionPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rNbrHumansUnloadedForCollectionPerTimeStep_ );
@@ -740,11 +740,11 @@ void PHY_ComposanteTypePion::ReadSupply( xml::xistream& xis )
 
     pStockTransporterNature_ = PHY_DotationNature::Find( strNature );
     if( !pStockTransporterNature_ )
-        xis.error( "Unkown dotation nature" );
+        throw MASA_EXCEPTION( xis.context() + "Unkown dotation nature" );
     if( rStockTransporterWeightCapacity_ <= 0 )
-        xis.error( "supply: mass <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "supply: mass <= 0" );
     if( rStockTransporterVolumeCapacity_ <= 0 )
-        xis.error( "supply: volume <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "supply: volume <= 0" );
 }
 
 // -----------------------------------------------------------------------------

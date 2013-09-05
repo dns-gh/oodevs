@@ -38,7 +38,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
     , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
-        xis.error( "Unknown parameter type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown parameter type" );
 }
 
 //-----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& /*order
     , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
-        xis.error( "Unknown parameter type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown parameter type" );
     //$$$$ Checker type DIA si c possible
 }
 

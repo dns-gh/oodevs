@@ -42,7 +42,7 @@ void PHY_MedicalResourcesAlarms::ReadResourceLevel( xml::xistream& xis )
         >> xml::attribute( "availability-threshold", rRatio );
 
     if( rRatio < 0 || rRatio > 100 )
-        xis.error( "resource-availability-alert: availability-treshold not in [0..100]" );
+        throw MASA_EXCEPTION( xis.context() + "resource-availability-alert: availability-treshold not in [0..100]" );
 
     rRatio /= 100.;
 
@@ -53,7 +53,7 @@ void PHY_MedicalResourcesAlarms::ReadResourceLevel( xml::xistream& xis )
     else if( resourceType == "doctor" )
         doctorsResourcesLevels_.insert( rRatio );
     else
-        xis.error( "resource-availability: unknow resource" );
+        throw MASA_EXCEPTION( xis.context() + "resource-availability: unknow resource" );
 }
 
 // -----------------------------------------------------------------------------

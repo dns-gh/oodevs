@@ -42,12 +42,12 @@ void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 
     const MIL_FragOrderType*& pMission = missionIDs_[ nID ];
     if( pMission )
-        xis.error( "Frag order already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Frag order already defined" );
     pMission = new MIL_FragOrderType( nID, xis );
 
     const MIL_FragOrderType*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
-        xis.error( "Entity fragOrder name already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Entity fragOrder name already defined" );
     pMissionName = pMission;
 
     const MIL_FragOrderType*& pMissionDiaType = fragOrderDiaTypes_[ pMission->GetDIAType() ];

@@ -80,6 +80,6 @@ void PHY_RoofShapeType::ReadRoofShape( xml::xistream& xis )
     std::string strRoofShape = xis.attribute< std::string >( "name" );
     const PHY_RoofShapeType*& pRoofShape = roofShapes_[ strRoofShape ];
     if( pRoofShape )
-        xis.error( "Roof shape " + strRoofShape + " already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Roof shape " + strRoofShape + " already defined" );
     pRoofShape = new PHY_RoofShapeType( strRoofShape );
 }

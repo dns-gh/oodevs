@@ -30,7 +30,7 @@ KnowledgeGroupType::KnowledgeGroupType( xml::xistream& xis )
     xis >> xml::attribute( "name", name_ );
     tools::ReadTimeAttribute( xis, "communication-delay", rCommunicationDelay_ );
     if( rCommunicationDelay_ < 0 )
-        xis.error( "communication-delay < 0" );
+        throw MASA_EXCEPTION( xis.context() + "communication-delay < 0" );
 }
 
 // -----------------------------------------------------------------------------

@@ -99,7 +99,7 @@ void Speeds::ReadSpeed( xml::xistream& xis, unsigned int timeStepDuration )
 {
     rMaxSpeed_ = xis.attribute< double >( "max" );
     if( rMaxSpeed_ <= 0 )
-        xis.error( "speeds: max <= 0" );
+        throw xml::exception( xis.context() + "speeds: max <= 0" );
     rMaxSpeed_ *= 1000. * timeStepDuration / 3600.;
     xis >> xml::list( "speed", *this, &Speeds::ReadTerrain );
 }
@@ -114,11 +114,11 @@ void Speeds::ReadTerrain( xml::xistream& xis )
 
     const TerrainData data = TerrainData::FromString( strTerrainType );
     if( data.Area() == 0xFF )
-        xis.error( "Unknown terrain type '" + strTerrainType + "'" );
+        throw xml::exception( xis.context() + "Unknown terrain type '" + strTerrainType + "'" );
     double& speed = SpeedFor( data );
     speed = xis.attribute< double >( "value" );
     if( speed < 0 )
-        xis.error( "speed: terrain < 0" );
+        throw xml::exception( xis.context() + "speed: terrain < 0" );
     speed = GET_HOOK( ConvertSpeedMosToSim )( speed );
     rMaxSpeed_ = std::max( rMaxSpeed_, speed );
     if( xis.has_attribute( "construction-speed" ) )
@@ -179,7 +179,7 @@ void Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepDurat
         LogWarning( TerrainData( 0, 0, 0, static_cast< unsigned short >( 1 << lastIndex ) ), ConvertSpeedToMOS( rLinearSpeeds_[ lastIndex ], timeStepDuration ) );
     }
     if( rMaxSpeed_ == 0. )
-        xis.error( "Composante's max speed is 0 km/h ..." );
+        throw xml::exception( xis.context() + "Composante's max speed is 0 km/h ..." );
 }
 
 // -----------------------------------------------------------------------------

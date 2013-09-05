@@ -63,17 +63,17 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
     xis >> xml::start( "times" );
     tools::ReadTimeAttribute( xis, "diagnosis-time", rTimeVal );
     if( rTimeVal < 0 )
-        xis.error( "times: diagnosis-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "times: diagnosis-time < 0" );
     nDiagnosticTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rTimeVal ) );
 
     tools::ReadTimeAttribute( xis, "sorting-time", rTimeVal );
     if( rTimeVal < 0 )
-        xis.error( "times: sorting-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "times: sorting-time < 0" );
     nSortingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rTimeVal ) );
 
     xis >> xml::optional >> xml::attribute( "diagnosis-life-expectancy-factor", diagnosisLifeExpectancyFactor_ );
     if ( diagnosisLifeExpectancyFactor_ < 0.0 )
-        xis.error( "times: diagnosis-life-expectancy-factor < 0" );
+        throw MASA_EXCEPTION( xis.context() + "times: diagnosis-life-expectancy-factor < 0" );
 
     xis >> xml::end;
 
@@ -83,7 +83,7 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
         >> xml::end;
 
     if( std::fabs( 1. - rFactorSum ) > 0.01 )
-        xis.error( "Total pourcentage is not 100%" );
+        throw MASA_EXCEPTION( xis.context() + "Total pourcentage is not 100%" );
 
     const_cast< PHY_HumanWound& >( notWounded_ ).nLifeExpectancy_ = std::numeric_limits< unsigned int >::max();
     const_cast< PHY_HumanWound& >( killed_ ).nLifeExpectancy_ = 0;
@@ -104,23 +104,23 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
             return;
         double rValue = xis.attribute< double >( "percentage" );
         if( rValue < 0 || rValue > 100 )
-            xis.error( "injury: percentage not in [0..100]" );
+            throw MASA_EXCEPTION( xis.context() + "injury: percentage not in [0..100]" );
         rValue /= 100.;
         rFactorSum += rValue;
         const_cast< PHY_HumanWound& >( wound ).rWoundedFactor_ = rValue;
         if( tools::ReadTimeAttribute( xis, "life-expectancy", rValue ) )
         {
             if( rValue <= 0 )
-                xis.error( "injury: life-expectancy <= 0" );
+                throw MASA_EXCEPTION( xis.context() + "injury: life-expectancy <= 0" );
             const_cast< PHY_HumanWound& >( wound ).nLifeExpectancy_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
         }
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
-            xis.error( "injury: caring-time < 0" );
+            throw MASA_EXCEPTION( xis.context() + "injury: caring-time < 0" );
         const_cast< PHY_HumanWound& >( wound ).nHealingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
         tools::ReadTimeAttribute( xis, "resting-time", rValue );
         if( rValue < 0 )
-            xis.error( "injury: resting-time < 0" );
+            throw MASA_EXCEPTION( xis.context() + "injury: resting-time < 0" );
         const_cast< PHY_HumanWound& >( wound ).nRestingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
     }
     else if( injuryType == "mental" )
@@ -128,15 +128,15 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
         double rValue = 0.;
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
-            xis.error( "injury: caring-time < 0" );
+            throw MASA_EXCEPTION( xis.context() + "injury: caring-time < 0" );
         nMentalDiseaseHealingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
         tools::ReadTimeAttribute( xis, "resting-time", rValue );
         if( rValue < 0 )
-            xis.error( "injury: resting-time < 0" );
+            throw MASA_EXCEPTION( xis.context() + "injury: resting-time < 0" );
         nMentalDiseaseRestingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
         rValue = xis.attribute< double >( "percentage" );
         if( rValue < 0 || rValue > 100 )
-            xis.error( "injury: percentage not in [0..100]" );
+            throw MASA_EXCEPTION( xis.context() + "injury: percentage not in [0..100]" );
         rMentalDiseaseFactor_ = rValue / 100.;
     }
     else if( injuryType == "contaminated" )
@@ -144,15 +144,15 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
         double rValue = 0;
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
-            xis.error( "injury: caring-time < 0" );
+            throw MASA_EXCEPTION( xis.context() + "injury: caring-time < 0" );
         nContaminatedHealingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
         tools::ReadTimeAttribute( xis, "resting-time", rValue );
         if( rValue < 0 )
-            xis.error( "injury: resting-time < 0" );
+            throw MASA_EXCEPTION( xis.context() + "injury: resting-time < 0" );
         nContaminatedRestingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
     }
     else
-        xis.error( "injury: unknown category" );
+        throw MASA_EXCEPTION( xis.context() + "injury: unknown category" );
 }
 
 // -----------------------------------------------------------------------------

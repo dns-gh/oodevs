@@ -109,7 +109,7 @@ void FirePropagationModifierCapacity::ReadModifier( xml::xistream& xis )
     std::string className( xml::attribute( xis, "fire-class", std::string() ) );
     const MIL_FireClass* pClass = MIL_FireClass::Find( className );
     if( !pClass )
-        xis.error( "Unknown 'Fire class' '" + className + "' for fire propagation modifier capacity" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown 'Fire class' '" + className + "' for fire propagation modifier capacity" );
     Modifier& modifier = modifiers_[ pClass ];
     xis >> xml::attribute( "ignition-threshold", modifier.ignitionThreshold_ )
         >> xml::attribute( "max-combustion-energy", modifier.maxCombustionEnergy_ );

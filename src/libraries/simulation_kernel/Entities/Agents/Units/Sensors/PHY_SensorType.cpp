@@ -45,7 +45,7 @@ void PHY_SensorType::ReadSensor( xml::xistream& xis, const ObjectTypeResolver_AB
 
     const PHY_SensorType*& pSensorType = sensorTypes_[ strSensorName ];
     if( pSensorType )
-        xis.error( "Unknown sensor type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown sensor type" );
     pSensorType = new PHY_SensorType( strSensorName, xis, resolver );
 }
 

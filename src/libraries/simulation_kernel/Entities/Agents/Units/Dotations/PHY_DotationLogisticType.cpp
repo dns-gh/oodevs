@@ -50,7 +50,7 @@ void PHY_DotationLogisticType::ReadDotationLogisticType( xml::xistream& xis )
 
     const PHY_DotationLogisticType*& pData = dotationLogisticTypes_[ type ];
     if( pData )
-        xis.error( "Logistic supply class '" + type + "' already registered" );
+        throw MASA_EXCEPTION( xis.context() + "Logistic supply class '" + type + "' already registered" );
     pData = new PHY_DotationLogisticType( id, type );
 }
 

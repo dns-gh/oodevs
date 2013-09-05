@@ -332,14 +332,14 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 {
     E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( xis.attribute< std::string >( "diplomacy" ) );
     if( nDiplomacy == eUnknown )
-        xis.error( "Unknown diplomacy relation between armies" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown diplomacy relation between armies" );
     MIL_Army_ABC* pArmy = armyFactory_.Find( xis.attribute< unsigned int >( "party" ) );
     if( !pArmy )
-        xis.error( "Unknown army" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown army" );
     if( diplomacies_.find( pArmy ) != diplomacies_.end() )
-        xis.error( "Diplomacy between armies already exist" );
+        throw MASA_EXCEPTION( xis.context() + "Diplomacy between armies already exist" );
     if( pArmy->GetID() == GetID() )
-        xis.error( "Self diplomacy not allowed" );
+        throw MASA_EXCEPTION( xis.context() + "Self diplomacy not allowed" );
     diplomacies_[ pArmy ] = nDiplomacy;
 }
 
@@ -361,10 +361,10 @@ void MIL_Army::ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automa
     unsigned int id = xis.attribute< unsigned int >( "id" );
     MIL_AutomateLOG* pLogisticSuperior = FindBrainLogistic( id, automateFactory, formationFactory );
     if( !pLogisticSuperior )
-        xis.error( "Unknown logistic superior" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown logistic superior" );
 
     if( pLogisticSuperior->GetArmy() != *this )
-        xis.error( "Invalid logistic superior (not in specified side)" );
+        throw MASA_EXCEPTION( xis.context() + "Invalid logistic superior (not in specified side)" );
 
     xis >> xml::list( "subordinate", *this, &MIL_Army::ReadLogisticLinkSubordinate, automateFactory, formationFactory, *pLogisticSuperior );
 }
@@ -384,7 +384,7 @@ void MIL_Army::ReadLogisticLinkSubordinate( xml::xistream& xis, AutomateFactory_
     {
         MIL_Automate* pSubordinate = automateFactory.Find( subordinateID );
         if( !pSubordinate )
-            xis.error( "Unknown subordinate" );
+            throw MASA_EXCEPTION( xis.context() + "Unknown subordinate" );
         pSubordinate->ReadLogisticLink( superior, xis );
     }
 }

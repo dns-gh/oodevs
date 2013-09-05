@@ -117,7 +117,7 @@ MIL_Army_ABC* ArmyFactory::Create( const std::string& tag, xml::xistream& xis, c
         }
     }
     else
-        xis.error( "Unknown tag in parties" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown tag in parties" );
     return army;
 }
 

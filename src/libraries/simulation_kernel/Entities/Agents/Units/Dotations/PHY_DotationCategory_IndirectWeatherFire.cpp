@@ -46,9 +46,9 @@ PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFi
         >> xml::attribute( "life-time", lifeTime );
 
     if( ! tools::DecodeTime( setupTime, rDeploymentDuration_ ) || rDeploymentDuration_ < 0. )
-        xis.error( "indirect-fire: setup-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "indirect-fire: setup-time < 0" );
     if( ! tools::DecodeTime( lifeTime, rLifeDuration_ ) || rLifeDuration_ < 0. )
-        xis.error( "indirect-fire: life-time < 0" );
+        throw MASA_EXCEPTION( xis.context() + "indirect-fire: life-time < 0" );
 }
 
 // -----------------------------------------------------------------------------

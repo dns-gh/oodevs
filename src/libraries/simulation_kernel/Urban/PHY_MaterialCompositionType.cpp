@@ -138,7 +138,7 @@ void PHY_MaterialCompositionType::ReadMaterialComposition( xml::xistream& xis )
     std::string strName = xis.attribute< std::string >( "name" );
     const PHY_MaterialCompositionType*& pMaterial = materialCompositions_[ strName ];
     if( pMaterial )
-        xis.error( "Material composition " + strName + " already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Material composition " + strName + " already defined" );
     pMaterial = new PHY_MaterialCompositionType( strName, xis );
 }
 

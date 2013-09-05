@@ -29,7 +29,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis )
     xis >> xml::attribute( "value", nLifeTime_ ) // s
         >> xml::optional >> xml::attribute( "initial", nDeathTimeStep_ );
     if( nLifeTime_ < 0 )
-        xis.error( "nMinesActivityTime_ is not greater than or equal to 0" );
+        throw MASA_EXCEPTION( xis.context() + "nMinesActivityTime_ is not greater than or equal to 0" );
 }
 
 // -----------------------------------------------------------------------------

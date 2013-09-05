@@ -217,7 +217,7 @@ void MIL_Config::ReadCheckPointConfiguration( xml::xistream& xis )
             >> xml::attribute( "usecrc", bUseCheckPointCRC_ )
         >> xml::end;
     if( !tools::DecodeTime( frequency, checkPointsFrequency_ ) )
-        xis.error( "Invalid time specified for checkpoint frequency" );
+        throw MASA_EXCEPTION( xis.context() + "Invalid time specified for checkpoint frequency" );
 }
 
 // -----------------------------------------------------------------------------

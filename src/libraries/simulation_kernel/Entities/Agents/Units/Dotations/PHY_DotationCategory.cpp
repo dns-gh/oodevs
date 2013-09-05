@@ -53,7 +53,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
         >> xml::optional >> xml::attribute( "ied", ied_ );
     pNature_ = PHY_DotationNature::Find( strNature );
     if( !pNature_ )
-        xis.error( "Unknown dotation nature" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation nature" );
     InitializePackagingData   ( xis );
     InitializeAttritions      ( xis );
     InitializeUrbanAttritions ( xis );
@@ -67,7 +67,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
         {
             pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( xis.attribute< std::string >( "type" ) );
             if( !pAmmoDotationClass_ )
-                xis.error( "Invalid ammo dotation class" );
+                throw MASA_EXCEPTION( xis.context() + "Invalid ammo dotation class" );
         }
     }
     else
@@ -95,11 +95,11 @@ void PHY_DotationCategory::InitializePackagingData( xml::xistream& xis )
         >> xml::attribute( "package-volume", rVolume_ );
 
     if( rNbrInPackage <= 0 )
-        xis.error( "dotation rNbrInPackage <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "dotation rNbrInPackage <= 0" );
     if( rWeight_ <= 0 )
-        xis.error( "dotation rWeight_ <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "dotation rWeight_ <= 0" );
     if( rVolume_ <= 0 )
-        xis.error( "dotation rVolume_ <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "dotation rVolume_ <= 0" );
 
     rWeight_ /= rNbrInPackage;
     rVolume_ /= rNbrInPackage;
@@ -137,7 +137,7 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
     const PHY_Protection::T_ProtectionMap& protections = PHY_Protection::GetProtections();
     PHY_Protection::CIT_ProtectionMap it = protections.find( protectionType );
     if( it == protections.end() )
-        xis.error( "Undefined protection type: " + protectionType );
+        throw MASA_EXCEPTION( xis.context() + "Undefined protection type: " + protectionType );
 
     const PHY_Protection& protection = *it->second;
     assert( attritions_.size() > protection.GetID() );
@@ -175,13 +175,13 @@ void PHY_DotationCategory::InitializeIndirectFireData( xml::xistream& xis )
             >> xml::attribute( "y-dispersion", rDispersionY_ )
             >> xml::optional >> xml::attribute( "detection-range", rDetectionRange_ );
         if( nInterventionType_ <= 0. )
-            xis.error( "intervention-type <= 0" );
+            throw MASA_EXCEPTION( xis.context() + "intervention-type <= 0" );
         if( rDispersionX_ <= 0. )
-            xis.error( "rDispersionX_ <= 0" );
+            throw MASA_EXCEPTION( xis.context() + "rDispersionX_ <= 0" );
         if( rDispersionY_ <= 0. )
-            xis.error( "rDispersionY_ <= 0" );
+            throw MASA_EXCEPTION( xis.context() + "rDispersionY_ <= 0" );
         if( rDetectionRange_ < 0. )
-            xis.error( "rDetectionRange_ < 0" );
+            throw MASA_EXCEPTION( xis.context() + "rDetectionRange_ < 0" );
         xis >> xml::list( "indirect-fire", *this, &PHY_DotationCategory::ReadIndirectFire, nInterventionType_, rDispersionX_, rDispersionY_, rDetectionRange_ )
             >> xml::end;
     }
@@ -195,7 +195,7 @@ void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis, unsigned int nI
 {
     const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
-        xis.error( "Unknown indirect fire data type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown indirect fire data type" );
     indirectFireEffects_.push_back(  &pType->InstanciateDotationCategory( *this, xis, nInterventionType, rDispersionX, rDispersionY, rDetectionRange ) ); // $$$$ MCO 2012-06-28: never deleted
 }
 
@@ -209,7 +209,7 @@ void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
     xis >> xml::attribute( "logistic-supply-class", strLogisticSupplyClass );
     pLogisticType_ = PHY_DotationLogisticType::Find( strLogisticSupplyClass );
     if( !pLogisticType_ )
-        xis.error( "Unknown logistic supply class" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown logistic supply class" );
 }
 
 // -----------------------------------------------------------------------------

@@ -276,10 +276,10 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, 
 
     T_ModelMap* pModels = modelTypes_[strEntityType];
     if( !pModels )
-        xis.error( "Unknown model type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown model type" );
     const DEC_Model_ABC*& pModel = (*pModels)[ strName ];
     if( pModel )
-        xis.error( "Duplicate model name" );
+        throw MASA_EXCEPTION( xis.context() + "Duplicate model name" );
 
     bool isMasalife = false;
     xis >> xml::attribute( "masalife", isMasalife );
@@ -288,7 +288,7 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, 
 
     const std::map< std::string, tools::Path >::const_iterator itFind = strSourcePaths.find( key );
     if( itFind == strSourcePaths.end() )
-        xis.error( "Model corresponds to an unknown namespace" );
+        throw MASA_EXCEPTION( xis.context() + "Model corresponds to an unknown namespace" );
 
     pModel = new DEC_Model( strName, xis, itFind->second, missionTypes, isMasalife, integrationDir );
 }

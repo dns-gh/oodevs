@@ -42,15 +42,15 @@ void PHY_HumanFactor::Read( xml::xistream& xis )
         >> xml::attribute( "sensor-distance", rCoefSensorDistanceModificator_ );
 
     if( rCoefMaxSpeedModificator_ <= 0 )
-        xis.error( "max-speed <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "max-speed <= 0" );
     if( rCoefReloadingTimeModificator_ <= 0 )
-        xis.error( "loading-time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "loading-time <= 0" );
     if( rCoefPhModificator_ <= 0 )
-        xis.error( "ph <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "ph <= 0" );
     if( rCoefPostureTimeModificator_ <= 0 )
-        xis.error( "posture-setup-time <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "posture-setup-time <= 0" );
     if( rCoefSensorDistanceModificator_ <= 0 )
-        xis.error( "sensor-distance <= 0" );
+        throw MASA_EXCEPTION( xis.context() + "sensor-distance <= 0" );
 }
 
 // -----------------------------------------------------------------------------

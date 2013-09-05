@@ -53,7 +53,7 @@ void PHY_Protection::ReadProtection( xml::xistream& xis )
     std::string strProtection = xis.attribute< std::string >( "name" );
     const PHY_Protection*& pProtection = protections_[ strProtection ];
     if( pProtection )
-        xis.error( "Protection " + strProtection + " already defined" );
+        throw MASA_EXCEPTION( xis.context() + "Protection " + strProtection + " already defined" );
      pProtection = new PHY_Protection( strProtection, xis );
 }
 
@@ -91,10 +91,10 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
 
     double timeVal, variance;
     if( ! tools::DecodeTime( timeString, timeVal ) || timeVal < 0 )
-        xis.error( "average-time not defined or < 0" );
+        throw MASA_EXCEPTION( xis.context() + "average-time not defined or < 0" );
     timeVal = MIL_Tools::ConvertSecondsToSim( timeVal );
     if( ! tools::DecodeTime( varianceString, variance ) )
-        xis.error( "variance is not defined" );
+        throw MASA_EXCEPTION( xis.context() + "variance is not defined" );
     neutralizationTime_ = MT_GaussianRandom( timeVal, fabs( MIL_Tools::ConvertSecondsToSim( variance ) ) );
 
     if( nType_ == eHuman )
@@ -117,9 +117,9 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
             >> xml::end;
 
         if( rBreakdownProbabilityEva_ < 0 || rBreakdownProbabilityEva_ > 100 )
-            xis.error( "random-breakdown-probability eva not in [0..100]" );
+            throw MASA_EXCEPTION( xis.context() + "random-breakdown-probability eva not in [0..100]" );
         if( rBreakdownProbabilityNeva_ < 0 || rBreakdownProbabilityNeva_ > 100 )
-            xis.error( "random-breakdown-probability neva not in [0..100]" );
+            throw MASA_EXCEPTION( xis.context() + "random-breakdown-probability neva not in [0..100]" );
         rBreakdownProbabilityEva_  /= 100.;
         rBreakdownProbabilityNeva_ /= 100.;
 
@@ -138,7 +138,7 @@ void PHY_Protection::ReadAttrition( xml::xistream& xis )
     std::string state = xis.attribute< std::string >( "equipment-state" );
     const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( state );
     if( !pComposanteState )
-        xis.error( "Unknown composante state" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown composante state" );
 
     assert( attritionEffectsOnHumans_.size() > pComposanteState->GetID() );
 
@@ -146,12 +146,12 @@ void PHY_Protection::ReadAttrition( xml::xistream& xis )
 
     double rTmp = xis.attribute< double >( "injured-percentage" );
     if( rTmp < 0 || rTmp > 100 )
-        xis.error( "injured-percentage not in [0..100]" );
+        throw MASA_EXCEPTION( xis.context() + "injured-percentage not in [0..100]" );
     data.rWoundedRatio_ = rTmp / 100.;
 
     rTmp = xis.attribute< double >( "dead-percentage" );
     if( rTmp < 0 || rTmp > 100 )
-        xis.error( "dead-percentage not in [0..100]" );
+        throw MASA_EXCEPTION( xis.context() + "dead-percentage not in [0..100]" );
     data.rDeadRatio_ = rTmp / 100.;
 }
 

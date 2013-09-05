@@ -32,11 +32,11 @@ PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_Weap
         >> xml::attribute( "max-range", rMaxRange_ );
 
     if( rAverageSpeed_ < 0 )
-        xis.error( "indirect-fire: average-speed < 0" );
+        throw MASA_EXCEPTION( xis.context() + "indirect-fire: average-speed < 0" );
     if( rMinRange_ < 0 )
-        xis.error( "indirect-fire: min-range < 0" );
+        throw MASA_EXCEPTION( xis.context() + "indirect-fire: min-range < 0" );
     if( rMaxRange_ < rMinRange_ )
-        xis.error( "indirect-fire: max-range < min-range" );
+        throw MASA_EXCEPTION( xis.context() + "indirect-fire: max-range < min-range" );
 
     rAverageSpeed_ = rAverageSpeed_ * timeFactor; /* m/s -> km/h */
     rMinRange_ = MIL_Tools::ConvertMeterToSim( rMinRange_ );

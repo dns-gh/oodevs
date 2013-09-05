@@ -118,7 +118,7 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
 {
     double rValue = xis.attribute< double >( "quantity" );
     if( rValue < 0. )
-        xis.error( "rValue is not greater or equal to 0." );
+        throw MASA_EXCEPTION( xis.context() + "rValue is not greater or equal to 0." );
     if( rValue > rCapacity_ )
         rCapacity_ = rValue;
     if( xis.has_attribute( "logistic-threshold" ) )
