@@ -24,7 +24,7 @@
         <go_proto input="${src.dir}/sword"/>
     </target>
 
-    <target name="configure" depends="update,proto"/>    
+    <target name="configure" depends="update,proto"/>
 
     <target name="build">
         <go_fmt/>
@@ -37,6 +37,9 @@
     <condition property="gocheck.verbose" value="-gocheck.v" else="">
         <isset property="gocheck.v"/>
     </condition>
+    <condition property="go.race" value="-race" else="">
+        <equals arg1="${platform}" arg2="vc100_x64"/>
+    </condition>
     <macrodef name="runtests">
         <element name="args" implicit="true" optional="true"/>
         <sequential>
@@ -44,7 +47,7 @@
             <go cmd="vet"/>
             <go cmd="test">
                 <arg value="-i"/>
-                <arg value="-race"/>
+                <arg value="${go.race}"/>
             </go>
             <go cmd="test">
                 <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
@@ -53,7 +56,7 @@
                      tests belonging to different modules to run concurrently. We
                      need a port allocation solution instead.
                 -->
-                <arg value="-race"/>
+                <arg value="${go.race}"/>
                 <arg value="-test.parallel=1"/>
                 <arg value="${gocheck.verbose}"/>
                 <arg line="${gocheck.filter}"/>
