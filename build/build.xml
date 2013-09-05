@@ -186,22 +186,11 @@
         <sequential>
             <!-- Create context -->
             <create-unicode-context root="@{root}" exercise-path="@{exercise-path}" exercise="@{exercise}" session="@{session}" terrain="@{terrain}" physical="@{physical}" new-root-without-unicode="@{new-root-without-unicode}" new-exercise-file="@{new-exercise-file}"/>
-            <!-- Launch simulation legacy -->
-            <exec-unicode name="sim-unicode-legacy" exe="${out.dir}/release/simulation_app.exe">
+            <!-- Launch simulation -->
+            <exec-unicode name="sim-unicode" exe="${out.dir}/release/simulation_app.exe">
                 <arg value="root-dir=@{new-root-without-unicode}"/>
                 <arg value="exercise=@{exercise}"/>
                 <arg value="session=@{session}"/>
-                <arg value="legacy=true"/>
-                <arg value="simulation-address=${test.portnumber}"/>
-                <arg value="dispatcher-address=${test.portnumber2}"/>
-                <arg value="test"/>
-            </exec-unicode>
-            <!-- Launch simulation non legacy -->
-            <exec-unicode name="sim-unicode-non-legacy" exe="${out.dir}/release/simulation_app.exe">
-                <arg value="root-dir=@{new-root-without-unicode}"/>
-                <arg value="exercise=@{exercise}"/>
-                <arg value="session=@{session}"/>
-                <arg value="legacy=false"/>
                 <arg value="simulation-address=${test.portnumber}"/>
                 <arg value="dispatcher-address=${test.portnumber2}"/>
                 <arg value="test"/>
@@ -217,12 +206,10 @@
 
     <macrodef name="run-one-simulation">
         <attribute name="exercise"/>
-        <attribute name="legacy" default="false"/>
         <attribute name="session" default="default"/>
         <element name="args" implicit="true" optional="true"/>
         <sequential>
             <exec taskname="sim" executable="${out.dir}/release/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
-                <arg value="--legacy=@{legacy}"/>
                 <arg value="--root-dir=${data.dir}"/>
                 <arg value="--exercise=@{exercise}"/>
                 <arg value="--session=@{session}"/>
@@ -239,9 +226,6 @@
         <attribute name="session" default="default"/>
         <element name="args" implicit="true" optional="true"/>
         <sequential>
-            <run-one-simulation exercise="@{exercise}" session="@{session}" legacy="true">
-                <args/>
-            </run-one-simulation>
             <run-one-simulation exercise="@{exercise}" session="@{session}">
                 <args/>
             </run-one-simulation>
@@ -250,16 +234,15 @@
 
    <macrodef name="save-load-checkpoint">
         <attribute name="exercise"/>
-        <attribute name="legacy" default="false"/>
         <attribute name="session" default="default"/>
         <attribute name="checkpoint" default="tempcheckpoint"/>
         <sequential>
-            <echo taskname="save-checkpoint" message='simulation_app --test --savecheckpoint=@{checkpoint} --legacy=@{legacy} --exercise="@{exercise}" --session=@{session} --root-dir="${data.dir}"'/>
-            <run-one-simulation exercise="@{exercise}" legacy="@{legacy}">
+            <echo taskname="save-checkpoint" message='simulation_app --test --savecheckpoint=@{checkpoint} --exercise="@{exercise}" --session=@{session} --root-dir="${data.dir}"'/>
+            <run-one-simulation exercise="@{exercise}">
                 <arg value="--savecheckpoint=@{checkpoint}"/>
             </run-one-simulation>
-            <echo taskname="load-checkpoint" message='simulation_app --test --checkpoint=@{checkpoint} --legacy=@{legacy} --exercise="@{exercise}" --session=@{session} --root-dir="${data.dir}"'/>
-            <run-one-simulation exercise="@{exercise}" legacy="@{legacy}">
+            <echo taskname="load-checkpoint" message='simulation_app --test --checkpoint=@{checkpoint} --exercise="@{exercise}" --session=@{session} --root-dir="${data.dir}"'/>
+            <run-one-simulation exercise="@{exercise}">
                 <arg value="- -checkpoint=@{checkpoint}"/>
             </run-one-simulation>
             <delete dir="${data.dir}/exercises/@{exercise}/checkpoints/@{checkpoint}"/>
@@ -267,7 +250,6 @@
     </macrodef>
 
     <target name="checkpoint_test" description="save and load a checkpoint">
-        <save-load-checkpoint exercise="worldwide/CheckpointTests" legacy="true"/>
         <save-load-checkpoint exercise="worldwide/CheckpointTests"/>
         <save-load-checkpoint exercise="tests/CheckpointTests"/>
     </target>
