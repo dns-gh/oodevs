@@ -69,7 +69,6 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 			return received
 		})
-		c.Assert(received, Equals, true)
 		// vision cones not sent again if unit state hasn't changed
 		received = false
 		client.Model.WaitTicks(1)
@@ -112,11 +111,19 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
 
+	check := func(ack *sword.ListEnabledVisionConesAck, all bool, units []int, start int, count int) {
+		c.Assert(ack.GetAll(), Equals, all)
+		c.Assert(len(ack.GetUnits()), Equals, len(units))
+		for i, unitId := range ack.GetUnits() {
+			c.Assert(unitId.GetId(), Equals, uint32(units[i]))
+		}
+		c.Assert(ack.GetStart().GetId(), Equals, uint32(start))
+		c.Assert(ack.GetCount(), Equals, uint32(count))
+	}
+
 	ack, err := client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
-	c.Assert(len(ack.GetUnits()), Equals, 0)
-	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
-	c.Assert(ack.GetCount(), Equals, uint32(0))
+	check(ack, false, nil, 0, 0)
 
 	err = client.EnableVisionCones(MakeUnitIds(12), true)
 	c.Assert(err, IsNil)
@@ -127,55 +134,31 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
-	c.Assert(ack.GetAll(), Equals, false)
-	c.Assert(len(ack.GetUnits()), Equals, 3)
-	c.Assert(ack.GetUnits()[0].GetId(), Equals, uint32(11))
-	c.Assert(ack.GetUnits()[1].GetId(), Equals, uint32(12))
-	c.Assert(ack.GetUnits()[2].GetId(), Equals, uint32(13))
-	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
-	c.Assert(ack.GetCount(), Equals, uint32(3))
+	check(ack, false, []int{11, 12, 13}, 0, 3)
 
 	ack, err = client.ListEnabledVisionCones(0, 1)
 	c.Assert(err, IsNil)
-	c.Assert(ack.GetAll(), Equals, false)
-	c.Assert(len(ack.GetUnits()), Equals, 1)
-	c.Assert(ack.GetUnits()[0].GetId(), Equals, uint32(11))
-	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
-	c.Assert(ack.GetCount(), Equals, uint32(3))
+	check(ack, false, []int{11}, 0, 3)
 
 	ack, err = client.ListEnabledVisionCones(12, 1)
 	c.Assert(err, IsNil)
-	c.Assert(ack.GetAll(), Equals, false)
-	c.Assert(len(ack.GetUnits()), Equals, 1)
-	c.Assert(ack.GetUnits()[0].GetId(), Equals, uint32(12))
-	c.Assert(ack.GetStart().GetId(), Equals, uint32(12))
-	c.Assert(ack.GetCount(), Equals, uint32(3))
+	check(ack, false, []int{12}, 12, 3)
 
 	err = client.EnableVisionCones(nil, true)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
-	c.Assert(ack.GetAll(), Equals, true)
-	c.Assert(len(ack.GetUnits()), Equals, 0)
-	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
-	c.Assert(ack.GetCount(), Equals, uint32(0))
+	check(ack, true, nil, 0, 0)
 
 	err = client.EnableVisionCones(MakeUnitIds(11), true)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
-	c.Assert(ack.GetAll(), Equals, false)
-	c.Assert(len(ack.GetUnits()), Equals, 1)
-	c.Assert(ack.GetUnits()[0].GetId(), Equals, uint32(11))
-	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
-	c.Assert(ack.GetCount(), Equals, uint32(1))
+	check(ack, false, []int{11}, 0, 1)
 
 	err = client.EnableVisionCones(nil, false)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
-	c.Assert(ack.GetAll(), Equals, false)
-	c.Assert(len(ack.GetUnits()), Equals, 0)
-	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
-	c.Assert(ack.GetCount(), Equals, uint32(0))
+	check(ack, false, nil, 0, 0)
 }
