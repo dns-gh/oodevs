@@ -270,20 +270,27 @@ activate = function( self )
     Activate( skill.links.AssignSETask, 1, { SE = pionsSE, tasks = tasksForSE, parameters = self.parameters, companyTask = self.companyTask })
     
     if myself.feedback then
+        if myself.leadRedoneByHigherSkill then  -- lead redone by higher skill, units echelon is not setting to 'none' and we don't want report "end mission"
+            myself.leadRedoneByHigherSkill = false
+            myself.feedback = false
+            return
+        end
         if self.params.disableWhenDone then
            Feedback( self.feedbacks.done )
         else
            meKnowledge:RC( eRC_FinMission )
         end
         for i = 1, #self.parameters.commandingEntities do
-           F_Pion_SeteEtatEchelon( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
+            F_Pion_SeteEtatEchelon( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
         end
         myself.feedback = false
         return
     end
     
     if not myself.stopFrago and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
-        Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
+        if not myself.leadRedoneByHigherSkill then -- lead redone by higher skill, we are sure that we have at least one unit which ca do the main effect (tested in lead create)
+            Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
+        end
     end
 end,
 

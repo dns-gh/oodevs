@@ -9,6 +9,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function ( self )
         self.entitiesToSupport = {}
+        myself.leadRedoneByHigherSkill = false -- if set to true : lead is redone
     end,
 
     activate = function( self )
@@ -25,6 +26,7 @@ node "Lead"
     connections = { skill.links.lead },
     create = function ( self )
         self.bInit = true
+        myself.leadRedoneByHigherSkill = true
     end,
     activate = function( self )
         if self.bInit then
