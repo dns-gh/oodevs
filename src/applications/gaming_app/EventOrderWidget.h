@@ -132,6 +132,7 @@ signals:
     void StartCreation( E_EventTypes type, const QDateTime& dateTime );
     void UpdateCreation( E_EventTypes type, const QDateTime& dateTime );
     void SelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
+    void EnableTriggerEvent( bool enable );
     //@}
 
 public slots:
@@ -171,9 +172,10 @@ private:
     gui::RichLabel* targetLabel_;
     actions::gui::MissionInterface* missionInterface_;
 
-    E_MissionType previousType_;
-    E_MissionType currentType_;
-    E_MissionType entityType_;
+    E_MissionType previousEntityType_;
+    E_MissionType previousMissionType_;
+    E_MissionType currentMissionType_;
+    E_MissionType currentEntityType_;
     bool missionChoosed_;
 
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
