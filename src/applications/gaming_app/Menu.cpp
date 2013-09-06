@@ -207,13 +207,6 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Tactical lines" ), MakePixmap( "tacticallines" ), controllers.options_, "TacticalLines" );
 
     {
-        CompositeMenu< bool > composite( subMenu, toolBar, tools::translate( "Menu", "Weather" ), MakePixmap( "weather" ), controllers.options_, "Weather" );
-        composite.AddItem( tools::translate( "Menu", "On" ), true );
-        composite.AddItem( tools::translate( "Menu", "Off" ), false );
-    }
-    subMenu->insertSeparator();
-
-    {
         CompositeMenu< float > composite( subMenu, toolBar, tools::translate( "Menu", "Grid" ), MakePixmap( "grid" ), controllers.options_, "GridSize" );
         composite.AddItem( tools::translate( "Menu", "100m"  ),  0.1f );
         composite.AddItem( tools::translate( "Menu", "250m" ),  0.25f );

@@ -2056,10 +2056,6 @@ This data can&apos;t be projected.</source>
         <translation>Off</translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation>Clima</translation>
-    </message>
-    <message>
         <source>100m</source>
         <translation>100m</translation>
     </message>

@@ -2089,10 +2089,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">خطوط التكتيكية</translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation type="unfinished">الطقس</translation>
-    </message>
-    <message>
         <source>Grid</source>
         <translation type="unfinished">الشبكة</translation>
     </message>

@@ -2087,10 +2087,6 @@ This data can&apos;t be projected.</source>
         <translation>Tactical lines</translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation>Weather</translation>
-    </message>
-    <message>
         <source>Grid</source>
         <translation>Grid</translation>
     </message>
