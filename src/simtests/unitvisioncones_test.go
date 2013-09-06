@@ -14,10 +14,6 @@ import (
 	"sword"
 )
 
-func MakeUnitIds(unitId uint32) []uint32 {
-	return []uint32{unitId}
-}
-
 func (s *TestSuite) TestUnitVisionCones(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
@@ -60,7 +56,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	c.Assert(received, Equals, false)
 
 	// registration fails when unit does not exist
-	err = client.EnableVisionCones(MakeUnitIds(1000), true)
+	err = client.EnableVisionCones(true, 1000)
 	c.Assert(err, ErrorMatches, "error_invalid_unit: invalid unit identifier 1000")
 
 	check := func(err error) {
@@ -75,7 +71,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	}
 
 	// registering allows to receive vision cones
-	check(client.EnableVisionCones(MakeUnitIds(11), true))
+	check(client.EnableVisionCones(true, 11))
 	// vision cones sent after posture changes
 	check(client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area))
 	// vision cones sent after position changes
@@ -97,7 +93,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	// vision cones sent after unit cancels surrender
 	check(client.CancelSurrender(automatId))
 	// visions cones not sent anymore after unregistering
-	err = client.EnableVisionCones(MakeUnitIds(11), false)
+	err = client.EnableVisionCones(false, 11)
 	c.Assert(err, IsNil)
 	err = client.Surrender(automatId, 2)
 	c.Assert(err, IsNil)
@@ -126,11 +122,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	check(ack, false, nil, 0, 0)
 
 	// 3 units registered listed
-	err = client.EnableVisionCones(MakeUnitIds(12), true)
-	c.Assert(err, IsNil)
-	err = client.EnableVisionCones(MakeUnitIds(13), true)
-	c.Assert(err, IsNil)
-	err = client.EnableVisionCones(MakeUnitIds(11), true)
+	err = client.EnableVisionCones(true, 12, 13, 11)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
@@ -148,34 +140,34 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	check(ack, false, []int{12}, 12, 3)
 
 	// globally enabling vision cones overwrites singely registered units
-	err = client.EnableVisionCones(nil, true)
+	err = client.EnableVisionCones(true)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	check(ack, true, nil, 0, 0)
 
 	// singlely registered units are ignored when globally enabled
-	err = client.EnableVisionCones(MakeUnitIds(11), true)
+	err = client.EnableVisionCones(true, 11)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	check(ack, true, nil, 0, 0)
 
 	// singlely unregistering units when globally enabled => error
-	err = client.EnableVisionCones(MakeUnitIds(11), false)
+	err = client.EnableVisionCones(false, 11)
 	c.Assert(err, ErrorMatches, "error_invalid_unit: cannot unregister a single unit with vision cones globally enabled")
 
 	// globally disabling vision cones disables all updates
-	err = client.EnableVisionCones(nil, false)
+	err = client.EnableVisionCones(false)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	check(ack, false, nil, 0, 0)
 
 	// globally disabling vision cones overwrites singlely registered units
-	err = client.EnableVisionCones(MakeUnitIds(11), true)
+	err = client.EnableVisionCones(true, 11)
 	c.Assert(err, IsNil)
-	err = client.EnableVisionCones(nil, false)
+	err = client.EnableVisionCones(false)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)

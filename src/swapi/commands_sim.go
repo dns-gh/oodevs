@@ -1345,7 +1345,7 @@ func (c *Client) ChangePosture(unitId uint32, posture sword.UnitAttributes_Postu
 	return c.ChangePostureTest(unitId, MakeParameters(MakeEnumeration(int32(posture))))
 }
 
-func (c *Client) EnableVisionCones(unitIds []uint32, enabled bool) error {
+func (c *Client) EnableVisionCones(enabled bool, unitIds ...uint32) error {
 	var units []*sword.UnitId = nil
 	for _, unitId := range unitIds {
 		units = append(units, &sword.UnitId{Id: proto.Uint32(unitId)})
