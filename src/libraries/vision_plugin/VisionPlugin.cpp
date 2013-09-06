@@ -81,7 +81,16 @@ void VisionPlugin::OnReceive( const std::string& link, const sword::ClientToSim&
 
 bool VisionPlugin::Validate( dispatcher::ClientPublisher_ABC& publisher, const sword::ControlEnableVisionCones& message, int context, unsigned int client ) const
 {
+    if( message.units().size() != 0 && ! message.vision_cones() && clients_->IsRegistered( publisher ) )
+    {
+        client::ControlEnableVisionConesAck ack;
+        ack().set_error_code( sword::ControlEnableVisionConesAck::error_invalid_unit );
+        ack().set_error_msg( "cannot unregister a single unit with vision cones globally enabled" );
+        ack.Send( publisher, context, client );
+        return false;
+    }
     for( auto it = message.units().begin(); it != message.units().end(); ++it )
+    {
         if( ! model_.Agents().Find( it->id() ) )
         {
             client::ControlEnableVisionConesAck ack;
@@ -90,15 +99,17 @@ bool VisionPlugin::Validate( dispatcher::ClientPublisher_ABC& publisher, const s
             ack.Send( publisher, context, client );
             return false;
         }
+    }
     return true;
 }
 
 void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, const sword::UnitId& unitId, bool activate )
 {
-    clients_->Unregister( publisher );
     const unsigned int id = unitId.id();
     if( activate )
     {
+        if( clients_->IsRegistered( publisher ) )
+            return;
         units_->Register( publisher, unitId );
         auto it = cones_.find( id );
         if( it != cones_.end() )
