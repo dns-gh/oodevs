@@ -106,7 +106,6 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
     catch( const std::exception& e )
     {
         throw MASA_EXCEPTION( xis.context() + tools::GetExceptionMsg( e ) );
-        pType = 0;
     }
 
     if( pType )
