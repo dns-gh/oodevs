@@ -14,6 +14,10 @@ import (
 	"sword"
 )
 
+func MakeUnitIds(unitId uint32) []uint32 {
+	return []uint32{unitId}
+}
+
 func (s *TestSuite) TestUnitVisionCones(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
@@ -56,7 +60,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	c.Assert(received, Equals, false)
 
 	// registration fails when unit does not exist
-	err = client.SendControlEnableVisionCones(1000, true)
+	err = client.EnableVisionCones(MakeUnitIds(1000), true)
 	c.Assert(err, ErrorMatches, "error_invalid_unit: invalid unit identifier 1000")
 
 	check := func(err error) {
@@ -73,7 +77,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	}
 
 	// registering allows to receive vision cones
-	check(client.SendControlEnableVisionCones(11, true))
+	check(client.EnableVisionCones(MakeUnitIds(11), true))
 	// vision cones sent after posture changes
 	check(client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area))
 	// vision cones sent after position changes
@@ -95,7 +99,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	// vision cones sent after unit cancels surrender
 	check(client.CancelSurrender(automatId))
 	// visions cones not sent anymore after unregistering
-	err = client.SendControlEnableVisionCones(11, false)
+	err = client.EnableVisionCones(MakeUnitIds(11), false)
 	c.Assert(err, IsNil)
 	err = client.Surrender(automatId, 2)
 	c.Assert(err, IsNil)
@@ -114,11 +118,11 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
 	c.Assert(ack.GetCount(), Equals, uint32(0))
 
-	err = client.SendControlEnableVisionCones(12, true)
+	err = client.EnableVisionCones(MakeUnitIds(12), true)
 	c.Assert(err, IsNil)
-	err = client.SendControlEnableVisionCones(13, true)
+	err = client.EnableVisionCones(MakeUnitIds(13), true)
 	c.Assert(err, IsNil)
-	err = client.SendControlEnableVisionCones(11, true)
+	err = client.EnableVisionCones(MakeUnitIds(11), true)
 	c.Assert(err, IsNil)
 
 	ack, err = client.ListEnabledVisionCones(0, 10)
@@ -147,7 +151,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	c.Assert(ack.GetStart().GetId(), Equals, uint32(12))
 	c.Assert(ack.GetCount(), Equals, uint32(3))
 
-	err = client.SendControlEnableAllVisionCones(true)
+	err = client.EnableVisionCones(nil, true)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
@@ -156,7 +160,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
 	c.Assert(ack.GetCount(), Equals, uint32(0))
 
-	err = client.SendControlEnableVisionCones(11, true)
+	err = client.EnableVisionCones(MakeUnitIds(11), true)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
@@ -166,7 +170,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
 	c.Assert(ack.GetCount(), Equals, uint32(1))
 
-	err = client.SendControlEnableAllVisionCones(false)
+	err = client.EnableVisionCones(nil, false)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)

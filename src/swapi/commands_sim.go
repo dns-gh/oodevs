@@ -1345,43 +1345,33 @@ func (c *Client) ChangePosture(unitId uint32, posture sword.UnitAttributes_Postu
 	return c.ChangePostureTest(unitId, MakeParameters(MakeEnumeration(int32(posture))))
 }
 
-func controlVisionConesAckHandler(msg *sword.SimToClient_Content) error {
-	reply := msg.GetControlEnableVisionConesAck()
-	if reply == nil {
-		return unexpected(msg)
+func (c *Client) EnableVisionCones(unitIds []uint32, enabled bool) error {
+	var units []*sword.UnitId = nil
+	for _, unitId := range unitIds {
+		units = append(units, &sword.UnitId{Id: proto.Uint32(unitId)})
 	}
-	code := reply.GetErrorCode()
-	if code != sword.ControlEnableVisionConesAck_no_error {
-		return makeError(reply, int32(code), sword.ControlEnableVisionConesAck_ErrorCode_name)
-	}
-	return nil
-}
-
-func (c *Client) SendControlEnableAllVisionCones(enabled bool) error {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				ControlToggleVisionCones: &sword.ControlEnableVisionCones{
 					VisionCones: proto.Bool(enabled),
+					Units:       units,
 				},
 			},
 		},
 	}
-	return <-c.postSimRequest(msg, controlVisionConesAckHandler)
-}
-
-func (c *Client) SendControlEnableVisionCones(unitId uint32, enabled bool) error {
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				ControlToggleVisionCones: &sword.ControlEnableVisionCones{
-					VisionCones: proto.Bool(enabled),
-					Units:       []*sword.UnitId{&sword.UnitId{Id: proto.Uint32(unitId)}},
-				},
-			},
-		},
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlEnableVisionConesAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.ControlEnableVisionConesAck_no_error {
+			return makeError(reply, int32(code), sword.ControlEnableVisionConesAck_ErrorCode_name)
+		}
+		return nil
 	}
-	return <-c.postSimRequest(msg, controlVisionConesAckHandler)
+	return <-c.postSimRequest(msg, handler)
 }
 
 func (c *Client) ListEnabledVisionCones(start uint32, count uint32) (*sword.ListEnabledVisionConesAck, error) {
