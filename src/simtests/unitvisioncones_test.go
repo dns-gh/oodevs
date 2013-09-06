@@ -108,7 +108,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
 
-	ack, err := client.SendListEnabledVisionCones(0, 10)
+	ack, err := client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	c.Assert(len(ack.GetUnits()), Equals, 0)
 	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
@@ -121,7 +121,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	err = client.SendControlEnableVisionCones(11, true)
 	c.Assert(err, IsNil)
 
-	ack, err = client.SendListEnabledVisionCones(0, 10)
+	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	c.Assert(ack.GetAll(), Equals, false)
 	c.Assert(len(ack.GetUnits()), Equals, 3)
@@ -131,7 +131,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
 	c.Assert(ack.GetCount(), Equals, uint32(3))
 
-	ack, err = client.SendListEnabledVisionCones(0, 1)
+	ack, err = client.ListEnabledVisionCones(0, 1)
 	c.Assert(err, IsNil)
 	c.Assert(ack.GetAll(), Equals, false)
 	c.Assert(len(ack.GetUnits()), Equals, 1)
@@ -139,7 +139,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	c.Assert(ack.GetStart().GetId(), Equals, uint32(0))
 	c.Assert(ack.GetCount(), Equals, uint32(3))
 
-	ack, err = client.SendListEnabledVisionCones(12, 1)
+	ack, err = client.ListEnabledVisionCones(12, 1)
 	c.Assert(err, IsNil)
 	c.Assert(ack.GetAll(), Equals, false)
 	c.Assert(len(ack.GetUnits()), Equals, 1)
@@ -149,7 +149,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 
 	err = client.SendControlEnableAllVisionCones(true)
 	c.Assert(err, IsNil)
-	ack, err = client.SendListEnabledVisionCones(0, 10)
+	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	c.Assert(ack.GetAll(), Equals, true)
 	c.Assert(len(ack.GetUnits()), Equals, 0)
@@ -158,7 +158,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 
 	err = client.SendControlEnableVisionCones(11, true)
 	c.Assert(err, IsNil)
-	ack, err = client.SendListEnabledVisionCones(0, 10)
+	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	c.Assert(ack.GetAll(), Equals, false)
 	c.Assert(len(ack.GetUnits()), Equals, 1)
@@ -168,7 +168,7 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 
 	err = client.SendControlEnableAllVisionCones(false)
 	c.Assert(err, IsNil)
-	ack, err = client.SendListEnabledVisionCones(0, 10)
+	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	c.Assert(ack.GetAll(), Equals, false)
 	c.Assert(len(ack.GetUnits()), Equals, 0)

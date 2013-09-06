@@ -1384,7 +1384,7 @@ func (c *Client) SendControlEnableVisionCones(unitId uint32, enabled bool) error
 	return <-c.postSimRequest(msg, controlVisionConesAckHandler)
 }
 
-func (c *Client) SendListEnabledVisionCones(start uint32, count uint32) (*sword.ListEnabledVisionConesAck, error) {
+func (c *Client) ListEnabledVisionCones(start uint32, count uint32) (*sword.ListEnabledVisionConesAck, error) {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
