@@ -1334,11 +1334,15 @@ func (c *Client) CreateBreakdowns(unitId uint32, equipments map[uint32]*Equipmen
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) ChangePosture(unitId uint32, params *sword.MissionParameters) error {
+func (c *Client) ChangePostureTest(unitId uint32, params *sword.MissionParameters) error {
 	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
 		sword.UnitMagicAction_change_posture.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangePosture(unitId uint32, posture sword.UnitAttributes_Posture) error {
+	return c.ChangePostureTest(unitId, MakeParameters(MakeEnumeration(int32(posture))))
 }
 
 func controlVisionConesAckHandler(msg *sword.SimToClient_Content) error {

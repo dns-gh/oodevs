@@ -116,8 +116,8 @@ type ResourceDotation struct {
 }
 
 type Posture struct {
-	Old        int32
-	New        int32
+	Old        sword.UnitAttributes_Posture
+	New        sword.UnitAttributes_Posture
 	Transition int32
 }
 
