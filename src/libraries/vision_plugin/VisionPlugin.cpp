@@ -33,7 +33,7 @@ VisionPlugin::~VisionPlugin()
     // NOTHING
 }
 
-bool VisionPlugin::Filter( const sword::SimToClient& message )
+bool VisionPlugin::Filter( const sword::SimToClient& message ) const
 {
     return message.message().has_unit_vision_cones();
 }

@@ -99,7 +99,7 @@ public:
             (*it)->Close();
     }
 
-    virtual bool Filter( const sword::SimToClient& message )
+    virtual bool Filter( const sword::SimToClient& message ) const
     {
         for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
             if( (*it)->Filter( message ) )

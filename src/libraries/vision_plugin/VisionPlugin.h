@@ -61,7 +61,7 @@ public:
              VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher, dispatcher::AuthenticatedLinkResolver_ABC& resolver );
     virtual ~VisionPlugin();
 
-    virtual bool Filter( const sword::SimToClient& message );
+    virtual bool Filter( const sword::SimToClient& message ) const;
     virtual void Receive( const sword::SimToClient& message );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& link );
 

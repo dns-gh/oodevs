@@ -547,7 +547,7 @@ message ControlInformation {
     required EnumSimulationState status               = 7;
     //! Whether the vision cones for units is currently being sent or not
     //! @see SimToClient::Content::unit_vision_cones
-    //! @deprecated
+    //! @deprecated Will always be false
     required bool                send_vision_cones    = 8;
     //! Whether the profiling information is currently being sent or not
     //! @see SimToClient::Content::control_profiling_information

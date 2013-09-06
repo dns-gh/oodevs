@@ -45,7 +45,11 @@ public:
     virtual void Update() {}
     virtual void Close() {}
 
-    virtual bool Filter( const sword::SimToClient& /*message*/ )
+    // Provides a way to filter out messages from the simulation so that they
+    // are not sent to clients. Returning true means not propagating a message
+    // through the message handler chain. Therefore MessageHandler_ABC::Receive
+    // will not be called for this plugin.
+    virtual bool Filter( const sword::SimToClient& /*message*/ ) const
     {
         return false;
     }
