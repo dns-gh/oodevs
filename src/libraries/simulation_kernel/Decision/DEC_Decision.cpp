@@ -310,6 +310,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterMethod( "DEC_Geometrie_Y", &MT_Vector2D::GetY );
     brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceFromFrontLine );
     brain.RegisterFunction( "DEC_Geometrie_StopCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StopComputingFrontAndBackLines );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongDangerDirection", &DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection);
 }
 
 // -----------------------------------------------------------------------------

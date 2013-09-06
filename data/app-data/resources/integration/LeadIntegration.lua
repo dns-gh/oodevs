@@ -773,6 +773,7 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
         self.nbrFront = self.companyTask:getNbrFront() -- Ask how many platoon will be in the front group. Number giving by the user or by default.
     end
     self.progressionInAOR = {}
+    self.progressionInDangerDirection = {}
 
     for _, unit in pairs( self.parameters.commandingEntities ) do
       unit:setHasMission(false)
@@ -969,6 +970,14 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
         
         -- Gestion de l'elongation inter echelon
         Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = fusionList( pionsPE, pionsSE ), progressionInAOR = self.progressionInAOR, distance = maxsupportDistance } )
+    end
+
+    if not self.params.SECanBeFirst then
+       for i = 1, #self.parameters.commandingEntities do
+            self.progressionInDangerDirection[entity] = integration.getPositionAlongDangerDirection(entity, entity:getPosition())
+        end
+         -- The second echelon is not allowed to go in front of the first echelon
+        Activate( self.skill.links.coordinationManagerBetweenEchelon , 1, { FirstEchelon = pionsPE, SecondEchelon = pionsSE, progressionInDangerDirection = self.progressionInDangerDirection } )
     end
 
     if not manageRelieveBeforeCoordination and self.params.relieveManager then
