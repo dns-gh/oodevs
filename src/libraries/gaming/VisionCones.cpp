@@ -34,7 +34,7 @@ struct VisionCones::Updater : public kernel::WorkerTask_ABC
         surfaces_.reserve( cones.surfaces_.size() );
         for( auto it = cones.surfaces_.begin(); it != cones.surfaces_.end(); ++it )
             surfaces_.push_back( new Surface( **it ) );
-    };
+    }
     virtual ~Updater()
     {
         for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
@@ -105,8 +105,8 @@ VisionCones::~VisionCones()
 {
     controller_.Unregister( *this );
     CancelCurrent();
-    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
-        delete *itSurface;
+    for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+        delete *it;
     delete map_;
 }
 
@@ -116,14 +116,12 @@ VisionCones::~VisionCones()
 // -----------------------------------------------------------------------------
 void VisionCones::DoUpdate( const sword::UnitVisionCones& message )
 {
-    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
-        delete *itSurface;
+    for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+        delete *it;
     elongationFactor_ = message.elongation();
-
     surfaces_.resize( message.cones().elem_size() );
     for( int i = 0; i < message.cones().elem_size(); ++i )
         surfaces_[i] = factory_.CreateSurface( agent_, message.cones().elem( i ), elongationFactor_ );
-
     Invalidate();
 }
 
@@ -175,7 +173,6 @@ void VisionCones::Draw( const geometry::Point2f& , const gui::Viewport_ABC& view
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );
-
     if( tools.ShouldDisplay( "VisionSurfaces" ) && map_->IsVisible( viewport ) )
     {
         if( needUpdating_ )
