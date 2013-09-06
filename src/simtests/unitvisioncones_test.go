@@ -106,14 +106,14 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
 
-	check := func(ack *sword.ListEnabledVisionConesAck, all bool, units []int, start int, count int) {
+	check := func(ack *sword.ListEnabledVisionConesAck, all bool, units []uint32, start uint32, count uint32) {
 		c.Assert(ack.GetAll(), Equals, all)
 		c.Assert(len(ack.GetUnits()), Equals, len(units))
 		for i, unitId := range ack.GetUnits() {
-			c.Assert(unitId.GetId(), Equals, uint32(units[i]))
+			c.Assert(unitId.GetId(), Equals, units[i])
 		}
-		c.Assert(ack.GetStart().GetId(), Equals, uint32(start))
-		c.Assert(ack.GetCount(), Equals, uint32(count))
+		c.Assert(ack.GetStart().GetId(), Equals, start)
+		c.Assert(ack.GetCount(), Equals, count)
 	}
 
 	// no unit registered by default
@@ -126,18 +126,18 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
-	check(ack, false, []int{11, 12, 13}, 0, 3)
+	check(ack, false, []uint32{11, 12, 13}, 0, 3)
 
 	// 3 units registered only first one listed
 	ack, err = client.ListEnabledVisionCones(0, 1)
 	c.Assert(err, IsNil)
-	check(ack, false, []int{11}, 0, 3)
+	check(ack, false, []uint32{11}, 0, 3)
 
 	// 3 units registered only second one listed
 	// when starting from the second one
 	ack, err = client.ListEnabledVisionCones(12, 1)
 	c.Assert(err, IsNil)
-	check(ack, false, []int{12}, 12, 3)
+	check(ack, false, []uint32{12}, 12, 3)
 
 	// globally enabling vision cones overwrites singely registered units
 	err = client.EnableVisionCones(true)
