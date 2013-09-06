@@ -1266,52 +1266,39 @@
     -->
     <target name="package" depends="package.app,package.debug,package.otpacks,package.decisional,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
 
+    <macrodef name="package-plugin">
+        <attribute name="name">
+        <sequential>
+            <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
+                <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
+                <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
+                <arg value="/DPLUGIN=${name}"/>
+                <arg value="/DPLUGIN_VERSION=1.0"/>
+            </nsis>
+        </sequential>
+    </macrodef>
+
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.bml,package.plugin.dis" description="package plugin individual installers"/>
 
     <target name="package.plugin.hla" description="create hla plugin installer">
-        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-            <arg value="/DPLUGIN=plugin-hla"/>
-            <arg value="/DPLUGIN_VERSION=1.0"/>
-        </nsis>
+        <package-plugin name="plugin-hla"/>
     </target>
 
     <target name="package.plugin.bml" description="create bml plugin installer">
-        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-            <arg value="/DPLUGIN=plugin-bml"/>
-            <arg value="/DPLUGIN_VERSION=1.0"/>
-        </nsis>
+        <package-plugin name="plugin-bml"/>
     </target>
 
     <target name="package.plugin.dis" description="create dis plugin installer">
-        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-            <arg value="/DPLUGIN=plugin-dis"/>
-            <arg value="/DPLUGIN_VERSION=1.0"/>
-        </nsis>
+        <package-plugin name="plugin-dis"/>
     </target>
 
     <target name="package.plugin.timeline" description="create timeline plugin installer">
-        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-            <arg value="/DPLUGIN=plugin-timeline"/>
-            <arg value="/DPLUGIN_VERSION=1.0"/>
-        </nsis>
+        <package-plugin name="plugin-timeline"/>
     </target>
 
     <target name="package.plugin.crossbow" description="create crossbow plugin installer">
-        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-            <arg value="/DPLUGIN=plugin-crossbow"/>
-            <arg value="/DPLUGIN_VERSION=1.0"/>
-        </nsis>
+        <package-plugin name="plugin-crossbow"/>
     </target>
 
     <!-- Package misc -->
