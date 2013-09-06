@@ -121,41 +121,61 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 		c.Assert(ack.GetCount(), Equals, uint32(count))
 	}
 
+	// no unit registered by default
 	ack, err := client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	check(ack, false, nil, 0, 0)
 
+	// 3 units registered listed
 	err = client.EnableVisionCones(MakeUnitIds(12), true)
 	c.Assert(err, IsNil)
 	err = client.EnableVisionCones(MakeUnitIds(13), true)
 	c.Assert(err, IsNil)
 	err = client.EnableVisionCones(MakeUnitIds(11), true)
 	c.Assert(err, IsNil)
-
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	check(ack, false, []int{11, 12, 13}, 0, 3)
 
+	// 3 units registered only first one listed
 	ack, err = client.ListEnabledVisionCones(0, 1)
 	c.Assert(err, IsNil)
 	check(ack, false, []int{11}, 0, 3)
 
+	// 3 units registered only second one listed
+	// when starting from the second one
 	ack, err = client.ListEnabledVisionCones(12, 1)
 	c.Assert(err, IsNil)
 	check(ack, false, []int{12}, 12, 3)
 
+	// globally enabling vision cones overwrites singely registered units
 	err = client.EnableVisionCones(nil, true)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
 	check(ack, true, nil, 0, 0)
 
+	// singlely registered units are ignored when globally enabled
 	err = client.EnableVisionCones(MakeUnitIds(11), true)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
 	c.Assert(err, IsNil)
-	check(ack, false, []int{11}, 0, 1)
+	check(ack, true, nil, 0, 0)
 
+	// singlely unregistering units when globally enabled => error
+	err = client.EnableVisionCones(MakeUnitIds(11), false)
+	c.Assert(err, ErrorMatches, "error_invalid_unit: cannot unregister a single unit with vision cones globally enabled")
+
+	// globally disabling vision cones disables all updates
+	err = client.EnableVisionCones(nil, false)
+	c.Assert(err, IsNil)
+	ack, err = client.ListEnabledVisionCones(0, 10)
+	c.Assert(err, IsNil)
+	check(ack, false, nil, 0, 0)
+
+	// globally disabling vision cones overwrites singlely registered units
+	err = client.EnableVisionCones(MakeUnitIds(11), true)
+	c.Assert(err, IsNil)
 	err = client.EnableVisionCones(nil, false)
 	c.Assert(err, IsNil)
 	ack, err = client.ListEnabledVisionCones(0, 10)
