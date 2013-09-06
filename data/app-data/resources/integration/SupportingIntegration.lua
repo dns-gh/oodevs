@@ -63,3 +63,8 @@ integration.getSupportDistanceToCoordination = function( agent, pH )
     end
     return rangeDistance
 end
+
+-- return the point projection into the entity danger direction vector
+integration.getPositionAlongDangerDirection = function( entity, point )
+    return DEC_Geometrie_PositionAdvanceAlongDangerDirection( entity.source, point )
+end
