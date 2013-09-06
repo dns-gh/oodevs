@@ -19,6 +19,7 @@
     <property name="version.major" value="4.3.3"/>
     <property name="version.minor" value="${version.major}.${git.revision}"/>
     <property name="version.version" value="${version.project}.${git.revision}"/>
+    <property name="version.productversion" value="${version.project}.${git.revision}.${git.hash}"/>
 
     <!--
     ============================================================================
@@ -1267,7 +1268,7 @@
     <target name="package" depends="package.app,package.debug,package.otpacks,package.decisional,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
 
     <macrodef name="package-plugin">
-        <attribute name="name">
+        <attribute name="name"/>
         <sequential>
             <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
                 <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
@@ -1336,6 +1337,7 @@
         <nsis name="sword" script="sword.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
+            <arg value="/DAPP_VERSION_FULL=${version.productversion}"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>

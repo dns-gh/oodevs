@@ -25,6 +25,9 @@ Var /GLOBAL INSTDATADIR
 !ifndef APP_VERSION_MINOR
     !define APP_VERSION_MINOR "1.0.0.0"
 !endif
+!ifndef APP_VERSION_FULL
+    !define APP_VERSION_FULL "${APP_VERSION_MINOR}"
+!endif
 ; worldwide / france
 !ifndef APP_MODEL
     !define APP_MODEL "worldwide"
