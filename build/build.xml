@@ -1315,14 +1315,6 @@
     </target>
 
     <!-- Package misc -->
-    <target name="package.patch" description="create a patch installer">
-        <nsis name="sword-patch" script="patchs/sword-patch.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
     <target name="package.debug" description="create a zip with all PDB files">
         <safe-move file="${out.dir}/SWORD_debug_${platform}_${version.project}.zip">
             <copy todir="${out.dir}/pdb" flatten="true">
