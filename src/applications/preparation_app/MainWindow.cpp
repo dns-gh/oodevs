@@ -504,6 +504,7 @@ bool MainWindow::Close()
 {
     if( model_.IsLoaded() && CheckSaving() == QMessageBox::Cancel )
         return false;
+    emit CloseDialogs();
     DoClose();
     controllers_.ChangeMode( eModes_Default );
     return true;

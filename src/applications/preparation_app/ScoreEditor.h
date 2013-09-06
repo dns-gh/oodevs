@@ -78,6 +78,7 @@ signals:
     //@{
     void Show();
     void Hide();
+    void CloseDialogs();
     //@}
 
 private slots:
@@ -90,6 +91,7 @@ private slots:
     void CheckFormula();
     void AllowCommit( bool base = true );
     void NameChanged();
+    void OnCloseDialogs();
     //@}
 
 private:

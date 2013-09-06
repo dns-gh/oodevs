@@ -99,6 +99,15 @@ void ScoreVariablesList::AddVariable( const indicators::Element_ABC& variable )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ScoreVariablesList::OnCloseDialogs
+// Created: LDC 2013-09-05
+// -----------------------------------------------------------------------------
+void ScoreVariablesList::OnCloseDialogs()
+{
+    wizard_->hide();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ScoreVariablesList::GetValue
 // Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------

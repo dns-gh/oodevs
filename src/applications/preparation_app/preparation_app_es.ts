@@ -2066,14 +2066,6 @@ This data can&apos;t be projected.</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Score edition - %1 </source>
-        <translation>Edición de indicador - %1</translation>
-    </message>
-    <message>
-        <source>Formula is empty.</source>
-        <translation>La formula está vacia.</translation>
-    </message>
-    <message>
         <source>Variables</source>
         <translation>Variables</translation>
     </message>
@@ -2088,6 +2080,14 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Profiles</source>
         <translation>Perfiles</translation>
+    </message>
+    <message>
+        <source>Score edition - %1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formula is empty.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

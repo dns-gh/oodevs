@@ -104,6 +104,7 @@ signals:
     //@{
     void CheckConsistency();
     void ShowHelp();
+    void CloseDialogs();
     //@}
 
 private:

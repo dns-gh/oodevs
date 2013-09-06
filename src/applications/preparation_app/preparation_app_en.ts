@@ -2087,11 +2087,11 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Score edition - %1 </source>
-        <translation>Score edition - %1 </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Formula is empty.</source>
-        <translation>Formula is empty.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

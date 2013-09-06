@@ -2084,11 +2084,11 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Score edition - %1 </source>
-        <translation type="unfinished">نقاط الطبعة--%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Formula is empty.</source>
-        <translation type="unfinished">الصيغة غير فارغ.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
