@@ -65,7 +65,6 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 
 	check := func(err error) {
 		c.Assert(err, IsNil)
-		received = false
 		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 			return received
 		})
