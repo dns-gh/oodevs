@@ -11,6 +11,7 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"swapi"
+	"sword"
 )
 
 func (s *TestSuite) TestUnitVisionCones(c *C) {
@@ -26,7 +27,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	})
 
 	// forcing unit posture to make it stable
-	err := client.ChangePosture(11, swapi.MakeParameters(swapi.MakeEnumeration(5)))
+	err := client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area)
 	c.Assert(err, IsNil)
 
 	automatId := client.Model.GetUnit(11).AutomatId
@@ -74,7 +75,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	// registering allows to receive vision cones
 	check(client.SendControlEnableVisionCones(11, true))
 	// vision cones sent after posture changes
-	check(client.ChangePosture(11, swapi.MakeParameters(swapi.MakeEnumeration(5))))
+	check(client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area))
 	// vision cones sent after position changes
 	check(client.TeleportUnit(11, swapi.Point{X: -15.8219, Y: 28.2456}))
 	// vision cones sent after direction changes
