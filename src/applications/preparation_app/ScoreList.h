@@ -85,6 +85,7 @@ signals:
     void ScoreDeleted( const Score_ABC& score );
     void Show();
     void Hide();
+    void CloseDialogs();
     //@}
 
 private slots:

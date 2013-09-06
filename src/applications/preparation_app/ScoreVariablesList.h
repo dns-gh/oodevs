@@ -80,6 +80,7 @@ public slots:
     //! @name Slots
     //@{
     void AddVariable( const indicators::Element_ABC& variable );
+    void OnCloseDialogs();
     //@}
 
 private slots:

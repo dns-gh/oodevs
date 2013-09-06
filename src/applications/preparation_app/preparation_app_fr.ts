@@ -2071,14 +2071,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Score edition - %1 </source>
-        <translation>Edition du score - %1</translation>
-    </message>
-    <message>
-        <source>Formula is empty.</source>
-        <translation>La formule est vide.</translation>
-    </message>
-    <message>
         <source>Variables</source>
         <translation>Variables</translation>
     </message>
@@ -2093,6 +2085,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Profiles</source>
         <translation>Profils</translation>
+    </message>
+    <message>
+        <source>Score edition - %1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formula is empty.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

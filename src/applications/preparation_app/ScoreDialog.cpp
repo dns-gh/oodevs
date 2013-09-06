@@ -52,6 +52,7 @@ ScoreDialog::ScoreDialog( const QString& objectName, QWidget* parent, kernel::Co
 {
     gui::SubObjectName subObject( objectName );
     setModal( false );
+    connect( parent, SIGNAL( CloseDialogs() ), this, SLOT( OnCloseDialogs() ) );
     setCaption( tr( "Scores" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
@@ -62,6 +63,7 @@ ScoreDialog::ScoreDialog( const QString& objectName, QWidget* parent, kernel::Co
         connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
         connect( scores_, SIGNAL( Show() ), SLOT( show() ) );
         connect( scores_, SIGNAL( Hide() ), SLOT( hide() ) );
+        connect( this, SIGNAL( CloseDialogs() ), scores_, SIGNAL( CloseDialogs() ) );
 
         //container
         gui::RichGroupBox* scoreBox = new gui::RichGroupBox( "scoreBox", tr( "Scores" ), this );
@@ -132,6 +134,16 @@ void ScoreDialog::OnCreateButtonClicked()
 void ScoreDialog::OnDeleteScore( const Score_ABC& score )
 {
     model_.Delete( score );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreDialog::OnCloseDialogs
+// Created: LDC 2013-09-06
+// -----------------------------------------------------------------------------
+void ScoreDialog::OnCloseDialogs()
+{
+    emit CloseDialogs();
+    hide();
 }
 
 // -----------------------------------------------------------------------------

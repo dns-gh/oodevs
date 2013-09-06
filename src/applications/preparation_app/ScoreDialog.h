@@ -73,12 +73,19 @@ public:
     void Draw( gui::Viewport_ABC& viewport );
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void CloseDialogs();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
     void OnCreateTextChanged( const QString& text );
     void OnCreateButtonClicked();
     void OnDeleteScore( const Score_ABC& score );
+    void OnCloseDialogs();
     //@}
 
 private:

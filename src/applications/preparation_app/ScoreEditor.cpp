@@ -188,6 +188,8 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, Sco
                 connect( variables_, SIGNAL( Updated() ), SLOT( CheckFormula() ) );
                 connect( variables_, SIGNAL( StartEdit() ), SLOT( hide() ) );
                 connect( variables_, SIGNAL( EndEdit() ), SLOT( show() ) );
+                connect( parent, SIGNAL( CloseDialogs() ), this, SLOT( OnCloseDialogs() ) );
+                connect( this, SIGNAL( CloseDialogs() ), variables_, SLOT( OnCloseDialogs() ) );
 
                 gui::SubObjectName subObject( "VariablesBox" );
                 gui::RichGroupBox* variablesBox = new gui::RichGroupBox( "variablesBox", tr( "Variables" ), page );
@@ -294,6 +296,18 @@ void ScoreEditor::CommitTo( Score_ABC& score )
 void ScoreEditor::Cancel()
 {
     reject();
+    emit Hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreEditor::OnCloseDialogs
+// Created: LDC 2013-09-05
+// -----------------------------------------------------------------------------
+void ScoreEditor::OnCloseDialogs()
+{
+    emit CloseDialogs();
+    reject();
+    hide();
     emit Hide();
 }
 
