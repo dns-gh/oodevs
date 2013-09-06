@@ -974,6 +974,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
 
     if not self.params.SECanBeFirst then
        for i = 1, #self.parameters.commandingEntities do
+            local entity = self.parameters.commandingEntities[i]
             self.progressionInDangerDirection[entity] = integration.getPositionAlongDangerDirection(entity, entity:getPosition())
         end
          -- The second echelon is not allowed to go in front of the first echelon
