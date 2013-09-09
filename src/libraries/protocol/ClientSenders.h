@@ -155,6 +155,8 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, UrbanKnowledgeDestruction                      , urban_knowledge_destruction               )
     GENERATE_MESSAGE( sword::SimToClient, sword, UrbanKnowledgeUpdate                           , urban_knowledge_update                    )
     GENERATE_MESSAGE( sword::SimToClient, sword, UrbanUpdate                                    , urban_update                              )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ControlEnableVisionConesAck      , control_enable_vision_cones_ack           )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ListEnabledVisionConesAck        , list_enabled_vision_cones_ack             )
 }
 
 #endif // __protocol_ClientSenders_h_

@@ -289,6 +289,9 @@ message ControlCheckPointListRequest {
 message ControlEnableVisionCones {
     //! Whether to activate vision cones or not
     required bool vision_cones = 1;
+    //! Units for which to activate/deactivate vision cones updates,
+    //! applies to all units if empty
+    repeated UnitId units = 2;
 }
 
 /** @struct ChangePopulationMagicAction
@@ -320,19 +323,11 @@ message ChangePopulationMagicAction {
     @see BurningCellRequestAck
 */
 message BurningCellRequest {
-
-    /** @property object
-        @brief Id of the burning object
-    */
+    //! Identifier of the burning object
     required ObjectId object = 1;
-
-    /** @property x
-        @brief X coordinates of the burning cell.
-    */
+    //! X coordinates of the burning cell
     required float x = 2;
-    /** @property y
-        @brief Y coordinates of the burning cell.
-    */
+    //! Y coordinates of the burning cell
     required float y = 3;
 }
 
@@ -341,6 +336,20 @@ message BurningCellRequest {
 message OrderStream {
     //! The serialized order
     required string serialized_order = 1;
+}
+
+/** @struct ListEnabledVisionCones
+    @brief requests the list of units for which vision updates are currently
+           listened to.
+    @see ListEnableVisionConesAck
+    @see ControlEnableVisionCones
+*/
+message ListEnabledVisionCones {
+    //! Identifier to start from (included), if omitted start from the
+    //! beginning
+    optional UnitId start = 1;
+    //! Maximum number of identifiers to send
+    optional uint32 count = 2;
 }
 
 /** @struct ClientToSim
@@ -368,7 +377,7 @@ message ClientToSim {
         optional ControlCheckPointSaveNow control_checkpoint_save_now     = 6;
         //! @copybrief ControlCheckPointSetFrequency
         optional ControlCheckPointSetFrequency
-            control_checkpoint_set_frequency  = 7;
+            control_checkpoint_set_frequency                              = 7;
         //! @copybrief ControlEnableVisionCones
         optional ControlEnableVisionCones control_toggle_vision_cones     = 8;
         //! @copybrief UnitOrder
@@ -393,19 +402,19 @@ message ClientToSim {
         optional MagicAction              magic_action                    = 18;
         //! @copybrief ControlCheckPointListRequest
         optional ControlCheckPointListRequest
-            control_checkpoint_list_request   = 19;
+            control_checkpoint_list_request                               = 19;
         //! @copybrief ControlCheckPointDeleteRequest
         optional ControlCheckPointDeleteRequest
-            control_checkpoint_delete_request = 20;
+            control_checkpoint_delete_request                             = 20;
         //! @copybrief ChangePopulationMagicAction
         optional ChangePopulationMagicAction
-            change_population_magic_action = 21;
-        /** @property burning_cell_request
-            @brief @copybrief BurningCellRequest
-            @see BurningCellRequest
-        */
+            change_population_magic_action                                = 21;
+        //! @copybrief BurningCellRequest
         optional BurningCellRequest       burning_cell_request            = 23;
+        //! @copybrief OrderStream
         optional OrderStream              order_stream                    = 24;
+        //! @copybrief ListEnabledVisionCones
+        optional ListEnabledVisionCones   list_enabled_vision_cones       = 25;
     }
     /** @property context
         @brief Identifies the request matching the response

@@ -9,8 +9,6 @@
 
 #include "protocol_test_pch.h"
 #include "protocol/Helpers.h"
-
-#include <boost/lexical_cast.hpp>
 #include <unordered_set>
 
 using namespace protocol;
@@ -21,10 +19,10 @@ namespace
     template< typename T >
     std::unordered_set< typename T::value_type > MakeSet()
     {
-        std::unordered_set< typename T::value_type > rpy;
+        std::unordered_set< typename T::value_type > set;
         for( size_t i = 0; i < T::size_; ++i )
-            rpy.insert( T::data_[i].type );
-        return rpy;
+            set.insert( T::data_[i].type );
+        return set;
     }
 
     template< typename T, typename U, typename V >
@@ -34,10 +32,8 @@ namespace
         for( int i = min; i <= max; ++i )
         {
             const auto value = static_cast< typename T::value_type >( i );
-            const bool valid = IsValid( value );
-            BOOST_REQUIRE( valid );
-            if( valid )
-                BOOST_CHECK_MESSAGE( set.find( value ) != set.end(), "Missing " + GetName( value ) );
+            BOOST_REQUIRE( IsValid( value ) );
+            BOOST_CHECK_MESSAGE( set.find( value ) != set.end(), "Missing " + GetName( value ) );
         }
     }
 
@@ -68,7 +64,7 @@ BOOST_AUTO_TEST_CASE( check_magic_mappings )
     CheckTypeMapping< mapping::MagicAction, MagicAction >();
 }
 
-BOOST_AUTO_TEST_CASE( check_phaselinetype_mappings )
+BOOST_AUTO_TEST_CASE( check_phase_line_type_mappings )
 {
     CheckMapping< mapping::PhaseLineType >(
         PhaseLineOrder::Function_MIN,

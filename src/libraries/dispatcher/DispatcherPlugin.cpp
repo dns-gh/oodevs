@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "DispatcherPlugin.h"
 #include "SimulationPublisher_ABC.h"
-#include "LinkResolver_ABC.h"
+#include "AuthenticatedLinkResolver_ABC.h"
 #include "Profile_ABC.h"
 #include "OrderResolver_ABC.h"
 #include "Services.h"
@@ -26,9 +26,9 @@ using namespace dispatcher;
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 DispatcherPlugin::DispatcherPlugin( SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
-                                    LinkResolver_ABC& links, OrderResolver_ABC& order, tools::RotatingLog& log )
+                                    AuthenticatedLinkResolver_ABC& resolver, OrderResolver_ABC& order, tools::RotatingLog& log )
     : simulation_( simulation )
-    , links_     ( links )
+    , resolver_  ( resolver )
     , order_     ( order )
     , clients_   ( clients )
 {
@@ -59,9 +59,9 @@ void DispatcherPlugin::Register( dispatcher::Services& services )
 // -----------------------------------------------------------------------------
 void DispatcherPlugin::OnReceive( const std::string& link, sword::ClientToSim& message )
 {
-    if( links_.GetProfile( link ).CheckRights( message ) )
+    if( resolver_.GetProfile( link ).CheckRights( message ) )
     {
-        if( unsigned int clientID = links_.GetClientID( link ) )
+        if( unsigned int clientID = resolver_.GetClientID( link ) )
             message.set_client_id( clientID );
         order_.Resolve( message );
         simulation_.Send( message );
@@ -70,13 +70,14 @@ void DispatcherPlugin::OnReceive( const std::string& link, sword::ClientToSim& m
     {
         sword::SimToClient error;
         error.set_context( message.context() );
-        if( !protocol::GetForbiddenError( message, error ))
+        if( !protocol::GetForbiddenError( message, error ) )
         {
             // Irrelevant but better than no error
             auto m = error.mutable_message()->mutable_magic_action_ack();
             m->set_error_code( sword::MagicActionAck::error_invalid_parameter );
+            m->set_error_msg( "rights check failed" );
         }
-        if( unsigned int clientID = links_.GetClientID( link ) )
+        if( unsigned int clientID = resolver_.GetClientID( link ) )
             error.set_client_id( clientID );
         clients_.Send( error );
     }

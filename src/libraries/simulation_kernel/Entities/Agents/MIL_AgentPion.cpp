@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPion.h"
-
 #include "Actions/CrowdTransport/PHY_RoleAction_CrowdTransport.h"
 #include "Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 #include "Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
@@ -23,6 +22,7 @@
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Adapters/RoleAdapterInterface.h"
+#include "AlgorithmsFactories.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Representations.h"
@@ -38,6 +38,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Logistic/PHY_BreakdownType.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -54,6 +55,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MissionController_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "NetworkNotificationHandler_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Roles/Communications/PHY_RolePion_Communications.h"
@@ -80,8 +82,6 @@
 #include "Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Roles/Transported/PHY_RolePion_Transported.h"
 #include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_Color.h"
 #include "Tools/MIL_DictionaryExtensions.h"
@@ -89,7 +89,6 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/NET_AsnException.h"
-
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
@@ -1277,6 +1276,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
     case sword::UnitMagicAction::change_brain_debug:
         OnChangeBrainDebug( msg.parameters() );
         break;
+    case sword::UnitMagicAction::change_posture:
+        OnChangePosture( msg.parameters() );
+        break;
     case sword::UnitMagicAction::create_breakdowns:
         OnReceiveCreateBreakdowns( msg.parameters() );
         break;
@@ -2123,6 +2125,26 @@ void MIL_AgentPion::OnChangeBrainDebug( const sword::MissionParameters& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnChangePosture
+// Created: MCO 2013-08-26
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnChangePosture( const sword::MissionParameters& msg )
+{
+    if( msg.elem_size() != 1 )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                                 "invalid parameter count, 1 parameter expected" );
+    if( msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value().Get( 0 ).has_enumeration() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                                 "parameters[0] must be an enumeration" );
+    const auto value = msg.elem( 0 ).value().Get( 0 ).enumeration();
+    if( ! sword::UnitAttributes::Posture_IsValid( value ) )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+                                 "parameters[0] must be a valid posture enumeration value" );
+    const sword::UnitAttributes::Posture posture = static_cast< sword::UnitAttributes::Posture >( value );
+    GetRole< PHY_RoleInterface_Posture >().SetPosture( PHY_Posture::FindPosture( posture ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveFinishLogisticHandlings
 // Created: NLD 2012-01-09
 // -----------------------------------------------------------------------------
@@ -2131,7 +2153,6 @@ void MIL_AgentPion::OnReceiveFinishLogisticHandlings()
     PHY_RoleInterface_Maintenance* roleMaintenance = RetrieveRole< PHY_RoleInterface_Maintenance >();
     if( roleMaintenance )
         roleMaintenance->FinishAllHandlingsSuccessfullyWithoutDelay();
-
     PHY_RoleInterface_Medical* roleMedical = RetrieveRole< PHY_RoleInterface_Medical >();
     if( roleMedical )
         roleMedical->FinishAllHandlingsSuccessfullyWithoutDelay();

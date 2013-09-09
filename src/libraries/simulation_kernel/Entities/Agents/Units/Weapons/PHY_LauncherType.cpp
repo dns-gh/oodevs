@@ -65,7 +65,7 @@ PHY_LauncherType::PHY_LauncherType( const std::string& strName, xml::xistream& x
     : strName_       ( strName )
     , bDirectFire_   ( false )
     , bIndirectFire_ ( false )
-    , phModificators_( PHY_Posture::GetPostures().size() )
+    , phModificators_( PHY_Posture::GetPostureCount() )
 {
     InitializeForDirectFire  ( xis );
     InitializeForIndirectFire( xis );
@@ -106,18 +106,15 @@ void PHY_LauncherType::InitializeForDirectFire( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_LauncherType::ReadDirect( xml::xistream& xis )
 {
-
     bDirectFire_ = true;
-    const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    std::string postureType;
-
-    xis >> xml::attribute( "posture", postureType );
-    auto it = postures.find( postureType );
-    const PHY_Posture& postureSource = *it->second;
-    if( !postureSource.CanModifyPH() )
+    std::string type;
+    xis >> xml::attribute( "posture", type );
+    const PHY_Posture* postureSource = PHY_Posture::FindPosture( type );
+    if( ! postureSource )
+        xis.error( "unknown type '" + type + "'" );
+    if( ! postureSource->CanModifyPH() )
         return;
-
-    xis >> xml::list( "ph-modifier", *this, &PHY_LauncherType::ReadModifier, postureSource );
+    xis >> xml::list( "ph-modifier", *this, &PHY_LauncherType::ReadModifier, *postureSource );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,21 +123,18 @@ void PHY_LauncherType::ReadDirect( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_LauncherType::ReadModifier( xml::xistream& xis, const PHY_Posture& postureSource )
 {
-    const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    std::string targetType;
-    xis >> xml::attribute( "target-posture", targetType );
-    auto it = postures.find( targetType );
-    const PHY_Posture& postureTarget = *it->second;
-    if( !postureTarget.CanModifyPH() )
+    std::string type;
+    xis >> xml::attribute( "target-posture", type );
+    const PHY_Posture* postureTarget = PHY_Posture::FindPosture( type );
+    if( ! postureTarget )
+        xis.error( "unknown type '" + type + "'" );
+    if( ! postureTarget->CanModifyPH() )
         return;
-
     double rModificatorValue;
     xis >> xml::attribute( "value", rModificatorValue );
-
     if( rModificatorValue < 0 || rModificatorValue > 1 )
         throw MASA_EXCEPTION( xis.context() + "target-posture: value not in [0..1]" );
-
-    RegisterPHModificator( postureSource, postureTarget, rModificatorValue );
+    RegisterPHModificator( postureSource, *postureTarget, rModificatorValue );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +149,7 @@ void PHY_LauncherType::RegisterPHModificator( const PHY_Posture& postureSource, 
     T_PhModificatorValueVector& phModificatorValues = phModificators_[ postureSource.GetID() ];
 
     if( phModificatorValues.size() <= postureTarget.GetID() )
-        phModificatorValues.resize( PHY_Posture::GetPostures().size() );
+        phModificatorValues.resize( PHY_Posture::GetPostureCount() );
 
     assert( phModificatorValues.size() > postureTarget.GetID() );
 

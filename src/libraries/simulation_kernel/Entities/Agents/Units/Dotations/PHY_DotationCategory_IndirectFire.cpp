@@ -65,7 +65,7 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create
 PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
                                                                       unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY, rDetectionRange )
-    , phs_            ( PHY_Posture::GetPostures().size(), 1. )
+    , phs_            ( PHY_Posture::GetPostureCount(), 1. )
     , rDispersionCoef_( 0 )
 {
     rNeutralizationCoef_ = xis.attribute< double >( "neutralization-ratio" );
@@ -83,11 +83,12 @@ PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory_IndirectFire::ReadPh( xml::xistream& xis )
 {
-    const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    auto it = postures.find( xis.attribute< std::string >( "target-posture" ) );
-    const PHY_Posture& posture = *it->second;
-    assert( phs_.size() > posture.GetID() );
-    phs_[ posture.GetID() ] = xis.attribute< double >( "value" );
+    const std::string name = xis.attribute< std::string >( "target-posture" );
+    const PHY_Posture* posture = PHY_Posture::FindPosture( name );
+    if( ! posture )
+        xis.error( "unknown posture name '" + name +"'" );
+    assert( phs_.size() > posture->GetID() );
+    phs_[ posture->GetID() ] = xis.attribute< double >( "value" );
 }
 
 // -----------------------------------------------------------------------------

@@ -3,41 +3,44 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __LinkResolver_ABC_h_
-#define __LinkResolver_ABC_h_
+#ifndef dispatcher_AuthenticatedLinkResolver_ABC_h
+#define dispatcher_AuthenticatedLinkResolver_ABC_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
 
 namespace dispatcher
 {
+    class Profile_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
-/** @class  LinkResolver_ABC
-    @brief  Link resolver declaration
+/** @class  AuthenticatedLinkResolver_ABC
+    @brief  Authenticated link resolver declaration
 */
-// Created: AGE 2007-08-24
+// Created: MCO 2013-08-23
 // =============================================================================
-class LinkResolver_ABC : boost::noncopyable
+class AuthenticatedLinkResolver_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LinkResolver_ABC() {}
-    virtual ~LinkResolver_ABC() {}
+             AuthenticatedLinkResolver_ABC() {}
+    virtual ~AuthenticatedLinkResolver_ABC() {}
     //@}
 
     //! @name Operations
     //@{
+    virtual Profile_ABC& GetProfile( const std::string& link ) const = 0;
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link ) const = 0;
+    virtual unsigned int GetClientID( const std::string& link ) const = 0;
     //@}
 };
 
 }
 
-#endif // __LinkResolver_ABC_h_
+#endif // dispatcher_AuthenticatedLinkResolver_ABC_h

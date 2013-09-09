@@ -2201,6 +2201,11 @@ message UnitMagicAction {
         //! parameters[0], BooleanValue: if true, enable brain debug,
         //!   otherwise disable it
         change_brain_debug                = 56;
+        //! Change the posture of a unit.
+        //! The tasker is set to the target unit.
+        //! parameters[0], Enumeration: the new posture, among
+        //!   UnitAttributes::Posture
+        change_posture                    = 57;
     }
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;

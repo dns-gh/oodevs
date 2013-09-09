@@ -30,12 +30,6 @@ class PHY_ConsumptionType;
 class PHY_Posture : private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, const PHY_Posture* > T_PostureMap;
-    //@}
-
-public:
     //! @name Postures
     //@{
     static const PHY_Posture mouvement_;
@@ -53,9 +47,10 @@ public:
     static void Initialize();
     static void Terminate ();
 
-    static const T_PostureMap& GetPostures();
-    static const PHY_Posture*  FindPosture( const std::string& strName );
-    static const PHY_Posture*  FindPosture( unsigned int nID );
+    static std::size_t GetPostureCount();
+    static const PHY_Posture* FindPosture( const std::string& strName );
+    static const PHY_Posture* FindPosture( unsigned int nID );
+    static const PHY_Posture& FindPosture( sword::UnitAttributes_Posture nAsnID );
     //@}
 
     //! @name Accessors
@@ -94,18 +89,12 @@ private:
     //! @name Member data
     //@{
     const std::string                   strName_;
-    const E_UnitPosture                 nType_;
+    const unsigned int                  nType_;
     const sword::UnitAttributes_Posture nAsnID_;
     const unsigned int                  nFlags_;
     const PHY_ConsumptionType&          consumptionMode_;
     const PHY_Posture*                  pNextAutoPosture_;
     const PHY_Posture*                  pPreviousAutoPosture_;
-    //@}
-
-private:
-    //! @name Static member data
-    //@{
-    static T_PostureMap                 postures_;
     //@}
 };
 

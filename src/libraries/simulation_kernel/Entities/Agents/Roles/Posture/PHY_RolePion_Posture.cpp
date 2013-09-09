@@ -128,7 +128,6 @@ void PHY_RolePion_Posture::ChangePostureCompletionPercentage( double rNewPercent
 {
     if( rPostureCompletionPercentage_ == rNewPercentage )
         return;
-    // Network
     if( fabs( rLastPostureCompletionPercentageSent_ - rNewPercentage ) > rDeltaPercentageForNetwork || rNewPercentage == 0. || rNewPercentage == 1. )
         bPercentageHasChanged_ = true;
     rPostureCompletionPercentage_ = rNewPercentage;
@@ -166,9 +165,11 @@ namespace
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Posture::UpdatePosture( bool bIsDead )
 {
-    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( random, owner_.GetType().GetUnitType(), *pCurrentPosture_,
-                                                                                                           bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
-                                                                                                           rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ ) );
+    std::auto_ptr< PostureComputer_ABC > computer =
+        owner_.GetAlgorithms().postureComputerFactory_->Create(
+            random, owner_.GetType().GetUnitType(), *pCurrentPosture_,
+            bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
+            rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ );
     owner_.Execute( *computer );
     const PostureComputer_ABC::Results& result = computer->Result();
     bool changed = false;
@@ -263,7 +264,7 @@ void PHY_RolePion_Posture::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bPostureHasChanged_ )
     {
-        msg().set_old_posture( pLastPosture_   ->GetAsnID() );
+        msg().set_old_posture( pLastPosture_->GetAsnID() );
         msg().set_new_posture( pCurrentPosture_->GetAsnID() );
     }
     if( bPercentageHasChanged_ )
@@ -290,14 +291,14 @@ void PHY_RolePion_Posture::SendChangedState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_old_posture( pLastPosture_   ->GetAsnID() );
+    msg().set_old_posture( pLastPosture_->GetAsnID() );
     msg().set_new_posture( pCurrentPosture_->GetAsnID() );
     msg().set_posture_transition( static_cast< unsigned int >( rPostureCompletionPercentage_ * 100. ) );
-    rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
-    msg().set_stealth( ( rStealthFactor_ < 1. ) );
+    rLastPostureCompletionPercentageSent_ = rPostureCompletionPercentage_;
+    msg().set_stealth( rStealthFactor_ < 1. );
     msg().set_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
     msg().set_ambiance_safety( bAmbianceSafety_ );
-    rLastInstallationStateSent_                = rInstallationState_;
+    rLastInstallationStateSent_ = rInstallationState_;
 }
 
 // -----------------------------------------------------------------------------
@@ -392,6 +393,16 @@ void PHY_RolePion_Posture::SetTimingFactor( double rFactor )
 {
     assert( rFactor > 0. );
     rTimingFactor_ = rFactor == 0. ? 1. : std::abs( rFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::SetPosture
+// Created: MCO 2013-08-27
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::SetPosture( const PHY_Posture& posture )
+{
+    ChangePosture( posture );
+    ChangePostureCompletionPercentage( 1 );
 }
 
 // -----------------------------------------------------------------------------

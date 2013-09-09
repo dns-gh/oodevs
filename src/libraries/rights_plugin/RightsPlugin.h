@@ -11,7 +11,7 @@
 #define __RightsPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include "dispatcher/LinkResolver_ABC.h"
+#include "dispatcher/AuthenticatedLinkResolver_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
 
@@ -38,14 +38,14 @@ namespace dispatcher
     class Config;
     class CompositeRegistrable;
     class Profile;
+    class LinkResolver_ABC;
 }
 
 namespace plugins
 {
 namespace rights
 {
-
-class AuthenticationSender;
+    class AuthenticationSender;
 
 // =============================================================================
 /** @class  RightsPlugin
@@ -53,13 +53,13 @@ class AuthenticationSender;
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class RightsPlugin : public dispatcher::Plugin_ABC, public dispatcher::LinkResolver_ABC
+class RightsPlugin : public dispatcher::Plugin_ABC, public dispatcher::AuthenticatedLinkResolver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              RightsPlugin( dispatcher::Model& model, dispatcher::ClientPublisher_ABC& clients, const dispatcher::Config& config,
-                           tools::MessageDispatcher_ABC& clientCommands, dispatcher::Plugin_ABC& container, dispatcher::LinkResolver_ABC& base,
+                           tools::MessageDispatcher_ABC& clientCommands, dispatcher::Plugin_ABC& container, const dispatcher::LinkResolver_ABC& resolver,
                            dispatcher::CompositeRegistrable& registrables, int maxConnections );
     virtual ~RightsPlugin();
     //@}
@@ -73,18 +73,12 @@ public:
 
     virtual void Register( dispatcher::Services& services );
 
-    virtual dispatcher::Profile_ABC& GetProfile( const std::string& link );
-    virtual dispatcher::ClientPublisher_ABC& GetPublisher( const std::string& link );
-    virtual unsigned int GetClientID ( const std::string& link ) const;
+    virtual dispatcher::Profile_ABC& GetProfile( const std::string& link ) const;
+    virtual dispatcher::ClientPublisher_ABC& GetPublisher( const std::string& link ) const;
+    virtual unsigned int GetClientID( const std::string& link ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    RightsPlugin( const RightsPlugin& );            //!< Copy constructor
-    RightsPlugin& operator=( const RightsPlugin& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void OnReceive( const std::string& link, const sword::ClientToAuthentication& message );
@@ -104,8 +98,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< dispatcher::Profile > > T_Profiles;
-    typedef T_Profiles::iterator                         IT_Profiles;
-    typedef T_Profiles::const_iterator                  CIT_Profiles;
 
     typedef std::map< std::string, unsigned int > T_ClientsID;
     //@}
@@ -116,7 +108,7 @@ private:
     dispatcher::ClientPublisher_ABC&            clients_;
     const dispatcher::Config&                   config_;
     dispatcher::Plugin_ABC&                     container_;
-    dispatcher::LinkResolver_ABC&               base_;
+    const dispatcher::LinkResolver_ABC&         resolver_;
     std::auto_ptr< dispatcher::ProfileManager > profiles_;
     T_Profiles                                  authenticated_;
     int                                         maxConnections_;

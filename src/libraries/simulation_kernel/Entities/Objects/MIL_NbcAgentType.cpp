@@ -123,7 +123,7 @@ void MIL_NbcAgentType::SortEffectType( xml::xistream& xis )
     else if( effectType == "gaseous" )
         ReadGaz( xis );
     else
-        throw MASA_EXCEPTION( "effects: unknow type" );
+        throw MASA_EXCEPTION( "effects: unknown type" );
 }
 
 // -----------------------------------------------------------------------------

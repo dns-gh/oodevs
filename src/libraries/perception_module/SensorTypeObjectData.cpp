@@ -53,7 +53,7 @@ void SensorTypeObjectData::ReadPosture( xml::xistream& xis, T_FactorVector& fact
         throw xml::exception( xis.context() + "distance-modifier: value not in [0..1]" );
     size_t postureId = 0;
     if( !GET_HOOK( GetPostureIdentifier )( postureType.c_str(), &postureId ) )
-        throw xml::exception( xis.context() + "distance-modifier: unknow type" );
+        throw xml::exception( xis.context() + "distance-modifier: unknown type" );
     if( !GET_HOOK( PostureCanModifyDetection )( postureType.c_str() ) )
         return;
     assert( factors.size() > postureId );

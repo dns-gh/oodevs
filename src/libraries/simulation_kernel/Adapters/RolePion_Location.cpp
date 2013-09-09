@@ -142,7 +142,7 @@ namespace
             agent_.UpdatePatch();
             owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
             owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-            owner_.Apply( &location::MovementHandler_ABC::NotifyHasMove, *pPosition_ );
+            owner_.Apply( &location::MovementHandler_ABC::NotifyHasMoved, *pPosition_ );
         }
     private:
         MIL_AgentPion& owner_;

@@ -14,7 +14,6 @@
 #include "Plugin_ABC.h"
 #include "tools/ServerNetworker.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/ClientBroadcaster_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
 
@@ -36,7 +35,6 @@ class ClientsNetworker : public tools::ServerNetworker
                        , public ClientPublisher_ABC
                        , public LinkResolver_ABC
                        , public Plugin_ABC
-                       , private ClientBroadcaster_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -54,9 +52,7 @@ public:
     virtual void Send( const sword::MessengerToClient& msg );
     virtual void Send( const sword::DispatcherToClient& msg );
 
-    virtual Profile_ABC&         GetProfile  ( const std::string& link );
-    virtual unsigned int         GetClientID( const std::string& link ) const;
-    virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
+    virtual ClientPublisher_ABC& GetPublisher( const std::string& link ) const;
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& link );
@@ -74,10 +70,7 @@ private:
     virtual void ConnectionError    ( const std::string& endpoint, const std::string& reason );
     virtual void ConnectionWarning  ( const std::string& endpoint, const std::string& reason );
 
-    virtual void Activate( const std::string& link );
-    virtual void Deactivate( const std::string& link );
-
-    virtual void Broadcast( const sword::SimToClient& message );
+    void Broadcast( const sword::SimToClient& message );
 
     void OnNewTick();
     //@}
@@ -86,8 +79,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< Client > > T_Clients;
-
-    typedef std::set< ClientBroadcaster_ABC* > T_Broadcasters;
     //@}
 
 private:
@@ -98,7 +89,6 @@ private:
     const Model_ABC& model_;
     T_Clients clients_;
     T_Clients internals_;
-    T_Broadcasters broadcasters_;
     //@}
 };
 

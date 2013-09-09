@@ -247,7 +247,7 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location::Move
+// Name: PHY_RolePion_Location::MagicMove
 // Created: NLD 2004-11-24
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
@@ -437,7 +437,7 @@ void PHY_RolePion_Location::Update( bool bIsDead )
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
     if( locationChanged )
-        owner_->Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
+        owner_->Apply( &location::MovementHandler_ABC::NotifyHasMoved, GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

@@ -82,10 +82,10 @@ void PHY_RolePion_TerrainAnalysis::CheckFuseau()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_TerrainAnalysis::Update
+// Name: PHY_RolePion_TerrainAnalysis::NotifyHasMoved
 // Created: MGD 2010-04-20
 // -----------------------------------------------------------------------------
-void PHY_RolePion_TerrainAnalysis::NotifyHasMove( const MT_Vector2D& newPos )
+void PHY_RolePion_TerrainAnalysis::NotifyHasMoved( const MT_Vector2D& newPos )
 {
     const double range = std::min( std::max( owner_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance(), 3000. ), (double)cacheRadius_ );
     const double squareRange = range * range;

@@ -19,9 +19,8 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( network::NET_RolePion_Dotations )
 
-namespace network
-{
-    
+using namespace network;
+
 // -----------------------------------------------------------------------------
 // Name: NET_RolePion_Dotations constructor
 // Created: LDC 2013-01-09
@@ -146,12 +145,10 @@ void NET_RolePion_Dotations::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::NotifyComponentHasChanged
+// Name: NET_RolePion_Dotations::NotifyDataHasChanged
 // Created: MGD 2009-09-29
 // -----------------------------------------------------------------------------
 void NET_RolePion_Dotations::NotifyDataHasChanged()
 {
     bExternalMustUpdateData_ = true;
 }
-
-} // namespace network

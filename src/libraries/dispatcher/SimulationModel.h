@@ -68,7 +68,6 @@ private:
    unsigned int nCheckpointFrequency_;
    sword::EnumSimulationState nSimState_;
    //$$$ BULLSHIT
-   bool bSendVisionCones_;
    bool bProfilingEnabled_;
    std::string localTime_;
    //@}

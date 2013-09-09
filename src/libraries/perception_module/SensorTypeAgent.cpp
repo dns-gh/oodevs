@@ -74,7 +74,7 @@ namespace
                     throw xml::exception( xis.context() + "distance-modifier: value not in [0..1]" );
             }
             else
-                throw xml::exception( xis.context() + "distance-modifier: unknow type" );
+                throw xml::exception( xis.context() + "distance-modifier: unknown type" );
         }
    private:
        Hook hook_;
@@ -100,7 +100,7 @@ namespace
                    throw xml::exception( xis.context() + "distance-modifier: value not in [0..1]" );
            }
            else
-               throw xml::exception( xis.context() + "distance-modifier: unknow type" );
+               throw xml::exception( xis.context() + "distance-modifier: unknown type" );
        }
    };
 

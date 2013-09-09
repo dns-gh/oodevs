@@ -31,7 +31,6 @@ namespace dispatcher
 // =============================================================================
 /** @class  Simulation
     @brief  Simulation
-    // $$$$ AGE 2007-08-24: au final, sert juste a positionner un flag sur SimulationNetworker...
 */
 // Created: NLD 2006-09-19
 // =============================================================================
@@ -40,7 +39,7 @@ class Simulation : public SimulationPublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Simulation( MessageHandler_ABC& handler, tools::MessageSender_ABC& messageService, const std::string& endpoint );
+             Simulation( MessageHandler_ABC& handler, tools::MessageSender_ABC& sender, const std::string& endpoint );
     virtual ~Simulation();
     //@}
 
@@ -53,16 +52,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Simulation( const Simulation& );            //!< Copy constructor
-    Simulation& operator=( const Simulation& ); //!< Assignment operator
-    //@}
-
-private:
     MessageHandler_ABC& handler_;
-    tools::MessageSender_ABC& messageService_;
-    std::string endpoint_;
+    tools::MessageSender_ABC& sender_;
+    const std::string endpoint_;
 };
 
 }

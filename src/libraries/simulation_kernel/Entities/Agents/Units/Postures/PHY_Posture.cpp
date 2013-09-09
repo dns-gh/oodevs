@@ -14,9 +14,14 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
+#pragma warning( push, 0 )
+#include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 
-PHY_Posture::T_PostureMap PHY_Posture::postures_;
+namespace
+{
+    std::map< std::string, const PHY_Posture* > postures;
+}
 
 const PHY_Posture PHY_Posture::mouvement_        ( "Mouvement"        , eUnitPosture_PostureMouvement        , sword::UnitAttributes::moving                          , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
 const PHY_Posture PHY_Posture::mouvementDiscret_ ( "MouvementDiscret" , eUnitPosture_PostureMouvementDiscret , sword::UnitAttributes::infiltrating                    , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
@@ -33,13 +38,16 @@ const PHY_Posture PHY_Posture::postePrepareGenie_( "PostePrepareGenie", eUnitPos
 void PHY_Posture::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing postures" );
-    postures_[ mouvement_        .GetName() ] = &mouvement_;
-    postures_[ mouvementDiscret_ .GetName() ] = &mouvementDiscret_;
-    postures_[ arret_            .GetName() ] = &arret_;
-    postures_[ posteReflexe_     .GetName() ] = &posteReflexe_;
-    postures_[ poste_            .GetName() ] = &poste_;
-    postures_[ posteAmenage_     .GetName() ] = &posteAmenage_;
-    postures_[ postePrepareGenie_.GetName() ] = &postePrepareGenie_;
+    postures[ mouvement_        .GetName() ] = &mouvement_;
+    postures[ mouvementDiscret_ .GetName() ] = &mouvementDiscret_;
+    postures[ arret_            .GetName() ] = &arret_;
+    postures[ posteReflexe_     .GetName() ] = &posteReflexe_;
+    postures[ poste_            .GetName() ] = &poste_;
+    postures[ posteAmenage_     .GetName() ] = &posteAmenage_;
+    postures[ postePrepareGenie_.GetName() ] = &postePrepareGenie_;
+    const auto descriptor = sword::UnitAttributes_Posture_descriptor();
+    for( int i = 0; i < descriptor->value_count(); ++i )
+        FindPosture( static_cast< sword::UnitAttributes_Posture >( descriptor->value( i )->number() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +56,7 @@ void PHY_Posture::Initialize()
 // -----------------------------------------------------------------------------
 void PHY_Posture::Terminate()
 {
-    postures_.clear();
+    postures.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +65,7 @@ void PHY_Posture::Terminate()
 // -----------------------------------------------------------------------------
 PHY_Posture::PHY_Posture( const std::string& strName, E_UnitPosture nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture, const PHY_Posture* pPreviousAutoPosture )
     : strName_             ( strName )
-    , nType_               ( nType )
+    , nType_               ( static_cast< unsigned int >( nType ) )
     , nAsnID_              ( nAsnID )
     , nFlags_              ( nFlags )
     , consumptionMode_     ( consumptionMode )
@@ -77,12 +85,12 @@ PHY_Posture::~PHY_Posture()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Posture::GetPostures
-// Created: NLD 2004-08-05
+// Name: PHY_Posture::GetPostureCount
+// Created: MCO 2013-08-27
 // -----------------------------------------------------------------------------
-const PHY_Posture::T_PostureMap& PHY_Posture::GetPostures()
+std::size_t PHY_Posture::GetPostureCount()
 {
-    return postures_;
+    return postures.size();
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +126,20 @@ bool PHY_Posture::IsInstantaneous() const
 // -----------------------------------------------------------------------------
 const PHY_Posture* PHY_Posture::FindPosture( const std::string& strName )
 {
-    auto it = postures_.find( strName );
-    return it == postures_.end() ? 0: it->second;
+    auto it = postures.find( strName );
+    return it == postures.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Posture::FindPosture
+// Created: MCO 2013-08-27
+// -----------------------------------------------------------------------------
+const PHY_Posture& PHY_Posture::FindPosture( sword::UnitAttributes_Posture nAsnID )
+{
+    for( auto it = postures.begin(); it != postures.end(); ++it )
+        if( it->second->nAsnID_ == nAsnID )
+            return *it->second;
+    throw MASA_EXCEPTION( "posture mapping mismatch between internal and protocol" );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,8 +148,10 @@ const PHY_Posture* PHY_Posture::FindPosture( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_Posture* PHY_Posture::FindPosture( unsigned int nID )
 {
-    auto it = std::find_if( postures_.begin(), postures_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Posture::GetID ), std::select2nd< T_PostureMap::value_type >() ) ) );
-    return it == postures_.end() ? 0: it->second;
+    for( auto it = postures.begin(); it != postures.end(); ++it )
+        if( it->second->nType_ == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +168,7 @@ const std::string& PHY_Posture::GetName() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_Posture::GetID() const
 {
-    return static_cast< unsigned int >( nType_ );
+    return nType_;
 }
 
 // -----------------------------------------------------------------------------

@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-12 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Network/NET_AgentServer.cpp $
-// $Author: Nld $
-// $Modtime: 17/06/05 21:32 $
-// $Revision: 11 $
-// $Workfile: NET_AgentServer.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "NET_AgentServer.h"
@@ -23,9 +21,9 @@ using namespace tools;
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation )
-    : ServerNetworker                ( config.GetNetworkAddress(), config.GetNetworkTimeout() )
-    , time_                          ( time )
-    , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
+    : ServerNetworker( config.GetNetworkAddress(), config.GetNetworkTimeout() )
+    , time_   ( time )
+    , manager_( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
     , nUnitVisionConesChangeTimeStep_( 0 )
     , bSendUnitVisionCones_          ( false )
 {
@@ -39,7 +37,7 @@ NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& 
 //-----------------------------------------------------------------------------
 NET_AgentServer::~NET_AgentServer()
 {
-    delete pMsgMgr_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -76,7 +74,7 @@ void NET_AgentServer::ConnectionFailed( const std::string& address, const std::s
 {
     MT_LOG_INFO_MSG( "Bad connection received from client '" << address << "' (" << error << ")" );
     ServerNetworker::ConnectionFailed( address, error );
-    pMsgMgr_->RemoveClient( address );
+    manager_->RemoveClient( address );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +85,7 @@ void NET_AgentServer::ConnectionError( const std::string& address, const std::st
 {
     MT_LOG_INFO_MSG( "Connection to '" << address << "' lost (" << error << ")" );
     ServerNetworker::ConnectionError( address, error );
-    if( pMsgMgr_->RemoveClient( address ) )
+    if( manager_->RemoveClient( address ) )
         AllowConnections();
 }
 

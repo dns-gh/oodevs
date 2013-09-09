@@ -56,6 +56,8 @@ void ClientsNetworker::Update()
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Receive( const sword::SimToClient& message )
 {
+    if( plugin_.Filter( message ) )
+        return;
     if( message.message().has_control_send_current_state_begin() )
         DenyConnections();
     else if( message.message().has_control_send_current_state_end() )
@@ -63,28 +65,6 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
     else if( message.message().has_control_begin_tick() )
         OnNewTick();
     Broadcast( message );
-    for( auto it = broadcasters_.begin(); it != broadcasters_.end(); ++it )
-        (*it)->Broadcast( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Activate
-// Created: MCO 2011-11-07
-// -----------------------------------------------------------------------------
-void ClientsNetworker::Activate( const std::string& link )
-{
-    boost::shared_ptr< Client > pClient = clients_[ link ];
-    internals_[ link ] = pClient;
-    model_.Send( *pClient );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Deactivate
-// Created: MCO 2011-11-07
-// -----------------------------------------------------------------------------
-void ClientsNetworker::Deactivate( const std::string& link )
-{
-    internals_.erase( link );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,9 +86,9 @@ void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link, dispatcher::Profile_ABC& /*profile*/ )
 {
-    auto it = clients_.find( link );
-    if( it != clients_.end() )
-        it->second->Activate();
+    boost::shared_ptr< Client > pClient = clients_[ link ];
+    internals_[ link ] = pClient;
+    model_.Send( *pClient );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,9 +97,7 @@ void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_AB
 // -----------------------------------------------------------------------------
 void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link )
 {
-    auto it = clients_.find( link );
-    if( it != clients_.end() )
-        it->second->Deactivate();
+    internals_.erase( link );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +109,7 @@ void ClientsNetworker::ConnectionSucceeded( const std::string& local, const std:
     MT_LOG_INFO_MSG( "Connection received from client '" << remote << "'" );
     ServerNetworker::ConnectionSucceeded( local, remote );
     boost::shared_ptr< Client >& pClient = clients_[ remote ];
-    pClient.reset( new Client( *this, *this, remote ) );
+    pClient.reset( new Client( *this, remote ) );
     services_.Send( *pClient );
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }
@@ -285,28 +263,10 @@ void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::GetProfile
-// Created: AGE 2007-09-05
-// -----------------------------------------------------------------------------
-Profile_ABC& ClientsNetworker::GetProfile( const std::string& )
-{
-    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::GetClientID
-// Created: LGY 2013-04-18
-// -----------------------------------------------------------------------------
-unsigned int ClientsNetworker::GetClientID( const std::string& /*link*/ ) const
-{
-    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ClientsNetworker::GetPublisher
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
-ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
+ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link ) const
 {
     auto it = clients_.find( link );
     if( it == clients_.end() || !it->second )
