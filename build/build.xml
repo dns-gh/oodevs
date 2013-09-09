@@ -15,7 +15,7 @@
     <property name="version.project" value="5.2"/>
     <property name="version.major" value="5.2.2"/>
 
-    <property name="version.version" value="${version.major}.${git.revision}"/>
+    <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
     <property name="unicode.extension" value=" ゑ"/>
 
     <propertyregex property="platform32" input="${platform}" regexp="(\w+)_x64" select="\1" defaultvalue="${platform}"/>
