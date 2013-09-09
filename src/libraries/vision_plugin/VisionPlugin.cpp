@@ -157,5 +157,4 @@ void VisionPlugin::Update()
     enabled_ = enabled;
     if( ! enabled_ )
         cones_.clear();
-    MT_LOG_INFO_MSG( "Vision plugin " << (enabled_ ? "enabled" : "disabled") << " vision cones" );
 }

@@ -105,6 +105,8 @@ void NET_AgentServer::ConnectionWarning( const std::string& address , const std:
 // -----------------------------------------------------------------------------
 void NET_AgentServer::SetMustSendUnitVisionCones( bool bEnable )
 {
+    if( bEnable != bSendUnitVisionCones_ )
+        MT_LOG_INFO_MSG( (bEnable ? "Enabling" : "Disabling") << " vision cones" );
     nUnitVisionConesChangeTimeStep_ = time_.GetCurrentTimeStep();
     bSendUnitVisionCones_           = bEnable;
 }
