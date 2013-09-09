@@ -142,6 +142,7 @@ private:
     T_ConcentrationMap concentrations_;
     T_FlowMap flows_;
     double rDominationState_;
+    double armedIndividuals_;
     int locked_;
     bool bIsRecon_;
     bool bReconAttributesValid_;

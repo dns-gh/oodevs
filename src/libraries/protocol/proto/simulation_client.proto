@@ -227,6 +227,7 @@ message HierarchyModificationAck {
 */
 message AutomatChangeKnowledgeGroupAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat knowledge group change operation @see HierarchyModificationAck.ErrorCode
+    optional Tasker tasker = 2;
 }
 
 /** @struct AutomatChangeKnowledgeGroup
@@ -245,6 +246,7 @@ message AutomatChangeKnowledgeGroup {
 */
 message ChangeLogisticLinksAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat logistic links change operation @see HierarchyModificationAck.ErrorCode
+    optional Tasker tasker = 2;
 }
 
 /** @struct ChangeLogisticLinks
@@ -262,6 +264,7 @@ message ChangeLogisticLinks {
 */
 message AutomatChangeSuperiorAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat superior change operation @see HierarchyModificationAck.ErrorCode
+    optional Tasker tasker = 2;
 }
 
 /** @struct UnitChangeSuperiorAck
@@ -271,6 +274,7 @@ message AutomatChangeSuperiorAck {
 */
 message UnitChangeSuperiorAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the agent superior change operation @see HierarchyModificationAck.ErrorCode
+    optional Tasker tasker = 2;
 }
 
 /** @struct LogSupplyPushFlowAck
@@ -288,6 +292,7 @@ message LogSupplyPushFlowAck {
         error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
     optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
+    optional Tasker tasker = 2;
 }
 
 /** @struct LogSupplyPullFlowAck
@@ -305,6 +310,7 @@ message LogSupplyPullFlowAck {
         error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
     optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
+    optional Tasker tasker = 2;
 }
 
 /** @struct LogSupplyChangeQuotasAck
@@ -327,6 +333,7 @@ message LogSupplyChangeQuotasAck {
         error_invalid_dotation = 3;
     }
     optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
+    optional Tasker tasker = 2;
 }
 
 /** @struct ActionCreateFireOrderAck
@@ -1939,6 +1946,7 @@ message CrowdKnowledgeUpdate {
    required KnowledgeGroupId knowledge_group       = 2; //!< The knowledge group identifier
    optional int32            domination            = 3; //!< The crowd domination
    optional string           critical_intelligence = 4; //!< The crowd critical intelligence
+   optional float            armed_individuals     = 5;
 }
 
 /** @struct CrowdKnowledgeDestruction

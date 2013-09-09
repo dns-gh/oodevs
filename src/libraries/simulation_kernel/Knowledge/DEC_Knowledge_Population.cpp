@@ -45,6 +45,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( boost::shared_ptr< MIL_Knowl
     , criticalIntelligence_        ( "" )
     , nID_                         ( idManager_.GetFreeId() )
     , rDominationState_            ( 0. )
+    , armedIndividuals_            ( 0. )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
@@ -66,6 +67,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
     , criticalIntelligence_        ( "" )
     , nID_                         ( 0 )
     , rDominationState_            ( 0. )
+    , armedIndividuals_            ( 0. )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
@@ -100,6 +102,7 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsign
          >> bIsRecon_
          >> bReconAttributesValid_
          >> rDominationState_
+         >> armedIndividuals_
          >> criticalIntelligence_;
     idManager_.Lock( nID_ );
     assert( pPopulationKnown_ );
@@ -120,6 +123,7 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsig
          << bIsRecon_
          << bReconAttributesValid_
          << rDominationState_
+         << armedIndividuals_
          << criticalIntelligence_;
 }
 
@@ -183,6 +187,11 @@ void DEC_Knowledge_Population::UpdateReconAttributes()
     if( rDominationState_ != pPopulationKnown_->GetDecision().GetDominationState() )
     {
         rDominationState_ = pPopulationKnown_->GetDecision().GetDominationState();
+        bDecStateUpdated_ = true;
+    }
+    if( armedIndividuals_ != pPopulationKnown_->GetArmedIndividuals() )
+    {
+        armedIndividuals_ = pPopulationKnown_->GetArmedIndividuals();
         bDecStateUpdated_ = true;
     }
 }
@@ -454,6 +463,7 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
             asnMsg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
         if( bLastCriticalIntelligenceUpdated_ )
             asnMsg().set_critical_intelligence( criticalIntelligence_ );
+        asnMsg().set_armed_individuals( armedIndividuals_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -478,6 +488,7 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
             asnMsg().set_domination( static_cast< unsigned int>( rDominationState_ * 100. ) );
         if( !criticalIntelligence_.empty() )
             asnMsg().set_critical_intelligence( criticalIntelligence_ );
+        asnMsg().set_armed_individuals( armedIndividuals_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -582,6 +593,7 @@ void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowled
     bIsRecon_ = knowledge.bIsRecon_;
     bReconAttributesValid_ = knowledge.bReconAttributesValid_;
     rDominationState_ = knowledge.rDominationState_;
+    armedIndividuals_ = knowledge.armedIndividuals_;
     criticalIntelligence_ = knowledge.criticalIntelligence_;
     bDecStateUpdated_ = true;
     bCriticalIntelligenceUpdated_ = true;

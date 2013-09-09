@@ -34,6 +34,7 @@ PopulationKnowledge::PopulationKnowledge( Model& model, const sword::CrowdKnowle
     , population_          ( model.Populations().Get( msg.crowd().id() ) )
     , team_                ( model.Sides().Get( msg.party().id() ) )
     , nDominationState_    ( 0 )
+    , armedIndividuals_    ( 0. )
     , criticalIntelligence_( "" )
 {
     // NOTHING
@@ -58,6 +59,8 @@ void PopulationKnowledge::Update( const sword::CrowdKnowledgeUpdate& msg )
         nDominationState_ = msg.domination();
     if( msg.has_critical_intelligence() )
         criticalIntelligence_ = msg.critical_intelligence();
+    if( msg.has_armed_individuals() )
+        armedIndividuals_ = msg.armed_individuals();
 }
 
 // -----------------------------------------------------------------------------
@@ -158,6 +161,7 @@ void PopulationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     asn().set_domination( nDominationState_ );
     asn().set_critical_intelligence( criticalIntelligence_ );
+    asn().set_armed_individuals( armedIndividuals_ );
 
     asn.Send( publisher );
 }
