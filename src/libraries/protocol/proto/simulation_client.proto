@@ -3717,7 +3717,8 @@ message SimToClient {
         //! @copybrief IndirectFirePerception
         optional IndirectFirePerception indirect_fire_perception = 147;
         //! @copybrief ControlEnableVisionConesAck
-        optional ControlEnableVisionConesAck control_enable_vision_cones_ack = 148;
+        optional ControlEnableVisionConesAck 
+            control_enable_vision_cones_ack = 148;
         //! @copybrief ListEnabledVisionConesAck
         optional ListEnabledVisionConesAck list_enabled_vision_cones_ack = 149;
     }
