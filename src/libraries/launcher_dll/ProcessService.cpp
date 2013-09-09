@@ -449,6 +449,8 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
             sword::CheckpointListResponse::CheckPoint* next = message.mutable_checkpoint(i);
             next->set_name( checkpoints[i].name_ );
             next->set_type( checkpoints[i].auto_ ? sword::CheckpointListResponse_CheckPoint::automatic : sword::CheckpointListResponse_CheckPoint::manual );
+            if( !checkpoints[i].date_.empty() )
+                next->mutable_date_time()->set_data( checkpoints[i].date_ );
         }
     }
 }

@@ -18,6 +18,7 @@
 #pragma warning( pop )
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <QtCore/qfileinfo.h>
 #include <QtCore/qstringlist.h>
 
 namespace bfs = boost::filesystem;
@@ -187,6 +188,12 @@ namespace frontend
                     CheckpointStatus item;
                     item.name_ = entry.join( "/" ).toAscii().constData();
                     item.auto_ = bfs::exists( p / item.name_ / "auto" );
+                    QFileInfo info( p.string().c_str() );
+                    QDateTime dateTime = info.created();
+                    QString str = dateTime.toString( Qt::ISODate );
+                    str.remove( ':' );
+                    str.remove( '-' );
+                    item.date_ = str.toAscii().constData();
                     result.push_back( item );
                     it.no_push();
                 }

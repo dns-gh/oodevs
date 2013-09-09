@@ -39,6 +39,7 @@ namespace frontend
         {
             std::string name_;
             bool auto_;
+            std::string date_;
         };
         QStringList ListTerrains        ( const tools::GeneralConfig& config );
         QStringList ListExercises       ( const tools::GeneralConfig& config, const std::string& subDirs = "" );

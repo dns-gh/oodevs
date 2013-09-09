@@ -188,6 +188,7 @@ message CheckpointListResponse {
 		}
 		required string  name	= 1;
 		required Type    type	= 2;
+		optional DateTime date_time = 3;
 	}
     required ErrorCode error_code = 1 [ default = success ];   //!< operation return code
     required string    exercise   = 2;                         //!< exercise for which checkpoints are listed
