@@ -77,6 +77,18 @@ public:
         ConsumptionItem* pRInfo = static_cast<ConsumptionItem*>( pR );
         return pLInfo->nConsumptionType_ < pRInfo->nConsumptionType_;
     }
+
+    bool Contains( int consumptionType, const std::string& consumption ) const
+    {
+        for( auto it = vDatas_.begin(); it != vDatas_.end(); ++it )
+        {
+            ConsumptionItem* pConsumption = static_cast<ConsumptionItem*>( *it );
+            if( pConsumption )
+                if( pConsumption->nConsumptionType_ == consumptionType && ( consumption == pConsumption->ptrCategory_.GetData()->strName_.GetData() ) )
+                    return true;
+        }
+        return false;
+    }
 };
 
 
@@ -153,6 +165,7 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( int /*nRow*/, int /*nCol*
     Q3PopupMenu addMenu( &menu );
 
     int nItemId = 0;
+    ADN_Connector_ConsumptionTable* connector = static_cast< ADN_Connector_ConsumptionTable* >( pConnector_ );
     // Iterate over the consumption types, and create an 'add' submenu for each of them
     for( int nConsumption = 0; nConsumption < eNbrConsumptionType; ++nConsumption )
     {
@@ -162,6 +175,8 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( int /*nRow*/, int /*nCol*
         // Fill the popup menu with submenus, one for each dotation.
         for( ADN_Composantes_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
         {
+            if( connector->Contains( nConsumption, (*it)->ptrCategory_.GetData()->strName_.GetData() ) )
+                continue;
             // Add the item.
             pConsumptionMenu->insertItem( (*it)->ptrCategory_.GetData()->strName_.GetData().c_str(), nItemId );
 

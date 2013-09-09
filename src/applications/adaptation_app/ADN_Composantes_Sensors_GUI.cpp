@@ -47,6 +47,15 @@ public:
         pItemCombo->GetConnector().Connect( &static_cast< SensorInfos* >( obj )->ptrSensor_.GetData()->strName_ );
         pItemInt->GetConnector().Connect( &static_cast< SensorInfos* >( obj )->rHeight_ );
     }
+
+    bool Contains( ADN_Sensors_Data::SensorInfos* pInfo )
+    {
+        std::string name = pInfo->GetItemName();
+        for( auto it = vDatas_.begin(); it != vDatas_.end(); ++it )
+            if( name == static_cast< SensorInfos* >( *it )->GetItemName() )
+                return true;
+        return false;
+    }
 private:
     ADN_Composantes_Sensors_GUI_Connector& operator=( const ADN_Composantes_Sensors_GUI_Connector& );
 };
@@ -95,9 +104,12 @@ void ADN_Composantes_Sensors_GUI::OnContextMenu( int /*row*/, int /*col*/, const
     // Get the list of the possible munitions
     bool bDisplayAdd = false;
     bool bDisplayRem = GetCurrentData() != 0;
+    ADN_Composantes_Sensors_GUI_Connector* connector = static_cast< ADN_Composantes_Sensors_GUI_Connector* >( pConnector_ );
     ADN_Sensors_Data::T_SensorsInfos_Vector& vAllSensors = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos();
     for( ADN_Sensors_Data::T_SensorsInfos_Vector::iterator it = vAllSensors.begin(); it != vAllSensors.end(); ++it )
     {
+        if( connector->Contains( *it ) )
+            continue;
         bDisplayAdd = true;
         pTargetMenu->insertItem( ( *it )->strName_.GetData().c_str(), static_cast< int >( 2 + std::distance( vAllSensors.begin(), it ) ) );
     }
