@@ -65,6 +65,22 @@ namespace
         "\"exercise\":{\"name\":\"a\",\"checksum\":\"c\"},"
         "\"terrain\":{\"name\":\"a\",\"checksum\":\"c\"},"
         "\"model\":{\"name\":\"a\",\"checksum\":\"c\"}";
+    const std::string sides =
+        "{"
+        "    \"sides\": {"
+        "        \"no_side_objects\": \"true\","
+        "        \"list\": {"
+        "            \"1\": {"
+        "                \"name\": \"Local militia\","
+        "                \"created\": \"true\""
+        "            },"
+        "            \"3\": {"
+        "                \"name\": \"Friend forces\","
+        "                \"created\": \"true\""
+        "            }"
+        "        }"
+        "    }"
+        "}";
 
     bool EndWith( const std::string& suffix, const host::Path& path )
     {
@@ -126,6 +142,8 @@ namespace
             , plugins ( fs, "" )
             , any_idx ( 0 )
         {
+            MOCK_RESET( node->GetExerciseProperties );
+            MOCK_EXPECT( node->GetExerciseProperties ).returns( FromJson( sides ) );
             MOCK_EXPECT( fs.GetDirectorySize ).returns( 0 );
             MOCK_EXPECT( fs.IsDirectory ).returns( false) ;
             MOCK_EXPECT( fs.MakePaths );
@@ -312,7 +330,8 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
 {
     const Tree save = MakeSession()->Save();
-    ReloadSession( save );
+    const auto copy = ReloadSession( save )->Save();
+    BOOST_CHECK_EQUAL( ToJson( save ), ToJson( copy ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_starts_and_reloads, Fixture )

@@ -225,7 +225,7 @@ Session::Session( const SessionDependencies& deps,
     , node_        ( node )
     , id_          ( Get< Uuid >( tree, "id" ) )
     , paths_       ( paths )
-    , cfg_         ( ReadConfig( deps.plugins, tree ) )
+    , cfg_         ()
     , links_       ( deps.nodes.LinkExercise( *node_, tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
     , replay_      ( Get< Uuid >( tree, "replay.root" ) )
@@ -245,6 +245,10 @@ Session::Session( const SessionDependencies& deps,
     , replays_     ()
 {
     NotifyNode();
+    // refill config with exercise properties,
+    // they could have changed since last run
+    ParseExerciseProperties();
+    ReadConfig( cfg_, deps.plugins, tree );
     node_->UpdateSessionSize( id_, size_ );
     if( !process_ && !IsReplay() )
         ParseCheckpoints();
