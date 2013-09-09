@@ -156,19 +156,23 @@ message HierarchyModificationAck {
 }
 
 message MsgAutomatChangeKnowledgeGroupAck  {
-    required HierarchyModificationAck.ErrorCode error_code = 1;
+    required HierarchyModificationAck.ErrorCode error_code	= 1;
+	optional Common.Tasker      				tasker	 	= 2; // [06/08/2013 FT45401]
 }
 
 message MsgChangeLogisticLinksAck  {
-    required HierarchyModificationAck.ErrorCode error_code = 1;
+    required HierarchyModificationAck.ErrorCode error_code 	= 1;
+	optional Common.Tasker      				tasker 		= 2; // [06/08/2013 FT45401]
 }
 
 message MsgAutomatChangeSuperiorAck  {
-    required HierarchyModificationAck.ErrorCode error_code = 1;
+    required HierarchyModificationAck.ErrorCode error_code 	= 1;
+	optional Common.Tasker      				tasker	 	= 2; // [06/08/2013 FT45401]
 }
 
 message MsgUnitChangeSuperiorAck  {
-    required HierarchyModificationAck.ErrorCode error_code = 1;
+    required HierarchyModificationAck.ErrorCode error_code 	= 1;
+	optional Common.Tasker      				tasker	 	= 2; // [06/08/2013 FT45401]
 }
 
 message MsgUnitTransferEquipmentAck  {
@@ -177,7 +181,8 @@ message MsgUnitTransferEquipmentAck  {
         error_invalid_equipment_type   = 1;
         error_invalid_equipment_number = 2;
     }
-    optional ErrorCode ack = 1;
+    optional ErrorCode 		ack 	= 1;
+	optional Common.Tasker	tasker	= 2; // [06/08/2013 FT45401]
 }
 
 message MsgLogSupplyPushFlowAck  {
@@ -186,7 +191,8 @@ message MsgLogSupplyPushFlowAck  {
         error_invalid_donneur_pushflow  = 1;
         error_invalid_receveur_pushflow = 2;
     }
-    optional EnumLogSupplyPushFlow ack = 1;
+    optional EnumLogSupplyPushFlow 	ack 	= 1;
+	optional Common.Tasker      	tasker 	= 2; // [06/08/2013 FT45401]
 }
 
 message MsgLogSupplyPullFlowAck  {
@@ -195,7 +201,8 @@ message MsgLogSupplyPullFlowAck  {
         error_invalid_provider_pullflow = 1;
         error_invalid_receiver_pullflow = 2;
     }
-    optional EnumLogSupplyPullFlow ack = 1;
+    optional EnumLogSupplyPullFlow 	ack 	= 1;
+	optional Common.Tasker      	tasker 	= 2; // [06/08/2013 FT45401]
 }
 
 message MsgLogSupplyChangeQuotasAck {
@@ -205,7 +212,8 @@ message MsgLogSupplyChangeQuotasAck {
         error_invalid_receiver        = 2;
         error_invalid_dotation        = 3;
     }
-    optional LogSupplyChangeQuotas ack = 1;
+    optional LogSupplyChangeQuotas 	ack 	= 1;
+	optional Common.Tasker      	tasker 	= 2; // [06/08/2013 FT45401]
 }
 
 message MsgActionCreateFireOrderAck {
@@ -1084,6 +1092,7 @@ message MsgCrowdKnowledgeUpdate {
    required Common.KnowledgeGroupId  knowledge_group       = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    optional int32                    etat_domination       = 3;
    optional string                   critical_intelligence = 4;
+   optional float                    armed_individuals		= 5; // [06/08/2013 FT45402]
 }
 
 message MsgCrowdKnowledgeDestruction {

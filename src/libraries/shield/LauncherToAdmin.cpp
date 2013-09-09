@@ -207,6 +207,8 @@ void LauncherToAdmin::Convert( const sword::CheckpointListResponse& from, MsgsLa
             checkpointTo->set_type( MsgsLauncherToAdmin::MsgCheckpointListResponse_CheckPoint::automatic );
         else
             checkpointTo->set_type( MsgsLauncherToAdmin::MsgCheckpointListResponse_CheckPoint::manual );
+        if( checkpointFrom.has_date_time() )
+            checkpointTo->mutable_date_time()->set_data( checkpointFrom.date_time().data() );
     }
 }
 

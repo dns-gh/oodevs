@@ -107,49 +107,56 @@ BOOST_FIXTURE_TEST_CASE( change_diplomacy_ack_to_client_is_converted, ContextFix
 BOOST_FIXTURE_TEST_CASE( automat_change_knowledge_group_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_change_knowledge_group_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_agent );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_knowledge_group_ack { error_code: error_invalid_pion } }" ) );
+    content.mutable_automat_change_knowledge_group_ack()->mutable_tasker()->mutable_unit()->set_id( 2 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_knowledge_group_ack { error_code: error_invalid_pion tasker { unit { id: 2 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_change_logistic_links_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_agent );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links_ack { error_code: error_invalid_pion } }" ) );
+    content.mutable_automat_change_logistic_links_ack()->mutable_tasker()->mutable_unit()->set_id( 2 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links_ack { error_code: error_invalid_pion tasker { unit { id: 2 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_change_superior_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_change_superior_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_agent );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_superior_ack { error_code: error_invalid_pion } }" ) );
+    content.mutable_automat_change_superior_ack()->mutable_tasker()->mutable_unit()->set_id( 2 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_superior_ack { error_code: error_invalid_pion tasker { unit { id: 2 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( unit_change_superior_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_unit_change_superior_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_agent );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_change_superior_ack { error_code: error_invalid_pion } }" ) );
+    content.mutable_unit_change_superior_ack()->mutable_tasker()->mutable_unit()->set_id( 2 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_change_superior_ack { error_code: error_invalid_pion tasker { unit { id: 2 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_push_flow_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_log_supply_push_flow_ack()->set_error_code( sword::LogSupplyPushFlowAck::error_invalid_supplier );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_push_flow_ack { ack: error_invalid_donneur_pushflow } }" ) );
+    content.mutable_log_supply_push_flow_ack()->mutable_tasker()->mutable_unit()->set_id( 2 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_push_flow_ack { ack: error_invalid_donneur_pushflow tasker { unit { id: 2 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_pull_flow_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_log_supply_pull_flow_ack()->set_error_code( sword::LogSupplyPullFlowAck::error_invalid_supplier );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_pull_flow_ack { ack: error_invalid_provider_pullflow } }" ) );
+    content.mutable_log_supply_pull_flow_ack()->mutable_tasker()->mutable_unit()->set_id( 2 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_pull_flow_ack { ack: error_invalid_provider_pullflow tasker { unit { id: 2 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_change_quotas_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_log_supply_change_quotas_ack()->set_error_code( sword::LogSupplyChangeQuotasAck::error_invalid_supplier );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_change_quotas_ack { ack: error_invalid_supplier } }" ) );
+    content.mutable_log_supply_change_quotas_ack()->mutable_tasker()->mutable_unit()->set_id( 2 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_change_quotas_ack { ack: error_invalid_supplier tasker { unit { id: 2 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -1391,7 +1398,8 @@ BOOST_FIXTURE_TEST_CASE( crowd_knowledge_update_to_client_is_converted, ContextF
     content.mutable_crowd_knowledge_update()->mutable_knowledge_group()->set_id( 8 );
     content.mutable_crowd_knowledge_update()->set_domination( 9 );
     content.mutable_crowd_knowledge_update()->set_critical_intelligence( "intelligence" );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_knowledge_update { knowledge { id: 7 } knowledge_group { id: 8 } etat_domination: 9 critical_intelligence: \"intelligence\" } }" ) );
+    content.mutable_crowd_knowledge_update()->set_armed_individuals( 0.25 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_knowledge_update { knowledge { id: 7 } knowledge_group { id: 8 } etat_domination: 9 critical_intelligence: \"intelligence\" armed_individuals: 0.25 } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 

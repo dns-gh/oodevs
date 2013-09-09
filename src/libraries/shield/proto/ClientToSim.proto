@@ -91,15 +91,15 @@ message MsgControlCheckPointSetFrequency {
 }
 
 message MsgControlCheckPointDeleteRequest {
-    required string checkpoint = 1;
+   required string checkpoint = 1;
 }
 
 message MsgControlCheckPointListRequest {}
 
 
 message MsgControlEnableVisionCones {
-    required bool vision_cones = 1;
-    optional Common.UnitId unit = 2;
+   required bool vision_cones = 1;
+   optional Common.UnitId unit = 2; // Valeur 0 non possible [28/06/2013 FT45391]
 }
 
 message MsgOrderStream {

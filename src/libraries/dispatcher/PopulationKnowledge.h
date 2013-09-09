@@ -95,6 +95,7 @@ public:
     const kernel::Population_ABC&     population_;
     const kernel::Team_ABC&           team_;
     unsigned int                      nDominationState_;
+    float                             armedIndividuals_;
     std::string                       criticalIntelligence_;
     tools::Resolver< PopulationConcentrationKnowledge > concentrations_;
     tools::Resolver< PopulationFlowKnowledge          > flows_;

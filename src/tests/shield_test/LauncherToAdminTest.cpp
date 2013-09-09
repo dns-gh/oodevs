@@ -128,20 +128,21 @@ BOOST_FIXTURE_TEST_CASE( session_command_execution_response_from_launcher_is_con
 BOOST_FIXTURE_TEST_CASE( checkpoint_list_response_from_launcher_is_converted, ContextFixture< sword::LauncherToAdmin > )
 {
     content.mutable_checkpoint_list_response()->set_error_code( sword::CheckpointListResponse::invalid_exercise_name );
-    content.mutable_checkpoint_list_response()->set_exercise("name") ;
-    content.mutable_checkpoint_list_response()->set_session("session") ;
+    content.mutable_checkpoint_list_response()->set_exercise( "name" );
+    content.mutable_checkpoint_list_response()->set_session( "session" );
     
     content.mutable_checkpoint_list_response()->add_checkpoint();
     sword::CheckpointListResponse_CheckPoint* checkpoint1 = content.mutable_checkpoint_list_response()->mutable_checkpoint( 0 );
     checkpoint1->set_name( "checkpoint1" );
     checkpoint1->set_type( sword::CheckpointListResponse_CheckPoint::automatic );
+    checkpoint1->mutable_date_time()->set_data( "date" );
 
     content.mutable_checkpoint_list_response()->add_checkpoint() ;
     sword::CheckpointListResponse_CheckPoint* checkpoint2 = content.mutable_checkpoint_list_response()->mutable_checkpoint( 1 );
     checkpoint2->set_name( "checkpoint2" );
     checkpoint2->set_type( sword::CheckpointListResponse_CheckPoint::manual );
 
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { checkpoint_list_response { error_code: invalid_exercise_name exercise: \"name\" session: \"session\" checkpoint { name: \"checkpoint1\" type: automatic } checkpoint { name: \"checkpoint2\" type: manual } } }" ) );
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { checkpoint_list_response { error_code: invalid_exercise_name exercise: \"name\" session: \"session\" checkpoint { name: \"checkpoint1\" type: automatic date_time { data: \"date\" } } checkpoint { name: \"checkpoint2\" type: manual } } }" ) );
     converter.ReceiveLauncherToAdmin( msg );
 }
 

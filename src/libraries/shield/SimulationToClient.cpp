@@ -306,6 +306,7 @@ void SimulationToClient::Convert( const sword::LogSupplyPushFlowAck& from, MsgsS
     CONVERT_ENUM_TO( error_code, ack, ( sword::LogSupplyPushFlowAck::no_error_pushflow, MsgsSimToClient::MsgLogSupplyPushFlowAck::no_error_pushflow )
                                       ( sword::LogSupplyPushFlowAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_donneur_pushflow )
                                       ( sword::LogSupplyPushFlowAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_receveur_pushflow ) );
+    CONVERT_CB( tasker, ConvertTasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -317,6 +318,7 @@ void SimulationToClient::Convert( const sword::LogSupplyPullFlowAck& from, MsgsS
     CONVERT_ENUM_TO( error_code, ack, ( sword::LogSupplyPullFlowAck::no_error_pullflow, MsgsSimToClient::MsgLogSupplyPullFlowAck::no_error_pullflow )
                                       ( sword::LogSupplyPullFlowAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_provider_pullflow )
                                       ( sword::LogSupplyPullFlowAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_receiver_pullflow ) );
+    CONVERT_CB( tasker, ConvertTasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,6 +331,7 @@ void SimulationToClient::Convert( const sword::LogSupplyChangeQuotasAck& from, M
                                                   ( sword::LogSupplyChangeQuotasAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_supplier )
                                                   ( sword::LogSupplyChangeQuotasAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receiver )
                                                   ( sword::LogSupplyChangeQuotasAck::error_invalid_dotation, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_dotation ));
+    CONVERT_CB( tasker, ConvertTasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -392,6 +395,7 @@ void SimulationToClient::Convert( const sword::ControlEndTick& from, MsgsSimToCl
 void SimulationToClient::Convert( const sword::AutomatChangeKnowledgeGroupAck& from, MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck* to )
 {
     ConvertHierarchyModificationAckErrorCode( from, to );
+    CONVERT_CB( tasker, ConvertTasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -401,6 +405,7 @@ void SimulationToClient::Convert( const sword::AutomatChangeKnowledgeGroupAck& f
 void SimulationToClient::Convert( const sword::ChangeLogisticLinksAck& from, MsgsSimToClient::MsgChangeLogisticLinksAck* to )
 {
     ConvertHierarchyModificationAckErrorCode( from, to );
+    CONVERT_CB( tasker, ConvertTasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -410,6 +415,7 @@ void SimulationToClient::Convert( const sword::ChangeLogisticLinksAck& from, Msg
 void SimulationToClient::Convert( const sword::AutomatChangeSuperiorAck& from, MsgsSimToClient::MsgAutomatChangeSuperiorAck* to )
 {
     ConvertHierarchyModificationAckErrorCode( from, to );
+    CONVERT_CB( tasker, ConvertTasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -419,6 +425,7 @@ void SimulationToClient::Convert( const sword::AutomatChangeSuperiorAck& from, M
 void SimulationToClient::Convert( const sword::UnitChangeSuperiorAck& from, MsgsSimToClient::MsgUnitChangeSuperiorAck* to )
 {
     ConvertHierarchyModificationAckErrorCode( from, to );
+    CONVERT_CB( tasker, ConvertTasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -1958,6 +1965,7 @@ void SimulationToClient::Convert( const sword::CrowdKnowledgeUpdate& from, MsgsS
     CONVERT_ID( knowledge_group );
     CONVERT_TO( domination, etat_domination );
     CONVERT( critical_intelligence );
+    CONVERT( armed_individuals );
 }
 
 // -----------------------------------------------------------------------------

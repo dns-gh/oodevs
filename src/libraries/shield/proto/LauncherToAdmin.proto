@@ -199,8 +199,9 @@ message MsgCheckpointListResponse {
 			automatic   = 0;
 			manual		= 1;
 		}
-		required string  name	= 1;
-		required Type    type	= 2;
+		required string  			name		= 1;
+		required Type    			type		= 2;
+		optional Common.MsgDateTime date_time	= 3; // [06/08/2013 FT45400]
 	}
     enum ErrorCode {
         success                 = 0; //!< checkpoints successfully listed

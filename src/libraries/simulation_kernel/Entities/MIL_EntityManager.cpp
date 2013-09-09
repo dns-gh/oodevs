@@ -1375,6 +1375,7 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
 {
     client::AutomatChangeKnowledgeGroupAck ack;
     ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
+    ack().mutable_tasker()->CopyFrom( message.tasker() );
     MIL_Automate* pAutomate = 0;
     try
     {
@@ -1507,6 +1508,7 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
 {
     client::ChangeLogisticLinksAck ack;
     ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
+    ack().mutable_tasker()->CopyFrom( message.tasker() );
     try
     {
         // Subordinate
@@ -1545,6 +1547,7 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
 {
     client::AutomatChangeSuperiorAck ack;
     ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
+    ack().mutable_tasker()->CopyFrom( message.tasker() );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
@@ -1578,6 +1581,7 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& messag
 {
     client::UnitChangeSuperiorAck ack;
     ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
+    ack().mutable_tasker()->CopyFrom( message.tasker() );
     try
     {
         MIL_AgentPion* pPion = ( message.tasker().has_unit() && message.tasker().unit().has_id() ) ? FindAgentPion( message.tasker().unit().id() ) : 0;
@@ -1607,6 +1611,7 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
 {
     client::LogSupplyChangeQuotasAck ack;
     ack().set_error_code( LogSupplyChangeQuotasAck::no_error_quotas );
+    ack().mutable_tasker()->CopyFrom( message.tasker() );
     try
     {
         if( message.parameters().elem_size() != 2 )
@@ -1660,6 +1665,7 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
 {
     client::LogSupplyPushFlowAck ack;
     ack().set_error_code( LogSupplyPushFlowAck::no_error_pushflow );
+    ack().mutable_tasker()->CopyFrom( message.tasker() );
     try
     {
         MIL_AutomateLOG* pBrainLog = FindBrainLogistic( TaskerToId( message.tasker() ) );
@@ -1686,6 +1692,7 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
 {
     client::LogSupplyPullFlowAck ack;
     ack().set_error_code( LogSupplyPullFlowAck::no_error_pullflow );
+    ack().mutable_tasker()->CopyFrom( message.tasker() );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
