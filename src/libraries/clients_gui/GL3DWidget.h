@@ -95,6 +95,7 @@ public:
     virtual void Zoom( float width );
     virtual void CenterView();
     virtual void SetCurrentCursor( const QCursor& cursor );
+    virtual geometry::Point2f GetCenter() const;
 
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type );

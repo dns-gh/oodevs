@@ -31,6 +31,7 @@
 #include "IndicatorPlotFactory.h"
 #include "LimitsLayer.h"
 #include "LinkInterpreter.h"
+#include "LockMapViewController.h"
 #include "LoggerProxy.h"
 #include "ConnectLoginDialog.h"
 #include "MagicOrdersInterface.h"
@@ -189,6 +190,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
+    lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
     gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d, firePlayer_.get() ) );
     new VisionConesToggler( controllers, network_.GetMessageMgr(), this );
@@ -394,6 +396,8 @@ void MainWindow::Load()
     {
         controllers_.SaveOptions( eModes_Gaming );
         dockContainer_->Purge();
+        if( lockMapViewController_.get() )
+            lockMapViewController_->Clear();
         model_.Purge();
         selector_->Close();
         selector_->Load();
@@ -418,6 +422,8 @@ void MainWindow::Close()
     parameters_->Reset();
     selector_->Close();
     dockContainer_->Purge();
+    if( lockMapViewController_.get() )
+        lockMapViewController_->Clear();
     model_.Purge();
     staticModel_.Purge();
 }

@@ -17,8 +17,16 @@
 
 namespace kernel
 {
+    class Agent_ABC;
+    class AgentKnowledge_ABC;
+    class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class Formation_ABC;
+    class Population_ABC;
+    class Object_ABC;
+    class ObjectKnowledge_ABC;
+    class Team_ABC;
 }
 
 namespace gui
@@ -41,7 +49,14 @@ class Profile;
 // =============================================================================
 class OrbatToolbar : public QFrame
                    , public tools::Observer_ABC
-                   , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::ObjectKnowledge_ABC >
                    , public tools::ElementObserver_ABC< Simulation >
                    , public tools::ElementObserver_ABC< Profile >
                    , public tools::ElementObserver_ABC< kernel::Filter_ABC >
@@ -73,7 +88,16 @@ private:
     //! @name Helpers
     //@{
     virtual QSize minimumSizeHint() const;
-    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void UpdateContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity, kernel::ContextMenu& menu );
+
     virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
     virtual void NotifyUpdated( const Profile& profile );

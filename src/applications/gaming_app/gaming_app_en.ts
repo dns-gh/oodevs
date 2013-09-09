@@ -1454,6 +1454,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>LockMapViewController</name>
+    <message>
+        <source>Unlock view on entity</source>
+        <translation>Unlock view on entity</translation>
+    </message>
+    <message>
+        <source>Lock view on entity</source>
+        <translation>Lock view on the unit</translation>
+    </message>
+</context>
+<context>
     <name>LoginDialog</name>
     <message>
         <source>Select user profile</source>

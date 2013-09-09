@@ -1454,6 +1454,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>LockMapViewController</name>
+    <message>
+        <source>Unlock view on entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock view on entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LoginDialog</name>
     <message>
         <source>Anonymous</source>

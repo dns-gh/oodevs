@@ -17,8 +17,18 @@
 #include "SubObjectName.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
+#include "MiniView.h"
+#include "GlWidget.h"
+#include "SmartGridWidget.h"
+#include "MiniViewsRenderPass.h"
 #include "clients_kernel/Profile_ABC.h"
 
 using namespace gui;
@@ -74,19 +84,91 @@ void MiniViews::OnWidget2dChanged( gui::GlWidget* widget )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MiniViews::NotifyContextMenu
+// Name: MiniViews::UpdateContextMenu
 // Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
-void MiniViews::NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu )
+void MiniViews::UpdateContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( widget_ && agent.Retrieve< kernel::Positions >() && profile_.IsVisible( agent ) )
+    if( widget_ && entity.Retrieve< kernel::Positions >() && profile_.IsVisible( entity ) )
     {
-        selected_ = &agent;
-        bool remove = miniViews_.find( &agent ) != miniViews_.end();
+        selected_ = &entity;
+        bool remove = miniViews_.find( &entity ) != miniViews_.end();
         static const QString supprimer = tr( "Remove miniview" );
         static const QString ajouter   = tr( "Add miniview" );
         menu.InsertItem( "Interface", remove ? supprimer : ajouter , this, SLOT( OnMiniView() ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
 }
 
 // -----------------------------------------------------------------------------
