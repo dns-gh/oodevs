@@ -38,6 +38,7 @@ namespace gui
 class MiniViews : public QDockWidget
                 , public tools::Observer_ABC
                 , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
@@ -66,6 +67,7 @@ private:
     //@{
     void BuildContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
     //! @name Types

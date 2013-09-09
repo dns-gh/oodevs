@@ -145,6 +145,15 @@ void OrbatToolbar::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    NotifyContextMenu( ( const kernel::Entity_ABC& )( entity ), menu );
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrbatToolbar::NotifyUpdated
 // Created: AGE 2007-05-09
 // -----------------------------------------------------------------------------

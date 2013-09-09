@@ -67,6 +67,15 @@ void HighlightColorModifier::NotifyContextMenu( const kernel::Entity_ABC& entity
 }
 
 // -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    NotifyContextMenu( ( const kernel::Entity_ABC& )( entity ), menu );
+}
+
+// -----------------------------------------------------------------------------
 // Name: HighlightColorModifier::Highlight
 // Created: AGE 2008-05-15
 // -----------------------------------------------------------------------------

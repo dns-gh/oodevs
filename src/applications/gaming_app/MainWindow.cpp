@@ -34,6 +34,7 @@
 #include "InfoPanels.h"
 #include "LimitsLayer.h"
 #include "LinkInterpreter.h"
+#include "LockMapViewController.h"
 #include "LoggerProxy.h"
 #include "LoginDialog.h"
 #include "LogisticListView.h"
@@ -222,6 +223,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, profile );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
+
+    lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
 
     // Logger
     QDockWidget* pLogDockWnd_ = new QDockWidget( "log", this );
@@ -605,6 +608,8 @@ void MainWindow::Load()
         WriteOptions();
         if( logisticListView_ )
             logisticListView_->Purge();
+        if( lockMapViewController_.get() )
+            lockMapViewController_->Clear();
         model_.Purge();
         selector_->Close();
         selector_->Load();
@@ -642,6 +647,8 @@ void MainWindow::Close()
     selector_->Close();
     if( logisticListView_ )
         logisticListView_->Purge();
+    if( lockMapViewController_.get() )
+        lockMapViewController_->Clear();
     model_.Purge();
     staticModel_.Purge();
 }

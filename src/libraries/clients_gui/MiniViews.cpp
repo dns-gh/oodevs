@@ -92,6 +92,15 @@ void MiniViews::NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::Cont
 }
 
 // -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
+{
+    NotifyContextMenu( (const kernel::Entity_ABC& )( agent ), menu );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MiniViews::OnMiniView
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------

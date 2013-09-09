@@ -787,6 +787,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\UserProfileEditor.cpp">
       <Filter>Source Files\Dialogs\Profile</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LockMapViewController.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -931,9 +934,6 @@
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\AgentKnowledgesLayer.h">
-      <Filter>Source Files\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\AgentsLayer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\AutomatsLayer.h">
@@ -1136,6 +1136,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\UserProfileEditor.h">
       <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\AgentsLayer.h">
+      <Filter>Source Files\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1437,6 +1440,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\SupplyQuotasWidget.h">
       <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LockMapViewController.h">
+      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

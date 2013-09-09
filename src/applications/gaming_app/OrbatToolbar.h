@@ -18,6 +18,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class Agent_ABC;
 }
 
 namespace gui
@@ -39,6 +40,7 @@ class ProfileFilter;
 class OrbatToolbar : public QFrame
                    , public tools::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                    , public tools::ElementObserver_ABC< Simulation >
                    , public tools::ElementObserver_ABC< ProfileFilter >
 {
@@ -76,6 +78,7 @@ private:
     //@{
     virtual QSize minimumSizeHint() const;
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyUpdated( const ProfileFilter& filter );
 

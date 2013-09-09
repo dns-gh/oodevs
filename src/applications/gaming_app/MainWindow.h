@@ -74,6 +74,7 @@ class Simulation;
 class RcEntityResolver_ABC;
 class ColorController;
 class PlanificationModePanel;
+class LockMapViewController;
 
 // =============================================================================
 /** @class  MainWindow
@@ -156,6 +157,7 @@ private:
     std::auto_ptr< gui::ColorStrategy > strategy_;
     std::auto_ptr< gui::LightingProxy > lighting_;
     std::auto_ptr< gui::GlSelector > selector_;
+    std::auto_ptr< LockMapViewController > lockMapViewController_;
     gui::OptionsPanel* pOptionsPanel_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer* agents_;
