@@ -32,3 +32,8 @@ bool Clients::IsRegistered( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     return clients_.find( &publisher ) != clients_.end();
 }
+
+bool Clients::IsRegistered() const
+{
+    return ! clients_.empty();
+}

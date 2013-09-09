@@ -41,6 +41,7 @@ public:
     void Send( const sword::SimToClient& message );
 
     bool IsRegistered( dispatcher::ClientPublisher_ABC& publisher ) const;
+    bool IsRegistered() const;
 
 private:
     std::set< dispatcher::ClientPublisher_ABC* > clients_;

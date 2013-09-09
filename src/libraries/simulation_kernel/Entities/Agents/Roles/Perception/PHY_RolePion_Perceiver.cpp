@@ -1258,7 +1258,8 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendVisionCones() const
 {
-    if( ! bExternalMustUpdateVisionCones_ )
+    if( ! MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() ||
+        ! MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() && ! bExternalMustUpdateVisionCones_ )
         return;
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );

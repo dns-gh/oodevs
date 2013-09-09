@@ -11,19 +11,24 @@
 #include "Clients.h"
 #include "Units.h"
 #include "dispatcher/Model_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/AuthenticatedLinkResolver_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include "tools/MessageDispatcher_ABC.h"
-#include <boost/range/algorithm.hpp>
+#include "MT_Tools/MT_Logger.h"
 
 using namespace plugins::vision;
 
-VisionPlugin::VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher, dispatcher::AuthenticatedLinkResolver_ABC& resolver )
-    : model_   ( model )
-    , resolver_( resolver )
-    , clients_ ( new Clients() )
-    , units_   ( new Units() )
+VisionPlugin::VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher,
+                            dispatcher::SimulationPublisher_ABC& simulation, dispatcher::AuthenticatedLinkResolver_ABC& resolver )
+    : model_     ( model )
+    , simulation_( simulation )
+    , resolver_  ( resolver )
+    , clients_   ( new Clients() )
+    , units_     ( new Units() )
+    , enabled_   ( false )
 {
     dispatcher.RegisterMessage( *this, &VisionPlugin::OnReceive );
 }
@@ -52,31 +57,35 @@ void VisionPlugin::Receive( const sword::SimToClient& message )
 void VisionPlugin::OnReceive( const std::string& link, const sword::ClientToSim& message )
 {
     if( message.message().has_control_toggle_vision_cones() )
-    {
-        const auto& toggle = message.message().control_toggle_vision_cones();
-        dispatcher::ClientPublisher_ABC& publisher = resolver_.GetPublisher( link );
-        const unsigned int client = resolver_.GetClientID( link );
-        if( ! Validate( publisher, toggle, message.context(), client ) )
-            return;
-        client::ControlEnableVisionConesAck ack;
-        ack().set_error_code( sword::ControlEnableVisionConesAck::no_error );
-        ack.Send( publisher, message.context(), client );
-        if( toggle.units().size() == 0 )
-            Register( publisher, toggle.vision_cones() );
-        for( auto it = toggle.units().begin(); it != toggle.units().end(); ++it )
-            Register( publisher, *it, toggle.vision_cones() );
-    }
+        Handle( link, message.message().control_toggle_vision_cones(), message.context() );
     else if( message.message().has_list_enabled_vision_cones() )
-    {
-        const auto& list = message.message().list_enabled_vision_cones();
-        dispatcher::ClientPublisher_ABC& publisher = resolver_.GetPublisher( link );
-        const auto start = list.has_start() ? list.start().id() : 0;
-        std::size_t count = list.has_count() ? list.count() : std::numeric_limits< std::size_t >::max();
-        client::ListEnabledVisionConesAck ack;
-        ack().set_all( clients_->IsRegistered( publisher ) );
-        units_->List( publisher, start, count, ack );
-        ack.Send( publisher, message.context(), resolver_.GetClientID( link ) );
-    }
+        Handle( link, message.message().list_enabled_vision_cones(), message.context() );
+}
+
+void VisionPlugin::Handle( const std::string& link, const sword::ControlEnableVisionCones& message, int context )
+{
+    dispatcher::ClientPublisher_ABC& publisher = resolver_.GetPublisher( link );
+    const unsigned int client = resolver_.GetClientID( link );
+    if( ! Validate( publisher, message, context, client ) )
+        return;
+    client::ControlEnableVisionConesAck ack;
+    ack().set_error_code( sword::ControlEnableVisionConesAck::no_error );
+    ack.Send( publisher, context, client );
+    if( message.units().size() == 0 )
+        Register( publisher, message.vision_cones() );
+    for( auto it = message.units().begin(); it != message.units().end(); ++it )
+        Register( publisher, *it, message.vision_cones() );
+}
+
+void VisionPlugin::Handle( const std::string& link, const sword::ListEnabledVisionCones& message, int context ) const
+{
+    dispatcher::ClientPublisher_ABC& publisher = resolver_.GetPublisher( link );
+    const auto start = message.has_start() ? message.start().id() : 0;
+    std::size_t count = message.has_count() ? message.count() : std::numeric_limits< std::size_t >::max();
+    client::ListEnabledVisionConesAck ack;
+    ack().set_all( clients_->IsRegistered( publisher ) );
+    units_->List( publisher, start, count, ack );
+    ack.Send( publisher, context, resolver_.GetClientID( link ) );
 }
 
 bool VisionPlugin::Validate( dispatcher::ClientPublisher_ABC& publisher, const sword::ControlEnableVisionCones& message, int context, unsigned int client ) const
@@ -117,6 +126,7 @@ void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, const s
     }
     else
         units_->Unregister( publisher, unitId );
+    Update();
 }
 
 void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, bool activate )
@@ -126,10 +136,26 @@ void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, bool ac
         clients_->Register( publisher );
     else
         clients_->Unregister( publisher );
+    Update();
 }
 
 void VisionPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& /*link*/ )
 {
     clients_->Unregister( publisher );
     units_->Unregister( publisher );
+    Update();
+}
+
+void VisionPlugin::Update()
+{
+    const bool enabled = clients_->IsRegistered() || units_->IsRegistered();
+    if( enabled_ == enabled )
+        return;
+    simulation::ControlEnableVisionCones message;
+    message().set_vision_cones( enabled );
+    message.Send( simulation_ );
+    enabled_ = enabled;
+    if( ! enabled_ )
+        cones_.clear();
+    MT_LOG_INFO_MSG( "Vision plugin " << (enabled_ ? "enabled" : "disabled") << " vision cones" );
 }

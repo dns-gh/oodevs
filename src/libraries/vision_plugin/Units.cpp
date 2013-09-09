@@ -47,3 +47,8 @@ void Units::Send( unsigned int id, const sword::SimToClient& message )
     for( auto it = range.first; it != range.second; ++it )
         it->publisher_->Send( message );
 }
+
+bool Units::IsRegistered() const
+{
+    return ! units_.empty();
+}

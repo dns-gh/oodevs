@@ -19,6 +19,7 @@ namespace sword
     class SimToClient;
     class ClientToSim;
     class ControlEnableVisionCones;
+    class ListEnabledVisionCones;
     class UnitId;
 }
 
@@ -30,6 +31,7 @@ namespace tools
 namespace dispatcher
 {
     class Model_ABC;
+    class SimulationPublisher_ABC;
     class AuthenticatedLinkResolver_ABC;
 }
 
@@ -58,7 +60,8 @@ namespace vision
 class VisionPlugin : public dispatcher::Plugin_ABC
 {
 public:
-             VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher, dispatcher::AuthenticatedLinkResolver_ABC& resolver );
+             VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher,
+                           dispatcher::SimulationPublisher_ABC& simulation, dispatcher::AuthenticatedLinkResolver_ABC& resolver );
     virtual ~VisionPlugin();
 
     virtual bool Filter( const sword::SimToClient& message ) const;
@@ -68,16 +71,23 @@ public:
 private:
     void OnReceive( const std::string& link, const sword::ClientToSim& message );
 
+    void Handle( const std::string& link, const sword::ControlEnableVisionCones& message, int context );
+    void Handle( const std::string& link, const sword::ListEnabledVisionCones& message, int context ) const;
+
     bool Validate( dispatcher::ClientPublisher_ABC& publisher, const sword::ControlEnableVisionCones& message, int context, unsigned int client ) const;
     void Register( dispatcher::ClientPublisher_ABC& publisher, const sword::UnitId& unitId, bool activate );
     void Register( dispatcher::ClientPublisher_ABC& publisher, bool activate );
 
+    void Update();
+
 private:
     const dispatcher::Model_ABC& model_;
+    dispatcher::SimulationPublisher_ABC& simulation_;
     dispatcher::AuthenticatedLinkResolver_ABC& resolver_;
     std::map< unsigned int, sword::SimToClient > cones_;
     boost::scoped_ptr< Clients > clients_;
     boost::scoped_ptr< Units > units_;
+    bool enabled_;
 };
 
 }

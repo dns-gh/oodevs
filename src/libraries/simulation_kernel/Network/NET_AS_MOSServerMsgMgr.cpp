@@ -92,6 +92,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( wrapper.message().control_checkpoint_save_now()               );
     else if( wrapper.message().has_control_checkpoint_set_frequency() )
         workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency      ( wrapper.message().control_checkpoint_set_frequency()          );
+    else if( wrapper.message().has_control_toggle_vision_cones() )
+        agentServer_                        .SetMustSendUnitVisionCones              ( wrapper.message().control_toggle_vision_cones().vision_cones() );
     else if( wrapper.message().has_unit_order() )
         workspace.GetEntityManager        ().OnReceiveUnitOrder                      ( wrapper.message().unit_order()                         , nCtx, clientId );
     else if( wrapper.message().has_automat_order() )

@@ -29,6 +29,10 @@ public:
 
     void Update();
 
+    bool                           MustInitUnitVisionCones   () const;
+    bool                           MustSendUnitVisionCones   () const;
+    void                           SetMustSendUnitVisionCones( bool bEnable );
+
 protected:
     virtual void ConnectionSucceeded( const std::string& local, const std::string& remote );
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
@@ -38,6 +42,8 @@ protected:
 private:
     const MIL_Time_ABC& time_;
     boost::scoped_ptr< NET_AS_MOSServerMsgMgr > manager_;
+    unsigned int                            nUnitVisionConesChangeTimeStep_;
+    bool                            bSendUnitVisionCones_;
 };
 
 #endif // __NET_AgentServer_h_

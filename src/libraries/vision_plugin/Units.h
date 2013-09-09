@@ -54,6 +54,8 @@ public:
     void List( dispatcher::ClientPublisher_ABC&, unsigned int start, std::size_t max, client::ListEnabledVisionConesAck& ack );
     void Send( unsigned int id, const sword::SimToClient& message );
 
+    bool IsRegistered() const;
+
 private:
     struct Value
     {
