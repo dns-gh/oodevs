@@ -94,7 +94,6 @@ private:
     Updater* current_;
     VisionMap* map_;
     T_Surfaces surfaces_;
-    float elongationFactor_;
     //@}
 };
 

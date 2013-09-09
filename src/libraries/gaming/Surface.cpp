@@ -32,12 +32,11 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const sword::VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap, const MeteoModel& meteoModel )
+Surface::Surface( const Agent_ABC& agent, const sword::VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, const UrbanBlockDetectionMap& urbanModelMap, const MeteoModel& meteoModel )
     : map_( map )
     , origin_( converter.ConvertToXY( message.origin() ) )
     , height_( message.height() + agent.Get< Positions >().GetHeight() )
     , sensorType_( resolver.Get( message.sensor() ) )
-    , elongation_( elongation )
     , distanceModificator_( 1 )
     , urbanModelMap_( urbanModelMap )
     , meteoModel_( meteoModel )
@@ -45,7 +44,7 @@ Surface::Surface( const Agent_ABC& agent, const sword::VisionCone& message, cons
     sectors_.reserve( message.directions().elem_size() );
     for( int i = 0; i < message.directions().elem_size(); ++i )
         sectors_.push_back( Sector( origin_, message.directions().elem( i ).heading(), sensorType_.GetAngle() ) );
-    distanceModificator_ = elongation_ * agent.Get< Attributes >().GetDistanceModificator( sensorType_ );
+    distanceModificator_ = agent.Get< Attributes >().GetDistanceModificator( sensorType_ );
     maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
 }
 
