@@ -68,7 +68,7 @@ public:
     QStringList GetMissionsThatUse( E_MissionType type, ADN_Objects_Data_ObjectInfos& object );
 
     tools::Path GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text );
-    boost::shared_ptr< kernel::Context > GetMissionSheetContext() const;
+    const boost::shared_ptr< kernel::Context >& GetMissionSheetContext() const;
     //@}
 
     //! @name Static Helpers

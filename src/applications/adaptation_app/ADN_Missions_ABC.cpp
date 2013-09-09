@@ -12,7 +12,6 @@
 #include "ADN_Missions_Data.h"
 #include "clients_gui/WikiXmlConverter.h"
 #include "clients_kernel/Language.h"
-#include "clients_kernel/XmlTranslations.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -21,7 +20,7 @@
 
 namespace
 {
-    const std::string& GetValueOrEmptyIfNoTranslation( ADN_Type_LocalizedString& text, const std::string& language )
+    const std::string& GetValueOrEmptyIfNoTranslation( const ADN_Type_LocalizedString& text, const std::string& language )
     {
         if( !text.GetTranslation() )
             return text.ADN_Type_ABC< std::string >::GetData();
@@ -51,7 +50,7 @@ ADN_Missions_ABC::ADN_Missions_ABC( E_MissionType type )
     , type_( type )
 {
     Initialize();
-    missionSheetPath_ = "";
+    missionSheetPath_ = ""; // $$$$ ABR 2013-09-18: This must not be done in the other constructor, it will be initialized with SetValue in ReadMissionSheet
 }
 
 // -----------------------------------------------------------------------------
@@ -215,8 +214,7 @@ void ADN_Missions_ABC::ReadMissionSheet( const tools::Path& missionDir, const st
 {
     tools::Path fileName = missionDir / tools::Path::FromUTF8( strName_.GetValue( language ) );
 
-    if( !missionDir.IsDirectory() )
-        missionDir.CreateDirectories();
+    missionDir.CreateDirectories();
 
     if( ( fileName + ".xml" ).IsRegularFile() )
     {
@@ -289,8 +287,7 @@ void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const s
 {
     const std::string& name = strName_.GetValue( language );
     tools::Path filePath = missionDir / tools::Path::FromUTF8( name );
-    if( !( missionDir / ADN_Missions_Data::obsoletePath_ ).IsDirectory() )
-        ( missionDir / ADN_Missions_Data::obsoletePath_ ).CreateDirectories();
+    ( missionDir / ADN_Missions_Data::obsoletePath_ ).CreateDirectories();
     if( IsEmptyMissionSheet( language ) && filePath.ToUTF8().find( tools::Path::TemporaryPath().ToUTF8() ) == std::string::npos )
         return;
 

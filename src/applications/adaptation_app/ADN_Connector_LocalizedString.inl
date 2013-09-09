@@ -51,11 +51,12 @@ void ADN_Connector_LocalizedString< T >::SetDataPrivate( void* data )
 template< typename T >
 void ADN_Connector_LocalizedString< T >::ConnectPrivateSub( ADN_Connector_ABC* pTarget )
 {
-    pTarget_ = static_cast< ADN_Type_LocalizedString* >( pTarget );
-    assert( pTarget_ != 0 );
+    pTarget_ = dynamic_cast< ADN_Type_LocalizedString* >( pTarget );
+    assert( pTarget_ );
     connect( pTarget, SIGNAL( TypeChanged( int ) ), pGfx_, SIGNAL( TypeChanged( int ) ) );
     connect( pGfx_, SIGNAL( OnTypeChanged( int ) ), pTarget, SLOT( OnTypeChanged( int ) ) );
     ADN_Connector_String< T >::ConnectPrivateSub( pTarget );
+    QMetaObject::invokeMethod( pTarget, "TypeChanged", Q_ARG( int, pTarget_->GetType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,5 +79,5 @@ void ADN_Connector_LocalizedString< T >::DisconnectPrivateSub( ADN_Connector_ABC
 template< typename T >
 bool ADN_Connector_LocalizedString< T >::ShouldEnableGfx() const
 {
-    return kernel::Language::IsCurrentDefault() || ( pTarget_ && !pTarget_->GetKey().empty() );
+    return kernel::Language::IsCurrentDefault() || pTarget_ && !pTarget_->GetKey().empty();
 }

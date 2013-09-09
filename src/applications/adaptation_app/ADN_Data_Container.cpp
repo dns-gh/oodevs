@@ -99,3 +99,14 @@ void ADN_Data_Container::WriteArchive( xml::xostream& output )
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->WriteArchive( output );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Data_Container::GetElementABC
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+ADN_Data_ABC& ADN_Data_Container::GetElementABC( int index )
+{
+    auto it = elements_.find( index );
+    assert( it != elements_.end() );
+    return *it->second;
+}

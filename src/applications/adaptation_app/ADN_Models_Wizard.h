@@ -32,10 +32,6 @@ public:
     {
         // NOTHING
     }
-    virtual ~ADN_Models_Wizard()
-    {
-        // NOTHING
-    }
     //@}
 
 public:

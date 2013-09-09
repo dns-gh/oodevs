@@ -838,20 +838,18 @@ void ADN_Workspace::SetMainWindowModified( bool isModified )
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< kernel::Context > ADN_Workspace::GetContext
+// Name: ADN_Workspace::GetContext
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-//inline
 boost::shared_ptr< kernel::Context > ADN_Workspace::GetContext( E_WorkspaceElements element, const std::string& context )
 {
     return GetWorkspaceElement( element ).GetDataABC().GetContext( context );
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< kernel::Context > ADN_Workspace::GetContext
+// Name: ADN_Workspace::GetContext
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-//inline
 boost::shared_ptr< kernel::Context > ADN_Workspace::GetContext( E_WorkspaceElements element, int subElement, const std::string& context )
 {
     return static_cast< ADN_Data_Container& >( GetWorkspaceElement( element ).GetDataABC() ).GetElementABC( subElement ).GetContext( context );

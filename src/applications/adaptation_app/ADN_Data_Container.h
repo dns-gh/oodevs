@@ -90,16 +90,4 @@ DataBaseType& ADN_Data_Container::GetElement( int index )
     return *static_cast< DataBaseType* >( it->second );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Data_Container::GetElementABC
-// Created: ABR 2013-08-23
-// -----------------------------------------------------------------------------
-inline
-ADN_Data_ABC& ADN_Data_Container::GetElementABC( int index )
-{
-    auto it = elements_.find( index );
-    assert( it != elements_.end() );
-    return *it->second;
-}
-
 #endif // __ADN_Data_Container_h_

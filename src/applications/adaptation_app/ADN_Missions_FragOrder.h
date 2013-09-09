@@ -12,11 +12,6 @@
 
 #include "ADN_Missions_ABC.h"
 
-namespace kernel
-{
-    class XmlTranslations;
-}
-
 enum E_EntityType;
 
 class ADN_Missions_FragOrder : public ADN_Missions_ABC

@@ -12,11 +12,6 @@
 
 #include "ADN_Missions_ABC.h"
 
-namespace kernel
-{
-    class XmlTranslations;
-}
-
 enum E_EntityType;
 
 namespace xml { class xistream; }

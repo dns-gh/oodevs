@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: E_TranslationType::operator<<
 // Created: ABR 2013-07-18
 // -----------------------------------------------------------------------------
-xml::xostream& kernel::operator<<( xml::xostream& xos, const E_TranslationType& type )
+xml::xostream& kernel::operator<<( xml::xostream& xos, E_TranslationType type )
 {
     if( type == eTranslationType_Unfinished )
         xos << xml::attribute( "type", "unfinished" );
@@ -30,7 +30,7 @@ xml::xostream& kernel::operator<<( xml::xostream& xos, const E_TranslationType& 
 // -----------------------------------------------------------------------------
 xml::xistream& kernel::operator>>( xml::xistream& xis, E_TranslationType& type )
 {
-    std::string typeStr = "";
+    std::string typeStr;
     xis >> xml::optional >> xml::attribute( "type", typeStr );
     type = ( typeStr.empty() ) ? eTranslationType_None : eTranslationType_Unfinished;
     return xis;
@@ -171,7 +171,7 @@ void LocalizedString::Initialize( const std::vector< Language >& languages )
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
         auto valueIt = values_.find( it->GetShortName() );
-        if( valueIt == values_.end() /*|| valueIt->second.value_.empty()*/ )
+        if( valueIt == values_.end() )
         {
             values_[ it->GetShortName() ].value_ = "";
             values_[ it->GetShortName() ].type_ = eTranslationType_Unfinished;
@@ -185,8 +185,7 @@ void LocalizedString::Initialize( const std::vector< Language >& languages )
 // -----------------------------------------------------------------------------
 void LocalizedString::CopyValues( const LocalizedString& other )
 {
-    for( auto it = other.values_.begin(); it != other.values_.end(); ++it )
-        values_[ it->first ] = it->second;
+    values_.insert( other.values_.begin(), other.values_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,10 +194,12 @@ void LocalizedString::CopyValues( const LocalizedString& other )
 // -----------------------------------------------------------------------------
 bool LocalizedString::operator==( const LocalizedString& other ) const
 {
-    bool result = Key() == other.Key();
-    for( auto it = values_.begin(); result && it != values_.end(); ++it )
-        result = result && it->second.value_ == other.Value( it->first ) && it->second.type_ == other.Type( it->first );
-    return result;
+    if( key_ != other.key_ || values_.size() != other.values_.size() )
+        return false;
+    for( auto it = values_.begin(); it != values_.end(); ++it )
+        if( it->second.value_ != other.values_.at( it->first ).value_ && it->second.type_ != other.values_.at( it->first ).type_ )
+            return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

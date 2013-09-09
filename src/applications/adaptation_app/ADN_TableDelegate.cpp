@@ -283,7 +283,6 @@ namespace
             layout->addWidget( editLine_, 1 );
             layout->addWidget( applyButton_, 0 );
         }
-        virtual ~ADN_LocalizedEditor() {}
 
         ADN_EditLine_LocalizedString* GetEditLine()
         {

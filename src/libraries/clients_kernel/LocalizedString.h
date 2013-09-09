@@ -20,8 +20,8 @@ enum E_TranslationType
     eTranslationType_Unfinished     = 1,
     eNbrTranslationType             = 2
 };
-xml::xostream& operator<<( xml::xostream& xos, const E_TranslationType& language );
-xml::xistream& operator>>( xml::xistream& xis, E_TranslationType& language );
+xml::xostream& operator<<( xml::xostream& xos, E_TranslationType type );
+xml::xistream& operator>>( xml::xistream& xis, E_TranslationType& type );
 
 // =============================================================================
 /** @class  LocalizedString
@@ -64,8 +64,8 @@ public:
 
     //! @name Operators
     //@{
-    virtual bool operator==( const LocalizedString& other ) const;
-    virtual bool operator!=( const LocalizedString& other ) const;
+    bool operator==( const LocalizedString& other ) const;
+    bool operator!=( const LocalizedString& other ) const;
     //@}
 
     //! @name Accessors

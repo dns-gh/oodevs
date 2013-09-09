@@ -31,10 +31,6 @@ public:
              {
                  // NOTHING
              }
-    virtual ~ADN_Models_WizardPage()
-    {
-        // NOTHING
-    }
     //@}
 
     //! @name Operations

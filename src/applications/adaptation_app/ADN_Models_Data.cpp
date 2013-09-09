@@ -404,7 +404,7 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
     {
         E_EntityType type = static_cast< E_EntityType >( i );
         input >> xml::start( MakePluralFromEntityType( type ) )
-                >> xml::list( ADN_Tr::ConvertFromEntityType( type, ADN_Tr::eToSim ), boost::bind( &ADN_Models_Data::ReadModels, this, _1, type ) )
+                >> xml::list( ADN_Tr::ConvertFromEntityType( type, ADN_Tr::eToSim ), *this, &ADN_Models_Data::ReadModels, type )
               >> xml::end;
         vModels_[ i ].CheckValidity();
     }

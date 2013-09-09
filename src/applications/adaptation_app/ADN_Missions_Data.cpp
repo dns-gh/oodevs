@@ -40,21 +40,18 @@ namespace
     template< typename T >
     void InitializeMissions( const ADN_Type_Vector_ABC< T >& vector )
     {
-        for( ADN_Type_Vector_ABC< T >::const_iterator itMission = vector.begin(); itMission != vector.end(); ++itMission )
+        for( auto itMission = vector.begin(); itMission != vector.end(); ++itMission )
         {
             T* mission = *itMission;
             QRegExp regExp( "[/\"<>|*\?:\\\\]" );
             QString name( mission->strName_.GetData().c_str() );
-            int indexBadCaracter = regExp.lastIndexIn( name );
-            if( indexBadCaracter != -1 )
+            int indexBadCharacter = regExp.lastIndexIn( name );
+            while( indexBadCharacter != -1 )
             {
-                while( indexBadCaracter != -1 )
-                {
-                    name.replace( indexBadCaracter, 1, "-" );
-                    indexBadCaracter = regExp.lastIndexIn( name );
-                }
-                mission->strName_ = name.toStdString();
+                name.replace( indexBadCharacter, 1, "-" );
+                indexBadCharacter = regExp.lastIndexIn( name );
             }
+            mission->strName_ = name.toStdString();
         }
     }
     tools::Path CreateMissionDirectory( const std::string& language, const tools::Path& basePath )
@@ -83,10 +80,10 @@ ADN_Missions_Data::ADN_Missions_Data()
     , missionSheetContext_( boost::make_shared< kernel::Context >() )
 {
     // $$$$ ABR 2013-04-23: Must be in E_MissionType order
-    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "units", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "automats", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "populations", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "fragorders", T_Mission_Vector() ) );
+    missionsVector_.push_back( std::make_pair( "units", T_Mission_Vector() ) );
+    missionsVector_.push_back( std::make_pair( "automats", T_Mission_Vector() ) );
+    missionsVector_.push_back( std::make_pair( "populations", T_Mission_Vector() ) );
+    missionsVector_.push_back( std::make_pair( "fragorders", T_Mission_Vector() ) );
 
     for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
         it->second.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
@@ -570,7 +567,7 @@ void ADN_Missions_Data::CheckAndFixLoadingErrors() const
 // Name: ADN_Missions_Data::GetMissionSheetContext
 // Created: ABR 2013-08-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< kernel::Context > ADN_Missions_Data::GetMissionSheetContext() const
+const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetContext() const
 {
     return missionSheetContext_;
 }

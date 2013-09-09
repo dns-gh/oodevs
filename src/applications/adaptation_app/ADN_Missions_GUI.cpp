@@ -117,7 +117,6 @@ namespace
     {
     public:
         TextEditWithoutWarning( QWidget* parent = 0 ) : ADN_TextEdit_LocalizedString( parent ) {}
-        ~TextEditWithoutWarning(){}
 
         virtual void Warn( ADN_ErrorStatus , const QString& ) {}
     };

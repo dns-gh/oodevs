@@ -188,7 +188,7 @@ void ADN_Data_ABC::InitQtTranslations()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< kernel::Context > ADN_Data_ABC::GetContext
+// Name: ADN_Data_ABC::GetContext
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
 boost::shared_ptr< kernel::Context > ADN_Data_ABC::GetContext( const std::string& context ) const
