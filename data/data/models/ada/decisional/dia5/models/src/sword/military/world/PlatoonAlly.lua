@@ -1010,6 +1010,7 @@ return
         return integration.isUnderIndirectFire()
     end,
     launchDREB = function( self )
+        myself.activityDREBTime = myself.activityDREBTime or 0
         if myself.activityDREBTime < 1 then -- if the last smoke doesn't exist anymore
             myself.activityDREBTime = integration.launchDREB()
         end
