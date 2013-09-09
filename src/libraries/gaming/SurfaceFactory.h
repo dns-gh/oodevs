@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    Surface* CreateSurface( const kernel::Agent_ABC& agent, const sword::VisionCone& input, float elongation );
+    Surface* CreateSurface( const kernel::Agent_ABC& agent, const sword::VisionCone& input );
     VisionMap* CreateVisionMap();
     //@}
 

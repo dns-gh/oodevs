@@ -24,7 +24,6 @@ struct VisionCones::Updater : public kernel::WorkerTask_ABC
     Updater( VisionCones& cones )
         : cones_           ( &cones )
         , map_             ( cones.factory_.CreateVisionMap() )
-        , elongationFactor_( cones.elongationFactor_ )
         , cancelled_       ( false )
         , deprecated_      ( false )
         , computed_        ( false )
@@ -74,7 +73,6 @@ private:
     VisionCones* cones_;
     VisionMap* map_;
     T_Surfaces surfaces_;
-    float elongationFactor_;
     bool cancelled_;
     bool deprecated_;
     bool computed_;
@@ -92,7 +90,6 @@ VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Worke
     , map_             ( factory_.CreateVisionMap() )
     , needUpdating_    ( true )
     , current_         ( 0 )
-    , elongationFactor_( 1.f )
 {
     controller_.Register( *this );
 }
@@ -118,10 +115,9 @@ void VisionCones::DoUpdate( const sword::UnitVisionCones& message )
 {
     for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
         delete *it;
-    elongationFactor_ = message.elongation();
     surfaces_.resize( message.cones().elem_size() );
     for( int i = 0; i < message.cones().elem_size(); ++i )
-        surfaces_[i] = factory_.CreateSurface( agent_, message.cones().elem( i ), elongationFactor_ );
+        surfaces_[i] = factory_.CreateSurface( agent_, message.cones().elem( i ) );
     Invalidate();
 }
 

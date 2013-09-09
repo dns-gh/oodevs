@@ -20,8 +20,7 @@ namespace detection
 // Created: MGD 2009-10-05
 // -----------------------------------------------------------------------------
 DefaultPerceptionDistanceComputer::DefaultPerceptionDistanceComputer()
-    : elongation_( 0 )
-    , factor_( 1. )
+    : factor_( 1. )
 {
     // NOTHING
 }
@@ -46,31 +45,12 @@ void DefaultPerceptionDistanceComputer::AddModifier( double modifier )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPerceptionDistanceComputer::AddModifier
-// Created: MGD 2009-10-16
-// -----------------------------------------------------------------------------
-void DefaultPerceptionDistanceComputer::AddElongationFactor( double modifier )
-{
-    elongation_ = modifier;
-    AddModifier( modifier );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DefaultPerceptionDistanceComputer::GetDuration
 // Created: MGD 2009-10-05
 // -----------------------------------------------------------------------------
 double DefaultPerceptionDistanceComputer::GetFactor() const
 {
     return factor_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultPerceptionDistanceComputer::AddModifier
-// Created: MGD 2009-10-16
-// -----------------------------------------------------------------------------
-double DefaultPerceptionDistanceComputer::GetElongationFactor() const
-{
-    return elongation_;
 }
 
 } // namespace detection

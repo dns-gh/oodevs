@@ -71,12 +71,6 @@ public:
     virtual void SetStealthFactor( double rValue ) = 0;
     //@}
 
-    //! @name Elongation
-    //@{
-    virtual void SetElongationFactor( double ) = 0;
-    virtual double GetElongationFactor() const = 0;
-    //@}
-
     //! @name Accessors
     //@{
     virtual bool IsStealth() const = 0;

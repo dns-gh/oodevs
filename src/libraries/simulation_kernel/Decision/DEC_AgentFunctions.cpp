@@ -202,16 +202,6 @@ bool DEC_AgentFunctions::IsFlying( const MIL_Agent_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::SetElongation
-// Created: JVT 2004-11-03
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SetElongationFactor( MIL_Agent_ABC& callerAgent, double factor )
-{
-    assert( factor > 0. );
-    callerAgent.GetRole< PHY_RoleInterface_Posture >().SetElongationFactor( factor );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsDead
 // Created: NLD 2006-02-01
 // -----------------------------------------------------------------------------

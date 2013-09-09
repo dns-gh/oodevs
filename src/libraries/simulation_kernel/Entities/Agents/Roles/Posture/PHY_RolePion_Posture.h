@@ -31,7 +31,6 @@ namespace dotation
 namespace detection
 {
     class DetectionComputer_ABC;
-    class PerceptionDistanceComputer_ABC;
 }
 
 namespace urbanLocation
@@ -46,7 +45,6 @@ namespace urbanLocation
 class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
-                           , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
                            , public network::NetworkUnitAttributesMessageSender_ABC
                            , public location::LocationActionNotificationHandler_ABC
@@ -72,7 +70,6 @@ public:
 
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
-    virtual void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
     virtual void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
 
     // Override automatic postures
@@ -95,12 +92,6 @@ public:
     //! @name Perception
     //@{
     virtual void SetStealthFactor( double rValue );
-    //@}
-
-    //! @name Elongation
-    //@{
-    virtual void SetElongationFactor( double );
-    virtual double GetElongationFactor() const;
     //@}
 
     //! @name Accessors
@@ -149,7 +140,6 @@ private:
     const PHY_Posture* pCurrentPosture_;
     const PHY_Posture* pLastPosture_;
     double rPostureCompletionPercentage_;
-    double rElongationFactor_;
     double rTimingFactor_;
     double rStealthFactor_;
     // Installation
