@@ -1956,6 +1956,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveAutomatDestruction( wrapper.message().automat_destruction() );
     else if( wrapper.message().has_crowd_destruction() )
         OnCrowdDestruction( wrapper.message().crowd_destruction() );
+    else if( wrapper.message().has_control_enable_vision_cones_ack() )
+        CheckAcknowledge( logger_, wrapper.message().control_enable_vision_cones_ack() );
     else
         OnReceiveSimToClient2( from, wrapper );
 }
