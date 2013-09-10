@@ -303,14 +303,14 @@ void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
 {
     float prevSatisf = securitySatisfaction_;
     securitySatisfaction_ = 0.5f;
-    nearbyUnitsAffinity.resetAffinitySum(   owner_->GetRole< PHY_RoleInterface_Perceiver >().GetMaxTheoreticalAgentPerceptionDistance(),
-                                            owner_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    nearbyUnitsAffinity.resetAffinitySum( owner_->GetRole< PHY_RoleInterface_Perceiver >().GetMaxTheoreticalAgentPerceptionDistance(),
+                                          owner_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     if( nearbyUnitsAffinity.maxSqrDistance > 0.01 /*epsilon*/ )
     {
         auto bbKg = owner_->GetKnowledgeGroup()->GetKnowledge();
         if( bbKg )
         {
-            class_mem_fun_void_t< PHY_RolePion_Refugee, DEC_Knowledge_Agent > methodAffinityAgent( & PHY_RolePion_Refugee::AddAffinityNearUnit, *this );
+            auto methodAffinityAgent = boost::bind( &PHY_RolePion_Refugee::AddAffinityNearUnit, this, _1 );
             bbKg->ApplyOnKnowledgesAgent( methodAffinityAgent );
         }
 

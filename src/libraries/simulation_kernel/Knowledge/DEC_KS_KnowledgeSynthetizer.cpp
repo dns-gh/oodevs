@@ -2,7 +2,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_KnowledgeSynthetizer.h"
-
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
@@ -12,7 +11,6 @@
 #include "DEC_Knowledge_Population.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "MT_Tools/MT_Stl.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
@@ -24,8 +22,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_KnowledgeSynthetizer )
 // -----------------------------------------------------------------------------
 DEC_KS_KnowledgeSynthetizer::DEC_KS_KnowledgeSynthetizer( DEC_KnowledgeBlackBoard_KnowledgeGroup& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pBlackBoard_           ( &blackBoard )
+    , pBlackBoard_( &blackBoard )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,10 +32,9 @@ DEC_KS_KnowledgeSynthetizer::DEC_KS_KnowledgeSynthetizer( DEC_KnowledgeBlackBoar
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 DEC_KS_KnowledgeSynthetizer::DEC_KS_KnowledgeSynthetizer()
-    : DEC_KnowledgeSource_ABC()
-    , pBlackBoard_           ( 0 )
+    : pBlackBoard_( 0 )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,11 +43,8 @@ DEC_KS_KnowledgeSynthetizer::DEC_KS_KnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 DEC_KS_KnowledgeSynthetizer::~DEC_KS_KnowledgeSynthetizer()
 {
+    //NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_KnowledgeSynthetizer::Prepare
@@ -73,7 +68,6 @@ void DEC_KS_KnowledgeSynthetizer::Prepare()
 void DEC_KS_KnowledgeSynthetizer::Talk( int currentTimeStep )
 {
     assert( pBlackBoard_ );
-
     pBlackBoard_->ApplyOnKnowledgesPerception( currentTimeStep );
 
     // Extrapolation
@@ -86,10 +80,6 @@ void DEC_KS_KnowledgeSynthetizer::Talk( int currentTimeStep )
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( populationFunctor );
 }
 
-// =============================================================================
-// CLEAN
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent
 // Created: NLD 2004-03-17
@@ -97,7 +87,6 @@ void DEC_KS_KnowledgeSynthetizer::Talk( int currentTimeStep )
 void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
 {
     assert( pBlackBoard_ );
-
     if( knowledge.Clean() )
         pBlackBoard_->GetKnowledgeAgentContainer().DestroyKnowledgeAgent( knowledge ); // The knowledge will be deleted
 }
@@ -109,7 +98,6 @@ void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent( DEC_Knowledge_Agent& know
 void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeDeletedAgent( DEC_Knowledge_Agent& knowledge )
 {
     assert( pBlackBoard_ );
-
     if( knowledge.GetAgentKnown().IsMarkedForDestruction() )
         pBlackBoard_->GetKnowledgeAgentContainer().DestroyKnowledgeAgent( knowledge ); // The knowledge will be deleted
 }
@@ -148,13 +136,13 @@ void DEC_KS_KnowledgeSynthetizer::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent, *this );
+    auto methodAgent = boost::bind( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent, this, _1 );
     pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( methodAgent );
 
-    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Population > methodPopulation( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgePopulation, *this );
+    auto methodPopulation = boost::bind( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgePopulation, this, _1 );
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( methodPopulation );
 
-    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, const boost::shared_ptr< DEC_Knowledge_Object > > methodObject( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject, *this );
+    auto methodObject = boost::bind( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject, this, _1 );
     pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( methodObject );
 }
 
@@ -164,6 +152,6 @@ void DEC_KS_KnowledgeSynthetizer::Clean()
 // -----------------------------------------------------------------------------
 void DEC_KS_KnowledgeSynthetizer::CleanDeletedAgentKnowledges()
 {
-    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeDeletedAgent, *this );
+    auto methodAgent = boost::bind( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeDeletedAgent, this, _1 );
     pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( methodAgent );
 }

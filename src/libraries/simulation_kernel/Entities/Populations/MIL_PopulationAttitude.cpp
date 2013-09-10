@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationAttitude.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 
 MIL_PopulationAttitude::T_AttitudeMap MIL_PopulationAttitude::attitudes_;
 
@@ -86,8 +85,10 @@ const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( const std::string& s
 // -----------------------------------------------------------------------------
 const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( sword::EnumCrowdAttitude nAsnID )
 {
-    CIT_AttitudeMap it = std::find_if( attitudes_.begin(), attitudes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nAsnID ), std::compose1( std::mem_fun( &MIL_PopulationAttitude::GetAsnID ), std::select2nd< T_AttitudeMap::value_type >() ) ) );
-    return it == attitudes_.end() ? 0 : it->second;
+    for( auto it = attitudes_.begin(); it != attitudes_.end(); ++it )
+        if( it->second->GetAsnID() == nAsnID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +97,10 @@ const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( sword::EnumCrowdAtti
 // -----------------------------------------------------------------------------
 const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( unsigned int nID )
 {
-    CIT_AttitudeMap it = std::find_if( attitudes_.begin(), attitudes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &MIL_PopulationAttitude::GetID ), std::select2nd< T_AttitudeMap::value_type >() ) ) );
-    return it == attitudes_.end() ? 0 : it->second;
+    for( auto it = attitudes_.begin(); it != attitudes_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ConsumptionType.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 
 PHY_ConsumptionType::T_ConsumptionTypeMap PHY_ConsumptionType::consumptionTypes_;
 
@@ -88,10 +87,10 @@ const PHY_ConsumptionType* PHY_ConsumptionType::FindConsumptionType( const std::
 // -----------------------------------------------------------------------------
 const PHY_ConsumptionType* PHY_ConsumptionType::FindConsumptionType( unsigned int nID )
 {
-    // $$$$ JVT : Recherche linéaire, mais n'est utilisé que lors de la reprise de la sim depuis un checkpoint
-    CIT_ConsumptionTypeMap it = std::find_if( consumptionTypes_.begin(), consumptionTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_ConsumptionType::GetID ), std::select2nd< T_ConsumptionTypeMap::value_type >() ) ) );
-
-    return it == consumptionTypes_.end() ? 0 : it->second;
+    for( auto it = consumptionTypes_.begin(); it != consumptionTypes_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

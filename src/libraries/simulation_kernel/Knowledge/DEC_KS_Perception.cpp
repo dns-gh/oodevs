@@ -180,13 +180,13 @@ void DEC_KS_Perception::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception > methodAgent( & DEC_KS_Perception::CleanKnowledgeAgentPerception, *this );
+    auto methodAgent = boost::bind( &DEC_KS_Perception::CleanKnowledgeAgentPerception, this, _1 );
     pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( methodAgent );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_ObjectPerception > methodObject( & DEC_KS_Perception::CleanKnowledgeObjectPerception, *this );
+    auto methodObject = boost::bind( &DEC_KS_Perception::CleanKnowledgeObjectPerception, this, _1 );
     pBlackBoard_->GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( methodObject );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_PopulationPerception > methodPopulation( & DEC_KS_Perception::CleanKnowledgePopulationPerception, *this );
+    auto methodPopulation = boost::bind( &DEC_KS_Perception::CleanKnowledgePopulationPerception, this, _1 );
     pBlackBoard_->GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( methodPopulation );
 }
 

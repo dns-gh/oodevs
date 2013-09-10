@@ -13,7 +13,6 @@
 #include "PHY_Experience.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
@@ -88,9 +87,10 @@ PHY_Experience::~PHY_Experience()
 // -----------------------------------------------------------------------------
 const PHY_Experience* PHY_Experience::Find( sword::UnitAttributes::EnumUnitExperience nAsnID )
 {
-    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< sword::UnitAttributes::EnumUnitExperience >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Experience::GetAsnID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
-
-    return it == experiences_.end() ? 0 : it->second;
+    for( auto it = experiences_.begin(); it != experiences_.end(); ++it )
+        if( it->second->GetAsnID() == nAsnID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,9 +99,10 @@ const PHY_Experience* PHY_Experience::Find( sword::UnitAttributes::EnumUnitExper
 // -----------------------------------------------------------------------------
 const PHY_Experience* PHY_Experience::Find( unsigned int nID )
 {
-    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Experience::GetID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
-
-    return it == experiences_.end() ? 0 : it->second;
+    for( auto it = experiences_.begin(); it != experiences_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 #include "MIL_KnowledgeGroup.h"
 #include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 #include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -133,8 +132,10 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( const std::strin
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( unsigned int nID )
 {
-    CIT_KnowledgeGroupTypeMap it = std::find_if( knowledgeGroupTypes_.begin(), knowledgeGroupTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &MIL_KnowledgeGroupType::GetID ), std::select2nd< T_KnowledgeGroupTypeMap::value_type >() ) ) );
-    return it == knowledgeGroupTypes_.end() ? 0 : it->second;
+    for( auto it = knowledgeGroupTypes_.begin(); it != knowledgeGroupTypes_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -143,10 +144,10 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( unsigned int nID
 // -----------------------------------------------------------------------------
 const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindTypeOrAny( const std::string& strName )
 {
-    const MIL_KnowledgeGroupType* ret = FindType( strName );
-    if( !ret && knowledgeGroupTypes_.size() > 0 )
-        ret = knowledgeGroupTypes_.begin()->second;
-    return ret;
+    const MIL_KnowledgeGroupType* type = FindType( strName );
+    if( !type && !knowledgeGroupTypes_.empty() )
+        type = knowledgeGroupTypes_.begin()->second;
+    return type;
 }
 
 // -----------------------------------------------------------------------------
