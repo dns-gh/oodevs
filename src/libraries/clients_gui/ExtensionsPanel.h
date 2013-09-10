@@ -55,6 +55,12 @@ public:
     virtual ~ExtensionsPanel();
     //@}
 
+    //! @name Operation
+    //@{
+    virtual void Purge() {}
+    virtual void Load() {}
+    //@}
+
 protected:
     //! @name Helpers
     //@{
@@ -65,6 +71,8 @@ protected:
     void DeleteWidgets();
     void UpdateDisplay();
     void UpdateDependencies();
+    virtual void SetAllIdCDB( const QStringList& ) {}
+    virtual void OnChangeIdCDB( const std::string& /*idCDB*/ ) {}
     //@}
 
 protected slots:
@@ -73,6 +81,7 @@ protected slots:
     virtual void OnActivationChanged( bool );
     virtual void Commit();
     virtual void OnChangeNationality() {}
+    virtual void OnChangeTypeSIOC() {}
     virtual void OnDeleteCPExtensions() {}
     virtual void OnFillEmptyCPExtensions() {}
     //@}

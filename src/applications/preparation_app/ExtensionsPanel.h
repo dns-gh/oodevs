@@ -15,6 +15,7 @@
 
 namespace kernel
 {
+    class Agent_ABC;
     class Automat_ABC;
     class Formation_ABC;
     class Team_ABC;
@@ -40,6 +41,12 @@ public:
     virtual ~ExtensionsPanel();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Purge();
+    virtual void Load();
+    //@}
+
 private:
     //! @name From ContextMenuObserver_ABC
     //@{
@@ -59,12 +66,19 @@ protected:
     //! @name Operations
     //@{
     virtual void OnChangeNationality();
+    virtual void OnChangeTypeSIOC();
+    virtual void OnChangeIdCDB( const std::string& idCDB );
+    virtual void SetAllIdCDB( const QStringList& IdCDB );
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC* cpSuperior_;
+    std::vector< std::string > allIdCDB_;
+    std::map< std::string, unsigned int > usedIdCDB_;
+    const tools::Resolver< kernel::Agent_ABC >& agents_;
+    int idIndex_;
     //@}
 };
 

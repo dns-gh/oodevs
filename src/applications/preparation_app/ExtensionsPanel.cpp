@@ -27,6 +27,24 @@
 
 using namespace kernel;
 
+namespace
+{
+    void FindUsedIdCDB( const tools::Resolver< kernel::Agent_ABC >& agents, std::map< std::string, unsigned int >& used )
+    {
+        auto it = agents.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Agent_ABC& agent = it.NextElement();
+            const DictionaryExtensions* ext = agent.Retrieve< DictionaryExtensions >();
+            if( !ext )
+                continue;
+            const std::string& idCDB = ext->GetValue( "IdCDB" );
+            if( !idCDB.empty() )
+                used[ idCDB ]++;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ExtensionsPanel constructor
 // Created: JSR 2011-12-08
@@ -35,6 +53,8 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, Controllers& controllers,
                                   const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations )
     : gui::ExtensionsPanel( parent, controllers, extensions, agents, formations )
     , cpSuperior_( 0 )
+    , idIndex_( 0 )
+    , agents_( agents )
 {
     // NOTHING
 }
@@ -46,6 +66,24 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, Controllers& controllers,
 ExtensionsPanel::~ExtensionsPanel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionsPanel::Purge
+// Created: MMC 2013-09-09
+// -----------------------------------------------------------------------------
+void ExtensionsPanel::Purge()
+{
+    usedIdCDB_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionsPanel::Load
+// Created: MMC 2013-09-09
+// -----------------------------------------------------------------------------
+void ExtensionsPanel::Load()
+{
+    FindUsedIdCDB( agents_, usedIdCDB_ );
 }
 
 namespace
@@ -106,6 +144,87 @@ void ExtensionsPanel::OnChangeNationality()
                 inhabitants->Apply( functor );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionsPanel::OnChangeTypeSIOC
+// Created: MMC 2013-08-30
+// -----------------------------------------------------------------------------
+void ExtensionsPanel::OnChangeTypeSIOC()
+{
+    if( !selected_ )
+        return;
+    DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
+    if( !ext )
+        return;
+    const TacticalHierarchies* hierarchies = selected_->Retrieve< TacticalHierarchies >();
+    if( !hierarchies )
+        return;
+    if( ext->GetValue( "TypeSIOC" ).empty() )
+        return;
+    if( !ext->GetValue( "IdCDB" ).empty() )
+        return;
+    for( int i = 0; i< allIdCDB_.size(); ++i )
+    {
+        int curIndex = ( i + idIndex_ ) % allIdCDB_.size();
+        const std::string& curIdCDB = allIdCDB_[ curIndex ];
+        if( usedIdCDB_.find( curIdCDB ) == usedIdCDB_.end() )
+        {
+            ext->SetValue( "IdCDB", curIdCDB );
+            usedIdCDB_[ curIdCDB ] = 1;
+            NotifyUpdated( *ext );
+            idIndex_ = curIndex + 1;
+            if( idIndex_ >= allIdCDB_.size() )
+                idIndex_ = 0;
+            return;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionsPanel::OnChangeIdCDB
+// Created: MMC 2013-09-03
+// -----------------------------------------------------------------------------
+void ExtensionsPanel::OnChangeIdCDB( const std::string& idCDB )
+{
+    if( !selected_ )
+        return;
+    DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
+    if( !ext )
+        return;
+    const TacticalHierarchies* hierarchies = selected_->Retrieve< TacticalHierarchies >();
+    if( !hierarchies )
+        return;
+    const std::string& previousIdCDB = ext->GetValue( "IdCDB" );
+    auto it = usedIdCDB_.find( previousIdCDB );
+    if( it != usedIdCDB_.end() )
+    {
+        if( it->second <= 1)
+        {
+            usedIdCDB_.erase( it );
+            idIndex_ = 0;
+        }
+        else
+            it->second--;
+    }
+    if( !idCDB.empty() )
+        usedIdCDB_[ idCDB ]++;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionsPanel::SetAllIdCDB
+// Created: MMC 2013-08-30
+// -----------------------------------------------------------------------------
+void ExtensionsPanel::SetAllIdCDB( const QStringList& IdCDB )
+{
+    if( IdCDB.empty() )
+        return;
+    if( !allIdCDB_.empty() )
+        return;
+    allIdCDB_.reserve( IdCDB.size() );
+    for( auto it = IdCDB.begin(); it != IdCDB.end(); ++it )
+        if( !it->isEmpty() )
+            allIdCDB_.push_back( it->toStdString() );
 }
 
 // -----------------------------------------------------------------------------

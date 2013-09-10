@@ -48,6 +48,7 @@ class InhabitantCreationPanel;
 class CreationPanels;
 class LivingAreaPanel;
 class UsagesDockWidget;
+class ExtensionsPanel;
 
 // =============================================================================
 /** @class  DockContainer
@@ -92,6 +93,7 @@ private:
     LivingAreaPanel*                        pLivingAreaPanel_;
     gui::TerrainProfiler*                   terrainProfiler_;
     UsagesDockWidget*                       pUsagesPanel_;
+    ExtensionsPanel*                        pExtensionsPanel_;
     //@}
 };
 
