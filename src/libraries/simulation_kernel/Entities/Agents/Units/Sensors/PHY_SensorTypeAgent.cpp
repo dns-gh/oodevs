@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SensorTypeAgent.h"
+#include "PHY_SensorTypeObjectData.h"
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "MIL_AgentServer.h"
@@ -92,22 +93,6 @@ namespace
         environmentAssociation[ "Vide"   ] = PHY_RawVisionData::eVisionEmpty;
         environmentAssociation[ "Foret"  ] = PHY_RawVisionData::eVisionForest;
         environmentAssociation[ "Urbain" ] = PHY_RawVisionData::eVisionUrban;
-    }
-    void ReadPostureFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
-    {
-        std::string type;
-        xis >> xml::attribute( "type", type );
-        const PHY_Posture* posture = PHY_Posture::FindPosture( type );
-        if( ! posture )
-            xis.error( "distance-modifier: unknown type" );
-        if( ! posture->CanModifyDetection() )
-            return;
-        assert( factors.size() > posture->GetID() );
-        double factor;
-        xis >> xml::attribute( "value", factor );
-        if( factor < 0 || factor > 1 )
-            xis.error( "distance-modifier: value not in [0..1]" );
-         factors[ posture->GetID() ] = factor;
     }
 }
 

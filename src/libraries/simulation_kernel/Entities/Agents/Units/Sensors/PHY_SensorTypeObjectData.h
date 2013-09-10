@@ -24,6 +24,11 @@ class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 
+/// Reads a posture element, maps its type to an integer identifier and sets
+/// factors[ id ] to the posture factor. "factors" size must be greater or
+/// equal to PHY_Posture::GetPostureCount().
+void ReadPostureFactor( xml::xistream& xis, std::vector< double >& factors );
+
 // =============================================================================
 // @class  PHY_SensorTypeObjectData
 // Created: JVT 2004-08-03
@@ -57,7 +62,6 @@ private:
     double GetPopulationFactor( double rDensity ) const;
     double GetSourceFactor( const MIL_Agent_ABC& source ) const;
     void InitializePopulationFactors( xml::xistream& xis );
-    void ReadPosture( xml::xistream& xis );
     //@}
 
 private:
