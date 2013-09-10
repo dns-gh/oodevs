@@ -97,7 +97,7 @@ void MiniViews::NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::Cont
 // -----------------------------------------------------------------------------
 void MiniViews::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
 {
-    NotifyContextMenu( (const kernel::Entity_ABC& )( agent ), menu );
+    NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( agent ), menu );
 }
 
 // -----------------------------------------------------------------------------

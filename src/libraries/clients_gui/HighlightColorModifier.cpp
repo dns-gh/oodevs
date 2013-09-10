@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "HighlightColorModifier.h"
 #include "moc_HighlightColorModifier.cpp"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ContextMenu.h"
 #include "Tools.h"
@@ -72,7 +73,7 @@ void HighlightColorModifier::NotifyContextMenu( const kernel::Entity_ABC& entity
 // -----------------------------------------------------------------------------
 void HighlightColorModifier::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
 {
-    NotifyContextMenu( ( const kernel::Entity_ABC& )( entity ), menu );
+    NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
 
 // -----------------------------------------------------------------------------

@@ -18,8 +18,10 @@
 namespace kernel
 {
     class Controllers;
-    class Agent_ABC;
     class Entity_ABC;
+    class Agent_ABC;
+    class Automat_ABC;
+    class Formation_ABC;
 }
 
 namespace simulation
@@ -42,6 +44,8 @@ class LockMapViewController : public QObject
                             , public tools::Observer_ABC
                             , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                            , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                            , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                             , public tools::ElementObserver_ABC< Simulation::sStartTick >
                             , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
@@ -69,9 +73,12 @@ private slots:
 protected:
     //! @name Helpers
     //@{
+    virtual void UpdateContextMenu( kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
     virtual void NotifyContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const kernel::Agent_ABC&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC&, kernel::ContextMenu& );
     //@}
 
 private:
@@ -79,8 +86,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::View_ABC& view_;
-    kernel::SafePointer< const kernel::Agent_ABC > locked_;
-    kernel::SafePointer< const kernel::Agent_ABC > selected_;
+    kernel::SafePointer< const kernel::Entity_ABC > locked_;
+    kernel::SafePointer< const kernel::Entity_ABC > selected_;
     geometry::Point2f center_;
     //@}
 };

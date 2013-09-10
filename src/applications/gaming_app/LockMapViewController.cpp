@@ -11,6 +11,8 @@
 #include "LockMapViewController.h"
 #include "moc_LockMapViewController.cpp"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Positions.h"
@@ -95,9 +97,24 @@ void LockMapViewController::NotifyUpdated( const Simulation::sEndTick& /*endTick
 // -----------------------------------------------------------------------------
 void LockMapViewController::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity );
-    if( pAgent )
+    if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
         NotifyContextMenu( *pAgent, menu );
+    else if ( const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
+        NotifyContextMenu( *pAutomat, menu );
+    else if ( const kernel::Formation_ABC* pFormation = dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
+        NotifyContextMenu( *pFormation, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LockMapViewController::UpdateContextMenu
+// Created: MMC 2013-09-09
+// -----------------------------------------------------------------------------
+void LockMapViewController::UpdateContextMenu( kernel::ContextMenu& menu )
+{
+    if( locked_ && locked_ == selected_ )
+        menu.InsertItem( "Interface", tools::translate( "LockMapViewController", "Unlock view on the unit" ), this, SLOT( UnlockViewOnAgent() ) );
+    else
+        menu.InsertItem( "Interface", tools::translate( "LockMapViewController", "Lock view on the unit" ), this, SLOT( LockViewOnAgent() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,8 +124,25 @@ void LockMapViewController::NotifyContextMenu( const kernel::Entity_ABC& entity,
 void LockMapViewController::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
 {
     selected_ = &agent;
-    if( locked_ && locked_ == selected_ )
-        menu.InsertItem( "Interface", tools::translate( "LockMapViewController", "Unlock view on the unit" ), this, SLOT( UnlockViewOnAgent() ) );
-    else
-        menu.InsertItem( "Interface", tools::translate( "LockMapViewController", "Lock view on the unit" ), this, SLOT( LockViewOnAgent() ) );
+    UpdateContextMenu( menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LockMapViewController::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void LockMapViewController::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
+{
+    selected_ = &automat;
+    UpdateContextMenu( menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LockMapViewController::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void LockMapViewController::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
+{
+    selected_ = &formation;
+    UpdateContextMenu( menu );
 }

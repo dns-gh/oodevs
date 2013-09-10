@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "OrbatToolbar.h"
 #include "moc_OrbatToolbar.cpp"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -150,7 +151,7 @@ void OrbatToolbar::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
 // -----------------------------------------------------------------------------
 void OrbatToolbar::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
 {
-    NotifyContextMenu( ( const kernel::Entity_ABC& )( entity ), menu );
+    NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
 
 // -----------------------------------------------------------------------------
