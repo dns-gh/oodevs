@@ -11,7 +11,6 @@
 #include "PHY_HumanRank.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 
 PHY_HumanRank::T_HumanRankMap PHY_HumanRank::humanRanks_;
 
@@ -87,8 +86,10 @@ const PHY_HumanRank* PHY_HumanRank::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_HumanRank* PHY_HumanRank::Find( unsigned int nID )
 {
-    CIT_HumanRankMap it = std::find_if( humanRanks_.begin(), humanRanks_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_HumanRank::GetID ), std::select2nd< T_HumanRankMap::value_type >() ) ) );
-    return it == humanRanks_.end() ? 0 : it->second;
+    for( auto it = humanRanks_.begin(); it != humanRanks_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +98,10 @@ const PHY_HumanRank* PHY_HumanRank::Find( unsigned int nID )
 // -----------------------------------------------------------------------------
 const PHY_HumanRank* PHY_HumanRank::Find( sword::EnumHumanRank nAsnID )
 {
-    CIT_HumanRankMap it = std::find_if( humanRanks_.begin(), humanRanks_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanRank::GetAsnID ), std::select2nd< T_HumanRankMap::value_type >() ) ) );
-    return it == humanRanks_.end() ? 0 : it->second;
+    for( auto it = humanRanks_.begin(); it != humanRanks_.end(); ++it )
+        if( it->second->GetAsnID() == nAsnID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

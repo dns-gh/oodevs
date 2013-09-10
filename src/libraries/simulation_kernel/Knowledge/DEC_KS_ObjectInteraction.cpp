@@ -21,7 +21,6 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/DisasterCapacity.h"
 #include "simulation_terrain/TER_World.h"
-#include "MT_Tools/MT_Stl.h"
 #include <boost/serialization/utility.hpp>
 #include <boost/serialization/vector.hpp>
 
@@ -33,7 +32,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectInteraction )
 // -----------------------------------------------------------------------------
 DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pBlackBoard_           ( &blackBoard )
+    , pBlackBoard_( &blackBoard )
 {
     // NOTHING
 }
@@ -43,8 +42,7 @@ DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard_Agen
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction()
-    : DEC_KnowledgeSource_ABC()
-    , pBlackBoard_           ( 0 )
+    : pBlackBoard_( 0 )
 {
     // NOTHING
 }
@@ -162,7 +160,7 @@ void DEC_KS_ObjectInteraction::Clean()
 {
     // Remove all invalid knowledges
     assert( pBlackBoard_ );
-    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( & DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, *this );
+    auto method = boost::bind( &DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, this, _1 );
     pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( method );
 }
 

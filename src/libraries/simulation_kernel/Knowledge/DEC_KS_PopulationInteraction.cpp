@@ -16,7 +16,6 @@
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include "MT_Tools/MT_Stl.h"
 #include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_PopulationInteraction )
@@ -27,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_PopulationInteraction )
 // -----------------------------------------------------------------------------
 DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pBlackBoard_           ( &blackBoard )
+    , pBlackBoard_( &blackBoard )
 {
     // NOTHING
 }
@@ -37,8 +36,7 @@ DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBo
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction()
-    : DEC_KnowledgeSource_ABC ()
-    , pBlackBoard_            ( 0 )
+    : pBlackBoard_( 0 )
 {
     // NOTHING
 }
@@ -137,7 +135,7 @@ void DEC_KS_PopulationInteraction::Clean()
 {
     // Remove all invalid knowledges
     assert( pBlackBoard_ );
-    class_mem_fun_void_t< DEC_KS_PopulationInteraction, DEC_Knowledge_PopulationCollision > method( & DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, *this );
+    auto method = boost::bind( &DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, this, _1 );
     pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( method );
 }
 

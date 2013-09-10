@@ -15,7 +15,6 @@
 #include "MIL_Random.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
 #include "MT_Tools/MT_Vector3D.h"
-#include "MT_Tools/MT_Stl.h"
 
 namespace xml
 {
@@ -59,14 +58,7 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< MT_InterpolatedFunction >  T_PhVector;
-    typedef T_PhVector::const_iterator                          CIT_PhVector;
-    //@}
-
-private:
-    //! @name Init / Tools
+    //! @name Helpers
     //@{
     double GetPH( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, const MT_Vector3D& firerPosition, const MT_Vector3D& targetPosition ) const;
     double GetPH( const PHY_Volume& targetVolume, double rDistance ) const;
@@ -77,18 +69,17 @@ private:
     double GetMinDistanceForPH( double rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
 
     void InitializePH( xml::xistream& xis );
-    //@}
-    //! @name Helpers
-    //@{
+
     void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction& phFunction );
     void NotifyFirerPerception( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const;
     bool IsFirerInsideRecognitionDistance( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const;
     //@}
+
 private:
     //! @name Member data
     //@{
     const PHY_WeaponType& weaponType_;
-          T_PhVector      phs_;
+    std::vector< MT_InterpolatedFunction > phs_;
     //@}
 };
 

@@ -13,7 +13,6 @@
 #include "PHY_Tiredness.h"
 #include "MIL_Time_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -105,9 +104,10 @@ PHY_Tiredness::~PHY_Tiredness()
 // -----------------------------------------------------------------------------
 const PHY_Tiredness* PHY_Tiredness::Find( sword::UnitAttributes::EnumUnitTiredness nAsnID )
 {
-    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< sword::UnitAttributes::EnumUnitTiredness >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetAsnID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
-
-    return it == tirednesses_.end() ? 0 : it->second;
+    for( auto it = tirednesses_.begin(); it != tirednesses_.end(); ++it )
+        if( it->second->GetAsnID() == nAsnID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -116,9 +116,10 @@ const PHY_Tiredness* PHY_Tiredness::Find( sword::UnitAttributes::EnumUnitTiredne
 // -----------------------------------------------------------------------------
 const PHY_Tiredness* PHY_Tiredness::Find( unsigned int nID )
 {
-    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
-
-    return it == tirednesses_.end() ? 0 : it->second;
+    for( auto it = tirednesses_.begin(); it != tirednesses_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

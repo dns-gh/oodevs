@@ -17,7 +17,6 @@
 #include "tools/Codec.h"
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
@@ -202,7 +201,6 @@ unsigned int PHY_BreakdownType::GetID() const
 const PHY_BreakdownType* PHY_BreakdownType::Find( const std::string& strName )
 {
     CIT_BreakdownMap it = breakdowns_.find( strName );
-
     return it == breakdowns_.end() ? 0 :  it->second;
 }
 
@@ -212,9 +210,10 @@ const PHY_BreakdownType* PHY_BreakdownType::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_BreakdownType* PHY_BreakdownType::Find( unsigned int nID )
 {
-    CIT_BreakdownMap it = std::find_if( breakdowns_.begin(), breakdowns_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_BreakdownType::GetID ), std::select2nd< T_BreakdownMap::value_type >() ) ) );
-
-    return it == breakdowns_.end() ? 0 :  it->second;
+    for( auto it = breakdowns_.begin(); it != breakdowns_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Volume.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Volume::T_VolumeMap PHY_Volume::volumes_;
@@ -91,9 +90,10 @@ const PHY_Volume* PHY_Volume::FindVolume( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_Volume* PHY_Volume::FindVolume( unsigned int nID )
 {
-    CIT_VolumeMap it = std::find_if( volumes_.begin(), volumes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Volume::GetID ), std::select2nd< T_VolumeMap::value_type >() ) ) );
-
-    return it == volumes_.end() ? 0 : it->second;
+    for( auto it = volumes_.begin(); it != volumes_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

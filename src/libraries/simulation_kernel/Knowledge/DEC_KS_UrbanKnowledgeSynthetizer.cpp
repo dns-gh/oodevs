@@ -160,8 +160,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::CleanKnowledgeUrban( boost::shared_ptr< D
 void DEC_KS_UrbanKnowledgeSynthetizer::Clean()
 {
     assert( pBlackBoard_ );
-
-    class_mem_fun_void_t< DEC_KS_UrbanKnowledgeSynthetizer, boost::shared_ptr< DEC_Knowledge_Urban > > methodUrban( & DEC_KS_UrbanKnowledgeSynthetizer::CleanKnowledgeUrban, *this );
+    auto methodUrban = boost::bind( &DEC_KS_UrbanKnowledgeSynthetizer::CleanKnowledgeUrban, this, _1 );
     pBlackBoard_->GetKnowledgeUrbanContainer().ApplyOnKnowledgesUrban( methodUrban );
 }
 

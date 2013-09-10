@@ -16,7 +16,6 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_HumanWound::T_HumanWoundMap PHY_HumanWound::humanWounds_;
@@ -312,8 +311,10 @@ const PHY_HumanWound* PHY_HumanWound::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_HumanWound* PHY_HumanWound::Find( sword::EnumHumanWound nAsnID )
 {
-    auto it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< sword::EnumHumanWound >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetAsnID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
-    return it == humanWounds_.end() ? 0 : it->second;
+    for( auto it = humanWounds_.begin(); it != humanWounds_.end(); ++it )
+        if( it->second->GetAsnID() == nAsnID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -322,8 +323,10 @@ const PHY_HumanWound* PHY_HumanWound::Find( sword::EnumHumanWound nAsnID )
 // -----------------------------------------------------------------------------
 const PHY_HumanWound* PHY_HumanWound::Find( unsigned int nID )
 {
-    auto it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
-    return it == humanWounds_.end() ? 0 : it->second;
+    for( auto it = humanWounds_.begin(); it != humanWounds_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "MIL_AgentType_ABC.h"
-#include "MT_Tools/MT_Stl.h"
 #include "MT_Tools/MT_String.h"
 #include <spatialcontainer/TerrainData.h>
 

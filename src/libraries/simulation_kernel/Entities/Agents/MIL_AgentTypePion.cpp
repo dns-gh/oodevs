@@ -377,3 +377,25 @@ void MIL_AgentTypePion::RegisterFunctions( sword::Brain& /*brain*/, MIL_Agent_AB
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::Find
+// Created: NLD 2004-08-09
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePion::Find( const std::string& strName )
+{
+    CIT_PionTypeMap it = pionTypes_.find( strName );
+    return it == pionTypes_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::Find
+// Created: JVT 2005-04-14
+// -----------------------------------------------------------------------------
+const MIL_AgentTypePion* MIL_AgentTypePion::Find( unsigned int nID )
+{
+    for( auto it = pionTypes_.begin(); it != pionTypes_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
+}

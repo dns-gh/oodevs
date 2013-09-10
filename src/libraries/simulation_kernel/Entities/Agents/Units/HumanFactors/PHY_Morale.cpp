@@ -13,7 +13,6 @@
 #include "PHY_Morale.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
 
 PHY_Morale::T_MoraleMap PHY_Morale::morales_;
 
@@ -71,8 +70,10 @@ PHY_Morale::~PHY_Morale()
 // -----------------------------------------------------------------------------
 const PHY_Morale* PHY_Morale::Find( sword::UnitAttributes::EnumUnitMorale nAsnID )
 {
-    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< sword::UnitAttributes::EnumUnitMorale >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Morale::GetAsnID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
-    return it == morales_.end() ? 0 : it->second;
+    for( auto it = morales_.begin(); it != morales_.end(); ++it )
+        if( it->second->GetAsnID() == nAsnID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +82,10 @@ const PHY_Morale* PHY_Morale::Find( sword::UnitAttributes::EnumUnitMorale nAsnID
 // -----------------------------------------------------------------------------
 const PHY_Morale* PHY_Morale::Find( unsigned int nID )
 {
-    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Morale::GetID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
-    return it == morales_.end() ? 0 : it->second;
+    for( auto it = morales_.begin(); it != morales_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

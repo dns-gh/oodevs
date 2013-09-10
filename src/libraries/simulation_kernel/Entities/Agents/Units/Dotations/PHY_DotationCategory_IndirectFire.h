@@ -45,12 +45,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< double >        T_PhVector;
-    typedef T_PhVector::const_iterator CIT_PhVector;
-    //@}
-
     //! @name Helpers
     //@{
     void ReadPh( xml::xistream& xis );
@@ -61,7 +55,7 @@ private:
     //@{
     double rNeutralizationCoef_;
     double rDispersionCoef_;
-    T_PhVector phs_;
+    std::vector< double > phs_;
     //@}
 };
 
