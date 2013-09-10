@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<automats model-version="4.12.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Automats.xsd">
+<automats model-version="4.12.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Automats.xsd">
   <automat decisional-model="Masalife.Automate.Test" id="621" name="ASS . Artillerie Animation AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . Artillerie Animation AUF1"/>
@@ -1470,4 +1470,4 @@
     <unit max-occurs="6" min-occurs="6" type="ASA . Piece MISTRAL"/>
   </automat>
 </automats>
-<!-- signature="0308186171" -->
+<!-- signature="2338751682" -->
