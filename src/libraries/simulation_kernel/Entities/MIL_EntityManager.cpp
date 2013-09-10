@@ -67,6 +67,7 @@
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -275,6 +276,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
+    , bSendUnitVisionCones_         ( false )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0 )
     , rKnowledgesTime_              ( 0 )
@@ -311,6 +313,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
+    , bSendUnitVisionCones_         ( false )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0 )
@@ -2663,7 +2666,31 @@ void MIL_EntityManager::ProcessFormationChangeSuperior( const UnitMagicAction& m
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,
             sword::UnitActionAck::error_invalid_parameter, "invalid new superior" );
 
-
     pFormation->OnReceiveChangeSuperior( message, *formationFactory_ );
     resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::SetVisionCones
+// Created: NLD 2003-10-24
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveControlToggleVisionCones( const sword::ControlEnableVisionCones& message )
+{
+    const bool enable = message.vision_cones();
+    MT_LOG_INFO_MSG( (enable ? "Enabling" : "Disabling") << " vision cones" );
+    bSendUnitVisionCones_ = enable;
+    if( enable )
+        sink_->Apply( []( MIL_Agent_ABC& agent )
+        {
+            agent.Apply( &PHY_RoleInterface_Perceiver::SendVisionCones );
+        } );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::SendVisionCones
+// Created: AGE 2007-09-06
+// -----------------------------------------------------------------------------
+bool MIL_EntityManager::SendVisionCones() const
+{
+    return bSendUnitVisionCones_;
 }

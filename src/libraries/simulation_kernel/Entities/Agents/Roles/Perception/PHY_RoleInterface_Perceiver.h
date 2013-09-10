@@ -170,7 +170,9 @@ public:
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
     virtual void SendFullState( client::UnitAttributes& msg ) const = 0;
+    virtual void SendVisionCones() const = 0;
     //@}
+
 private:
     //! @name Serialization
     //@{

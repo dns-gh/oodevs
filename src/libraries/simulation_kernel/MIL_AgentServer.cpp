@@ -217,7 +217,7 @@ void MIL_AgentServer::ReadStaticData()
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     PHY_MeteoDataManager::Initialize();
     MIL_EntityManager::Initialize( config_, *this, *pObjectFactory_ );
-    pAgentServer_ = new NET_AgentServer( config_, *this, *this );
+    pAgentServer_ = new NET_AgentServer( config_, *this );
 }
 
 //-----------------------------------------------------------------------------

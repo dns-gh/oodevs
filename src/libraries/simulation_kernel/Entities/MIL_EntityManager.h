@@ -29,6 +29,7 @@ namespace sword
     class Tasker;
     class FragOrder;
     class ObjectMagicAction;
+    class ControlEnableVisionCones;
     class SetAutomatMode;
     class UnitCreationRequest;
     class UnitMagicAction;
@@ -178,6 +179,7 @@ public:
     //@{
     void OnReceiveUnitMagicAction          ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveObjectMagicAction        ( const sword::ObjectMagicAction&    message, unsigned int nCtx );
+    void OnReceiveControlToggleVisionCones ( const sword::ControlEnableVisionCones& message );
     void OnReceiveUnitOrder                ( const sword::UnitOrder&            message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveAutomatOrder             ( const sword::AutomatOrder&         message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveCrowdOrder               ( const sword::CrowdOrder&           message, unsigned int nCtx, unsigned int clientId );
@@ -205,6 +207,8 @@ public:
     void EvacuateInhabitants( const TER_Localisation& localisation );
     void UndoEvacuateInhabitants( const TER_Localisation& localisation );
     //@}
+
+    bool SendVisionCones() const;
 
     //! @name CheckPoints
     //@{
@@ -281,6 +285,7 @@ private:
     const unsigned int gcMult_;
     MIL_EffectManager& effectManager_;
     std::vector< const MIL_UrbanObject_ABC* > cities_;
+    bool bSendUnitVisionCones_;
 
     // Profiling
     std::map< std::string, double > profilers_;

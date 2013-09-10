@@ -96,6 +96,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
 
     MOCK_METHOD( SendChangedState, 1 );
     MOCK_METHOD( SendFullState, 1 );
+    MOCK_METHOD( SendVisionCones, 0 );
 };
 
 #endif // __MockPHY_RoleInterface_Perceiver_h_

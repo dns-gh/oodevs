@@ -58,7 +58,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
-#include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -1071,7 +1070,8 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
             owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
-    SendVisionCones();
+    if( bExternalMustUpdateVisionCones_ && MIL_AgentServer::GetWorkspace().GetEntityManager().SendVisionCones() )
+        SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -1255,9 +1255,6 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendVisionCones() const
 {
-    if( ! MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() ||
-        ! MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() && ! bExternalMustUpdateVisionCones_ )
-        return;
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
