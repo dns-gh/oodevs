@@ -86,7 +86,7 @@ void PHY_DotationCategory_IndirectFire::ReadPh( xml::xistream& xis )
     const std::string name = xis.attribute< std::string >( "target-posture" );
     const PHY_Posture* posture = PHY_Posture::FindPosture( name );
     if( ! posture )
-        xis.error( "unknown posture name '" + name +"'" );
+        throw MASA_EXCEPTION( xis.context() + "unknown posture name '" + name +"'" );
     assert( phs_.size() > posture->GetID() );
     phs_[ posture->GetID() ] = xis.attribute< double >( "value" );
 }

@@ -111,7 +111,7 @@ void PHY_LauncherType::ReadDirect( xml::xistream& xis )
     xis >> xml::attribute( "posture", type );
     const PHY_Posture* postureSource = PHY_Posture::FindPosture( type );
     if( ! postureSource )
-        xis.error( "unknown type '" + type + "'" );
+        throw MASA_EXCEPTION( xis.context() + "unknown type '" + type + "'" );
     if( ! postureSource->CanModifyPH() )
         return;
     xis >> xml::list( "ph-modifier", *this, &PHY_LauncherType::ReadModifier, *postureSource );
@@ -127,7 +127,7 @@ void PHY_LauncherType::ReadModifier( xml::xistream& xis, const PHY_Posture& post
     xis >> xml::attribute( "target-posture", type );
     const PHY_Posture* postureTarget = PHY_Posture::FindPosture( type );
     if( ! postureTarget )
-        xis.error( "unknown type '" + type + "'" );
+        throw MASA_EXCEPTION( xis.context() + "unknown type '" + type + "'" );
     if( ! postureTarget->CanModifyPH() )
         return;
     double rModificatorValue;

@@ -31,7 +31,7 @@ void ReadPostureFactor( xml::xistream& xis, std::vector< double >& factors )
     xis >> xml::attribute( "type", type );
     const PHY_Posture* posture = PHY_Posture::FindPosture( type );
     if( ! posture )
-        xis.error( "distance-modifier: unknown type" );
+        throw MASA_EXCEPTION( xis.context() + "distance-modifier: unknown type" );
     if( ! posture->CanModifyDetection() )
         return;
     if( factors.size() <= posture->GetID() )
@@ -39,7 +39,7 @@ void ReadPostureFactor( xml::xistream& xis, std::vector< double >& factors )
     double factor;
     xis >> xml::attribute( "value", factor );
     if( factor < 0 || factor > 1 )
-        xis.error( "distance-modifier: value not in [0..1]" );
+        throw MASA_EXCEPTION( xis.context() + "distance-modifier: value not in [0..1]" );
     factors[ posture->GetID() ] = factor;
 }
 
