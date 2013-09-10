@@ -496,12 +496,6 @@ function( add_module target )
         ${target}
         wrapper
      )
-    add_target( ${target}_test modules "tests/${target}_test" OPTIONS test )
-    target_link_libraries( ${target}_test
-        ${target}
-        ${CORE_LIBRARIES}
-    )
-    add_dependencies( ${target}_test ${target}_dll )
 endfunction()
 
 # fire_module
@@ -515,7 +509,6 @@ target_link_libraries( movement_module
     mt_tools
     ${SPATIALCONTAINER_LIBRARIES}
 )
-masa_add_target_include( movement_module_test "${root_dir}/src/libraries/simulation_kernel" )
 
 # perception_module
 add_module( perception_module )
