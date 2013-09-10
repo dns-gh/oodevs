@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<package-activity model-version="4.12.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Activity.xsd">
+<package-activity model-version="4.12.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Activity.xsd">
   <activities/>
   <packages>
     <package name="attack"/>
@@ -10,4 +10,4 @@
     <package name="support"/>
   </packages>
 </package-activity>
-<!-- signature="4202000536" -->
+<!-- signature="2886969940" -->
