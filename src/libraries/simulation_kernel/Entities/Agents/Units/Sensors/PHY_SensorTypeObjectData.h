@@ -25,7 +25,7 @@ class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 
 // Extract "type" and "value" attribute of "distance-modifier" child elements
-// of "parent" in xis. Values must be double within [0, 1], and exception is
+// of "parent" in xis. Values must be double within [0, 1], an exception is
 // thrown otherwise.
 std::map< std::string, double > ReadDistanceModifiers( xml::xistream& xis,
         const std::string& parent );
