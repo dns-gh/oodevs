@@ -520,10 +520,10 @@ void MIL_EntityManager::ReadUrbanStates( xml::xistream& xis )
 
 namespace
 {
-    void UrbanNotificationFunctor( MIL_Agent_ABC& agent )
+    void NotifyInsideUrbanObject( MIL_Agent_ABC& agent )
     {
-        MT_Vector2D position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
-        agent.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( position );
+        agent.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove(
+            agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     }
 }
 
@@ -533,7 +533,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::NotifyPionsInsideUrbanObject()
 {
-    sink_->Apply( boost::bind( &UrbanNotificationFunctor, _1 )  );
+    sink_->Apply( &NotifyInsideUrbanObject );
 }
 
 // -----------------------------------------------------------------------------

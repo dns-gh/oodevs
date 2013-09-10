@@ -96,7 +96,6 @@ namespace
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     : owner_                         ( 0 )
     , rMaxAgentPerceptionDistance_   ( 0. )
-    , vSensorInfo_                   ()
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
@@ -129,7 +128,6 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     : owner_                         ( &pion )
     , rMaxAgentPerceptionDistance_   ( 0. )
-    , vSensorInfo_                   ()
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
@@ -230,7 +228,6 @@ namespace boost
             file >> nID;
             assert( PHY_SensorType::FindSensorType( nID ) );
             pair.first = PHY_SensorType::FindSensorType( nID )->GetTypeObject();
-
             file >> pair.second;
         }
     }

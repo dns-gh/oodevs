@@ -182,6 +182,4 @@ private:
     //@}
 };
 
-//} // namespace perception
-//} // namespace simulation
 #endif // __PHY_RoleInterface_Perceiver_h_
