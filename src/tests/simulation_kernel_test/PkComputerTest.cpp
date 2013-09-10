@@ -103,7 +103,7 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
         "   </physical>"
         "</urban-object>" );
 
-    MIL_ObjectFactory factory( true );
+    MIL_ObjectFactory factory;
     {
         xml::xistringstream xis(
             "<objects>"

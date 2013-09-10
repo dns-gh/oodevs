@@ -75,7 +75,7 @@ BOOST_CLASS_EXPORT( ArmySerializationProxy )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSerializationFixture )
 {
-    MIL_ObjectFactory factory( true );
+    MIL_ObjectFactory factory;
     {
         xml::xistringstream xis( "<objects>"
                                  "    <object type='object'>"

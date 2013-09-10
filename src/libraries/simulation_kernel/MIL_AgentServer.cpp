@@ -88,7 +88,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pBurningCells_        ( new MIL_BurningCells() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
-    , pObjectFactory_       ( new MIL_ObjectFactory( config.IsLegacy() ) )
+    , pObjectFactory_       ( new MIL_ObjectFactory() )
 {
     MIL_Time_ABC::RegisterTime( *this );
     loopTimer_.Start();

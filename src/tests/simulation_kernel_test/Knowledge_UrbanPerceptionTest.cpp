@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
     WorldInitialize( "worldwide/tests/EmptyParis-ML" );
     {
-        MIL_ObjectFactory factory( true );
+        MIL_ObjectFactory factory;
         {
             xml::xistringstream xis( "<objects>"
                 "    <object type='urban block'/>"

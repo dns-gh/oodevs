@@ -118,7 +118,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/regex.hpp>
 
-#include "Adapters/Sink.h"
 #include "Adapters/Legacy/Sink.h"
 #include "Adapters/FloodModel.h"
 
@@ -290,8 +289,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
-    , sink_                         ( config.IsLegacy() ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
-                                                        : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, *populationFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), objectFactory.GetDangerousObjects() ) ) )
+    , sink_                         ( std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) ))
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
     , automateFactory_              ( new AutomateFactory( *idManager_, *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )

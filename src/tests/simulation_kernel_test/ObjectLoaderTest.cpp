@@ -30,7 +30,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
 {
-    MIL_ObjectFactory factory( false );
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects/>" );
     factory.Initialize( xis );
     BOOST_CHECK_THROW( factory.FindType( "fake" ), std::exception );
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
         "</resources>" );
     PHY_DotationType::Initialize( xdotation );
 
-    MIL_ObjectFactory factory( false );
+    MIL_ObjectFactory factory;
     xml::xistringstream xobject(
         "<objects>"
         "  <object name='Mine Cluster' point-size='50' type='mines'>"
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 {
-    MIL_ObjectFactory factory( false );
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'/>"
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Constructor )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 {
-    MIL_ObjectFactory factory( false );
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
@@ -165,7 +165,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorBuildable )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 {
-    MIL_ObjectFactory factory( false );
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <constructor unit-type='raw' default-consumption-mode='EnTravaux'>"
@@ -187,7 +187,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_ConstructorImprovable )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Spawn )
 {
-    MIL_ObjectFactory factory( true );
+    MIL_ObjectFactory factory;
     xml::xistringstream xis( "<objects>"
                              "    <object type='object'>"
                              "        <spawn object='toto' action-range='10' nbc='false'/>"

@@ -48,7 +48,7 @@ class MIL_ObjectFactory : public ObjectTypeResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_ObjectFactory( bool isLegacy );
+             MIL_ObjectFactory();
     virtual ~MIL_ObjectFactory();
     //@}
 

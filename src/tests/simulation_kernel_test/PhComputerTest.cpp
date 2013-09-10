@@ -60,7 +60,6 @@ namespace
             , xis          ( "<objects>"
                              "    <object type='urban block'/>"
                              "</objects>" )
-            , factory      ( false )
         {
             MockSink sink;
             factory.Initialize( xis );
