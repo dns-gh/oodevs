@@ -141,7 +141,6 @@ public:
     const tools::Resolver< MIL_Army_ABC >& GetArmies() const;
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     bool ConvertIdToUrbanId( unsigned int& id ) const;
-    unsigned long FindMaxId( const MIL_Config& config ) const;
     //@}
 
     //! @name Stats

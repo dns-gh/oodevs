@@ -24,6 +24,7 @@
 #include "Tools/MIL_Config.h"
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
+#include "tools/FileWrapper.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Tools/MIL_IDManager.h"
 #include <tools/thread/Thread.h>
@@ -32,28 +33,70 @@
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+#include <boost/algorithm/string/regex.hpp>
 
 namespace
 {
-
-struct AgentServerInit : boost::noncopyable
-{
-    AgentServerInit( MIL_AgentServer*& agent ): agent_( agent ), done_( false ) {}
-    ~AgentServerInit()
+    struct AgentServerInit : boost::noncopyable
     {
-        if( !done_ )
-            agent_ = 0;
-    }
-    void Done()
+        explicit AgentServerInit( MIL_AgentServer*& agent )
+            : agent_( agent )
+            , done_ ( false )
+        {}
+        ~AgentServerInit()
+        {
+            if( !done_ )
+                agent_ = 0;
+        }
+        void Done()
+        {
+            done_ = true;
+        }
+
+    private:
+        MIL_AgentServer*& agent_;
+        bool done_;
+    };
+
+    unsigned long FindMaxIdInFile( const tools::Path& filePath )
     {
-        done_ = true;
+        unsigned long maxId = 0;
+        try
+        {
+            if( filePath.Exists() )
+            {
+                std::string currentLine;
+                tools::Ifstream ifile( filePath );
+                while( std::getline( ifile, currentLine ) )
+                {
+                    boost::regex idRegex( "id=\"([0-9]+)\"" );
+                    boost::sregex_iterator end;
+                    for( boost::sregex_iterator it( currentLine.begin(), currentLine.end(), idRegex ); it != end; ++it )
+                        for( unsigned int i = 1; i < it->size(); ++i )
+                            if( ( *it )[ i ].matched )
+                            {
+                                const std::string matchId( (*it)[i].first, (*it)[i].second );
+                                unsigned long curId =boost::lexical_cast< unsigned long >( matchId );
+                                if( curId > maxId )
+                                    maxId = curId;
+                            }
+                }
+                ifile.close();
+            }
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+        return maxId;
     }
 
-private:
-    MIL_AgentServer*& agent_;
-    bool done_;
-};
-
+    unsigned long FindMaxId( const MIL_Config& config )
+    {
+        unsigned long maxUrbanId = FindMaxIdInFile( config.GetUrbanFile() );
+        unsigned long maxOrbatId = FindMaxIdInFile( config.GetOrbatFile() );
+        return std::max( maxUrbanId, maxOrbatId ) + 2;
+    }
 }
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
@@ -101,7 +144,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     pTheAgentServer_ = this;
     AgentServerInit initGuard( pTheAgentServer_ );
 
-    MIL_IDManager::SetKeepIdsMode( true, pEntityManager_->FindMaxId( config_ ) + 2 );
+    MIL_IDManager::SetKeepIdsMode( true, FindMaxId( config_ ) );
     config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();
