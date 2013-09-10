@@ -339,29 +339,29 @@ end
 -- Safeguarding on crowd.
 -- --------------------------------------------------------------------------------
 integration.startInterveneOnCrowd = function( crowd )
-    myself.respond = true
-    myself.rTempsDebut = getSimulationTime()
+    crowd.respond = true
+    crowd.rTempsDebut = getSimulationTime()
 end
 
 integration.updateInterveneOnCrowd = function( crowd, periodicity )
-    if myself.respond then
+    if crowd.respond then
         
         meKnowledge:RC( eRC_RiposteContrePopulation, crowd.source )
         integration.startShootingOnCrowd( crowd )
-        myself.rTempsDebut = getSimulationTime()
-        myself.respond = false
+        crowd.rTempsDebut = getSimulationTime()
+        crowd.respond = false
     else
         integration.stopShootingOnCrowd( crowd )
     end
-    if ( periodicity * 60 ) <= ( getSimulationTime() - myself.rTempsDebut ) then
-        myself.respond = true
+    if ( periodicity * 60 ) <= ( getSimulationTime() - crowd.rTempsDebut ) then
+        crowd.respond = true
     end
     return true
 end
 
 integration.stopInterveneOnCrowd = function( crowd )
-    myself.respond = nil
-    myself.rTempsDebut = nil
+    crowd.respond = nil
+    crowd.rTempsDebut = nil
     integration.stopShootingOnCrowd( crowd )
 end
 
