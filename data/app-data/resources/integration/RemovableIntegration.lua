@@ -121,8 +121,8 @@ integration.isInAvoidanceArea = function( object )
     return DEC_ConnaissanceObjet_PointEstDansZoneEvitement( meKnowledge:getPosition(), object.source )
 end
 
-integration.isInEffectArea = function( object )
-    return DEC_ConnaissanceObjet_PointEstProcheZoneEffet( meKnowledge:getPosition(), object.source, 100 )
+integration.isInEffectArea = function( object, distance )
+    return DEC_ConnaissanceObjet_PointEstProcheZoneEffet( meKnowledge:getPosition(), object.source, distance or 100 )
 end
 --- Return if the unit is avoidable
 -- @param knowledge on an object
