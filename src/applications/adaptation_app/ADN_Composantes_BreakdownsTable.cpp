@@ -65,7 +65,7 @@ public:
         breakdownsTable_.OnModified();
     }
 
-    bool Contains( ADN_Breakdowns_Data::BreakdownInfo* pInfo )
+    bool Contains( ADN_Breakdowns_Data::BreakdownInfo* pInfo ) const
     {
         if( !pInfo )
             return false;

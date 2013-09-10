@@ -48,7 +48,7 @@ public:
         pItemInt->GetConnector().Connect( &static_cast< SensorInfos* >( obj )->rHeight_ );
     }
 
-    bool Contains( ADN_Sensors_Data::SensorInfos* pInfo )
+    bool Contains( ADN_Sensors_Data::SensorInfos* pInfo ) const
     {
         std::string name = pInfo->GetItemName();
         for( auto it = vDatas_.begin(); it != vDatas_.end(); ++it )
