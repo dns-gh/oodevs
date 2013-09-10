@@ -1308,6 +1308,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
         <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 has duplicate sensors.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

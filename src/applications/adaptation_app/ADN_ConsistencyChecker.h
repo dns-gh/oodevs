@@ -73,6 +73,7 @@ private: // NNO Consistency
     void CheckMissionTypes( const ADN_Missions_Data::T_Mission_ABC_Vector& missions, int subTab );
     void CheckParameters( const ADN_Missions_Data::T_MissionParameter_Vector& parameters, const std::string& missionName, int subTab );
     void CheckMissionParameters();
+    void CheckComposantes();
     bool IsAlreadyRegistered( const std::string& code, E_ConsistencyCheck type ) const;
     void AddError( E_ConsistencyCheck type, const NNOElement& element );
     void AddError( E_ConsistencyCheck type, const T_NNOElements& elements );

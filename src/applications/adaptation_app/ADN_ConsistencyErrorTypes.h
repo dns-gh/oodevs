@@ -27,6 +27,7 @@ enum E_ConsistencyCheck
 
     eOthersMask             = 0x000f << 8,
     eInvalidIdInVector      = 0x0001 << 8,
+    eDuplicateSensor        = 0x0002 << 8,
 };
 
 #endif // __ADN_ConsistencyErrorTypes_h_

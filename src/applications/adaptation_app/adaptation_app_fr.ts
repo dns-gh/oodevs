@@ -1309,6 +1309,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
         <translation>&apos;%1&apos; possèdent le même identifiant. Ces identifiants seront remplacés à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>%1 has duplicate sensors.</source>
+        <translation>%1 a des capteurs en double.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

@@ -59,6 +59,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingPart ]            = tr( "The breakdown '%1' has no replacement part." );
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission '%1' has no type defined for a localisation composite parameter." );
     errorDescriptions_[ eInvalidIdInVector ]      = tr( "'%1' has the same id. These id will be replaced at next save." );
+    errorDescriptions_[ eDuplicateSensor ]        = tr( "%1 has duplicate sensors." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );

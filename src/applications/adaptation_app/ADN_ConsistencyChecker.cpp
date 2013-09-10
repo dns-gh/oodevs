@@ -45,6 +45,7 @@ bool ADN_ConsistencyChecker::CheckConsistency()
     CheckMissionsTypes();
     CheckBreakdownsBackup();
     CheckMissionParameters();
+    CheckComposantes();
     return !errors_.empty();
 }
 
@@ -262,6 +263,30 @@ void ADN_ConsistencyChecker::CheckParameters( const ADN_Missions_Data::T_Mission
                 errors_.push_back( error );
             }
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::CheckComposantes
+// Created: LDC 2013-09-09
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::CheckComposantes()
+{
+    ADN_Composantes_Data& data = ADN_Workspace::GetWorkspace().GetComposantes().GetData();
+    
+    auto composantes = data.GetComposantes();
+    for( auto it = composantes.begin(); it != composantes.end(); ++it )
+    {
+        auto sensors = (*it)->vSensors_;
+        std::set< std::string > alreadyDefinedSensors;
+        for( auto sensor = sensors.begin(); sensor != sensors.end(); ++sensor )
+            if( !alreadyDefinedSensors.insert( (*sensor)->GetItemName() ).second )
+            {
+                ConsistencyError error( eDuplicateSensor );
+                error.items_.push_back( CreateGotoInfo( ( *it )->strName_.GetData(), eComposantes ) );
+                errors_.push_back( error );
+                break;
+            }
+    }
 }
 
 // -----------------------------------------------------------------------------

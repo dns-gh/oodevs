@@ -65,13 +65,25 @@ public:
         breakdownsTable_.OnModified();
     }
 
+    bool Contains( ADN_Breakdowns_Data::BreakdownInfo* pInfo ) const
+    {
+        if( !pInfo )
+            return false;
+        std::string name = pInfo->strName_.GetData();
+        for( auto it = vDatas_.begin(); it != vDatas_.end(); ++it )
+        {
+            BreakdownInfos* breakdownInfos = static_cast< BreakdownInfos* >( *it );
+            if( name == breakdownInfos->ptrBreakdown_.GetData()->strName_.GetData() )
+                return true;
+        }
+        return false;
+    }
+
 private:
     ADN_Composantes_BreakdownsTable& breakdownsTable_;
 
     ADN_CT_Composantes_BreakdownsTable& operator=( const ADN_CT_Composantes_BreakdownsTable& );
 };
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_BreakdownsTable constructor
@@ -107,7 +119,6 @@ ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const std::str
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnModified() ) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_BreakdownsTable destructor
 // Created: JDY 03-07-03
@@ -116,7 +127,6 @@ ADN_Composantes_BreakdownsTable::~ADN_Composantes_BreakdownsTable()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_BreakdownsTable::OnContextMenu
@@ -127,9 +137,14 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
     Q3PopupMenu menu( this );
     Q3PopupMenu addMenu( &menu );
 
+    ADN_CT_Composantes_BreakdownsTable* connector = static_cast< ADN_CT_Composantes_BreakdownsTable* >( pConnector_ );
+
     ADN_Breakdowns_Data& breakdownsData = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData();
     for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.vBreakdowns_.begin(); it != breakdownsData.vBreakdowns_.end(); ++it )
-        addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
+    {
+        if( !connector->Contains( *it ) )
+            addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
+    }
 
     menu.insertItem( tr( "New" ), &addMenu );
     menu.insertItem( tr( "Delete" ), 1 );
@@ -144,7 +159,7 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
         // Delete the current element.
         BreakdownInfos* pCurrent = (BreakdownInfos*)GetCurrentData();
         if( pCurrent != 0 )
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrent );
+            connector->RemItem( pCurrent );
     }
     else
     {
@@ -154,9 +169,8 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
         pNewInfo->ptrBreakdown_ = pCast;
         pNewInfo->ptrBreakdown_.SetVector( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_ );
         //pNewInfo->ptrBreakdown_.SetVector( pCast->nti_.vBreakdowns_ );
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
+        connector->AddItem( pNewInfo );
+        connector->AddItem( 0 );
     }
 }
 
