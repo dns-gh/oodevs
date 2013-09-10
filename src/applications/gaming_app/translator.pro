@@ -65,6 +65,7 @@ KnowledgeAddInGroupDialog.cpp \
 KnowledgeGroupMagicOrdersInterface.cpp \
 LendingsListView.cpp \
 LivingAreaDialog.cpp \
+LockMapViewController.cpp \
 LoginDialog.cpp \
 LogisticListView.cpp \
 LogisticStatusWidgets.cpp \

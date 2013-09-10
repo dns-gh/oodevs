@@ -17,6 +17,7 @@
 
 namespace kernel
 {
+    class Agent_ABC;
     class Entity_ABC;
     class Controllers;
 }
@@ -35,6 +36,7 @@ class HighlightColorModifier : public QObject
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC    < kernel::Entity_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                             , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
@@ -61,6 +63,7 @@ private slots:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC&, kernel::ContextMenu& );
     virtual void NotifyDeleted( const kernel::Entity_ABC& );
     QColor Highlight( const QColor& base );
     //@}

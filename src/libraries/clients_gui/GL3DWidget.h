@@ -91,6 +91,7 @@ public:
     virtual void Zoom( float width );
     virtual void CenterView();
     virtual void SetCurrentCursor( const QCursor& cursor );
+    virtual geometry::Point2f GetCenter() const;
     //@}
 
 private:

@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "HighlightColorModifier.h"
 #include "moc_HighlightColorModifier.cpp"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ContextMenu.h"
 #include "Tools.h"
@@ -64,6 +65,15 @@ void HighlightColorModifier::NotifyContextMenu( const kernel::Entity_ABC& entity
         menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Highlight" ), this, SLOT( Highlight() ) );
     else
         menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Remove highlight" ), this, SLOT( Unhighlight() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
 
 // -----------------------------------------------------------------------------

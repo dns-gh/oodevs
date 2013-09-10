@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "OrbatToolbar.h"
 #include "moc_OrbatToolbar.cpp"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -142,6 +143,15 @@ void OrbatToolbar::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
 {
     entity_ = &entity;
     menu.InsertItem( "Interface", tr( "Filter view" ), this, SLOT( OnSetFilter() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
 
 // -----------------------------------------------------------------------------

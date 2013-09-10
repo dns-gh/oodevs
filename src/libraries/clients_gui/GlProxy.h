@@ -58,6 +58,7 @@ public:
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );
     virtual float   GetAdaptiveZoomFactor() const;
+    virtual geometry::Point2f GetCenter() const;
 
     virtual std::pair< bool, bool > UnSelect() const;
     virtual void Select( bool, bool ) const;

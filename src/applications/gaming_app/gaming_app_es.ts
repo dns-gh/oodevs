@@ -1380,6 +1380,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>LockMapViewController</name>
+    <message>
+        <source>Unlock view on the unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock view on the unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LoginDialog</name>
     <message>
         <source>Ok</source>
