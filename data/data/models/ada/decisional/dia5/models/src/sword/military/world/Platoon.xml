@@ -744,6 +744,12 @@
         <method name="disabledSharedPerception">
             <description>Stops sharing knowledges to friend</description>
         </method>
+        <method name="enableSharingKnowledges">
+            <description>Begins sharing knowledges with friend.</description>
+        </method>
+        <method name="disabledSharingKnowledges">
+            <description>Stops sharing knowledges to friend</description>
+        </method>
         <method name="agentKnowledgeSharedPerception">
             <description>Begins sharing perceptions between a knowledge to an other one.</description>
         </method>

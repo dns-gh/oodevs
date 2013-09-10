@@ -127,12 +127,28 @@ integration.disabledSharedPerception = function( supportedUnit )
     DEC_DisabledSharedPerception( supportedUnit.source )
 end
 
+integration.enableSharingKnowledges = function( unit )
+    DEC_EnableSharingKnowledges( unit.source )
+end
+
+integration.disabledSharingKnowledges = function( unit )
+    DEC_DisabledSharingKnowledges( unit.source )
+end
+
 integration.enabledSharedPerceptionWithKnowledge = function( supportedUnit )
     DEC_EnableSharedPerceptionWithKnowledge( myself, supportedUnit.source )
 end
 
 integration.disableSharedPerceptionWithKnowledge = function( supportedUnit )
     DEC_DisabledSharedPerceptionWithKnowledge( myself, supportedUnit.source )
+end
+
+integration.enableSharingKnowledgesWithKnowledge = function( unit )
+    DEC_EnableSharingKnowledgesWithKnowledge( myself, unit.source )
+end
+
+integration.disabledSharingKnowledgesKnowledge = function( unit )
+    DEC_DisabledSharingKnowledgesWithKnowledge( myself, unit.source )
 end
 
 integration.agentKnowledgeSharedPerception = function( self )

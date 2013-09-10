@@ -1040,11 +1040,23 @@ return
         end
         integration.unboardElementsWithoutDelay( simElements )
     end,
-    enabledSharedPerception = function( self )
-        integration.enabledSharedPerception( self )
+    enabledSharedPerception = function( self, supportUnit )
+        integration.enabledSharedPerception( supportUnit )
     end,
-    disabledSharedPerception = function( self )
-        integration.disabledSharedPerception( self )
+    disabledSharedPerception = function( self, supportUnit )
+        integration.disabledSharedPerception( supportUnit )
+    end,
+    enableSharingKnowledges = function( self )
+        integration.enableSharingKnowledges( self )
+    end,
+    disabledSharingKnowledges = function( self )
+        integration.disabledSharingKnowledges( self )
+    end,
+    enabledSharedPerceptionWithKnowledge = function( self, supportUnit )
+        integration.enabledSharedPerceptionWithKnowledge( supportUnit )
+    end,
+    disableSharedPerceptionWithKnowledge = function( self, supportUnit )
+        integration.disableSharedPerceptionWithKnowledge( supportUnit )
     end,
     isPartialRadioState = function( self )
         return integration.isPartialRadioState( self )
