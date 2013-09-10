@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
-                               bool legacy, bool timeline );
+                               bool timeline );
     virtual ~DebugConfigPanel();
     //@}
 
@@ -45,7 +45,6 @@ public:
 signals:
     //! @name Signals
     //@{
-    void SwordVersionSelected( bool isLegacy );
     void TimelineEnabled( bool enabled );
     void IntegrationPathSelected( const tools::Path& integrationPath );
     void DumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
@@ -54,7 +53,6 @@ signals:
 private slots:
     //! @name Operations
     //@{
-    void SwordVersionChecked( int state );
     void OnTimelineChecked( bool checked );
     void OnTimelineDebugPortChanged( int port );
     void OnExerciseNumberChanged( int exerciseNumber );
@@ -74,9 +72,6 @@ private:
 
     QGroupBox* topBox_;
 
-    //legacy
-    QCheckBox* legacyCheckBox_;
-
     // timeline
     QGroupBox* timelineBox_;
     QLabel* timelineDebugPortLabel_;
@@ -91,8 +86,6 @@ private:
     //profiling configuration
     QGroupBox* profilingBox_;
     QCheckBox* decCallsBox_;
-    QCheckBox* commandsBox_;
-    QCheckBox* hooksBox_;
 
     //pathfinds configuration
     QGroupBox* pathfindsBox_;

@@ -70,7 +70,6 @@ private slots:
     void OnSelect( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
     void OnSelectCheckpoint( const tools::Path& session, const tools::Path& checkpoint );
-    void OnSwordVersionSelected( bool isLegacy );
     void OnClientEnabled( bool enabled );
     void OnIntegrationPathSelected( const tools::Path& integrationDir );
     void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
@@ -114,7 +113,6 @@ protected:
     T_Plugins                     plugins_;
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
-    bool                          isLegacy_;
     bool                          hasClient_;
     bool                          hasTimeline_;
     int                           exerciseNumber_;

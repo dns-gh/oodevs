@@ -150,10 +150,6 @@
 <context>
     <name>DebugConfigPanel</name>
     <message>
-        <source>Enable Legacy Mode</source>
-        <translation>Activer le mode compatibilité</translation>
-    </message>
-    <message>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
@@ -168,14 +164,6 @@
     <message>
         <source>Decisional functions</source>
         <translation>Fonctions décisionnelles</translation>
-    </message>
-    <message>
-        <source>Commands (non-legacy)</source>
-        <translation>Commandes (non-legacy)</translation>
-    </message>
-    <message>
-        <source>Hooks (non-legacy)</source>
-        <translation>Hooks (non-legacy)</translation>
     </message>
     <message>
         <source>Pathfind settings</source>

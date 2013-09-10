@@ -125,7 +125,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !ReadBoolSetting( "NoClientSelected" ) )
-    , isLegacy_         ( ReadBoolSetting( "IsLegacy", true ) )
     , hasTimeline_      ( ReadBoolSetting( "HasTimeline" ) )
     , integrationDir_   ( "" )
     , exerciseNumber_   ( 1 )
@@ -172,8 +171,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     //debug config panel
     if( config.IsOnDebugMode() )
     {
-        DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( configTabs_, config_, isLegacy_, hasTimeline_ ) );
-        connect( configPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
+        DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( configTabs_, config_, hasTimeline_ ) );
         connect( configPanel, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
         connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
         connect( configPanel, SIGNAL( TimelineEnabled( bool ) ), SLOT( OnTimelineEnabled( bool ) ) );
@@ -269,9 +267,9 @@ void ScenarioLauncherPage::OnStart()
     const tools::Path session = session_.IsEmpty() ? tools::Path::FromUTF8( BuildSessionName() ) : session_;
     CreateSession( exerciseName, session );
 
-    std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", isLegacy_ ? "true" : "false" )
-                                                                                ( "checkpoint", checkpoint_.ToUTF8().c_str() )
-                                                                                ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
+    std::map< std::string, std::string > arguments = boost::assign::map_list_of
+            ( "checkpoint", checkpoint_.ToUTF8().c_str() )
+            ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
     if( !integrationDir_.IsEmpty() )
         arguments[ "integration-dir" ] = "\"" + integrationDir_.ToUTF8() + "\"";
     if( !dumpPathfindDirectory_.IsEmpty() )
@@ -362,16 +360,6 @@ void ScenarioLauncherPage::OnClientEnabled( bool enabled )
 {
     WriteBoolSetting( "NoClientSelected", !enabled );
     hasClient_ = enabled;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::OnSwordVersionSelected
-// Created: SLI 2012-01-27
-// -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnSwordVersionSelected( bool isLegacy )
-{
-    WriteBoolSetting( "IsLegacy", isLegacy );
-    isLegacy_ = isLegacy;
 }
 
 // -----------------------------------------------------------------------------

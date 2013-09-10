@@ -148,10 +148,6 @@
 <context>
     <name>DebugConfigPanel</name>
     <message>
-        <source>Enable Legacy Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Debug</source>
         <translation type="unfinished"></translation>
     </message>
@@ -165,14 +161,6 @@
     </message>
     <message>
         <source>Decisional functions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Commands (non-legacy)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hooks (non-legacy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
