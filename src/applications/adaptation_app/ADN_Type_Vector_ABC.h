@@ -75,7 +75,6 @@ protected:
     virtual bool RemItemPrivate( void* pObj );
     virtual void ClearPrivate( bool bInConnection = false );
     virtual void InvalidatePrivate( void* pObj, bool bDel = false );
-    virtual void push_back( T* const & x );
 
 public:
     //! @name Assignment/Copy constructor

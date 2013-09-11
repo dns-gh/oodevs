@@ -208,16 +208,6 @@ void ADN_Type_Vector_ABC<T>::Initialize( ADN_Connector_Vector_ABC& dest ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::push_back
-// Created: APE 2005-04-07
-// -----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::push_back( T* const& x )
-{
-    std::vector< T* >::push_back( x );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::AddUniquenessChecker
 // Created: ABR 2013-01-15
 // -----------------------------------------------------------------------------
