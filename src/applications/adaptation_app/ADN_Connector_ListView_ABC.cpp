@@ -44,7 +44,6 @@ void ADN_Connector_ListView_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pT
 
     connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
     connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
     connect( pTarget, SIGNAL( SendErrorStatus( ADN_ErrorStatus, const QString& ) ), &list_, SLOT( Warn( ADN_ErrorStatus, const QString& ) ) );
 
@@ -65,7 +64,6 @@ void ADN_Connector_ListView_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC*
 
     disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
     disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
     disconnect( pTarget, SIGNAL( SendErrorStatus( ADN_ErrorStatus, const QString& ) ), &list_, SLOT( Warn( ADN_ErrorStatus, const QString& ) ) );
 
@@ -100,50 +98,6 @@ bool ADN_Connector_ListView_ABC::RemItemPrivate( void* item )
         list_.TakeItem( pItem );
     ADN_App::GetMainWindow()->setWindowModified( true );
     return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Connector_ListView_ABC::SwapItemPrivate
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-void ADN_Connector_ListView_ABC::SwapItemPrivate(int i,int j)
-{
-    if( list_.ChildCount() == 0 || i == j )
-        return;
-    else if( i < 0 )
-        SwapItem( 0, j );
-    else if( j >= list_.ChildCount() )
-        SwapItem( i, list_.ChildCount() - 1 );
-    else if( i > j )
-        SwapItem( j, i );
-    else if( !bSwap_)
-    {
-        ADN_StandardItem* pItemJ = list_.ItemAt( j );
-        ADN_StandardItem* pItemI = list_.ItemAt( i );
-
-        if( i == 0)
-        {
-            // special case cause itemAbove of first Item
-            // doesn't work
-            if( j == 1)
-                list_.MoveItem( pItemI, pItemJ );
-            else
-            {
-                list_.MoveItemAbove( pItemI, pItemJ );
-                list_.TakeItem(pItemJ);
-                list_.InsertItem(pItemJ);
-            }
-        }
-        else
-        {
-            // general case
-            list_.Swap( pItemI, pItemJ );
-        }
-
-        bSwap_=true;
-        emit ItemSwapped(i,j);
-        bSwap_=false;
-    }
 }
 
 //-----------------------------------------------------------------------------

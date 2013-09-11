@@ -35,7 +35,6 @@ protected:
     virtual void SetDataPrivate( void* data );
     virtual bool AddItemPrivate( void* obj );
     virtual bool RemItemPrivate( void* item );
-    virtual void SwapItemPrivate( int i, int j );
     virtual void ClearPrivate( bool bInConnection = false );
 
     virtual ADN_StandardItem* CreateItem( void* obj ) = 0;

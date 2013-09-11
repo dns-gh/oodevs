@@ -58,7 +58,6 @@ public slots:
     void AddItemNoEmit( void* pObj );
     void RemItemNoEmit( void* pObj );
 
-    void SwapItem( int i, int j );
     void Clear( bool bInConnection = false );
 
     virtual void Rename( void* ) {}
@@ -66,7 +65,6 @@ public slots:
 signals:
     void ItemAdded( void* pObj );
     void ItemRemoved( void* pObj );
-    void ItemSwapped( int i, int j );
     void Cleared( bool bInConnection = false);
 
 public:
@@ -85,7 +83,6 @@ public:
     virtual void SetDataPrivate( void* pData );
     virtual bool AddItemPrivate( void* pObj );
     virtual bool RemItemPrivate( void* pObj);
-    virtual void SwapItemPrivate( int i, int j );
     virtual void ClearPrivate( bool bInConnection = false );
 
 protected:

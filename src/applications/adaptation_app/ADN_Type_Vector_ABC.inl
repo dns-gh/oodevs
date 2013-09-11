@@ -108,30 +108,6 @@ void ADN_Type_Vector_ABC< T >::EndVector()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC<T>::SwapItemPrivate
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::SwapItemPrivate( int i, int j )
-{
-    if( size() == 0 || i == j )
-        return;
-    else if( i < 0 )
-        SwapItem( 0, j );
-    else if( j >= static_cast< int >( size() ) )
-        SwapItem( i, static_cast< int >( size() ) - 1 );
-    else if( i > j )
-        SwapItem( j , i );
-    else
-    {
-        T* tmp = at( i );
-        at( i ) = at( j );
-        at( j ) = tmp;
-        emit ItemSwapped( i, j );
-    }
-}
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::InvalidatePrivate
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------

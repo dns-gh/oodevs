@@ -42,7 +42,6 @@ void ADN_Connector_Combo<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarge
 
     connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
     connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
 
     if( pCombo_->IsAutoEnabled() )
@@ -63,7 +62,6 @@ void ADN_Connector_Combo<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTa
 
     disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
     disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
 
     bIsConnected_=false;
