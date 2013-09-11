@@ -90,8 +90,7 @@ const SupplyConvoyFactory_ABC& SupplyConvoyConfig::GetConvoyFactory( xml::xistre
         return SupplyConvoyRealFactory::Instance();
     else if( type == "virtual" )
         return SupplyConvoyVirtualFactory::Instance();
-    throw MASA_EXCEPTION( xis.context() + "Invalid convoy type" ); // Throw
-    return SupplyConvoyVirtualFactory::Instance(); //$$ Stupid warning
+    throw MASA_EXCEPTION( xis.context() + "Invalid convoy type" );
 }
 
 // -----------------------------------------------------------------------------
