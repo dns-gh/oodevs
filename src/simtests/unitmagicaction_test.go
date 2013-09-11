@@ -464,9 +464,6 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
 
 	// Teleport unit
 	err = client.TeleportUnit(unit.Id, pos)

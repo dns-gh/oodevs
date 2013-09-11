@@ -10,7 +10,6 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
-	"swapi"
 )
 
 func (s *TestSuite) TestSetAutomatMode(c *C) {
@@ -22,9 +21,6 @@ func (s *TestSuite) TestSetAutomatMode(c *C) {
 	checkEngage := func(engagedId, waitId uint32, engage bool) {
 		err := client.SetAutomatMode(engagedId, engage)
 		c.Assert(err, IsNil)
-		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-			return data.FindAutomat(waitId).Engaged == engage
-		})
 	}
 
 	// Invalid automat identifier

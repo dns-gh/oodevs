@@ -43,9 +43,6 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 	// Disengage automat
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
 
 	// Cannot send frag order to an disengaged automat
 	_, err = client.SendAutomatFragOrder(automat.Id, FragOrderNbcSuitOn, params)
@@ -54,9 +51,6 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 	// Engage automat
 	err = client.SetAutomatMode(automat.Id, true)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
 
 	_, err = client.SendAutomatFragOrder(automat.Id, FragOrderNbcSuitOn, params)
 	c.Assert(err, IsNil)
@@ -118,9 +112,6 @@ func (s *TestSuite) TestUnitFragOrder(c *C) {
 	// Disengage automat
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
 
 	// Cannot send frag order with an invalid frag order identifier
 	_, err = client.SendUnitFragOrder(unit.Id, InvalidIdentifier, params)

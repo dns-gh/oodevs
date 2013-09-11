@@ -34,9 +34,6 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	// disengaging unit automat to be able to send all needed magic actions
 	err = client.SetAutomatMode(automatId, false)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automatId).Engaged
-	})
 
 	receive := func() bool {
 		received := make(chan int, 1)

@@ -522,7 +522,17 @@ func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {
 		}
 		return nil
 	}
-	return <-c.postSimRequest(msg, handler)
+	err := <-c.postSimRequest(msg, handler)
+	if err != nil {
+		return err
+	}
+	ok := c.Model.WaitCondition(func(data *ModelData) bool {
+		return data.FindAutomat(automatId).Engaged == engaged
+	})
+	if !ok {
+		return fmt.Errorf("automat mode change timed out")
+	}
+	return nil
 }
 
 type ControlAckError interface {
