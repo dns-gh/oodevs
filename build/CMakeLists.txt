@@ -498,10 +498,6 @@ function( add_module target )
      )
 endfunction()
 
-# fire_module
-add_module( fire_module )
-target_link_libraries( fire_module mt_tools )
-
 # movement_module
 add_module( movement_module )
 masa_add_target_include( movement_module "${root_dir}/src/libraries/simulation_kernel" )
@@ -530,7 +526,6 @@ target_link_libraries( simulation_app
 )
 add_dependencies( simulation_app
     dispatcher_dll
-    fire_module_dll
     movement_module_dll
     perception_module_dll
     propagation_module_dll
