@@ -124,9 +124,10 @@ void ADN_Connector_Vector_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTar
 {
     ADN_Connector_ABC::ConnectPrivateSub( (ADN_Connector_ABC*)pTarget );
 
-    connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItem(void*)));
-    connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItem(void*)));
-    connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
+    connect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
+    connect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void*) ) );
+    connect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool) ) );
+    connect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,9 +138,10 @@ void ADN_Connector_Vector_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* p
 {
     ADN_Connector_ABC::DisconnectPrivateSub( (ADN_Connector_ABC*)pTarget );
 
-    disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItem(void*)));
-    disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItem(void*)));
-    disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
+    disconnect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
+    disconnect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void* ) ) );
+    disconnect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool ) ) );
+    disconnect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 }
 
 //-----------------------------------------------------------------------------
