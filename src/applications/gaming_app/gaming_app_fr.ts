@@ -1803,10 +1803,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Automates</translation>
     </message>
     <message>
-        <source>Logo</source>
-        <translation>Logo</translation>
-    </message>
-    <message>
         <source> - Not connected</source>
         <translation> - Non connecté</translation>
     </message>

@@ -89,7 +89,6 @@
 #include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/Logger.h"
-#include "clients_gui/LogoLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MiniViews.h"
 #include "clients_gui/MiscLayer.h"
@@ -299,7 +298,6 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& defaultLayer         = *new gui::DefaultLayer( controllers_ );
-    gui::Layer& logoLayer            = *new gui::LogoLayer( *glProxy_, gui::Image( config_.BuildResourceChildFile( "logo.png" ) ), 0.7f );
     gui::Layer& teamLayer            = *new TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
     gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, *pProfile_ );
@@ -339,7 +337,6 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( drawerLayer, "main,miniviews" );
     AddLayer( fogLayer, "fog" );
     AddTooltipLayer( tooltipLayer );
-    AddLayer( logoLayer, "main", tr( "Logo" ) );
 
     // ordre des evenements
     forward_->Register( terrainLayer );
