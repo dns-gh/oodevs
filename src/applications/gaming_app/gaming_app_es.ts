@@ -1801,10 +1801,6 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> - Not connected</source>
         <translation type="unfinished"> - No conectado</translation>
     </message>

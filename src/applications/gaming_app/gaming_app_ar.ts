@@ -1797,10 +1797,6 @@ Reason: %3
         <translation type="unfinished">الدائرة</translation>
     </message>
     <message>
-        <source>Logo</source>
-        <translation type="unfinished">شعار</translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation type="unfinished">خطأ في تحميل التمرين:</translation>
     </message>

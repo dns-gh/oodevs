@@ -1796,10 +1796,6 @@ Reason: %3
         <translation>Automats</translation>
     </message>
     <message>
-        <source>Logo</source>
-        <translation>Logo</translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation>Error loading exercise: </translation>
     </message>

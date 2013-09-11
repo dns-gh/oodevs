@@ -1804,10 +1804,6 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error loading exercise: </source>
         <translation type="unfinished"></translation>
     </message>
