@@ -1948,7 +1948,7 @@ ADN_Equipments_Data::ADN_Equipments_Data()
     : ADN_Data_ABC( eEquipments )
     , vEquipments_()
 {
-    vEquipments_.AddUniquenessChecker( eError, duplicateName_ );
+    vEquipments_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------

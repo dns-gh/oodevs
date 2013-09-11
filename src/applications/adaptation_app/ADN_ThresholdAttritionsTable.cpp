@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ThresholdAttritionsTable.h"
 #include "ADN_Disasters_Data.h"
+#include "ADN_Gui_Tools.h"
 #include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -79,5 +80,5 @@ void ADN_ThresholdAttritionsTable::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_ThresholdAttritionsTable::OnContextMenu( const QPoint& pt )
 {
-    ADN_Tools::GenerateStandardContextMenu< ADN_Disasters_Data::AttritionThresholdInfos >( *this, pt );
+    ADN_Gui_Tools::GenerateStandardContextMenu< ADN_Disasters_Data::AttritionThresholdInfos >( *this, pt );
 }

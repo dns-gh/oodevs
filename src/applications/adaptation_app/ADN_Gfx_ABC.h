@@ -12,6 +12,8 @@
 #ifndef __ADN_Gfx_ABC_h_
 #define __ADN_Gfx_ABC_h_
 
+#include "ADN_Checker.h"
+
 class ADN_Connector_ABC;
 
 //*****************************************************************************

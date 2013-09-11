@@ -129,7 +129,7 @@ ADN_Launchers_Data::LauncherInfos* ADN_Launchers_Data::LauncherInfos::CreateCopy
 ADN_Launchers_Data::ADN_Launchers_Data()
     : ADN_Data_ABC( eLaunchers )
 {
-    vLaunchers_.AddUniquenessChecker( eError, duplicateName_ );
+    vLaunchers_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------

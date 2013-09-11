@@ -168,7 +168,7 @@ ADN_Breakdowns_Data::ADN_Breakdowns_Data()
     : ADN_Data_ABC( eBreakdowns )
     , strAverageDiagnosticTime_( "0s" )
 {
-    vBreakdowns_.AddUniquenessChecker( eError, duplicateName_ );
+    vBreakdowns_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

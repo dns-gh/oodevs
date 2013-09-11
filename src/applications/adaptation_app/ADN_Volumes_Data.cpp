@@ -37,7 +37,7 @@ ADN_Volumes_Data::VolumeInfos* ADN_Volumes_Data::VolumeInfos::CreateCopy()
 ADN_Volumes_Data::ADN_Volumes_Data()
     : ADN_Data_ABC( eCategories, eVolumes )
 {
-    vSizes_.AddUniquenessChecker( eError, duplicateName_ );
+    vSizes_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

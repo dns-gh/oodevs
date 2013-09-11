@@ -352,7 +352,7 @@ ADN_FireClass_Data::ADN_FireClass_Data()
     : ADN_Data_ABC( eFireClasses )
     , cellSize_( 10 )
 {
-    fireClasses_.AddUniquenessChecker( eError, duplicateName_ );
+    fireClasses_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

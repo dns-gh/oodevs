@@ -10,6 +10,8 @@
 #ifndef __ADN_Languages_Data_h_
 #define __ADN_Languages_Data_h_
 
+#include "ADN_Data_ABC.h"
+
 namespace kernel
 {
     class Language;

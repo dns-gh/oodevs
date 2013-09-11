@@ -183,7 +183,7 @@ void ADN_Type_Vector_ABC<T>::Initialize( ADN_Connector_Vector_ABC& dest ) const
 // Created: ABR 2013-01-15
 // -----------------------------------------------------------------------------
 template< class T >
-void ADN_Type_Vector_ABC< T >::AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor /* = &ADN_Tools::NameExtractor */ )
+void ADN_Type_Vector_ABC< T >::AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor )
 {
     checkers_.push_back( new UniquenessChecker( errorType, errorMsg, extractor ) );
 }

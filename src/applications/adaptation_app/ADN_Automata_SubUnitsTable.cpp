@@ -11,6 +11,7 @@
 #include "ADN_Automata_SubUnitsTable.h"
 #include "moc_ADN_Automata_SubUnitsTable.cpp"
 #include "ADN_Automata_Data.h"
+#include "ADN_Gui_Tools.h"
 
 typedef ADN_Automata_Data::UnitInfos AutomatUnitInfos;
 typedef ADN_Units_Data::UnitInfos    UnitInfos;
@@ -49,7 +50,7 @@ ADN_Automata_SubUnitsTable::~ADN_Automata_SubUnitsTable()
 // -----------------------------------------------------------------------------
 void ADN_Automata_SubUnitsTable::OnContextMenu( const QPoint& pt )
 {
-    ADN_Tools::GenerateStandardEditionDialog< UnitInfos, AutomatUnitInfos >(
+    ADN_Gui_Tools::GenerateStandardEditionDialog< UnitInfos, AutomatUnitInfos >(
         *this, pt, "subordinate-list", tr( "Subordinates" ), ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
         ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos() );
 }

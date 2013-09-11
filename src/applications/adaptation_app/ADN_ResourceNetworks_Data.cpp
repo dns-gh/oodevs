@@ -104,7 +104,7 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostrea
 ADN_ResourceNetworks_Data::ADN_ResourceNetworks_Data()
     : ADN_Data_ABC( eResourceNetworks )
 {
-    resourceNetworks_.AddUniquenessChecker( eError, duplicateName_ );
+    resourceNetworks_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

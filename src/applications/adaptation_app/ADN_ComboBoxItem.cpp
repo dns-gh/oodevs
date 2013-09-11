@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ComboBoxItem.h"
 #include "moc_ADN_ComboBoxItem.cpp"
+#include "ADN_ComboBox.h"
 #include "ADN_Connector_String.h"
 
 //-----------------------------------------------------------------------------

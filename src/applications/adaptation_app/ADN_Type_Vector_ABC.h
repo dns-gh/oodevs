@@ -11,8 +11,8 @@
 #define __ADN_Type_Vector_ABC_h_
 
 #include "ADN_Connector_Vector_ABC.h"
+#include "ADN_Checker.h"
 #include "ADN_Type_ABC.h"
-#include "ADN_Tools.h"
 
 //*****************************************************************************
 // Created: JDY 03-06-26
@@ -21,7 +21,6 @@ template < class T >
 class ADN_Type_Vector_ABC : public ADN_Connector_Vector_ABC
                           , public std::vector< T* >
 {
-
 public:
     typedef std::vector< T* > T_PtrVector;
 
@@ -64,7 +63,7 @@ public:
     void Reset();
 
     virtual void CheckValidity();
-    void AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor = &ADN_Tools::NameExtractor );
+    void AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor );
     virtual std::vector< T* > FindElements( boost::function< bool( const T* ) > func ) const;
 
 protected:

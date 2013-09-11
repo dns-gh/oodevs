@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Schedule_Table.h"
+#include "ADN_Gui_Tools.h"
 #include "ADN_Inhabitants_Data.h"
 
 // -----------------------------------------------------------------------------
@@ -68,5 +69,5 @@ void ADN_Schedule_Table::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::OnContextMenu( const QPoint& pt )
 {
-    ADN_Tools::GenerateStandardContextMenu< ADN_Inhabitants_Data::EventInfos >( *this, pt );
+    ADN_Gui_Tools::GenerateStandardContextMenu< ADN_Inhabitants_Data::EventInfos >( *this, pt );
 }

@@ -319,9 +319,9 @@ void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xo
 ADN_Models_Data::ADN_Models_Data()
     : ADN_Data_ABC( eModels )
 {
-    vUnitModels_.AddUniquenessChecker( eError, duplicateName_ );
-    vAutomataModels_.AddUniquenessChecker( eError, duplicateName_ );
-    vPopulationModels_.AddUniquenessChecker( eError, duplicateName_ );
+    vUnitModels_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    vAutomataModels_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    vPopulationModels_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------

@@ -1120,7 +1120,7 @@ ADN_Sensors_Data::ADN_Sensors_Data()
     : ADN_Data_ABC( eSensors )
     , radarData_( new ADN_Radars_Data() )
 {
-    vSensors_.AddUniquenessChecker( eError, duplicateName_ );
+    vSensors_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------

@@ -776,7 +776,7 @@ ADN_Resources_Data::ADN_Resources_Data()
     for( int n = 0; n < eNbrDotationFamily; ++n )
         resources_.AddItem( new ResourceInfos( (E_DotationFamily)n ) );
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
-        ( *it )->categories_.AddUniquenessChecker( eError, duplicateName_ );
+        ( *it )->categories_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

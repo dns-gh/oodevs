@@ -52,7 +52,7 @@ ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* ADN_LogisticSupplyClasses_D
 ADN_LogisticSupplyClasses_Data::ADN_LogisticSupplyClasses_Data()
     : ADN_Data_ABC( eCategories, eLogisticSupplyClasses )
 {
-    vLogisticSupplyClasses_.AddUniquenessChecker( eError, duplicateName_ );
+    vLogisticSupplyClasses_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

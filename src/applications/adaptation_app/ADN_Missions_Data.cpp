@@ -42,7 +42,7 @@ ADN_Missions_Data::ADN_Missions_Data()
     missionsVector_.push_back( std::make_pair< std::string, T_Mission_Vector >( "fragorders", T_Mission_Vector() ) );
 
     for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
-        it->second.AddUniquenessChecker( eError, duplicateName_ );
+        it->second.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

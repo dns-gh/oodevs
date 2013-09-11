@@ -11,6 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_ListView_ABC.h"
+#include "ADN_App.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC constructor

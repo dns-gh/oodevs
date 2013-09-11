@@ -12,21 +12,9 @@
 #ifndef __ADN_Tools_h_
 #define __ADN_Tools_h_
 
-#include "ADN_Connector_ABC.h"
-#include "ADN_VectorEditionDialog.h"
 #include "ADN_Types.h"
 
-namespace xml
-{
-    class xostream;
-}
-
-template< typename T > class ADN_Type_Vector_ABC;
-
 enum E_UnitPosture;
-enum E_TempsBordee;
-
-class Q3PopupMenu;
 
 // =============================================================================
 /** @class  ADN_Tools
@@ -136,43 +124,6 @@ namespace ADN_Tools
 
     void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
     void SortMenu( Q3PopupMenu& menu );
-
-    // -----------------------------------------------------------------------------
-    template< typename TargetType, typename ViewType >
-    void GenerateStandardContextMenu( ViewType& view, const QPoint& pt )
-    {
-        Q3PopupMenu menu( &view );
-        menu.insertItem( tools::translate( "ADN_Tools", "Add"), 0 );
-        if( view.GetData( pt ) )
-            menu.insertItem( tools::translate( "ADN_Tools", "Remove"), 1 );
-
-        int result = menu.exec( pt );
-        if( result == 1 )
-            view.RemoveCurrentElement();
-        else if( result == 0 )
-            view.CreateNewElement< TargetType >();
-    }
-
-    template< typename SourceType, typename TargetType, typename ViewType >
-    void GenerateStandardEditionDialog( ViewType& view, const QPoint& pt, const QString& objectName, const QString& dialogTitle, const QString& vectorName, ADN_Type_Vector_ABC< SourceType >& vector )
-    {
-        Q3PopupMenu menu( &view );
-        menu.insertItem( tools::translate( "ADN_Tools", "Edit" ), 0 );
-        if( view.GetData( pt ) )
-            menu.insertItem( tools::translate( "ADN_Tools", "Remove" ), 1 );
-
-        int menuResult = menu.exec( pt );
-        if( menuResult == 1 )
-            view.RemoveCurrentElement();
-        else if( menuResult == 0 )
-        {
-            ADN_VectorEditionDialog< SourceType, TargetType >* dialog;
-            dialog = new ADN_VectorEditionDialog< SourceType, TargetType >( view.objectName() + "_" + objectName, dialogTitle, &view );
-            dialog->AddVector( vectorName, vector, view.GetModel(), static_cast< ADN_Connector_Vector_ABC& >( view.GetConnector() ) );
-            dialog->exec();
-        }
-    }
-
 }
 
 #endif // __ADN_Tools_h_

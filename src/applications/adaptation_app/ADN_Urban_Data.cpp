@@ -33,11 +33,11 @@ ADN_Urban_Data::ADN_Urban_Data()
     , defaultMaxCapacity_    ( 1 )
     , templateTranslations_  ( new kernel::XmlTranslations() )
 {
-    vMaterials_.AddUniquenessChecker( eError, duplicateName_ );
-    vRoofShapes_.AddUniquenessChecker( eError, duplicateName_ );
-    vAccommodations_.AddUniquenessChecker( eError, duplicateName_ );
-    vInfrastructures_.AddUniquenessChecker( eError, duplicateName_ );
-    vTemplates_.AddUniquenessChecker( eError, duplicateName_ );
+    vMaterials_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    vRoofShapes_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    vAccommodations_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    vInfrastructures_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    vTemplates_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------

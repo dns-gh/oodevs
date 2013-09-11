@@ -12,6 +12,8 @@
 
 #include "ADN_Gfx_ABC.h"
 
+class ADN_Ref_ABC;
+
 class ADN_EditLine_ToolTiped : public QLineEdit
 {
 public:

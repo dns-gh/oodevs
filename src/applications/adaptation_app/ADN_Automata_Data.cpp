@@ -216,7 +216,7 @@ void ADN_Automata_Data::AutomatonInfos::CheckDatabaseValidity( ADN_ConsistencyCh
 ADN_Automata_Data::ADN_Automata_Data()
     : ADN_Data_ABC( eAutomata )
 {
-    vAutomata_.AddUniquenessChecker( eError, duplicateName_ );
+    vAutomata_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

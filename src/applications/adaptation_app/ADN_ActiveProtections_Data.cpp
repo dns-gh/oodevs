@@ -22,7 +22,7 @@
 ADN_ActiveProtections_Data::ADN_ActiveProtections_Data()
     : ADN_Data_ABC( eActiveProtections )
 {
-    activeProtections_.AddUniquenessChecker( eError, duplicateName_ );
+    activeProtections_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

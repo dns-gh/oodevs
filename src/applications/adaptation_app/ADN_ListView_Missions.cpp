@@ -6,20 +6,12 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2003-11-27 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_ListView_Missions.cpp $
-// $Author: Nld $
-// $Modtime: 29/04/05 16:26 $
-// $Revision: 7 $
-// $Workfile: ADN_ListView_Missions.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Missions.h"
 #include "ADN_App.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Gui_Tools.h"
 #include "ADN_Models_Data.h"
 #include "ADN_Models_GUI.h"
 #include "ADN_Workspace.h"
@@ -77,7 +69,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
         return;
 
-    ADN_Tools::GenerateStandardEditionDialog< ADN_Missions_ABC, ADN_Models_Data::MissionInfos >(
+    ADN_Gui_Tools::GenerateStandardEditionDialog< ADN_Missions_ABC, ADN_Models_Data::MissionInfos >(
         *this, pt, std::string( ADN_Tr::ConvertFromEntityType( eEntityType_, ADN_Tr::eToSim ) + "-list" ).c_str(), tools::translate( "ADN_ListView_Missions", "Missions" ),
         ADN_Tr::ConvertFromEntityType( eEntityType_ ).c_str(), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( static_cast< E_MissionType >( eEntityType_ ) ) );
 }

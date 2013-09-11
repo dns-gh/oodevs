@@ -11,6 +11,8 @@
 #define __ADN_Data_ABC_h_
 
 #include "ADN_Enums.h"
+#include "ADN_XmlStreamOperators.h"
+#include "ADN_Tools.h"
 
 namespace kernel
 {
