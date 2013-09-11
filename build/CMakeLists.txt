@@ -484,9 +484,6 @@ add_dependencies( replayer_app
     dispatcher_dll
 )
 
-# wrapper
-add_target( wrapper modules "libraries/wrapper" )
-
 # simulation_app
 add_target( simulation_app server "applications/simulation_app" OPTIONS executable )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
