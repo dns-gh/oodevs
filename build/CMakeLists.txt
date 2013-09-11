@@ -511,10 +511,6 @@ add_module( perception_module )
 masa_add_target_include( perception_module "${root_dir}/src/libraries/simulation_kernel" )
 target_link_libraries( perception_module mt_tools )
 
-# propagation_module
-add_module( propagation_module )
-target_link_libraries( propagation_module mt_tools )
-
 # simulation_app
 add_target( simulation_app server "applications/simulation_app" OPTIONS executable )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
@@ -528,7 +524,6 @@ add_dependencies( simulation_app
     dispatcher_dll
     movement_module_dll
     perception_module_dll
-    propagation_module_dll
 )
 
 # decisional_test
