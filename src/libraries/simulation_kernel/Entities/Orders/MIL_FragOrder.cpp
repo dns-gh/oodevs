@@ -587,7 +587,6 @@ void MIL_FragOrder::Send( MIL_AgentPion& pion ) const
     MIL_Report::PostEvent( pion, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_unit()->set_id( pion.GetID() );
-    message().set_id( id_ );
     Send( message );
 }
 
@@ -600,7 +599,6 @@ void MIL_FragOrder::Send( MIL_Automate& automat ) const
     MIL_Report::PostEvent( automat, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_automat()->set_id( automat.GetID() );
-    message().set_id( id_ );
     Send( message );
 }
 
@@ -613,7 +611,6 @@ void MIL_FragOrder::Send( MIL_Population& population ) const
     MIL_Report::PostEvent( population, report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_crowd()->set_id( population.GetID() );
-    message().set_id( id_ );
     Send( message );
 }
 
@@ -626,6 +623,7 @@ void MIL_FragOrder::Send( client::FragOrder& message ) const
     message().mutable_type()->set_id( type_.GetID() );
     Serialize( *message().mutable_parameters() );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_start_time() );
+    message().set_name( type_.GetName() );
     message().set_id( id_ );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
