@@ -46,7 +46,6 @@ private:
     //! @name Member data
     //@{
     ADN_MainWindow*             mainWindow_;
-    std::auto_ptr< ADN_Config > config_;
     tools::Path                 inputFile_;
     tools::Path                 outputFile_;
     tools::Path                 newFile_;

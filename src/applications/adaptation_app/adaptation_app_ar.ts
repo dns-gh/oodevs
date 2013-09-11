@@ -589,41 +589,6 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation type="unfinished">التكوين</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation type="unfinished">مسار سيم</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="unfinished">تصفح</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation type="unfinished">معلمات سيم</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished">آند موافق</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">آند إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation type="unfinished">السيف القابل للتنفيذ (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation type="unfinished">حدد سيم لاستخدامها لاختبار البيانات</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ConsistencyDialog</name>
     <message>
         <source>Description</source>
@@ -2581,26 +2546,6 @@ PNG (*.png)
     <message>
         <source> [ Read Only ]</source>
         <translation type="unfinished">[للقراءة فقط]</translation>
-    </message>
-    <message>
-        <source>Data test</source>
-        <translation type="unfinished">بيانات الاختبار</translation>
-    </message>
-    <message>
-        <source>Project will be saved in order to execute data test.</source>
-        <translation type="unfinished">سيتم حفظ المشروع من أجل تنفيذ اختبار البيانات.</translation>
-    </message>
-    <message>
-        <source>No project loaded, continue anyway?</source>
-        <translation type="unfinished">مواصلة المشروع ليست تحميل، على أية حال؟</translation>
-    </message>
-    <message>
-        <source>Running data check</source>
-        <translation type="unfinished">تشغيل التحقق من البيانات</translation>
-    </message>
-    <message>
-        <source>Data test failed</source>
-        <translation type="unfinished">فشل اختبار البيانات</translation>
     </message>
     <message>
         <source>Sword Adaptation Tool</source>

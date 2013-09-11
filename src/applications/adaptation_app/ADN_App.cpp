@@ -13,7 +13,6 @@
 #include "ADN_MainWindow.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
-#include "ADN_Config.h"
 #include "ADN_Workspace.h"
 #pragma warning( push, 1 )
 #pragma warning( disable: 4127 4512 4511 )
@@ -43,11 +42,8 @@ ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
     // Application_ABC initialization
     Initialize();
 
-    // Data
-    config_.reset( new ADN_Config() );
-
     // GUI
-    mainWindow_ = new ADN_MainWindow( *config_, argc , argv );
+    mainWindow_ = new ADN_MainWindow( argc , argv );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
     qApp->setProperty( mainWindowProperty, QVariant::fromValue< QWidget* >( mainWindow_ ) );
 

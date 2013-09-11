@@ -601,41 +601,6 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation>Configuration</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation>SIM path</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation>Browse</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation>SIM parameters</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Cancel</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation>Sword executable (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation>Select SIM to use for data test</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ConsistencyDialog</name>
     <message>
         <source>Description</source>
@@ -2593,26 +2558,6 @@ PNG (*.png)
     <message>
         <source> [ Read Only ]</source>
         <translation> [ Read Only ]</translation>
-    </message>
-    <message>
-        <source>Data test</source>
-        <translation>Data test</translation>
-    </message>
-    <message>
-        <source>Project will be saved in order to execute data test.</source>
-        <translation>Project will be saved in order to execute data test.</translation>
-    </message>
-    <message>
-        <source>No project loaded, continue anyway?</source>
-        <translation>No project loaded, continue anyway?</translation>
-    </message>
-    <message>
-        <source>Running data check</source>
-        <translation>Running data check</translation>
-    </message>
-    <message>
-        <source>Data test failed</source>
-        <translation>Data test failed</translation>
     </message>
     <message>
         <source>Sword Adaptation Tool</source>

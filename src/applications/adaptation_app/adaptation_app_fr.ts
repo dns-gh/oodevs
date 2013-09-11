@@ -601,41 +601,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation>Configuration</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation>Chemin SIM</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation>Parcourir</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation>Paramètres SIM</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;Ok</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Annuler</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation>Exécutable SWORD (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation>Choississez la SIM à utiliser pour le test</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ConsistencyDialog</name>
     <message>
         <source>Description</source>
@@ -2561,26 +2526,6 @@ PNG (*.png)</translation>
     <message>
         <source>&amp;Export HTML</source>
         <translation>&amp;Export HTML</translation>
-    </message>
-    <message>
-        <source>Data test</source>
-        <translation>Test des données</translation>
-    </message>
-    <message>
-        <source>Project will be saved in order to execute data test.</source>
-        <translation>Le projet doit être enregistré avant d&apos;exécuter les tests.</translation>
-    </message>
-    <message>
-        <source>No project loaded, continue anyway?</source>
-        <translation>Aucun projet chargé, continuer?</translation>
-    </message>
-    <message>
-        <source>Running data check</source>
-        <translation>Test des données</translation>
-    </message>
-    <message>
-        <source>Data test failed</source>
-        <translation>Echec du test des données</translation>
     </message>
     <message>
         <source>Physical model file (physical.xml)</source>

@@ -11,7 +11,6 @@
 #include "ADN_MainWindow.h"
 #include "moc_ADN_MainWindow.cpp"
 #include "ADN_Workspace.h"
-#include "ADN_Config.h"
 #include "ADN_ConsistencyDialog.h"
 #include "ADN_Tools.h"
 #include "ADN_Table.h"
@@ -79,7 +78,7 @@ namespace
 // Name: ADN_MainWindow constructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
+ADN_MainWindow::ADN_MainWindow( int argc, char** argv )
     : QMainWindow ()
     , generalConfig_( new ADN_GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
@@ -87,7 +86,6 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     , strAdminPassword_( ReadPassword() )
     , workspace_( ADN_Workspace::GetWorkspace() )
     , openGLContext_( new gui::GlContext() )
-    , config_( config )
     , pProjectLoadAction_( 0 )
     , pCoheranceTablesMenu_( 0 )
     , pConfigurationMenu_( 0 )
@@ -483,49 +481,6 @@ void ADN_MainWindow::CloseApplication( bool bAskSave /*= true*/ )
     if( !bAskSave )
         bSkipSave_ = true;
     close();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::TestData
-// Created: SBO 2006-01-02
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::TestData()
-{
-    if( isWindowModified() )
-    {
-        int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "Project will be saved in order to execute data test." ), QMessageBox::Ok, QMessageBox::Cancel );
-        if( nResult == QMessageBox::Cancel )
-            return;
-        DoSaveProject();
-    }
-
-    try
-    {
-        std::wstring strCommandLine = config_.GetSimPath().ToUnicode() + L" " + config_.GetSimArguments();
-        if( workspace_.GetProject().GetFileInfos().GetFileNameFull().IsEmpty() )
-        {
-            int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "No project loaded, continue anyway?" ), QMessageBox::Yes, QMessageBox::No );
-            if( nResult == QMessageBox::No )
-                return;
-        }
-
-        static ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, tr( "Running data check" ) );
-        pDialog->RunCommand( strCommandLine );
-    }
-    catch( const std::exception& e )
-    {
-        QMessageBox::critical( this, tr( "Data test" ), tr( "Data test failed" ) + "\n" + tools::GetExceptionMsg( e ).c_str() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::ConfigureDataTest
-// Created: SBO 2006-01-02
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::ConfigureDataTest()
-{
-    config_.Configure();
 }
 
 //-----------------------------------------------------------------------------
