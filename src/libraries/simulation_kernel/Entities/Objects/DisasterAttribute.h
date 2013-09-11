@@ -70,6 +70,7 @@ public:
     bool Update( const DisasterAttribute& rhs );
     float GetDose( const MT_Vector2D& position ) const;
     DisasterAttribute& operator=( const DisasterAttribute& ); //!< Assignment operator
+    void OnUpdate( const sword::MissionParameter_Value& /*attribute*/ );
     //@}
 
 private:
