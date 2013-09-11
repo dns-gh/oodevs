@@ -30,6 +30,17 @@ namespace
             path.RemoveAll();
         }
     }
+
+    void CheckForDirectories( tools::Path::T_Paths& result, const tools::Path::T_Paths& directories, const tools::Path& root, const tools::Path::T_Functor& validator )
+    {
+        for( auto it = directories.begin(); it != directories.end(); ++it )
+        {
+            if( validator( *it ) )
+                result.push_back( it->Relative( root ) );
+            else if ( it->IsDirectory() )
+                CheckForDirectories( result, it->ListDirectories( false, false ), root, validator );
+        }
+    }
 }
 
 namespace frontend
@@ -54,9 +65,13 @@ namespace frontend
         tools::Path::T_Paths ListExercises( const tools::GeneralConfig& config, const tools::Path& subDirs )
         {
             const tools::Path baseDirectory = config.GetExercisesDir();
+            tools::Path::T_Paths result;
             if( !baseDirectory.IsEmpty() )
-                return ( baseDirectory / subDirs ).ListElements( boost::bind( &IsValidExercise, _1 ) );
-            return tools::Path::T_Paths();
+            {
+                tools::Path::T_Paths directories = ( baseDirectory / subDirs ).ListDirectories( false, false );
+                CheckForDirectories( result, directories, ( baseDirectory / subDirs ), boost::bind( &IsValidExercise, _1 ) );
+            }
+            return result;
         }
 
         bool IsValidReplay( const tools::Path& session )
