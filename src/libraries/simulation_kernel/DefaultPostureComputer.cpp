@@ -31,7 +31,6 @@ DefaultPostureComputer::DefaultPostureComputer( const MIL_Random_ABC& random, co
     , posture_               ( posture )
     , bIsDead_               ( bIsDead )
     , bDiscreteModeEnabled_  ( bDiscreteModeEnabled )
-    , rCompletionPercentage_ ( rCompletionPercentage )
     , rStealthFactor_        ( rStealthFactor )
     , isParkedOnEngineerArea_( isParkedOnEngineerArea )
     , modifier_              ( 1 / rTimingFactor )
