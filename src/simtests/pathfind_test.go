@@ -32,9 +32,6 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
 
 	// Check unit path is empty
 	c.Assert(unit.PathPoints, Equals, uint32(0))

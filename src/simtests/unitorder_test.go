@@ -51,9 +51,6 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
 
 	// Cannot order with an invalid mission identifier
 	_, err = client.SendUnitOrder(unit.Id, InvalidIdentifier, params)
@@ -96,9 +93,6 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
 
 	// Cannot send order to an disengaged automat
 	_, err = client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
@@ -106,9 +100,6 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 
 	err = client.SetAutomatMode(automat.Id, true)
 	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
 
 	order, err := client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
 	c.Assert(err, IsNil)
