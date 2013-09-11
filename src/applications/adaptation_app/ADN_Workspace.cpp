@@ -36,6 +36,7 @@
 #include "ADN_Resources_GUI.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_FireClass_GUI.h"
+#include "ADN_GeneralConfig.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_HumanFactors_GUI.h"
@@ -80,9 +81,19 @@
 #include "tools/GeneralConfig.h"
 #include "tools/ZipExtractor.h"
 
-ADN_Workspace* ADN_Workspace::pWorkspace_=0;
+ADN_Workspace* ADN_Workspace::pWorkspace_ = 0;
 
-#define WAIT_RESET 2000
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::CreateWorkspace
+// Created: ABR 2013-09-11
+// -----------------------------------------------------------------------------
+void ADN_Workspace::CreateWorkspace( const ADN_GeneralConfig& config )
+{
+    if( pWorkspace_ )
+        throw MASA_EXCEPTION( "Workspace already created" );
+    pWorkspace_ = new ADN_Workspace( config );
+    pWorkspace_->Initialize();
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetWorkspace
@@ -91,10 +102,7 @@ ADN_Workspace* ADN_Workspace::pWorkspace_=0;
 ADN_Workspace& ADN_Workspace::GetWorkspace()
 {
     if( !pWorkspace_ )
-    {
-        pWorkspace_ = new ADN_Workspace();
-        pWorkspace_->Initialize();
-    }
+        throw MASA_EXCEPTION( "Workspace not created" );
     return *pWorkspace_;
 }
 
@@ -104,6 +112,8 @@ ADN_Workspace& ADN_Workspace::GetWorkspace()
 //-----------------------------------------------------------------------------
 void ADN_Workspace::CleanWorkspace()
 {
+    if( !pWorkspace_ )
+        throw MASA_EXCEPTION( "Workspace not created" );
     delete pWorkspace_;
     pWorkspace_ = 0;
 }
@@ -112,8 +122,9 @@ void ADN_Workspace::CleanWorkspace()
 // Name: ADN_Workspace constructor
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-ADN_Workspace::ADN_Workspace()
-    : pProgressIndicator_( 0 )
+ADN_Workspace::ADN_Workspace( const ADN_GeneralConfig& config )
+    : config_( config )
+    , pProgressIndicator_( 0 )
     , nOpenMode_         ( eOpenMode_Normal )
     , devMode_           ( false )
 {
@@ -128,6 +139,10 @@ void ADN_Workspace::Initialize()
 {
     InitializeEnumType();
     projectData_ = new ADN_Project_Data();
+    symbols_ = !config_.IsNoSymbols();
+    if( config_.IsNoReadOnly() )
+        projectData_->GetDataInfos().SetNoReadOnly();
+
     // Creation order
     elements_[eDrawings]          = new ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI>                   ( eDrawings );
     elements_[eSymbols]           = new ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI>                     ( eSymbols );
@@ -340,26 +355,6 @@ void ADN_Workspace::Load( const tools::Path& filename, const tools::Loader_ABC& 
     GetMissions().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
     GetObjects().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
     GetLanguages().GetGui().FillMenu();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::SetOptions
-// Created: LDC 2011-09-21
-// -----------------------------------------------------------------------------
-void ADN_Workspace::SetOptions( bool symbols, bool noreadonly )
-{
-    symbols_ = symbols;
-    if( noreadonly )
-        GetProject().GetDataInfos().SetNoReadOnly();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::ShowSymbols
-// Created: PHC 2011-09-21
-// -----------------------------------------------------------------------------
-bool ADN_Workspace::ShowSymbols() const
-{
-    return symbols_;
 }
 
 namespace

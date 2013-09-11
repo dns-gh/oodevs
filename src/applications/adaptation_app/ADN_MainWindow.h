@@ -50,7 +50,7 @@ class ADN_MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ADN_MainWindow( int argc, char **argv );
+    explicit ADN_MainWindow( const ADN_GeneralConfig& config );
     virtual ~ADN_MainWindow();
 
     void Build();
@@ -99,13 +99,12 @@ private:
     typedef std::map< int, T_ListViewRegistrationItem > T_ListViewRegistrationMap;
 
 private:
-    std::auto_ptr< ADN_GeneralConfig >          generalConfig_;
+    const ADN_GeneralConfig& config_;
     std::auto_ptr< ADN_FileLoaderObserver >     fileLoaderObserver_;
     std::auto_ptr< tools::Loader_ABC >          fileLoader_;
     std::auto_ptr< ADN_MainTabWidget >          mainTabWidget_;
     std::auto_ptr< gui::ConsistencyDialog_ABC > consistencyDialog_;
     const QString   strAdminPassword_;
-    ADN_Workspace&  workspace_;
     QAction*        pProjectLoadAction_;
     Q3PopupMenu*    pCoheranceTablesMenu_;
     Q3PopupMenu*    pConfigurationMenu_;

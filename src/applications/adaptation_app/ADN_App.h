@@ -12,8 +12,8 @@
 
 #include "clients_gui/Application_ABC.h"
 
+class ADN_GeneralConfig;
 class ADN_MainWindow;
-class ADN_Config;
 
 namespace gui
 {
@@ -45,10 +45,8 @@ public:
 private:
     //! @name Member data
     //@{
-    ADN_MainWindow*             mainWindow_;
-    tools::Path                 inputFile_;
-    tools::Path                 outputFile_;
-    tools::Path                 newFile_;
+    std::auto_ptr< ADN_GeneralConfig > config_;
+    ADN_MainWindow* mainWindow_;
     //@}
 };
 

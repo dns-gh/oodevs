@@ -9,22 +9,39 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_App.h"
-
+#include "ADN_GeneralConfig.h"
 #include "ADN_MainWindow.h"
 #include "ADN_Tr.h"
-#include "ENT/ENT_Tr.h"
 #include "ADN_Workspace.h"
+#include "ENT/ENT_Tr.h"
 #pragma warning( push, 1 )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
 #pragma warning( pop )
+#include <shlobj.h>
 
 namespace po = boost::program_options;
 
 namespace
 {
     const char mainWindowProperty[] = "ADN_App_MainWindow";
+
+    tools::Path ReadDataDirectory()
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        return tools::Path::FromUnicode( settings.readEntry( "/Common/DataDirectory", "" ).toStdWString() );
+    }
+
+    tools::Path GetDefaultRoot( const std::string& appName )
+    {
+        const tools::Path regDir = ReadDataDirectory();
+        if( !regDir.IsEmpty() )
+            return regDir;
+        char myDocuments[ MAX_PATH ];
+        SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
+        return tools::Path( myDocuments ) / tools::Path::FromUTF8( appName );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -42,27 +59,16 @@ ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
     // Application_ABC initialization
     Initialize();
 
+    // Data
+    config_.reset( new ADN_GeneralConfig( argc, argv, GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) );
+    ADN_Workspace::CreateWorkspace( *config_ );
+
     // GUI
-    mainWindow_ = new ADN_MainWindow( argc , argv );
+    mainWindow_ = new ADN_MainWindow( *config_ );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
     qApp->setProperty( mainWindowProperty, QVariant::fromValue< QWidget* >( mainWindow_ ) );
 
-    // Command line options
-    po::options_description desc( "Allowed options" );
-    desc.add_options()
-        ( "input,i" , po::value( &inputFile_  )->default_value( "" ), "specify root input file (physical.xml)" )
-        ( "output,o", po::value( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
-        ( "create,c", po::value( &newFile_    )->default_value( "" ), "specify root file for creating new base (physical.xml)" )
-        ( "silent", "silent mode" )
-        ( "nosymbols,n", "turn off unit symbols view" )
-        ( "noreadonly", "disable read-only protection" )
-        ;
-    po::variables_map vm;
-    po::store( po::command_line_parser( argc, argv ).options( desc ).allow_unregistered().run(), vm );
-    po::notify( vm );
-
     // Initialize
-    ADN_Workspace::GetWorkspace().SetOptions( vm.count( "nosymbols" ) == 0, vm.count( "noreadonly" ) != 0 );
     mainWindow_->Build();
 }
 
@@ -130,26 +136,26 @@ int ADN_App::Run()
         if( IsInvalidLicense() )
             return EXIT_FAILURE;
 
-        if( !newFile_.IsEmpty() && ( !inputFile_.IsEmpty() || !outputFile_.IsEmpty() ) )
+        if( !config_->GetNewFile().IsEmpty() && ( !config_->GetInputFile().IsEmpty() || !config_->GetOutputFile().IsEmpty() ) )
             throw MASA_EXCEPTION( tools::translate( "ADN_App" , "New base creation and input/output file options cannot be used together." ).toStdString() );
 
-        if( !newFile_.IsEmpty() )
+        if( !config_->GetNewFile().IsEmpty() )
         {
-            mainWindow_->NewProject( newFile_ );
-            mainWindow_->SaveProjectAs( newFile_ );
+            mainWindow_->NewProject( config_->GetNewFile() );
+            mainWindow_->SaveProjectAs( config_->GetNewFile() );
             return EXIT_SUCCESS;
         }
-        if( !inputFile_.IsEmpty() )
-            mainWindow_->OpenProject( inputFile_, true );
-        if( !outputFile_.IsEmpty() )
+        if( !config_->GetInputFile().IsEmpty() )
+            mainWindow_->OpenProject( config_->GetInputFile(), true );
+        if( !config_->GetOutputFile().IsEmpty() )
         {
-            mainWindow_->SaveProjectAs( outputFile_ );
+            mainWindow_->SaveProjectAs( config_->GetOutputFile() );
             return EXIT_SUCCESS;
         }
     }
     catch( const std::exception& e )
     {
-        if( outputFile_.IsEmpty() )
+        if( config_->GetOutputFile().IsEmpty() )
             QMessageBox::critical( mainWindow_, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         else
         {
