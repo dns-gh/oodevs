@@ -17,7 +17,11 @@ rootnode
         local group = true
         for _, supportUnit in pairs( self.sharedUnits ) do
             if group then
-                group = supportUnit:communicateWithKnowledge( )
+                if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
+                    group = false
+                else
+                    group = supportUnit:communicateWithKnowledge( )
+                end
             end
         end
 
@@ -27,9 +31,11 @@ rootnode
             end
             for _, supportUnit in pairs( self.sharedUnits ) do
                 if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
-                    supportUnit:agentKnowledgeSharedPerception( ) 
+                    meKnowledge:enabledSharedPerceptionWithKnowledge( supportUnit )
+                    supportUnit:enableSharingKnowledges( )
                 else
-                    supportUnit:enabledSharedPerception( )
+                    meKnowledge:enabledSharedPerception( supportUnit )
+                    supportUnit:enableSharingKnowledges()
                 end
             end
         end
@@ -48,9 +54,11 @@ rootnode
         end
         for _, supportUnit in pairs( self.sharedUnits ) do
             if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
-                supportUnit:agentKnowledgeStopSharedPerception( ) 
+                meKnowledge:disableSharedPerceptionWithKnowledge( supportUnit )
+                supportUnit:disabledSharingKnowledges( )
             else
-                 supportUnit:disabledSharedPerception()
+                meKnowledge:disabledSharedPerception( supportUnit )
+                supportUnit:disabledSharingKnowledges()
             end
         end
     end,

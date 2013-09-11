@@ -112,8 +112,10 @@ public:
     void RefreshTimeToDiffuseToKnowledgeGroup();
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
-    void RegisterPion( const MIL_Agent_ABC& agent );
-    void UnregisterPion( const MIL_Agent_ABC& agent );
+    void RegisterSharingPerceptions( const MIL_Agent_ABC& agent );
+    void UnregisterSharingPerceptions( const MIL_Agent_ABC& agent );
+    void RegisterSharingKnowledges( const MIL_Agent_ABC& agent );
+    void UnregisterSharingKnowledges( const MIL_Agent_ABC& agent );
     void RegisterPopulation( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
 
@@ -256,10 +258,12 @@ private:
     void UpdateAgentKnowledgeFromCrowdPerception( const MIL_Agent_ABC& agent, const MIL_Population& population, int currentTimeStep );
     void UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& agent, const MIL_Population& population );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
+    void UpdateAgentKnowledgeFromAgent( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     void UpdateObjectKnowledgeFromAgent( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     void UpdateObjectKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Object& objectKnowledge, int currentTimeStep );
     void UpdatePopulationKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Population& pnowledge, int currentTimeStep );
+    void UpdatePopulationKnowledgeFromAgent( const DEC_Knowledge_Population& knowledge, int currentTimeStep );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception );
@@ -292,7 +296,8 @@ private:
     const MIL_Agent_ABC* jammedPion_;
     static MIL_IDManager idManager_;
 
-    std::vector< const MIL_Agent_ABC* > pions_;
+    std::vector< const MIL_Agent_ABC* > sharingPercetionsGroup_;
+    std::vector< const MIL_Agent_ABC* > sharingKnowledgesGroup_;
     //@}
 };
 

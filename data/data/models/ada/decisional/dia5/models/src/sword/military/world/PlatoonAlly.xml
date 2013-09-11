@@ -1527,6 +1527,18 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
             <description>Begins sharing perceptions with friend.</description>
         </method>
         <method name="disabledSharedPerception">
+            <description>Stops sharing perceptions to friend</description>
+        </method>
+        <method name="enabledSharedPerceptionWithKnowledge">
+            <description>Begins sharing perceptions with friend.</description>
+        </method>
+        <method name="disableSharedPerceptionWithKnowledge">
+            <description>Stops sharing perceptions to friend</description>
+        </method>
+        <method name="enableSharingKnowledges">
+            <description>Begins sharing knowledges with friend.</description>
+        </method>
+        <method name="disabledSharingKnowledges">
             <description>Stops sharing knowledges to friend</description>
         </method>
         <method name="sendStartBuildingObstacle">

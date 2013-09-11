@@ -406,6 +406,14 @@ return
     disabledSharedPerception = function( self )
         integration.disableSharedPerceptionWithKnowledge( self )
     end,
+
+    enableSharingKnowledges = function( self )
+        integration.enableSharingKnowledgesWithKnowledge( self )
+    end,
+    disabledSharingKnowledges = function( self )
+        integration.disabledSharingKnowledgesKnowledge( self )
+    end,
+
     agentKnowledgeSharedPerception = function( self )
         integration.agentKnowledgeSharedPerception( self )
     end,
@@ -414,5 +422,5 @@ return
     end,
     communicateWithKnowledge = function( self )
         integration.communicateWithKnowledge( self )
-    end
+    end,
 }

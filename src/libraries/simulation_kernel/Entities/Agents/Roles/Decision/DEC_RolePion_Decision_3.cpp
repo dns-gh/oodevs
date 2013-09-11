@@ -422,6 +422,13 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Knowledge_EnableSharedPerceptionWithKnowledge" ] = &DEC_AgentFunctions::KnowledgeEnableSharedPerceptionWithKnowledge;
     brain[ "DEC_Knowledge_DisabledSharedPerceptionWithKnowledge" ] = &DEC_AgentFunctions::KnowledgeDisabledSharedPerceptionWithKnowledge;
 
+    brain[ "DEC_EnableSharingKnowledges" ] =
+        boost::function< void( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::EnableSharingKnowledges, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_DisabledSharingKnowledges" ] = 
+        boost::function< void( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::DisabledSharingKnowledges, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_EnableSharingKnowledgesWithKnowledge" ] = &DEC_AgentFunctions::EnableSharingKnowledgesWithKnowledge;
+    brain[ "DEC_DisabledSharingKnowledgesWithKnowledge" ] = &DEC_AgentFunctions::DisabledSharingKnowledgesWithKnowledge;
+
     brain[ "DEC_Knowledge_CommunicateWithKnowledgeGroup" ] = &DEC_AgentFunctions::KnowledgeCommunicate;
 
     // Agent knowledge accessors
