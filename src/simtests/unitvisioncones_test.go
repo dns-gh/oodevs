@@ -38,22 +38,30 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 		return !data.FindAutomat(automatId).Engaged
 	})
 
-	received := false
-	listener := func(msg *swapi.SwordMessage, context int32, err error) bool {
-		if msg != nil && msg.SimulationToClient != nil {
-			m := msg.SimulationToClient.GetMessage().GetUnitVisionCones()
-			if m != nil && m.GetUnit().GetId() == 11 {
-				received = true
+	receive := func() bool {
+		received := make(chan int, 1)
+		handler := func(msg *swapi.SwordMessage, context int32, err error) bool {
+			if msg != nil && msg.SimulationToClient != nil {
+				m := msg.SimulationToClient.GetMessage().GetUnitVisionCones()
+				if m != nil && m.GetUnit().GetId() == 11 {
+					received <- 1
+					return true
+				}
 			}
+			return false
 		}
-		return false
+		client.Register(handler)
+		client.Model.WaitTicks(2)
+		select {
+		case <-received:
+			return true
+		default:
+			return false
+		}
 	}
-	client.Register(listener)
 
 	// no vision cones received by default
-	received = false
-	client.Model.WaitTicks(1)
-	c.Assert(received, Equals, false)
+	c.Assert(receive(), Equals, false)
 
 	// registration fails when unit does not exist
 	err = client.EnableVisionCones(true, 1000)
@@ -61,13 +69,8 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 
 	check := func(err error) {
 		c.Assert(err, IsNil)
-		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-			return received
-		})
-		// vision cones not sent again if unit state hasn't changed
-		received = false
-		client.Model.WaitTicks(1)
-		c.Assert(received, Equals, false)
+		c.Assert(receive(), Equals, true)
+		c.Assert(receive(), Equals, false)
 	}
 
 	// registering allows to receive vision cones
@@ -97,9 +100,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	c.Assert(err, IsNil)
 	err = client.Surrender(automatId, 2)
 	c.Assert(err, IsNil)
-	received = false
-	client.Model.WaitTicks(1)
-	c.Assert(received, Equals, false)
+	c.Assert(receive(), Equals, false)
 }
 
 func (s *TestSuite) TestListVisionCones(c *C) {
