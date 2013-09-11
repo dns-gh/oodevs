@@ -119,7 +119,6 @@
 #include <boost/lexical_cast.hpp>
 
 #include "Adapters/Legacy/Sink.h"
-#include "Adapters/FloodModel.h"
 
 #define MASA_BADPARAM_UNIT( name ) MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, name )
 

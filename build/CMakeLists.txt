@@ -484,48 +484,6 @@ add_dependencies( replayer_app
     dispatcher_dll
 )
 
-# wrapper
-add_target( wrapper modules "libraries/wrapper" )
-
-function( add_module target )
-    add_target( ${target} modules "libraries/${target}" )
-    target_link_libraries( ${target} ${XERCES_LIBRARIES} )
-    add_target( ${target}_dll modules "libraries/${target}_dll" OPTIONS shared )
-    masa_set_target_output_name( ${target}_dll ${target}_d ${target} )
-    target_link_libraries( ${target}_dll
-        ${target}
-        wrapper
-     )
-endfunction()
-
-# fire_module
-add_module( fire_module )
-target_link_libraries( fire_module mt_tools )
-
-# movement_module
-add_module( movement_module )
-masa_add_target_include( movement_module "${root_dir}/src/libraries/simulation_kernel" )
-target_link_libraries( movement_module
-    mt_tools
-    ${SPATIALCONTAINER_LIBRARIES}
-)
-
-# perception_module
-add_module( perception_module )
-masa_add_target_include( perception_module "${root_dir}/src/libraries/simulation_kernel" )
-target_link_libraries( perception_module mt_tools )
-
-# propagation_module
-add_module( propagation_module )
-target_link_libraries( propagation_module mt_tools )
-
-# module_tester_test
-add_target( module_tester_test modules "tests/module_tester_test" OPTIONS test )
-target_link_libraries( module_tester_test
-    ${CORE_LIBRARIES}
-    ${TOOLS_LIBRARIES}
-)
-
 # simulation_app
 add_target( simulation_app server "applications/simulation_app" OPTIONS executable )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
@@ -537,10 +495,6 @@ target_link_libraries( simulation_app
 )
 add_dependencies( simulation_app
     dispatcher_dll
-    fire_module_dll
-    movement_module_dll
-    perception_module_dll
-    propagation_module_dll
 )
 
 # decisional_test
