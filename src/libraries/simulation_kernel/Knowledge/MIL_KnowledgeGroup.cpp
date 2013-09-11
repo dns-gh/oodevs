@@ -1728,7 +1728,6 @@ void MIL_KnowledgeGroup::UnregisterSharingPerceptions( const MIL_Agent_ABC& agen
 void MIL_KnowledgeGroup::RegisterSharingKnowledges( const MIL_Agent_ABC& agent )
 {
     AddElement( sharingKnowledgesGroup_, agent );
-    sharingKnowledgesGroup_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1737,7 +1736,6 @@ void MIL_KnowledgeGroup::RegisterSharingKnowledges( const MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UnregisterSharingKnowledges( const MIL_Agent_ABC& agent )
 {
-    sharingKnowledgesGroup_;
     RemoveElement( sharingKnowledgesGroup_, agent );
 }
 
