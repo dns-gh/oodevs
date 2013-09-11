@@ -41,7 +41,7 @@ void ADN_Type_VectorFixed_ABC< T, Cmp >::AutoCreatePrivate( void* ptr )
     {
         T* pNewItem = new T( ( T_Item* ) ptr );
         AddItemPrivate( pNewItem );
-        EndVector();
+        AddItem( 0 );
         emit ItemAdded( pNewItem );
     }
 }

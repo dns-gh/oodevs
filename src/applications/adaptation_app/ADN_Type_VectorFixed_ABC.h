@@ -39,7 +39,7 @@ public:
         // initialize vector
         for( auto it = v.begin(); it != v.end(); ++it )
             AddItem( new T( *it ) );
-        EndVector();
+        AddItem( 0 );
         // connection
         connect( &v, SIGNAL( ItemAdded( void* ) ), this, SLOT( AutoCreate( void* ) ) );
     }

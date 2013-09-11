@@ -61,9 +61,7 @@ public:
 
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
 
-    virtual void EndVector();
-            void Reset();
-            void Delete();
+    void Reset();
 
     virtual void CheckValidity();
     void AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor = &ADN_Tools::NameExtractor );

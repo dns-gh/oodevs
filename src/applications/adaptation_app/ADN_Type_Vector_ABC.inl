@@ -97,15 +97,6 @@ bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem )
     return true;
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC<T>::EndVector
-// Created: JDY 03-07-21
-//-----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::EndVector()
-{
-    AddItem( 0 );
-}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::InvalidatePrivate
@@ -157,28 +148,8 @@ void ADN_Type_Vector_ABC< T >::Reset()
     if( empty() )
         return;
 
-    // backup vector in order to delete ptr after
-    // cleaning vector - ptr may be in use in Cleared
-    // signal
-    ADN_Type_Vector_ABC< T > vTmp = *this;
-
-    // clear vector
-    clear();
-    emit Cleared(false);
-
-    // delete ptrs
-    clear_owned_ptrs( vTmp );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::Delete
-// Created: LDC 2010-09-13
-// -----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::Delete()
-{
-    ADN_Type_Vector_ABC< T >& vTmp = *this;
-    clear_owned_ptrs( vTmp );
+    emit Cleared( false );
+    clear_owned_ptrs( *this );
 }
 
 //-----------------------------------------------------------------------------
