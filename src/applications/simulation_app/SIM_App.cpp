@@ -69,7 +69,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpC
         exerciceConfig->GetSimLogLevel(), bClearPreviousLog, MT_Logger_ABC::eSimulation, exerciceConfig->IsSimLogInBytes() ) );
     MT_LOG_REGISTER_LOGGER( *logger_ );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( ( "Sword(tm) Simulation - Version " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE + ( config_->IsLegacy() ? " - Legacy mode" : "" ) ).c_str() );
+    MT_LOG_STARTUP_MESSAGE( ( "Sword Simulation - Version " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE ).c_str() );
     MT_LOG_STARTUP_MESSAGE( ( "Starting simulation - " + boost::posix_time::to_simple_string( boost::posix_time::second_clock::local_time() ) ).c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     if( config_->UseNetworkLogger() )

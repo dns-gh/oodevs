@@ -57,7 +57,6 @@ public:
     const std::string& GetNetworkAddress           () const;
     unsigned long      GetNetworkTimeout           () const;
     bool               IsThreadedNetwork           () const;
-    bool               IsLegacy                    () const;
 
     bool               UseCheckPointCRC            () const;
     bool               UseNetworkLogger            () const;
@@ -142,7 +141,6 @@ private:
     bool           bSaveCheckpointTestMode_;
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
-    bool           bLegacy_;
     tools::Path    strCheckPointNameTestMode_;
     T_CRCMap       CRCMap_;
     int            randomSeed_;

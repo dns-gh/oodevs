@@ -21,26 +21,16 @@
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
 #include "Entities/Objects/ConstructionAttribute.h"
-#include "Adapters/CapacityFactory.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
-
-namespace
-{
-    std::auto_ptr< CapacityFactory_ABC > CreateCapacityFactory( bool isLegacy )
-    {
-        return isLegacy ? std::auto_ptr< CapacityFactory_ABC >( new legacy::CapacityFactory() ) :
-                          std::auto_ptr< CapacityFactory_ABC >( new sword::CapacityFactory() );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory constructor
 // Created: JCR 2008-04-21
 // -----------------------------------------------------------------------------
-MIL_ObjectFactory::MIL_ObjectFactory( bool isLegacy )
-    : factory_   ( CreateCapacityFactory( isLegacy ) )
+MIL_ObjectFactory::MIL_ObjectFactory()
+    : factory_   ( new legacy::CapacityFactory() )
     , attributes_( new AttributeFactory() )
 {
     // NOTHING

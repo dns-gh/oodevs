@@ -50,13 +50,11 @@ namespace
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
 DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
-                                    bool legacy, bool timeline )
+                                    bool timeline )
     : PluginConfig_ABC( parent )
     , config_( config )
     , profilingBox_( 0 )
     , decCallsBox_( 0 )
-    , commandsBox_( 0 )
-    , hooksBox_( 0 )
     , pathfindsBox_( 0 )
     , filterLabel_( 0 )
     , dumpLabel_( 0 )
@@ -64,12 +62,6 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     , dataButton_( 0 )
     , exerciseNumber_( 1 )
 {
-    //legacy box
-    legacyCheckBox_ = new QCheckBox();
-    legacyCheckBox_->setCheckable( true );
-    legacyCheckBox_->setChecked( legacy );
-    connect( legacyCheckBox_, SIGNAL( stateChanged( int ) ), SLOT( SwordVersionChecked( int ) ) );
-
     //integration level label
     integrationLabel_ = new QLabel();
 
@@ -102,7 +94,6 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     topBox_ = new QGroupBox();
     QVBoxLayout* commentBoxLayout = new QVBoxLayout( topBox_ );
     commentBoxLayout->setMargin( 5 );
-    commentBoxLayout->addWidget( legacyCheckBox_ );
     commentBoxLayout->addLayout( integrationBoxLayout );
 
     //timeline box
@@ -127,14 +118,10 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
 
     //profiling group box
     profilingBox_ = new QGroupBox();
-    QGridLayout* profiling = new QGridLayout( profilingBox_, 2, 2 );
+    QGridLayout* profiling = new QGridLayout( profilingBox_, 1, 1 );
     profiling->setMargin( 10 );
     decCallsBox_ = new QCheckBox();
-    commandsBox_ = new QCheckBox();
-    hooksBox_ = new QCheckBox();
     profiling->addWidget( decCallsBox_, 0, 0 );
-    profiling->addWidget( commandsBox_, 0, 1 );
-    profiling->addWidget( hooksBox_, 1, 0 );
 
     //pathfinds group box
     pathfindsBox_ = new QGroupBox();
@@ -181,15 +168,6 @@ DebugConfigPanel::~DebugConfigPanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DebugConfigPanel::SwordVersionChecked
-// Created: NPT 2013-01-03
-// -----------------------------------------------------------------------------
-void DebugConfigPanel::SwordVersionChecked( int state )
-{
-    emit SwordVersionSelected( state == Qt::Checked );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DebugConfigPanel::OnChangeIntegrationDirectory
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
@@ -230,14 +208,11 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnLanguageChanged()
 {
-    legacyCheckBox_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
     timelineBox_->setTitle( tools::translate( "DebugConfigPanel", "Enable Web Timeline" ) );
     timelineDebugPortLabel_->setText( tools::translate( "DebugConfigPanel", "Debug port" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
     profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
     decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional functions" ) );
-    commandsBox_->setText( tools::translate( "DebugConfigPanel", "Commands (non-legacy)" ) );
-    hooksBox_->setText( tools::translate( "DebugConfigPanel", "Hooks (non-legacy)" ) );
     pathfindsBox_->setTitle( tools::translate( "DebugConfigPanel", "Pathfind settings" ) );
     filterLabel_->setText( tools::translate( "DebugConfigPanel", "Filter :" ) );
     dumpLabel_->setText( tools::translate( "DebugConfigPanel", "Dump pathfinds directory :" ) );
@@ -259,15 +234,11 @@ QString DebugConfigPanel::GetName() const
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
-    if( decCallsBox_->isChecked() || commandsBox_->isChecked() || hooksBox_->isChecked() || timelineBox_->isChecked() )
+    if( decCallsBox_->isChecked() || timelineBox_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
         if( decCallsBox_->isChecked() )
             action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-        if( commandsBox_->isChecked() )
-           action.SetOption( "session/config/simulation/profiling/@command", "true" );
-        if( hooksBox_->isChecked() )
-            action.SetOption( "session/config/simulation/profiling/@hook", "true" );
         if( timelineBox_->isChecked() )
         {
             action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );

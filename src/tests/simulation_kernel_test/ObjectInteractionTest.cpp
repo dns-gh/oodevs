@@ -78,7 +78,6 @@ namespace
     struct ObjectCapacityFixture
     {
         ObjectCapacityFixture()
-            : factory( false )
         {
             WorldInitialize( "worldwide/tests/EmptyParis-ML" );
             MOCK_EXPECT( army.RegisterObject ).once();
