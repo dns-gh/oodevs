@@ -519,13 +519,6 @@ target_link_libraries( perception_module mt_tools )
 add_module( propagation_module )
 target_link_libraries( propagation_module mt_tools )
 
-# module_tester_test
-add_target( module_tester_test modules "tests/module_tester_test" OPTIONS test )
-target_link_libraries( module_tester_test
-    ${CORE_LIBRARIES}
-    ${TOOLS_LIBRARIES}
-)
-
 # simulation_app
 add_target( simulation_app server "applications/simulation_app" OPTIONS executable )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
