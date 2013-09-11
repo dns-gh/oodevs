@@ -70,7 +70,6 @@ private:
     const PHY_Posture& posture_;
     const bool bIsDead_;
     const bool bDiscreteModeEnabled_;
-    const double rCompletionPercentage_;
     const double rStealthFactor_;
     const bool isParkedOnEngineerArea_;
     T_Reinforcements reinforcements_;
