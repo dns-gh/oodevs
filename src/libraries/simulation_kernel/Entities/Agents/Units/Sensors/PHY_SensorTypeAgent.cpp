@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SensorTypeAgent.h"
+#include "PHY_SensorTypeObjectData.h"
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "MIL_AgentServer.h"
@@ -45,44 +46,18 @@
 
 namespace
 {
-   template< typename C >
-   class Loader : private boost::noncopyable
-   {
-   public:
-        explicit Loader( const C& container )
-            : container_( container )
-        {}
-
-        void ReadFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
-        {
-            std::string containerType;
-            xis >> xml::attribute( "type", containerType );
-
-            C::const_iterator it = container_.find( containerType );
-            if( it != container_.end() )
-            {
-                assert( static_cast< int >( factors.size() ) > it->second->GetID() );
-                double& rFactor = factors[ it->second->GetID() ];
-
-                xis >> xml::attribute( "value", rFactor );
-                if( rFactor < 0 || rFactor > 1 )
-                    throw MASA_EXCEPTION( xis.context() + "distance-modifier: value not in [0..1]" );
-            }
-            else
-                throw MASA_EXCEPTION( xis.context() + "distance-modifier: unknown type" );
-        }
-   private:
-       const C& container_;
-    };
-
     template< typename C >
     void InitializeFactors( const C& container, const std::string& strTagName, PHY_SensorTypeAgent::T_FactorVector& factors, xml::xistream& xis )
     {
-        typedef typename Loader< C > T_Loader;
-        T_Loader loader( container );
-        xis >> xml::start( strTagName )
-                >> xml::list( "distance-modifier", loader, &T_Loader::ReadFactor, factors )
-            >> xml::end;
+        auto values = ReadDistanceModifiers( xis, strTagName );
+        for( auto it = values.cbegin(); it != values.cend(); ++it )
+        {
+            auto ic = container.find( it->first );
+            if( ic == container.end() )
+                throw MASA_EXCEPTION( xis.context()
+                        + "distance-modifier: unknown type: " + it->first );
+            factors[ ic->second->GetID() ] = it->second;
+        }
     }
 
     std::map< std::string, PHY_RawVisionData::E_VisionObject > environmentAssociation;
@@ -92,22 +67,6 @@ namespace
         environmentAssociation[ "Vide"   ] = PHY_RawVisionData::eVisionEmpty;
         environmentAssociation[ "Foret"  ] = PHY_RawVisionData::eVisionForest;
         environmentAssociation[ "Urbain" ] = PHY_RawVisionData::eVisionUrban;
-    }
-    void ReadPostureFactor( xml::xistream& xis, PHY_SensorTypeAgent::T_FactorVector& factors )
-    {
-        std::string type;
-        xis >> xml::attribute( "type", type );
-        const PHY_Posture* posture = PHY_Posture::FindPosture( type );
-        if( ! posture )
-            xis.error( "distance-modifier: unknown type" );
-        if( ! posture->CanModifyDetection() )
-            return;
-        assert( factors.size() > posture->GetID() );
-        double factor;
-        xis >> xml::attribute( "value", factor );
-        if( factor < 0 || factor > 1 )
-            xis.error( "distance-modifier: value not in [0..1]" );
-         factors[ posture->GetID() ] = factor;
     }
 }
 
@@ -143,12 +102,8 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     InitializeFactors( PHY_Volume::GetVolumes(), "size-modifiers", volumeFactors_, xis );
     InitializeFactors( weather::PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
     InitializeFactors( weather::PHY_Lighting::GetLightings(), "visibility-modifiers", lightingFactors_, xis );
-    xis >> xml::start( "source-posture-modifiers" )
-            >> xml::list( "distance-modifier", boost::bind( &ReadPostureFactor, _1, boost::ref( postureSourceFactors_ ) ) )
-        >> xml::end
-        >> xml::start( "target-posture-modifiers" )
-            >> xml::list( "distance-modifier", boost::bind( &ReadPostureFactor, _1, boost::ref( postureTargetFactors_ ) ) )
-        >> xml::end;
+    ReadPostureFactors( xis, "source-posture-modifiers", postureSourceFactors_ );
+    ReadPostureFactors( xis, "target-posture-modifiers", postureTargetFactors_ );
     InitializeEnvironmentAssociation();
     InitializeEnvironmentFactors( xis );
     InitializePopulationFactors( xis );
