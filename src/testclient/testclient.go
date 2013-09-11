@@ -124,7 +124,7 @@ used to exercise swapi.Model update against real world scenarii.
 	termination := make(chan int)
 	client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
 		if err != nil {
-			close(termination)
+			termination <- 1
 			return true
 		}
 		if msg != nil && logWriter != nil {
@@ -186,7 +186,7 @@ used to exercise swapi.Model update against real world scenarii.
 				prevNow = now
 				prevc = c
 				if t.Tick == *endtick {
-					close(termination)
+					termination <- 1
 				}
 			case cc := <-compressionCh:
 				c = cc
