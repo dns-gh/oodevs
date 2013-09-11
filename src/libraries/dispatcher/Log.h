@@ -10,13 +10,14 @@
 #ifndef dispatcher_Log_h
 #define dispatcher_Log_h
 
-#include "tools/Log_ABC.h"
-#include "tools/FileWrapper.h"
-#include <tools/Exception.h>
+#include "tools/FileLog.h"
 #include <tools/Path.h>
-#include <ctime>
-#pragma warning( push )
-#pragma warning( disable: 4996 )
+#include <tools/StdFileWrapper.h>
+
+namespace tools
+{
+    class Path;
+}
 
 namespace dispatcher
 {
@@ -26,52 +27,24 @@ namespace dispatcher
 */
 // Created: MCO 2011-06-27
 // =============================================================================
-class Log : public tools::Log_ABC
+class Log : public tools::FileLog
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-    Log( const tools::Path& filename, bool sizeInBytes )
-        : s_          ( filename )
-        , sizeInBytes_( sizeInBytes )
-    {
-        if( ! s_ )
-            throw MASA_EXCEPTION( "Failed to open log file '" + filename.ToUTF8() + "' for writing" );
-    }
-    //@}
+    Log( const tools::Path& filename, bool sizeInBytes );
 
-    //! @name Operations
-    //@{
-    virtual std::size_t Write( const std::string& s )
-    {
-        const std::string time = GetTime();
-        s_ << "[" << time << "] " << s << std::endl;
-        return sizeInBytes_ ? time.size() + s.size() + 3 : 1;
-    }
-    //@}
+protected:
+    virtual std::size_t Write( const std::string& line );
 
 private:
-    //! @name Helpers
-    //@{
-    std::string GetTime() const
-    {
-        char buffer[256];
-        std::time_t t = time( 0 );
-        std::strftime( buffer, sizeof( buffer ), "%H:%M:%S", std::localtime( &t ) );
-        return buffer;
-    }
-    //@}
+    void Close();
+
+    std::string GetTime() const;
 
 private:
-    //! @name Member data
-    //@{
     tools::Ofstream s_;
     bool sizeInBytes_;
-    //@}
 };
 
 }
-
-#pragma warning( pop )
 
 #endif // dispatcher_Log_h
