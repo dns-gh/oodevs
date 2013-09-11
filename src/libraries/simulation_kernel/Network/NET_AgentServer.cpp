@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "NET_AgentServer.h"
 #include "NET_AS_MOSServerMsgMgr.h"
-#include "MIL_AgentServer.h"
 #include "Tools/MIL_Config.h"
 #include "MT_Tools/MT_Logger.h"
 
@@ -20,12 +19,9 @@ using namespace tools;
 // Name: NET_AgentServer constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation )
+NET_AgentServer::NET_AgentServer( const MIL_Config& config, NET_Simulation_ABC& simulation )
     : ServerNetworker( config.GetNetworkAddress(), config.GetNetworkTimeout() )
-    , time_   ( time )
     , manager_( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
-    , nUnitVisionConesChangeTimeStep_( 0 )
-    , bSendUnitVisionCones_          ( false )
 {
     MT_LOG_INFO_MSG( "Starting simulation server on address " << config.GetNetworkAddress() );
     AllowConnections();
@@ -97,34 +93,4 @@ void NET_AgentServer::ConnectionWarning( const std::string& address , const std:
 {
     MT_LOG_INFO_MSG( "Connection to '" << address << "' warning (" << warning << ")" );
     ServerNetworker::ConnectionWarning( address, warning );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AgentServer::SetMustSendUnitVisionCones
-// Created: NLD 2003-10-24
-// -----------------------------------------------------------------------------
-void NET_AgentServer::SetMustSendUnitVisionCones( bool bEnable )
-{
-    if( bEnable != bSendUnitVisionCones_ )
-        MT_LOG_INFO_MSG( (bEnable ? "Enabling" : "Disabling") << " vision cones" );
-    nUnitVisionConesChangeTimeStep_ = time_.GetCurrentTimeStep();
-    bSendUnitVisionCones_           = bEnable;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AgentServer::MustInitUnitVisionCones
-// Created: NLD 2004-11-30
-// -----------------------------------------------------------------------------
-bool NET_AgentServer::MustInitUnitVisionCones() const
-{
-    return bSendUnitVisionCones_ && time_.GetCurrentTimeStep() == nUnitVisionConesChangeTimeStep_ + 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AgentServer::MustSendUnitVisionCones
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-bool NET_AgentServer::MustSendUnitVisionCones() const
-{
-    return bSendUnitVisionCones_;
 }

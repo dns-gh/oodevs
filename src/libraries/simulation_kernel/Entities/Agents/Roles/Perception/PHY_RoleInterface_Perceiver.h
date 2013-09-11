@@ -170,7 +170,9 @@ public:
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
     virtual void SendFullState( client::UnitAttributes& msg ) const = 0;
+    virtual void SendVisionCones() const = 0;
     //@}
+
 private:
     //! @name Serialization
     //@{
@@ -182,6 +184,4 @@ private:
     //@}
 };
 
-//} // namespace perception
-//} // namespace simulation
 #endif // __PHY_RoleInterface_Perceiver_h_

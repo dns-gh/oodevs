@@ -58,7 +58,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
-#include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -96,7 +95,6 @@ namespace
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
     : owner_                         ( 0 )
     , rMaxAgentPerceptionDistance_   ( 0. )
-    , vSensorInfo_                   ()
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
@@ -129,7 +127,6 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver()
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     : owner_                         ( &pion )
     , rMaxAgentPerceptionDistance_   ( 0. )
-    , vSensorInfo_                   ()
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
@@ -230,7 +227,6 @@ namespace boost
             file >> nID;
             assert( PHY_SensorType::FindSensorType( nID ) );
             pair.first = PHY_SensorType::FindSensorType( nID )->GetTypeObject();
-
             file >> pair.second;
         }
     }
@@ -1074,7 +1070,8 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
             owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
-    SendVisionCones();
+    if( bExternalMustUpdateVisionCones_ && MIL_AgentServer::GetWorkspace().GetEntityManager().SendVisionCones() )
+        SendVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -1258,9 +1255,6 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendVisionCones() const
 {
-    if( ! MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() ||
-        ! MIL_AgentServer::GetWorkspace().GetAgentServer().MustInitUnitVisionCones() && ! bExternalMustUpdateVisionCones_ )
-        return;
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();

@@ -191,6 +191,7 @@ public:
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const;
     virtual void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendVisionCones() const;
     //@}
 
 private:
@@ -223,7 +224,6 @@ private:
     void UpdatePeriphericalVisionState();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
     void EnsurePerceptionRecoLocalisation();
-    void SendVisionCones() const;
     //@}
 
 private:
