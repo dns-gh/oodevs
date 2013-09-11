@@ -506,11 +506,6 @@ target_link_libraries( movement_module
     ${SPATIALCONTAINER_LIBRARIES}
 )
 
-# perception_module
-add_module( perception_module )
-masa_add_target_include( perception_module "${root_dir}/src/libraries/simulation_kernel" )
-target_link_libraries( perception_module mt_tools )
-
 # simulation_app
 add_target( simulation_app server "applications/simulation_app" OPTIONS executable )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
@@ -523,7 +518,6 @@ target_link_libraries( simulation_app
 add_dependencies( simulation_app
     dispatcher_dll
     movement_module_dll
-    perception_module_dll
 )
 
 # decisional_test
