@@ -36,7 +36,7 @@ struct FixturePion : private boost::noncopyable
         xis >> xml::start( "main" );
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
 
-        pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) ) );
+        pModel_.reset( new DEC_Model( "test", xis, testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) ) );
         MockMIL_Time_ABC time;
         MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
@@ -67,7 +67,7 @@ struct FixtureAutomate : private boost::noncopyable
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis >> xml::start( "main" );
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-        pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) ) );
+        pModel_.reset( new DEC_Model( "test", xis, testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) ) );
         pType_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pType_, controller_ ) );
     }

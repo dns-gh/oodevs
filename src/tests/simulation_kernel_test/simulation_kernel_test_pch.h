@@ -21,10 +21,6 @@
 #pragma warning( disable: 4505 )
 #include <turtle/mock.hpp>
 
-#include <tools/Path.h>
-
-tools::Path BOOST_RESOLVE( const tools::Path& filename );
-
 #include <vector>
 #include <list>
 #include <map>
@@ -34,6 +30,9 @@ tools::Path BOOST_RESOLVE( const tools::Path& filename );
 #undef min
 
 #include <tools/Exception.h>
+#include <tools/BoostTest.h>
+
+extern tools::TestOptions testOptions;
 
 #include <geometry/Types.h>
 

@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
+    DEC_Model model( "test", xis, testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) );
     MissionController controller;
     MockArmy army;
     StubMIL_PopulationType type( model );
@@ -134,7 +134,7 @@ namespace
     public:
         Pion()
             : xis       ( "<main dia-type='PionTest' file='PionTest.bms'/>" )
-            , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) )
+            , model     ( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) )
             , type      ( model )
             , population( type, controller, army )
             , decision  ( population, 0 )
@@ -208,7 +208,7 @@ namespace
     public:
         Mission()
             : xis       ( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" )
-            , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) )
+            , model     ( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) )
             , type      ( model )
             , population( type, controller, army )
             , decision  ( population, 0 )
