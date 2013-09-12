@@ -488,7 +488,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Crowd_ExtractWoundedFromCrowd",
         boost::function< bool( int, const MT_Vector2D* ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Crowd_ExtractDeadFromCrowd",
-        boost::function< bool( int, const MT_Vector2D* ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< bool( int, const MT_Vector2D* ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd, boost::cref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Crowd_GetHumansFromAllTypes",
         boost::function< std::vector< unsigned int >( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Crowd_HealWoundedHumans",
