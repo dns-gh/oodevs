@@ -17,17 +17,17 @@ using namespace frontend;
 // Name: JoinAnalysis constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile, bool attach )
-    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), attach, "" )
+JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile )
+    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
-    AddRootDirArgument();
+    AddRootArgument();
     AddExerciseArgument( exercise );
     if( !session.IsEmpty() )
         AddSessionArgument( session );
     if( profile.isEmpty() )
-        AddArgument( "--login=\"anonymous\"" );
+        AddArgument( "login", "anonymous" );
     else
-        AddArgument( "--login=\"" + profile +"\"" );
+        AddArgument( "login", profile.toStdString() );
 }
 
 // -----------------------------------------------------------------------------

@@ -277,15 +277,15 @@ void ScenarioLauncherPage::OnStart()
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartExercise >(
-        config_, exerciseName, session, arguments, true, true, "", "" ) );
+        config_, exerciseName, session, arguments, true, "" ) );
     if( hasClient_ )
         process->Add( boost::make_shared< frontend::JoinExercise >(
-            config_, exerciseName, session, profile_.GetLogin(), true ) );
+            config_, exerciseName, session, profile_.GetLogin() ) );
     if( hasTimeline_ )
         process->Add( boost::make_shared< frontend::StartTimeline >(
         config_, exerciseName, session, exerciseNumber_, profile_ ) );
     progressPage_->Attach( process );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     progressPage_->show();
 }
 

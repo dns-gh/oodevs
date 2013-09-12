@@ -88,9 +88,9 @@ void AuthoringPage::OnAuthoring()
     }
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::StartAuthoring >( config_, true ) );
+    process->Add( boost::make_shared< frontend::StartAuthoring >( config_ ) );
     progressPage_->Attach( process );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     progressPage_->show();
 }
 

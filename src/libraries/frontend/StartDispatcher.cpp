@@ -11,6 +11,7 @@
 #include "StartDispatcher.h"
 #include "clients_kernel/Tools.h"
 #include "tools/IpcQueue.h"
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 
 using namespace frontend;
 
@@ -19,22 +20,20 @@ using namespace frontend;
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
 StartDispatcher::StartDispatcher( const tools::GeneralConfig& config,
-                                  bool attach,
                                   const tools::Path& exercise,
                                   const tools::Path& session,
-                                  const tools::Path& checkpoint /*= ""*/,
-                                  const tools::Path& dispatcher_path /*= ""*/,
-                                  std::string commanderEndpoint /*= ""*/,
-                                  std::string processJobName /*= ""*/ )
-    : SpawnCommand( config, MakeBinaryName( "dispatcher_app" ), attach, commanderEndpoint, processJobName )
+                                  const tools::Path& checkpoint,
+                                  const tools::Path& dispatcher_path,
+                                  const std::string& name )
+    : SpawnCommand( config, MakeBinaryName( "dispatcher_app" ), name )
 {
     if( !dispatcher_path.IsEmpty() )
         SetWorkingDirectory( dispatcher_path );
-    AddRootDirArgument();
+    AddRootArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
     if( !checkpoint.IsEmpty() )
-        AddArgument( QString( "--checkpoint=" ) + checkpoint.ToUTF8().c_str() );
+        AddArgument( "checkpoint", checkpoint.ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------

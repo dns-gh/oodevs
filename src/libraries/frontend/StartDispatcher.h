@@ -25,10 +25,12 @@ class StartDispatcher : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-    StartDispatcher( const tools::GeneralConfig& config, bool attach,
-                     const tools::Path& exercise, const tools::Path& session,
-                     const tools::Path& checkpoint = "", const tools::Path& dispatcher_path = "",
-                     std::string commanderEndpoint = "", std::string processJobName = "" );
+    StartDispatcher( const tools::GeneralConfig& config,
+                     const tools::Path& exercise,
+                     const tools::Path& session,
+                     const tools::Path& checkpoint,
+                     const tools::Path& dispatcher_path,
+                     const std::string& name );
     virtual ~StartDispatcher();
     //@}
 

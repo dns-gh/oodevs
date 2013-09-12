@@ -16,10 +16,10 @@ using namespace frontend;
 // Name: EditExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-EditExercise::EditExercise( const tools::GeneralConfig& config, const tools::Path& name, bool attach )
-    : SpawnCommand( config, MakeBinaryName( "preparation_app" ), attach, "" )
+EditExercise::EditExercise( const tools::GeneralConfig& config, const tools::Path& name )
+    : SpawnCommand( config, MakeBinaryName( "preparation_app" ), "preparation" )
 {
-    AddRootDirArgument();
+    AddRootArgument();
     AddExerciseArgument( name );
 }
 

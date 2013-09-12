@@ -42,9 +42,6 @@ public:
                    const Profile& profile );
     virtual ~StartTimeline();
     //@}
-
-protected:
-    virtual bool IsHidden() const;
 };
 
 }

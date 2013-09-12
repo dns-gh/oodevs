@@ -26,7 +26,7 @@ class EditExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             EditExercise( const tools::GeneralConfig& config, const tools::Path& name, bool attach = false );
+             EditExercise( const tools::GeneralConfig& config, const tools::Path& name );
     virtual ~EditExercise();
     //@}
 };

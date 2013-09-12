@@ -290,10 +290,10 @@ void FilterCommand::Execute()
     }
     assert( !path_.IsEmpty() );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *this );
-    auto command = boost::make_shared< frontend::SpawnCommand >( config_, path_ / command_ + tools::Path::FromUTF8( argumentsLine_ ), true );
+    auto command = boost::make_shared< frontend::SpawnCommand >( config_, path_ / command_ + tools::Path::FromUTF8( argumentsLine_ ), "" );
     process->Add( command );
     command->SetWorkingDirectory( path_ );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     if( !nonBlocking_ )
         process->Join();
 }

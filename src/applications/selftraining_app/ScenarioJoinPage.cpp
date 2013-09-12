@@ -135,8 +135,8 @@ void ScenarioJoinPage::OnJoin()
         action.Commit();
     }
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::JoinExercise >( config_, exercise_->GetName(), "remote", true ) );
+    process->Add( boost::make_shared< frontend::JoinExercise >( config_, exercise_->GetName(), "remote" ) );
     progressPage_->Attach( process );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     progressPage_->show();
 }

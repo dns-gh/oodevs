@@ -53,7 +53,7 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
     {
         process_ = boost::make_shared< frontend::ProcessWrapper >( observer );
         process_->Add( command );
-        process_->Start();
+        frontend::ProcessWrapper::Start( process_ );
     }
     if( isDispatcher_ )
     {

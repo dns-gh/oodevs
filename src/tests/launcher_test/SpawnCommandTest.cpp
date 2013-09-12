@@ -12,6 +12,7 @@
 #include "tools/GeneralConfig.h"
 #include <tools/StdFileWrapper.h>
 #include <tools/TemporaryDirectory.h>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 
 namespace
 {
@@ -20,13 +21,9 @@ class DummyCommand: public frontend::SpawnCommand
 {
 public:
     DummyCommand( const tools::GeneralConfig& config, const tools::Path& exe )
-        : frontend::SpawnCommand( config, exe, true )
+        : frontend::SpawnCommand( config, exe, "dummy" )
     {
-    }
-
-    void AddArgument( const std::string& s )
-    {
-        frontend::SpawnCommand::AddArgument( QString( s.c_str() ));
+        // NOTHING
     }
 };
 
@@ -48,12 +45,12 @@ BOOST_AUTO_TEST_CASE( TestSpawnCommand )
     // Fill output.txt with python command line arguments after -c
     DummyCommand cmd( config, python );
     cmd.AddArgument( "-c" );
-    cmd.AddArgument( "\"import sys; file('" + output.Normalize().ToUTF8() + "', 'wb').write(" + "' '.join(sys.argv[1:]))\"" );
+    cmd.AddArgument( "import sys; file('" + output.Normalize().ToUTF8() + "', 'wb').write(" + "' '.join(sys.argv[1:]))" );
     cmd.AddArgument( "arg1" );
     cmd.AddArgument( "arg2" );
 
     cmd.Start();
-    bool stopped = !cmd.Wait( boost::posix_time::minutes(1) );
+    bool stopped = cmd.Wait( boost::posix_time::minutes(1) );
     BOOST_CHECK( stopped );
     tools::Fstream f( output, std::ios::in );
     std::string line;

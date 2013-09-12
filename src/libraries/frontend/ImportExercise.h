@@ -25,7 +25,7 @@ class ImportExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             ImportExercise( const tools::GeneralConfig& config, const tools::Path& inputScenario, const tools::Path& outputScenario, bool attach = false );
+             ImportExercise( const tools::GeneralConfig& config, const tools::Path& inputScenario, const tools::Path& outputScenario );
     virtual ~ImportExercise();
     //@}
 };

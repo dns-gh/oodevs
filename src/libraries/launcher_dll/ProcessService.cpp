@@ -167,14 +167,16 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
     {
-        std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", "true" )
-                                                                                   ( "checkpoint", checkpoint.ToUTF8().c_str() );
-        command.reset( new frontend::StartExercise( config_, exercise, session, arguments, true, false, endpoint, "launcher-job" ) );
+        const auto arguments = boost::assign::map_list_of< std::string, std::string >
+            ( "legacy", "true" )
+            ( "checkpoint", checkpoint.ToUTF8() );
+        command.reset( new frontend::StartExercise( config_, exercise, session, arguments, false, endpoint ) );
     }
     else if( message.type() == sword::SessionStartRequest::dispatch )
-        command.reset( new frontend::StartDispatcher( config_, true, exercise, session, checkpoint, "", endpoint, "launcher-job" ) );
+        command.reset( new frontend::StartDispatcher( config_, exercise, session, checkpoint, "", endpoint ) );
     else
-        command.reset( new frontend::StartReplay( config_, exercise, session, 10001, true, endpoint, "launcher-job" ) );
+        command.reset( new frontend::StartReplay( config_, exercise, session, 10001, endpoint ) );
+    command->AddArgument( "--silent" );
 
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
@@ -249,7 +251,7 @@ namespace
             for( auto it = spawns.begin(); it != spawns.end(); ++it )
             {
                 auto cmd = *it;
-                if( cmd->GetCommanderEndpoint() != endpoint )
+                if( cmd->GetName() != endpoint )
                     continue;
                 SessionStatus msg;
                 msg().set_status( sword::SessionStatus::not_running );
@@ -508,7 +510,7 @@ void ProcessService::SendSessionsStatuses( const std::string& endpoint )
         for( auto it = spawns.begin(); it != spawns.end(); ++it )
         {
             auto cmd = *it;
-            if( cmd->GetCommanderEndpoint() != endpoint )
+            if( cmd->GetName() != endpoint )
                 continue;
             SessionStatus msg;
             const tools::Path exercise = cmd->GetExercise();

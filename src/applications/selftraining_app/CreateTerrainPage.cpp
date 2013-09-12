@@ -89,7 +89,7 @@ void CreateTerrainPage::OnStart()
 {
     auto process = frontend::CreateTerrain( *progressPage_, config_, tools::Path::FromUnicode( editName_->text().toStdWString() ) );
     progressPage_->Attach( process );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     progressPage_->show();
     Update();
 }

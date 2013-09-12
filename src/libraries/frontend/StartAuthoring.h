@@ -26,15 +26,8 @@ class StartAuthoring : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             StartAuthoring( const tools::GeneralConfig& config, bool attach = false );
+             StartAuthoring( const tools::GeneralConfig& config );
     virtual ~StartAuthoring();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    StartAuthoring( const StartAuthoring& );            //!< Copy constructor
-    StartAuthoring& operator=( const StartAuthoring& ); //!< Assignment operator
     //@}
 };
 
