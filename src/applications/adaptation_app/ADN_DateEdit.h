@@ -32,7 +32,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void setEnabled( bool b );
     virtual QString text() const;
     virtual void setText( const QString& text );
     //@}
@@ -41,7 +40,6 @@ private slots:
     //! @name Slots
     //@{
     void DateChanged( const QDate& date );
-    void UpdateEnableState();
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
 

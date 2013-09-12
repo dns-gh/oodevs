@@ -57,7 +57,6 @@ public:
     //! @name Operations
     //@{
     void Build();
-    void Enable( bool enable );
     void SetDecisionalFilters( const std::vector< std::wstring >& decisionalFilters );
     //@}
 
@@ -72,7 +71,6 @@ private:
     //@{
     ADN_Models_Data& data_;
     ADN_FileChooser* DIAFileChooser_[ eNbrEntityTypes ];
-    QWidget* pWidgets_[ eNbrEntityTypes ];
     //@}
 };
 

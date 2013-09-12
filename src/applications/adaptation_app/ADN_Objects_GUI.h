@@ -156,7 +156,6 @@ public:
     //! @name Operations
     //@{
     void Build();
-    void Enable( bool enable );
     void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath );
     //@}
 
@@ -182,8 +181,6 @@ private:
     ADN_ComboBox_Vector* attritionDotationVector_;
     ADN_ComboBox_Vector* attritionMineVector_;
     ADN_ComboBox_Vector* attritionExplosiveVector_;
-    QWidget* pContent_;
-    QWidget* pCapacities_;
     //@}
 };
 

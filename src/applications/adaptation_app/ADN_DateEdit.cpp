@@ -28,7 +28,6 @@ ADN_DateEdit::ADN_DateEdit( QWidget* parent )
     setCalendarPopup( true );
     pConnector_ = new ADN_Connector_String< ADN_DateEdit >( this );
     connect( this, SIGNAL( dateChanged( const QDate& ) ), this, SLOT( DateChanged( const QDate& ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,18 +37,6 @@ ADN_DateEdit::ADN_DateEdit( QWidget* parent )
 ADN_DateEdit::~ADN_DateEdit()
 {
     delete pConnector_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_DateEdit::setEnabled
-// Created: JSR 2011-10-13
-// -----------------------------------------------------------------------------
-void ADN_DateEdit::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        QDateEdit::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        QDateEdit::setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,16 +67,6 @@ void ADN_DateEdit::setText( const QString& text )
 void ADN_DateEdit::DateChanged( const QDate& date )
 {
     static_cast< ADN_Connector_String< ADN_DateEdit >* >(pConnector_)->SetDataChanged( date.toString( strFormat_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_DateEdit::UpdateEnableState
-// Created: JSR 2011-10-13
-// -----------------------------------------------------------------------------
-void ADN_DateEdit::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_String< ADN_DateEdit >* >( pConnector_ )->IsConnected() );
 }
 
 // -----------------------------------------------------------------------------

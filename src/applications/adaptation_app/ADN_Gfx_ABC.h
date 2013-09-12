@@ -29,12 +29,9 @@ public:
     void SetAutoEnabled( bool bAuto );
     bool IsAutoEnabled();
 
-    void SetIsEnabledOnlyInAdminMode( bool b );
-
 protected:
     ADN_Connector_ABC* pConnector_;
     bool bAutoEnabled_;
-    bool bEnabledOnlyInAdminMode_;
 };
 
 //-----------------------------------------------------------------------------
@@ -65,16 +62,6 @@ inline
 bool ADN_Gfx_ABC::IsAutoEnabled()
 {
     return bAutoEnabled_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Gfx_ABC::SetIsEnabledOnlyInAdminMode
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-inline
-void ADN_Gfx_ABC::SetIsEnabledOnlyInAdminMode( bool b )
-{
-    bEnabledOnlyInAdminMode_ = b;
 }
 
 #endif // __ADN_Gfx_ABC_h_

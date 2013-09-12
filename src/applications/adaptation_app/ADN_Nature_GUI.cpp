@@ -26,7 +26,6 @@ ADN_Nature_GUI::ADN_Nature_GUI( QGridLayout* parent, int row /* = 0 */ )
 {
     pConnector_ = new ADN_Connector_String< ADN_Nature_GUI >( this );
     connect( this, SIGNAL( textChanged( const QString& ) ), SLOT( OnTextChanged( const QString& ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), SLOT( UpdateEnableState() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,16 +44,6 @@ ADN_Nature_GUI::~ADN_Nature_GUI()
 void ADN_Nature_GUI::OnTextChanged( const QString& value )
 {
     static_cast< ADN_Connector_String< ADN_Nature_GUI >* >( pConnector_ )->SetDataChanged( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Nature_GUI::UpdateEnableState
-// Created: SBO 2010-02-15
-// -----------------------------------------------------------------------------
-void ADN_Nature_GUI::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_String< ADN_Nature_GUI >* >( pConnector_ )->IsConnected() );
 }
 
 // -----------------------------------------------------------------------------

@@ -23,7 +23,6 @@ public:
 
 protected:
     virtual void SetCurrentData( void* data );
-    void UpdateEnableState();
 };
 
 #endif // __ADN_ComboBox_Enum_h_

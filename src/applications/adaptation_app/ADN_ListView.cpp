@@ -83,7 +83,6 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
     viewport()->installEventFilter( new ADN_ListViewToolTip( viewport(), *this ) );
 
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( SetCurrentItem() ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
     connect( &usedByMapper_, SIGNAL( mapped( int ) ), this, SLOT( ContextMenuSearchElements( int ) ) );
     connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged( const std::string& ) ), this, SLOT( OnLanguageChanged( const std::string& ) ) );
 }
@@ -485,28 +484,6 @@ bool ADN_ListView::SetCurrentItem()
 void ADN_ListView::contextMenuEvent( QContextMenuEvent* event )
 {
     OnContextMenu( event->globalPos() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ListView::setEnabled
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_ListView::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        gui::RichTreeView::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        gui::RichTreeView::setEnabled( b );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ListView::UpdateEnableState
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_ListView::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_ListView_ABC* >( pConnector_ )->IsConnected() );
 }
 
 // -----------------------------------------------------------------------------

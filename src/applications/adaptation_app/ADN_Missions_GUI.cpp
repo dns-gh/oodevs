@@ -361,16 +361,6 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_GUI::Enable
-// Created: JSR 2010-05-21
-// -----------------------------------------------------------------------------
-void ADN_Missions_GUI::Enable( bool enable )
-{
-    for( int i = 0; i < 4; ++i )
-        missionTabs_[ i ]->setEnabled( enable );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::NotifyElementDeleted
 // Created: NPT 2012-07-31
 // -----------------------------------------------------------------------------

@@ -351,9 +351,6 @@ void ADN_Workspace::Load( const tools::Path& filename, const tools::Loader_ABC& 
     ResetProgressIndicator();
     pProgressIndicator_->SetVisible( false );
 
-    GetModels().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
-    GetMissions().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
-    GetObjects().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
     GetLanguages().GetGui().FillMenu();
 }
 

@@ -37,7 +37,6 @@ public:
     explicit ADN_EditLine_ABC( QWidget* parent, const char * name = 0 );
     virtual ~ADN_EditLine_ABC();
 
-    void setEnabled( bool b );
     void SetToolTip( const QString& toolTip );
     void ConnectWithRefValidity( const ADN_Ref_ABC& ref );
 
@@ -53,7 +52,6 @@ signals:
 protected slots:
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     virtual void TextChanged( const QString& string )=0;
-    virtual void UpdateEnableState() = 0;
 
 private:
     const QPalette originalPalette_;

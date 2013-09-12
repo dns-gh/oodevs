@@ -26,13 +26,11 @@ public:
     explicit ADN_TextEdit_ABC( QWidget* parent = 0, const char * name = 0 );
     virtual ~ADN_TextEdit_ABC();
 
-    void setEnabled( bool b );
     void SetToolTip( const QString& toolTip );
     void ConnectWithRefValidity( const ADN_Ref_ABC& ref );
 
 protected slots:
     virtual void TextChanged() = 0;
-    virtual void UpdateEnableState() = 0;
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
 
 private:

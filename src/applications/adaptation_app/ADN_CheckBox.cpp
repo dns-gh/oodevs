@@ -25,26 +25,22 @@
 // Name: ADN_CheckBox constructor
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
-ADN_CheckBox::ADN_CheckBox(QWidget* parent, const char * name)
-: QCheckBox(parent,name)
-, ADN_Gfx_ABC()
+ADN_CheckBox::ADN_CheckBox( QWidget* parent, const char* name )
+    : QCheckBox( parent, name )
 {
-    pConnector_=new ADN_Connector_Bool<ADN_CheckBox>(this);
-    connect(this        ,SIGNAL( toggled( bool ) )    ,this         , SLOT( BoolChanged(bool) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    pConnector_ = new ADN_Connector_Bool< ADN_CheckBox >( this );
+    connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_CheckBox constructor
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
-ADN_CheckBox::ADN_CheckBox(const QString &text, QWidget *parent, const char* name)
-: QCheckBox(text,parent,name)
-, ADN_Gfx_ABC()
+ADN_CheckBox::ADN_CheckBox(const QString& text, QWidget* parent, const char* name )
+    : QCheckBox( text, parent, name )
 {
-    pConnector_=new ADN_Connector_Bool<ADN_CheckBox>(this);
-    connect(this        ,SIGNAL( toggled( bool ) )    ,this         , SLOT( BoolChanged(bool) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    pConnector_ = new ADN_Connector_Bool< ADN_CheckBox >( this );
+    connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -60,31 +56,7 @@ ADN_CheckBox::~ADN_CheckBox()
 // Name: ADN_CheckBox::BoolChanged
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-void ADN_CheckBox::BoolChanged(bool b)
+void ADN_CheckBox::BoolChanged( bool b )
 {
-    static_cast<ADN_Connector_Bool<ADN_CheckBox>*>(pConnector_)->SetDataChanged(b);
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_CheckBox::setEnabled
-/** @param  b
-*/
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_CheckBox::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        QCheckBox::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        QCheckBox::setEnabled( b );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_CheckBox::UpdateEnableState
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_CheckBox::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_Bool<ADN_CheckBox>* >( pConnector_ )->IsConnected() );
+    static_cast< ADN_Connector_Bool< ADN_CheckBox >* >( pConnector_ )->SetDataChanged( b );
 }

@@ -141,24 +141,21 @@ public:
 // -----------------------------------------------------------------------------
 void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
 {
-    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
+    Q3PopupMenu popupMenu( this );
+    ADN_Wizard< ADN_Missions_ABC, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ), this );
+    FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
     {
-        Q3PopupMenu popupMenu( this );
-        ADN_Wizard< ADN_Missions_ABC, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ), this );
-        FillContextMenuWithDefault( popupMenu, wizard );
-        if( pCurData_ != 0 )
-        {
-            FragOrder* pCastData = static_cast< FragOrder* >( pCurData_ );
-            assert( pCastData != 0 );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Unit models" ),
-                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Pawn, *pCastData ), eModels, static_cast< int >( eEntityType_Pawn ) );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Automata models" ),
-                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Automat, *pCastData ), eModels, static_cast< int >( eEntityType_Automat ) );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Crowds models" ),
-                                          ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Population, *pCastData ), eModels, static_cast< int >( eEntityType_Population ) );
-        }
-        popupMenu.exec( pt );
+        FragOrder* pCastData = static_cast< FragOrder* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Unit models" ),
+                                        ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Pawn, *pCastData ), eModels, static_cast< int >( eEntityType_Pawn ) );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Automata models" ),
+                                        ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Automat, *pCastData ), eModels, static_cast< int >( eEntityType_Automat ) );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Crowds models" ),
+                                        ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Population, *pCastData ), eModels, static_cast< int >( eEntityType_Population ) );
     }
+    popupMenu.exec( pt );
 }
 
 // -----------------------------------------------------------------------------

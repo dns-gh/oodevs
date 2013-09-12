@@ -38,7 +38,6 @@ ADN_GroupBox::ADN_GroupBox( QWidget * parent /* = 0*/, const char * name /* = 0*
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +52,6 @@ ADN_GroupBox::ADN_GroupBox( const QString & title, QWidget * parent /* = 0*/, co
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +66,6 @@ ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, QWidget * p
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +80,6 @@ ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, const QStri
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,28 +101,6 @@ void ADN_GroupBox::BoolChanged(bool b)
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_GroupBox::setEnabled
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_GroupBox::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        Q3GroupBox::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        Q3GroupBox::setEnabled( b );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GroupBox::UpdateEnableState
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_GroupBox::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_Bool<ADN_GroupBox>* >( pConnector_ )->IsConnected() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_GroupBox::ADN_GroupBox2
 // Created: ABR 2012-01-23
 // -----------------------------------------------------------------------------
@@ -138,7 +112,6 @@ ADN_GroupBox2::ADN_GroupBox2( QWidget * parent /* = 0 */, const char * name /* =
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox2>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +126,6 @@ ADN_GroupBox2::ADN_GroupBox2( const QString & title, QWidget * parent /* = 0 */,
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox2>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,32 +138,10 @@ ADN_GroupBox2::~ADN_GroupBox2()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_GroupBox::setEnabled
-// Created: ABR 2012-01-23
-// -----------------------------------------------------------------------------
-void ADN_GroupBox2::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        QGroupBox::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        QGroupBox::setEnabled( b );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_GroupBox::BoolChanged
 // Created: ABR 2012-01-23
 // -----------------------------------------------------------------------------
 void ADN_GroupBox2::BoolChanged(bool b)
 {
     static_cast<ADN_Connector_Bool<ADN_GroupBox2>*>(pConnector_)->SetDataChanged(b);
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GroupBox::UpdateEnableState
-// Created: ABR 2012-01-23
-// -----------------------------------------------------------------------------
-void ADN_GroupBox2::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_Bool<ADN_GroupBox2>* >( pConnector_ )->IsConnected() );
 }

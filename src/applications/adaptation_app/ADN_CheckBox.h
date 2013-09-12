@@ -18,24 +18,18 @@
 //*****************************************************************************
 // Created: JDY 03-07-02
 //*****************************************************************************
-class ADN_CheckBox
-: public QCheckBox
-, public ADN_Gfx_ABC
+class ADN_CheckBox : public QCheckBox
+                   , public ADN_Gfx_ABC
 {
     Q_OBJECT
 
 public:
-
     explicit ADN_CheckBox(QWidget* parent, const char * name = 0);
     explicit ADN_CheckBox(const QString &text, QWidget *parent, const char* name=0);
     virtual ~ADN_CheckBox();
 
-    void setEnabled( bool b );
-
 private slots:
-
-    void    BoolChanged(bool b);
-    void UpdateEnableState();
+    void BoolChanged(bool b);
 };
 
 #endif // __ADN_CheckBox_h_

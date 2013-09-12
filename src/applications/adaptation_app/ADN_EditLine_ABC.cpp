@@ -108,7 +108,6 @@ ADN_EditLine_ABC::ADN_EditLine_ABC( QWidget* parent, const char* name )
 {
     // connect edit line & connector
     connect( this, SIGNAL( textChanged( const QString & ) ), this, SLOT( TextChanged( const QString & ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 //-----------------------------------------------------------------------------
@@ -118,18 +117,6 @@ ADN_EditLine_ABC::ADN_EditLine_ABC( QWidget* parent, const char* name )
 ADN_EditLine_ABC::~ADN_EditLine_ABC()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_EditLine_ABC::setEnabled
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_EditLine_ABC::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        QLineEdit::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        QLineEdit::setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------

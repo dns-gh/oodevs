@@ -32,7 +32,6 @@ public:
 
 protected:
     virtual void TextChanged( const QString& string );
-    virtual void UpdateEnableState();
     virtual void mousePressEvent( QMouseEvent* event );
 
 private:

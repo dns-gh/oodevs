@@ -333,35 +333,32 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
 {
-    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
+    Q3PopupMenu popupMenu( this );
+    ADN_Wizard< ADN_Objects_Data_ObjectInfos, ADN_Object_WizardPage > wizard( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                                                                                ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), this );
+    FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
     {
-        Q3PopupMenu popupMenu( this );
-        ADN_Wizard< ADN_Objects_Data_ObjectInfos, ADN_Object_WizardPage > wizard( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
-                                                                                  ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), this );
-        FillContextMenuWithDefault( popupMenu, wizard );
-        if( pCurData_ != 0 )
-        {
-            ADN_Objects_Data_ObjectInfos* pCastData = static_cast< ADN_Objects_Data_ObjectInfos* >( pCurData_ );
-            assert( pCastData != 0 );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, eDotationFamily_Munition );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
+        ADN_Objects_Data_ObjectInfos* pCastData = static_cast< ADN_Objects_Data_ObjectInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                        ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
+                                        ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                        ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
+                                        ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, eDotationFamily_Munition );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                        ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                                        ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                        ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                                        ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
 
-            for( int type = 0; type < eNbrMissionTypes; ++type )
-                FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
-                                              ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), eMissions, type );
-        }
-        popupMenu.exec( pt );
+        for( int type = 0; type < eNbrMissionTypes; ++type )
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
+                                            ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), eMissions, type );
     }
+    popupMenu.exec( pt );
 }
 
 // -----------------------------------------------------------------------------
