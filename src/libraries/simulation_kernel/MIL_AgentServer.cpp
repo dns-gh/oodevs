@@ -35,6 +35,39 @@
 #pragma warning( pop )
 #include <boost/algorithm/string/regex.hpp>
 
+unsigned long FindMaxIdInFile( const tools::Path& filePath )
+{
+    unsigned long maxId = 0;
+    try
+    {
+        if( filePath.Exists() )
+        {
+            std::string currentLine;
+            tools::Ifstream ifile( filePath );
+            while( std::getline( ifile, currentLine ) )
+            {
+                boost::regex idRegex( "id=\"([0-9]+)\"" );
+                boost::sregex_iterator end;
+                for( boost::sregex_iterator it( currentLine.begin(), currentLine.end(), idRegex ); it != end; ++it )
+                    for( unsigned int i = 1; i < it->size(); ++i )
+                        if( ( *it )[ i ].matched )
+                        {
+                            const std::string matchId( (*it)[i].first, (*it)[i].second );
+                            unsigned long curId =boost::lexical_cast< unsigned long >( matchId );
+                            if( curId > maxId )
+                                maxId = curId;
+                        }
+            }
+            ifile.close();
+        }
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+    return maxId;
+}
+
 namespace
 {
     struct AgentServerInit : boost::noncopyable
@@ -57,39 +90,6 @@ namespace
         MIL_AgentServer*& agent_;
         bool done_;
     };
-
-    unsigned long FindMaxIdInFile( const tools::Path& filePath )
-    {
-        unsigned long maxId = 0;
-        try
-        {
-            if( filePath.Exists() )
-            {
-                std::string currentLine;
-                tools::Ifstream ifile( filePath );
-                while( std::getline( ifile, currentLine ) )
-                {
-                    boost::regex idRegex( "id=\"([0-9]+)\"" );
-                    boost::sregex_iterator end;
-                    for( boost::sregex_iterator it( currentLine.begin(), currentLine.end(), idRegex ); it != end; ++it )
-                        for( unsigned int i = 1; i < it->size(); ++i )
-                            if( ( *it )[ i ].matched )
-                            {
-                                const std::string matchId( (*it)[i].first, (*it)[i].second );
-                                unsigned long curId =boost::lexical_cast< unsigned long >( matchId );
-                                if( curId > maxId )
-                                    maxId = curId;
-                            }
-                }
-                ifile.close();
-            }
-        }
-        catch( ... )
-        {
-            // NOTHING
-        }
-        return maxId;
-    }
 
     unsigned long FindMaxId( const MIL_Config& config )
     {

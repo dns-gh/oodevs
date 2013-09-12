@@ -46,6 +46,10 @@ class MIL_BurningCells;
 class MIL_UrbanCache;
 class MIL_ObjectFactory;
 
+// If filePath exists, returns the largest identifier referenced in expressions
+// such as id="\d+". Returns 0 otherwise.
+unsigned long FindMaxIdInFile( const tools::Path& filePath );
+
 //*****************************************************************************
 // Created: DFT 02-02-28
 // Last modified: JVT 03-12-15
