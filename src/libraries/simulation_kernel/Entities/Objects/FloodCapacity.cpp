@@ -150,10 +150,9 @@ void FloodCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& a
         const MT_Vector2D& position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
         geometry::Point2f point( static_cast< float>( position.rX_ ), static_cast< float >( position.rY_ ) );
         const FloodAttribute& flood = object.GetAttribute< FloodAttribute >();
-        const std::vector< geometry::Polygon2f* >& deepAreas = flood.GetDeepAreas();
-        std::vector< geometry::Polygon2f* >::const_iterator it;
-        for( it = deepAreas.begin(); it != deepAreas.end(); ++it )
-            if( ( *it )->BoundingBox().IsInside( point ) && ( *it )->IsInside( point ) )
+        const auto& deepAreas = flood.GetDeepAreas();
+        for( auto it = deepAreas.begin(); it != deepAreas.end(); ++it )
+            if( it->BoundingBox().IsInside( point ) && it->IsInside( point ) )
             {
                 isHurt = true;
                 break;
@@ -161,9 +160,9 @@ void FloodCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& a
 
         if( !isHurt && crossingHeight == eCrossingHeightNever )
         {
-            const std::vector< geometry::Polygon2f* >& lowAreas = flood.GetLowAreas();
-            for( it = lowAreas.begin(); it != lowAreas.end(); ++it )
-                if( ( *it )->BoundingBox().IsInside( point ) && ( *it )->IsInside( point ) )
+            const auto& lowAreas = flood.GetLowAreas();
+            for( auto it = lowAreas.begin(); it != lowAreas.end(); ++it )
+                if( it->BoundingBox().IsInside( point ) && it->IsInside( point ) )
                 {
                     isHurt = true;
                     break;

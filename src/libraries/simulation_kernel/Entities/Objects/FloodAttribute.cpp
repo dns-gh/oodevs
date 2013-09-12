@@ -201,7 +201,7 @@ const TER_Localisation& FloodAttribute::GetLocalisation() const
 // Name: FloodAttribute::GetDeepAreas
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-const std::vector< geometry::Polygon2f* >& FloodAttribute::GetDeepAreas() const
+const std::vector< geometry::Polygon2f >& FloodAttribute::GetDeepAreas() const
 {
     return deepAreas_;
 }
@@ -210,7 +210,7 @@ const std::vector< geometry::Polygon2f* >& FloodAttribute::GetDeepAreas() const
 // Name: FloodAttribute::GetLowAreas
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-const std::vector< geometry::Polygon2f* >& FloodAttribute::GetLowAreas() const
+const std::vector< geometry::Polygon2f >& FloodAttribute::GetLowAreas() const
 {
     return lowAreas_;
 }

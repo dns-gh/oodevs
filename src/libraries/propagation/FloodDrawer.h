@@ -54,16 +54,16 @@ private:
 
     //! @name Helpers
     //@{
-    void RenderTexture( const std::vector< geometry::Polygon2f* >& deepAreas, const std::vector< geometry::Polygon2f* >& lowAreas );
+    void RenderTexture( const std::vector< geometry::Polygon2f >& deepAreas, const std::vector< geometry::Polygon2f >& lowAreas );
     void ResetTexture();
-    void DrawPolygons( const std::vector< geometry::Polygon2f* >& polygons ) const;
+    void DrawPolygons( const std::vector< geometry::Polygon2f >& polygons ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::vector< geometry::Polygon2f* > deepAreas_;
-    std::vector< geometry::Polygon2f* > lowAreas_;
+    std::vector< geometry::Polygon2f > deepAreas_;
+    std::vector< geometry::Polygon2f > lowAreas_;
     const geometry::Point2f point_;
     int depth_;
     int refDist_;

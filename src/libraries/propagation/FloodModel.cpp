@@ -217,9 +217,9 @@ void FloodModel::CreatePolygon( int nPolygonIndex, const geometry::Point2f& cent
             }
         }
         if( ppCells[ cellX ][ cellY ].deep_ )
-            deepAreas.push_back( new Polygon2f( vertices ) );
+            deepAreas.push_back( Polygon2f( vertices ) );
         else
-            lowAreas.push_back( new Polygon2f( vertices ) );
+            lowAreas.push_back( Polygon2f( vertices ) );
     }
 }
 
