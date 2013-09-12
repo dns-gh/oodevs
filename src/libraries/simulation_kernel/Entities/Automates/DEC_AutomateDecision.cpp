@@ -28,6 +28,7 @@
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
+#include "protocol/ClientSenders.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
 
@@ -220,13 +221,13 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_AutomateFunctions::DecisionalState, boost::ref( GetAutomate() ), _1, _2 ) ) );
 
     brain.RegisterFunction( "DEC_DebugAffichePoint"  ,
-            boost::function< void ( const MT_Vector2D* ) > ( boost::bind( &DEC_MiscFunctions::DebugDrawPoint< MIL_Automate >, boost::ref( GetAutomate()), _1  ) ) );
+            boost::function< void ( const MT_Vector2D* ) > ( boost::bind( &DEC_MiscFunctions::DebugDrawPoint, boost::cref( GetAutomate() ), _1  ) ) );
     brain.RegisterFunction( "DEC_DebugAffichePoints" ,
-            boost::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind( &DEC_MiscFunctions::DebugDrawPoints< MIL_Automate >, boost::ref( GetAutomate()), _1  ) ) );
+            boost::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind( &DEC_MiscFunctions::DebugDrawPoints, boost::cref( GetAutomate() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Debug",
-            boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug< MIL_Automate > , boost::ref( GetAutomate()) , "Automate" , _1  ) ) );
+            boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug, boost::cref( GetAutomate() ) , "Automate" , _1  ) ) );
     brain.RegisterFunction( "DEC_Trace",
-        boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
+        boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace, boost::cref( GetAutomate() ), _1 ) ) );
 
     // Connaissance
     brain.RegisterFunction( "DEC_Connaissances_PartageConnaissancesAvec",

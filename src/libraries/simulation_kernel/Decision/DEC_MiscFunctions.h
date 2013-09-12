@@ -68,10 +68,12 @@ public:
     static void ReportString             ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
     static void ReportStage              ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
 
-    template< typename T > static void Trace          ( const T& caller, const std::string& message );
-    template< typename T > static void Debug          ( const T& caller, const std::string& callerType, const std::string& message );
-    template< typename T > static void DebugDrawPoints( const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points );
-    template< typename T > static void DebugDrawPoint ( const T& caller, const MT_Vector2D* pPoint  );
+    static void Trace( const MIL_Entity_ABC& caller, const std::string& message );
+    static void Debug( const MIL_Entity_ABC& caller, const std::string& callerType,
+            const std::string& message );
+    static void DebugDrawPoints( const MIL_Entity_ABC& caller,
+            std::vector< boost::shared_ptr< MT_Vector2D > > points );
+    static void DebugDrawPoint ( const MIL_Entity_ABC& caller, const MT_Vector2D* pPoint  );
     static std::string                 GetPointXY     ( boost::shared_ptr< MT_Vector2D > point );
 
     // Reinforcement
@@ -106,7 +108,5 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void CopyDirectionDanger                           ( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission );
 };
-
-#include "DEC_MiscFunctions.inl"
 
 #endif // __DEC_MiscFunctions_h_

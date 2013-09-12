@@ -288,13 +288,13 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
 
     // Tests / Debug
     RegisterFunction( "DEC_DebugAffichePoint"  ,
-        boost::function< void ( const MT_Vector2D* ) > (boost::bind( &DEC_MiscFunctions::DebugDrawPoint< MIL_AgentPion >, boost::ref( GetPion()), _1  ) ) );
+        boost::function< void ( const MT_Vector2D* ) > (boost::bind( &DEC_MiscFunctions::DebugDrawPoint, boost::cref( GetPion() ), _1  ) ) );
     RegisterFunction( "DEC_DebugAffichePoints" ,
-        boost::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind( &DEC_MiscFunctions::DebugDrawPoints< MIL_AgentPion >, boost::ref( GetPion()), _1  ) ) );
+        boost::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind( &DEC_MiscFunctions::DebugDrawPoints, boost::cref( GetPion() ), _1  ) ) );
     RegisterFunction( "DEC_Debug",
-        boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug< MIL_AgentPion > , boost::ref( GetPion()) , "Agent" , _1  ) ) );
+        boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug, boost::cref( GetPion() ) , "Agent" , _1  ) ) );
     RegisterFunction( "DEC_Trace",
-        boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace, boost::cref( GetPion() ), _1 ) ) );
 
     RegisterFunction( "DEC_DecisionalState",
         boost::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_AgentFunctions::DecisionalState, boost::ref( GetPion() ), _1, _2 ) ) );

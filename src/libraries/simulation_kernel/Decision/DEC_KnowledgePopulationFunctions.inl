@@ -15,6 +15,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "MIL_AgentServer.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::GetDominationState

@@ -23,6 +23,9 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_Time_ABC.h"
+#include "MIL_AgentServer.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include <tools/Set.h>
 
 // -----------------------------------------------------------------------------
@@ -525,4 +528,62 @@ void DEC_MiscFunctions::ReportStage( DEC_Decision_ABC& caller, int type, const s
         params.push_back( missionParam );
         pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::Trace
+// Created: AHC 2009-07-30
+//-----------------------------------------------------------------------------
+void DEC_MiscFunctions::Trace( const MIL_Entity_ABC& caller, const std::string& message )
+{
+    try
+    {
+        client::Trace msg;
+        MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *msg().mutable_source(),
+               caller.GetID() );
+        *msg().mutable_message() = message.c_str();
+        msg.Send( NET_Publisher_ABC::Publisher() );
+    }
+    catch( const std::exception& ) {}
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::Debug
+// Created: AHC 2009-07-30
+//-----------------------------------------------------------------------------
+void DEC_MiscFunctions::Debug( const MIL_Entity_ABC& caller, const std::string& callerType,
+        const std::string& message )
+{
+    if( !MIL_AgentServer::GetWorkspace().GetConfig().UseDecDebug() )
+        return;
+    MT_LOG_INFO_MSG( callerType << " " << caller.GetID() << " says : [" << message << "]" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::DebugDrawPoints
+// Created: AHC 2009-07-30
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::DebugDrawPoints( const MIL_Entity_ABC& caller,
+        std::vector< boost::shared_ptr< MT_Vector2D > > points )
+{
+    client::DebugPoints message;
+    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(),
+           caller.GetID() );
+    NET_ASN_Tools::WriteCoordinates( points, *message().mutable_coordinates() );
+    message.Send( NET_Publisher_ABC::Publisher() );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::DebugDrawPoint
+// Created: NLD 2005-03-22
+// Created: AHC 2009-07-30-----------------------------------------------
+void DEC_MiscFunctions::DebugDrawPoint( const MIL_Entity_ABC& caller, const MT_Vector2D* pPoint )
+{
+    assert( pPoint );
+    client::DebugPoints message;
+    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(),
+           caller.GetID() );
+    NET_ASN_Tools::WritePoint( *pPoint, *message().mutable_coordinates()->add_elem() );
+    message.Send( NET_Publisher_ABC::Publisher() );
 }
