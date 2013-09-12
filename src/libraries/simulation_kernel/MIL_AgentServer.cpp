@@ -668,3 +668,185 @@ void MIL_AgentServer::DestroyWorkspace()
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetConfig
+// Created: NLD 2003-12-04
+// -----------------------------------------------------------------------------
+MIL_Config& MIL_AgentServer::GetConfig()
+{
+    return config_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetWorkspaceDIA
+// Created: DFT 02-03-13
+//-----------------------------------------------------------------------------
+DEC_Workspace& MIL_AgentServer::GetWorkspaceDIA() const
+{
+    assert( pWorkspaceDIA_ );
+    return *pWorkspaceDIA_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: NET_AgentServer::GetAgentServer
+// Created: JVT 2002-07-17
+//-----------------------------------------------------------------------------
+NET_AgentServer& MIL_AgentServer::GetAgentServer() const
+{
+    assert( pAgentServer_ );
+    return *pAgentServer_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetMeteoDataManager
+// Created: JVT 02-10-21
+//-----------------------------------------------------------------------------
+PHY_MeteoDataManager& MIL_AgentServer::GetMeteoDataManager() const
+{
+    assert( pMeteoDataManager_ );
+    return *pMeteoDataManager_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetPathFindManager
+// Created: JDY 03-02-12
+//-----------------------------------------------------------------------------
+DEC_PathFind_Manager& MIL_AgentServer::GetPathFindManager() const
+{
+    assert( pPathFindManager_ );
+    return *pPathFindManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetCheckPointManager
+// Created: NLD 2003-08-05
+// -----------------------------------------------------------------------------
+MIL_CheckPointManager& MIL_AgentServer::GetCheckPointManager() const
+{
+    assert( pCheckPointManager_ );
+    return *pCheckPointManager_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetSimTime
+// Created: JVT 02-08-02
+//-----------------------------------------------------------------------------
+unsigned int MIL_AgentServer::GetSimTime() const
+{
+    return nSimTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::SetInitialRealTime
+// Created: AGE 2007-10-12
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::SetInitialRealTime( unsigned int time )
+{
+    nRealTime_ = nInitialRealTime_ = time;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetRealTime
+// Created: JVT 02-08-02
+//-----------------------------------------------------------------------------
+unsigned int MIL_AgentServer::GetRealTime() const
+{
+    return nRealTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetCurrentTimeStep
+// Created: AGE 2007-08-10
+// -----------------------------------------------------------------------------
+unsigned int MIL_AgentServer::GetCurrentTimeStep() const
+{
+    return nCurrentTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetTickDuration
+// Created: AGE 2007-08-13
+// -----------------------------------------------------------------------------
+unsigned int MIL_AgentServer::GetTickDuration() const
+{
+    return nTimeStepDuration_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetEntityManager
+// Created: NLD 2004-08-11
+// -----------------------------------------------------------------------------
+MIL_EntityManager& MIL_AgentServer::GetEntityManager() const
+{
+    assert( pEntityManager_ );
+    return *pEntityManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetUrbanCache
+// Created: LDC 2011-12-28
+// -----------------------------------------------------------------------------
+MIL_UrbanCache& MIL_AgentServer::GetUrbanCache() const
+{
+    assert( pUrbanCache_ );
+    return *pUrbanCache_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetResourceNetworkModel
+// Created: JSR 2010-08-13
+// -----------------------------------------------------------------------------
+resource::ResourceNetworkModel& MIL_AgentServer::GetResourceNetworkModel() const
+{
+    assert( pResourceNetworkModel_ );
+    return *pResourceNetworkModel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetResourceTools
+// Created: JSR 2010-09-03
+// -----------------------------------------------------------------------------
+resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
+{
+    assert( pResourceTools_ );
+    return *pResourceTools_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetBurningCells
+// Created: BCI 2010-12-22
+// -----------------------------------------------------------------------------
+MIL_BurningCells& MIL_AgentServer::GetBurningCells() const
+{
+    assert( pBurningCells_ );
+    return *pBurningCells_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetWorkspace
+// Created: DFT 02-03-13
+//-----------------------------------------------------------------------------
+MIL_AgentServer& MIL_AgentServer::GetWorkspace()
+{
+    assert( pTheAgentServer_ );
+    return *pTheAgentServer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::IsInitialized
+// Created: JSR 2010-11-22
+// -----------------------------------------------------------------------------
+bool MIL_AgentServer::IsInitialized()
+{
+    return pTheAgentServer_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetSettings
+// Created: ABR 2011-12-13
+// -----------------------------------------------------------------------------
+tools::ExerciseSettings& MIL_AgentServer::GetSettings() const
+{
+    assert( settings_ != 0 );
+    return *settings_;
+}

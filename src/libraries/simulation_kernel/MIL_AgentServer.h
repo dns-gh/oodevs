@@ -206,6 +206,4 @@ private:
     static MIL_AgentServer* pTheAgentServer_;
 };
 
-#include "MIL_AgentServer.inl"
-
 #endif // __MIL_AgentServer_h_
