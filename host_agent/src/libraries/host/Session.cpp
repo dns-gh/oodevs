@@ -32,6 +32,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include <boost/range/algorithm.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -361,7 +362,8 @@ namespace
 {
     bool AddLogFile( const FileSystem_ABC& fs, const runtime::Path& path, Tree& tree )
     {
-        if( fs.IsFile( path ) && path.extension() == ".log" )
+        if( fs.IsFile( path ) &&
+            path.extension() == ".log" && boost::count( path.string(), '.' ) == 1 )
             tree.put( runtime::Utf8( path.filename() ), true );
         return true;
     }
@@ -502,10 +504,12 @@ void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConf
 
 void WriteLogConfiguration( Tree& tree, const std::string& prefix, const Config& cfg )
 {
-    tree.put( prefix + "loglevel", cfg.logs.level );
-    tree.put( prefix + "logfiles", cfg.logs.max_files );
-    tree.put( prefix + "logsize", cfg.logs.max_size );
-    tree.put( prefix + "sizeunit", cfg.logs.size_unit );
+    if( cfg.logs.rotate )
+    {
+        tree.put( prefix + "logfiles", cfg.logs.max_files + 1 );
+        tree.put( prefix + "logsize", cfg.logs.max_size );
+        tree.put( prefix + "sizeunit", cfg.logs.size_unit );
+    }
 }
 
 void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )

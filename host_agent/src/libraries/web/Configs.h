@@ -124,6 +124,7 @@ struct Config
     struct
     {
         LogLevel    level;
+        bool        rotate;
         int         max_files;
         int         max_size;
         std::string size_unit;
