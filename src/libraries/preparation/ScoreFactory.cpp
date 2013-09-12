@@ -40,7 +40,7 @@ ScoreFactory::~ScoreFactory()
 // -----------------------------------------------------------------------------
 Score_ABC* ScoreFactory::CreateScore( xml::xistream& xis ) const
 {
-    return new Score( xis, controllers_, indicators_, gaugeFactory_, model_.profiles_ );
+    return new Score( xis, controllers_, indicators_, gaugeFactory_, *model_.profiles_ );
 }
 
 // -----------------------------------------------------------------------------

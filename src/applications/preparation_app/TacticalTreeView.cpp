@@ -204,7 +204,7 @@ void TacticalTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const kerne
 void TacticalTreeView::Drop( const kernel::AgentType& item, kernel::Entity_ABC& target )
 {
     const geometry::Point2f position = target.Get< kernel::Positions >().GetPosition();
-    if( kernel::Entity_ABC* result = model_.agents_.CreateAgent( static_cast< kernel::Ghost_ABC& >( target ), item, position ) )
+    if( kernel::Entity_ABC* result = model_.agents_->CreateAgent( static_cast< kernel::Ghost_ABC& >( target ), item, position ) )
     {
         delete &target;
         setFocus();
@@ -222,7 +222,7 @@ void TacticalTreeView::Drop( const kernel::AgentType& item, kernel::Entity_ABC& 
 void TacticalTreeView::Drop( const kernel::AutomatType& item, kernel::Entity_ABC& target )
 {
     const geometry::Point2f position = target.Get< kernel::Positions >().GetPosition();
-    if( kernel::Entity_ABC* result = model_.agents_.CreateAutomatInsteadOf( target, item, position ) )
+    if( kernel::Entity_ABC* result = model_.agents_->CreateAutomatInsteadOf( target, item, position ) )
     {
         delete &target;
         setFocus();

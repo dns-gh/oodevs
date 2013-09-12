@@ -236,7 +236,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
                 QMessageBox::warning( 0, tools::translate( "Application", "SWORD" ), tools::translate( "AgentsLayer", "Logistic units can not be placed under a non logistic automat" ) );
                 return false;
             }
-            model_.agents_.CreateAgent( *automat, *agentType, point );
+            model_.agents_->CreateAgent( *automat, *agentType, point );
         }
         return true;
     }
@@ -246,7 +246,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         kernel::Entity_ABC* selectedEntity = selectedFormation_.ConstCast();
         if( !selectedEntity )
             selectedEntity = selectedAutomat_.ConstCast();
-        model_.agents_.CreateAutomat( *selectedEntity, *automatType, point );
+        model_.agents_->CreateAutomat( *selectedEntity, *automatType, point );
         return true;
     }
     const HierarchyTemplate* model = dnd::FindData< HierarchyTemplate >( event );

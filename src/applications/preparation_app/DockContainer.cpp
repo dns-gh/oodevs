@@ -75,13 +75,13 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Extensions panel
     {
-        gui::RichDockWidget* pExtensionsPanel = new gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.formations_ );
+        gui::RichDockWidget* pExtensionsPanel = new gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, *model.agents_, *model.formations_ );
         pExtensionsPanel->SetModes( eModes_Default | eModes_LivingArea | eModes_Terrain );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel );
     }
     // Urban informations
     {
-        gui::RichDockWidget* pInformations = new UrbanInfosDockWidget( parent, controllers, model.urban_ );
+        gui::RichDockWidget* pInformations = new UrbanInfosDockWidget( parent, controllers, *model.urban_ );
         pInformations->SetModes( eModes_Default | eModes_LivingArea );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pInformations );
     }

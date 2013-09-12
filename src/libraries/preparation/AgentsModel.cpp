@@ -230,12 +230,12 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, Entity_ABC& parent, Model& 
             tools::Resolver< Automat_ABC >::Register( automat->GetId(), *automat );
             xis >> xml::list( "automat", *this        , &AgentsModel::CreateAutomat, *automat, model )
                 >> xml::list( "unit"   , *this        , &AgentsModel::CreateAgent  , *automat, model )
-                >> xml::list( "phantom", model.ghosts_, &GhostModel::Create        , *automat )
-                >> xml::list( "lima"   , model.limits_, &LimitsModel::CreateLima   , *automat )
-                >> xml::list( "limit"  , model.limits_, &LimitsModel::CreateLimit  , *automat );
+                >> xml::list( "phantom", *model.ghosts_, &GhostModel::Create        , *automat )
+                >> xml::list( "lima"   , *model.limits_, &LimitsModel::CreateLima   , *automat )
+                >> xml::list( "limit"  , *model.limits_, &LimitsModel::CreateLimit  , *automat );
         }
         else
-            model.ghosts_.Create( xis, parent, eGhostType_Automat );
+            model.ghosts_->Create( xis, parent, eGhostType_Automat );
     }
     catch( const std::exception& e )
     {
@@ -305,11 +305,11 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, Model& m
         if( agent )
         {
             tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
-            xis >> xml::list( "lima"   , model.limits_, &LimitsModel::CreateLima   , *agent )
-                >> xml::list( "limit"  , model.limits_, &LimitsModel::CreateLimit  , *agent );
+            xis >> xml::list( "lima"   , *model.limits_, &LimitsModel::CreateLima   , *agent )
+                >> xml::list( "limit"  , *model.limits_, &LimitsModel::CreateLimit  , *agent );
         }
         else
-            model.ghosts_.Create( xis, parent, eGhostType_Agent );
+            model.ghosts_->Create( xis, parent, eGhostType_Agent );
     }
     catch( const std::exception& e )
     {

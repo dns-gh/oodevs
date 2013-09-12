@@ -107,7 +107,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     else
     {
         assert( result->GetGhostType() == eGhostType_Automat );
-        result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
+        result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.GetKnowledgeGroupResolver() ) );
         result->Attach( *new LogisticLevelAttribute( controllers_.controller_, xis, *result, true, dictionary ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, result->GetLogisticLevel() != kernel::LogisticLevel::none_ ) );
     }
@@ -137,7 +137,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
         assert( result->GetGhostType() == eGhostType_Automat );
         const geometry::Point2f position = model_.ClipPosition( ComputeAutomatPosition( xis ), result );
         result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary, parent ) );
-        result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
+        result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.GetKnowledgeGroupResolver() ) );
         result->Attach( *new LogisticLevelAttribute( controllers_.controller_, xis, *result, true, dictionary ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, result->GetLogisticLevel() != kernel::LogisticLevel::none_ ) );
     }

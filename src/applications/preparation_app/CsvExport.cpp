@@ -159,13 +159,13 @@ void CsvExport::WriteEntity( const tools::Path& exerciseName, const tools::Path&
     file    << tools::translate( "CsvExport", "SIDE" ) << separator << tools::translate( "CsvExport", "CATEGORY" )
             << separator << tools::translate( "CsvExport", "NAME" ) << separator << tools::translate( "CsvExport", "TYPE" )
             << separator << tools::translate( "CsvExport", "POSITION" ) << std::endl;
-    tools::Iterator< const kernel::Team_ABC& > itTeam = model_.teams_.CreateIterator();
+    tools::Iterator< const kernel::Team_ABC& > itTeam = model_.teams_->CreateIterator();
     while( itTeam.HasMoreElements() )
     {
         const kernel::Team_ABC& team = itTeam.NextElement();
         WriteEntity( team, team.GetName().toStdString(), file, separator );
     }
-    tools::Iterator< const kernel::Object_ABC& > itObject = model_.objects_.CreateIterator();
+    tools::Iterator< const kernel::Object_ABC& > itObject = model_.objects_->CreateIterator();
     while( itObject.HasMoreElements() )
     {
         const kernel::Object_ABC& object = itObject.NextElement();
@@ -279,12 +279,12 @@ void CsvExport::WriteWeather( const tools::Path& exerciseName, const tools::Path
          << tools::translate( "CsvExport", "WEATHER TYPE" ) << separator <<  tools::translate( "CsvExport", "START TIME" ) << separator
          << tools::translate( "CsvExport", "END TIME" ) << std::endl;
 
-    weather::Meteo& global = *model_.weather_.globalWeather_;
+    weather::Meteo& global = *model_.weather_->globalWeather_;
     file << global.GetWind().rSpeed_ << separator << global.GetWind().eAngle_ << separator << global.GetTemperature() << separator
          << global.GetCloud().nFloor_ << separator << global.GetCloud().nCeiling_ << separator << global.GetCloud().nDensityPercentage_ << separator
          << global.GetPrecipitation().GetName() << separator << separator << std::endl;
 
-    tools::Iterator< const weather::MeteoLocal& > it = model_.weather_.CreateIterator();
+    tools::Iterator< const weather::MeteoLocal& > it = model_.weather_->CreateIterator();
     while( it.HasMoreElements() )
     {
         const weather::MeteoLocal& meteo = it.NextElement();
@@ -305,16 +305,16 @@ void CsvExport::WriteDiplomaty( const tools::Path& exerciseName, const tools::Pa
 {
     tools::Path diplomacyPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "diplomacy" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( diplomacyPath );
-    tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
+    tools::Iterator< const kernel::Team_ABC& > it = model_.teams_->CreateIterator();
     while( it.HasMoreElements() )
         file << separator<< it.NextElement().GetName();
     file << std::endl;
-    tools::Iterator< const kernel::Team_ABC& > itRhs = model_.teams_.CreateIterator();
+    tools::Iterator< const kernel::Team_ABC& > itRhs = model_.teams_->CreateIterator();
     while( itRhs.HasMoreElements() )
     {
         const kernel::Team_ABC& rhs = itRhs.NextElement();
         file << rhs.GetName();
-        tools::Iterator< const kernel::Team_ABC& > itLhs = model_.teams_.CreateIterator();
+        tools::Iterator< const kernel::Team_ABC& > itLhs = model_.teams_->CreateIterator();
         while( itLhs.HasMoreElements() )
         {
             file << separator;
@@ -336,7 +336,7 @@ void CsvExport::WriteProfiles( const tools::Path& exerciseName, const tools::Pat
     tools::Path profilesPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "profiles" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( profilesPath );
     ProfilesModel::T_Profiles profiles;
-    model_.profiles_.Visit( profiles );
+    model_.profiles_->Visit( profiles );
     BOOST_FOREACH( const std::string& profile, profiles )
         file << separator << profile;
     file << std::endl;
@@ -360,9 +360,9 @@ void CsvExport::WriteProfiles( tools::Ofstream& file, const std::string& separat
     BOOST_FOREACH( const std::string& profile, profiles )
     {
         file << separator;
-        if( model_.profiles_.IsWriteable( entity, profile ) )
+        if( model_.profiles_->IsWriteable( entity, profile ) )
             file << "RW";
-        else if( model_.profiles_.IsReadable( entity, profile ) )
+        else if( model_.profiles_->IsReadable( entity, profile ) )
             file << "R";
     }
     file << std::endl;

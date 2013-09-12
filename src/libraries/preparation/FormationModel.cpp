@@ -70,10 +70,10 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
         Formation_ABC* formation = factory_.Create( xis, parent );
         Register( formation->GetId(), *formation );
         xis >> xml::list( "formation", *this        , &FormationModel::Create    , *formation, model )
-            >> xml::list( "automat"  , model.agents_, &AgentsModel::CreateAutomat, *formation, model )
-            >> xml::list( "phantom"  , model.ghosts_, &GhostModel::Create        , *formation )
-            >> xml::list( "lima"     , model.limits_, &LimitsModel::CreateLima   , *formation )
-            >> xml::list( "limit"    , model.limits_, &LimitsModel::CreateLimit  , *formation );
+            >> xml::list( "automat"  , *model.agents_, &AgentsModel::CreateAutomat, *formation, model )
+            >> xml::list( "phantom"  , *model.ghosts_, &GhostModel::Create        , *formation )
+            >> xml::list( "lima"     , *model.limits_, &LimitsModel::CreateLima   , *formation )
+            >> xml::list( "limit"    , *model.limits_, &LimitsModel::CreateLimit  , *formation );
     }
     catch( const std::exception& e )
     {

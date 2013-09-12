@@ -193,7 +193,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
                                              *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
 
     // ToolBars
-    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
+    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, *model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
 
     // Layers 2
     CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *profilerLayer, PreparationProfile::GetProfile(), *picker, automats, formation, elevation2d );
@@ -293,7 +293,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     gui::Layer& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     gui::Layer& resourceNetworksLayer   = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile );
+    gui::Layer& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *model_.urban_, profile );
     gui::Layer& grid                    = *new gui::GridLayer( controllers_, *glProxy_ );
     gui::Layer& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
     gui::Layer& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
@@ -540,19 +540,19 @@ void MainWindow::LoadExercise()
         dockContainer_->Load();
         if( config_.HasGenerateScores() )
         {
-            model_.scores_.GenerateScoresFromTemplate( config_.GetLoader() );
+            model_.scores_->GenerateScoresFromTemplate( config_.GetLoader() );
             const tools::SchemaWriter schemaWriter;
-            if( model_.scores_.CheckValidity( schemaWriter ) )
-                model_.scores_.Serialize( config_.GetScoresFile(), schemaWriter );
+            if( model_.scores_->CheckValidity( schemaWriter ) )
+                model_.scores_->Serialize( config_.GetScoresFile(), schemaWriter );
             return;
         }
         SetProgression( 90, tr( "Generate symbols" ) );
-        icons_->GenerateSymbols( model_.teams_ );
+        icons_->GenerateSymbols( *model_.teams_ );
 
         loading_ = false;
         controllers_.ChangeMode( eModes_Prepare );
         emit CheckConsistency();
-        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() || model_.HasConsistencyErrorsOnLoad() ||  model_.OldUrbanMode() );
+        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_->NeedSaving() || model_.HasConsistencyErrorsOnLoad() ||  model_.OldUrbanMode() );
     }
     catch( const std::exception& e )
     {
@@ -624,7 +624,7 @@ void MainWindow::SaveAs()
     tools::Path newExerciseFile = config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( exerciseName );
     config_.GetExerciseFile().Copy( newExerciseFile );
     config_.LoadExercise( newExerciseFile );
-    model_.exercise_.SetName( exerciseName.FileName().ToUTF8().c_str() );
+    model_.exercise_->SetName( exerciseName.FileName().ToUTF8().c_str() );
     dialogContainer_->Purge();
     needsSaving_ = true;
     Save();
@@ -655,7 +655,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 // -----------------------------------------------------------------------------
 void MainWindow::OnForceSaveAndAddActionPlanning( const tools::Path& filename )
 {
-    model_.exercise_.SetActionPlanning( filename );
+    model_.exercise_->SetActionPlanning( filename );
     needsSaving_ = true;
     Save();
 }
@@ -722,9 +722,9 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     QString mode = ENT_Tr::ConvertFromModes( GetCurrentMode(), ENT_Tr_ABC::eToTr ).c_str();
     if( model_.IsLoaded() && isVisible() )
     {
-        filename = model_.exercise_.GetName().isEmpty()
+        filename = model_.exercise_->GetName().isEmpty()
             ? ( config_.GetExerciseName().IsEmpty() ? tr( "Untitled" ) : config_.GetExerciseName().ToUTF8().c_str() )
-            : model_.exercise_.GetName();
+            : model_.exercise_->GetName();
         filename += ( needsSaving ) ? "*" : "";
     }
     if( filename.isEmpty() )

@@ -195,7 +195,7 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             selectedEntity = selectedAutomat_.ConstCast();
         if( !selectedEntity )
             return false;
-        model_.ghosts_.Create( *selectedEntity, *prototype, point );
+        model_.ghosts_->Create( *selectedEntity, *prototype, point );
         return true;
     }
     // Create agent from ghost
@@ -209,7 +209,7 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         kernel::Ghost_ABC* currentGhost = ( fromHighLight ) ? highLightedGhost_.ConstCast() : selectedGhost_.ConstCast();
         assert( currentGhost && currentGhost->Retrieve< kernel::Positions >() );
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
-        kernel::Agent_ABC* agent = model_.agents_.CreateAgent( *currentGhost, *agentType, position );
+        kernel::Agent_ABC* agent = model_.agents_->CreateAgent( *currentGhost, *agentType, position );
         delete currentGhost;
         agent->Select( controllers_.actions_ );
         kernel::GraphicalEntity_ABC::T_GraphicalEntities list;
@@ -230,7 +230,7 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         kernel::Ghost_ABC* currentGhost = ( fromHighLight ) ? highLightedGhost_.ConstCast() : selectedGhost_.ConstCast();
         assert( currentGhost && currentGhost->Retrieve< kernel::Positions >() );
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
-        kernel::Automat_ABC* automat = model_.agents_.CreateAutomatInsteadOf( *currentGhost, *automatType, position );
+        kernel::Automat_ABC* automat = model_.agents_->CreateAutomatInsteadOf( *currentGhost, *automatType, position );
         delete currentGhost;
         automat->Select( controllers_.actions_ );
         kernel::GraphicalEntity_ABC::T_GraphicalEntities list;

@@ -331,13 +331,13 @@ void Ghost::Finalize( const ::StaticModel& staticModel )
     if( LogisticHierarchiesBase* logHierarchy = Retrieve< LogisticHierarchiesBase >() )
     {
         if( logisticSuperiorID_ != -1 )
-            if( const kernel::Automat_ABC* superiorAutomat = model_.agents_.FindAutomat( logisticSuperiorID_ ) )
+            if( const kernel::Automat_ABC* superiorAutomat = model_.agents_->FindAutomat( logisticSuperiorID_ ) )
                 logHierarchy->SetLogisticSuperior( superiorAutomat );
-            else if( const kernel::Formation_ABC* superiorFormation = model_.formations_.Find( logisticSuperiorID_ ) )
+            else if( const kernel::Formation_ABC* superiorFormation = model_.formations_->Find( logisticSuperiorID_ ) )
                 logHierarchy->SetLogisticSuperior( superiorFormation );
         FinalizeDotations( staticModel, *this, static_cast< LogisticBaseStates& >( *logHierarchy ) );
         for( std::vector< int >::const_iterator it = logisticSubordinatesID_.begin(); it != logisticSubordinatesID_.end(); ++it )
-            if( kernel::Automat_ABC* subordinateAutomat = model_.agents_.FindAutomat( *it ) )
+            if( kernel::Automat_ABC* subordinateAutomat = model_.agents_->FindAutomat( *it ) )
             {
                 LogisticHierarchiesBase& subordinateHierarchy = subordinateAutomat->Get< LogisticHierarchiesBase >();
                 subordinateHierarchy.SetLogisticSuperior( this );
@@ -345,7 +345,7 @@ void Ghost::Finalize( const ::StaticModel& staticModel )
             }
             else
             {
-                kernel::Ghost_ABC* subordinateGhost = model_.ghosts_.Find( *it );
+                kernel::Ghost_ABC* subordinateGhost = model_.ghosts_->Find( *it );
                 if( subordinateGhost )
                 {
                     assert( subordinateGhost->GetGhostType() == eGhostType_Automat );
@@ -357,11 +357,11 @@ void Ghost::Finalize( const ::StaticModel& staticModel )
     // Compute profiles
     if( !profilesReadOnly_.empty() )
         for( std::vector< std::string >::const_iterator it = profilesReadOnly_.begin(); it != profilesReadOnly_.end(); ++it )
-            if( UserProfile* profile = model_.profiles_.Find( *it ) )
+            if( UserProfile* profile = model_.profiles_->Find( *it ) )
                 profile->SetReadable( *this, true );
     if( !profilesWriteOnly_.empty() )
         for( std::vector< std::string >::const_iterator it = profilesWriteOnly_.begin(); it != profilesWriteOnly_.end(); ++it )
-            if( UserProfile* profile = model_.profiles_.Find( *it ) )
+            if( UserProfile* profile = model_.profiles_->Find( *it ) )
                 profile->SetWriteable( *this, true );
 }
 
@@ -401,13 +401,13 @@ void Ghost::SerializeGhostAttributes( xml::xostream& xos ) const
     //if( const ProfileHierarchies_ABC* ghostProfileHierarchy = Retrieve< ProfileHierarchies_ABC >() )
     {
         xos << xml::start( "profiles" );
-        std::vector< std::string > readingProfiles = model_.profiles_.GetProfilesWhoCanRead( *this );
+        std::vector< std::string > readingProfiles = model_.profiles_->GetProfilesWhoCanRead( *this );
         for( std::vector< std::string >::const_iterator it = readingProfiles.begin(); it != readingProfiles.end(); ++it )
             xos << xml::start( "profile" )
                     << xml::attribute( "read", *it )
                 << xml::end; //! profile
 
-        std::vector< std::string > writingProfiles = model_.profiles_.GetProfilesWhoCanWrite( *this );
+        std::vector< std::string > writingProfiles = model_.profiles_->GetProfilesWhoCanWrite( *this );
         for( std::vector< std::string >::const_iterator it = writingProfiles.begin(); it != writingProfiles.end(); ++it )
             xos << xml::start( "profile" )
                     << xml::attribute( "write", *it )

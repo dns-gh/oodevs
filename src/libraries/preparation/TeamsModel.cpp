@@ -202,22 +202,22 @@ void TeamsModel::ReadTeam( const std::string& tag, xml::xistream& xis, Model& mo
 
     // $$$$ SBO 2006-10-05: forward to communications extension?
     xis >> xml::optional >> xml::start( "communication" )
-            >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
+            >> xml::list( "knowledge-group", *model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
         >> xml::end;
     xis >> xml::optional >> xml::start( "tactical" )
-            >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model )
+            >> xml::list( "formation", *model.formations_, &FormationModel::Create, *team, model )
         >> xml::end;
     xis >> xml::optional >> xml::start( "logistics" )
             >> xml::list( "logistic-base", *this, &TeamsModel::ReadLogistic, model )
         >> xml::end;
     xis >> xml::optional >> xml::start( "objects" )
-            >> xml::list( "object", model.objects_, &ObjectsModel::CreateObject, *team, model  )
+            >> xml::list( "object", *model.objects_, &ObjectsModel::CreateObject, *team, model  )
         >> xml::end;
     xis >> xml::optional >> xml::start( "populations" )
-            >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team, model )
+            >> xml::list( "population", *model.agents_, &AgentsModel::CreatePopulation, *team, model )
         >> xml::end;
     xis >> xml::optional >> xml::start( "inhabitants" )
-        >> xml::list( "inhabitant", model.agents_, &AgentsModel::CreateInhabitant, *team, model )
+        >> xml::list( "inhabitant", *model.agents_, &AgentsModel::CreateInhabitant, *team, model )
         >> xml::end;
 }
 
@@ -237,11 +237,11 @@ void TeamsModel::ReadDiplomacy( xml::xistream& xis )
 void TeamsModel::ReadLogistic( xml::xistream& xis, Model& model )
 {
     int id = xis.attribute< int >( "id" );
-    Entity_ABC* entity = model.formations_.Find( id );
+    Entity_ABC* entity = model.GetFormationResolver().Find( id );
     if( !entity )
-        entity = model.agents_.FindAutomat( id );
+        entity = model.agents_->FindAutomat( id );
     if( !entity )
-        entity = model.ghosts_.Find( id );
+        entity = model.ghosts_->Find( id );
     if( entity )
         xis >> xml::list( "subordinate", *this, &TeamsModel::ReadLogisticLink, model, *entity );
 }
@@ -255,11 +255,11 @@ void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Ent
     try
     {
         int id = xis.attribute< int >( "id" );
-        Entity_ABC* entity = model.formations_.Find( id );
+        Entity_ABC* entity = model.GetFormationResolver().Find( id );
         if( !entity )
-            entity = model.agents_.FindAutomat( id );
+            entity = model.agents_->FindAutomat( id );
         if( !entity )
-            entity = model.ghosts_.Find( id );
+            entity = model.ghosts_->Find( id );
         if( entity )
         {
             LogisticHierarchiesBase* hierarchies = entity->Retrieve< LogisticHierarchiesBase >();
