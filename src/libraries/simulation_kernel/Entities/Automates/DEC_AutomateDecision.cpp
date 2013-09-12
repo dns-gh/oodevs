@@ -252,7 +252,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Geometrie_DecoupeFuseauEnTroncons",
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_Automate >, boost::ref( GetAutomate() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionObstacle",
-        boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, const std::string&, double) >( boost::bind( &DEC_GeometryFunctions::ComputeObstaclePosition< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, const std::string&, double) >( boost::bind( &DEC_GeometryFunctions::ComputeObstaclePositionForAutomat, boost::cref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointArrivee",
                             boost::bind( &DEC_GeometryFunctions::ComputeDestPoint< MIL_Automate >, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointDepart",

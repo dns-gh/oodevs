@@ -653,7 +653,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Geometrie_DecoupeFuseauEnTroncons",
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_AgentPion >, boost::ref( GetPion() ), _1  ) ) );
     RegisterFunction( "DEC_Geometrie_CalculerPositionObstacle",
-        boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, const std::string&, double) >( boost::bind( &DEC_GeometryFunctions::ComputeObstaclePosition< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, const std::string&, double) >( boost::bind( &DEC_GeometryFunctions::ComputeObstaclePositionForUnit, boost::cref( GetPion() ), _1, _2, _3 ) ) );
     RegisterFunction( "DEC_Geometrie_CalculerPointArrivee",
         boost::bind( &DEC_GeometryFunctions::ComputeDestPoint< MIL_AgentPion >, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Geometrie_CalculerPointDepart",

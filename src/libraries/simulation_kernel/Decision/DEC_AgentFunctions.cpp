@@ -52,6 +52,7 @@
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "MIL_AgentServer.h"
 #include "meteo/PHY_MeteoDataManager.h"
 #include "meteo/PHY_Precipitation.h"
 #include "Urban/MIL_UrbanObject_ABC.h"

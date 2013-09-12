@@ -17,6 +17,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "MIL_AgentServer.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::Trace
