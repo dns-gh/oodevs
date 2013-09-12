@@ -19,14 +19,13 @@
 // Name: ADN_ListViewDialog constructor
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
-ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCaption, ADN_ListView* pListView )
+ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCaption, ADN_ListView& pListView )
     : QDialog( pParent, strCaption )
     , pListView_ ( pListView )
     , strCaption_( strCaption )
 {
-    assert( pListView != 0 );
     this->setCaption( strCaption );
-    pListView->reparent( this, QPoint(0,0) );
+    pListView.reparent( this, QPoint(0,0) );
     Q3HBox* pHBox = new Q3HBox( this );
     QPushButton* pSaveButton = new QPushButton( tr( "Save" ), pHBox );
     //QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
@@ -35,7 +34,7 @@ ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCapt
     //connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintListView() ) );
     connect( pCloseButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
-    pLayout->addWidget( pListView );
+    pLayout->addWidget( &pListView );
     pLayout->addWidget( pHBox );
     QMainWindow* pMainWindow = ADN_App::GetMainWindow();
     this->resize( static_cast< int >( pMainWindow->width() * 0.8 ), static_cast< int >( pMainWindow->height() * 0.8 ) );
@@ -76,12 +75,12 @@ void ADN_ListViewDialog::PrintListView()
     const double rScale = 1;
     painter.scale( rScale, rScale );
     QSize painterSize( (int)(pageRect.width() / rScale) + 1, (int)(pageRect.height() / rScale) + 1 );
-    const int nNbrPages = pListView_->ComputeNbrPrintPages( painterSize );
+    const int nNbrPages = pListView_.ComputeNbrPrintPages( painterSize );
     for( int n = 0; n < nNbrPages; ++n )
     {
         if( n != 0 )
             printer.newPage();
-        pListView_->Print( n, painter, painterSize );
+        pListView_.Print( n, painter, painterSize );
     }
 }
 
@@ -91,11 +90,9 @@ void ADN_ListViewDialog::PrintListView()
 // -----------------------------------------------------------------------------
 void ADN_ListViewDialog::SaveListView()
 {
-    if( !pListView_ )
-        return;
     const tools::Path path = gui::FileDialog::getSaveFileName( this, tr( "Save" ), tools::Path(), tr("Excel files (*.xls)") );
     if( path.IsEmpty() )
         return;
-    pListView_->SaveToXls( path, strCaption_ );
+    pListView_.SaveToXls( path, strCaption_ );
     ShellExecuteW( 0, NULL, path.ToUnicode().c_str(), NULL, NULL, SW_NORMAL );
 }

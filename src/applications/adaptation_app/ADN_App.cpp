@@ -141,15 +141,15 @@ int ADN_App::Run()
 
         if( !config_->GetNewFile().IsEmpty() )
         {
-            mainWindow_->NewProject( config_->GetNewFile() );
-            mainWindow_->SaveProjectAs( config_->GetNewFile() );
+            mainWindow_->New( config_->GetNewFile() );
+            mainWindow_->SaveAs( config_->GetNewFile() );
             return EXIT_SUCCESS;
         }
         if( !config_->GetInputFile().IsEmpty() )
-            mainWindow_->OpenProject( config_->GetInputFile(), true );
+            mainWindow_->Open( config_->GetInputFile() );
         if( !config_->GetOutputFile().IsEmpty() )
         {
-            mainWindow_->SaveProjectAs( config_->GetOutputFile() );
+            mainWindow_->SaveAs( config_->GetOutputFile() );
             return EXIT_SUCCESS;
         }
     }

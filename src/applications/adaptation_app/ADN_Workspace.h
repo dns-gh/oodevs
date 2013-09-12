@@ -149,8 +149,6 @@ public:
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
 
-    E_OpenMode GetOpenMode() const;
-    void SetOpenMode( E_OpenMode nNewMode );
     bool IsDevMode() const;
 
 signals:
@@ -176,7 +174,6 @@ private:
     ADN_Project_Data* projectData_;
     ADN_WorkspaceElement_ABC* elements_[ eNbrWorkspaceElements ];
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
-    E_OpenMode nOpenMode_;
     bool symbols_;
     bool devMode_;
     static ADN_Workspace* pWorkspace_;
@@ -493,26 +490,6 @@ inline
 void ADN_Workspace::SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator )
 {
     pProgressIndicator_ = pProgressIndicator;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetOpenMode
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-inline
-E_OpenMode ADN_Workspace::GetOpenMode() const
-{
-    return nOpenMode_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::SetOpenMode
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-inline
-void ADN_Workspace::SetOpenMode( E_OpenMode nNewMode )
-{
-    nOpenMode_ = nNewMode;
 }
 
 // -----------------------------------------------------------------------------

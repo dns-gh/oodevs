@@ -2082,10 +2082,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Languages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2552,14 +2548,6 @@ PNG (*.png)
         <translation type="unfinished">أداة التكيف السيف</translation>
     </message>
     <message>
-        <source>Invalid password</source>
-        <translation type="unfinished">كلمة المرور غير صالحة</translation>
-    </message>
-    <message>
-        <source>The password you entered is not valid. Please try again.</source>
-        <translation type="unfinished">كلمة المرور التي أدخلتها غير صالحة. الرجاء المحاولة مرة أخرى.</translation>
-    </message>
-    <message>
         <source>Save changes to project %1?</source>
         <translation type="unfinished">هل تريد حفظ التغييرات في المشروع %1؟</translation>
     </message>
@@ -2569,6 +2557,14 @@ PNG (*.png)
     </message>
     <message>
         <source>Show optional fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Languages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3552,33 +3548,6 @@ PNG (*.png)
     <message>
         <source>Description</source>
         <translation type="unfinished">الوصف</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_OpenMode_Dialog</name>
-    <message>
-        <source>Open mode configuration</source>
-        <translation type="unfinished">تكوين وضع الفتح</translation>
-    </message>
-    <message>
-        <source>Normal mode</source>
-        <translation type="unfinished">الوضع العادي</translation>
-    </message>
-    <message>
-        <source>Admin mode</source>
-        <translation type="unfinished">وضع المسؤول</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation type="unfinished">كلمة المرور:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
     </message>
 </context>
 <context>

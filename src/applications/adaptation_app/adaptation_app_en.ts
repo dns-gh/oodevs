@@ -2093,10 +2093,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Languages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2564,14 +2560,6 @@ PNG (*.png)
         <translation>Sword Adaptation Tool</translation>
     </message>
     <message>
-        <source>Invalid password</source>
-        <translation>Invalid password</translation>
-    </message>
-    <message>
-        <source>The password you entered is not valid. Please try again.</source>
-        <translation>The password you entered is not valid. Please try again.</translation>
-    </message>
-    <message>
         <source>Save changes to project %1?</source>
         <translation>Save changes to project %1?</translation>
     </message>
@@ -2581,6 +2569,14 @@ PNG (*.png)
     </message>
     <message>
         <source>Show optional fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Languages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3564,33 +3560,6 @@ PNG (*.png)
     <message>
         <source>Description</source>
         <translation type="unfinished">Description</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_OpenMode_Dialog</name>
-    <message>
-        <source>Open mode configuration</source>
-        <translation>Open mode configuration</translation>
-    </message>
-    <message>
-        <source>Normal mode</source>
-        <translation>Normal mode</translation>
-    </message>
-    <message>
-        <source>Admin mode</source>
-        <translation>Admin mode</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Password:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
     </message>
 </context>
 <context>

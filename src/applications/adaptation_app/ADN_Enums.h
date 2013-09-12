@@ -66,12 +66,6 @@ enum E_LogElements
     eNbrLogElements
 };
 
-enum E_OpenMode
-{
-    eOpenMode_Normal,
-    eOpenMode_Admin
-};
-
 enum E_ConsumptionType
 {
     eEngineStopped  = 0,

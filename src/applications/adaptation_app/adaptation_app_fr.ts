@@ -2101,10 +2101,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation>Défaut</translation>
     </message>
     <message>
-        <source>Languages</source>
-        <translation>Langues</translation>
-    </message>
-    <message>
         <source>Edit...</source>
         <translation>Editer...</translation>
     </message>
@@ -2496,14 +2492,6 @@ PNG (*.png)</translation>
         <translation>&amp;A propos</translation>
     </message>
     <message>
-        <source>Invalid password</source>
-        <translation>Mot de passe invalide</translation>
-    </message>
-    <message>
-        <source>The password you entered is not valid. Please try again.</source>
-        <translation>Le mot de passe est incorrect. Veuillez réessayer.</translation>
-    </message>
-    <message>
         <source>Consistency &amp;tables</source>
         <translation>&amp;Tableaux de cohérence</translation>
     </message>
@@ -2594,6 +2582,14 @@ PNG (*.png)</translation>
     <message>
         <source>Show optional fields</source>
         <translation>Montrer les champs optionnels</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Fermer</translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation>Langues</translation>
     </message>
 </context>
 <context>
@@ -3576,33 +3572,6 @@ PNG (*.png)</translation>
     <message>
         <source>Description</source>
         <translation>Description</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_OpenMode_Dialog</name>
-    <message>
-        <source>Open mode configuration</source>
-        <translation>Mode d&apos;ouverture</translation>
-    </message>
-    <message>
-        <source>Normal mode</source>
-        <translation>Mode normal</translation>
-    </message>
-    <message>
-        <source>Admin mode</source>
-        <translation>Mode administrateur</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Mot de passe:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
     </message>
 </context>
 <context>

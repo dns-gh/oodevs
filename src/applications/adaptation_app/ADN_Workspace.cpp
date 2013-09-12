@@ -125,7 +125,6 @@ void ADN_Workspace::CleanWorkspace()
 ADN_Workspace::ADN_Workspace( const ADN_GeneralConfig& config )
     : config_( config )
     , pProgressIndicator_( 0 )
-    , nOpenMode_         ( eOpenMode_Normal )
     , devMode_           ( false )
 {
     // NOTHING
@@ -326,8 +325,6 @@ void ADN_Workspace::Reset(const tools::Path& filename, bool bVisible )
 //-----------------------------------------------------------------------------
 void ADN_Workspace::Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader )
 {
-    Reset( filename, false );
-
     // load configuration file
     // Must load it first
     pProgressIndicator_->SetVisible( true );
@@ -350,8 +347,6 @@ void ADN_Workspace::Load( const tools::Path& filename, const tools::Loader_ABC& 
         elements_[n]->GetDataABC().Initialize();
     ResetProgressIndicator();
     pProgressIndicator_->SetVisible( false );
-
-    GetLanguages().GetGui().FillMenu();
 }
 
 namespace
