@@ -198,3 +198,12 @@ end
 integration.agentCanFly = function( teammate )
     return DEC_Agent_PionCanFly( teammate.source )
 end
+
+integration.getCollidingCrowds = function( self )
+    local simCrowds = DEC_Connaissances_CollisionsPopulations()
+    local crowds = {}
+    for i = 1, #simCrowds do
+        crowds[ i ] = CreateKnowledge( integration.ontology.types.population, simCrowds[ i ] )
+    end
+    return crowds
+end
