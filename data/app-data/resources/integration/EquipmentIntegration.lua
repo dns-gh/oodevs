@@ -427,7 +427,7 @@ integration.startActivateDrone = function ( self, alreadyDeployed )
 	myself.Deployed = false
     if myself.droneAvailable == nil then
         meKnowledge:RC( eRC_PasDeDroneDisponible )
-        if not meKnowledge:isSelfCommanding() then
+        if not integration.isCommanderEngaged() then
             meKnowledge:sendNoDisponibleDrone( meKnowledge:getAutomat() )
         end
 	else
