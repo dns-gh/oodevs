@@ -280,6 +280,10 @@
         <source>Started</source>
         <translation>Started</translation>
     </message>
+    <message>
+        <source>Stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StartExercise</name>

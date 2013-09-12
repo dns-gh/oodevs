@@ -98,10 +98,10 @@ void ReplayPage::StartExercise()
     const unsigned int port = exercise_->GetPort();
     ConfigureSession( exerciseName, session_ );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, true ) );
-    process->Add( boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, session_, profile_.GetLogin(), true ) );
+    process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, "" ) );
+    process->Add( boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, session_, profile_.GetLogin() ) );
     progressPage_->Attach( process );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     progressPage_->show();
 }
 

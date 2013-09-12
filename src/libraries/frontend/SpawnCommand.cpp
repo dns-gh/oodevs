@@ -9,20 +9,19 @@
 
 #include "frontend_pch.h"
 #include "SpawnCommand.h"
-#include "clients_kernel/Tools.h"
+
+#include "clients_kernel/tools.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Path.h"
+
+#pragma warning( push, 0 )
+#include <QProcess>
+#pragma warning( pop )
 #include <windows.h>
-#include <tlhelp32.h>
-#include "MT_Tools/MT_Logger.h"
-#include <tools/EncodingConverter.h>
+#include <boost/numeric/conversion/cast.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace frontend;
-
-struct SpawnCommand::InternalData
-{
-    PROCESS_INFORMATION pid_ ;
-    InternalData() { ZeroMemory( &pid_ , sizeof( pid_ ) ); }
-};
 
 tools::Path frontend::MakeBinaryName( const tools::Path& prefix )
 {
@@ -33,23 +32,33 @@ tools::Path frontend::MakeBinaryName( const tools::Path& prefix )
 #endif
 }
 
+struct SpawnCommand::Private : public boost::noncopyable
+{
+    Private( const tools::Path& exe )
+        : exe( exe )
+    {
+        // NOTHING
+    }
+
+    const tools::Path exe;
+    tools::Path working;
+    QStringList arguments;
+    boost::shared_ptr< QProcess > process;
+    boost::shared_ptr< Process_ABC > attached;
+};
+
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const tools::Path& exe, bool attach ,
-                            std::string commanderEndpoint /* = ""*/, std::string jobName /* = ""*/ )
-    : config_                   ( config )
-    , internal_                 ( new InternalData() )
-    , attach_                   ( attach )
-    , workingDirectory_         ()
-    , stopped_                  ( false )
-    , networkCommanderEndpoint_ ( commanderEndpoint )
-    , jobName_                  ( jobName )
+SpawnCommand::SpawnCommand( const tools::GeneralConfig& config,
+                            const tools::Path& exe,
+                            const std::string& name )
+    : config_ ( config )
+    , name_   ( name )
+    , private_( new Private( exe ) )
 {
-    AddArgument( exe.ToUTF8().c_str() );
-    if( jobName_ == "launcher-job" )
-        AddArgument( "--silent" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,17 +67,35 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const tools::Pat
 // -----------------------------------------------------------------------------
 SpawnCommand::~SpawnCommand()
 {
-    if( attach_ )
-        StopProcess();
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::AddArgument
+// Created: BAX 2013-09-11
+// -----------------------------------------------------------------------------
+void SpawnCommand::AddArgument( const std::string& arg )
+{
+    private_->arguments << QString::fromStdString( arg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::AddArgument
+// Created: BAX 2013-09-11
+// -----------------------------------------------------------------------------
+void SpawnCommand::AddArgument( const std::string& key, const std::string& value )
+{
+    AddArgument( "--" + key );
+    AddArgument( value );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::AddRootDirArgument
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-void SpawnCommand::AddRootDirArgument()
+void SpawnCommand::AddRootArgument()
 {
-    AddArgument( ( "--root-dir=\"" + config_.GetRootDir().ToUTF8() + "\"" ).c_str() );
+    AddArgument( "root-dir", config_.GetRootDir().ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +104,7 @@ void SpawnCommand::AddRootDirArgument()
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddExerciseArgument( const tools::Path& exercise )
 {
-    AddArgument( QString( "--exercise=\"" ) + exercise.ToUTF8().c_str() +"\"" );
+    AddArgument( "exercise", exercise.ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,16 +113,7 @@ void SpawnCommand::AddExerciseArgument( const tools::Path& exercise )
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddSessionArgument( const tools::Path& session )
 {
-    AddArgument( QString( "--session=\"" ) + session.ToUTF8().c_str() +"\"" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpawnCommand::IsHidden
-// Created: BAX 2013-04-16
-// -----------------------------------------------------------------------------
-bool SpawnCommand::IsHidden() const
-{
-    return false;
+    AddArgument( "session", session.ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,99 +122,27 @@ bool SpawnCommand::IsHidden() const
 // -----------------------------------------------------------------------------
 void SpawnCommand::Start()
 {
-    STARTUPINFOW startupInfo;
-    memset( &startupInfo, 0, sizeof( startupInfo ));
-    startupInfo.cb = sizeof( STARTUPINFOW );
-    startupInfo.dwX = (DWORD)CW_USEDEFAULT;
-    startupInfo.dwY = (DWORD)CW_USEDEFAULT;
-    startupInfo.dwXSize = (DWORD)CW_USEDEFAULT;
-    startupInfo.dwYSize = (DWORD)CW_USEDEFAULT;
-    if( IsHidden() )
-    {
-        startupInfo.dwFlags |= STARTF_USESHOWWINDOW;
-        startupInfo.wShowWindow = SW_HIDE;
-    }
-
-    // CreateProcessW() can modify the input command line buffer
-    std::wstring cmd = commandLine_.toStdWString();
-    std::vector< wchar_t > buffer( cmd.size() + 1);
-    *std::copy( cmd.begin(), cmd.end(), buffer.begin() ) = '\0';
-    if( !CreateProcessW( 0,                                     // lpApplicationName
-                         &buffer[0],                            // lpCommandLine
-                         0,                                     // lpProcessAttributes
-                         0,                                     // lpThreadAttributes
-                         TRUE,                                  // bInheritHandles
-                         CREATE_NO_WINDOW,                      // dwCreationFlags
-                         0,                                     // lpEnvironment
-                         !workingDirectory_.IsEmpty()           // lpCurrentDirectory
-                            ? workingDirectory_.ToUnicode().c_str()
-                            : NULL,
-                         &startupInfo,                          // lpStartupInfo
-                         &internal_->pid_) )                    // lpProcessInformation
-    {
-        DWORD errCode = GetLastError();
-        throw MASA_EXCEPTION(
-            tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" )
-                .arg( tools::EscapeNonAscii( cmd ).c_str())
-                .arg( errCode ).toStdString().c_str() );
-    }
-
-    if ( HANDLE jobObject = OpenJobObject( JOB_OBJECT_ALL_ACCESS, TRUE, jobName_.c_str() ) )
-        AssignProcessToJobObject( jobObject, internal_->pid_.hProcess );
-}
-
-namespace
-{
-    BOOL CALLBACK CloseWndProc( HWND hwnd, LPARAM /*lParam*/ )
-    {
-        if( IsWindow( hwnd ) )
-        {
-            DWORD_PTR result;
-            SendMessageTimeout( hwnd, WM_CLOSE, 0, 0, SMTO_ABORTIFHUNG | SMTO_BLOCK, 0, &result );
-        }
-        return TRUE;
-    }
+    private_->process = boost::make_shared< QProcess >();
+    if( !private_->working.IsEmpty() )
+        private_->process->setWorkingDirectory( QString::fromStdWString( private_->working.ToUnicode() ) );
+    private_->process->start( QString::fromStdWString( private_->exe.ToUnicode() ), private_->arguments );
+    const bool done = private_->process->waitForStarted();
+    if( done )
+        return;
+    const int exit = private_->process->exitCode();
+    private_->process.reset();
+    throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" )
+            .arg( QString::fromStdWString( private_->exe.ToUnicode() ) + " " + private_->arguments.join( " " ) )
+            .arg( exit ).toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::Attach
 // Created: SBO 2010-11-05
 // -----------------------------------------------------------------------------
-void SpawnCommand::Attach( boost::shared_ptr< Process_ABC > process )
+void SpawnCommand::Attach( const boost::shared_ptr< Process_ABC >& process )
 {
-    attachment_ = process;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpawnCommand::StopProcess
-// Created: SBO 2010-11-05
-// -----------------------------------------------------------------------------
-void SpawnCommand::StopProcess()
-{
-    if( internal_.get() && internal_->pid_.hProcess )
-    {
-        HANDLE hThreadSnap = INVALID_HANDLE_VALUE;
-        THREADENTRY32 te32;
-
-        // Take a snapshot of all running threads
-        hThreadSnap = CreateToolhelp32Snapshot( TH32CS_SNAPTHREAD, internal_->pid_.dwThreadId );
-        if( hThreadSnap == INVALID_HANDLE_VALUE )
-            return;
-        te32.dwSize = sizeof( THREADENTRY32 );
-        if( !Thread32First( hThreadSnap, &te32 ) )
-        {
-            CloseHandle( hThreadSnap ); // Must clean up the snapshot object!
-            return;
-        }
-        do
-        {
-            if( te32.th32OwnerProcessID == internal_->pid_.dwProcessId )
-                EnumThreadWindows( te32.th32ThreadID, &::CloseWndProc, 0 );
-        }
-        while( Thread32Next( hThreadSnap, &te32 ) );
-        EnumThreadWindows( internal_->pid_.dwThreadId, &::CloseWndProc, 0 );
-        TerminateProcess( internal_->pid_.hProcess, 0 );
-    }
+    private_->attached = process;
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +151,8 @@ void SpawnCommand::StopProcess()
 // -----------------------------------------------------------------------------
 void SpawnCommand::Stop()
 {
-    stopped_ = true;
+    if( private_->process )
+        private_->process->kill();
 }
 
 // -----------------------------------------------------------------------------
@@ -214,9 +161,10 @@ void SpawnCommand::Stop()
 // -----------------------------------------------------------------------------
 int SpawnCommand::GetPid() const
 {
-    if( !internal_.get() )
-        return -1;
-    return int( internal_->pid_.dwProcessId );
+    if( private_->process )
+        if( auto info = private_->process->pid() )
+            return info->dwProcessId;
+    return -1; // -1 is the only invalid process id under windows
 }
 
 // -----------------------------------------------------------------------------
@@ -225,42 +173,9 @@ int SpawnCommand::GetPid() const
 // -----------------------------------------------------------------------------
 bool SpawnCommand::Wait( const boost::posix_time::time_duration& duration )
 {
-    if( !internal_.get() )
+    if( !private_->process )
         return true;
-    const auto rpy = WaitForSingleObjectEx( internal_->pid_.hProcess,
-                                            int( duration.total_milliseconds() ),
-                                            false );
-    return rpy != WAIT_OBJECT_0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpawnCommand::Wait
-// Created: RDS 2008-08-25
-// -----------------------------------------------------------------------------
-bool SpawnCommand::Wait()
-{
-    if( !stopped_ && internal_->pid_.hProcess )
-    {
-        const DWORD result = WaitForSingleObject( internal_->pid_.hProcess, 100 );
-        if( result != WAIT_OBJECT_0 )
-        {
-            ::Sleep( 100 );
-            return true;
-        }
-    }
-    StopProcess();
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpawnCommand::IsRunning
-// Created: RDS 2008-08-22
-// -----------------------------------------------------------------------------
-bool SpawnCommand::IsRunning() const
-{
-    if( internal_->pid_.dwProcessId )
-        return CreateToolhelp32Snapshot( TH32CS_SNAPMODULE, internal_->pid_.dwProcessId ) != INVALID_HANDLE_VALUE;
-    return false;
+    return private_->process->waitForFinished( boost::numeric_cast< int >( duration.total_milliseconds() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,18 +184,7 @@ bool SpawnCommand::IsRunning() const
 // -----------------------------------------------------------------------------
 unsigned int SpawnCommand::GetPercentage() const
 {
-    return IsRunning() ? 100 : 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpawnCommand::addArgument
-// Created: AGE 2007-10-09
-// -----------------------------------------------------------------------------
-void SpawnCommand::AddArgument( const QString& arg )
-{
-    if( !commandLine_.isEmpty() )
-        commandLine_ += ' ';
-    commandLine_ += arg;
+    return private_->process && private_->process->state() == QProcess::Running ? 100 : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -289,9 +193,14 @@ void SpawnCommand::AddArgument( const QString& arg )
 // -----------------------------------------------------------------------------
 QString SpawnCommand::GetStatus() const
 {
-    if( !IsRunning() )
-        return tools::translate( "SpawnCommand", "Starting..." );
-    return tools::translate( "SpawnCommand", "Started" );
+    auto state = private_->process ? private_->process->state() : QProcess::NotRunning;
+    switch( state )
+    {
+        case QProcess::Starting:   return tools::translate( "SpawnCommand", "Starting..." );
+        case QProcess::Running:    return tools::translate( "SpawnCommand", "Started" );
+        default:
+        case QProcess::NotRunning: return tools::translate( "SpawnCommand", "Stopped" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -327,14 +236,14 @@ tools::Path SpawnCommand::GetSession() const
 // -----------------------------------------------------------------------------
 void SpawnCommand::SetWorkingDirectory( const tools::Path& directory )
 {
-    workingDirectory_ = directory;
+    private_->working = directory;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SpawnCommand::GetCommanderEndpoint
+// Name: SpawnCommand::GetName
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------
-const std::string& SpawnCommand::GetCommanderEndpoint() const
+const std::string& SpawnCommand::GetName() const
 {
-    return networkCommanderEndpoint_;
+    return name_;
 }

@@ -99,15 +99,15 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
                               const tools::Path& session,
                               int index,
                               const Profile& profile )
-    : SpawnCommand( config, "timeline_server.exe", true )
+    : SpawnCommand( config, "timeline_server.exe", "timeline_server" )
 {
-    AddArgument( QString( "--port=%1" ).arg( GetPort( index, TIMELINE_PORT ) ) );
-    AddArgument( QString( "--serve=%1" ) .arg( GetPort( index, TIMELINE_WEB_PORT ) ) );
+    AddArgument( "port", boost::lexical_cast< std::string >( GetPort( index, TIMELINE_PORT ) ) );
+    AddArgument( "serve", boost::lexical_cast< std::string >( GetPort( index, TIMELINE_WEB_PORT ) ) );
     const tools::Path root = ConfigurationManipulator::GetSessionXml( config, exercise, session ).Parent();
     const tools::Path log = root / "timeline.log";
-    AddArgument( QString( "--log=%1" ).arg( QString::fromStdWString( log.ToUnicode() ) ) );
+    AddArgument( "log", log.ToUTF8() );
     const tools::Path run = root / "timeline.run";
-    AddArgument( QString( "--run=%1" ).arg( QString::fromStdWString( run.ToUnicode() ) ) );
+    AddArgument( "run", run.ToUTF8() );
     WriteRunScript( run, profile, GetPort( index, DISPATCHER_PORT ) );
 }
 
@@ -118,13 +118,4 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
 StartTimeline::~StartTimeline()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: StartTimeline::IsHidden
-// Created: BAX 2013-04-16
-// -----------------------------------------------------------------------------
-bool StartTimeline::IsHidden() const
-{
-    return true;
 }

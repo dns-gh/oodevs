@@ -280,6 +280,10 @@
         <source>Started</source>
         <translation>Démarré</translation>
     </message>
+    <message>
+        <source>Stopped</source>
+        <translation>Arrêté</translation>
+    </message>
 </context>
 <context>
     <name>StartExercise</name>

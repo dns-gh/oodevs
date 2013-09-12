@@ -22,28 +22,28 @@ using namespace frontend;
 // Name: JoinExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, bool attach )
-    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), attach, "" )
+JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
+    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
-    AddRootDirArgument();
+    AddRootArgument();
     AddExerciseArgument( exercise );
-    AddSessionArgument ( session );
+    AddSessionArgument( session );
 }
 
 // -----------------------------------------------------------------------------
 // Name: JoinExercise constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile, bool attach /* = false*/ )
-    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), attach, "" )
+JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile )
+    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
-    AddRootDirArgument();
+    AddRootArgument();
     AddExerciseArgument( exercise );
-    AddSessionArgument ( session );
+    AddSessionArgument( session );
     if( profile.isEmpty() )
-        AddArgument( "--login=\"anonymous\"" );
+        AddArgument( "login", "anonymous" );
     else
-        AddArgument( "--login=\"" + profile +"\"" );
+        AddArgument( "login", profile.toStdString() );
 }
 
 // -----------------------------------------------------------------------------

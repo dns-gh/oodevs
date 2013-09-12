@@ -10,11 +10,14 @@
 #ifndef __Process_ABC_h_
 #define __Process_ABC_h_
 
-#include <boost/enable_shared_from_this.hpp>
 #include <boost/noncopyable.hpp>
-#include <string>
 
 class QString;
+
+namespace tools
+{
+    class Path;
+}
 
 namespace frontend
 {
@@ -25,8 +28,7 @@ namespace frontend
 */
 // Created: SBO 2008-10-14
 // =============================================================================
-class Process_ABC : public boost::enable_shared_from_this< frontend::Process_ABC >
-                  , private boost::noncopyable
+class Process_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

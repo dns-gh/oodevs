@@ -26,8 +26,8 @@ class JoinExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, bool attach = false );
-             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile, bool attach = false );
+             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
+             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile );
     virtual ~JoinExercise();
     //@}
 

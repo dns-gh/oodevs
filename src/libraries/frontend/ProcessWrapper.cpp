@@ -91,11 +91,12 @@ void ProcessWrapper::SetCurrent( const T_Spawn& spawn )
 // Name: ProcessWrapper::Start
 // Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
-void ProcessWrapper::Start()
+void ProcessWrapper::Start( const boost::shared_ptr< ProcessWrapper >& process )
 {
-    for( auto it = spawns_.begin(); it != spawns_.end(); ++it )
-        ( *it )->Attach( shared_from_this() );
-    thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::Run, this ) ) );
+    const auto& spawns = process->spawns_;
+    for( auto it = spawns.begin(); it != spawns.end(); ++it )
+        ( *it )->Attach( process );
+    process->thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::Run, process.get() ) ) );
 }
 
 namespace
@@ -104,13 +105,13 @@ namespace
     {
         while( true )
             for( auto it = spawns.begin(); it != spawns.end(); ++it )
-                if( !(*it)->Wait() )
+                if( (*it)->Wait( boost::posix_time::milliseconds( 100 ) ) )
                     return;
     }
 
     void Wait( SpawnCommand& spawn )
     {
-        while( spawn.Wait() )
+        while( !spawn.Wait( boost::posix_time::milliseconds( 100 ) ) )
             continue;
     }
 }
@@ -134,11 +135,11 @@ void ProcessWrapper::Run()
     {
         Stop();
         boost::mutex::scoped_lock lock( *mutex_ );
-        const std::string endpoint = spawns_.empty()
-                                    ? std::string()
-                                    : spawns_.front()->GetCommanderEndpoint();
+        const std::string name = spawns_.empty()
+                               ? std::string()
+                               : spawns_.front()->GetName();
         lock.unlock();
-        observer_.NotifyError( tools::GetExceptionMsg( e ), endpoint );
+        observer_.NotifyError( tools::GetExceptionMsg( e ), name );
     }
 }
 

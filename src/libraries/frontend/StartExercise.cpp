@@ -16,6 +16,7 @@
 #include "clients_kernel/Tools.h"
 #include "tools/IpcQueue.h"
 
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/thread.hpp>
 
 using namespace frontend;
@@ -37,13 +38,16 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session,
-                              const std::map< std::string, std::string >& arguments, bool attach, bool launchDispatchedIfNotEmbedded /* = true*/,
-                              std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
-    : SpawnCommand( config, MakeBinaryName( "simulation_app" ), attach, commanderEndpoint, processJobName )
+StartExercise::StartExercise( const tools::GeneralConfig& config,
+                              const tools::Path& exercise,
+                              const tools::Path& session,
+                              const std::map< std::string, std::string >& arguments,
+                              bool launchDispatchedIfNotEmbedded,
+                              const std::string& name )
+    : SpawnCommand( config, MakeBinaryName( "simulation_app" ), name )
     , exercise_ ( exercise )
     , session_ ( session )
-    , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
+    , configManipulator_ ( new ConfigurationManipulator( config, exercise_, session_ ) )
     , percentage_( 0 )
 {
     auto it = arguments.find( "checkpoint" );
@@ -51,21 +55,16 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const tools::P
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
     {
         tools::Path dispatcher_path = GetEmbeddedDispatcherPath( *configManipulator_ );
-        dispatcher_.reset( new frontend::StartDispatcher( config, attach, exercise, session, checkpoint.c_str(), dispatcher_path ) );
+        dispatcher_.reset( new frontend::StartDispatcher( config, exercise, session, checkpoint.c_str(), dispatcher_path, "dispatcher" ) );
     }
 
-    AddRootDirArgument();
+    AddRootArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
 
     for( auto it = arguments.begin(); it != arguments.end(); ++it )
-        if( it->second != "" )
-        {
-            if( it->first == "checkpoint" )
-                AddArgument( std::string( "--" + it->first + "=\"" + it->second + "\"" ).c_str() );
-            else
-                AddArgument( std::string( "--" + it->first + "=" + it->second ).c_str() );
-        }
+        if( !it->second.empty() )
+            AddArgument( it->first, it->second );
 }
 
 // -----------------------------------------------------------------------------

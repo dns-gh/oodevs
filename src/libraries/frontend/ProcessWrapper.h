@@ -56,11 +56,15 @@ public:
     virtual tools::Path  GetStartedExercise() const;
     virtual tools::Path  GetExercise() const;
     virtual tools::Path  GetSession() const;
-    void                 Start();
     void                 Stop();
     bool                 IsRunning() const;
     T_Spawns             GetSpawns() const;
     void                 Join() const;
+    //@}
+
+    //! @name Static method
+    //@{
+    static void Start( const boost::shared_ptr< ProcessWrapper >& process );
     //@}
 
 private:

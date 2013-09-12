@@ -26,16 +26,15 @@ using namespace frontend;
 StartReplay::StartReplay( const tools::GeneralConfig& config,
                           const tools::Path& exercise,
                           const tools::Path& session,
-                          unsigned port, bool attach,
-                          std::string commanderEndpoint /*= ""*/,
-                          std::string processJobName /*= ""*/  )
-    : SpawnCommand( config, MakeBinaryName( "replayer_app" ), attach, commanderEndpoint, processJobName )
+                          unsigned port,
+                          const std::string& name )
+    : SpawnCommand( config, MakeBinaryName( "replayer_app" ), name )
     , configManipulator_( new ConfigurationManipulator( config, exercise, session ) )
 {
-    AddRootDirArgument();
+    AddRootArgument();
     AddExerciseArgument( exercise );
-    AddSessionArgument ( session );
-    AddArgument( QString( "--port=%1" ).arg( port ) );
+    AddSessionArgument( session );
+    AddArgument( "port", boost::lexical_cast< std::string >( port ) );
 }
 
 // -----------------------------------------------------------------------------

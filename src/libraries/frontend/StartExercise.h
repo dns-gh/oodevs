@@ -27,10 +27,7 @@ class StartExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-    StartExercise(  const tools::GeneralConfig& config, const tools::Path& exercise,
-                    const tools::Path& session, const std::map< std::string, std::string >& arguments,
-                    bool attach, bool launchDispatchedIfNotEmbedded = true,
-                    std::string commanderEndpoint = "", std::string processJobName = "" );
+    StartExercise(  const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const std::map< std::string, std::string >& arguments, bool launchDispatchedIfNotEmbedded, const std::string& name );
     virtual ~StartExercise();
     //@}
 

@@ -280,6 +280,10 @@
         <source>Could not start process: %1, error: %2</source>
         <translation>No se puede iniciar el proceso: %1, error: %2</translation>
     </message>
+    <message>
+        <source>Stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StartExercise</name>

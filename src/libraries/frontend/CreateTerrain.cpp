@@ -33,12 +33,12 @@ class TerrainCommand: public SpawnCommand
 {
 public:
     TerrainCommand( const tools::GeneralConfig& config, const tools::Path& name )
-        : SpawnCommand( config, GetGenExecutable(), true, "" )
+        : SpawnCommand( config, GetGenExecutable(), "generation" )
     {
         const tools::Path directory = config.GetTerrainDir( name );
         directory.CreateDirectories();
 
-        AddArgument( QString( "--out=\"%1\"" ).arg( directory.ToUTF8().c_str() ) );
+        AddArgument( "out", directory.ToUTF8() );
         SetWorkingDirectory( GetGenExecutable().Parent() );
     }
 };

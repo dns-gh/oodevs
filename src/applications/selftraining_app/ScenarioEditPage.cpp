@@ -128,9 +128,9 @@ void ScenarioEditPage::OnEdit()
 void ScenarioEditPage::Edit( const tools::Path& exercise )
 {
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::EditExercise >( config_, exercise, true ) );
+    process->Add( boost::make_shared< frontend::EditExercise >( config_, exercise ) );
     progressPage_->Attach( process );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     progressPage_->show();
 }
 
@@ -232,9 +232,9 @@ void ScenarioEditPage::OnExercisePropertiesChanged()
 void ScenarioEditPage::LaunchScenarioImport( const tools::Path& inputScenario, const tools::Path& outputScenario )
 {
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::ImportExercise >( config_, inputScenario, outputScenario, true ) );
+    process->Add( boost::make_shared< frontend::ImportExercise >( config_, inputScenario, outputScenario ) );
     progressPage_->Attach( process );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     progressPage_->show();
 }
 
@@ -246,8 +246,8 @@ void ScenarioEditPage::LaunchScenarioImport( const tools::Path& inputScenario, c
 void ScenarioEditPage::LaunchPreparation( const tools::Path& outputScenario )
 {
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    process->Add( boost::make_shared< frontend::EditExercise >( config_, outputScenario, true ) );
+    process->Add( boost::make_shared< frontend::EditExercise >( config_, outputScenario ) );
     progressPage_->Attach( process );
-    process->Start();
+    frontend::ProcessWrapper::Start( process );
     progressPage_->show();
 }
