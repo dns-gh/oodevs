@@ -4,7 +4,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanCache.h"
-#include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MT_Tools/MT_Rect.h"
 #include "MT_Tools/MT_Logger.h"

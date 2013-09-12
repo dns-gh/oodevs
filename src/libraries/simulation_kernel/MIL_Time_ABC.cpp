@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Time_ABC.h"
-#include "MIL_AgentServer.h"
 
 namespace
 {

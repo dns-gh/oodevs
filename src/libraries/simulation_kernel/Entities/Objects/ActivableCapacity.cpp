@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "ActivableCapacity.h"
 #include "ConstructionAttribute.h"
-#include "MIL_AgentServer.h"
 #include "MIL_Object_ABC.h"
 #include "ObstacleAttribute.h"
 #include "Tools/MIL_Tools.h"

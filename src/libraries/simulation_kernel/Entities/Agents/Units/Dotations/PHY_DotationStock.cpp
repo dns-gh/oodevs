@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "MIL_AgentServer.h"
 #include "PHY_DotationStock.h"
 #include "PHY_DotationStockContainer.h"
 #include "PHY_DotationCapacity.h"

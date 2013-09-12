@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
+#include "MIL_AgentServer.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager_ABC.h"

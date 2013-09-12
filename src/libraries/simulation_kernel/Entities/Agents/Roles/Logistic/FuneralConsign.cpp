@@ -12,7 +12,6 @@
 #include "FuneralPackagingResource.h"
 #include "FuneralRequest_ABC.h"
 #include "FuneralConfig.h"
-#include "MIL_AgentServer.h"
 #include "MIL_Time_ABC.h"
 #include "SupplyConsign_ABC.h"
 #include "SupplyConvoy_ABC.h"

@@ -11,7 +11,6 @@
 #include "PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
-#include "MIL_AgentServer.h"
 #include "PHY_MeteoDataManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/NET_AsnException.h"

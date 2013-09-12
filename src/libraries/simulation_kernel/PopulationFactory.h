@@ -11,7 +11,6 @@
 #define __PopulationFactory_h_
 
 #include "PopulationFactory_ABC.h"
-#include "MIL_AgentServer.h"
 #include "CheckPoints/SerializationTools.h"
 
 class MissionController_ABC;

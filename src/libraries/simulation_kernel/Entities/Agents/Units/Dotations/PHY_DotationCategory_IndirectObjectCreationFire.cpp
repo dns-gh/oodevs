@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectObjectCreationFire.h"
-#include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
