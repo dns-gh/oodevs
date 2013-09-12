@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE( FindMaxIdInFileTest )
     BOOST_CHECK_EQUAL( 0u, FindMaxIdInFile( path ));
 
     // Several identifiers
-    tools::Ofstream( path ) << "one line\nanother id=\"12\" line\nid=\"13\" and id=\"14\"\nno EOL";
+    tools::Ofstream( path ) << "one line\nanother id=\"12\" line\nid=\"13\" and id=\"14\"\nno id=\"bad\" EOL";
     BOOST_CHECK_EQUAL( 14u, FindMaxIdInFile( path ));
 }
 
