@@ -87,6 +87,7 @@
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
+#include "MIL_AgentServer.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Objects/MIL_FireClass.h"

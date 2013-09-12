@@ -34,6 +34,7 @@
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/QueryValidity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "MIL_AgentServer.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"

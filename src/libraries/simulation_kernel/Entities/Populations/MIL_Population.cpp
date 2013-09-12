@@ -23,6 +23,7 @@
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "MIL_AgentServer.h"
 #include "MIL_PopulationAttitude.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationFlow.h"

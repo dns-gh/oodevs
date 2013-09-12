@@ -39,6 +39,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "MIL_AgentServer.h"
 #include "tools/ExerciseSettings.h"
 #include <xeumeuleu/xml.hpp>
 

@@ -24,6 +24,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
+#include "MIL_AgentServer.h"
 #include "tools/Codec.h"
 #include "tools/Loader_ABC.h"
 #include "Tools/MIL_AffinitiesMap.h"

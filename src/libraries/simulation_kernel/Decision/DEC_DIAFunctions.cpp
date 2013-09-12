@@ -16,6 +16,7 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "MIL_AgentServer.h"
 #include "MIL_Random.h"
 #include <iostream>
 

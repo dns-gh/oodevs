@@ -22,6 +22,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "MIL_Time_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"

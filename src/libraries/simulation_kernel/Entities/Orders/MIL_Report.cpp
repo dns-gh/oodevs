@@ -17,6 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "MIL_AgentServer.h"
 #include "MIL_MissionParameter_ABC.h"
 #include "MIL_ParameterType_ABC.h"
 #include "MT_Tools/MT_Logger.h"

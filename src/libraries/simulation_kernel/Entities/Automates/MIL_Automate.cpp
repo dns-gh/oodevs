@@ -37,6 +37,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL_AutomateType.h"
+#include "MIL_AgentServer.h"
 #include "MissionController_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "Network/NET_ASN_Tools.h"

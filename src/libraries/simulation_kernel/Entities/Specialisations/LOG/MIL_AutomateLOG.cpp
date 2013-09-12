@@ -40,6 +40,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"

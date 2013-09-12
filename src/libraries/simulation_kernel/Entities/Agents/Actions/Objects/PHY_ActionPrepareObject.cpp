@@ -17,6 +17,7 @@
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Gen_Object.h"
+#include "MIL_AgentServer.h"
 
 namespace
 {

@@ -17,6 +17,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
+#include "MIL_Time_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
