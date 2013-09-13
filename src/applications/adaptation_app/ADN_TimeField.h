@@ -55,7 +55,6 @@ private slots:
     //@{
     void OnValueChanged( const QString& strValue );
     void OnUnitChanged ( const QString& strUnit );
-    void UpdateEnableState();
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
 

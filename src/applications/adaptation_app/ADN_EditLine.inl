@@ -52,17 +52,6 @@ void ADN_EditLine<Connector, Validator>::TextChanged( const QString& string )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_EditLine::UpdateEnableState
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-template <class Connector, class Validator>
-void ADN_EditLine<Connector, Validator>::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< Connector* >( pConnector_ )->IsConnected() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_EditLine::mousePressEvent
 // Created: ABR 2012-03-09
 // -----------------------------------------------------------------------------

@@ -124,18 +124,18 @@ void ADN_Ref_ABC::DisconnectPrivate( ADN_Connector_Vector_ABC* /*pTarget*/ )
 // Name: ADN_Ref_ABC::ConnectPrivateSub
 // Created: APE 2005-03-03
 // -----------------------------------------------------------------------------
-void ADN_Ref_ABC::ConnectPrivateSub( ADN_Ref_ABC* pTarget )
+void ADN_Ref_ABC::ConnectPrivateSub( ADN_Ref_ABC* /*pTarget*/ )
 {
-    connect( pTarget ,SIGNAL(Invalidated(void *,bool)), this ,SLOT(Invalidate(void *,bool)));
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::DisconnectPrivateSub
 // Created: APE 2005-03-03
 // -----------------------------------------------------------------------------
-void ADN_Ref_ABC::DisconnectPrivateSub( ADN_Ref_ABC* pTarget )
+void ADN_Ref_ABC::DisconnectPrivateSub( ADN_Ref_ABC* /*pTarget*/ )
 {
-    disconnect( pTarget ,SIGNAL(Invalidated(void *,bool)), this ,SLOT(Invalidate(void *,bool)));
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

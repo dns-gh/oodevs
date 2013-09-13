@@ -702,7 +702,7 @@ ADN_Crowds_Data::ADN_Crowds_Data()
     , reloadingSpeedEffectInfos_()
     , timeBetweenNbcApplication_ ( "1h" )
 {
-    vCrowds_.AddUniquenessChecker( eError, duplicateName_ );
+    vCrowds_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

@@ -53,8 +53,6 @@ public:
     ADN_ComboBoxItem*           GetItem( int ndx );
     int                         GetEnumIndexFromGUI( int index ) const;
 
-    void setEnabled( bool b );
-
     virtual void wheelEvent( QWheelEvent* );
 
 protected:
@@ -66,9 +64,6 @@ protected:
 
 private slots:
     void    ItemSelected( int ndx );
-
-protected slots:
-    virtual void UpdateEnableState();
 };
 
 typedef ADN_Connector_Combo< ADN_ComboBox > ADN_Connector_ComboBox;

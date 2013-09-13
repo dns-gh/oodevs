@@ -28,7 +28,7 @@ class ADN_ListViewDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListViewDialog( QWidget* pParent, const QString& strCaption, ADN_ListView* pListView );
+             ADN_ListViewDialog( QWidget* pParent, const QString& strCaption, ADN_ListView& pListView );
     virtual ~ADN_ListViewDialog();
     //@}
 
@@ -42,7 +42,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ADN_ListView* pListView_;
+    ADN_ListView& pListView_;
     const QString& strCaption_;
     //@}
 };

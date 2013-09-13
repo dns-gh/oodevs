@@ -13,8 +13,8 @@
 #include "ADN_Units_Composantes_GUI.h"
 #include "moc_ADN_Units_Composantes_GUI.cpp"
 #include "ADN_App.h"
-#include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
+#include "ADN_Gui_Tools.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Workspace.h"
 
@@ -85,7 +85,7 @@ void ADN_Units_Composantes_GUI::AddRow( int row, void* data )
 //-----------------------------------------------------------------------------
 void ADN_Units_Composantes_GUI::OnContextMenu( const QPoint& pt )
 {
-    ADN_Tools::GenerateStandardEditionDialog< ComposanteInfos, UnitComposanteInfos >(
+    ADN_Gui_Tools::GenerateStandardEditionDialog< ComposanteInfos, UnitComposanteInfos >(
         *this, pt, "equipment-list", tr( "Equipments" ), ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
         ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments() );
 }

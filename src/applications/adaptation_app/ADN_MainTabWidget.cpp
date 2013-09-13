@@ -21,6 +21,7 @@ ADN_MainTabWidget::ADN_MainTabWidget( QWidget* parent )
     , navigating_         ( false )
 {
     connect( this, SIGNAL( currentChanged( int ) ), this, SLOT( OnCurrentChanged( int ) ) );
+    setVisible( false );
 }
 
 // -----------------------------------------------------------------------------

@@ -601,41 +601,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation>Configuration</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation>Chemin SIM</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation>Parcourir</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation>Paramètres SIM</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;Ok</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Annuler</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation>Exécutable SWORD (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation>Choississez la SIM à utiliser pour le test</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ConsistencyDialog</name>
     <message>
         <source>Description</source>
@@ -2136,10 +2101,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation>Défaut</translation>
     </message>
     <message>
-        <source>Languages</source>
-        <translation>Langues</translation>
-    </message>
-    <message>
         <source>Edit...</source>
         <translation>Editer...</translation>
     </message>
@@ -2531,14 +2492,6 @@ PNG (*.png)</translation>
         <translation>&amp;A propos</translation>
     </message>
     <message>
-        <source>Invalid password</source>
-        <translation>Mot de passe invalide</translation>
-    </message>
-    <message>
-        <source>The password you entered is not valid. Please try again.</source>
-        <translation>Le mot de passe est incorrect. Veuillez réessayer.</translation>
-    </message>
-    <message>
         <source>Consistency &amp;tables</source>
         <translation>&amp;Tableaux de cohérence</translation>
     </message>
@@ -2561,26 +2514,6 @@ PNG (*.png)</translation>
     <message>
         <source>&amp;Export HTML</source>
         <translation>&amp;Export HTML</translation>
-    </message>
-    <message>
-        <source>Data test</source>
-        <translation>Test des données</translation>
-    </message>
-    <message>
-        <source>Project will be saved in order to execute data test.</source>
-        <translation>Le projet doit être enregistré avant d&apos;exécuter les tests.</translation>
-    </message>
-    <message>
-        <source>No project loaded, continue anyway?</source>
-        <translation>Aucun projet chargé, continuer?</translation>
-    </message>
-    <message>
-        <source>Running data check</source>
-        <translation>Test des données</translation>
-    </message>
-    <message>
-        <source>Data test failed</source>
-        <translation>Echec du test des données</translation>
     </message>
     <message>
         <source>Physical model file (physical.xml)</source>
@@ -2649,6 +2582,14 @@ PNG (*.png)</translation>
     <message>
         <source>Show optional fields</source>
         <translation>Montrer les champs optionnels</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Fermer</translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation>Langues</translation>
     </message>
 </context>
 <context>
@@ -3631,33 +3572,6 @@ PNG (*.png)</translation>
     <message>
         <source>Description</source>
         <translation>Description</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_OpenMode_Dialog</name>
-    <message>
-        <source>Open mode configuration</source>
-        <translation>Mode d&apos;ouverture</translation>
-    </message>
-    <message>
-        <source>Normal mode</source>
-        <translation>Mode normal</translation>
-    </message>
-    <message>
-        <source>Admin mode</source>
-        <translation>Mode administrateur</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Mot de passe:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
     </message>
 </context>
 <context>

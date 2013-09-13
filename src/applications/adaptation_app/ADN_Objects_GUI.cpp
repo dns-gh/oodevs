@@ -38,8 +38,6 @@ ADN_Objects_GUI::ADN_Objects_GUI( ADN_Objects_Data& data )
     , pSpeedImpactCombo_( 0 )
     , pMaxAgentSpeed_( 0 )
     , pPointDistance_( 0 )
-    , pContent_( 0 )
-    , pCapacities_( 0 )
     , attrition_( 0 )
     , attritionDotation_( 0 )
     , attritionMine_( 0 )
@@ -392,8 +390,8 @@ void ADN_Objects_GUI::Build()
     // Layouts
     // -------------------------------------------------------------------------
     // Content layout
-    pContent_ = new QWidget();
-    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent_ );
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
@@ -401,8 +399,8 @@ void ADN_Objects_GUI::Build()
     pContentLayout->addWidget( geometries );
     pContentLayout->addStretch( 1 );
 
-    pCapacities_ = new QWidget();
-    QVBoxLayout* pCapacitiesLayout = new QVBoxLayout( pCapacities_ );
+    QWidget* pCapacities = new QWidget();
+    QVBoxLayout* pCapacitiesLayout = new QVBoxLayout( pCapacities );
     pCapacitiesLayout->setMargin( 10 );
     pCapacitiesLayout->setSpacing( 10 );
     pCapacitiesLayout->addWidget( capacitiesGroup );
@@ -413,8 +411,8 @@ void ADN_Objects_GUI::Build()
 
     // Tab widget
     QTabWidget* pTabWidget = new QTabWidget();
-    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "infos-tab" ), *pContent_, 0 ), tr( "Infos" ) );
-    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "capacities-tab" ), *pCapacities_, 0 ), tr( "Capacities" ) );
+    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "infos-tab" ), *pContent, 0 ), tr( "Infos" ) );
+    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "capacities-tab" ), *pCapacities, 0 ), tr( "Capacities" ) );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pTabWidget, pSearchListView );
@@ -436,16 +434,6 @@ void ADN_Objects_GUI::OnSpeedImpactComboChanged()
 void ADN_Objects_GUI::OnGeometryChanged( bool b )
 {
     pPointDistance_->setEnabled( b );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_GUI::Enable
-// Created: JSR 2010-05-21
-// -----------------------------------------------------------------------------
-void ADN_Objects_GUI::Enable( bool enable )
-{
-    pContent_->setEnabled( enable );
-    pCapacities_->setEnabled( enable );
 }
 
 // -----------------------------------------------------------------------------

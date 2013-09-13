@@ -26,7 +26,6 @@ ADN_TextEdit_ABC::ADN_TextEdit_ABC( QWidget* parent /* = 0 */, const char * name
 {
     // connect edit line & connector
     connect( this, SIGNAL( textChanged() ), this, SLOT( TextChanged() ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -36,18 +35,6 @@ ADN_TextEdit_ABC::ADN_TextEdit_ABC( QWidget* parent /* = 0 */, const char * name
 ADN_TextEdit_ABC::~ADN_TextEdit_ABC()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TextEdit_ABC::setEnabled
-// Created: JSR 21-11-11
-// -----------------------------------------------------------------------------
-void ADN_TextEdit_ABC::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        QTextEdit::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        QTextEdit::setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------

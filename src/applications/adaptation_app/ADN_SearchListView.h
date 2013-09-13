@@ -12,9 +12,10 @@
 
 #include "ADN_NavigationInfos.h"
 
-class ADN_Ref_ABC;
+class ADN_Connector_ABC;
 class ADN_GUI_ABC;
 class ADN_ListView;
+class ADN_Ref_ABC;
 
 namespace gui
 {
@@ -34,7 +35,7 @@ class ADN_SearchListView : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_SearchListView( const QString& objectName, ADN_GUI_ABC* gui, ADN_ListView& listView, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
+             ADN_SearchListView( const QString& objectName, ADN_GUI_ABC* gui, ADN_ListView& listView, ADN_Ref_ABC& reference, const std::vector< ADN_Connector_ABC* >& connector, int subTab = -1, QWidget* parent = 0 );
     virtual ~ADN_SearchListView();
     //@}
 

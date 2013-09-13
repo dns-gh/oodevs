@@ -49,16 +49,10 @@ public:
     virtual ~ADN_GroupBox();
     //@}
 
-    //! @name Operations
-    //@{
-    void setEnabled( bool b );
-    //@}
-
 private slots:
     //! @name Internal slots
     //@{
     void BoolChanged(bool b);
-    void UpdateEnableState();
     //@}
 };
 
@@ -82,16 +76,10 @@ public:
     virtual ~ADN_GroupBox2();
     //@}
 
-    //! @name Operations
-    //@{
-    void setEnabled( bool b );
-    //@}
-
 private slots:
     //! @name Internal slots
     //@{
     void BoolChanged(bool b);
-    void UpdateEnableState();
     //@}
 };
 

@@ -11,6 +11,9 @@
 #include "ADN_ApplyButton.h"
 #include "moc_ADN_ApplyButton.cpp"
 #include "clients_kernel/Language.h"
+#include "clients_kernel/Translations.h"
+#include "ADN_Workspace.h"
+#include "ADN_Languages_GUI.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ApplyButton constructor

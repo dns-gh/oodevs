@@ -34,7 +34,6 @@ ADN_Languages_GUI::ADN_Languages_GUI( ADN_Languages_Data& data )
     : ADN_GUI_ABC( eLanguages )
     , data_( data )
     , mapper_( 0 )
-    , menu_( 0 )
     , currentAction_( 0 )
     , defaultAction_( 0 )
     , currentLanguage_( kernel::Language::default_ )
@@ -63,33 +62,22 @@ void ADN_Languages_GUI::Build()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Languages_GUI::CreateMenu
-// Created: ABR 2013-07-08
-// -----------------------------------------------------------------------------
-QMenu* ADN_Languages_GUI::CreateMenu( QWidget* parent )
-{
-    menu_ = new QMenu( tr( "Languages" ), parent );
-    defaultAction_ = AddToMenu( tr( "Default" ), menu_, mapper_ );
-    defaultAction_->setChecked( true );
-    actions_.push_back( defaultAction_ );
-    currentAction_ = defaultAction_;
-    return menu_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Languages_GUI::FillMenu
 // Created: ABR 2013-07-08
 // -----------------------------------------------------------------------------
-void ADN_Languages_GUI::FillMenu()
+void ADN_Languages_GUI::FillMenu( QMenu* menu )
 {
+    defaultAction_ = AddToMenu( tr( "Default" ), menu, mapper_ );
+    defaultAction_->setChecked( true );
+    actions_.push_back( defaultAction_ );
+    currentAction_ = defaultAction_;
+
     for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
-        actions_.push_back( AddToMenu( it->GetName().c_str(), menu_, mapper_ ) );
+        actions_.push_back( AddToMenu( it->GetName().c_str(), menu, mapper_ ) );
 
-    menu_->addSeparator();
-    QAction* editAction = menu_->addAction( tr( "Edit..." ), this, SLOT( OnEditLanguages() ) );
+    menu->addSeparator();
+    QAction* editAction = menu->addAction( tr( "Edit..." ), this, SLOT( OnEditLanguages() ) );
     editAction->setEnabled( false );
-
-    OnLanguageChanged( currentLanguage_.c_str() );
 }
 
 // -----------------------------------------------------------------------------

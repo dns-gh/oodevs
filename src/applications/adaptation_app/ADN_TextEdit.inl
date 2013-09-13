@@ -38,14 +38,3 @@ void ADN_TextEdit< Connector >::TextChanged()
 {
     static_cast< Connector* >( pConnector_ )->SetDataChanged( text() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TextEdit::UpdateEnableState
-// Created: JSR 21-11-11
-// -----------------------------------------------------------------------------
-template< class Connector >
-void ADN_TextEdit< Connector >::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< Connector* >( pConnector_ )->IsConnected() );
-}

@@ -34,6 +34,7 @@ class ADN_Equipments_Data;
 class ADN_Equipments_GUI;
 class ADN_FireClass_Data;
 class ADN_FireClass_GUI;
+class ADN_GeneralConfig;
 class ADN_HumanFactors_Data;
 class ADN_HumanFactors_GUI;
 class ADN_Inhabitants_Data;
@@ -95,6 +96,7 @@ class ADN_Workspace : public QObject
     Q_OBJECT
 
 public:
+    static void CreateWorkspace( const ADN_GeneralConfig& config );
     static ADN_Workspace& GetWorkspace();
     static void CleanWorkspace();
 
@@ -108,8 +110,6 @@ public:
     bool Save( const tools::Loader_ABC& fileLoader );
     bool SaveAs( const tools::Path& filename, const tools::Loader_ABC& fileLoader );
     void ExportHtml( const tools::Path& strPath );
-    void SetOptions( bool symbols, bool noreadonly );
-    bool ShowSymbols() const;
 
     ADN_Project_Data& GetProject();
     ADN_WorkspaceElement_ABC& GetWorkspaceElement( E_WorkspaceElements workspaceElement );
@@ -149,8 +149,6 @@ public:
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
 
-    E_OpenMode GetOpenMode() const;
-    void SetOpenMode( E_OpenMode nNewMode );
     bool IsDevMode() const;
 
 signals:
@@ -168,14 +166,14 @@ private:
     void AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element );
 
 private:
-    explicit ADN_Workspace();
+    explicit ADN_Workspace( const ADN_GeneralConfig& config );
     virtual ~ADN_Workspace();
 
 private:
+    const ADN_GeneralConfig& config_;
     ADN_Project_Data* projectData_;
     ADN_WorkspaceElement_ABC* elements_[ eNbrWorkspaceElements ];
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
-    E_OpenMode nOpenMode_;
     bool symbols_;
     bool devMode_;
     static ADN_Workspace* pWorkspace_;
@@ -492,26 +490,6 @@ inline
 void ADN_Workspace::SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator )
 {
     pProgressIndicator_ = pProgressIndicator;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetOpenMode
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-inline
-E_OpenMode ADN_Workspace::GetOpenMode() const
-{
-    return nOpenMode_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::SetOpenMode
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-inline
-void ADN_Workspace::SetOpenMode( E_OpenMode nNewMode )
-{
-    nOpenMode_ = nNewMode;
 }
 
 // -----------------------------------------------------------------------------

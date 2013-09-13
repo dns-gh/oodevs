@@ -39,11 +39,9 @@ public:
         // initialize vector
         for( auto it = v.begin(); it != v.end(); ++it )
             AddItem( new T( *it ) );
-        EndVector();
+        AddItem( 0 );
         // connection
         connect( &v, SIGNAL( ItemAdded( void* ) ), this, SLOT( AutoCreate( void* ) ) );
-        connect( &v, SIGNAL( ItemSwapped( int, int ) ), this, SLOT( SwapItem( int, int ) ) );
-        connect( this, SIGNAL( ItemSwapped( int, int ) ), &v, SLOT( SwapItem( int, int ) ) );
     }
 
     void ResetFixedVector()
@@ -51,8 +49,6 @@ public:
         if( v_ )
         {
             disconnect( v_, SIGNAL( ItemAdded( void* ) ), this, SLOT( AutoCreate( void* ) ) );
-            disconnect( v_, SIGNAL( ItemSwapped( int, int ) ), this, SLOT( SwapItem( int, int ) ) );
-            disconnect( this, SIGNAL( ItemSwapped( int, int ) ), v_, SLOT( SwapItem( int, int ) ) );
             Reset();
             v_ = 0;
         }

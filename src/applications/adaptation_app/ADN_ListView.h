@@ -70,8 +70,6 @@ public:
 
     virtual void ConnectItem( bool /*bConnect*/ ) {} 
 
-    void setEnabled( bool b );
-
     void SetDeletionEnabled( bool enable, bool warning = true );
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
 
@@ -120,7 +118,6 @@ protected slots:
 
     void GoToOnDoubleClicked( const QModelIndex& index );
     bool SetCurrentItem();
-    void UpdateEnableState();
 
     void Warn( ADN_ErrorStatus errorStatus = eNoError, const QString& errorMsg = "" );
 

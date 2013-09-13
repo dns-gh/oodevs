@@ -80,8 +80,7 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
         pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
 
     ADN_Wizard< ModelInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(), *pUnitsList, this );
-    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
-        FillContextMenuWithDefault( popupMenu, wizard );
+    FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
         ModelInfos* pCastData = static_cast< ModelInfos* >( pCurData_ );

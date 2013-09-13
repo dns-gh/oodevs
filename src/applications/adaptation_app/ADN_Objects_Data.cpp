@@ -1303,7 +1303,7 @@ namespace
 ADN_Objects_Data::ADN_Objects_Data()
     : ADN_Data_ABC( eObjects )
 {
-    vObjectInfos_.AddUniquenessChecker( eError, duplicateName_ );
+    vObjectInfos_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
     vObjectInfos_.AddUniquenessChecker( eError, tr( "Duplicate type" ), &TypeExtractor );
 }
 

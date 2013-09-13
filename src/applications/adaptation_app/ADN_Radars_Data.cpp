@@ -261,7 +261,7 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
 ADN_Radars_Data::ADN_Radars_Data()
     : ADN_Data_ABC( eSensors )
 {
-    vRadars_.AddUniquenessChecker( eError, duplicateName_ );
+    vRadars_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

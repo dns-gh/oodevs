@@ -27,7 +27,6 @@ ADN_ComboBox::ADN_ComboBox( QWidget* parent )
     , fromView_  ( false )
 {
     connect( this, SIGNAL( activated( int ) ), this, SLOT( ItemSelected( int ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -234,29 +233,6 @@ ADN_ComboBoxItem* ADN_ComboBox::GetItem( int ndx )
     if( ndx == -1 || ndx >= static_cast< int >( vItems_.size() ) )
         return 0;
     return vItems_[ ndx ];
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ComboBox::setEnabled
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_ComboBox::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        QComboBox::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        QComboBox::setEnabled( b );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ComboBox::UpdateEnableState
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_ComboBox::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() && pConnector_ )
-        if( ADN_Connector_Combo_ABC* connectorCombo = dynamic_cast< ADN_Connector_Combo_ABC* >( pConnector_ ) )
-            setEnabled( connectorCombo->IsConnected() );
 }
 
 // -----------------------------------------------------------------------------

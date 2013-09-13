@@ -124,10 +124,10 @@ void ADN_Connector_Vector_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTar
 {
     ADN_Connector_ABC::ConnectPrivateSub( (ADN_Connector_ABC*)pTarget );
 
-    connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItem(void*)));
-    connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItem(void*)));
-    connect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
-    connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
+    connect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
+    connect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void*) ) );
+    connect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool) ) );
+    connect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,10 +138,10 @@ void ADN_Connector_Vector_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* p
 {
     ADN_Connector_ABC::DisconnectPrivateSub( (ADN_Connector_ABC*)pTarget );
 
-    disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItem(void*)));
-    disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItem(void*)));
-    disconnect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
-    disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
+    disconnect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
+    disconnect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void* ) ) );
+    disconnect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool ) ) );
+    disconnect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -221,29 +221,6 @@ bool ADN_Connector_Vector_ABC::RemItemPrivate( void* )
 {
     // nothing
     return false;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Connector_Vector_ABC::SwapItem
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-void  ADN_Connector_Vector_ABC::SwapItem( int i, int j )
-{
-    if( ! SlotsBlocked() )
-    {
-        BlockSlots( true );
-        SwapItemPrivate( i, j );
-        BlockSlots( false );
-    }
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Connector_Vector_ABC::SwapItemPrivate
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-void  ADN_Connector_Vector_ABC::SwapItemPrivate( int i, int j )
-{
-    emit ItemSwapped( i, j );
 }
 
 //-----------------------------------------------------------------------------

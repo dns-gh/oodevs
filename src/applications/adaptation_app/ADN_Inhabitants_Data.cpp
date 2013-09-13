@@ -379,7 +379,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadConsumption( xml::xistream& inp
 ADN_Inhabitants_Data::ADN_Inhabitants_Data()
     : ADN_Data_ABC( eInhabitants )
 {
-    vInhabitants_.AddUniquenessChecker( eError, duplicateName_ );
+    vInhabitants_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

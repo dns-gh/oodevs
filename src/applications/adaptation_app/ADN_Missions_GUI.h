@@ -73,7 +73,6 @@ public:
     //! @name Operations
     //@{
     void Build();
-    void Enable( bool enable );
     //@}
 
 private:

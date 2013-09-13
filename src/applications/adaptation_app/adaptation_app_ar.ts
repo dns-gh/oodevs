@@ -589,41 +589,6 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation type="unfinished">التكوين</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation type="unfinished">مسار سيم</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="unfinished">تصفح</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation type="unfinished">معلمات سيم</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished">آند موافق</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">آند إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation type="unfinished">السيف القابل للتنفيذ (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation type="unfinished">حدد سيم لاستخدامها لاختبار البيانات</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ConsistencyDialog</name>
     <message>
         <source>Description</source>
@@ -2117,10 +2082,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Languages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2583,36 +2544,8 @@ PNG (*.png)
         <translation type="unfinished">[للقراءة فقط]</translation>
     </message>
     <message>
-        <source>Data test</source>
-        <translation type="unfinished">بيانات الاختبار</translation>
-    </message>
-    <message>
-        <source>Project will be saved in order to execute data test.</source>
-        <translation type="unfinished">سيتم حفظ المشروع من أجل تنفيذ اختبار البيانات.</translation>
-    </message>
-    <message>
-        <source>No project loaded, continue anyway?</source>
-        <translation type="unfinished">مواصلة المشروع ليست تحميل، على أية حال؟</translation>
-    </message>
-    <message>
-        <source>Running data check</source>
-        <translation type="unfinished">تشغيل التحقق من البيانات</translation>
-    </message>
-    <message>
-        <source>Data test failed</source>
-        <translation type="unfinished">فشل اختبار البيانات</translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool</source>
         <translation type="unfinished">أداة التكيف السيف</translation>
-    </message>
-    <message>
-        <source>Invalid password</source>
-        <translation type="unfinished">كلمة المرور غير صالحة</translation>
-    </message>
-    <message>
-        <source>The password you entered is not valid. Please try again.</source>
-        <translation type="unfinished">كلمة المرور التي أدخلتها غير صالحة. الرجاء المحاولة مرة أخرى.</translation>
     </message>
     <message>
         <source>Save changes to project %1?</source>
@@ -2624,6 +2557,14 @@ PNG (*.png)
     </message>
     <message>
         <source>Show optional fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Languages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3607,33 +3548,6 @@ PNG (*.png)
     <message>
         <source>Description</source>
         <translation type="unfinished">الوصف</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_OpenMode_Dialog</name>
-    <message>
-        <source>Open mode configuration</source>
-        <translation type="unfinished">تكوين وضع الفتح</translation>
-    </message>
-    <message>
-        <source>Normal mode</source>
-        <translation type="unfinished">الوضع العادي</translation>
-    </message>
-    <message>
-        <source>Admin mode</source>
-        <translation type="unfinished">وضع المسؤول</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation type="unfinished">كلمة المرور:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
     </message>
 </context>
 <context>

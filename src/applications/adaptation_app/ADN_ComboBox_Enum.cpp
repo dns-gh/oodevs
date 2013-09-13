@@ -31,16 +31,6 @@ ADN_ComboBox_Enum::~ADN_ComboBox_Enum()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBox_Enum::UpdateEnableState
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_ComboBox_Enum::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_EnumComboBox* >( pConnector_ )->IsConnected() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Enum::SetCurrentData
 // Created: ABR 2012-10-26
 // -----------------------------------------------------------------------------

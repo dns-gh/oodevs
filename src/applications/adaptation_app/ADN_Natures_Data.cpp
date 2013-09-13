@@ -59,7 +59,7 @@ ADN_Natures_Data::NatureInfos* ADN_Natures_Data::NatureInfos::CreateCopy()
 ADN_Natures_Data::ADN_Natures_Data()
     : ADN_Data_ABC( eCategories, eNatures )
 {
-    vDotationNatures_.AddUniquenessChecker( eError, duplicateName_ );
+    vDotationNatures_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

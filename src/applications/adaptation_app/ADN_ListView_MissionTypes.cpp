@@ -102,8 +102,7 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
 
     ADN_Missions_Wizard wizard( ConvertMissionToEntityType( eMissionType_ ), ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_ ), this );
-    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
-        FillContextMenuWithDefault( popupMenu, wizard );
+    FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
         Mission* pCastData = static_cast< Mission* >( pCurData_ );

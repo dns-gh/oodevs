@@ -357,7 +357,7 @@ void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output )
 ADN_Disasters_Data::ADN_Disasters_Data()
     : ADN_Data_ABC( eDisasters )
 {
-    vDisasters_.AddUniquenessChecker( eError, duplicateName_ );
+    vDisasters_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------

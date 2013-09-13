@@ -59,8 +59,6 @@ ADN_ListView_Orders::~ADN_ListView_Orders()
 // -----------------------------------------------------------------------------
 void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
 {
-    if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
-        return;
     fragOrders_.clear();
     std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu(this) );
 

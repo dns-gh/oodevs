@@ -34,8 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void Build();
-    QMenu* CreateMenu( QWidget* parent );
-    void FillMenu();
+    void FillMenu( QMenu* menu );
     const std::string& GetCurrentLanguage() const;
     //@}
 
@@ -64,7 +63,6 @@ private:
     ADN_Languages_Data& data_;
     std::vector< QAction* > actions_;
     QSignalMapper* mapper_;
-    QMenu* menu_;
     std::string currentLanguage_;
     QAction* currentAction_;
     QAction* defaultAction_;

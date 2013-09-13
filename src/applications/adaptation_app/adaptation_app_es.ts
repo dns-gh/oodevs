@@ -601,41 +601,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation>Configuración</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation>Sendero SIM</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation>Buscar</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation>Parámetros SIM</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;Ok</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Cancelar</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation>Ejecutable SWORD (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation>Seleccionar el SIM à usar en la prueba de datos</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ConsistencyDialog</name>
     <message>
         <source>Description</source>
@@ -2131,10 +2096,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Languages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2562,36 +2523,8 @@ PNG (*.png)
         <translation>Herramienta de adaptación Sword - %1</translation>
     </message>
     <message>
-        <source>Data test</source>
-        <translation>Prueba de datos</translation>
-    </message>
-    <message>
-        <source>Project will be saved in order to execute data test.</source>
-        <translation>El proyecto será grabado para ejectuar la prueba de datos.</translation>
-    </message>
-    <message>
-        <source>No project loaded, continue anyway?</source>
-        <translation>No hay proyecto cargado, ¿Continuar de todas formas?</translation>
-    </message>
-    <message>
-        <source>Running data check</source>
-        <translation>Ejecutando revisión de datos</translation>
-    </message>
-    <message>
-        <source>Data test failed</source>
-        <translation>Prueba de datos falló</translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool</source>
         <translation>Herramienta de adaptación Sword</translation>
-    </message>
-    <message>
-        <source>Invalid password</source>
-        <translation>Contraseña incorrecta</translation>
-    </message>
-    <message>
-        <source>The password you entered is not valid. Please try again.</source>
-        <translation>La contraseña que ingresó es inválida. Intente nuevamente.</translation>
     </message>
     <message>
         <source>Save changes to project %1?</source>
@@ -2639,6 +2572,14 @@ PNG (*.png)
     </message>
     <message>
         <source>Show optional fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Languages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3622,33 +3563,6 @@ PNG (*.png)
     <message>
         <source>Description</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_OpenMode_Dialog</name>
-    <message>
-        <source>Open mode configuration</source>
-        <translation>Abrir modo de configuración</translation>
-    </message>
-    <message>
-        <source>Normal mode</source>
-        <translation>Modo normal</translation>
-    </message>
-    <message>
-        <source>Admin mode</source>
-        <translation>Modo administrador</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Contraseña:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
     </message>
 </context>
 <context>

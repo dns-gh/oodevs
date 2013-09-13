@@ -31,7 +31,6 @@ ADN_ColorSelector::ADN_ColorSelector( QWidget* parent, bool fixedSize )
         setMaximumWidth( 3 * height() );
     }
     connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
     pConnector_ = new ADN_Connector_String< ADN_ColorSelector >( this );
 }
 
@@ -45,18 +44,6 @@ ADN_ColorSelector::~ADN_ColorSelector()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ColorSelector::setEnabled
-// Created: JSR 2010-09-14
-// -----------------------------------------------------------------------------
-void ADN_ColorSelector::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        QPushButton::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        QPushButton::setEnabled( b );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_ColorSelector::setText
 // Created: JSR 2010-09-14
 // -----------------------------------------------------------------------------
@@ -65,16 +52,6 @@ void ADN_ColorSelector::setText( const QString& string )
     std::string color( string.toStdString() );
     boost::replace_all( color, "0x", "#" );
     color_.setNamedColor( color.c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ColorSelector::UpdateEnableState
-// Created: JSR 2010-09-14
-// -----------------------------------------------------------------------------
-void ADN_ColorSelector::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_String< ADN_ColorSelector >* >( pConnector_ )->IsConnected() );
 }
 
 // -----------------------------------------------------------------------------

@@ -837,7 +837,7 @@ void ADN_Units_Data::UnitInfos::CleanupNature()
 ADN_Units_Data::ADN_Units_Data()
     : ADN_Data_ABC( eUnits )
 {
-    vUnits_.AddUniquenessChecker( eError, duplicateName_ );
+    vUnits_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------

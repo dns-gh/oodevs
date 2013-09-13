@@ -111,8 +111,8 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     // Layouts
     // -------------------------------------------------------------------------
     // Content layout
-    pWidgets_[ eEntityType ] = new QWidget();
-    QVBoxLayout* pContentLayout = new QVBoxLayout( pWidgets_[ eEntityType ] );
+    QWidget* content = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( content );
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
@@ -125,17 +125,7 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
 
     // Main page
     builder.PopSubName(); //eEntityType-tab
-    return CreateScrollArea( builder.GetName(), *pWidgets_[ eEntityType ], pSearchListView );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_GUI::Enable
-// Created: JSR 2010-05-21
-// -----------------------------------------------------------------------------
-void ADN_Models_GUI::Enable( bool enable )
-{
-    for( int i = 0; i < eNbrEntityTypes; ++i )
-        pWidgets_[ i ]->setEnabled( enable );
+    return CreateScrollArea( builder.GetName(), *content, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------

@@ -25,7 +25,6 @@ ADN_TimeEdit::ADN_TimeEdit( QWidget* parent, const QString& format /* = "hh:mm"*
     setTime( QTime( 0, 0 ) );
     pConnector_ = new ADN_Connector_String< ADN_TimeEdit >( this );
     connect( this, SIGNAL( timeChanged( const QTime& ) ), this, SLOT( TimeChanged( const QTime& ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,18 +34,6 @@ ADN_TimeEdit::ADN_TimeEdit( QWidget* parent, const QString& format /* = "hh:mm"*
 ADN_TimeEdit::~ADN_TimeEdit()
 {
     delete pConnector_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TimeEdit::setEnabled
-// Created: ABR 2012-11-05
-// -----------------------------------------------------------------------------
-void ADN_TimeEdit::setEnabled( bool b )
-{
-    if( bEnabledOnlyInAdminMode_ && b )
-        QTimeEdit::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
-    else
-        QTimeEdit::setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,14 +64,4 @@ void ADN_TimeEdit::setText( const QString& text )
 void ADN_TimeEdit::TimeChanged( const QTime& time )
 {
     static_cast< ADN_Connector_String< ADN_TimeEdit >* >( pConnector_ )->SetDataChanged( time.toString( format_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TimeEdit::UpdateEnableState
-// Created: ABR 2012-11-05
-// -----------------------------------------------------------------------------
-void ADN_TimeEdit::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_String< ADN_TimeEdit >* >( pConnector_ )->IsConnected() );
 }

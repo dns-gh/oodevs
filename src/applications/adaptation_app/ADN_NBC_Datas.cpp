@@ -300,7 +300,7 @@ ADN_NBC_Datas::ADN_NBC_Datas()
     , rNbcSuitMaxSpeedMultiplier_   ( 0.f )
     , rNbcSuitReloadSpeedMultiplier_( 0.f )
 {
-    vNbcAgent_.AddUniquenessChecker( eError, duplicateName_ );
+    vNbcAgent_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

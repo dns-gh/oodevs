@@ -19,7 +19,6 @@
 ADN_Gfx_ABC::ADN_Gfx_ABC( bool bAuto )
     : pConnector_( 0 )
     , bAutoEnabled_( bAuto )
-    , bEnabledOnlyInAdminMode_( false )
 {
     // NOTHING
 }

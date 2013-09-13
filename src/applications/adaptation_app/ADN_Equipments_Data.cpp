@@ -606,7 +606,7 @@ ADN_Equipments_Data::BreakdownGroupInfos::BreakdownGroupInfos( const std::string
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::BreakdownGroupInfos::~BreakdownGroupInfos()
 {
-    vBreakdowns_.Delete();
+    vBreakdowns_.Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -1432,12 +1432,12 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos( unsigned int id )
 //-----------------------------------------------------------------------------
 ADN_Equipments_Data::EquipmentInfos::~EquipmentInfos()
 {
-    vSpeeds_.Delete();
-    vWeapons_.Delete();
-    vActiveProtections_.Delete();
-    vSensors_.Delete();
-    vRadars_.Delete();
-    vObjects_.Delete();
+    vSpeeds_.Reset();
+    vWeapons_.Reset();
+    vActiveProtections_.Reset();
+    vSensors_.Reset();
+    vRadars_.Reset();
+    vObjects_.Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -1948,7 +1948,7 @@ ADN_Equipments_Data::ADN_Equipments_Data()
     : ADN_Data_ABC( eEquipments )
     , vEquipments_()
 {
-    vEquipments_.AddUniquenessChecker( eError, duplicateName_ );
+    vEquipments_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 //-----------------------------------------------------------------------------
@@ -1976,7 +1976,7 @@ void ADN_Equipments_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Equipments_Data::Reset()
 {
     idManager_.Reset();
-    vEquipments_.Delete();
+    vEquipments_.Reset();
 }
 
 // -----------------------------------------------------------------------------

@@ -107,7 +107,6 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
 
     connect( pLineEdit_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnValueChanged( const QString& ) ) );
     connect( pComboBox_, SIGNAL( activated  ( const QString& ) ), this, SLOT( OnUnitChanged ( const QString& ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT( UpdateEnableState() ) );
     pValidator_ = new ADN_DoubleValidator( 0., INT_MAX, 10, pLineEdit_ );
     pLineEdit_->setValidator( pValidator_ );
 }
@@ -179,16 +178,6 @@ void ADN_TimeField::setText( const QString& strText )
     pComboBox_->setCurrentText( strUnit );
     pLineEdit_->setText( locale().toString( strValue.toFloat() ) );
     emit ValueChanged();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TimeField::UpdateEnableState
-// Created: AGN 2004-05-25
-// -----------------------------------------------------------------------------
-void ADN_TimeField::UpdateEnableState()
-{
-    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
-        setEnabled( static_cast< ADN_Connector_String<ADN_TimeField>* >( pConnector_ )->IsConnected() );
 }
 
 // -----------------------------------------------------------------------------

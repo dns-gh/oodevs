@@ -59,16 +59,17 @@
 #undef min
 #undef max
 
+#include <cassert>
+#include <set>
+
 #include <boost/bind.hpp>
 #include <tools/Exception.h>
 #include <tools/Path.h>
+#include "clients_gui/ObjectNameManager.h"
+#include "MT_Tools/MT_Logger.h"
 #include "tools/FileWrapper.h"
 #include "tools/SchemaWriter.h"
 #include "tools/XmlStreamOperators.h"
-#include <cassert>
-#include "MT_Tools/MT_Logger.h"
-#include "ADN_XmlStreamOperators.h"
-#include "clients_gui/ObjectNameManager.h"
 
 struct DeleteOwnedObject
 {

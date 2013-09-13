@@ -154,7 +154,7 @@ ADN_Armors_Data::ArmorInfos* ADN_Armors_Data::ArmorInfos::CreateCopy()
 ADN_Armors_Data::ADN_Armors_Data()
     : ADN_Data_ABC( eCategories, eArmors )
 {
-    vArmors_.AddUniquenessChecker( eError, duplicateName_ );
+    vArmors_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

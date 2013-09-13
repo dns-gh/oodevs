@@ -151,7 +151,7 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output )
 ADN_KnowledgeGroups_Data::ADN_KnowledgeGroups_Data()
     : ADN_Data_ABC( eKnowledgeGroups )
 {
-    vGroups_.AddUniquenessChecker( eError, duplicateName_ );
+    vGroups_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------

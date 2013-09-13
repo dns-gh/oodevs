@@ -25,7 +25,6 @@ public:
 
 protected:
     virtual void TextChanged();
-    virtual void UpdateEnableState();
 };
 
 #include "ADN_TextEdit.inl"

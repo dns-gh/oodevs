@@ -97,39 +97,6 @@ bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem )
     return true;
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC<T>::EndVector
-// Created: JDY 03-07-21
-//-----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::EndVector()
-{
-    AddItem( 0 );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC<T>::SwapItemPrivate
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::SwapItemPrivate( int i, int j )
-{
-    if( size() == 0 || i == j )
-        return;
-    else if( i < 0 )
-        SwapItem( 0, j );
-    else if( j >= static_cast< int >( size() ) )
-        SwapItem( i, static_cast< int >( size() ) - 1 );
-    else if( i > j )
-        SwapItem( j , i );
-    else
-    {
-        T* tmp = at( i );
-        at( i ) = at( j );
-        at( j ) = tmp;
-        emit ItemSwapped( i, j );
-    }
-}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::InvalidatePrivate
@@ -181,28 +148,8 @@ void ADN_Type_Vector_ABC< T >::Reset()
     if( empty() )
         return;
 
-    // backup vector in order to delete ptr after
-    // cleaning vector - ptr may be in use in Cleared
-    // signal
-    ADN_Type_Vector_ABC< T > vTmp = *this;
-
-    // clear vector
-    clear();
-    emit Cleared(false);
-
-    // delete ptrs
-    clear_owned_ptrs( vTmp );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::Delete
-// Created: LDC 2010-09-13
-// -----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::Delete()
-{
-    ADN_Type_Vector_ABC< T >& vTmp = *this;
-    clear_owned_ptrs( vTmp );
+    emit Cleared( false );
+    clear_owned_ptrs( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -232,21 +179,11 @@ void ADN_Type_Vector_ABC<T>::Initialize( ADN_Connector_Vector_ABC& dest ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::push_back
-// Created: APE 2005-04-07
-// -----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::push_back( T* const& x )
-{
-    std::vector< T* >::push_back( x );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::AddUniquenessChecker
 // Created: ABR 2013-01-15
 // -----------------------------------------------------------------------------
 template< class T >
-void ADN_Type_Vector_ABC< T >::AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor /* = &ADN_Tools::NameExtractor */ )
+void ADN_Type_Vector_ABC< T >::AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor )
 {
     checkers_.push_back( new UniquenessChecker( errorType, errorMsg, extractor ) );
 }
