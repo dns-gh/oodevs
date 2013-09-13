@@ -59,7 +59,7 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Models_GUI.h"
 #include "ADN_NavigationInfos.h"
-#include "ADN_NBC_Datas.h"
+#include "ADN_NBC_Data.h"
 #include "ADN_NBC_GUI.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Objects_GUI.h"
@@ -151,7 +151,7 @@ void ADN_Workspace::Initialize()
     elements_[eSymbols]           = new ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI>                     ( eSymbols );
     elements_[eCategories]        = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >              ( eCategories );
     elements_[eUrban]             = new ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >                        ( eUrban );
-    elements_[eNBC]               = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >                           ( eNBC );
+    elements_[eNBC]               = new ADN_WorkspaceElement< ADN_NBC_Data, ADN_NBC_GUI >                           ( eNBC );
     elements_[eLaunchers]         = new ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >                ( eLaunchers );
     elements_[eResources]         = new ADN_WorkspaceElement< ADN_Resources_Data, ADN_Resources_GUI >                ( eResources );
     elements_[eActiveProtections] = new ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI >( eActiveProtections );

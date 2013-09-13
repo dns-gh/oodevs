@@ -12,12 +12,12 @@
 #include "ADN_Workspace.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
-#include "ADN_NBC_Datas.h"
+#include "ADN_NBC_Data.h"
 #include "ADN_NBC_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 
-typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
+typedef ADN_NBC_Data::NbcAgentInfos NbcAgentInfos;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_NbcAgentListView constructor

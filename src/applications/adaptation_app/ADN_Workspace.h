@@ -53,7 +53,7 @@ class ADN_Missions_Data;
 class ADN_Missions_GUI;
 class ADN_Models_Data;
 class ADN_Models_GUI;
-class ADN_NBC_Datas;
+class ADN_NBC_Data;
 class ADN_NBC_GUI;
 class ADN_Objects_Data;
 class ADN_Objects_GUI;
@@ -148,7 +148,7 @@ public:
     ADN_Project_Data& GetProject();
     ADN_WorkspaceElement_ABC& GetWorkspaceElement( E_WorkspaceElements workspaceElement );
 
-    ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();
+    ADN_WorkspaceElement< ADN_NBC_Data, ADN_GUI_ABC >& GetNbc();
     ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& GetLaunchers();
     ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& GetCategories();
     ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >& GetUrban();
@@ -231,9 +231,9 @@ ADN_WorkspaceElement_ABC& ADN_Workspace::GetWorkspaceElement( E_WorkspaceElement
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& ADN_Workspace::GetNbc()
+ADN_WorkspaceElement< ADN_NBC_Data, ADN_GUI_ABC >& ADN_Workspace::GetNbc()
 {
-    return (ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >&)(*elements_[eNBC]);
+    return (ADN_WorkspaceElement< ADN_NBC_Data, ADN_GUI_ABC >&)(*elements_[eNBC]);
 }
 
 // -----------------------------------------------------------------------------

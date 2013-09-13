@@ -13,12 +13,12 @@
 
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
-#include "ADN_NBC_Datas.h"
+#include "ADN_NBC_Data.h"
 #include "ADN_GroupBox.h"
 #include "ADN_MultiPercentage.h"
 #include "ADN_Tools.h"
 
-typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
+typedef ADN_NBC_Data::NbcAgentInfos NbcAgentInfos;
 
 namespace
 {
@@ -30,7 +30,7 @@ namespace
 
         virtual void Connect( ADN_Ref_ABC* pTarget, bool bConnect )
         {
-            ADN_NBC_Datas::NbcIntoxInfos* pInfos = (ADN_NBC_Datas::NbcIntoxInfos*)pTarget;
+            ADN_NBC_Data::NbcIntoxInfos* pInfos = (ADN_NBC_Data::NbcIntoxInfos*)pTarget;
             if( !pTarget )
                 return;
 

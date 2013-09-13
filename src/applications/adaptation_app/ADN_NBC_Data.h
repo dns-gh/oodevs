@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_NBC_Datas_h_
-#define __ADN_NBC_Datas_h_
+#ifndef __ADN_NBC_Data_h_
+#define __ADN_NBC_Data_h_
 
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
@@ -17,12 +17,12 @@
 #include "tools/IdManager.h"
 
 // =============================================================================
-/** @class  ADN_NBC_Datas
-    @brief  ADN_NBC_Datas
+/** @class  ADN_NBC_Data
+    @brief  ADN_NBC_Data
 */
 // Created: AGN 2004-05-06
 // =============================================================================
-class ADN_NBC_Datas : public ADN_Data_ABC
+class ADN_NBC_Data : public ADN_Data_ABC
 {
 
 public:
@@ -93,8 +93,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_NBC_Datas();
-    virtual ~ADN_NBC_Datas();
+             ADN_NBC_Data();
+    virtual ~ADN_NBC_Data();
     //@}
 
     void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
@@ -122,13 +122,13 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::GetNbcAgentVector
+// Name: ADN_NBC_Data::GetNbcAgentVector
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
 inline
-ADN_NBC_Datas::T_NbcAgentInfos_Vector& ADN_NBC_Datas::GetNbcAgentVector()
+ADN_NBC_Data::T_NbcAgentInfos_Vector& ADN_NBC_Data::GetNbcAgentVector()
 {
     return vNbcAgent_;
 }
 
-#endif // __ADN_NBC_Datas_h_
+#endif // __ADN_NBC_Data_h_
