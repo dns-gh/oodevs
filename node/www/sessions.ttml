@@ -79,7 +79,7 @@
         </div>
     </div>
 </div>
-[[ template "input_number"   sub "id" "logs_files" "label" "Keep" "prepend" 1 "prepend_value" "{{#is_positive logs.max_files}} checked=\"checked\"{{/is_positive}}" "append" "Rotated Files" "value" "{{logs.max_files}}" ]]
+[[ template "input_number" sub "id" "logs_files" "label" "Keep" "prepend" 1 "prepend_value" "{{#is_positive logs.max_files}} checked=\"checked\"{{/is_positive}}" "append" "Rotated Files" "value" "{{logs.max_files}}" ]]
 <div class="control-group">
     <label class="control-label">Level</label>
     <div class="controls">
