@@ -23,7 +23,7 @@ enum E_WorkspaceElements
     eNBC,
     eLaunchers,
     eResources,
-    eFireClasses,
+    eFires,
     eDrawings, // Must be before eObjects
     eDisasters, // Must be before eObjects
     eObjects,

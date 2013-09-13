@@ -20,7 +20,7 @@
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
 ADN_Fires_ListView::ADN_Fires_ListView( QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_Fires_ListView", ADN_Tr::ConvertFromWorkspaceElement( eFireClasses ).c_str() )
+    : ADN_ListView( pParent, "ADN_Fires_ListView", ADN_Tr::ConvertFromWorkspaceElement( eFires ).c_str() )
 {
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ADN_Fires_Data::FireClassInfos >( *this );
@@ -70,7 +70,7 @@ void ADN_Fires_ListView::ConnectItem( bool bConnect )
 void ADN_Fires_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< ADN_Fires_Data::FireClassInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eFireClasses ).c_str(), ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), this );
+    ADN_Wizard< ADN_Fires_Data::FireClassInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eFires ).c_str(), ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

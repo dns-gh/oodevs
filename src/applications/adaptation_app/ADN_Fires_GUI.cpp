@@ -25,7 +25,7 @@
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_Fires_GUI::ADN_Fires_GUI( ADN_Fires_Data& data )
-    : ADN_GUI_ABC( eFireClasses )
+    : ADN_GUI_ABC( eFires )
     , data_( data )
 {
     // NOTHING

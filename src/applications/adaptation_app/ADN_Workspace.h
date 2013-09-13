@@ -475,7 +475,7 @@ ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& ADN
 inline
 ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >& ADN_Workspace::GetFireClasses()
 {
-    return static_cast< ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >& >( *elements_[ eFireClasses ] );
+    return static_cast< ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >& >( *elements_[ eFires ] );
 }
 
 // -----------------------------------------------------------------------------

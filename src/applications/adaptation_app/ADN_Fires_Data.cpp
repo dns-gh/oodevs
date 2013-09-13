@@ -266,7 +266,7 @@ void ADN_Fires_Data::FireClassInfos::ReadAgent( xml::xistream& input )
     std::string agent = input.attribute< std::string >( "agent" );
     auto itAgent = std::find_if( agents_.begin(), agents_.end(), ADN_ExtinguisherAgentInfos::Cmp( agent ) );
     if( itAgent == agents_.end() )
-        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFireClasses, -1, tools::translate( "ADN_Fires_Data", "Extinguisher agents" ).toStdString() );
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFires, -1, tools::translate( "ADN_Fires_Data", "Extinguisher agents" ).toStdString() );
     else
         ( *itAgent )->ReadArchive( input );
 }
@@ -291,7 +291,7 @@ void ADN_Fires_Data::FireClassInfos::ReadUrbanModifer( xml::xistream& input )
     std::string material = input.attribute< std::string >( "material-type" );
     auto it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
-        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFireClasses, -1, tools::translate( "ADN_Fires_Data", "Urban attritions" ).toStdString() );
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFires, -1, tools::translate( "ADN_Fires_Data", "Urban attritions" ).toStdString() );
     else
         ( *it )->ReadArchive( input );
 }
@@ -349,7 +349,7 @@ void ADN_Fires_Data::FireClassInfos::WriteArchive( xml::xostream& output )
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_Fires_Data::ADN_Fires_Data()
-    : ADN_Data_ABC( eFireClasses )
+    : ADN_Data_ABC( eFires )
     , cellSize_( 10 )
 {
     fireClasses_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );

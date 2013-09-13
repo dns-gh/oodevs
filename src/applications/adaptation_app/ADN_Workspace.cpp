@@ -172,7 +172,7 @@ void ADN_Workspace::Initialize()
     elements_[eCrowds]            = new ADN_WorkspaceElement< ADN_Crowds_Data, ADN_Crowds_GUI >                      ( eCrowds );
     elements_[eInhabitants]       = new ADN_WorkspaceElement< ADN_Inhabitants_Data, ADN_Inhabitants_GUI >            ( eInhabitants );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >                    ( eReports );
-    elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >                ( eFireClasses );
+    elements_[eFires]       = new ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >                ( eFires );
     elements_[eLogistic]          = new ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >                  ( eLogistic );
     elements_[eDisasters]         = new ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >                ( eDisasters );
     elements_[eLanguages]         = new ADN_WorkspaceElement< ADN_Languages_Data, ADN_Languages_GUI >                ( eLanguages );
@@ -282,7 +282,7 @@ void ADN_Workspace::Build( QMainWindow& mainWindow )
     AddPage( eSensors );
     AddPage( eActiveProtections );
     AddPage( eBreakdowns );
-    AddPage( eFireClasses );
+    AddPage( eFires );
     AddPage( eNBC );
     AddPage( eObjects );
     AddPage( eMissions );
@@ -726,7 +726,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     {
         FillUsingElements( eActiveProtections, *infos, GetActiveProtections().GetData(), &ADN_ActiveProtections_Data::GetActiveProtectionsThatUse, result );
         FillUsingElements( eBreakdowns, *infos, GetBreakdowns().GetData(), &ADN_Breakdowns_Data::GetBreakdownsThatUse, result );
-        FillUsingElements( eFireClasses, *infos, GetFireClasses().GetData(), &ADN_Fires_Data::GetFireThatUse, result );
+        FillUsingElements( eFires, *infos, GetFireClasses().GetData(), &ADN_Fires_Data::GetFireThatUse, result );
         FillUsingElements( eObjects, *infos, GetObjects().GetData(), &ADN_Objects_Data::GetObjectsThatUse, result );
         FillUsingElements( eEquipments, *infos, GetEquipments().GetData(), &ADN_Equipments_Data::GetEquipmentsThatUse, result );
     }
@@ -746,7 +746,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     // All objects, fires, and sensors use urban material. Urban template and resources that use urban material
     if( ADN_Urban_Data::UrbanMaterialInfos* infos = dynamic_cast< ADN_Urban_Data::UrbanMaterialInfos* >( data ) )
     {
-        result[ eFireClasses ]; // Empty list means all resources
+        result[ eFires ]; // Empty list means all resources
         result[ eSensors ];
         result[ eObjects ] = GetObjects().GetData().GetObjectsWithCapacity( ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::TAG );
         result[ eResources ] = GetResources().GetData().GetResourcesWithDirectFire();
