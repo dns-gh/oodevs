@@ -10,11 +10,7 @@
 #ifndef __clients_gui_pch_h_
 #define __clients_gui_pch_h_
 
-// Ignore snprintf is insecure warnings.
-#define _SCL_SECURE_NO_WARNINGS
-
 #pragma warning( disable : 4231 4290 4702 4355 )
-#pragma warning( disable : 4996 ) // 'sprintf': This function or variable may be unsafe.
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

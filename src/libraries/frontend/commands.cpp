@@ -12,7 +12,7 @@
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
 #pragma warning( push )
-#pragma warning( disable: 4127 4244 4245 4996 )
+#pragma warning( disable: 4127 4244 4245 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 #include <boost/foreach.hpp>

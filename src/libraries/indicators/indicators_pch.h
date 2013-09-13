@@ -10,7 +10,6 @@
 #ifndef __indicators_pch_h_
 #define __indicators_pch_h_
 
-#pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #include <QtGui/qtreewidget.h>

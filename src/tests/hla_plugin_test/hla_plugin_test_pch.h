@@ -10,8 +10,6 @@
 #ifndef hla_plugin_test_pch_h
 #define hla_plugin_test_pch_h
 
-#pragma warning( disable : 4996 ) // 'std::_Swap_ranges': Function call with parameters that may be unsafe
-
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 

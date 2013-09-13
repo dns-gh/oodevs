@@ -9,7 +9,6 @@
 
 #include "MT_FormatString.h"
 #include <vector>
-#pragma warning( disable: 4996 )
 #include <cstdio>
 
 //-----------------------------------------------------------------------------

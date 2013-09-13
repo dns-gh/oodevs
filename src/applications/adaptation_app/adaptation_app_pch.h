@@ -10,7 +10,7 @@
 #ifndef __ADN_APPLICATION_PCH_H_
 #define __ADN_APPLICATION_PCH_H_
 
-#pragma warning( disable : 4231 4355 4503 4996  )
+#pragma warning( disable : 4231 4355 4503 )
 
 #pragma warning( push, 0 )
 

@@ -12,10 +12,6 @@
 
 #pragma warning( disable: 4231 )
 
-#ifndef _SCL_SECURE_NO_WARNINGS
-#define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #undef min

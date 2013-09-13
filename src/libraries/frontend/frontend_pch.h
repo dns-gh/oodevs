@@ -10,7 +10,6 @@
 #ifndef __frontend_pch_h_
 #define __frontend_pch_h_
 
-#pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 #include <exception>
 #include <memory>
 #pragma warning( push, 0 )

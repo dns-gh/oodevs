@@ -12,7 +12,6 @@
 #ifndef __MIL_pch_h_
 #define __MIL_pch_h_
 
-#pragma warning( disable: 4996 ) // 'function': was declared deprecated
 #pragma warning( disable: 4786 ) // identifier was truncated to '255' characters in the debug information
 #pragma warning( disable: 4355 ) // 'this' : used in base member initializer list
 

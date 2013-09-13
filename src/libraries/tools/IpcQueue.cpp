@@ -8,20 +8,10 @@
 // *****************************************************************************
 
 #include "tools_pch.h"
-
-#ifdef _MSC_VER
-#ifndef _SCL_SECURE_NO_WARNINGS
-#define _SCL_SECURE_NO_WARNINGS
-#endif
-#endif
-
 #include "IpcQueue.h"
-
 #include "IpcHandler_ABC.h"
 #include "ThreadPool.h"
-
 #include "MT_Tools/MT_Logger.h"
-
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/interprocess/detail/atomic.hpp>

@@ -10,8 +10,7 @@
 #ifndef __FolkModel_h_
 #define __FolkModel_h_
 
-#pragma warning( push )
-#pragma warning( disable : 4100 4996 )
+#pragma warning( push, 0 )
 #include <boost/multi_array.hpp>
 #pragma warning( pop )
 

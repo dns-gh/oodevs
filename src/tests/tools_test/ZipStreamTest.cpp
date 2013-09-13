@@ -11,7 +11,7 @@
 #include <tools/Path.h>
 #include "tools/zipextractor.h"
 #include <tools/TemporaryDirectory.h>
-#pragma warning( disable: 4127 4244 4245 4996 )
+#pragma warning( disable: 4127 4244 4245 )
 #include <zipstream/izipfile.h>
 
 BOOST_AUTO_TEST_CASE( zipstream_extract_archive )
