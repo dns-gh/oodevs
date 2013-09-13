@@ -11,9 +11,6 @@
 #include "ADN_ComboBox.h"
 #include "moc_ADN_ComboBox.cpp"
 #include "ADN_Workspace.h"
-#include "ADN_Enums.h"
-#include "ADN_App.h"
-#include "ADN_MainWindow.h"
 #include "ADN_Connector_Combo_ABC.h"
 
 //-----------------------------------------------------------------------------

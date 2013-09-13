@@ -10,10 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ColorSelector.h"
 #include "moc_ADN_ColorSelector.cpp"
-#include "ADN_App.h"
 #include "ADN_Connector_String.h"
-#include "ADN_Enums.h"
-#include "ADN_Workspace.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )

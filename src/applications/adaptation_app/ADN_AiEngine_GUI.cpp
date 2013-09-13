@@ -19,7 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_AiEngine_GUI.h"
 #include "moc_ADN_AiEngine_GUI.cpp"
-#include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_AiEngine_Data.h"
 #include "ADN_CommonGfx.h"

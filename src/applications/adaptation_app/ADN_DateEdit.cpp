@@ -10,10 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_DateEdit.h"
 #include "moc_ADN_DateEdit.cpp"
-#include "ADN_App.h"
 #include "ADN_Connector_String.h"
-#include "ADN_Enums.h"
-#include "ADN_Workspace.h"
 
 const QString ADN_DateEdit::strFormat_( "yyyy-MM-dd" );
 

@@ -6,18 +6,10 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ProgressIndicator_ABC.cpp $
-// $Author: Ape $
-// $Modtime: 18/03/05 11:43 $
-// $Revision: 1 $
-// $Workfile: ADN_ProgressIndicator_ABC.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_ProgressIndicator_ABC.h"
+#include "ADN_Workspace.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressIndicator_ABC constructor
@@ -41,5 +33,5 @@ ADN_ProgressIndicator_ABC::~ADN_ProgressIndicator_ABC()
 // -----------------------------------------------------------------------------
 void ADN_ProgressIndicator_ABC::SetVisible( bool visible )
 {
-    ADN_App::GetMainWindow()->statusBar()->setVisible( visible );
+    ADN_Workspace::GetWorkspace().GetMainWindow()->statusBar()->setVisible( visible );
 }

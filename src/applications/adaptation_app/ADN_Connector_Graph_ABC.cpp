@@ -87,7 +87,7 @@ bool ADN_Connector_Graph_ABC::RemItemPrivate(void* pObj )
         ADN_GraphData& graphData = (ADN_GraphData&)(*it);
         graphData.DeleteData( pObj );  // The graphData will delete any related graphValue.
     }
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
 

@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Equipments_Sensors_GUI.h"
-#include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Equipments_Data.h"

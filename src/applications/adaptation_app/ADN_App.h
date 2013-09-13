@@ -37,11 +37,6 @@ public:
     virtual void CreateTranslators();
     //@}
 
-    //! @name Accessors
-    //@{
-    static QMainWindow* GetMainWindow();
-    //@}
-
 private:
     //! @name Member data
     //@{

@@ -11,7 +11,9 @@
 #define __ADN_TypePtr_InVector_ABC_h_
 
 #include "ADN_Connector_Vector_ABC.h"
+#include "ADN_ConsistencyChecker.h"
 #include "ADN_Type_Vector_ABC.h"
+#include "ADN_Workspace.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-18

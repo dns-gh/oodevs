@@ -13,7 +13,6 @@
 #define __ADN_Workspace_h_
 
 #include "ADN_Enums.h"
-#include "ADN_NavigationInfos.h"
 #include "ADN_WorkspaceElement.h"
 
 class ADN_ActiveProtections_Data;
@@ -28,6 +27,8 @@ class ADN_Categories_Data;
 class ADN_Categories_GUI;
 class ADN_Crowds_Data;
 class ADN_Crowds_GUI;
+class ADN_Disasters_Data;
+class ADN_Disasters_GUI;
 class ADN_Drawings_Data;
 class ADN_Drawings_GUI;
 class ADN_Equipments_Data;
@@ -48,7 +49,6 @@ class ADN_Launchers_Data;
 class ADN_Launchers_GUI;
 class ADN_Logistic_Data;
 class ADN_Logistic_GUI;
-class ADN_MainWindow;
 class ADN_Missions_Data;
 class ADN_Missions_GUI;
 class ADN_Models_Data;
@@ -77,9 +77,12 @@ class ADN_Urban_Data;
 class ADN_Urban_GUI;
 class ADN_Weapons_Data;
 class ADN_Weapons_GUI;
-class ADN_Disasters_Data;
-class ADN_Disasters_GUI;
-enum E_OpenMode;
+
+namespace ADN_NavigationInfos
+{
+    struct GoTo;
+    struct UsedBy;
+}
 
 namespace tools
 {
@@ -126,7 +129,7 @@ public:
 
     //! @name Gui Operations
     //@{
-    void Build( ADN_MainWindow& mainWindow );
+    void Build( QMainWindow& mainWindow );
     void ExportHtml( const tools::Path& strPath );
 
     T_UsingElements GetElementThatWillBeDeleted( ADN_Ref_ABC* data );
@@ -138,6 +141,8 @@ public:
     bool IsNewBaseReadOnly( const tools::Path& filename ) const;
     bool IsDevMode() const;
 
+    QMainWindow* GetMainWindow() const;
+    void SetMainWindowModified( bool isModified );
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
 
     ADN_Project_Data& GetProject();
@@ -193,7 +198,7 @@ private:
     //@{
     void Initialize();
     void InitializeEnumType();
-    void AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element );
+    void AddPage( E_WorkspaceElements element );
     //@}
 
 private:
@@ -205,6 +210,7 @@ private:
     ADN_Project_Data* projectData_;
     ADN_WorkspaceElement_ABC* elements_[ eNbrWorkspaceElements ];
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
+    QMainWindow* mainWindow_;
     static ADN_Workspace* pWorkspace_;
     //@}
 };
@@ -520,6 +526,27 @@ inline
 void ADN_Workspace::SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator )
 {
     pProgressIndicator_ = pProgressIndicator;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetMainWindow
+// Created: ABR 2013-09-13
+// -----------------------------------------------------------------------------
+inline
+QMainWindow* ADN_Workspace::GetMainWindow() const
+{
+    return mainWindow_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::SetMainWindowModified
+// Created: ABR 2013-09-13
+// -----------------------------------------------------------------------------
+inline
+void ADN_Workspace::SetMainWindowModified( bool isModified )
+{
+    if( mainWindow_ )
+        mainWindow_->setWindowModified( isModified );
 }
 
 #endif // __ADN_Workspace_h_

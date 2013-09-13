@@ -9,7 +9,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Models_Data.h"
 
-#include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Models_Gui.h"

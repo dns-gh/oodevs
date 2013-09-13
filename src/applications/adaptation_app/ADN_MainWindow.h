@@ -10,7 +10,6 @@
 #ifndef __ADN_MainWindow_h_
 #define __ADN_MainWindow_h_
 
-#include "ADN_Callback.h"
 #include <map>
 
 namespace gui
@@ -21,6 +20,7 @@ namespace gui
 
 enum E_WorkspaceElements;
 
+template< typename T > class ADN_Callback_ABC;
 class ADN_Config;
 class ADN_GeneralConfig;
 class ADN_ListView;

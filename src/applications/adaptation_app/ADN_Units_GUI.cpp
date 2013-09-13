@@ -11,7 +11,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Units_GUI.h"
 #include "moc_ADN_Units_GUI.cpp"
-#include "ADN_App.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipments_Dotations_GUI.h"
 #include "ADN_GoToButton.h"
@@ -30,7 +29,6 @@
 #include "ADN_Units_Data.h"
 #include "ADN_Units_Postures_GUI.h"
 #include "ADN_Units_LogThreshold_GUI.h"
-#include "ADN_Workspace.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "ENT/ENT_Tr.h"
 #include <numeric>

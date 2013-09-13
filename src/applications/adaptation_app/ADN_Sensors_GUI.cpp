@@ -11,8 +11,8 @@
 #include "ADN_Sensors_GUI.h"
 #include "moc_ADN_Sensors_GUI.cpp"
 
+#include "ADN_Callback.h"
 #include "ADN_MainWindow.h"
-#include "ADN_App.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_GroupBox.h"
 #include "ADN_CommonGfx.h"

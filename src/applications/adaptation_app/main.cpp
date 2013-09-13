@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "clients_gui/ApplicationMonitor.h"
 #include "ADN_App.h"
+#include "clients_gui/ApplicationMonitor.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Version.h"
 #include "tools/VersionHelper.h"

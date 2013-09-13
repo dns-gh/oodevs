@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Equipments.h"
-#include "ADN_App.h"
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Workspace.h"
 #include "ADN_Units_Data.h"

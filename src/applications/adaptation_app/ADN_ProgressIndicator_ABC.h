@@ -11,8 +11,6 @@
 #define __ADN_ProgressIndicator_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include "ADN_App.h"
-#include "ADN_MainWindow.h"
 
 // =============================================================================
 /** @class  ADN_ProgressIndicator_ABC

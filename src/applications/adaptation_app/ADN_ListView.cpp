@@ -15,12 +15,9 @@
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
 #include "ADN_Connector_ListView_ABC.h"
-#include "ADN_App.h"
 #include "ADN_Languages_GUI.h"
-#include "ADN_MainWindow.h"
 #include "ADN_MultiRefWarningDialog.h"
 #include "ADN_ObjectCreator_ABC.h"
-#include "ADN_MainWindow.h"
 #include "ADN_ListViewToolTip.h"
 #include "clients_kernel/Language.h"
 #include <boost/bind.hpp>
@@ -271,7 +268,7 @@ bool ADN_ListView::SetCurrentItem( void* pData )
 
     ConnectItem( true );
 
-    topLevelWidget()->setWindowModified( wasModified );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( wasModified );
 
     if( pData == 0 )
         SetAutoClear( vItemConnectors_, false );
@@ -433,7 +430,7 @@ void ADN_ListView::FinishCreation( ADN_Ref_ABC* ref )
     selectionModel()->setCurrentIndex( dataModel_.indexFromItem( FindItem( ref ) ), QItemSelectionModel::ClearAndSelect );
 
     pObjectCreator_ = 0;
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -456,7 +453,7 @@ bool ADN_ListView::ContextMenuDelete()
         return false;
     // Remove the item from the list.
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     delete pCurrentData;
     return true;
 }

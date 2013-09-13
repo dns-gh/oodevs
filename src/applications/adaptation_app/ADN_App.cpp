@@ -25,8 +25,6 @@ namespace po = boost::program_options;
 
 namespace
 {
-    const char mainWindowProperty[] = "ADN_App_MainWindow";
-
     tools::Path ReadDataDirectory()
     {
         QSettings settings( "MASA Group", "SWORD" );
@@ -66,7 +64,6 @@ ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
     // GUI
     mainWindow_ = new ADN_MainWindow( *config_ );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
-    qApp->setProperty( mainWindowProperty, QVariant::fromValue< QWidget* >( mainWindow_ ) );
 
     // Initialize
     mainWindow_->Build();
@@ -175,13 +172,4 @@ int ADN_App::Run()
     }
     mainWindow_->showMaximized();
     return qApp->exec();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_App::GetMainWindow
-// Created: ABR 2012-10-28
-// -----------------------------------------------------------------------------
-QMainWindow* ADN_App::GetMainWindow()
-{
-    return static_cast< QMainWindow* >( qApp->property( mainWindowProperty ).value< QWidget* >() );
 }

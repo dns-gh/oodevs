@@ -29,6 +29,8 @@
 #include "ADN_Crowds_Data.h"
 #include "ADN_Crowds_GUI.h"
 #include "ADN_DialogLog.h"
+#include "ADN_Disasters_Data.h"
+#include "ADN_Disasters_GUI.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Drawings_GUI.h"
 #include "ADN_enums.h"
@@ -51,10 +53,12 @@
 #include "ADN_Launchers_GUI.h"
 #include "ADN_Logistic_Data.h"
 #include "ADN_Logistic_GUI.h"
+#include "ADN_MainWindow.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Models_Data.h"
 #include "ADN_Models_GUI.h"
+#include "ADN_NavigationInfos.h"
 #include "ADN_NBC_Datas.h"
 #include "ADN_NBC_GUI.h"
 #include "ADN_Objects_Data.h"
@@ -75,8 +79,6 @@
 #include "ADN_Urban_GUI.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
-#include "ADN_Disasters_Data.h"
-#include "ADN_Disasters_GUI.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/foreach.hpp>
 #include "tools/DefaultLoader.h"
@@ -255,9 +257,10 @@ bool ADN_Workspace::IsDevMode() const
 // Name: ADN_Workspace::Build
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
+void ADN_Workspace::Build( QMainWindow& mainWindow )
 {
-    assert( pProgressIndicator_ != 0 );
+    mainWindow_ = &mainWindow;
+    assert( pProgressIndicator_ );
     pProgressIndicator_->SetVisible( true );
     pProgressIndicator_->Reset( tr( "Loading GUI..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
@@ -265,52 +268,52 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
         elements_[n]->GetGuiABC().Build();
-        elements_[n]->GetGuiABC().RegisterTable( mainwindow );
+        elements_[n]->GetGuiABC().RegisterTable( static_cast< ADN_MainWindow& >( *mainWindow_ ) );
         pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
     }
 
     // Tab order
-    AddPage( mainwindow, eCategories );
-    AddPage( mainwindow, eUrban );
-    AddPage( mainwindow, eResources );
-    AddPage( mainwindow, eResourceNetworks );
-    AddPage( mainwindow, eLaunchers );
-    AddPage( mainwindow, eWeapons );
-    AddPage( mainwindow, eSensors );
-    AddPage( mainwindow, eActiveProtections );
-    AddPage( mainwindow, eBreakdowns );
-    AddPage( mainwindow, eFireClasses );
-    AddPage( mainwindow, eNBC );
-    AddPage( mainwindow, eObjects );
-    AddPage( mainwindow, eMissions );
-    AddPage( mainwindow, eModels );
-    AddPage( mainwindow, eEquipments );
-    AddPage( mainwindow, eUnits );
-    AddPage( mainwindow, eAutomata );
-    AddPage( mainwindow, eCrowds );
-    AddPage( mainwindow, eInhabitants );
-    AddPage( mainwindow, eLogistic );
-    AddPage( mainwindow, eCommunications );
-    AddPage( mainwindow, eKnowledgeGroups );
-    AddPage( mainwindow, eHumanFactors );
-    AddPage( mainwindow, eAiEngine );
+    AddPage( eCategories );
+    AddPage( eUrban );
+    AddPage( eResources );
+    AddPage( eResourceNetworks );
+    AddPage( eLaunchers );
+    AddPage( eWeapons );
+    AddPage( eSensors );
+    AddPage( eActiveProtections );
+    AddPage( eBreakdowns );
+    AddPage( eFireClasses );
+    AddPage( eNBC );
+    AddPage( eObjects );
+    AddPage( eMissions );
+    AddPage( eModels );
+    AddPage( eEquipments );
+    AddPage( eUnits );
+    AddPage( eAutomata );
+    AddPage( eCrowds );
+    AddPage( eInhabitants );
+    AddPage( eLogistic );
+    AddPage( eCommunications );
+    AddPage( eKnowledgeGroups );
+    AddPage( eHumanFactors );
+    AddPage( eAiEngine );
     if( config_.IsDevMode() )
-        AddPage( mainwindow, eDisasters );
+        AddPage( eDisasters );
 
     //AddPage( mainwindow, eReports ); // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
 
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );
     pProgressIndicator_->SetVisible( false );
-    connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), &mainwindow, SIGNAL( ChangeTab( E_WorkspaceElements ) ) );
+    connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), mainWindow_, SIGNAL( ChangeTab( E_WorkspaceElements ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::AddPage
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-void ADN_Workspace::AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element )
+void ADN_Workspace::AddPage( E_WorkspaceElements element )
 {
-    mainWindow.AddPage( element, *elements_[ element ]->GetGuiABC().GetMainWidget(), elements_[ element ]->GetName() );
+    static_cast< ADN_MainWindow* >( mainWindow_ )->AddPage( element, *elements_[ element ]->GetGuiABC().GetMainWidget(), elements_[ element ]->GetName() );
 }
 
 //-----------------------------------------------------------------------------

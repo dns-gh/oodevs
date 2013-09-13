@@ -12,7 +12,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Units_Composantes_GUI.h"
 #include "moc_ADN_Units_Composantes_GUI.cpp"
-#include "ADN_App.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Gui_Tools.h"
 #include "ADN_Units_Data.h"

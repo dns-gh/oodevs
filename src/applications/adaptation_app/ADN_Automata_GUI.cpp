@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_GUI.h"
+#include "ADN_Callback.h"
 #include "ADN_MainWindow.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Automata_Data.h"

@@ -10,21 +10,21 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MainWindow.h"
 #include "moc_ADN_MainWindow.cpp"
-#include "ADN_Workspace.h"
+#include "ADN_Callback.h"
 #include "ADN_ConsistencyDialog.h"
-#include "ADN_Tools.h"
-#include "ADN_Table.h"
-#include "ADN_TableDialog.h"
+#include "ADN_Enums.h"
 #include "ADN_GeneralConfig.h"
 #include "ADN_Languages_GUI.h"
 #include "ADN_ListView.h"
 #include "ADN_ListViewDialog.h"
 #include "ADN_MainTabWidget.h"
-#include "ADN_Enums.h"
-#include "ADN_RunProcessDialog.h"
-#include "ADN_Project_Data.h"
 #include "ADN_ProgressBar.h"
-#include "ADN_FileLoaderObserver.h"
+#include "ADN_Project_Data.h"
+#include "ADN_RunProcessDialog.h"
+#include "ADN_Table.h"
+#include "ADN_TableDialog.h"
+#include "ADN_Tools.h"
+#include "ADN_Workspace.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/GlContext.h"
 #include "clients_gui/HelpSystem.h"
@@ -65,7 +65,7 @@ namespace
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
 ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
-    : QMainWindow ()
+    : QMainWindow()
     , config_( config )
     , openGLContext_( new gui::GlContext() )
     , actionClose_( 0 )

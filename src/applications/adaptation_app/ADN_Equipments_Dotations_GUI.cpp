@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Equipments_Dotations_GUI.h"
 #include "moc_ADN_Equipments_Dotations_GUI.cpp"
-#include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Equipments_Data.h"

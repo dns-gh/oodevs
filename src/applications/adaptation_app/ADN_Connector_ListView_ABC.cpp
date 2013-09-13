@@ -11,7 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_ListView_ABC.h"
-#include "ADN_App.h"
+#include "ADN_Workspace.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC constructor
@@ -97,7 +97,7 @@ bool ADN_Connector_ListView_ABC::RemItemPrivate( void* item )
     ADN_StandardItem *pItem = list_.FindItem( item );
     if( pItem )
         list_.TakeItem( pItem );
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
 

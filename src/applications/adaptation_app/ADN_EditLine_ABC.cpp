@@ -10,10 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_EditLine_ABC.h"
 #include "moc_ADN_EditLine_ABC.cpp"
-#include "ADN_Workspace.h"
-#include "ADN_Enums.h"
-#include "ADN_App.h"
-#include "ADN_MainWindow.h"
+#include "ADN_Ref_ABC.h"
 
 // -----------------------------------------------------------------------------
 // ADN_EditLine_ToolTiped

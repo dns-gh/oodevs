@@ -10,9 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_TextEdit_ABC.h"
 #include "moc_ADN_TextEdit_ABC.cpp"
-#include "ADN_App.h"
-#include "ADN_Enums.h"
-#include "ADN_Workspace.h"
+#include "ADN_Ref_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TextEdit_ABC constructor

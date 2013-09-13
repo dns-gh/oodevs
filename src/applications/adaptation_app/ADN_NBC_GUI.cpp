@@ -10,8 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_GUI.h"
 #include "moc_ADN_NBC_GUI.cpp"
-#include "ADN_App.h"
-#include "ADN_Workspace.h"
 #include "ADN_NBC_Datas.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_NBC_NbcAgentListView.h"

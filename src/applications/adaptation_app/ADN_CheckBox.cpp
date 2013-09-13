@@ -16,11 +16,6 @@
 #include "ADN_Connector_ABC.h"
 #include "ADN_Connector_Bool.h"
 
-#include "ADN_Workspace.h"
-#include "ADN_Enums.h"
-#include "ADN_App.h"
-#include "ADN_MainWindow.h"
-
 //-----------------------------------------------------------------------------
 // Name: ADN_CheckBox constructor
 // Created: JDY 03-07-01

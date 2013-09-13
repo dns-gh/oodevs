@@ -12,8 +12,6 @@
 #include "moc_ADN_Table.cpp"
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
-#include "ADN_App.h"
-#include "ADN_MainWindow.h"
 #include "ADN_Connector_StandardItem.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "excel/ExcelFormat.h"
