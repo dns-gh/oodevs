@@ -32,6 +32,7 @@ class ADN_Drawings_Data;
 class ADN_Drawings_GUI;
 class ADN_Equipments_Data;
 class ADN_Equipments_GUI;
+class ADN_FileLoaderObserver;
 class ADN_FireClass_Data;
 class ADN_FireClass_GUI;
 class ADN_GeneralConfig;
@@ -96,20 +97,48 @@ class ADN_Workspace : public QObject
     Q_OBJECT
 
 public:
+    //! @name Singleton implementation
+    //@{
     static void CreateWorkspace( const ADN_GeneralConfig& config );
     static ADN_Workspace& GetWorkspace();
     static void CleanWorkspace();
+    //@}
+
+private:
+    //! @name Constructors/destructor
+    //@{
+    explicit ADN_Workspace( const ADN_GeneralConfig& config );
+    virtual ~ADN_Workspace();
+    //@}
 
 public:
-    typedef std::map< E_WorkspaceElements, QStringList >  T_UsingElements;
+    //! @name Types
+    //@{
+    typedef std::map< E_WorkspaceElements, QStringList > T_UsingElements;
+    //@}
 
-public:
-    void Build( ADN_MainWindow& mainWindow, bool devMode );
-    void Reset( const tools::Path& filename, bool bVisible = true );
-    void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader );
-    bool Save( const tools::Loader_ABC& fileLoader );
-    bool SaveAs( const tools::Path& filename, const tools::Loader_ABC& fileLoader );
+    //! @name Data operations
+    //@{
+    void Reset( const tools::Path& filename );
+    void Load( const tools::Path& filename );
+    bool SaveAs( const tools::Path& filename );
+    //@}
+
+    //! @name Gui Operations
+    //@{
+    void Build( ADN_MainWindow& mainWindow );
     void ExportHtml( const tools::Path& strPath );
+
+    T_UsingElements GetElementThatWillBeDeleted( ADN_Ref_ABC* data );
+    T_UsingElements GetElementThatUse( ADN_Ref_ABC* data );
+    //@}
+
+    //! @name Accessors
+    //@{
+    bool IsNewBaseReadOnly( const tools::Path& filename ) const;
+    bool IsDevMode() const;
+
+    void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
 
     ADN_Project_Data& GetProject();
     ADN_WorkspaceElement_ABC& GetWorkspaceElement( E_WorkspaceElements workspaceElement );
@@ -142,41 +171,43 @@ public:
     ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& GetLogistic();
     ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& GetDisasters();
     ADN_WorkspaceElement< ADN_Languages_Data, ADN_Languages_GUI >& GetLanguages();
-
-    T_UsingElements GetElementThatWillBeDeleted( ADN_Ref_ABC* data );
-    T_UsingElements GetElementThatUse( ADN_Ref_ABC* data );
-
-    void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
-    void ResetProgressIndicator();
-
-    bool IsDevMode() const;
+    //@}
 
 signals:
+    //! @name Signals
+    //@{
     void ChangeTab( E_WorkspaceElements targetTab );
+    //@}
 
 public slots:
+    //! @name Slots
+    //@{
     void OnUsersListRequested( const ADN_NavigationInfos::UsedBy& usedByInfo );
     void OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo );
     void OnChooseOptional( bool choice );
     void OnLanguageChanged( const std::string& language );
+    //@}
 
 private:
+    //! @name Helpers
+    //@{
     void Initialize();
     void InitializeEnumType();
     void AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element );
+    //@}
 
 private:
-    explicit ADN_Workspace( const ADN_GeneralConfig& config );
-    virtual ~ADN_Workspace();
-
-private:
+    //! @name Member data
+    //@{
     const ADN_GeneralConfig& config_;
+    std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
+    std::auto_ptr< const tools::Loader_ABC > fileLoader_;
     ADN_Project_Data* projectData_;
     ADN_WorkspaceElement_ABC* elements_[ eNbrWorkspaceElements ];
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
     bool symbols_;
-    bool devMode_;
     static ADN_Workspace* pWorkspace_;
+    //@}
 };
 
 // -----------------------------------------------------------------------------
@@ -490,16 +521,6 @@ inline
 void ADN_Workspace::SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator )
 {
     pProgressIndicator_ = pProgressIndicator;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::IsDevMode
-// Created: LGY 2013-05-16
-// -----------------------------------------------------------------------------
-inline
-bool ADN_Workspace::IsDevMode() const
-{
-    return devMode_;
 }
 
 #endif // __ADN_Workspace_h_

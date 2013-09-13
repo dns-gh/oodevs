@@ -19,15 +19,9 @@ namespace gui
     class GlContext;
 }
 
-namespace tools
-{
-    class Loader_ABC;
-}
-
 enum E_WorkspaceElements;
 
 class ADN_Config;
-class ADN_FileLoaderObserver;
 class ADN_GeneralConfig;
 class ADN_ListView;
 class ADN_MainTabWidget;
@@ -51,14 +45,7 @@ public:
     virtual ~ADN_MainWindow();
     //@}
 
-    //! @name Data operations
-    //@{
-    void Open( const tools::Path& filename );
-    void New( const tools::Path& filename );
-    void SaveAs( const tools::Path& filename );
-    //@}
-
-    //! @name Gui operations
+    //! @name Operations
     //@{
     void Build();
     void AddPage( E_WorkspaceElements element, QWidget& page, const QString& title );
@@ -67,7 +54,7 @@ public:
     //@}
 
 protected:
-    //! @name 
+    //! @name QMainWindow override
     //@{
     virtual void closeEvent( QCloseEvent* e );
     virtual void mousePressEvent( QMouseEvent * event );
@@ -98,7 +85,6 @@ private:
     //@{
     void OnOpenned( bool isOpen );
     bool OfferToSave();
-    bool IsNewBaseReadOnly( const tools::Path& filename ) const;
     //@}
 
 private:
@@ -112,8 +98,6 @@ private:
     //! @name Member data
     //@{
     const ADN_GeneralConfig& config_;
-    std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
-    std::auto_ptr< tools::Loader_ABC > fileLoader_;
     std::auto_ptr< gui::GlContext > openGLContext_;
 
     std::auto_ptr< gui::ConsistencyDialog_ABC > consistencyDialog_;

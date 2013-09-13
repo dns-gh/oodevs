@@ -30,7 +30,6 @@
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
-#include "tools/DefaultLoader.h"
 #include "tools/VersionHelper.h"
 
 namespace
@@ -68,8 +67,6 @@ namespace
 ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     : QMainWindow ()
     , config_( config )
-    , fileLoaderObserver_( new ADN_FileLoaderObserver() )
-    , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , openGLContext_( new gui::GlContext() )
     , actionClose_( 0 )
     , actionSave_( 0 )
@@ -197,23 +194,7 @@ void ADN_MainWindow::Build()
     connect( actionOptional_, SIGNAL( triggered( bool ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnChooseOptional( bool ) ) );
     ADN_Workspace::GetWorkspace().SetProgressIndicator( progressBar_.get() );
 
-    ADN_Workspace::GetWorkspace().Build( *this, config_.IsDevMode() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::New
-// Created: JSR 2013-03-20
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::New( const tools::Path& filename )
-{
-    filename.Parent().CreateDirectories();
-    if( mainTabWidget_.get() )
-        mainTabWidget_->setVisible( false );
-    ADN_Workspace::GetWorkspace().Reset( filename );
-    if( mainTabWidget_.get() )
-        mainTabWidget_->setVisible( true );
-    setCaption( tr( "Sword Adaptation Tool - " ) + filename.ToUTF8().c_str() + "[*]" );
-    OnOpenned( true );
+    ADN_Workspace::GetWorkspace().Build( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -225,28 +206,14 @@ void ADN_MainWindow::OnNew()
     tools::Path path = gui::FileDialog::getExistingDirectory( this, tr( "Create new project" ), config_.GetModelsDir() );
     if( path.IsEmpty() )
         return;
-    New( path / "physical.xml" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::Open
-// Created: APE 2005-04-14
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::Open( const tools::Path& filename )
-{
-    if( isOpen_ )
-        OnClose();
-    QApplication::setOverrideCursor( Qt::waitCursor );
-    ADN_Workspace::GetWorkspace().Load( filename, *fileLoader_ );
-    QApplication::restoreOverrideCursor();
-    QString title = tr( "Sword Adaptation Tool - %1" ).arg( filename.ToUTF8().c_str() );
-    if( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() )
-        title += tr( " [ Read Only ]" );
-    setCaption( title + "[*]" );
-    if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
-        consistencyDialog_->CheckConsistency();
-    else
-        setWindowModified( false );
+    path /= "physical.xml";
+    path.Parent().CreateDirectories();
+    if( mainTabWidget_.get() )
+        mainTabWidget_->setVisible( false );
+    ADN_Workspace::GetWorkspace().Reset( path );
+    if( mainTabWidget_.get() )
+        mainTabWidget_->setVisible( true );
+    setCaption( tr( "Sword Adaptation Tool - " ) + path.ToUTF8().c_str() + "[*]" );
     OnOpenned( true );
 }
 
@@ -261,11 +228,24 @@ void ADN_MainWindow::OnOpen()
         return;
     try
     {
-        Open( filename );
+        if( isOpen_ )
+            OnClose();
+        QApplication::setOverrideCursor( Qt::waitCursor );
+        ADN_Workspace::GetWorkspace().Load( filename );
+        QApplication::restoreOverrideCursor();
+        QString title = tr( "Sword Adaptation Tool - %1" ).arg( filename.ToUTF8().c_str() );
+        if( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() )
+            title += tr( " [ Read Only ]" );
+        setCaption( title + "[*]" );
+        if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
+            consistencyDialog_->CheckConsistency();
+        else
+            setWindowModified( false );
+        OnOpenned( true );
     }
     catch( const std::exception& e )
     {
-        ADN_Workspace::GetWorkspace().ResetProgressIndicator();
+        progressBar_->Reset();
         QMessageBox::critical( 0, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         skipSave_ = true;
         OnClose();
@@ -322,16 +302,6 @@ void ADN_MainWindow::closeEvent( QCloseEvent * e )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::SaveAs
-// Created: SBO 2006-11-16
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::SaveAs( const tools::Path& filename )
-{
-    if( !IsNewBaseReadOnly( filename ) )
-        ADN_Workspace::GetWorkspace().SaveAs( filename, *fileLoader_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::OnSave
 // Created: JSR 2012-04-26
 // -----------------------------------------------------------------------------
@@ -343,7 +313,7 @@ void ADN_MainWindow::OnSave()
         if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
             ADN_ConsistencyChecker::ClearLoadingErrors();
         consistencyDialog_->CheckConsistency();
-        ADN_Workspace::GetWorkspace().Save( *fileLoader_ );
+        ADN_Workspace::GetWorkspace().SaveAs( ADN_Workspace::GetWorkspace().GetProject().GetFileInfos().GetFileNameFull() );
     }
     catch( const std::exception& e )
     {
@@ -366,7 +336,7 @@ void ADN_MainWindow::OnSaveAs()
         return;
 
     directory /= "physical.xml";
-    if( IsNewBaseReadOnly( directory ) )
+    if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( directory ) )
     {
         QMessageBox::warning( this, tr( "Warning" ), tr( "The database you are trying to override is read-only. Please select another directory." ) );
         OnSaveAs();
@@ -377,7 +347,7 @@ void ADN_MainWindow::OnSaveAs()
     bool hasSaved = true;
     try
     {
-        hasSaved = ADN_Workspace::GetWorkspace().SaveAs( directory, *fileLoader_ );
+        hasSaved = ADN_Workspace::GetWorkspace().SaveAs( directory );
         if( !hasSaved )
             QMessageBox::critical( this, tr( "Saving error" ), tr( "Something went wrong during the saving process." ) );
     }
@@ -507,21 +477,6 @@ void ADN_MainWindow::ShowConsistencyTable( const QString& name ) const
     if( !ShowConsistencyDialog< ADN_TableDialog >( name, consistencyTables_ ) &&
         !ShowConsistencyDialog< ADN_ListViewDialog >( name, consistencyListViews_ ) )
         throw MASA_EXCEPTION( "Invalid consistency table " + name.toStdString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::IsNewBaseReadOnly
-// Created: ABR 2013-09-12
-// -----------------------------------------------------------------------------
-bool ADN_MainWindow::IsNewBaseReadOnly( const tools::Path& filename ) const
-{
-    if( !filename.Exists() )
-        return false;
-    bool readOnly = false;
-    tools::Xifstream xis( filename );
-    xis >> xml::optional >> xml::start( "physical" )
-        >> xml::optional >> xml::attribute( "read-only", readOnly );
-    return readOnly;
 }
 
 // -----------------------------------------------------------------------------

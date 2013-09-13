@@ -34,6 +34,7 @@
 #include "ADN_enums.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Resources_GUI.h"
+#include "ADN_FileLoaderObserver.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_FireClass_GUI.h"
 #include "ADN_GeneralConfig.h"
@@ -78,6 +79,7 @@
 #include "ADN_Disasters_GUI.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/foreach.hpp>
+#include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "tools/ZipExtractor.h"
 
@@ -124,8 +126,9 @@ void ADN_Workspace::CleanWorkspace()
 //-----------------------------------------------------------------------------
 ADN_Workspace::ADN_Workspace( const ADN_GeneralConfig& config )
     : config_( config )
+    , fileLoaderObserver_( new ADN_FileLoaderObserver() )
+    , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , pProgressIndicator_( 0 )
-    , devMode_           ( false )
 {
     // NOTHING
 }
@@ -225,17 +228,40 @@ ADN_Workspace::~ADN_Workspace()
     delete projectData_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::IsNewBaseReadOnly
+// Created: ABR 2013-09-12
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::IsNewBaseReadOnly( const tools::Path& filename ) const
+{
+    if( !filename.Exists() )
+        return false;
+    bool readOnly = false;
+    tools::Xifstream xis( filename );
+    xis >> xml::optional >> xml::start( "physical" )
+        >> xml::optional >> xml::attribute( "read-only", readOnly );
+    return readOnly;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::IsDevMode
+// Created: LGY 2013-05-16
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::IsDevMode() const
+{
+    return config_.IsDevMode();
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::Build
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Build( ADN_MainWindow& mainwindow, bool devMode )
+void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
 {
     assert( pProgressIndicator_ != 0 );
     pProgressIndicator_->SetVisible( true );
     pProgressIndicator_->Reset( tr( "Loading GUI..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
-    devMode_ = devMode;
 
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
@@ -269,7 +295,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow, bool devMode )
     AddPage( mainwindow, eKnowledgeGroups );
     AddPage( mainwindow, eHumanFactors );
     AddPage( mainwindow, eAiEngine );
-    if( devMode_ )
+    if( config_.IsDevMode() )
         AddPage( mainwindow, eDisasters );
 
     //AddPage( mainwindow, eReports ); // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
@@ -292,9 +318,9 @@ void ADN_Workspace::AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements ele
 // Name: ADN_Workspace::Reset
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Reset(const tools::Path& filename, bool bVisible )
+void ADN_Workspace::Reset(const tools::Path& filename )
 {
-    if( bVisible )
+    if( pProgressIndicator_ )
     {
         pProgressIndicator_->SetVisible( true );
         pProgressIndicator_->Reset( tr( "Reseting project..." ) );
@@ -304,7 +330,7 @@ void ADN_Workspace::Reset(const tools::Path& filename, bool bVisible )
     projectData_->SetFile( filename );
     for( int n = eNbrWorkspaceElements - 1; n >= 0; --n )
     {
-        if( bVisible )
+        if( pProgressIndicator_ )
             pProgressIndicator_->Increment( tr( "Unloading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
         qApp->processEvents();
         elements_[n]->GetGuiABC().DisconnectListView();
@@ -312,7 +338,7 @@ void ADN_Workspace::Reset(const tools::Path& filename, bool bVisible )
     }
     projectData_->Reset();
 
-    if( bVisible )
+    if( pProgressIndicator_ )
     {
         pProgressIndicator_->Reset( tr( "Project reseted" ) );
         pProgressIndicator_->SetVisible( false );
@@ -323,29 +349,33 @@ void ADN_Workspace::Reset(const tools::Path& filename, bool bVisible )
 // Name: ADN_Workspace::Load
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader )
+void ADN_Workspace::Load( const tools::Path& filename )
 {
-    // load configuration file
-    // Must load it first
-    pProgressIndicator_->SetVisible( true );
-    pProgressIndicator_->Reset( tr( "Loading project..." ) );
-    pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
+    if( pProgressIndicator_ )
+    {
+        pProgressIndicator_->SetVisible( true );
+        pProgressIndicator_->Reset( tr( "Loading project..." ) );
+        pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
+    }
 
     projectData_->SetFile( filename );
-    projectData_->Load( fileLoader );
-    pProgressIndicator_->Increment();
+    projectData_->Load( *fileLoader_ );
+    if( pProgressIndicator_ )
+        pProgressIndicator_->Increment();
 
     // Treatment order, ie E_WorkspaceElements order.
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
-        pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
+        if( pProgressIndicator_ )
+            pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
         qApp->processEvents();
-        elements_[n]->GetDataABC().Load( fileLoader );
+        elements_[n]->GetDataABC().Load( *fileLoader_ );
     }
     // Allow circular dependences between pages
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
         elements_[n]->GetDataABC().Initialize();
-    ResetProgressIndicator();
+    pProgressIndicator_->Reset();
+    if( pProgressIndicator_ )
     pProgressIndicator_->SetVisible( false );
 }
 
@@ -387,7 +417,7 @@ namespace
 // Name: ADN_Workspace::SaveAs
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-bool ADN_Workspace::SaveAs( const tools::Path& filename, const tools::Loader_ABC& fileLoader )
+bool ADN_Workspace::SaveAs( const tools::Path& filename )
 {
     ADN_Project_Data::WorkDirInfos& dirInfos = ADN_Project_Data::GetWorkDirInfos();
 
@@ -436,7 +466,8 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename, const tools::Loader_ABC
     if( !dlgLog.empty() )
     {
         dlgLog.exec();
-        ResetProgressIndicator();
+        if( pProgressIndicator_ )
+            pProgressIndicator_->Reset();
         return false;
     }
 
@@ -446,11 +477,14 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename, const tools::Loader_ABC
     try
     {
         // saving in temporary files activated
-        pProgressIndicator_->SetVisible( true );
-        pProgressIndicator_->Reset( tr( "Saving project..." ) );
-        pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
+        if( pProgressIndicator_ )
+        {
+            pProgressIndicator_->SetVisible( true );
+            pProgressIndicator_->Reset( tr( "Saving project..." ) );
+            pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
+        }
         projectData_->SetFile( filename );
-        projectData_->Save( fileLoader );
+        projectData_->Save( *fileLoader_ );
         for( tools::Path::T_Paths::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
         {
             if( !it->IsEmpty() )
@@ -460,13 +494,15 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename, const tools::Loader_ABC
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
-            pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
+            if( pProgressIndicator_ )
+                pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
         }
     }
     catch( const std::exception& )
     {
         dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
-        ResetProgressIndicator();
+        if( pProgressIndicator_ )
+            pProgressIndicator_->Reset();
         throw;
     }
 
@@ -483,22 +519,16 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename, const tools::Loader_ABC
         tools::zipextractor::ExtractArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
                                              dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ );
 
-    pProgressIndicator_->Increment( "" );
-    pProgressIndicator_->SetVisible( false );
+    if( pProgressIndicator_ )
+    {
+        pProgressIndicator_->Increment( "" );
+        pProgressIndicator_->SetVisible( false );
+        pProgressIndicator_->Reset();
+    }
 
     // Save is ended
-    ResetProgressIndicator();
     projectData_->GetDataInfos().DisableReadOnly();
     return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Workspace::Save
-// Created: JDY 03-07-04
-//-----------------------------------------------------------------------------
-bool ADN_Workspace::Save( const tools::Loader_ABC& fileLoader )
-{
-    return SaveAs( GetProject().GetFileInfos().GetFileNameFull(), fileLoader );
 }
 
 // -----------------------------------------------------------------------------
@@ -518,15 +548,6 @@ void ADN_Workspace::ExportHtml( const tools::Path& strPath )
     mainIndexBuilder.EndHtml();
     tools::Path fileName = strPath / "index.htm";
     mainIndexBuilder.WriteToFile( fileName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::ResetProgressIndicator
-// Created: SBO 2006-01-13
-// -----------------------------------------------------------------------------
-void ADN_Workspace::ResetProgressIndicator()
-{
-    pProgressIndicator_->Reset();
 }
 
 // -----------------------------------------------------------------------------

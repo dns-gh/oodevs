@@ -136,20 +136,28 @@ int ADN_App::Run()
         if( IsInvalidLicense() )
             return EXIT_FAILURE;
 
-        if( !config_->GetNewFile().IsEmpty() && ( !config_->GetInputFile().IsEmpty() || !config_->GetOutputFile().IsEmpty() ) )
-            throw MASA_EXCEPTION( tools::translate( "ADN_App" , "New base creation and input/output file options cannot be used together." ).toStdString() );
+        const tools::Path& newFile = config_->GetNewFile();
+        const tools::Path& inputFile = config_->GetInputFile();
+        const tools::Path& outputFile = config_->GetOutputFile();
 
-        if( !config_->GetNewFile().IsEmpty() )
+        if( !newFile.IsEmpty() && ( !inputFile.IsEmpty() || !outputFile.IsEmpty() ) )
+            throw MASA_EXCEPTION( tools::translate( "ADN_App" , "New base creation and input/output file options cannot be used together." ).toStdString() );
+        if( !newFile.IsEmpty() )
         {
-            mainWindow_->New( config_->GetNewFile() );
-            mainWindow_->SaveAs( config_->GetNewFile() );
+            if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( newFile ) )
+                return EXIT_FAILURE;
+            newFile.Parent().CreateDirectories();
+            ADN_Workspace::GetWorkspace().Reset( newFile );
+            ADN_Workspace::GetWorkspace().SaveAs( newFile );
             return EXIT_SUCCESS;
         }
-        if( !config_->GetInputFile().IsEmpty() )
-            mainWindow_->Open( config_->GetInputFile() );
-        if( !config_->GetOutputFile().IsEmpty() )
+        if( !inputFile.IsEmpty() )
+            ADN_Workspace::GetWorkspace().Load( inputFile );
+        if( !outputFile.IsEmpty() )
         {
-            mainWindow_->SaveAs( config_->GetOutputFile() );
+            if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( outputFile ) )
+                return EXIT_FAILURE;
+            ADN_Workspace::GetWorkspace().SaveAs( outputFile );
             return EXIT_SUCCESS;
         }
     }
