@@ -61,7 +61,7 @@ AgentTypes::AgentTypes( const tools::ExerciseConfig& config )
 void AgentTypes::Load( const tools::ExerciseConfig& config )
 {
     Purge();
-    symbolFactory_ = new SymbolFactory();
+    symbolFactory_.reset( new SymbolFactory() );
     symbolFactory_->Load( config );
     const tools::Loader_ABC& loader = config.GetLoader();
     loader.LoadPhysicalFile( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ) );

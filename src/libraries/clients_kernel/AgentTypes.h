@@ -121,7 +121,7 @@ private:
     //! @name Member data
     //@{
     T_MissionResolver missions_[ 3 ];
-    SymbolFactory* symbolFactory_;
+    std::auto_ptr< SymbolFactory > symbolFactory_;
     //@}
 
 public:
