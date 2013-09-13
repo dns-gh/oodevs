@@ -20,28 +20,27 @@
 */
 // Created: APE 2005-03-18
 // =============================================================================
-class ADN_ProgressBar : public Q3HBox
+class ADN_ProgressBar : public QWidget
                       , public ADN_ProgressIndicator_ABC
 {
 public:
-    explicit ADN_ProgressBar( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+    explicit ADN_ProgressBar( QWidget* parent );
     virtual ~ADN_ProgressBar();
 
     //! @name Modifiers
     //@{
-    void SetNbrOfSteps( int n );
+    void SetMaximum( int n );
     //@}
 
     //! @name Operations
     //@{
-    void Increment( int n = 1 );
-    void Increment( const char* szText, int n = 1 );
-    void Reset( const char* szMsg = 0 );
+    void Increment( const QString& text );
+    void SetVisible( bool visible );
     //@}
 
 private:
     QLabel* label_;
-    Q3ProgressBar* bar_;
+    QProgressBar* bar_;
 };
 
 #endif // __ADN_ProgressBar_h_

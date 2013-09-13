@@ -79,7 +79,7 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     , menuConsistencyTables_( 0 )
     , menuLanguages_( 0 )
     , skipSave_( false )
-    , isOpen_( false )
+    , isLoaded_( false )
 {
     // Init
     openGLContext_->Init( this->winId() );
@@ -154,8 +154,15 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     // Status bar
     progressBar_.reset( new ADN_ProgressBar( statusBar() ) );
     statusBar()->addWidget( progressBar_.get() );
+    statusBar()->setVisible( false );
 
-    OnOpenned( false );
+    // Main Layout
+    QWidget* mainWidget = new QWidget( this );
+    mainLayout_ = new QVBoxLayout( mainWidget );
+    mainLayout_->setMargin( 0 );
+    setCentralWidget( mainWidget );
+
+    OnLoadStatusChanged( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -167,16 +174,45 @@ ADN_MainWindow::~ADN_MainWindow()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::OnLoadStatusChanged
+// Created: ABR 2013-09-12
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::OnLoadStatusChanged( bool isLoaded )
+{
+    if( isLoaded )
+        BuildGUI();
+    else
+        PurgeGUI();
+    isLoaded_ = isLoaded;
+    if( mainTabWidget_.get() )
+        mainTabWidget_->setVisible( isLoaded );
+    actionSave_->setVisible( isLoaded && !ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() );
+    actionSaveAs_->setVisible( isLoaded );
+    actionClose_->setVisible( isLoaded );
+    actionExportHtml_->setVisible( isLoaded );
+    actionConsistencyAnalysis_->setVisible( isLoaded );
+    actionOptional_->setVisible( isLoaded );
+    actionBack_->setVisible( isLoaded );
+    actionForward_->setVisible( isLoaded );
+    menuConsistencyTables_->menuAction()->setVisible( isLoaded );
+    menuLanguages_->menuAction()->setVisible( isLoaded );
+}
+
 //-----------------------------------------------------------------------------
-// Name: ADN_MainWindow::Build
+// Name: ADN_MainWindow::BuildGUI
 // Created: JDY 03-06-23
 //-----------------------------------------------------------------------------
-void ADN_MainWindow::Build()
+void ADN_MainWindow::BuildGUI()
 {
-    // Main widget
-    Q3VBox* pBox = new Q3VBox( this );
-    setCentralWidget( pBox );
-    mainTabWidget_.reset( new ADN_MainTabWidget( pBox ) );
+    if( isLoaded_ )
+        return;
+    // Languages menu
+    ADN_Workspace::GetWorkspace().GetLanguages().GetGui().FillMenu( menuLanguages_ );
+
+    // Main tab widget
+    mainTabWidget_.reset( new ADN_MainTabWidget() );
+    mainLayout_->addWidget( mainTabWidget_.get() );
     connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), mainTabWidget_.get(), SLOT( OnChangeTab( E_WorkspaceElements ) ) );
     connect( actionBack_, SIGNAL( triggered() ), mainTabWidget_.get(), SLOT( OnBack() ) );
     connect( actionForward_, SIGNAL( triggered() ), mainTabWidget_.get(), SLOT( OnForward() ) );
@@ -187,14 +223,45 @@ void ADN_MainWindow::Build()
     consistencyDialog_.reset( new ADN_ConsistencyDialog( this ) );
     connect( actionConsistencyAnalysis_, SIGNAL( triggered() ), consistencyDialog_.get(), SLOT( Display() ) );
     // Consistency tables
-    consistencyMapper_ = new QSignalMapper( this );
-    connect( consistencyMapper_, SIGNAL( mapped( const QString& ) ), this, SLOT( ShowConsistencyTable( const QString& ) ) );
+    consistencyMapper_.reset( new QSignalMapper( this ) );
+    connect( consistencyMapper_.get(), SIGNAL( mapped( const QString& ) ), this, SLOT( OnShowConsistencyTable( const QString& ) ) );
 
-    // Workspace interaction
+    // Workspace
     connect( actionOptional_, SIGNAL( triggered( bool ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnChooseOptional( bool ) ) );
-    ADN_Workspace::GetWorkspace().SetProgressIndicator( progressBar_.get() );
+    ADN_Workspace::GetWorkspace().BuildGUI( *this );
+}
 
-    ADN_Workspace::GetWorkspace().Build( *this );
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::PurgeGUI
+// Created: ABR 2013-09-13
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::PurgeGUI()
+{
+    if( !isLoaded_ )
+        return;
+    // Workspace
+    disconnect( actionOptional_, SIGNAL( triggered( bool ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnChooseOptional( bool ) ) );
+    ADN_Workspace::GetWorkspace().PurgeGUI();
+
+    // Consistency tables
+    disconnect( consistencyMapper_.get(), SIGNAL( mapped( const QString& ) ), this, SLOT( OnShowConsistencyTable( const QString& ) ) );
+    consistencyMapper_.reset();
+
+    // Consistency dialog
+    disconnect( actionConsistencyAnalysis_, SIGNAL( triggered() ), consistencyDialog_.get(), SLOT( Display() ) );
+    consistencyDialog_.reset();
+
+    // Main tab widget
+    disconnect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), mainTabWidget_.get(), SLOT( OnChangeTab( E_WorkspaceElements ) ) );
+    disconnect( actionBack_, SIGNAL( triggered() ), mainTabWidget_.get(), SLOT( OnBack() ) );
+    disconnect( actionForward_, SIGNAL( triggered() ), mainTabWidget_.get(), SLOT( OnForward() ) );
+    disconnect( mainTabWidget_.get(), SIGNAL( BackEnabled( bool ) ), actionBack_, SLOT( setEnabled( bool ) ) );
+    disconnect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), actionForward_, SLOT( setEnabled( bool ) ) );
+    mainLayout_->removeWidget( mainTabWidget_.get() );
+    mainTabWidget_.reset();
+
+    // Languages menu
+    menuLanguages_->clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -208,13 +275,8 @@ void ADN_MainWindow::OnNew()
         return;
     path /= "physical.xml";
     path.Parent().CreateDirectories();
-    if( mainTabWidget_.get() )
-        mainTabWidget_->setVisible( false );
-    ADN_Workspace::GetWorkspace().Reset( path );
-    if( mainTabWidget_.get() )
-        mainTabWidget_->setVisible( true );
+    ADN_Workspace::GetWorkspace().Reset( path, false );
     setCaption( tr( "Sword Adaptation Tool - " ) + path.ToUTF8().c_str() + "[*]" );
-    OnOpenned( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -228,7 +290,7 @@ void ADN_MainWindow::OnOpen()
         return;
     try
     {
-        if( isOpen_ )
+        if( isLoaded_ )
             OnClose();
         QApplication::setOverrideCursor( Qt::waitCursor );
         ADN_Workspace::GetWorkspace().Load( filename );
@@ -241,11 +303,10 @@ void ADN_MainWindow::OnOpen()
             consistencyDialog_->CheckConsistency();
         else
             setWindowModified( false );
-        OnOpenned( true );
     }
     catch( const std::exception& e )
     {
-        progressBar_->Reset();
+        progressBar_->SetVisible( false );
         QMessageBox::critical( 0, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         skipSave_ = true;
         OnClose();
@@ -283,9 +344,8 @@ void ADN_MainWindow::OnClose()
     if( !OfferToSave() )
         return;
     skipSave_ = false;
-    OnOpenned( false );
     QApplication::setOverrideCursor( Qt::waitCursor );
-    ADN_Workspace::GetWorkspace().Reset( ADN_Project_Data::FileInfos::szUntitled_ );
+    ADN_Workspace::GetWorkspace().Reset( ADN_Project_Data::FileInfos::szUntitled_, true );
     QApplication::restoreOverrideCursor();
 }
 
@@ -385,7 +445,7 @@ void ADN_MainWindow::AddPage( E_WorkspaceElements element, QWidget& page, const 
 void ADN_MainWindow::AddTable( const QString& name, ADN_Callback_ABC< ADN_Table* >* pCallback )
 {
     QAction* action = new QAction( name, this );
-    QObject::connect( action, SIGNAL( triggered() ), consistencyMapper_, SLOT( map() ) );
+    QObject::connect( action, SIGNAL( triggered() ), consistencyMapper_.get(), SLOT( map() ) );
     consistencyMapper_->setMapping( action, name );
     menuConsistencyTables_->addAction( action );
     consistencyTables_[ name ] = pCallback;
@@ -398,35 +458,10 @@ void ADN_MainWindow::AddTable( const QString& name, ADN_Callback_ABC< ADN_Table*
 void ADN_MainWindow::AddListView( const QString& name, ADN_Callback_ABC< ADN_ListView* >* pCallback )
 {
     QAction* action = new QAction( name, this );
-    QObject::connect( action, SIGNAL( triggered() ), consistencyMapper_, SLOT( map() ) );
+    QObject::connect( action, SIGNAL( triggered() ), consistencyMapper_.get(), SLOT( map() ) );
     consistencyMapper_->setMapping( action, name );
     menuConsistencyTables_->addAction( action );
     consistencyListViews_[ name ] = pCallback;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::OnOpenned
-// Created: ABR 2013-09-12
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::OnOpenned( bool isOpen )
-{
-    if( mainTabWidget_.get() )
-        mainTabWidget_->setVisible( isOpen );
-    isOpen_ = isOpen;
-    actionSave_->setVisible( isOpen && !ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() );
-    actionSaveAs_->setVisible( isOpen );
-    actionClose_->setVisible( isOpen );
-    actionExportHtml_->setVisible( isOpen );
-    actionConsistencyAnalysis_->setVisible( isOpen );
-    actionOptional_->setVisible( isOpen );
-    actionBack_->setVisible( isOpen );
-    actionForward_->setVisible( isOpen );
-    menuConsistencyTables_->menuAction()->setVisible( isOpen );
-    menuLanguages_->menuAction()->setVisible( isOpen );
-    if( !isOpen )
-        menuLanguages_->clear();
-    else
-        ADN_Workspace::GetWorkspace().GetLanguages().GetGui().FillMenu( menuLanguages_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -472,7 +507,7 @@ namespace
 // Name: ADN_MainWindow::ShowCoheranceTable
 // Created: ABR 2013-09-12
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::ShowConsistencyTable( const QString& name ) const
+void ADN_MainWindow::OnShowConsistencyTable( const QString& name ) const
 {
     if( !ShowConsistencyDialog< ADN_TableDialog >( name, consistencyTables_ ) &&
         !ShowConsistencyDialog< ADN_ListViewDialog >( name, consistencyListViews_ ) )
@@ -506,4 +541,13 @@ void ADN_MainWindow::mousePressEvent( QMouseEvent * event )
 QMenu* ADN_MainWindow::createPopupMenu()
 {
     return 0; // $$$$ ABR 2013-09-12: Disable "windows" menu
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::GetProgressIndicator
+// Created: ABR 2013-09-13
+// -----------------------------------------------------------------------------
+ADN_ProgressIndicator_ABC& ADN_MainWindow::GetProgressIndicator() const
+{
+    return *progressBar_;
 }

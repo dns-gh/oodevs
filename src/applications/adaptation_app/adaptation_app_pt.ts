@@ -6201,34 +6201,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Loading GUI...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6241,11 +6213,27 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Saving project...</source>
+        <source>ADN - Data export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ADN - Data export</source>
+        <source>Building GUI: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving: %1...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

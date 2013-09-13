@@ -10,9 +10,10 @@
 #include "adaptation_app_pch.h"
 #include "ADN_SearchListView.h"
 #include "moc_ADN_SearchListView.cpp"
-#include "clients_gui/SearchLineEdit.h"
+#include "ADN_GUI_ABC.h"
 #include "ADN_ListView.h"
 #include "ADN_Workspace.h"
+#include "clients_gui/SearchLineEdit.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SearchListView constructor

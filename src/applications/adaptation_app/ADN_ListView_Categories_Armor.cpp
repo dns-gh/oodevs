@@ -15,7 +15,6 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Armors_Data.h"
 #include "ADN_Armors_GUI.h"
-#include "ADN_MainWindow.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"

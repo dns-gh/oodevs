@@ -69,7 +69,7 @@ void ADN_NBC_NbcAgentListView::ConnectItem( bool bConnect )
 void ADN_NBC_NbcAgentListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< NbcAgentInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str(), ADN_Workspace::GetWorkspace().GetNbc().GetData().GetNbcAgentVector(), this );
+    ADN_Wizard< NbcAgentInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str(), ADN_Workspace::GetWorkspace().GetNBC().GetData().GetNbcAgentVector(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

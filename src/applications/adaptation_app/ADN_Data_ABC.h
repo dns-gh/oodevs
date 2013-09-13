@@ -13,6 +13,7 @@
 #include "ADN_Enums.h"
 #include "ADN_XmlStreamOperators.h"
 #include "ADN_Tools.h"
+#include "ADN_WorkspaceElement.h"
 
 namespace kernel
 {

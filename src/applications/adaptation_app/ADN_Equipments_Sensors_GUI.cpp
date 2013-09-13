@@ -45,7 +45,7 @@ ADN_Equipments_Sensors_GUI::ADN_Equipments_Sensors_GUI( const QString& objectNam
 //-----------------------------------------------------------------------------
 ADN_Equipments_Sensors_GUI::~ADN_Equipments_Sensors_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

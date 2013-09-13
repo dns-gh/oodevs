@@ -70,7 +70,7 @@ void ADN_Fires_ListView::ConnectItem( bool bConnect )
 void ADN_Fires_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< ADN_Fires_Data::FireClassInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eFires ).c_str(), ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), this );
+    ADN_Wizard< ADN_Fires_Data::FireClassInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eFires ).c_str(), ADN_Workspace::GetWorkspace().GetFires().GetData().GetFireClassesInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

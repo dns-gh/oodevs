@@ -6223,34 +6223,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Loading GUI...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation></translation>
     </message>
@@ -6263,12 +6235,28 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>Saving project...</source>
+        <source>ADN - Data export</source>
         <translation></translation>
     </message>
     <message>
-        <source>ADN - Data export</source>
-        <translation></translation>
+        <source>Building GUI: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving: %1...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

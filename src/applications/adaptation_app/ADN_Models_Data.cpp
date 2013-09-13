@@ -343,24 +343,14 @@ void ADN_Models_Data::Reset()
     vPopulationModels_.Reset();
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::ReadSourcePath
+// Created: ABR 2013-09-13
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::ReadSourcePath( xml::xistream& xis )
 {
-    class SourcePaths : boost::noncopyable
-    {
-    public:
-         SourcePaths() {}
-        ~SourcePaths() {}
-
-        void AddSource( xml::xistream& xis )
-        {
-            static const tools::Path basePath( "decisional" );
-            sourcePaths_.push_back( ( basePath / xis.attribute< tools::Path >( "directory" ) ).Normalize().ToUnicode() );
-        }
-        const std::vector< std::wstring >& GetSourcePaths() const { return sourcePaths_; }
-
-    private:
-        std::vector< std::wstring > sourcePaths_;
-    };
+    static const tools::Path basePath( "decisional" );
+    sourcePaths_.push_back( ( basePath / xis.attribute< tools::Path >( "directory" ) ).Normalize().ToUnicode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,12 +366,10 @@ void ADN_Models_Data::Initialize()
     tools::Path decisionalFile = p.Parent() / "decisional/decisional.xml";
     if( decisionalFile.Exists() )
     {
-        SourcePaths sourcePaths;
         tools::Xifstream xis( decisionalFile );
         xis >> xml::start( "decisional" )
                 >> xml::start( "RepertoiresSources" )
-                    >> xml::list( "RepertoireSources" , sourcePaths, &SourcePaths::AddSource );
-        ADN_Workspace::GetWorkspace().GetModels().GetGui().SetDecisionalFilters( sourcePaths.GetSourcePaths() );
+                    >> xml::list( "RepertoireSources" , *this, &ADN_Models_Data::ReadSourcePath );
     }
 }
 

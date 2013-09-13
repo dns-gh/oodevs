@@ -82,6 +82,7 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     nameField->ConnectWithRefValidity( model );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "dia-type", tr( "DIA type" ), vInfosConnectors[ eDiaType ] );
     DIAFileChooser_[ eEntityType ] = builder.AddFileField( pInfoHolder, "file", tr( "File" ), vInfosConnectors[ eFile ] );
+    DIAFileChooser_[ eEntityType ]->SetRestrictions( data_.GetSourcePaths() );
     builder.AddField< ADN_CheckBox >( pInfoHolder, "masalife", tr( "DIA5" ), vInfosConnectors[ eMasalife ] );
 
     // Missions
@@ -123,14 +124,4 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     // Main page
     builder.PopSubName(); //eEntityType-tab
     return CreateScrollArea( builder.GetName(), *content, pSearchListView );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_GUI::SetDecisionalFilters
-// Created: JSR 2013-05-22
-// -----------------------------------------------------------------------------
-void ADN_Models_GUI::SetDecisionalFilters( const std::vector< std::wstring >& decisionalFilters )
-{
-    for( int i = 0; i < eNbrEntityTypes; ++i )
-        DIAFileChooser_[ i ]->SetRestrictions( decisionalFilters );
 }

@@ -6218,34 +6218,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Loading GUI...</source>
-        <translation>Loading GUI...</translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation>GUI loaded</translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation>Reseting project...</translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation>Unloading: %1...</translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation>Project reseted</translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation>Loading project...</translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation>Loading: %1...</translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation>Sword Adaptation Tool - Saving Errors</translation>
     </message>
@@ -6258,12 +6230,28 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>&lt;p&gt;- Unable to save %s : file is write protected&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Saving project...</source>
-        <translation>Saving project...</translation>
-    </message>
-    <message>
         <source>ADN - Data export</source>
         <translation>ADN - Data export</translation>
+    </message>
+    <message>
+        <source>Building GUI: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving: %1...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

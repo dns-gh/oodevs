@@ -891,7 +891,6 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "units" )
             >> xml::list( "unit", *this, &ADN_Units_Data::ReadUnit )
           >> xml::end;
-    //vUnits_.AddItem( 0 ); // $$$$ ABR 2013-01-16: Needed ?
     vUnits_.CheckValidity();
     if( !vUnits_.empty() )
         ADN_Workspace::GetWorkspace().GetUnits().GetGui().PreloadUnitSymbolComboBox( vUnits_[0] );

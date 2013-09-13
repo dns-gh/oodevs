@@ -26,6 +26,7 @@ class ADN_GeneralConfig;
 class ADN_ListView;
 class ADN_MainTabWidget;
 class ADN_ProgressBar;
+class ADN_ProgressIndicator_ABC;
 class ADN_Table;
 
 // =============================================================================
@@ -47,10 +48,11 @@ public:
 
     //! @name Operations
     //@{
-    void Build();
     void AddPage( E_WorkspaceElements element, QWidget& page, const QString& title );
     void AddTable( const QString& strTableName, ADN_Callback_ABC< ADN_Table* >* pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC< ADN_ListView* >* pCallback );
+
+    ADN_ProgressIndicator_ABC& GetProgressIndicator() const;
     //@}
 
 protected:
@@ -77,13 +79,15 @@ private slots:
     void OnSaveAs();
     void OnExportHtml();
     void OnAbout();
-    void ShowConsistencyTable( const QString& name ) const;
+    void OnLoadStatusChanged( bool );
+    void OnShowConsistencyTable( const QString& name ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void OnOpenned( bool isOpen );
+    void BuildGUI();
+    void PurgeGUI();
     bool OfferToSave();
     //@}
 
@@ -103,6 +107,9 @@ private:
     std::auto_ptr< gui::ConsistencyDialog_ABC > consistencyDialog_;
     std::auto_ptr< ADN_MainTabWidget > mainTabWidget_;
     std::auto_ptr< ADN_ProgressBar > progressBar_;
+    std::auto_ptr< QSignalMapper > consistencyMapper_;
+
+    QLayout* mainLayout_;
 
     QAction* actionClose_;
     QAction* actionSave_;
@@ -116,12 +123,11 @@ private:
     QMenu* menuConsistencyTables_;
     QMenu* menuLanguages_;
 
-    QSignalMapper* consistencyMapper_;
     T_ConsistencyTables consistencyTables_;
     T_ConsistencyListViews consistencyListViews_;
 
     bool skipSave_;
-    bool isOpen_;
+    bool isLoaded_;
     //@}
 };
 

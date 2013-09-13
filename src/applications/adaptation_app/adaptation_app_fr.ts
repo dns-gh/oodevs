@@ -6241,34 +6241,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Loading GUI...</source>
-        <translation>Chargement de l&apos;interface...</translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation>Interface chargée</translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation>Réinitialisation du projet...</translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation>Fermeture: %1...</translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation>Projet réinitialisé</translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation>Chargement du projet...</translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation>Chargement: %1...</translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation>Sword outil d&apos;adaptation - Erreurs d&apos;enregistrement</translation>
     </message>
@@ -6281,12 +6253,28 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>&lt;p&gt;- Impossible de sauvegarder %s : le fichier est en lecture seule&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Saving project...</source>
-        <translation>Enregistrement du projet...</translation>
-    </message>
-    <message>
         <source>ADN - Data export</source>
         <translation>Adaptation - Export des données</translation>
+    </message>
+    <message>
+        <source>Building GUI: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving: %1...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

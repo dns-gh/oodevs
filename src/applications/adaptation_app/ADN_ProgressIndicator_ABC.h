@@ -24,21 +24,14 @@ class ADN_ProgressIndicator_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ProgressIndicator_ABC();
-    virtual ~ADN_ProgressIndicator_ABC();
+             ADN_ProgressIndicator_ABC() {}
     //@}
 
     //! @name Abstract operations
     //@{
-    virtual void SetNbrOfSteps( int n ) = 0;
-    virtual void Increment( int n = 1 ) = 0;
-    virtual void Increment( const char* szText, int n = 1 ) = 0;
-    virtual void Reset( const char* szMsg = 0) = 0;
-    //@}
-
-    //! @name Operations
-    //@{
-    void SetVisible( bool visible );
+    virtual void SetMaximum( int n ) = 0;
+    virtual void Increment( const QString& text ) = 0;
+    virtual void SetVisible( bool visible ) = 0;
     //@}
 };
 

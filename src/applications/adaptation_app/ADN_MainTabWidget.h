@@ -21,14 +21,13 @@
 // Created: ABR 2012-01-18
 // =============================================================================
 class ADN_MainTabWidget : public QTabWidget
-                        , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_MainTabWidget( QWidget* parent );
+             ADN_MainTabWidget();
     virtual ~ADN_MainTabWidget();
     //@}
 
