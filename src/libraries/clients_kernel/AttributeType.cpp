@@ -53,8 +53,7 @@ AttributeType::AttributeType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 AttributeType::~AttributeType()
 {
-    for( auto it = labels_.begin(); it != labels_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -76,8 +75,8 @@ bool AttributeType::Extends( const std::string& type ) const
 const std::string& AttributeType::GetLabel( const std::string& language, const std::string& kind ) const
 {
     for( auto it = labels_.begin(); it != labels_.end(); ++it )
-        if( ( *it )->Matches( language, kind ) )
-            return ( *it )->GetText();
+        if( it->Matches( language, kind ) )
+            return it->GetText();
     return name_;
 }
 
@@ -157,14 +156,14 @@ bool AttributeType::IsActive( const std::map< std::string, std::string >& extens
         return true;
     bool active = operator_ == EOperatorAND;
     bool hasChanged = false;
-    for( CIT_Dependencies dep = dependencies_.begin(); dep != dependencies_.end(); ++dep )
+    for( auto dep = dependencies_.begin(); dep != dependencies_.end(); ++dep )
         for( std::map< std::string, std::string >::const_iterator ext = extensions.begin(); ext != extensions.end(); ++ext )
-            if( ( *dep )->GetName() == ext->first )
+            if( dep->GetName() == ext->first )
             {
                 if( operator_ == EOperatorAND )
-                    active = active && ( *dep )->Allow( ext->second );
+                    active = active && dep->Allow( ext->second );
                 else if( operator_ == EOperatorOR )
-                    active = active || ( *dep )->Allow( ext->second );
+                    active = active || dep->Allow( ext->second );
                 hasChanged = true;
                 break;
             }

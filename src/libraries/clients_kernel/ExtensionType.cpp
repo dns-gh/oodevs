@@ -29,7 +29,7 @@ ExtensionType::ExtensionType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 ExtensionType::~ExtensionType()
 {
-    // NOTHING
+    tools::StringResolver< AttributeType >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
