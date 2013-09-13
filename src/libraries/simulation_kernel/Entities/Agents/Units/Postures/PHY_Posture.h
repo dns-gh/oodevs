@@ -65,6 +65,8 @@ public:
     bool CanModifyPH       () const;
     bool CanModifyDetection() const;
     bool IsInstantaneous   () const;
+    bool operator < ( const PHY_Posture& p ) const;
+    bool operator == ( const PHY_Posture& p ) const;
     //@}
 
 private:

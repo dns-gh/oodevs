@@ -30,9 +30,9 @@ class DefaultPostureComputer : public PostureComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultPostureComputer( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
-                                     bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
-                                     double rTimingFactor, bool isParkedOnEngineerArea );
+             DefaultPostureComputer( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& previousPosture,
+                                     const PHY_Posture& newPosture, bool bIsDead, bool bDiscreteModeEnabled, double rCompletionPercentage,
+                                     double rStealthFactor, double rTimingFactor, bool isParkedOnEngineerArea );
     virtual ~DefaultPostureComputer();
     //@}
 
@@ -50,10 +50,10 @@ public:
 private:
     //! @name Operations
     //@{
-    template< typename GetTime, typename Accumulator >
-    double ComputeCompletion( const GetTime& time, const Accumulator& accumulator ) const;
-    void ComputeMovingPosture();
-    void ComputeStopPosture();
+    template< typename GetTime >
+    double ComputeCompletion( const GetTime& time, double& timeSpent ) const;
+    double ComputeMovingPosture();
+    double ComputeStopPosture();
     //@}
 
 private:
@@ -67,17 +67,18 @@ private:
     //@{
     const MIL_Random_ABC& random_;
     const PostureTime_ABC& time_;
-    const PHY_Posture& posture_;
+    const PHY_Posture& previousPosture_;
+    const PHY_Posture* currentPosture_;
+    Results results_;
+    T_Reinforcements reinforcements_;
+    const double rStealthFactor_;
+    double modifier_;
     const bool bIsDead_;
     const bool bDiscreteModeEnabled_;
-    const double rStealthFactor_;
     const bool isParkedOnEngineerArea_;
-    T_Reinforcements reinforcements_;
-    double modifier_;
     bool bMoving_;
     bool bStopped_;
     bool bIsLoaded_;
-    Results results_;
     //@}
 
 };

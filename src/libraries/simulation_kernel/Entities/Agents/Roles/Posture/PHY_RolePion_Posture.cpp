@@ -163,14 +163,13 @@ bool PHY_RolePion_Posture::UpdatePosture( bool bIsDead )
 {
     std::auto_ptr< PostureComputer_ABC > computer =
         owner_.GetAlgorithms().postureComputerFactory_->Create(
-            random, owner_.GetType().GetUnitType(), *pCurrentPosture_,
+            random, owner_.GetType().GetUnitType(), *pLastPosture_, *pCurrentPosture_,
             bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
             rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ );
     owner_.Execute( *computer );
     const PostureComputer_ABC::Results& result = computer->Result();
     bool changed = false;
-    if( result.newPosture_ )
-        changed = ChangePosture( *result.newPosture_ );
+    changed = ChangePosture( *result.newPosture_ );
     ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
     bIsStealth_ = result.bIsStealth_;
     return changed;

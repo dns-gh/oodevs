@@ -142,13 +142,14 @@ InfoStancesWidget::~InfoStancesWidget()
 void InfoStancesWidget::Update( const Attributes& attributes )
 {
     show();
+    const int oldInstallation = attributes.nOldPosture_ - eUnitPosture_PosturePosteReflexe;
     const int installation = attributes.nCurrentPosture_ - eUnitPosture_PosturePosteReflexe;
     const bool isMoving = attributes.nCurrentPosture_ < eUnitPosture_PostureArret;
     movement_->setProgress( std::max< int >( -installation * 33, 0 ) );
     if( isMoving )
         installation_->setProgress( 0 );
     else
-        installation_->setProgress( std::max< int >( int( float( ( installation + 1 ) * 100 + attributes.nPostureCompletionPourcentage_ ) / 4.f ), 0 ) );
+        installation_->setProgress( int( float( ( oldInstallation + 1 ) * 100 + ( installation - oldInstallation ) * attributes.nPostureCompletionPourcentage_ ) / 4.f ) );
     QToolTip::add( installation_, tools::translate( "InfoStancesWidget", "Stance '%1' at %2" )
                                     .arg( tools::ToString( attributes.nCurrentPosture_ ) )
                                     .arg( locale().toString( attributes.nPostureCompletionPourcentage_ ) + Units::percentage.AsString() ) );
