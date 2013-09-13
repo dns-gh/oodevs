@@ -205,7 +205,6 @@ private:
     ADN_Project_Data* projectData_;
     ADN_WorkspaceElement_ABC* elements_[ eNbrWorkspaceElements ];
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
-    bool symbols_;
     static ADN_Workspace* pWorkspace_;
     //@}
 };

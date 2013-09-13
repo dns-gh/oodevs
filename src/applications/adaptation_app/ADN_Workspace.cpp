@@ -141,7 +141,6 @@ void ADN_Workspace::Initialize()
 {
     InitializeEnumType();
     projectData_ = new ADN_Project_Data();
-    symbols_ = !config_.IsNoSymbols();
     if( config_.IsNoReadOnly() )
         projectData_->GetDataInfos().SetNoReadOnly();
 
