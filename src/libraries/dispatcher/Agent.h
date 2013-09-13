@@ -46,20 +46,21 @@ namespace dispatcher
 // =============================================================================
 class Agent : public dispatcher::Agent_ABC
             , public kernel::Extension_ABC
-            , public kernel::Updatable_ABC< sword::UnitCreation >
-            , public kernel::Updatable_ABC< sword::UnitAttributes >
-            , public kernel::Updatable_ABC< sword::DecisionalState >
-            , public kernel::Updatable_ABC< sword::LogMedicalState >
-            , public kernel::Updatable_ABC< sword::LogMaintenanceState >
-            , public kernel::Updatable_ABC< sword::LogSupplyState >
-            , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
-            , public kernel::Updatable_ABC< sword::UnitOrder >
-            , public kernel::Updatable_ABC< sword::UnitPathFind >
-            , public kernel::Updatable_ABC< sword::UnitEnvironmentType >
-            , public kernel::Updatable_ABC< sword::UnitDetection >
-            , public kernel::Updatable_ABC< sword::ObjectDetection >
             , public kernel::Updatable_ABC< sword::CrowdConcentrationDetection >
             , public kernel::Updatable_ABC< sword::CrowdFlowDetection >
+            , public kernel::Updatable_ABC< sword::DecisionalState >
+            , public kernel::Updatable_ABC< sword::LogMaintenanceState >
+            , public kernel::Updatable_ABC< sword::LogMedicalState >
+            , public kernel::Updatable_ABC< sword::LogSupplyState >
+            , public kernel::Updatable_ABC< sword::ObjectDetection >
+            , public kernel::Updatable_ABC< sword::UnitAttributes >
+            , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
+            , public kernel::Updatable_ABC< sword::UnitCreation >
+            , public kernel::Updatable_ABC< sword::UnitDestruction >
+            , public kernel::Updatable_ABC< sword::UnitDetection >
+            , public kernel::Updatable_ABC< sword::UnitEnvironmentType >
+            , public kernel::Updatable_ABC< sword::UnitOrder >
+            , public kernel::Updatable_ABC< sword::UnitPathFind >
 {
 public:
     //! @name Constructors/Destructor
@@ -71,6 +72,7 @@ public:
     //! @name Main
     //@{
     virtual void DoUpdate( const sword::UnitCreation&        asnMsg );
+    virtual void DoUpdate( const sword::UnitDestruction&     asnMsg );
     virtual void DoUpdate( const sword::UnitAttributes&      asnMsg );
     virtual void DoUpdate( const sword::DecisionalState&     asnMsg );
     virtual void DoUpdate( const sword::LogMedicalState&     asnMsg );

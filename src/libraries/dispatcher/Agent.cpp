@@ -152,6 +152,16 @@ void Agent::DoUpdate( const sword::UnitCreation& msg )
     transportedAgents_.Clear();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: LDC 2013-09-13
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const sword::UnitDestruction& msg )
+{
+    transportedAgents_.Remove( msg.unit().id() );
+    reinforcements_.Remove( msg.unit().id() );
+}
+
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
     if( message.has_##ASN##() )        \
         CPP = message.##ASN##();
