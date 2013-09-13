@@ -47,9 +47,7 @@ public:
         //@}
     };
 
-    typedef std::map< std::string, AttritionData* > T_AttritionInfos;
-    typedef T_AttritionInfos::iterator             IT_AttritionInfos;
-    typedef T_AttritionInfos::const_iterator      CIT_AttritionInfos;
+    typedef std::map< std::string, AttritionData > T_AttritionInfos;
     //@}
 
 public:
@@ -63,7 +61,7 @@ public:
     //@{
     unsigned int GetId() const;
     const std::string& GetName() const;
-    MaterialCompositionType::AttritionData* FindAttrition( const std::string& protection ) const;
+    const MaterialCompositionType::AttritionData* FindAttrition( const std::string& protection ) const;
     //@}
 
     //! @name Copy/Assignment
