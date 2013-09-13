@@ -182,7 +182,7 @@ private:
     //@{
     directia::tools::binders::ScriptRef GetScriptRef( const std::string& id );
 
-    virtual sword::Brain& GetBrain() = 0;
+    virtual sword::Brain* GetBrain() = 0;
     template< typename T > static void SetScriptVariable( const T& source, T& dest );
     //@}
 };
