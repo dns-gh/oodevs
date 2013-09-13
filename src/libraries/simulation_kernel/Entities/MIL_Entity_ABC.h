@@ -15,6 +15,7 @@
 #pragma warning( push, 0 )
 #include <boost/archive/binary_oarchive_impl.hpp>
 #pragma warning( pop ) // $$$$ LDC Mandatory in order for is_abstract stuff below to compile
+#include <boost/serialization/export.hpp>  
 
 namespace xml
 {
@@ -75,15 +76,6 @@ namespace serialization {
 } // namespace serialization
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Entity_ABC::serialize
-// Created: RDS 2008-05-09
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_Entity_ABC::serialize( Archive& archive, const unsigned int )
-{
-    archive & boost::serialization::base_object< tools::RoleContainer >( *this )
-        & const_cast< std::string& >( strName_ ) ;
-}
+BOOST_CLASS_EXPORT_KEY( MIL_Entity_ABC )
 
 #endif // __MIL_Entity_ABC_h_

@@ -8,6 +8,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "MIL_Entity_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -57,3 +59,17 @@ void MIL_Entity_ABC::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::attribute( "name", strName_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Entity_ABC::serialize
+// Created: RDS 2008-05-09
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_Entity_ABC::serialize( Archive& archive, const unsigned int )
+{
+    archive & boost::serialization::base_object< tools::RoleContainer >( *this )
+        & const_cast< std::string& >( strName_ ) ;
+}
+
+template void MIL_Entity_ABC::serialize( MIL_CheckPointInArchive&, const unsigned int );
+template void MIL_Entity_ABC::serialize( MIL_CheckPointOutArchive&, const unsigned int );
