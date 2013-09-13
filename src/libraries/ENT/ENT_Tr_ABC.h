@@ -10,9 +10,6 @@
 #ifndef __ENT_Tr_ABC_h_
 #define __ENT_Tr_ABC_h_
 
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-
 #pragma warning( push, 0 )
 #include <QtGui/QApplication>
 #pragma warning( pop )
@@ -112,7 +109,5 @@ public:
         return strBadName_;
     }
 };
-
-#pragma warning( pop )
 
 #endif // __ENT_Tr_ABC_h_

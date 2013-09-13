@@ -7,14 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef _SCL_SECURE_NO_WARNINGS
-#define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #include "XmlReaders.h"
-
 #include "Helpers.h"
-
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>

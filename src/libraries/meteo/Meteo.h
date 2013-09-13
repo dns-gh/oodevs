@@ -10,8 +10,6 @@
 #ifndef __weather_Meteo_h_
 #define __weather_Meteo_h_
 
-#pragma warning( disable : 4996 )
-
 #include "clients_kernel/Entity_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <geometry/Types.h>

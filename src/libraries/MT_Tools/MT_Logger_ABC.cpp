@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "MT_Logger_ABC.h"
-#pragma warning( disable: 4996 )
 #include <ctime>
 #include <sstream>
 

@@ -14,6 +14,13 @@ add_definitions(
     -D_WIN32_WINNT=0x501
     -DWINVER=0x501
 )
+if( MSVC )
+    # disable msvc non-portable warnings
+    add_definitions(
+        -D_CRT_SECURE_NO_WARNINGS
+        -D_SCL_SECURE_NO_WARNINGS
+    )
+endif()
 
 set( COMPANY "MASA Group" )
 set( PRODUCT "Sword" )

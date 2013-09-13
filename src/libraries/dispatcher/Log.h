@@ -15,8 +15,6 @@
 #include <tools/Exception.h>
 #include <tools/Path.h>
 #include <ctime>
-#pragma warning( push )
-#pragma warning( disable: 4996 )
 
 namespace dispatcher
 {
@@ -71,7 +69,5 @@ private:
 };
 
 }
-
-#pragma warning( pop )
 
 #endif // dispatcher_Log_h

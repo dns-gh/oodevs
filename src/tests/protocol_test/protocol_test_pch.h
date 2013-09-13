@@ -10,8 +10,6 @@
 #ifndef __protocol_test_pch_h_
 #define __protocol_test_pch_h_
 
-#pragma warning( disable : 4996 ) // Function call with parameters that may be unsafe
-
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 

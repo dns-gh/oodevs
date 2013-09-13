@@ -13,11 +13,7 @@
 #include <exception>
 #include <string>
 #include <memory>
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-#include <QtCore/qstring.h>
-#pragma warning( pop )
-
 #include <tools/Exception.h>
+#include <QtCore/Qstring>
 
 #endif // __launcher_dll_pch_h_

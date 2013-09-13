@@ -7,14 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef _SCL_SECURE_NO_WARNINGS
-#define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #include "XmlWriters.h"
-
 #include "Helpers.h"
-
 #include <boost/algorithm/string/join.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>

@@ -10,7 +10,6 @@
 #ifndef __tools_pch_h_
 #define __tools_pch_h_
 
-#pragma warning( disable : 4996 ) // Function call with parameters that may be unsafe
 #pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
 
 #include <string>

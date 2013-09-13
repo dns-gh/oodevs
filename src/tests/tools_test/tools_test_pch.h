@@ -10,12 +10,6 @@
 #ifndef __tools_test_pch_h_
 #define __tools_test_pch_h_
 
-#ifdef _MSC_VER
-    #define _CRT_SECURE_NO_WARNINGS
-#endif // _MSC_VER
-
-#pragma warning( disable: 4996 )
-
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 

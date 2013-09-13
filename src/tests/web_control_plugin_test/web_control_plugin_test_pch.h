@@ -11,7 +11,7 @@
 #define web_control_plugin_test_pch_h
 
 // warning 4267: conversion from 'size_t' to 'int', possible loss of data
-#pragma warning( disable : 4996 4702 4267 )
+#pragma warning( disable : 4702 4267 )
 
 #include <boost/bind.hpp>
 #include <boost/test/auto_unit_test.hpp>

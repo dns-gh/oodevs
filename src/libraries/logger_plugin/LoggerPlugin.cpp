@@ -22,7 +22,6 @@
 #include "reports/ReportFactory.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include <boost/lexical_cast.hpp>
-#pragma warning( disable: 4996 )
 
 namespace replay
 {

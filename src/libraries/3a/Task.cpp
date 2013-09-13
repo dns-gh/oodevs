@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-#pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 #include "Task.h"
 #include "Connectors.h"
 #include "Result_ABC.h"
