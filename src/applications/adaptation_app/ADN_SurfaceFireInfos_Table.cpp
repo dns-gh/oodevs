@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_SurfaceFireInfos_Table.h"
-#include "ADN_FireClass_Data.h"
+#include "ADN_Fires_Data.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_SurfaceFireInfos_Table constructor
@@ -44,7 +44,7 @@ ADN_SurfaceFireInfos_Table::~ADN_SurfaceFireInfos_Table()
 // -----------------------------------------------------------------------------
 void ADN_SurfaceFireInfos_Table::AddRow( int row, void* data )
 {
-    ADN_FireClass_Data::FireSurfaceInfos* pInfos = static_cast< ADN_FireClass_Data::FireSurfaceInfos* >( data );
+    ADN_Fires_Data::FireSurfaceInfos* pInfos = static_cast< ADN_Fires_Data::FireSurfaceInfos* >( data );
     if( !pInfos )
         return;
     AddItem( row, 0, data, &pInfos->strName_, ADN_StandardItem::eString );

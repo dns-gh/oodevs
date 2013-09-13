@@ -1631,7 +1631,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data</name>
+    <name>ADN_Fires_Data</name>
     <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation type="unfinished"></translation>
@@ -1654,14 +1654,14 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data::FireClassInfos</name>
+    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_GUI</name>
+    <name>ADN_Fires_GUI</name>
     <message>
         <source>Global fire parameters</source>
         <translation type="unfinished"></translation>

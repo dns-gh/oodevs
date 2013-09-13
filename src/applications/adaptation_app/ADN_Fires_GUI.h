@@ -7,20 +7,20 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_FireClass_GUI_h_
-#define __ADN_FireClass_GUI_h_
+#ifndef __ADN_Fires_GUI_h_
+#define __ADN_Fires_GUI_h_
 
 #include "ADN_GUI_ABC.h"
 
-class ADN_FireClass_Data;
+class ADN_Fires_Data;
 
 // =============================================================================
-/** @class  ADN_FireClass_GUI
-    @brief  ADN_FireClass_GUI
+/** @class  ADN_Fires_GUI
+    @brief  ADN_Fires_GUI
 */
 // Created: JSR 2010-12-01
 // =============================================================================
-class ADN_FireClass_GUI : public ADN_GUI_ABC
+class ADN_Fires_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
 
@@ -49,8 +49,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_FireClass_GUI( ADN_FireClass_Data& );
-    virtual ~ADN_FireClass_GUI();
+    explicit ADN_Fires_GUI( ADN_Fires_Data& );
+    virtual ~ADN_Fires_GUI();
     //@}
 
     //! @name Operations
@@ -61,8 +61,8 @@ public:
 private:
     //! @name Member data
     //@{
-    ADN_FireClass_Data& data_;
+    ADN_Fires_Data& data_;
     //@}
 };
 
-#endif // __ADN_FireClass_GUI_h_
+#endif // __ADN_Fires_GUI_h_

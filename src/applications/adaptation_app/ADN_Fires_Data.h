@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_FireClass_Data_h_
-#define __ADN_FireClass_Data_h_
+#ifndef __ADN_Fires_Data_h_
+#define __ADN_Fires_Data_h_
 
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
@@ -17,13 +17,13 @@
 #include "ADN_WeatherFireEffects.h"
 
 // =============================================================================
-/** @class  ADN_FireClass_Data
-    @brief  ADN_FireClass_Data
+/** @class  ADN_Fires_Data
+    @brief  ADN_Fires_Data
     @see    4311340-Modèles de feu.doc
 */
 // Created: JSR 2010-12-01
 // =============================================================================
-class ADN_FireClass_Data : public ADN_Data_ABC
+class ADN_Fires_Data : public ADN_Data_ABC
 {
 
 public:
@@ -131,8 +131,8 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             ADN_FireClass_Data();
-    virtual ~ADN_FireClass_Data();
+             ADN_Fires_Data();
+    virtual ~ADN_Fires_Data();
     //@}
 
     //! @name Operations
@@ -160,4 +160,4 @@ private:
     //@}
 };
 
-#endif // __ADN_FireClass_Data_h_
+#endif // __ADN_Fires_Data_h_

@@ -8,12 +8,12 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_FireClass_GUI.h"
-#include "moc_ADN_FireClass_GUI.cpp"
+#include "ADN_Fires_GUI.h"
+#include "moc_ADN_Fires_GUI.cpp"
 #include "ADN_WeatherFireEffects_Table.h"
 #include "ADN_ExtinguisherAgentInfos_Table.h"
-#include "ADN_FireClass_ListView.h"
-#include "ADN_FireClass_Data.h"
+#include "ADN_Fires_ListView.h"
+#include "ADN_Fires_Data.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_MultiPercentage.h"
@@ -21,10 +21,10 @@
 #include "ADN_UrbanModifiersTable.h"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_GUI constructor
+// Name: ADN_Fires_GUI constructor
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_FireClass_GUI::ADN_FireClass_GUI( ADN_FireClass_Data& data )
+ADN_Fires_GUI::ADN_Fires_GUI( ADN_Fires_Data& data )
     : ADN_GUI_ABC( eFireClasses )
     , data_( data )
 {
@@ -32,19 +32,19 @@ ADN_FireClass_GUI::ADN_FireClass_GUI( ADN_FireClass_Data& data )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_GUI destructor
+// Name: ADN_Fires_GUI destructor
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_FireClass_GUI::~ADN_FireClass_GUI()
+ADN_Fires_GUI::~ADN_Fires_GUI()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_GUI::Build
+// Name: ADN_Fires_GUI::Build
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_GUI::Build()
+void ADN_Fires_GUI::Build()
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -110,7 +110,7 @@ void ADN_FireClass_GUI::Build()
     pFireClassLayout->addWidget( surfaceGroup );
 
     // List view
-    QWidget* pSearchListView = builder.AddSearchListView< ADN_FireClass_ListView >( this, data_.GetFireClassesInfos(), vInfosConnectors );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_Fires_ListView >( this, data_.GetFireClassesInfos(), vInfosConnectors );
     // Sub content
     QWidget* pSubContent = CreateScrollArea( builder.GetChildName( "content" ), *pFireClassContent, pSearchListView, false, false, true, 0, 0 );
 

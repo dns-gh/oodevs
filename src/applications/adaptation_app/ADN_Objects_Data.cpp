@@ -1139,7 +1139,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::CheckDatabaseV
 // Name: ADN_Objects_Data::ModifierByFireClass
 // Created: BCI 2010-12-06
 // -----------------------------------------------------------------------------
-ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* p )
+ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_Fires_Data::FireClassInfos* p )
     : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), p, true, "fire-class" )
     , ignitionThreshold_  ( 0 )
     , maxCombustionEnergy_( 0 )

@@ -37,8 +37,8 @@
 #include "ADN_Resources_Data.h"
 #include "ADN_Resources_GUI.h"
 #include "ADN_FileLoaderObserver.h"
-#include "ADN_FireClass_Data.h"
-#include "ADN_FireClass_GUI.h"
+#include "ADN_Fires_Data.h"
+#include "ADN_Fires_GUI.h"
 #include "ADN_GeneralConfig.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_HumanFactors_Data.h"
@@ -172,7 +172,7 @@ void ADN_Workspace::Initialize()
     elements_[eCrowds]            = new ADN_WorkspaceElement< ADN_Crowds_Data, ADN_Crowds_GUI >                      ( eCrowds );
     elements_[eInhabitants]       = new ADN_WorkspaceElement< ADN_Inhabitants_Data, ADN_Inhabitants_GUI >            ( eInhabitants );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >                    ( eReports );
-    elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >                ( eFireClasses );
+    elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >                ( eFireClasses );
     elements_[eLogistic]          = new ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >                  ( eLogistic );
     elements_[eDisasters]         = new ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >                ( eDisasters );
     elements_[eLanguages]         = new ADN_WorkspaceElement< ADN_Languages_Data, ADN_Languages_GUI >                ( eLanguages );
@@ -726,7 +726,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     {
         FillUsingElements( eActiveProtections, *infos, GetActiveProtections().GetData(), &ADN_ActiveProtections_Data::GetActiveProtectionsThatUse, result );
         FillUsingElements( eBreakdowns, *infos, GetBreakdowns().GetData(), &ADN_Breakdowns_Data::GetBreakdownsThatUse, result );
-        FillUsingElements( eFireClasses, *infos, GetFireClasses().GetData(), &ADN_FireClass_Data::GetFireThatUse, result );
+        FillUsingElements( eFireClasses, *infos, GetFireClasses().GetData(), &ADN_Fires_Data::GetFireThatUse, result );
         FillUsingElements( eObjects, *infos, GetObjects().GetData(), &ADN_Objects_Data::GetObjectsThatUse, result );
         FillUsingElements( eEquipments, *infos, GetEquipments().GetData(), &ADN_Equipments_Data::GetEquipmentsThatUse, result );
     }
@@ -770,7 +770,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         return result;
     }
     // All objects use fire
-    if( ADN_FireClass_Data::FireClassInfos* infos = dynamic_cast< ADN_FireClass_Data::FireClassInfos* >( data ) )
+    if( ADN_Fires_Data::FireClassInfos* infos = dynamic_cast< ADN_Fires_Data::FireClassInfos* >( data ) )
     {
         result[ eObjects ] = GetObjects().GetData().GetObjectsWithCapacity( ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::TAG );
         return result;

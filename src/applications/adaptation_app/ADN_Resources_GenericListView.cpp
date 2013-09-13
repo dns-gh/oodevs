@@ -14,7 +14,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Equipments_Data.h"
-#include "ADN_FireClass_Data.h"
+#include "ADN_Fires_Data.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Resources_GUI.h"
 #include "ADN_Enums.h"

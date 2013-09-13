@@ -1633,7 +1633,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data</name>
+    <name>ADN_Fires_Data</name>
     <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation type="unfinished">النار--الجرح البيانات &apos;%1&apos; &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
@@ -1656,14 +1656,14 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data::FireClassInfos</name>
+    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation type="unfinished">النار-موقع النوع لا تم العثور على &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_GUI</name>
+    <name>ADN_Fires_GUI</name>
     <message>
         <source>Global fire parameters</source>
         <translation type="unfinished">معلمات النار العالمي</translation>

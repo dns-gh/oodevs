@@ -34,8 +34,8 @@ class ADN_Drawings_GUI;
 class ADN_Equipments_Data;
 class ADN_Equipments_GUI;
 class ADN_FileLoaderObserver;
-class ADN_FireClass_Data;
-class ADN_FireClass_GUI;
+class ADN_Fires_Data;
+class ADN_Fires_GUI;
 class ADN_GeneralConfig;
 class ADN_HumanFactors_Data;
 class ADN_HumanFactors_GUI;
@@ -170,7 +170,7 @@ public:
     ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& GetHumanFactors();
     ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
     ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& GetResourceNetworks();
-    ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& GetFireClasses();
+    ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >& GetFireClasses();
     ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI >& GetDrawings() const;
     ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
     ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& GetLogistic();
@@ -469,13 +469,13 @@ ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& ADN
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& ADN_Workspace::GetFireClasses
+// Name: ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >& ADN_Workspace::GetFireClasses
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& ADN_Workspace::GetFireClasses()
+ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >& ADN_Workspace::GetFireClasses()
 {
-    return static_cast< ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& >( *elements_[ eFireClasses ] );
+    return static_cast< ADN_WorkspaceElement< ADN_Fires_Data, ADN_Fires_GUI >& >( *elements_[ eFireClasses ] );
 }
 
 // -----------------------------------------------------------------------------

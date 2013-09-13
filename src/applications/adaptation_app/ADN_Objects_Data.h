@@ -19,7 +19,7 @@
 #include "ADN_CapacityInfos.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Equipments_Data.h"
-#include "ADN_FireClass_Data.h"
+#include "ADN_Fires_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Disasters_Data.h"
 #include <boost/tuple/tuple.hpp>
@@ -444,10 +444,10 @@ public:
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName );
 
     public:
-        class ModifierByFireClass : public ADN_CrossedRef< ADN_FireClass_Data::FireClassInfos >
+        class ModifierByFireClass : public ADN_CrossedRef< ADN_Fires_Data::FireClassInfos >
         {
         public:
-            explicit ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* );
+            explicit ModifierByFireClass( ADN_Fires_Data::FireClassInfos* );
             ADN_Type_Int ignitionThreshold_;
             ADN_Type_Int maxCombustionEnergy_;
 
@@ -457,25 +457,25 @@ public:
             void ReadArchive( xml::xistream& xis );
             void WriteArchive( xml::xostream& xos );
 
-            typedef ADN_FireClass_Data::FireClassInfos T_Item;
+            typedef ADN_Fires_Data::FireClassInfos T_Item;
 
-            class CmpRef : public std::unary_function< ADN_FireClass_Data::FireClassInfos* , bool >
+            class CmpRef : public std::unary_function< ADN_Fires_Data::FireClassInfos* , bool >
             {
             public:
                 void ReadArchive( xml::xistream& xis );
                 void WriteArchive( xml::xostream& xos );
 
-                CmpRef( ADN_FireClass_Data::FireClassInfos* val ) : val_( val ){}
+                CmpRef( ADN_Fires_Data::FireClassInfos* val ) : val_( val ){}
                 bool operator()( ModifierByFireClass* other ) const
                 {
                     return other->GetCrossedElement() == val_;
                 }
 
             private:
-                ADN_FireClass_Data::FireClassInfos* val_;
+                ADN_Fires_Data::FireClassInfos* val_;
             };
 
-            class Cmp : public std::unary_function< ADN_FireClass_Data::FireClassInfos* , bool >
+            class Cmp : public std::unary_function< ADN_Fires_Data::FireClassInfos* , bool >
             {
             public:
                 Cmp( const std::string& name ) : name_( name ) {}

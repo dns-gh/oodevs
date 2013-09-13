@@ -1652,7 +1652,7 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data</name>
+    <name>ADN_Fires_Data</name>
     <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation>Feu - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
@@ -1675,14 +1675,14 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data::FireClassInfos</name>
+    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation>Incendie - Type de location introuvable &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_GUI</name>
+    <name>ADN_Fires_GUI</name>
     <message>
         <source>Name</source>
         <translation>Nom</translation>
