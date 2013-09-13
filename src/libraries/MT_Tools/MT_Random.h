@@ -13,12 +13,11 @@
 #define __MT_Random_h_
 
 #include <boost/noncopyable.hpp>
-#include <vector>
 
 namespace MT_RandomConsts
 {
-    static const unsigned int N = 624;
-    static const unsigned int M = 397;
+    const unsigned int N = 624;
+    const unsigned int M = 397;
 }
 
 //*****************************************************************************
@@ -27,12 +26,9 @@ namespace MT_RandomConsts
 //*****************************************************************************
 class MT_Random : private boost::noncopyable
 {
-
 public:
     static MT_Random& GetInstance();
-    static void Initialize( unsigned long nSeed );
-    static void Initialize( const std::vector< unsigned long >& key );
-    static void DeleteInstance();
+    static void Initialize( unsigned long seed );
 
 public:
     virtual ~MT_Random() {}
@@ -53,28 +49,15 @@ public:
     double rand_oi( double min, double max );   // ] min., max. ]
 
 private:
-             MT_Random();
-    explicit MT_Random( unsigned long nSeed );
-    explicit MT_Random( const std::vector< unsigned long >& key );
-
-private:
-    inline static unsigned long twist( unsigned long u, unsigned long v )
-    {
-        return ( ( ( ( ( (u) & 0x80000000UL ) | ( (v) & 0x7fffffffUL ) ) ) >> 1 ) ^ ( (v) & 1UL ? 0x9908b0dfUL : 0UL ) );
-    }
-
-    inline void nextState();
+    MT_Random();
+    void InitializeSeed( unsigned long seed );
+    void NextState();
 
 private:
     unsigned long  state_[ MT_RandomConsts::N ];
     unsigned long* next_;
     unsigned int   left_;
-
-private:
-    static MT_Random* pInstance_;
 };
-
-#include "MT_Random.inl"
 
 #endif // __MT_Random_h
 
@@ -119,7 +102,6 @@ private:
    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 
    Any feedback is very welcome.
    http://www.math.keio.ac.jp/matumoto/emt.html
