@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "MT_FileLogger.h"
-#include "tools/Log_ABC.h"
+#include "tools/FileLog.h"
 #include <tools/FileWrapper.h>
 #include <boost/lexical_cast.hpp>
 
@@ -44,17 +44,21 @@ void MT_FileLogger::WriteString( const std::string& s )
 
 namespace
 {
-    struct LogFile : tools::Log_ABC
+    struct FileLog : tools::FileLog
     {
-        LogFile( const tools::Path& filename, bool sizeInBytes )
-            : s_          ( filename, std::ios::out | std::ios::app )
+        FileLog( const tools::Path& filename, bool sizeInBytes )
+            : tools::FileLog( filename )
+            , s_          ( filename, std::ios::out | std::ios::app )
             , sizeInBytes_( sizeInBytes )
         {}
-        virtual std::size_t Write( const std::string& s )
+        virtual std::size_t Write( const std::string& line )
         {
-            s_ << s;
-            s_.flush();
-            return sizeInBytes_ ? s.size() : 1;
+            s_ << line << std::flush;
+            return sizeInBytes_ ? line.size() : 1;
+        }
+        virtual void Close()
+        {
+            s_.close();
         }
         tools::Ofstream s_;
         bool sizeInBytes_;
@@ -67,7 +71,7 @@ std::auto_ptr< tools::Log_ABC > MT_FileLogger::CreateLog( const tools::Path& fil
         filename.Remove();
     else
         size = ComputeSize( filename );
-    return std::auto_ptr< tools::Log_ABC >( new LogFile( filename, sizeInBytes_ ) );
+    return std::auto_ptr< tools::Log_ABC >( new FileLog( filename, sizeInBytes_ ) );
 }
 
 std::streamoff MT_FileLogger::ComputeSize( const tools::Path& filename ) const

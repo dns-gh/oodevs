@@ -7,21 +7,23 @@
 //
 // *****************************************************************************
 
-#ifndef __dispatcher_Log_ABC_h_
-#define __dispatcher_Log_ABC_h_
+#ifndef tools_Log_ABC_h
+#define tools_Log_ABC_h
 
 #include <boost/noncopyable.hpp>
 #include <string>
 
 namespace tools
 {
+    class Path;
+
 // =============================================================================
 /** @class  Log_ABC
     @brief  Log declaration
 */
 // Created: MCO 2011-06-26
 // =============================================================================
-class Log_ABC : private boost::noncopyable
+class Log_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -32,10 +34,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::size_t Write( const std::string& ) = 0;
+    virtual std::size_t Write( const std::string& line ) = 0;
+
+    virtual void Rename( const tools::Path& filename ) = 0;
+    virtual void Delete() = 0;
     //@}
 };
 
 }
 
-#endif // __dispatcher_Log_ABC_h_
+#endif // tools_Log_ABC_h

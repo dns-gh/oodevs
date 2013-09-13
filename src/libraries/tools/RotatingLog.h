@@ -13,6 +13,7 @@
 #include <tools/Path.h>
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/ptr_container/ptr_deque.hpp>
 #include <memory>
 
 namespace tools
@@ -49,9 +50,9 @@ private:
     //! @name Helpers
     //@{
     void DoWrite( const std::string& line );
-
-    std::size_t FindOldestFile() const;
-    tools::Path GetFileName( std::size_t file ) const;
+    void Log( const std::string& line );
+    void Rotate();
+    void CreateLog();
     //@}
 
 private:
@@ -59,10 +60,9 @@ private:
     //@{
     LogFactory_ABC& factory_;
     tools::Path filename_;
-    tools::Path extension_;
-    std::size_t file_, files_;
+    std::size_t files_;
     std::streamoff size_, count_;
-    std::auto_ptr< Log_ABC > pLog_;
+    boost::ptr_deque< Log_ABC > logs_;
     bool sizeInBytes_;
     //@}
 };

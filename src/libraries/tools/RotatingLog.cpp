@@ -11,88 +11,76 @@
 #include "RotatingLog.h"
 #include "LogFactory_ABC.h"
 #include "Log_ABC.h"
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string.hpp>
+#include <boost/date_time/posix_time/posix_time_io.hpp>
 
 using namespace tools;
 
-// -----------------------------------------------------------------------------
-// Name: RotatingLog constructor
-// Created: MCO 2011-06-26
-// -----------------------------------------------------------------------------
 RotatingLog::RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, std::size_t files, std::size_t size )
     : factory_ ( factory )
     , filename_( filename )
     , files_   ( files )
-    , file_    ( FindOldestFile() )
     , size_    ( size )
     , count_   ( 0 )
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: RotatingLog destructor
-// Created: MCO 2013-08-20
-// -----------------------------------------------------------------------------
 RotatingLog::~RotatingLog()
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: RotatingLog::DoWrite
-// Created: MCO 2011-06-26
-// -----------------------------------------------------------------------------
 void RotatingLog::DoWrite( const std::string& line )
 {
-    if( ! pLog_.get() )
-        pLog_ = factory_.CreateLog( GetFileName( file_ ), count_ );
-    count_ += pLog_->Write( line );
-    if( size_ == 0 )
+    try
+    {
+        Rotate();
+    }
+    catch( std::exception& e )
+    {
+        Log( "Failed to rotate log file : " + std::string( e.what() ) + '\n' );
+    }
+    catch( ... )
+    {
+        Log( "Failed to rotate log file for an unknown reason\n" );
+    }
+    Log( line );
+}
+
+namespace
+{
+    tools::Path Rename( const tools::Path& filename )
+    {
+        static const std::locale loc( std::wcout.getloc(), new boost::posix_time::time_facet( "%Y%m%dT%H%M%S" ) );
+        std::stringstream s;
+        s.imbue( loc );
+        s << "." << boost::posix_time::second_clock::local_time();
+        return filename.Parent() / filename.BaseName() + tools::Path::FromUTF8( s.str() ) + filename.Extension();
+    }
+}
+
+void RotatingLog::Rotate()
+{
+    if( size_ == 0 || count_ < size_ )
         return;
-    if( count_ >= size_ )
+    logs_.back().Rename( Rename( filename_ ) );
+    CreateLog();
+    if( logs_.size() > files_ )
     {
-        pLog_.reset();
-        count_ = 0;
-        if( ++file_ >= files_ )
-            file_ = 0;
+        logs_.front().Delete();
+        logs_.pop_front();
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: RotatingLog::GetFileName
-// Created: MCO 2013-08-02
-// -----------------------------------------------------------------------------
-tools::Path RotatingLog::GetFileName( std::size_t file ) const
+void RotatingLog::Log( const std::string& line )
 {
-    if( file < 1 )
-        return filename_;
-    return filename_.Parent() / filename_.BaseName() +
-                    "." + tools::Path::FromUTF8( boost::lexical_cast< std::string >( file ) ) + filename_.Extension();
+    if( logs_.empty() )
+        CreateLog();
+    count_ += logs_.back().Write( line );
 }
 
-//-----------------------------------------------------------------------------
-// Name: RotatingLog::FindOldestFile
-// Created:  MMC 2012-03-02
-//-----------------------------------------------------------------------------
-std::size_t RotatingLog::FindOldestFile() const
+void RotatingLog::CreateLog()
 {
-    if( ! filename_.Exists() )
-        return 0;
-    std::size_t oldest = 0;
-    std::time_t minTime = filename_.LastWriteTime();
-    for( std::size_t i = 1; i < files_; ++i )
-    {
-        const tools::Path filename = GetFileName( i );
-        if( ! filename.Exists() )
-            return i;
-        const std::time_t curTime = filename.LastWriteTime();
-        if( curTime < minTime )
-        {
-            minTime = curTime;
-            oldest = i;
-        }
-    }
-    return oldest;
+    count_ = 0;
+    logs_.push_back( factory_.CreateLog( filename_, count_ ) );
 }
