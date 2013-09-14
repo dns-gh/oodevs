@@ -71,10 +71,10 @@ public:
 private:
     //! @name Tools
     //@{
-    void RotateCheckPoints       ( const tools::Path& newName );
-    bool SaveCheckPoint          ( const tools::Path& name, const tools::Path& userName = "" );
-    bool SaveOrbatCheckPoint     ( const tools::Path& name );
-    bool SaveFullCheckPoint      ( const tools::Path& name, const tools::Path& userName = "" );
+    void RotateCheckPoints( const tools::Path& newName );
+    std::string SaveCheckPoint( const tools::Path& name, const tools::Path& userName );
+    std::string SaveOrbatCheckPoint( const tools::Path& name );
+    std::string SaveFullCheckPoint( const tools::Path& name, const tools::Path& userName );
     tools::Path BuildCheckPointName() const;
 
     void UpdateNextCheckPointTick();

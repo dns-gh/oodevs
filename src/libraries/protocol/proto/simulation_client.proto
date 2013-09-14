@@ -2931,12 +2931,11 @@ message FolkGraphUpdate {
 message ControlCheckPointSetFrequencyAck {
 }
 
-/** @struct ControlCheckPointSaveNowAck
-    @brief Acknowledges a checkpoint save request
-
-    @see ControlCheckPointSaveNow
-*/
+//! Sent in response to ControlCheckPointSaveNow, after the checkpoint
+//! operation terminated.
 message ControlCheckPointSaveNowAck {
+    //! Error detail if any, empty upon success.
+    optional string error_msg = 1;
 }
 
 /** @struct ControlCheckPointSaveBegin

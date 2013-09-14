@@ -176,7 +176,7 @@ void MIL_CheckPointManager::Update()
     if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() < nNextCheckPointTick_ )
         return;
     const tools::Path name = BuildCheckPointName();
-    if( SaveCheckPoint( name ) )
+    if( SaveCheckPoint( name, "" ).empty() )
         RotateCheckPoints( name );
     nLastCheckPointTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateNextCheckPointTick();
@@ -252,8 +252,9 @@ void MIL_CheckPointManager::RotateCheckPoints( const tools::Path& newName )
 // Name: MIL_CheckPointManager::SaveOrbatCheckPoint
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------
-bool MIL_CheckPointManager::SaveOrbatCheckPoint( const tools::Path& name )
+std::string MIL_CheckPointManager::SaveOrbatCheckPoint( const tools::Path& name )
 {
+    std::string err;
     try
     {
         const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
@@ -280,69 +281,60 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const tools::Path& name )
     }
     catch( const xml::exception& e )
     {
-        _clearfp();
-        MT_LOG_ERROR_MSG( "Can't save backup checkpoint ( " << tools::GetExceptionMsg( e ) << " )" );
-        return false;
+        err = tools::GetExceptionMsg( e );
+        MT_LOG_ERROR_MSG( "Can't save backup checkpoint ( " << err << " )" );
     }
-    catch( ... )
-    {
-        _clearfp();
-        MT_LOG_ERROR_MSG( "Can't save backup checkpoint ( Unknown error )" );
-        return false;
-    }
-    return true;
+    return err;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::SaveFullCheckPoint
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------
-bool MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name, const tools::Path& userName /*= ""*/ )
+std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
+        const tools::Path& userName )
 {
+    std::string err;
     const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     try
     {
-        const boost::crc_32_type::value_type nDataFileCRC = CreateData( config.BuildCheckpointChildFile( "data", name ) );
-        const boost::crc_32_type::value_type nCRCFileCRC  = config.serialize( config.BuildCheckpointChildFile( "CRCs.xml" , name ) );
-        CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ), userName, nDataFileCRC, nCRCFileCRC );
-    }
-    catch( const tools::Exception& e )
-    {
-        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
-        return false;
+        CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ),
+                userName,
+                CreateData( config.BuildCheckpointChildFile( "data", name ) ),
+                config.serialize( config.BuildCheckpointChildFile( "CRCs.xml" , name ) ));
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Can't save checkpoint ( '" << tools::GetExceptionMsg( e ) << "' )" );
-        return false;
+        err = tools::GetExceptionMsg( e );
+        std::string s = err;
+        if( auto ee = dynamic_cast< const tools::Exception* >( &e ) )
+            MT_LOG_ERROR_MSG( ee->CreateLoggerMsg() );
+        else
+            MT_LOG_ERROR_MSG( "cannot save checkpoint: " << err );
     }
-    catch( ... )
-    {
-        _clearfp();
-        MT_LOG_ERROR_MSG( "Can't save checkpoint ( Unknown error )" );
-        return false;
-    }
-    return true;
+    return err;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::SaveCheckPoint
 // Created: JVT 2005-04-13
 // -----------------------------------------------------------------------------
-bool MIL_CheckPointManager::SaveCheckPoint( const tools::Path& name, const tools::Path& userName /*= ""*/ )
+std::string MIL_CheckPointManager::SaveCheckPoint( const tools::Path& name,
+        const tools::Path& userName )
 {
     tools::Path checkpointName = userName.IsEmpty()? name : userName;
     MT_LOG_INFO_MSG( "Begin save checkpoint " << checkpointName );
     client::ControlCheckPointSaveBegin().Send( NET_Publisher_ABC::Publisher() );
-    MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", checkpointName ).CreateDirectories();
-    bool bNotOk = !SaveOrbatCheckPoint( checkpointName );
+    MIL_AgentServer::GetWorkspace().GetConfig()
+        .BuildCheckpointChildFile( "", checkpointName ).CreateDirectories();
+    const std::string orbatErr = SaveOrbatCheckPoint( checkpointName );
     MT_LOG_INFO_MSG( "End save orbat" );
-    bNotOk |= !SaveFullCheckPoint( checkpointName, userName );
+    const std::string checkpointErr = SaveFullCheckPoint( checkpointName, userName );
     MT_LOG_INFO_MSG( "End save checkpoint" );
     client::ControlCheckPointSaveEnd msg;
     msg().set_name( checkpointName.ToUTF8() );
     msg.Send( NET_Publisher_ABC::Publisher() );
-    return ! bNotOk;
+    return !orbatErr.empty() ? orbatErr : checkpointErr;
 }
 
 // -----------------------------------------------------------------------------
@@ -352,11 +344,18 @@ bool MIL_CheckPointManager::SaveCheckPoint( const tools::Path& name, const tools
 void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow(
         const sword::ControlCheckPointSaveNow& msg, unsigned int clientId, unsigned int ctx )
 {
-    tools::Path name;
-    if( msg.has_name() )
-        name = tools::Path::FromUTF8( msg.name() );
-    SaveCheckPoint( BuildCheckPointName(), name );
     client::ControlCheckPointSaveNowAck ack;
+    try
+    {
+        tools::Path name;
+        if( msg.has_name() )
+            name = tools::Path::FromUTF8( msg.name() );
+        SaveCheckPoint( BuildCheckPointName(), name );
+    }
+    catch( const std::exception& e )
+    {
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
+    }
     ack.Send( NET_Publisher_ABC::Publisher(), ctx, clientId );
 }
 
