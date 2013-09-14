@@ -34,6 +34,14 @@ namespace bpt = boost::posix_time;
 namespace
 {
 
+bool IsValidCheckpointName( const std::wstring& name )
+{
+    for( auto it = name.cbegin(); it != name.cend(); ++it )
+        if( !std::iswalnum( *it ) && !std::iswspace( *it ) && *it != L'_' )
+            return false;
+    return true;
+}
+
 void CreateMetaData( const tools::Path& strFileName, const tools::Path& name,
         const boost::crc_32_type::value_type& nDataCRC,
         const boost::crc_32_type::value_type& nCRCCRC )
@@ -322,7 +330,13 @@ std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
 std::string MIL_CheckPointManager::SaveCheckPoint( const tools::Path& name,
         const tools::Path& userName )
 {
-    tools::Path checkpointName = userName.IsEmpty()? name : userName;
+    tools::Path checkpointName = name;
+    if( !userName.IsEmpty() )
+    {
+        if( !IsValidCheckpointName( userName.ToUnicode() ))
+            throw MASA_EXCEPTION( "invalid checkpoint name" );
+        checkpointName = userName;
+    }
     MT_LOG_INFO_MSG( "Begin save checkpoint " << checkpointName );
     client::ControlCheckPointSaveBegin().Send( NET_Publisher_ABC::Publisher() );
     MIL_AgentServer::GetWorkspace().GetConfig()
