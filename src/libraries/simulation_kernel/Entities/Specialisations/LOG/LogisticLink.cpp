@@ -257,9 +257,9 @@ std::set< const PHY_DotationCategory* > LogisticLink::OnReceiveChangeQuotas( con
 void LogisticLink::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "logistic-base" )
-            << xml::attribute( "id", superior_->GetID() )
+            << xml::attribute( "id", superior_->GetLogisticId() )
             << xml::start( "subordinate" )
-                    << xml::attribute( "id", owner_->GetID() );
+                    << xml::attribute( "id", owner_->GetLogisticId() );
     WriteQuotas( xos );
     xos     << xml::end
         << xml::end;

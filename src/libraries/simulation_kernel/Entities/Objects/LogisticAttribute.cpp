@@ -93,7 +93,7 @@ void LogisticAttribute::WriteODB( xml::xostream& xos ) const
         return; // It sucks ...
 
     xos << xml::start( "logistic-base" )
-            << xml::attribute( "id", pSuperior->GetID() )
+            << xml::attribute( "id", pSuperior->GetLogisticId() )
         << xml::end;
 }
 

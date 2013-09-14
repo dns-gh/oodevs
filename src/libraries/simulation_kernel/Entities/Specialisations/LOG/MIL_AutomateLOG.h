@@ -93,7 +93,7 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int                      GetID() const;
+    virtual unsigned int              GetLogisticId() const;
     logistic::LogisticHierarchy_ABC&  GetLogisticHierarchy() const;
     MIL_Army_ABC&                     GetArmy     () const;
     virtual const MIL_AgentPion*      GetPC      () const;

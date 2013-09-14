@@ -123,7 +123,7 @@ tools::Iterator< MIL_AutomateLOG& > ObjectLogisticHierarchy::CreateSuperiorsIter
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< LogisticLink_ABC > ObjectLogisticHierarchy::FindSuperiorLink( const MIL_AutomateLOG& superior ) const
 {
-    if( superiorLink_.get() && superiorLink_->GetSuperior().GetID() == superior.GetID() )
+    if( superiorLink_.get() && superiorLink_->GetSuperior().GetLogisticId() == superior.GetLogisticId() )
         return superiorLink_;
     return boost::shared_ptr< LogisticLink_ABC >();
 }

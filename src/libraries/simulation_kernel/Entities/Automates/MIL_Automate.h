@@ -126,6 +126,7 @@ public:
     MIL_DotationSupplyManager& GetDotationSupplyManager() const;
 
     // logistics
+    virtual unsigned int GetLogisticId() const;
     MIL_AutomateLOG* GetBrainLogistic () const;
     MIL_AutomateLOG* FindLogisticManager() const; // Returns logistic chief
     const MIL_Color& GetColor() const;

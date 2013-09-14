@@ -57,7 +57,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned int GetID() const = 0;
+    virtual unsigned int GetLogisticId() const = 0;
     //@}
 
     //! @name Serialization

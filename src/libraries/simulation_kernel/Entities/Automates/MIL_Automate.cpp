@@ -1361,6 +1361,11 @@ unsigned int MIL_Automate::GetID() const
     return nID_;
 }
 
+unsigned int MIL_Automate::GetLogisticId() const
+{
+    return GetID();
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetType
 // Created: NLD 2004-08-17
