@@ -35,7 +35,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlCheckPointSaveBegin                     , control_checkpoint_save_begin             )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlCheckPointSaveEnd                       , control_checkpoint_save_end               )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlCheckPointSaveDelete                    , control_checkpoint_save_delete            )
-    GENERATE_MESSAGE( sword::SimToClient, sword, ControlCheckPointSaveNowAck                    , control_checkpoint_save_now_ack           )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ControlCheckPointSaveNowAck      , control_checkpoint_save_now_ack           )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlCheckPointSetFrequencyAck               , control_checkpoint_set_frequency_ack      )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlDateTimeChangeAck                       , control_date_time_change_ack              )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlEndTick                                 , control_end_tick                          )

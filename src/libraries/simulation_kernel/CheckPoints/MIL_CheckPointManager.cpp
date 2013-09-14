@@ -349,14 +349,15 @@ bool MIL_CheckPointManager::SaveCheckPoint( const tools::Path& name, const tools
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const sword::ControlCheckPointSaveNow& msg )
+void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow(
+        const sword::ControlCheckPointSaveNow& msg, unsigned int clientId, unsigned int ctx )
 {
     tools::Path name;
     if( msg.has_name() )
         name = tools::Path::FromUTF8( msg.name() );
-    client::ControlCheckPointSaveNowAck asnReplyMsg;
-    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
     SaveCheckPoint( BuildCheckPointName(), name );
+    client::ControlCheckPointSaveNowAck ack;
+    ack.Send( NET_Publisher_ABC::Publisher(), ctx, clientId );
 }
 
 // -----------------------------------------------------------------------------
