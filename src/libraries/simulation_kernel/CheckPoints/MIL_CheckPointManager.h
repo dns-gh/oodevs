@@ -13,10 +13,6 @@
 #define __MIL_CheckPointManager_h_
 
 #include "MIL.h"
-#pragma warning ( push )
-#pragma warning ( disable : 4244 4245 )
-#include <boost/CRC.hpp>
-#pragma warning ( pop )
 #include <queue>
 #include <tools/Path.h>
 
@@ -79,15 +75,6 @@ private:
     tools::Path BuildCheckPointName() const;
 
     void UpdateNextCheckPointTick();
-    //@}
-
-    //! @name Tools
-    //@{
-    static void                           CreateMetaData     ( const tools::Path& path, const tools::Path& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
-    static boost::crc_32_type::value_type CreateData         ( const tools::Path& filename );
-
-    static void                           CheckCRC           ( const MIL_Config& config );
-    static void                           CheckFilesCRC      ( const MIL_Config& config );
     //@}
 
 private:
