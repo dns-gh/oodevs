@@ -12,7 +12,6 @@
 #ifndef __MIL_CheckPointManager_h_
 #define __MIL_CheckPointManager_h_
 
-#include "MIL.h"
 #include <queue>
 #include <tools/Path.h>
 
@@ -28,6 +27,9 @@ namespace xml
 }
 
 class MIL_Config;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+class ObjectTypeResolver_ABC;
 
 // =============================================================================
 // Created: NLD 2003-08-05
