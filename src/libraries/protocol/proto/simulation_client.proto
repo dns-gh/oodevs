@@ -2947,9 +2947,6 @@ message ControlCheckPointSaveNowAck {
 message ControlCheckPointSaveBegin {
 }
 
-message ControlCheckPointSaveBeginAck {
-}
-
 /** @struct ControlCheckPointSaveEnd
     @brief Notify of the end of a checkpoint save
 
