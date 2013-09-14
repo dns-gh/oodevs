@@ -59,7 +59,6 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const;
     const MIL_PopulationType& GetType() const;
     const DEC_PopulationDecision& GetDecision() const;
     DEC_PopulationDecision& GetDecision();
@@ -237,7 +236,6 @@ private:
     //! @name Member Data
     //@{
     const MIL_PopulationType*                   pType_;
-    const unsigned int                          nID_;
     MIL_Army_ABC*                               pArmy_;
     boost::shared_ptr< MIL_KnowledgeGroup >     pKnowledgeGroup_;
     const MIL_PopulationAttitude*               pDefaultAttitude_;

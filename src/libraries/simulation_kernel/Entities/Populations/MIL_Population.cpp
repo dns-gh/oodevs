@@ -88,9 +88,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
                                 unsigned int gcPause,
                                 unsigned int gcMult,
                                 sword::DEC_Logger* logger )
-    : MIL_Entity_ABC( xis )
+    : MIL_Entity_ABC( xis, idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pType_                      ( &type )
-    , nID_                        ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pArmy_                      ( &army )
     , pDefaultAttitude_           ( 0 )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
@@ -144,9 +143,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type,
                                 MissionController_ABC& controller )
-    : MIL_Entity_ABC( type.GetName() )
+    : MIL_Entity_ABC( type.GetName(), 0 )
     , pType_                      ( &type )
-    , nID_                        ( 0 )
     , pArmy_                      ( 0 )
     , pDefaultAttitude_           ( MIL_PopulationAttitude::Find( "calme" ) )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
@@ -185,9 +183,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
                                 unsigned int gcMult,
                                 sword::DEC_Logger* logger,
                                 unsigned int context )
-    : MIL_Entity_ABC( name )
+    : MIL_Entity_ABC( name, idManager_.GetId() )
     , pType_                      ( &type )
-    , nID_                        ( idManager_.GetId() )
     , pArmy_                      ( &army )
     , pDefaultAttitude_           ( 0 )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
@@ -261,9 +258,8 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
 void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file >> const_cast< unsigned int& >( nID_ )
-         >> const_cast< MIL_Army_ABC*& >( pArmy_ );
-    idManager_.GetId( nID_, true );
+    file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
+    idManager_.GetId( GetID(), true );
     MIL_AffinitiesMap* pAffinities;
     MIL_DictionaryExtensions* pExtensions;
     unsigned int nAttitudeID;
@@ -310,8 +306,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     unsigned attitude = pDefaultAttitude_->GetID();
-    file << nID_
-         << pArmy_
+    file << pArmy_
          << attitude
          << rArmedIndividuals_
          << rNewArmedIndividuals_
@@ -348,7 +343,7 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
         MT_LOG_ERROR_MSG( "Saving Population with no flow nor concentration." );
     xos << xml::start( "population" );
     MIL_Entity_ABC::WriteODB ( xos ) ;
-    xos << xml::attribute( "id", nID_ )
+    xos << xml::attribute( "id", GetID() )
         << xml::attribute( "type", pType_->GetName() )
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
     if( !concentrations_.empty() )
@@ -1426,7 +1421,7 @@ void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicA
 void MIL_Population::SendCreation( unsigned int context ) const
 {
     client::CrowdCreation asnMsg;
-    asnMsg().mutable_crowd()->set_id( nID_ );
+    asnMsg().mutable_crowd()->set_id( GetID() );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().mutable_party()->set_id( pArmy_->GetID() );
     asnMsg().set_name( GetName() );
@@ -1451,7 +1446,7 @@ void MIL_Population::SendCreation( unsigned int context ) const
 void MIL_Population::SendFullState() const
 {
     client::CrowdUpdate asnMsg;
-    asnMsg().mutable_crowd()->set_id( nID_ );
+    asnMsg().mutable_crowd()->set_id( GetID() );
     const DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
     if( roleDec )
         roleDec->SendFullState( asnMsg );
@@ -1486,7 +1481,7 @@ void MIL_Population::UpdateNetwork()
         if( GetRole< DEC_PopulationDecision >().HasStateChanged() || criticalIntelligenceChanged_ || armedIndividualsChanged_ || pAffinities_->HasChanged() || pExtensions_->HasChanged() || HasHumansChanged() )
         {
             client::CrowdUpdate asnMsg;
-            asnMsg().mutable_crowd()->set_id( nID_ );
+            asnMsg().mutable_crowd()->set_id( GetID() );
             GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
             if( criticalIntelligenceChanged_ && !criticalIntelligence_.empty() )
                 asnMsg().set_critical_intelligence( criticalIntelligence_ );
@@ -1579,15 +1574,6 @@ const MIL_PopulationAttitude& MIL_Population::GetDefaultAttitude() const
 {
     assert( pDefaultAttitude_ );
     return *pDefaultAttitude_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Population::GetID
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-unsigned int MIL_Population::GetID() const
-{
-    return nID_;
 }
 
 // -----------------------------------------------------------------------------

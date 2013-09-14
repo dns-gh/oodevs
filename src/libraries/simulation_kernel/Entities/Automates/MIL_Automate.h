@@ -103,7 +103,6 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const;
     const MIL_AutomateType& GetType() const;
     MIL_Army_ABC& GetArmy() const;
     boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
@@ -268,7 +267,6 @@ private:
     //! @name Member data
     //@{
     const MIL_AutomateType* pType_;
-    const unsigned int nID_;
     MIL_Formation* pParentFormation_;
     MIL_Automate* pParentAutomate_;
     boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;

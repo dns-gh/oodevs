@@ -59,9 +59,8 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army )
-    : MIL_Entity_ABC( xis )
+    : MIL_Entity_ABC( xis, idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , type_                   ( type )
-    , nID_                    ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pArmy_                  ( &army )
     , movingObjectId_         ( 0 )
     , nNbrHealthyHumans_      ( 0 )
@@ -89,9 +88,8 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
-    : MIL_Entity_ABC( type.GetName() )
+    : MIL_Entity_ABC( type.GetName(), 0 )
     , type_                   ( type )
-    , nID_                    ( 0 )
     , pArmy_                  ( 0 )
     , movingObjectId_         ( 0 )
     , pLivingArea_            ( 0 )
@@ -140,9 +138,8 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
     MIL_AffinitiesMap* pAffinities;
     MIL_DictionaryExtensions* pExtensions;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file >> const_cast< unsigned int& >( nID_ )
-         >> const_cast< MIL_Army_ABC*& >( pArmy_ );
-    idManager_.GetId( nID_, true );
+    file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
+    idManager_.GetId( GetID(), true );
     file >> text_
          >> nNbrHealthyHumans_
          >> nNbrDeadHumans_
@@ -173,8 +170,7 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file << nID_
-         << pArmy_
+    file << pArmy_
          << text_
          << nNbrHealthyHumans_
          << nNbrDeadHumans_
@@ -195,7 +191,7 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
     assert( pArmy_ );
     xos << xml::start( "inhabitant" );
     MIL_Entity_ABC::WriteODB ( xos ) ;
-    xos << xml::attribute( "id", nID_ )
+    xos << xml::attribute( "id", GetID() )
         << xml::attribute( "type", type_.GetName() )
         << xml::start( "composition" )
             << xml::attribute( "healthy", nNbrHealthyHumans_ )
@@ -217,7 +213,7 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
 void MIL_Inhabitant::SendCreation() const
 {
     client::PopulationCreation msg;
-    msg().mutable_id()->set_id( nID_ );
+    msg().mutable_id()->set_id( GetID() );
     msg().mutable_type()->set_id( type_.GetID() );
     msg().mutable_party()->set_id( pArmy_->GetID() );
     msg().set_text( text_ );
@@ -233,7 +229,7 @@ void MIL_Inhabitant::SendCreation() const
 void MIL_Inhabitant::SendFullState() const
 {
     client::PopulationUpdate msg;
-    msg().mutable_id()->set_id( nID_ );
+    msg().mutable_id()->set_id( GetID() );
     msg().set_healthy( nNbrHealthyHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
@@ -294,7 +290,7 @@ void MIL_Inhabitant::UpdateNetwork()
     try
     {
         client::PopulationUpdate msg;
-        msg().mutable_id()->set_id( nID_ );
+        msg().mutable_id()->set_id( GetID() );
         if( healthStateChanged_ )
         {
             msg().set_healthy( nNbrHealthyHumans_ );
@@ -402,15 +398,6 @@ void MIL_Inhabitant::OnReceiveMsgChangeConfinedState( const sword::UnitMagicActi
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     pLivingArea_->SetConfined( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::GetID
-// Created: SLG 2010-11-29
-// -----------------------------------------------------------------------------
-unsigned int MIL_Inhabitant::GetID() const
-{
-    return nID_;
 }
 
 // -----------------------------------------------------------------------------

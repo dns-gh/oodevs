@@ -58,7 +58,6 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const;
     virtual MIL_Army_ABC& GetArmy() const;
     float GetAffinity( unsigned long teamID ) const;
     virtual bool CanEmitReports() const;
@@ -125,7 +124,6 @@ private:
     //! @name Member Data
     //@{
     const MIL_InhabitantType&                    type_;
-    const unsigned int                           nID_;
     MIL_Army_ABC*                                pArmy_;
     unsigned long                                movingObjectId_;
     std::auto_ptr< MIL_LivingArea >              pLivingArea_;

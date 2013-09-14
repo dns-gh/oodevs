@@ -13,7 +13,6 @@
 #define __MIL_Agent_ABC_h_
 
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
-#include "Tools/MIL_IDManager.h"
 
 class AlgorithmsFactories;
 class DEC_Decision_ABC;
@@ -53,7 +52,6 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const = 0;
     virtual const MIL_AgentType_ABC& GetType() const = 0;
     virtual bool IsMarkedForDestruction() const = 0;
@@ -114,23 +112,8 @@ public:
     bool operator ==( const MIL_Agent_ABC& rhs ) const;
     bool operator !=( const MIL_Agent_ABC& rhs ) const;
     //@}
-
-private:
-    unsigned int nID_;
-    static MIL_IDManager idManager_;
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_Agent_ABC )
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Agent_ABC::serialize
-// Created: SBO 2009-07-01
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_Agent_ABC::serialize( Archive& file, const unsigned int )
-{
-    file & boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file & nID_;
-}
 
 #endif // __MIL_Agent_ABC_h_

@@ -37,13 +37,14 @@ class MIL_Entity_ABC : public tools::RoleContainer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_Entity_ABC( const std::string& name );
-    explicit MIL_Entity_ABC( xml::xistream& xis );
+             MIL_Entity_ABC( const std::string& name, unsigned int id );
+             MIL_Entity_ABC( xml::xistream& xis, unsigned int id );
     virtual ~MIL_Entity_ABC();
     //@}
 
     //! @name Accessors
     //@{
+    unsigned int GetID() const;
     const std::string& GetName() const;
     virtual MIL_Army_ABC& GetArmy() const = 0;
     virtual bool CanEmitReports() const = 0;
@@ -64,6 +65,7 @@ private:
     //! @name data Members
     //@{
     const std::string strName_;
+    const unsigned int id_;
     //@}
 };
 
