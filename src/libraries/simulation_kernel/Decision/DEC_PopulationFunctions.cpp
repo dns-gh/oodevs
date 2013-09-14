@@ -22,6 +22,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"

@@ -27,6 +27,7 @@
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMoveAlong.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"

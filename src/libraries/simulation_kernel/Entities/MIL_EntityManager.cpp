@@ -76,6 +76,7 @@
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_DisasterType.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "propagation/FloodModel.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Inhabitants/MIL_Inhabitant.h"

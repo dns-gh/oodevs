@@ -20,6 +20,7 @@
 #include "MIL_KnowledgeGroup.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"

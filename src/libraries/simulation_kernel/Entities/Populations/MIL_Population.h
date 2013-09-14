@@ -13,7 +13,6 @@
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
-#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include <tools/Set.h>
 
 namespace sword
@@ -33,15 +32,18 @@ class MIL_AgentPion;
 class MIL_Army_ABC;
 class MIL_DictionaryExtensions;
 class MIL_Formation;
+class MIL_KnowledgeGroup;
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class MIL_PopulationElement_ABC;
+class MIL_PopulationOrderManager;
 class MIL_PopulationAttitude;
 class PHY_Volume;
 class PHY_FireResults_Population;
 class TER_Localisation;
 class MIL_UrbanObject_ABC;
+class MissionController_ABC;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -250,7 +252,7 @@ private:
     T_ConcentrationVector                       trashedConcentrations_;
     T_FlowVector                                trashedFlows_;
     DEC_PopulationKnowledge*                    pKnowledge_;
-    MIL_PopulationOrderManager                  orderManager_;
+    std::auto_ptr< MIL_PopulationOrderManager > orderManager_;
     boost::shared_ptr< MT_Vector2D >            vBarycenter_;
     // Pion effects
     double                                      rOverloadedPionMaxSpeed_;

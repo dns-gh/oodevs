@@ -5,6 +5,7 @@
 #include "Decision/DEC_PopulationFunctions.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "MissionController.h"
 #include "Fixture.h"

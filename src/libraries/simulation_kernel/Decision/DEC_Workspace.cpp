@@ -13,6 +13,7 @@
 #include "Entities/Orders/MIL_AutomateMission.h"
 #include "Entities/Orders/MIL_PopulationMissionType.h"
 #include "Entities/Orders/MIL_PopulationMission.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Orders/MIL_FragOrderType.h"
 #include "Entities/Orders/MIL_FragOrder.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"

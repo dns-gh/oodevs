@@ -17,6 +17,7 @@
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Entities/Orders/MIL_PopulationMissionType.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
