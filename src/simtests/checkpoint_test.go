@@ -11,6 +11,7 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"swapi"
+	"swapi/simu"
 )
 
 func (s *TestSuite) TestCheckpointMessages(c *C) {
@@ -86,4 +87,45 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 		longname += "a"
 	}
 	check(longname, ".*create_directory.*")
+}
+
+func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
+	*simu.SimProcess, *swapi.Client) {
+
+	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, false)
+	client := loginAndWaitModel(c, sim, user, password)
+	return sim, client
+}
+
+// Test SimProcess --checkpoint. This should be with other SimProcess tests but
+// it is really difficult to craft checkpoint inputs, so we generate one here
+// from a running exercise and reload it.
+// There will be other tests to check the checkpoint content.
+func (s *TestSuite) TestCheckpointRestart(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	defer sim.Stop()
+	party := client.Model.GetData().FindPartyByName("party1")
+	c.Assert(party, NotNil)
+	CreateFormation(c, client, party.Id)
+	automat := createAutomatForParty(c, client, "party1")
+	from := swapi.Point{X: -15.9219, Y: 28.3456}
+	unit, err := client.CreateUnit(automat.Id, UnitType, from)
+	c.Assert(err, IsNil)
+	session := sim.Opts.SessionName
+	checkpoint, err := client.CreateCheckpoint("")
+	c.Assert(err, IsNil)
+	client.Close()
+	sim.Stop()
+
+	sim, client = loadCheckpointAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty,
+		session, checkpoint)
+	defer sim.Stop()
+	unit2 := client.Model.GetUnit(unit.Id)
+	c.Assert(unit2, NotNil)
+	c.Assert(Nearby(unit2.Position, from), Equals, true)
+	automat2 := client.Model.GetAutomat(automat.Id)
+	c.Assert(automat2, NotNil)
+	c.Assert(automat2.FormationId, Equals, automat.FormationId)
+	formation2 := client.Model.GetFormation(automat.FormationId)
+	c.Assert(formation2, NotNil)
 }

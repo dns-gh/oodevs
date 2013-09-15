@@ -93,6 +93,20 @@ func startSimOnExercise(c *C, exercise string, endTick int,
 	return sim
 }
 
+func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick int,
+	paused bool) *simu.SimProcess {
+
+	opts := MakeOpts()
+	opts.ExerciseName = exercise
+	opts.ConnectTimeout = 40 * time.Second
+	opts.SessionName = session
+	opts.CheckpointName = checkpoint
+
+	sim, err := simu.StartSim(opts)
+	c.Assert(err, IsNil) // failed to start the simulation
+	return sim
+}
+
 func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	client, err := swapi.Connect(sim.DispatcherAddr)
 	client.PostTimeout = 10 * time.Second
@@ -133,10 +147,10 @@ const (
 	CrowdType = "Standard Crowd"
 )
 
-func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
+func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.Automat {
 	data := client.Model.GetData()
 
-	party := data.FindPartyByName("party")
+	party := data.FindPartyByName(partyName)
 	c.Assert(party, NotNil)
 
 	c.Assert(len(party.Formations), Greater, 0)
@@ -160,6 +174,10 @@ func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
 	c.Assert(err, IsNil)
 	c.Assert(automat, NotNil)
 	return automat
+}
+
+func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
+	return createAutomatForParty(c, client, "party")
 }
 
 func Test(t *testing.T) { TestingT(t) }
