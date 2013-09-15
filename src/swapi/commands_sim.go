@@ -1406,3 +1406,33 @@ func (c *Client) ListEnabledVisionCones(start uint32, count uint32) (*sword.List
 	err := <-c.postSimRequest(msg, handler)
 	return reply, err
 }
+
+// Returns the checkpoint name or an error.
+func (c *Client) CreateCheckpoint(name string) (string, error) {
+	var n *string
+	if len(name) > 0 {
+		n = proto.String(name)
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlCheckpointSaveNow: &sword.ControlCheckPointSaveNow{
+					Name: n,
+				},
+			},
+		},
+	}
+	checkpoint := ""
+	err := <-c.postSimRequest(msg, func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlCheckpointSaveNowAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		if e := reply.GetErrorMsg(); len(e) > 0 {
+			return fmt.Errorf("%s", e)
+		}
+		checkpoint = reply.GetName()
+		return nil
+	})
+	return checkpoint, err
+}
