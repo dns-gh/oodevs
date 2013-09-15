@@ -327,16 +327,9 @@ std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
 // Name: MIL_CheckPointManager::SaveCheckPoint
 // Created: JVT 2005-04-13
 // -----------------------------------------------------------------------------
-std::string MIL_CheckPointManager::SaveCheckPoint( const tools::Path& name,
+std::string MIL_CheckPointManager::SaveCheckPoint( const tools::Path& checkpointName,
         const tools::Path& userName )
 {
-    tools::Path checkpointName = name;
-    if( !userName.IsEmpty() )
-    {
-        if( !IsValidCheckpointName( userName.ToUnicode() ))
-            throw MASA_EXCEPTION( "invalid checkpoint name" );
-        checkpointName = userName;
-    }
     MT_LOG_INFO_MSG( "Begin save checkpoint " << checkpointName );
     client::ControlCheckPointSaveBegin().Send( NET_Publisher_ABC::Publisher() );
     MIL_AgentServer::GetWorkspace().GetConfig()
@@ -361,10 +354,18 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow(
     client::ControlCheckPointSaveNowAck ack;
     try
     {
-        tools::Path name;
+        tools::Path userName;
         if( msg.has_name() )
-            name = tools::Path::FromUTF8( msg.name() );
-        SaveCheckPoint( BuildCheckPointName(), name );
+            userName = tools::Path::FromUTF8( msg.name() );
+        tools::Path checkpointName = BuildCheckPointName();
+        if( !userName.IsEmpty() )
+        {
+            if( !IsValidCheckpointName( userName.ToUnicode() ))
+                throw MASA_EXCEPTION( "invalid checkpoint name" );
+            checkpointName = userName;
+        }
+        SaveCheckPoint( checkpointName, userName );
+        ack().set_name( checkpointName.ToUTF8() );
     }
     catch( const std::exception& e )
     {
