@@ -2940,21 +2940,13 @@ message ControlCheckPointSaveNowAck {
     optional string name      = 2;
 }
 
-/** @struct ControlCheckPointSaveBegin
-    @brief Notify of the beginning of a checkpoint save
-
-    @see ControlCheckPointSaveNow ControlCheckPointSaveEnd
-*/
+//! Emitted when a checkpoint creation starts.
 message ControlCheckPointSaveBegin {
+    optional string name = 1;
 }
 
-/** @struct ControlCheckPointSaveEnd
-    @brief Notify of the end of a checkpoint save
-
-    @see ControlCheckPointSaveNow ControlCheckPointSaveBegin
-*/
+//! Emitted when a checkpoint creation ends.
 message ControlCheckPointSaveEnd {
-    //! The checkpoint name
     optional string name = 1;
 }
 

@@ -331,16 +331,21 @@ std::string MIL_CheckPointManager::SaveCheckPoint( const tools::Path& checkpoint
         const tools::Path& userName )
 {
     MT_LOG_INFO_MSG( "Begin save checkpoint " << checkpointName );
-    client::ControlCheckPointSaveBegin().Send( NET_Publisher_ABC::Publisher() );
+    client::ControlCheckPointSaveBegin begin;
+    begin().set_name( checkpointName.ToUTF8() );
+    begin.Send( NET_Publisher_ABC::Publisher() );
+
     MIL_AgentServer::GetWorkspace().GetConfig()
         .BuildCheckpointChildFile( "", checkpointName ).CreateDirectories();
     const std::string orbatErr = SaveOrbatCheckPoint( checkpointName );
     MT_LOG_INFO_MSG( "End save orbat" );
     const std::string checkpointErr = SaveFullCheckPoint( checkpointName, userName );
+
     MT_LOG_INFO_MSG( "End save checkpoint" );
-    client::ControlCheckPointSaveEnd msg;
-    msg().set_name( checkpointName.ToUTF8() );
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    client::ControlCheckPointSaveEnd end;
+    end().set_name( checkpointName.ToUTF8() );
+    end.Send( NET_Publisher_ABC::Publisher() );
+
     return !orbatErr.empty() ? orbatErr : checkpointErr;
 }
 
