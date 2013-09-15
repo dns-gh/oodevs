@@ -327,25 +327,42 @@ std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
 // Name: MIL_CheckPointManager::SaveCheckPoint
 // Created: JVT 2005-04-13
 // -----------------------------------------------------------------------------
+namespace
+{
+
+struct CheckpointGuard: boost::noncopyable
+{
+    CheckpointGuard( const tools::Path& name )
+        : name_( name )
+    {
+        MT_LOG_INFO_MSG( "Begin save checkpoint " << name_ );
+        client::ControlCheckPointSaveBegin begin;
+        begin().set_name( name_.ToUTF8() );
+        begin.Send( NET_Publisher_ABC::Publisher() );
+    }
+
+    ~CheckpointGuard()
+    {
+        MT_LOG_INFO_MSG( "End save checkpoint" << name_ );
+        client::ControlCheckPointSaveEnd end;
+        end().set_name( name_.ToUTF8() );
+        end.Send( NET_Publisher_ABC::Publisher() );
+    }
+
+    const tools::Path name_;
+};
+
+} // namespace
+
 std::string MIL_CheckPointManager::SaveCheckPoint( const tools::Path& checkpointName,
         const tools::Path& userName )
 {
-    MT_LOG_INFO_MSG( "Begin save checkpoint " << checkpointName );
-    client::ControlCheckPointSaveBegin begin;
-    begin().set_name( checkpointName.ToUTF8() );
-    begin.Send( NET_Publisher_ABC::Publisher() );
-
+    CheckpointGuard guard( checkpointName );
     MIL_AgentServer::GetWorkspace().GetConfig()
         .BuildCheckpointChildFile( "", checkpointName ).CreateDirectories();
     const std::string orbatErr = SaveOrbatCheckPoint( checkpointName );
     MT_LOG_INFO_MSG( "End save orbat" );
     const std::string checkpointErr = SaveFullCheckPoint( checkpointName, userName );
-
-    MT_LOG_INFO_MSG( "End save checkpoint" );
-    client::ControlCheckPointSaveEnd end;
-    end().set_name( checkpointName.ToUTF8() );
-    end.Send( NET_Publisher_ABC::Publisher() );
-
     return !orbatErr.empty() ? orbatErr : checkpointErr;
 }
 
