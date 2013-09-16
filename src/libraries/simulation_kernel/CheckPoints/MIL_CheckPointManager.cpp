@@ -343,7 +343,7 @@ struct CheckpointGuard: boost::noncopyable
 
     ~CheckpointGuard()
     {
-        MT_LOG_INFO_MSG( "End save checkpoint" << name_ );
+        MT_LOG_INFO_MSG( "End save checkpoint " << name_ );
         client::ControlCheckPointSaveEnd end;
         end().set_name( name_.ToUTF8() );
         try
