@@ -2009,6 +2009,8 @@ void PHY_RolePion_Composantes::CancelLogisticRequests()
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
         ( *it )->CancelLogisticRequests();
+    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
+        ( *it )->Cancel();
 }
 
 // -----------------------------------------------------------------------------
