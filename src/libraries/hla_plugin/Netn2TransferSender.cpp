@@ -16,7 +16,6 @@
 #include "LocalAgentResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
 #include "InteractionSender.h"
-#include "MT_Tools/MT_Random.h"
 #include <hla/Interaction.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/foreach.hpp>

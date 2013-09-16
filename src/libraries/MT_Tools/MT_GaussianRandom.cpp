@@ -79,13 +79,14 @@ double MT_GaussianRandom::rand()
         bAlreadyComputed_ = false;
         return rAlreadyComputed_ + rMean_;
     }
-    double rX         = MT_Random::GetInstance().rand_ii( -1., 1. );
-    rAlreadyComputed_ = MT_Random::GetInstance().rand_ii( -1., 1. );
+    auto& rand        = MT_Random::GetInstance();
+    double rX         = rand.rand_ii( -1., 1. );
+    rAlreadyComputed_ = rand.rand_ii( -1., 1. );
     double rSqLength  = rX * rX + rAlreadyComputed_ * rAlreadyComputed_;
     while ( rSqLength >= 1. || rSqLength == 0. )
     {
-        rX                = MT_Random::GetInstance().rand_ii( -1., 1. );
-        rAlreadyComputed_ = MT_Random::GetInstance().rand_ii( -1., 1. );
+        rX                = rand.rand_ii( -1., 1. );
+        rAlreadyComputed_ = rand.rand_ii( -1., 1. );
         rSqLength         = rX * rX + rAlreadyComputed_ * rAlreadyComputed_;
     }
     rSqLength          = rVariance_ * sqrt( ( -2. * log( rSqLength ) ) / rSqLength );

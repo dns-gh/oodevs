@@ -11,6 +11,7 @@
 #define __AttributeType_h_
 
 #include "OptionalValue.h"
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace xml
 {
@@ -51,8 +52,7 @@ public:
         EOperatorOR
     };
 
-    typedef std::vector< ExtensionDependency* >   T_Dependencies;
-    typedef T_Dependencies::const_iterator      CIT_Dependencies;
+    typedef boost::ptr_vector< ExtensionDependency > T_Dependencies;
     //@}
 
 public:
@@ -91,8 +91,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< EntryLabelType* >        T_Entries;
-    typedef T_Entries::const_iterator           CIT_Entries;
+    typedef boost::ptr_vector< EntryLabelType > T_Entries;
     //@}
 
 private:

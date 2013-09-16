@@ -56,8 +56,8 @@ MaterialCompositionType::~MaterialCompositionType()
 // -----------------------------------------------------------------------------
 void MaterialCompositionType::ReadAttrition( xml::xistream& xis )
 {
-    AttritionData* attrition = new AttritionData( xis );
-    attritions_.insert( std::pair< std::string, AttritionData* >( attrition->protection_, attrition ) );
+    AttritionData attrition( xis );
+    attritions_.insert( std::make_pair( attrition.protection_, attrition ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,10 +94,10 @@ MaterialCompositionType& MaterialCompositionType::operator=( const MaterialCompo
 // Name: MaterialCompositionType::FindAttrition
 // Created: SLG 2010-11-17
 // -----------------------------------------------------------------------------
-MaterialCompositionType::AttritionData* MaterialCompositionType::FindAttrition( const std::string& protection ) const
+const MaterialCompositionType::AttritionData* MaterialCompositionType::FindAttrition( const std::string& protection ) const
 {
-    CIT_AttritionInfos it = attritions_.find( protection );
+    auto it = attritions_.find( protection );
     if( it != attritions_.end() )
-        return it->second;
+        return &it->second;
     return 0;
 }
