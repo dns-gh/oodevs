@@ -39,6 +39,17 @@ MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type,
     // NOTHING
 }
 
+MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type,
+                                              MIL_Population& population,
+                                              uint32_t id )
+    : MIL_Mission_ABC( type, population.GetKnowledge(), id,
+            boost::shared_ptr< MIL_Mission_ABC >() )
+    , population_( population )
+    , bDIABehaviorActivated_( false )
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission destructor
 // Created: NLD 2006-11-25
@@ -148,7 +159,7 @@ void load_construct_data( Archive& archive, MIL_PopulationMission* mission, cons
         if( !type )
             throw MASA_EXCEPTION( "unknown crowd mission type: "
                     + boost::lexical_cast< std::string >( idType ) );
-        ::new( mission ) MIL_PopulationMission( *type, *population, id, sword::MissionParameters() );
+        ::new( mission ) MIL_PopulationMission( *type, *population, id );
     }
     catch( const std::exception& e )
     {

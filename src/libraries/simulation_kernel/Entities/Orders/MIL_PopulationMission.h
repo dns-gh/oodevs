@@ -52,6 +52,9 @@ public:
 private:
     //! @name Serialization
     //@{
+    // This constructor is reserved for deserialization purpose, we need to
+    // recreate a MIL_Mission_ABC without its parameters.
+             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, uint32_t id );
     template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_PopulationMission* mission, const unsigned int version );
     template< typename Archive > friend void load_construct_data( Archive& archive, MIL_PopulationMission* mission, const unsigned int version );
     //@}
