@@ -12,11 +12,6 @@
 #ifndef __MIL_CheckPointManager_h_
 #define __MIL_CheckPointManager_h_
 
-#include "MIL.h"
-#pragma warning ( push )
-#pragma warning ( disable : 4244 4245 )
-#include <boost/CRC.hpp>
-#pragma warning ( pop )
 #include <queue>
 #include <tools/Path.h>
 
@@ -32,6 +27,9 @@ namespace xml
 }
 
 class MIL_Config;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+class ObjectTypeResolver_ABC;
 
 // =============================================================================
 // Created: NLD 2003-08-05
@@ -57,7 +55,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgCheckPointSaveNow     ( const sword::ControlCheckPointSaveNow&      msg );
+    void OnReceiveMsgCheckPointSaveNow( const sword::ControlCheckPointSaveNow&  msg,
+            unsigned int clientId, unsigned int ctx );
     void OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency& msg );
     //@}
 
@@ -72,22 +71,13 @@ public:
 private:
     //! @name Tools
     //@{
-    void RotateCheckPoints       ( const tools::Path& newName );
-    bool SaveCheckPoint          ( const tools::Path& name, const tools::Path& userName = "" );
-    bool SaveOrbatCheckPoint     ( const tools::Path& name );
-    bool SaveFullCheckPoint      ( const tools::Path& name, const tools::Path& userName = "" );
+    void RotateCheckPoints( const tools::Path& newName );
+    std::string SaveCheckPoint( const tools::Path& name, const tools::Path& userName );
+    std::string SaveOrbatCheckPoint( const tools::Path& name );
+    std::string SaveFullCheckPoint( const tools::Path& name, const tools::Path& userName );
     tools::Path BuildCheckPointName() const;
 
     void UpdateNextCheckPointTick();
-    //@}
-
-    //! @name Tools
-    //@{
-    static void                           CreateMetaData     ( const tools::Path& path, const tools::Path& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
-    static boost::crc_32_type::value_type CreateData         ( const tools::Path& filename );
-
-    static void                           CheckCRC           ( const MIL_Config& config );
-    static void                           CheckFilesCRC      ( const MIL_Config& config );
     //@}
 
 private:

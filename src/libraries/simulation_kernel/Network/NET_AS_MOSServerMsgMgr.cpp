@@ -89,7 +89,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_control_date_time_change() )
         simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data() );
     else if( wrapper.message().has_control_checkpoint_save_now() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( wrapper.message().control_checkpoint_save_now()               );
+        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( wrapper.message().control_checkpoint_save_now(), clientId, nCtx );
     else if( wrapper.message().has_control_checkpoint_set_frequency() )
         workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency      ( wrapper.message().control_checkpoint_set_frequency()          );
     else if( wrapper.message().has_control_toggle_vision_cones() )
