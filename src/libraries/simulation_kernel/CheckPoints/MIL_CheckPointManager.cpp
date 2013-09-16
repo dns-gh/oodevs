@@ -345,7 +345,15 @@ struct CheckpointGuard: boost::noncopyable
         MT_LOG_INFO_MSG( "End save checkpoint" << name_ );
         client::ControlCheckPointSaveEnd end;
         end().set_name( name_.ToUTF8() );
-        end.Send( NET_Publisher_ABC::Publisher() );
+        try
+        {
+            end.Send( NET_Publisher_ABC::Publisher() );
+        }
+        catch( const std::exception& )
+        {
+            // If the connection is lost, it does not matter we cannot send
+            // the end message.
+        }
     }
 
     const tools::Path name_;
