@@ -145,3 +145,21 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
     }
     tools.DrawCurvedArrow( from, to, 0.5f );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetId
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+unsigned int LogMaintenanceConsign::GetId() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::RefersToAgent
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+bool LogMaintenanceConsign::RefersToAgent( unsigned int id ) const
+{
+    return consumer_.GetId() == id;
+}

@@ -63,6 +63,8 @@ public:
     void CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message );
     LogFuneralConsign& GetFuneralConsign( unsigned long id );
     void DeleteFuneralConsign( unsigned long id );
+
+    void DestroyAgent( unsigned long id );
     //@}
 
 private:

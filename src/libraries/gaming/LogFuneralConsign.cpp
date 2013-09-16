@@ -175,3 +175,23 @@ kernel::Entity_ABC* LogFuneralConsign::FindLogEntity(const sword::ParentEntity& 
         retval = formationResolver_.Find( msg.formation().id() );
     return retval;
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetId
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+unsigned long LogFuneralConsign::GetId() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::RefersToAgent
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+bool LogFuneralConsign::RefersToAgent( unsigned int id ) const
+{
+    return consumer_.GetId() == id
+        || ( handler_ && handler_->GetId() == id )
+        || ( convoy_ && convoy_->GetId() == id );
+}
