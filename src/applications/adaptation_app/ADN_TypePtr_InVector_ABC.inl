@@ -54,7 +54,7 @@ ADN_TypePtr_InVector_ABC< T >::ADN_TypePtr_InVector_ABC( const typename ADN_Type
 template< class T >
 ADN_TypePtr_InVector_ABC< T >::~ADN_TypePtr_InVector_ABC()
 {
-    Clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,6 @@ void ADN_TypePtr_InVector_ABC< T >::ConnectPrivateSub( ADN_Connector_Vector_ABC*
 
     connect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
     connect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void* ) ) );
-    connect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool ) ) );
     connect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 
     pTarget->Initialize( *this );
@@ -85,7 +84,6 @@ void ADN_TypePtr_InVector_ABC< T >::DisconnectPrivateSub( ADN_Connector_Vector_A
 
     disconnect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
     disconnect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void* ) ) );
-    disconnect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool ) ) );
     disconnect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 }
 

@@ -126,7 +126,6 @@ void ADN_Connector_Vector_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTar
 
     connect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
     connect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void*) ) );
-    connect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool) ) );
     connect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 }
 
@@ -140,7 +139,6 @@ void ADN_Connector_Vector_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* p
 
     disconnect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
     disconnect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void* ) ) );
-    disconnect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool ) ) );
     disconnect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 }
 
@@ -180,7 +178,6 @@ void ADN_Connector_Vector_ABC::AddItemNoEmit( void* pObj )
 // -----------------------------------------------------------------------------
 bool ADN_Connector_Vector_ABC::AddItemPrivate( void* )
 {
-    // nothing
     return false;
 }
 
@@ -241,9 +238,9 @@ void  ADN_Connector_Vector_ABC::Clear( bool bInConnection )
 // Name: ADN_Connector_Vector_ABC::ClearPrivate
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void  ADN_Connector_Vector_ABC::ClearPrivate( bool bInConnection )
+void  ADN_Connector_Vector_ABC::ClearPrivate( bool )
 {
-    emit Cleared( bInConnection );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

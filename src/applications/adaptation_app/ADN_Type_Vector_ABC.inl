@@ -135,10 +135,7 @@ template< class T >
 void ADN_Type_Vector_ABC< T >::ClearPrivate( bool bInConnection )
 {
     if( !bInConnection && size() != 0 )
-    {
         clear();
-        emit Cleared( bInConnection );
-    }
 }
 
 //-----------------------------------------------------------------------------

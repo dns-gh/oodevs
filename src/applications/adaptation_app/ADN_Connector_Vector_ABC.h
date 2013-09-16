@@ -65,7 +65,6 @@ public slots:
 signals:
     void ItemAdded( void* pObj );
     void ItemRemoved( void* pObj );
-    void Cleared( bool bInConnection = false);
 
 public:
     //! @name Double dispatch connexion mechanism
