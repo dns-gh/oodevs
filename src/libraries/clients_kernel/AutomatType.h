@@ -11,6 +11,8 @@
 #define __AutomatType_h_
 
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace xml { class xistream; };
 
@@ -32,7 +34,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AutomatType
+class AutomatType : public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -52,7 +54,6 @@ public:
     std::string GetTypeName() const;
     const DecisionalModel& GetDecisionalModel() const;
     unsigned int NumberOfAgents() const;
-    tools::Iterator< const AutomatComposition& > CreateIterator() const;
 
     bool HasLogistics() const;
     bool IsTC2() const;
@@ -61,22 +62,17 @@ public:
     bool IsLogisticMedical() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Methods
     //@{
-    AutomatType( const AutomatType& );            //!< Copy constructor
-    AutomatType& operator=( const AutomatType& ); //!< Assignment operator
+    typedef boost::ptr_vector< AutomatComposition > T_Compositions;
+    const T_Compositions& GetCompositions() const;
     //@}
 
+private:
     //! @name Helpers
     //@{
     void ReadAgent( xml::xistream& xis, const  tools::Resolver_ABC< AgentType, std::string >& agentResolver );
     void UpdateSymbol( const SymbolFactory& symbolFactory );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< AutomatComposition* > T_UnitConstitution;
     //@}
 
 private:
@@ -89,7 +85,7 @@ private:
 
     DecisionalModel* model_;
     const AgentType* pcType_;
-    T_UnitConstitution units_;
+    T_Compositions compositions_;
     //@}
 };
 

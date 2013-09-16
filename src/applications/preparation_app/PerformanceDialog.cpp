@@ -158,7 +158,7 @@ namespace
 // -----------------------------------------------------------------------------
 void PerformanceDialog::UpdateDisplay()
 {
-    const PerformanceIndicator::Values& values =  model_.performanceIndicator_.ComputeValues();
+    const PerformanceIndicator::Values& values =  model_.performanceIndicator_->ComputeValues();
     dataModel_->item( ePerformanceData_Profiles                 , 1 )->setText( locale().toString( values.profiles_ ) );
     dataModel_->item( ePerformanceData_Units                    , 1 )->setText( locale().toString( values.units_ ) );
     dataModel_->item( ePerformanceData_Populations              , 1 )->setText( locale().toString( values.populations_ ) );

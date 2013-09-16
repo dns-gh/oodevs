@@ -72,15 +72,15 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
-    scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, model.scores_, paramLayer, staticModel, config, tools );
-    successFactorDialog_ = new SuccessFactorDialog( parent, controllers, model.successFactors_, staticModel.successFactorActionTypes_, model.scores_ );
-    exerciseDialog_ = new ExerciseDialog( parent, controllers, model.exercise_, config );
+    scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, tools );
+    successFactorDialog_ = new SuccessFactorDialog( parent, controllers, *model.successFactors_, staticModel.successFactorActionTypes_, *model.scores_ );
+    exerciseDialog_ = new ExerciseDialog( parent, controllers, *model.exercise_, config );
     consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, const_cast< tools::RealFileLoaderObserver_ABC& >( static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() ) );
     performanceDialog_ = new PerformanceDialog( parent, model, staticModel );
     filtersDialog_ = new FilterDialogs( parent, config, model, staticModel.coordinateConverter_ );
     addRasterDialog_ = new gui::AddRasterDialog( parent );
-    removeBlocksDialog_ = new RemoveBlocksDialog( parent, controllers, model.urban_ );
-    terrainExportDialog_ = new TerrainExportDialog( parent, config, model.urban_ );
+    removeBlocksDialog_ = new RemoveBlocksDialog( parent, controllers, *model.urban_ );
+    terrainExportDialog_ = new TerrainExportDialog( parent, config, *model.urban_ );
 }
 
 // -----------------------------------------------------------------------------

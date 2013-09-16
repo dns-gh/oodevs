@@ -93,7 +93,7 @@ void FloodDrawer::ResetTexture()
 // Name: FloodDrawer::RenderTexture
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodDrawer::RenderTexture( const std::vector< geometry::Polygon2f* >& deepAreas, const std::vector< geometry::Polygon2f* >& lowAreas )
+void FloodDrawer::RenderTexture( const std::vector< geometry::Polygon2f >& deepAreas, const std::vector< geometry::Polygon2f >& lowAreas )
 {
     callListId_ = glGenLists( 1 );
     glNewList( callListId_, GL_COMPILE );
@@ -114,13 +114,13 @@ void FloodDrawer::RenderTexture( const std::vector< geometry::Polygon2f* >& deep
 // Name: FloodDrawer::DrawPolygons
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodDrawer::DrawPolygons( const std::vector< geometry::Polygon2f* >& polygons ) const
+void FloodDrawer::DrawPolygons( const std::vector< geometry::Polygon2f >& polygons ) const
 {
-    for( std::vector< geometry::Polygon2f* >::const_iterator it = polygons.begin(); it != polygons.end(); ++it )
-        if( !( *it )->Vertices().empty() )
+    for( auto it = polygons.begin(); it != polygons.end(); ++it )
+        if( ! it->Vertices().empty() )
         {
-            GLsizei size = static_cast< GLsizei >( ( *it )->Vertices().size() );
-            glVertexPointer( 2, GL_FLOAT, 0, &( *it )->Vertices().front() );
+            GLsizei size = static_cast< GLsizei >( it->Vertices().size() );
+            glVertexPointer( 2, GL_FLOAT, 0, &it->Vertices().front() );
             glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE ); // disable writing to color buffer
             glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
             glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );

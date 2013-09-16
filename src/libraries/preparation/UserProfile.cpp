@@ -42,7 +42,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model_.GetFormationResolver() );
     const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Automat_ABC > >    automatChecker( model_.GetAutomatResolver() );
     const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Population_ABC > > populationChecker( model_.GetPopulationResolver() );
-    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Ghost_ABC > >      ghostChecker( model_.ghosts_ );
+    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Ghost_ABC > >      ghostChecker( *model_.ghosts_ );
 
     std::string login, pass;
     xis >> xml::attribute( "name", login )

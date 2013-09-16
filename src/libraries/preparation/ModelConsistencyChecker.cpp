@@ -191,36 +191,36 @@ void ModelConsistencyChecker::FillEntitiesCopy( E_ConsistencyCheck type )
                 return;
             EntityWithLongNameExtractor functor( entities_ );
             if( attribute->Extends( "unit") )
-                model_.agents_.Resolver< Agent_ABC >::Apply( functor );
+                model_.agents_->Resolver< Agent_ABC >::Apply( functor );
             if( attribute->Extends( "automat" ) )
-                model_.agents_.Resolver< Automat_ABC >::Apply( functor );
+                model_.agents_->Resolver< Automat_ABC >::Apply( functor );
             if( attribute->Extends( "formation" ) )
-                model_.formations_.Resolver< Formation_ABC >::Apply( functor );
+                model_.formations_->Resolver< Formation_ABC >::Apply( functor );
             if( attribute->Extends( "crowd" ) )
-                model_.agents_.Resolver< Population_ABC >::Apply( functor );
+                model_.agents_->Resolver< Population_ABC >::Apply( functor );
             if( attribute->Extends( "population" ) )
-                model_.agents_.Resolver< Inhabitant_ABC >::Apply( functor );
+                model_.agents_->Resolver< Inhabitant_ABC >::Apply( functor );
             if( attribute->Extends( "party" ) )
-                model_.teams_.Resolver< Team_ABC >::Apply( functor );
+                model_.teams_->Resolver< Team_ABC >::Apply( functor );
         }
         break;
     case eTeamNameUniqueness:
         {
-            Iterator< const Team_ABC& > it = model_.teams_.CreateIterator();
+            Iterator< const Team_ABC& > it = model_.teams_->CreateIterator();
             while( it.HasMoreElements() )
                 entities_.push_back( &it.NextElement() );
         }
         break;
     case eObjectNameUniqueness:
         {
-            Iterator< const Object_ABC& > it = model_.objects_.CreateIterator();
+            Iterator< const Object_ABC& > it = model_.objects_->CreateIterator();
             while( it.HasMoreElements() )
                 entities_.push_back( &it.NextElement() );
         }
         break;
     case eLimaNameUniqueness:
         {
-            Iterator< const ::TacticalLine_ABC& > it = model_.limits_.CreateIterator();
+            Iterator< const ::TacticalLine_ABC& > it = model_.limits_->CreateIterator();
             while( it.HasMoreElements() )
             {
                 const ::TacticalLine_ABC& line = it.NextElement();
@@ -231,7 +231,7 @@ void ModelConsistencyChecker::FillEntitiesCopy( E_ConsistencyCheck type )
         break;
     case eLimitNameUniqueness:
         {
-            Iterator< const ::TacticalLine_ABC& > it = model_.limits_.CreateIterator();
+            Iterator< const ::TacticalLine_ABC& > it = model_.limits_->CreateIterator();
             while( it.HasMoreElements() )
             {
                 const ::TacticalLine_ABC& line = it.NextElement();
@@ -465,7 +465,7 @@ void ModelConsistencyChecker::CheckLogisticInitialization()
 void ModelConsistencyChecker::CheckProfileUniqueness()
 {
     ProfilesModel::T_Units units;
-    model_.profiles_.Visit( units );
+    model_.profiles_->Visit( units );
     for( ProfilesModel::CIT_Units it = units.begin(); it != units.end(); ++it )
     {
         const ProfilesModel::T_Units::value_type& element = *it;
@@ -496,10 +496,10 @@ void ModelConsistencyChecker::CheckProfileInitialization()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& agent = it.NextElement();
-        if( !model_.profiles_.IsWriteable( agent ) )
+        if( !model_.profiles_->IsWriteable( agent ) )
         {
             AddError( eProfileUnwritable, &agent );
-            if( !model_.profiles_.IsReadable( agent ) )
+            if( !model_.profiles_->IsReadable( agent ) )
                 AddError( eProfileUnreadable, &agent );
         }
     }
@@ -511,7 +511,7 @@ void ModelConsistencyChecker::CheckProfileInitialization()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::CheckGhosts()
 {
-    Iterator< const Ghost_ABC& > it = model_.ghosts_.CreateIterator();
+    Iterator< const Ghost_ABC& > it = model_.ghosts_->CreateIterator();
     while( it.HasMoreElements() )
     {
         const Ghost_ABC& ghost = it.NextElement();
@@ -589,7 +589,7 @@ void ModelConsistencyChecker::CheckScores()
     {
         const tools::SchemaWriter schemaWriter;
         xml::xostringstream xos;
-        model_.scores_.Serialize( xos, schemaWriter );
+        model_.scores_->Serialize( xos, schemaWriter );
     }
     catch( const std::exception& e )
     {
@@ -607,7 +607,7 @@ void ModelConsistencyChecker::CheckSuccessFactors()
     {
         const tools::SchemaWriter schemaWriter;
         xml::xostringstream xos;
-        model_.successFactors_.Serialize( xos, schemaWriter );
+        model_.successFactors_->Serialize( xos, schemaWriter );
         xsl::xstringtransform xst( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ).ToUTF8().c_str() );
         xml::xistringstream xis( xos.str() );
         xst << xis;
@@ -782,7 +782,7 @@ void ModelConsistencyChecker::CheckUrban()
     }
     for( auto itNetwork = unknownNetworks.begin(); itNetwork != unknownNetworks.end(); ++ itNetwork )
         AddError( eUnknownResourceNetwork, 0, *itNetwork );
-    if( model_.urban_.TakeLinkErrors() )
+    if( model_.urban_->TakeLinkErrors() )
     {
         AddError( eDeletedUrbanBlocks, 0, "" );
         model_.SetConsistencyErrorsOnLoad();

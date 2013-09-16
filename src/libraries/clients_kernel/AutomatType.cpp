@@ -52,8 +52,8 @@ AutomatType::~AutomatType()
 // -----------------------------------------------------------------------------
 void AutomatType::UpdateSymbol( const SymbolFactory& symbolFactory )
 {
-    for( T_UnitConstitution::const_iterator it = units_.begin(); it != units_.end(); ++it )
-        symbolFactory.Merge( (*it)->GetType().GetSymbol(), symbol_ );
+    for( auto it = compositions_.begin(); it != compositions_.end(); ++it )
+        symbolFactory.Merge( it->GetType().GetSymbol(), symbol_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,11 +62,11 @@ void AutomatType::UpdateSymbol( const SymbolFactory& symbolFactory )
 // -----------------------------------------------------------------------------
 void AutomatType::ReadAgent( xml::xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver )
 {
-    units_.push_back( new AutomatComposition( xis, agentResolver ) );
+    compositions_.push_back( new AutomatComposition( xis, agentResolver ) );
     bool commandPost = false;
     xis >> xml::optional >> xml::attribute( "command-post", commandPost );
     if( commandPost )
-        pcType_ = & units_.back()->GetType();
+        pcType_ = & compositions_.back().GetType();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,22 +76,18 @@ void AutomatType::ReadAgent( xml::xistream& xis, const tools::Resolver_ABC< Agen
 unsigned int AutomatType::NumberOfAgents() const
 {
     unsigned int number = 0;
-    tools::Iterator< const AutomatComposition& > it = CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const kernel::AutomatComposition& composition = it.NextElement();
-        number += composition.GetSensibleNumber();
-    }
+    for( auto it = compositions_.begin(); it != compositions_.end(); ++it )
+        number += it->GetSensibleNumber();
     return number;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatType::CreateIterator
-// Created: SBO 2006-08-28
+// Name: AutomatType::GetCompositions
+// Created: BAX 2013-09-13
 // -----------------------------------------------------------------------------
-tools::Iterator< const AutomatComposition& > AutomatType::CreateIterator() const
+const AutomatType::T_Compositions& AutomatType::GetCompositions() const
 {
-    return new tools::SimpleIterator< const AutomatComposition&, T_UnitConstitution >( units_ );
+    return compositions_;
 }
 
 // -----------------------------------------------------------------------------

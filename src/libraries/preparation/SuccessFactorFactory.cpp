@@ -39,7 +39,7 @@ SuccessFactorFactory::~SuccessFactorFactory()
 // -----------------------------------------------------------------------------
 SuccessFactor* SuccessFactorFactory::Create( xml::xistream& xis ) const
 {
-    return new SuccessFactor( xis, controllers_, model_.profiles_, model_.scores_, actionTypes_ );
+    return new SuccessFactor( xis, controllers_, *model_.profiles_, *model_.scores_, actionTypes_ );
 }
 
 // -----------------------------------------------------------------------------

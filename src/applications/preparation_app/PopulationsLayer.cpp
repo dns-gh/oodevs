@@ -97,7 +97,7 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
     {
         if( const kernel::PopulationPrototype* droppedItem = dnd::FindData< kernel::PopulationPrototype >( event ) )
         {
-            model_.agents_.CreatePopulation( *selectedEntity_.ConstCast(), *(droppedItem->type_), droppedItem->number_, point );
+            model_.agents_->CreatePopulation( *selectedEntity_.ConstCast(), *(droppedItem->type_), droppedItem->number_, point );
             return true;
         }
     }

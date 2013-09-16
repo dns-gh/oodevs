@@ -10,6 +10,8 @@
 #ifndef __AutomatComposition_h_
 #define __AutomatComposition_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace xml
 {
     class xistream;
@@ -30,7 +32,7 @@ namespace kernel
 */
 // Created: AGE 2006-09-05
 // =============================================================================
-class AutomatComposition
+class AutomatComposition : public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -45,13 +47,6 @@ public:
     unsigned int GetMin() const;
     unsigned int GetMax() const;
     unsigned int GetSensibleNumber() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AutomatComposition( const AutomatComposition& );            //!< Copy constructor
-    AutomatComposition& operator=( const AutomatComposition& ); //!< Assignment operator
     //@}
 
 private:

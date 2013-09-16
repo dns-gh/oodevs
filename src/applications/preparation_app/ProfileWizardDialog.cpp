@@ -23,8 +23,8 @@
 // -----------------------------------------------------------------------------
 ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model )
     : ModalDialog( parent, "ProfileWizardDialog" )
-    , generator_   ( new ProfilesGenerator( model, model.profiles_ ) )
-    , profiles_    ( model.profiles_ )
+    , generator_   ( new ProfilesGenerator( model, *model.profiles_ ) )
+    , profiles_    ( *model.profiles_ )
 {
     gui::SubObjectName subObject( "ProfileWizardDialog" );
     setCaption( tr( "User profiles creation wizard" ) );

@@ -23,8 +23,22 @@ namespace blc = boost::locale::conv;
 
 namespace
 {
+    struct SqliteInitializer
+    {
+        SqliteInitializer()
+        {
+            sqlite3_initialize();
+        }
+
+        ~SqliteInitializer()
+        {
+            sqlite3_shutdown();
+        }
+    };
+
     sqlite3* Open( const tools::Path& path )
     {
+        static const SqliteInitializer initializer;
         sqlite3* db = 0;
         if( SQLITE_OK !=
             sqlite3_open_v2(

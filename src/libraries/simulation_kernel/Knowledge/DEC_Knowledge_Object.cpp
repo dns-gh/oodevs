@@ -384,7 +384,7 @@ void DEC_Knowledge_Object::UpdateLocalisations()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::UpdateLocalisations( const MIL_Object_ABC& pObjectKnown )
 {
-    const TER_Localisation& localisation = const_cast< const MIL_Object_ABC& >( pObjectKnown ).GetLocalisation(); 
+    const TER_Localisation& localisation = const_cast< const MIL_Object_ABC& >( pObjectKnown ).GetLocalisation();
     if( !( localisation_ == localisation ) )
     {
         localisation_.Reset( localisation );
@@ -1052,19 +1052,18 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
             if( crossingHeight == eCrossingHeightAlways )
                 return false;
             const TER_Localisation& localisation = flood->GetLocalisation();
-            const std::vector< geometry::Polygon2f* >& deepAreas = flood->GetDeepAreas();
-            const std::vector< geometry::Polygon2f* >& lowAreas = flood->GetLowAreas();
-            std::vector< geometry::Polygon2f* >::const_iterator polygonIt;
+            const auto& deepAreas = flood->GetDeepAreas();
+            const auto& lowAreas = flood->GetLowAreas();
             for( auto it = pathPoints.begin(); it != pathPoints.end(); ++it )
                 if( localisation.IsInside( *it, epsilon ) )
                 {
                     geometry::Point2f point( static_cast< float>( ( *it ).rX_ ), static_cast< float >( ( *it ).rY_ ) );
-                    for( polygonIt = deepAreas.begin(); polygonIt != deepAreas.end(); ++polygonIt )
-                        if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
+                    for( auto polygonIt = deepAreas.begin(); polygonIt != deepAreas.end(); ++polygonIt )
+                        if( polygonIt->BoundingBox().IsInside( point ) && polygonIt->IsInside( point ) )
                             return true;
                     if( crossingHeight == eCrossingHeightNever )
-                        for( polygonIt = lowAreas.begin(); polygonIt != lowAreas.end(); ++polygonIt )
-                            if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
+                        for( auto polygonIt = lowAreas.begin(); polygonIt != lowAreas.end(); ++polygonIt )
+                            if( polygonIt->BoundingBox().IsInside( point ) && polygonIt->IsInside( point ) )
                                 return true;
                 }
             return false;

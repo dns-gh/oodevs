@@ -33,8 +33,7 @@ public:
 
    //! @name Types
    //@{
-   typedef std::vector< geometry::Polygon2f* > T_Polygons;
-   typedef T_Polygons::const_iterator        CIT_Polygons;
+   typedef std::vector< geometry::Polygon2f > T_Polygons;
    //@}
 
     //! @name Operations

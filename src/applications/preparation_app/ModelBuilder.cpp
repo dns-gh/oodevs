@@ -101,9 +101,9 @@ ModelBuilder::~ModelBuilder()
 void ModelBuilder::OnCreateFormation( int levelId )
 {
     if( selectedTeam_ )
-        model_.formations_.Create( *selectedTeam_.ConstCast(), static_cast< E_NatureLevel >( levelId ) );
+        model_.formations_->Create( *selectedTeam_.ConstCast(), static_cast< E_NatureLevel >( levelId ) );
     else if( selectedFormation_ )
-        model_.formations_.Create( *selectedFormation_.ConstCast(), static_cast< E_NatureLevel >( levelId ) );
+        model_.formations_->Create( *selectedFormation_.ConstCast(), static_cast< E_NatureLevel >( levelId ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +112,7 @@ void ModelBuilder::OnCreateFormation( int levelId )
 // -----------------------------------------------------------------------------
 void ModelBuilder::OnCreate()
 {
-    model_.teams_.CreateTeam();
+    model_.teams_->CreateTeam();
 }
 
 // -----------------------------------------------------------------------------
@@ -122,9 +122,9 @@ void ModelBuilder::OnCreate()
 void ModelBuilder::OnCreateCommunication()
 {
     if( selectedTeam_ ) // LTO
-        model_.knowledgeGroups_.Create( *selectedTeam_.ConstCast() );
+        model_.knowledgeGroups_->Create( *selectedTeam_.ConstCast() );
     else if( selectedGroup_ ) // LTO
-        model_.knowledgeGroups_.CreateSubKnowledgeGroup( *selectedGroup_.ConstCast() ); // LTO
+        model_.knowledgeGroups_->CreateSubKnowledgeGroup( *selectedGroup_.ConstCast() ); // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +150,7 @@ void ModelBuilder::CreateLimit( const T_PointVector& points )
     else if( selectedAgent_ )
         element = selectedAgent_.ConstCast();
     if( element )
-        model_.limits_.CreateLimit( points, *element );
+        model_.limits_->CreateLimit( points, *element );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +167,7 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
     else if( selectedAgent_ )
         element = selectedAgent_.ConstCast();
     if( element )
-        model_.limits_.CreateLima( points, *element );
+        model_.limits_->CreateLima( points, *element );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +176,7 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ModelBuilder::CreateCityOrDistrict( kernel::Entity_ABC* parent )
 {
-    model_.urban_.CreateCityOrDistrict( parent );
+    model_.urban_->CreateCityOrDistrict( parent );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ void ModelBuilder::CreateCityOrDistrict( kernel::Entity_ABC* parent )
 // -----------------------------------------------------------------------------
 void ModelBuilder::DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects )
 {
-    model_.urban_.DeleteBlocks( urbanObjects );
+    model_.urban_->DeleteBlocks( urbanObjects );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
     // TODO gérer suivant les modes
     if( entity.GetTypeName() == kernel::UrbanObject_ABC::typeName_ )
         return;
-    if( &entity != &model_.teams_.GetNoSideTeam() )
+    if( &entity != &model_.teams_->GetNoSideTeam() )
     {
         toDelete_ = &entity;
         menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ), false, 5 );
@@ -245,7 +245,7 @@ namespace
         if( dynamic_cast< const kernel::KnowledgeGroup_ABC* >( superior ) )
             return false;
         unsigned int count = 0u;
-        tools::Iterator< const kernel::KnowledgeGroup_ABC& > it = model.knowledgeGroups_.CreateIterator();
+        tools::Iterator< const kernel::KnowledgeGroup_ABC& > it = model.knowledgeGroups_->CreateIterator();
         while( it.HasMoreElements() )
         {
             const kernel::KnowledgeGroup_ABC& group = it.NextElement();
@@ -264,7 +264,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ModelBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
 {
-    if( &entity == &model_.teams_.GetNoSideTeam() )
+    if( &entity == &model_.teams_->GetNoSideTeam() )
         return;
     toDelete_ = &entity;
     if( IsLastKnowledgeGroup( *toDelete_, model_ ) )
@@ -374,7 +374,7 @@ void ModelBuilder::Delete( const kernel::Entity_ABC& entity )
 kernel::Automat_ABC* ModelBuilder::ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type )
 {
     const kernel::Positions& position = original.Get< kernel::Positions >();
-    kernel::Automat_ABC* result = model_.agents_.CreateAutomatInsteadOf( original, type, position.GetPosition( false ) );
+    kernel::Automat_ABC* result = model_.agents_->CreateAutomatInsteadOf( original, type, position.GetPosition( false ) );
     if( result )
         Delete( original );
     return result;

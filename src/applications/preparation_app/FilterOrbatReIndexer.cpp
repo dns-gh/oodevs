@@ -264,6 +264,6 @@ void FilterOrbatReIndexer::Execute()
     xos << xml::end;
     xml::xistringstream newXis( xos.str() );
     // Reload teams model
-    model_.teams_.Load( newXis, model_ );
+    model_.teams_->Load( newXis, model_ );
     emit( DoConsistencyCheck() );
 }

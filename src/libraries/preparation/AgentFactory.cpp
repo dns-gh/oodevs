@@ -182,7 +182,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
 
-    kernel::Positions& positions = *new InhabitantPositions( controllers_.controller_, static_.coordinateConverter_, location, model_.urban_, *result, dictionary );
+    kernel::Positions& positions = *new InhabitantPositions( controllers_.controller_, static_.coordinateConverter_, location, *model_.urban_, *result, dictionary );
     if( positions.GetPosition() == geometry::Point2f( 0, 0 ) )
     {
         delete &positions;
@@ -261,7 +261,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, std::string(), symbolsFactory_ ) );
     result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
-    result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, *model_.knowledgeGroups_ ) );
 
     bool isTC2 = type->IsTC2(); //$$ NAZE
     result->Attach( *new LogisticLevelAttribute( controllers_.controller_, xis, *result, isTC2, dictionary ) );
@@ -304,7 +304,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
     Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_ );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new gui::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
-    result->Attach< kernel::Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, model_.urban_, *result, dictionary ) );
+    result->Attach< kernel::Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, *model_.urban_, *result, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary, *result ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
@@ -370,13 +370,13 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
         result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, tactSuperior ) );
         // Profile hierarchy
         //result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, tactSuperior ) );
-        std::vector< std::string > readingProfiles = model_.profiles_.GetProfilesWhoCanRead( ghost );
+        std::vector< std::string > readingProfiles = model_.profiles_->GetProfilesWhoCanRead( ghost );
         for( std::vector< std::string >::const_iterator it = readingProfiles.begin(); it != readingProfiles.end(); ++it )
-            if( UserProfile* profile = model_.profiles_.Find( *it ) )
+            if( UserProfile* profile = model_.profiles_->Find( *it ) )
                 profile->SetReadable( *result, true );
-        std::vector< std::string > writingProfiles = model_.profiles_.GetProfilesWhoCanWrite( ghost );
+        std::vector< std::string > writingProfiles = model_.profiles_->GetProfilesWhoCanWrite( ghost );
         for( std::vector< std::string >::const_iterator it = writingProfiles.begin(); it != writingProfiles.end(); ++it )
-            if( UserProfile* profile = model_.profiles_.Find( *it ) )
+            if( UserProfile* profile = model_.profiles_->Find( *it ) )
                 profile->SetWriteable( *result, true );
     }
     // Communication hierarchy

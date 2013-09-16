@@ -122,7 +122,7 @@ void AgentAffinities::NotifyDeleted( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 void AgentAffinities::InitializeAffinities()
 {
-    tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
+    tools::Iterator< const kernel::Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
     while( it.HasMoreElements() )
         AddTeam( it.NextElement() );
 }

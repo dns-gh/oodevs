@@ -65,37 +65,37 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     : EntityResolverFacade( static_cast< Model_ABC& >( *this ) )
     , controllers_          ( controllers )
     , staticModel_          ( staticModel )
-    , idManager_            ( *new tools::IdManager( true ) )
-    , teamFactory_          ( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
-    , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) )
-    , formationFactory_     ( *new FormationFactory( controllers, staticModel, idManager_, symbolsFactory_ ) )
-    , agentFactory_         ( *new AgentFactory( controllers, *this, staticModel, idManager_, symbolsFactory_ ) )
-    , objectFactory_        ( *new ObjectFactory( controllers, *this, staticModel, idManager_ ) )
-    , profileFactory_       ( *new ProfileFactory( controllers.controller_, *this ) )
-    , scoreFactory_         ( *new ScoreFactory( controllers_, staticModel.indicators_, staticModel.gaugeTypes_, *this ) )
-    , successFactorFactory_ ( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
-    , drawingFactory_       ( *new gui::DrawerFactory( controllers, staticModel.drawings_, staticModel.coordinateConverter_ ) )
-    , ghostFactory_         ( *new GhostFactory( controllers, *this, staticModel, idManager_, symbolsFactory_ ) )
-    , resourceObserver_     ( *new gui::ResourceNetworkSelectionObserver( controllers ) )
+    , idManager_            ( new tools::IdManager( true ) )
+    , teamFactory_          ( new TeamFactory( controllers, *this, staticModel, *idManager_ ) )
+    , knowledgeGroupFactory_( new KnowledgeGroupFactory( controllers, staticModel, *idManager_ ) )
+    , symbolsFactory_       ( new SymbolFactory() )
+    , formationFactory_     ( new FormationFactory( controllers, staticModel, *idManager_, *symbolsFactory_ ) )
+    , agentFactory_         ( new AgentFactory( controllers, *this, staticModel, *idManager_, *symbolsFactory_ ) )
+    , objectFactory_        ( new ObjectFactory( controllers, *this, staticModel, *idManager_ ) )
+    , profileFactory_       ( new ProfileFactory( controllers.controller_, *this ) )
+    , scoreFactory_         ( new ScoreFactory( controllers, staticModel.indicators_, staticModel.gaugeTypes_, *this ) )
+    , successFactorFactory_ ( new SuccessFactorFactory( controllers, *this, staticModel.successFactorActionTypes_ ) )
+    , drawingFactory_       ( new gui::DrawerFactory( controllers, staticModel.drawings_, staticModel.coordinateConverter_ ) )
+    , ghostFactory_         ( new GhostFactory( controllers, *this, staticModel, *idManager_, *symbolsFactory_ ) )
+    , resourceObserver_     ( new gui::ResourceNetworkSelectionObserver( controllers ) )
     , loaded_               ( false )
     , consistencyErrorsOnLoad_( false )
     , oldUrbanMode_         ( false )
-    , exercise_             ( *new Exercise( controllers.controller_ ) )
-    , knowledgeGroups_      ( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
-    , teams_                ( *new TeamsModel( controllers, teamFactory_, knowledgeGroups_ ) )
-    , objects_              ( *new ObjectsModel( controllers, objectFactory_, staticModel.objectTypes_ ) )
-    , agents_               ( *new AgentsModel( controllers, agentFactory_, staticModel ) )
-    , formations_           ( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
-    , limits_               ( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
-    , weather_              ( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
-    , profiles_             ( *new ProfilesModel( controllers, profileFactory_ ) )
-    , scores_               ( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
-    , successFactors_       ( *new SuccessFactorsModel( successFactorFactory_ ) )
-    , urban_                ( *new UrbanModel( controllers, staticModel, objects_, idManager_ ) )
-    , drawings_             ( *new gui::DrawerModel( controllers, drawingFactory_, *this ) )
-    , ghosts_               ( *new GhostModel( controllers, ghostFactory_ ) )
-    , symbolsFactory_       ( *new SymbolFactory() )
-    , performanceIndicator_ ( *new PerformanceIndicator( *this ) )
+    , exercise_             ( new Exercise( controllers.controller_ ) )
+    , knowledgeGroups_      ( new KnowledgeGroupsModel( controllers, *knowledgeGroupFactory_ ) ) // LTO
+    , teams_                ( new TeamsModel( controllers, *teamFactory_, *knowledgeGroups_ ) )
+    , objects_              ( new ObjectsModel( controllers, *objectFactory_, staticModel.objectTypes_ ) )
+    , agents_               ( new AgentsModel( controllers, *agentFactory_, staticModel ) )
+    , formations_           ( new FormationModel( controllers, *formationFactory_, *agents_, staticModel ) )
+    , limits_               ( new LimitsModel( controllers, staticModel.coordinateConverter_, *idManager_ ) )
+    , weather_              ( new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
+    , profiles_             ( new ProfilesModel( controllers, *profileFactory_ ) )
+    , scores_               ( new ScoresModel( *scoreFactory_, *teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
+    , successFactors_       ( new SuccessFactorsModel( *successFactorFactory_ ) )
+    , urban_                ( new UrbanModel( controllers, staticModel, *objects_, *idManager_ ) )
+    , drawings_             ( new gui::DrawerModel( controllers, *drawingFactory_, *this ) )
+    , ghosts_               ( new GhostModel( controllers, *ghostFactory_ ) )
+    , performanceIndicator_ ( new PerformanceIndicator( *this ) )
     , width_                ( 0.f )
     , height_               ( 0.f )
 {
@@ -108,31 +108,7 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
-    // $$$$ ABR 2011-10-14: TODO: Delete everything ...
-    delete &profiles_;
-    delete &successFactors_;
-    delete &successFactorFactory_;
-    delete &scores_;
-    delete &scoreFactory_;
-    delete &profileFactory_;
-    delete &resourceObserver_;
-    delete &weather_;
-    delete &limits_;
-    delete &objects_;
-    delete &objectFactory_;
-    delete &agents_;
-    delete &agentFactory_;
-    delete &formations_;
-    delete &formationFactory_;
-    delete &symbolsFactory_;
-    delete &knowledgeGroups_;
-    delete &teams_;
-    delete &teamFactory_;
-    delete &urban_;
-    delete &ghosts_;
-    delete &ghostFactory_;
-    delete &idManager_;
-    delete &performanceIndicator_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +117,7 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< Team_ABC >& Model::GetTeamResolver() const
 {
-    return teams_;
+    return *teams_;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +126,7 @@ tools::Resolver_ABC< Team_ABC >& Model::GetTeamResolver() const
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< Formation_ABC >& Model::GetFormationResolver() const
 {
-    return formations_;
+    return *formations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +135,7 @@ tools::Resolver_ABC< Formation_ABC >& Model::GetFormationResolver() const
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< Automat_ABC >& Model::GetAutomatResolver() const
 {
-    return agents_;
+    return *agents_;
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +144,7 @@ tools::Resolver_ABC< Automat_ABC >& Model::GetAutomatResolver() const
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< Agent_ABC >& Model::GetAgentResolver() const
 {
-    return agents_;
+    return *agents_;
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +153,7 @@ tools::Resolver_ABC< Agent_ABC >& Model::GetAgentResolver() const
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< KnowledgeGroup_ABC >& Model::GetKnowledgeGroupResolver() const
 {
-    return knowledgeGroups_;
+    return *knowledgeGroups_;
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +162,7 @@ tools::Resolver_ABC< KnowledgeGroup_ABC >& Model::GetKnowledgeGroupResolver() co
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< Object_ABC >& Model::GetObjectResolver() const
 {
-    return objects_;
+    return *objects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +171,7 @@ tools::Resolver_ABC< Object_ABC >& Model::GetObjectResolver() const
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< Population_ABC >& Model::GetPopulationResolver() const
 {
-    return agents_;
+    return *agents_;
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +180,7 @@ tools::Resolver_ABC< Population_ABC >& Model::GetPopulationResolver() const
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< Inhabitant_ABC >& Model::GetInhabitantResolver() const
 {
-    return agents_;
+    return *agents_;
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +189,7 @@ tools::Resolver_ABC< Inhabitant_ABC >& Model::GetInhabitantResolver() const
 // -----------------------------------------------------------------------------
 tools::Resolver_ABC< kernel::UrbanObject_ABC >& Model::GetUrbanObjectResolver() const
 {
-    return urban_;
+    return *urban_;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,21 +218,21 @@ void Model::Purge()
 {
     ClearLoadingErrors();
     UpdateName( "orbat" );
-    profiles_.Purge();
-    urban_.Purge();
-    successFactors_.Purge();
-    scores_.Purge();
-    weather_.Purge();
-    limits_.Purge();
-    ghosts_.Purge();
-    drawings_.Purge();
-    agents_.Purge();
-    formations_.Purge();
-    knowledgeGroups_.Purge();
-    teams_.Purge();
-    objects_.Purge();
-    exercise_.Purge();
-    idManager_.Reset();
+    profiles_->Purge();
+    urban_->Purge();
+    successFactors_->Purge();
+    scores_->Purge();
+    weather_->Purge();
+    limits_->Purge();
+    ghosts_->Purge();
+    drawings_->Purge();
+    agents_->Purge();
+    formations_->Purge();
+    knowledgeGroups_->Purge();
+    teams_->Purge();
+    objects_->Purge();
+    exercise_->Purge();
+    idManager_->Reset();
     SetLoaded( false );
 }
 
@@ -267,10 +243,10 @@ namespace
     {
         if( fileName.Exists() )
         {
-            model.Load( fileLoader, fileName );
+            model->Load( fileLoader, fileName );
             return true;
         }
-        model.Serialize( fileName, schemaWriter );
+        model->Serialize( fileName, schemaWriter );
         return false;
     }
 }
@@ -283,27 +259,27 @@ void Model::Load( const tools::ExerciseConfig& config )
 {
     width_ = config.GetTerrainWidth();
     height_ = config.GetTerrainHeight();
-    config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
-    config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
+    config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, exercise_.get(), _1 ) );
+    config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_->GetSettings(), _1 ) );
     oldUrbanMode_ = false;
-    if( !config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) ) )
-        if( config.GetLoader().LoadOptionalFile( config.GetTerrainUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) ) )
+    if( !config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, urban_.get(), _1 ) ) )
+        if( config.GetLoader().LoadOptionalFile( config.GetTerrainUrbanFile(), boost::bind( &UrbanModel::LoadUrban, urban_.get(), _1 ) ) )
         {
             if( !config.IsTerrainSamePhysicalRef() )
                 AppendLoadingError( eOthers, tools::translate( "Model", "Terrain's physical base does not match the one selected for the exercise. All urban materials, roofshapes, usages and infrastructures will be lost at next save." ).toAscii().constData() );
             oldUrbanMode_ = true;
-            config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
+            config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, urban_.get(), _1 ) );
         }
-    urban_.CreateGeostoreManager( config );
-    symbolsFactory_.Load( config );
-    urban_.Load();
+    urban_->CreateGeostoreManager( config );
+    symbolsFactory_->Load( config );
+    urban_->Load();
 
     const tools::Path orbatFile = config.GetOrbatFile();
     if( orbatFile.Exists() )
     {
         UpdateName( orbatFile );
-        config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ) ) );
-        objects_.Finalize();
+        config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, teams_.get(), _1, boost::ref( *this ) ) );
+        objects_->Finalize();
     }
 
     const tools::SchemaWriter schemaWriter;
@@ -314,13 +290,13 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetDrawingsFile(), drawings_, schemaWriter );
 
-    performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
+    performanceIndicator_->Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
     if( orbatFile.Exists() )
-        ghosts_.Finalize( staticModel_ ); // $$$$ ABR 2012-06-25: Resolve logistic link and profiles for ghost ... frozen ICD
-    
-    if( urban_.ManageIdConflicts() )
+        ghosts_->Finalize( staticModel_ ); // $$$$ ABR 2012-06-25: Resolve logistic link and profiles for ghost ... frozen ICD
+
+    if( urban_->ManageIdConflicts() )
         AppendLoadingError( eOthers, tools::translate( "Model", "Urban blocks ids have been changed on loading because they were in conflict with other entities ids." ).toAscii().constData() );
-    idManager_.SetKeepIds( false );
+    idManager_->SetKeepIds( false );
 
     SetLoaded( true );
 }
@@ -334,23 +310,23 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
     if( !loaded_ )
         return;
     const tools::SchemaWriter schemaWriter;
-    exercise_.Serialize( config, schemaWriter );
-    exercise_.GetSettings().Serialize( config.GetSettingsFile(), schemaWriter );
+    exercise_->Serialize( config, schemaWriter );
+    exercise_->GetSettings().Serialize( config.GetSettingsFile(), schemaWriter );
     {
         tools::Xofstream xos( config.GetOrbatFile() );
         xos << xml::start( "orbat" );
         schemaWriter.WriteExerciseSchema( xos, "orbat" );
-        teams_.Serialize( xos );
+        teams_->Serialize( xos );
         xos << xml::end;
     }
-    if( urban_.Count() > 0 )
-        urban_.Serialize( config.GetUrbanFile(), schemaWriter );
-    drawings_.Serialize( config.GetDrawingsFile(), schemaWriter );
-    weather_.Serialize( config.GetWeatherFile(), schemaWriter );
-    profiles_.Serialize( config.GetProfilesFile(), schemaWriter );
-    scores_.Serialize( config.GetScoresFile(), schemaWriter );
-    successFactors_.Serialize( config.GetSuccessFactorsFile(), schemaWriter );
-    successFactors_.SerializeScript( config );
+    if( urban_->Count() > 0 )
+        urban_->Serialize( config.GetUrbanFile(), schemaWriter );
+    drawings_->Serialize( config.GetDrawingsFile(), schemaWriter );
+    weather_->Serialize( config.GetWeatherFile(), schemaWriter );
+    profiles_->Serialize( config.GetProfilesFile(), schemaWriter );
+    scores_->Serialize( config.GetScoresFile(), schemaWriter );
+    successFactors_->Serialize( config.GetSuccessFactorsFile(), schemaWriter );
+    successFactors_->SerializeScript( config );
     UpdateName( config.GetOrbatFile() );
 }
 
@@ -373,7 +349,7 @@ void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& erro
 // -----------------------------------------------------------------------------
 void Model::SetExerciseValidity( bool valid )
 {
-    exercise_.SetExerciseValidity( valid );
+    exercise_->SetExerciseValidity( valid );
 }
 
 // -----------------------------------------------------------------------------
@@ -418,7 +394,7 @@ QString Model::GetName() const
 // -----------------------------------------------------------------------------
 tools::IdManager& Model::GetIdManager() const
 {
-    return idManager_;
+    return *idManager_;
 }
 
 // -----------------------------------------------------------------------------
@@ -427,7 +403,7 @@ tools::IdManager& Model::GetIdManager() const
 // -----------------------------------------------------------------------------
 kernel::SymbolFactory& Model::GetSymbolsFactory() const
 {
-    return symbolsFactory_;
+    return *symbolsFactory_;
 }
 
 // -----------------------------------------------------------------------------

@@ -28,24 +28,23 @@ DEC_Path_KnowledgeObjectFlood::DEC_Path_KnowledgeObjectFlood( E_CrossingHeight c
         localisation_ = attribute->GetLocalisation();
 
         // conversion to MT instead of geometry, more efficient. To optimize.
-        const std::vector< Polygon2f* >& deepAreas = attribute->GetDeepAreas();
-        const std::vector< Polygon2f* >& lowAreas = attribute->GetLowAreas();
-        std::vector< Polygon2f* >::const_iterator it;
+        const auto& deepAreas = attribute->GetDeepAreas();
+        const auto& lowAreas = attribute->GetLowAreas();
         T_PointVector vector;
-        for( it = deepAreas.begin(); it != deepAreas.end(); ++it )
+        for( auto it = deepAreas.begin(); it != deepAreas.end(); ++it )
         {
             vector.clear();
-            const Polygon2f::T_Vertices& vertices = ( *it )->Vertices();
-            for( Polygon2f::CIT_Vertices vertexIt = vertices.begin(); vertexIt != vertices.end(); ++vertexIt )
+            const auto& vertices = it->Vertices();
+            for( auto vertexIt = vertices.begin(); vertexIt != vertices.end(); ++vertexIt )
                 vector.push_back( MT_Vector2D( vertexIt->X(), vertexIt->Y() ) );
             deepAreas_.push_back( TER_Polygon() );
             deepAreas_.back().Reset( vector );
         }
-        for( it = lowAreas.begin(); it != lowAreas.end(); ++it )
+        for( auto it = lowAreas.begin(); it != lowAreas.end(); ++it )
         {
             vector.clear();
-            const Polygon2f::T_Vertices& vertices = ( *it )->Vertices();
-            for( Polygon2f::CIT_Vertices vertexIt = vertices.begin(); vertexIt != vertices.end(); ++vertexIt )
+            const auto& vertices = it->Vertices();
+            for( auto vertexIt = vertices.begin(); vertexIt != vertices.end(); ++vertexIt )
                 vector.push_back( MT_Vector2D( vertexIt->X(), vertexIt->Y() ) );
             lowAreas_.push_back( TER_Polygon() );
             lowAreas_.back().Reset( vector );

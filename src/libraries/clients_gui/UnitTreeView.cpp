@@ -195,21 +195,22 @@ void UnitTreeView::FillListByNature()
 // -----------------------------------------------------------------------------
 void UnitTreeView::FillAutomatComposition( QStandardItem& parent, const kernel::AutomatType& type )
 {
-    tools::Iterator< const kernel::AutomatComposition& > it = type.CreateIterator();
-    while( it.HasMoreElements() )
+    const auto& compositions = type.GetCompositions();
+    for( auto composition = compositions.begin(); composition != compositions.end(); ++composition )
     {
-        const kernel::AutomatComposition& unit = it.NextElement();
         const int row = parent.rowCount();
-        const kernel::AgentType& agentType = unit.GetType();
+        const kernel::AgentType& agentType = composition->GetType();
         QStandardItem* item = dataModel_.AddChildDataItem( &parent, row, 0, agentType.GetName().c_str(), "", agentType, Qt::ItemIsDragEnabled );
         item->setSelectable( !selectOnlyAutomats_ );
         if( &agentType == type.GetTypePC() )
             item->setIcon( QIcon( MAKE_PIXMAP( commandpost ) ) );
         QString cnt;
-        if( unit.GetMax() != unit.GetMin() )
-            cnt = QString( "%L1..%L2" ).arg( unit.GetMin() ).arg( unit.GetMax() == std::numeric_limits< unsigned int >::max() ? "*" : locale().toString( unit.GetMax() ) );
+        auto min = composition->GetMin();
+        auto max = composition->GetMax();
+        if( max != min )
+            cnt = QString( "%L1..%L2" ).arg( min ).arg( max == std::numeric_limits< unsigned int >::max() ? "*" : locale().toString( max ) );
         else
-            cnt = locale().toString( unit.GetMin() );
+            cnt = locale().toString( min );
         QStandardItem* item2 = dataModel_.AddChildTextItem( &parent, row, 1, cnt, "" );
         item2->setSelectable( !selectOnlyAutomats_ );
         FillAgentComposition( *item, agentType );

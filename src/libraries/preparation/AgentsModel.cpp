@@ -124,13 +124,10 @@ void AgentsModel::CreateAutomatChilds( Automat_ABC& automat, const AutomatType& 
 {
     CircleFormation formation( position, type.NumberOfAgents() );
     bool pcSet = false;
-    tools::Iterator< const AutomatComposition& > it = type.CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const AutomatComposition& composition = it.NextElement();
-        for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
-            InternalCreateAgent( automat, type, composition, formation, pcSet );
-    }
+    const auto& compositions = type.GetCompositions();
+    for( auto composition = compositions.begin(); composition != compositions.end(); ++composition )
+        for( unsigned toAdd = composition->GetSensibleNumber(); toAdd > 0; --toAdd )
+            InternalCreateAgent( automat, type, *composition, formation, pcSet );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,32 +138,29 @@ void AgentsModel::ReplaceAutomatChildrenByAGhost( const kernel::Ghost_ABC& origi
 {
     const kernel::Ghost_ABC::T_Children& originalChildren = original.GetChildren();
     kernel::Ghost_ABC::CIT_Children originalIterator = originalChildren.begin();
-    tools::Iterator< const AutomatComposition& > typeIterator = type.CreateIterator();
     CircleFormation formation( position, type.NumberOfAgents() );
-
     bool pcSet = false;
-    while( originalIterator != originalChildren.end() && typeIterator.HasMoreElements() )
+
+    const auto& compositions = type.GetCompositions();
+    auto it = compositions.begin();
+    while( originalIterator != originalChildren.end() && it != compositions.end() )
     {
-        const AutomatComposition& composition = typeIterator.NextElement();
-        unsigned toAdd = composition.GetSensibleNumber();
+        unsigned toAdd = it->GetSensibleNumber();
         for( ; toAdd > 0 && originalIterator != originalChildren.end(); --toAdd )
         {
             kernel::Ghost_ABC::T_Child child = *originalIterator++;
             const geometry::Point2f entityPosition = child.second;
-            const bool isPc = !pcSet && &composition.GetType() == type.GetTypePC();
-            CreateAgent( automat, composition.GetType(), entityPosition, isPc, child.first.c_str() );
+            const bool isPc = !pcSet && &it->GetType() == type.GetTypePC();
+            CreateAgent( automat, it->GetType(), entityPosition, isPc, child.first.c_str() );
             if( isPc )
                 pcSet = true;
         }
         for( ; toAdd > 0; --toAdd ) // Type bigger than original
-            InternalCreateAgent( automat, type, composition, formation, pcSet );
+            InternalCreateAgent( automat, type, *it, formation, pcSet );
     }
-    while( typeIterator.HasMoreElements() ) // Type bigger than original
-    {
-        const AutomatComposition& composition = typeIterator.NextElement();
-        for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
-            InternalCreateAgent( automat, type, composition, formation, pcSet );
-    }
+    for( ; it != compositions.end(); ++it ) // Type bigger than original
+        for( unsigned toAdd = it->GetSensibleNumber(); toAdd > 0; --toAdd )
+            InternalCreateAgent( automat, type, *it, formation, pcSet );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,32 +171,29 @@ void AgentsModel::ReplaceAutomatChildrenByAnAutomat( const Automat_ABC& original
 {
     const TacticalHierarchies& pHierarchy = original.Get< TacticalHierarchies >();
     tools::Iterator< const Entity_ABC& > originalIterator = pHierarchy.CreateSubordinateIterator();
-    tools::Iterator< const AutomatComposition& > typeIterator = type.CreateIterator();
     CircleFormation formation( position, type.NumberOfAgents() );
-
     bool pcSet = false;
-    while( originalIterator.HasMoreElements() && typeIterator.HasMoreElements() )
+
+    const auto& compositions = type.GetCompositions();
+    auto it = compositions.begin();
+    while( originalIterator.HasMoreElements() && it != compositions.end() )
     {
-        const AutomatComposition& composition = typeIterator.NextElement();
-        unsigned toAdd = composition.GetSensibleNumber();
+        unsigned toAdd = it->GetSensibleNumber();
         for( ; toAdd > 0 && originalIterator.HasMoreElements(); --toAdd )
         {
             const Entity_ABC& entity = originalIterator.NextElement();
             const geometry::Point2f entityPosition = entity.Get< Positions >().GetPosition();
-            const bool isPc = !pcSet && &composition.GetType() == type.GetTypePC();
-            CreateAgent( automat, composition.GetType(), entityPosition, isPc, entity.GetName() );
+            const bool isPc = !pcSet && &it->GetType() == type.GetTypePC();
+            CreateAgent( automat, it->GetType(), entityPosition, isPc, entity.GetName() );
             if( isPc )
                 pcSet = true;
         }
         for( ; toAdd > 0; --toAdd ) // Type bigger than original
-            InternalCreateAgent( automat, type, composition, formation, pcSet );
+            InternalCreateAgent( automat, type, *it, formation, pcSet );
     }
-    while( typeIterator.HasMoreElements() ) // Type bigger than original
-    {
-        const AutomatComposition& composition = typeIterator.NextElement();
-        for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
-            InternalCreateAgent( automat, type, composition, formation, pcSet );
-    }
+    for( ; it != compositions.end(); ++it ) // Type bigger than original
+        for( unsigned toAdd = it->GetSensibleNumber(); toAdd > 0; --toAdd )
+            InternalCreateAgent( automat, type, *it, formation, pcSet );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,12 +221,12 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, Entity_ABC& parent, Model& 
             tools::Resolver< Automat_ABC >::Register( automat->GetId(), *automat );
             xis >> xml::list( "automat", *this        , &AgentsModel::CreateAutomat, *automat, model )
                 >> xml::list( "unit"   , *this        , &AgentsModel::CreateAgent  , *automat, model )
-                >> xml::list( "phantom", model.ghosts_, &GhostModel::Create        , *automat )
-                >> xml::list( "lima"   , model.limits_, &LimitsModel::CreateLima   , *automat )
-                >> xml::list( "limit"  , model.limits_, &LimitsModel::CreateLimit  , *automat );
+                >> xml::list( "phantom", *model.ghosts_, &GhostModel::Create        , *automat )
+                >> xml::list( "lima"   , *model.limits_, &LimitsModel::CreateLima   , *automat )
+                >> xml::list( "limit"  , *model.limits_, &LimitsModel::CreateLimit  , *automat );
         }
         else
-            model.ghosts_.Create( xis, parent, eGhostType_Automat );
+            model.ghosts_->Create( xis, parent, eGhostType_Automat );
     }
     catch( const std::exception& e )
     {
@@ -305,11 +296,11 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, Model& m
         if( agent )
         {
             tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
-            xis >> xml::list( "lima"   , model.limits_, &LimitsModel::CreateLima   , *agent )
-                >> xml::list( "limit"  , model.limits_, &LimitsModel::CreateLimit  , *agent );
+            xis >> xml::list( "lima"   , *model.limits_, &LimitsModel::CreateLima   , *agent )
+                >> xml::list( "limit"  , *model.limits_, &LimitsModel::CreateLimit  , *agent );
         }
         else
-            model.ghosts_.Create( xis, parent, eGhostType_Agent );
+            model.ghosts_->Create( xis, parent, eGhostType_Agent );
     }
     catch( const std::exception& e )
     {

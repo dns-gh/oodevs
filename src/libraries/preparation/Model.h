@@ -120,20 +120,20 @@ private:
     //! @name Member data
     //@{
     const StaticModel& staticModel_;
-    tools::IdManager& idManager_;
     kernel::Controllers& controllers_;
-    TeamFactory_ABC& teamFactory_;
-    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
-    kernel::SymbolFactory& symbolsFactory_;
-    FormationFactory_ABC& formationFactory_;
-    AgentFactory_ABC& agentFactory_;
-    ObjectFactory_ABC& objectFactory_;
-    ProfileFactory_ABC& profileFactory_;
-    ScoreFactory_ABC& scoreFactory_;
-    SuccessFactorFactory_ABC& successFactorFactory_;
-    gui::DrawingFactory_ABC& drawingFactory_;
-    GhostFactory_ABC& ghostFactory_;
-    gui::ResourceNetworkSelectionObserver& resourceObserver_;
+    std::auto_ptr< tools::IdManager > idManager_;
+    std::auto_ptr< TeamFactory_ABC > teamFactory_;
+    std::auto_ptr< kernel::KnowledgeGroupFactory_ABC > knowledgeGroupFactory_; // LTO
+    std::auto_ptr< kernel::SymbolFactory > symbolsFactory_;
+    std::auto_ptr< FormationFactory_ABC > formationFactory_;
+    std::auto_ptr< AgentFactory_ABC > agentFactory_;
+    std::auto_ptr< ObjectFactory_ABC > objectFactory_;
+    std::auto_ptr< ProfileFactory_ABC > profileFactory_;
+    std::auto_ptr< ScoreFactory_ABC > scoreFactory_;
+    std::auto_ptr< SuccessFactorFactory_ABC > successFactorFactory_;
+    std::auto_ptr< gui::DrawingFactory_ABC > drawingFactory_;
+    std::auto_ptr< GhostFactory_ABC > ghostFactory_;
+    std::auto_ptr< gui::ResourceNetworkSelectionObserver > resourceObserver_;
     QString name_;
     bool loaded_;
     bool consistencyErrorsOnLoad_;
@@ -147,21 +147,21 @@ public:
     //! @name Member data
     //@{
     // $$$$ JSR 2011-06-28: TODO passer en private ce qui est possible et utiliser les méthodes de Model_ABC
-    Exercise& exercise_;
-    KnowledgeGroupsModel& knowledgeGroups_;
-    TeamsModel& teams_;
-    ObjectsModel& objects_;
-    AgentsModel& agents_;
-    FormationModel& formations_;
-    LimitsModel& limits_;
-    WeatherModel& weather_;
-    ProfilesModel& profiles_;
-    ScoresModel& scores_;
-    SuccessFactorsModel& successFactors_;
-    UrbanModel& urban_;
-    gui::DrawerModel& drawings_;
-    GhostModel& ghosts_;
-    PerformanceIndicator& performanceIndicator_;
+    std::auto_ptr< Exercise > exercise_;
+    std::auto_ptr< KnowledgeGroupsModel > knowledgeGroups_;
+    std::auto_ptr< TeamsModel > teams_;
+    std::auto_ptr< ObjectsModel > objects_;
+    std::auto_ptr< AgentsModel > agents_;
+    std::auto_ptr< FormationModel > formations_;
+    std::auto_ptr< LimitsModel > limits_;
+    std::auto_ptr< WeatherModel > weather_;
+    std::auto_ptr< ProfilesModel > profiles_;
+    std::auto_ptr< ScoresModel > scores_;
+    std::auto_ptr< SuccessFactorsModel > successFactors_;
+    std::auto_ptr< UrbanModel > urban_;
+    std::auto_ptr< gui::DrawerModel > drawings_;
+    std::auto_ptr< GhostModel > ghosts_;
+    std::auto_ptr< PerformanceIndicator > performanceIndicator_;
     //@}
 };
 
