@@ -385,7 +385,9 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow(
                 throw MASA_EXCEPTION( "invalid checkpoint name" );
             checkpointName = userName;
         }
-        SaveCheckPoint( checkpointName, userName );
+        const std::string err = SaveCheckPoint( checkpointName, userName );
+        if( !err.empty() )
+            ack().set_error_msg( err );
         ack().set_name( checkpointName.ToUTF8() );
     }
     catch( const std::exception& e )
