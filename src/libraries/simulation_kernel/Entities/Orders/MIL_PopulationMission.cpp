@@ -20,6 +20,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include <boost/lexical_cast.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationMission )
 
@@ -135,15 +136,24 @@ void save_construct_data( Archive& archive, const MIL_PopulationMission* mission
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_PopulationMission* mission, const unsigned int /*version*/ )
 {
-    MIL_Population* population = 0;
-    unsigned int idType = 0;
-    uint32_t id = 0;
-    archive >> population
-            >> idType
-            >> id;
-    const MIL_MissionType_ABC* type = MIL_PopulationMissionType::Find( idType );
-    assert( type );
-    ::new( mission ) MIL_PopulationMission( *type, *population, id, sword::MissionParameters() );
+    try
+    {
+        MIL_Population* population = 0;
+        unsigned int idType = 0;
+        uint32_t id = 0;
+        archive >> population
+                >> idType
+                >> id;
+        const MIL_MissionType_ABC* type = MIL_PopulationMissionType::Find( idType );
+        if( !type )
+            throw MASA_EXCEPTION( "unknown crowd mission type: "
+                    + boost::lexical_cast< std::string >( idType ) );
+        ::new( mission ) MIL_PopulationMission( *type, *population, id, sword::MissionParameters() );
+    }
+    catch( const std::exception& e )
+    {
+        throw MASA_EXCEPTION( "could not load crowd mission: " + tools::GetExceptionMsg( e ));
+    }
 }
 
 // -----------------------------------------------------------------------------

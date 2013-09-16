@@ -27,6 +27,10 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Mission_ABC )
 
+#define ORDER_BADPARAM(reason) \
+    MASA_BADPARAM_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter, \
+        static_cast< std::stringstream& >( std::stringstream() << reason ).str().c_str() )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-23
@@ -110,19 +114,26 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParame
     {
         const MIL_OrderTypeParameter& parameterType = **it;
         if( parameters.elem_size() <= i )
-            throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
+            throw ORDER_BADPARAM(
+                "got " << parameters.elem_size() << " parameters, " << ( i + 1 ) << " required" );
         try
         {
             boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( parameterType, parameters.elem( i ), knowledgeResolver_ );
             if( !pParameter->IsOfType( parameterType.GetType().GetType() ) )
-                throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
+                throw ORDER_BADPARAM( "parameter[" << i << "] must be a "
+                        << parameterType.GetType().GetName() );
             if( !parameterType.IsOptional() && dynamic_cast< const MIL_NullParameter* >( pParameter.get() ) )
-                throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
+                throw ORDER_BADPARAM( "parameter[" << i << "] cannot be null" );
             parameters_.push_back( pParameter );
         }
-        catch( const std::exception& )
+        catch( const NET_AsnBadParam< sword::OrderAck::ErrorCode >& )
         {
-            throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
+            throw;
+        }
+        catch( const std::exception& e )
+        {
+            throw ORDER_BADPARAM( "could not handle parameter[" << i << "]: "
+                    << tools::GetExceptionMsg( e ));
         }
     }
 }
