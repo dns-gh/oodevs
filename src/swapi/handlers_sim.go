@@ -18,6 +18,23 @@ var (
 	ErrSkipHandler = errors.New("skip handler")
 )
 
+func GetTaskerId(tasker *sword.Tasker) uint32 {
+	if id := tasker.GetAutomat(); id != nil {
+		return id.GetId()
+	} else if id := tasker.GetFormation(); id != nil {
+		return id.GetId()
+	} else if id := tasker.GetCrowd(); id != nil {
+		return id.GetId()
+	} else if id := tasker.GetUnit(); id != nil {
+		return id.GetId()
+	} else if id := tasker.GetParty(); id != nil {
+		return id.GetId()
+	} else if id := tasker.GetPopulation(); id != nil {
+		return id.GetId()
+	}
+	return 0
+}
+
 func (model *Model) handleControlSendCurrentStateEnd(m *sword.SimToClient_Content) error {
 	if m.GetControlSendCurrentStateEnd() == nil {
 		return ErrSkipHandler
@@ -799,13 +816,15 @@ func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) 
 	return nil
 }
 
-func (model *Model) addOrder(id, idType uint32, orderType OrderType) error {
+func (model *Model) addOrder(id, idType, tasker uint32, orderType OrderType) error {
 	if idType == 0 {
 		return nil
 	}
 	order := &Order{
-		Id:   id,
-		Type: orderType,
+		Id:        id,
+		MissionId: idType,
+		TaskerId:  tasker,
+		Type:      orderType,
 	}
 	if !model.data.addOrder(order) {
 		return fmt.Errorf("cannot insert order %d", order.Id)
@@ -818,7 +837,7 @@ func (model *Model) handleUnitOrder(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetType().GetId(), UnitOrder)
+	return model.addOrder(mm.GetId(), mm.GetType().GetId(), mm.GetTasker().GetId(), UnitOrder)
 }
 
 func (model *Model) handleAutomatOrder(m *sword.SimToClient_Content) error {
@@ -826,7 +845,7 @@ func (model *Model) handleAutomatOrder(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetType().GetId(), AutomatOrder)
+	return model.addOrder(mm.GetId(), mm.GetType().GetId(), mm.GetTasker().GetId(), AutomatOrder)
 }
 
 func (model *Model) handleCrowdOrder(m *sword.SimToClient_Content) error {
@@ -834,7 +853,7 @@ func (model *Model) handleCrowdOrder(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetType().GetId(), CrowdOrder)
+	return model.addOrder(mm.GetId(), mm.GetType().GetId(), mm.GetTasker().GetId(), CrowdOrder)
 }
 
 func (model *Model) handleFragOrder(m *sword.SimToClient_Content) error {
@@ -842,7 +861,8 @@ func (model *Model) handleFragOrder(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetType().GetId(), FragOrder)
+	return model.addOrder(mm.GetId(), mm.GetType().GetId(),
+		GetTaskerId(mm.GetTasker()), FragOrder)
 }
 
 func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {

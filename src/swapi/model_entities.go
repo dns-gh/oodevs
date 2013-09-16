@@ -342,8 +342,10 @@ const (
 )
 
 type Order struct {
-	Id   uint32
-	Type OrderType
+	Id        uint32
+	Type      OrderType
+	MissionId uint32
+	TaskerId  uint32
 }
 
 type ModelData struct {
