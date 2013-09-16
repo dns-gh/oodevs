@@ -108,7 +108,9 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
-    // NOTHING
+    // crash on egypt if we rely on destruction order
+    // there is an hidden dependency somewhere which we must make explicit
+    agents_.reset();
 }
 
 // -----------------------------------------------------------------------------
