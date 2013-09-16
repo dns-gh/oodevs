@@ -108,6 +108,7 @@ session::Config::Config()
     checkpoints.frequency = 3600;
     checkpoints.keep = 1;
     logs.level = LOG_LEVEL_ALL;
+    logs.rotate = true;
     logs.max_files = 5;
     logs.max_size = 10;
     logs.size_unit = "mbytes";
@@ -225,6 +226,7 @@ bool ReadLogConfig( session::Config& dst, const Tree& src, const std::string& pr
     std::string level = ConvertLogLevel( dst.logs.level );
     bool modified = ::TryRead( level, src, prefix + "level" );
     dst.logs.level = ConvertLogLevel( level );
+    modified |= ::TryRead( dst.logs.rotate, src, prefix + "rotate" );
     modified |= ::TryRead( dst.logs.max_files, src, prefix + "max_files" );
     modified |= ::TryRead( dst.logs.max_size, src, prefix + "max_size" );
     modified |= ::TryRead( dst.logs.size_unit, src, prefix + "size_unit" );
@@ -234,6 +236,7 @@ bool ReadLogConfig( session::Config& dst, const Tree& src, const std::string& pr
 void WriteLogConfig( Tree& dst, const std::string& prefix, const session::Config& cfg )
 {
     dst.put( prefix + "level", ConvertLogLevel( cfg.logs.level ) );
+    dst.put( prefix + "rotate", cfg.logs.rotate );
     dst.put( prefix + "max_files", cfg.logs.max_files );
     dst.put( prefix + "max_size", cfg.logs.max_size );
     dst.put( prefix + "size_unit", cfg.logs.size_unit );

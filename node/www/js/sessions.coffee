@@ -153,6 +153,7 @@ pop_settings = (ui, data) ->
     force_input_regexp /[\d.]/, ui.find "input[data-type='float']"
     attach_checkbox_and_input $("#time_end_tick"), $("#time_end_tick_check")
     attach_checkbox_and_input $("#rng_seed"), $("#rng_seed_check")
+    attach_checkbox_and_input $("#logs_files"), $("#logs_files_check")
     attach_click_to_dropdown $("#size_unit")
     mod = ui.find ".modal"
     mod.modal "show"
@@ -257,7 +258,8 @@ validate_settings = (ui) ->
 
     if has_element ui, "#tab_logs"
         next = data.logs = {}
-        return unless validate_number next, "max_size", ui, "#logs_size", 0, Number.MAX_VALUE, "Invalid"
+        next.rotate = get_ui_option ui.find "#logs_rotate"
+        return unless validate_number next, "max_size", ui, "#logs_size", 1, Number.MAX_VALUE, "Invalid"
         return unless validate_number next, "max_files", ui, "#logs_files", 0, Number.MAX_VALUE, "Invalid"
         unit = ui.find(".dropdown-toggle").text().trim()
         next.size_unit = "kbytes" if unit == "KB"
