@@ -129,3 +129,43 @@ func (s *TestSuite) TestCheckpointRestart(c *C) {
 	formation2 := client.Model.GetFormation(automat.FormationId)
 	c.Assert(formation2, NotNil)
 }
+
+func (s *TestSuite) TestCheckpointCrowd(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	defer sim.Stop()
+	party := client.Model.GetData().FindPartyByName("party1")
+	c.Assert(party, NotNil)
+
+	// Create a crowd and give it a mission
+	pos := swapi.Point{X: -15.9219, Y: 28.3456}
+	crowd, err := client.CreateCrowd(party.Id, 0, CrowdType, pos, 100, 0, 0, "crowd")
+	c.Assert(err, IsNil)
+	to := swapi.Point{X: -15.9219, Y: 28.346}
+	params := swapi.MakeParameters(swapi.MakePointParam(to))
+	order, err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
+	c.Assert(err, IsNil)
+
+	// Create the checkpoint and quit
+	session := sim.Opts.SessionName
+	checkpoint, err := client.CreateCheckpoint("")
+	c.Assert(err, IsNil)
+	client.Close()
+	sim.Stop()
+
+	// Restart and check the crowd exists and has a mission
+	sim, client = loadCheckpointAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty,
+		session, checkpoint)
+	defer sim.Stop()
+	crowd2 := client.Model.GetCrowd(crowd.Id)
+	c.Assert(crowd2, NotNil)
+	data := client.Model.GetData()
+	found := false
+	for _, o := range data.Orders {
+		if o.TaskerId == crowd.Id {
+			c.Assert(o.MissionId, Equals, order.MissionId)
+			found = true
+			break
+		}
+	}
+	c.Assert(found, Equals, true)
+}
