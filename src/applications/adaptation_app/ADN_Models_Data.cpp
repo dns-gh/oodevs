@@ -91,7 +91,7 @@ ADN_Models_Data::MissionInfos::MissionInfos( const ADN_Missions_Data::T_Mission_
 // -----------------------------------------------------------------------------
 ADN_Models_Data::MissionInfos::~MissionInfos()
 {
-    vOrders_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& mi
 // -----------------------------------------------------------------------------
 ADN_Models_Data::ModelInfos::~ModelInfos()
 {
-    vMissions_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -329,18 +329,7 @@ ADN_Models_Data::ADN_Models_Data()
 //-----------------------------------------------------------------------------
 ADN_Models_Data::~ADN_Models_Data()
 {
-    Reset();
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Models_Data::Reset
-// Created: JDY 03-06-26
-//-----------------------------------------------------------------------------
-void ADN_Models_Data::Reset()
-{
-    vUnitModels_.Reset();
-    vAutomataModels_.Reset();
-    vPopulationModels_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

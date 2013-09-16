@@ -98,7 +98,6 @@ public:
     //@}
 
     void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
-    void Reset();
 
     T_NbcAgentInfos_Vector& GetNbcAgentVector();
 

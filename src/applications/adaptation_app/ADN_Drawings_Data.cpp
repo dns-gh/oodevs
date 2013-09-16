@@ -120,8 +120,6 @@ ADN_Drawings_Data::~ADN_Drawings_Data()
     for( auto it = categoryMap_.begin(); it != categoryMap_.end(); ++it )
         it->second.clear();
     categoryMap_.clear();
-    for( auto it = drawings_.begin(); it != drawings_.end(); ++it )
-        delete *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -131,21 +129,6 @@ ADN_Drawings_Data::~ADN_Drawings_Data()
 void ADN_Drawings_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDrawingTemplates_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::Reset
-// Created: SBO 2011-04-18
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::Reset()
-{
-    drawings_.Reset();
-    for( auto it = geometryMap_.begin(); it != geometryMap_.end(); ++it )
-        it->second.clear();
-    geometryMap_.clear();
-    for( auto it = categoryMap_.begin(); it != categoryMap_.end(); ++it )
-        it->second.clear();
-    categoryMap_.clear();
 }
 
 // -----------------------------------------------------------------------------

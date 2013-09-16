@@ -27,7 +27,6 @@ template< class T, class Cmp >
 ADN_Type_VectorFixed_ABC< T, Cmp >::~ADN_Type_VectorFixed_ABC()
 {
     ResetFixedVector();
-    clear_owned_ptrs( *this );
 }
 
 //-----------------------------------------------------------------------------

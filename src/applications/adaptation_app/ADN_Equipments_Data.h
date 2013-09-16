@@ -548,7 +548,6 @@ public:
     virtual ~ADN_Equipments_Data();
 
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     T_EquipmentInfos_Vector& GetEquipments();
     EquipmentInfos* FindEquipment( const std::string& strName );

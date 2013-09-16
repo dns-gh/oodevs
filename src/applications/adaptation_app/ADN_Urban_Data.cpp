@@ -46,7 +46,7 @@ ADN_Urban_Data::ADN_Urban_Data()
 //-----------------------------------------------------------------------------
 ADN_Urban_Data::~ADN_Urban_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -57,21 +57,6 @@ void ADN_Urban_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_ );
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::Reset
-// Created: SLG 2010-03-08
-//-----------------------------------------------------------------------------
-void ADN_Urban_Data::Reset()
-{
-    vMaterials_.Reset();
-    vRoofShapes_.Reset();
-    vAccommodations_.Reset();
-    vInfrastructures_.Reset();
-    vTemplates_.Reset();
-    defaultNominalCapacity_ = 0.1;
-    defaultMaxCapacity_ = 1;
 }
 
 // -----------------------------------------------------------------------------

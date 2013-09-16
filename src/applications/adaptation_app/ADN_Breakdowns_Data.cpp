@@ -93,7 +93,7 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo( unsigned int id )
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::~BreakdownInfo()
 {
-    clear_owned_ptrs( vRepairParts_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -187,16 +187,6 @@ ADN_Breakdowns_Data::~ADN_Breakdowns_Data()
 void ADN_Breakdowns_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szBreakdowns_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Breakdowns_Data::Reset
-// Created: APE 2005-03-17
-// -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::Reset()
-{
-    idManager_.Reset();
-    vBreakdowns_.Reset();
 }
 
 // -----------------------------------------------------------------------------

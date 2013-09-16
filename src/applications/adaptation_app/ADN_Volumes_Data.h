@@ -44,7 +44,6 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
-    void Reset();
 
     T_VolumeInfos_Vector& GetVolumesInfos();
     VolumeInfos* FindSize( const std::string& strName );

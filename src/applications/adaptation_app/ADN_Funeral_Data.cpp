@@ -32,7 +32,7 @@ ADN_Funeral_Data::ADN_Funeral_Data()
 // -----------------------------------------------------------------------------
 ADN_Funeral_Data::~ADN_Funeral_Data()
 {
-    funeralPackagingResources_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,15 +42,6 @@ ADN_Funeral_Data::~ADN_Funeral_Data()
 void ADN_Funeral_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFuneral_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Funeral_Data::Reset
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-void ADN_Funeral_Data::Reset()
-{
-    funeralPackagingResources_.Reset();
 }
 
 // -----------------------------------------------------------------------------

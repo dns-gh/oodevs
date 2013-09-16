@@ -68,7 +68,7 @@ ADN_Natures_Data::ADN_Natures_Data()
 // -----------------------------------------------------------------------------
 ADN_Natures_Data::~ADN_Natures_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,16 +78,6 @@ ADN_Natures_Data::~ADN_Natures_Data()
 void ADN_Natures_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Natures_Data::Reset
-// Created: ABR 2013-07-11
-// -----------------------------------------------------------------------------
-void ADN_Natures_Data::Reset()
-{
-    idManager_.Reset();
-    vDotationNatures_.Reset();
 }
 
 // -----------------------------------------------------------------------------

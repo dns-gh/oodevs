@@ -72,9 +72,7 @@ ADN_Maintenance_Data::ADN_Maintenance_Data()
 // -----------------------------------------------------------------------------
 ADN_Maintenance_Data::~ADN_Maintenance_Data()
 {
-    vWorkingSchemes_.Reset();
-    vRepairerWarnings_.Reset();
-    vHaulerWarnings_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -84,16 +82,6 @@ ADN_Maintenance_Data::~ADN_Maintenance_Data()
 void ADN_Maintenance_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMaintenance_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Maintenance_Data::Reset
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-void ADN_Maintenance_Data::Reset()
-{
-    vRepairerWarnings_.Reset();
-    vHaulerWarnings_.Reset();
 }
 
 // -----------------------------------------------------------------------------

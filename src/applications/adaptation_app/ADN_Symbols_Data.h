@@ -108,7 +108,6 @@ private:
     //! @name Operations
     //@{
     virtual void FilesNeeded( tools::Path::T_Paths& files ) const;
-    virtual void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     //@}
 

@@ -50,7 +50,7 @@ ADN_Data_ABC::ADN_Data_ABC( E_WorkspaceElements currentTab, int subTab /* = -1 *
 // -----------------------------------------------------------------------------
 ADN_Data_ABC::~ADN_Data_ABC()
 {
-    // NOTHING
+    translations_->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,16 +73,6 @@ void ADN_Data_ABC::LoadFile( const tools::Loader_ABC& fileLoader, const tools::P
 {
     LoadTranslations( xmlFile );
     fileLoader.LoadFile( xmlFile, loader );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Data_ABC::ResetData
-// Created: JSR 2013-07-23
-// -----------------------------------------------------------------------------
-void ADN_Data_ABC::ResetData()
-{
-    Reset();
-    translations_->Purge();
 }
 
 // -----------------------------------------------------------------------------

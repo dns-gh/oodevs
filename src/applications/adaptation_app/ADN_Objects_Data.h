@@ -523,7 +523,6 @@ public:
 
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
     void SaveAttritionInfos( xml::xostream& output );
 
     T_ObjectsInfos_Vector& GetObjectInfos();

@@ -160,7 +160,6 @@ public:
     void SetFile( const tools::Path& strFile );
 
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
-    virtual void Reset();
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Save( const tools::Loader_ABC& fileLoader );
 

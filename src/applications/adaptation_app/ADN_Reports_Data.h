@@ -105,7 +105,6 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
     //@}
 
 private:

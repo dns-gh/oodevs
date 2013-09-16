@@ -126,15 +126,6 @@ void ADN_ResourceNetworks_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ResourceNetworks_Data::Reset
-// Created: JSR 2010-09-13
-// -----------------------------------------------------------------------------
-void ADN_ResourceNetworks_Data::Reset()
-{
-    resourceNetworks_.Reset();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_ResourceNetworks_Data::GetResourceNetworksInfos
 // Created: JSR 2010-09-14
 // -----------------------------------------------------------------------------

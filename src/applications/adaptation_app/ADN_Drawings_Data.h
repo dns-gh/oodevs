@@ -66,7 +66,6 @@ public:
     //! @name Operations
     //@{
     virtual void FilesNeeded( tools::Path::T_Paths& files ) const;
-    virtual void Reset();
     DrawingInfo* const GetDrawing( const std::string& code ) const;
     T_DrawingInfoVector& GetGeometryDrawings( const std::string& geometries, const std::string& category );
     T_DrawingInfoVector& GetCategoryDrawings( const std::string& category );

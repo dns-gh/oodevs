@@ -73,22 +73,7 @@ ADN_Supply_Data::SupplyDataInfos::SupplyDataInfos()
 // -----------------------------------------------------------------------------
 ADN_Supply_Data::SupplyDataInfos::~SupplyDataInfos()
 {
-    Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::Reset
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::Reset()
-{
-    vConvoySetupInfos_.Reset();
-    vConvoyLoadingInfos_.Reset();
-    vConvoyUnloadingInfos_.Reset();
-    vConvoySpeedModificatorInfos_.Reset();
-    vVectorWarnings_.Reset();
-    ptrSupplyMission_.SetData( 0 );
-    ptrUnit_.SetData( 0 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -304,16 +289,7 @@ ADN_Supply_Data::ADN_Supply_Data()
 // -----------------------------------------------------------------------------
 ADN_Supply_Data::~ADN_Supply_Data()
 {
-    Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::Reset
-// Created: SBO 2009-06-03
-// -----------------------------------------------------------------------------
-void ADN_Supply_Data::Reset()
-{
-    infos_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

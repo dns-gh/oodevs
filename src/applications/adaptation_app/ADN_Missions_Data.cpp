@@ -51,7 +51,14 @@ ADN_Missions_Data::ADN_Missions_Data()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::~ADN_Missions_Data()
 {
-    // NOTHING
+    try
+    {
+        ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ ).Parent().RemoveAll();
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -61,25 +68,6 @@ ADN_Missions_Data::~ADN_Missions_Data()
 void ADN_Missions_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissions_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::Reset
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::Reset()
-{
-    idManager_.Reset();
-    for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
-        it->second.Reset();
-    try
-    {
-        ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ ).Parent().RemoveAll();
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
 }
 
 namespace

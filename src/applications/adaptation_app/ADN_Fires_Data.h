@@ -138,7 +138,6 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
     ADN_Type_Int& GetCellSize();
     T_FireClassInfosVector& GetFireClassesInfos();
     QStringList GetFireThatUse( ADN_Resources_Data::CategoryInfo& infos );

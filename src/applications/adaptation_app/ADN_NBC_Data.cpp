@@ -309,7 +309,7 @@ ADN_NBC_Data::ADN_NBC_Data()
 // -----------------------------------------------------------------------------
 ADN_NBC_Data::~ADN_NBC_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -319,16 +319,6 @@ ADN_NBC_Data::~ADN_NBC_Data()
 void ADN_NBC_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szNBC_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_NBC_Data::Reset
-// Created: AGN 2004-05-06
-// -----------------------------------------------------------------------------
-void ADN_NBC_Data::Reset()
-{
-    idManager_.Reset();
-    vNbcAgent_.Reset();
 }
 
 // -----------------------------------------------------------------------------

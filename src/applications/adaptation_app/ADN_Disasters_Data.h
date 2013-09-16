@@ -161,7 +161,6 @@ public:
     //! @name Operations
     //@{
     virtual void FilesNeeded(tools::Path::T_Paths& l) const;
-    virtual void Reset();
     //@}
 
 public:

@@ -400,9 +400,7 @@ ADN_Units_Data::UnitInfos::UnitInfos( unsigned int id )
 //-----------------------------------------------------------------------------
 ADN_Units_Data::UnitInfos::~UnitInfos()
 {
-    vComposantes_.Reset();
-    vPostures_.Reset();
-    vPointInfos_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -846,16 +844,6 @@ ADN_Units_Data::ADN_Units_Data()
 ADN_Units_Data::~ADN_Units_Data()
 {
     // NOTHING
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Units_Data::Reset
-// Created: JDY 03-06-26
-//-----------------------------------------------------------------------------
-void ADN_Units_Data::Reset()
-{
-    idManager_.Reset();
-    vUnits_.Reset();
 }
 
 //-----------------------------------------------------------------------------

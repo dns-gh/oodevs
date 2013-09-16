@@ -606,7 +606,7 @@ ADN_Equipments_Data::BreakdownGroupInfos::BreakdownGroupInfos( const std::string
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::BreakdownGroupInfos::~BreakdownGroupInfos()
 {
-    vBreakdowns_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -628,7 +628,6 @@ bool ADN_Equipments_Data::BreakdownGroupInfos::Contains( ADN_Breakdowns_Data::Br
 void ADN_Equipments_Data::BreakdownGroupInfos::CopyFrom( BreakdownGroupInfos& src )
 {
     assert( strName_ == src.strName_ );
-    vBreakdowns_.Reset();
     for( auto it = src.vBreakdowns_.begin(); it != src.vBreakdowns_.end(); ++it )
         vBreakdowns_.AddItem( ( *it )->CreateCopy() );
 }
@@ -1432,12 +1431,7 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos( unsigned int id )
 //-----------------------------------------------------------------------------
 ADN_Equipments_Data::EquipmentInfos::~EquipmentInfos()
 {
-    vSpeeds_.Reset();
-    vWeapons_.Reset();
-    vActiveProtections_.Reset();
-    vSensors_.Reset();
-    vRadars_.Reset();
-    vObjects_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1957,7 +1951,7 @@ ADN_Equipments_Data::ADN_Equipments_Data()
 //-----------------------------------------------------------------------------
 ADN_Equipments_Data::~ADN_Equipments_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -1967,16 +1961,6 @@ ADN_Equipments_Data::~ADN_Equipments_Data()
 void ADN_Equipments_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szComponents_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Equipments_Data::Reset
-// Created: JDY 03-07-17
-//-----------------------------------------------------------------------------
-void ADN_Equipments_Data::Reset()
-{
-    idManager_.Reset();
-    vEquipments_.Reset();
 }
 
 // -----------------------------------------------------------------------------

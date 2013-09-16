@@ -92,17 +92,6 @@ void ADN_Health_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Health_Data::Reset
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-void ADN_Health_Data::Reset()
-{
-    vChangeOverWarnings_.Reset();
-    vCollectingWarnings_.Reset();
-    vDoctorsWarnings_.Reset();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Health_Data::ReadInjury
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------

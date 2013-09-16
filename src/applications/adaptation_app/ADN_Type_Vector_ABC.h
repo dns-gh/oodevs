@@ -55,12 +55,10 @@ public:
     typedef std::vector< UniquenessChecker* > T_Checkers;
 
 public:
-    explicit ADN_Type_Vector_ABC( bool bAutoRef = true );
+    explicit ADN_Type_Vector_ABC( bool bAutoRef = true, bool owner = true );
     virtual ~ADN_Type_Vector_ABC();
 
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
-
-    void Reset();
 
     virtual void CheckValidity();
     void AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor );
@@ -82,6 +80,7 @@ public:
 
 public:
     bool bAutoRef_;
+    bool owner_;
     T_Checkers checkers_;
 };
 

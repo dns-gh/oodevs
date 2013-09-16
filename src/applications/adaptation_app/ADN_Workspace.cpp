@@ -408,9 +408,7 @@ void ADN_Workspace::Reset(const tools::Path& filename, bool isClosing )
         progressIndicator_->Increment( isClosing ? tr( "Closing: %1..." ).arg( elements_[n]->GetName() )
                                                  : tr( "Creating: %1..." ).arg( elements_[n]->GetName() ) );
         elements_[n]->GetGuiABC().DisconnectListView();
-        elements_[n]->GetDataABC().ResetData();
     }
-    projectData_->Reset();
     progressIndicator_->SetVisible( false );
     if( !isClosing )
         SetLoadStatus( true );

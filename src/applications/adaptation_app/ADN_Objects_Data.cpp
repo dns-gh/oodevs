@@ -1313,7 +1313,7 @@ ADN_Objects_Data::ADN_Objects_Data()
 //-----------------------------------------------------------------------------
 ADN_Objects_Data::~ADN_Objects_Data()
 {
-    vObjectInfos_.Reset();
+    // NOTHING
 }
 
 namespace
@@ -1352,15 +1352,6 @@ void ADN_Objects_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
 void ADN_Objects_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szObjects_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::Reset
-// Created: JDY 03-06-26
-//-----------------------------------------------------------------------------
-void ADN_Objects_Data::Reset()
-{
-    vObjectInfos_.Reset();
 }
 
 // -----------------------------------------------------------------------------

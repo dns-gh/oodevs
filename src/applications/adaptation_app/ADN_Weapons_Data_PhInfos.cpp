@@ -115,7 +115,7 @@ ADN_Weapons_Data_PhSizeInfos::ADN_Weapons_Data_PhSizeInfos( ADN_Volumes_Data::Vo
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data_PhSizeInfos::~ADN_Weapons_Data_PhSizeInfos()
 {
-    vPhs_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
