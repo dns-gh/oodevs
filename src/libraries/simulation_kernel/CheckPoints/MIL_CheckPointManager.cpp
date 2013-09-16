@@ -390,7 +390,8 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow(
         if( !userName.IsEmpty() )
         {
             if( !IsValidCheckpointName( userName.ToUnicode() ))
-                throw MASA_EXCEPTION( "invalid checkpoint name" );
+                throw MASA_EXCEPTION( "invalid checkpoint name, only alphanumeric"
+                    ", spaces and underscores are allowed" );
             checkpointName = userName;
         }
         const std::string err = SaveCheckPoint( checkpointName, userName );
