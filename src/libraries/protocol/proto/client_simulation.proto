@@ -26,7 +26,7 @@ message ControlDateTimeChange {
     required DateTime date_time = 1;
 }
 
-//! Creates a new checkpoint. If "name" is not supplied, generates a
+//! Creates a new checkpoint. If "name" is not supplied, generates one
 //! based on the current date and time. Returns a
 //! ControlCheckPointSaveNowAck message, containing the generated
 //! checkpoint name on success. Between both messages, a
