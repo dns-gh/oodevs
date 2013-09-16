@@ -313,7 +313,7 @@ std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
     catch( const tools::Exception& e )
     {
         err = tools::GetExceptionMsg( e );
-        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
+        MT_LOG_ERROR_MSG( "cannot save checkpoint: " << e.CreateLoggerMsg() );
     }
     catch( const std::exception& e )
     {
