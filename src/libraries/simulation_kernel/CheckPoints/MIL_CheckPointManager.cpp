@@ -310,14 +310,15 @@ std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
                 CreateData( config.BuildCheckpointChildFile( "data", name ) ),
                 config.serialize( config.BuildCheckpointChildFile( "CRCs.xml" , name ) ));
     }
+    catch( const tools::Exception& e )
+    {
+        err = tools::GetExceptionMsg( e );
+        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
+    }
     catch( const std::exception& e )
     {
         err = tools::GetExceptionMsg( e );
-        std::string s = err;
-        if( auto ee = dynamic_cast< const tools::Exception* >( &e ) )
-            MT_LOG_ERROR_MSG( ee->CreateLoggerMsg() );
-        else
-            MT_LOG_ERROR_MSG( "cannot save checkpoint: " << err );
+        MT_LOG_ERROR_MSG( "cannot save checkpoint: " << err );
     }
     return err;
 }
