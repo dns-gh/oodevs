@@ -45,7 +45,6 @@ private:
     std::streamoff ComputeSize( const tools::Path& filename ) const;
 
 private:
-    bool truncate_;
     bool sizeInBytes_;
     boost::mutex mutex_;
     tools::RotatingLog log_;

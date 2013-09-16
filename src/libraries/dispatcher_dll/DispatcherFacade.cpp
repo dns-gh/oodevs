@@ -56,7 +56,6 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
         throw;
     }
     bool bClearPreviousLog = !config_->HasCheckpoint();
-
     file_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ),
                                     config_->GetDispatcherLogFiles(), config_->GetDispatcherLogSize(),
                                     config_->GetDispatcherLogLevel(), bClearPreviousLog,

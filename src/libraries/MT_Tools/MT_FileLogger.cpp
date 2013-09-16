@@ -20,9 +20,8 @@
 //-----------------------------------------------------------------------------
 MT_FileLogger::MT_FileLogger( const tools::Path& filename, std::size_t files, std::size_t size, int levels, bool truncate, E_Type type, bool sizeInBytes )
     : MT_Logger_ABC( levels, type )
-    , truncate_   ( truncate || files > 1 )
     , sizeInBytes_( sizeInBytes )
-    , log_        ( *this, filename, files, size )
+    , log_        ( *this, filename, files, size, truncate )
 {
     // NOTHING
 }
@@ -67,10 +66,7 @@ namespace
 
 std::auto_ptr< tools::Log_ABC > MT_FileLogger::CreateLog( const tools::Path& filename, std::streamoff& size )
 {
-    if( truncate_ )
-        filename.Remove();
-    else
-        size = ComputeSize( filename );
+    size = ComputeSize( filename );
     return std::auto_ptr< tools::Log_ABC >( new FileLog( filename, sizeInBytes_ ) );
 }
 
