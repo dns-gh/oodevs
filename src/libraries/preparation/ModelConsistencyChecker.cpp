@@ -13,6 +13,7 @@
 #include "Dotation.h"
 #include "FormationModel.h"
 #include "GhostModel.h"
+#include "InitialState.h"
 #include "LimitsModel.h"
 #include "LogisticAttribute.h"
 #include "LogisticBaseStates.h"
@@ -168,6 +169,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckOrbat();
     CheckUrban();
     CheckFiles();
+    CheckEquipmentState();
 
     return !errors_.empty();
 }
@@ -800,6 +802,25 @@ void ModelConsistencyChecker::CheckFiles()
     for( unsigned int i = 0; i < filesXsdErrors.size(); ++i )
         AddError( eOthers, 0, filesXsdErrors[ i ] );
     fileLoaderObserver_.Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckEquipmentState
+// Created: LDC 2013-09-17
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckEquipmentState()
+{
+    Iterator< const Agent_ABC& > it = model_.GetAgentResolver().CreateIterator();
+    bool unsupportedStates = false;
+    while( it.HasMoreElements() )
+    {
+        const Agent_ABC& agent = it.NextElement();
+        InitialState& state = const_cast< InitialState& >( agent.Get< InitialState >() );
+        if( state.CleanUnsupportedState() )
+            unsupportedStates = true;
+    }
+    if( unsupportedStates )
+        AddError( eEquipmentState, 0 );
 }
 
 // -----------------------------------------------------------------------------

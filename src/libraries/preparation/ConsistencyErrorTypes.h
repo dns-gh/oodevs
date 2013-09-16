@@ -57,6 +57,7 @@ enum E_ConsistencyCheck
     eDeletedPopulationUrbanBlocks,
     eSignature,
     eUnitOutsideMap,
+    eEquipmentState,
     eOthers,
     eImpossibleObjectCreation,
     eOthersMask,

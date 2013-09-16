@@ -124,6 +124,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eUnitOutsideMap ]                  = tools::translate( "ModelConsistencyDialog", "Entity '%1' is outside the map. It will be repositioned to the origin." );
     errorDescriptions_[ eImpossibleObjectCreation ] = tools::translate( "ModelConsistencyDialog", "The following object is invalid and will be deleted at next save: %1" );
     errorDescriptions_[ eOthers ]                          = "%1";
+    errorDescriptions_[ eEquipmentState ] = tools::translate( "ModelConsistencyDialog", "Equipments in maintenance or surrendered state have been reset to on site fixable." );
 }
 
 // -----------------------------------------------------------------------------

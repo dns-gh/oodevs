@@ -1442,6 +1442,10 @@ This data can&apos;t be projected.</source>
         <source>The following object is invalid and will be deleted at next save: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Equipments in maintenance or surrendered state have been reset to on site fixable.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

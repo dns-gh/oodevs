@@ -1443,6 +1443,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>The following object is invalid and will be deleted at next save: %1</source>
         <translation>L&apos;objet suivant est invalide et sera supprimé à la prochaine sauvegarde : %1</translation>
     </message>
+    <message>
+        <source>Equipments in maintenance or surrendered state have been reset to on site fixable.</source>
+        <translation>Des équipements rendus ou en maintenance ont été passés à l'état "réparable sur place".</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

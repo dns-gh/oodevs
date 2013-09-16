@@ -39,6 +39,7 @@ public:
     void Serialize( xml::xostream& xos ) const;
     bool operator==( const InitialStateEquipment& object ) const;
     bool operator!=( const InitialStateEquipment& object ) const;
+    bool CleanUnsupportedState();
     //@}
 
 public:
