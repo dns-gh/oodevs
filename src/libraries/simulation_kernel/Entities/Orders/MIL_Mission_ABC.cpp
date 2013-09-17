@@ -109,7 +109,8 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParame
         const MIL_OrderTypeParameter& parameterType = **it;
         if( parameters.elem_size() <= i )
             throw ORDER_BADPARAM(
-                "got " << parameters.elem_size() << " parameters, " << ( i + 1 ) << " required" );
+                "got " << parameters.elem_size() << " parameters, an additional "
+                    << parameterType.GetType().GetName() << " is expected" );
         try
         {
             boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( parameterType, parameters.elem( i ), knowledgeResolver_ );
