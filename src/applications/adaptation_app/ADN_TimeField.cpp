@@ -27,14 +27,14 @@
 
 namespace
 {
-    const double maxSeconds = 3599999.99;
+    const int maxCentiSeconds = 359999999;
 
     class Orientation : public boost::noncopyable
     {
     public:
         virtual QString StringWithOrientation( const std::string& hours, const std::string& minutes, const std::string& seconds, const std::string& microseconds ) const = 0;
-        virtual double ComputeModifier( const std::string& text, int cursor ) const = 0;
-        virtual double ComputeValue( const QStringList& buffer ) const = 0;
+        virtual int ComputeModifier( const std::string& text, int cursor ) const = 0;
+        virtual int ComputeValue( const QStringList& buffer ) const = 0;
     };
 
     class LeftToRight : public Orientation
@@ -44,16 +44,17 @@ namespace
         {
             return ( hours + ":" + minutes + ":" + seconds + QString( QLocale().decimalPoint() ).toStdString() + microseconds ).c_str();
         }
-        virtual double ComputeModifier( const std::string& text, int cursor ) const
+        virtual int ComputeModifier( const std::string& text, int cursor ) const
         {
-            return cursor <= text.find_first_of( ':' )                               ? 3600
-                 : cursor <= text.find_last_of( ':' )                                ? 60
-                 : cursor <= text.find_last_of( QLocale().decimalPoint().toAscii() ) ? 1
-                                                                                     : 0.01;
+            return cursor <= text.find_first_of( ':' )                               ? 360000
+                 : cursor <= text.find_last_of( ':' )                                ? 6000
+                 : cursor <= text.find_last_of( QLocale().decimalPoint().toAscii() ) ? 100
+                                                                                     : 1;
         }
-        virtual double ComputeValue( const QStringList& buffer ) const
+        virtual int ComputeValue( const QStringList& buffer ) const
         {
-            return buffer.at( 0 ).toInt() * 3600 + buffer.at( 1 ).toInt() * 60 + QLocale().toDouble( buffer.at( 2 ) );
+            const QStringList seconds = buffer.at( 2 ).split( QLocale().decimalPoint() );
+            return buffer.at( 0 ).toInt() * 360000 + buffer.at( 1 ).toInt() * 6000 + seconds.at( 0 ).toInt() * 100 + seconds.at( 1 ).toInt();
         }
     };
     class RightToLeft : public Orientation
@@ -63,50 +64,48 @@ namespace
         {
             return ( seconds + QString( QLocale().decimalPoint() ).toStdString() + microseconds + ":" + minutes + ":" + hours ).c_str();
         }
-        virtual double ComputeModifier( const std::string& text, int cursor ) const
+        virtual int ComputeModifier( const std::string& text, int cursor ) const
         {
-            return cursor <= text.find_last_of( QLocale().decimalPoint().toAscii() ) ? 1
-                 : cursor <= text.find_first_of( ':' )                               ? 0.01
-                 : cursor <= text.find_last_of( ':' )                                ? 60
-                                                                                     : 3600;
+            return cursor <= text.find_last_of( QLocale().decimalPoint().toAscii() ) ? 100
+                 : cursor <= text.find_first_of( ':' )                               ? 1
+                 : cursor <= text.find_last_of( ':' )                                ? 6000
+                                                                                     : 360000;
         }
-        virtual double ComputeValue( const QStringList& buffer ) const
+        virtual int ComputeValue( const QStringList& buffer ) const
         {
-            return buffer.at( 2 ).toInt() * 3600 + buffer.at( 1 ).toInt() * 60 + QLocale().toDouble( buffer.at( 0 ) );
+            const QStringList seconds = buffer.at( 0 ).split( QLocale().decimalPoint() );
+            return buffer.at( 2 ).toInt() * 360000 + buffer.at( 1 ).toInt() * 6000 + seconds.at( 0 ).toInt() * 100 + seconds.at( 1 ).toInt();
         }
     };
-    class DurationSpinBox : public QDoubleSpinBox
+    class DurationSpinBox : public QSpinBox
     {
     public:
         DurationSpinBox( QWidget* parent = 0 )
-            : QDoubleSpinBox( parent )
+            : QSpinBox( parent )
             , orientation_ ( qApp->isRightToLeft() ? static_cast< Orientation* >( new RightToLeft() )
                                                    : static_cast< Orientation* >( new LeftToRight() ) )
             , exact_       ( orientation_->StringWithOrientation( "\\d+", "[0-5]\\d", "[0-5]\\d", "\\d\\d" ) )
             , intermediate_( orientation_->StringWithOrientation( "\\d*", "\\d*", "\\d*", "\\d*" ) )
         {
             setValue( 0 );
-            setMaximum( maxSeconds );
+            setMaximum( maxCentiSeconds );
         }
         virtual ~DurationSpinBox() {}
-        virtual double valueFromText( const QString& text ) const
+        virtual int valueFromText( const QString& text ) const
         {
             QStringList buffer = text.split( ":" );
             if( buffer.size() < 3 )
                 throw MASA_EXCEPTION( tools::translate( "TimeField", "Invalid time duration '%1'" ).arg( text ).toStdString() );
             return orientation_->ComputeValue( buffer );
         }
-        virtual QString textFromValue( double value ) const
+        virtual QString textFromValue( int value ) const
         {
-            const int intValue = boost::numeric_cast< int >( value );
-            const int minutes = ( intValue / 60 ) % 60;
-            const int hours = intValue / 3600;
-            const int seconds = intValue - hours * 3600 - minutes * 60;
-            const int centisec = boost::numeric_cast< int >( std::ceil( ( value - intValue ) * 100 ) );
-            return orientation_->StringWithOrientation( boost::lexical_cast< std::string >( hours ),
-                                                      ( minutes  < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( minutes ),
-                                                      ( seconds  < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( seconds ),
-                                                      ( centisec < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( centisec ) );
+            const int minutes = ( value / 6000 ) % 60;
+            const int hours = value / 360000;
+            const int seconds = value / 100 - hours * 3600 - minutes * 60;
+            const int centisec = value % 100;
+            return orientation_->StringWithOrientation( boost::lexical_cast< std::string >( hours ), Fill( minutes ),
+                                                        Fill( seconds ), Fill( centisec ) );
         }
         virtual void stepBy( int steps )
         {
@@ -120,6 +119,10 @@ namespace
             return exact_.exactMatch( text )        ? QValidator::Acceptable :
                    intermediate_.exactMatch( text ) ? QValidator::Intermediate :
                                                       QValidator::Invalid;
+        }
+        std::string Fill( int number ) const
+        {
+            return ( number  < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( number );
         }
     protected:
         boost::scoped_ptr< Orientation > orientation_;
@@ -143,7 +146,7 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
     pLayout->addWidget( pSpinBox_ );
     setFocusProxy( pSpinBox_ );
     connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
-    connect( pSpinBox_, SIGNAL( valueChanged( double ) ), this, SLOT( OnValueChanged() ) );
+    connect( pSpinBox_, SIGNAL( valueChanged( int ) ), this, SLOT( OnValueChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +173,7 @@ void ADN_TimeField::OnValueChanged()
 // -----------------------------------------------------------------------------
 QString ADN_TimeField::text() const
 {
-    return QString( boost::lexical_cast< std::string >( pSpinBox_->value() ).c_str() ) + "s";
+    return QString::number( boost::numeric_cast< double >( pSpinBox_->value() ) / 100 ) + "s";
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +186,7 @@ void ADN_TimeField::setText( const QString& strText )
         return;
     const QString strUnit( strText.right( 1 ) );
     const QString strValue( strText.left( strText.size() - 1 ) );
-    pSpinBox_->setValue( GetSeconds( strValue, strUnit ) );
+    pSpinBox_->setValue( GetCentiSeconds( strValue, strUnit ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,16 +218,16 @@ void ADN_TimeField::Warn( ADN_ErrorStatus, const QString& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_TimeField::GetSeconds
+// Name: ADN_TimeField::GetCentiSeconds
 // Created: MMC 2013-04-04
 // -----------------------------------------------------------------------------
-float ADN_TimeField::GetSeconds( const QString& strValue, const QString& strUnit ) const
+int ADN_TimeField::GetCentiSeconds( const QString& strValue, const QString& strUnit ) const
 {
     if( strUnit == "s" )
-        return locale().toFloat( strValue );
+        return boost::numeric_cast< int >( locale().toFloat( strValue ) * 100 );
     else if( strUnit == "m" )
-        return locale().toFloat( strValue ) * 60;
+        return boost::numeric_cast< int >( locale().toFloat( strValue ) * 6000 );
     else if( strUnit == "h" )
-        return locale().toFloat( strValue ) * 3600;
-    return 0.f;
+        return boost::numeric_cast< int >( locale().toFloat( strValue ) * 360000 );
+    return 0;
 }

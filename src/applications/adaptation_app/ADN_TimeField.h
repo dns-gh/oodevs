@@ -16,7 +16,7 @@
 
 class ADN_TimeField_EditLine;
 class ADN_DoubleValidator;
-class QDoubleSpinBox;
+class QSpinBox;
 
 // $$$$ ABR 2012-11-05: This class should be rename in ADN_DelayEdit
 
@@ -54,13 +54,13 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    float GetSeconds( const QString& strValue, const QString& strUnit ) const;
+    int GetCentiSeconds( const QString& strValue, const QString& strUnit ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QDoubleSpinBox* pSpinBox_;
+    QSpinBox* pSpinBox_;
     //@}
 };
 
