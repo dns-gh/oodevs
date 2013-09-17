@@ -9,10 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "LogFactory.h"
-#include "Log.h"
 #include <ctime>
-
-#pragma warning( disable: 4996 ) // This function or variable may be unsafe
+#include <tools/Path.h>
+#include <tools/StdFileWrapper.h>
 
 using namespace dispatcher;
 
