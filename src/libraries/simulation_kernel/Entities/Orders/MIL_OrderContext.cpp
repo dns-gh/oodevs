@@ -22,13 +22,70 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_OrderContext )
 
+#define ORDER_BADLIMIT(reason)                     \
+    MASA_BADPARAM_ASN( sword::OrderAck::ErrorCode, \
+        sword::OrderAck::error_invalid_limit,      \
+        static_cast< std::stringstream& >( std::stringstream() << reason ).str().c_str() )
+
+namespace
+{
+
+const MT_Vector2D defaultDirection( 0, 1 );
+
+const sword::MissionParameter& GetParam( const sword::MissionParameters& params,
+        int index, const char* expected )
+{
+    if( params.elem_size() < index + 1 )
+        throw ORDER_BADPARAM( "parameters[" << index << "] is missing, "
+                << expected << " expected" );
+    return params.elem( index );
+}
+
+MT_Vector2D ReadDirections( const sword::MissionParameters& params, int index )
+{
+    const auto& param = GetParam( params, index, "heading" );
+    if( param.null_value() )
+        return defaultDirection;
+    if( !param.value_size() || !param.value().Get( 0 ).has_heading() )
+        throw ORDER_BADPARAM( "parameters[" << index << "] is invalid, heading expected" );
+    return weather::ReadDirection( param.value().Get( 0 ).heading() );
+}
+
+void ReadPhaseLines( const sword::MissionParameters& params, int index,
+        T_LimaVector& phaselines )
+{
+    const auto& param = GetParam( params, index, "phaseline" );
+    if( param.null_value() )
+        return;
+    if( !param.value_size() || !param.value().Get( 0 ).has_phaseline() )
+        throw ORDER_BADPARAM( "parameters[" << index
+                << "] is invalid, phaseline expected" );
+    const int count = param.value().size();
+    for( int i = 0; i < count; ++i )
+        phaselines.push_back( MIL_LimaOrder( param.value().Get( i ).phaseline().elem( 0 )));
+}
+
+void ReadPointVector( const sword::MissionParameters& params, int index,
+        T_PointVector& points )
+{
+    const auto& limit = GetParam( params, index, "limit" );
+    if( limit.null_value() )
+        return;
+    if( !limit.value().Get( 0 ).has_limit() )
+        throw ORDER_BADLIMIT( "parameters[" << index << "] must be a limit" );
+    if( !NET_ASN_Tools::ReadLine( limit.value().Get( 0 ).limit(), points ) )
+        throw ORDER_BADLIMIT( "parameters[" << index << "] limit value is invalid" );
+}
+
+} // namespace
+
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext constructor
 // Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
     : hasContext_( present )
-    , dirDanger_ ( new MT_Vector2D( 0., 1. ) )
+    , dirDanger_ ( new MT_Vector2D( defaultDirection ) )
 {
     // NOTHING
 }
@@ -37,15 +94,24 @@ MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
 // Name: MIL_OrderContext constructor
 // Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
-MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& asn, const MT_Vector2D& orientationReference )
+MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& params,
+        const MT_Vector2D& orientationReference )
     : hasContext_( true )
-    , dirDanger_ ( new MT_Vector2D( 0., 1. ) )
+    , dirDanger_ ( new MT_Vector2D( defaultDirection ) )
 {
-    if( unsigned int( asn.elem_size() ) < Length() )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
-    ReadDirection( asn.elem(0) );
-    ReadPhaseLines( asn.elem(1) );
-    ReadLimits( asn.elem(2), asn.elem(3), orientationReference );
+    *dirDanger_ = ReadDirections( params, 0 );
+    ReadPhaseLines( params, 1, limas_ );
+
+    T_PointVector limit1, limit2;
+    ReadPointVector( params, 2, limit1 );
+    ReadPointVector( params, 3, limit2 );
+    if( limit1.empty() != limit2.empty() || !limit1.empty() && limit1 == limit2 )
+        throw ORDER_BADLIMIT(
+            "limits parameters 2 and 3 must be both null/empty or different" );
+    if( !limit1.empty() )
+        fuseau_.Reset( &orientationReference, limit1, limit2,
+                FindLima( MIL_LimaFunction::LDM_ ),
+                FindLima( MIL_LimaFunction::LFM_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,65 +149,6 @@ void MIL_OrderContext::Serialize( sword::MissionParameters& asn ) const
         WriteDirection( *asn.mutable_elem(0) );
         WritePhaseLines( *asn.mutable_elem(1) );
         WriteLimits( *asn.mutable_elem(2), *asn.mutable_elem(3) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::ReadLimits
-// Created: SBO 2008-03-04
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadLimits( const sword::MissionParameter& limit1, const sword::MissionParameter& limit2, const MT_Vector2D& orientationReference )
-{
-    if( limit1.null_value() != limit2.null_value() )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_limit );
-    if( limit1.null_value() )
-        return;
-    if( !limit1.value().Get( 0 ).has_limit() || !limit2.value().Get( 0 ).has_limit() )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
-
-    T_PointVector limit1Data, limit2Data;
-    if( !NET_ASN_Tools::ReadLine( limit1.value().Get( 0 ).limit(), limit1Data )
-        || !NET_ASN_Tools::ReadLine( limit2.value().Get( 0 ).limit(), limit2Data ) )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_limit );
-
-    const bool equal  = limit1Data == limit2Data;
-    const bool empty1 = limit1Data.empty();
-    const bool empty2 = limit1Data.empty();
-    if( ( empty1 || empty2 ) && !equal )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_limit );
-    if( !empty1 && equal )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_limit );
-    if( !empty1 && !empty2 )
-        fuseau_.Reset( &orientationReference, limit1Data, limit2Data, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::ReadPhaseLines
-// Created: SBO 2008-03-04
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadPhaseLines( const sword::MissionParameter& asn )
-{
-    if( !asn.null_value() )
-    {
-        if( !asn.value_size() || !asn.value().Get( 0 ).has_phaseline() )
-            throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
-        int nLimas = asn.value().size();
-        for( int i = 0; i < nLimas; ++i )
-            limas_.push_back( MIL_LimaOrder( asn.value().Get( i ).phaseline().elem( 0 ) ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::ReadDirection
-// Created: SBO 2008-03-04
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadDirection( const sword::MissionParameter& asn )
-{
-    if( !asn.null_value() )
-    {
-        if( !asn.value_size() || !asn.value().Get( 0 ).has_heading() )
-            throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
-        *dirDanger_ = weather::ReadDirection( asn.value().Get( 0 ).heading() );
     }
 }
 

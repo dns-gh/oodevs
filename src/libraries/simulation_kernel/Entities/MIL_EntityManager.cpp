@@ -1025,6 +1025,7 @@ void MIL_EntityManager::OnReceiveUnitOrder( const UnitOrder& message, unsigned i
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
@@ -1048,6 +1049,7 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
@@ -1401,6 +1403,7 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
@@ -1438,6 +1441,7 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
     catch( const NET_AsnException< OrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     catch( const NET_InvalidTasker& )
     {

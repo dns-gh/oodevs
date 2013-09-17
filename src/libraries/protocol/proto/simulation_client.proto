@@ -89,6 +89,8 @@ message TaskCreationRequestAck {
     required OrderAck.ErrorCode error_code = 2;
     //! Unique order identifier
     optional uint32             id         = 3;
+    //! More detailed account of the returned error
+    optional string             error_msg  = 4;
 }
 
 /** @struct FragOrderAck
