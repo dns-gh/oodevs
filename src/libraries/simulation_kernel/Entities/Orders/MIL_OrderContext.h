@@ -21,6 +21,11 @@ namespace sword
 
 class MIL_LimaFunction;
 
+#define ORDER_BADPARAM(reason)                     \
+    MASA_BADPARAM_ASN( sword::OrderAck::ErrorCode, \
+        sword::OrderAck::error_invalid_parameter,  \
+        static_cast< std::stringstream& >( std::stringstream() << reason ).str().c_str() )
+
 // =============================================================================
 /** @class  MIL_OrderContext
     @brief  MIL_OrderContext
@@ -70,10 +75,6 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadDirection( const sword::MissionParameter& asn );
-    void ReadPhaseLines( const sword::MissionParameter& asn );
-    void ReadLimits( const sword::MissionParameter& limit1, const sword::MissionParameter& limit2, const MT_Vector2D& orientationReference );
-
     void WriteDirection( sword::MissionParameter& asn ) const;
     void WritePhaseLines( sword::MissionParameter& asn ) const;
     void WriteLimits( sword::MissionParameter& limit1, sword::MissionParameter& limit2 ) const;

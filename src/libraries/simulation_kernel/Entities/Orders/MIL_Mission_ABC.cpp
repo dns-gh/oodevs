@@ -25,10 +25,6 @@
 #include <boost/make_shared.hpp>
 #include <boost/optional.hpp>
 
-#define ORDER_BADPARAM(reason) \
-    MASA_BADPARAM_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter, \
-        static_cast< std::stringstream& >( std::stringstream() << reason ).str().c_str() )
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-23
