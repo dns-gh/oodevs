@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_FileLoaderObserver.h"
 #include <boost/format.hpp>
+#include <iostream>
 
 using namespace tools;
 
