@@ -57,6 +57,7 @@ namespace
             return buffer.at( 0 ).toInt() * 360000 + buffer.at( 1 ).toInt() * 6000 + seconds.at( 0 ).toInt() * 100 + seconds.at( 1 ).toInt();
         }
     };
+
     class RightToLeft : public Orientation
     {
     public:
@@ -77,6 +78,7 @@ namespace
             return buffer.at( 2 ).toInt() * 360000 + buffer.at( 1 ).toInt() * 6000 + seconds.at( 0 ).toInt() * 100 + seconds.at( 1 ).toInt();
         }
     };
+
     class DurationSpinBox : public QSpinBox
     {
     public:
