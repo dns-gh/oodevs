@@ -287,6 +287,8 @@ void ADN_MainWindow::PurgeGUI()
     mainTabWidget_.reset();
     // Languages menu
     menuLanguages_->clear();
+    // ObjectNameManager
+    gui::ObjectNameManager::getInstance()->Purge();
 }
 
 //-----------------------------------------------------------------------------

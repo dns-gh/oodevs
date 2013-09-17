@@ -114,3 +114,13 @@ void ObjectNameManager::RemoveRegisteredName( const QString& name )
     if( paths_.contains( name ) )
         paths_.remove( name );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectNameManager::Purge
+// Created: ABR 2013-09-17
+// -----------------------------------------------------------------------------
+void ObjectNameManager::Purge()
+{
+    objectNamePath_.clear();
+    paths_.clear();
+}
