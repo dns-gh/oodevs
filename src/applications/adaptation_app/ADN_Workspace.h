@@ -50,6 +50,7 @@ class ADN_Launchers_Data;
 class ADN_Launchers_GUI;
 class ADN_Logistic_Data;
 class ADN_Logistic_GUI;
+class ADN_MainWindow;
 class ADN_Missions_Data;
 class ADN_Missions_GUI;
 class ADN_Models_Data;
@@ -58,7 +59,7 @@ class ADN_NBC_Data;
 class ADN_NBC_GUI;
 class ADN_Objects_Data;
 class ADN_Objects_GUI;
-class ADN_ProgressIndicator_ABC;
+class ADN_ProgressBar;
 class ADN_Project_Data;
 class ADN_Ref_ABC;
 class ADN_Reports_Data;
@@ -110,15 +111,16 @@ class ADN_Workspace : public QObject
 public:
     //! @name Singleton implementation
     //@{
-    static void CreateWorkspace( const ADN_GeneralConfig& config );
+    static void CreateWorkspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config );
+    static bool HasWorkspace();
     static ADN_Workspace& GetWorkspace();
-    static void CleanWorkspace();
+    static void DeleteWorkspace();
     //@}
 
 private:
     //! @name Constructors/destructor
     //@{
-    explicit ADN_Workspace( const ADN_GeneralConfig& config );
+    explicit ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config );
     virtual ~ADN_Workspace();
     //@}
 
@@ -130,16 +132,17 @@ public:
 
     //! @name Data operations
     //@{
-    void Reset( const tools::Path& filename, bool isClosing );
+    void Initialize();
+    void Purge();
+
+    void New( const tools::Path& filename );
     void Load( const tools::Path& filename );
     bool SaveAs( const tools::Path& filename );
     //@}
 
     //! @name Gui Operations
     //@{
-    void SetProgressIndicator( ADN_ProgressIndicator_ABC& progressIndicator );
-    void BuildGUI( QMainWindow& mainWindow );
-    void PurgeGUI();
+    void BuildGUI();
     void ExportHtml( const tools::Path& strPath );
 
     T_UsingElements GetElementThatWillBeDeleted( ADN_Ref_ABC* data );
@@ -151,7 +154,7 @@ public:
     bool IsNewBaseReadOnly( const tools::Path& filename ) const;
     bool IsDevMode() const;
 
-    QMainWindow* GetMainWindow() const;
+    ADN_MainWindow& GetMainWindow() const;
     void SetMainWindowModified( bool isModified );
 
     ADN_Project_Data& GetProject();
@@ -192,7 +195,6 @@ signals:
     //! @name Signals
     //@{
     void ChangeTab( E_WorkspaceElements targetTab );
-    void LoadStatusChanged( bool isLoaded );
     //@}
 
 public slots:
@@ -207,24 +209,24 @@ public slots:
 private:
     //! @name Helpers
     //@{
-    void SetLoadStatus( bool isLoaded );
-    void Initialize();
-    void InitializeEnumType();
     void AddPage( E_WorkspaceElements element );
     //@}
 
 private:
     //! @name Member data
     //@{
+    ADN_MainWindow& mainWindow_;
+    ADN_ProgressBar& progressIndicator_;
     const ADN_GeneralConfig& config_;
     std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
     std::auto_ptr< const tools::Loader_ABC > fileLoader_;
-    ADN_Project_Data* projectData_;
+    std::auto_ptr< ADN_Project_Data > projectData_;
     std::auto_ptr< ADN_WorkspaceElement_ABC > elements_[ eNbrWorkspaceElements ];
-    ADN_ProgressIndicator_ABC* progressIndicator_;
-    QMainWindow* mainWindow_;
+    //@}
+
+    //! @name Singleton
+    //@{
     static ADN_Workspace* pWorkspace_;
-    bool isLoaded_;
     //@}
 };
 

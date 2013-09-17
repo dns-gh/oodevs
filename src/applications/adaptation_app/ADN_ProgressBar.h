@@ -12,8 +12,6 @@
 #ifndef __ADN_ProgressBar_h_
 #define __ADN_ProgressBar_h_
 
-#include "ADN_ProgressIndicator_ABC.h"
-
 // =============================================================================
 /** @class  ADN_ProgressBar
     @brief  ADN_ProgressBar
@@ -21,7 +19,6 @@
 // Created: APE 2005-03-18
 // =============================================================================
 class ADN_ProgressBar : public QWidget
-                      , public ADN_ProgressIndicator_ABC
 {
 public:
     explicit ADN_ProgressBar( QWidget* parent );
@@ -29,13 +26,9 @@ public:
 
     //! @name Modifiers
     //@{
+    void Reset();
     void SetMaximum( int n );
-    //@}
-
-    //! @name Operations
-    //@{
     void Increment( const QString& text );
-    void SetVisible( bool visible );
     //@}
 
 private:

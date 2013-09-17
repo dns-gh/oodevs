@@ -26,7 +26,6 @@ class ADN_GeneralConfig;
 class ADN_ListView;
 class ADN_MainTabWidget;
 class ADN_ProgressBar;
-class ADN_ProgressIndicator_ABC;
 class ADN_Table;
 
 // =============================================================================
@@ -52,7 +51,10 @@ public:
     void AddTable( const QString& strTableName, ADN_Callback_ABC< ADN_Table* >* pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC< ADN_ListView* >* pCallback );
 
-    ADN_ProgressIndicator_ABC& GetProgressIndicator() const;
+    bool IsLoaded() const;
+    void SetIsLoading( bool );
+    void LoadStatusChanged( bool );
+    ADN_ProgressBar& GetProgressBar() const;
     //@}
 
 protected:
@@ -74,12 +76,11 @@ private slots:
     //@{
     void OnNew();
     void OnOpen();
-    void OnClose();
+    bool OnClose();
     void OnSave();
     void OnSaveAs();
     void OnExportHtml();
     void OnAbout();
-    void OnLoadStatusChanged( bool );
     void OnShowConsistencyTable( const QString& name ) const;
     //@}
 
@@ -88,7 +89,7 @@ private:
     //@{
     void BuildGUI();
     void PurgeGUI();
-    bool OfferToSave();
+    void UpdateTitle();
     //@}
 
 private:
@@ -123,10 +124,11 @@ private:
     QMenu* menuConsistencyTables_;
     QMenu* menuLanguages_;
 
+    QToolBar* toolBar_;
+
     T_ConsistencyTables consistencyTables_;
     T_ConsistencyListViews consistencyListViews_;
 
-    bool skipSave_;
     bool isLoaded_;
     //@}
 };

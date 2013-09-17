@@ -63,7 +63,7 @@
 #include "ADN_NBC_GUI.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Objects_GUI.h"
-#include "ADN_ProgressIndicator_ABC.h"
+#include "ADN_ProgressBar.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Reports_Data.h"
 #include "ADN_Reports_GUI.h"
@@ -88,64 +88,6 @@
 
 ADN_Workspace* ADN_Workspace::pWorkspace_ = 0;
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::CreateWorkspace
-// Created: ABR 2013-09-11
-// -----------------------------------------------------------------------------
-void ADN_Workspace::CreateWorkspace( const ADN_GeneralConfig& config )
-{
-    if( pWorkspace_ )
-        throw MASA_EXCEPTION( "Workspace already created" );
-    pWorkspace_ = new ADN_Workspace( config );
-    pWorkspace_->Initialize();
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetWorkspace
-// Created: JDY 03-07-09
-//-----------------------------------------------------------------------------
-ADN_Workspace& ADN_Workspace::GetWorkspace()
-{
-    if( !pWorkspace_ )
-        throw MASA_EXCEPTION( "Workspace not created" );
-    return *pWorkspace_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Workspace::CleanWorkspace
-// Created: JDY 03-07-09
-//-----------------------------------------------------------------------------
-void ADN_Workspace::CleanWorkspace()
-{
-    if( !pWorkspace_ )
-        throw MASA_EXCEPTION( "Workspace not created" );
-    delete pWorkspace_;
-    pWorkspace_ = 0;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Workspace constructor
-// Created: JDY 03-07-04
-//-----------------------------------------------------------------------------
-ADN_Workspace::ADN_Workspace( const ADN_GeneralConfig& config )
-    : config_( config )
-    , fileLoaderObserver_( new ADN_FileLoaderObserver() )
-    , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
-    , progressIndicator_( 0 )
-    , mainWindow_( 0 )
-    , isLoaded_( false )
-{
-    // NOTHING
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Workspace destructor
-// Created: JDY 03-07-04
-//-----------------------------------------------------------------------------
-ADN_Workspace::~ADN_Workspace()
-{
-    delete projectData_;
-}
 
 #define INITIALIZE_ADN_ENUMTYPE( TypeName )                                                                                 \
     ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ADN_Tr::ConvertFrom##TypeName );                          \
@@ -167,18 +109,110 @@ const ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& ADN_Wor
     return static_cast< ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& >( *elements_[ e##ELEMENT ] );   \
 }                                                                                                                           \
 
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::CreateWorkspace
+// Created: ABR 2013-09-11
+// -----------------------------------------------------------------------------
+void ADN_Workspace::CreateWorkspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config )
+{
+    if( pWorkspace_ )
+        throw MASA_EXCEPTION( "Workspace already created" );
+    pWorkspace_ = new ADN_Workspace( mainWindow, config );
+    pWorkspace_->Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::HasWorkspace
+// Created: ABR 2013-09-17
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::HasWorkspace()
+{
+    return pWorkspace_ != 0;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetWorkspace
+// Created: JDY 03-07-09
+//-----------------------------------------------------------------------------
+ADN_Workspace& ADN_Workspace::GetWorkspace()
+{
+    if( !pWorkspace_ )
+        throw MASA_EXCEPTION( "Workspace not created" );
+    return *pWorkspace_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Workspace::CleanWorkspace
+// Created: JDY 03-07-09
+//-----------------------------------------------------------------------------
+void ADN_Workspace::DeleteWorkspace()
+{
+    if( !pWorkspace_ )
+        throw MASA_EXCEPTION( "Workspace not created" );
+    delete pWorkspace_;
+    pWorkspace_ = 0;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Workspace constructor
+// Created: JDY 03-07-04
+//-----------------------------------------------------------------------------
+ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfig& config )
+    : mainWindow_( mainWindow )
+    , progressIndicator_( mainWindow.GetProgressBar() )
+    , config_( config )
+    , fileLoaderObserver_( new ADN_FileLoaderObserver() )
+    , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
+    , projectData_( new ADN_Project_Data() )
+{
+    if( config_.IsNoReadOnly() )
+        projectData_->GetDataInfos().SetNoReadOnly();
+
+    INITIALIZE_ADN_ENUMTYPE( AgentTypeAutomate );
+    INITIALIZE_ADN_ENUMTYPE( AgentTypePion );
+    INITIALIZE_ENT_ENUMTYPE( AgentNbcSuit );
+    INITIALIZE_ADN_ENUMTYPE( BreakdownNTI );
+    INITIALIZE_ADN_ENUMTYPE( BreakdownType );
+    INITIALIZE_ADN_ENUMTYPE( ConstructorType );
+    INITIALIZE_ADN_ENUMTYPE( ConsumptionType );
+    INITIALIZE_ADN_ENUMTYPE( CrossingHeight );
+    INITIALIZE_ENT_ENUMTYPE( CrossingType );
+    INITIALIZE_ADN_ENUMTYPE( Days );
+    INITIALIZE_ADN_ENUMTYPE( EquipmentState_ADN );
+    INITIALIZE_ENT_ENUMTYPE( Location );
+    INITIALIZE_ADN_ENUMTYPE( MissionParameterType );
+    INITIALIZE_ENT_ENUMTYPE( AmmunitionType );
+    INITIALIZE_ADN_ENUMTYPE( NatureAtlasType );
+    INITIALIZE_ENT_ENUMTYPE( NatureLevel );
+    INITIALIZE_ENT_ENUMTYPE( PopulationAttitude );
+    INITIALIZE_ADN_ENUMTYPE( PropagationModel );
+    INITIALIZE_ADN_ENUMTYPE( ProtectionType );
+    INITIALIZE_ADN_ENUMTYPE( RadarType );
+    INITIALIZE_ADN_ENUMTYPE( SpeedImpact );
+    INITIALIZE_ADN_ENUMTYPE( SupplyConvoyType );
+    INITIALIZE_ENT_ENUMTYPE( UnitExperience );
+    INITIALIZE_ENT_ENUMTYPE( UnitPosture );
+    INITIALIZE_ENT_ENUMTYPE( UnitStress );
+    INITIALIZE_ENT_ENUMTYPE( UnitTiredness );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Workspace destructor
+// Created: JDY 03-07-04
+//-----------------------------------------------------------------------------
+ADN_Workspace::~ADN_Workspace()
+{
+    for( int n = 0; n < eNbrWorkspaceElements; n++ )
+        elements_[ n ].reset();
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::Initialize
 // Created: JSR 2012-04-26
 // -----------------------------------------------------------------------------
 void ADN_Workspace::Initialize()
 {
-    InitializeEnumType();
-    projectData_ = new ADN_Project_Data();
-    if( config_.IsNoReadOnly() )
-        projectData_->GetDataInfos().SetNoReadOnly();
-
-    // Creation order
     CREATE_WORKSPACE_ELEMENT( Drawings );
     CREATE_WORKSPACE_ELEMENT( Symbols );
     CREATE_WORKSPACE_ELEMENT( Categories );
@@ -208,6 +242,23 @@ void ADN_Workspace::Initialize()
     CREATE_WORKSPACE_ELEMENT( Logistic );
     CREATE_WORKSPACE_ELEMENT( Disasters );
     CREATE_WORKSPACE_ELEMENT( Languages );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::Purge
+// Created: ABR 2013-09-17
+// -----------------------------------------------------------------------------
+void ADN_Workspace::Purge()
+{
+    mainWindow_.LoadStatusChanged( false );
+    mainWindow_.SetIsLoading( true );
+    progressIndicator_.SetMaximum( eNbrWorkspaceElements );
+    for( int n = 0; n < eNbrWorkspaceElements; n++ )
+    {
+        progressIndicator_.Increment( tr( "Closing: %1..." ).arg( elements_[ n ]->GetName() ) );
+        elements_[ n ].reset();
+    }
+    mainWindow_.SetIsLoading( false );
 }
 
 IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Languages )
@@ -241,40 +292,6 @@ IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Reports )
 IMPLEMENT_WORKSPACE_ELEMENT_GETTER( Logistic )
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::InitializeEnumType
-// Created: ABR 2012-10-29
-// -----------------------------------------------------------------------------
-void ADN_Workspace::InitializeEnumType()
-{
-    INITIALIZE_ADN_ENUMTYPE( AgentTypeAutomate );
-    INITIALIZE_ADN_ENUMTYPE( AgentTypePion );
-    INITIALIZE_ENT_ENUMTYPE( AgentNbcSuit );
-    INITIALIZE_ADN_ENUMTYPE( BreakdownNTI );
-    INITIALIZE_ADN_ENUMTYPE( BreakdownType );
-    INITIALIZE_ADN_ENUMTYPE( ConstructorType );
-    INITIALIZE_ADN_ENUMTYPE( ConsumptionType );
-    INITIALIZE_ADN_ENUMTYPE( CrossingHeight );
-    INITIALIZE_ENT_ENUMTYPE( CrossingType );
-    INITIALIZE_ADN_ENUMTYPE( Days );
-    INITIALIZE_ADN_ENUMTYPE( EquipmentState_ADN );
-    INITIALIZE_ENT_ENUMTYPE( Location );
-    INITIALIZE_ADN_ENUMTYPE( MissionParameterType );
-    INITIALIZE_ENT_ENUMTYPE( AmmunitionType );
-    INITIALIZE_ADN_ENUMTYPE( NatureAtlasType );
-    INITIALIZE_ENT_ENUMTYPE( NatureLevel );
-    INITIALIZE_ENT_ENUMTYPE( PopulationAttitude );
-    INITIALIZE_ADN_ENUMTYPE( PropagationModel );
-    INITIALIZE_ADN_ENUMTYPE( ProtectionType );
-    INITIALIZE_ADN_ENUMTYPE( RadarType );
-    INITIALIZE_ADN_ENUMTYPE( SpeedImpact );
-    INITIALIZE_ADN_ENUMTYPE( SupplyConvoyType );
-    INITIALIZE_ENT_ENUMTYPE( UnitExperience );
-    INITIALIZE_ENT_ENUMTYPE( UnitPosture );
-    INITIALIZE_ENT_ENUMTYPE( UnitStress );
-    INITIALIZE_ENT_ENUMTYPE( UnitTiredness );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Workspace::IsNewBaseReadOnly
 // Created: ABR 2013-09-12
 // -----------------------------------------------------------------------------
@@ -302,14 +319,13 @@ bool ADN_Workspace::IsDevMode() const
 // Name: ADN_Workspace::BuildGUI
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::BuildGUI( QMainWindow& mainWindow )
+void ADN_Workspace::BuildGUI()
 {
-    mainWindow_ = &mainWindow;
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
-        progressIndicator_->Increment( tr( "Building GUI: %1..." ).arg( elements_[n]->GetName() ) );
+        progressIndicator_.Increment( tr( "Building GUI: %1..." ).arg( elements_[n]->GetName() ) );
         elements_[n]->GetGuiABC().Build();
-        elements_[n]->GetGuiABC().RegisterTable( static_cast< ADN_MainWindow& >( *mainWindow_ ) );
+        elements_[n]->GetGuiABC().RegisterTable( mainWindow_ );
     }
 
     // Tab order
@@ -340,47 +356,8 @@ void ADN_Workspace::BuildGUI( QMainWindow& mainWindow )
     if( config_.IsDevMode() )
         AddPage( eDisasters );
 
-    progressIndicator_->SetVisible( false );
-    connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), mainWindow_, SIGNAL( ChangeTab( E_WorkspaceElements ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::PurgeGUI
-// Created: ABR 2013-09-13
-// -----------------------------------------------------------------------------
-void ADN_Workspace::PurgeGUI()
-{
-    mainWindow_ = 0;
-
-    GetDrawings().ResetGui();
-    GetSymbols().ResetGui();
-    GetCategories().ResetGui();
-    GetUrban().ResetGui();
-    GetNBC().ResetGui();
-    GetLaunchers().ResetGui();
-    GetResources().ResetGui();
-    GetActiveProtections().ResetGui();
-    GetObjects().ResetGui();
-    GetWeapons().ResetGui();
-    GetSensors().ResetGui();
-    GetEquipments().ResetGui();
-    GetResourceNetworks().ResetGui();
-    GetAiEngine().ResetGui();
-    GetModels().ResetGui();
-    GetUnits().ResetGui();
-    GetAutomata().ResetGui();
-    GetBreakdowns().ResetGui();
-    GetCommunications().ResetGui();
-    GetHumanFactors().ResetGui();
-    GetMissions().ResetGui();
-    GetKnowledgeGroups().ResetGui();
-    GetCrowds().ResetGui();
-    GetInhabitants().ResetGui();
-    GetReports().ResetGui();
-    GetFires().ResetGui();
-    GetLogistic().ResetGui();
-    GetDisasters().ResetGui();
-    GetLanguages().ResetGui();
+    mainWindow_.SetIsLoading( false );
+    connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), &mainWindow_, SIGNAL( ChangeTab( E_WorkspaceElements ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -389,29 +366,21 @@ void ADN_Workspace::PurgeGUI()
 // -----------------------------------------------------------------------------
 void ADN_Workspace::AddPage( E_WorkspaceElements element )
 {
-    static_cast< ADN_MainWindow* >( mainWindow_ )->AddPage( element, *elements_[ element ]->GetGuiABC().GetMainWidget(), elements_[ element ]->GetName() );
+    mainWindow_.AddPage( element, *elements_[ element ]->GetGuiABC().GetMainWidget(), elements_[ element ]->GetName() );
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Workspace::Reset
-// Created: JDY 03-07-04
-//-----------------------------------------------------------------------------
-void ADN_Workspace::Reset(const tools::Path& filename, bool isClosing )
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::New
+// Created: ABR 2013-09-16
+// -----------------------------------------------------------------------------
+void ADN_Workspace::New( const tools::Path& filename )
 {
-    SetLoadStatus( false );
-    progressIndicator_->SetVisible( true );
-    progressIndicator_->SetMaximum( eNbrWorkspaceElements );
-
-    projectData_->SetFile( filename );
-    for( int n = eNbrWorkspaceElements - 1; n >= 0; --n )
-    {
-        progressIndicator_->Increment( isClosing ? tr( "Closing: %1..." ).arg( elements_[n]->GetName() )
-                                                 : tr( "Creating: %1..." ).arg( elements_[n]->GetName() ) );
-        elements_[n]->GetGuiABC().DisconnectListView();
-    }
-    progressIndicator_->SetVisible( false );
-    if( !isClosing )
-        SetLoadStatus( true );
+    filename.Parent().CreateDirectories();
+    pWorkspace_->GetMainWindow().SetIsLoading( true );
+    progressIndicator_.SetMaximum( eNbrWorkspaceElements );
+    projectData_->New( filename );
+    mainWindow_.LoadStatusChanged( true );
+    SetMainWindowModified( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -420,8 +389,8 @@ void ADN_Workspace::Reset(const tools::Path& filename, bool isClosing )
 //-----------------------------------------------------------------------------
 void ADN_Workspace::Load( const tools::Path& filename )
 {
-    progressIndicator_->SetVisible( true );
-    progressIndicator_->SetMaximum( 2 * eNbrWorkspaceElements );
+    mainWindow_.SetIsLoading( true );
+    progressIndicator_.SetMaximum( 2 * eNbrWorkspaceElements );
 
     projectData_->SetFile( filename );
     projectData_->Load( *fileLoader_ );
@@ -429,13 +398,14 @@ void ADN_Workspace::Load( const tools::Path& filename )
     // Treatment order, ie E_WorkspaceElements order.
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
-        progressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
+        progressIndicator_.Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );
         elements_[n]->GetDataABC().Load( *fileLoader_ );
     }
     // Allow circular dependences between pages
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
         elements_[n]->GetDataABC().Initialize();
-    SetLoadStatus( true );
+    mainWindow_.LoadStatusChanged( true );
+    SetMainWindowModified( false );
 }
 
 namespace
@@ -525,7 +495,7 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
     if( !dlgLog.empty() )
     {
         dlgLog.exec();
-        progressIndicator_->SetVisible( false );
+        mainWindow_.SetIsLoading( false );
         return false;
     }
 
@@ -535,8 +505,8 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
     try
     {
         // saving in temporary files activated
-        progressIndicator_->SetVisible( true );
-        progressIndicator_->SetMaximum( eNbrWorkspaceElements + 1 );
+        mainWindow_.SetIsLoading( true );
+        progressIndicator_.SetMaximum( eNbrWorkspaceElements + 1 );
 
         projectData_->SetFile( filename );
         projectData_->Save( *fileLoader_ );
@@ -549,13 +519,13 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
-            progressIndicator_->Increment( tr( "Saving: %1..." ).arg( elements_[n]->GetName() ) );
+            progressIndicator_.Increment( tr( "Saving: %1..." ).arg( elements_[n]->GetName() ) );
         }
     }
     catch( const std::exception& )
     {
         dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
-        progressIndicator_->SetVisible( false );
+        mainWindow_.SetIsLoading( false );
         throw;
     }
 
@@ -571,7 +541,7 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
     if( !( dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ ).Exists() )
         tools::zipextractor::ExtractArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
                                              dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ );
-    progressIndicator_->SetVisible( false );
+    mainWindow_.SetIsLoading( false );
 
     // Save is ended
     projectData_->GetDataInfos().DisableReadOnly();
@@ -855,8 +825,6 @@ ADN_WorkspaceElement_ABC& ADN_Workspace::GetWorkspaceElement( E_WorkspaceElement
 // -----------------------------------------------------------------------------
 ADN_Project_Data& ADN_Workspace::GetProject()
 {
-    if( !projectData_ )
-        throw MASA_EXCEPTION( "Project data not initialized" );
     return *projectData_;
 }
 
@@ -864,7 +832,7 @@ ADN_Project_Data& ADN_Workspace::GetProject()
 // Name: ADN_Workspace::GetMainWindow
 // Created: ABR 2013-09-13
 // -----------------------------------------------------------------------------
-QMainWindow* ADN_Workspace::GetMainWindow() const
+ADN_MainWindow& ADN_Workspace::GetMainWindow() const
 {
     return mainWindow_;
 }
@@ -875,25 +843,6 @@ QMainWindow* ADN_Workspace::GetMainWindow() const
 // -----------------------------------------------------------------------------
 void ADN_Workspace::SetMainWindowModified( bool isModified )
 {
-    if( mainWindow_ )
-        mainWindow_->setWindowModified( isModified );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::SetLoadStatus
-// Created: ABR 2013-09-13
-// -----------------------------------------------------------------------------
-void ADN_Workspace::SetLoadStatus( bool isLoaded )
-{
-    isLoaded_ = isLoaded;
-    emit LoadStatusChanged( isLoaded );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::SetProgressIndicator
-// Created: ABR 2013-09-13
-// -----------------------------------------------------------------------------
-void ADN_Workspace::SetProgressIndicator( ADN_ProgressIndicator_ABC& progressIndicator )
-{
-    progressIndicator_ = &progressIndicator;
+    if( mainWindow_.IsLoaded() )
+        mainWindow_.setWindowModified( isModified );
 }

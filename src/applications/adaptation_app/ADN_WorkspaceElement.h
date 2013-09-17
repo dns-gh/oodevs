@@ -36,8 +36,6 @@ public:
 
     //! @name Operations
     //@{
-    void ResetGui() { gui_.reset( new GUI( *data_ ) ); }
-
     DATA& GetData() { return *data_; }
     GUI& GetGui() { return *gui_; }
     const DATA& GetData() const { return *data_; }

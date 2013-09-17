@@ -55,10 +55,10 @@ void ADN_ProgressBar::Increment( const QString& text )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ProgressBar::SetVisible
-// Created: ABR 2012-07-13
+// Name: ADN_ProgressBar::Reset
+// Created: ABR 2013-09-17
 // -----------------------------------------------------------------------------
-void ADN_ProgressBar::SetVisible( bool visible )
+void ADN_ProgressBar::Reset()
 {
-    parentWidget()->setVisible( visible );
+    bar_->reset();
 }

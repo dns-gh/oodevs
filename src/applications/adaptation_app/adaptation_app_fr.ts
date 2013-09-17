@@ -2528,10 +2528,6 @@ PNG (*.png)</translation>
         <translation>Sword Adaptation - Pas de projet</translation>
     </message>
     <message>
-        <source>Sword Adaptation Tool - </source>
-        <translation>Sword Adaptation - </translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool</source>
         <translation>Sword Adaptation</translation>
     </message>
@@ -6262,10 +6258,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Closing: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating: %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

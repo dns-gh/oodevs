@@ -2526,10 +2526,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sword Adaptation Tool - </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> [ Read Only ]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6222,10 +6218,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Closing: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating: %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

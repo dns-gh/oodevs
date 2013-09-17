@@ -2500,10 +2500,6 @@ PNG (*.png)
         <translation type="unfinished">آند حول</translation>
     </message>
     <message>
-        <source>Sword Adaptation Tool - </source>
-        <translation type="unfinished">السيف التكيف أداة-</translation>
-    </message>
-    <message>
         <source>Save project as</source>
         <translation type="unfinished">حفظ المشروع</translation>
     </message>
@@ -6227,10 +6223,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Closing: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating: %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

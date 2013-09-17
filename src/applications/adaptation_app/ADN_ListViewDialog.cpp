@@ -12,6 +12,7 @@
 #include "moc_ADN_ListViewDialog.cpp"
 #include "ADN_ListView.h"
 #include "ADN_Workspace.h"
+#include "ADN_MainWindow.h"
 #include "clients_gui/FileDialog.h"
 
 // -----------------------------------------------------------------------------
@@ -35,9 +36,9 @@ ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCapt
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
     pLayout->addWidget( &pListView );
     pLayout->addWidget( pHBox );
-    QMainWindow* pMainWindow = ADN_Workspace::GetWorkspace().GetMainWindow();
-    this->resize( static_cast< int >( pMainWindow->width() * 0.8 ), static_cast< int >( pMainWindow->height() * 0.8 ) );
-    this->move( pMainWindow->x() + static_cast< int >( pMainWindow->width() * 0.1 ), pMainWindow->y() + static_cast< int >( pMainWindow->height() * 0.1 ) );
+    QMainWindow& mainWindow = ADN_Workspace::GetWorkspace().GetMainWindow();
+    this->resize( static_cast< int >( mainWindow.width() * 0.8 ), static_cast< int >( mainWindow.height() * 0.8 ) );
+    this->move( mainWindow.x() + static_cast< int >( mainWindow.width() * 0.1 ), mainWindow.y() + static_cast< int >( mainWindow.height() * 0.1 ) );
 }
 
 // -----------------------------------------------------------------------------

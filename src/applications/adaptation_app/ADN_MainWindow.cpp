@@ -78,14 +78,12 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     , actionConsistencyAnalysis_( 0 )
     , menuConsistencyTables_( 0 )
     , menuLanguages_( 0 )
-    , skipSave_( false )
     , isLoaded_( false )
 {
     // Init
     openGLContext_->Init( this->winId() );
     setMinimumSize( 640, 480 );
     setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
-    setCaption( tr( "Sword Adaptation Tool - No Project" ) + "[*]" );
 
     // Actions
     QAction* actionNew = CreateAction( tr("&New"), this, "new", MAKE_ICON( new ), Qt::CTRL + Qt::Key_N );
@@ -111,15 +109,15 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     connect( actionExportHtml_, SIGNAL( triggered() ), this, SLOT( OnExportHtml() ) );
 
     // Toolbar
-    QToolBar* pToolBar = new QToolBar( this );
-    addToolBar( pToolBar );
-    pToolBar->addAction( actionNew );
-    pToolBar->addAction( actionLoad );
-    pToolBar->addAction( actionSave_ );
-    pToolBar->addAction( actionSaveAs_ );
-    pToolBar->addSeparator();
-    pToolBar->addAction( actionBack_ );
-    pToolBar->addAction( actionForward_ );
+    toolBar_ = new QToolBar( this );
+    addToolBar( toolBar_ );
+    toolBar_->addAction( actionNew );
+    toolBar_->addAction( actionLoad );
+    toolBar_->addAction( actionSave_ );
+    toolBar_->addAction( actionSaveAs_ );
+    toolBar_->addSeparator();
+    toolBar_->addAction( actionBack_ );
+    toolBar_->addAction( actionForward_ );
 
     // Menus
     QMenu* menuProject = new QMenu( tr("&Project"), this );
@@ -162,7 +160,7 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     mainLayout_->setMargin( 0 );
     setCentralWidget( mainWidget );
 
-    OnLoadStatusChanged( false );
+    LoadStatusChanged( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -175,10 +173,44 @@ ADN_MainWindow::~ADN_MainWindow()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::OnLoadStatusChanged
+// Name: ADN_MainWindow::UpdateTitle
+// Created: ABR 2013-09-17
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::UpdateTitle()
+{
+    const tools::Path filename = ADN_Workspace::HasWorkspace() ? ADN_Workspace::GetWorkspace().GetProject().szFile_.GetFileNameFull() : tools::Path();
+    if( filename.IsEmpty() || !isLoaded_ )
+        setCaption( tr( "Sword Adaptation Tool - No Project" ) + "[*]" );
+    else
+    {
+        QString title = tr( "Sword Adaptation Tool - %1" ).arg( filename.ToUTF8().c_str() );
+        if( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() )
+            title += tr( " [ Read Only ]" );
+        setCaption( title + "[*]" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::SetIsLoading
+// Created: ABR 2013-09-17
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::SetIsLoading( bool isLoading )
+{
+    progressBar_->Reset();
+    menuBar()->setEnabled( !isLoading );
+    toolBar_->setEnabled( !isLoading );
+    statusBar()->setVisible( isLoading );
+    if( isLoading )
+        QApplication::setOverrideCursor( Qt::waitCursor );
+    else
+        QApplication::restoreOverrideCursor();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::LoadStatusChanged
 // Created: ABR 2013-09-12
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::OnLoadStatusChanged( bool isLoaded )
+void ADN_MainWindow::LoadStatusChanged( bool isLoaded )
 {
     if( isLoaded )
         BuildGUI();
@@ -187,7 +219,7 @@ void ADN_MainWindow::OnLoadStatusChanged( bool isLoaded )
     isLoaded_ = isLoaded;
     if( mainTabWidget_.get() )
         mainTabWidget_->setVisible( isLoaded );
-    actionSave_->setVisible( isLoaded && !ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() );
+    actionSave_->setVisible( isLoaded && ADN_Workspace::HasWorkspace() && !ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() );
     actionSaveAs_->setVisible( isLoaded );
     actionClose_->setVisible( isLoaded );
     actionExportHtml_->setVisible( isLoaded );
@@ -197,6 +229,7 @@ void ADN_MainWindow::OnLoadStatusChanged( bool isLoaded )
     actionForward_->setVisible( isLoaded );
     menuConsistencyTables_->menuAction()->setVisible( isLoaded );
     menuLanguages_->menuAction()->setVisible( isLoaded );
+    UpdateTitle();
 }
 
 //-----------------------------------------------------------------------------
@@ -209,7 +242,6 @@ void ADN_MainWindow::BuildGUI()
         return;
     // Languages menu
     ADN_Workspace::GetWorkspace().GetLanguages().GetGui().FillMenu( menuLanguages_ );
-
     // Main tab widget
     mainTabWidget_.reset( new ADN_MainTabWidget() );
     mainLayout_->addWidget( mainTabWidget_.get() );
@@ -218,17 +250,15 @@ void ADN_MainWindow::BuildGUI()
     connect( actionForward_, SIGNAL( triggered() ), mainTabWidget_.get(), SLOT( OnForward() ) );
     connect( mainTabWidget_.get(), SIGNAL( BackEnabled( bool ) ), actionBack_, SLOT( setEnabled( bool ) ) );
     connect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), actionForward_, SLOT( setEnabled( bool ) ) );
-
     // Consistency dialog
     consistencyDialog_.reset( new ADN_ConsistencyDialog( this ) );
     connect( actionConsistencyAnalysis_, SIGNAL( triggered() ), consistencyDialog_.get(), SLOT( Display() ) );
     // Consistency tables
     consistencyMapper_.reset( new QSignalMapper( this ) );
     connect( consistencyMapper_.get(), SIGNAL( mapped( const QString& ) ), this, SLOT( OnShowConsistencyTable( const QString& ) ) );
-
     // Workspace
     connect( actionOptional_, SIGNAL( triggered( bool ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnChooseOptional( bool ) ) );
-    ADN_Workspace::GetWorkspace().BuildGUI( *this );
+    ADN_Workspace::GetWorkspace().BuildGUI();
 }
 
 // -----------------------------------------------------------------------------
@@ -241,16 +271,12 @@ void ADN_MainWindow::PurgeGUI()
         return;
     // Workspace
     disconnect( actionOptional_, SIGNAL( triggered( bool ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnChooseOptional( bool ) ) );
-    ADN_Workspace::GetWorkspace().PurgeGUI();
-
     // Consistency tables
     disconnect( consistencyMapper_.get(), SIGNAL( mapped( const QString& ) ), this, SLOT( OnShowConsistencyTable( const QString& ) ) );
     consistencyMapper_.reset();
-
     // Consistency dialog
     disconnect( actionConsistencyAnalysis_, SIGNAL( triggered() ), consistencyDialog_.get(), SLOT( Display() ) );
     consistencyDialog_.reset();
-
     // Main tab widget
     disconnect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), mainTabWidget_.get(), SLOT( OnChangeTab( E_WorkspaceElements ) ) );
     disconnect( actionBack_, SIGNAL( triggered() ), mainTabWidget_.get(), SLOT( OnBack() ) );
@@ -259,7 +285,6 @@ void ADN_MainWindow::PurgeGUI()
     disconnect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), actionForward_, SLOT( setEnabled( bool ) ) );
     mainLayout_->removeWidget( mainTabWidget_.get() );
     mainTabWidget_.reset();
-
     // Languages menu
     menuLanguages_->clear();
 }
@@ -273,10 +298,11 @@ void ADN_MainWindow::OnNew()
     tools::Path path = gui::FileDialog::getExistingDirectory( this, tr( "Create new project" ), config_.GetModelsDir() );
     if( path.IsEmpty() )
         return;
+    if( isLoaded_ && !OnClose() )
+        return;
     path /= "physical.xml";
-    path.Parent().CreateDirectories();
-    ADN_Workspace::GetWorkspace().Reset( path, false );
-    setCaption( tr( "Sword Adaptation Tool - " ) + path.ToUTF8().c_str() + "[*]" );
+    ADN_Workspace::GetWorkspace().Initialize();
+    ADN_Workspace::GetWorkspace().New( path );
 }
 
 //-----------------------------------------------------------------------------
@@ -290,15 +316,10 @@ void ADN_MainWindow::OnOpen()
         return;
     try
     {
-        if( isLoaded_ )
-            OnClose();
-        QApplication::setOverrideCursor( Qt::waitCursor );
+        if( isLoaded_ && !OnClose() )
+            return;
+        ADN_Workspace::GetWorkspace().Initialize();
         ADN_Workspace::GetWorkspace().Load( filename );
-        QApplication::restoreOverrideCursor();
-        QString title = tr( "Sword Adaptation Tool - %1" ).arg( filename.ToUTF8().c_str() );
-        if( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() )
-            title += tr( " [ Read Only ]" );
-        setCaption( title + "[*]" );
         if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
             consistencyDialog_->CheckConsistency();
         else
@@ -306,47 +327,35 @@ void ADN_MainWindow::OnOpen()
     }
     catch( const std::exception& e )
     {
-        progressBar_->SetVisible( false );
         QMessageBox::critical( 0, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
-        skipSave_ = true;
-        OnClose();
+        ADN_Workspace::GetWorkspace().Purge();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::OfferToSave
-// Created: APE 2005-04-12
-// -----------------------------------------------------------------------------
-bool ADN_MainWindow::OfferToSave()
-{
-    if( skipSave_ || !isWindowModified() )
-        return true;
-    QString strMessage = tr( "Save changes to project %1?" ).arg( ADN_Workspace::GetWorkspace().GetProject().GetFileInfos().GetFileNameFull().ToUTF8().c_str() );
-    int nResult = QMessageBox::information( this, tr( "Sword Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
-    if( nResult == QMessageBox::Yes )
-    {
-        if( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() )
-            OnSaveAs();
-        else
-            OnSave();
-    }
-    else if( nResult == QMessageBox::Cancel )
-        return false;
-    return true;
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::OnClose
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-void ADN_MainWindow::OnClose()
+bool ADN_MainWindow::OnClose()
 {
-    if( !OfferToSave() )
-        return;
-    skipSave_ = false;
-    QApplication::setOverrideCursor( Qt::waitCursor );
-    ADN_Workspace::GetWorkspace().Reset( ADN_Project_Data::FileInfos::szUntitled_, true );
-    QApplication::restoreOverrideCursor();
+    if( !isLoaded_ )
+        return true;
+    if( isWindowModified() )
+    {
+        QString strMessage = tr( "Save changes to project %1?" ).arg( ADN_Workspace::GetWorkspace().GetProject().GetFileInfos().GetFileNameFull().ToUTF8().c_str() );
+        int nResult = QMessageBox::information( this, tr( "Sword Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+        if( nResult == QMessageBox::Yes )
+        {
+            if( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() )
+                OnSaveAs();
+            else
+                OnSave();
+        }
+        else if( nResult == QMessageBox::Cancel )
+            return false;
+    }
+    ADN_Workspace::GetWorkspace().Purge();
+    return true;
 }
 
 //-----------------------------------------------------------------------------
@@ -355,7 +364,7 @@ void ADN_MainWindow::OnClose()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::closeEvent( QCloseEvent * e )
 {
-    if( OfferToSave() )
+    if( OnClose() )
         e->accept();
     else
         e->ignore();
@@ -367,7 +376,6 @@ void ADN_MainWindow::closeEvent( QCloseEvent * e )
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::OnSave()
 {
-    QApplication::setOverrideCursor( Qt::waitCursor );
     try
     {
         if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
@@ -381,7 +389,6 @@ void ADN_MainWindow::OnSave()
         QMessageBox::critical( this, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         return;
     }
-    QApplication::restoreOverrideCursor();
     setWindowModified( false );
 }
 
@@ -403,7 +410,6 @@ void ADN_MainWindow::OnSaveAs()
         return;
     }
 
-    QApplication::setOverrideCursor( Qt::waitCursor );
     bool hasSaved = true;
     try
     {
@@ -416,14 +422,10 @@ void ADN_MainWindow::OnSaveAs()
         hasSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
     }
-    QApplication::restoreOverrideCursor();
 
     if( hasSaved )
     {
-        QString title = tr( "Sword Adaptation Tool - " ) + directory.ToUTF8().c_str();
-        if( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().IsReadOnly() )
-            title += tr( " [ Read Only ]" );
-        setCaption( title + "[*]" );
+        UpdateTitle();
         setWindowModified( false );
     }
 }
@@ -544,10 +546,19 @@ QMenu* ADN_MainWindow::createPopupMenu()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::GetProgressIndicator
+// Name: ADN_MainWindow::GetProgressBar
 // Created: ABR 2013-09-13
 // -----------------------------------------------------------------------------
-ADN_ProgressIndicator_ABC& ADN_MainWindow::GetProgressIndicator() const
+ADN_ProgressBar& ADN_MainWindow::GetProgressBar() const
 {
     return *progressBar_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::IsLoaded
+// Created: ABR 2013-09-16
+// -----------------------------------------------------------------------------
+bool ADN_MainWindow::IsLoaded() const
+{
+    return isLoaded_;
 }

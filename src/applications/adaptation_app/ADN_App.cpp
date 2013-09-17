@@ -70,6 +70,8 @@ namespace
 //-----------------------------------------------------------------------------
 ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
     : gui::Application_ABC( monitor )
+    , config_( new ADN_GeneralConfig( argc, argv, GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) )
+    , mainWindow_( *config_ )
 {
     // License
     CheckLicense( "sword-authoring" );
@@ -79,14 +81,11 @@ ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
     // Application_ABC initialization
     Initialize();
 
-    // Data
-    config_.reset( new ADN_GeneralConfig( argc, argv, GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) );
-    ADN_Workspace::CreateWorkspace( *config_ );
+    // Workspace creation
+    ADN_Workspace::CreateWorkspace( mainWindow_, *config_ );
 
-    // GUI
-    mainWindow_ = new ADN_MainWindow( *config_ );
-    qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
-    ADN_Workspace::GetWorkspace().SetProgressIndicator( mainWindow_->GetProgressIndicator() );
+    // Make sure that once the last window is closed, the application quits.
+    qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -95,7 +94,7 @@ ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
 //-----------------------------------------------------------------------------
 ADN_App::~ADN_App()
 {
-    // NOTHING
+    ADN_Workspace::DeleteWorkspace();
 }
 
 // -----------------------------------------------------------------------------
@@ -132,20 +131,18 @@ int ADN_App::Run()
             throw MASA_EXCEPTION( tools::translate( "ADN_App" , "New base creation and input/output file options cannot be used together." ).toStdString() );
         if( !newFile.IsEmpty() )
         {
+            ADN_Workspace::GetWorkspace().Initialize();
             if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( newFile ) )
                 return EXIT_FAILURE;
-            newFile.Parent().CreateDirectories();
-            ADN_Workspace::GetWorkspace().Reset( newFile, false );
+            ADN_Workspace::GetWorkspace().New( newFile );
             ADN_Workspace::GetWorkspace().SaveAs( newFile );
             return EXIT_SUCCESS;
         }
         if( !inputFile.IsEmpty() )
         {
             if( outputFile.IsEmpty() )
-            {
-                connect( &ADN_Workspace::GetWorkspace(), SIGNAL( LoadStatusChanged( bool ) ), mainWindow_, SLOT( OnLoadStatusChanged( bool ) ) );
-                mainWindow_->showMaximized();
-            }
+                mainWindow_.showMaximized();
+            ADN_Workspace::GetWorkspace().Initialize();
             ADN_Workspace::GetWorkspace().Load( inputFile );
         }
         if( !outputFile.IsEmpty() )
@@ -159,7 +156,7 @@ int ADN_App::Run()
     catch( const std::exception& e )
     {
         if( outputFile.IsEmpty() && newFile.IsEmpty() )
-            QMessageBox::critical( mainWindow_, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
+            QMessageBox::critical( &mainWindow_, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         else
         {
             std::stringstream ss;
@@ -168,8 +165,6 @@ int ADN_App::Run()
         }
         return EXIT_FAILURE;
     }
-    if( inputFile.IsEmpty() )
-        connect( &ADN_Workspace::GetWorkspace(), SIGNAL( LoadStatusChanged( bool ) ), mainWindow_, SLOT( OnLoadStatusChanged( bool ) ) );
-    mainWindow_->showMaximized();
+    mainWindow_.showMaximized();
     return qApp->exec();
 }
