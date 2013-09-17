@@ -29,7 +29,7 @@ public:
             boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ).c_str() + filename_.Extension();
         tools::Path to = filename;
         for( int i = 1; to.Exists(); ++i )
-            to = filename + "." + boost::lexical_cast< std::string >( ++i ).c_str();
+            to = filename + "." + boost::lexical_cast< std::string >( i ).c_str();
         stream_.close();
         filename_.Rename( to );
         filename_ = to;
