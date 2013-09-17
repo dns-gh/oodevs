@@ -32,7 +32,7 @@ class RotatingLog : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate );
+     RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, std::size_t files, std::size_t size );
     ~RotatingLog();
     //@}
 
@@ -49,7 +49,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void Populate();
     void DoWrite( const std::string& line );
     void Log( const std::string& line );
     void Rotate();
@@ -64,6 +63,7 @@ private:
     std::size_t files_;
     std::streamoff size_, count_;
     boost::ptr_deque< Log_ABC > logs_;
+    bool sizeInBytes_;
     //@}
 };
 

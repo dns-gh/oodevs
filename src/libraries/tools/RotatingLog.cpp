@@ -12,39 +12,22 @@
 #include "LogFactory_ABC.h"
 #include "Log_ABC.h"
 #include <boost/date_time/posix_time/posix_time_io.hpp>
-#include <boost/regex.hpp>
 
 using namespace tools;
 
-RotatingLog::RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate )
+RotatingLog::RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, std::size_t files, std::size_t size )
     : factory_ ( factory )
     , filename_( filename )
     , files_   ( files )
     , size_    ( size )
     , count_   ( 0 )
 {
-    Populate();
-    if( truncate && ! logs_.empty() )
-        Rotate();
+    // NOTHING
 }
 
 RotatingLog::~RotatingLog()
 {
     // NOTHING
-}
-
-void RotatingLog::Populate() // $$$$ MCO 2013-09-13: double check RotatingLog usage in regards to "bool truncate"
-{
-    const tools::Path parent = filename_.Parent();
-    parent.ListElements(
-        [&]( const Path& path ) -> bool
-        {
-            if( boost::regex_match( path.ToUTF8(), boost::regex( ".+\\.\\d{8}T\\d{6}\\.log" ) ) )
-                logs_.push_back( factory_.CreateLog( path, count_ ) );
-            return false;
-        } );
-    if( ! logs_.empty() )
-        logs_.push_back( factory_.CreateLog( filename_, count_ ) );
 }
 
 void RotatingLog::DoWrite( const std::string& line )
@@ -82,7 +65,7 @@ void RotatingLog::Rotate()
         return;
     logs_.back().Rename( Rename( filename_ ) );
     CreateLog();
-    while( logs_.size() > files_ )
+    if( logs_.size() > files_ )
     {
         logs_.front().Delete();
         logs_.pop_front();
