@@ -15,7 +15,6 @@
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/ptr_container/ptr_deque.hpp>
-#include <memory>
 
 namespace tools
 {

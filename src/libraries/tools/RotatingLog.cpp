@@ -12,7 +12,6 @@
 #include "LogFactory_ABC.h"
 #include <tools/StdFileWrapper.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 
 using namespace tools;
