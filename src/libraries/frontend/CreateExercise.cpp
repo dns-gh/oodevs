@@ -164,7 +164,7 @@ namespace frontend
     {
         const tools::Path from = config.GetExerciseDir( params.from_ );
         const tools::Path to = config.GetExerciseDir( params.to_ );
-        from.Copy( to, tools::Path::FailIfExists, boost::bind( &tools::FileExtractor, _1 ) );
+        from.Copy( to, tools::Path::FailIfExists, boost::bind( &tools::Path::IsRegularFile, _1 ) );
         CreateExerciseFileCopy( from, to, params );
         params.checkpoint_.Copy( to, tools::Path::OverwriteIfExists, boost::bind( &CheckpointsExtractor, _1 ) );
     }
