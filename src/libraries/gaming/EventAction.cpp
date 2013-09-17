@@ -15,7 +15,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/Protocol.h"
-#include "timeline/api.h"
+#include <timeline/api.h>
 
 // -----------------------------------------------------------------------------
 // Name: EventAction constructor

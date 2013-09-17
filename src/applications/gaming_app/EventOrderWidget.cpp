@@ -41,7 +41,7 @@
 #include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/TimelinePublisher.h"
-#include "timeline/api.h"
+#include <timeline/api.h>
 
 const QColor disableColor_ = Qt::gray;
 
@@ -469,7 +469,6 @@ bool EventOrderWidget::AreTargetAndMissionCompatible( const kernel::OrderType* c
     }
     return false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::WarnTargetAndMission

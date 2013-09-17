@@ -18,7 +18,7 @@
 #include "clients_kernel/Tools.h"
 #include "gaming/Model.h"
 #include "MT_Tools/MT_Logger.h"
-#include "timeline/api.h"
+#include <timeline/api.h>
 
 int TimelineDockWidget::maxTabNumber_ = -1;
 

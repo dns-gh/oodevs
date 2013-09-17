@@ -11,7 +11,7 @@
 #include "EventTaskWidget.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/Event.h"
-#include "timeline/api.h"
+#include <timeline/api.h>
 
 // -----------------------------------------------------------------------------
 // Name: EventTaskWidget constructor

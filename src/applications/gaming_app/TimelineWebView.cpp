@@ -28,10 +28,10 @@
 #include "gaming/TimelinePublisher.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
-#include "timeline/api.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
+#include <timeline/api.h>
 #include <tools/StdFileWrapper.h>
 #include <boost/bind.hpp>
 

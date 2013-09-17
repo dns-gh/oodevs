@@ -28,7 +28,7 @@
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
 
-#include "timeline/api.h"
+#include <timeline/api.h>
 
 #include <boost/lexical_cast.hpp>
 #pragma warning( push )
@@ -155,7 +155,6 @@ void EventDockWidget::StartEdition( const Event& event )
     event_.reset( event.Clone() );
     Configure( event.GetType(), true, true );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: EventDockWidget::Configure

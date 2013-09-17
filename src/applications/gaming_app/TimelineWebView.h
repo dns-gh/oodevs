@@ -12,12 +12,20 @@
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "timeline/api.h"
 
 namespace kernel
 {
     class ContextMenu;
     class ActionController;
+}
+
+namespace timeline
+{
+    struct Configuration;
+    struct Error;
+    struct Event;
+    typedef std::vector< Event > Events;
+    class Server_ABC;
 }
 
 namespace tools
