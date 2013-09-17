@@ -235,7 +235,6 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
 void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
     Event& gamingEvent = GetOrCreateEvent( event );
-    gamingEvent.Select( actionController_ );
     gamingEvent.Activate( actionController_ );
 }
 
