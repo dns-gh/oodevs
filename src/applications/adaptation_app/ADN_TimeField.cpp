@@ -46,10 +46,11 @@ namespace
         }
         virtual int ComputeModifier( const std::string& text, int cursor ) const
         {
-            return cursor <= text.find_first_of( ':' )                               ? 360000
-                 : cursor <= text.find_last_of( ':' )                                ? 6000
-                 : cursor <= text.find_last_of( QLocale().decimalPoint().toAscii() ) ? 100
-                                                                                     : 1;
+            const std::size_t ucursor = boost::numeric_cast< std::size_t >( cursor );
+            return ucursor <= text.find_first_of( ':' )                               ? 360000
+                 : ucursor <= text.find_last_of( ':' )                                ? 6000
+                 : ucursor <= text.find_last_of( QLocale().decimalPoint().toAscii() ) ? 100
+                                                                                      : 1;
         }
         virtual int ComputeValue( const QStringList& buffer ) const
         {
@@ -67,10 +68,11 @@ namespace
         }
         virtual int ComputeModifier( const std::string& text, int cursor ) const
         {
-            return cursor <= text.find_last_of( QLocale().decimalPoint().toAscii() ) ? 100
-                 : cursor <= text.find_first_of( ':' )                               ? 1
-                 : cursor <= text.find_last_of( ':' )                                ? 6000
-                                                                                     : 360000;
+            const std::size_t ucursor = boost::numeric_cast< std::size_t >( cursor );
+            return ucursor <= text.find_last_of( QLocale().decimalPoint().toAscii() ) ? 100
+                 : ucursor <= text.find_first_of( ':' )                               ? 1
+                 : ucursor <= text.find_last_of( ':' )                                ? 6000
+                                                                                      : 360000;
         }
         virtual int ComputeValue( const QStringList& buffer ) const
         {
