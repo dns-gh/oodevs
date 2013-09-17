@@ -17,6 +17,7 @@
 namespace sword
 {
     class UnitAttributes;
+    class UnitDestruction;
 }
 
 namespace kernel
@@ -39,6 +40,7 @@ namespace gui
 // =============================================================================
 class Transports : public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< sword::UnitAttributes >
+                 , public kernel::Updatable_ABC< sword::UnitDestruction >
 {
 public:
     //! @name Constructors/Destructor
@@ -68,6 +70,7 @@ private:
     //@{
     void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     virtual void DoUpdate( const sword::UnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitDestruction& destruction );
     //@}
 
 public:

@@ -150,3 +150,21 @@ void LogMedicalConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport
     }
     tools.DrawCurvedArrow( from, to, 0.4f );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetId
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+unsigned int LogMedicalConsign::GetId() const
+{
+    return nID_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::RefersToAgent
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+bool LogMedicalConsign::RefersToAgent( unsigned int id ) const
+{
+    return consumer_.GetId() == id || ( pPionLogHandling_ && pPionLogHandling_->GetId() == id );
+}

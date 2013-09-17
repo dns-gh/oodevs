@@ -289,6 +289,11 @@ void Model::Update( const sword::SimToClient& wrapper )
         agents_.Get( message.unit_environment_type().unit().id() ).Update( message.unit_environment_type() );
     else if( message.has_unit_destruction() )
     {
+        for( auto it = agents_.CreateIterator(); it.HasMoreElements(); )
+        {
+            const dispatcher::Agent_ABC& agent = it.NextElement();
+            const_cast< dispatcher::Agent_ABC& >( agent ).Update( message.unit_destruction() );
+        }
         ClearLogisticRequests( message.unit_destruction().unit().id() );
         Destroy( agents_, message.unit_destruction().unit().id(), message.unit_destruction() );
     }

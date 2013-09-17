@@ -167,3 +167,39 @@ void LogisticsModel::DeleteFuneralConsign( unsigned long id )
 {
     Delete< LogFuneralConsign >( id );
 }
+
+namespace
+{
+    template< typename T >
+    struct DeleteAgentFunctor : boost::noncopyable
+    {
+        DeleteAgentFunctor( unsigned int id ) : id_( id ) {}
+        void operator()( const T& consign ) const
+        {
+            if( consign.RefersToAgent( id_ ) )
+                toDelete_.push_back( consign.GetId() );
+        }
+        unsigned long id_;
+        mutable std::vector< unsigned int > toDelete_;
+    };
+    template< typename T >
+    void DeleteDeletedAgentConsigns( tools::Resolver< T >& model, unsigned long id )
+    {
+        DeleteAgentFunctor< T > functor( id );
+        model.Apply( functor );
+        for( auto it = functor.toDelete_.begin(); it!= functor.toDelete_.end(); ++it )
+            model.Delete( *it );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsModel::DestroyAgent
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+void LogisticsModel::DestroyAgent( unsigned long id )
+{
+    DeleteDeletedAgentConsigns< LogMaintenanceConsign >( *this, id );
+    DeleteDeletedAgentConsigns< LogMedicalConsign >( *this, id );
+    DeleteDeletedAgentConsigns< LogSupplyConsign >( *this, id );
+    DeleteDeletedAgentConsigns< LogFuneralConsign >( *this, id );
+}

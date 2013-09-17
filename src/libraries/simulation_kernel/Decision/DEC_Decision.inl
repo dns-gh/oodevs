@@ -220,10 +220,9 @@ void DEC_Decision< T >::HandleUpdateDecisionError( const std::exception* error )
 // Created: LDC 2009-07-02
 // -----------------------------------------------------------------------------
 template< class T >
-sword::Brain& DEC_Decision< T >::GetBrain()
+sword::Brain* DEC_Decision< T >::GetBrain()
 {
-    assert( pBrain_.get() );
-    return *pBrain_;
+    return pBrain_.get();
 }
 
 // -----------------------------------------------------------------------------

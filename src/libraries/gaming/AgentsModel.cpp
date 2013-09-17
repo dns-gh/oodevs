@@ -119,8 +119,9 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 void AgentsModel::DestroyAgent( const sword::UnitDestruction& msg )
 {
-    delete tools::Resolver< Agent_ABC >::Find( msg.unit().id() );
-    tools::Resolver< Agent_ABC >::Remove( msg.unit().id() );
+    for( auto it = tools::Resolver< Agent_ABC >::CreateIterator(); it.HasMoreElements(); )
+        const_cast< kernel::Agent_ABC& >( it.NextElement() ).Update( msg );
+    tools::Resolver< Agent_ABC >::Delete( msg.unit().id() );
 }
 
 // -----------------------------------------------------------------------------

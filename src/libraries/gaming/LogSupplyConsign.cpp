@@ -232,3 +232,23 @@ unsigned int LogSupplyConsign::FindLogEntityID(const sword::ParentEntity& msg)
         retval = msg.formation().id() ;
     return retval;
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetId
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+unsigned int LogSupplyConsign::GetId() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::RefersToAgent
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+bool LogSupplyConsign::RefersToAgent( unsigned int id ) const
+{
+    return ( pLogHandlingEntity_ && pLogHandlingEntity_->GetId() == id )
+        || ( pPionLogConvoying_ && pPionLogConvoying_->GetId() == id )
+        || ( pLogProvidingConvoyResourcesEntity_ && pLogProvidingConvoyResourcesEntity_->GetId() == id );
+}

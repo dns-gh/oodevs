@@ -194,7 +194,7 @@ private://! @name Helpers
     void HandleUpdateDecisionError( const std::exception* error = 0 );
     /* virtual */ void LogError   ( const std::exception* error = 0 ) const;
 
-    virtual sword::Brain& GetBrain();
+    virtual sword::Brain* GetBrain();
 
     virtual void RegisterSelf( sword::Brain& brain ) = 0;
     virtual void RegisterSpecific( sword::Brain& brain, bool isMasalife, const std::string& groupName ) = 0;

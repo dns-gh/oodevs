@@ -512,6 +512,12 @@ int PHY_RoleAction_Transport::GetFinalReturnCode() const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::Update( bool /*bIsDead*/ )
 {
+    std::vector< MIL_Agent_ABC* > deletedUnits;
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
+        if( it->first->IsMarkedForDestruction() )
+            deletedUnits.push_back( it->first );
+    for( auto it = deletedUnits.begin(); it != deletedUnits.end(); ++it )
+        MagicUnloadPion( **it );
     if( !bLoadUnloadHasBeenUpdated_ )
         nState_ = eNothing;
 

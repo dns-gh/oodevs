@@ -35,5 +35,8 @@ DEC_Decision_ABC::~DEC_Decision_ABC()
 // -----------------------------------------------------------------------------
 directia::tools::binders::ScriptRef DEC_Decision_ABC::GetScriptRef( const std::string& id )
 {
-    return GetBrain().GetScriptRef( id );
+    sword::Brain* brain = GetBrain();
+    if( !brain )
+        throw MASA_EXCEPTION( "Trying to access a deleted brain." );
+    return brain->GetScriptRef( id );
 }

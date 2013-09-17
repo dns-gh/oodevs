@@ -9,11 +9,12 @@
 
 #include "gaming_pch.h"
 #include "Transports.h"
-#include "clients_kernel/Controller.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_gui/PropertiesDictionary.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/DictionaryUpdated.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;
@@ -67,6 +68,27 @@ void Transports::DoUpdate( const sword::UnitAttributes& message )
         transporter_ = resolver_.Find( message.transporting_unit().id() );
     if( message.has_transported_units() || message.has_transporting_unit() )
         controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "Transports", "Transports" ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Transports::DoUpdate
+// Created: LDC 2013-09-13
+// -----------------------------------------------------------------------------
+void Transports::DoUpdate( const sword::UnitDestruction& destruction )
+{
+    unsigned int id = destruction.unit().id();
+    if( transporter_ && transporter_->GetId() == id )
+        transporter_ = 0;
+    size_t size = transported_.size();
+    for( size_t i = 0; i < size; ++i )
+    {
+        if( transported_[ i ]->GetId() == id )
+        {
+            for( ++i ; i < size; ++i )
+                transported_[ i - 1 ] = transported_[i];
+            transported_.pop_back();
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
