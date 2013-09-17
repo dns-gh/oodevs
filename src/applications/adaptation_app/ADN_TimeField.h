@@ -15,8 +15,8 @@
 #include <QtGui/qwidget.h>
 
 class ADN_TimeField_EditLine;
-class QComboBox;
 class ADN_DoubleValidator;
+class QDoubleSpinBox;
 
 // $$$$ ABR 2012-11-05: This class should be rename in ADN_DelayEdit
 
@@ -39,22 +39,14 @@ public:
     //! @name Operations
     //@{
     QString text() const;
-    ADN_DoubleValidator& GetValidator();
     void setText( const QString& strText );
     void SetMinimumValueInSecond( unsigned int value );
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void ValueChanged();
     //@}
 
 private slots:
     //! @name Internal events
     //@{
-    void OnValueChanged( const QString& strValue );
-    void OnUnitChanged ( const QString& strUnit );
+    void OnValueChanged();
     void UpdateEnableState();
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
@@ -62,23 +54,13 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void NotifyDataChanged();
     float GetSeconds( const QString& strValue, const QString& strUnit ) const;
-    float GetDisplayValue( const QString& strUnit ) const;
-    float GetDisplayMin( const QString& strUnit ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    ADN_TimeField_EditLine* pLineEdit_;
-    QComboBox*              pComboBox_;
-    float                   secondsValue_;
-    unsigned int            nMinimumSecondsValue_;
-    unsigned int            nMinimumMinutesValue_;
-    unsigned int            nMinimumHoursValue_;
-    bool                    bFreezeSlot_;
-    ADN_DoubleValidator*    pValidator_;
+    QDoubleSpinBox* pSpinBox_;
     //@}
 };
 
