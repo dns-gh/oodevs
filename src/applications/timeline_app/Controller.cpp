@@ -90,7 +90,7 @@ namespace
 
     std::string ToString( const QDateTimeEdit& edit )
     {
-        return edit.dateTime().toTimeSpec( Qt::UTC ).toString( "yyyy-MM-ddTHH:mm:ssZ" ).toStdString();
+        return edit.dateTime().toString( "yyyy-MM-ddTHH:mm:ssZ" ).toStdString();
     }
 
     void WriteDummyEvent( Ui::CreateEvent& ui )
