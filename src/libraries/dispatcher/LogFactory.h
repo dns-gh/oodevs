@@ -25,7 +25,8 @@ class LogFactory : public tools::LogFactory_ABC
 public:
     explicit LogFactory( bool sizeInBytes );
 
-    virtual std::auto_ptr< tools::Log_ABC > CreateLog( const tools::Path& filename, std::streamoff& size );
+    virtual std::size_t Write( std::ostream& os, const std::string& line );
+    virtual std::streamoff ComputeSize( const tools::Path& filename ) const;
 
 private:
     bool sizeInBytes_;

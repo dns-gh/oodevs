@@ -17,7 +17,6 @@
 #include "PluginFactory.h"
 #include "Services.h"
 #include "StaticModel.h"
-#include "MT_Tools/MT_Logger.h"
 #include <google/protobuf/message.h>
 
 #pragma warning( disable: 4355 )
@@ -36,7 +35,7 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , registrables_       ( new CompositeRegistrable() )
     , services_           ( new Services() )
     , logFactory_         ( config.IsDispatcherProtobufLogInBytes() )
-    , log_                ( logFactory_, config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(), config.GetDispatcherProtobufLogSize() )
+    , log_                ( logFactory_, config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(), config.GetDispatcherProtobufLogSize(), true )
     , clientsNetworker_   ( new ClientsNetworker( config, *handler_, *services_, *model_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config, log_ ) )
     , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, log_, maxConnections ) )

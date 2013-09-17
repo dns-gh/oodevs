@@ -11,7 +11,6 @@
 #define __MT_FileLogger_h_
 
 #include "MT_Logger_ABC.h"
-#include <tools/Path.h>
 #include "tools/RotatingLog.h"
 #include "tools/LogFactory_ABC.h"
 #pragma warning( push, 0 )
@@ -40,12 +39,11 @@ public:
 
 private:
     virtual void WriteString( const std::string& s );
-    virtual std::auto_ptr< tools::Log_ABC > CreateLog( const tools::Path& filename, std::streamoff& size );
 
-    std::streamoff ComputeSize( const tools::Path& filename ) const;
+    virtual std::size_t Write( std::ostream& os, const std::string& line );
+    virtual std::streamoff ComputeSize( const tools::Path& filename ) const;
 
 private:
-    bool truncate_;
     bool sizeInBytes_;
     boost::mutex mutex_;
     tools::RotatingLog log_;

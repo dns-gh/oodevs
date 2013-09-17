@@ -11,13 +11,13 @@
 #define tools_LogFactory_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <iosfwd>
 #include <memory>
 #include <string>
 
 namespace tools
 {
     class Path;
-    class Log_ABC;
 
 // =============================================================================
 /** @class  LogFactory_ABC
@@ -36,7 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< Log_ABC > CreateLog( const Path& filename, std::streamoff& size ) = 0;
+    virtual std::size_t Write( std::ostream& os, const std::string& line ) = 0;
+    virtual std::streamoff ComputeSize( const tools::Path& filename ) const = 0;
     //@}
 };
 }

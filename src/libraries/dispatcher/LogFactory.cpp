@@ -10,6 +10,9 @@
 #include "dispatcher_pch.h"
 #include "LogFactory.h"
 #include "Log.h"
+#include <ctime>
+
+#pragma warning( disable: 4996 ) // This function or variable may be unsafe
 
 using namespace dispatcher;
 
@@ -19,7 +22,28 @@ LogFactory::LogFactory( bool sizeInBytes )
     // NOTHING
 }
 
-std::auto_ptr< tools::Log_ABC > LogFactory::CreateLog( const tools::Path& filename, std::streamoff& /*size*/ )
+namespace
 {
-    return std::auto_ptr< tools::Log_ABC >( new Log( filename, sizeInBytes_ ) );
+    std::string GetTime()
+    {
+        char buffer[256];
+        std::time_t t = time( 0 );
+        std::strftime( buffer, sizeof( buffer ), "%H:%M:%S", std::localtime( &t ) );
+        return buffer;
+    }
+}
+
+std::size_t LogFactory::Write( std::ostream& os, const std::string& line )
+{
+    const std::string time = GetTime();
+    os << "[" << time << "] " << line << std::endl;
+    return sizeInBytes_ ? time.size() + line.size() + 3 : 1;
+}
+
+std::streamoff LogFactory::ComputeSize( const tools::Path& filename ) const
+{
+    if( sizeInBytes_ )
+        return filename.FileSize();
+    tools::Ifstream file( filename );
+    return std::count( std::istreambuf_iterator< char >( file ), std::istreambuf_iterator< char >(), '\n');
 }
