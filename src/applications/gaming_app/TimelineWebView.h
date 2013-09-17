@@ -12,6 +12,7 @@
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include <boost/scoped_ptr.hpp>
 
 namespace kernel
 {
@@ -118,24 +119,20 @@ private slots:
 private:
     //! @name Member data
     //@{
-    QWidget* timelineWidget_;
+    boost::scoped_ptr< QWidget > timelineWidget_;
     QVBoxLayout* mainLayout_;
 
     const tools::ExerciseConfig& config_;
     kernel::ActionController& actionController_;
     Model& model_;
 
-    std::auto_ptr< timeline::Server_ABC > server_;
-    std::auto_ptr< timeline::Configuration > cfg_;
+    boost::scoped_ptr< timeline::Server_ABC > server_;
+    boost::scoped_ptr< timeline::Configuration > cfg_;
     boost::shared_ptr< timeline::Event > selected_;
     QDateTime selectedDateTime_;
-    QSignalMapper* creationSignalMapper_;
-    QSignalMapper* dummySignalMapper_;
+    boost::scoped_ptr< QSignalMapper > creationSignalMapper_;
+    boost::scoped_ptr< QSignalMapper > dummySignalMapper_;
     tools::Path currentFile_;
-
-    std::vector< std::string > creationRequestedEvents_;
-    std::vector< std::string > editionRequestedEvents_;
-    std::vector< std::string > deletionRequestedEvents_;
     //@}
 };
 
