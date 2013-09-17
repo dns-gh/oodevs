@@ -162,7 +162,7 @@ func (s *TestSuite) TestCheckpointCrowd(c *C) {
 	found := false
 	for _, o := range data.Orders {
 		if o.TaskerId == crowd.Id {
-			c.Assert(o.MissionId, Equals, order.MissionId)
+			c.Assert(o.MissionType, Equals, order.MissionType)
 			found = true
 			break
 		}

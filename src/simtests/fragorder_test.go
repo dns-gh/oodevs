@@ -86,7 +86,7 @@ func (s *TestSuite) TestCrowdFragOrder(c *C) {
 	// Send moveTo mission for activate frag order
 	order, err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, missionParams)
 	c.Assert(err, IsNil)
-	c.Assert(order.Type, Equals, swapi.CrowdOrder)
+	c.Assert(order.Kind, Equals, swapi.CrowdOrder)
 
 	// Wait one tick for the mission to be applied
 	client.Model.WaitTicks(1)

@@ -816,15 +816,15 @@ func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) 
 	return nil
 }
 
-func (model *Model) addOrder(id, idType, tasker uint32, orderType OrderType) error {
-	if idType == 0 {
+func (model *Model) addOrder(id, missionType, tasker uint32, kind OrderKind) error {
+	if missionType == 0 {
 		return nil
 	}
 	order := &Order{
-		Id:        id,
-		MissionId: idType,
-		TaskerId:  tasker,
-		Type:      orderType,
+		Id:          id,
+		MissionType: missionType,
+		TaskerId:    tasker,
+		Kind:        kind,
 	}
 	if !model.data.addOrder(order) {
 		return fmt.Errorf("cannot insert order %d", order.Id)

@@ -332,20 +332,20 @@ func NewUrban(id uint32, name string,
 	}
 }
 
-type OrderType int
+type OrderKind int
 
 const (
-	UnitOrder OrderType = iota
+	UnitOrder OrderKind = iota
 	AutomatOrder
 	CrowdOrder
 	FragOrder
 )
 
 type Order struct {
-	Id        uint32
-	Type      OrderType
-	MissionId uint32
-	TaskerId  uint32
+	Id          uint32
+	Kind        OrderKind
+	MissionType uint32
+	TaskerId    uint32
 }
 
 type ModelData struct {

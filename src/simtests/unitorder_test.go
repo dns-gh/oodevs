@@ -62,7 +62,7 @@ func (s *TestSuite) TestGenericMission(c *C) {
 			c.Assert(err, ErrorMatches, expected)
 		} else {
 			c.Assert(err, IsNil)
-			c.Assert(order.Type, Equals, swapi.UnitOrder)
+			c.Assert(order.Kind, Equals, swapi.UnitOrder)
 		}
 	}
 
@@ -161,7 +161,7 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 
 	order, err := client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
 	c.Assert(err, IsNil)
-	c.Assert(order.Type, Equals, swapi.AutomatOrder)
+	c.Assert(order.Kind, Equals, swapi.AutomatOrder)
 }
 
 // Test we can send a crowd mission and get a successful acknowledgement.
@@ -192,5 +192,5 @@ func (s *TestSuite) TestCrowdMission(c *C) {
 
 	order, err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)
-	c.Assert(order.Type, Equals, swapi.CrowdOrder)
+	c.Assert(order.Kind, Equals, swapi.CrowdOrder)
 }
