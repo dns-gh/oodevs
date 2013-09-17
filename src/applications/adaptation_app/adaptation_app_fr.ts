@@ -6571,6 +6571,13 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
+    <name>TimeField</name>
+    <message>
+        <source>Invalid time duration &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Units_Data</name>
     <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>

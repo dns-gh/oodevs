@@ -682,17 +682,6 @@ void ADN_GuiBuilder::DoValidator< ADN_EditLine_Double >( ADN_EditLine_Double* pW
 // -----------------------------------------------------------------------------
 template<>
 inline
-void ADN_GuiBuilder::DoValidator< ADN_TimeField >( ADN_TimeField* pWidget, E_Validator nValidator )
-{
-    SetValidator( pWidget->GetValidator(), nValidator );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::DoValidator
-// Created: APE 2005-04-14
-// -----------------------------------------------------------------------------
-template<>
-inline
 void ADN_GuiBuilder::DoValidator< ADN_PH_EditLine_Double >( ADN_PH_EditLine_Double* pWidget, E_Validator nValidator )
 {
     SetValidator( pWidget->GetValidator(), nValidator );

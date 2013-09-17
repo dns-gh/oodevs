@@ -6548,6 +6548,13 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
 </context>
 <context>
+    <name>TimeField</name>
+    <message>
+        <source>Invalid time duration &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Units_Data</name>
     <message>
         <source>Units</source>
