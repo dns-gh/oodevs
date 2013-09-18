@@ -1088,7 +1088,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive( xml::xostream
 // Created: BCI 2010-12-03
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ADN_CapacityInfos_FirePropagationModifier()
-    : modifiers_( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos() )
+    : modifiers_( ADN_Workspace::GetWorkspace().GetFires().GetData().GetFireClassesInfos() )
 {
     // NOTHING
 }
@@ -1139,8 +1139,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::CheckDatabaseV
 // Name: ADN_Objects_Data::ModifierByFireClass
 // Created: BCI 2010-12-06
 // -----------------------------------------------------------------------------
-ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* p )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), p, true, "fire-class" )
+ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_Fires_Data::FireClassInfos* p )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetFires().GetData().GetFireClassesInfos(), p, true, "fire-class" )
     , ignitionThreshold_  ( 0 )
     , maxCombustionEnergy_( 0 )
 {
@@ -1313,7 +1313,7 @@ ADN_Objects_Data::ADN_Objects_Data()
 //-----------------------------------------------------------------------------
 ADN_Objects_Data::~ADN_Objects_Data()
 {
-    vObjectInfos_.Reset();
+    // NOTHING
 }
 
 namespace
@@ -1352,15 +1352,6 @@ void ADN_Objects_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
 void ADN_Objects_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szObjects_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::Reset
-// Created: JDY 03-06-26
-//-----------------------------------------------------------------------------
-void ADN_Objects_Data::Reset()
-{
-    vObjectInfos_.Reset();
 }
 
 // -----------------------------------------------------------------------------

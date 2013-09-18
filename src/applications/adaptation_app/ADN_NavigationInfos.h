@@ -10,27 +10,10 @@
 #ifndef __ADN_NavigationInfos_h_
 #define __ADN_NavigationInfos_h_
 
-#include <boost/noncopyable.hpp>
 #include "ADN_Enums.h"
 
-// =============================================================================
-/** @class  ADN_NavigationInfos
-    @brief  ADN_NavigationInfos
-*/
-// Created: ABR 2012-03-05
-// =============================================================================
-class ADN_NavigationInfos : private boost::noncopyable
+namespace ADN_NavigationInfos
 {
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-             ADN_NavigationInfos() {}
-    virtual ~ADN_NavigationInfos() {}
-    //@}
-
-    //! @name Types
-    //@{
     struct UsedBy
     {
         UsedBy() : usingName_( "" ), targetTab_( eNbrWorkspaceElements ), subTargetTab_( -1 ) {}
@@ -50,7 +33,6 @@ public:
         int                     subTargetTab_;
         int                     sourceColumn_;
     };
-    //@}
 };
 
 #endif // __ADN_NavigationInfos_h_

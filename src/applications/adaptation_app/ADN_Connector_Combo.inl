@@ -42,7 +42,6 @@ void ADN_Connector_Combo<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarge
 
     connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
 
     if( pCombo_->IsAutoEnabled() )
         pCombo_->setEnabled(true);
@@ -62,7 +61,6 @@ void ADN_Connector_Combo<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTa
 
     disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
 
     bIsConnected_=false;
 
@@ -99,7 +97,7 @@ bool ADN_Connector_Combo< T >::RemItemPrivate( void* item )
         return false;
 
     pCombo_->removeItem(ndx);
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
 

@@ -11,9 +11,9 @@
 #define __ADN_App_h_
 
 #include "clients_gui/Application_ABC.h"
+#include "ADN_MainWindow.h"
 
 class ADN_GeneralConfig;
-class ADN_MainWindow;
 
 namespace gui
 {
@@ -37,16 +37,11 @@ public:
     virtual void CreateTranslators();
     //@}
 
-    //! @name Accessors
-    //@{
-    static QMainWindow* GetMainWindow();
-    //@}
-
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ADN_GeneralConfig > config_;
-    ADN_MainWindow* mainWindow_;
+    std::auto_ptr< const ADN_GeneralConfig > config_;
+    ADN_MainWindow mainWindow_;
     //@}
 };
 

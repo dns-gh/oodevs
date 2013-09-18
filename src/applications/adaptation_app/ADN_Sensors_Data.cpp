@@ -312,7 +312,7 @@ ADN_Sensors_Data::TargetInfos::TargetInfos()
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::TargetInfos::~TargetInfos()
 {
-    vModifStance_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -577,15 +577,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::SensorInfos::~SensorInfos()
 {
-    vTargets_.Reset();
-    vDisasters_.Reset();
-    vLimitedToSensorsInfos_.Reset(); // LTO
-    vModifIlluminations_.Reset();
-    vModifWeather_.Reset();
-    vModifEnvironments_.Reset();
-    vModifUrbanBlocks_.Reset();
-    vModifStance_.Reset();
-    vModifTargetStance_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1139,16 +1131,6 @@ ADN_Sensors_Data::~ADN_Sensors_Data()
 void ADN_Sensors_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSensors_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::Reset
-// Created: JDY 03-06-30
-//-----------------------------------------------------------------------------
-void ADN_Sensors_Data::Reset()
-{
-    vSensors_.Reset();
-    radarData_->Reset();
 }
 
 // -----------------------------------------------------------------------------

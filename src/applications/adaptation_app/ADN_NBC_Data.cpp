@@ -8,20 +8,20 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_NBC_Datas.h"
+#include "ADN_NBC_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
 
-tools::IdManager ADN_NBC_Datas::idManager_;
+tools::IdManager ADN_NBC_Data::idManager_;
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::NbcIntoxInfos
+// Name: ADN_NBC_Data::NbcIntoxInfos
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-ADN_NBC_Datas::NbcIntoxInfos::NbcIntoxInfos()
+ADN_NBC_Data::NbcIntoxInfos::NbcIntoxInfos()
     : parentName_           ()
     , bIntoxPresent_        ( false )
     , rNbAlivedHumans_      ( 100.0 )
@@ -36,10 +36,10 @@ ADN_NBC_Datas::NbcIntoxInfos::NbcIntoxInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::CopyFrom
+// Name: ADN_NBC_Data::CopyFrom
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcIntoxInfos::CopyFrom( NbcIntoxInfos& infos )
+void ADN_NBC_Data::NbcIntoxInfos::CopyFrom( NbcIntoxInfos& infos )
 {
     bIntoxPresent_ = infos.bIntoxPresent_.GetData();
     rNbAlivedHumans_ = infos.rNbAlivedHumans_.GetData();
@@ -52,10 +52,10 @@ void ADN_NBC_Datas::NbcIntoxInfos::CopyFrom( NbcIntoxInfos& infos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::NbcIntoxInfos::ReadEffect
+// Name: ADN_NBC_Data::NbcIntoxInfos::ReadEffect
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
+void ADN_NBC_Data::NbcIntoxInfos::ReadEffect( xml::xistream& input )
 {
     std::string wound = input.attribute< std::string >( "wound" );
     std::transform( wound.begin(), wound.end(), wound.begin(), std::tolower );
@@ -78,15 +78,15 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::ReadArchive
+// Name: ADN_NBC_Data::ReadArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
+void ADN_NBC_Data::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 {
     input >>  xml::attribute( "affliction", bIntoxPresent_ );
     if( bIntoxPresent_.GetData() )
     {
-        input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
+        input >> xml::list( "effect", *this, &ADN_NBC_Data::NbcIntoxInfos::ReadEffect );
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
             throw MASA_EXCEPTION( tools::translate( "NBC_Data","NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( parentName_.c_str() ).toStdString() );
     }
@@ -94,10 +94,10 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::WriteArchive
+// Name: ADN_NBC_Data::WriteArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcIntoxInfos::WriteArchive( xml::xostream& output )
+void ADN_NBC_Data::NbcIntoxInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "effects" )
            << xml::attribute( "type", "liquid" )
@@ -107,10 +107,10 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::NbcIntoxInfos::WriteContent
+// Name: ADN_NBC_Data::NbcIntoxInfos::WriteContent
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
+void ADN_NBC_Data::NbcIntoxInfos::WriteContent( xml::xostream& output )
 {
     if( bIntoxPresent_.GetData() )
     {
@@ -147,10 +147,10 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::NbcGazInfos
+// Name: ADN_NBC_Data::NbcGazInfos
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-ADN_NBC_Datas::NbcGazInfos::NbcGazInfos()
+ADN_NBC_Data::NbcGazInfos::NbcGazInfos()
     : intoxInfos_  ()
     , lifeTime_    ( "1s" )
     , rSpreadAngle_( 20 )
@@ -159,10 +159,10 @@ ADN_NBC_Datas::NbcGazInfos::NbcGazInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::CopyFrom
+// Name: ADN_NBC_Data::CopyFrom
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcGazInfos::CopyFrom( NbcGazInfos& infos )
+void ADN_NBC_Data::NbcGazInfos::CopyFrom( NbcGazInfos& infos )
 {
     intoxInfos_.CopyFrom( infos.intoxInfos_ );
     lifeTime_ = infos.lifeTime_.GetData();
@@ -170,10 +170,10 @@ void ADN_NBC_Datas::NbcGazInfos::CopyFrom( NbcGazInfos& infos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::ReadArchive
+// Name: ADN_NBC_Data::ReadArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcGazInfos::ReadArchive( xml::xistream& input )
+void ADN_NBC_Data::NbcGazInfos::ReadArchive( xml::xistream& input )
 {
     intoxInfos_.ReadArchive( input );
     input >> xml::attribute( "life-time", lifeTime_ )
@@ -181,10 +181,10 @@ void ADN_NBC_Datas::NbcGazInfos::ReadArchive( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::WriteArchive
+// Name: ADN_NBC_Data::WriteArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcGazInfos::WriteArchive( xml::xostream& output )
+void ADN_NBC_Data::NbcGazInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "effects" )
             << xml::attribute( "type", "gaseous" )
@@ -199,8 +199,8 @@ void ADN_NBC_Datas::NbcGazInfos::WriteArchive( xml::xostream& output )
 // Name: NbcAgentInfos::NbcAgentInfos
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
-ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
-    : nId_( ADN_NBC_Datas::idManager_.GetNextId() )
+ADN_NBC_Data::NbcAgentInfos::NbcAgentInfos()
+    : nId_( ADN_NBC_Data::idManager_.GetNextId() )
     , liquidInfos_()
     , category_( "chemical" )
     , bGazPresent_( false )
@@ -214,7 +214,7 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
 // Name: NbcAgentInfos::NbcAgentInfos
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
-ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos( unsigned int id )
+ADN_NBC_Data::NbcAgentInfos::NbcAgentInfos( unsigned int id )
     : nId_( id )
     , liquidInfos_()
     , category_( "chemical" )
@@ -222,14 +222,14 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos( unsigned int id )
     , bLiquidPresent_( false )
     , gazInfos_()
 {
-    ADN_NBC_Datas::idManager_.Lock( id );
+    ADN_NBC_Data::idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NbcAgentInfos::CreateCopy
 // Created: APE 2005-02-14
 // -----------------------------------------------------------------------------
-ADN_NBC_Datas::NbcAgentInfos* ADN_NBC_Datas::NbcAgentInfos::CreateCopy()
+ADN_NBC_Data::NbcAgentInfos* ADN_NBC_Data::NbcAgentInfos::CreateCopy()
 {
     NbcAgentInfos* pCopy = new NbcAgentInfos();
     pCopy->liquidInfos_.CopyFrom( liquidInfos_ );
@@ -240,10 +240,10 @@ ADN_NBC_Datas::NbcAgentInfos* ADN_NBC_Datas::NbcAgentInfos::CreateCopy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::NbcAgentInfos::ReadEffect
+// Name: ADN_NBC_Data::NbcAgentInfos::ReadEffect
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
+void ADN_NBC_Data::NbcAgentInfos::ReadEffect( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
     if( type == "liquid" )
@@ -262,11 +262,11 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
 // Name: NbcAgentInfos::ReadArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
+void ADN_NBC_Data::NbcAgentInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::optional >> xml::attribute( "category", category_ );
     liquidInfos_.parentName_ = strName_.GetData();
-    input >> xml::list( "effects", *this, &ADN_NBC_Datas::NbcAgentInfos::ReadEffect );
+    input >> xml::list( "effects", *this, &ADN_NBC_Data::NbcAgentInfos::ReadEffect );
     if( category_ == "" )
         category_ = "chemical";
 }
@@ -275,7 +275,7 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
 // Name: NbcAgentInfos::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
+void ADN_NBC_Data::NbcAgentInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "agent" )
            << xml::attribute( "name", strName_ )
@@ -289,10 +289,10 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas constructor
+// Name: ADN_NBC_Data constructor
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
-ADN_NBC_Datas::ADN_NBC_Datas()
+ADN_NBC_Data::ADN_NBC_Data()
     : ADN_Data_ABC                  ( eNBC )
     , rContaminationDistance_       ( 0.f )
     , rContaminationQuantityGiven_  ( 0.f )
@@ -304,38 +304,28 @@ ADN_NBC_Datas::ADN_NBC_Datas()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas destructor
+// Name: ADN_NBC_Data destructor
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
-ADN_NBC_Datas::~ADN_NBC_Datas()
+ADN_NBC_Data::~ADN_NBC_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::FilesNeeded
+// Name: ADN_NBC_Data::FilesNeeded
 // Created: APE 2004-12-06
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::FilesNeeded( tools::Path::T_Paths& vFiles ) const
+void ADN_NBC_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szNBC_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::Reset
-// Created: AGN 2004-05-06
-// -----------------------------------------------------------------------------
-void ADN_NBC_Datas::Reset()
-{
-    idManager_.Reset();
-    vNbcAgent_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::ReadAgent
+// Name: ADN_NBC_Data::ReadAgent
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::ReadAgent( xml::xistream& input )
+void ADN_NBC_Data::ReadAgent( xml::xistream& input )
 {
     std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< NbcAgentInfos > spNew( new NbcAgentInfos( input.attribute< unsigned int >( "id" ) ) );
@@ -345,10 +335,10 @@ void ADN_NBC_Datas::ReadAgent( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::ReadArchive
+// Name: ADN_NBC_Data::ReadArchive
 // Created: AGN 2004-07-02
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::ReadArchive( xml::xistream& input )
+void ADN_NBC_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "nbc" )
             >> xml::start( "propagation" )
@@ -361,16 +351,16 @@ void ADN_NBC_Datas::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "reloading-time-modifier", rNbcSuitReloadSpeedMultiplier_ )
             >> xml::end;
     input >> xml::start( "agents" )
-            >> xml::list( "agent", *this, &ADN_NBC_Datas::ReadAgent )
+            >> xml::list( "agent", *this, &ADN_NBC_Data::ReadAgent )
           >> xml::end;
     vNbcAgent_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::WriteArchive
+// Name: ADN_NBC_Data::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::WriteArchive( xml::xostream& output )
+void ADN_NBC_Data::WriteArchive( xml::xostream& output )
 {
     if( vNbcAgent_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

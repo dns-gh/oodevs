@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Missions.h"
-#include "ADN_App.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Gui_Tools.h"
 #include "ADN_Models_Data.h"

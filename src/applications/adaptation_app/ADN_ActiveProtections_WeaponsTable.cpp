@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ActiveProtections_WeaponsTable.h"
 #include "ADN_ActiveProtections_Data.h"
+#include "ADN_Resources_Data.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_WeaponsTable constructor

@@ -61,7 +61,7 @@ ADN_LogisticSupplyClasses_Data::ADN_LogisticSupplyClasses_Data()
 // -----------------------------------------------------------------------------
 ADN_LogisticSupplyClasses_Data::~ADN_LogisticSupplyClasses_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,16 +71,6 @@ ADN_LogisticSupplyClasses_Data::~ADN_LogisticSupplyClasses_Data()
 void ADN_LogisticSupplyClasses_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_LogisticSupplyClasses_Data::Reset
-// Created: ABR 2013-07-11
-// -----------------------------------------------------------------------------
-void ADN_LogisticSupplyClasses_Data::Reset()
-{
-    idManager_.Reset();
-    vLogisticSupplyClasses_.Reset();
 }
 
 // -----------------------------------------------------------------------------

@@ -11,8 +11,6 @@
 #include "ADN_Nature_GUI.h"
 #include "moc_ADN_Nature_GUI.cpp"
 #include "ADN_Connector_String.h"
-#include "ADN_App.h"
-#include "ADN_MainWindow.h"
 
 using namespace gui;
 

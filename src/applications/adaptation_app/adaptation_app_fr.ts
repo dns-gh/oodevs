@@ -1652,7 +1652,7 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data</name>
+    <name>ADN_Fires_Data</name>
     <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation>Feu - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
@@ -1675,14 +1675,14 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data::FireClassInfos</name>
+    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation>Incendie - Type de location introuvable &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_GUI</name>
+    <name>ADN_Fires_GUI</name>
     <message>
         <source>Name</source>
         <translation>Nom</translation>
@@ -2526,10 +2526,6 @@ PNG (*.png)</translation>
     <message>
         <source>Sword Adaptation Tool - No Project</source>
         <translation>Sword Adaptation - Pas de projet</translation>
-    </message>
-    <message>
-        <source>Sword Adaptation Tool - </source>
-        <translation>Sword Adaptation - </translation>
     </message>
     <message>
         <source>Sword Adaptation Tool</source>
@@ -6241,34 +6237,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Loading GUI...</source>
-        <translation>Chargement de l&apos;interface...</translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation>Interface chargée</translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation>Réinitialisation du projet...</translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation>Fermeture: %1...</translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation>Projet réinitialisé</translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation>Chargement du projet...</translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation>Chargement: %1...</translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation>Sword outil d&apos;adaptation - Erreurs d&apos;enregistrement</translation>
     </message>
@@ -6281,12 +6249,24 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>&lt;p&gt;- Impossible de sauvegarder %s : le fichier est en lecture seule&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Saving project...</source>
-        <translation>Enregistrement du projet...</translation>
-    </message>
-    <message>
         <source>ADN - Data export</source>
         <translation>Adaptation - Export des données</translation>
+    </message>
+    <message>
+        <source>Building GUI: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving: %1...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

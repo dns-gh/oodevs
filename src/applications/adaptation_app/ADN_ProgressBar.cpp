@@ -15,15 +15,14 @@
 // Name: ADN_ProgressBar constructor
 // Created: JDY 03-07-17
 //-----------------------------------------------------------------------------
-ADN_ProgressBar::ADN_ProgressBar( QWidget* pParent, const char* szName, Qt::WFlags f )
-    : Q3HBox( pParent, szName, f )
-    , ADN_ProgressIndicator_ABC()
+ADN_ProgressBar::ADN_ProgressBar( QWidget* parent )
+    : QWidget( parent )
 {
-    label_ = new QLabel( this );
-    label_->setAlignment( Qt::AlignLeft );
-    bar_ = new Q3ProgressBar( this );
-    setStretchFactor( label_, 2 );
-    setStretchFactor( bar_, 1 );
+    QHBoxLayout* layout = new QHBoxLayout( this );
+    label_ = new QLabel();
+    bar_ = new QProgressBar();
+    layout->addWidget( label_, 2, Qt::AlignLeft );
+    layout->addWidget( bar_, 1 );
 }
 
 //-----------------------------------------------------------------------------
@@ -36,39 +35,30 @@ ADN_ProgressBar::~ADN_ProgressBar()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ProgressBar::SetNbrOfSteps
+// Name: ADN_ProgressBar::SetMaximum
 // Created: APE 2005-03-18
 // -----------------------------------------------------------------------------
-void ADN_ProgressBar::SetNbrOfSteps( int n )
+void ADN_ProgressBar::SetMaximum( int n )
 {
-    bar_->setTotalSteps( n );
+    bar_->setMaximum( n );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressBar::Increment
 // Created: APE 2005-03-18
 // -----------------------------------------------------------------------------
-void ADN_ProgressBar::Increment( int n )
+void ADN_ProgressBar::Increment( const QString& text )
 {
-    bar_->setProgress( bar_->progress() + n );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ProgressBar::Increment
-// Created: APE 2005-03-18
-// -----------------------------------------------------------------------------
-void ADN_ProgressBar::Increment( const char* szText, int n )
-{
-    label_->setText( szText );
-    Increment( n );
+    label_->setText( text );
+    bar_->setValue( bar_->value() + 1 );
+    qApp->processEvents();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressBar::Reset
-// Created: APE 2005-03-18
+// Created: ABR 2013-09-17
 // -----------------------------------------------------------------------------
-void ADN_ProgressBar::Reset( const char* szMsg )
+void ADN_ProgressBar::Reset()
 {
-    label_->setText( szMsg );
     bar_->reset();
 }

@@ -57,7 +57,6 @@ public:
     //! @name Operations
     //@{
     void Build();
-    void SetDecisionalFilters( const std::vector< std::wstring >& decisionalFilters );
     //@}
 
 private:

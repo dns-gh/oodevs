@@ -10,7 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Models.h"
-#include "ADN_App.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Workspace.h"
 #include "ADN_Models_GUI.h"

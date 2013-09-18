@@ -43,7 +43,6 @@ void ADN_Connector_Graph_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarg
     pTarget->Initialize( *this );
     connect( pTarget, SIGNAL(ItemAdded(void*)),   this, SLOT(AddItemNoEmit(void*)) );
     connect( pTarget, SIGNAL(ItemRemoved(void*)), this, SLOT(RemItemNoEmit(void*)) );
-    connect( pTarget, SIGNAL(Cleared(bool)),      this, SLOT(Clear(bool)) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +54,6 @@ void ADN_Connector_Graph_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pT
     ADN_Connector_ABC::DisconnectPrivateSub( (ADN_Connector_ABC*)pTarget );
     disconnect( pTarget, SIGNAL(ItemAdded(void*)),   this, SLOT(AddItemNoEmit(void*)) );
     disconnect( pTarget, SIGNAL(ItemRemoved(void*)), this, SLOT(RemItemNoEmit(void*)) );
-    disconnect( pTarget, SIGNAL(Cleared(bool)),      this, SLOT(Clear(bool)) );
     ClearPrivate();
 }
 
@@ -87,7 +85,7 @@ bool ADN_Connector_Graph_ABC::RemItemPrivate(void* pObj )
         ADN_GraphData& graphData = (ADN_GraphData&)(*it);
         graphData.DeleteData( pObj );  // The graphData will delete any related graphValue.
     }
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
 

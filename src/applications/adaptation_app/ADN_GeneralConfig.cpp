@@ -28,13 +28,11 @@ ADN_GeneralConfig::ADN_GeneralConfig( int argc, char** argv, const tools::Path& 
         ( "output,o", po::value( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
         ( "create,c", po::value( &newFile_    )->default_value( "" ), "specify root file for creating new base (physical.xml)" )
         ( "dev", "activate dev mode" )
-        ( "nosymbols,n", "turn off unit symbols view" )
         ( "noreadonly", "disable read-only protection" )
         ;
     AddOptions( desc );
     Parse( argc, argv );
     devMode_ = IsSet( "dev" );
-    nosymbols_ = IsSet( "nosymbols" );
     noreadonly_ = IsSet( "noreadonly" );
 }
 
@@ -54,15 +52,6 @@ ADN_GeneralConfig::~ADN_GeneralConfig()
 bool ADN_GeneralConfig::IsDevMode() const
 {
     return devMode_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GeneralConfig::IsNoSymbols
-// Created: ABR 2013-09-11
-// -----------------------------------------------------------------------------
-bool ADN_GeneralConfig::IsNoSymbols() const
-{
-    return nosymbols_;
 }
 
 // -----------------------------------------------------------------------------

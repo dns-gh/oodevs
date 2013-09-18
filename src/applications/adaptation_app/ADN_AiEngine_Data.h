@@ -29,7 +29,6 @@ public:
     virtual ~ADN_AiEngine_Data();
     //@}
 
-    void Reset();
     void FilesNeeded( tools::Path::T_Paths& l ) const;
 
 private:

@@ -19,12 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_GroupBox.h"
 #include "moc_ADN_GroupBox.cpp"
-
 #include "ADN_Connector_Bool.h"
-#include "ADN_App.h"
-#include "ADN_MainWindow.h"
-#include "ADN_Enums.h"
-#include "ADN_Workspace.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GroupBox constructor

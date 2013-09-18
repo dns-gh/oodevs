@@ -41,7 +41,6 @@ void ADN_Connector_Table_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarg
 
     connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
 
     if( tab_.IsAutoEnabled() )
         tab_.setEnabled(true);
@@ -60,7 +59,6 @@ void ADN_Connector_Table_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pT
 
     disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
 
     bIsConnected_=false;
     if( tab_.IsAutoEnabled() )
@@ -109,7 +107,7 @@ bool ADN_Connector_Table_ABC::RemItemPrivate( void* pItem )
     // Remove it from the table (which can be user sorted, and thus not match the order of vData_
     tab_.RemoveItem( pItem );
     
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
 

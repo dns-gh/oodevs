@@ -11,7 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_ListView_ABC.h"
-#include "ADN_App.h"
+#include "ADN_Workspace.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC constructor
@@ -45,7 +45,6 @@ void ADN_Connector_ListView_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pT
 
     connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
     connect( pTarget, SIGNAL( SendErrorStatus( ADN_ErrorStatus, const QString& ) ), &list_, SLOT( Warn( ADN_ErrorStatus, const QString& ) ) );
 
     bIsConnected_ = true;
@@ -65,7 +64,6 @@ void ADN_Connector_ListView_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC*
 
     disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
     disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
     disconnect( pTarget, SIGNAL( SendErrorStatus( ADN_ErrorStatus, const QString& ) ), &list_, SLOT( Warn( ADN_ErrorStatus, const QString& ) ) );
 
     bIsConnected_ = false;
@@ -97,7 +95,7 @@ bool ADN_Connector_ListView_ABC::RemItemPrivate( void* item )
     ADN_StandardItem *pItem = list_.FindItem( item );
     if( pItem )
         list_.TakeItem( pItem );
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
 

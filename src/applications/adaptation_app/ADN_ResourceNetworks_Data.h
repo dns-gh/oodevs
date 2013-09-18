@@ -65,7 +65,6 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
     T_ResourceNetworkInfosVector& GetResourceNetworksInfos();
     ResourceNetworkInfos* FindResourceNetwork( const std::string& strName );
     QStringList GetResourceNetworksThatUse( ADN_Resources_Data::CategoryInfo& category );

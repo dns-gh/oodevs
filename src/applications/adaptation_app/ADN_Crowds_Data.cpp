@@ -711,7 +711,7 @@ ADN_Crowds_Data::ADN_Crowds_Data()
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::~ADN_Crowds_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -721,16 +721,6 @@ ADN_Crowds_Data::~ADN_Crowds_Data()
 void ADN_Crowds_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szPopulation_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Crowds_Data::Reset
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-void ADN_Crowds_Data::Reset()
-{
-    idManager_.Reset();
-    vCrowds_.Reset();
 }
 
 // -----------------------------------------------------------------------------

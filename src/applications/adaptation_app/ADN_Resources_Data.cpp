@@ -683,15 +683,6 @@ ADN_Resources_Data::ResourceInfos::~ResourceInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceInfos::Reset
-// Created: APE 2004-12-29
-// -----------------------------------------------------------------------------
-void ADN_Resources_Data::ResourceInfos::Reset()
-{
-    categories_.Reset();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ResourceInfos::GetCategories
 // Created: APE 2005-01-05
 // -----------------------------------------------------------------------------
@@ -772,6 +763,7 @@ void ADN_Resources_Data::ResourceInfos::CheckDatabaseValidity( ADN_ConsistencyCh
 ADN_Resources_Data::ADN_Resources_Data()
     : ADN_Data_ABC( eResources )
     , resources_ ()
+    , networkUsableResources_( true, false )
 {
     for( int n = 0; n < eNbrDotationFamily; ++n )
         resources_.AddItem( new ResourceInfos( (E_DotationFamily)n ) );
@@ -785,7 +777,7 @@ ADN_Resources_Data::ADN_Resources_Data()
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::~ADN_Resources_Data()
 {
-    resources_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -795,18 +787,6 @@ ADN_Resources_Data::~ADN_Resources_Data()
 void ADN_Resources_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szEquipements_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Resources_Data::Reset
-// Created: APE 2004-11-16
-// -----------------------------------------------------------------------------
-void ADN_Resources_Data::Reset()
-{
-    idManager_.Reset();
-    networkUsableResources_.clear();
-    for( auto it = resources_.begin(); it != resources_.end(); ++it )
-        (*it)->Reset();
 }
 
 // -----------------------------------------------------------------------------

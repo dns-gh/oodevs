@@ -11,6 +11,7 @@
 #include "ADN_Weapons_GUI.h"
 #include "moc_ADN_Weapons_GUI.cpp"
 
+#include "ADN_Callback.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_Data_WeaponInfos.h"
@@ -74,7 +75,7 @@ public:
     bool RemItemPrivate( void* pItem )
     {
         graphData_.DeleteData( pItem );
-        ADN_App::GetMainWindow()->setWindowModified( true );
+        ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
         return true;
     }
 
@@ -156,7 +157,7 @@ public:
             return false;
         // Unregister and destroy it.
         graph_.UnregisterPlotData( *pPlotData, true );
-        ADN_App::GetMainWindow()->setWindowModified( true );
+        ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
         return true;
     }
 

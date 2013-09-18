@@ -57,7 +57,6 @@ public:
     virtual ~ADN_Launchers_Data();
 
     void FilesNeeded(tools::Path::T_Paths& l) const;
-    void Reset();
 
     T_LauncherInfos_Vector& GetLaunchersInfos();
     LauncherInfos* FindLauncher( const std::string& strName );

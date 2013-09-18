@@ -26,7 +26,8 @@ ADN_Data_Container::ADN_Data_Container( E_WorkspaceElements currentTab )
 // -----------------------------------------------------------------------------
 ADN_Data_Container::~ADN_Data_Container()
 {
-    // NOTHING
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -37,16 +38,6 @@ void ADN_Data_Container::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->FilesNeeded( vFiles );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Data_Container::Reset
-// Created: ABR 2012-01-18
-// -----------------------------------------------------------------------------
-void ADN_Data_Container::Reset()
-{
-    for( auto it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->ResetData();
 }
 
 // -----------------------------------------------------------------------------

@@ -99,7 +99,6 @@ public:
              ADN_Inhabitants_Data();
     virtual ~ADN_Inhabitants_Data();
 
-    void Reset();
     void FilesNeeded(tools::Path::T_Paths& l) const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 

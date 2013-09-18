@@ -230,7 +230,6 @@ public:
     virtual ~ADN_Units_Data();
 
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
 
     T_UnitInfos_Vector& GetUnitsInfos();
     UnitInfos* FindUnit( const std::string& strName );

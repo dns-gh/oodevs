@@ -14,8 +14,9 @@
 // Created: JDY 03-06-25
 //-----------------------------------------------------------------------------
 template< class T >
-ADN_Type_Vector_ABC< T >::ADN_Type_Vector_ABC( bool bAutoRef )
+ADN_Type_Vector_ABC< T >::ADN_Type_Vector_ABC( bool bAutoRef, bool owner = true )
     : bAutoRef_( bAutoRef )
+    , owner_( owner )
 {
     // NOTHING
 }
@@ -28,6 +29,7 @@ template< class T >
 ADN_Type_Vector_ABC< T >::ADN_Type_Vector_ABC( const ADN_Type_Vector_ABC& o )
     : std::vector< T* >( o )
     , bAutoRef_( o.bAutoRef_ )
+    , owner_( o.owner_ )
 {
     // NOTHING
 }
@@ -39,7 +41,8 @@ ADN_Type_Vector_ABC< T >::ADN_Type_Vector_ABC( const ADN_Type_Vector_ABC& o )
 template< class T >
 ADN_Type_Vector_ABC< T >::~ADN_Type_Vector_ABC()
 {
-    Reset();
+    if( owner_ )
+        clear_owned_ptrs( *this );
     for( auto it = checkers_.begin(); it != checkers_.end(); ++it )
         delete *it;
 }
@@ -93,7 +96,7 @@ bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem )
     if( bAutoRef_ )
         disconnect( static_cast< ADN_Ref_ABC* >( pItem ), SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
     
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
 
@@ -132,24 +135,7 @@ template< class T >
 void ADN_Type_Vector_ABC< T >::ClearPrivate( bool bInConnection )
 {
     if( !bInConnection && size() != 0 )
-    {
         clear();
-        emit Cleared( bInConnection );
-    }
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC<T>::Reset
-// Created: JDY 03-09-02
-//-----------------------------------------------------------------------------
-template< class T >
-void ADN_Type_Vector_ABC< T >::Reset()
-{
-    if( empty() )
-        return;
-
-    emit Cleared( false );
-    clear_owned_ptrs( *this );
 }
 
 //-----------------------------------------------------------------------------

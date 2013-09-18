@@ -13,6 +13,7 @@
 #include "ADN_Enums.h"
 #include "ADN_XmlStreamOperators.h"
 #include "ADN_Tools.h"
+#include "ADN_WorkspaceElement.h"
 
 namespace kernel
 {
@@ -43,9 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void ResetData();
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const = 0;
-    virtual void Reset() = 0;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
     virtual void OnLanguageChanged( const std::string& language );

@@ -12,7 +12,6 @@
 #include "moc_ADN_TimeField.cpp"
 #include "ADN_Connector_ABC.h"
 #include "ADN_Connector_String.h"
-#include "ADN_App.h"
 #include "ADN_Validator.h"
 #include <tools/Exception.h>
 #include <QtGui/qlayout.h>

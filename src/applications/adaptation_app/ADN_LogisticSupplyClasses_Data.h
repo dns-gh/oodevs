@@ -48,7 +48,6 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
-    void Reset();
 
     T_LogisticSupplyClass_Vector& GetLogisticSupplyClasses();
     LogisticSupplyClass* FindLogisticSupplyClass( const std::string& strName );

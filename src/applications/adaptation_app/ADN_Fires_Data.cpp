@@ -8,17 +8,17 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_FireClass_Data.h"
+#include "ADN_Fires_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos
+// Name: ADN_Fires_Data::FireInjuryInfos::FireInjuryInfos
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos()
+ADN_Fires_Data::FireInjuryInfos::FireInjuryInfos()
     : nNbHurtHumans1_( 0 )
     , nNbHurtHumans2_( 0 )
     , nNbHurtHumans3_( 0 )
@@ -29,10 +29,10 @@ ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireInjuryInfos::CopyFrom
+// Name: ADN_Fires_Data::FireInjuryInfos::CopyFrom
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireInjuryInfos::CopyFrom( FireInjuryInfos& infos )
+void ADN_Fires_Data::FireInjuryInfos::CopyFrom( FireInjuryInfos& infos )
 {
     nNbHurtHumans1_ = infos.nNbHurtHumans1_.GetData();
     nNbHurtHumans2_ = infos.nNbHurtHumans2_.GetData();
@@ -42,10 +42,10 @@ void ADN_FireClass_Data::FireInjuryInfos::CopyFrom( FireInjuryInfos& infos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos::ReadEffect
+// Name: ADN_Fires_Data::FireInjuryInfos::FireInjuryInfos::ReadEffect
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireInjuryInfos::ReadInjury( xml::xistream& input )
+void ADN_Fires_Data::FireInjuryInfos::ReadInjury( xml::xistream& input )
 {
     std::string wound = input.attribute< std::string >( "type" );
     std::transform( wound.begin(), wound.end(), wound.begin(), std::tolower );
@@ -60,32 +60,32 @@ void ADN_FireClass_Data::FireInjuryInfos::ReadInjury( xml::xistream& input )
     {
         *pWound = static_cast< int >( input.attribute< double >( "percentage" ) * 100. );
         if( pWound->GetData() < 0 || pWound->GetData() > 100 )
-            throw MASA_EXCEPTION( tools::translate( "ADN_FireClass_Data", "Fire - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "ADN_Fires_Data", "Fire - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).toStdString() );
     }
     else
-        throw MASA_EXCEPTION(tools::translate( "ADN_FireClass_Data", "Fire - Invalid wound type '%1'" ).arg( wound.c_str() ).toStdString() );
+        throw MASA_EXCEPTION(tools::translate( "ADN_Fires_Data", "Fire - Invalid wound type '%1'" ).arg( wound.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireInjuryInfos::ReadArchive
+// Name: ADN_Fires_Data::FireInjuryInfos::ReadArchive
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
+void ADN_Fires_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::list( "injury", *this, &ADN_FireClass_Data::FireInjuryInfos::ReadInjury );
+    input >> xml::list( "injury", *this, &ADN_Fires_Data::FireInjuryInfos::ReadInjury );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw MASA_EXCEPTION( tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Fires_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireInjuryInfos::WriteArchive
+// Name: ADN_Fires_Data::FireInjuryInfos::WriteArchive
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "injuries" );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw MASA_EXCEPTION( tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Fires_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
     output  << xml::start( "injury" )
                 << xml::attribute( "type", "u1" )
                 << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
@@ -110,10 +110,10 @@ void ADN_FireClass_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireSurfaceInfos::FireSurfaceInfos
+// Name: ADN_Fires_Data::FireSurfaceInfos::FireSurfaceInfos
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::FireSurfaceInfos::FireSurfaceInfos( E_Location location )
+ADN_Fires_Data::FireSurfaceInfos::FireSurfaceInfos( E_Location location )
     : ADN_RefWithName( ENT_Tr::ConvertFromLocation( location ) )
     , ignitionThreshold_  ( 0 )
     , maxCombustionEnergy_( 0 )
@@ -122,19 +122,19 @@ ADN_FireClass_Data::FireSurfaceInfos::FireSurfaceInfos( E_Location location )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireSurfaceInfos::GetItemName
+// Name: ADN_Fires_Data::FireSurfaceInfos::GetItemName
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-std::string ADN_FireClass_Data::FireSurfaceInfos::GetItemName()
+std::string ADN_Fires_Data::FireSurfaceInfos::GetItemName()
 {
     return std::string();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireSurfaceInfos::CopyFrom
+// Name: ADN_Fires_Data::FireSurfaceInfos::CopyFrom
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireSurfaceInfos::CopyFrom( FireSurfaceInfos& infos )
+void ADN_Fires_Data::FireSurfaceInfos::CopyFrom( FireSurfaceInfos& infos )
 {
     strName_ = infos.strName_.GetData();
     ignitionThreshold_ = infos.ignitionThreshold_.GetData();
@@ -142,20 +142,20 @@ void ADN_FireClass_Data::FireSurfaceInfos::CopyFrom( FireSurfaceInfos& infos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireSurfaceInfos::ReadArchive
+// Name: ADN_Fires_Data::FireSurfaceInfos::ReadArchive
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireSurfaceInfos::ReadArchive( xml::xistream& input )
+void ADN_Fires_Data::FireSurfaceInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "ignition-threshold", ignitionThreshold_ )
           >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireSurfaceInfos::WriteArchive
+// Name: ADN_Fires_Data::FireSurfaceInfos::WriteArchive
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output )
 {
     output  << xml::start( "surface" )
         << xml::attribute( "type", strName_ )
@@ -165,10 +165,10 @@ void ADN_FireClass_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::FireClassInfos
+// Name: ADN_Fires_Data::FireClassInfos::FireClassInfos
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::FireClassInfos::FireClassInfos()
+ADN_Fires_Data::FireClassInfos::FireClassInfos()
     : agents_          ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_ )
     , initialHeat_     ( 0 )
     , maxHeat_         ( 0 )
@@ -190,19 +190,19 @@ ADN_FireClass_Data::FireClassInfos::FireClassInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::~FireClassInfos
+// Name: ADN_Fires_Data::FireClassInfos::~FireClassInfos
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::FireClassInfos::~FireClassInfos()
+ADN_Fires_Data::FireClassInfos::~FireClassInfos()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::CreateCopy
+// Name: ADN_Fires_Data::FireClassInfos::CreateCopy
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::FireClassInfos* ADN_FireClass_Data::FireClassInfos::CreateCopy()
+ADN_Fires_Data::FireClassInfos* ADN_Fires_Data::FireClassInfos::CreateCopy()
 {
     FireClassInfos* pCopy = new FireClassInfos();
     pCopy->injuryInfos_.CopyFrom( injuryInfos_ );
@@ -226,56 +226,56 @@ ADN_FireClass_Data::FireClassInfos* ADN_FireClass_Data::FireClassInfos::CreateCo
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::ReadArchive
+// Name: ADN_Fires_Data::FireClassInfos::ReadArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireClassInfos::ReadArchive( xml::xistream& input )
+void ADN_Fires_Data::FireClassInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "initial-heat", initialHeat_ )
           >> xml::attribute( "max-heat", maxHeat_ )
           >> xml::attribute( "increase-rate", increaseRate_ )
           >> xml::attribute( "decrease-rate", decreaseRate_ )
           >> xml::start( "extinguisher-agents" )
-              >> xml::list( "extinguisher-agent", *this, &ADN_FireClass_Data::FireClassInfos::ReadAgent )
+              >> xml::list( "extinguisher-agent", *this, &ADN_Fires_Data::FireClassInfos::ReadAgent )
           >> xml::end
           >> xml::start( "weather-effects" )
-              >> xml::list( "weather-effect", *this, &ADN_FireClass_Data::FireClassInfos::ReadWeatherEffect )
+              >> xml::list( "weather-effect", *this, &ADN_Fires_Data::FireClassInfos::ReadWeatherEffect )
           >> xml::end
           >> xml::start( "injuries" );
     injuryInfos_.parentName_ = strName_.GetData();
     injuryInfos_.ReadArchive( input );
     input >> xml::end
           >> xml::start( "urban-modifiers" )
-            >> xml::list( "urban-modifier", *this, &ADN_FireClass_Data::FireClassInfos::ReadUrbanModifer )
+            >> xml::list( "urban-modifier", *this, &ADN_Fires_Data::FireClassInfos::ReadUrbanModifer )
           >> xml::end;
     isSurface_ = input.has_child( "surfaces" );
     if( isSurface_.GetData() )
     {
         input >> xml::start( "surfaces" )
-                  >> xml::list( "surface", *this, &ADN_FireClass_Data::FireClassInfos::ReadSurface )
+                  >> xml::list( "surface", *this, &ADN_Fires_Data::FireClassInfos::ReadSurface )
               >> xml::end;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::ReadAgent
+// Name: ADN_Fires_Data::FireClassInfos::ReadAgent
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireClassInfos::ReadAgent( xml::xistream& input )
+void ADN_Fires_Data::FireClassInfos::ReadAgent( xml::xistream& input )
 {
     std::string agent = input.attribute< std::string >( "agent" );
     auto itAgent = std::find_if( agents_.begin(), agents_.end(), ADN_ExtinguisherAgentInfos::Cmp( agent ) );
     if( itAgent == agents_.end() )
-        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFireClasses, -1, tools::translate( "ADN_FireClass_Data", "Extinguisher agents" ).toStdString() );
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFires, -1, tools::translate( "ADN_Fires_Data", "Extinguisher agents" ).toStdString() );
     else
         ( *itAgent )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::ReadWeatherEffect
+// Name: ADN_Fires_Data::FireClassInfos::ReadWeatherEffect
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireClassInfos::ReadWeatherEffect( xml::xistream& input )
+void ADN_Fires_Data::FireClassInfos::ReadWeatherEffect( xml::xistream& input )
 {
     std::string weatherStr = input.attribute< std::string >( "weather" );
     E_SensorWeatherModifiers weather = ADN_Tr::ConvertToSensorWeatherModifiers( weatherStr );
@@ -283,24 +283,24 @@ void ADN_FireClass_Data::FireClassInfos::ReadWeatherEffect( xml::xistream& input
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::ReadUrbanModifer
+// Name: ADN_Fires_Data::FireClassInfos::ReadUrbanModifer
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireClassInfos::ReadUrbanModifer( xml::xistream& input )
+void ADN_Fires_Data::FireClassInfos::ReadUrbanModifer( xml::xistream& input )
 {
     std::string material = input.attribute< std::string >( "material-type" );
     auto it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
-        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFireClasses, -1, tools::translate( "ADN_FireClass_Data", "Urban attritions" ).toStdString() );
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFires, -1, tools::translate( "ADN_Fires_Data", "Urban attritions" ).toStdString() );
     else
         ( *it )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::ReadSurface
+// Name: ADN_Fires_Data::FireClassInfos::ReadSurface
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireClassInfos::ReadSurface( xml::xistream& input )
+void ADN_Fires_Data::FireClassInfos::ReadSurface( xml::xistream& input )
 {
     std::string type = input.attribute< std::string >( "type" );
     auto it = std::find_if( surfaceInfos_.begin(), surfaceInfos_.end(), FireSurfaceInfos::Cmp( type ) );
@@ -310,10 +310,10 @@ void ADN_FireClass_Data::FireClassInfos::ReadSurface( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::WriteArchive
+// Name: ADN_Fires_Data::FireClassInfos::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FireClassInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireClassInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "fire" )
                << xml::attribute( "name", strName_ )
@@ -345,63 +345,54 @@ void ADN_FireClass_Data::FireClassInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data constructor
+// Name: ADN_Fires_Data constructor
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::ADN_FireClass_Data()
-    : ADN_Data_ABC( eFireClasses )
+ADN_Fires_Data::ADN_Fires_Data()
+    : ADN_Data_ABC( eFires )
     , cellSize_( 10 )
 {
     fireClasses_.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data destructor
+// Name: ADN_Fires_Data destructor
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::~ADN_FireClass_Data()
+ADN_Fires_Data::~ADN_Fires_Data()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FilesNeeded
+// Name: ADN_Fires_Data::FilesNeeded
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FilesNeeded( tools::Path::T_Paths& files ) const
+void ADN_Fires_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFireClasses_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::Reset
+// Name: ADN_Fires_Data::ReadArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::Reset()
-{
-    fireClasses_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::ReadArchive
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-void ADN_FireClass_Data::ReadArchive( xml::xistream& input )
+void ADN_Fires_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "fires" )
             >> xml::start( "cell-size" )
                 >> xml::attribute( "value", cellSize_ )
             >> xml::end
-            >> xml::list( "fire", *this, &ADN_FireClass_Data::ReadFireClass )
+            >> xml::list( "fire", *this, &ADN_Fires_Data::ReadFireClass )
           >> xml::end;
     fireClasses_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::ReadFireClass
+// Name: ADN_Fires_Data::ReadFireClass
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::ReadFireClass( xml::xistream& input )
+void ADN_Fires_Data::ReadFireClass( xml::xistream& input )
 {
     std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< FireClassInfos > spNew( new FireClassInfos() );
@@ -411,10 +402,10 @@ void ADN_FireClass_Data::ReadFireClass( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::WriteArchive
+// Name: ADN_Fires_Data::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::WriteArchive( xml::xostream& output )
 {
     if( fireClasses_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
@@ -431,28 +422,28 @@ void ADN_FireClass_Data::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::GetCellSize
+// Name: ADN_Fires_Data::GetCellSize
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-ADN_Type_Int& ADN_FireClass_Data::GetCellSize()
+ADN_Type_Int& ADN_Fires_Data::GetCellSize()
 {
     return cellSize_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::GetFireClassesInfos
+// Name: ADN_Fires_Data::GetFireClassesInfos
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::T_FireClassInfosVector& ADN_FireClass_Data::GetFireClassesInfos()
+ADN_Fires_Data::T_FireClassInfosVector& ADN_Fires_Data::GetFireClassesInfos()
 {
     return fireClasses_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::GetFireThatUse
+// Name: ADN_Fires_Data::GetFireThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_FireClass_Data::GetFireThatUse( ADN_Resources_Data::CategoryInfo& infos )
+QStringList ADN_Fires_Data::GetFireThatUse( ADN_Resources_Data::CategoryInfo& infos )
 {
     QStringList result;
     for( auto it = fireClasses_.begin(); it != fireClasses_.end(); ++it )

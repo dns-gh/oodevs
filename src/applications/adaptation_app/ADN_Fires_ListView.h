@@ -7,24 +7,24 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_FireClass_ListView_h_
-#define __ADN_FireClass_ListView_h_
+#ifndef __ADN_Fires_ListView_h_
+#define __ADN_Fires_ListView_h_
 
 #include "ADN_ListView.h"
 
 // =============================================================================
-/** @class  ADN_FireClass_ListView
-    @brief  ADN_FireClass_ListView
+/** @class  ADN_Fires_ListView
+    @brief  ADN_Fires_ListView
 */
 // Created: JSR 2010-12-02
 // =============================================================================
-class ADN_FireClass_ListView : public ADN_ListView
+class ADN_Fires_ListView : public ADN_ListView
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_FireClass_ListView( QWidget* pParent );
-    virtual ~ADN_FireClass_ListView();
+    explicit ADN_Fires_ListView( QWidget* pParent );
+    virtual ~ADN_Fires_ListView();
     //@}
 
     //! @name Operations
@@ -34,4 +34,4 @@ public:
     //@}
 };
 
-#endif // __ADN_FireClass_ListView_h_
+#endif // __ADN_Fires_ListView_h_

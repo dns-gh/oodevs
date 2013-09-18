@@ -12,6 +12,7 @@
 
 #include "ADN_NavigationInfos.h"
 #include "ADN_Enums.h"
+#include "ADN_WorkspaceElement.h"
 
 class ADN_MainWindow;
 class ADN_HtmlBuilder;

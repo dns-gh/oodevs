@@ -10,7 +10,6 @@
 #ifndef __ADN_MainWindow_h_
 #define __ADN_MainWindow_h_
 
-#include "ADN_Callback.h"
 #include <map>
 
 namespace gui
@@ -19,15 +18,10 @@ namespace gui
     class GlContext;
 }
 
-namespace tools
-{
-    class Loader_ABC;
-}
-
 enum E_WorkspaceElements;
 
+template< typename T > class ADN_Callback_ABC;
 class ADN_Config;
-class ADN_FileLoaderObserver;
 class ADN_GeneralConfig;
 class ADN_ListView;
 class ADN_MainTabWidget;
@@ -51,23 +45,20 @@ public:
     virtual ~ADN_MainWindow();
     //@}
 
-    //! @name Data operations
+    //! @name Operations
     //@{
-    void Open( const tools::Path& filename );
-    void New( const tools::Path& filename );
-    void SaveAs( const tools::Path& filename );
-    //@}
-
-    //! @name Gui operations
-    //@{
-    void Build();
     void AddPage( E_WorkspaceElements element, QWidget& page, const QString& title );
     void AddTable( const QString& strTableName, ADN_Callback_ABC< ADN_Table* >* pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC< ADN_ListView* >* pCallback );
+
+    bool IsLoaded() const;
+    void SetIsLoading( bool );
+    void LoadStatusChanged( bool );
+    ADN_ProgressBar& GetProgressBar() const;
     //@}
 
 protected:
-    //! @name 
+    //! @name QMainWindow override
     //@{
     virtual void closeEvent( QCloseEvent* e );
     virtual void mousePressEvent( QMouseEvent * event );
@@ -85,20 +76,20 @@ private slots:
     //@{
     void OnNew();
     void OnOpen();
-    void OnClose();
+    bool OnClose();
     void OnSave();
     void OnSaveAs();
     void OnExportHtml();
     void OnAbout();
-    void ShowConsistencyTable( const QString& name ) const;
+    void OnShowConsistencyTable( const QString& name ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void OnOpenned( bool isOpen );
-    bool OfferToSave();
-    bool IsNewBaseReadOnly( const tools::Path& filename ) const;
+    void BuildGUI();
+    void PurgeGUI();
+    void UpdateTitle();
     //@}
 
 private:
@@ -112,13 +103,14 @@ private:
     //! @name Member data
     //@{
     const ADN_GeneralConfig& config_;
-    std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
-    std::auto_ptr< tools::Loader_ABC > fileLoader_;
     std::auto_ptr< gui::GlContext > openGLContext_;
 
     std::auto_ptr< gui::ConsistencyDialog_ABC > consistencyDialog_;
     std::auto_ptr< ADN_MainTabWidget > mainTabWidget_;
     std::auto_ptr< ADN_ProgressBar > progressBar_;
+    std::auto_ptr< QSignalMapper > consistencyMapper_;
+
+    QLayout* mainLayout_;
 
     QAction* actionClose_;
     QAction* actionSave_;
@@ -132,12 +124,12 @@ private:
     QMenu* menuConsistencyTables_;
     QMenu* menuLanguages_;
 
-    QSignalMapper* consistencyMapper_;
+    QToolBar* toolBar_;
+
     T_ConsistencyTables consistencyTables_;
     T_ConsistencyListViews consistencyListViews_;
 
-    bool skipSave_;
-    bool isOpen_;
+    bool isLoaded_;
     //@}
 };
 

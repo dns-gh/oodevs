@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_AvailabilityWarning.h"
+#include "ADN_XmlStreamOperators.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarning constructor

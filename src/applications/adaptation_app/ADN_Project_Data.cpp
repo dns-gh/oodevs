@@ -380,14 +380,13 @@ void ADN_Project_Data::FilesNeeded( tools::Path::T_Paths& /*vFiles*/ ) const
 #endif
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Project_Data::Reset
-// Created: JDY 03-06-23
-//-----------------------------------------------------------------------------
-void ADN_Project_Data::Reset()
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::New
+// Created: ABR 2013-09-17
+// -----------------------------------------------------------------------------
+void ADN_Project_Data::New( const tools::Path& filename )
 {
-    assert( ! szFile_.GetFileName().IsEmpty() );
-    // load default parameters (included has resource)
+    SetFile( filename );
     xml::xistringstream defaultFile( physicalXml );
     dataInfos_.ReadArchive( defaultFile );
 }

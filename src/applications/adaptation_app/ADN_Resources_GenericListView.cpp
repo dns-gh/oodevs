@@ -14,7 +14,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Equipments_Data.h"
-#include "ADN_FireClass_Data.h"
+#include "ADN_Fires_Data.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Resources_GUI.h"
 #include "ADN_Enums.h"
@@ -105,8 +105,8 @@ void ADN_Resources_GenericListView::OnContextMenu( const QPoint& pt )
         assert( pCastData != 0 );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str(),
                                       ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsThatUse( *pCastData ), eActiveProtections );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eFireClasses ).c_str(),
-                                      ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireThatUse( *pCastData ), eFireClasses );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eFires ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetFires().GetData().GetFireThatUse( *pCastData ), eFires );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eBreakdowns ).c_str(),
                                       ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetBreakdownsThatUse( *pCastData ), eBreakdowns );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
@@ -133,7 +133,7 @@ std::string ADN_Resources_GenericListView::GetToolTipFor( const QModelIndex& ind
 
     std::string result;
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str(), ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsThatUse( *pCastData ), result );
-    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eFireClasses ).c_str(), ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eFires ).c_str(), ADN_Workspace::GetWorkspace().GetFires().GetData().GetFireThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eBreakdowns ).c_str(), ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetBreakdownsThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(), ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(), ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), result );

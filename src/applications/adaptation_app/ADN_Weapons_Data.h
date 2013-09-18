@@ -28,7 +28,6 @@ public:
     virtual ~ADN_Weapons_Data();
 
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     ADN_Type_Vector_ABC< ADN_Weapons_Data_WeaponInfos >& GetWeaponInfos();

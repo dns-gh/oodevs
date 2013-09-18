@@ -240,9 +240,7 @@ ADN_Disasters_Data::DisasterInfos::DisasterInfos()
 //-----------------------------------------------------------------------------
 ADN_Disasters_Data::DisasterInfos::~DisasterInfos()
 {
-    concentrationThresholds_.Reset();
-    attritionThresholds_.Reset();
-    nbcSuitRatio_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -366,7 +364,7 @@ ADN_Disasters_Data::ADN_Disasters_Data()
 //-----------------------------------------------------------------------------
 ADN_Disasters_Data::~ADN_Disasters_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -376,15 +374,6 @@ ADN_Disasters_Data::~ADN_Disasters_Data()
 void ADN_Disasters_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDisasters_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Disasters_Data::Reset
-// Created: LGY 2012-11-13
-//-----------------------------------------------------------------------------
-void ADN_Disasters_Data::Reset()
-{
-    vDisasters_.Reset();
 }
 
 // -----------------------------------------------------------------------------

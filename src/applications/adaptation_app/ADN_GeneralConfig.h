@@ -30,7 +30,6 @@ public:
     //! @name Accessors
     //@{
     bool IsDevMode() const;
-    bool IsNoSymbols() const;
     bool IsNoReadOnly() const;
     const tools::Path& GetInputFile() const;
     const tools::Path& GetOutputFile() const;
@@ -41,7 +40,6 @@ private:
     //! @name Member data
     //@{
     bool devMode_;
-    bool nosymbols_;
     bool noreadonly_;
     tools::Path inputFile_;
     tools::Path outputFile_;

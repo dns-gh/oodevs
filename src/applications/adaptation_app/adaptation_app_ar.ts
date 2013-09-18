@@ -1633,7 +1633,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data</name>
+    <name>ADN_Fires_Data</name>
     <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation type="unfinished">النار--الجرح البيانات &apos;%1&apos; &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
@@ -1656,14 +1656,14 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data::FireClassInfos</name>
+    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation type="unfinished">النار-موقع النوع لا تم العثور على &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_GUI</name>
+    <name>ADN_Fires_GUI</name>
     <message>
         <source>Global fire parameters</source>
         <translation type="unfinished">معلمات النار العالمي</translation>
@@ -2498,10 +2498,6 @@ PNG (*.png)
     <message>
         <source>&amp;About</source>
         <translation type="unfinished">آند حول</translation>
-    </message>
-    <message>
-        <source>Sword Adaptation Tool - </source>
-        <translation type="unfinished">السيف التكيف أداة-</translation>
     </message>
     <message>
         <source>Save project as</source>
@@ -6206,34 +6202,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Loading GUI...</source>
-        <translation type="unfinished">تحميل واجهة المستخدم الرسومية...</translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation type="unfinished">تحميل واجهة المستخدم الرسومية</translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation type="unfinished">مشروع الإعادة...</translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation type="unfinished">تفريغ: %1...</translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation type="unfinished">المشروع reseted</translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation type="unfinished">تحميل المشروع...</translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation type="unfinished">التحميل: %1...</translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation type="unfinished">السيف أداة التكيف--إنقاذ أخطاء</translation>
     </message>
@@ -6246,12 +6214,24 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">&lt;p&gt;-غير قادر على حفظ % s: هو ملف محمي ضد الكتابة&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Saving project...</source>
-        <translation type="unfinished">حفظ المشروع...</translation>
-    </message>
-    <message>
         <source>ADN - Data export</source>
         <translation type="unfinished">ADN-تصدير البيانات</translation>
+    </message>
+    <message>
+        <source>Building GUI: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving: %1...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

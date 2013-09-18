@@ -7,9 +7,6 @@
 //
 // *****************************************************************************
 
-#include "ADN_App.h"
-#include "ADN_ConsistencyChecker.h"
-
 //-----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC constructor
 // Created: JDY 03-07-18
@@ -57,7 +54,7 @@ ADN_TypePtr_InVector_ABC< T >::ADN_TypePtr_InVector_ABC( const typename ADN_Type
 template< class T >
 ADN_TypePtr_InVector_ABC< T >::~ADN_TypePtr_InVector_ABC()
 {
-    Clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +68,6 @@ void ADN_TypePtr_InVector_ABC< T >::ConnectPrivateSub( ADN_Connector_Vector_ABC*
 
     connect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
     connect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void* ) ) );
-    connect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool ) ) );
     connect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 
     pTarget->Initialize( *this );
@@ -88,7 +84,6 @@ void ADN_TypePtr_InVector_ABC< T >::DisconnectPrivateSub( ADN_Connector_Vector_A
 
     disconnect( pTarget, SIGNAL( ItemAdded( void* ) ),         this, SLOT( AddItem( void* ) ) );
     disconnect( pTarget, SIGNAL( ItemRemoved( void* ) ),       this, SLOT( RemItem( void* ) ) );
-    disconnect( pTarget, SIGNAL( Cleared( bool ) ),            this, SLOT( Clear( bool ) ) );
     disconnect( pTarget, SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 }
 
@@ -194,7 +189,7 @@ bool ADN_TypePtr_InVector_ABC< T >::RemItemPrivate( void* item )
         return false;
     if( pData_ == item )
         InvalidatePrivate( item );
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     return true;
 }
 
@@ -227,7 +222,7 @@ void ADN_TypePtr_InVector_ABC< T >::SetDataPrivate( void* data )
 {
     T_TypePtr newData = static_cast< T_TypePtr >( data );
     SetData( newData );
-    ADN_App::GetMainWindow()->setWindowModified( true );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
 }
 
 //-----------------------------------------------------------------------------

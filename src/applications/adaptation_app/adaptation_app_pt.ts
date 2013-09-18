@@ -1631,7 +1631,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data</name>
+    <name>ADN_Fires_Data</name>
     <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation type="unfinished"></translation>
@@ -1654,14 +1654,14 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_Data::FireClassInfos</name>
+    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ADN_FireClass_GUI</name>
+    <name>ADN_Fires_GUI</name>
     <message>
         <source>Global fire parameters</source>
         <translation type="unfinished"></translation>
@@ -2523,10 +2523,6 @@ PNG (*.png)
     </message>
     <message>
         <source>Something went wrong during the saving process.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sword Adaptation Tool - </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6201,34 +6197,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Loading GUI...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sword Adaptation Tool - Saving Errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6241,11 +6209,23 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Saving project...</source>
+        <source>ADN - Data export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ADN - Data export</source>
+        <source>Building GUI: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving: %1...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

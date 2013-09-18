@@ -51,7 +51,6 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
-        void Reset();
 
     private:
         void ReadConstitutionTime( xml::xistream& input );
@@ -84,7 +83,6 @@ public:
     //! @name Operations
     //@{
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
-    virtual void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}
 

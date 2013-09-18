@@ -51,7 +51,7 @@ public:
     bool RemItemPrivate( void* pItem )
     {
         graph_->RemoveAttrition( *( helpers::AttritionInfos* ) pItem );
-        ADN_App::GetMainWindow()->setWindowModified( true );
+        ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
         return true;
     }
 

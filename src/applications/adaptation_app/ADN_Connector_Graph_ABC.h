@@ -11,7 +11,6 @@
 #define __ADN_Connector_Graph_ABC_h_
 
 #include "ADN_Connector_Vector_ABC.h"
-#include <boost/noncopyable.hpp>
 
 class ADN_Graph;
 class ADN_GraphValue;
@@ -27,7 +26,6 @@ class ADN_GraphValue;
 // Created: APE 2004-12-14
 // =============================================================================
 class ADN_Connector_Graph_ABC : public ADN_Connector_Vector_ABC
-                              , private boost::noncopyable
 {
 
 public:

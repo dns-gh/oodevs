@@ -10,10 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ColorNameSelector.h"
 #include "moc_ADN_ColorNameSelector.cpp"
-#include "ADN_App.h"
 #include "ADN_Connector_String.h"
-#include "ADN_Enums.h"
-#include "ADN_Workspace.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ColorNameSelector constructor

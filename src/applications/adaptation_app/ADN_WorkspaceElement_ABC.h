@@ -40,12 +40,15 @@ public:
     virtual ~ADN_WorkspaceElement_ABC() {};
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
     virtual ADN_Data_ABC& GetDataABC() = 0;
-    virtual ADN_GUI_ABC&  GetGuiABC() = 0;
+    virtual ADN_GUI_ABC& GetGuiABC() = 0;
 
-    const QString& GetName() { return strName_; };
+    virtual const ADN_Data_ABC& GetDataABC() const = 0;
+    virtual const ADN_GUI_ABC& GetGuiABC() const = 0;
+
+    const QString& GetName() const { return strName_; };
     //@}
 
 private:

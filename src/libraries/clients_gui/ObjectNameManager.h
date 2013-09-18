@@ -40,6 +40,7 @@ public:
     void SetObjectName( QObject* obj, const QString& name );
     void RemoveRegisteredName( const QString& name );
     void CheckErrors();
+    void Purge();
     //@}
 
 private:

@@ -11,7 +11,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Units_Data.h"
-#include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Categories_Data.h"
@@ -401,9 +400,7 @@ ADN_Units_Data::UnitInfos::UnitInfos( unsigned int id )
 //-----------------------------------------------------------------------------
 ADN_Units_Data::UnitInfos::~UnitInfos()
 {
-    vComposantes_.Reset();
-    vPostures_.Reset();
-    vPointInfos_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -850,16 +847,6 @@ ADN_Units_Data::~ADN_Units_Data()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Units_Data::Reset
-// Created: JDY 03-06-26
-//-----------------------------------------------------------------------------
-void ADN_Units_Data::Reset()
-{
-    idManager_.Reset();
-    vUnits_.Reset();
-}
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Munitions_Data::FilesNeeded
 // Created: JDY 03-09-08
 //-----------------------------------------------------------------------------
@@ -892,7 +879,6 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "units" )
             >> xml::list( "unit", *this, &ADN_Units_Data::ReadUnit )
           >> xml::end;
-    //vUnits_.AddItem( 0 ); // $$$$ ABR 2013-01-16: Needed ?
     vUnits_.CheckValidity();
     if( !vUnits_.empty() )
         ADN_Workspace::GetWorkspace().GetUnits().GetGui().PreloadUnitSymbolComboBox( vUnits_[0] );

@@ -9,16 +9,15 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_NbcAgentListView.h"
-#include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
-#include "ADN_NBC_Datas.h"
+#include "ADN_NBC_Data.h"
 #include "ADN_NBC_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 
-typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
+typedef ADN_NBC_Data::NbcAgentInfos NbcAgentInfos;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_NbcAgentListView constructor
@@ -70,7 +69,7 @@ void ADN_NBC_NbcAgentListView::ConnectItem( bool bConnect )
 void ADN_NBC_NbcAgentListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< NbcAgentInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str(), ADN_Workspace::GetWorkspace().GetNbc().GetData().GetNbcAgentVector(), this );
+    ADN_Wizard< NbcAgentInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str(), ADN_Workspace::GetWorkspace().GetNBC().GetData().GetNbcAgentVector(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }

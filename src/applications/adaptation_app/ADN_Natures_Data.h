@@ -51,7 +51,6 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
-    void Reset();
 
     ADN_Natures_Data::T_NatureInfos_Vector& GetNaturesInfos();
     ADN_Natures_Data::NatureInfos*          FindNature( const std::string& strName );

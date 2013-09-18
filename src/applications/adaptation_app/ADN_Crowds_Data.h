@@ -244,7 +244,6 @@ public:
     virtual ~ADN_Crowds_Data();
 
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
 
     T_CrowdsInfosVector& GetCrowds();
     CrowdsInfos* FindCrowd( const std::string& strName );

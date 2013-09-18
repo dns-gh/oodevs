@@ -65,15 +65,6 @@ void ADN_ActiveProtections_Data::FilesNeeded( tools::Path::T_Paths& vFiles) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ActiveProtections_Data::Reset
-// Created: LDC 2010-01-13
-// -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::Reset()
-{
-    activeProtections_.Reset();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data::ReadArchive
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------

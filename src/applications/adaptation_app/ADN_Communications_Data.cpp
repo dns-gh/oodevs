@@ -43,15 +43,6 @@ void ADN_Communications_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Communications_Data::Reset
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-void ADN_Communications_Data::Reset()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Communications_Data::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------

@@ -42,7 +42,6 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& files ) const;
-    void Reset();
     //@}
 
 private:

@@ -76,7 +76,6 @@ public:
     virtual ~ADN_Automata_Data();
 
     void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
 
     T_AutomatonInfosVector& GetAutomata();

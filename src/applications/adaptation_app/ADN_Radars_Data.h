@@ -80,7 +80,6 @@ public:
     virtual ~ADN_Radars_Data();
 
     void FilesNeeded( tools::Path::T_Paths& files ) const;
-    void Reset();
 
     T_RadarInfos_Vector& GetRadars();
     RadarInfos* FindRadar( const std::string& strName );

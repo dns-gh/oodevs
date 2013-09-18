@@ -10,9 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_GUI.h"
 #include "moc_ADN_NBC_GUI.cpp"
-#include "ADN_App.h"
-#include "ADN_Workspace.h"
-#include "ADN_NBC_Datas.h"
+#include "ADN_NBC_Data.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_NBC_NbcAgentListView.h"
 #include "ADN_NBC_Intox_GUI.h"
@@ -25,7 +23,7 @@
 // Name: ADN_NBC_GUI constructor
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
-ADN_NBC_GUI::ADN_NBC_GUI( ADN_NBC_Datas& data )
+ADN_NBC_GUI::ADN_NBC_GUI( ADN_NBC_Data& data )
     : ADN_GUI_ABC( eNBC )
     , data_( data )
 {

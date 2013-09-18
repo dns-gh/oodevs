@@ -90,15 +90,18 @@ public:
     typedef ADN_Type_Vector_ABC<ModelInfos> T_ModelInfos_Vector;
 
 //*****************************************************************************
+    typedef std::vector< std::wstring > T_SourcePaths;
+//*****************************************************************************
+
 public:
     explicit ADN_Models_Data();
     virtual ~ADN_Models_Data();
 
     virtual void FilesNeeded( tools::Path::T_Paths& l ) const;
-    virtual void Reset();
     virtual void Initialize();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
-    
+
+    const T_SourcePaths& GetSourcePaths() const;
     QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );
     QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder );
 
@@ -116,13 +119,14 @@ private:
     void ReadAutomat( xml::xistream& input );
     void ReadPopulation( xml::xistream& input );
     void ReadUnit( xml::xistream& input );
-
+    void ReadSourcePath( xml::xistream& xis );
     void WriteArchive( xml::xostream& output );
 
 private:
     T_ModelInfos_Vector vUnitModels_;
     T_ModelInfos_Vector vAutomataModels_;
     T_ModelInfos_Vector vPopulationModels_;
+    std::vector< std::wstring > sourcePaths_;
 };
 
 //-----------------------------------------------------------------------------
@@ -192,6 +196,16 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::FindPopulationModel( const std::st
     if( it == vPopulationModels_.end() )
         return 0;
     return *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::GetSourcePath
+// Created: ABR 2013-09-13
+// -----------------------------------------------------------------------------
+inline
+const ADN_Models_Data::T_SourcePaths& ADN_Models_Data::GetSourcePaths() const
+{
+    return sourcePaths_;
 }
 
 #endif // __ADN_Models_Data_h_

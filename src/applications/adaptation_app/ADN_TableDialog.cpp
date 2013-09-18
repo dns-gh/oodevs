@@ -20,7 +20,6 @@
 #include "ADN_TableDialog.h"
 #include "moc_ADN_TableDialog.cpp"
 #include "ADN_Table.h"
-#include "ADN_App.h"
 #include "ADN_MainWindow.h"
 #include "clients_gui/FileDialog.h"
 
@@ -49,9 +48,9 @@ ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, A
     pLayout->addWidget( &table_ );
     pLayout->addWidget( pHBox );
 
-    QMainWindow* pMainWindow = ADN_App::GetMainWindow();
-    this->resize( static_cast< int >( pMainWindow->width() * 0.8 ), static_cast< int >( pMainWindow->height() * 0.8 ) );
-    this->move( pMainWindow->x() + static_cast< int >( pMainWindow->width() * 0.1 ), pMainWindow->y() +  static_cast< int >( pMainWindow->height() * 0.1 ) );
+    QMainWindow& mainWindow = ADN_Workspace::GetWorkspace().GetMainWindow();
+    this->resize( static_cast< int >( mainWindow.width() * 0.8 ), static_cast< int >( mainWindow.height() * 0.8 ) );
+    this->move( mainWindow.x() + static_cast< int >( mainWindow.width() * 0.1 ), mainWindow.y() +  static_cast< int >( mainWindow.height() * 0.1 ) );
 }
 
 // -----------------------------------------------------------------------------

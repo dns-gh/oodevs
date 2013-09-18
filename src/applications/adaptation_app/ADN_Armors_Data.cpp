@@ -163,7 +163,7 @@ ADN_Armors_Data::ADN_Armors_Data()
 // -----------------------------------------------------------------------------
 ADN_Armors_Data::~ADN_Armors_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -173,15 +173,6 @@ ADN_Armors_Data::~ADN_Armors_Data()
 void ADN_Armors_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Armors_Data::Reset
-// Created: ABR 2013-07-11
-// -----------------------------------------------------------------------------
-void ADN_Armors_Data::Reset()
-{
-    vArmors_.Reset();
 }
 
 // -----------------------------------------------------------------------------

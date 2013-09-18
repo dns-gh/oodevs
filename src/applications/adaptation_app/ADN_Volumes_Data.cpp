@@ -46,7 +46,7 @@ ADN_Volumes_Data::ADN_Volumes_Data()
 // -----------------------------------------------------------------------------
 ADN_Volumes_Data::~ADN_Volumes_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -56,15 +56,6 @@ ADN_Volumes_Data::~ADN_Volumes_Data()
 void ADN_Volumes_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Volumes_Data::Reset
-// Created: ABR 2013-07-11
-// -----------------------------------------------------------------------------
-void ADN_Volumes_Data::Reset()
-{
-    vSizes_.Reset();
 }
 
 // -----------------------------------------------------------------------------

@@ -10,10 +10,9 @@
 #ifndef __ADN_Graph_h_
 #define __ADN_Graph_h_
 
-#include "ADN_Type_Vector_ABC.h"
 #include "GQ_Plot.h"
-#include <boost/noncopyable.hpp>
 
+class ADN_Connector_Vector_ABC;
 class ADN_ListView;
 
 // =============================================================================
@@ -27,7 +26,6 @@ class ADN_ListView;
 // Created: APE 2004-12-14
 // =============================================================================
 class ADN_Graph : public GQ_Plot
-                , private boost::noncopyable
 {
     Q_OBJECT
 

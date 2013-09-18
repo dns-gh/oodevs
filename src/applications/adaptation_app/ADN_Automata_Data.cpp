@@ -104,7 +104,7 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::AutomatonInfos::~AutomatonInfos()
 {
-    vSubUnits_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +225,7 @@ ADN_Automata_Data::ADN_Automata_Data()
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::~ADN_Automata_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -235,16 +235,6 @@ ADN_Automata_Data::~ADN_Automata_Data()
 void ADN_Automata_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szAutomata_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Automata_Data::Reset
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-void ADN_Automata_Data::Reset()
-{
-    idManager_.Reset();
-    vAutomata_.Reset();
 }
 
 // -----------------------------------------------------------------------------

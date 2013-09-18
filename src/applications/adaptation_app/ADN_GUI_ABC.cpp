@@ -33,8 +33,6 @@ ADN_GUI_ABC::ADN_GUI_ABC( E_WorkspaceElements workspaceElement )
 // -----------------------------------------------------------------------------
 ADN_GUI_ABC::~ADN_GUI_ABC()
 {
-    delete pListView_;
-    delete pMainWidget_;
     // NOTHING
 }
 

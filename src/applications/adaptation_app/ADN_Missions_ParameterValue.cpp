@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_ParameterValue.h"
+#include "ADN_XmlStreamOperators.h"
 
 ADN_Missions_ParameterValue::ADN_Missions_ParameterValue()
 {

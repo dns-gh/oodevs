@@ -191,8 +191,6 @@ public:
         explicit ResourceInfos( E_DotationFamily nType );
         virtual ~ResourceInfos();
 
-        void Reset();
-
         T_CategoryInfos_Vector& GetCategories();
         CategoryInfo* FindCategory( const std::string& strName );
 
@@ -222,7 +220,6 @@ public:
 
 public:
     void FilesNeeded(tools::Path::T_Paths& files ) const;
-    void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_ResourceInfos_Vector& GetResources();

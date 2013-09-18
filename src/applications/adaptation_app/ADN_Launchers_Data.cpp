@@ -150,15 +150,6 @@ void ADN_Launchers_Data::FilesNeeded( tools::Path::T_Paths& files ) const
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLaunchers_ );
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Launchers_Data::Reset
-// Created: JDY 03-07-11
-//-----------------------------------------------------------------------------
-void ADN_Launchers_Data::Reset()
-{
-    vLaunchers_.Reset();
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data::ReadLauncher
 // Created: AGE 2007-08-21

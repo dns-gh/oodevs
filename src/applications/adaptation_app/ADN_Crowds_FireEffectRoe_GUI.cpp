@@ -11,7 +11,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Crowds_FireEffectRoe_GUI.h"
-#include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_Crowds_Data.h"
 #include "ENT/ENT_Tr.h"

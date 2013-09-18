@@ -49,7 +49,7 @@ public:
         if( v_ )
         {
             disconnect( v_, SIGNAL( ItemAdded( void* ) ), this, SLOT( AutoCreate( void* ) ) );
-            Reset();
+            clear_owned_ptrs( *this );
             v_ = 0;
         }
     }

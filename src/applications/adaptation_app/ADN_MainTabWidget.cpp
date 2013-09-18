@@ -15,10 +15,10 @@
 // Name: ADN_MainTabWidget constructor
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-ADN_MainTabWidget::ADN_MainTabWidget( QWidget* parent )
-    : QTabWidget          ( parent )
+ADN_MainTabWidget::ADN_MainTabWidget()
+    : QTabWidget()
     , currentHistoryIndex_( -1 )
-    , navigating_         ( false )
+    , navigating_( false )
 {
     connect( this, SIGNAL( currentChanged( int ) ), this, SLOT( OnCurrentChanged( int ) ) );
     setVisible( false );

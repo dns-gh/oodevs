@@ -12,7 +12,7 @@
 
 #include "ADN_GUI_ABC.h"
 
-class ADN_NBC_Datas;
+class ADN_NBC_Data;
 class ADN_ListView;
 class ADN_Connector_ABC;
 
@@ -42,7 +42,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_NBC_GUI( ADN_NBC_Datas& data );
+    explicit ADN_NBC_GUI( ADN_NBC_Data& data );
     virtual ~ADN_NBC_GUI();
     //@}
 
@@ -52,7 +52,7 @@ public:
     //@}
 
 private:
-    ADN_NBC_Datas& data_;
+    ADN_NBC_Data& data_;
 };
 
 #endif // __ADN_NBC_GUI_h_

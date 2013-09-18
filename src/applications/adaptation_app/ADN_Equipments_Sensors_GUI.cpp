@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Equipments_Sensors_GUI.h"
-#include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Equipments_Data.h"
@@ -46,7 +45,7 @@ ADN_Equipments_Sensors_GUI::ADN_Equipments_Sensors_GUI( const QString& objectNam
 //-----------------------------------------------------------------------------
 ADN_Equipments_Sensors_GUI::~ADN_Equipments_Sensors_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

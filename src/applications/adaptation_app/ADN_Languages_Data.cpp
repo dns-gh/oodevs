@@ -29,7 +29,7 @@ ADN_Languages_Data::ADN_Languages_Data()
 // -----------------------------------------------------------------------------
 ADN_Languages_Data::~ADN_Languages_Data()
 {
-    Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,15 +39,6 @@ ADN_Languages_Data::~ADN_Languages_Data()
 void ADN_Languages_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLanguages_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Languages_Data::Reset
-// Created: ABR 2013-07-08
-// -----------------------------------------------------------------------------
-void ADN_Languages_Data::Reset()
-{
-    languages_.clear();
 }
 
 // -----------------------------------------------------------------------------

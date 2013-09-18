@@ -146,15 +146,6 @@ void ADN_HumanFactors_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_HumanFactors_Data::Reset
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::Reset()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_Data::ReadArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------

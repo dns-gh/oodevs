@@ -31,7 +31,6 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
-    void Reset();
     //@}
 
 private:
