@@ -183,7 +183,10 @@ void ADN_TimeField::OnValueChanged()
 // -----------------------------------------------------------------------------
 QString ADN_TimeField::text() const
 {
-    return QString::number( boost::numeric_cast< double >( pSpinBox_->value() ) / 100 ) + "s";
+    const int seconds = pSpinBox_->value() / 100;
+    const int centiSeconds = pSpinBox_->value() % 100;
+    return ( boost::lexical_cast< std::string >( seconds ) + "." // $$$$ _RC_ SLI 2013-09-18: we always want to save decimal time with US format '.'
+           + boost::lexical_cast< std::string >( centiSeconds ) + "s" ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -233,11 +236,9 @@ void ADN_TimeField::Warn( ADN_ErrorStatus, const QString& )
 // -----------------------------------------------------------------------------
 int ADN_TimeField::GetCentiSeconds( const QString& strValue, const QString& strUnit ) const
 {
-    if( strUnit == "s" )
-        return boost::numeric_cast< int >( locale().toFloat( strValue ) * 100 );
-    else if( strUnit == "m" )
-        return boost::numeric_cast< int >( locale().toFloat( strValue ) * 6000 );
-    else if( strUnit == "h" )
-        return boost::numeric_cast< int >( locale().toFloat( strValue ) * 360000 );
-    return 0;
+    const int modifier = strUnit == "s" ? 100
+                       : strUnit == "m" ? 6000
+                       : strUnit == "h" ? 360000
+                       :                  0;
+    return boost::numeric_cast< int >( boost::lexical_cast< double >( strValue.toStdString() ) * modifier );
 }
