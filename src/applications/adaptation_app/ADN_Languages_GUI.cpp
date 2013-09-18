@@ -119,8 +119,10 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
 void ADN_Languages_GUI::ChangeLanguage( const std::string& language )
 {
     kernel::Language::SetCurrent( language );
+    ADN_Workspace::GetWorkspace().SetIsSwappingLanguage( true );
     emit LanguageChanged();
     emit PostLanguageChanged();
+    ADN_Workspace::GetWorkspace().SetIsSwappingLanguage( false );
 }
 
 // -----------------------------------------------------------------------------

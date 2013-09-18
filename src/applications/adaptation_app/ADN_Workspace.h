@@ -164,6 +164,7 @@ public:
 
     ADN_MainWindow& GetMainWindow() const;
     void SetMainWindowModified( bool isModified );
+    void SetIsSwappingLanguage( bool isSwappingLanguage );
 
     ADN_Project_Data& GetProject();
     ADN_WorkspaceElement_ABC& GetWorkspaceElement( E_WorkspaceElements workspaceElement );
@@ -229,6 +230,7 @@ private:
     std::auto_ptr< const tools::Loader_ABC > fileLoader_;
     std::auto_ptr< ADN_Project_Data > projectData_;
     std::auto_ptr< ADN_WorkspaceElement_ABC > elements_[ eNbrWorkspaceElements ];
+    bool isSwappingLanguage_;
     //@}
 
     //! @name Singleton
