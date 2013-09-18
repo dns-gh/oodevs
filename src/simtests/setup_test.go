@@ -22,6 +22,10 @@ import (
 	"time"
 )
 
+const (
+	ConnectTimeout = 40 * time.Second
+)
+
 var (
 	projectRoot string
 	application string
@@ -82,7 +86,7 @@ func startSimOnExercise(c *C, exercise string, endTick int,
 
 	opts := MakeOpts()
 	opts.ExerciseName = exercise
-	opts.ConnectTimeout = 40 * time.Second
+	opts.ConnectTimeout = ConnectTimeout
 
 	session := simu.CreateDefaultSession()
 	session.Paused = paused
@@ -98,7 +102,7 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 
 	opts := MakeOpts()
 	opts.ExerciseName = exercise
-	opts.ConnectTimeout = 40 * time.Second
+	opts.ConnectTimeout = ConnectTimeout
 	opts.SessionName = session
 	opts.CheckpointName = checkpoint
 
