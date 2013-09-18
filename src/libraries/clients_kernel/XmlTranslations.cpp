@@ -356,7 +356,7 @@ void XmlTranslations::SetTranslation( const std::string& context, const std::str
 // Name: XmlTranslations::GetTranslation
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-boost::shared_ptr< LocalizedString > XmlTranslations::GetTranslation( const std::string& context, const std::string& key ) const
+const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( const std::string& context, const std::string& key ) const
 {
     return contexts_.at( context )->at( key );
 }
@@ -365,7 +365,7 @@ boost::shared_ptr< LocalizedString > XmlTranslations::GetTranslation( const std:
 // Name: boost::shared_ptr< Context > XmlTranslations::GetContext
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Context > XmlTranslations::GetContext( const std::string& context )
+const boost::shared_ptr< Context >& XmlTranslations::GetContext( const std::string& context )
 {
     if( contexts_.find( context ) == contexts_.end() )
         contexts_[ context ] = boost::make_shared< Context >();

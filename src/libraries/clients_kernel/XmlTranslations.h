@@ -72,8 +72,8 @@ public:
     bool HasDuplicateErrors() const;
 
     const std::string Translate( const std::string& key, const std::string& context = "", const std::string& language = "" ) const;
-    boost::shared_ptr< Context > GetContext( const std::string& context );
-    boost::shared_ptr< LocalizedString > GetTranslation( const std::string& context, const std::string& key ) const;
+    const boost::shared_ptr< Context >& GetContext( const std::string& context );
+    const boost::shared_ptr< LocalizedString >& GetTranslation( const std::string& context, const std::string& key ) const;
     //@}
 
 private:

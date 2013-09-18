@@ -156,8 +156,8 @@ public:
 
     //! @name Accessors
     //@{
-    boost::shared_ptr< kernel::Context > GetContext( E_WorkspaceElements element, const std::string& context );
-    boost::shared_ptr< kernel::Context > GetContext( E_WorkspaceElements element, int subElement, const std::string& context );
+    const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, const std::string& context );
+    const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, int subElement, const std::string& context );
 
     bool IsNewBaseReadOnly( const tools::Path& filename ) const;
     bool IsDevMode() const;
