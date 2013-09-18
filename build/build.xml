@@ -59,6 +59,7 @@
                 -->
                 <arg value="${go.race}"/>
                 <arg value="-test.parallel=1"/>
+                <arg value="-test.timeout=15m"/>
                 <arg value="${gocheck.verbose}"/>
                 <arg line="${gocheck.filter}"/>
                 <arg value="--application=${application}"/>
