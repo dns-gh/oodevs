@@ -80,3 +80,17 @@ bool InitialStateEquipment::operator!=( const InitialStateEquipment& object ) co
 {
     return !( *this == object );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InitialStateEquipment::CleanUnsupportedState
+// Created: LDC 2013-09-17
+// -----------------------------------------------------------------------------
+bool InitialStateEquipment::CleanUnsupportedState()
+{
+    if( eEquipmentState_InMaintenance == state_ || eEquipmentState_Prisonner == state_ )
+    {
+        state_ = eEquipmentState_OnSiteFixable;
+        return true;
+    }
+    return false;
+}

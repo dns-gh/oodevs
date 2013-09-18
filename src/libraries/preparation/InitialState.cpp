@@ -223,6 +223,19 @@ void InitialState::Reset()
     resources_  = originalResources_;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: InitialState::CleanUnsupportedState
+// Created: LDC 2013-09-17
+// -----------------------------------------------------------------------------
+bool InitialState::CleanUnsupportedState()
+{
+    bool result = false;
+    for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
+        result = it->CleanUnsupportedState() || result;
+    return result;
+}
+
 // -----------------------------------------------------------------------------
 // Name: InitialState::Initialize
 // Created: ABR 2011-03-01

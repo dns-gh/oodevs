@@ -70,6 +70,7 @@ public:
     //! @name Operations
     //@{
     void Reset();
+    bool CleanUnsupportedState();
     //@}
 
 private:

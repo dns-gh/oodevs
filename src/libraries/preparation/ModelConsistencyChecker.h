@@ -82,6 +82,7 @@ private:
     void CheckLogisticSubordinates();
     void CheckUrban();
     void CheckFiles();
+    void CheckEquipmentState();
     //@}
 
 private:
