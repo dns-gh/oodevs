@@ -313,7 +313,7 @@
 <!-- session_goto_btn -->
 [[ define "session_goto_btn" ]]
 {{#is_option status playing="" paused="" replaying=""}}
-<a title="URL" class="btn link{{#unless can_link}} disabled{{/unless}}"><i class="icon-share"></i></a>
+<a title="Join" class="btn link{{#unless can_link}} disabled{{/unless}}"><i class="icon-share"></i></a>
 {{/is_option}}
 [[ end ]]
 <!-- session_pause_btn -->
