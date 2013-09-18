@@ -155,6 +155,7 @@ ADN_Inhabitants_Data::InhabitantsInfos::InhabitantsInfos()
     , healthNeed_         ( 0 )
     , transferTime_       ( "0h" )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eInhabitants, "inhabitants" ) );
     BindExistenceTo( &ptrModel_ );
 }
 
@@ -171,6 +172,7 @@ ADN_Inhabitants_Data::InhabitantsInfos::InhabitantsInfos( unsigned int id )
     , healthNeed_         ( 0 )
     , transferTime_       ( "0h" )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eInhabitants, "inhabitants" ) );
     BindExistenceTo( &ptrModel_ );
     ADN_Inhabitants_Data::idManager_.Lock( id );
 }

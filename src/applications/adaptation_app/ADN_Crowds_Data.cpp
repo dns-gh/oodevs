@@ -423,6 +423,7 @@ ADN_Crowds_Data::CrowdsInfos::CrowdsInfos( unsigned int id )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::CrowdsInfos::Initialize()
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eCrowds, "crowds" ) );
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
         E_PopulationAttitude attitude = static_cast< E_PopulationAttitude >( i );

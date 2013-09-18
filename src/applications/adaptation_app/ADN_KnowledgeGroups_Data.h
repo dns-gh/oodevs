@@ -53,7 +53,7 @@ public:
     };
 
 // *****************************************************************************
-    class GroupInfo : public ADN_RefWithName
+    class GroupInfo : public ADN_RefWithLocalizedName
     {
 
     public:

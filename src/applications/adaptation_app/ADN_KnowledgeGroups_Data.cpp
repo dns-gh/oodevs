@@ -98,7 +98,7 @@ ADN_KnowledgeGroups_Data::GroupInfo::GroupInfo()
     , populationInfos_   ()
     , communicationDelay_( "0s" ) // LTO
 {
-    // NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eKnowledgeGroups, "knowledge-groups" ) );
 }
 
 // -----------------------------------------------------------------------------

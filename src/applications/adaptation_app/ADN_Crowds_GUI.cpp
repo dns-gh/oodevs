@@ -87,8 +87,7 @@ void ADN_Crowds_GUI::Build()
     //{
         // Information
         QWidget* pInfoHolder = builder.AddFieldHolder( pPropertiesGroup );
-        ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-        nameField->ConnectWithRefValidity( data_.GetCrowds() );
+        builder.AddLocalizedField( data_.GetCrowds(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
         ADN_GoToButton* goToButton = new ADN_GoToButton( eModels, eEntityType_Population );
         goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "behavior-model", tr( "Behavior model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
         // Density
