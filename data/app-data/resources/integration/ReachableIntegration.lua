@@ -860,7 +860,11 @@ integration.annuleRenfortMouvement = function()
 end
 
 integration.isPointInLocalisation = function( position, localisation )
-    return DEC_Geometrie_EstPointDansLocalisation( position:getPosition(), localisation:getLocalisation() )
+    return integration.isPointInSimLocalisation( position, localisation:getLocalisation() )
+end
+
+integration.isPointInSimLocalisation = function( position, localisation )
+    return DEC_Geometrie_EstPointDansLocalisation( position:getPosition(), localisation )
 end
 
 integration.isPointTrafficable = function( self )
