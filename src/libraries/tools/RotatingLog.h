@@ -57,6 +57,7 @@ private:
     void Populate();
     void DoWrite( const std::string& line );
     void Log( const std::string& line );
+    void Prune();
     void Rotate();
     void CreateLog();
     //@}

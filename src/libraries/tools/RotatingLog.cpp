@@ -43,6 +43,10 @@ public:
     {
         return factory.Write( stream_, line );
     }
+    bool operator<( const Stream& rhs ) const
+    {
+        return filename_ < rhs.filename_;
+    }
 
 private:
     tools::Path filename_;
@@ -54,16 +58,12 @@ RotatingLog::RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& fil
     , filename_( filename )
     , files_   ( files )
     , size_    ( size )
-    , count_   ( 0 )
+    , count_   ( factory.ComputeSize( filename ) )
 {
     Populate();
     if( truncate )
-    {
-        if( files_ <= 1 )
-            filename_.Remove();
-        else
-            Rotate();
-    }
+        Rotate();
+    Prune();
 }
 
 RotatingLog::~RotatingLog()
@@ -81,16 +81,19 @@ void RotatingLog::Populate()
             return false;
         },
         false );
-    if( ! logs_.empty() )
-        CreateLog();
+    logs_.sort();
+    logs_.push_back( new Stream( filename_ ) );
 }
 
 void RotatingLog::DoWrite( const std::string& line )
 {
     try
     {
-        if( size_ != 0 && count_ >= size_ )
+        if( count_ >= size_ )
+        {
             Rotate();
+            Prune();
+        }
     }
     catch( std::exception& e )
     {
@@ -103,28 +106,25 @@ void RotatingLog::DoWrite( const std::string& line )
     Log( line );
 }
 
+void RotatingLog::Log( const std::string& line )
+{
+    count_ += logs_.back().Write( factory_, line );
+}
+
 void RotatingLog::Rotate()
 {
     if( logs_.empty() )
         return;
     logs_.back().Rotate();
-    CreateLog();
+    count_ = 0;
+    logs_.push_back( new Stream( filename_ ) );
+}
+
+void RotatingLog::Prune()
+{
     while( logs_.size() > files_ )
     {
         logs_.front().Remove();
         logs_.pop_front();
     }
-}
-
-void RotatingLog::Log( const std::string& line )
-{
-    if( logs_.empty() )
-        CreateLog();
-    count_ += logs_.back().Write( factory_, line );
-}
-
-void RotatingLog::CreateLog()
-{
-    count_ = factory_.ComputeSize( filename_ );
-    logs_.push_back( new Stream( filename_ ) );
 }

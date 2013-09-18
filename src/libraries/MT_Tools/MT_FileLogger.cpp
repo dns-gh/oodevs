@@ -15,7 +15,7 @@
 MT_FileLogger::MT_FileLogger( const tools::Path& filename, std::size_t files, std::size_t size, int levels, bool truncate, E_Type type, bool sizeInBytes )
     : MT_Logger_ABC( levels, type )
     , sizeInBytes_( sizeInBytes )
-    , log_        ( *this, filename, files, size, truncate )
+    , log_        ( new tools::RotatingLog( *this, filename, files, size, truncate ) )
 {
     // NOTHING
 }
@@ -28,7 +28,7 @@ MT_FileLogger::~MT_FileLogger()
 void MT_FileLogger::WriteString( const std::string& s )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    log_.Write( s );
+    log_->Write( s );
 }
 
 std::size_t MT_FileLogger::Write( std::ostream& os, const std::string& line )

@@ -13,6 +13,7 @@
 #include "MT_Logger_ABC.h"
 #include "tools/RotatingLog.h"
 #include "tools/LogFactory_ABC.h"
+#include <boost/scoped_ptr.hpp>
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
@@ -20,7 +21,6 @@
 namespace tools
 {
     class Path;
-    class Ofstream;
 }
 
 //=============================================================================
@@ -46,7 +46,7 @@ private:
 private:
     bool sizeInBytes_;
     boost::mutex mutex_;
-    tools::RotatingLog log_;
+    boost::scoped_ptr< tools::RotatingLog > log_;
 };
 
 #endif // __MT_FileLogger_h_
