@@ -51,7 +51,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 			c.Assert(len(boundaries), Greater, 0)
 		}
 		if len(boundaries) > 0 {
-			c.Assert(len(boundaries), Equals, 2)
+			c.Assert(boundaries, HasLen, 2)
 			c.Assert(boundaries[0][:1], Equals, "+")
 			c.Assert(boundaries[1][:1], Equals, "-")
 			c.Assert(boundaries[0][1:], Equals, boundaries[1][1:])
@@ -88,7 +88,6 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
 	*simu.SimProcess, *swapi.Client) {
-
 	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, false)
 	client := loginAndWaitModel(c, sim, user, password)
 	return sim, client
