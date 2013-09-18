@@ -93,6 +93,20 @@ func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpo
 	return sim, client
 }
 
+func checkpointAndRestart(c *C, sim *simu.SimProcess, client *swapi.Client) (
+	*simu.SimProcess, *swapi.Client) {
+	session := sim.Opts.SessionName
+	exercise := sim.Opts.ExerciseName
+	checkpoint, err := client.CreateCheckpoint("")
+	c.Assert(err, IsNil)
+	client.Close()
+	sim.Stop()
+
+	sim, client = loadCheckpointAndWaitModel(c, "admin", "", exercise,
+		session, checkpoint)
+	return sim, client
+}
+
 // Test SimProcess --checkpoint. This should be with other SimProcess tests but
 // it is really difficult to craft checkpoint inputs, so we generate one here
 // from a running exercise and reload it.
@@ -107,14 +121,8 @@ func (s *TestSuite) TestCheckpointRestart(c *C) {
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
 	unit, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
-	session := sim.Opts.SessionName
-	checkpoint, err := client.CreateCheckpoint("")
-	c.Assert(err, IsNil)
-	client.Close()
-	sim.Stop()
 
-	sim, client = loadCheckpointAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty,
-		session, checkpoint)
+	sim, client = checkpointAndRestart(c, sim, client)
 	defer sim.Stop()
 	unit2 := client.Model.GetUnit(unit.Id)
 	c.Assert(unit2, NotNil)
@@ -141,16 +149,8 @@ func (s *TestSuite) TestCheckpointCrowd(c *C) {
 	order, err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)
 
-	// Create the checkpoint and quit
-	session := sim.Opts.SessionName
-	checkpoint, err := client.CreateCheckpoint("")
-	c.Assert(err, IsNil)
-	client.Close()
-	sim.Stop()
-
 	// Restart and check the crowd exists and has a mission
-	sim, client = loadCheckpointAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty,
-		session, checkpoint)
+	sim, client = checkpointAndRestart(c, sim, client)
 	defer sim.Stop()
 	crowd2 := client.Model.GetCrowd(crowd.Id)
 	c.Assert(crowd2, NotNil)
