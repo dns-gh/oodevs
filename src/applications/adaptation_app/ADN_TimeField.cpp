@@ -94,8 +94,8 @@ namespace
             : QSpinBox( parent )
             , orientation_ ( qApp->isRightToLeft() ? static_cast< Orientation* >( new RightToLeft() )
                                                    : static_cast< Orientation* >( new LeftToRight() ) )
-            , exact_       ( orientation_->StringWithOrientation( "\\d+", "[0-5]\\d", "[0-5]\\d", "\\d\\d", "[" + QString( QLocale().decimalPoint() ).toStdString() + "]" ) )
-            , intermediate_( orientation_->StringWithOrientation( "\\d*", "\\d*", "\\d*", "\\d*", "[" + QString( QLocale().decimalPoint() ).toStdString() + "]" ) )
+            , exact_       ( orientation_->StringWithOrientation( "\\d+", "[0-5]\\d", "[0-5]\\d", "\\d\\d", QRegExp::escape( QLocale().decimalPoint() ).toStdString() ) )
+            , intermediate_( orientation_->StringWithOrientation( "\\d*", "\\d*", "\\d*", "\\d*", QRegExp::escape( QLocale().decimalPoint() ).toStdString() ) )
         {
             setValue( 0 );
             setMaximum( maxCentiSeconds );
