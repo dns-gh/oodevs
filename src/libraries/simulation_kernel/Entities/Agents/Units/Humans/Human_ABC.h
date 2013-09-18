@@ -11,6 +11,7 @@
 #define __Human_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Enums_Gen.h"
 
 class MIL_AutomateLOG;
 class PHY_HumanRank;
@@ -24,17 +25,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class Human_ABC : public boost::noncopyable
 {
-public:
-    //! @name Types
-    //@{
-    enum E_Location
-    {
-        eBattleField,
-        eMaintenance,
-        eMedical,
-        eFuneral
-    };
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -59,7 +49,7 @@ public:
     //@{
     virtual const PHY_HumanRank& GetRank() const = 0;
     virtual const PHY_HumanWound& GetWound() const = 0;
-    virtual E_Location GetLocation() const = 0;
+    virtual E_HumanLocation GetLocation() const = 0;
     virtual bool IsUsable() const = 0;
     virtual bool IsDead() const = 0;
     virtual bool IsWounded() const = 0;

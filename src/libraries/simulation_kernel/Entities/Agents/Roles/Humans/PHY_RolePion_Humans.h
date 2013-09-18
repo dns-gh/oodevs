@@ -117,7 +117,7 @@ private:
         //! @name Constructors/Destructor
         //@{
         explicit HumanState();
-                 HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, Human_ABC::E_Location location = Human_ABC::eBattleField, bool contaminated = false, bool psyop = false );
+                 HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, E_HumanLocation location = eHumanLocation_Battlefield, bool contaminated = false, bool psyop = false );
         virtual ~HumanState();
         //@}
 
@@ -133,7 +133,7 @@ private:
         unsigned int          number_;
         const PHY_HumanRank*  rank_;
         const PHY_HumanWound* state_;
-        Human_ABC::E_Location location_;
+        E_HumanLocation       location_;
         bool                  contaminated_;
         bool                  psyop_;
         //@}

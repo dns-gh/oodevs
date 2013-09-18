@@ -47,7 +47,7 @@ PHY_RolePion_Humans::HumanState::HumanState()
     : number_               ( 0 )
     , rank_                 ( &PHY_HumanRank::officier_ )
     , state_                ( &PHY_HumanWound::notWounded_ )
-    , location_             ( Human_ABC::eBattleField )
+    , location_             ( eHumanLocation_Battlefield )
     , contaminated_         ( false )
     , psyop_                ( false )
 {
@@ -58,7 +58,7 @@ PHY_RolePion_Humans::HumanState::HumanState()
 // Name: PHY_RolePion_Humans::HumanState constructor
 // Created: ABR 2011-07-18
 // -----------------------------------------------------------------------------
-PHY_RolePion_Humans::HumanState::HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, Human_ABC::E_Location location /*= Human_ABC::eBattleField*/, bool contaminated /*= false*/, bool psyop /*= false*/ )
+PHY_RolePion_Humans::HumanState::HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, E_HumanLocation location /*= eHumanLocation_Battlefield*/, bool contaminated /*= false*/, bool psyop /*= false*/ )
     : number_               ( number )
     , rank_                 ( &rank )
     , state_                ( &state )
@@ -412,17 +412,21 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         // Location
         switch( state.location_ )
         {
-        case Human_ABC::eBattleField:
+        case eHumanLocation_Battlefield:
+            personnel.set_location_deprecated( sword::battlefield );
             personnel.set_location( sword::battlefield );
             break;
-        case Human_ABC::eMaintenance:
+        case eHumanLocation_Maintenance:
+            personnel.set_location_deprecated( sword::maintenance );
             personnel.set_location( sword::maintenance );
             break;
-        case Human_ABC::eMedical:
+        case eHumanLocation_Medical:
+            personnel.set_location_deprecated( sword::medical );
             personnel.set_location( sword::medical );
             break;
-        case Human_ABC::eFuneral: 
-            personnel.set_location( sword::medical ); //$$$ NLD 2011-10-03 TEMPORAIRE EN ATTENDANT SCIPIO, remplacer par sword::funeral
+        case eHumanLocation_Funeral:
+            personnel.set_location_deprecated( sword::medical );
+            personnel.set_location( sword::funeral );
             break;
         }
         // Psyop && contaminated
@@ -559,7 +563,7 @@ unsigned int PHY_RolePion_Humans::GetNbrOperational( const PHY_HumanRank& rank )
     for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = *it;
-        if( state.rank_->GetID() == rank.GetID() && state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
+        if( state.rank_->GetID() == rank.GetID() && state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != eHumanLocation_Medical && !state.psyop_ && !state.contaminated_ )
             result += state.number_;
     }
     return result;
@@ -576,7 +580,7 @@ bool PHY_RolePion_Humans::HasNoMoreOperationalHumans() const
     for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = *it;
-        if( state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ )
+        if( state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != eHumanLocation_Medical && !state.psyop_ )
             return false;
     }
     return true;

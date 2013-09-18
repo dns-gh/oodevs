@@ -951,5 +951,9 @@
         <source>Deactivated</source>
         <translation>Désactivé</translation>
     </message>
+    <message>
+        <source>In funeral system</source>
+        <translation>Dans la chaîne mortuaire</translation>
+    </message>
 </context>
 </TS>
