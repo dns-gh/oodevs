@@ -20,13 +20,12 @@
 */
 // Created: ABR 2011-12-06
 // =============================================================================
-class ADN_Objects_Data_ObjectInfos : public ADN_RefWithName
+class ADN_Objects_Data_ObjectInfos : public ADN_RefWithLocalizedName
 {
 public:
     //! @name Constructors/Destructor
     //@{
              ADN_Objects_Data_ObjectInfos();
-    explicit ADN_Objects_Data_ObjectInfos( const std::string& name );
     virtual ~ADN_Objects_Data_ObjectInfos();
     //@}
 

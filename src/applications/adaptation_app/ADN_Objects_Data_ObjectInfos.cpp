@@ -17,30 +17,14 @@ namespace
     static const std::string locations[ 4 ] = { "polygon", "point", "line", "circle" };
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos
-// Created: JDY 03-07-09
-//-----------------------------------------------------------------------------
-ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& type )
-    : strType_   ( type )
-    , pointSize_ ( 0. )
-{
-    for( int i = 0; i < 4; ++i )
-    {
-        geometries_[ i ] = false;
-    }
-
-    InitializeCapacities();
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
-    : strType_   ()
-    , pointSize_ ( 0. )
+    : pointSize_ ( 0. )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eObjects, "objects" ) );
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
     for( int i = 0; i < 4; ++i )
     {

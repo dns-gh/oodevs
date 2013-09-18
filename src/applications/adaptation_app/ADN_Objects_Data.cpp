@@ -1361,7 +1361,7 @@ void ADN_Objects_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ReadObject( xml::xistream& xis )
 {
-    ADN_Objects_Data_ObjectInfos* pObjInfo = new ADN_Objects_Data_ObjectInfos( xis.attribute< std::string >( "type" ) );
+    ADN_Objects_Data_ObjectInfos* pObjInfo = new ADN_Objects_Data_ObjectInfos();
     if( pObjInfo )
     {
         pObjInfo->ReadArchive( xis );
