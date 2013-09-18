@@ -654,90 +654,6 @@
 <context>
     <name>Logistic</name>
     <message>
-        <source>Instruction:</source>
-        <translation>Instruction:</translation>
-    </message>
-    <message>
-        <source>Consumer:</source>
-        <translation>Consumer:</translation>
-    </message>
-    <message>
-        <source>Handler:</source>
-        <translation>Handler:</translation>
-    </message>
-    <message>
-        <source>Convoy:</source>
-        <translation>Convoy:</translation>
-    </message>
-    <message>
-        <source>Rank:</source>
-        <translation>Rank:</translation>
-    </message>
-    <message>
-        <source>Current packaging:</source>
-        <translation>Current packaging:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>State:</translation>
-    </message>
-    <message>
-        <source>Current state end:</source>
-        <translation>Current state end:</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Unknown</translation>
-    </message>
-    <message>
-        <source>Equipment:</source>
-        <translation>Equipment:</translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation>Breakdown:</translation>
-    </message>
-    <message>
-        <source>Mentally injured:</source>
-        <translation>Mentally injured:</translation>
-    </message>
-    <message>
-        <source>NBC contaminated:</source>
-        <translation>NBC contaminated:</translation>
-    </message>
-    <message>
-        <source>Injury:</source>
-        <translation>Injury:</translation>
-    </message>
-    <message>
-        <source>Not diagnosed</source>
-        <translation>Not diagnosed</translation>
-    </message>
-    <message>
-        <source>No recipients</source>
-        <translation>No recipients</translation>
-    </message>
-    <message>
-        <source>Multiple recipients</source>
-        <translation>Multiple recipients</translation>
-    </message>
-    <message>
-        <source>Transporters provider:</source>
-        <translation>Transporters provider:</translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
-        <translation>Supplier:</translation>
-    </message>
-    <message>
-        <source>Convoyer:</source>
-        <translation>Convoyer:</translation>
-    </message>
-    <message>
-        <source>Current state end :</source>
-        <translation>Current state end :</translation>
-    </message>
-    <message>
         <source>Logistic links/Superiors</source>
         <translation>Logistics links/Superiors</translation>
     </message>
@@ -746,19 +662,7 @@
         <translation>Logistics links</translation>
     </message>
     <message>
-        <source>requested</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>granted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoyed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recipients</source>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

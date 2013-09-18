@@ -68,7 +68,7 @@ private:
     //config
     const tools::GeneralConfig& config_;
 
-    QStringList pathList_; // $$$$ ABR 2013-03-04: TODO Extract this to a new ComboBox class which will handle a registry based historic
+    QStringList pathList_; // $$$$ ABR 2013-03-04: TODO Extract this to a new ComboBox class which will handle a registry based history
 
     QGroupBox* topBox_;
 

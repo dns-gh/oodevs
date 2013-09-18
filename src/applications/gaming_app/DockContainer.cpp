@@ -230,7 +230,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Info
     {
-        gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, *displayExtractor_, staticModel, model.actions_, simulation );
+        gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, *displayExtractor_, staticModel, model.actions_, simulation, network.GetMessageMgr() );
         infoWnd->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
     }

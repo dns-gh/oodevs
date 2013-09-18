@@ -9,18 +9,21 @@
 
 #include "gaming_app_pch.h"
 #include "InfoMaintenanceDialog.h"
+#include "LogisticsRequestsMaintenanceWidget.h"
 #include "LogisticStatusWidgets.h"
-#include "LogisticConsignsWidget.h"
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/LogisticConsigns.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/LogMaintenanceConsign.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoMaintenanceDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor )
+InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
+                                            , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
     : InfoDialog< kernel::MaintenanceStates_ABC >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
@@ -34,7 +37,8 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
     statusLayout->addWidget( new MaintenanceStatusWidget( tabs, controllers, factory ) );
 
-    tabs->addTab( new LogisticConsignsWidget< LogMaintenanceConsign, LogMaintenanceConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMaintenanceDialog", "Instructions" ) );
+    tabs->addTab( new LogisticsRequestsMaintenanceWidget( tabs, controllers, extractor, profile, publisher )
+        , tools::translate( "InfoMaintenanceDialog", "Instructions" ) );
     tabs->addTab( pHaulersRepairersWidget, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "SupplyStates", "Chain status" ) );
     setMinimumWidth( 420 );

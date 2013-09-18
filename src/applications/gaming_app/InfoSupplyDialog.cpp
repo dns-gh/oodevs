@@ -9,13 +9,16 @@
 
 #include "gaming_app_pch.h"
 #include "InfoSupplyDialog.h"
+#include "LogisticsRequestsSupplyWidget.h"
 #include "LogisticStatusWidgets.h"
-#include "LogisticConsignsWidget.h"
-#include "SupplyStocksListView.h"
 #include "SupplyQuotasWidget.h"
+#include "SupplyStocksListView.h"
 #include "SupplyTransportersListView.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/EntityHelpers.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/LogisticConsigns.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/LogSupplyConsign.h"
 
 using namespace kernel;
@@ -25,7 +28,8 @@ using namespace EntityHelpers;
 // Name: InfoSupplyDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor )
+InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
+                                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
     : InfoDialog< SupplyStates >( parent, controllers, tools::translate( "InfoSupplyDialog", "Supply system" ) )
 {
     tabs_ = new QTabWidget( RootWidget() );
@@ -39,7 +43,8 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, Controllers& controllers, g
     statusLayout->addWidget( new SupplyStatusWidget( this, controllers, factory ) );
 
     supplyQuotasWidget_ = new SupplyQuotasWidget( this, controllers, factory );
-    tabs_->addTab( new LogisticConsignsWidget< LogSupplyConsign, LogSupplyConsigns >( this, controllers, extractor ), tools::translate( "InfoSupplyDialog", "Instructions" ) );
+    tabs_->addTab( new LogisticsRequestsSupplyWidget( this, controllers, extractor, profile, publisher )
+        , tools::translate( "InfoSupplyDialog", "Instructions" ) );
     tabs_->addTab( new SupplyStocksListView( this, controllers ), tools::translate( "InfoSupplyDialog", "Stocks" ) );
     tabs_->addTab( supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );
     tabs_->addTab( transportersWidget, tools::translate( "InfoSupplyDialog", "Transporters" ) );

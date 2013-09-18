@@ -1172,10 +1172,6 @@ Reason: %3
         <translation type="unfinished">نظام العرض</translation>
     </message>
     <message>
-        <source>Instructions</source>
-        <translation type="unfinished">يلقي</translation>
-    </message>
-    <message>
         <source>Stocks</source>
         <translation type="unfinished">الأرصدة</translation>
     </message>
@@ -1186,6 +1182,10 @@ Reason: %3
     <message>
         <source>Transporters</source>
         <translation type="unfinished">الناقلون</translation>
+    </message>
+    <message>
+        <source>Instructions</source>
+        <translation type="unfinished">يلقي</translation>
     </message>
 </context>
 <context>
@@ -1449,6 +1449,77 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>Logistic</name>
+    <message>
+        <source>Psy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Requester:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rank:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current packaging:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Handler:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Started:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ending:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdown:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Injury:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recipient(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transport provider:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conveyor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supplier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Logistic : Push supply flow</name>
     <message>
         <source>Move waypoint up</source>
@@ -1505,11 +1576,38 @@ Reason: %3
 <context>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
-        <source>Logistic requests</source>
+        <source>Show completed requests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Processing instructions</source>
+        <source>Details</source>
+        <translation type="unfinished">تفاصيل</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticHistoryDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
+    </message>
+    <message>
+        <source>Logistic history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reduce history to the last simulated days :</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1681,6 +1779,86 @@ Reason: %3
     <message>
         <source>Change Logistic Links</source>
         <translation type="unfinished">تغيير الارتباطات السوقية</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticsRequestsHistoryTable</name>
+    <message>
+        <source>Previous state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Handler</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticsRequestsSupplyTable</name>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">الموارد</translation>
+    </message>
+    <message>
+        <source>Requested</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Granted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conveyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticsRequestsSupplyWidget</name>
+    <message>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recipient(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supplier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticsRequestsTable</name>
+    <message>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Requester</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Handler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2157,6 +2335,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>&amp;Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic history</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

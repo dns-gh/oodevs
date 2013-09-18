@@ -181,7 +181,7 @@ void ClientsNetworker::Send( const sword::AuthenticationToClient& msg )
     try
     {
         // Obviously we must send authentication responses to unauthenticated
-        // clients. The connected_profile_list passthrough is historical and
+        // clients. The connected_profile_list passthrough is historyal and
         // and might be removed in the future.
         const T_Clients* receivers = &internals_;
         if( msg.message().has_authentication_response() ||

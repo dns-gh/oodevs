@@ -11,7 +11,6 @@
 #include "LogMedicalConsign.h"
 #include "LogisticConsigns.h"
 #include "Simulation.h"
-#include "LogConsignDisplayer_ABC.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -30,11 +29,9 @@ using namespace kernel;
 // Name: LogMedicalConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const Simulation& simulation, const sword::LogMedicalHandlingCreation& message )
-    : controller_         ( controller )
+LogMedicalConsign::LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const Simulation& simulation, const sword::LogMedicalHandlingCreation& message )
+    : LogisticsConsign_ABC( message.request().id(), controller, simulation, message.tick() )
     , resolver_           ( resolver )
-    , simulation_         ( simulation )
-    , nID_                ( message.request().id() )
     , consumer_           ( resolver_.Get( message.unit().id() ) )
     , pPionLogHandling_   ( 0 )
     , wound_              ( E_HumanWound( message.wound() ) )
@@ -42,7 +39,7 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resol
     , bContaminated_      ( message.nbc_contaminated() )
     , diagnosed_          ( false )
     , nState_             ( eLogMedicalHandlingStatus_Termine )
-    , currentStateEndTick_( std::numeric_limits< unsigned int >::max() )
+    , rank_               ( (E_HumanRank)message.rank() )
 {
     consumer_.Get< LogMedicalConsigns >().AddConsign( *this );
 }
@@ -72,57 +69,21 @@ void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message )
         if( pPionLogHandling_ )
             pPionLogHandling_->Get< LogMedicalConsigns >().HandleConsign( *this );
     }
-    if( message.has_mental_wound()  )
+    if( message.has_mental_wound() )
         bMentalDeceased_ = message.mental_wound();
-    if( message.has_nbc_contaminated()  )
+    if( message.has_nbc_contaminated() )
         bContaminated_   = message.nbc_contaminated();
-    if( message.has_wound()  )
+    if( message.has_wound() )
         wound_ = E_HumanWound( message.wound() );
-    if( message.has_state()  )
+    if( message.has_state() )
         nState_ = E_LogMedicalHandlingStatus( message.state() );
     if( message.has_current_state_end_tick() )
         currentStateEndTick_ = message.current_state_end_tick();
     else
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
-    if( message.has_diagnosed()  )
+    if( message.has_diagnosed() )
         diagnosed_ = message.diagnosed();
     controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogMedicalConsign::Display
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-void LogMedicalConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const
-{
-    gui::DisplayExtractor& extractor = *static_cast< gui::DisplayExtractor* >( &displayExtractor );
-    displayer.DisplayTitle( consumer_.GetTooltip(), tools::ToString( nState_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Instruction:" ), extractor.GetDisplayName( nID_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Consumer:" ), extractor.GetDisplayName( consumer_ ) );
-    if( pPionLogHandling_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Handler:" ), extractor.GetDisplayName( *pPionLogHandling_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Mentally injured:" ), extractor.GetDisplayName( bMentalDeceased_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "NBC contaminated:" ), extractor.GetDisplayName( bContaminated_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "State:" ), tools::ToString( nState_ ) );
-    if( diagnosed_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Injury:" ), tools::ToString( wound_ ) );
-    else
-        displayer.DisplayItem( tools::translate( "Logistic", "Injury:" ), tools::translate( "Logistic", "Not diagnosed" ) );
-    if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
-        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
-    else
-    {
-        unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
-        QDateTime endDate = QDateTime::fromTime_t( endSeconds );
-        QDateTime curDate = simulation_.GetDateTime();
-
-        QString dateDisplay;
-        if( endDate.date() != curDate.date() )
-            dateDisplay += endDate.date().toString() + " ";
-        dateDisplay += endDate.time().toString();
-
-        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -154,19 +115,116 @@ void LogMedicalConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogMedicalConsign::GetId
-// Created: LDC 2013-09-16
-// -----------------------------------------------------------------------------
-unsigned int LogMedicalConsign::GetId() const
-{
-    return nID_;
-}
-    
-// -----------------------------------------------------------------------------
 // Name: LogMedicalConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
 bool LogMedicalConsign::RefersToAgent( unsigned int id ) const
 {
     return consumer_.GetId() == id || ( pPionLogHandling_ && pPionLogHandling_->GetId() == id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetRank
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+E_HumanRank LogMedicalConsign::GetRank() const
+{
+    return rank_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetConsumer
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Agent_ABC* LogMedicalConsign::GetConsumer() const
+{
+    return &consumer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetHandler
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* LogMedicalConsign::GetHandler() const
+{
+    return pPionLogHandling_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::IsMental
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+bool LogMedicalConsign::IsMental() const
+{
+    return bMentalDeceased_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::IsContamined
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+bool LogMedicalConsign::IsContamined() const
+{
+    return bContaminated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::IsDiagnosed
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+bool LogMedicalConsign::IsDiagnosed() const
+{
+    return diagnosed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetWound
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+E_HumanWound LogMedicalConsign::GetWound() const
+{
+    return wound_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetStatus
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+E_LogMedicalHandlingStatus LogMedicalConsign::GetStatus() const
+{
+    return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetStatusDisplay
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogMedicalConsign::GetStatusDisplay() const
+{
+    return tools::ToString( nState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetStatusDisplay
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogMedicalConsign::GetStatusDisplay( int status ) const
+{
+    if( 0 <= status && status < eNbrLogMedicalHandlingStatus )
+        return tools::ToString( static_cast< E_LogMedicalHandlingStatus >( status ) );
+    return QString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetCurrentStartedTime
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogMedicalConsign::GetCurrentStartedTime() const
+{
+    return GetStatusLastStarted( nState_ );
+}
+
+kernel::Entity_ABC* LogMedicalConsign::GetRequestHandler( uint32_t entityId ) const
+{
+    return resolver_.Find( entityId );
 }

@@ -9,22 +9,26 @@
 
 #include "gaming_app_pch.h"
 #include "InfoFuneralDialog.h"
-#include "LogisticConsignsWidget.h"
+#include "LogisticsRequestsFuneralWidget.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/LogisticConsigns.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/LogFuneralConsign.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoFuneralDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoFuneralDialog::InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor )
+InfoFuneralDialog::InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers
+                                    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
     : InfoDialog_Base( parent, tools::translate( "InfoFuneralDialog", "Funeral system" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
     controllers_.Register( *this );
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new LogisticConsignsWidget< LogFuneralConsign, LogFuneralConsigns >( tabs, controllers, extractor ), tools::translate( "InfoFuneralDialog", "Instructions" ) );
+    tabs->addTab( new LogisticsRequestsFuneralWidget( tabs, controllers, extractor, profile, publisher )
+                , tools::translate( "InfoFuneralDialog", "Instructions" ) );
     setMinimumWidth( 400 );
 }
 

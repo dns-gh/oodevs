@@ -11,7 +11,6 @@
 #include "LogMaintenanceConsign.h"
 #include "LogisticConsigns.h"
 #include "Simulation.h"
-#include "LogConsignDisplayer_ABC.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/GlTools_ABC.h"
@@ -33,17 +32,14 @@ using namespace kernel;
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const sword::LogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation )
-    : controller_         ( controller )
+    : LogisticsConsign_ABC( message.request().id(), controller, simulation, message.tick() )
     , resolver_           ( resolver )
-    , simulation_         ( simulation )
-    , nID_                ( message.request().id() )
     , consumer_           ( resolver_.Get( message.unit().id() ) )
     , pPionLogHandling_   ( 0 )
     , equipmentType_      ( & componentResolver.Get( message.equipement().id() ) )
     , breakdownType_      ( & breakdownResolver.Get( message.breakdown().id() ) )
     , diagnosed_          ( false )
     , nState_             ( eLogMaintenanceHandlingStatus_Termine )
-    , currentStateEndTick_( std::numeric_limits< unsigned int >::max() )
 {
     consumer_.Get< LogMaintenanceConsigns >().AddConsign( *this );
 }
@@ -86,40 +82,6 @@ void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogMaintenanceConsign::Display
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const
-{
-    gui::DisplayExtractor& extractor = *static_cast< gui::DisplayExtractor* >( &displayExtractor );
-    displayer.DisplayTitle( consumer_.GetTooltip(), tools::ToString( nState_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Instruction:" ), extractor.GetDisplayName( nID_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Consumer:" ), extractor.GetDisplayName( consumer_ ) );
-    if( pPionLogHandling_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Handler:" ), extractor.GetDisplayName( *pPionLogHandling_ ) );
-    if( diagnosed_ && equipmentType_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Equipment:" ), extractor.GetDisplayName( equipmentType_->GetName() ) );
-    if( diagnosed_ && breakdownType_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Breakdown:" ), extractor.GetDisplayName( breakdownType_->GetName() ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "State:" ), tools::ToString( nState_ ) );
-    if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
-        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
-    else
-    {
-        unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
-        QDateTime endDate = QDateTime::fromTime_t( endSeconds );
-        QDateTime curDate = simulation_.GetDateTime();
-
-        QString dateDisplay;
-        if( endDate.date() != curDate.date() )
-            dateDisplay += endDate.date().toString() + " ";
-        dateDisplay += endDate.time().toString();
-
-        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
@@ -149,19 +111,98 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogMaintenanceConsign::GetId
-// Created: LDC 2013-09-16
-// -----------------------------------------------------------------------------
-unsigned int LogMaintenanceConsign::GetId() const
-{
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
 bool LogMaintenanceConsign::RefersToAgent( unsigned int id ) const
 {
     return consumer_.GetId() == id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetConsumer
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Agent_ABC* LogMaintenanceConsign::GetConsumer() const
+{
+    return &consumer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetHandler
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* LogMaintenanceConsign::GetHandler() const
+{
+    return pPionLogHandling_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetEquipment
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::ComponentType* LogMaintenanceConsign::GetEquipment() const
+{
+    return equipmentType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetBreakdown
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::BreakdownType* LogMaintenanceConsign::GetBreakdown() const
+{
+    return breakdownType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::IsDiagnosed
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+bool LogMaintenanceConsign::IsDiagnosed() const
+{
+    return diagnosed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetStatus
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+E_LogMaintenanceHandlingStatus LogMaintenanceConsign::GetStatus() const
+{
+    return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetStatusDisplay
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogMaintenanceConsign::GetStatusDisplay() const
+{
+    return tools::ToString( nState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetStatusDisplay
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogMaintenanceConsign::GetStatusDisplay( int status ) const
+{
+    if( 0 <= status && status < eNbrLogMaintenanceHandlingStatus )
+        return tools::ToString( static_cast< E_LogMaintenanceHandlingStatus >( status ) );
+    return QString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetCurrentStartedTime
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogMaintenanceConsign::GetCurrentStartedTime() const
+{
+    return GetStatusLastStarted( nState_ );
+}
+
+kernel::Entity_ABC* LogMaintenanceConsign::GetRequestHandler( uint32_t entityId ) const
+{
+    return resolver_.Find( entityId );
 }

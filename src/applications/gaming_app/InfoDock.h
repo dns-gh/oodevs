@@ -34,6 +34,7 @@ namespace gui
 }
 
 class StaticModel;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  InfoDock
@@ -46,8 +47,9 @@ class InfoDock : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
-                       gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
+             InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons
+                       , gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel
+                       , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, Publisher_ABC& publisher );
     virtual ~InfoDock();
     //@}
 };

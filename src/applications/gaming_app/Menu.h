@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class ContextMenu;
     class Controllers;
     class Logger_ABC;
     class ObjectTypes;
@@ -63,6 +64,7 @@ private:
     kernel::Controllers& controllers_;
     UserProfileDialog& profileDialog_;
     int profileMenu_;
+    kernel::ContextMenu* logisticSubMenu_;
     gui::RichAction* windowAction_;
     //@}
 };
