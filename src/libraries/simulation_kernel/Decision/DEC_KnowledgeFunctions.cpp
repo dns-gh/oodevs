@@ -23,6 +23,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
+#include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Urban/MIL_UrbanCache.h"
 

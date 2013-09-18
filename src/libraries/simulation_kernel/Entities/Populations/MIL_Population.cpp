@@ -20,8 +20,10 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "MIL_AgentServer.h"
 #include "MIL_PopulationAttitude.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationFlow.h"
@@ -58,7 +60,7 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ )
 {
     unsigned int nTypeID = population->GetType().GetID();
-    const MissionController_ABC* const controller = &population->orderManager_.GetController();
+    const MissionController_ABC* const controller = &population->orderManager_->GetController();
     archive << nTypeID
             << controller;
 }
@@ -88,9 +90,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
                                 unsigned int gcPause,
                                 unsigned int gcMult,
                                 sword::DEC_Logger* logger )
-    : MIL_Entity_ABC( xis )
+    : MIL_Entity_ABC( xis, idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pType_                      ( &type )
-    , nID_                        ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pArmy_                      ( &army )
     , pDefaultAttitude_           ( 0 )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
@@ -99,7 +100,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( controller, *this )
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -144,9 +145,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type,
                                 MissionController_ABC& controller )
-    : MIL_Entity_ABC( type.GetName() )
+    : MIL_Entity_ABC( type.GetName(), 0 )
     , pType_                      ( &type )
-    , nID_                        ( 0 )
     , pArmy_                      ( 0 )
     , pDefaultAttitude_           ( MIL_PopulationAttitude::Find( "calme" ) )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
@@ -154,7 +154,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( controller, *this )
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -185,9 +185,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
                                 unsigned int gcMult,
                                 sword::DEC_Logger* logger,
                                 unsigned int context )
-    : MIL_Entity_ABC( name )
+    : MIL_Entity_ABC( name, idManager_.GetId() )
     , pType_                      ( &type )
-    , nID_                        ( idManager_.GetId() )
     , pArmy_                      ( &army )
     , pDefaultAttitude_           ( 0 )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
@@ -196,7 +195,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( controller, *this )
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -261,9 +260,8 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
 void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file >> const_cast< unsigned int& >( nID_ )
-         >> const_cast< MIL_Army_ABC*& >( pArmy_ );
-    idManager_.GetId( nID_, true );
+    file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
+    idManager_.GetId( GetID(), true );
     MIL_AffinitiesMap* pAffinities;
     MIL_DictionaryExtensions* pExtensions;
     unsigned int nAttitudeID;
@@ -310,8 +308,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     unsigned attitude = pDefaultAttitude_->GetID();
-    file << nID_
-         << pArmy_
+    file << pArmy_
          << attitude
          << rArmedIndividuals_
          << rNewArmedIndividuals_
@@ -348,7 +345,7 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
         MT_LOG_ERROR_MSG( "Saving Population with no flow nor concentration." );
     xos << xml::start( "population" );
     MIL_Entity_ABC::WriteODB ( xos ) ;
-    xos << xml::attribute( "id", nID_ )
+    xos << xml::attribute( "id", GetID() )
         << xml::attribute( "type", pType_->GetName() )
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
     if( !concentrations_.empty() )
@@ -471,7 +468,7 @@ void MIL_Population::UpdateDecision( float duration )
 {
     try
     {
-        orderManager_.Update();
+        orderManager_->Update();
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
     catch( const std::exception& e )
@@ -1147,7 +1144,7 @@ double MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, 
 // -----------------------------------------------------------------------------
 uint32_t MIL_Population::OnReceiveOrder( const sword::CrowdOrder& msg )
 {
-    return orderManager_.OnReceiveMission( msg );
+    return orderManager_->OnReceiveMission( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1156,7 +1153,7 @@ uint32_t MIL_Population::OnReceiveOrder( const sword::CrowdOrder& msg )
 // -----------------------------------------------------------------------------
 uint32_t MIL_Population::OnReceiveFragOrder( const sword::FragOrder& msg )
 {
-    return orderManager_.OnReceiveFragOrder( msg );
+    return orderManager_->OnReceiveFragOrder( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1228,7 +1225,7 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicActi
         roleDec->Reset();
     UpdateState();
     UpdateBarycenter();
-    orderManager_.CancelMission();
+    orderManager_->CancelMission();
     bHasDoneMagicMove_ = true;
 }
 
@@ -1245,7 +1242,7 @@ void MIL_Population::OnReceiveMsgDestroyAll()
     DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
     if( roleDec )
         roleDec->Reset();
-    orderManager_.CancelMission();
+    orderManager_->CancelMission();
 }
 
 // -----------------------------------------------------------------------------
@@ -1426,7 +1423,7 @@ void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicA
 void MIL_Population::SendCreation( unsigned int context ) const
 {
     client::CrowdCreation asnMsg;
-    asnMsg().mutable_crowd()->set_id( nID_ );
+    asnMsg().mutable_crowd()->set_id( GetID() );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().mutable_party()->set_id( pArmy_->GetID() );
     asnMsg().set_name( GetName() );
@@ -1451,7 +1448,7 @@ void MIL_Population::SendCreation( unsigned int context ) const
 void MIL_Population::SendFullState() const
 {
     client::CrowdUpdate asnMsg;
-    asnMsg().mutable_crowd()->set_id( nID_ );
+    asnMsg().mutable_crowd()->set_id( GetID() );
     const DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
     if( roleDec )
         roleDec->SendFullState( asnMsg );
@@ -1486,7 +1483,7 @@ void MIL_Population::UpdateNetwork()
         if( GetRole< DEC_PopulationDecision >().HasStateChanged() || criticalIntelligenceChanged_ || armedIndividualsChanged_ || pAffinities_->HasChanged() || pExtensions_->HasChanged() || HasHumansChanged() )
         {
             client::CrowdUpdate asnMsg;
-            asnMsg().mutable_crowd()->set_id( nID_ );
+            asnMsg().mutable_crowd()->set_id( GetID() );
             GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
             if( criticalIntelligenceChanged_ && !criticalIntelligence_.empty() )
                 asnMsg().set_critical_intelligence( criticalIntelligence_ );
@@ -1582,15 +1579,6 @@ const MIL_PopulationAttitude& MIL_Population::GetDefaultAttitude() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetID
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-unsigned int MIL_Population::GetID() const
-{
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetType
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
@@ -1606,7 +1594,7 @@ const MIL_PopulationType& MIL_Population::GetType() const
 // -----------------------------------------------------------------------------
 const MIL_PopulationOrderManager& MIL_Population::GetOrderManager() const
 {
-    return orderManager_;
+    return *orderManager_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1615,7 +1603,7 @@ const MIL_PopulationOrderManager& MIL_Population::GetOrderManager() const
 // -----------------------------------------------------------------------------
 MIL_PopulationOrderManager& MIL_Population::GetOrderManager()
 {
-    return orderManager_;
+    return *orderManager_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1893,7 +1881,7 @@ void MIL_Population::OnReloadBrain( const sword::UnitMagicAction& msg )
         GetRole< DEC_PopulationDecision >().SetModel( *pModel );
 
     GetDecision().Reload( !modelChanged );
-    orderManager_.CancelMission();
+    orderManager_->CancelMission();
 }
 
 // -----------------------------------------------------------------------------

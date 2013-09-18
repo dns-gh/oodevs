@@ -15,7 +15,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Authentication.h"
 #include <xeumeuleu/xml.hpp>
-#include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ConstructionAttribute )

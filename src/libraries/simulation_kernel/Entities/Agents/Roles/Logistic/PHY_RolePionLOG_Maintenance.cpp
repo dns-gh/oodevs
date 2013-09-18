@@ -25,6 +25,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "MIL_Time_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"

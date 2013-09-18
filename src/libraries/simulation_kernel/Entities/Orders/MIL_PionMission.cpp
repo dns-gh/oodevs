@@ -18,6 +18,7 @@
 #include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"

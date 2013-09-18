@@ -40,6 +40,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -703,15 +704,16 @@ void MIL_AutomateLOG::SendChangedState() const
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error sending states of log automat " << GetID() << " : " << tools::GetExceptionMsg( e ) );
+        MT_LOG_ERROR_MSG( "Error sending states of log automat " << GetLogisticId()
+                << " : " << tools::GetExceptionMsg( e ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::GetID
+// Name: MIL_AutomateLOG::GetLogisticId
 // Created: AHC 2010-09-24
 // -----------------------------------------------------------------------------
-unsigned int MIL_AutomateLOG::GetID() const
+unsigned int MIL_AutomateLOG::GetLogisticId() const
 {
     assert( pAssociatedFormation_ || pAssociatedAutomate_ );
     if( pAssociatedFormation_ )

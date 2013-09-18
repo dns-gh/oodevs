@@ -79,7 +79,6 @@ public:
     //! @name Accessors
     //@{
     virtual MIL_Army_ABC& GetArmy() const;
-    unsigned int GetID() const;
     MIL_AutomateLOG* GetBrainLogistic() const;
     MIL_AutomateLOG* FindLogisticManager() const;
     const MIL_Color& GetColor() const;
@@ -131,7 +130,6 @@ private:
 private:
     //! @name Attributes
     //@{
-    unsigned int nID_;
     MIL_Army_ABC* pArmy_;
     MIL_Formation* pParent_;
     const PHY_NatureLevel* pLevel_;

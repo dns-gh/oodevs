@@ -11,7 +11,6 @@
 #include "BuildableCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "ConstructionAttribute.h"
-#include "MIL_AgentServer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"

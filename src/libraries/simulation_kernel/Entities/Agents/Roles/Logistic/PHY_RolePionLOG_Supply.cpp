@@ -30,6 +30,7 @@
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/ExerciseSettings.h"

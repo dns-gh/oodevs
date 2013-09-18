@@ -27,6 +27,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 

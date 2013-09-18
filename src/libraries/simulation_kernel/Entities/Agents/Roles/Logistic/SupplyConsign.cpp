@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyConsign.h"
-#include "MIL_AgentServer.h"
 #include "SupplyRequest_ABC.h"
 #include "SupplyConvoy_ABC.h"
 #include "SupplyConvoyFactory_ABC.h"

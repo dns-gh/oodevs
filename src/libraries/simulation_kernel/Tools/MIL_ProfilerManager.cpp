@@ -16,6 +16,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MT_Tools/MT_Logger.h"
 #include <direct.h>

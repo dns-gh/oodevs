@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
-#include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"

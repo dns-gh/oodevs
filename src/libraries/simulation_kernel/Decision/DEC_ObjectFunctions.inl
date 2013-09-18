@@ -9,7 +9,6 @@
 //
 // *****************************************************************************
 
-#include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 

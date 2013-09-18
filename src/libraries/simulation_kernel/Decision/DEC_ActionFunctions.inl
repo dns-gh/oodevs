@@ -9,7 +9,6 @@
 //
 //*****************************************************************************
 
-#include "MIL_AgentServer.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Tools.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"

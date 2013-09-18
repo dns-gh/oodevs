@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentDataDetection.h"
-#include "MIL_AgentServer.h"
 #include "DEC_Knowledge_AgentPerceptionDataDetection.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

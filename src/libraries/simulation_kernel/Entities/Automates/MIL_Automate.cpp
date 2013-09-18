@@ -37,6 +37,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL_AutomateType.h"
+#include "MIL_AgentServer.h"
 #include "MissionController_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "Network/NET_ASN_Tools.h"
@@ -73,9 +74,10 @@ void save_construct_data( Archive& archive, const MIL_Automate* automat, const u
 {
     assert( automat->pType_ );
     unsigned int type = automat->pType_->GetID();
+    unsigned int id = automat->GetID();
     const MissionController_ABC* const controller = &automat->pOrderManager_->GetController();
     archive << type
-            << automat->nID_
+            << id
             << controller;
 }
 
@@ -105,9 +107,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
                             unsigned int gcPause,
                             unsigned int gcMult,
                             sword::DEC_Logger* logger )
-    : MIL_Entity_ABC         ( xis )
+    : MIL_Entity_ABC         ( xis, nID )
     , pType_                 ( &type )
-    , nID_                   ( nID )
     , pParentFormation_      ( dynamic_cast< MIL_Formation* >( &parent ) )
     , pParentAutomate_       ( dynamic_cast< MIL_Automate* >( &parent ) )
     , pOrderManager_         ( new MIL_AutomateOrderManager( controller, *this ) )
@@ -137,9 +138,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
                             unsigned int nID,
                             MissionController_ABC& controller )
-    : MIL_Entity_ABC         ( "" )
+    : MIL_Entity_ABC         ( "", nID )
     , pType_                 ( &type )
-    , nID_                   ( nID )
     , pParentFormation_      ( 0 )
     , pParentAutomate_       ( 0 )
     , bEngaged_              ( true )
@@ -173,9 +173,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type,
                             sword::DEC_Logger* logger,
                             unsigned int context,
                             const MIL_DictionaryExtensions& extensions )
-    : MIL_Entity_ABC         ( name )
+    : MIL_Entity_ABC         ( name, nID )
     , pType_                 ( &type )
-    , nID_                   ( nID )
     , pParentFormation_      ( dynamic_cast< MIL_Formation* >( &parent ) )
     , pParentAutomate_       ( dynamic_cast< MIL_Automate* >( &parent ) )
     , bEngaged_              ( true )
@@ -265,7 +264,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
     MIL_Color* pColor;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
-    file >> const_cast< unsigned int& >( nID_ );
     {
         DEC_AutomateDecision* pRole;
         file >> pRole;
@@ -309,7 +307,6 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
     const MIL_Color* const pColor = pColor_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file << boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
-    file << const_cast< unsigned int& >( nID_ );
     SaveRole< DEC_AutomateDecision >( *this, file );
     file << pParentFormation_;
     file << pParentAutomate_;
@@ -345,15 +342,15 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
         >> xml::list( "automat", *this, &MIL_Automate::ReadAutomatSubordinate );
     pExtensions_.reset( new MIL_DictionaryExtensions( xis ) );
     if( !pPionPC_ )
-        throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has no command post", nID_ ) );
+        throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has no command post", GetID() ) );
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
-        throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has no knowledge group", nID_ ) );
+        throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has no knowledge group", GetID() ) );
     std::string logLevelStr = PHY_LogisticLevel::none_.GetName();
     xis >> xml::optional >> xml::attribute( "logistic-level", logLevelStr );
     const PHY_LogisticLevel* pLogLevel = PHY_LogisticLevel::Find( logLevelStr );
     if( !pLogLevel )
-        throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has an invalid logistic level", nID_ ) );
+        throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has an invalid logistic level", GetID() ) );
     if( *pLogLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *pLogLevel ) );
@@ -408,7 +405,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     assert( pKnowledgeGroup_ );
     xos << xml::start( "automat" );
     MIL_Entity_ABC::WriteODB( xos ) ;
-    xos     << xml::attribute( "id", nID_ )
+    xos     << xml::attribute( "id", GetID() )
             << xml::attribute( "engaged", bEngaged_ )
             << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() );
     if( pBrainLogistic_.get() )
@@ -552,7 +549,7 @@ void MIL_Automate::UpdateNetwork() const
         if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() || pExtensions_->HasChanged() )
         {
             client::AutomatAttributes msg;
-            msg().mutable_automat()->set_id( nID_ );
+            msg().mutable_automat()->set_id( GetID() );
             if( bAutomateModeChanged_ )
                 msg().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
             GetRole< DEC_AutomateDecision >().SendChangedState( msg );
@@ -860,7 +857,7 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 void MIL_Automate::SendCreation( unsigned int context ) const
 {
     client::AutomatCreation message;
-    message().mutable_automat()->set_id( nID_ );
+    message().mutable_automat()->set_id( GetID() );
     message().mutable_type()->set_id( pType_->GetID() );
     message().mutable_party()->set_id( GetArmy().GetID() );
     message().mutable_knowledge_group()->set_id( GetKnowledgeGroup()->GetId() );
@@ -890,7 +887,7 @@ void MIL_Automate::SendCreation( unsigned int context ) const
 void MIL_Automate::SendFullState( unsigned int contex ) const
 {
     client::AutomatAttributes message;
-    message().mutable_automat()->set_id( nID_ );
+    message().mutable_automat()->set_id( GetID() );
     message().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
     const DEC_AutomateDecision* roleDec = RetrieveRole< DEC_AutomateDecision >();
     if( roleDec )
@@ -1353,15 +1350,11 @@ const MIL_Army_ABC* MIL_Automate::GetArmySurrenderedTo() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetID
-// Created: NLD 2004-08-17
-// -----------------------------------------------------------------------------
-unsigned int MIL_Automate::GetID() const
+unsigned int MIL_Automate::GetLogisticId() const
 {
-    return nID_;
+    return GetID();
 }
 
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetType
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------

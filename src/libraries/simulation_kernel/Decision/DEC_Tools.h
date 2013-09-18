@@ -12,10 +12,6 @@
 #ifndef __DEC_Tools_h_
 #define __DEC_Tools_h_
 
-#include "MIL.h"
-
-#include "MIL_AgentServer.h"
-
 class DEC_Decision_ABC;
 class DEC_FrontAndBackLinesComputer;
 class DEC_Gen_Object;

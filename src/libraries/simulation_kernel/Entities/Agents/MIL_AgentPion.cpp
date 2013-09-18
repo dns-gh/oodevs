@@ -53,6 +53,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_Fire.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "MIL_AgentServer.h"
 #include "MissionController_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "NetworkNotificationHandler_ABC.h"

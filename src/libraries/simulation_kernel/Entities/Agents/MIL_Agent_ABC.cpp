@@ -10,10 +10,17 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "MIL_Agent_ABC.h"
+#include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.hpp>
 
-MIL_IDManager MIL_Agent_ABC::idManager_;
+
+namespace
+{
+MIL_IDManager idManager;
+}
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Agent_ABC )
 
@@ -22,8 +29,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Agent_ABC )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis )
-    : MIL_Entity_ABC( xis )
-    , nID_          ( idManager_.GetId( xis.attribute< unsigned long >( "id" ), true ) )
+    : MIL_Entity_ABC( xis, idManager.GetId( xis.attribute< unsigned long >( "id" ), true ) )
 {
     // NOTHING
 }
@@ -33,8 +39,7 @@ MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis )
 // Created: RDS 2008-05-09
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name )
-    : MIL_Entity_ABC ( name )
-    , nID_           ( idManager_.GetId() )
+    : MIL_Entity_ABC ( name, idManager.GetId() )
 {
     // NOTHING
 }
@@ -49,21 +54,12 @@ MIL_Agent_ABC::~MIL_Agent_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Agent_ABC::GetID
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-unsigned int MIL_Agent_ABC::GetID() const
-{
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Agent_ABC::operator==
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 bool MIL_Agent_ABC::operator==( const MIL_Agent_ABC& rhs ) const
 {
-    return nID_ == rhs.nID_;
+    return GetID() == rhs.GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,5 +68,18 @@ bool MIL_Agent_ABC::operator==( const MIL_Agent_ABC& rhs ) const
 // -----------------------------------------------------------------------------
 bool MIL_Agent_ABC::operator!=( const MIL_Agent_ABC& rhs ) const
 {
-    return nID_ != rhs.nID_;
+    return GetID() != rhs.GetID();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Agent_ABC::serialize
+// Created: SBO 2009-07-01
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_Agent_ABC::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_Entity_ABC >( *this );
+}
+
+template void MIL_Agent_ABC::serialize( MIL_CheckPointInArchive&, const unsigned int );
+template void MIL_Agent_ABC::serialize( MIL_CheckPointOutArchive&, const unsigned int );

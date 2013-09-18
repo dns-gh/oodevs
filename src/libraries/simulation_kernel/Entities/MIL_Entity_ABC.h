@@ -15,6 +15,7 @@
 #pragma warning( push, 0 )
 #include <boost/archive/binary_oarchive_impl.hpp>
 #pragma warning( pop ) // $$$$ LDC Mandatory in order for is_abstract stuff below to compile
+#include <boost/serialization/export.hpp>  
 
 namespace xml
 {
@@ -36,13 +37,14 @@ class MIL_Entity_ABC : public tools::RoleContainer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_Entity_ABC( const std::string& name );
-    explicit MIL_Entity_ABC( xml::xistream& xis );
+             MIL_Entity_ABC( const std::string& name, unsigned int id );
+             MIL_Entity_ABC( xml::xistream& xis, unsigned int id );
     virtual ~MIL_Entity_ABC();
     //@}
 
     //! @name Accessors
     //@{
+    unsigned int GetID() const;
     const std::string& GetName() const;
     virtual MIL_Army_ABC& GetArmy() const = 0;
     virtual bool CanEmitReports() const = 0;
@@ -63,6 +65,7 @@ private:
     //! @name data Members
     //@{
     const std::string strName_;
+    const unsigned int id_;
     //@}
 };
 
@@ -75,15 +78,6 @@ namespace serialization {
 } // namespace serialization
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Entity_ABC::serialize
-// Created: RDS 2008-05-09
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_Entity_ABC::serialize( Archive& archive, const unsigned int )
-{
-    archive & boost::serialization::base_object< tools::RoleContainer >( *this )
-        & const_cast< std::string& >( strName_ ) ;
-}
+BOOST_CLASS_EXPORT_KEY( MIL_Entity_ABC )
 
 #endif // __MIL_Entity_ABC_h_

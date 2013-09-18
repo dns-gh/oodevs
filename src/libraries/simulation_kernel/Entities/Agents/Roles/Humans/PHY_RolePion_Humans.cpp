@@ -27,6 +27,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "MIL_Time_ABC.h"
 #include "tools/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>

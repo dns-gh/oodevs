@@ -27,6 +27,7 @@
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"

@@ -42,8 +42,7 @@ namespace
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
-    : MIL_Entity_ABC( xis )
-    , nID_        ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
+    : MIL_Entity_ABC( xis, idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pArmy_      ( &army )
     , pParent_    ( pParent )
     , pLevel_     ( 0 )
@@ -78,8 +77,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
 // Created: LDC 2010-10-21
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( int level, const std::string& name, std::string logLevelStr, MIL_Army_ABC& army, MIL_Formation* parent )
-    : MIL_Entity_ABC( name )
-    , nID_        ( idManager_.GetId() )
+    : MIL_Entity_ABC( name, idManager_.GetId() )
     , pArmy_      ( &army )
     , pParent_    ( parent )
     , pLevel_     ( 0 )
@@ -116,8 +114,7 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( const std::string& name )
-    : MIL_Entity_ABC( name )
-    , nID_        ( 0 )
+    : MIL_Entity_ABC( name, 0 )
     , pArmy_      ( 0 )
     , pParent_    ( 0 )
     , pLevel_     ( 0 )
@@ -186,12 +183,12 @@ void load_construct_data( Archive& archive, MIL_Formation* formation, const unsi
 // -----------------------------------------------------------------------------
 void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     MIL_DictionaryExtensions* pExtensions;
     MIL_Color* pColor;
-    file >> const_cast< unsigned int& >( nID_ )
-         >> pArmy_
+    file >> pArmy_
          >> pParent_;
-    idManager_.GetId( nID_, true );
+    idManager_.GetId( GetID(), true );
     unsigned int nLevel;
     file >> nLevel;
     pLevel_ = PHY_NatureLevel::Find( nLevel );
@@ -217,12 +214,12 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     const MIL_Color* const pColor = pColor_.get();
     assert( pLevel_ );
     unsigned int level = pLevel_->GetID();
-    file << nID_
-         << pArmy_
+    file << pArmy_
          << pParent_
          << level
          << tools::Resolver< MIL_Formation >::elements_
@@ -241,7 +238,7 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
 {
     assert( pLevel_ );
     xos << xml::start( "formation" )
-            << xml::attribute( "id", nID_ )
+            << xml::attribute( "id", GetID() )
             << xml::attribute( "level", pLevel_->GetName() )
             << xml::attribute( "name", GetName() );
     if( pBrainLogistic_.get() )
@@ -276,7 +273,7 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     assert( pLevel_ );
     assert( pArmy_ );
     client::FormationCreation message;
-    message().mutable_formation()->set_id( nID_ );
+    message().mutable_formation()->set_id( GetID() );
     message().mutable_party()->set_id( pArmy_->GetID() );
     message().set_name( GetName() );
     message().set_level( pLevel_->GetAsnID() );
@@ -302,7 +299,7 @@ void MIL_Formation::SendFullState( unsigned int context /*= 0*/ ) const
     if( !pExtensions_->IsEmpty() )
     {
         client::FormationUpdate message;
-        message().mutable_formation()->set_id( nID_ );
+        message().mutable_formation()->set_id( GetID() );
         pExtensions_->SendFullState( message );
         message.Send( NET_Publisher_ABC::Publisher() );
     }
@@ -346,15 +343,6 @@ MIL_Army_ABC& MIL_Formation::GetArmy() const
 const MIL_Color& MIL_Formation::GetColor() const
 {
     return *pColor_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::GetID
-// Created: NLD 2006-10-13
-// -----------------------------------------------------------------------------
-unsigned int MIL_Formation::GetID() const
-{
-    return nID_;
 }
 
 // -----------------------------------------------------------------------------
@@ -484,7 +472,7 @@ void MIL_Formation::UpdateNetwork()
     if( pExtensions_->HasChanged() )
     {
         client::FormationUpdate message;
-        message().mutable_formation()->set_id( nID_ );
+        message().mutable_formation()->set_id( GetID() );
         pExtensions_->UpdateNetwork( message );
         message.Send( NET_Publisher_ABC::Publisher() );
     }
