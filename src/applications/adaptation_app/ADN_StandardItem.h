@@ -44,7 +44,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_StandardItem( void* data, E_Type type = eString );
+    explicit ADN_StandardItem( void* parentData, E_Type type = eString );
     virtual ~ADN_StandardItem();
     //@}
 
@@ -54,12 +54,13 @@ public:
     ADN_Connector_ABC* GetConnector() const;
     E_Type GetType() const;
     void Connect( ADN_Connector_ABC* data, const QStringList* enumContent =  0  );
+    void Warn( ADN_ErrorStatus elementStatus );
     //@}
 
 private:
     //! @name Member data
     //@{
-    void* pData_;
+    void* parentData_;
     ADN_Connector_ABC* connector_;
     E_Type type_;
     //@}

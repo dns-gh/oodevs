@@ -431,7 +431,7 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnector = &static_cast< ADN_EditLine_LocalizedString* >( static_cast< ADN_LocalizedEditor* >( editor )->GetEditLine() )->GetConnector();
     if( guiConnector )
         guiConnector->Disconnect( data );
-    static_cast< ADN_Table* >( this->parent() )->CheckValidity();
+    static_cast< ADN_Table* >( this->parent() )->CheckValidity( newIndex.row(), newIndex.column() );
 }
 
 // -----------------------------------------------------------------------------

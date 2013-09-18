@@ -84,7 +84,6 @@ bool ADN_Connector_Table_ABC::AddItemPrivate( void* obj )
         tab_.setNumRows( 0 );
         for( unsigned i = 0; i < vDatas_.size(); ++i )
             AddSubItems( i, vDatas_[ i ] );
-        tab_.CheckValidity();
     }
     return true;
 }
@@ -146,4 +145,5 @@ void ADN_Connector_Table_ABC::AddSubItems( int nRow, void* pObj )
 {
     assert( pObj );
     tab_.AddRow( nRow, pObj );
+    tab_.CheckValidity( nRow );
 }

@@ -62,6 +62,15 @@ ADN_MissionParameters_Table::~ADN_MissionParameters_Table()
     // NOTHING
 }
 
+namespace
+{
+    void SetColor( QStandardItem* item, const QBrush& brush )
+    {
+        item->setBackground( brush );
+        item->setData( brush, gui::Roles::OtherRole );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameters_Table::AddRow
 // Created: ABR 2012-10-23
@@ -75,22 +84,22 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
     const Qt::ItemFlags contextFlag = ( pMissionParameter->isContext_ && ( missionType_ == eEntityType_Pawn || missionType_ == eEntityType_Automat ) )
         ? Qt::ItemIsSelectable
         : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
-    const QBrush brush = pMissionParameter->isContext_ ? QBrush( Qt::gray ) : QBrush( Qt::transparent );
+    const QBrush brush = pMissionParameter->isContext_ ? QBrush( Qt::lightGray ) : QBrush( Qt::transparent );
 
     addingRow_ = true;
     QStandardItem* item = 0;
 
     item = AddItem( row, 0, data, &pMissionParameter->strName_, ADN_StandardItem::eLocalizedString, Qt::ItemIsEditable );
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable ); // always editable
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 1, data, &pMissionParameter->diaName_, ADN_StandardItem::eString );
     item->setFlags( contextFlag );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 2, data, &pMissionParameter->type_, parameterTypes_, contextFlag );
     item->setFlags( contextFlag );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 3, data, &pMissionParameter->isOptional_, ADN_StandardItem::eBool );
     if( missionType_ == eEntityType_Automat && pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeLimit ||
@@ -98,15 +107,15 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
     else
         item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 4, data, &pMissionParameter->minOccurs_, ADN_StandardItem::eInt );
     item->setFlags( contextFlag );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 5, data, &pMissionParameter->maxOccurs_, ADN_StandardItem::eInt );
     item->setFlags( contextFlag );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     addingRow_ = false;
 }

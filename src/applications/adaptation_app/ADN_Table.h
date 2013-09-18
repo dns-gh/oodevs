@@ -60,7 +60,7 @@ public:
     template< typename T >
     T* CreateNewElement();
 
-    void CheckValidity();
+    void CheckValidity( int row = -1, int col = -1 );
 
     QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     QStandardItem* AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
@@ -89,7 +89,7 @@ protected:
     virtual bool event( QEvent *event );
     virtual void mousePressEvent( QMouseEvent* mouseEvent );
 
-    void Warn( ADN_ErrorStatus errorStatus = eNoError, const QString& errorMsg = "" );
+    void Warn( int row, int col );
     //@}
 
 private:

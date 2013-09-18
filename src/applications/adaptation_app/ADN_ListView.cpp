@@ -886,25 +886,8 @@ void ADN_ListView::Warn( ADN_ErrorStatus /* errorStatus = eNoError */, const QSt
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
-            if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
-            {
-                ADN_ErrorStatus elementStatus = pData->GetErrorStatus();
-                QBrush brush = Qt::transparent;
-                switch( elementStatus )
-                {
-                case eWarning:
-                    brush = Qt::yellow;
-                    break;
-                case eError:
-                    brush = Qt::red;
-                    break;
-                case eNoError:
-                default:
-                    break;
-                }
-                item->setBackground( brush );
-            }
-    // $$$$ ABR 2013-01-15: ListView Border color depending on errorStatus ??
+            if( ADN_Ref_ABC* parentData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
+                item->Warn( parentData->GetErrorStatus() );
 }
 
 // -----------------------------------------------------------------------------
@@ -927,7 +910,9 @@ void ADN_ListView::OnLanguageChanged()
     bEditionEnabled_ = kernel::Language::IsCurrentDefault();
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
-                if( ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
-                    pData->CheckValidity();
-    Warn();
+            if( ADN_Ref_ABC* parentData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
+            {
+                parentData->CheckValidity();
+                item->Warn( parentData->GetErrorStatus() );
+            }
 }
