@@ -10,20 +10,20 @@
 #ifndef dispatcher_LogFactory_h
 #define dispatcher_LogFactory_h
 
-#include "tools/LogFactory_ABC.h"
+#include "tools/Log_ABC.h"
 
 namespace dispatcher
 {
 // =============================================================================
-/** @class  LogFactory
+/** @class  Log
     @brief  Log definition
 */
 // Created: MCO 2011-06-27
 // =============================================================================
-class LogFactory : public tools::LogFactory_ABC
+class Log : public tools::Log_ABC
 {
 public:
-    explicit LogFactory( bool sizeInBytes );
+    explicit Log( bool sizeInBytes );
 
     virtual std::size_t Write( std::ostream& os, const std::string& line );
     virtual std::streamoff ComputeSize( const tools::Path& filename ) const;

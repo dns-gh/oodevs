@@ -8,14 +8,14 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "LogFactory.h"
+#include "Log.h"
 #include <ctime>
 #include <tools/Path.h>
 #include <tools/StdFileWrapper.h>
 
 using namespace dispatcher;
 
-LogFactory::LogFactory( bool sizeInBytes )
+Log::Log( bool sizeInBytes )
     : sizeInBytes_( sizeInBytes )
 {
     // NOTHING
@@ -32,14 +32,14 @@ namespace
     }
 }
 
-std::size_t LogFactory::Write( std::ostream& os, const std::string& line )
+std::size_t Log::Write( std::ostream& os, const std::string& line )
 {
     const std::string time = GetTime();
     os << "[" << time << "] " << line << std::endl;
     return sizeInBytes_ ? time.size() + line.size() + 3 : 1;
 }
 
-std::streamoff LogFactory::ComputeSize( const tools::Path& filename ) const
+std::streamoff Log::ComputeSize( const tools::Path& filename ) const
 {
     if( sizeInBytes_ )
         return filename.FileSize();

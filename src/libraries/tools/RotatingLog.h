@@ -18,7 +18,7 @@
 
 namespace tools
 {
-    class LogFactory_ABC;
+    class Log_ABC;
 
 // =============================================================================
 /** @class  RotatingLog
@@ -31,7 +31,7 @@ class RotatingLog : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate );
+     RotatingLog( tools::Log_ABC& log, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate );
     ~RotatingLog();
     //@}
 
@@ -65,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    LogFactory_ABC& factory_;
+    Log_ABC& log_;
     tools::Path filename_;
     std::size_t files_;
     std::streamoff size_, count_;

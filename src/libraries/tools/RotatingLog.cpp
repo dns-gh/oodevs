@@ -9,7 +9,7 @@
 
 #include "tools_pch.h"
 #include "RotatingLog.h"
-#include "LogFactory_ABC.h"
+#include "Log_ABC.h"
 #include <tools/StdFileWrapper.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/regex.hpp>
@@ -39,9 +39,9 @@ public:
         stream_.close();
         filename_.Remove();
     }
-    std::size_t Write( tools::LogFactory_ABC& factory, const std::string& line )
+    std::size_t Write( tools::Log_ABC& log, const std::string& line )
     {
-        return factory.Write( stream_, line );
+        return log.Write( stream_, line );
     }
     bool operator<( const Stream& rhs ) const
     {
@@ -53,12 +53,12 @@ private:
     tools::Ofstream stream_;
 };
 
-RotatingLog::RotatingLog( tools::LogFactory_ABC& factory, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate )
-    : factory_ ( factory )
+RotatingLog::RotatingLog( tools::Log_ABC& log, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate )
+    : log_ ( log )
     , filename_( filename )
     , files_   ( files )
     , size_    ( size )
-    , count_   ( factory.ComputeSize( filename ) )
+    , count_   ( log.ComputeSize( filename ) )
 {
     Populate();
     if( truncate )
@@ -108,7 +108,7 @@ void RotatingLog::DoWrite( const std::string& line )
 
 void RotatingLog::Log( const std::string& line )
 {
-    count_ += logs_.back().Write( factory_, line );
+    count_ += logs_.back().Write( log_, line );
 }
 
 void RotatingLog::Rotate()

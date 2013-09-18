@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef tools_LogFactory_ABC_h
-#define tools_LogFactory_ABC_h
+#ifndef tools_Log_ABC_h
+#define tools_Log_ABC_h
 
 #include <boost/noncopyable.hpp>
 #include <iosfwd>
@@ -20,18 +20,18 @@ namespace tools
     class Path;
 
 // =============================================================================
-/** @class  LogFactory_ABC
-    @brief  Log factory declaration
+/** @class  Log_ABC
+    @brief  Log declaration
 */
 // Created: MCO 2011-06-26
 // =============================================================================
-class LogFactory_ABC : private boost::noncopyable
+class Log_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogFactory_ABC() {}
-    virtual ~LogFactory_ABC() {}
+             Log_ABC() {}
+    virtual ~Log_ABC() {}
     //@}
 
     //! @name Operations
@@ -42,4 +42,4 @@ public:
 };
 }
 
-#endif // tools_LogFactory_ABC_h
+#endif // tools_Log_ABC_h
