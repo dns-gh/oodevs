@@ -978,6 +978,8 @@ unsigned long MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const swo
     }
     else if( MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( identifier ) )
     {
+        if( pObject->IsMarkedForDestruction() )
+            throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_unit );
         boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = GetObjectKnowledgeToUpdate( *pObject );
         if( !knowledgeObject )
             throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_unit );
@@ -1348,6 +1350,8 @@ void MIL_KnowledgeGroup::UpdateFlowKnowledgeFromCrowdPerception( TER_PopulationF
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception( MIL_Object_ABC& object )
 {
+    if( object.IsMarkedForDestruction() )
+        return;
     boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = GetObjectKnowledgeToUpdate( object );
     if( knowledgeObject )
         knowledgeObject->UpdateFromCrowdPerception();
@@ -1399,12 +1403,15 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC
 void MIL_KnowledgeGroup::UpdateObjectKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Object& objectKnowledge, int currentTimeStep )
 {
     if( objectKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
-        if( objectKnowledge.GetObjectKnown() )
+    {
+        MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectKnowledge.GetObjectId() );
+        if( object && !object->IsMarkedForDestruction() )
         {
-            boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject = GetObjectKnowledgeToUpdate( *objectKnowledge.GetObjectKnown() );
+            boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject = GetObjectKnowledgeToUpdate( *object );
             if( pKnowledgeObject.get() )
                 pKnowledgeObject->Update( objectKnowledge, currentTimeStep );
         }
+    }
 }
 
 // -----------------------------------------------------------------------------
