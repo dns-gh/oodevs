@@ -110,13 +110,16 @@ namespace
         ReListFixture()
             : rotated_1( dir.Path() / "filename.20130916T115500.log" )
             , rotated_2( dir.Path() / "filename.20130916T115501.log" )
+            , unrelated( dir.Path() / "unrelated.20130916T115503.log" )
         {
             tools::Ofstream( rotated_1, std::ios_base::out );
             tools::Ofstream( rotated_2, std::ios_base::out );
+            tools::Ofstream( unrelated, std::ios_base::out );
             BOOST_REQUIRE( rotated_1.Exists() );
             BOOST_REQUIRE( rotated_2.Exists() );
+            BOOST_REQUIRE( unrelated.Exists() );
         }
-        const tools::Path rotated_1, rotated_2;
+        const tools::Path rotated_1, rotated_2, unrelated;
     };
 }
 
@@ -125,6 +128,7 @@ BOOST_FIXTURE_TEST_CASE( rotating_log_re_lists_existing_rotated_log_files_trunca
     RotatingLog rlog( log, filename, 3, size, true );
     MOCK_EXPECT( validator ).once().with( filename ).returns( false );
     MOCK_EXPECT( validator ).once().with( rotated_2 ).returns( false );
+    MOCK_EXPECT( validator ).once().with( unrelated ).returns( false );
     MOCK_EXPECT( validator ).once().with( match( boost::regex( ".+\\.\\d{8}T\\d{6}\\.log.*" ) ) ).returns( false );
     dir.Path().ListElements( validator );
 }
@@ -135,6 +139,7 @@ BOOST_FIXTURE_TEST_CASE( rotating_log_re_lists_existing_rotated_log_files_append
     MOCK_EXPECT( validator ).once().with( filename ).returns( false );
     MOCK_EXPECT( validator ).once().with( rotated_1 ).returns( false );
     MOCK_EXPECT( validator ).once().with( rotated_2 ).returns( false );
+    MOCK_EXPECT( validator ).once().with( unrelated ).returns( false );
     dir.Path().ListElements( validator );
 }
 
@@ -143,6 +148,7 @@ BOOST_FIXTURE_TEST_CASE( rotating_log_re_lists_existing_rotated_log_files_deleti
     RotatingLog rlog( log, filename, 3, size, true );
     MOCK_EXPECT( validator ).once().with( filename ).returns( false );
     MOCK_EXPECT( validator ).once().with( rotated_2 ).returns( false );
+    MOCK_EXPECT( validator ).once().with( unrelated ).returns( false );
     MOCK_EXPECT( validator ).once().with( match( boost::regex( ".+\\.\\d{8}T\\d{6}\\.log.*" ) ) ).returns( false );
     dir.Path().ListElements( validator );
 }
@@ -152,5 +158,6 @@ BOOST_FIXTURE_TEST_CASE( rotating_log_re_lists_existing_rotated_log_files_deleti
     RotatingLog rlog( log, filename, 2, size, false );
     MOCK_EXPECT( validator ).once().with( filename ).returns( false );
     MOCK_EXPECT( validator ).once().with( rotated_2 ).returns( false );
+    MOCK_EXPECT( validator ).once().with( unrelated ).returns( false );
     dir.Path().ListElements( validator );
 }

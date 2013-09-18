@@ -73,7 +73,7 @@ RotatingLog::~RotatingLog()
 
 void RotatingLog::Populate()
 {
-    const boost::regex regex( ".+\\.\\d{8}T\\d{6}\\.log.*" );
+    const boost::regex regex( ".+" + filename_.BaseName().ToUTF8() + "\\.\\d{8}T\\d{6}\\.log.*" );
     filename_.Parent().ListElements(
         [&]( const Path& path ) -> bool
         {
