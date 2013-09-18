@@ -10,6 +10,7 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"strings"
 	"swapi"
 	"swapi/simu"
 )
@@ -82,11 +83,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 	check("some invalid ? name", ".*invalid checkpoint name.*")
 
 	// Invalid very long filename (limited at 255 chars on windows)
-	longname := ""
-	for i := 0; i < 300; i++ {
-		longname += "a"
-	}
-	check(longname, ".*create_directory.*")
+	check(strings.Repeat("a", 300), ".*create_directory.*")
 }
 
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
