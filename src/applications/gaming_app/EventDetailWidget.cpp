@@ -11,7 +11,7 @@
 #include "EventDetailWidget.h"
 #include "gaming/Event.h"
 #include "protocol/Protocol.h"
-#include "timeline/api.h"
+#include <timeline/api.h>
 #include <tools/Base64Converters.h>
 
 // -----------------------------------------------------------------------------

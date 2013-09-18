@@ -16,6 +16,7 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace actions
 {
@@ -65,6 +66,7 @@ class Model;
 class EventDockWidget : public gui::RichDockWidget
                       , public kernel::ContextMenuObserver_ABC< Event >
                       , public tools::ElementObserver_ABC< Event >
+                      , public tools::SelectionObserver< Event >
                       , public kernel::ActivationObserver_ABC< Event >
 {
     Q_OBJECT
@@ -93,11 +95,13 @@ private:
     void SetContentVisible( bool visible );
     void SetEditing( bool editing );
     void Configure( E_EventTypes type, bool editing, bool purge );
+    void StartEdition( const Event& event );
     //@}
 
     //! @name Observers implementation
     //@{
     virtual void NotifyActivated( const Event& event );
+    virtual void NotifySelected( const Event* event );
     virtual void NotifyContextMenu( const Event& event, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const Event& event );
     virtual void NotifyUpdated( const Event& event );
@@ -123,7 +127,6 @@ private slots:
     //@{
     void StartCreation( E_EventTypes type, const QDateTime& dateTime );
     void UpdateCreation( E_EventTypes type, const QDateTime& dateTime );
-    void StartEdition( const Event& event );
 
     void OnEditClicked();
     void OnDeleteClicked();

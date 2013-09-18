@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Event.h"
 #include "clients_kernel/ActionController.h"
-#include "timeline/api.h"
+#include <timeline/api.h>
 
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ Event* Event::Clone() const
 // -----------------------------------------------------------------------------
 void Event::Update( const timeline::Event& event )
 {
-    event_.reset( new timeline::Event( event ) );
+    *event_ = event;
 }
 
 // -----------------------------------------------------------------------------

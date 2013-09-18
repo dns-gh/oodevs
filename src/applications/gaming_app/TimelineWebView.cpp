@@ -28,10 +28,10 @@
 #include "gaming/TimelinePublisher.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
-#include "timeline/api.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
+#include <timeline/api.h>
 #include <tools/StdFileWrapper.h>
 #include <boost/bind.hpp>
 
@@ -74,10 +74,10 @@ TimelineWebView::~TimelineWebView()
 // -----------------------------------------------------------------------------
 void TimelineWebView::Connect()
 {
-    timelineWidget_ = new QWidget();
-    mainLayout_->addWidget( timelineWidget_ );
-    cfg_->widget = timelineWidget_;
-    server_ = MakeServer( *cfg_ );
+    timelineWidget_.reset( new QWidget() );
+    mainLayout_->addWidget( timelineWidget_.get() );
+    cfg_->widget = timelineWidget_.get();
+    server_.reset( MakeServer( *cfg_ ).release() );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( UpdateEvent( const timeline::Event& ) ) );
@@ -102,29 +102,29 @@ void TimelineWebView::Connect()
 // -----------------------------------------------------------------------------
 void TimelineWebView::Disconnect()
 {
-    if( server_.get() )
-    {
-        disconnect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
-        disconnect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( UpdateEvent( const timeline::Event& ) ) );
-        disconnect( this, SIGNAL( DeleteEventSignal( const std::string& ) ), server_.get(), SLOT( DeleteEvent( const std::string& ) ) );
+    if( !server_ )
+        return;
 
-        disconnect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
-        disconnect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
-        disconnect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
-        disconnect( server_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
-        disconnect( server_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
-        disconnect( server_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
+    disconnect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
+    disconnect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( UpdateEvent( const timeline::Event& ) ) );
+    disconnect( this, SIGNAL( DeleteEventSignal( const std::string& ) ), server_.get(), SLOT( DeleteEvent( const std::string& ) ) );
 
-        disconnect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
-        disconnect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
-        disconnect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
-        disconnect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
+    disconnect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
+    disconnect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
+    disconnect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
+    disconnect( server_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
+    disconnect( server_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
+    disconnect( server_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
 
-        server_.reset();
-        cfg_->widget = 0;
-        mainLayout_->removeWidget( timelineWidget_ );
-        delete timelineWidget_;
-    }
+    disconnect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
+    disconnect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
+    disconnect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
+    disconnect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
+
+    server_.reset();
+    cfg_->widget = 0;
+    mainLayout_->removeWidget( timelineWidget_.get() );
+    timelineWidget_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +156,6 @@ void TimelineWebView::OnCenterView()
 // -----------------------------------------------------------------------------
 void TimelineWebView::CreateEvent( const timeline::Event& event )
 {
-    creationRequestedEvents_.push_back( event.uuid );
     emit CreateEventSignal( event );
 }
 
@@ -166,7 +165,6 @@ void TimelineWebView::CreateEvent( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineWebView::EditEvent( const timeline::Event& event )
 {
-    editionRequestedEvents_.push_back( event.uuid );
     emit EditEventSignal( event );
 }
 
@@ -177,7 +175,6 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
 void TimelineWebView::DeleteEvent( const std::string& uuid )
 {
     actionController_.DeselectAll();
-    deletionRequestedEvents_.push_back( uuid );
     emit DeleteEventSignal( uuid );
 }
 
@@ -187,13 +184,8 @@ void TimelineWebView::DeleteEvent( const std::string& uuid )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnCreatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    auto it = std::find( creationRequestedEvents_.begin(), creationRequestedEvents_.end(), event.uuid );
-    if( it != creationRequestedEvents_.end() )
-    {
-        if( error.code != timeline::EC_OK )
-            MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
-        creationRequestedEvents_.erase( it );
-    }
+    if( error.code != timeline::EC_OK )
+        MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
     model_.events_.Create( event );
 }
 
@@ -203,13 +195,8 @@ void TimelineWebView::OnCreatedEvent( const timeline::Event& event, const timeli
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnEditedEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    auto it = std::find( editionRequestedEvents_.begin(), editionRequestedEvents_.end(), event.uuid );
-    if( it != editionRequestedEvents_.end() )
-    {
-        if( error.code != timeline::EC_OK )
-            MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
-        editionRequestedEvents_.erase( it );
-    }
+    if( error.code != timeline::EC_OK )
+        MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
     model_.events_.Update( event );
 }
 
@@ -219,13 +206,8 @@ void TimelineWebView::OnEditedEvent( const timeline::Event& event, const timelin
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnDeletedEvent( const std::string& uuid, const timeline::Error& error )
 {
-    auto it = std::find( deletionRequestedEvents_.begin(), deletionRequestedEvents_.end(), uuid );
-    if( it != deletionRequestedEvents_.end() )
-    {
-        if( error.code != timeline::EC_OK )
-            MT_LOG_ERROR_MSG( tr( "An error occurred during event deletion process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
-        deletionRequestedEvents_.erase( it );
-    }
+    if( error.code != timeline::EC_OK )
+        MT_LOG_ERROR_MSG( tr( "An error occurred during event deletion process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
     model_.events_.Destroy( uuid );
 }
 
@@ -235,9 +217,9 @@ void TimelineWebView::OnDeletedEvent( const std::string& uuid, const timeline::E
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > event )
 {
-    bool hadSelection = selected_.get() != 0;
+    bool hadSelection = selected_;
     selected_ = event;
-    if( selected_.get() )
+    if( selected_ )
     {
         Event& gamingEvent = GetOrCreateEvent( *selected_ );
         gamingEvent.Select( actionController_ );
@@ -253,7 +235,6 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
 void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
     Event& gamingEvent = GetOrCreateEvent( event );
-    gamingEvent.Select( actionController_ );
     gamingEvent.Activate( actionController_ );
 }
 
@@ -290,21 +271,19 @@ namespace
 // -----------------------------------------------------------------------------
 void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel::ContextMenu& menu )
 {
-    delete creationSignalMapper_;
-    creationSignalMapper_ = new QSignalMapper( this );
-    connect( creationSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnCreateClicked( int ) ) );
+    creationSignalMapper_.reset( new QSignalMapper( this ) );
+    connect( creationSignalMapper_.get(), SIGNAL( mapped( int ) ), this, SLOT( OnCreateClicked( int ) ) );
 
-    delete dummySignalMapper_;
-    dummySignalMapper_ = new QSignalMapper( this );
-    connect( dummySignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnCreateDummyClicked( int ) ) );
+    dummySignalMapper_.reset( new QSignalMapper( this ) );
+    connect( dummySignalMapper_.get(), SIGNAL( mapped( int ) ), this, SLOT( OnCreateDummyClicked( int ) ) );
 
     kernel::ContextMenu* createMenu = new kernel::ContextMenu( &menu );
     kernel::ContextMenu* dummyMenu = new kernel::ContextMenu( &menu );
     for( int i = 0; i < eNbrEventTypes; ++i )
     {
         if( i != eEventTypes_Report )
-            AddToMenu( *createMenu, creationSignalMapper_, QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
-        AddToMenu( *dummyMenu, dummySignalMapper_, QString( "Dummy " ) + QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
+            AddToMenu( *createMenu, creationSignalMapper_.get(), QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
+        AddToMenu( *dummyMenu, dummySignalMapper_.get(), QString( "Dummy " ) + QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
     }
 
     menu.InsertItem( "Command", tr( "Create an event" ), createMenu );
@@ -431,7 +410,7 @@ void TimelineWebView::ReadActions( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void TimelineWebView::ReadAction( xml::xistream& xis )
 {
-    std::auto_ptr< actions::Action_ABC > action;
+    boost::scoped_ptr< actions::Action_ABC > action;
     // $$$$ ABR 2013-06-19: The dual try catch was in actionsModel, so i keep it for now but it's ugly and should be remove asap
     try
     {
@@ -449,7 +428,7 @@ void TimelineWebView::ReadAction( xml::xistream& xis )
         }
     }
 
-    if( action.get() == 0 )
+    if( !action )
         return;
 
     action->Publish( model_.timelinePublisher_, 0 );
@@ -471,11 +450,10 @@ void TimelineWebView::ReadAction( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnSaveOrderFileRequested( const tools::Path& filename )
 {
-    if( server_.get() )
-    {
-        currentFile_ = filename;
-        server_->ReadEvents();
-    }
+    if( !server_  )
+        return;
+    currentFile_ = filename;
+    server_->ReadEvents();
 }
 
 // -----------------------------------------------------------------------------
@@ -484,7 +462,7 @@ void TimelineWebView::OnSaveOrderFileRequested( const tools::Path& filename )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnLoadTimelineSessionFileRequested( const tools::Path& filename )
 {
-    if( !server_.get() )
+    if( !server_ )
         return;
     tools::Ifstream is( filename );
     if( !is.is_open() )
@@ -507,11 +485,10 @@ void TimelineWebView::OnLoadTimelineSessionFileRequested( const tools::Path& fil
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnSaveTimelineSessionFileRequested( const tools::Path& filename )
 {
-    if( server_.get() )
-    {
-        currentFile_ = filename;
-        server_->SaveEvents();
-    }
+    if( !server_.get() )
+        return;
+    currentFile_ = filename;
+    server_->SaveEvents();
 }
 
 // -----------------------------------------------------------------------------

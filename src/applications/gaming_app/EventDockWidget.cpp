@@ -28,7 +28,7 @@
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
 
-#include "timeline/api.h"
+#include <timeline/api.h>
 
 #include <boost/lexical_cast.hpp>
 #pragma warning( push )
@@ -36,6 +36,15 @@
 #include <boost/uuid/random_generator.hpp>
 #pragma warning( pop )
 #include <boost/uuid/uuid_io.hpp>
+
+namespace
+{
+    void ShowWidget( QWidget* w )
+    {
+        w->setVisible( true );
+        w->raise();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: EventDockWidget constructor
@@ -132,6 +141,7 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
     if( dateTime.isValid() )
         emit BeginDateChanged( dateTime );
     Configure( type, false, true );
+    ShowWidget( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +166,6 @@ void EventDockWidget::StartEdition( const Event& event )
     Configure( event.GetType(), true, true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: EventDockWidget::Configure
 // Created: ABR 2013-08-21
@@ -169,8 +178,6 @@ void EventDockWidget::Configure( E_EventTypes type, bool editing, bool purge )
     SetEditing( editing );
     Fill();
     SetContentVisible( true );
-    setVisible( true );
-    raise();
 }
 
 // -----------------------------------------------------------------------------
@@ -348,6 +355,17 @@ void EventDockWidget::Draw( gui::Viewport_ABC& viewport )
 void EventDockWidget::NotifyActivated( const Event& event )
 {
     StartEdition( event );
+    ShowWidget( this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::NotifySelected
+// Created: BAX 2013-09-17
+// -----------------------------------------------------------------------------
+void EventDockWidget::NotifySelected( const Event* event )
+{
+    if( event )
+        StartEdition( *event );
 }
 
 // -----------------------------------------------------------------------------

@@ -24,7 +24,7 @@ namespace timeline
     struct Event;
 }
 
-#define EVENT_DATE_FORMAT "yyyy-MM-ddTHH:mm:ssZ" // $$$$ ABR 2013-07-03: Use Qt::ISODate instead, when timeline_server will allow unlocalized iso datetime
+#define EVENT_DATE_FORMAT "yyyy-MM-ddTHH:mm:ssZ"
 
 #define EVENT_ORDER_PROTOCOL "sword"
 #define EVENT_REPORT_PROTOCOL "report"

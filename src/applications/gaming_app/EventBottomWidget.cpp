@@ -15,8 +15,8 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Time_ABC.h"
 #include "gaming/Event.h"
-#include "timeline/api.h"
 #include "tools/ExerciseConfig.h"
+#include <timeline/api.h>
 
 namespace
 {

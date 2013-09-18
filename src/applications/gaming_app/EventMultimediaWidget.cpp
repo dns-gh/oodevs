@@ -13,8 +13,8 @@
 #include "clients_gui/FileDialog.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/Event.h"
-#include "timeline/api.h"
 #include "tools/GeneralConfig.h"
+#include <timeline/api.h>
 
 // -----------------------------------------------------------------------------
 // Name: EventMultimediaWidget constructor

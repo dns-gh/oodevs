@@ -13,7 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Tr.h"
-#include "timeline/api.h"
+#include <timeline/api.h>
 
 // -----------------------------------------------------------------------------
 // Name: EventFactory constructor
