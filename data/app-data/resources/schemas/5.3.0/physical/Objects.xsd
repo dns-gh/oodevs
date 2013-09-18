@@ -14,69 +14,6 @@
 			<xs:maxLength value="15" fixed="true"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="T_ObjectType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="mines"/>
-			<xs:enumeration value="mined area (linear)"/>
-			<xs:enumeration value="mined area (scattered)"/>
-			<xs:enumeration value="anti tank obstacle"/>
-			<xs:enumeration value="abattis"/>
-			<xs:enumeration value="barricade"/>
-			<xs:enumeration value="landslide"/>
-			<xs:enumeration value="road destruction"/>
-			<xs:enumeration value="bridge destruction"/>
-			<xs:enumeration value="continuous pontoon bridge"/>
-			<xs:enumeration value="firing post"/>
-			<xs:enumeration value="safe zone"/>
-			<xs:enumeration value="gun artillery deployment area"/>
-			<xs:enumeration value="cobra deployment area"/>
-			<xs:enumeration value="mrls deployment area"/>
-			<xs:enumeration value="crossing site"/>
-			<xs:enumeration value="nbc cloud (external model)"/>
-			<xs:enumeration value="logistic support area"/>
-			<xs:enumeration value="decontamination site"/>
-			<xs:enumeration value="jamming area"/>
-			<xs:enumeration value="full jamming area"/>
-			<xs:enumeration value="paralyzing area"/>
-			<xs:enumeration value="blinding area"/>
-			<xs:enumeration value="scattering area"/>
-			<xs:enumeration value="rota area"/>
-			<xs:enumeration value="nbc zone (external model)"/>
-			<xs:enumeration value="landing area"/>
-			<xs:enumeration value="trail"/>
-			<xs:enumeration value="platform"/>
-			<xs:enumeration value="mobility enhanced area"/>
-			<xs:enumeration value="landing area (helicopter)"/>
-			<xs:enumeration value="logistic area"/>
-			<xs:enumeration value="logistic route"/>
-			<xs:enumeration value="prisoners camp"/>
-			<xs:enumeration value="refugees camp"/>
-			<xs:enumeration value="checkpoint"/>
-			<xs:enumeration value="dropping area"/>
-			<xs:enumeration value="movement forbidden area"/>
-			<xs:enumeration value="fire forbidden area"/>
-			<xs:enumeration value="mortar deployment area"/>
-			<xs:enumeration value="discontinuous pontoon bridge"/>
-			<xs:enumeration value="installation"/>
-			<xs:enumeration value="fire"/>
-			<xs:enumeration value="emergency shelter"/>
-			<xs:enumeration value="distribution point"/>
-			<xs:enumeration value="nbc cloud"/>
-			<xs:enumeration value="nbc zone"/>
-			<xs:enumeration value="dirty bomb"/>
-			<xs:enumeration value="hospital"/>
-			<xs:enumeration value="weapon cache"/>
-			<xs:enumeration value="leaflet"/>
-			<xs:enumeration value="sensors"/>
-			<xs:enumeration value="sensorsDetectionZone"/>
-			<xs:enumeration value="urban block"/>
-			<xs:enumeration value="seal off area"/>
-			<xs:enumeration value="flood"/>
-			<xs:enumeration value="dyke"/>
-			<xs:enumeration value="resource production node"/>
-			<xs:enumeration value="disaster"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="T_ConsumptionMode">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="ArretMoteurEteint"/>
@@ -125,6 +62,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="translation-queries" type="T_TranslationQueries" minOccurs="0" maxOccurs="1"/>
 			</xs:sequence>
 			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
