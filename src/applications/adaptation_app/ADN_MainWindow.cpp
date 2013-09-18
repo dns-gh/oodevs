@@ -30,6 +30,7 @@
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
+#include "clients_kernel/Language.h"
 #include "tools/VersionHelper.h"
 
 namespace
@@ -287,6 +288,7 @@ void ADN_MainWindow::PurgeGUI()
     mainTabWidget_.reset();
     // Languages menu
     menuLanguages_->clear();
+    kernel::Language::SetCurrent( kernel::Language::Default() );
     // ObjectNameManager
     gui::ObjectNameManager::getInstance()->Purge();
 }
