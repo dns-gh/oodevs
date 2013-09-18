@@ -32,7 +32,9 @@ namespace
     class Orientation : public boost::noncopyable
     {
     public:
-        virtual QString StringWithOrientation( const std::string& hours, const std::string& minutes, const std::string& seconds, const std::string& microseconds ) const = 0;
+        virtual QString StringWithOrientation( const std::string& hours, const std::string& minutes,
+                                               const std::string& seconds, const std::string& microseconds,
+                                               const std::string& decimalPoint ) const = 0;
         virtual int ComputeModifier( const std::string& text, int cursor ) const = 0;
         virtual int ComputeValue( const QStringList& buffer ) const = 0;
     };
@@ -40,9 +42,11 @@ namespace
     class LeftToRight : public Orientation
     {
     public:
-        virtual QString StringWithOrientation( const std::string& hours, const std::string& minutes, const std::string& seconds, const std::string& microseconds ) const
+        virtual QString StringWithOrientation( const std::string& hours, const std::string& minutes,
+                                               const std::string& seconds, const std::string& microseconds,
+                                               const std::string& decimalPoint ) const
         {
-            return ( hours + ":" + minutes + ":" + seconds + QString( QLocale().decimalPoint() ).toStdString() + microseconds ).c_str();
+            return ( hours + ":" + minutes + ":" + seconds + decimalPoint + microseconds ).c_str();
         }
         virtual int ComputeModifier( const std::string& text, int cursor ) const
         {
@@ -62,9 +66,11 @@ namespace
     class RightToLeft : public Orientation
     {
     public:
-        virtual QString StringWithOrientation( const std::string& hours, const std::string& minutes, const std::string& seconds, const std::string& microseconds ) const
+        virtual QString StringWithOrientation( const std::string& hours, const std::string& minutes,
+                                               const std::string& seconds, const std::string& microseconds,
+                                               const std::string& decimalPoint ) const
         {
-            return ( seconds + QString( QLocale().decimalPoint() ).toStdString() + microseconds + ":" + minutes + ":" + hours ).c_str();
+            return ( seconds + decimalPoint + microseconds + ":" + minutes + ":" + hours ).c_str();
         }
         virtual int ComputeModifier( const std::string& text, int cursor ) const
         {
@@ -88,8 +94,8 @@ namespace
             : QSpinBox( parent )
             , orientation_ ( qApp->isRightToLeft() ? static_cast< Orientation* >( new RightToLeft() )
                                                    : static_cast< Orientation* >( new LeftToRight() ) )
-            , exact_       ( orientation_->StringWithOrientation( "\\d+", "[0-5]\\d", "[0-5]\\d", "\\d\\d" ) )
-            , intermediate_( orientation_->StringWithOrientation( "\\d*", "\\d*", "\\d*", "\\d*" ) )
+            , exact_       ( orientation_->StringWithOrientation( "\\d+", "[0-5]\\d", "[0-5]\\d", "\\d\\d", "[" + QString( QLocale().decimalPoint() ).toStdString() + "]" ) )
+            , intermediate_( orientation_->StringWithOrientation( "\\d*", "\\d*", "\\d*", "\\d*", "[" + QString( QLocale().decimalPoint() ).toStdString() + "]" ) )
         {
             setValue( 0 );
             setMaximum( maxCentiSeconds );
@@ -109,7 +115,7 @@ namespace
             const int seconds = value / 100 - hours * 3600 - minutes * 60;
             const int centisec = value % 100;
             return orientation_->StringWithOrientation( boost::lexical_cast< std::string >( hours ), Fill( minutes ),
-                                                        Fill( seconds ), Fill( centisec ) );
+                                                        Fill( seconds ), Fill( centisec ), QString( QLocale().decimalPoint() ).toStdString() );
         }
         virtual void stepBy( int steps )
         {
