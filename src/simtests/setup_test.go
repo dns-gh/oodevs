@@ -22,6 +22,10 @@ import (
 	"time"
 )
 
+const (
+	ConnectTimeout = 40 * time.Second
+)
+
 var (
 	projectRoot string
 	application string
@@ -82,12 +86,26 @@ func startSimOnExercise(c *C, exercise string, endTick int,
 
 	opts := MakeOpts()
 	opts.ExerciseName = exercise
-	opts.ConnectTimeout = 40 * time.Second
+	opts.ConnectTimeout = ConnectTimeout
 
 	session := simu.CreateDefaultSession()
 	session.Paused = paused
 	session.GamingServer = opts.DispatcherAddr
 	WriteSession(c, opts, session)
+	sim, err := simu.StartSim(opts)
+	c.Assert(err, IsNil) // failed to start the simulation
+	return sim
+}
+
+func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick int,
+	paused bool) *simu.SimProcess {
+
+	opts := MakeOpts()
+	opts.ExerciseName = exercise
+	opts.ConnectTimeout = ConnectTimeout
+	opts.SessionName = session
+	opts.CheckpointName = checkpoint
+
 	sim, err := simu.StartSim(opts)
 	c.Assert(err, IsNil) // failed to start the simulation
 	return sim
@@ -133,10 +151,10 @@ const (
 	CrowdType = "Standard Crowd"
 )
 
-func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
+func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.Automat {
 	data := client.Model.GetData()
 
-	party := data.FindPartyByName("party")
+	party := data.FindPartyByName(partyName)
 	c.Assert(party, NotNil)
 
 	c.Assert(len(party.Formations), Greater, 0)
@@ -160,6 +178,10 @@ func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
 	c.Assert(err, IsNil)
 	c.Assert(automat, NotNil)
 	return automat
+}
+
+func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
+	return createAutomatForParty(c, client, "party")
 }
 
 func Test(t *testing.T) { TestingT(t) }

@@ -201,10 +201,10 @@ func MakePointLocation(point Point) *sword.Location {
 	}
 }
 
-func MakeLineLocation(from, to Point) *sword.Location {
+func MakeLineLocation(points ...Point) *sword.Location {
 	return &sword.Location{
 		Type:        sword.Location_line.Enum(),
-		Coordinates: MakeCoords(from, to),
+		Coordinates: MakeCoords(points...),
 	}
 }
 
@@ -253,11 +253,11 @@ func MakeNullValue() *sword.MissionParameter {
 	}
 }
 
-func MakeLimit(from, to Point) *sword.MissionParameter {
+func MakeLimit(points ...Point) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
 			Limit: &sword.Line{
-				Location: MakeLineLocation(from, to),
+				Location: MakeLineLocation(points...),
 			},
 		})
 }

@@ -21,12 +21,13 @@ import (
 )
 
 type SimOpts struct {
-	Executable   string
-	RunDir       *string
-	RootDir      string
-	DataDir      string
-	SessionName  string
-	ExerciseName string
+	Executable     string
+	RunDir         *string
+	RootDir        string
+	DataDir        string
+	SessionName    string
+	ExerciseName   string
+	CheckpointName string
 
 	// Network address:port of dispatcher server, default to session if empty.
 	DispatcherAddr string
@@ -259,6 +260,9 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	}
 	if len(opts.SimulationAddr) > 0 {
 		args = append(args, "--simulation-address="+opts.SimulationAddr)
+	}
+	if len(opts.CheckpointName) > 0 {
+		args = append(args, "--checkpoint="+opts.CheckpointName)
 	}
 
 	cmd := exec.Command(opts.Executable, args...)
