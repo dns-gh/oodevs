@@ -18,6 +18,7 @@ static const struct { UserType type; std::string text; } types_map[] =
     { USER_TYPE_ADMINISTRATOR, "administrator" },
     { USER_TYPE_MANAGER,       "manager" },
     { USER_TYPE_USER,          "user" },
+    { USER_TYPE_PLAYER,        "player" },
 };
 
 #define COUNT_OF(X) (sizeof(X)/sizeof*(X))

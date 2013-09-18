@@ -73,7 +73,7 @@
                     [[/*
                     <a class="btn" href="/api/download_install?id=[[ .node ]]&item={{id}}"><i class="icon-download"></i> </a>
                     */]]
-                    [[ if ne .user.type "user" ]]
+                    [[ if ne .user.type "user" "player" ]]
                     <a class="btn delete"><i class="icon-trash"></i> </a>
                     [[ end ]]
                 </td>

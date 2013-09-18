@@ -510,7 +510,7 @@ void Controller::UpdateNode( Reply_ABC& rpy, Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::GetClient( Reply_ABC& rpy, const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_USER );
+    Authenticate( request, USER_TYPE_PLAYER );
     WriteHttpReply( rpy, agent_.GetClient() );
 }
 
@@ -520,7 +520,7 @@ void Controller::GetClient( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::DownloadClient( Reply_ABC& rpy, const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_USER );
+    Authenticate( request, USER_TYPE_PLAYER );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
     return agent_.DownloadClient( *chunker );
 }
@@ -531,7 +531,7 @@ void Controller::DownloadClient( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::GetInstall( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "id" );
     WriteHttpReply( rpy, agent_.GetInstall( node ) );
 }
 
@@ -604,7 +604,7 @@ void Controller::InstallFromCache( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::DownloadInstall( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "id" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
     const boost::optional< std::string > id = request.GetParameter( "item" );
@@ -623,7 +623,7 @@ void Controller::DownloadInstall( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::ListSessions( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 100 );
     WriteHttpReply( rpy, agent_.ListSessions( node, offset, limit ) );
@@ -635,7 +635,7 @@ void Controller::ListSessions( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::CountSessions( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "node" );
     WriteHttpReply( rpy, agent_.CountSessions( node ) );
 }
 
@@ -645,7 +645,7 @@ void Controller::CountSessions( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::GetSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "node" );
     WriteHttpReply( rpy, agent_.GetSession( node, GetId( request ) ) );
 }
 
@@ -785,7 +785,7 @@ void Controller::DownloadSessionLog( Reply_ABC& rpy, Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::ListExercises( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "id" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
     const int offset = GetParameter( "offset", request, 0 );
@@ -1004,7 +1004,7 @@ void Controller::UpdateUser( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::ListLicenses( Reply_ABC& reply, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "node" );
     WriteHttpReply( reply, agent_.ListLicenses( node ) );
 }
 
