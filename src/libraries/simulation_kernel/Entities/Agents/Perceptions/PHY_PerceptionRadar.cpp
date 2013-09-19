@@ -14,7 +14,6 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
-#include "simulation_kernel/DetectionComputerFactory_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 
 // -----------------------------------------------------------------------------
@@ -154,7 +153,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const MIL_Agent_ABC& /*
 // Name: PHY_PerceptionRadar::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
+void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses(); 
     for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
@@ -176,7 +175,7 @@ void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perc
                 radarData_.insert( std::pair< const PHY_RadarType*, PHY_PerceptionRadarData >( radarType,radarData ) );
             else // Use max height for a given radar type
                 radarData_[ radarType ].SetMinHeight( radarHeight );
-            radarData_[ radarType ].Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos, detectionComputerFactory );
+            radarData_[ radarType ].Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos );
         }
     }
 }

@@ -18,8 +18,7 @@
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
-#include "DetectionComputer_ABC.h"
-#include "DetectionComputerFactory_ABC.h"
+#include "DefaultDetectionComputer.h"
 #include "MIL_Random.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
@@ -124,7 +123,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vecto
 // Name: PHY_PerceptionRecoUrbanBlock::Execute
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
+void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     for( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
@@ -133,10 +132,10 @@ void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVecto
         for( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-            std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer( detectionComputerFactory.Create( target ) );
-            perceiver_.GetPion().Execute( *detectionComputer );
-            target.Execute( *detectionComputer );
-            if( detectionComputer->CanBeSeen() && ( *itReco )->CanSeeIt() )
+            detection::DefaultDetectionComputer detectionComputer( target );
+            perceiver_.GetPion().Execute( detectionComputer );
+            target.Execute( detectionComputer );
+            if( detectionComputer.CanBeSeen() && ( *itReco )->CanSeeIt() )
                 perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }

@@ -11,8 +11,7 @@
 #include "PHY_RolePion_Perceiver.h"
 #include "AlgorithmsFactories.h"
 #include "ConsumptionComputer_ABC.h"
-#include "DetectionComputer_ABC.h"
-#include "DetectionComputerFactory_ABC.h"
+#include "DefaultDetectionComputer.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputer_ABC.h"
@@ -955,7 +954,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         owner_->InteractWithTraffic( perceivableAgents );
 
         for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
-            (**it).Execute( perceivableAgents, *owner_->GetAlgorithms().detectionComputerFactory_ );
+            (**it).Execute( perceivableAgents );
 
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( position, maxPerceptionDistance, perceivableObjects );
         for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )

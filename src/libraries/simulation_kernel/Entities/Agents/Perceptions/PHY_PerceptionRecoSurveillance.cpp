@@ -16,8 +16,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "DetectionComputer_ABC.h"
-#include "DetectionComputerFactory_ABC.h"
+#include "DefaultDetectionComputer.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_terrain/TER_World.h"
@@ -194,7 +193,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MT_Vec
 // Name: PHY_PerceptionRecoSurveillance::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
+void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
 
@@ -206,11 +205,11 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
 
-            std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer( detectionComputerFactory.Create( target ) );
-            perceiver_.GetPion().Execute( *detectionComputer );
-            target.Execute( *detectionComputer );
+            detection::DefaultDetectionComputer detectionComputer( target );
+            perceiver_.GetPion().Execute( detectionComputer );
+            target.Execute( detectionComputer );
 
-            if( detectionComputer->CanBeSeen() )
+            if( detectionComputer.CanBeSeen() )
                 perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }

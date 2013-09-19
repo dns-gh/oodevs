@@ -59,7 +59,7 @@ const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const MT_Vector2D& /*vPo
 // Name: PHY_Perception_ABC::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void PHY_Perception_ABC::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& /*detectionComputerFactory*/ )
+void PHY_Perception_ABC::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     // NOTHING
 }

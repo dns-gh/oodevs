@@ -19,8 +19,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include "DetectionComputer_ABC.h"
-#include "DetectionComputerFactory_ABC.h"
+#include "DefaultDetectionComputer.h"
 #include "MIL_Random.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include <boost/bind.hpp>
@@ -121,7 +120,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
 // Name: PHY_PerceptionView::Execute
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
+void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents )
 {
     if( bIsEnabled_ )
     {
@@ -131,9 +130,9 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
             if( agent.BelongsTo( *perceiver_.GetKnowledgeGroup() ) )
                 continue;
-            std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer( detectionComputerFactory.Create( agent ) );
-            perceiver_.GetPion().Execute( *detectionComputer );
-            agent.Execute( *detectionComputer );
+            detection::DefaultDetectionComputer detectionComputer( agent );
+            perceiver_.GetPion().Execute( detectionComputer );
+            agent.Execute( detectionComputer );
             if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( agent ) )
             {
                 if( agent.IsMarkedForDestruction() )
@@ -141,7 +140,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
                 else
                     perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( agent ) );
             }
-            else if( detectionComputer->CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
+            else if( detectionComputer.CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
                 if( !civiliansEncountered && agent.IsCivilian() )
                 {
                     MIL_Report::PostEvent( perceiver_.GetPion(), report::eRC_CiviliansEncountered );

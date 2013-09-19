@@ -11,8 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRadarData.h"
-#include "DetectionComputer_ABC.h"
-#include "DetectionComputerFactory_ABC.h"
+#include "DefaultDetectionComputer.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -88,17 +87,17 @@ namespace
 // Name: PHY_PerceptionRadarData::AcquireTargets
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
+void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets )
 {
     const MT_Vector2D& perceiverPosition = perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     double perceiverAltitude = perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetHeight();
     for( TER_Agent_ABC::CIT_AgentPtrVector it = targets.begin(); it != targets.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer = detectionComputerFactory.Create( target );
-        perceiver.GetPion().Execute( *detectionComputer );
-        target.Execute( *detectionComputer );
-        if( detectionComputer->CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
+        detection::DefaultDetectionComputer detectionComputer( target );
+        perceiver.GetPion().Execute( detectionComputer );
+        target.Execute( detectionComputer );
+        if( detectionComputer.CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
         {
             const MT_Vector2D& targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
             double targetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetHeight();
@@ -137,20 +136,20 @@ void PHY_PerceptionRadarData::Update( PHY_RoleInterface_Perceiver& perceiver )
 // Name: PHY_PerceptionRadarData::Acquire
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadarData::Acquire( PHY_RoleInterface_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition, const detection::DetectionComputerFactory_ABC& detectionComputer )
+void PHY_PerceptionRadarData::Acquire( PHY_RoleInterface_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition )
 {
     assert( pRadarType_ );
     for( auto it = zones.begin(); it != zones.end(); ++it )
     {
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( **it, targets );
-        AcquireTargets( perceiver, targets, detectionComputer );
+        AcquireTargets( perceiver, targets );
     }
     if( bAcquireOnPerceiverPosition )
     {
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), pRadarType_->GetRadius(), targets );
-        AcquireTargets( perceiver, targets, detectionComputer );
+        AcquireTargets( perceiver, targets );
     }
     Update( perceiver );
 }

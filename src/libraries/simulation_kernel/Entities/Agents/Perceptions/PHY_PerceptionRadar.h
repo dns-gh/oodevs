@@ -18,10 +18,6 @@
 class PHY_RadarClass;
 class TER_Localisation;
 
-namespace detection
-{
-    class DetectionComputerFactory_ABC;
-}
 // =============================================================================
 // @class  PHY_PerceptionRadar
 // Created: JVT 2004-10-21
@@ -51,7 +47,7 @@ public:
 
     //! @name Execution
     //@{
-    virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputer );
+    virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents );
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     virtual void FinalizePerception();
     //@}

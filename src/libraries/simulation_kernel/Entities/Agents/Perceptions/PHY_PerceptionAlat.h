@@ -20,7 +20,7 @@ public:
 
     //! @name Execution
     //@{
-    virtual void Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputerFactory  );
+    virtual void Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents );
     virtual void FinalizePerception();
     //@}
 

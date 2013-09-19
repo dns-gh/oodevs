@@ -12,8 +12,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include "simulation_kernel/DetectionComputer_ABC.h"
-#include "simulation_kernel/DetectionComputerFactory_ABC.h"
+#include "simulation_kernel/DefaultDetectionComputer.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionCoupDeSonde constructor
@@ -76,7 +75,7 @@ const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MIL_Agent_A
 // Name: PHY_PerceptionCoupDeSonde::Execute
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
+void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     TER_Agent_ABC::T_AgentPtrVector vAgentDetectedList;
     TER_World::GetWorld().GetAgentManager().GetListWithinCircle( GetPerceiverPosition(), rLength_, vAgentDetectedList );
@@ -85,11 +84,11 @@ void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
 
-        std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer = detectionComputerFactory.Create( agent );
-        perceiver_.GetPion().Execute( *detectionComputer );
-        agent.Execute( *detectionComputer );
+        detection::DefaultDetectionComputer detectionComputer( agent );
+        perceiver_.GetPion().Execute( detectionComputer );
+        agent.Execute( detectionComputer );
 
-        if( detectionComputer->CanBeSeen() )
+        if( detectionComputer.CanBeSeen() )
             perceiver_.NotifyPerception( agent, Compute( agent ) );
     }
 }
