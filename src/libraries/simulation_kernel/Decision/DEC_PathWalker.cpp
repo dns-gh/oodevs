@@ -133,6 +133,17 @@ void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
     }
 }
 
+namespace
+{    
+    bool IsDifficultToPassThrough( const MT_Vector2D& lastWaypoint, const MIL_Object_ABC& object, PHY_MovingEntity_ABC& movingEntity, const TerrainData& environment )
+    {
+        return object.IsInside( lastWaypoint )
+            && movingEntity.GetSpeed( environment, object ) == 0
+            && movingEntity.CanObjectInteractWith( object )
+            && movingEntity.HasKnowledgeObject( object );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::SetCurrentPath
 // Created: NLD 2004-09-22
@@ -166,7 +177,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
         for( TER_Object_ABC::CIT_ObjectVector itObject = objects.begin(); itObject != objects.end(); ++itObject )
         {
             const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
-            if( movingEntity_.CanObjectInteractWith( object ) && movingEntity_.HasKnowledgeObject( object ) )
+            if( IsDifficultToPassThrough( lastWaypoint, object, movingEntity_, environment_ ) )
             {
                 const double objectCost = movingEntity_.GetObjectCost( object.GetType(), pPath->GetPathType() );
                 if( objectCost > cost )
