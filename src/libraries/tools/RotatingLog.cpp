@@ -16,52 +16,15 @@
 
 using namespace tools;
 
-class RotatingLog::Stream : boost::noncopyable
-{
-public:
-    Stream( const tools::Path& filename )
-        : filename_( filename )
-        , stream_  ( filename, std::ios::app )
-    {}
-    void Rotate()
-    {
-        const tools::Path filename = filename_.Parent() / filename_.BaseName() + "." +
-            boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ).c_str() + filename_.Extension();
-        tools::Path to = filename;
-        for( int i = 1; to.Exists(); ++i )
-            to = filename + "." + boost::lexical_cast< std::string >( i ).c_str();
-        stream_.close();
-        filename_.Rename( to );
-        filename_ = to;
-    }
-    void Remove()
-    {
-        stream_.close();
-        filename_.Remove();
-    }
-    std::size_t Write( tools::Log_ABC& log, const std::string& line )
-    {
-        return log.Write( stream_, line );
-    }
-    bool operator<( const Stream& rhs ) const
-    {
-        return filename_ < rhs.filename_;
-    }
-
-private:
-    tools::Path filename_;
-    tools::Ofstream stream_;
-};
-
 RotatingLog::RotatingLog( tools::Log_ABC& log, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate )
-    : log_ ( log )
+    : log_     ( log )
     , filename_( filename )
     , files_   ( files )
     , size_    ( size )
-    , count_   ( log.ComputeSize( filename ) )
+    , count_   ( log_.ComputeSize( filename_ ) )
 {
     Populate();
-    if( truncate )
+    if( truncate && filename_.Exists() )
         Rotate();
     Prune();
 }
@@ -73,24 +36,24 @@ RotatingLog::~RotatingLog()
 
 void RotatingLog::Populate()
 {
-    const boost::regex regex( ".+" + filename_.BaseName().ToUTF8() + "\\.\\d{8}T\\d{6}\\.log.*" );
+    const tools::Path stem = filename_.Parent() / filename_.BaseName();
+    const boost::regex regex( "\\Q" + stem.ToUTF8() + "\\E\\.\\d{8}T\\d{6}\\.log(\\.\\d+)*" );
     filename_.Parent().ListElements(
         [&]( const Path& path ) -> bool
         {
             if( boost::regex_match( path.ToUTF8(), regex ) )
-                logs_.push_back( new Stream( path ) );
+                history_.push_back( path );
             return false;
         },
         false );
-    logs_.sort();
-    logs_.push_back( new Stream( filename_ ) );
+    std::sort( history_.begin(), history_.end() );
 }
 
 void RotatingLog::DoWrite( const std::string& line )
 {
     try
     {
-        if( count_ >= size_ )
+        if( size_ != 0 && count_ >= size_ && stream_ )
         {
             Rotate();
             Prune();
@@ -109,23 +72,29 @@ void RotatingLog::DoWrite( const std::string& line )
 
 void RotatingLog::Log( const std::string& line )
 {
-    count_ += logs_.back().Write( log_, line );
-}
-
-void RotatingLog::Rotate()
-{
-    if( logs_.empty() )
-        return;
-    logs_.back().Rotate();
-    count_ = 0;
-    logs_.push_back( new Stream( filename_ ) );
+    if( ! stream_ )
+        stream_.reset( new Ofstream( filename_, count_ > 0 ? std::ios::app : std::ios::trunc ) );
+    count_ += log_.Write( *stream_, line );
 }
 
 void RotatingLog::Prune()
 {
-    while( logs_.size() > files_ )
+    while( history_.size() >= files_ && ! history_.empty() )
     {
-        logs_.front().Remove();
-        logs_.pop_front();
+        history_.front().Remove();
+        history_.pop_front();
     }
+}
+
+void RotatingLog::Rotate()
+{
+    const tools::Path filename = filename_.Parent() / filename_.BaseName() + "." +
+        boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ).c_str() + filename_.Extension();
+    tools::Path to = filename;
+    for( int i = 1; to.Exists(); ++i )
+        to = filename + "." + boost::lexical_cast< std::string >( i ).c_str();
+    stream_.reset();
+    count_ = 0;
+    filename_.Rename( to );
+    history_.push_back( to );
 }

@@ -11,14 +11,15 @@
 #define tools_RotatingLog_h
 
 #include <tools/Path.h>
-#include <tools/StdFileWrapper.h>
+#include <boost/scoped_ptr.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/ptr_container/ptr_deque.hpp>
+#include <deque>
 
 namespace tools
 {
     class Log_ABC;
+    class Ofstream;
 
 // =============================================================================
 /** @class  RotatingLog
@@ -46,16 +47,10 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    class Stream;
-    //@}
-
-private:
     //! @name Helpers
     //@{
-    void Populate();
     void DoWrite( const std::string& line );
+    void Populate();
     void Log( const std::string& line );
     void Prune();
     void Rotate();
@@ -69,7 +64,8 @@ private:
     tools::Path filename_;
     std::size_t files_;
     std::streamoff size_, count_;
-    boost::ptr_deque< Stream > logs_;
+    std::deque< tools::Path > history_;
+    boost::scoped_ptr< tools::Ofstream > stream_;
     //@}
 };
 
