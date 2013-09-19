@@ -1072,10 +1072,6 @@
         <translation>Valorisation:</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle:</translation>
-    </message>
-    <message>
         <source>Fire</source>
         <translation>Feu</translation>
     </message>

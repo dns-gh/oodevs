@@ -37,7 +37,6 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( "Mining", tools::findTranslation( "Object", "Mining:" ) )
                 .AddLabel( "DevelopmentResource", tools::findTranslation( "Object", "Development resource:" ) )
                 .AddLabel( "Bypass", tools::findTranslation( "Object", "Bypass:" ) )
-                .AddLabel( "ObstacleType", tools::findTranslation( "Object", "Obstacle type:" ) )
                 .AddLabel( "ObstacleActivated", tools::findTranslation( "Object", "Obstacle activated:" ) )
                 .AddLabel( "ActivationTime", tools::findTranslation( "Object", "Activation time:" ) )
                 .AddLabel( "ActivityTime", tools::findTranslation( "Object", "Activity time:" ) )

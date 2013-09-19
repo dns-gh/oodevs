@@ -1461,16 +1461,32 @@ Do you want to remove it?</translation>
         <translation>Obstacle</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation>Obstacle type:</translation>
+        <source>Activation</source>
+        <translation>Activation</translation>
     </message>
     <message>
-        <source>Activation time:</source>
-        <translation>Activation time:</translation>
+        <source>Deactivation</source>
+        <translation>Deactivation</translation>
     </message>
     <message>
-        <source>Activity time:</source>
-        <translation>Activity time:</translation>
+        <source>Immediately</source>
+        <translation>Immediately</translation>
+    </message>
+    <message>
+        <source>After a delay</source>
+        <translation>After a delay</translation>
+    </message>
+    <message>
+        <source>At a specific date</source>
+        <translation>At a specific date</translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation>Inactive</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Never</translation>
     </message>
 </context>
 <context>

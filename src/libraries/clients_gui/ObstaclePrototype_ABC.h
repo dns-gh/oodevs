@@ -18,6 +18,7 @@
 namespace gui
 {
     class LoadableCheckBox;
+    class LoadableDateTimeEdit;
     class LoadableTimeEdit;
 
 // =============================================================================
@@ -43,38 +44,51 @@ public:
     virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
-signals:
-    //! @name signals
-    //@{
-    void ToggleActivable( bool );
-    //@}
-
 private slots:
     //! @name slots
     //@{
-    void OnObstacleTypeChanged();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void showEvent( QShowEvent* );
+    void OnActivationTypeChanged( int index );
+    void OnDeactivationTypeChanged( int index );
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    // bool IsActivated() const;
+    virtual QDateTime GetCreationDate() const = 0;
     int GetActivationTime() const;
     int GetActivityTime() const;
+    bool IsActivated() const;
+    //@}
+
+protected:
+    //! @name Types
+    //@{
+    enum EActivationType
+    {
+        eActivationImmediately,
+        eActivationDelay,
+        eActivationDate,
+        eActivationInactive
+    };
+
+    enum EDeactivationType
+    {
+        eDeactivationNever,
+        eDeactivationDelay,
+        eDeactivationDate
+    };
     //@}
 
 protected:
     //! @name Member data
     //@{
-    ValuedComboBox< E_DemolitionTargetType >* types_;
-    LoadableTimeEdit*                         activationTime_;
-    LoadableTimeEdit*                         activityTime_;
+    QComboBox* activationCombo_;
+    RichGroupBox* deactivationGroup_;
+    QComboBox* deactivationCombo_;
+    LoadableTimeEdit* activationDelay_;
+    LoadableDateTimeEdit* activationDate_;
+    LoadableTimeEdit* deactivationDelay_;
+    LoadableDateTimeEdit* deactivationDate_;
     //@}
 };
 

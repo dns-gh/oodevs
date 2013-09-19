@@ -1132,10 +1132,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>

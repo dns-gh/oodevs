@@ -1456,16 +1456,32 @@ Do you want to remove it?</source>
         <translation type="unfinished">العقبة</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished">نوع العائق:</translation>
+        <source>Activation</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activation time:</source>
-        <translation type="unfinished">وقت التنشيط:</translation>
+        <source>Deactivation</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activity time:</source>
-        <translation type="unfinished">وقت النشاط:</translation>
+        <source>Immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After a delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At a specific date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

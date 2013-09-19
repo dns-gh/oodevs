@@ -36,7 +36,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     layout->setMargin( 5 );
     layout->setAlignment( Qt::AlignTop );
 
-    created_ = new ObjectPrototype( this, controllers, staticModel, noSideTeam, layer,config );
+    created_ = new ObjectPrototype( this, controllers, staticModel, simulation_, noSideTeam, layer,config );
     layout->addWidget( created_ );
     QPushButton* ok = new QPushButton( tools::translate( "ObjectCreationPanel", "Create" ), this );
     layout->addWidget( ok );

@@ -17,8 +17,6 @@
 #include "statusicons.h"
 #include "protocol/SimulationSenders.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor
 // Created: SBO 2007-02-08
@@ -46,7 +44,6 @@ ObstacleAttribute::~ObstacleAttribute()
 void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ )
              .Display( tools::translate( "Object", "Obstacle activated:" ), obstacleActivated_ )
              .Display( tools::translate( "Object", "Activation time:" ), activationTime_ )
              .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
@@ -97,13 +94,12 @@ void ObstacleAttribute::UpdateData( const T& message )
 {
      if( message.has_obstacle() )
      {
-        obstacleType_ = (E_DemolitionTargetType)message.obstacle().type();
-        obstacleActivated_= (message.obstacle().activated() != 0);
+        obstacleActivated_= message.obstacle().activated();
         if( message.obstacle().has_activation_time() )
             activationTime_ = message.obstacle().activation_time();
         if( message.obstacle().has_activity_time() )
             activityTime_ = message.obstacle().activity_time();
-        controller_.Update( *(ObstacleAttribute_ABC*)this );
+        controller_.Update( *static_cast< ObstacleAttribute_ABC* >( this ) );
      }
 }
 
@@ -115,8 +111,8 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewpor
 {
     if( obstacleActivated_.IsSet() && viewport.IsVisible( where ) )
     {
-        float zoomFactor = tools.GetAdaptiveZoomFactor( !hasSinglePointPos_ );
-        geometry::Point2f offsetPoint = where + geometry::Vector2f( zoomFactor * 250.f, zoomFactor * 150.f );
+        const float zoomFactor = tools.GetAdaptiveZoomFactor( !hasSinglePointPos_ );
+        const geometry::Point2f offsetPoint = where + geometry::Vector2f( zoomFactor * 250.f, zoomFactor * 150.f );
 
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
@@ -125,15 +121,6 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewpor
                           , offsetPoint, 150.f, hasSinglePointPos_? gui::GlTools_ABC::pixels : gui::GlTools_ABC::meters );
         glPopAttrib();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::IsReservedObstacle
-// Created: LDC 2010-12-27
-// -----------------------------------------------------------------------------
-bool ObstacleAttribute::IsReservedObstacle() const
-{
-    return obstacleType_.IsSet() && obstacleType_ == eDemolitionTargetType_Reserved;
 }
 
 // -----------------------------------------------------------------------------

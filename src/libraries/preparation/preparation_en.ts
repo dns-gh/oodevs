@@ -470,20 +470,12 @@
         <translation>Mine parameters</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation>Obstacle type:</translation>
-    </message>
-    <message>
         <source>Activation time:</source>
         <translation>Activation time:</translation>
     </message>
     <message>
         <source>Activity time:</source>
         <translation>Activity time:</translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation>Info/Demolition target parameters/Obstacle type</translation>
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle activated</source>
@@ -548,6 +540,10 @@
     <message>
         <source>Info/Breaching/Value</source>
         <translation>Info/Breaching/Value</translation>
+    </message>
+    <message>
+        <source>Obstacle parameters</source>
+        <translation>Obstacle parameters</translation>
     </message>
 </context>
 <context>

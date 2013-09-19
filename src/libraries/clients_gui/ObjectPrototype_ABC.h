@@ -95,12 +95,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectPrototype_ABC( const ObjectPrototype_ABC& );            //!< Copy constructor
-    ObjectPrototype_ABC& operator=( const ObjectPrototype_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& team );

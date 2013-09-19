@@ -46,7 +46,8 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam,
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model,
+                              const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam,
                               gui::ParametersLayer& layer, const tools::GeneralConfig& config );
     virtual ~ObjectPrototype();
     //@}
@@ -60,12 +61,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DoCommit( const kernel::Team_ABC& team );
-    //@}
-
-    //! @name Copy/Assignment
-    //@{
-    ObjectPrototype( const ObjectPrototype& );            //!< Copy constructor
-    ObjectPrototype& operator=( const ObjectPrototype& ); //!< Assignment operator
     //@}
 
 private:

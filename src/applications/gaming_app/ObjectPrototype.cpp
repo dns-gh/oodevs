@@ -45,7 +45,6 @@
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/smart_ptr/make_shared.hpp>
-#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 using namespace gui;
@@ -61,9 +60,9 @@ namespace
             container.push_back( new MinePrototype( parent, attributesList ) );
     }
 
-    void BypassableAttribute( T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
+    void ObstacleAttribute( T_AttributeContainer& container, QWidget* parent, const kernel::Time_ABC& simulation, ParameterList*& attributesList )
     {
-        container.push_back( new BypassPrototype( parent, attributesList ) );
+        container.push_back( new ObstaclePrototype( parent, attributesList, simulation ) );
     }
 
     void BridgingAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
@@ -178,12 +177,13 @@ namespace
     };
 
     std::auto_ptr< ObjectAttributePrototypeFactory_ABC > CreateFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver,
-                                                                        ParameterList*& attributesList, const tools::GeneralConfig& config )
+                                                                        const kernel::Time_ABC& simulation, ParameterList*& attributesList,
+                                                                        const tools::GeneralConfig& config )
     {
         gui::SubObjectName subobject( "CreateFactory" );
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
-        factory->Register( "activable"                 , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "activable"                 , boost::bind( &ObstacleAttribute, _2, _3, boost::cref( simulation ), boost::ref( attributesList ) ) );
         factory->Register( "time-limited"              , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "delay"                     , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "supply-route"              , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
@@ -197,7 +197,7 @@ namespace
         factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "altitude-modifier"         , boost::bind( &Capacity< AltitudeModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "trafficability"            , boost::bind( &TrafficabilityAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
-        factory->Register( "bypassable"                , boost::bind( &BypassableAttribute, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "bypassable"                , boost::bind( &Capacity< BypassPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "disaster"                  , boost::bind( &DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( controllers ), boost::ref( attributesList ) ) );
 
         boost::shared_ptr< NBCBuilder > pNBCBuilders = boost::make_shared< NBCBuilder >();
@@ -218,13 +218,14 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam,
+ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model,
+                                  const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam,
                                   gui::ParametersLayer& layer, const tools::GeneralConfig& config )
     : ObjectPrototype_ABC( "ObjectPrototype", parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,
-                           CreateFactory( controllers, model.objectTypes_, attributesList_, config ) )
+                           CreateFactory( controllers, model.objectTypes_, simulation, attributesList_, config ) )
     , attributesList_( 0 )
-    , static_               ( model )
-    , currentActionsModel_  ( 0 )
+    , static_( model )
+    , currentActionsModel_( 0 )
     , currentSimulationTime_( 0 )
 {
     // NOTHING

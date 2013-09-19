@@ -40,7 +40,7 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
     AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ) ) );
     inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, *model.agents_, paramLayer, glProxy );
     AddPanel( inhabitantCreationPanel_ );
-    objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, *model.objects_, *model.urban_, model.teams_->GetNoSideTeam(), paramLayer, glProxy, config );
+    objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, *model.objects_, *model.urban_, *model.weather_, model.teams_->GetNoSideTeam(), paramLayer, glProxy, config );
     AddPanel( objectCreationPanel_ );
     ghostPanel_ = new GhostsPanel( this, *this, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
     AddPanel( ghostPanel_ );

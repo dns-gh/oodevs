@@ -12,24 +12,17 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Units.h"
-#include "EnumTypes.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Displayer_ABC;
-    class NBCAgent;
     class Entity_ABC;
 }
 
 namespace gui
 {
     class PropertiesDictionary;
-}
-
-namespace xml
-{
-    class xistream;
 }
 
 // =============================================================================
@@ -40,12 +33,12 @@ namespace xml
 // =============================================================================
 class ObstacleAttribute : public kernel::ObstacleAttribute_ABC
                         , public kernel::Serializable_ABC
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObstacleAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
-             ObstacleAttribute( gui::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type, const kernel::Entity_ABC& entity );
+             ObstacleAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
              ObstacleAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~ObstacleAttribute();
     //@}
@@ -62,17 +55,10 @@ public:
     void Activate( bool activate );
     void SetActivationTime( int time );
     void SetActivityTime( int time );
-    virtual bool IsReservedObstacle() const;
     virtual bool IsObstacleActivated() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObstacleAttribute( const ObstacleAttribute& );            //!< Copy constructor
-    ObstacleAttribute& operator=( const ObstacleAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( const kernel::Entity_ABC& entity);
@@ -82,10 +68,9 @@ private:
     //! @name Member data
     //@{
     gui::PropertiesDictionary& dictionary_;
-    Enum_DemolitionTargetType     type_;
-    bool                          bActivated_;
-    QTime                         activationTime_;
-    QTime                         activityTime_;
+    bool bActivated_;
+    QTime activationTime_;
+    QTime activityTime_;
     //@}
 };
 

@@ -46,6 +46,11 @@ namespace
 {
     typedef ObjectAttributePrototypeFactory_ABC::T_AttributeContainer  T_AttributeContainer;
 
+    void ObstacleAttribute( T_AttributeContainer& container, QWidget* parent, const WeatherModel& weather, Object_ABC*& object )
+    {
+        container.push_back( new ObstaclePrototype( parent, object, weather ) );
+    }
+
     void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
     {
         container.push_back( new ConstructionPrototype( parent, object ) );
@@ -196,11 +201,11 @@ namespace
     /*
     * Register capacity tag
     */
-    std::auto_ptr< ObjectAttributePrototypeFactory_ABC > FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, DetectionMap& detection, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const tools::GeneralConfig& config, Object_ABC*& object )
+    std::auto_ptr< ObjectAttributePrototypeFactory_ABC > FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, DetectionMap& detection, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const WeatherModel& weather, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
-        factory->Register( "activable"                 , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( object ) ) );
+        factory->Register( "activable"                 , boost::bind( &ObstacleAttribute, _2, _3, boost::cref( weather ), boost::ref( object ) ) );
         factory->Register( "time-limited"              , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "supply-route"              , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "bridging"                  , boost::bind( &BridgingAttribute, _1, _2, _3, boost::ref( object ) ) );
@@ -240,11 +245,12 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( const QString& objectName, QWidget* parent, Controllers& controllers, const ::StaticModel& model,
-                                  ObjectsModel& objectsModel, const UrbanModel& urbanModel, const Team_ABC& noSideTeam,
+ObjectPrototype::ObjectPrototype( const QString& objectName, QWidget* parent, Controllers& controllers,
+                                  const ::StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel,
+                                  const WeatherModel& weather, const Team_ABC& noSideTeam,
                                   ParametersLayer& layer, const tools::GeneralConfig& config )
         : ObjectPrototype_ABC( objectName, parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,
-                           FactoryBuilder( controllers, model.objectTypes_, model.detection_, objectsModel, urbanModel, config, creation_ ) )
+                           FactoryBuilder( controllers, model.objectTypes_, model.detection_, objectsModel, urbanModel, weather, config, creation_ ) )
     , model_   ( objectsModel )
     , creation_( 0 )
 {

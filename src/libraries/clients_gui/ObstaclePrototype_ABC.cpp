@@ -12,21 +12,11 @@
 #include "moc_ObstaclePrototype_ABC.cpp"
 #include "Tools.h"
 #include "LoadableCheckBox.h"
+#include "LoadableDateTimeEdit.h"
 #include "LoadableTimeEdit.h"
 #include "SubObjectName.h"
 
 using namespace gui;
-
-namespace
-{
-    template< typename Enum, typename Combo >
-    void Populate( Enum size, Combo& combo )
-    {
-        combo.Clear();
-        for( unsigned int i = 0; i < unsigned int( size ); ++i )
-            combo.AddItem( tools::ToString( (Enum)i ), (Enum)i );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ObstaclePrototype_ABC constructor
@@ -36,33 +26,43 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, "ObstaclePrototype_ABC", tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle" ) )
 {
     SubObjectName subObject( "ObstaclePrototypeABC" );
-    Q3VBox* vbox = new Q3VBox( this );
-    QGridLayout* layout = new QGridLayout( this );
-    layout->setMargin( 5 );
-    layout->addWidget( vbox );
-    {
-        Q3HBox* hBox = new Q3HBox( vbox );
-        new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle type:" ), hBox );
-        types_ = new ValuedComboBox< E_DemolitionTargetType >( "types", hBox );
-    }
-    {
-        Q3HBox* activationBox = new Q3HBox( vbox );
-        QLabel* activationLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), activationBox );
-        activationTime_ = new LoadableTimeEdit( "activationTime", activationBox );
-        activationLabel->hide();
-        activationTime_->hide();
-        Q3HBox* activityBox = new Q3HBox( vbox );
-        QLabel* activityLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ), activityBox );
-        activityTime_ = new LoadableTimeEdit( "activityTime", activityBox );
-        activityLabel->hide();
-        activityTime_->hide();
 
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activationLabel, SLOT( setVisible( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setVisible( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activityLabel, SLOT( setVisible( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activityTime_, SLOT( setVisible( bool ) ) );
-    }
-    connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
+    QVBoxLayout* vLayout = new QVBoxLayout( this );
+    QGroupBox* activationGroup = new QGroupBox( tools::translate( "gui::ObstaclePrototype_ABC", "Activation" ) );
+    vLayout->addWidget( activationGroup );
+    activationCombo_ = new QComboBox;
+    activationCombo_->addItem( tools::translate( "gui::ObstaclePrototype_ABC", "Immediately" ) );
+    activationCombo_->addItem( tools::translate( "gui::ObstaclePrototype_ABC", "After a delay" ) );
+    activationCombo_->addItem( tools::translate( "gui::ObstaclePrototype_ABC", "At a specific date" ) );
+    activationCombo_->addItem( tools::translate( "gui::ObstaclePrototype_ABC", "Inactive" ) );
+    activationDelay_ = new LoadableTimeEdit( "activation_delay", 0 );
+    activationDate_ = new LoadableDateTimeEdit( "activation_date", 0 );
+    QHBoxLayout* activationLayout = new QHBoxLayout;
+    activationLayout->addWidget( activationCombo_ );
+    activationLayout->addWidget( activationDelay_ );
+    activationLayout->addWidget( activationDate_ );
+    activationDelay_->setEnabled( false );
+    activationDate_->setVisible( false );
+    activationGroup->setLayout( activationLayout );
+
+    deactivationGroup_ = new RichGroupBox( "deactivation_group", tools::translate( "gui::ObstaclePrototype_ABC", "Deactivation" ) );
+    vLayout->addWidget( deactivationGroup_ );
+    deactivationCombo_ = new QComboBox;
+    deactivationCombo_->addItem( tools::translate( "gui::ObstaclePrototype_ABC", "Never" ) );
+    deactivationCombo_->addItem( tools::translate( "gui::ObstaclePrototype_ABC", "After a delay" ) );
+    deactivationCombo_->addItem( tools::translate( "gui::ObstaclePrototype_ABC", "At a specific date" ) );
+    deactivationDelay_ = new LoadableTimeEdit( "deactivation_delay", 0 );
+    deactivationDate_ = new LoadableDateTimeEdit( "deactivation_date", 0 );
+    QHBoxLayout* deactivationLayout = new QHBoxLayout;
+    deactivationLayout->addWidget( deactivationCombo_ );
+    deactivationLayout->addWidget( deactivationDelay_ );
+    deactivationLayout->addWidget( deactivationDate_ );
+    deactivationDelay_->setEnabled( false );
+    deactivationDate_->setVisible( false );
+    deactivationGroup_->setLayout( deactivationLayout );
+
+    connect( activationCombo_, SIGNAL( activated( int ) ), this, SLOT( OnActivationTypeChanged( int ) ) );
+    connect( deactivationCombo_, SIGNAL( activated( int ) ), this, SLOT( OnDeactivationTypeChanged( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,36 +75,87 @@ ObstaclePrototype_ABC::~ObstaclePrototype_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstaclePrototype_ABC::showEvent
-// Created: AGE 2006-08-11
-// -----------------------------------------------------------------------------
-void ObstaclePrototype_ABC::showEvent( QShowEvent* e )
-{
-    Populate( eNbrDemolitionTargetType, *types_ );
-    OnObstacleTypeChanged();
-    RichGroupBox::showEvent( e );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObstaclePrototype_ABC::CheckValidity
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 bool ObstaclePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
-    return types_->count() > 0;
+    if( activationCombo_->currentIndex() != eActivationInactive && deactivationCombo_->currentIndex() == eDeactivationDate )
+    {
+        QDateTime activationDate;
+        if( activationCombo_->currentIndex() == eActivationDate )
+            activationDate = activationDate_->dateTime();
+        else
+            activationDate = GetCreationDate().addSecs( GetActivationTime() );
+        if( activationDate >= deactivationDate_->dateTime() )
+        {
+            deactivationGroup_->Warn();
+            return false;
+        }
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstaclePrototype_ABC::OnObstacleTypeChanged
-// Created: SBO 2007-05-24
+// Name: ObstaclePrototype_ABC::OnActivationTypeChanged
+// Created: JSR 2013-09-12
 // -----------------------------------------------------------------------------
-void ObstaclePrototype_ABC::OnObstacleTypeChanged()
+void ObstaclePrototype_ABC::OnActivationTypeChanged( int index )
 {
-    if( activationTime_ && activationTime_->GetDefaultValueWidget() )
-        activationTime_->GetDefaultValueWidget()->setTime( QTime() );
-    if( activityTime_ && activityTime_->GetDefaultValueWidget() )
-        activityTime_->GetDefaultValueWidget()->setTime( QTime() );
-    emit ToggleActivable( types_->GetValue() != eDemolitionTargetType_Reserved );
+    switch( index )
+    {
+    case eActivationImmediately:
+        deactivationGroup_->setEnabled( true );
+        activationDelay_->setEnabled( false );
+        activationDate_->setEnabled( false );
+        break;
+    case eActivationDelay:
+        deactivationGroup_->setEnabled( true );
+        activationDelay_->setEnabled( true );
+        activationDelay_->setVisible( true );
+        activationDate_->setVisible( false );
+        break;
+    case eActivationDate:
+        deactivationGroup_->setEnabled( true );
+        activationDate_->setEnabled( true );
+        activationDelay_->setVisible( false );
+        activationDate_->setVisible( true );
+        break;
+    case eActivationInactive:
+        deactivationGroup_->setEnabled( false );
+        activationDelay_->setEnabled( false );
+        activationDate_->setEnabled( false );
+        break;
+    default:
+        break;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstaclePrototype_ABC::OnDeactivationTypeChanged
+// Created: JSR 2013-09-16
+// -----------------------------------------------------------------------------
+void ObstaclePrototype_ABC::OnDeactivationTypeChanged( int index )
+{
+    switch( index )
+    {
+    case eDeactivationNever:
+        deactivationDelay_->setEnabled( false );
+        deactivationDate_->setEnabled( false );
+        break;
+    case eDeactivationDelay:
+        deactivationDelay_->setEnabled( true );
+        deactivationDelay_->setVisible( true );
+        deactivationDate_->setVisible( false );
+        break;
+    case eDeactivationDate:
+        deactivationDate_->setEnabled( true );
+        deactivationDelay_->setVisible( false );
+        deactivationDate_->setVisible( true );
+        break;
+    default:
+        break;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -113,8 +164,31 @@ void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 // -----------------------------------------------------------------------------
 int ObstaclePrototype_ABC::GetActivationTime() const
 {
-    QTime time = activationTime_->time();
-    return 3600 * time.hour() + 60 * time.minute() + time.second();
+    switch( activationCombo_->currentIndex() )
+    {
+    case eActivationDelay:
+    {
+        QTime time = activationDelay_->time();
+        return 3600 * time.hour() + 60 * time.minute() + time.second();
+    }
+    case eActivationDate:
+        return std::max( 0, GetCreationDate().secsTo( activationDate_->dateTime() ) );
+    case eActivationImmediately:
+    case eActivationInactive:
+    default:
+        return 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstaclePrototype_ABC::IsActivated
+// Created: JSR 2013-09-17
+// -----------------------------------------------------------------------------
+bool ObstaclePrototype_ABC::IsActivated() const
+{
+    int activation = activationCombo_->currentIndex();
+    return ( activation == eActivationImmediately )
+        || ( ( activation == eActivationDelay || activation == eActivationDate ) && GetActivationTime() == 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,8 +197,21 @@ int ObstaclePrototype_ABC::GetActivationTime() const
 // -----------------------------------------------------------------------------
 int ObstaclePrototype_ABC::GetActivityTime() const
 {
-    QTime time = activityTime_->time();
-    return 3600 * time.hour() + 60 * time.minute() + time.second();
+    if( activationCombo_->currentIndex() == eActivationInactive )
+        return 0;
+    switch( deactivationCombo_->currentIndex() )
+    {
+    case eDeactivationDelay:
+        {
+            QTime time = deactivationDelay_->time();
+            return 3600 * time.hour() + 60 * time.minute() + time.second();
+        }
+    case eDeactivationDate:
+        return std::max( 0, GetCreationDate().addSecs( GetActivationTime() ).secsTo( deactivationDate_->dateTime() ) );
+    case eDeactivationNever:
+    default:
+       return 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -133,6 +220,8 @@ int ObstaclePrototype_ABC::GetActivityTime() const
 // -----------------------------------------------------------------------------
 void ObstaclePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 {
-    activationTime_->SetLoader( loader );
-    activityTime_->SetLoader( loader );
+    activationDelay_->SetLoader( loader );
+    activationDate_->SetLoader( loader );
+    deactivationDelay_->SetLoader( loader );
+    deactivationDate_->SetLoader( loader );
 }
