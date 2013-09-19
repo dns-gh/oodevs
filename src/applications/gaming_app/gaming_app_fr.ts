@@ -2391,6 +2391,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Activate obstacle</source>
         <translation>Activer l&apos;obstacle</translation>
     </message>
+    <message>
+        <source>Deactivate obstacle</source>
+        <translation>Désactiver l&apos;obstacle</translation>
+    </message>
 </context>
 <context>
     <name>ObjectReportPanel</name>
