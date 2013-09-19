@@ -7,17 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef dispatcher_Log_h
-#define dispatcher_Log_h
+#ifndef dispatcher_LogFactory_h
+#define dispatcher_LogFactory_h
 
-#include "tools/FileLog.h"
-#include <tools/Path.h>
-#include <tools/StdFileWrapper.h>
-
-namespace tools
-{
-    class Path;
-}
+#include "tools/Log_ABC.h"
 
 namespace dispatcher
 {
@@ -27,24 +20,18 @@ namespace dispatcher
 */
 // Created: MCO 2011-06-27
 // =============================================================================
-class Log : public tools::FileLog
+class Log : public tools::Log_ABC
 {
 public:
-    Log( const tools::Path& filename, bool sizeInBytes );
+    explicit Log( bool sizeInBytes );
 
-protected:
-    virtual std::size_t Write( const std::string& line );
-
-private:
-    void Close();
-
-    std::string GetTime() const;
+    virtual std::size_t Write( std::ostream& os, const std::string& line );
+    virtual std::streamoff ComputeSize( const tools::Path& filename ) const;
 
 private:
-    tools::Ofstream s_;
     bool sizeInBytes_;
 };
 
 }
 
-#endif // dispatcher_Log_h
+#endif // dispatcher_LogFactory_h

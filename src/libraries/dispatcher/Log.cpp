@@ -9,38 +9,40 @@
 
 #include "dispatcher_pch.h"
 #include "Log.h"
-#include <tools/Exception.h>
 #include <ctime>
-
-#pragma warning( disable: 4996 ) // This function or variable may be unsafe
+#include <tools/Path.h>
+#include <tools/StdFileWrapper.h>
 
 using namespace dispatcher;
 
-Log::Log( const tools::Path& filename, bool sizeInBytes )
-    : tools::FileLog( filename )
-    , s_          ( filename )
-    , sizeInBytes_( sizeInBytes )
+Log::Log( bool sizeInBytes )
+    : sizeInBytes_( sizeInBytes )
 {
-    if( ! s_ )
-        throw MASA_EXCEPTION( "Failed to open log file '" + filename.ToUTF8() + "' for writing" );
+    // NOTHING
 }
 
-std::size_t Log::Write( const std::string& line )
+namespace
+{
+    std::string GetTime()
+    {
+        char buffer[256];
+        std::time_t t = time( 0 );
+        std::strftime( buffer, sizeof( buffer ), "%H:%M:%S", std::localtime( &t ) );
+        return buffer;
+    }
+}
+
+std::size_t Log::Write( std::ostream& os, const std::string& line )
 {
     const std::string time = GetTime();
-    s_ << "[" << time << "] " << line << std::endl;
+    os << "[" << time << "] " << line << std::endl;
     return sizeInBytes_ ? time.size() + line.size() + 3 : 1;
 }
 
-std::string Log::GetTime() const
+std::streamoff Log::ComputeSize( const tools::Path& filename ) const
 {
-    char buffer[256];
-    std::time_t t = time( 0 );
-    std::strftime( buffer, sizeof( buffer ), "%H:%M:%S", std::localtime( &t ) );
-    return buffer;
-}
-
-void Log::Close()
-{
-    s_.close();
+    if( sizeInBytes_ )
+        return filename.FileSize();
+    tools::Ifstream file( filename );
+    return std::count( std::istreambuf_iterator< char >( file ), std::istreambuf_iterator< char >(), '\n');
 }

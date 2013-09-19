@@ -11,6 +11,8 @@
 #define tools_Log_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <iosfwd>
+#include <memory>
 #include <string>
 
 namespace tools
@@ -23,7 +25,7 @@ namespace tools
 */
 // Created: MCO 2011-06-26
 // =============================================================================
-class Log_ABC : boost::noncopyable
+class Log_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -34,13 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::size_t Write( const std::string& line ) = 0;
-
-    virtual void Rename( const tools::Path& filename ) = 0;
-    virtual void Delete() = 0;
+    virtual std::size_t Write( std::ostream& os, const std::string& line ) = 0;
+    virtual std::streamoff ComputeSize( const tools::Path& filename ) const = 0;
     //@}
 };
-
 }
 
 #endif // tools_Log_ABC_h
