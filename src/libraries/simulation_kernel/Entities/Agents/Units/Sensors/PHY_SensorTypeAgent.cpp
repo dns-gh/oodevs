@@ -13,7 +13,7 @@
 #include "PHY_SensorTypeAgent.h"
 #include "PHY_SensorTypeObjectData.h"
 #include "AlgorithmsFactories.h"
-#include "DetectionComputerFactory_ABC.h"
+#include "DefaultPerceptionDistanceComputer.h"
 #include "MIL_AgentServer.h"
 #include "PerceptionDistanceComputer_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
@@ -313,8 +313,8 @@ double PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) const
                      * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
     MIL_Agent_ABC& tempSource = const_cast< MIL_Agent_ABC& >( source );//@TODO MGD FIND A BETTER WAY
-    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > computer( tempSource.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    rModifier *= tempSource.Execute( *computer ).GetFactor();
+    detection::DefaultPerceptionDistanceComputer computer;
+    rModifier *= tempSource.Execute( computer ).GetFactor();
 
     // Population
     const double rPopulationDensity = source.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();

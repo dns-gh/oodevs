@@ -11,7 +11,6 @@
 
 #include "simulation_kernel/DetectionComputerFactory.h"
 #include "simulation_kernel/DefaultDetectionComputer.h"
-#include "simulation_kernel/DefaultPerceptionDistanceComputer.h"
 
 using namespace detection;
 // -----------------------------------------------------------------------------
@@ -41,11 +40,3 @@ std::auto_ptr< DetectionComputer_ABC > DetectionComputerFactory::Create( MIL_Age
     return std::auto_ptr< DetectionComputer_ABC >( new DefaultDetectionComputer( target ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DetectionComputerFactory Create
-// Created: MGD 2009-10-06
-// -----------------------------------------------------------------------------
-std::auto_ptr< PerceptionDistanceComputer_ABC > DetectionComputerFactory::CreateDistanceComputer() const
-{
-    return std::auto_ptr< PerceptionDistanceComputer_ABC >( new DefaultPerceptionDistanceComputer() );
-}

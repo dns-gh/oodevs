@@ -11,6 +11,7 @@
 #include "PHY_RolePion_Perceiver.h"
 #include "AlgorithmsFactories.h"
 #include "ConsumptionComputer_ABC.h"
+#include "DefaultPerceptionDistanceComputer.h"
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
@@ -640,8 +641,8 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return rMaxAgentPerceptionDistance_ * owner_->Execute( *computer ).GetFactor();
+    detection::DefaultPerceptionDistanceComputer computer;
+    return rMaxAgentPerceptionDistance_ * owner_->Execute( computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
@@ -1258,7 +1259,6 @@ void PHY_RolePion_Perceiver::SendVisionCones() const
 {
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );
-    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
     // Elongation factor is deprecated, its value was 1.0 for relevant cases
     message().set_elongation( 1.0 );
     message().mutable_cones();

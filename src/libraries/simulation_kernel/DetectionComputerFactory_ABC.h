@@ -14,7 +14,6 @@ class MIL_Agent_ABC;
 namespace detection
 {
     class DetectionComputer_ABC;
-    class PerceptionDistanceComputer_ABC;
 // =============================================================================
 /** @class  DetectionComputerFactory_ABC
     @brief  DetectionComputerFactory_ABC
@@ -33,7 +32,6 @@ public:
     //! @name Operations
     //@{
     virtual std::auto_ptr< DetectionComputer_ABC > Create( MIL_Agent_ABC& target ) const = 0;
-    virtual std::auto_ptr< PerceptionDistanceComputer_ABC > CreateDistanceComputer() const = 0;
     //@}
 };
 
