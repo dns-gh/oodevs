@@ -2858,6 +2858,10 @@ PNG (*.png)</translation>
         <source>Update Preview</source>
         <translation>Mise à jour Prévisualisation</translation>
     </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished">Type DIA</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
@@ -3553,6 +3557,10 @@ PNG (*.png)</translation>
     <message>
         <source>Description</source>
         <translation>Description</translation>
+    </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished">Type DIA</translation>
     </message>
 </context>
 <context>

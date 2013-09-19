@@ -2834,6 +2834,10 @@ PNG (*.png)
         <source>Update Preview</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished">نوع ديا</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
@@ -3529,6 +3533,10 @@ PNG (*.png)
     <message>
         <source>Description</source>
         <translation type="unfinished">الوصف</translation>
+    </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished">نوع ديا</translation>
     </message>
 </context>
 <context>

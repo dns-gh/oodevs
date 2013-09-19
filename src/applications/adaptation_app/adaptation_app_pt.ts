@@ -2832,6 +2832,10 @@ PNG (*.png)
         <source>Allowed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
@@ -3526,6 +3530,10 @@ PNG (*.png)
     </message>
     <message>
         <source>Geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIA type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -95,7 +95,7 @@ void ADN_Objects_GUI::Build()
 
     builder.AddLocalizedField( data_.GetObjectInfos(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
 
-    ADN_EditLine_String* typeField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "Type"), vInfosConnectors[ eType ] );
+    ADN_EditLine_String* typeField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "DIA type"), vInfosConnectors[ eType ], 0, eDIAType );
     typeField->ConnectWithRefValidity( data_.GetObjectInfos() );
 
     pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, "point-effect-distance", tr( "Point effect distance"), vInfosConnectors[ ePointSize ], 0, eGreaterEqualZero );
