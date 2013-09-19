@@ -51,7 +51,8 @@
                     <div class="controls">
                         <select id="type">
                             <option value="manager">Manager</option>
-                            <option value="user" selected="selected">User</option>
+                            <option value="user">User</option>
+                            <option value="player" selected="selected">Player</option>
                         </select>
                     </div>
                 </div>
