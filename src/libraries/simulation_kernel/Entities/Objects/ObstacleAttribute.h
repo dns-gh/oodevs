@@ -15,16 +15,6 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
-namespace xml
-{
-    class xistream;
-}
-
-namespace sword
-{
-    enum ObstacleType_DemolitionTargetType;
-}
-
 // =============================================================================
 /** @class  ObstacleAttribute
     @brief  ObstacleAttribute
@@ -41,7 +31,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              ObstacleAttribute();
-    explicit ObstacleAttribute( bool reserved );
     explicit ObstacleAttribute( xml::xistream& xis );
     explicit ObstacleAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~ObstacleAttribute();
@@ -54,7 +43,6 @@ public:
 
     //! @name Operations
     //@{
-    void SetType( bool reserved );
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     virtual void Register( MIL_Object_ABC& object ) const;
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
@@ -86,7 +74,6 @@ public:
 private:
     //! @name Member data
     //@{
-    sword::ObstacleType_DemolitionTargetType obstacle_;
     bool bActivated_;
     int activationTime_;
     int activityTime_;

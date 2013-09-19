@@ -122,13 +122,12 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
             AddMagic( tr( "Mine" ), SLOT( MineObject() ), magicMenu );
             AddMagic( tr( "Sweep mines" ), SLOT( SweepMineObject() ), magicMenu );
         }
-        const kernel::ObstacleAttribute_ABC* obstacle = entity.Retrieve< kernel::ObstacleAttribute_ABC >();
-        if( obstacle && obstacle->IsReservedObstacle() )
+        if( const kernel::ObstacleAttribute_ABC* obstacle = entity.Retrieve< kernel::ObstacleAttribute_ABC >() )
         {
             if( obstacle->IsObstacleActivated() )
-                AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateObstacle() ), magicMenu );
+                AddMagic( tr( "Deactivate obstacle" ), SLOT( DeactivateObstacle() ), magicMenu );
             else
-                AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateObstacle() ), magicMenu );
+                AddMagic( tr( "Activate obstacle" ), SLOT( ActivateObstacle() ), magicMenu );
         }
         if( const kernel::UndergroundAttribute_ABC* underground = entity.Retrieve< kernel::UndergroundAttribute_ABC >() )
         {

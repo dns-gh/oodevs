@@ -275,7 +275,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, 0u );
+    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, "", type, army, localisation, true, 0u, 0u );
     RegisterObject( pObject );
     return pObject;
 }
@@ -286,7 +286,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int forcedId )
 {
-    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary, 0u, forcedId );
+    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, "", type, army, localisation, true, 0u, forcedId );
     RegisterObject( pObject );
     return pObject;
 }
@@ -296,11 +296,11 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation,
-                                                 sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, const std::string& name, double density )
+                                                 bool activated, unsigned int externalIdentifier, const std::string& name, double density )
 {
     if( pLocalisation )
     {
-        MIL_Object_ABC* pObject = factory_.CreateObject( sink_, name, type, army, *pLocalisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier, 0, density );
+        MIL_Object_ABC* pObject = factory_.CreateObject( sink_, name, type, army, *pLocalisation, activated, externalIdentifier, 0, density );
         RegisterObject( pObject );
         return pObject;
     }

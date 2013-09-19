@@ -2317,14 +2317,6 @@ This data can&apos;t be projected.</source>
         <translation>Sweep mines</translation>
     </message>
     <message>
-        <source>Deactivate reserved obstacle</source>
-        <translation>Deactivate reserved obstacle</translation>
-    </message>
-    <message>
-        <source>Activate reserved obstacle</source>
-        <translation>Activate reserved obstacle</translation>
-    </message>
-    <message>
         <source>Deactivate exit</source>
         <translation>Deactivate exit</translation>
     </message>
@@ -2379,6 +2371,14 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation>Type-in value then press &apos;Enter&apos;</translation>
+    </message>
+    <message>
+        <source>Deactivate obstacle</source>
+        <translation>Deactivate obstacle</translation>
+    </message>
+    <message>
+        <source>Activate obstacle</source>
+        <translation>Activate obstacle</translation>
     </message>
 </context>
 <context>

@@ -33,7 +33,7 @@ class Object : public MIL_Object
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( xml::xistream& xis, const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation, bool reserved = true );
+             Object( xml::xistream& xis, const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation );
              Object( const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation,
                      unsigned int externalIdentifier, const std::string& name = std::string(), unsigned int forcedId = 0u );
              Object();

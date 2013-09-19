@@ -2325,14 +2325,6 @@ This data can&apos;t be projected.</source>
         <translation>Barrer minas</translation>
     </message>
     <message>
-        <source>Deactivate reserved obstacle</source>
-        <translation>Desactivar obstáculo resevrado</translation>
-    </message>
-    <message>
-        <source>Activate reserved obstacle</source>
-        <translation>Activar Obstáculoi reservado</translation>
-    </message>
-    <message>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2386,6 +2378,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Limit Trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate obstacle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

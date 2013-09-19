@@ -2328,14 +2328,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Déminer</translation>
     </message>
     <message>
-        <source>Deactivate reserved obstacle</source>
-        <translation>Désactiver l&apos;obstacle de manoeuvre</translation>
-    </message>
-    <message>
-        <source>Activate reserved obstacle</source>
-        <translation>Activer l&apos;obstacle de manoeuvre</translation>
-    </message>
-    <message>
         <source>Alert</source>
         <translation>Alerter</translation>
     </message>
@@ -2390,6 +2382,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Limit Trafficability</source>
         <translation>Limiter la traficabilité</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation>Désactiver l&apos;obstacle</translation>
+    </message>
+    <message>
+        <source>Activate obstacle</source>
+        <translation>Activer l&apos;obstacle</translation>
     </message>
 </context>
 <context>

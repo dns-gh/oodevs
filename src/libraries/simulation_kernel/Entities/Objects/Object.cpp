@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 // Name: Object constructor
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation, bool /*reserved*/ )
+Object::Object( xml::xistream& xis, const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation )
     : MIL_Object( army, type, xis.attribute< unsigned long >( "id" ) )
     , name_( xis.attribute< std::string >( "name", "" ) )
     , externalIdentifier_( 0 )

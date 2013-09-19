@@ -100,7 +100,7 @@ void MIL_ObjectFactory::ReadCapacity( const std::string& capacity, xml::xistream
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
-                                                 bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const
+                                                 bool activated, unsigned int externalIdentifier, unsigned int forcedId, double density ) const
 {
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
@@ -110,7 +110,12 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const st
     builder.Build( *object, sink );
     attributes_->Initialize( *object );
     if( ObstacleAttribute* pObstacle = object->RetrieveAttribute< ObstacleAttribute >() )
-        pObstacle->SetType( reserved );
+    {
+        if( activated )
+            pObstacle->Activate();
+        else
+            pObstacle->Deactivate();
+    }
     if( density )
     {
         BuildableCapacity* capacity = object->Retrieve< BuildableCapacity >();
