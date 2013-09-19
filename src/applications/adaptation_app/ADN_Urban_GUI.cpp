@@ -81,8 +81,7 @@ void ADN_Urban_GUI::Build()
         // material info
         QWidget* pHolder = builder.AddFieldHolder( pGroupMaterials );
         pHolder->layout()->setMargin( 0 );
-        ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pHolder, "name", tr( "Name" ), vMaterialInfosConnectors[ eUrbanMaterialName ] );
-        nameField->ConnectWithRefValidity( data_.GetMaterialsInfos() );
+        builder.AddLocalizedField( data_.GetMaterialsInfos(), pHolder, "name", tr( "Name" ), vMaterialInfosConnectors[ eUrbanMaterialName ] );
 
         pAttritionTable_ = new ADN_Urban_AttritionTable( builder.GetChildName( "attrition-table" ), vMaterialInfosConnectors[ eUrbanMaterialAttrition ], pGroupMaterials );
         pAttritionTable_->setFixedHeight( 180 );
@@ -102,8 +101,7 @@ void ADN_Urban_GUI::Build()
         // Roofshape info
         QWidget* pHolder = builder.AddFieldHolder( pGroupRoofShapes );
         pHolder->layout()->setMargin( 0 );
-        ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pHolder, "name", tr( "Name" ), vRoofShapeInfosConnectors[ eUrbanName ] );
-        nameField->ConnectWithRefValidity( data_.GetRoofShapesInfos() );
+        builder.AddLocalizedField( data_.GetRoofShapesInfos(), pHolder, "name", tr( "Name" ), vRoofShapeInfosConnectors[ eUrbanName ] );
 
         builder.PopSubName();
     }
@@ -129,8 +127,7 @@ void ADN_Urban_GUI::Build()
         pGroupAccommodation->setInsideSpacing( 10 );
         pHolder = builder.AddFieldHolder( pGroupAccommodation );
 
-        ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pHolder, "name", tr( "Name" ), vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
-        nameField->ConnectWithRefValidity( data_.GetAccommodationsInfos() );
+        builder.AddLocalizedField( data_.GetAccommodationsInfos(), pHolder, "name", tr( "Name" ), vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
         builder.AddField< ADN_EditLine_Double >( pHolder, "nominal-capacity", tr( "Nominal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationNominalCapacity ], tr( "persons/m2" ), eGreaterZero );
         builder.AddField< ADN_EditLine_Double >( pHolder, "maximal-capacity", tr( "Maximal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationMaxCapacity ], tr( "persons/m2" ), eGreaterZero );
 
@@ -152,8 +149,7 @@ void ADN_Urban_GUI::Build()
         pGroupInfrastructure->setInsideSpacing( 10 );
         QWidget* pHolder = builder.AddFieldHolder( pGroupInfrastructure );
 
-        ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pHolder, "name", tr( "Name" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
-        nameField->ConnectWithRefValidity( data_.GetInfrastructuresInfos() );
+        builder.AddLocalizedField( data_.GetInfrastructuresInfos(), pHolder, "name", tr( "Name" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
         builder.AddField< ADN_ComboBox_Vector >( pHolder, "symbol", tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
         builder.AddField< ADN_CheckBox >( pHolder, "medical", tr( "Medical" ), vInfrastructureInfosConnectors[ eMedicalCapacityPresent ] );
 
@@ -170,8 +166,7 @@ void ADN_Urban_GUI::Build()
         static_cast< ADN_Connector_Vector_ABC* >( &pListTemplate_->GetConnector() )->Connect( &data_.GetTemplatesInfos() );
         Q3GroupBox* pGroupTemplate = new Q3VGroupBox( tr( "Template" ), pTemplates );
         QWidget* pHolder = builder.AddFieldHolder( pGroupTemplate );
-        ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pHolder, "name", tr( "Name" ), vUsageInfosConnectors[ eUrbanUsageName ] );
-        nameField->ConnectWithRefValidity( data_.GetTemplatesInfos() );
+        builder.AddLocalizedField( data_.GetTemplatesInfos(), pHolder, "name", tr( "Name" ), vUsageInfosConnectors[ eUrbanUsageName ] );
 
         Q3HBox* pInfoBox = new Q3HBox( pGroupTemplate );
         pInfoBox->setSpacing( 10 );

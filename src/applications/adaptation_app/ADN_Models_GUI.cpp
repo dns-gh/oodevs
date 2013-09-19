@@ -50,9 +50,9 @@ void ADN_Models_GUI::Build()
 
     // Tab management
     pTabWidget_ = new QTabWidget( pMainWidget_ );
-    pTabWidget_->addTab( BuildPage( eEntityType_Pawn, data_.GetUnitModelsInfos() ), tr( "Unit models" ) );
-    pTabWidget_->addTab( BuildPage( eEntityType_Automat, data_.GetAutomataModelsInfos() ), tr( "Automata models" ) );
-    pTabWidget_->addTab( BuildPage( eEntityType_Population, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Pawn, data_.GetModels( eEntityType_Pawn ) ), tr( "Unit models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Automat, data_.GetModels( eEntityType_Automat ) ), tr( "Automata models" ) );
+    pTabWidget_->addTab( BuildPage( eEntityType_Population, data_.GetModels( eEntityType_Population ) ), tr( "Crowds models" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
@@ -78,8 +78,7 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->ConnectWithRefValidity( model );
+    builder.AddLocalizedField( model, pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "dia-type", tr( "DIA type" ), vInfosConnectors[ eDiaType ] );
     DIAFileChooser_[ eEntityType ] = builder.AddFileField( pInfoHolder, "file", tr( "File" ), vInfosConnectors[ eFile ] );
     DIAFileChooser_[ eEntityType ]->SetRestrictions( data_.GetSourcePaths() );

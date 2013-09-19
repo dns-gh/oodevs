@@ -26,7 +26,7 @@ ADN_Armors_Data::ArmorInfos::ArmorInfos()
     , rBreakdownEVA_  ( 0 )
     , rBreakdownNEVA_ ( 0 )
 {
-    // NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eCategories, eArmors, "protections" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,8 @@ void ADN_Armors_Data::ArmorInfos::CreateDefaultAttrition()
 void ADN_Armors_Data::ArmorInfos::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "type", type );
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToProtectionType( type );
     if( nType_ == E_ProtectionType( -1 ) )
         throw MASA_EXCEPTION( tr( "Categories - Invalid armor type '%1'" ).arg( type.c_str() ).toStdString() );
@@ -193,10 +194,8 @@ void ADN_Armors_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Armors_Data::ReadArmor( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );;
     std::auto_ptr< ArmorInfos > pNew( new ArmorInfos() );
     pNew->ReadArchive( input );
-    pNew->strName_.SetTranslation( strName, translations_->GetTranslation( "protections", strName ) );
     vArmors_.AddItem( pNew.release() );
 }
 
@@ -223,6 +222,7 @@ void ADN_Armors_Data::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_Armors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     if( vArmors_.size() == 0 )
         checker.AddError( eMissingArmor, "", eCategories );
 }

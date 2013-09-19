@@ -35,6 +35,16 @@
 ADN_Missions_Mission::ADN_Missions_Mission()
     : ADN_Missions_ABC()
 {
+    assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::Mission
+// Created: SBO 2009-11-16
+// -----------------------------------------------------------------------------
+ADN_Missions_Mission::ADN_Missions_Mission( E_MissionType type )
+    : ADN_Missions_ABC( type )
+{
     // NOTHING
 }
 
@@ -42,8 +52,8 @@ ADN_Missions_Mission::ADN_Missions_Mission()
 // Name: ADN_Missions_Mission::Mission
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Mission::ADN_Missions_Mission( unsigned int id )
-    : ADN_Missions_ABC( id )
+ADN_Missions_Mission::ADN_Missions_Mission( E_MissionType type, unsigned int id )
+    : ADN_Missions_ABC( type, id )
 {
     //NOTHING
 }
@@ -63,7 +73,7 @@ ADN_Missions_Mission::~ADN_Missions_Mission()
 // -----------------------------------------------------------------------------
 ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 {
-    ADN_Missions_Mission* newMission     = new ADN_Missions_Mission();
+    ADN_Missions_Mission* newMission     = new ADN_Missions_Mission( type_ );
     newMission->strName_                 = strName_.GetData();
     newMission->diaBehavior_             = diaBehavior_.GetData();
     newMission->cdtDiaBehavior_          = cdtDiaBehavior_.GetData();
@@ -89,10 +99,10 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 // Name: ADN_Missions_Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir )
+void ADN_Missions_Mission::ReadArchive( xml::xistream& input )
 {
     std::string missionSheetDesc, symbol;
-    ADN_Missions_ABC::ReadArchive( input, missionDir );
+    ADN_Missions_ABC::ReadArchive( input );
     input >> xml::optional >> xml::attribute( "symbol", symbol )
           >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
           >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
@@ -103,11 +113,11 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data&
             >> xml::optional >> xml::attribute( "doctrine", doctrine_ )
             >> xml::optional >> xml::attribute( "usage", usage_ )
           >> xml ::end
-          >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1 ) );
+          >> xml::list( "parameter", boost::bind( &ADN_Missions_ABC::ReadParameter, this, _1 ) );
     const std::string code = symbol.empty() ? " - " : symbol;
+    ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
     symbol_.SetVector( drawings.GetCategoryDrawings( "tasks" ) );
     symbol_.SetData( drawings.GetDrawing( code ) );
-    ReadMissionSheet( missionDir );
 }
 
 namespace
@@ -126,16 +136,16 @@ namespace
 // Name: ADN_Missions_Mission::WriteArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::WriteArchive( xml::xostream& output, E_MissionType type )
+void ADN_Missions_Mission::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "mission" );
-    bool isAutomat = type == eMissionType_Automat;
-    const QString typeName = type == eMissionType_Pawn ? "Pion" : ( isAutomat ? "Automate" : "Population" );
+    bool isAutomat = type_ == eMissionType_Automat;
+    const QString typeName = type_ == eMissionType_Pawn ? "Pion" : ( isAutomat ? "Automate" : "Population" );
     const QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
     if( diaType_.GetData().empty() )
         diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).toStdString();
 
-    ADN_Missions_ABC::WriteArchive( output, type );
+    ADN_Missions_ABC::WriteArchive( output );
     const std::string code = ( symbol_.GetData() ) ? symbol_.GetData()->GetCode() : "";
     if( code != "" && code != " - " )
         output << xml::attribute( "symbol", code );

@@ -71,6 +71,13 @@ public:
     unsigned int AddComboPtrInVector( int fromRow, int toRow, int fromCol, int toCol );
     //@}
 
+    //! @name LocalizedString
+    //@{
+    unsigned int AddLocalizedLineEditOnRow( int row );
+    unsigned int AddLocalizedLineEditOnColumn( int column );
+    unsigned int AddLocalizedLineEdit( int fromRow, int toRow, int fromCol, int toCol );
+    //@}
+
     //! @name boldIndexes
     //@{
     void AddBoldRowIndex( int row );
@@ -99,6 +106,7 @@ private:
     T_SimpleWidget timeEdits_;
     T_SimpleWidget comboPtrInVectors_;
     T_SimpleWidget colorEdits_;
+    T_SimpleWidget localizedEditLines_;
     QPen gridPen_;
     std::set<int> boldGridRowIndexes_;
     std::set<int> boldGridColIndexes_;

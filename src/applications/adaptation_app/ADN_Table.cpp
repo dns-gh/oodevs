@@ -14,6 +14,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Connector_StandardItem.h"
 #include "ADN_Connector_Table_ABC.h"
+#include "ADN_Languages_GUI.h"
 #include "excel/ExcelFormat.h"
 #include "clients_kernel/VariantPointer.h"
 
@@ -87,6 +88,7 @@ void ADN_Table::Initialize( const QString& objectName )
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), &delegate_, SLOT( OnItemChanged( QStandardItem* ) ) );
     connect( &delegate_, SIGNAL( CheckedStateChanged( const QStandardItem& ) ), this, SLOT( OnCheckedStateChanged( const QStandardItem& ) ) );
     connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( PrivateOnContextMenu( const QPoint& ) ) );
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( PostLanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +155,8 @@ void ADN_Table::RemoveCurrentElement()
     void* data = GetSelectedData();
     if( data )
         static_cast< ADN_Connector_Vector_ABC& >( GetConnector() ).RemItem( data );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
+    delete static_cast< ADN_Ref_ABC* >( data );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +254,6 @@ QStandardItem* ADN_Table::GetItemFromIndex( const QModelIndex& index ) const
 QStandardItem* ADN_Table::GetItem( int row, int col ) const
 {
     return GetItemFromIndex( proxyModel_.index( row, col ) );
-    //return dataModel_.item( row, col );
 }
 
 // -----------------------------------------------------------------------------
@@ -632,4 +635,43 @@ QString ADN_Table::GetToolTips( int nRow, int nCol ) const
 void ADN_Table::Sort( int column, Qt::SortOrder order )
 {
     proxyModel_.sort( column, order );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::CheckValidity
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Table::CheckValidity( int row, int col /* = -1 */ )
+{
+    if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row, 0 ) ) ) // each row have the same parent data
+        if( ADN_Ref_ABC* parentData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )
+            parentData->CheckValidity();
+    if( col == -1 )
+        for( col = 0; col < dataModel_.columnCount(); ++col )
+            Warn( row, col );
+    else
+        Warn( row, col );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::Warn
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Table::Warn( int row, int col )
+{
+    if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row, col ) ) )
+        if( const ADN_Ref_ABC* itemData = reinterpret_cast< const ADN_Ref_ABC* >( item->data( gui::Roles::SafeRole ).value< kernel::VariantPointer >().ptr_ ) )
+            item->Warn( itemData->GetErrorStatus() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::OnLanguageChanged
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Table::OnLanguageChanged()
+{
+    setFocus();
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+        for( int col = 0; col < dataModel_.columnCount(); ++col )
+            Warn( row, col );
 }

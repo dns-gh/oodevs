@@ -34,6 +34,7 @@ public:
     void AddElement( int index );
     template< typename DataBaseType >
     DataBaseType& GetElement( int index );
+    ADN_Data_ABC& GetElementABC( int index );
     //@}
 
     //! @name ADN_Data_ABC Operations
@@ -41,7 +42,6 @@ public:
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
-    virtual void OnLanguageChanged( const std::string& language );
     virtual void Save();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}

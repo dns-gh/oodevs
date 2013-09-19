@@ -12,7 +12,7 @@
 
 #include "ADN_Ref_ABC.h"
 #include "ADN_Types.h"
-#include "ADN_LocalizedTypes.h"
+#include "ADN_Type_LocalizedString.h"
 
 // =============================================================================
 /** @class  ADN_RefWithName
@@ -41,17 +41,8 @@ public:
     virtual void CheckValidity()
     {
         ADN_Ref_ABC::CheckValidity();
-        ADN_ErrorStatus status = GetErrorStatus();
-        strName_.CheckValidity();
-        status = std::max< ADN_ErrorStatus >( status, strName_.GetErrorStatus() );
-        SetErrorStatus( status );
+        CheckTypeValidity( strName_ );
     }
-
-    virtual void OnLanguageChanged( const std::string& language )
-    {
-        strName_.OnLanguageChanged( language );
-    }
-    //@}
 
 public:
     //! @name Member data
@@ -60,9 +51,7 @@ public:
     //@}
 };
 
-
 typedef ADN_RefWithText< ADN_Type_String > ADN_RefWithName;
 typedef ADN_RefWithText< ADN_Type_LocalizedString > ADN_RefWithLocalizedName;
-
 
 #endif // __ADN_RefWithName_h_

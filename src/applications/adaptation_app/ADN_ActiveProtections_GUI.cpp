@@ -47,8 +47,7 @@ void ADN_ActiveProtections_GUI::Build()
 
     // Properties
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vConnectors[eActiveProtectionName] );
-    nameField->ConnectWithRefValidity( data_.GetActiveProtectionsInfos() );
+    builder.AddLocalizedField( data_.GetActiveProtectionsInfos(), pInfoHolder, "name", tr( "Name" ), vConnectors[eActiveProtectionName] );
     ADN_EditLine_Double* pEdit = builder.AddField< ADN_EditLine_Double >( pInfoHolder, "coefficient", tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
     pEdit->GetValidator().setTop( 1 );
     builder.AddField< ADN_CheckBox >( pInfoHolder, "hard-kill", tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );

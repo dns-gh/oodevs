@@ -83,9 +83,8 @@ void ADN_Units_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    ADN_EditLine_ABC* pNameEditLine = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_ABC* pNameEditLine = builder.AddLocalizedField( data_.GetUnitsInfos(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     connect( pNameEditLine, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNameChanged() ) );
-    pNameEditLine->ConnectWithRefValidity( data_.GetUnitsInfos() );
     // Unit type
     pTypeCombo_ = builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[ eTypeId ] );
     builder.SetToolTip( tr( "The type of unit in the simulation. This type must match the associated decisional model." ) );

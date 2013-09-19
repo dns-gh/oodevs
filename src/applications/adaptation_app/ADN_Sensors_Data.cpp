@@ -539,6 +539,8 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     , detectionDelay_      ( "0h" )
     , activatedOnRequest_  ( false )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eSensors, "sensors" ) );
+
     // initialize illumination modificator infos
     unsigned int i = 0;
     for( i = 0; i< eNbrLightingType; ++i )
@@ -881,7 +883,8 @@ void ADN_Sensors_Data::SensorInfos::ReadDisaster( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "detection-delay", detectionDelay_ )
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "detection-delay", detectionDelay_ )
           >> xml::optional
           >> xml::attribute( "activation-on-request", activatedOnRequest_ )
           >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
@@ -1139,10 +1142,8 @@ void ADN_Sensors_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::ReadSensor( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<SensorInfos> spNew( new SensorInfos() );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "sensors", strName ) );
     vSensors_.AddItem( spNew.release() );
 }
 
@@ -1233,6 +1234,7 @@ QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Disasters_Data::DisasterInf
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vSensors_.begin(); it != vSensors_.end(); ++it )
         ( *it )->CheckDatabaseValidity( checker );
 }

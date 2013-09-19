@@ -48,6 +48,7 @@ public:
 public slots:
    virtual void SetData( void* pData );
    virtual void OnTypeChanged( int ) {}
+   virtual void OnLanguageChanged() {}
 
 signals:
     void DataChanged( void* pData );
@@ -64,6 +65,8 @@ protected:
 
     virtual void ConnectPrivateSub( ADN_Connector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_ABC* pTarget );
+
+    virtual bool ShouldEnableGfx() const;
     //@}
 
     virtual void SetDataPrivate( void* pData ) = 0;

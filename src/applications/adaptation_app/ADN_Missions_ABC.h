@@ -21,17 +21,14 @@
 */
 // Created: NPT 2013-02-14
 // =============================================================================
-class ADN_Missions_ABC : public ADN_RefWithName
+class ADN_Missions_ABC : public ADN_RefWithLocalizedName
     {
     public:
         class ADN_Missions_Attachment : public ADN_RefWithName
         {
         public:
             ADN_Missions_Attachment(){}
-            ADN_Missions_Attachment( const tools::Path& name )
-            {
-                strName_ = name.ToUTF8();
-            }
+            ADN_Missions_Attachment( const tools::Path& name ) : ADN_RefWithName( name.ToUTF8() ) {}
             virtual ~ADN_Missions_Attachment(){}
         };
 
@@ -42,7 +39,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ADN_Missions_ABC();
-             ADN_Missions_ABC( unsigned int id );
+    explicit ADN_Missions_ABC( E_MissionType type );
+             ADN_Missions_ABC( E_MissionType type, unsigned int id );
     virtual ~ADN_Missions_ABC();
     //@}
 
@@ -50,30 +48,35 @@ public:
     //@{
     virtual ADN_Missions_ABC* CreateCopy() { return 0; }
 
-    void FillContextParameters( E_EntityType entityType );
+    void FillContextParameters();
 
-    virtual void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
-    virtual void WriteArchive( xml::xostream& output, E_MissionType type );
-
+    virtual void ReadArchive( xml::xistream& input );
+    virtual void WriteArchive( xml::xostream& output );
     void ReadParameter( xml::xistream& input );
-    void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type );
-    void CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker, E_MissionType type );
-    void ReadMissionSheetParametersDescriptions( xml::xistream& xis );
-    void ReadMissionSheetAttachments( xml::xistream& xis );
-    void WriteMissionSheetParametersDescriptions( xml::xostream& xos );
-    void WriteMissionSheetAttachments( xml::xostream& xos );
-    bool IsFileInAttachmentList( const std::string& fileName );
-    void ReadMissionSheet( const tools::Path& missionDir );
-    void RenameDifferentNamedMissionSheet( const tools::Path& missionDir );
-    bool WriteMissionSheet( const tools::Path& missionDir, const tools::Path& fileName, int type );
-    bool IsEmptyMissionSheet();
-    bool IsEmptyParameterList();
+
+    void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, const std::string& language );
+    void ReadMissionSheet( const tools::Path& missionDir, const std::string& language );
+    void RenameDifferentNamedMissionSheet( const tools::Path& missionDir, const std::string& language );
+    void WriteMissionSheet( const tools::Path& missionDir, const std::string& language );
     bool NeedsSaving();
     void SetNeedsSaving( bool saving );
-    void ParseImagesInImageDirectory( const tools::Path& imageDir );
+    //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ReadMissionSheetParametersDescriptions( xml::xistream& xis, const std::string& language );
+    void ReadMissionSheetAttachments( xml::xistream& xis );
+    void WriteMissionSheetParametersDescriptions( xml::xostream& xos, const std::string& language );
+    void WriteMissionSheetAttachments( xml::xostream& xos );
+
     void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );
+    void Initialize();
+    void CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker );
+    void ParseImagesInImageDirectory( const tools::Path& imageDir );
+    bool IsFileInAttachmentList( const std::string& fileName );
+    bool IsEmptyMissionSheet( const std::string& language );
+    bool IsEmptyParameterList( const std::string& language );
     //@}
 
 public:
@@ -82,14 +85,15 @@ public:
     ADN_Type_Int              id_;
     T_MissionParameter_Vector parameters_;
     ADN_Type_String           diaType_;
+    E_MissionType             type_;
 
     //Missions sheets descriptions data
-    ADN_Type_String missionSheetPath_;
-    ADN_Type_String descriptionContext_;
-    ADN_Type_String descriptionBehavior_;
-    ADN_Type_String descriptionSpecific_;
-    ADN_Type_String descriptionComment_;
-    ADN_Type_String descriptionMissionEnd_;
+    ADN_Type_LocalizedString missionSheetPath_;
+    ADN_Type_LocalizedString descriptionContext_;
+    ADN_Type_LocalizedString descriptionBehavior_;
+    ADN_Type_LocalizedString descriptionSpecific_;
+    ADN_Type_LocalizedString descriptionComment_;
+    ADN_Type_LocalizedString descriptionMissionEnd_;
     T_MissionAttachment_Vector attachments_;
 
 private:

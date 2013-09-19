@@ -207,7 +207,7 @@ ADN_NBC_Data::NbcAgentInfos::NbcAgentInfos()
     , bLiquidPresent_( false )
     , gazInfos_()
 {
-    // NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eNBC, "nbc" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,6 +222,7 @@ ADN_NBC_Data::NbcAgentInfos::NbcAgentInfos( unsigned int id )
     , bLiquidPresent_( false )
     , gazInfos_()
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eNBC, "nbc" ) );
     ADN_NBC_Data::idManager_.Lock( id );
 }
 
@@ -264,7 +265,8 @@ void ADN_NBC_Data::NbcAgentInfos::ReadEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Data::NbcAgentInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional >> xml::attribute( "category", category_ );
+    input >> xml::attribute( "name", strName_ )
+          >> xml::optional >> xml::attribute( "category", category_ );
     liquidInfos_.parentName_ = strName_.GetData();
     input >> xml::list( "effects", *this, &ADN_NBC_Data::NbcAgentInfos::ReadEffect );
     if( category_ == "" )
@@ -327,10 +329,8 @@ void ADN_NBC_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_NBC_Data::ReadAgent( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< NbcAgentInfos > spNew( new NbcAgentInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "nbc", strName ) );
     vNbcAgent_.AddItem( spNew.release() );
 }
 

@@ -47,7 +47,7 @@ signals:
     //! @name Signals
     //@{
     void SelectionChanged();
-    void NotifyElementDeleted( std::string name, E_MissionType type );
+    void NotifyElementDeleted( boost::shared_ptr< kernel::LocalizedString > name, E_MissionType type );
     //@}
 
 private:

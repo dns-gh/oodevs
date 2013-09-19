@@ -87,6 +87,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eInvalidPtrInVector ]     = tr( "Field '%2' is invalid in '%1'" ) + error;
     errorDescriptions_[ eInvalidCrossedRef ]      = tr( "'%1' has one unfound field of type '%2', it will be deleted at next save." );
     errorDescriptions_[ eInvalidIdInVector ]      = tr( "'%1' has the same id. These id will be replaced at next save." );
+    errorDescriptions_[ eDuplicateTranslation ]   = tr( "Some translations on tab '%1' have the same key and different translation values. Only one will be used by the simulation." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );

@@ -13,10 +13,10 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Workspace.h"
 #include "ADN_Models_GUI.h"
+#include "ADN_Models_Wizard.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Crowds_Data.h"
-#include "ADN_Wizard.h"
 #include "ADN_enums.h"
 
 typedef ADN_Models_Data::ModelInfos ModelInfos;
@@ -70,15 +70,8 @@ void ADN_ListView_Models::ConnectItem( bool bConnect )
 void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Models_Data::T_ModelInfos_Vector* pUnitsList;
-    if( eEntityType_ == eEntityType_Automat )
-        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
-    else if( eEntityType_ == eEntityType_Pawn )
-        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
-    else
-        pUnitsList = &ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
-
-    ADN_Wizard< ModelInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(), *pUnitsList, this );
+    ADN_Models_Wizard wizard( eEntityType_, ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(),
+                              ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_ ), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     void ConnectItem( bool bConnect );
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMsg );
     //@}
 };
 

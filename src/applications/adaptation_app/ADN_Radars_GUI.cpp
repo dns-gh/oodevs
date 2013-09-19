@@ -54,8 +54,7 @@ void ADN_Radars_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vConnectors[ eName ] );
-    nameField->ConnectWithRefValidity( data_.GetRadars() );
+    builder.AddLocalizedField( data_.GetRadars(), pInfoHolder, "name", tr( "Name" ), vConnectors[ eName ] );
 
     builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vConnectors[ eType ] );
     builder.AddField< ADN_EditLine_Double >( pInfoHolder, "range", tr( "Range" ), vConnectors[ eRange ], tr( "m" ), eGreaterEqualZero );

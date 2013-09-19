@@ -123,4 +123,36 @@ void SortMenu( Q3PopupMenu& menu )
         menu.insertItem( (*it).first, (*it).second );
 }
 
+// -----------------------------------------------------------------------------
+
+E_EntityType ConvertMissionToEntityType( E_MissionType type )
+{
+    switch( type )
+    {
+    case eMissionType_Pawn:
+        return eEntityType_Pawn;
+    case eMissionType_Automat:
+        return eEntityType_Automat;
+    case eMissionType_Population:
+        return eEntityType_Population;
+    default:
+        throw MASA_EXCEPTION( "Invalid conversion from E_EntityType to E_MissionType" );
+    }
+}
+
+E_MissionType ConvertEntityTypeToMissionType( E_EntityType type )
+{
+    switch( type )
+    {
+    case eEntityType_Pawn:
+        return eMissionType_Pawn;
+    case eEntityType_Automat:
+        return eMissionType_Automat;
+    case eEntityType_Population:
+        return eMissionType_Population;
+    default:
+        throw MASA_EXCEPTION( "Invalid conversion from E_EntityType to E_MissionType" );
+    }
+}
+
 }

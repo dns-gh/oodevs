@@ -37,6 +37,7 @@ enum E_ConsistencyCheck
     eInvalidCrossedRef,
     eInvalidPtrInVector,
     eInvalidIdInVector,
+    eDuplicateTranslation,
     eOthersMask
 };
 

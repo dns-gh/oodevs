@@ -89,6 +89,11 @@ namespace ADN_NavigationInfos
     struct UsedBy;
 }
 
+namespace kernel
+{
+    class Context;
+}
+
 namespace tools
 {
     class Loader_ABC;
@@ -151,11 +156,15 @@ public:
 
     //! @name Accessors
     //@{
+    const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, const std::string& context );
+    const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, int subElement, const std::string& context );
+
     bool IsNewBaseReadOnly( const tools::Path& filename ) const;
     bool IsDevMode() const;
 
     ADN_MainWindow& GetMainWindow() const;
     void SetMainWindowModified( bool isModified );
+    void SetIsSwappingLanguage( bool isSwappingLanguage );
 
     ADN_Project_Data& GetProject();
     ADN_WorkspaceElement_ABC& GetWorkspaceElement( E_WorkspaceElements workspaceElement );
@@ -203,7 +212,6 @@ public slots:
     void OnUsersListRequested( const ADN_NavigationInfos::UsedBy& usedByInfo );
     void OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo );
     void OnChooseOptional( bool choice );
-    void OnLanguageChanged( const std::string& language );
     //@}
 
 private:
@@ -222,6 +230,7 @@ private:
     std::auto_ptr< const tools::Loader_ABC > fileLoader_;
     std::auto_ptr< ADN_Project_Data > projectData_;
     std::auto_ptr< ADN_WorkspaceElement_ABC > elements_[ eNbrWorkspaceElements ];
+    bool isSwappingLanguage_;
     //@}
 
     //! @name Singleton

@@ -60,6 +60,8 @@ public:
     template< typename T >
     T* CreateNewElement();
 
+    void CheckValidity( int row = -1, int col = -1 );
+
     QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     QStandardItem* AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     template< typename T >
@@ -86,6 +88,8 @@ protected:
     virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
     virtual bool event( QEvent *event );
     virtual void mousePressEvent( QMouseEvent* mouseEvent );
+
+    void Warn( int row, int col );
     //@}
 
 private:
@@ -101,6 +105,7 @@ private slots:
     void OnGotoRequested( const QModelIndex& index );
     void OnCheckedStateChanged( const QStandardItem& item );
     void PrivateOnContextMenu( const QPoint& pt );
+    void OnLanguageChanged();
     //@}
 
 signals:
@@ -191,7 +196,7 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
 
     // Alignment
-    if( type != ADN_StandardItem::eString )
+    if( type != ADN_StandardItem::eString && type != ADN_StandardItem::eLocalizedString )
         item->setTextAlignment( Qt::AlignRight );
 
     // Variant

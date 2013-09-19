@@ -706,6 +706,10 @@ Parked engine running</translation>
         <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Some translations on tab &apos;%1&apos; have the same key and different translation values. Only one will be used by the simulation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2413,13 +2417,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>ADN_LocalizedType</name>
-    <message>
-        <source>Unfinished translation</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
         <source>Logistic resource categories</source>
@@ -2859,18 +2856,6 @@ PNG (*.png)
 </context>
 <context>
     <name>ADN_Models_Data</name>
-    <message>
-        <source>Unit models</source>
-        <translation>Unit models</translation>
-    </message>
-    <message>
-        <source>Automata models</source>
-        <translation>Automata models</translation>
-    </message>
-    <message>
-        <source>Crowds models</source>
-        <translation>Crowds models</translation>
-    </message>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
@@ -5474,6 +5459,17 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Languages</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Type_LocalizedString</name>
+    <message>
+        <source>Unfinished translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate translation key with different translation values</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

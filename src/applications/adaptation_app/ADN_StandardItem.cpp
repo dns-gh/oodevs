@@ -65,17 +65,18 @@ private:
 // Name: ADN_StandardItem::ADN_StandardItem
 // Created: ABR 2012-10-25
 // -----------------------------------------------------------------------------
-ADN_StandardItem::ADN_StandardItem( void* data, E_Type type /* = eString */ )
-    : pData_( data )
+ADN_StandardItem::ADN_StandardItem( void* parentData, E_Type type /* = eString */ )
+    : parentData_( parentData )
     , type_( type )
     , connector_( 0 )
 {
     setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
 
-    setData( *new QVariant( gui::StandardModel::showValue_ ), gui::Roles::FilterRole );
-    setData( *new QVariant(), gui::Roles::DataRole );
-    setData( *new QVariant(), gui::Roles::SafeRole );
-    setData( *new QVariant(), gui::Roles::MimeTypeRole );
+    setData( QVariant( gui::StandardModel::showValue_ ), gui::Roles::FilterRole );
+    setData( QVariant(), gui::Roles::DataRole );
+    setData( QVariant(), gui::Roles::SafeRole );
+    setData( QVariant(), gui::Roles::MimeTypeRole );
+    setData( QBrush( Qt::transparent ), gui::Roles::OtherRole );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +85,7 @@ ADN_StandardItem::ADN_StandardItem( void* data, E_Type type /* = eString */ )
 // -----------------------------------------------------------------------------
 ADN_StandardItem::~ADN_StandardItem()
 {
-    pData_ = 0;
+    parentData_ = 0;
     delete connector_;
 }
 
@@ -94,7 +95,7 @@ ADN_StandardItem::~ADN_StandardItem()
 // -----------------------------------------------------------------------------
 void* ADN_StandardItem::GetData() const
 {
-    return pData_;
+    return parentData_;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,4 +134,26 @@ void ADN_StandardItem::Connect( ADN_Connector_ABC* data, const QStringList* enum
 
     // connect internal connector and external data
     connector_->Connect( data );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_StandardItem::Warn
+// Created: ABR 2013-09-18
+// -----------------------------------------------------------------------------
+void ADN_StandardItem::Warn( ADN_ErrorStatus elementStatus )
+{
+    QBrush brush = data( gui::Roles::OtherRole ).value< QBrush >();
+    switch( elementStatus )
+    {
+    case eWarning:
+        brush = brush == Qt::lightGray ? Qt::darkYellow : Qt::yellow;
+        break;
+    case eError:
+        brush = brush == Qt::lightGray ? Qt::darkRed : Qt::red;
+        break;
+    case eNoError:
+    default:
+        break;
+    }
+    setBackground( brush );
 }

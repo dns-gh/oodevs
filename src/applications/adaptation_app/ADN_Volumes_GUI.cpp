@@ -60,8 +60,7 @@ void ADN_Volumes_GUI::Build()
     pHolder->layout()->setMargin( 0 );
 
     // Name field
-    ADN_EditLine_ABC* namefield = builder.AddLocalizedField( pHolder, "name", tr( "Name" ), vInfosConnectors[ eSizeName ], 0, eVarName );
-    namefield->ConnectWithRefValidity( data_.GetVolumesInfos() );
+    builder.AddLocalizedField( data_.GetVolumesInfos(), pHolder, "name", tr( "Name" ), vInfosConnectors[ eSizeName ], 0, eVarName );
 
     builder.PopSubName(); //! volumes
 

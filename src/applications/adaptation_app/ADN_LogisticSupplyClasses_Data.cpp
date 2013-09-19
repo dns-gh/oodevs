@@ -21,7 +21,7 @@ tools::IdManager ADN_LogisticSupplyClasses_Data::idManager_;
 ADN_LogisticSupplyClasses_Data::LogisticSupplyClass::LogisticSupplyClass()
     : nId_( ADN_LogisticSupplyClasses_Data::idManager_.GetNextId() )
 {
-    //NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eCategories, eLogisticSupplyClasses, "logistic-supply-classes" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ ADN_LogisticSupplyClasses_Data::LogisticSupplyClass::LogisticSupplyClass()
 ADN_LogisticSupplyClasses_Data::LogisticSupplyClass::LogisticSupplyClass( int id )
     : nId_( id )
 {
-    // NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eCategories, eLogisticSupplyClasses, "logistic-supply-classes" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,14 +91,12 @@ void ADN_LogisticSupplyClasses_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_LogisticSupplyClasses_Data::ReadLogisticSupplyClass( xml::xistream& input )
 {
-    std::string strName;
     int id ( 0 );
-    input >> xml::attribute( "type", strName );
     input >> xml::optional >> xml::attribute( "id", id );
     if( !id )
         id = idManager_.GetNextId();
     ADN_LogisticSupplyClasses_Data::LogisticSupplyClass* pNew = new ADN_LogisticSupplyClasses_Data::LogisticSupplyClass( id );
-    pNew->strName_.SetTranslation( strName, translations_->GetTranslation( "logistic-supply-classes", strName ) );
+    input >> xml::attribute( "type", pNew->strName_ );
     vLogisticSupplyClasses_.AddItem( pNew );
     idManager_.Lock( id );
 }

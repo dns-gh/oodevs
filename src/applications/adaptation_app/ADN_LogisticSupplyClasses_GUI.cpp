@@ -59,8 +59,7 @@ void ADN_LogisticSupplyClasses_GUI::Build()
     pHolder->layout()->setMargin( 0 );
 
     // Name field
-    ADN_EditLine_ABC* namefield = builder.AddLocalizedField( pHolder, "name", tr( "Name" ), vInfosConnectors[ eLogisticSupplyClassName ], 0, eVarName );
-    namefield->ConnectWithRefValidity( data_.GetLogisticSupplyClasses() );
+    builder.AddLocalizedField( data_.GetLogisticSupplyClasses(), pHolder, "name", tr( "Name" ), vInfosConnectors[ eLogisticSupplyClassName ], 0, eVarName );
 
     builder.PopSubName(); //! logistic-categories
 

@@ -470,6 +470,7 @@ public:
         void ReadActiveProtection( xml::xistream& input );
         void ReadObject( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+        virtual void CheckValidity();
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker );
         void FillMissingConsumptions();
 

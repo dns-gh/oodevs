@@ -52,13 +52,13 @@ public:
     //@{
     ADN_ErrorStatus GetErrorStatus() const;
     void SetErrorStatus( ADN_ErrorStatus errorStatus, const QString& errorMsg = "" );
-    virtual void OnLanguageChanged( const std::string& ) {};
     //@}
 
 public slots:
     //! @name Slots
     //@{
     void Invalidate( void* pObj, bool bDel = false );
+    void CheckTypeValidity( ADN_Ref_ABC& type );
     virtual void CheckValidity();
     virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
     //@}

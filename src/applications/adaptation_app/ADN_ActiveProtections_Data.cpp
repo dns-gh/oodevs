@@ -82,10 +82,8 @@ void ADN_ActiveProtections_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ReadProtection( xml::xistream& xis )
 {
-    std::string strName = xis.attribute< std::string >( "name" );
     std::auto_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
     spNew->ReadArchive( xis );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "protections", strName ) );
     activeProtections_.AddItem( spNew.release() );
 }
 
@@ -166,6 +164,7 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
     , hardKill_     ( false )
     , usage_        ( 0 )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eActiveProtections, "protections" ) );
     BindExistenceTo( &ptr_ );
 }
 
@@ -200,7 +199,8 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& xis )
 {
-    xis >> xml::attribute( "coefficient", coefficient_ )
+    xis >> xml::attribute( "name", strName_ )
+        >> xml::attribute( "coefficient", coefficient_ )
         >> xml::attribute( "hard-kill", hardKill_ )
         >> xml::optional >> xml::start( "resource" )
             >> xml::attribute( "name", ptr_ )
@@ -289,6 +289,7 @@ QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resourc
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eActiveProtections );
 }

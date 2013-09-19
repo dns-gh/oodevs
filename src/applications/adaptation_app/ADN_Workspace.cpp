@@ -81,13 +81,13 @@
 #include "ADN_Weapons_GUI.h"
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
-#include <boost/foreach.hpp>
+#include "clients_kernel/Context.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "tools/ZipExtractor.h"
+#include <boost/foreach.hpp>
 
 ADN_Workspace* ADN_Workspace::pWorkspace_ = 0;
-
 
 #define INITIALIZE_ADN_ENUMTYPE( TypeName )                                                                                 \
     ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ADN_Tr::ConvertFrom##TypeName );                          \
@@ -165,6 +165,7 @@ ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfi
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
     , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , projectData_( new ADN_Project_Data() )
+    , isSwappingLanguage_( false )
 {
     if( config_.IsNoReadOnly() )
         projectData_->GetDataInfos().SetNoReadOnly();
@@ -800,16 +801,6 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::OnLanguageChanged
-// Created: ABR 2013-07-15
-// -----------------------------------------------------------------------------
-void ADN_Workspace::OnLanguageChanged( const std::string& language )
-{
-    for( int n = 0; n < eNbrWorkspaceElements; ++n )
-        elements_[n]->GetDataABC().OnLanguageChanged( language );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetWorkspaceElement
 // Created: ABR 2012-11-15
 // -----------------------------------------------------------------------------
@@ -843,6 +834,33 @@ ADN_MainWindow& ADN_Workspace::GetMainWindow() const
 // -----------------------------------------------------------------------------
 void ADN_Workspace::SetMainWindowModified( bool isModified )
 {
-    if( mainWindow_.IsLoaded() )
+    if( mainWindow_.IsLoaded() && !isSwappingLanguage_ )
         mainWindow_.setWindowModified( isModified );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetContext
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+const boost::shared_ptr< kernel::Context >& ADN_Workspace::GetContext( E_WorkspaceElements element, const std::string& context )
+{
+    return GetWorkspaceElement( element ).GetDataABC().GetContext( context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetContext
+// Created: ABR 2013-08-23
+// -----------------------------------------------------------------------------
+const boost::shared_ptr< kernel::Context >& ADN_Workspace::GetContext( E_WorkspaceElements element, int subElement, const std::string& context )
+{
+    return static_cast< ADN_Data_Container& >( GetWorkspaceElement( element ).GetDataABC() ).GetElementABC( subElement ).GetContext( context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::SetIsSwappingLanguage
+// Created: ABR 2013-09-18
+// -----------------------------------------------------------------------------
+void ADN_Workspace::SetIsSwappingLanguage( bool isSwappingLanguage )
+{
+    isSwappingLanguage_ = isSwappingLanguage;
 }

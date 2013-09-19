@@ -1443,6 +1443,12 @@ void ADN_Equipments_Data::EquipmentInfos::Initialize()
     BindExistenceTo( &ptrArmor_ );
     BindExistenceTo( &ptrSize_ );
 
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eEquipments, "equipments" ) );
+    strAdditionalComments_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eEquipments, "comment" ) );
+    strNativeCountry_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eEquipments, "native-country" ) );
+    strInformationOrigin_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eEquipments, "information-origin" ) );
+    equipmentCategory_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eEquipments, "equipment-category" ) );
+
     // initialize speeds
     for( int iTerrain=0; iTerrain < eNbrLocation; ++iTerrain )
     {
@@ -1651,6 +1657,14 @@ void ADN_Equipments_Data::EquipmentInfos::ReadObject( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
 {
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "comment", strAdditionalComments_ )
+          >> xml::optional >> xml::start( "operational-information" )
+            >> xml::optional >> xml::attribute( "native-country", strNativeCountry_ )
+            >> xml::optional >> xml::attribute( "information-origin", strInformationOrigin_ )
+          >> xml::end
+          >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
+
     strCodeEMAT6_ = strName_.GetData();
     strCodeEMAT8_ = strName_.GetData();
     strCodeLFRIL_ = strName_.GetData();
@@ -1796,6 +1810,7 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
         (*it)->CheckDatabaseValidity( checker );
 }
@@ -1930,6 +1945,19 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output )
     output << xml::end;
 }
 
+// -----------------------------------------------------------------------------
+// Name: EquipmentInfos::CheckValidity
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::EquipmentInfos::CheckValidity()
+{
+    ADN_RefWithLocalizedName::CheckValidity();
+    CheckTypeValidity( strAdditionalComments_ );
+    CheckTypeValidity( strNativeCountry_ );
+    CheckTypeValidity( strInformationOrigin_ );
+    CheckTypeValidity( equipmentCategory_ );
+}
+
 //=============================================================================
 //
 //=============================================================================
@@ -1969,24 +1997,8 @@ void ADN_Equipments_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ReadElement( xml::xistream& input )
 {
-    std::string strAdditionalComments = input.attribute< std::string >( "comment" );
-    std::string strName = input.attribute< std::string >( "name" );
-    std::string strNativeCountry, strInformationOrigin, equipmentCategory;
-    input >> xml::optional >> xml::start( "operational-information" )
-        >> xml::optional >> xml::attribute( "native-country", strNativeCountry )
-        >> xml::optional >> xml::attribute( "information-origin", strInformationOrigin )
-        >> xml::end;
-    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory );
-
     std::auto_ptr<EquipmentInfos> spNew( new EquipmentInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
-
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "equipments", strName ) );
-    spNew->strAdditionalComments_.SetTranslation( strAdditionalComments, translations_->GetTranslation( "comment", strName ) );
-    spNew->strNativeCountry_.SetTranslation( strNativeCountry, translations_->GetTranslation( "native-country", strName ) );
-    spNew->strInformationOrigin_.SetTranslation( strInformationOrigin, translations_->GetTranslation( "information-origin", strName ) );
-    spNew->equipmentCategory_.SetTranslation( equipmentCategory, translations_->GetTranslation( "equipment-category", equipmentCategory ) );
-
     vEquipments_.AddItem( spNew.release() );
 }
 

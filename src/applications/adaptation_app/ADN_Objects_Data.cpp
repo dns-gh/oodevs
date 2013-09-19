@@ -1338,6 +1338,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
     {
         ( *it )->CheckDatabaseValidity( checker );

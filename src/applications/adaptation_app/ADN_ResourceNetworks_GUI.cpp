@@ -50,8 +50,7 @@ void ADN_ResourceNetworks_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->ConnectWithRefValidity( data_.GetResourceNetworksInfos() );
+    builder.AddLocalizedField( data_.GetResourceNetworksInfos(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "resource", tr( "Resource" ), vInfosConnectors[ eCategory ] );
     builder.AddField< ADN_EditLine_Int >( pInfoHolder, "default-production", tr( "Default production" ), vInfosConnectors[ eProduction ] );
     builder.SetValidator( new ADN_IntValidator( 0, INT_MAX, this ) );

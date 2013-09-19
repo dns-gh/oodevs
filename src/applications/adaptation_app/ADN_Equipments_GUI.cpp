@@ -78,10 +78,9 @@ void ADN_Equipments_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->ConnectWithRefValidity( data_.GetEquipments() );
+    builder.AddLocalizedField( data_.GetEquipments(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     // Comments
-    builder.AddLocalizedOptionalField( pInfoHolder, "comments", tr( "Comments" ), vInfosConnectors[ eComments ], optionalWidgets_ );
+    builder.AddLocalizedOptionalField( data_.GetEquipments(), pInfoHolder, "comments", tr( "Comments" ), vInfosConnectors[ eComments ], optionalWidgets_ );
     // Armors
     QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "armor-plating", tr( "Armor-Plating" ), vInfosConnectors[ eArmor ] );
     connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
@@ -136,11 +135,11 @@ void ADN_Equipments_GUI::Build()
     Q3GroupBox* pInfoGroupBox = new Q3VGroupBox( tr( "Operational Information" ) );
     QWidget* operationalHolder = builder.AddFieldHolder( pInfoGroupBox );
     optionalWidgets_.push_back( pInfoGroupBox );
-    builder.AddLocalizedField( operationalHolder, "native-country", tr( "Native country:" )    , vInfosConnectors[ eNativeCountry ] );
-    builder.AddField< ADN_EditLine_String >( operationalHolder, "starting-country", tr( "Starting country:" )  , vInfosConnectors[ eStartingCountry ] );
-    builder.AddField< ADN_DateEdit >       ( operationalHolder, "starting-date", tr( "Starting date:" )     , vInfosConnectors[ eStartingDate ] );
-    builder.AddLocalizedField( operationalHolder, "information-origin", tr( "Information origin:" ), vInfosConnectors[ eInformationOrigin ] );
-    builder.AddLocalizedField( operationalHolder, "category", tr( "Equipment category:" ), vInfosConnectors[ eEquipmentCategory ] );
+    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "native-country", tr( "Native country:" ), vInfosConnectors[ eNativeCountry ] );
+    builder.AddField< ADN_EditLine_String >( operationalHolder, "starting-country", tr( "Starting country:" ), vInfosConnectors[ eStartingCountry ] );
+    builder.AddField< ADN_DateEdit >( operationalHolder, "starting-date", tr( "Starting date:" ), vInfosConnectors[ eStartingDate ] );
+    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "information-origin", tr( "Information origin:" ), vInfosConnectors[ eInformationOrigin ] );
+    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "category", tr( "Equipment category:" ), vInfosConnectors[ eEquipmentCategory ] );
 
     Q3GroupBox* pDimensionsGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Equipment dimensions" ) );
     builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "length", tr( "Length" ), vInfosConnectors[ eLength ], tr("m"), eGreaterEqualZero );

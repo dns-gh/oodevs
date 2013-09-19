@@ -29,21 +29,22 @@ public:
     //@{
     enum E_Type
     {
-        eBool        = 0,
-        eInt         = 1,
-        eDouble      = 2,
-        eEnum        = 3,
-        eString      = 4,
-        ePtrInVector = 5,
-        eDelay       = 6,
-        eTime        = 7,
-        eColor       = 8
+        eBool            = 0,
+        eInt             = 1,
+        eDouble          = 2,
+        eEnum            = 3,
+        eString          = 4,
+        eLocalizedString = 5,
+        ePtrInVector     = 6,
+        eDelay           = 7,
+        eTime            = 8,
+        eColor           = 9
     };
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_StandardItem( void* data, E_Type type = eString );
+    explicit ADN_StandardItem( void* parentData, E_Type type = eString );
     virtual ~ADN_StandardItem();
     //@}
 
@@ -53,12 +54,13 @@ public:
     ADN_Connector_ABC* GetConnector() const;
     E_Type GetType() const;
     void Connect( ADN_Connector_ABC* data, const QStringList* enumContent =  0  );
+    void Warn( ADN_ErrorStatus elementStatus );
     //@}
 
 private:
     //! @name Member data
     //@{
-    void* pData_;
+    void* parentData_;
     ADN_Connector_ABC* connector_;
     E_Type type_;
     //@}

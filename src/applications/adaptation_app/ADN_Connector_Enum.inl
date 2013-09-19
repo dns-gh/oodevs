@@ -54,7 +54,7 @@ void ADN_Connector_Enum< T >::ConnectPrivateSub( ADN_Connector_ABC* pTarget )
     ADN_Connector_ABC::ConnectPrivateSub( pTarget );
     bIsConnected_ = true;
     if( pGfx_->IsAutoEnabled() )
-        pGfx_->setEnabled( true );
+        pGfx_->setEnabled( ShouldEnableGfx() );
 }
 
 // -----------------------------------------------------------------------------

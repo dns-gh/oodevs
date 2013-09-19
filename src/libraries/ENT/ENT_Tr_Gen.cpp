@@ -456,7 +456,7 @@ ENT_Tr::T_ConverterMissionType ENT_Tr::MissionTypeConverter_[] =
     T_ConverterMissionType( "unit",      QT_TRANSLATE_NOOP( "ENT_Tr", "Unit missions" ),      eMissionType_Pawn ),
     T_ConverterMissionType( "automat",   QT_TRANSLATE_NOOP( "ENT_Tr", "Automat missions" ),   eMissionType_Automat ),
     T_ConverterMissionType( "crowd",     QT_TRANSLATE_NOOP( "ENT_Tr", "Crowd missions" ),     eMissionType_Population ),
-    T_ConverterMissionType( "fragOrder", QT_TRANSLATE_NOOP( "ENT_Tr", "Fragmentary Orders" ), eMissionType_FragOrder ),
+    T_ConverterMissionType( "frag-order", QT_TRANSLATE_NOOP( "ENT_Tr", "Fragmentary Orders" ), eMissionType_FragOrder ),
 
     T_ConverterMissionType( "", "", (E_MissionType)-1 )
 };

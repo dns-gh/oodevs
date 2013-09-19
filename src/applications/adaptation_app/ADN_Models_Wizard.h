@@ -7,32 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Missions_Wizard_h_
-#define __ADN_Missions_Wizard_h_
+#ifndef __ADN_Models_Wizard_h_
+#define __ADN_Models_Wizard_h_
 
 #include "ADN_Wizard.h"
-#include "ADN_Missions_Data.h"
-#include "ADN_Missions_WizardPage.h"
+#include "ADN_Models_Data.h"
+#include "ADN_Models_WizardPage.h"
 
 // =============================================================================
-/** @class  ADN_Missions_Wizard
-    @brief  ADN_Missions_Wizard
+/** @class  ADN_Models_Wizard
+    @brief  ADN_Models_Wizard
 */
 // Created: APE 2005-01-19
 // =============================================================================
-class ADN_Missions_Wizard : public ADN_Wizard< ADN_Missions_ABC, ADN_Missions_WizardPage >
+class ADN_Models_Wizard : public ADN_Wizard< ADN_Models_Data::ModelInfos, ADN_Models_WizardPage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Missions_Wizard( E_MissionType entityType, const QString& elementName, ADN_Missions_Data::T_Mission_Vector& vector, QWidget* pParent = 0 )
-        : ADN_Wizard< ADN_Missions_ABC, ADN_Missions_WizardPage >( elementName, vector, pParent )
+    explicit ADN_Models_Wizard( E_EntityType entityType, const QString& elementName, ADN_Models_Data::T_ModelInfos_Vector& vector, QWidget* pParent = 0 )
+        : ADN_Wizard< ADN_Models_Data::ModelInfos, ADN_Models_WizardPage >( elementName, vector, pParent )
         , entityType_( entityType )
-    {
-        // NOTHING
-    }
-    virtual ~ADN_Missions_Wizard()
     {
         // NOTHING
     }
@@ -41,17 +37,17 @@ public:
 public:
     //! @name Helpers
     //@{
-    virtual ADN_Missions_WizardPage* CreatePage()
+    virtual ADN_Models_WizardPage* CreatePage()
     {
-        return new ADN_Missions_WizardPage( vector_, title_, this, entityType_ );
+        return new ADN_Models_WizardPage( vector_, title_, this, entityType_ );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    E_MissionType entityType_;
+    E_EntityType entityType_;
     //@}
 };
 
-#endif // __ADN_Missions_Wizard_h_
+#endif // __ADN_Models_Wizard_h_

@@ -40,11 +40,10 @@ private:
 
 #include "ADN_EditLine.inl"
 
-typedef ADN_EditLine< ADN_Connector_String< ADN_EditLine_ABC >, QRegExpValidator >                      ADN_EditLine_String;
-typedef ADN_EditLine< ADN_Connector_Int< ADN_EditLine_ABC >,    ADN_IntValidator >                      ADN_EditLine_Int;
-typedef ADN_EditLine< ADN_Connector_Double< ADN_EditLine_ABC >, ADN_DoubleValidator >                   ADN_EditLine_Double;
-
-typedef ADN_EditLine< ADN_Connector_LocalizedString< ADN_EditLine_ABC >, QRegExpValidator >             ADN_EditLine_LocalizedString;
+typedef ADN_EditLine< ADN_Connector_String< ADN_EditLine_ABC >, QRegExpValidator >          ADN_EditLine_String;
+typedef ADN_EditLine< ADN_Connector_Int< ADN_EditLine_ABC >,    ADN_IntValidator >          ADN_EditLine_Int;
+typedef ADN_EditLine< ADN_Connector_Double< ADN_EditLine_ABC >, ADN_DoubleValidator >       ADN_EditLine_Double;
+typedef ADN_EditLine< ADN_Connector_LocalizedString< ADN_EditLine_ABC >, QRegExpValidator > ADN_EditLine_LocalizedString;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_PH_EditLine_Double

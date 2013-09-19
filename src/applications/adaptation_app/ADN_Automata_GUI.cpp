@@ -58,8 +58,7 @@ void ADN_Automata_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    ADN_EditLine_ABC* nameField = builder.AddLocalizedField( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
-    nameField->ConnectWithRefValidity( data_.GetAutomata() );
+    builder.AddLocalizedField( data_.GetAutomata(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
     // Automaton type
     builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[eAgentType] );
     // Model

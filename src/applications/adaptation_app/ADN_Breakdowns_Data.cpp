@@ -72,7 +72,7 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
     , repairTime_( "0s" )
     , repairTimeVariance_( "0s" )
 {
-    // NOTHING
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eBreakdowns, "breakdowns" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +84,7 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo( unsigned int id )
     , repairTime_( "0s" )
     , repairTimeVariance_( "0s" )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eBreakdowns, "breakdowns" ) );
     ADN_Breakdowns_Data::idManager_.Lock( id );
 }
 
@@ -134,7 +135,8 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
 void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "type", type )
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", type )
           >> xml::attribute( "average-repairing-time", repairTime_ )
           >> xml::attribute( "variance", repairTimeVariance_ );
     nType_ = ADN_Tr::ConvertToBreakdownType( type );
@@ -241,11 +243,9 @@ void ADN_Breakdowns_Data::ReadCategory( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_BreakdownNTI& nti )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     spNew->nNTI_ = nti;
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "breakdowns", strName ) );
     vBreakdowns_.AddItem( spNew.release() );
 }
 
@@ -300,6 +300,7 @@ QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Resources_Data::Categ
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
     {
         if( ( *it )->vRepairParts_.size() == 0 )

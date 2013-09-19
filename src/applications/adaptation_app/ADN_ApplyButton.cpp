@@ -11,7 +11,7 @@
 #include "ADN_ApplyButton.h"
 #include "moc_ADN_ApplyButton.cpp"
 #include "clients_kernel/Language.h"
-#include "clients_kernel/Translations.h"
+#include "clients_kernel/LocalizedString.h"
 #include "ADN_Workspace.h"
 #include "ADN_Languages_GUI.h"
 
@@ -25,9 +25,9 @@ ADN_ApplyButton::ADN_ApplyButton( QWidget* parent /*= 0*/ )
     QToolTip::add( this, tr( "Mark as finished" ) );
     setCheckable( true );
     setIconSize( QSize( 10, 10 ) );
-    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged( const std::string& ) ), this, SLOT( OnLanguageChanged( const std::string& ) ) );
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
     connect( this, SIGNAL( clicked( bool ) ), this, SLOT( OnClicked( bool ) ) );
-    setVisible( false );
+    OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ void ADN_ApplyButton::OnTypeChanged( int newType )
 // Name: ADN_ApplyButton::OnLanguageChanged
 // Created: ABR 2013-07-17
 // -----------------------------------------------------------------------------
-void ADN_ApplyButton::OnLanguageChanged( const std::string& language )
+void ADN_ApplyButton::OnLanguageChanged()
 {
-    setVisible( language != kernel::Language::default_ );
+    setVisible( !kernel::Language::IsCurrentDefault() );
 }

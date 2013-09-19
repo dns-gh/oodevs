@@ -302,7 +302,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     : eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
     , eNbcSuit_                         ( static_cast< E_AgentNbcSuit >( 0 ) )
     , nId_                              ( ADN_Units_Data::idManager_.GetNextId() )
-    , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
+    , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Pawn ), 0 )
     , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
     , nNbOfficer_                       ( 0 )
     , nNbNCOfficer_                     ( 0 )
@@ -352,7 +352,7 @@ ADN_Units_Data::UnitInfos::UnitInfos( unsigned int id )
     : eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
     , eNbcSuit_                         ( static_cast< E_AgentNbcSuit >( 0 ) )
     , nId_                              ( id )
-    , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
+    , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Pawn ), 0 )
     , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
     , nNbOfficer_                       ( 0 )
     , nNbNCOfficer_                     ( 0 )
@@ -409,6 +409,7 @@ ADN_Units_Data::UnitInfos::~UnitInfos()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::Initialize()
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUnits, "units" ) );
     BindExistenceTo(&ptrModel_);
 
     // postures initialization
@@ -545,8 +546,9 @@ void ADN_Units_Data::UnitInfos::ReadPointDistance( xml::xistream& input )
 void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
     std::string strType, nbcSuit;
-    input >> xml::attribute( "type", strType )
-        >> xml::attribute( "decisional-model", ptrModel_ );
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", strType )
+          >> xml::attribute( "decisional-model", ptrModel_ );
 
     eTypeId_ = ADN_Tr::ConvertToAgentTypePion( strType );
     if( eTypeId_ == (E_AgentTypePion)-1 )
@@ -862,9 +864,7 @@ void ADN_Units_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Units_Data::ReadUnit( xml::xistream& input )
 {
     std::auto_ptr<UnitInfos> spNew( new UnitInfos( input.attribute< unsigned int >( "id" ) ) );
-    std::string strName = input.attribute< std::string >( "name" );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "units", strName ) );
     vUnits_.AddItem( spNew.release() );
 }
 
@@ -960,6 +960,7 @@ QStringList ADN_Units_Data::GetUnitsThatUse( ADN_LogisticSupplyClasses_Data::Log
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
         (*it)->CheckDatabaseValidity( checker );
 }

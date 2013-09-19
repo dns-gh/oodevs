@@ -37,4 +37,5 @@ template< class Connector >
 void ADN_TextEdit< Connector >::TextChanged()
 {
     static_cast< Connector* >( pConnector_ )->SetDataChanged( text() );
+    emit textChanged( text() );
 }

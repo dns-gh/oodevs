@@ -20,13 +20,14 @@ class ADN_Missions_Mission : public ADN_Missions_ABC
 {
 public:
              ADN_Missions_Mission();
-    explicit ADN_Missions_Mission( unsigned int id );
+    explicit ADN_Missions_Mission( E_MissionType type );
+             ADN_Missions_Mission( E_MissionType type, unsigned int id );
     virtual ~ADN_Missions_Mission();
 
     virtual ADN_Missions_Mission* CreateCopy();
 
-    virtual void ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir );
-    virtual void WriteArchive( xml::xostream& output, E_MissionType type );
+    virtual void ReadArchive( xml::xistream& input );
+    virtual void WriteArchive( xml::xostream& output );
 
 public:
     ADN_Type_String diaBehavior_;

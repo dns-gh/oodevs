@@ -710,6 +710,10 @@ Arrêt moteur allumé</translation>
         <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
         <translation>&apos;%1&apos; possèdent le même identifiant. Ces identifiants seront remplacés à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>Some translations on tab &apos;%1&apos; have the same key and different translation values. Only one will be used by the simulation.</source>
+        <translation>Des traductions de l&apos;onglet &apos;%1&apos; ont la meme clef et des valeurs de traduction différentes. La simulation n&apos;en utilisera qu&apos;une.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2425,13 +2429,6 @@ PNG (*.png)</translation>
     </message>
 </context>
 <context>
-    <name>ADN_LocalizedType</name>
-    <message>
-        <source>Unfinished translation</source>
-        <translation>Traduction non terminée</translation>
-    </message>
-</context>
-<context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
         <source>Logistic resource categories</source>
@@ -2874,18 +2871,6 @@ PNG (*.png)</translation>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
-    </message>
-    <message>
-        <source>Unit models</source>
-        <translation>Modèles de pions</translation>
-    </message>
-    <message>
-        <source>Automata models</source>
-        <translation>Modèles d&apos;automates</translation>
-    </message>
-    <message>
-        <source>Crowds models</source>
-        <translation>Modèles de foules</translation>
     </message>
     <message>
         <source>Missions</source>
@@ -5491,6 +5476,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Languages</source>
         <translation>Langues</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Type_LocalizedString</name>
+    <message>
+        <source>Unfinished translation</source>
+        <translation type="unfinished">Traduction non terminée</translation>
+    </message>
+    <message>
+        <source>Duplicate translation key with different translation values</source>
+        <translation type="unfinished">Clef de traduction dupliquées avec des valeurs de traduction differentes</translation>
     </message>
 </context>
 <context>

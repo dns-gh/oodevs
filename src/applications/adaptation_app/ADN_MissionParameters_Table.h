@@ -27,7 +27,7 @@ class ADN_MissionParameters_Table : public ADN_Table
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, int entityType = -1, QWidget* pParent = 0 );
+             ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, E_MissionType missionType, QWidget* pParent = 0 );
     virtual ~ADN_MissionParameters_Table();
     //@}
 
@@ -72,7 +72,7 @@ private:
     T_ConnectorVector itemConnectors_;
     QStringList parameterTypes_;
     bool addingRow_;
-    int entityType_;
+    E_MissionType missionType_;
     //@}
 };
 

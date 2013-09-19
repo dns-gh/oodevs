@@ -84,7 +84,7 @@ public slots:
     bool SetCurrentItem( const QString& itemName );
     void OnFilterChanged( const QString& );
     void OnFilterChanged( const QStringList& );
-    void OnLanguageChanged( const std::string& language );
+    void OnLanguageChanged();
 
 protected:
     void keyReleaseEvent( QKeyEvent* pEvent );
@@ -119,7 +119,7 @@ protected slots:
     void GoToOnDoubleClicked( const QModelIndex& index );
     bool SetCurrentItem();
 
-    void Warn( ADN_ErrorStatus errorStatus = eNoError, const QString& errorMsg = "" );
+    virtual void Warn( ADN_ErrorStatus errorStatus = eNoError, const QString& errorMsg = "" );
 
 signals:
     void ItemSelected( void* pData );

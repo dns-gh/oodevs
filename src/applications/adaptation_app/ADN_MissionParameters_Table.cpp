@@ -18,9 +18,9 @@
 // Name: ADN_MissionParameters_Table::ADN_MissionParameters_Table
 // Created: ABR 2012-10-25
 // -----------------------------------------------------------------------------
-ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, int entityType /*= -1*/, QWidget* pParent /* = 0 */ )
+ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, E_MissionType missionType, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
-    , entityType_( entityType )
+    , missionType_( missionType )
     , addingRow_( false )
 {
     dataModel_.setColumnCount( 6 );
@@ -43,7 +43,7 @@ ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectN
     for( unsigned int i = 0; i < unsigned int( eNbrMissionParameterType ); ++i )
         parameterTypes_ << ADN_Tr::ConvertFromMissionParameterType( static_cast< E_MissionParameterType >( i ), ENT_Tr_ABC::eToTr ).c_str();
 
-    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddLocalizedLineEditOnColumn( 0 );
     delegate_.AddLineEditOnColumn( 1, "[A-Za-z0-9_]*" );
     delegate_.AddComboBoxOnColumn( 2, parameterTypes_ );
     delegate_.AddCheckBoxOnColumn( 3 );
@@ -62,6 +62,15 @@ ADN_MissionParameters_Table::~ADN_MissionParameters_Table()
     // NOTHING
 }
 
+namespace
+{
+    void SetColor( QStandardItem* item, const QBrush& brush )
+    {
+        item->setBackground( brush );
+        item->setData( brush, gui::Roles::OtherRole );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameters_Table::AddRow
 // Created: ABR 2012-10-23
@@ -72,41 +81,41 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
     if( !pMissionParameter )
         return;
 
-    const Qt::ItemFlags contextFlag = ( pMissionParameter->isContext_ && ( entityType_ == eEntityType_Pawn || entityType_ == eEntityType_Automat ) )
+    const Qt::ItemFlags contextFlag = ( pMissionParameter->isContext_ && ( missionType_ == eEntityType_Pawn || missionType_ == eEntityType_Automat ) )
         ? Qt::ItemIsSelectable
         : Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
-    const QBrush brush = pMissionParameter->isContext_ ? QBrush( Qt::gray ) : QBrush( Qt::transparent );
+    const QBrush brush = pMissionParameter->isContext_ ? QBrush( Qt::lightGray ) : QBrush( Qt::transparent );
 
     addingRow_ = true;
     QStandardItem* item = 0;
 
-    item = AddItem( row, 0, data, &pMissionParameter->strName_, ADN_StandardItem::eString, Qt::ItemIsEditable );
+    item = AddItem( row, 0, data, &pMissionParameter->strName_, ADN_StandardItem::eLocalizedString, Qt::ItemIsEditable );
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable ); // always editable
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 1, data, &pMissionParameter->diaName_, ADN_StandardItem::eString );
     item->setFlags( contextFlag );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 2, data, &pMissionParameter->type_, parameterTypes_, contextFlag );
     item->setFlags( contextFlag );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 3, data, &pMissionParameter->isOptional_, ADN_StandardItem::eBool );
-    if( entityType_ == eEntityType_Automat && pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeLimit ||
+    if( missionType_ == eEntityType_Automat && pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeLimit ||
         pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeDirection )
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
     else
         item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 4, data, &pMissionParameter->minOccurs_, ADN_StandardItem::eInt );
     item->setFlags( contextFlag );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     item = AddItem( row, 5, data, &pMissionParameter->maxOccurs_, ADN_StandardItem::eInt );
     item->setFlags( contextFlag );
-    item->setBackground( brush );
+    SetColor( item, brush );
 
     addingRow_ = false;
 }
@@ -151,7 +160,7 @@ void ADN_MissionParameters_Table::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::AddNewElement()
 {
-    ADN_Missions_Parameter* newElement = new ADN_Missions_Parameter();
+    ADN_Missions_Parameter* newElement = new ADN_Missions_Parameter( missionType_ );
     newElement->strName_ = tr( "New parameter" ).toStdString();
 
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );

@@ -694,6 +694,10 @@ Parked engine running</source>
         <source> and &apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Some translations on tab &apos;%1&apos; have the same key and different translation values. Only one will be used by the simulation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2399,13 +2403,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>ADN_LocalizedType</name>
-    <message>
-        <source>Unfinished translation</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_LogisticSupplyClasses_GUI</name>
     <message>
         <source>Logistic resource categories</source>
@@ -2855,18 +2852,6 @@ PNG (*.png)
     </message>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit models</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automata models</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowds models</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5457,6 +5442,17 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Languages</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Type_LocalizedString</name>
+    <message>
+        <source>Unfinished translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate translation key with different translation values</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

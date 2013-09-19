@@ -122,6 +122,7 @@ ADN_Radars_Data::RadarInfos::RadarInfos()
     , bHasDetectTimes_         ( false )
     , bHasHQDetectTimes_       ( false )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eSensors, "radars" ) );
     for( int n = 0; n < eNbrConsumptionType; ++n )
         detectableActivities_[ n ] = false;
 }
@@ -175,7 +176,8 @@ ADN_Radars_Data::RadarInfos* ADN_Radars_Data::RadarInfos::CreateCopy()
 void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "type", type );
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToRadarType( type );
     if( nType_ == E_RadarType(-1 ) )
         throw MASA_EXCEPTION( tools::translate( "Radars_Data", "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).toStdString() );
@@ -312,10 +314,8 @@ void ADN_Radars_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Radars_Data::ReadRadar( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< RadarInfos > spNew( new RadarInfos() );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "radars", strName ) );
     vRadars_.AddItem( spNew.release() );
 }
 

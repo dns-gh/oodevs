@@ -17,7 +17,7 @@
             <xsl:attribute name="context">automats</xsl:attribute>
           </xsl:element>
           <xsl:element name="translation-query">
-            <xsl:attribute name="query">/models/crowd/crowd/string(@role)</xsl:attribute>
+            <xsl:attribute name="query">/models/crowd/crowd/string(@name)</xsl:attribute>
             <xsl:attribute name="context">crowd</xsl:attribute>
           </xsl:element>
         </xsl:element>

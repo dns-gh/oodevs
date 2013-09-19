@@ -76,10 +76,11 @@ void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const Un
 ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
     : nId_( ADN_Automata_Data::idManager_.GetNextId() )
     , ptrUnit_( vSubUnits_, 0 )
-    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos(), 0 )
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Automat ), 0 )
     , bStrengthRatioFeedbackTime_( false )
     , strengthRatioFeedbackTime_( "0s" )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eAutomata, "automats" ) );
     BindExistenceTo( &ptrModel_ );
 }
 
@@ -90,10 +91,11 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
 ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
     : nId_( id )
     , ptrUnit_( vSubUnits_, 0 )
-    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos(), 0 )
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Automat ), 0 )
     , bStrengthRatioFeedbackTime_( false )
     , strengthRatioFeedbackTime_( "0s" )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eAutomata, "automats" ) );
     BindExistenceTo( &ptrModel_ );
     ADN_Automata_Data::idManager_.Lock( id );
 }
@@ -154,7 +156,8 @@ void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 {
     std::string strType;
-    input >> xml::attribute( "type", strType )
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "type", strType )
           >> xml::attribute( "decisional-model", ptrModel_ )
           >> xml::optional >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
@@ -255,10 +258,8 @@ void ADN_Automata_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr< AutomatonInfos > spNew( new AutomatonInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "automats", strName ) );
     vAutomata_.AddItem( spNew.release() );
 }
 
@@ -350,6 +351,7 @@ QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& 
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    ADN_Data_ABC::CheckDatabaseValidity( checker );
     for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
         ( *it )->CheckDatabaseValidity( checker );
 }

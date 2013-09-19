@@ -32,6 +32,8 @@ enum E_MissionType;
 // =============================================================================
 class ADN_Missions_Data : public ADN_Data_ABC
 {
+    Q_OBJECT
+
 // =============================================================================
 // Mission parameters
 // =============================================================================
@@ -65,8 +67,27 @@ public:
     QStringList GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
     QStringList GetMissionsThatUse( E_MissionType type, ADN_Objects_Data_ObjectInfos& object );
 
-    void NotifyElementDeleted( std::string elementName, E_MissionType missionType );
-    tools::Path GenerateMissionSheet( int index, const QString& text );
+    tools::Path GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text );
+    const boost::shared_ptr< kernel::Context >& GetMissionSheetContext() const;
+    //@}
+
+    //! @name Static Helpers
+    //@{
+    static tools::Path GetMissionSheetsPath();
+    static tools::Path GetMissionSheetsPath( int index );
+    static tools::Path GetMissionSheetsImagesPath( int index );
+    static tools::Path GetCssFile();
+
+    static tools::Path GetTemporaryPath();
+    static tools::Path GetTemporaryPath( int index );
+    static tools::Path GetTemporaryImagesPath( int index );
+    static tools::Path GetTemporaryCssFile();
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnElementDeleted( boost::shared_ptr< kernel::LocalizedString > elementName, E_MissionType missionType );
     //@}
 
 private:
@@ -75,17 +96,20 @@ private:
     void WriteArchive( xml::xostream& output );
     void MoveMissionSheetsToObsolete( const tools::Path& file ) const;
     void CheckAndFixLoadingErrors() const;
+    void DeleteMissionSheet( const tools::Path& filename );
 
-public:
+private:
     std::vector< std::pair< std::string, T_Mission_Vector > > missionsVector_;
     tools::Path::T_Paths toDeleteMissionSheets_;
+    boost::shared_ptr< kernel::Context > missionSheetContext_;
 
 public:
     static tools::IdManager idManager_;
-    static tools::Path imagePath_;
-    static tools::Path imageTemporaryPath_;
     static tools::Path xslTemporaryFile_;
-    static tools::Path missionSheetTemporaryFile_;
+    static tools::Path imagePath_;
+    static tools::Path temporaryPath_;
+    static tools::Path cssFile_;
+    static tools::Path obsoletePath_;
 };
 
 #endif // __ADN_Missions_Data_h_

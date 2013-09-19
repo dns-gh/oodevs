@@ -24,6 +24,7 @@ ADN_Launchers_Data::LauncherInfos::LauncherInfos()
     , bDirect_( false )
     , bIndirect_( false )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eLaunchers, "launchers" ) );
     for( int i = 0; i < eNbrUnitPosture; ++i )
         for( int j = 0; j < eNbrUnitPosture; ++j )
             tabModifs_.Get( i, j ) = 0.0;
@@ -75,7 +76,8 @@ void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std:
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::LauncherInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::optional >> xml::attribute( "indirect-fire", bIndirect_ )
+    input >> xml::attribute( "name", strName_ )
+          >> xml::optional >> xml::attribute( "indirect-fire", bIndirect_ )
           >> xml::list( "ph-modifiers", *this, &ADN_Launchers_Data::LauncherInfos::ReadPosture );
 }
 
@@ -156,10 +158,8 @@ void ADN_Launchers_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::ReadLauncher( xml::xistream& input )
 {
-    std::string strName = input.attribute< std::string >( "name" );
     std::auto_ptr<LauncherInfos> spNew( new LauncherInfos() );
     spNew->ReadArchive( input );
-    spNew->strName_.SetTranslation( strName, translations_->GetTranslation( "launchers", strName ) );
     vLaunchers_.AddItem( spNew.release() );
 }
 

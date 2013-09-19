@@ -44,3 +44,12 @@ void ADN_ListView_DescriptionParameter::ConnectItem( bool bConnect )
     ADN_Missions_Parameter* pInfos = ( ADN_Missions_Parameter* )pCurData_;
     vItemConnectors_[ ADN_Missions_GUI::eDescriptionParametersText ]->Connect( &pInfos->description_, bConnect );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_DescriptionParameter::Warn
+// Created: ABR 2013-08-28
+// -----------------------------------------------------------------------------
+void ADN_ListView_DescriptionParameter::Warn( ADN_ErrorStatus /*errorStatus*/, const QString& /*errorMsg*/ )
+{
+    // NOTHING
+}

@@ -20,6 +20,8 @@
 #include <QtGui/QApplication>
 #pragma warning( pop )
 
+#include "ADN_ConsistencyErrorTypes.h"
+
 QString ADN_Data_ABC::duplicateName_ = QT_TRANSLATE_NOOP( "ADN_Data_ABC", "Duplicate name" );
 QString ADN_Data_ABC::invalidDataOntab_ = QT_TRANSLATE_NOOP( "ADN_Data_ABC", "Invalid data on tab '%1'" );
 
@@ -133,6 +135,7 @@ void ADN_Data_ABC::SaveTranslations( const tools::Path& xmlFile, kernel::XmlTran
     if( currentTranslation )
     {
         currentTranslation->SaveTranslationQueries( xmlFile );
+        currentTranslation->MergeDuplicateTranslations();
         currentTranslation->SaveTranslationFiles( xmlFile, BuildLocalDirectory(), ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
     }
 }
@@ -159,9 +162,10 @@ void ADN_Data_ABC::WriteArchive( xml::xostream& )
 // Name: ADN_Data_ABC::CheckDatabaseValidity
 // Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::CheckDatabaseValidity( ADN_ConsistencyChecker& ) const
+void ADN_Data_ABC::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    // NOTHING
+    if( translations_->HasDuplicateErrors() )
+        checker.AddError( eDuplicateTranslation, ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ), currentTab_, subTab_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,10 +188,10 @@ void ADN_Data_ABC::InitQtTranslations()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Data_ABC::OnLanguageChanged
-// Created: ABR 2013-07-15
+// Name: ADN_Data_ABC::GetContext
+// Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::OnLanguageChanged( const std::string& )
+const boost::shared_ptr< kernel::Context >& ADN_Data_ABC::GetContext( const std::string& context ) const
 {
-    // NOTHING
+    return translations_->GetContext( context );
 }
