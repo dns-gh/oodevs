@@ -507,7 +507,7 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
     {
         // saving in temporary files activated
         mainWindow_.SetIsLoading( true );
-        progressIndicator_.SetMaximum( eNbrWorkspaceElements + 1 );
+        progressIndicator_.SetMaximum( eNbrWorkspaceElements );
 
         projectData_->SetFile( filename );
         projectData_->Save( *fileLoader_ );
@@ -519,8 +519,8 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
 
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
-            elements_[n]->GetDataABC().Save();
             progressIndicator_.Increment( tr( "Saving: %1..." ).arg( elements_[n]->GetName() ) );
+            elements_[n]->GetDataABC().Save();
         }
     }
     catch( const std::exception& )
