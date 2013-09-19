@@ -16,10 +16,20 @@
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
-{
+{    
+    class Agent_ABC;
+    class AgentKnowledge_ABC;
+    class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class Agent_ABC;
     class Profile_ABC;
+    class Automat_ABC;
+    class Formation_ABC;
+    class Object_ABC;
+    class ObjectKnowledge_ABC;
+    class Population_ABC;
+    class UrbanObject_ABC;
 }
 
 namespace gui
@@ -36,7 +46,14 @@ namespace gui
 // Created: AGE 2006-06-23
 // =============================================================================
 class MiniViews : public RichDockWidget
-                , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::ObjectKnowledge_ABC >
                 , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
@@ -58,8 +75,15 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void BuildContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void UpdateContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     void DeleteView( MiniView*& view, const kernel::Entity_ABC* entity );
     //@}

@@ -111,6 +111,7 @@ public:
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void Zoom( float width );
     virtual void SetCurrentCursor( const QCursor& cursor );
+    virtual geometry::Point2f GetCenter() const;
     virtual geometry::Point2f MapToterrainCoordinates( int x, int y );
     virtual bool HasFocus();
     //@}

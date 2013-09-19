@@ -10,6 +10,14 @@
 #include "gaming_app_pch.h"
 #include "OrbatToolbar.h"
 #include "moc_OrbatToolbar.cpp"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -134,15 +142,87 @@ void OrbatToolbar::NotifyUpdated( const kernel::Filter_ABC& filter )
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatToolbar::NotifyContextMenu
-// Created: AGE 2006-12-13
+// Name: OrbatToolbar::UpdateContextMenu
+// Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void OrbatToolbar::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void OrbatToolbar::UpdateContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     if( !filter_.IsVisible( entity ) || entity.GetId() == 0 ) // no side team
         return;
     entity_ = &entity;
     menu.InsertItem( "Interface", tr( "Filter view" ), this, SLOT( OnSetFilter() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatToolbar::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void OrbatToolbar::NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
 }
 
 // -----------------------------------------------------------------------------

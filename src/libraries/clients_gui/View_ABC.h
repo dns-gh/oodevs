@@ -34,6 +34,7 @@ public:
     //@{
     virtual void CenterOn( const geometry::Point2f& point ) = 0;
     virtual void Zoom( float width ) = 0;
+    virtual geometry::Point2f GetCenter() const = 0;
     //@}
 };
 

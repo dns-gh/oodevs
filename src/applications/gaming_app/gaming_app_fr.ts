@@ -1457,6 +1457,17 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>LockMapViewController</name>
+    <message>
+        <source>Unlock view on entity</source>
+        <translation>Déverrouiller la vue sur l&apos;entité</translation>
+    </message>
+    <message>
+        <source>Lock view on entity</source>
+        <translation>Verrouiller la vue sur l&apos;entité</translation>
+    </message>
+</context>
+<context>
     <name>LoginDialog</name>
     <message>
         <source>Anonymous</source>

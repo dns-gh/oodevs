@@ -12,6 +12,13 @@
 #include "moc_HighlightColorModifier.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "Tools.h"
 
@@ -65,8 +72,10 @@ float HighlightColorModifier::Apply( const kernel::Entity_ABC& /*entity*/, float
 // -----------------------------------------------------------------------------
 // Name: HighlightColorModifier::NotifyContextMenu
 // Created: AGE 2008-05-15
+// Name: HighlightColorModifier::UpdateContextMenu
+// Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void HighlightColorModifier::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void HighlightColorModifier::UpdateContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     if( !profile_.IsVisible( entity ) )
         return;
@@ -75,6 +84,69 @@ void HighlightColorModifier::NotifyContextMenu( const kernel::Entity_ABC& entity
         menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Highlight" ), this, SLOT( Highlight() ) );
     else
         menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Remove highlight" ), this, SLOT( Unhighlight() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: MMC 2013-09-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
 }
 
 // -----------------------------------------------------------------------------
