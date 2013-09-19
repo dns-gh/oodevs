@@ -103,26 +103,6 @@
 			<xs:pattern value="0x([a-fA-F0-9]{6})"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="obstacleType">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">Defines obstacle types.</xs:documentation>
-			<xs:documentation xml:lang="fr">Liste des types d'obstacles possibles.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="preliminary">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Defines a preliminary obstacle.</xs:documentation>
-					<xs:documentation xml:lang="fr">Pour les obstacles activÃ©s dÃ¨s le dÃ©but de la simulation.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="reserved">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Defines a reserved obstacle, which is initially disabled and must be activated.</xs:documentation>
-					<xs:documentation xml:lang="fr">Pour les obstacles initialement inactifs et nÃ©cessitant d'Ãªtre activÃ©s.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="TargetType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="urban-object"/>
@@ -363,15 +343,8 @@
 					</xs:sequence>
 					<xs:attribute name="activated" type="xs:boolean" use="required">
 						<xs:annotation>
-							<xs:appinfo>Not read by simulation.</xs:appinfo>
 							<xs:documentation xml:lang="en">Defines whether the obstacle is initially activated or not.</xs:documentation>
 							<xs:documentation xml:lang="fr">Définit si l'obstacle est initialement actif.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="type" type="obstacleType" use="required">
-						<xs:annotation>
-							<xs:documentation xml:lang="en">Defines the type of obstacle.</xs:documentation>
-							<xs:documentation xml:lang="fr">Définit le type d'obstacle.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:complexType>
@@ -424,22 +397,22 @@
 		</xs:all>
 	</xs:complexType>
 	<xs:complexType name="T_TranslationQueries">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">Data specifying the translation queries</xs:documentation>
-            <xs:documentation xml:lang="fr">Cette donnée permet de caractériser les requêtes de traductions</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="translation-query" minOccurs="0" maxOccurs="unbounded">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">A given translation query</xs:documentation>
-                    <xs:documentation xml:lang="fr">Une requête de traduction</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:attribute name="query" type="xs:string" use="required"/>
-                    <xs:attribute name="context" type="xs:string" use="required"/>
-                    <xs:attribute name="prefix" type="xs:string" use="optional"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Data specifying the translation queries</xs:documentation>
+			<xs:documentation xml:lang="fr">Cette donnée permet de caractériser les requêtes de traductions</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="translation-query" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A given translation query</xs:documentation>
+					<xs:documentation xml:lang="fr">Une requête de traduction</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="query" type="xs:string" use="required"/>
+					<xs:attribute name="context" type="xs:string" use="required"/>
+					<xs:attribute name="prefix" type="xs:string" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
