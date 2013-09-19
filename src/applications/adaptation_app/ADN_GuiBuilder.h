@@ -40,8 +40,7 @@ enum E_Validator
     eLowerEqualZero,
     ePercentage,
     eZeroOne,
-    eDegrees,
-    eVarName
+    eDegrees
 };
 
 // =============================================================================
@@ -629,8 +628,6 @@ void ADN_GuiBuilder::SetValidator( QRegExpValidator& validator, E_Validator nVal
     if( nValidator == eNone )
         return;
 
-    assert( nValidator == eVarName );
-    validator.setRegExp( QRegExp( "([A-Z]|[a-z]|[0-9])*" ) );
 }
 
 // -----------------------------------------------------------------------------

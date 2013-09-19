@@ -61,7 +61,7 @@ void ADN_Armors_GUI::Build()
     QWidget* pHolder = builder.AddFieldHolder( pArmorInfoGroup );
 
     // Name field
-    builder.AddLocalizedField( data_.GetArmorsInfos(), pHolder, "name", tr( "Name" ), vInfosConnectors[ eArmorName ], 0, eVarName );
+    builder.AddLocalizedField( data_.GetArmorsInfos(), pHolder, "name", tr( "Name" ), vInfosConnectors[ eArmorName ] );
 
     pComboType_ = builder.AddEnumField( pHolder, "type", tr( "Type" ), vInfosConnectors[ eArmorType ] );
     connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );

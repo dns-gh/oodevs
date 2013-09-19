@@ -60,7 +60,7 @@ void ADN_Natures_GUI::Build()
     pHolder->layout()->setMargin( 0 );
 
     // Name field
-    builder.AddLocalizedField( data_.GetNaturesInfos(), pHolder, "name", tr( "Name" ), vInfosConnectors[ eDotationNatureName ], 0, eVarName );
+    builder.AddLocalizedField( data_.GetNaturesInfos(), pHolder, "name", tr( "Name" ), vInfosConnectors[ eDotationNatureName ] );
 
     builder.PopSubName(); //! natures
 
