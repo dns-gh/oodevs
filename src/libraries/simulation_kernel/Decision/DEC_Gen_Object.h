@@ -18,7 +18,6 @@
 namespace sword
 {
     class PlannedWork;
-    enum ObstacleType_DemolitionTargetType;
 }
 
 class MIL_EntityManager_ABC;
@@ -34,13 +33,6 @@ class MIL_Automate;
 class DEC_Gen_Object
 {
 public:
-    //! @name Type
-    //@{
-// $$$$ _RC_ FDS 2010-01-22: Test de suppression à voir si possible ou non
-    typedef sword::ObstacleType_DemolitionTargetType E_DemolitionTargetType;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              DEC_Gen_Object();
@@ -48,7 +40,7 @@ public:
                              const ObjectTypeResolver_ABC& resolver );
              DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager, unsigned int identifier,
                              const ObjectTypeResolver_ABC& resolver );
-             DEC_Gen_Object( std::string type, TER_Localisation* location, bool preliminary );
+             DEC_Gen_Object( std::string type, TER_Localisation* location, bool activated );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();
     //@}
@@ -58,7 +50,7 @@ public:
     const std::string& GetTypeName() const;
     unsigned int GetExternalIdentifier() const;
     const TER_Localisation& GetLocalisation() const;
-    E_DemolitionTargetType GetObstacleType() const;
+    bool GetActivated() const;
     double GetDensity() const;
     unsigned int GetMinesActivityTime() const;
     unsigned int GetActivationTime() const;
@@ -90,7 +82,7 @@ private:
     std::string type_;
     unsigned int identifier_;
     TER_Localisation localisation_;
-    E_DemolitionTargetType pObstacleType_;
+    bool activated_;
     double rDensity_;
     unsigned int nMinesActivityTime_;
     unsigned int nActivationTime_;

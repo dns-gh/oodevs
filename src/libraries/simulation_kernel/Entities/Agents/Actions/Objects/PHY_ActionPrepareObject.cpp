@@ -25,7 +25,7 @@ namespace
     {
         if( !pGenObject )
             throw MASA_EXCEPTION( "Invalid genObject in PHY_ActionPrepareObject" );
-        return MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() );
+        return MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetActivated(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() );
     }
 }
 

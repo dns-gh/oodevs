@@ -1713,7 +1713,7 @@ void DEC_AgentFunctions::CreateInstantaneously( const DEC_Decision_ABC* callerAg
 {
     if( !callerAgent || !pGenObject )
         throw MASA_EXCEPTION( "invalid parameter." );
-    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &callerAgent->GetPion().GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() );
+    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &callerAgent->GetPion().GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetActivated(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() );
     if( !object )
         throw MASA_EXCEPTION( "unable to create object." );
     object->Initialize( *pGenObject );

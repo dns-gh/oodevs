@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Gen_Object )
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object()
     : identifier_( 0 )
-    , pObstacleType_( sword::ObstacleType_DemolitionTargetType_preliminary )
+    , activated_( true )
     , rDensity_( 0 )
     , nMinesActivityTime_( 0 )
     , nActivationTime_( 0 )
@@ -52,6 +52,16 @@ namespace
     }
 }
 
+namespace
+{
+    bool ExtractActivated( const sword::PlannedWork& msg )
+    {
+        if( msg.has_type_obstacle() && msg.type_obstacle() == sword::ObstacleType_DemolitionTargetType_reserved )
+            return false;
+        return true;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Gen_Object constructor
 // Created: NLD 2007-05-14
@@ -60,7 +70,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
                                 const ObjectTypeResolver_ABC& resolver )
     : type_              ( &resolver.FindType( msg.type() )? msg.type(): "" )
     , identifier_        ( 0u )
-    , pObstacleType_     ( msg.has_type_obstacle() ? msg.type_obstacle() : sword::ObstacleType_DemolitionTargetType_preliminary )
+    , activated_         ( ExtractActivated( msg ) )
     , rDensity_          ( msg.has_density() ? msg.density() : 0. )
     , nMinesActivityTime_( msg.has_activity_time() ? msg.activity_time() : 0 )
     , nActivationTime_   ( msg.has_activation_time() ? msg.activation_time() : 0 )
@@ -92,7 +102,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
                                 const ObjectTypeResolver_ABC& resolver )
     : type_              ( &resolver.FindType( msg.type() )? msg.type(): "" )
     , identifier_        ( identifier )
-    , pObstacleType_     ( msg.has_type_obstacle() ? msg.type_obstacle() : sword::ObstacleType_DemolitionTargetType_preliminary )
+    , activated_         ( ExtractActivated( msg ) )
     , rDensity_          ( msg.has_density() ? msg.density() : 0. )
     , nMinesActivityTime_( msg.has_activity_time() ? msg.activity_time() : 0 )
     , nActivationTime_   ( msg.has_activation_time() ? msg.activation_time() : 0 )
@@ -120,11 +130,11 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
 // Name: DEC_Gen_Object constructor
 // Created: MGD 2010-06-16
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( std::string type, TER_Localisation* location, bool preliminary )
+DEC_Gen_Object::DEC_Gen_Object( std::string type, TER_Localisation* location, bool activated )
     : type_              ( type )
     , identifier_        ( 0u )
     , localisation_      ( *location )
-    , pObstacleType_     ( preliminary ? sword::ObstacleType_DemolitionTargetType_preliminary : sword::ObstacleType_DemolitionTargetType_reserved )
+    , activated_         ( activated )
     , rDensity_          ( 0 )
     , nMinesActivityTime_( 0 )
     , nActivationTime_   ( 0 )
@@ -146,7 +156,7 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
     : type_              ( rhs.type_ )
     , identifier_        ( rhs.identifier_ )
     , localisation_      ( rhs.localisation_ )
-    , pObstacleType_     ( rhs.pObstacleType_ )
+    , activated_         ( rhs.activated_ )
     , rDensity_          ( rhs.rDensity_ )
     , nMinesActivityTime_( rhs.nMinesActivityTime_ )
     , nActivationTime_   ( rhs.nActivationTime_ )
@@ -178,7 +188,7 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
     type_               = rhs.type_;
     identifier_         = rhs.identifier_;
     localisation_       = rhs.localisation_;
-    pObstacleType_      = rhs.pObstacleType_;
+    activated_          = rhs.activated_;
     rDensity_           = rhs.rDensity_;
     nMinesActivityTime_ = rhs.nMinesActivityTime_;
     nActivationTime_    = rhs.nActivationTime_;
@@ -198,7 +208,7 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
 {
     msg.set_type( type_.c_str() );
-    msg.set_type_obstacle( pObstacleType_ );
+    msg.set_type_obstacle( activated_ ? sword::ObstacleType_DemolitionTargetType_preliminary : sword::ObstacleType_DemolitionTargetType_reserved );
     msg.mutable_combat_train()->set_id( pTC2_ ? pTC2_->GetID() : 0 );
     msg.set_density( static_cast< float >( rDensity_ ) );
     msg.set_activity_time( nMinesActivityTime_ );
@@ -233,7 +243,7 @@ void DEC_Gen_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> type_
          >> identifier_
          >> localisation_
-         >> pObstacleType_
+         >> activated_
          >> rDensity_
          >> nMinesActivityTime_
          >> nActivationTime_
@@ -254,7 +264,7 @@ void DEC_Gen_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     file << type_
          << identifier_
          << localisation_
-         << pObstacleType_
+         << activated_
          << rDensity_
          << nMinesActivityTime_
          << nActivationTime_

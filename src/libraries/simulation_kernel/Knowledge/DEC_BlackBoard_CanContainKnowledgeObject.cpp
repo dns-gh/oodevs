@@ -399,7 +399,7 @@ namespace
         void operator() ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( knowledge->IsValid()
-                && ( nonActivatedObstacles_ || ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) )
+                && ( nonActivatedObstacles_ || ( !knowledge->IsActivableObstacle() || knowledge->IsObstacleActivated() ) )
                 && filter_.Test( knowledge->GetType() )
                 && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
                 pContainer_->push_back( knowledge );
@@ -446,7 +446,7 @@ namespace
         void operator()( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( filter_.Test( knowledge->GetType() )
-                && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
+                && ( !knowledge->IsActivableObstacle() || knowledge->IsObstacleActivated() )
                 && pZone_->IsInside( knowledge->GetLocalisation().ComputeBarycenter() )
                 && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
@@ -530,7 +530,7 @@ namespace
 
         void operator() ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) && knowledge->IsValid() )
+            if( ( !knowledge->IsActivableObstacle() || knowledge->IsObstacleActivated() ) && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
         }
 
@@ -804,7 +804,7 @@ namespace
         void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( filter_.Test( knowledge->GetType() ) 
-                && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) 
+                && ( !knowledge->IsActivableObstacle() || knowledge->IsObstacleActivated() ) 
                 && pZone_->IsIntersecting( knowledge->GetLocalisation() )
                 && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
