@@ -45,8 +45,8 @@ unsigned long FindMaxIdInFile( const tools::Path& filePath )
     {
         boost::sregex_iterator it( line.begin(), line.end(), idRegex );
         const boost::sregex_iterator end;
-        for( ;it != end; ++it )
-            for( int i = 1; i < it->size(); ++i )
+        for( ; it != end; ++it )
+            for( size_t i = 1; i < it->size(); ++i )
                 maxId = std::max( maxId,
                     boost::lexical_cast< unsigned long >( it->str( i ) ));
     }
