@@ -267,11 +267,11 @@ ENT_Tr::T_ConverterLogFuneralHandlingStatus ENT_Tr::LogFuneralHandlingStatusConv
     T_ConverterLogFuneralHandlingStatus( "", "", (E_LogFuneralHandlingStatus)-1 )
 };
 
-ENT_Tr::T_ConverterDemolitionTargetType ENT_Tr::DemolitionTargetTypeConverter_[] =
+ENT_Tr::T_ConverterObstacleActivation ENT_Tr::ObstacleActivationConverter_[] =
 {
-    T_ConverterDemolitionTargetType( "preliminary", QT_TRANSLATE_NOOP( "ENT_Tr", "preliminary" ), eDemolitionTargetType_Preliminary ),
-    T_ConverterDemolitionTargetType( "reserved", QT_TRANSLATE_NOOP( "ENT_Tr", "reserved" ), eDemolitionTargetType_Reserved ),
-    T_ConverterDemolitionTargetType( "", "", (E_DemolitionTargetType)-1 )
+    T_ConverterObstacleActivation( "activated", QT_TRANSLATE_NOOP( "ENT_Tr", "Activated" ), eObstacleActivation_Activated ),
+    T_ConverterObstacleActivation( "deactivated", QT_TRANSLATE_NOOP( "ENT_Tr", "Deactivated" ), eObstacleActivation_Deactivated ),
+    T_ConverterObstacleActivation( "", "", (E_ObstacleActivation)-1 )
 };
 
 ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
@@ -489,7 +489,7 @@ void ENT_Tr::InitTranslations()
     InitTr( LogSupplyHandlingStatusConverter_, "ENT_Tr" );
     InitTr( LogMedicalHandlingStatusConverter_, "ENT_Tr" );
     InitTr( LogFuneralHandlingStatusConverter_, "ENT_Tr" );
-    InitTr( DemolitionTargetTypeConverter_, "ENT_Tr" );
+    InitTr( ObstacleActivationConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
     InitTr( LocationConverter_, "ENT_Tr" );
     InitTr( CrossingTypeConverter_, "ENT_Tr" );
@@ -707,12 +707,12 @@ const std::string& ENT_Tr::ConvertFromLogFuneralHandlingStatus( E_LogFuneralHand
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromDemolitionTargetType
+// Name: ENT_Tr::ConvertFromObstacleActivation
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromDemolitionTargetType( E_DemolitionTargetType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromObstacleActivation( E_ObstacleActivation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( DemolitionTargetTypeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( ObstacleActivationConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1058,12 +1058,12 @@ E_LogFuneralHandlingStatus ENT_Tr::ConvertToLogFuneralHandlingStatus( const std:
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToDemolitionTargetType
+// Name: ENT_Tr::ConvertToObstacleActivation
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_DemolitionTargetType ENT_Tr::ConvertToDemolitionTargetType( const std::string& strName, E_Conversion mode /* = eToSim */ )
+E_ObstacleActivation ENT_Tr::ConvertToObstacleActivation( const std::string& strName, E_Conversion mode /* = eToSim */ )
 {
-    return ENT_Tr::FindInConverter( DemolitionTargetTypeConverter_, strName, mode );
+    return ENT_Tr::FindInConverter( ObstacleActivationConverter_, strName, mode );
 }
 
 //-----------------------------------------------------------------------------

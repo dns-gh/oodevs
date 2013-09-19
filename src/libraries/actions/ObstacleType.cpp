@@ -24,7 +24,7 @@ ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned in
     : Parameter< QString >( parameter )
     , value_( sword::ObstacleType_DemolitionTargetType( value ) )
 {
-    SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
+    SetValue( tools::ToString( E_ObstacleActivation( value_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ ObstacleType::ObstacleType( xml::xistream& xis )
     : Parameter< QString >( kernel::OrderParameter( xis.attribute< std::string >( "name" ).c_str(), xis.attribute< std::string >( "type" ), false ) )
     , value_( sword::ObstacleType_DemolitionTargetType( xis.attribute< unsigned int >( "value" ) ) )
 {
-    SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
+    SetValue( tools::ToString( E_ObstacleActivation( value_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

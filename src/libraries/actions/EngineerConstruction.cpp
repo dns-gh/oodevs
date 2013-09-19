@@ -65,7 +65,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
     if( message.combat_train().id() != 0 )
         AddParam( *new Automat(      OrderParameter( tools::translate( "ActionParameter", "Obstacle tc2" ).toStdString(), "tc2", false ), message.combat_train().id(), entities, controller ), "tc2" );
     if( message.has_type_obstacle() )
-        AddParam( *new ObstacleType( OrderParameter( tools::translate( "ActionParameter", "Obstacle type" ).toStdString(), "obstacletype", false ), static_cast< unsigned int >( message.type_obstacle() ) ), "obstacletype" );
+        AddParam( *new ObstacleType( OrderParameter( tools::translate( "ActionParameter", "Activation" ).toStdString(), "obstacletype", false ), static_cast< unsigned int >( message.type_obstacle() ) ), "obstacletype" );
     if( message.has_name() && !message.name().empty() )
         AddParam( *new String(       OrderParameter( tools::translate( "ActionParameter", "Name" ).toStdString(), "string", true ), message.name() ), "name" );
     if( message.mining() != false )

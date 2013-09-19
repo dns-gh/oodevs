@@ -217,17 +217,6 @@ void EditorFactory::Call( Enum_PopulationAttitude* const& value )
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
-// Created: SBO 2006-11-10
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( Enum_DemolitionTargetType* const& value )
-{
-    EnumEditor< Enum_DemolitionTargetType >* editor = new EnumEditor< Enum_DemolitionTargetType >( parent_ );
-    editor->SetCurrentItem( *value );
-    result_ = editor;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
 // Created: ABR 2011-11-29
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( Enum_NbcState* const& value )

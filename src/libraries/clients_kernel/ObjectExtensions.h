@@ -42,7 +42,6 @@ namespace kernel
     class ObstacleAttribute_ABC : public ObjectExtension
     {
     public:
-        virtual bool IsReservedObstacle() const = 0;
         virtual bool IsObstacleActivated() const = 0;
     };
     class LodgingAttribute_ABC : public ObjectExtension {};

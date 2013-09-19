@@ -49,15 +49,6 @@ void PropertyDisplayer::Call( const Enum_PopulationAttitude& value )
 
 // -----------------------------------------------------------------------------
 // Name: PropertyDisplayer::Call
-// Created: SBO 2006-11-10
-// -----------------------------------------------------------------------------
-void PropertyDisplayer::Call( const Enum_DemolitionTargetType& value )
-{
-    AddToDisplay( value.ToString() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertyDisplayer::Call
 // Created: ABR 2011-11-29
 // -----------------------------------------------------------------------------
 void PropertyDisplayer::Call( const Enum_NbcState & value )

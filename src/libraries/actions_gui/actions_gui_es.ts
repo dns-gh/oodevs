@@ -43,6 +43,17 @@
     </message>
 </context>
 <context>
+    <name>ParamBool</name>
+    <message>
+        <source>True</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>False</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -120,10 +131,6 @@
         <translation type="unfinished">Tipo:</translation>
     </message>
     <message>
-        <source>Demolition target type:</source>
-        <translation type="unfinished">Tipo de blanco de demolición:</translation>
-    </message>
-    <message>
         <source>TC2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -140,10 +147,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Time limit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -157,6 +160,14 @@
     </message>
     <message>
         <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

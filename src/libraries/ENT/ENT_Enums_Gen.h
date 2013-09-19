@@ -286,11 +286,11 @@ enum E_LogMedicalHandlingStatus
     eNbrLogMedicalHandlingStatus
 };
 
-enum E_DemolitionTargetType
+enum E_ObstacleActivation
 {
-    eDemolitionTargetType_Preliminary,
-    eDemolitionTargetType_Reserved,
-    eNbrDemolitionTargetType
+    eObstacleActivation_Activated,
+    eObstacleActivation_Deactivated,
+    eNbrObstacleActivation
 };
 
 enum E_PopulationAttitude

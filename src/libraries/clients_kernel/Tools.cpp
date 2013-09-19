@@ -232,9 +232,9 @@ QString tools::ToString( E_PopulationAttitude nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_DemolitionTargetType nType )
+QString tools::ToString( E_ObstacleActivation nType )
 {
-    return ENT_Tr::ConvertFromDemolitionTargetType( nType, ENT_Tr::eToTr ).c_str();
+    return ENT_Tr::ConvertFromObstacleActivation( nType, ENT_Tr::eToTr ).c_str();
 }
 
 // -----------------------------------------------------------------------------

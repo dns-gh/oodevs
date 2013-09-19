@@ -46,7 +46,7 @@ namespace tools
     QString ToShortString( kernel::E_FuncLimaType nType );
 
     QString ToString( E_PopulationAttitude nType );
-    QString ToString( E_DemolitionTargetType nType );
+    QString ToString( E_ObstacleActivation nType );
     QString ToString( E_UnitPosture nType );
     QString ToString( E_OperationalStatus nType );
     QString ToString( E_ForceRatioStatus nType );

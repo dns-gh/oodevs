@@ -94,10 +94,6 @@
         <translation>Hébergement</translation>
     </message>
     <message>
-        <source>Obstacle type</source>
-        <translation>Type d&apos;obstacle</translation>
-    </message>
-    <message>
         <source>Construction location</source>
         <translation>Position de la construction</translation>
     </message>
@@ -112,6 +108,10 @@
     <message>
         <source>Activity time:</source>
         <translation>Temps d&apos;activité:</translation>
+    </message>
+    <message>
+        <source>Activation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

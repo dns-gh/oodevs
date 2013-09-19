@@ -43,6 +43,17 @@
     </message>
 </context>
 <context>
+    <name>ParamBool</name>
+    <message>
+        <source>True</source>
+        <translation type="unfinished">صحيح</translation>
+    </message>
+    <message>
+        <source>False</source>
+        <translation type="unfinished">كاذبة</translation>
+    </message>
+</context>
+<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -148,16 +159,16 @@
         <translation type="unfinished">النوع:</translation>
     </message>
     <message>
-        <source>Demolition target type:</source>
-        <translation type="unfinished">نوع الهدف الهدم:</translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation type="unfinished">نوع عقبة</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation type="unfinished">الاسم</translation>
+    </message>
+    <message>
+        <source>Activate:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

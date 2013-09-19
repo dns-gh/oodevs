@@ -351,12 +351,6 @@ struct Formatter< E_LogFuneralHandlingStatus >
     void operator()( const E_LogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
-template< >
-struct Formatter< E_DemolitionTargetType >
-{
-    void operator()( const E_DemolitionTargetType& e, Displayer_ABC& displayer ) const;
-};
-
 // =============================================================================
 /** @class  Formatter
     @brief  Containers

@@ -51,7 +51,7 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , converter_  ( builder.GetStaticModel().coordinateConverter_ )
     , controller_ ( builder.GetControllers().actions_ )
     , typeCombo_  ( 0 )
-    , obstacleTypeCombo_( 0 )
+    , activatedCombo_( 0 )
 {
     SetRecursive( true );
 
@@ -153,14 +153,14 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
 
     // Target type
     {
-        QLabel* label = new QLabel( tr( "Demolition target type:" ), parent );
-        obstacleTypeCombo_ = new ::gui::ValuedComboBox< unsigned int >( "obstacleTypeCombo", parent );
-        for( unsigned int i = 0; i < eNbrDemolitionTargetType ; ++i )
-            obstacleTypeCombo_->AddItem( tools::ToString( ( E_DemolitionTargetType)i ), i );
+        QLabel* label = new QLabel( tr( "Activate:" ), parent );
+        activatedCombo_ = new QComboBox;
+        activatedCombo_->addItem( tools::translate( "ParamBool", "True" ) );
+        activatedCombo_->addItem( tools::translate( "ParamBool", "False" ) );
         connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setVisible( bool ) ) );
-        connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypeCombo_, SLOT( setVisible( bool ) ) );
+        connect( this, SIGNAL( ToggleReservable( bool ) ), activatedCombo_, SLOT( setVisible( bool ) ) );
         layout->addWidget( label );
-        layout->addWidget( obstacleTypeCombo_ );
+        layout->addWidget( activatedCombo_ );
     }
 
     // Density
@@ -282,9 +282,9 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
             density_->CommitTo( *param );
         if( type->HasLogistic() )
             tc2_->CommitTo( *param );
-        if( type->CanBeReservedObstacle() )
+        if( type->CanBeActivated() )
         {
-            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Obstacle type" ).toStdString(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
+            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Activation" ).toStdString(), "obstacletype", false ), activatedCombo_->currentIndex() ) );
             activityTime_->CommitTo( *param );
             activationTime_->CommitTo( *param );
         }
@@ -357,8 +357,8 @@ void ParamObstacle::OnTypeChanged()
 
     ShowAndAddToControllerIfNeeded( *density_,          controller_, *type, &kernel::ObjectType::HasBuildableDensity );
     ShowAndAddToControllerIfNeeded( *tc2_,              controller_, *type, &kernel::ObjectType::HasLogistic );
-    ShowAndAddToControllerIfNeeded( *activityTime_,     controller_, *type, &kernel::ObjectType::CanBeReservedObstacle );
-    ShowAndAddToControllerIfNeeded( *activationTime_,   controller_, *type, &kernel::ObjectType::CanBeReservedObstacle );
+    ShowAndAddToControllerIfNeeded( *activityTime_,     controller_, *type, &kernel::ObjectType::CanBeActivated );
+    ShowAndAddToControllerIfNeeded( *activationTime_,   controller_, *type, &kernel::ObjectType::CanBeActivated );
     ShowAndAddToControllerIfNeeded( *altitudeModifier_, controller_, *type, &kernel::ObjectType::HasAltitudeModifierCapacity );
     ShowAndAddToControllerIfNeeded( *timeLimit_,        controller_, *type, &kernel::ObjectType::HasTimeLimitedCapacity );
     ShowAndAddToControllerIfNeeded( *mining_,           controller_, *type, &kernel::ObjectType::CanBeValorized );
@@ -367,7 +367,7 @@ void ParamObstacle::OnTypeChanged()
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
     location_->RegisterIn( controller_ );
     location_->SetVisible( true );
-    emit ToggleReservable( type->CanBeReservedObstacle() );
+    emit ToggleReservable( type->CanBeActivated() );
 }
 
 // -----------------------------------------------------------------------------
@@ -447,8 +447,8 @@ void ParamObstacle::Visit( const actions::parameters::Numeric& param )
 // -----------------------------------------------------------------------------
 void ParamObstacle::Visit( const actions::parameters::ObstacleType& param )
 {
-    assert( obstacleTypeCombo_ != 0 );
-    obstacleTypeCombo_->SetCurrentItem( static_cast< unsigned int >( ENT_Tr::ConvertToDemolitionTargetType( param.GetValue().toStdString(), ENT_Tr::eToTr ) ) );
+    assert( activatedCombo_ != 0 );
+    activatedCombo_->setCurrentIndex( static_cast< unsigned int >( ENT_Tr::ConvertToObstacleActivation( param.GetValue().toStdString(), ENT_Tr::eToTr ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -475,4 +475,3 @@ void ParamObstacle::Visit( const actions::parameters::String& param )
     assert( name_ != 0 );
     param.Accept( *name_ );
 }
-
