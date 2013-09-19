@@ -12,9 +12,13 @@
                 label-important
                 [[ else ]]
                 [[ if eq .user.type "manager" ]]
+                label-warning
+                [[ else ]]
+                [[ if eq .user.type "user" ]]
                 label-success
                 [[ else ]]
                 label-info
+                [[ end ]]
                 [[ end ]]
                 [[ end ]]
                 ufirst"> [[ .user.type ]] </li>
