@@ -232,3 +232,14 @@ void NatureEditionCategory::SetDeep( int deep )
 {
     deep_ = deep;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionCategory::setEnabled
+// Created: ABR 2013-09-19
+// -----------------------------------------------------------------------------
+void NatureEditionCategory::setEnabled( bool enabled )
+{
+    box_->setEnabled( enabled );
+    if( next_ )
+        next_->setEnabled( enabled );
+}
