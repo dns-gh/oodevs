@@ -37,14 +37,14 @@
 
 unsigned long FindMaxIdInFile( const tools::Path& filePath )
 {
-    const static boost::regex idRegex( "id=\"([0-9]+)\"" );
-    const static boost::sregex_iterator end;
+    static const boost::regex idRegex( "id=\"([0-9]+)\"" );
     unsigned long maxId = 0;
     std::string line;
     tools::Ifstream ifile( filePath );
     while( std::getline( ifile, line ) )
     {
         boost::sregex_iterator it( line.begin(), line.end(), idRegex );
+        const boost::sregex_iterator end;
         for( ;it != end; ++it )
             for( int i = 1; i < it->size(); ++i )
                 maxId = std::max( maxId,
