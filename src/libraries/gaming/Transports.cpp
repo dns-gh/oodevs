@@ -16,6 +16,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
+#include <boost/range/algorithm_ext/erase.hpp>  
 
 using namespace kernel;
 
@@ -76,19 +77,11 @@ void Transports::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Transports::DoUpdate( const sword::UnitDestruction& destruction )
 {
-    unsigned int id = destruction.unit().id();
+    const unsigned int id = destruction.unit().id();
     if( transporter_ && transporter_->GetId() == id )
         transporter_ = 0;
-    size_t size = transported_.size();
-    for( size_t i = 0; i < size; ++i )
-    {
-        if( transported_[ i ]->GetId() == id )
-        {
-            for( ++i ; i < size; ++i )
-                transported_[ i - 1 ] = transported_[i];
-            transported_.pop_back();
-        }
-    }
+    boost::remove_erase_if( transported_,
+        [id]( const kernel::Agent_ABC* agent ) -> bool { return id == agent->GetId(); } );
 }
 
 // -----------------------------------------------------------------------------
