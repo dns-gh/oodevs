@@ -434,7 +434,7 @@
             <div class="session_top_right">
                 <div class="btn-group">
                     [[ template "session_goto_btn" . ]]
-		    [[ if ne .user.type "player" ]]
+                    [[ if ne .user.type "player" ]]
                     [[ template "session_play_btn" . ]]
                     [[ template "session_pause_btn" . ]]
                     [[ template "session_replay_btn" . ]]
@@ -446,7 +446,7 @@
                     [[ template "session_log_btn" . ]]
                     [[ template "session_archive_btn" . ]]
                     [[ template "session_delete_btn" . ]]
-		    [[ end ]]
+                    [[ end ]]
                 </div>
             </div>
         </div>
