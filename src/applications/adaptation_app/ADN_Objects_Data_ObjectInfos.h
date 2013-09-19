@@ -65,6 +65,7 @@ public:
 
     //! @name Static member data
     //@{
+    static unsigned int typeId_;
     static int VAL;
     //@}
     template< typename T > struct Enumerator

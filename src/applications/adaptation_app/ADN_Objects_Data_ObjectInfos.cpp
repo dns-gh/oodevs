@@ -17,6 +17,8 @@ namespace
     static const std::string locations[ 4 ] = { "polygon", "point", "line", "circle" };
 }
 
+unsigned int ADN_Objects_Data_ObjectInfos::typeId_ = 0;
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos
 // Created: JCR 2008-07-15
@@ -143,6 +145,13 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
         >> xml::list( "geometry", *this, &ADN_Objects_Data_ObjectInfos::ReadGeometry )
         >> xml::end
         >> xml::list( *this, &ADN_Objects_Data_ObjectInfos::ReadCapacityArchive );
+    if( strType_.GetData().substr( 0, 9 ) == "T_Object_" )
+    {
+        QString strId = strType_.GetData().substr( 9, strType_.GetData().size() ).c_str();
+        unsigned int id = strId.toUInt();
+        if( id && id > typeId_ )
+            typeId_ = id;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -155,10 +164,9 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
         << xml::attribute( "name", strName_ );
     if( pointSize_.GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );
-    if( strType_ == "" )
-        xos << xml::attribute( "type", strName_ );
-    else
-        xos << xml::attribute( "type", strType_ );
+    if( strType_.GetData().empty() )
+        strType_ = QString( "T_Object_%1" ).arg( ++typeId_ ).toStdString();
+    xos << xml::attribute( "type", strType_ );
     if( !description_.GetData().empty() )
         xos << xml::attribute( "description", description_ );
 
