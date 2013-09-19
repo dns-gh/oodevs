@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_MovingUnderground.h"
-#include "DetectionComputer_ABC.h"
+#include "DetectionComputer.h"
 #include "MIL_Time_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "CheckPoints/SerializationTools.h"
@@ -102,7 +102,7 @@ void PHY_RoleAction_MovingUnderground::Clean()
 // Name: PHY_RoleAction_MovingUnderground::Execute
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_MovingUnderground::Execute( detection::DetectionComputer_ABC& algorithm ) const
+void PHY_RoleAction_MovingUnderground::Execute( detection::DetectionComputer& algorithm ) const
 {
     if( algorithm.GetTarget() == *owner_ )
         algorithm.SetUnderground( IsUnderground() );

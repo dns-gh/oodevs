@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRadarData.h"
-#include "DefaultDetectionComputer.h"
+#include "DetectionComputer.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -94,7 +94,7 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
     for( TER_Agent_ABC::CIT_AgentPtrVector it = targets.begin(); it != targets.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        detection::DefaultDetectionComputer detectionComputer( target );
+        detection::DetectionComputer detectionComputer( target );
         perceiver.GetPion().Execute( detectionComputer );
         target.Execute( detectionComputer );
         if( detectionComputer.CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )

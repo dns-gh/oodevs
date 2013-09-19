@@ -17,7 +17,7 @@
 
 namespace detection
 {
-    class DetectionComputer_ABC;
+    class DetectionComputer;
 }
 
 class DEC_Knowledge_Object;
@@ -30,7 +30,7 @@ class MIL_Agent_ABC;
 // Created: JSR 2011-06-08
 // =============================================================================
 class PHY_RoleAction_MovingUnderground : public tools::Role_ABC
-                                       , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
+                                       , public tools::AlgorithmModifier_ABC< detection::DetectionComputer >
                                        , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
@@ -57,7 +57,7 @@ public:
     //@{
     virtual void Update( bool bIsDead );
     virtual void Clean();
-    virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
+    virtual void Execute( detection::DetectionComputer& algorithm ) const;
 
     bool InitializeUndergroundMoving( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     bool Run();

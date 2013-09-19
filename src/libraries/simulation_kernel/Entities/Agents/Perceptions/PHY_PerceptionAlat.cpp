@@ -12,7 +12,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
-#include "DefaultDetectionComputer.h"
+#include "DetectionComputer.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 
@@ -55,7 +55,7 @@ void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perce
     {
         PHY_RoleInterface_Location& targetRoleLocation = static_cast< PHY_RoleInterface_Location& >( **itAgent );
         MIL_Agent_ABC& target = targetRoleLocation.GetAgent();
-        detection::DefaultDetectionComputer detectionComputer( target );
+        detection::DetectionComputer detectionComputer( target );
         perceiver_.GetPion().Execute( detectionComputer );
         target.Execute( detectionComputer );
 

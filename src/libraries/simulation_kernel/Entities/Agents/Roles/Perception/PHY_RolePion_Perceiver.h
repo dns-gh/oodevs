@@ -39,7 +39,7 @@ class TER_PopulationFlow_ABC;
 
 namespace detection
 {
-    class DetectionComputer_ABC;
+    class DetectionComputer;
 }
 
 namespace dotation
@@ -53,7 +53,7 @@ namespace dotation
 // Modified: JVT 2004-10-28
 // =============================================================================
 class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
-                             , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
+                             , public tools::AlgorithmModifier_ABC< detection::DetectionComputer >
                              , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
                              , public component::ComponentsChangedNotificationHandler_ABC
                              , public surrender::SurrenderNotificationHandler_ABC
@@ -103,7 +103,7 @@ public:
     virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
 
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
-    virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
+    virtual void Execute( detection::DetectionComputer& algorithm ) const;
     virtual void NotifyComponentHasChanged();
     virtual void NotifyCaptured();
     virtual void NotifyReleased();

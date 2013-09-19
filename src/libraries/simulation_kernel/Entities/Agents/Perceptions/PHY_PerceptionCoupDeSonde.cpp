@@ -12,7 +12,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include "simulation_kernel/DefaultDetectionComputer.h"
+#include "simulation_kernel/DetectionComputer.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionCoupDeSonde constructor
@@ -84,7 +84,7 @@ void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
 
-        detection::DefaultDetectionComputer detectionComputer( agent );
+        detection::DetectionComputer detectionComputer( agent );
         perceiver_.GetPion().Execute( detectionComputer );
         agent.Execute( detectionComputer );
 

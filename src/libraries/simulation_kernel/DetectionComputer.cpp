@@ -9,16 +9,16 @@
 
 #include "simulation_kernel_pch.h"
 
-#include "simulation_kernel/DefaultDetectionComputer.h"
+#include "simulation_kernel/DetectionComputer.h"
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 
 using namespace detection;
 
 // -----------------------------------------------------------------------------
-// Name: DefaultDetectionComputer::DefaultDetectionComputer
+// Name: DetectionComputer::DetectionComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultDetectionComputer::DefaultDetectionComputer( MIL_Agent_ABC& target )
+DetectionComputer::DetectionComputer( MIL_Agent_ABC& target )
     : pTarget_       ( &target )
     , bAlreadySeen_  ( false )
     , bIsStealth_    ( false )
@@ -28,55 +28,55 @@ DefaultDetectionComputer::DefaultDetectionComputer( MIL_Agent_ABC& target )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultDetectionComputer::~DefaultDetectionComputer
+// Name: DetectionComputer::~DetectionComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultDetectionComputer::~DefaultDetectionComputer()
+DetectionComputer::~DetectionComputer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultDetectionComputer::~DefaultDetectionComputer
+// Name: DetectionComputer::~DetectionComputer
 // Created: MGD 2009-09-23
 // -----------------------------------------------------------------------------
-const MIL_Agent_ABC& DefaultDetectionComputer::GetTarget()
+const MIL_Agent_ABC& DetectionComputer::GetTarget()
 {
     return *pTarget_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultDetectionComputer::AlreadyPerceived
+// Name: DetectionComputer::AlreadyPerceived
 // Created: MGD 2009-09-23
 // -----------------------------------------------------------------------------
-void DefaultDetectionComputer::AlreadyPerceived()
+void DetectionComputer::AlreadyPerceived()
 {
     bAlreadySeen_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultDetectionComputer::NotifyStealth
+// Name: DetectionComputer::NotifyStealth
 // Created: MGD 2009-09-23
 // -----------------------------------------------------------------------------
-void DefaultDetectionComputer::NotifyStealth()
+void DetectionComputer::NotifyStealth()
 {
     bIsStealth_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultDetectionComputer::SetUnderground
+// Name: DetectionComputer::SetUnderground
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
-void DefaultDetectionComputer::SetUnderground( bool underground )
+void DetectionComputer::SetUnderground( bool underground )
 {
     bIsUnderground_ = underground;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultDetectionComputer::CanBeSeen
+// Name: DetectionComputer::CanBeSeen
 // Created: MGD 2009-09-23
 // -----------------------------------------------------------------------------
-bool DefaultDetectionComputer::CanBeSeen()
+bool DetectionComputer::CanBeSeen()
 {
     return ( bAlreadySeen_ || ( !bIsUnderground_ && !bIsStealth_ ) );
 }

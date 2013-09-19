@@ -19,7 +19,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include "DefaultDetectionComputer.h"
+#include "DetectionComputer.h"
 #include "MIL_Random.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include <boost/bind.hpp>
@@ -130,7 +130,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
             if( agent.BelongsTo( *perceiver_.GetKnowledgeGroup() ) )
                 continue;
-            detection::DefaultDetectionComputer detectionComputer( agent );
+            detection::DetectionComputer detectionComputer( agent );
             perceiver_.GetPion().Execute( detectionComputer );
             agent.Execute( detectionComputer );
             if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( agent ) )

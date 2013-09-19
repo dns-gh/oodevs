@@ -7,40 +7,52 @@
 //
 // *****************************************************************************
 
-#ifndef __DetectionComputer_ABC_h_
-#define __DetectionComputer_ABC_h_
+#ifndef __DetectionComputer_h_
+#define __DetectionComputer_h_
 
 class MIL_Agent_ABC;
+
 namespace detection
 {
 
 // =============================================================================
-/** @class  DetectionComputer_ABC
-    @brief  DetectionComputer_ABC
+/** @class  DetectionComputer
+    @brief  DetectionComputer
 */
-// Created: MGD 2009-09-22
+// Created: MGD 2009-09-15
 // =============================================================================
-class DetectionComputer_ABC
+class DetectionComputer
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DetectionComputer_ABC() {}
-    virtual ~DetectionComputer_ABC() {}
+    explicit DetectionComputer( MIL_Agent_ABC& target );
+    virtual ~DetectionComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual const MIL_Agent_ABC& GetTarget() = 0;
+    virtual const MIL_Agent_ABC& GetTarget();
 
-    virtual void AlreadyPerceived() = 0;
-    virtual void NotifyStealth() = 0;
-    virtual void SetUnderground( bool underground ) = 0;
+    virtual void AlreadyPerceived();
+    virtual void NotifyStealth();
+    virtual void SetUnderground( bool underground );
 
-    virtual bool CanBeSeen() = 0;
+    virtual bool CanBeSeen();
     //@}
+
+private:
+    //! @name Attribute
+    //@{
+    const MIL_Agent_ABC* pTarget_;
+
+    bool bAlreadySeen_;
+    bool bIsStealth_;
+    bool bIsUnderground_;
+    //@}
+
 };
 
 } // namespace detection
 
-#endif // __DetectionComputer_ABC_h_
+#endif // __DetectionComputer_h_

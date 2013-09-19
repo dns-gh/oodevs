@@ -11,7 +11,7 @@
 #include "PHY_RolePion_Perceiver.h"
 #include "AlgorithmsFactories.h"
 #include "ConsumptionComputer_ABC.h"
-#include "DefaultDetectionComputer.h"
+#include "DetectionComputer.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputer_ABC.h"
@@ -1416,7 +1416,7 @@ const PHY_RolePion_Perceiver::T_RadarMap& PHY_RolePion_Perceiver::GetRadars( con
 // Name: PHY_RolePion_Perceiver::Execute
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) const
+void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer& algorithm ) const
 {
     if( algorithm.GetTarget() != *owner_ && owner_->GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
         algorithm.AlreadyPerceived();

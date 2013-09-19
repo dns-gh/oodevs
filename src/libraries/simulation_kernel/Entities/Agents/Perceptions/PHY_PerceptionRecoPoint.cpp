@@ -19,7 +19,7 @@
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "DefaultDetectionComputer.h"
+#include "DetectionComputer.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_AgentManager.h"
@@ -117,7 +117,7 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*
         for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-            detection::DefaultDetectionComputer detectionComputer( target );
+            detection::DetectionComputer detectionComputer( target );
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
 

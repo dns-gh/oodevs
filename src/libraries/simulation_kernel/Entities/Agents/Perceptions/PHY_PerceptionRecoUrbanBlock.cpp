@@ -18,7 +18,7 @@
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
-#include "DefaultDetectionComputer.h"
+#include "DetectionComputer.h"
 #include "MIL_Random.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
@@ -132,7 +132,7 @@ void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVecto
         for( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-            detection::DefaultDetectionComputer detectionComputer( target );
+            detection::DetectionComputer detectionComputer( target );
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
             if( detectionComputer.CanBeSeen() && ( *itReco )->CanSeeIt() )

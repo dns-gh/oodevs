@@ -16,7 +16,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "DefaultDetectionComputer.h"
+#include "DetectionComputer.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_terrain/TER_World.h"
@@ -205,7 +205,7 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
 
-            detection::DefaultDetectionComputer detectionComputer( target );
+            detection::DetectionComputer detectionComputer( target );
             perceiver_.GetPion().Execute( detectionComputer );
             target.Execute( detectionComputer );
 
