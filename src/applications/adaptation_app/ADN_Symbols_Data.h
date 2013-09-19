@@ -95,7 +95,7 @@ public:
 
     //! @name Accessors
     //@{
-    kernel::SymbolFactory& GetSymbolFactory();
+    const kernel::SymbolFactory& GetSymbolFactory() const;
 
     const T_SymbolsUnits_Vector& GetSymbolsUnits() const;
     const T_SymbolsInfra_Vector& GetSymbolsInfras() const;
