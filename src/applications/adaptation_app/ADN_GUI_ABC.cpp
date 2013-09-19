@@ -14,6 +14,7 @@
 #include "ADN_ListView.h"
 #include "ADN_Tr.h"
 #include <QtGui/qsizepolicy.h>
+#include <boost/scoped_ptr.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GUI_ABC constructor
@@ -47,20 +48,15 @@ namespace
         {
             // NOTHING
         }
-        ~ADN_SmartSplitter()
-        {
-            // $$$$ ABR 2013-09-19: force list view deletion before other children, so signals emitted by list view destruction can be received
-            delete listView_;
-        }
         void AddListView( QWidget* list )
         {
             if( listView_ != 0 )
                 throw MASA_EXCEPTION( "List view already added" );
-            listView_ = list;
-            addWidget( listView_ );
+            listView_.reset( list );
+            addWidget( listView_.get() );
         }
     private:
-        QWidget* listView_;
+        boost::scoped_ptr< QWidget > listView_;
     };
 }
 
