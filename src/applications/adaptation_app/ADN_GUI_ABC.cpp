@@ -44,14 +44,11 @@ namespace
     public:
         ADN_SmartSplitter()
             : QSplitter()
-            , listView_( 0 )
         {
             // NOTHING
         }
         void AddListView( QWidget* list )
         {
-            if( listView_ != 0 )
-                throw MASA_EXCEPTION( "List view already added" );
             listView_.reset( list );
             addWidget( listView_.get() );
         }
