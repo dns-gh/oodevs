@@ -36,6 +36,34 @@ ADN_GUI_ABC::~ADN_GUI_ABC()
     // NOTHING
 }
 
+namespace
+{
+    class ADN_SmartSplitter : public QSplitter
+    {
+    public:
+        ADN_SmartSplitter()
+            : QSplitter()
+            , listView_( 0 )
+        {
+            // NOTHING
+        }
+        ~ADN_SmartSplitter()
+        {
+            // $$$$ ABR 2013-09-19: force list view deletion before other children, so signals emitted by list view destruction can be received
+            delete listView_;
+        }
+        void AddListView( QWidget* list )
+        {
+            if( listView_ != 0 )
+                throw MASA_EXCEPTION( "List view already added" );
+            listView_ = list;
+            addWidget( listView_ );
+        }
+    private:
+        QWidget* listView_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_GUI_ABC::CreateMainWidget
 // Created: ABR 2012-01-20
@@ -61,12 +89,12 @@ QWidget* ADN_GUI_ABC::CreateScrollArea( const char* objectName, QWidget& content
         pMainLayout->addWidget( scrollArea, 1 );
     else
     {
-        QSplitter* splitter = new QSplitter();
+        ADN_SmartSplitter* splitter = new ADN_SmartSplitter();
         pMainLayout->addWidget( splitter, 1 );
         splitter->setOpaqueResize( false );
         if( paintSplitter )
             splitter->setBackgroundColor( Qt::white );
-        splitter->addWidget( list );
+        splitter->AddListView( list );
         splitter->addWidget( scrollArea );
 
         splitter->setCollapsible( list, false );
