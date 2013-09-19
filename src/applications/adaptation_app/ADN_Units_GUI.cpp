@@ -145,6 +145,10 @@ void ADN_Units_GUI::Build()
         pNatureInternalGroupLayout->addWidget( subLayout, 0, 0, 1, 2, Qt::AlignTop );
         pNatureGui_ = builder.AddWidget< ADN_Nature_GUI >( "nature", pNatureInternalGroupLayout, 2 );
         vInfosConnectors[ eNatureNature ] = &pNatureGui_->GetConnector();
+        connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNatureChanged() ) );
+        const kernel::SymbolFactory& factory = ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolFactory();
+        if( factory.GetSymbolRule() )
+            pNatureGui_->SetRootSymbolRule( *factory.GetSymbolRule() );
 
         // Symbol combo
         QWidget* pHolder = builder.AddFieldHolder( natureLayout );
@@ -160,7 +164,6 @@ void ADN_Units_GUI::Build()
         CreateUnitSymbolWidget( builder, "move-symbols"  , pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetMovePixmap,    &ADN_Symbols_Data::SymbolsUnit::GetMoveSymbol   , labelMoveSymbol_  , unitSymbolMoveWidget_ );
         CreateUnitSymbolWidget( builder, "static-symbols", pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetStaticPixmap,  &ADN_Symbols_Data::SymbolsUnit::GetStaticSymbol , labelStaticSymbol_, unitSymbolStaticWidget_ );    
         SetOnlyApp6SymbolVisible();
-        connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNatureChanged() ) );        
     }
 
     // Commandement
@@ -445,26 +448,4 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::
 
     QString strText = "<a href=\"" + tr( "Units/" ) + "index.htm\">" + tr( "Units" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_GUI::SetSymbolFactory
-// Created: ABR 2011-05-26
-// -----------------------------------------------------------------------------
-void ADN_Units_GUI::SetSymbolFactory( kernel::SymbolFactory& factory )
-{
-    if( pNatureGui_ && factory.GetSymbolRule() )
-        pNatureGui_->SetRootSymbolRule( *factory.GetSymbolRule() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_GUI::PreloadUnitSymbolComboBox
-// Created: MMC 2011-07-06
-// -----------------------------------------------------------------------------
-void ADN_Units_GUI::PreloadUnitSymbolComboBox( ADN_Units_Data::UnitInfos* pValidUnitInfos )
-{
-    if( !pListView_ )
-        return;
-    if( ADN_ListView_Units* unitListView = dynamic_cast< ADN_ListView_Units* >( pListView_ ) )
-        unitListView->ConnectNatureSymbol( pValidUnitInfos );
 }

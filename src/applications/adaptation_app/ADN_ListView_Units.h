@@ -27,8 +27,6 @@ public:
     //@{
              ADN_ListView_Units( QWidget* pParent );
     virtual ~ADN_ListView_Units();
-
-    void ConnectNatureSymbol( ADN_Units_Data::UnitInfos* pValidData );
     //@}
 
 private:

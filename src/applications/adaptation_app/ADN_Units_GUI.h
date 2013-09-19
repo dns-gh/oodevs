@@ -112,8 +112,6 @@ public:
     //@{
     void Build();
     void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath );
-    void SetSymbolFactory( kernel::SymbolFactory& factory );
-    void PreloadUnitSymbolComboBox( ADN_Units_Data::UnitInfos* pValidUnitInfos );
     //@}
 
 private slots:

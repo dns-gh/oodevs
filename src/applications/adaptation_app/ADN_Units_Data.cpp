@@ -416,7 +416,7 @@ void ADN_Units_Data::UnitInfos::Initialize()
     for( int i = eUnitPosture_PosturePosteReflexe; i < eNbrUnitPosture; ++i )
         vPostures_.AddItem( new PostureInfos( static_cast< E_UnitPosture >( i ) ) );
 
-    natureSymbol_.SetVector( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsUnits() );
+    ptrNatureSymbol_.SetVector( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsUnits() );
 }
 
 // -----------------------------------------------------------------------------
@@ -559,6 +559,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "level", level )
             >> xml::attribute( "atlas-nature", atlas )
             >> xml::attribute( "nature-app6", strNature_ )
+            >> xml::attribute( "nature-app6", ptrNatureSymbol_ )
             >> xml::optional >> xml::attribute( "depth", footprint_ )
           >> xml::end;
     CleanupNature();
@@ -572,8 +573,6 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
     if( eNatureAtlasType == (E_NatureAtlasType)-1 )
         throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid 'Atlas' attribute '%1'" ).arg( atlas.c_str() ).toStdString() );
     eNatureAtlas_=eNatureAtlasType;
-
-    natureSymbol_.SetVector( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsUnits() );
 
     input >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &ADN_Units_Data::UnitInfos::ReadEquipment )
@@ -874,14 +873,10 @@ void ADN_Units_Data::ReadUnit( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::ReadArchive( xml::xistream& input )
 {
-    ADN_Workspace::GetWorkspace().GetUnits().GetGui().SetSymbolFactory( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolFactory() );
-
     input >> xml::start( "units" )
             >> xml::list( "unit", *this, &ADN_Units_Data::ReadUnit )
           >> xml::end;
     vUnits_.CheckValidity();
-    if( !vUnits_.empty() )
-        ADN_Workspace::GetWorkspace().GetUnits().GetGui().PreloadUnitSymbolComboBox( vUnits_[0] );
 }
 
 // -----------------------------------------------------------------------------

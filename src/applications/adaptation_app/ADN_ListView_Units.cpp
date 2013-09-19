@@ -62,6 +62,7 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::eNatureLevel ]->Connect( &pInfos->eNatureLevel_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eNatureAtlas ]->Connect( &pInfos->eNatureAtlas_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eNatureNature ]->Connect( &pInfos->strNature_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eNatureSymbol ]->Connect( &pInfos->ptrNatureSymbol_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eNbOfficer ]->Connect( &pInfos->nNbOfficer_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eNbNCOfficer ]->Connect( &pInfos->nNbNCOfficer_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::ePostures ]->Connect( &pInfos->vPostures_, bConnect );
@@ -130,15 +131,4 @@ std::string ADN_ListView_Units::GetToolTipFor( const QModelIndex& index )
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str(),
                             ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ListView_Units::ConnectNatureSymbol
-// Created: MMC 2011-07-11
-// -----------------------------------------------------------------------------
-void ADN_ListView_Units::ConnectNatureSymbol( UnitInfos* pValidData )
-{
-    UnitInfos* pInfos = static_cast< UnitInfos* >( pValidData );
-    if( pInfos && ADN_Units_GUI::eNatureSymbol < vItemConnectors_.size() )
-        vItemConnectors_[ ADN_Units_GUI::eNatureSymbol ]->Connect( &pInfos->natureSymbol_, true );
 }
