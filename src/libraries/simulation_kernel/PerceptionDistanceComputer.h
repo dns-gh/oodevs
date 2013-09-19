@@ -7,38 +7,48 @@
 //
 // *****************************************************************************
 
-#ifndef __PerceptionDistanceComputer_ABC_h_
-#define __PerceptionDistanceComputer_ABC_h_
-
-#include "simulation_kernel/OnComponentComputer_ABC.h"
-#include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
-
-class PHY_ComposantePion;
+#ifndef __PerceptionDistanceComputer_h_
+#define __PerceptionDistanceComputer_h_
 
 namespace detection
 {
+
 // =============================================================================
-/** @class  PerceptionDistanceComputer_ABC
-    @brief  Perception distance computer declaration
+/** @class  PerceptionDistanceComputer
+    @brief  PerceptionDistanceComputer
 */
-// Created: MGD 2009-09-15
+// Created: MGD 2009-10-05
 // =============================================================================
-class PerceptionDistanceComputer_ABC
+class PerceptionDistanceComputer
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionDistanceComputer_ABC() {}
-    virtual ~PerceptionDistanceComputer_ABC() {}
+             PerceptionDistanceComputer() : factor_( 1 ) {}
+    virtual ~PerceptionDistanceComputer() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void AddModifier( double modifier ) = 0;
-    virtual double GetFactor() const = 0;
+    void AddModifier( double modifier )
+    {
+        if( modifier != 0 )
+            factor_ *= modifier;
+    }
+
+    double GetFactor() const
+    {
+        return factor_;
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    double factor_;
     //@}
 };
 
 } // namespace detection
 
-#endif // __PerceptionDistanceComputer_ABC_h_
+#endif // __PerceptionDistanceComputer_h_

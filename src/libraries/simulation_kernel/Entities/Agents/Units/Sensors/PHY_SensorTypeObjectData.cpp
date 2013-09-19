@@ -13,7 +13,7 @@
 #include "PHY_SensorTypeObjectData.h"
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
-#include "DefaultPerceptionDistanceComputer.h"
+#include "PerceptionDistanceComputer.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -138,7 +138,7 @@ double PHY_SensorTypeObjectData::GetSourceFactor( const MIL_Agent_ABC& source ) 
                             * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
     MIL_Agent_ABC& tempSource = const_cast< MIL_Agent_ABC& >( source );//@TODO MGD FIND A BETTER WAY
-    detection::DefaultPerceptionDistanceComputer computer;
+    detection::PerceptionDistanceComputer computer;
     rModificator *= tempSource.Execute( computer ).GetFactor();
 
     // Population

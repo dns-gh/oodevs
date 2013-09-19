@@ -22,7 +22,7 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
-#include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
+#include "simulation_kernel/PerceptionDistanceComputer.h"
 #include "MIL_AgentServer.h"
 #include "tools/ExerciseSettings.h"
 #include "protocol/ClientSenders.h"
@@ -474,7 +474,7 @@ void PHY_RolePion_HumanFactors::Execute( posture::PostureComputer_ABC& algorithm
 // Name: PHY_RolePion_HumanFactors::Execute
 // Created: MGD 2009-10-06
 // -----------------------------------------------------------------------------
-void PHY_RolePion_HumanFactors::Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const
+void PHY_RolePion_HumanFactors::Execute( detection::PerceptionDistanceComputer& algorithm ) const
 {
     algorithm.AddModifier( pExperience_->GetCoefSensorDistanceModificator() );
     algorithm.AddModifier( pTiredness_->GetCoefSensorDistanceModificator() );

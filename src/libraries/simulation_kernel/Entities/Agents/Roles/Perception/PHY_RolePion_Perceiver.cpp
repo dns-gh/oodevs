@@ -11,14 +11,13 @@
 #include "PHY_RolePion_Perceiver.h"
 #include "AlgorithmsFactories.h"
 #include "ConsumptionComputer_ABC.h"
-#include "DefaultPerceptionDistanceComputer.h"
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
-#include "PerceptionDistanceComputer_ABC.h"
+#include "PerceptionDistanceComputer.h"
 #include "VisionConeNotificationHandler_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
@@ -641,7 +640,7 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-    detection::DefaultPerceptionDistanceComputer computer;
+    detection::PerceptionDistanceComputer computer;
     return rMaxAgentPerceptionDistance_ * owner_->Execute( computer ).GetFactor();
 }
 
