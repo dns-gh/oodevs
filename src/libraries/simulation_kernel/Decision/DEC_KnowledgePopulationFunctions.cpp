@@ -504,3 +504,35 @@ bool DEC_KnowledgePopulationFunctions::IsFlowKnown( const DEC_Decision_ABC& call
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd
+// Created: NMI 2013-07-25
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_AgentPion& caller,
+        unsigned int knowledgeId, const MT_Vector2D* position )
+{
+    if( !position )
+        throw MASA_EXCEPTION( "invalid parameter." );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( !bbKg )
+        return false;
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+    if( !pKnowledge )
+        return false;
+
+    MIL_Population& population = pKnowledge->GetPopulationKnown();
+    unsigned int dead = population.GetDeadHumans();
+    if( dead > 0 )
+    {
+        population.ChangeComposition( population.GetHealthyHumans(), population.GetWoundedHumans(),  population.GetContaminatedHumans(), 0 );
+        MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( population.GetType().GetName(), *position, dead, population.GetName() + " - dead", population.GetArmy() );
+        if( newPopulation )
+        {
+            newPopulation->ChangeComposition( 0, 0, 0, dead );
+            return true;
+        }
+    }
+    return false;
+}
+

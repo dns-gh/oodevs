@@ -30,8 +30,8 @@ public:
 
     //! @name Functions
     //@{
-    template< typename T > static int MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
-    template< typename T > static int MagicGetOrCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation );
+    static int MagicCreateObject( const MIL_Entity_ABC& caller, const std::string& type, const TER_Localisation* pLocalisation );
+    static int MagicGetOrCreateObject( const MIL_Entity_ABC& caller, const std::string& type, const TER_Localisation* pLocalisation );
     static void MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static void MagicDestroyObjectId( int objectId );
     static bool ActivateObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
@@ -50,13 +50,6 @@ public:
     // Objects
     static std::string ConvertTypeObjectToString( int id );
     //@}
-
-private:
-    static int MagicCreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation );
-    static int MagicGetOrCreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation );
-    
 };
-
-#include "DEC_ObjectFunctions.inl"
 
 #endif // __DEC_ObjectFunctions_h_

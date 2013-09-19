@@ -33,6 +33,7 @@
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionUrbanDestruction.h"
+#include "protocol/ClientSenders.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -208,13 +209,13 @@ void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& brain )
 
     // Debug
     brain.RegisterFunction( "DEC_DebugAffichePoint"  ,
-            boost::function< void ( const MT_Vector2D* ) > (boost::bind(&DEC_MiscFunctions::DebugDrawPoint< MIL_Population >, boost::cref( GetPopulation()) , _1 ) ) );
+            boost::function< void ( const MT_Vector2D* ) > (boost::bind(&DEC_MiscFunctions::DebugDrawPoint, boost::cref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_DebugAffichePoints" ,
-            boost::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind(&DEC_MiscFunctions::DebugDrawPoints< MIL_Population >, boost::cref( GetPopulation()), _1  ) ) );
+            boost::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind(&DEC_MiscFunctions::DebugDrawPoints, boost::cref( GetPopulation() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Debug",
-            boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug< MIL_Population > , boost::cref( GetPopulation()) , "Population" , _1  ) ) );
+            boost::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug, boost::cref( GetPopulation() ) , "Population" , _1  ) ) );
     brain.RegisterFunction( "DEC_Trace",
-        boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace< MIL_Population >, boost::cref( GetPopulation() ), _1 ) ) );
+        boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace, boost::cref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_DecisionalState",
         boost::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_PopulationFunctions::DecisionalState, boost::cref( GetPopulation() ), _1, _2 ) ) );
 

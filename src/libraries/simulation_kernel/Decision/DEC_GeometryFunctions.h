@@ -116,7 +116,10 @@ public:
     static boost::shared_ptr< MT_Vector2D > ComputeDestPointForPion( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion );
     static boost::shared_ptr< MT_Vector2D > ComputeDestPointForFuseau( MIL_Fuseau& fuseau );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeStartPoint( const T& caller );
-    template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const T& caller, MT_Vector2D* pCenter, const std::string& type, double rRadius );
+    static boost::shared_ptr< MT_Vector2D > ComputeObstaclePositionForUnit(
+        const MIL_AgentPion& pion, MT_Vector2D* pCenter, const std::string& type, double rRadius );
+    static boost::shared_ptr< MT_Vector2D > ComputeObstaclePositionForAutomat(
+        const MIL_Automate& automat, MT_Vector2D* pCenter, const std::string& type, double rRadius );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputePointsBeforeLima ( const MIL_Automate& callerAutomate, unsigned int nLimaID, double rDistBeforeLima, unsigned int nNbrPoints );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLima( const T& caller, int phaseLine, float distanceBefore );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaInFuseau( const T& caller, unsigned int limaID, double rDistBeforeLima, const MIL_Fuseau* pFuseau );

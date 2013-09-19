@@ -104,7 +104,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 // -----------------------------------------------------------------------------
 //BOOST_AUTO_TEST_CASE( SerializationTest_SimpleDerivedRole )
 //{
-//    const std::string filename = BOOST_RESOLVE( "output-simple.bin" );
+//    const std::string filename = testOptions.GetDataPath( "output-simple.bin" );
 //    {
 //        tools::Ofstream os( filename.c_str(), std::ios::out );
 //        BOOST_CHECK( os && os.is_open() );
@@ -133,7 +133,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 // -----------------------------------------------------------------------------
 //BOOST_AUTO_TEST_CASE( SerializationTest_MultipleDerivedRoles )
 //{
-//    const std::string filename = BOOST_RESOLVE( "output-multiple.bin" );
+//    const std::string filename = testOptions.GetDataPath( "output-multiple.bin" );
 //    {
 //        tools::Ofstream os( filename.c_str(), std::ios::out );
 //        BOOST_CHECK( os && os.is_open() );
@@ -222,7 +222,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 // -----------------------------------------------------------------------------
 //BOOST_AUTO_TEST_CASE( SerializationTest_NoDefaultConstructor )
 //{
-//    const std::string filename = BOOST_RESOLVE( "output-no-default-constructor.bin" );
+//    const std::string filename = testOptions.GetDataPath( "output-no-default-constructor.bin" );
 //    {
 //        tools::Ofstream os( filename.c_str(), std::ios::out );
 //        BOOST_CHECK( os && os.is_open() );

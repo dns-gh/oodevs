@@ -416,7 +416,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, Objec
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
+    DEC_Model model( "test", xis, testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) );
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType, controller, army );
 
@@ -453,7 +453,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionPerception, ObjectCapac
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
+    DEC_Model model( "test", xis, testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) );
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType, controller, army );
 
@@ -490,7 +490,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionScattering, ObjectCapac
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
+    DEC_Model model( "test", xis, testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) );
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType, controller, army );
 

@@ -2061,3 +2061,46 @@ bool DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuse
         throw MASA_EXCEPTION( "Invalid fuseau" );
     return pFuseau->IsInside( *pPoint );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeObstaclePosition
+// Created: NLD 2003-09-18
+// Modified RPD 2009-08-06
+// -----------------------------------------------------------------------------
+namespace
+{
+
+boost::shared_ptr< MT_Vector2D > ComputeObstaclePosition( const MIL_Fuseau& fuseau,
+        MT_Vector2D* pCenter, const std::string& type, double rRadius )
+{
+    if( !pCenter )
+        throw MASA_EXCEPTION( "Compute obstacle position with null center" );
+    boost::shared_ptr< MT_Vector2D > pResultPos ( new MT_Vector2D( *pCenter ) );
+
+    const MIL_ObjectType_ABC& object = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type );
+    const TerrainHeuristicCapacity* pCapacity = object.GetCapacity< TerrainHeuristicCapacity >();
+    if ( pCapacity )
+    {
+        sBestNodeForObstacle  costEvaluationFunctor( fuseau, *pCapacity, *pCenter, rRadius );
+        TER_World::GetWorld().GetAnalyzerManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );        
+        if( costEvaluationFunctor.FoundAPoint() )
+            pResultPos.reset( new MT_Vector2D( costEvaluationFunctor.BestPosition() ) );
+    }
+    return pResultPos;
+}
+
+} // namespace
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePositionForUnit(
+    const MIL_AgentPion& pion, MT_Vector2D* pCenter, const std::string& type, double rRadius )
+{
+    return ::ComputeObstaclePosition( pion.GetOrderManager().GetFuseau(), pCenter,
+            type, rRadius );
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePositionForAutomat(
+    const MIL_Automate& automat, MT_Vector2D* pCenter, const std::string& type, double rRadius )
+{
+    return ::ComputeObstaclePosition( automat.GetOrderManager().GetFuseau(), pCenter,
+            type, rRadius );
+}

@@ -15,7 +15,7 @@ public:
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-        model_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) ) );
+        model_.reset( new DEC_Model( "test", xis, testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) ) );
         SetModel( *model_ );
     }
     virtual ~StubDEC_Decision() {}

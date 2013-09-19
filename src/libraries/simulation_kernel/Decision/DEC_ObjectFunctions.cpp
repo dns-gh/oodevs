@@ -14,9 +14,10 @@
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Entities/MIL_EntityManager_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
@@ -25,6 +26,38 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
+
+namespace
+{
+
+
+int MagicCreateObjectInArmy( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation )
+{
+        //$$$ A réencapsuler    
+    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &army, type, &localisation, sword::ObstacleType_DemolitionTargetType_preliminary );
+    if( !object )
+        return 0;
+    return object->GetID();
+}
+    
+int MagicGetOrCreateObjectInArmy( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation )
+{
+    std::vector< TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( localisation.ComputeBarycenter(), 1., objects );
+    for( auto it = objects.begin(); it != objects.end(); ++it )
+    {
+        const TER_Object_ABC* object = *it;
+        if( object && object->GetLocalisation() == localisation )
+        {
+            const MIL_Object_ABC* obj = dynamic_cast< const MIL_Object_ABC* >( object );
+            if( obj && obj->GetType().GetName() == type && obj->GetArmy() == &army )
+                return obj->GetID();
+        }
+    }
+    return MagicCreateObjectInArmy( army, type, localisation );
+}
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::GetGenObjectType
@@ -212,35 +245,25 @@ boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObject(
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::MagicCreateObject
-// Created: LDC 2013-02-11
+// Name: template< typename T > static void DEC_ObjectFunctions::MagicCreateObject
+// Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-int DEC_ObjectFunctions::MagicCreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation )
+int DEC_ObjectFunctions::MagicCreateObject( const MIL_Entity_ABC& caller,
+        const std::string& type, const TER_Localisation* pLocalisation )
 {
-        //$$$ A réencapsuler    
-    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &army, type, &localisation, sword::ObstacleType_DemolitionTargetType_preliminary );
-    if( !object )
+    if( !pLocalisation )
         return 0;
-    return object->GetID();
+    return MagicCreateObjectInArmy( caller.GetArmy(), type, *pLocalisation );
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::MagicGetOrCreateObject
+// Name: template< typename T > static int DEC_ObjectFunctions::MagicGetOrCreateObject
 // Created: LDC 2013-02-11
 // -----------------------------------------------------------------------------
-int DEC_ObjectFunctions::MagicGetOrCreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation )
+int DEC_ObjectFunctions::MagicGetOrCreateObject( const MIL_Entity_ABC& caller,
+        const std::string& type, const TER_Localisation* pLocalisation )
 {
-    std::vector< TER_Object_ABC* > objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( localisation.ComputeBarycenter(), 1., objects );
-    for( auto it = objects.begin(); it != objects.end(); ++it )
-    {
-        const TER_Object_ABC* object = *it;
-        if( object && object->GetLocalisation() == localisation )
-        {
-            const MIL_Object_ABC* obj = dynamic_cast< const MIL_Object_ABC* >( object );
-            if( obj && obj->GetType().GetName() == type && obj->GetArmy() == &army )
-                return obj->GetID();
-        }
-    }
-    return DEC_ObjectFunctions::MagicCreateObject( army, type, localisation );
+    if( !pLocalisation )
+        return 0;
+    return MagicGetOrCreateObjectInArmy( caller.GetArmy(), type, *pLocalisation );
 }

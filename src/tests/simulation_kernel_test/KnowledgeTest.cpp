@@ -363,7 +363,7 @@ namespace
             : blackBoardGroup1( group1->GetKnowledge()->GetKnowledgePopulationContainer() )
             , blackBoardGroup2( group2->GetKnowledge()->GetKnowledgePopulationContainer() )
             , xis( "<main dia-type='PionTest' file='PionTest.bms'/>" )
-            , model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) )
+            , model( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) )
             , type( model )
         {
             WorldInitialize( "worldwide/tests/EmptyParis-ML" );
@@ -388,7 +388,7 @@ namespace
         MOCK_EXPECT( agent.BelongsTo ).returns( true );
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-        DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
+        DEC_Model model( "test", xis >> xml::start( "main" ), testOptions.GetDataPath( "." ), missionTypes, false, testOptions.GetDataPath( "resources" ) );
         StubMIL_AgentTypePion type( model );
         MOCK_EXPECT( agent.GetType ).returns( boost::cref( type ) );
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( *group, agent, relevance ) );
