@@ -57,7 +57,7 @@ signals:
     void textChanged( const QString& );
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
     QGridLayout*           layout_;
