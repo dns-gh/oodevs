@@ -85,7 +85,7 @@ void ADN_Missions_ABC::Initialize()
     if( type_ != eMissionType_FragOrder )
         context += "-missions";
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
-    boost::shared_ptr< kernel::Context > missionSheetContext = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetContext();
+    boost::shared_ptr< kernel::Context > missionSheetContext = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetContext( type_ );
     missionSheetPath_.SetContext( missionSheetContext );
     descriptionContext_.SetContext( missionSheetContext );
     descriptionBehavior_.SetContext( missionSheetContext );

@@ -30,7 +30,7 @@ ADN_Missions_Parameter::ADN_Missions_Parameter(E_MissionType type)
     if( type != eMissionType_FragOrder )
         context += "-missions";
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context + "-parameters" ) );
-    description_.SetContext( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetContext() );
+    description_.SetContext( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetContext( missionType_ ) );
     FillChoices();
 }
 
