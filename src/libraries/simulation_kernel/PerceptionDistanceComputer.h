@@ -10,6 +10,8 @@
 #ifndef __PerceptionDistanceComputer_h_
 #define __PerceptionDistanceComputer_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace detection
 {
 
@@ -19,7 +21,7 @@ namespace detection
 */
 // Created: MGD 2009-10-05
 // =============================================================================
-class PerceptionDistanceComputer
+class PerceptionDistanceComputer: boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

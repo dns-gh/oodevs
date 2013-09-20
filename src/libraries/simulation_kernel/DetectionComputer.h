@@ -10,6 +10,8 @@
 #ifndef __DetectionComputer_h_
 #define __DetectionComputer_h_
 
+#include <boost/noncopyable.hpp>
+
 class MIL_Agent_ABC;
 
 namespace detection
@@ -21,7 +23,7 @@ namespace detection
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class DetectionComputer
+class DetectionComputer: boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
