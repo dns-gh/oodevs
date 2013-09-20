@@ -55,8 +55,7 @@ public:
 
     //! @name Statistics
     //@{
-    unsigned long GetReceivedAmount() const;
-    unsigned long GetSentAmount() const;
+    size_t GetSentAmount() const;
     //@}
 
 private:

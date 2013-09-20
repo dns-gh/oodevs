@@ -117,19 +117,10 @@ CommandHandler& Network::GetCommands()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Network::GetReceivedAmount
-// Created: SBO 2007-01-04
-// -----------------------------------------------------------------------------
-unsigned long Network::GetReceivedAmount() const
-{
-    return 0; // $$$$ AGE 2007-09-06:
-}
-
-// -----------------------------------------------------------------------------
 // Name: Network::GetSentAmount
 // Created: SBO 2007-01-04
 // -----------------------------------------------------------------------------
-unsigned long Network::GetSentAmount() const
+size_t Network::GetSentAmount() const
 {
     return 0; // $$$$ AGE 2007-09-06:
 }

@@ -22,6 +22,42 @@
 
 using namespace tools;
 
+namespace
+{
+
+struct CommitStatistics : public MessageCallback_ABC, boost::noncopyable
+{
+    CommitStatistics( MessageCallback_ABC& wrapped )
+        : wrapped_( wrapped )
+        , messages_( 0 )
+        , messagesSize_( 0 )
+    {
+    }
+
+    virtual void OnError( const std::string& endpoint, const std::string& error )
+    {
+        wrapped_.OnError( endpoint, error );
+    }
+
+    virtual void OnWarning( const std::string& endpoint, const std::string& warning )
+    {
+        wrapped_.OnWarning( endpoint, warning );
+    }
+
+    virtual void OnMessage( const std::string& endpoint, Message& message )
+    {
+        wrapped_.OnMessage( endpoint, message );
+        messages_++;
+        messagesSize_ += message.Size();
+    }
+
+    MessageCallback_ABC& wrapped_;
+    unsigned long messages_;
+    size_t messagesSize_;
+};
+
+}  // namespace
+
 // -----------------------------------------------------------------------------
 // Name: ClientNetworker constructor
 // Created: NLD 2006-09-20
@@ -36,6 +72,8 @@ ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry
     , quit_            ( new WaitEvent() )
     , retry_           ( retry )
     , thread_          ( boost::bind( &ClientNetworker::Run, this ) )
+    , inBytes_         ( 0 )
+    , inMessages_      ( 0 )
 {
     messageService_->RegisterErrorCallback( boost::bind( &ClientNetworker::ConnectionError, this, _1, _2 ) );
     messageService_->RegisterWarningCallback( boost::bind( &ClientNetworker::ConnectionWarning, this, _1, _2 ) );
@@ -90,7 +128,10 @@ void ClientNetworker::Disconnect()
 void ClientNetworker::Update()
 {
     connectionBuffer_->Commit( *this );
-    messageBuffer_->Commit( *messageService_ );
+    CommitStatistics stats( *messageService_ );
+    messageBuffer_->Commit( stats );
+    inMessages_ += stats.messages_;
+    inBytes_ += stats.messagesSize_;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +220,12 @@ ObjectMessageCallback_ABC* ClientNetworker::Retrieve( unsigned long id )
 // -----------------------------------------------------------------------------
 unsigned long ClientNetworker::GetNbMessagesReceived() const
 {
-    return messageService_->GetNbMessagesReceived();
+    return inMessages_;
+}
+
+size_t ClientNetworker::GetReceivedAmount() const
+{
+    return inBytes_;
 }
 
 // -----------------------------------------------------------------------------

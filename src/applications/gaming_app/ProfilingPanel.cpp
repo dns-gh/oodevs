@@ -91,11 +91,12 @@ ProfilingPanel::~ProfilingPanel()
 
 namespace
 {
-    QString ToUSI( unsigned long bytes )
+    QString ToUSI( size_t bytes )
     {
         static const char* units[] = { "B", "KiB", "MiB", "GiB" };
+        static const int unitsCount = sizeof( units ) / sizeof( *units );
         unsigned int i = 0;
-        while( bytes >> 10 > 0 && i < 4 )
+        while( bytes >> 10 > 0 && i < unitsCount - 1 )
         {
             bytes /= 1024;
             ++i;
@@ -114,16 +115,18 @@ void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& )
 {
     ++ticks_;
     {
-        unsigned long bytesReceived = network_.GetReceivedAmount();
+        const size_t bytesReceived = network_.GetReceivedAmount();
         networkTotalBytesReceived_->setText( ToUSI( bytesReceived ) + " - " + ToUSI( bytesReceived / ticks_ ) + "/tick" );
-        networkBytesReceived_->AddValue( ticks_, bytesReceived - previousTotalBytesReceived_ );
+        networkBytesReceived_->AddValue( ticks_,
+                static_cast< unsigned long >( bytesReceived - previousTotalBytesReceived_ ));
         previousTotalBytesReceived_ = bytesReceived;
     }
 
     {
-        unsigned long bytesSent = network_.GetSentAmount();
+        const size_t bytesSent = network_.GetSentAmount();
         networkTotalBytesSent_->setText( ToUSI( bytesSent ) + " - " + ToUSI( bytesSent / ticks_ ) + "/tick" );
-        networkBytesSent_->AddValue( ticks_, bytesSent - previousTotalBytesSent_ );
+        networkBytesSent_->AddValue( ticks_,
+                static_cast< unsigned long >( bytesSent - previousTotalBytesSent_ ));
         previousTotalBytesSent_ = bytesSent;
     }
 
