@@ -20,8 +20,6 @@ Profiling::Profiling()
     , tickSum_( 0 )
     , memory_( 0 )
     , virtualMemory_( 0 )
-    , shortPathfinds_( 0 )
-    , longPathfinds_( 0 )
     , actualTickDuration_( 10 )
 {
     // NOTHING
@@ -56,8 +54,6 @@ void Profiling::Update( const sword::ControlEndTick& message )
 {
     memory_ = message.memory();
     virtualMemory_ = message.virtual_memory();
-    shortPathfinds_ = message.short_pathfinds();
-    longPathfinds_ = message.long_pathfinds();
 }
 
 namespace
@@ -134,22 +130,4 @@ unsigned long Profiling::GetMemory() const
 unsigned long Profiling::GetVirtualMemory() const
 {
     return virtualMemory_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profiling::GetShortPathfinds
-// Created: SBO 2007-06-19
-// -----------------------------------------------------------------------------
-unsigned long Profiling::GetShortPathfinds() const
-{
-    return shortPathfinds_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profiling::GetLongPathfinds
-// Created: SBO 2007-06-19
-// -----------------------------------------------------------------------------
-unsigned long Profiling::GetLongPathfinds() const
-{
-    return longPathfinds_;
 }

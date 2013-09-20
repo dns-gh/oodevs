@@ -2651,22 +2651,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Mémoire</translation>
     </message>
     <message>
-        <source>Shorts: </source>
-        <translation>Courts: </translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Longs: </source>
-        <translation>Longs: </translation>
-    </message>
-    <message>
-        <source>Pathfinds</source>
-        <translation>Calculs d&apos;itinéraires</translation>
-    </message>
-    <message>
         <source>Incoming bytes: </source>
         <translation>Octets entrants: </translation>
     </message>

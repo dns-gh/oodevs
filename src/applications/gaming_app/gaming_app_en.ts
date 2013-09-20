@@ -2660,22 +2660,6 @@ This data can&apos;t be projected.</source>
         <translation>Memory</translation>
     </message>
     <message>
-        <source>Shorts: </source>
-        <translation>Shorts: </translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation>Count</translation>
-    </message>
-    <message>
-        <source>Longs: </source>
-        <translation>Longs: </translation>
-    </message>
-    <message>
-        <source>Pathfinds</source>
-        <translation>Pathfinds</translation>
-    </message>
-    <message>
         <source>Profiling</source>
         <translation>Profiling</translation>
     </message>

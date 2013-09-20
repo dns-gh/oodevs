@@ -2662,22 +2662,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">الذاكرة</translation>
     </message>
     <message>
-        <source>Shorts: </source>
-        <translation type="unfinished">سراويل داخلية:</translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation type="unfinished">العد</translation>
-    </message>
-    <message>
-        <source>Longs: </source>
-        <translation type="unfinished">الميزة:</translation>
-    </message>
-    <message>
-        <source>Pathfinds</source>
-        <translation type="unfinished">باثفيندس</translation>
-    </message>
-    <message>
         <source>Profiling</source>
         <translation type="unfinished">التنميط</translation>
     </message>

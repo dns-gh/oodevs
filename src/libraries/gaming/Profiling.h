@@ -45,8 +45,6 @@ public:
     float ActualTickDuration() const;
     unsigned long GetMemory() const;
     unsigned long GetVirtualMemory() const;
-    unsigned long GetShortPathfinds() const;
-    unsigned long GetLongPathfinds() const;
     //@}
 
 private:
@@ -76,8 +74,6 @@ private:
 
     unsigned long memory_;
     unsigned long virtualMemory_;
-    unsigned long shortPathfinds_;
-    unsigned long longPathfinds_;
     float actualTickDuration_;
     //@}
 };

@@ -2663,22 +2663,6 @@ This data can&apos;t be projected.</source>
         <source>Memory</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Shorts: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Longs: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pathfinds</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Properties</name>
