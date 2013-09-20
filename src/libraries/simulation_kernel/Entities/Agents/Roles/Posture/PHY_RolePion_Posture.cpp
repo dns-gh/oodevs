@@ -18,7 +18,7 @@
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/PostureComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
-#include "simulation_kernel/DetectionComputer_ABC.h"
+#include "simulation_kernel/DetectionComputer.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
@@ -451,7 +451,7 @@ void PHY_RolePion_Posture::Execute( dotation::ConsumptionComputer_ABC& algorithm
 // Name: PHY_RolePion_Posture::Execute
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::Execute( detection::DetectionComputer_ABC& algorithm ) const
+void PHY_RolePion_Posture::Execute( detection::DetectionComputer& algorithm ) const
 {
     if( bIsStealth_ && algorithm.GetTarget() == owner_ )
         algorithm.NotifyStealth();

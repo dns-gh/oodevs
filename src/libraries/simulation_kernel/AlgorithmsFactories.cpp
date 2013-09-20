@@ -15,7 +15,6 @@
 #include "simulation_kernel/PostureComputerFactory.h"
 #include "simulation_kernel/ConsumptionComputerFactory.h"
 #include "simulation_kernel/MoveComputerFactory.h"
-#include "simulation_kernel/DetectionComputerFactory.h"
 #include "simulation_kernel/TransportCapacityComputerFactory.h"
 #include "simulation_kernel/HealComputerFactory.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
@@ -39,7 +38,6 @@ AlgorithmsFactories::AlgorithmsFactories()
     , postureComputerFactory_                 ( new posture::PostureComputerFactory() )
     , consumptionComputerFactory_             ( new dotation::ConsumptionComputerFactory() )
     , moveComputerFactory_                    ( new moving::MoveComputerFactory() )
-    , detectionComputerFactory_               ( new detection::DetectionComputerFactory() )
     , transportComputerFactory_               ( new transport::TransportComputerFactory() )
     , healComputerFactory_                    ( new human::HealComputerFactory() )
     , onComponentFunctorComputerFactory_      ( new OnComponentFunctorComputerFactory() )

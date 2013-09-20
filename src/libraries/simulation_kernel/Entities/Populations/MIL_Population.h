@@ -14,6 +14,7 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include <tools/Set.h>
+#include <boost/scoped_ptr.hpp>
 
 namespace sword
 {
@@ -252,7 +253,7 @@ private:
     T_ConcentrationVector                       trashedConcentrations_;
     T_FlowVector                                trashedFlows_;
     DEC_PopulationKnowledge*                    pKnowledge_;
-    std::auto_ptr< MIL_PopulationOrderManager > orderManager_;
+    boost::scoped_ptr< MIL_PopulationOrderManager > orderManager_;
     boost::shared_ptr< MT_Vector2D >            vBarycenter_;
     // Pion effects
     double                                      rOverloadedPionMaxSpeed_;
@@ -264,8 +265,8 @@ private:
     bool                                        armedIndividualsChanged_;
     bool                                        isDamagingUrbanBlock_;
     bool                                        isDemonstrating_;
-    std::auto_ptr< MIL_AffinitiesMap >          pAffinities_;
-    std::auto_ptr< MIL_DictionaryExtensions >   pExtensions_;
+    boost::scoped_ptr< MIL_AffinitiesMap >      pAffinities_;
+    boost::scoped_ptr< MIL_DictionaryExtensions > pExtensions_;
     double                                      urbanBlockAngriness_;
     tools::Set< MIL_Agent_ABC* >                hidden_;
     //@}

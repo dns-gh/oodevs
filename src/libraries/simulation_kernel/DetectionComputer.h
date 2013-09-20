@@ -7,27 +7,29 @@
 //
 // *****************************************************************************
 
-#ifndef __DefaultDetectionComputer_h_
-#define __DefaultDetectionComputer_h_
+#ifndef __DetectionComputer_h_
+#define __DetectionComputer_h_
 
-#include "simulation_kernel/DetectionComputer_ABC.h"
+#include <boost/noncopyable.hpp>
+
+class MIL_Agent_ABC;
 
 namespace detection
 {
 
 // =============================================================================
-/** @class  DefaultDetectionComputer
-    @brief  DefaultDetectionComputer
+/** @class  DetectionComputer
+    @brief  DetectionComputer
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class DefaultDetectionComputer : public DetectionComputer_ABC
+class DetectionComputer: boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DefaultDetectionComputer( MIL_Agent_ABC& target );
-    virtual ~DefaultDetectionComputer();
+    explicit DetectionComputer( MIL_Agent_ABC& target );
+    virtual ~DetectionComputer();
     //@}
 
     //! @name Operations
@@ -55,4 +57,4 @@ private:
 
 } // namespace detection
 
-#endif // __DefaultDetectionComputer_h_
+#endif // __DetectionComputer_h_

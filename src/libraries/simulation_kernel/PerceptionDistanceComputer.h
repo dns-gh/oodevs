@@ -7,33 +7,41 @@
 //
 // *****************************************************************************
 
-#ifndef __DefaultPerceptionDistanceComputer_h_
-#define __DefaultPerceptionDistanceComputer_h_
+#ifndef __PerceptionDistanceComputer_h_
+#define __PerceptionDistanceComputer_h_
 
-#include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace detection
 {
 
 // =============================================================================
-/** @class  DefaultPerceptionDistanceComputer
-    @brief  DefaultPerceptionDistanceComputer
+/** @class  PerceptionDistanceComputer
+    @brief  PerceptionDistanceComputer
 */
 // Created: MGD 2009-10-05
 // =============================================================================
-class DefaultPerceptionDistanceComputer : public PerceptionDistanceComputer_ABC
+class PerceptionDistanceComputer: boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultPerceptionDistanceComputer();
-    virtual ~DefaultPerceptionDistanceComputer();
+             PerceptionDistanceComputer() : factor_( 1 ) {}
+    virtual ~PerceptionDistanceComputer() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void AddModifier( double modifier );
-    virtual double GetFactor() const;
+    void AddModifier( double modifier )
+    {
+        if( modifier != 0 )
+            factor_ *= modifier;
+    }
+
+    double GetFactor() const
+    {
+        return factor_;
+    }
     //@}
 
 private:
@@ -45,4 +53,4 @@ private:
 
 } // namespace detection
 
-#endif // __DefaultPerceptionDistanceComputer_h_
+#endif // __PerceptionDistanceComputer_h_

@@ -11,13 +11,12 @@
 #include "PHY_RolePion_Perceiver.h"
 #include "AlgorithmsFactories.h"
 #include "ConsumptionComputer_ABC.h"
-#include "DetectionComputer_ABC.h"
-#include "DetectionComputerFactory_ABC.h"
+#include "DetectionComputer.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
-#include "PerceptionDistanceComputer_ABC.h"
+#include "PerceptionDistanceComputer.h"
 #include "VisionConeNotificationHandler_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
@@ -640,8 +639,8 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return rMaxAgentPerceptionDistance_ * owner_->Execute( *computer ).GetFactor();
+    detection::PerceptionDistanceComputer computer;
+    return rMaxAgentPerceptionDistance_ * owner_->Execute( computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
@@ -955,7 +954,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         owner_->InteractWithTraffic( perceivableAgents );
 
         for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
-            (**it).Execute( perceivableAgents, *owner_->GetAlgorithms().detectionComputerFactory_ );
+            (**it).Execute( perceivableAgents );
 
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( position, maxPerceptionDistance, perceivableObjects );
         for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
@@ -1258,7 +1257,6 @@ void PHY_RolePion_Perceiver::SendVisionCones() const
 {
     client::UnitVisionCones message;
     message().mutable_unit()->set_id( owner_->GetID() );
-    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
     // Elongation factor is deprecated, its value was 1.0 for relevant cases
     message().set_elongation( 1.0 );
     message().mutable_cones();
@@ -1418,7 +1416,7 @@ const PHY_RolePion_Perceiver::T_RadarMap& PHY_RolePion_Perceiver::GetRadars( con
 // Name: PHY_RolePion_Perceiver::Execute
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) const
+void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer& algorithm ) const
 {
     if( algorithm.GetTarget() != *owner_ && owner_->GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
         algorithm.AlreadyPerceived();

@@ -30,7 +30,7 @@ namespace dotation
 
 namespace detection
 {
-    class DetectionComputer_ABC;
+    class DetectionComputer;
 }
 
 namespace urbanLocation
@@ -44,7 +44,7 @@ namespace urbanLocation
 // =============================================================================
 class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
-                           , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
+                           , public tools::AlgorithmModifier_ABC< detection::DetectionComputer >
                            , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
                            , public network::NetworkUnitAttributesMessageSender_ABC
                            , public location::LocationActionNotificationHandler_ABC
@@ -69,7 +69,7 @@ public:
     void Clean();
 
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
-    virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
+    virtual void Execute( detection::DetectionComputer& algorithm ) const;
     virtual void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
 
     // Override automatic postures

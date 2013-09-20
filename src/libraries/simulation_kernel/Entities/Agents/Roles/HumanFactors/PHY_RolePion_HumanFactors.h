@@ -41,7 +41,7 @@ namespace moving
 }
 namespace detection
 {
-    class PerceptionDistanceComputer_ABC;
+    class PerceptionDistanceComputer;
 }
 
 // =============================================================================
@@ -52,7 +52,7 @@ class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
                                 , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                                 , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
                                 , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
-                                , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
+                                , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer >
                                 , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
@@ -74,7 +74,7 @@ public:
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
-    virtual void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
+    virtual void Execute( detection::PerceptionDistanceComputer& algorithm ) const;
     //@}
 
     //! @name Main
