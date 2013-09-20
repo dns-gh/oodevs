@@ -189,7 +189,7 @@ public:
     typedef ADN_Type_Vector_ABC< UrbanEffectInfos > T_UrbanEffectInfosVector;
 
 // *****************************************************************************
-    class CrowdsInfos : public ADN_RefWithName
+    class CrowdsInfos : public ADN_RefWithLocalizedName
     {
     public:
                  CrowdsInfos();
@@ -204,7 +204,7 @@ public:
         void ReadFireEffect( xml::xistream& input );
         void ReadUrbanEffect( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-        using ADN_RefWithName::CheckValidity;
+        using ADN_RefWithLocalizedName::CheckValidity;
         virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
 
     public:

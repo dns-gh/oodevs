@@ -63,7 +63,7 @@ public:
     typedef ADN_Type_Vector_ABC< InhabitantsInfosConsumption > T_InhabitantsInfosConsumptionVector;
 
 // *****************************************************************************
-    class InhabitantsInfos : public ADN_RefWithName
+    class InhabitantsInfos : public ADN_RefWithLocalizedName
     {
     public:
         InhabitantsInfos();

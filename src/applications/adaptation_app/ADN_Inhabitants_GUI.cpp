@@ -54,8 +54,7 @@ void ADN_Inhabitants_GUI::Build()
 
     // Population parameters
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->ConnectWithRefValidity( data_.GetInhabitants() );
+    builder.AddLocalizedField( data_.GetInhabitants(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eCrowds );
     goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "associated-crowd", tr( "Associated Crowd" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "angry-crowd-misison", tr( "Angry crowd mission" ), vInfosConnectors[ eAngryCrowdMission ] );
