@@ -1026,7 +1026,7 @@ bool DEC_AgentFunctions::IsInhabitantsEvacuated( const TER_Localisation* locatio
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsInstalled( const MIL_Agent_ABC& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled();
+    return callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsDeployed();
 }
 
 // -----------------------------------------------------------------------------
@@ -1035,7 +1035,7 @@ bool DEC_AgentFunctions::IsInstalled( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsUninstalled( const MIL_Agent_ABC& callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Posture >().IsUninstalled();
+    return callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
 }
 
 // -----------------------------------------------------------------------------
@@ -1044,7 +1044,7 @@ bool DEC_AgentFunctions::IsUninstalled( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::Install( MIL_Agent_ABC& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Posture >().Install();
+    callerAgent.GetRole< PHY_RoleInterface_Deployment >().StartDeploy();
 }
 
 // -----------------------------------------------------------------------------

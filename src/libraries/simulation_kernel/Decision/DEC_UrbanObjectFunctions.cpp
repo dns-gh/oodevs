@@ -17,7 +17,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -195,7 +195,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
 
     // Add bonus if the pion is posted in this urbanbloc
     const MIL_UrbanObject_ABC* urbanBlock = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    if( pUrbanObject && urbanBlock && pUrbanObject == urbanBlock && callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() )  // $$$$ _RC_ LGY 2011-02-24: == sur les ID
+    if( pUrbanObject && urbanBlock && pUrbanObject == urbanBlock && callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsDeployed() )  // $$$$ _RC_ LGY 2011-02-24: == sur les ID
         rRapForValue *= 1.2;
     rRapForValue = std::max( 0.2, std::min( 5., rRapForValue ) );
     return static_cast< float >( rRapForValue );

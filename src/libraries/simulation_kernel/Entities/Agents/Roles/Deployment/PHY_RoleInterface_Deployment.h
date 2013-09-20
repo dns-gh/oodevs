@@ -39,6 +39,8 @@ public:
 
     //! @name Deployment
     //@{
+    /** StartDeploy does the same as Deploy but must be called every tick. When it's no longer called, it leads to Undeploy. */
+    virtual void StartDeploy() = 0;
     virtual void Deploy() = 0;
     virtual void Undeploy() = 0;
     virtual bool IsDeployed() const = 0;

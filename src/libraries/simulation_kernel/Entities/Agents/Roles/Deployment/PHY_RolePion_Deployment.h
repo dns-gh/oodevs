@@ -12,6 +12,7 @@
 
 #include "MIL.h"
 #include "PHY_RoleInterface_Deployment.h"
+#include "NetworkUnitAttributesMessageSender_ABC.h"
 
 class MIL_Agent_ABC;
 
@@ -22,6 +23,7 @@ class MIL_Agent_ABC;
 // Created: ABR 2011-12-15
 // =============================================================================
 class PHY_RolePion_Deployment : public PHY_RoleInterface_Deployment
+                              , public network::NetworkUnitAttributesMessageSender_ABC
 {
 
 public:
@@ -41,21 +43,22 @@ public:
     //! @name Operations
     //@{
     virtual void Update( bool bIsDead );
-    //@}
-
-    //! @name Deployment
-    //@{
+    virtual void StartDeploy();
     virtual void Deploy();
     virtual void Undeploy();
     virtual bool IsDeployed() const;
     virtual bool IsUndeployed() const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState( client::UnitAttributes& msg ) const;
     //@}
 
 private:
     //! @name Type
     //@{
-    enum E_DeploymentState { eDeployed, eUndeployed, eDeploying, eUndeploying };
+    enum E_DeploymentState { eDeployed, eUndeployed, eDeploying, eUndeploying, eStartDeploying };
     //@}
+
+    bool UpdateDeploymentValue();
 
     //! @name Serialization
     //@{
@@ -65,11 +68,12 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_Agent_ABC& owner_;
-    E_DeploymentState    eDeploymentState_;
-    double               rDeploymentValue_;
-    double               rDeploymentGap_;
-    double               rUndeploymentGap_;
+    MIL_Agent_ABC& owner_;
+    E_DeploymentState eDeploymentState_;
+    double rDeploymentValue_;
+    double rDeploymentGap_;
+    double rUndeploymentGap_;
+    bool bInstallationStateHasChanged_;
     //@}
 };
 
