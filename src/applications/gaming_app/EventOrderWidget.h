@@ -178,8 +178,8 @@ private:
     E_MissionType currentEntityType_;
     bool missionChoosed_;
 
-    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
-    kernel::SafePointer< kernel::Entity_ABC > target_;
+    const kernel::Entity_ABC* selectedEntity_;
+    const kernel::Entity_ABC* target_;
 
     const kernel::OrderType* lastGivenOrder_;
     bool planningMode_;
