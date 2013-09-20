@@ -134,7 +134,7 @@ int ADN_App::Run()
             ADN_Workspace::GetWorkspace().Initialize();
             if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( newFile ) )
                 return EXIT_FAILURE;
-            ADN_Workspace::GetWorkspace().New( newFile );
+            ADN_Workspace::GetWorkspace().New( newFile, false );
             ADN_Workspace::GetWorkspace().SaveAs( newFile );
             return EXIT_SUCCESS;
         }
@@ -143,7 +143,7 @@ int ADN_App::Run()
             if( outputFile.IsEmpty() )
                 mainWindow_.showMaximized();
             ADN_Workspace::GetWorkspace().Initialize();
-            ADN_Workspace::GetWorkspace().Load( inputFile );
+            ADN_Workspace::GetWorkspace().Load( inputFile, outputFile.IsEmpty() );
         }
         if( !outputFile.IsEmpty() )
         {

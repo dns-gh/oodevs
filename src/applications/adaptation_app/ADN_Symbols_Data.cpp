@@ -243,6 +243,26 @@ void ADN_Symbols_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Symbols_Data::ReadAndCopyArchive
+// Created: ABR 2013-09-20
+// -----------------------------------------------------------------------------
+void ADN_Symbols_Data::ReadAndCopyArchive( xml::xistream& xis )
+{
+    xibs_.reset( new xml::xibufferstream( xis ) );
+    ReadArchive( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Symbols_Data::WriteArchive
+// Created: ABR 2013-09-20
+// -----------------------------------------------------------------------------
+void ADN_Symbols_Data::WriteArchive( xml::xostream& xos )
+{
+    if( xibs_.get() )
+        xos << *xibs_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Symbols_Data::ReadArchive
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
@@ -254,10 +274,8 @@ void ADN_Symbols_Data::ReadArchive( xml::xistream& xis )
     // Units
     const std::string strUndefined = "undefined";
     units_.AddItem( new SymbolsUnit( strUndefined, *factory_, *glSymbols_ ) );
-   
 
     // To move to ADN_APP
-
     const std::vector< std::string >& symbols = factory_->GetAvailableSymbols();
     for( auto it = symbols.begin(); it != symbols.end(); ++it )
         units_.AddItem( new SymbolsUnit( *it, *factory_, *glSymbols_ ) );
