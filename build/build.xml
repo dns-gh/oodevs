@@ -51,6 +51,7 @@
             <arg value="--exclude=SimToClient.Content.UnitAttributes.RulesOfEngagement.Value"/>
             <arg value="--exclude=SimToClient.Content.AutomatAttributes.RulesOfEngagement.Value"/>
         </compare-proto>
+        <compare-proto olddir="${data.dir}/proto-5.2.1" newdir="${data.dir}/proto-5.2.2"/>
     </target>
 
     <target name="package">
@@ -62,7 +63,7 @@
                      update referenced version upon releases -->
                 <zipfileset dir="${data.dir}/proto-5.1.3"
                     prefix="protolint/proto/proto-5.1.x"/>
-                <zipfileset dir="${data.dir}/proto-5.2.1"
+                <zipfileset dir="${data.dir}/proto-5.2.2"
                     prefix="protolint/proto/proto-5.2.x"/>
             </zip>
         </safe-move>
