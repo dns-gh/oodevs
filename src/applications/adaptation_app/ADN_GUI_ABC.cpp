@@ -14,6 +14,7 @@
 #include "ADN_ListView.h"
 #include "ADN_Tr.h"
 #include <QtGui/qsizepolicy.h>
+#include <boost/scoped_ptr.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GUI_ABC constructor
@@ -34,6 +35,26 @@ ADN_GUI_ABC::ADN_GUI_ABC( E_WorkspaceElements workspaceElement )
 ADN_GUI_ABC::~ADN_GUI_ABC()
 {
     // NOTHING
+}
+
+namespace
+{
+    class ADN_SmartSplitter : public QSplitter
+    {
+    public:
+        ADN_SmartSplitter()
+            : QSplitter()
+        {
+            // NOTHING
+        }
+        void AddListView( QWidget* list )
+        {
+            listView_.reset( list );
+            addWidget( listView_.get() );
+        }
+    private:
+        boost::scoped_ptr< QWidget > listView_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -61,12 +82,12 @@ QWidget* ADN_GUI_ABC::CreateScrollArea( const char* objectName, QWidget& content
         pMainLayout->addWidget( scrollArea, 1 );
     else
     {
-        QSplitter* splitter = new QSplitter();
+        ADN_SmartSplitter* splitter = new ADN_SmartSplitter();
         pMainLayout->addWidget( splitter, 1 );
         splitter->setOpaqueResize( false );
         if( paintSplitter )
             splitter->setBackgroundColor( Qt::white );
-        splitter->addWidget( list );
+        splitter->AddListView( list );
         splitter->addWidget( scrollArea );
 
         splitter->setCollapsible( list, false );

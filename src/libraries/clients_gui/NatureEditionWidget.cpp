@@ -83,3 +83,14 @@ void NatureEditionWidget::SetDeep( int deep )
 {
     rootWidget_->SetDeep( ( deep < 0 ) ? -1 : deep - 1 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionWidget::setEnabled
+// Created: ABR 2013-09-19
+// -----------------------------------------------------------------------------
+void NatureEditionWidget::setEnabled( bool enabled )
+{
+    QWidget::setEnabled( enabled );
+    if( rootWidget_ )
+        rootWidget_->setEnabled( enabled );
+}

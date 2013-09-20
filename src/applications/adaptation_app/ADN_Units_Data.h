@@ -180,7 +180,7 @@ public:
         ADN_Type_Bool bCanFly_;
         ADN_Type_Enum< E_CrossingHeight, eNbrCrossingHeight > eCrossingHeight_;
         ADN_Type_Bool bIsAutonomous_;
-        ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolsUnit > natureSymbol_;
+        ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolsUnit > ptrNatureSymbol_;
         ADN_Type_Double footprint_;
 
         T_ComposanteInfos_Vector vComposantes_;

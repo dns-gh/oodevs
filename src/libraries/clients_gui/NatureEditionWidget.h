@@ -42,6 +42,7 @@ public:
     void SetRootSymbolRule( kernel::SymbolRule& root );
     void Clear();
     void SetDeep( int deep );
+    virtual void setEnabled( bool enabled );
     //@}
 
 public slots:

@@ -283,7 +283,7 @@ void ADN_Symbols_Data::ReadInfra( xml::xistream& xis )
 // Name: ADN_Symbols_Data::GetSymbolFactory
 // Created: ABR 2011-05-26
 // -----------------------------------------------------------------------------
-kernel::SymbolFactory& ADN_Symbols_Data::GetSymbolFactory()
+const kernel::SymbolFactory& ADN_Symbols_Data::GetSymbolFactory() const
 {
     return *factory_;
 }
