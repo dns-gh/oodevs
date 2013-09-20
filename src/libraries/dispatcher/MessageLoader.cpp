@@ -222,7 +222,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
                             {
                                 incremented = true;
                                 sword::TimeTable_TimeMapping* item = msg.add_time_table_item();
-                                item->set_tick( tick );
+                                item->set_tick( tick + 1 );
                                 item->mutable_simulation_time()->set_data( simTime );
                                 item->mutable_real_time()->set_data( realTime );
                                 int size = msg.ByteSize();
