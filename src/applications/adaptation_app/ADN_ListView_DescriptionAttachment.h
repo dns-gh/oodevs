@@ -14,6 +14,8 @@
 #include "ADN_EditLine_ABC.h"
 #include "ADN_ListView.h"
 
+class ADN_Type_LocalizedString;
+
 // =============================================================================
 /** @class  ADN_ListView_DescriptionAttachment
     @brief  ADN_ListView_DescriptionAttachment
@@ -27,7 +29,7 @@ class ADN_ListView_DescriptionAttachment : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_DescriptionAttachment( E_MissionType missionType, ADN_EditLine_ABC* missionName );
+             ADN_ListView_DescriptionAttachment( E_MissionType missionType );
     virtual ~ADN_ListView_DescriptionAttachment();
     //@}
 
@@ -43,13 +45,14 @@ public slots:
     void AddFile();
     void CopyName();
     void RemoveFile();
+    void OnItemSelected( void* );
     //@}
 
 private:
     //! @name members
     //@{
     E_MissionType missionType_;
-    ADN_EditLine_ABC* missionName_;
+    ADN_Type_LocalizedString* missionName_;
     //@}
 };
 

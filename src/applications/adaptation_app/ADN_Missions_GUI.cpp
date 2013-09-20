@@ -198,6 +198,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
 
     //Mission Sheet Editor
     QWidget* descriptionTab = new QWidget();
+    ADN_ListView* attachmentListView;
     {
         builder.PushSubName( "description-tab" );
 
@@ -245,7 +246,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         parameterLayout->addWidget( parametersListView, 1 );
         parameterLayout->addWidget( parametersField, 4 );
 
-        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType, nameField );
+        attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType );
         vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();
 
         QGroupBox* attachmentGroupBox = new QGroupBox( tr( "Attachments" ) );
@@ -332,6 +333,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     // Main page
     builder.PopSubName(); //! eMissionType-tab
     connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), missionChangedMapper_, SLOT( map() ) );
+    connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), attachmentListView, SLOT( OnItemSelected( void* ) ) );
     missionChangedMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
 
     connect( pSearchListView->GetListView(), SIGNAL( NotifyElementDeleted( boost::shared_ptr< kernel::LocalizedString >, E_MissionType ) ), &data_, SLOT( OnElementDeleted( boost::shared_ptr< kernel::LocalizedString >, E_MissionType ) ) );
