@@ -95,19 +95,19 @@ public:
 
     //! @name Accessors
     //@{
-    const kernel::SymbolFactory& GetSymbolFactory() const;
+    virtual void FilesNeeded( tools::Path::T_Paths& files ) const;
+    void ReadAndCopyArchive( xml::xistream& xis );
 
+    const kernel::SymbolFactory& GetSymbolFactory() const;
     const T_SymbolsUnits_Vector& GetSymbolsUnits() const;
     const T_SymbolsInfra_Vector& GetSymbolsInfras() const;
     SymbolsInfra* FindSymbolInfra( const std::string& strName ) const;
-
     SymbolsUnit* FindSymbolUnit( const std::string& strNature ) const;
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void FilesNeeded( tools::Path::T_Paths& files ) const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     //@}
 
@@ -116,6 +116,7 @@ private:
     void ReadArchive( xml::xistream& xis );
     void ReadInfra( xml::xistream& xis );
     void ReadRule( xml::xistream& xis );
+    void WriteArchive( xml::xostream& xos );
     //@}
 
 private:
@@ -126,6 +127,7 @@ private:
     std::auto_ptr< kernel::SymbolFactory > factory_;
     std::auto_ptr< gui::SvglRenderer >     svgRender_;
     std::auto_ptr< gui::GLSymbols >        glSymbols_;
+    std::auto_ptr< xml::xibufferstream >   xibs_;
     //@}
 };
 

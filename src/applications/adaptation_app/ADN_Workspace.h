@@ -140,8 +140,8 @@ public:
     void Initialize();
     void Purge();
 
-    void New( const tools::Path& filename );
-    void Load( const tools::Path& filename );
+    void New( const tools::Path& filename, bool loadGui );
+    void Load( const tools::Path& filename, bool loadGui );
     bool SaveAs( const tools::Path& filename );
     //@}
 
@@ -218,6 +218,7 @@ private:
     //! @name Helpers
     //@{
     void AddPage( E_WorkspaceElements element );
+    void LoadDefaultSymbols();
     //@}
 
 private:

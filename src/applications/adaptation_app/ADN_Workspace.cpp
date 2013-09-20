@@ -371,26 +371,44 @@ void ADN_Workspace::AddPage( E_WorkspaceElements element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Workspace::LoadDefaultSymbols
+// Created: ABR 2013-09-20
+// -----------------------------------------------------------------------------
+void ADN_Workspace::LoadDefaultSymbols()
+{
+    ADN_Symbols_Data& symbolsData = GetSymbols().GetData();
+    tools::Path::T_Paths fileList;
+    symbolsData.FilesNeeded( fileList );
+    assert( !fileList.empty() );
+    fileLoader_->LoadFile( ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / fileList.front(), boost::bind( &ADN_Symbols_Data::ReadAndCopyArchive, &symbolsData, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Workspace::New
 // Created: ABR 2013-09-16
 // -----------------------------------------------------------------------------
-void ADN_Workspace::New( const tools::Path& filename )
+void ADN_Workspace::New( const tools::Path& filename, bool loadGui )
 {
     filename.Parent().CreateDirectories();
     pWorkspace_->GetMainWindow().SetIsLoading( true );
     progressIndicator_.SetMaximum( eNbrWorkspaceElements );
     projectData_->New( filename );
-    mainWindow_.LoadStatusChanged( true );
-    SetMainWindowModified( true );
+    LoadDefaultSymbols();
+    if( loadGui )
+    {
+        mainWindow_.LoadStatusChanged( true );
+        SetMainWindowModified( true );
+    }
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::Load
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Load( const tools::Path& filename )
+void ADN_Workspace::Load( const tools::Path& filename, bool loadGui )
 {
-    mainWindow_.SetIsLoading( true );
+    if( loadGui )
+        mainWindow_.SetIsLoading( true );
     progressIndicator_.SetMaximum( 2 * eNbrWorkspaceElements );
 
     projectData_->SetFile( filename );
@@ -405,8 +423,11 @@ void ADN_Workspace::Load( const tools::Path& filename )
     // Allow circular dependences between pages
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
         elements_[n]->GetDataABC().Initialize();
-    mainWindow_.LoadStatusChanged( true );
-    SetMainWindowModified( false );
+    if( loadGui )
+    {
+        mainWindow_.LoadStatusChanged( true );
+        SetMainWindowModified( false );
+    }
 }
 
 namespace
