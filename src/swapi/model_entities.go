@@ -149,6 +149,7 @@ type Unit struct {
 	ResourceDotations  []*ResourceDotation
 	Posture            Posture
 	VisionCones        VisionCones
+	Adhesions          map[uint32]float32
 }
 
 type Automat struct {
