@@ -284,8 +284,7 @@ integration.getAgentFromKnowledge = function( entity )
 end
 
 integration.getAgentFromAutomatKnowledge = function( entity )
-    local agent = DEC_Connaissance_EnAgent( entity.source )
-    return CreateKnowledge(integration.ontology.types.agent, agent)
+    return integration.getAgentFromKnowledge( entity )
 end
 
 function DEC_GetMission( entity )
