@@ -262,7 +262,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsMelee( const MIL
         if( ! (*it) )
             throw MASA_EXCEPTION( "Invalid pion in GetPionsMelee" );
         const std::string& type = (*it)->GetType().GetMilPionType();
-        if( type == "Pion ABC" || type == "Pion INF" )
+        if( type == "Pion ABC" || type == "Pion INF" || type == "Pion MILICE" )
             result.push_back( &(**it).GetDecision() );
     }
     return result;
