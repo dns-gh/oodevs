@@ -121,7 +121,7 @@ bool PHY_Posture::IsInstantaneous() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Posture::IsInstantaneous
+// Name: PHY_Posture::operator <
 // Created: LDC 2013-09-12
 // -----------------------------------------------------------------------------
 bool PHY_Posture::operator < ( const PHY_Posture& p ) const
