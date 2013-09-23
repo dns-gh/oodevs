@@ -39,6 +39,9 @@ protected slots:
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
 
 private:
+    void ChangeBackgroundColor( const QColor& color );
+
+private:
     const QPalette originalPalette_;
     QString originalToolTip_;
 };

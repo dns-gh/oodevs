@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_GUI.h"
 #include "moc_ADN_Missions_GUI.cpp"
+#include "ADN_ApplyButton.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_MissionTypes_Table.h"
 #include "ADN_GuiBuilder.h"
@@ -85,23 +86,21 @@ void ADN_Missions_GUI::Build()
 
 namespace
 {
-    class TextEditWithoutWarning : public ADN_TextEdit_LocalizedString
-    {
-    public:
-        TextEditWithoutWarning( QWidget* parent = 0 ) : ADN_TextEdit_LocalizedString( parent ) {}
-
-        virtual void Warn( ADN_ErrorStatus , const QString& ) {}
-    };
-
-    QWidget* AddTextEditField( QVBoxLayout* layout, const char* objectName, const QString& name, ADN_Connector_ABC*& pGuiConnector )
+    void AddTextEditField( QVBoxLayout* layout, const char* objectName, const QString& name, ADN_Connector_ABC*& pGuiConnector )
     {
         QLabel* label= new QLabel( name );
-        TextEditWithoutWarning* textEdit = new TextEditWithoutWarning( 0 );
+        ADN_TextEdit_LocalizedString* textEdit = new ADN_TextEdit_LocalizedString( 0 );
         textEdit->setObjectName( objectName );
         pGuiConnector = &textEdit->GetConnector();
+
+        ADN_ApplyButton* applyButton = new ADN_ApplyButton();
+        applyButton->Connect( textEdit );
+
+        QHBoxLayout* hLayout = new QHBoxLayout();
+        hLayout->addWidget( textEdit );
+        hLayout->addWidget( applyButton );
         layout->addWidget( label );
-        layout->addWidget( textEdit );
-        return textEdit;
+        layout->addLayout( hLayout );
     }
 
     class SelectableLabel : public QLabel
@@ -239,12 +238,15 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         QGroupBox* parameterGroupBox = new QGroupBox( tr( "Parameters" ) );
         QHBoxLayout* parameterLayout = new QHBoxLayout( parameterGroupBox );
         ADN_ListView* parametersListView = builder.AddWidget< ADN_ListView_DescriptionParameter >( "parameters-list" );
-        TextEditWithoutWarning* parametersField = builder.AddWidget< TextEditWithoutWarning >( "parameter" );
+        ADN_TextEdit_LocalizedString* parametersField = builder.AddWidget< ADN_TextEdit_LocalizedString >( "parameter" );
         vInfosConnectors[ eDescriptionParameters ] = &parametersListView->GetConnector();
         vInfosConnectors[ eDescriptionParametersText ] = &parametersField->GetConnector();
+        ADN_ApplyButton* applyButton = new ADN_ApplyButton();
+        applyButton->Connect( parametersField );
         parametersListView->SetItemConnectors( vInfosConnectors );
         parameterLayout->addWidget( parametersListView, 1 );
         parameterLayout->addWidget( parametersField, 4 );
+        parameterLayout->addWidget( applyButton );
 
         attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType );
         vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();

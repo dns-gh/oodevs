@@ -55,6 +55,20 @@ void ADN_TextEdit_ABC::ConnectWithRefValidity( const ADN_Ref_ABC& ref )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_TextEdit_ABC::ChangeBackgroundColor
+// Created: ABR 2013-09-20
+// -----------------------------------------------------------------------------
+void ADN_TextEdit_ABC::ChangeBackgroundColor( const QColor& color )
+{
+    QString str = toHtml();
+    if( str.contains( "bgcolor=" ) )
+        str.replace( QRegExp( "bgcolor=\"#[a-fA-F0-9]{6}\"" ), QString( "bgcolor=\"%1\"" ).arg( color.name() ) );
+    else
+        str.replace( "<body", QString( "<body bgcolor=\"%1\"" ).arg( color.name() ) );
+    setHtml( str );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_TextEdit_ABC::Warn
 // Created: ABR 2013-01-15
 // -----------------------------------------------------------------------------
@@ -65,6 +79,7 @@ void ADN_TextEdit_ABC::Warn( ADN_ErrorStatus errorStatus, const QString& errorMe
     case eNoError:
         {
             setToolTip( originalToolTip_ );
+            ChangeBackgroundColor( Qt::white );
             setPalette( originalPalette_ );
         }
         break;
@@ -72,12 +87,13 @@ void ADN_TextEdit_ABC::Warn( ADN_ErrorStatus errorStatus, const QString& errorMe
         {
             if( !errorMessage.isEmpty() )
                 setToolTip( errorMessage );
+            ChangeBackgroundColor( Qt::yellow );
             QPalette palette;
             palette.setColor( QPalette::Text, Qt::black );
             palette.setColor( QPalette::Base, Qt::yellow );
             palette.setColor( QPalette::Shadow, Qt::yellow );
             palette.setColor( QPalette::Window, Qt::yellow );
-            palette.setColor( QPalette::Highlight, Qt::yellow );
+            palette.setColor( QPalette::Highlight, QColor( Qt::yellow ).lighter( 50 ) );
             palette.setColor( QPalette::HighlightedText, Qt::black );
             setPalette( palette );
         }
@@ -86,12 +102,13 @@ void ADN_TextEdit_ABC::Warn( ADN_ErrorStatus errorStatus, const QString& errorMe
         {
             if( !errorMessage.isEmpty() )
                 setToolTip( errorMessage );
+            ChangeBackgroundColor( Qt::red );
             QPalette palette;
             palette.setColor( QPalette::Text, Qt::black );
             palette.setColor( QPalette::Base, Qt::red );
             palette.setColor( QPalette::Shadow, Qt::red );
             palette.setColor( QPalette::Window, Qt::red );
-            palette.setColor( QPalette::Highlight, Qt::red );
+            palette.setColor( QPalette::Highlight, QColor( Qt::red ).lighter( 150 ) );
             palette.setColor( QPalette::HighlightedText, Qt::black );
             setPalette( palette );
         }
