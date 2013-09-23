@@ -328,13 +328,13 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     else
     {
         pSearchListView = builder.AddSearchListView< ADN_ListView_MissionTypes >( this, eMissionType, missions, missions, vInfosConnectors, eMissionType );
-        connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), paramList, SLOT( OnMissionSelectionChanged() ) );
+        connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), paramList, SLOT( OnMissionSelectionChanged() ) );
         generateMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
     }
     listViews_[ eMissionType ] = pSearchListView->GetListView();
     // Main page
     builder.PopSubName(); //! eMissionType-tab
-    connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), missionChangedMapper_, SLOT( map() ) );
+    connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), missionChangedMapper_, SLOT( map() ) );
     connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), attachmentListView, SLOT( OnItemSelected( void* ) ) );
     missionChangedMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
 

@@ -49,7 +49,6 @@ public slots:
 signals:
     //! @name Signals
     //@{
-    void SelectionChanged();
     void NotifyElementDeleted( boost::shared_ptr< kernel::LocalizedString > name, E_MissionType type );
     //@}
 
