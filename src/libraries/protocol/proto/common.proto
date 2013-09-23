@@ -1936,7 +1936,16 @@ message UnitMagicAction {
         recover_resources                 = 8;
         //! A destroy all magic action
         destroy_all                       = 9;
-        //! A change human factors magic action
+        //! Change the human factors
+        //! The tasker must be a unit identifier.
+        //! parameters[0], EnumUnitTiredness: rested,
+        //!     tired, exhausted
+        //! parameters[1], EnumUnitMorale: fanatical,
+        //!     high, standard, low
+        //! parameters[2], EnumUnitExperience: veteran,
+        //!     expert, novice
+        //! parameters[3], EnumUnitStress: calm,
+        //!     worried, stressed
         change_human_factors              = 10;
         //! A partial recovery magic action
         partial_recovery                  = 11;

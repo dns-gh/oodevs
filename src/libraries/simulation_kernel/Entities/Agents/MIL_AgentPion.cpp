@@ -1002,38 +1002,45 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& as
 // -----------------------------------------------------------------------------
 void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters& msg )
 {
-    if( msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value().Get(0).has_enumeration() )
-    {
-        sword::UnitAttributes::EnumUnitTiredness tiredness = static_cast< sword::UnitAttributes::EnumUnitTiredness >( msg.elem( 0 ).value().Get(0).enumeration() );
-        const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
-        if( !pTiredness )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness, true );
-    }
-    if( msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value().Get(0).has_enumeration() )
-    {
-        sword::UnitAttributes::EnumUnitMorale morale = static_cast< sword::UnitAttributes::EnumUnitMorale >( msg.elem( 1 ).value().Get(0).enumeration() );
-        const PHY_Morale* pMoral = PHY_Morale::Find( morale );
-        if( !pMoral )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
-    }
-    if( msg.elem( 2 ).value_size() == 1 && msg.elem( 2 ).value().Get(0).has_enumeration() )
-    {
-        sword::UnitAttributes::EnumUnitExperience experience = static_cast< sword::UnitAttributes::EnumUnitExperience >( msg.elem( 2 ).value().Get(0).enumeration() );
-        const PHY_Experience* pExperience = PHY_Experience::Find( experience );
-        if( !pExperience )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
-    }
-    if( msg.elem( 3 ).value_size() == 1 && msg.elem( 3 ).value().Get(0).has_enumeration() )
-    {
-        sword::UnitAttributes::EnumUnitStress stress = static_cast< sword::UnitAttributes::EnumUnitStress >( msg.elem( 3 ).value().Get(0).enumeration() );
-        const PHY_Stress* pStress = PHY_Stress::Find( stress );
-        if( !pStress )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        GetRole< PHY_RolePion_HumanFactors >().SetStress( *pStress, true );
-    }
+    if( msg.elem_size() != 4 )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid parameters count, 4 parameters expected" );
+
+    const sword::MissionParameter& paramTiredness = msg.elem( 0 );
+    const sword::MissionParameter& paramMorale = msg.elem( 1 );
+    const sword::MissionParameter& paramExperience = msg.elem( 2 );
+    const sword::MissionParameter& paramStress = msg.elem( 3 );
+    if( paramTiredness.value_size() != 1 || !paramTiredness.value( 0 ).has_enumeration() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[0] must be an enumeration" );
+    if( paramMorale.value_size() != 1 || !paramMorale.value( 0 ).has_enumeration() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[1] must be an enumeration" );
+    if( paramExperience.value_size() != 1 || !paramExperience.value( 0 ).has_enumeration() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[2] must be an enumeration" );
+    if( paramStress.value_size() != 1 || !paramStress.value( 0 ).has_enumeration() )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[3] must be an enumeration" );
+
+    sword::UnitAttributes::EnumUnitTiredness tiredness = static_cast< sword::UnitAttributes::EnumUnitTiredness >( paramTiredness.value( 0 ).enumeration() );
+    const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
+    if( !pTiredness )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid tiredness enumeration" );
+    GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness, true );
+
+    sword::UnitAttributes::EnumUnitMorale morale = static_cast< sword::UnitAttributes::EnumUnitMorale >( paramMorale.value( 0 ).enumeration() );
+    const PHY_Morale* pMoral = PHY_Morale::Find( morale );
+    if( !pMoral )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid morale enumeration" );
+    GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
+
+    sword::UnitAttributes::EnumUnitExperience experience = static_cast< sword::UnitAttributes::EnumUnitExperience >( paramExperience.value( 0 ).enumeration() );
+    const PHY_Experience* pExperience = PHY_Experience::Find( experience );
+    if( !pExperience )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid experience enumeration" );
+    GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
+
+    sword::UnitAttributes::EnumUnitStress stress = static_cast< sword::UnitAttributes::EnumUnitStress >( paramStress.value( 0 ).enumeration() );
+    const PHY_Stress* pStress = PHY_Stress::Find( stress );
+    if( !pStress )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid stress enumeration" );
+    GetRole< PHY_RolePion_HumanFactors >().SetStress( *pStress, true );
 }
 
 // -----------------------------------------------------------------------------
