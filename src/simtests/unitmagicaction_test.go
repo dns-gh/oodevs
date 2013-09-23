@@ -1636,12 +1636,12 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 
 	// Error : missing parameter
 	err := client.ChangeUnitAdhesions(u1.Id, map[uint32]float32{})
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid parameters count, one parameter expected`)
 
 	// Error : adhesion must be between -1 and 1
 	adhesions := map[uint32]float32{0: 1.1, 1: 5.2}
 	err = client.ChangeUnitAdhesions(u1.Id, adhesions)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: adhesion must be between -1 and 1`)
 
 	// Change unit adhesions
 	adhesions = map[uint32]float32{0: 0.7, 1: -0.5}
@@ -1656,7 +1656,7 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 	// No change adhesions if new adhesions are invalid
 	err = client.ChangeUnitAdhesions(u1.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: adhesion must be between -1 and 1`)
 	newAdhesions = client.Model.GetData().FindUnit(u1.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
