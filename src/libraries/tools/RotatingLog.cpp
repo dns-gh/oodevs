@@ -18,7 +18,7 @@ using namespace tools;
 
 RotatingLog::RotatingLog( tools::Log_ABC& log, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate )
     : log_     ( log )
-    , filename_( filename )
+    , filename_( filename.Normalize() )
     , files_   ( files )
     , size_    ( size )
     , count_   ( log_.ComputeSize( filename_ ) )
