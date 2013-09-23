@@ -23,8 +23,17 @@ namespace
         MOCK_METHOD( Write, 2 )
         MOCK_METHOD( ComputeSize, 1 )
     };
+}
 
+BOOST_AUTO_TEST_CASE( rotating_log_does_not_get_confused_by_escaped_characters_in_path )
+{
+    MockLog log;
+    MOCK_EXPECT( log.ComputeSize ).returns( 0 );
+    RotatingLog rlog( log, "SWORD\\exercises\\Egypt\\sessions\\default\\Protobuf\\some.log", 0, 3, true );
+}
 
+namespace
+{
     struct Fixture
     {
         Fixture()
