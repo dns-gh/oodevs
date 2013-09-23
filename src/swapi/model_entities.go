@@ -133,6 +133,13 @@ type VisionCones struct {
 	Elongation float32
 }
 
+type HumanFactors struct {
+	Tiredness  sword.UnitAttributes_EnumUnitTiredness
+	Morale     sword.UnitAttributes_EnumUnitMorale
+	Experience sword.UnitAttributes_EnumUnitExperience
+	Stress     sword.UnitAttributes_EnumUnitStress
+}
+
 type Unit struct {
 	Id                 uint32
 	AutomatId          uint32
@@ -149,6 +156,7 @@ type Unit struct {
 	ResourceDotations  []*ResourceDotation
 	Posture            Posture
 	VisionCones        VisionCones
+	HumanFactors       HumanFactors
 }
 
 type Automat struct {

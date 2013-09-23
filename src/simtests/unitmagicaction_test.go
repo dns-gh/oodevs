@@ -1622,3 +1622,55 @@ func (s *TestSuite) TestUnitChangePosture(c *C) {
 			unit.Posture.Transition == 0
 	})
 }
+
+func (s *TestSuite) TestUnitChangeHumanFactors(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	u1 := CreateUnit(c, client, a1.Id)
+
+	// Error: invalid parameter count
+	err := client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters())
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid parameters count, 4 parameters expected`)
+
+	// Error: invalid parameter type
+	invalidString := swapi.MakeString("invalid")
+	validEnumeration := swapi.MakeEnumeration(0)
+	err = client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters(invalidString, validEnumeration, validEnumeration, validEnumeration))
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\] must be an enumeration`)
+	err = client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters(validEnumeration, invalidString, validEnumeration, validEnumeration))
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[1\] must be an enumeration`)
+	err = client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters(validEnumeration, validEnumeration, invalidString, validEnumeration))
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[2\] must be an enumeration`)
+	err = client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters(validEnumeration, validEnumeration, validEnumeration, invalidString))
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[3\] must be an enumeration`)
+
+	// Error: invalid tiredness
+	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_EnumUnitTiredness(42), sword.UnitAttributes_fanatical, sword.UnitAttributes_veteran, sword.UnitAttributes_calm)
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid tiredness enumeration`)
+
+	// Error: invalid morale
+	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_rested, sword.UnitAttributes_EnumUnitMorale(42), sword.UnitAttributes_veteran, sword.UnitAttributes_calm)
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid morale enumeration`)
+
+	// Error: invalid experience
+	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_rested, sword.UnitAttributes_fanatical, sword.UnitAttributes_EnumUnitExperience(42), sword.UnitAttributes_calm)
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid experience enumeration`)
+
+	// Error: invalid stress
+	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_rested, sword.UnitAttributes_fanatical, sword.UnitAttributes_veteran, sword.UnitAttributes_EnumUnitStress(42))
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid stress enumeration`)
+
+	// Valid: change human factors
+	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_tired, sword.UnitAttributes_high, sword.UnitAttributes_expert, sword.UnitAttributes_worried)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(u1.Id)
+		return unit.HumanFactors.Tiredness == sword.UnitAttributes_tired &&
+			unit.HumanFactors.Morale == sword.UnitAttributes_high &&
+			unit.HumanFactors.Experience == sword.UnitAttributes_expert &&
+			unit.HumanFactors.Stress == sword.UnitAttributes_worried
+	})
+}

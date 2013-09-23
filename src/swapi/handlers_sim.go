@@ -178,6 +178,18 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	if mm.PostureTransition != nil {
 		unit.Posture.Transition = *mm.PostureTransition
 	}
+	if mm.Tiredness != nil {
+		unit.HumanFactors.Tiredness = *mm.Tiredness
+	}
+	if mm.Morale != nil {
+		unit.HumanFactors.Morale = *mm.Morale
+	}
+	if mm.Experience != nil {
+		unit.HumanFactors.Experience = *mm.Experience
+	}
+	if mm.Stress != nil {
+		unit.HumanFactors.Stress = *mm.Stress
+	}
 	return nil
 }
 
