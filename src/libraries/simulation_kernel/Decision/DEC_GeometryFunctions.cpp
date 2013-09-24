@@ -1573,7 +1573,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeConvexHull( 
     std::vector< MT_Vector2D > points;
     for( auto it = locations.cbegin(); it != locations.cend(); ++it )
     {
-        const boost::shared_ptr< TER_Localisation >& next = *it;
+        const auto& next = *it;
         if( !next )
             continue;
         TER_Localisation::E_LocationType type = next->GetType();
@@ -1593,7 +1593,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeConvexHull( 
     }
     if( points.empty() )
         return boost::make_shared< TER_Localisation >();
-    boost::shared_ptr< TER_Localisation > result = boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon, points );
+    auto result = boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon, points );
     result->Convexify();
     return result;
 }
