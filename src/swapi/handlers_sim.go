@@ -111,6 +111,12 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	if mm.BrainDebug != nil {
 		unit.DebugBrain = *mm.BrainDebug
 	}
+	if mm.RawOperationalState != nil {
+		unit.OperationalState = uint32(mm.GetRawOperationalState())
+	}
+	if mm.Neutralized != nil {
+		unit.Neutralized = *mm.Neutralized
+	}
 	if dotations := mm.GetEquipmentDotations(); dotations != nil {
 		for _, dotation := range dotations.GetElem() {
 			unit.EquipmentDotations[dotation.GetType().GetId()] = &EquipmentDotation{

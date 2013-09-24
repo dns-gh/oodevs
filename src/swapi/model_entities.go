@@ -160,6 +160,8 @@ type Unit struct {
 	TransporterId      uint32
 	Adhesions          map[uint32]float32
 	HumanFactors       HumanFactors
+	OperationalState   uint32
+	Neutralized        bool
 }
 
 type Automat struct {
@@ -707,6 +709,19 @@ func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
 func (model *ModelData) FindKnowledgeGroup(knowledgeGroupId uint32) *KnowledgeGroup {
 	for _, u := range model.ListKnowledgeGroups() {
 		if u.Id == knowledgeGroupId {
+			return u
+		}
+	}
+	return nil
+}
+
+func (model *ModelData) FindUnitKnowledge(knowledgeGroupId uint32, unitId uint32) *UnitKnowledge {
+	knowledgeGroup := model.FindKnowledgeGroup(knowledgeGroupId)
+	if knowledgeGroup == nil {
+		return nil
+	}
+	for _, u := range knowledgeGroup.UnitKnowledges {
+		if u.UnitId == unitId {
 			return u
 		}
 	}
