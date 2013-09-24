@@ -92,9 +92,9 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions( sword::Brain& brain 
 
     // Object knowledges accessors
     brain.RegisterFunction( "DEC_IsValidKnowledgeObject", &DEC_KnowledgeObjectFunctions::IsKnowledgeValid );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif", &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif", &DEC_KnowledgeObjectFunctions::IsObstacleActivated );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_DateActivationObstacle", &DEC_KnowledgeObjectFunctions::GetActivationTime );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre", &DEC_KnowledgeObjectFunctions::IsReservedObstacle );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre", &DEC_KnowledgeObjectFunctions::IsActivableObstacle );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstContourne", &DEC_KnowledgeObjectFunctions::IsBypassed );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstValorise", &DEC_KnowledgeObjectFunctions::IsMined );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstBreche", &DEC_KnowledgeObjectFunctions::IsBreached );
@@ -598,8 +598,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_SetMissionLimaFlagHoraire"     ,
         boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag, boost::ref( GetPion() ), _1, _2 ) ) );
-	RegisterFunction( "DEC_Fuseau"    , 
-		boost::function< const MIL_Fuseau& ()> ( boost::bind( &DEC_OrdersFunctions::GetFuseau< MIL_AgentPion>, boost::ref( GetPion() ) ) ) );
+    RegisterFunction( "DEC_Fuseau"    , 
+        boost::function< const MIL_Fuseau& ()> ( boost::bind( &DEC_OrdersFunctions::GetFuseau< MIL_AgentPion>, boost::ref( GetPion() ) ) ) );
 
     // Etat décisionnel
     RegisterFunction( "DEC_Agent_ChangeEtatRapportDeForce",

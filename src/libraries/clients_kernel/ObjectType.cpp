@@ -248,10 +248,10 @@ bool ObjectType::IsUrban() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectType::CanBeReservedObstacle
+// Name: ObjectType::CanBeActivated
 // Created: AGE 2006-10-17
 // -----------------------------------------------------------------------------
-bool ObjectType::CanBeReservedObstacle() const
+bool ObjectType::CanBeActivated() const
 {
     return( capacities_.find( "activable" ) != capacities_.end() );
 }

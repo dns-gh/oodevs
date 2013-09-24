@@ -2330,14 +2330,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">اكتساح الألغام</translation>
     </message>
     <message>
-        <source>Deactivate reserved obstacle</source>
-        <translation type="unfinished">إلغاء تنشيط عقبة المحجوزة</translation>
-    </message>
-    <message>
-        <source>Activate reserved obstacle</source>
-        <translation type="unfinished">تنشيط عقبة المحجوزة</translation>
-    </message>
-    <message>
         <source>Deactivate exit</source>
         <translation type="unfinished">إلغاء تنشيط الخروج</translation>
     </message>
@@ -2392,6 +2384,14 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation type="unfinished">في نوع القيمة ثم اضغط &apos;Enter&apos;</translation>
+    </message>
+    <message>
+        <source>Deactivate obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate obstacle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

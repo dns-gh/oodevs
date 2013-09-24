@@ -120,8 +120,8 @@ public:
     bool IsMined() const;
     bool IsFullMined() const;
     bool IsConstructed() const;
-    bool IsReservedObstacle() const;
-    bool IsReservedObstacleActivated() const;
+    bool IsActivableObstacle() const;
+    bool IsObstacleActivated() const;
     bool MustBeMined() const;
     int GetActivationTime() const;
     virtual unsigned int GetID() const;

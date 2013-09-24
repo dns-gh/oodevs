@@ -32,7 +32,6 @@ class PopulationRepartition;
 // =============================================================================
 class PropertyDisplayer : public gui::PropertyDisplayer
                         , public tools::Caller< Enum_PopulationAttitude >
-                        , public tools::Caller< Enum_DemolitionTargetType >
                         , public tools::Caller< Enum_NbcState >
                         , public tools::Caller< DotationsItem >
                         , public tools::Caller< geometry::Point2f >
@@ -54,7 +53,6 @@ public:
     //! @name Operations
     //@{
     virtual void Call( const Enum_PopulationAttitude& value );
-    virtual void Call( const Enum_DemolitionTargetType & value );
     virtual void Call( const Enum_NbcState & value );
     virtual void Call( const DotationsItem& value );
     virtual void Call( const geometry::Point2f& value );

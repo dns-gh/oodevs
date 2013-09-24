@@ -26,6 +26,7 @@ namespace tools
 class StaticModel;
 class ObjectsModel;
 class UrbanModel;
+class WeatherModel;
 
 // =============================================================================
 /** @class  ObjectPrototype
@@ -38,7 +39,10 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer, const tools::GeneralConfig& config );
+             ObjectPrototype( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
+                              const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel,
+                              const WeatherModel& weather, const kernel::Team_ABC& noSideTeam,
+                              gui::ParametersLayer& layer, const tools::GeneralConfig& config );
     virtual ~ObjectPrototype();
     //@}
 
@@ -46,13 +50,6 @@ protected:
     //! @name Operations
     //@{
     virtual void DoCommit( const kernel::Team_ABC& team );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectPrototype( const ObjectPrototype& );            //!< Copy constructor
-    ObjectPrototype& operator=( const ObjectPrototype& ); //!< Assignment operator
     //@}
 
 private:

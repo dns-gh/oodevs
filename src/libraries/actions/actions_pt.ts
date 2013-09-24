@@ -94,10 +94,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Construction location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -111,6 +107,10 @@
     </message>
     <message>
         <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

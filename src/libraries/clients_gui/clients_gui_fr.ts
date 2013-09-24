@@ -1457,16 +1457,32 @@ Voulez-vous le supprimer?</translation>
         <translation>Obstacle</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle:</translation>
+        <source>Activation</source>
+        <translation>Activation</translation>
     </message>
     <message>
-        <source>Activation time:</source>
-        <translation>Délai avant activation:</translation>
+        <source>Deactivation</source>
+        <translation>Désactivation</translation>
     </message>
     <message>
-        <source>Activity time:</source>
-        <translation>Durée d&apos;activité:</translation>
+        <source>Immediately</source>
+        <translation>Immédiatement</translation>
+    </message>
+    <message>
+        <source>After a delay</source>
+        <translation>Après un délai</translation>
+    </message>
+    <message>
+        <source>At a specific date</source>
+        <translation>A une date précise</translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation>Inactif</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Jamais</translation>
     </message>
 </context>
 <context>

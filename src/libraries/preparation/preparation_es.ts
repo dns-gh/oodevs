@@ -441,14 +441,6 @@
         <translation>Info/Tipo</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation>Tipo de obstáculo :</translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation>Info/Atributos de demolición/Tipo de obstáculo</translation>
-    </message>
-    <message>
         <source>Info/Demolition target parameters/Obstacle activated</source>
         <translation>Info/Atributos de demolición/Obstáculo activado</translation>
     </message>
@@ -554,6 +546,10 @@
     </message>
     <message>
         <source>Info/Breaching/Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

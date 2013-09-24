@@ -18,6 +18,7 @@ namespace kernel
 }
 
 class ObjectsModel;
+class WeatherModel;
 
 // =============================================================================
 /** @class  ObstaclePrototype
@@ -30,7 +31,7 @@ class ObstaclePrototype : public gui::ObstaclePrototype_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             ObstaclePrototype( QWidget* parent, kernel::Object_ABC*& creation );
+             ObstaclePrototype( QWidget* parent, kernel::Object_ABC*& creation, const WeatherModel& weather );
     virtual ~ObstaclePrototype();
     //@}
 
@@ -39,10 +40,17 @@ public:
     virtual void Commit( const kernel::Team_ABC& );
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    virtual QDateTime GetCreationDate() const;
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;
+    const WeatherModel& weather_;
     //@}
 };
 

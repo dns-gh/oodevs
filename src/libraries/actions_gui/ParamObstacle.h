@@ -101,7 +101,7 @@ private:
     const kernel::CoordinateConverter_ABC&              converter_;
     kernel::ActionController&                           controller_;
     ::gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
-    ::gui::ValuedComboBox< unsigned int >*              obstacleTypeCombo_;
+    QComboBox*                                          activatedCombo_;
     ParamLocation*                                      location_;
     ParamNumericField< float >*                         density_;
     ParamAutomat*                                       tc2_;

@@ -43,6 +43,17 @@
     </message>
 </context>
 <context>
+    <name>ParamBool</name>
+    <message>
+        <source>True</source>
+        <translation type="unfinished">Vrai</translation>
+    </message>
+    <message>
+        <source>False</source>
+        <translation type="unfinished">Faux</translation>
+    </message>
+</context>
+<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -120,10 +131,6 @@
         <translation>Type:</translation>
     </message>
     <message>
-        <source>Demolition target type:</source>
-        <translation>Type de cible de démolition:</translation>
-    </message>
-    <message>
         <source>Density per 100 square meter</source>
         <translation>Densité par 100 mètres carrés</translation>
     </message>
@@ -140,10 +147,6 @@
         <translation>Valoriser</translation>
     </message>
     <message>
-        <source>Obstacle type</source>
-        <translation>Type d&apos;obstacle</translation>
-    </message>
-    <message>
         <source>Time limit</source>
         <translation>Durée de vie</translation>
     </message>
@@ -158,6 +161,14 @@
     <message>
         <source>Name</source>
         <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Activate:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

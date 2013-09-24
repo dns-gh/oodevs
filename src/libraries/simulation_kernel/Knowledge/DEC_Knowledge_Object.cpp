@@ -857,19 +857,19 @@ bool DEC_Knowledge_Object::IsConstructed() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::IsReservedObstacle
+// Name: DEC_Knowledge_Object::IsActivableObstacle
 // Created: NLD 2007-05-22
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_Object::IsReservedObstacle() const
+bool DEC_Knowledge_Object::IsActivableObstacle() const
 {
     return pObjectType_ && pObjectType_->GetCapacity< ActivableCapacity >();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::IsReservedObstacleActivated
+// Name: DEC_Knowledge_Object::IsObstacleActivated
 // Created: NLD 2007-05-23
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
+bool DEC_Knowledge_Object::IsObstacleActivated() const
 {
     if( const ObstacleAttribute* activable = RetrieveAttribute< ObstacleAttribute >() )
         return activable->IsActivated();
@@ -907,7 +907,7 @@ int DEC_Knowledge_Object::GetActivationTime() const
 bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent, bool bCheckBypassed /*= true*/ ) const
 {
     bool bIsBypassed = bCheckBypassed ? IsBypassed() : false;
-    return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !bIsBypassed && CanInteractWith( agent )
+    return ( !IsActivableObstacle() || IsObstacleActivated() ) && !bIsBypassed && CanInteractWith( agent )
          && agent.GetRole< PHY_RoleInterface_Location >().GetHeight() <= GetMaxInteractionHeight();
 }
 
@@ -917,7 +917,7 @@ bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent, bool bChe
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::CanCollideWithEntity() const
 {
-    return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !IsBypassed() && CanInteractWithEntity();
+    return ( !IsActivableObstacle() || IsObstacleActivated() ) && !IsBypassed() && CanInteractWithEntity();
 }
 
 // -----------------------------------------------------------------------------

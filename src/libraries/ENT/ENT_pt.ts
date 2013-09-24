@@ -556,14 +556,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>preliminary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>reserved</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>quiet</source>
         <translation type="unfinished"></translation>
     </message>
@@ -949,6 +941,14 @@
     </message>
     <message>
         <source>Fragmentary Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

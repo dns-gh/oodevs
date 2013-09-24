@@ -43,6 +43,17 @@
     </message>
 </context>
 <context>
+    <name>ParamBool</name>
+    <message>
+        <source>True</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>False</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -152,11 +163,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Demolition target type:</source>
+        <source>Activate:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type</source>
+        <source>Activation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

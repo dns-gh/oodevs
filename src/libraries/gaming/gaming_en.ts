@@ -1132,10 +1132,6 @@
         <translation>Unknown object</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation>Obstacle type:</translation>
-    </message>
-    <message>
         <source>Activation time:</source>
         <translation>Activation time:</translation>
     </message>

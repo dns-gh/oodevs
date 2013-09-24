@@ -441,14 +441,6 @@
         <translation>Info/Type</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle :</translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation>Info/Attributs de destruction/Type d&apos;obstacle</translation>
-    </message>
-    <message>
         <source>Info/Demolition target parameters/Obstacle activated</source>
         <translation>Info/Attributs de destruction/Obstacle activé</translation>
     </message>
@@ -555,6 +547,10 @@
     <message>
         <source>Info/Breaching/Value</source>
         <translation>Info/Contournement/Valeur</translation>
+    </message>
+    <message>
+        <source>Obstacle parameters</source>
+        <translation>Paramètres d&apos;obstacle</translation>
     </message>
 </context>
 <context>

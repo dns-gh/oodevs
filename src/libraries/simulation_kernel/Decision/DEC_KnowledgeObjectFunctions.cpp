@@ -280,23 +280,23 @@ bool DEC_KnowledgeObjectFunctions::IsKnowledgeValid( boost::shared_ptr< DEC_Know
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated
+// Name: DEC_KnowledgeObjectFunctions::IsObstacleActivated
 // Created: NLD 2004-04-09
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::IsObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsReservedObstacleActivated();
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsObstacleActivated();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeObjectFunctions::IsReservedObstacle
+// Name: DEC_KnowledgeObjectFunctions::IsActivableObstacle
 // Created: NLD 2004-04-09
 // Modified: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::IsReservedObstacle( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::IsActivableObstacle( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsReservedObstacle();
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsActivableObstacle();
 }
 
 // -----------------------------------------------------------------------------

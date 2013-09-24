@@ -13,6 +13,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/OptionalValue.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -28,6 +29,7 @@ namespace kernel
 // =============================================================================
 class ObstacleAttribute : public kernel::ObstacleAttribute_ABC
                         , public gui::Drawable_ABC
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,17 +45,10 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
 
-    virtual bool IsReservedObstacle() const;
     virtual bool IsObstacleActivated() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObstacleAttribute( const ObstacleAttribute& );            //!< Copy constructor
-    ObstacleAttribute& operator=( const ObstacleAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
@@ -67,10 +62,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::OptionalValue< E_DemolitionTargetType > obstacleType_;
-    kernel::OptionalValue< bool >                   obstacleActivated_;
-    kernel::OptionalValue< unsigned int >           activationTime_;
-    kernel::OptionalValue< unsigned int >           activityTime_;
+    kernel::OptionalValue< bool > obstacleActivated_;
+    kernel::OptionalValue< unsigned int > activationTime_;
+    kernel::OptionalValue< unsigned int > activityTime_;
     bool hasSinglePointPos_;
     //@}
 };

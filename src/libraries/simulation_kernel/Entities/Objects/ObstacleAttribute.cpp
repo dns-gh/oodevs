@@ -15,52 +15,18 @@
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
 
-namespace
-{
-    sword::ObstacleType_DemolitionTargetType GetDemolitionTargetType( bool reserved )
-    {
-        return reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary;
-    }
-
-    sword::ObstacleType_DemolitionTargetType ExtractObstacle( const std::string& obstacle )
-    {
-        return obstacle == "reserved" ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary;
-    }
-
-    std::string ExtractObstacle( sword::ObstacleType_DemolitionTargetType obstacle )
-    {
-        return obstacle == sword::ObstacleType_DemolitionTargetType_reserved ? "reserved" : "preliminary";
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute()
-    : obstacle_      ( sword::ObstacleType_DemolitionTargetType_preliminary )
-    , bActivated_    ( false )
-    , activationTime_( 0 )
-    , activityTime_  ( 0 )
-    , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute constructor
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( bool reserved )
-    : obstacle_      ( GetDemolitionTargetType( reserved ) )
-    , bActivated_    ( false )
+    : bActivated_    ( false )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
     , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
@@ -73,8 +39,7 @@ ObstacleAttribute::ObstacleAttribute( bool reserved )
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
-    : obstacle_      ( ExtractObstacle( xis.attribute< std::string >( "type", std::string() ) ) )
-    , bActivated_    ( xis.attribute< bool >( "activated", false ) )
+    : bActivated_    ( xis.attribute< bool >( "activated", false ) )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
     , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
@@ -94,8 +59,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attributes )
-    : obstacle_      ( ( sword::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
-    , bActivated_    ( attributes.list( 2 ).booleanvalue() )
+    : bActivated_    ( attributes.list( 2 ).booleanvalue() ) // first parameter is deprecated preliminary/reserved type. Kept for compatibility
     , activationTime_( attributes.list( 3 ).quantity() )
     , activityTime_  ( attributes.list( 4 ).quantity() )
     , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
@@ -119,20 +83,10 @@ ObstacleAttribute::~ObstacleAttribute()
 template < typename Archive > void ObstacleAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    file & obstacle_
-         & bActivated_
+    file & bActivated_
          & activationTime_
          & activityTime_
          & creationTime_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::SetType
-// Created: LDC 2009-03-23
-// -----------------------------------------------------------------------------
-void ObstacleAttribute::SetType( bool reserved )
-{
-    obstacle_ = GetDemolitionTargetType( reserved );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +149,7 @@ bool ObstacleAttribute::IsTimesUndefined() const
 // -----------------------------------------------------------------------------
 bool ObstacleAttribute::IsActivable() const
 {
-    return obstacle_ == sword::ObstacleType_DemolitionTargetType_reserved;
+    return !bActivated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +211,7 @@ void ObstacleAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    asn.mutable_obstacle()->set_type( obstacle_ );
+    asn.mutable_obstacle()->set_type( bActivated_ ? sword::ObstacleType_DemolitionTargetType_preliminary : sword::ObstacleType_DemolitionTargetType_reserved );
     asn.mutable_obstacle()->set_activated( bActivated_ );
     asn.mutable_obstacle()->set_activation_time( activationTime_ );
     asn.mutable_obstacle()->set_activity_time( activityTime_ );
@@ -272,8 +226,8 @@ bool ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
+        asn.mutable_obstacle()->set_type( bActivated_ ? sword::ObstacleType_DemolitionTargetType_preliminary : sword::ObstacleType_DemolitionTargetType_reserved );
         asn.mutable_obstacle()->set_activated( bActivated_ );
-        asn.mutable_obstacle()->set_type( obstacle_ );
         asn.mutable_obstacle()->set_activation_time( activationTime_ );
         asn.mutable_obstacle()->set_activity_time( activityTime_ );
         asn.mutable_obstacle()->set_creation_time( creationTime_ );
@@ -290,7 +244,6 @@ bool ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 void ObstacleAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "obstacle" )
-            << xml::attribute( "type", ExtractObstacle( obstacle_ ) )
             << xml::attribute( "activated", bActivated_ );
     if( activationTime_ != 0 )
     {
@@ -313,7 +266,6 @@ void ObstacleAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
 {
-    obstacle_ = rhs.obstacle_;
     bActivated_ = rhs.bActivated_;
     activationTime_ = rhs.activationTime_;
     activityTime_ = rhs.activityTime_;
@@ -330,6 +282,10 @@ void ObstacleAttribute::OnUpdate( const sword::MissionParameter_Value& attribute
     if( attribute.list_size() > 1 && bActivated_ != attribute.list( 1 ).booleanvalue() )
     {
         bActivated_ = attribute.list( 1 ).booleanvalue();
+        if( bActivated_ )
+            activationTime_ = 0;
+        else
+            activityTime_ = 0;
         NotifyAttributeUpdated( eOnUpdate );
     }
 }
@@ -340,11 +296,6 @@ void ObstacleAttribute::OnUpdate( const sword::MissionParameter_Value& attribute
 // -----------------------------------------------------------------------------
 bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
 {
-    if( obstacle_ != rhs.obstacle_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate );
-        obstacle_ = rhs.obstacle_;
-    }
     if( bActivated_ != rhs.bActivated_ )
     {
         NotifyAttributeUpdated( eOnUpdate );

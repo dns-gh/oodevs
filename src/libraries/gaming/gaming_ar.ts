@@ -1132,10 +1132,6 @@
         <translation type="unfinished">كائن غير معروف</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished">نوع العائق:</translation>
-    </message>
-    <message>
         <source>Activation time:</source>
         <translation type="unfinished">وقت التنشيط:</translation>
     </message>

@@ -38,13 +38,13 @@ const TER_Localisation& DEC_Gen_Object::GetLocalisation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Gen_Object::GetObstacleType
-// Created: NLD 2006-10-26
+// Name: DEC_Gen_Object::GetActivated
+// Created: JSR 2013-09-18
 // -----------------------------------------------------------------------------
 inline
-DEC_Gen_Object::E_DemolitionTargetType DEC_Gen_Object::GetObstacleType() const
+bool DEC_Gen_Object::GetActivated() const
 {
-    return pObstacleType_;
+    return activated_;
 }
 
 // -----------------------------------------------------------------------------

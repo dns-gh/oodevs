@@ -35,7 +35,7 @@ namespace
         return MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(),
                                                                          pGenObject->GetTypeName(),
                                                                          &pGenObject->GetLocalisation(),
-                                                                         pGenObject->GetObstacleType(),
+                                                                         pGenObject->GetActivated(),
                                                                          pGenObject->GetExternalIdentifier(),
                                                                          pGenObject->GetName(),
                                                                          pGenObject->GetDensity() );

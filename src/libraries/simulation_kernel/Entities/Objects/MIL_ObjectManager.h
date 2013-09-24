@@ -76,7 +76,7 @@ public:
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation, unsigned int forcedId );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation,
-                                  sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, const std::string& name, double density );
+                                  bool activated, unsigned int externalIdentifier, const std::string& name, double density );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC* CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent );
 

@@ -20,6 +20,11 @@ namespace actions
     }
 }
 
+namespace kernel
+{
+    class Time_ABC;
+}
+
 // =============================================================================
 /** @class  ObstaclePrototype
     @brief  ObstaclePrototype
@@ -31,26 +36,21 @@ class ObstaclePrototype : public gui::ObstaclePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ObstaclePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
+    ObstaclePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList, const kernel::Time_ABC& simulation );
     virtual ~ObstaclePrototype();
     //@}
 
     //! @name Operations
     //@{
+    virtual QDateTime GetCreationDate() const;
     virtual void Commit( const kernel::Team_ABC& );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ObstaclePrototype( const ObstaclePrototype& );            //!< Copy constructor
-    ObstaclePrototype& operator=( const ObstaclePrototype& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
     actions::parameters::ParameterList*& attributesList_;
+    const kernel::Time_ABC& simulation_;
     //@}
 };
 

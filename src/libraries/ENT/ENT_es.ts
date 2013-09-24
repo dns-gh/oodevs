@@ -92,10 +92,6 @@
         <translation>veterano</translation>
     </message>
     <message>
-        <source>reserved</source>
-        <translation>reservado</translation>
-    </message>
-    <message>
         <source>agressive</source>
         <translation>agresivo</translation>
     </message>
@@ -450,10 +446,6 @@
     <message>
         <source>nervous</source>
         <translation>nervioso</translation>
-    </message>
-    <message>
-        <source>preliminary</source>
-        <translation>preliminar</translation>
     </message>
     <message>
         <source>rectangle</source>
@@ -949,6 +941,14 @@
     </message>
     <message>
         <source>Fragmentary Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

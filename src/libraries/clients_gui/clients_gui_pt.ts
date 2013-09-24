@@ -1452,15 +1452,31 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
+        <source>Activation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activation time:</source>
+        <source>Deactivation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activity time:</source>
+        <source>Immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After a delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At a specific date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -74,7 +74,7 @@ public:
     bool HasLodgingCapacity() const;
     bool HasResourceNetwork() const;
     bool IsUrban() const;
-    bool CanBeReservedObstacle() const;
+    bool CanBeActivated() const;
     bool CanBeValorized() const;
     bool CanBeBypassed() const;
     bool CanBeTrafficable() const;

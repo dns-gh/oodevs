@@ -1072,10 +1072,6 @@
         <translation>Minado:</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation>Tipo de obstáculo:</translation>
-    </message>
-    <message>
         <source>Fire</source>
         <translation>Fuego</translation>
     </message>

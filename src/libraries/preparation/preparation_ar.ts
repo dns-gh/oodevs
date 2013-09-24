@@ -470,20 +470,12 @@
         <translation type="unfinished">المعلمات المتعلقة بالألغام</translation>
     </message>
     <message>
-        <source>Obstacle type:</source>
-        <translation type="unfinished">نوع العائق:</translation>
-    </message>
-    <message>
         <source>Activation time:</source>
         <translation type="unfinished">وقت التنشيط:</translation>
     </message>
     <message>
         <source>Activity time:</source>
         <translation type="unfinished">وقت النشاط:</translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation type="unfinished">معلومات/الهدم المستهدفة نوع المعلمات/العقبة</translation>
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle activated</source>
@@ -548,6 +540,10 @@
     <message>
         <source>Info/Breaching/Value</source>
         <translation type="unfinished">معلومات/خرق/القيمة</translation>
+    </message>
+    <message>
+        <source>Obstacle parameters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

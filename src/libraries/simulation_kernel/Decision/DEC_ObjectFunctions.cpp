@@ -89,7 +89,7 @@ bool DEC_ObjectFunctions::GetGenObjectReservedObstacle( const DEC_Gen_Object* ob
 {
     if( !object )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return object->GetObstacleType() == sword::ObstacleType_DemolitionTargetType_reserved;
+    return !object->GetActivated();
 }
 
 // -----------------------------------------------------------------------------

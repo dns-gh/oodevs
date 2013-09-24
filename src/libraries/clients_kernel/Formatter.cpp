@@ -178,8 +178,3 @@ void  Formatter< E_LogFuneralHandlingStatus >::operator()( const E_LogFuneralHan
 {
     displayer.AddToDisplay( tools::ToString( e ) );
 }
-
-void  Formatter< E_DemolitionTargetType >::operator()( const E_DemolitionTargetType& e, Displayer_ABC& displayer ) const
-{
-    displayer.AddToDisplay( tools::ToString( e ) );
-}

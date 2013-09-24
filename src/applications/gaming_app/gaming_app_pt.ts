@@ -2328,14 +2328,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Deactivate reserved obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activate reserved obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Deactivate exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2389,6 +2381,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate obstacle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

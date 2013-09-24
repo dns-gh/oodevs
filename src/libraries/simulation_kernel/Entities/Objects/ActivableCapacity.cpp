@@ -82,7 +82,7 @@ void ActivableCapacity::Register( MIL_Object_ABC& object )
 void ActivableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new ActivableCapacity( *this ) );
-    object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( true ); // reserved obstacle
+    object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute();
 }
 
 // -----------------------------------------------------------------------------
