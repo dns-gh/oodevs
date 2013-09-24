@@ -931,7 +931,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     end
 
     if not self.params.noCoordination then
-        local fuseau = meKnowledge:getFuseau()
+        local fuseau = meKnowledge:getAreaOfResponsibility()
 
         -- Gestion de l'elongation   
         -- tous les pions sont projete sur un des deux fuseaux de l'automate
@@ -1096,7 +1096,7 @@ integration.leadDelayActivate = function( self, disengageTask )
         self.progressionInAOR[ entity ] = proj
     end
 
-    local fuseau = meKnowledge:getFuseau()
+    local fuseau = meKnowledge:getAreaOfResponsibility()
     local largeurFuseau = fuseau:getWidth()
 
     Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = myself.leadData.pionsLima1, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )

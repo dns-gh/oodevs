@@ -5,15 +5,22 @@ integration.getActionCouranteConvoi = function()
     return DEC_Ravitaillement_Convoi_ActionCourante()
 end
 
-integration.getRavitailleur = function()
+-- Returns the supplies provider. 
+-- /!\ Returns nil if the agent is not performing a logistic convoy mission
+integration.getRavitailleur = function() 
     return DEC_Ravitaillement_Convoi_Ravitailleur()
 end
-integration.getDestinataireCourant = function()
+-- Returns the supplies receiver.
+-- /!\ Returns nil if the agent is not performing a logistic convoy mission
+integration.getDestinataireCourant = function() 
     return DEC_Ravitaillement_Convoi_DestinataireCourant()
 end
+-- Returns the vehicles provider.
+-- /!\ Returns nil if the agent is not performing a logistic convoy mission
 integration.getTransporter = function()
     return DEC_Ravitaillement_Convoi_Transporteur()
 end
+
 integration.getItineraireVersProchaineDestination = function()
     return DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination()
 end
