@@ -41,6 +41,12 @@
     <condition property="go.race" value="-race" else="">
         <equals arg1="${platform}" arg2="vc100_x64"/>
     </condition>
+    <condition property="showlog" value="true" else="false">
+        <isset property="show-log"/>
+    </condition>
+    <condition property="test.verbose" value="-test.v" else="">
+        <isset property="test.v"/>
+    </condition>
     <property name="application" value="${run.dir}/simulation_app.exe"/>
     <macrodef name="runtests">
         <element name="args" implicit="true" optional="true"/>
@@ -62,7 +68,9 @@
                 <arg value="-test.parallel=1"/>
                 <arg value="-test.timeout=15m"/>
                 <arg value="${gocheck.verbose}"/>
+                <arg value="${test.verbose}"/>
                 <arg line="${gocheck.filter}"/>
+                <arg value="-show-log=${showlog}"/>
                 <arg value="--application=${application}"/>
                 <arg value="--run-dir=${run.dir}"/>
                 <arg value="--root-dir=${data.dir}"/>
