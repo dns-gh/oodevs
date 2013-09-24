@@ -62,7 +62,7 @@ func (s *TestSuite) TestChangeDiplomacy(c *C) {
 	c.Assert(party1.Diplomacies[party2.Id], Equals, sword.EnumDiplomacy_enemy)
 }
 
-func (s *TestSuite) TestFireOrderCreation(c *C) {
+func (s *TestSuite) TestFireOrderOnLocationCreation(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	point := swapi.Point{X: -15.8241, Y: 28.3241}
