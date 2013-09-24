@@ -1934,19 +1934,15 @@ void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& m
         const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
         CheckSubSubParameterCount( !pHumanRank, i, 1, "invalid, bad human rank enumeration" );
 
-        CheckSubSubParameterCount( elem.list( 2 ).enumeration() < sword::EnumHumanState_MIN ||
-                                   elem.list( 2 ).enumeration() > sword::EnumHumanState_MAX,
-                                   i, 2, "invalid, bad human state enumeration" );
+        auto nstate = elem.list( 2 ).enumeration();
+        CheckSubSubParameterCount( !sword::EnumHumanState_IsValid( nstate ), i, 2, "invalid, bad human state enumeration" );
 
-        sword::EnumHumanState state = static_cast< sword::EnumHumanState >( elem.list( 2 ).enumeration() );
+        sword::EnumHumanState state = static_cast< sword::EnumHumanState >( nstate );
         if( state == sword::injured )
-        {
             CheckSubSubParameterCount( elem.list( 3 ).list_size() != 1 || elem.list( 3 ).list( 0 ).list_size() != 2 ||
                                        !elem.list( 3 ).list( 0 ).list( 1 ).has_enumeration() ||
-                                       elem.list( 3 ).list( 0 ).list( 1 ).enumeration() < sword::EnumInjuriesSeriousness_MIN ||
-                                       elem.list( 3 ).list( 0 ).list( 1 ).enumeration() > sword::EnumInjuriesSeriousness_MAX,
+                                       !sword::EnumInjuriesSeriousness_IsValid( elem.list( 3 ).list( 0 ).list( 1 ).enumeration() ),
                                        i, 3, "invalid injuries seriousness" );
-        }
     }
 
     GetRole< PHY_RolePion_Composantes >().ChangeHumanState( msg );
