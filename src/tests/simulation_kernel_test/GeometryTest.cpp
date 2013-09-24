@@ -13,6 +13,7 @@
 #include "simulation_kernel/Decision/DEC_GeometryFunctions.h"
 #include "simulation_terrain/TER_Polygon.h"
 #include "StubTER_World.h"
+#include <boost/assign/list_of.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TestComputePolygonHull
@@ -47,7 +48,7 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonHull )
     result.push_back( Point2 );
     result.push_back( Point3 );
     result.push_back( Point5 );
-    BOOST_CHECK_EQUAL( true, output == result );
+    BOOST_CHECK_EQUAL_COLLECTIONS( output.begin(), output.end(), result.begin(), result.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +80,7 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
     result.push_back( Point9 );
     result.push_back( Point6 );
     result.push_back( Point7 );
-    BOOST_CHECK_EQUAL( true, output.GetBorderPoints() == result );
+    BOOST_CHECK_EQUAL_COLLECTIONS( output.GetBorderPoints().begin(), output.GetBorderPoints().end(), result.begin(), result.end() );
 }
 
 BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
@@ -149,18 +150,16 @@ BOOST_AUTO_TEST_CASE( GeometryComputeConvexHull )
 {
     WorldInitialize( "worldwide/tests/EmptyParis-ML" );
     std::vector< boost::shared_ptr< TER_Localisation > > locations;
-    std::vector< MT_Vector2D > polyPoints;
-    polyPoints.push_back( MT_Vector2D( 100, 100 ) );
-    polyPoints.push_back( MT_Vector2D( 101, 100 ) );
-    polyPoints.push_back( MT_Vector2D( 100, 101 ) );
-    locations.push_back( boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon, polyPoints ) );    
-    std::vector< MT_Vector2D > linePoints;
-    linePoints.push_back( MT_Vector2D( 103, 100 ) );
-    linePoints.push_back( MT_Vector2D( 103, 98 ) );
-    locations.push_back( boost::make_shared< TER_Localisation >( TER_Localisation::eLine, linePoints ) );
-    MT_Vector2D pointVector( 98, 98 );
+    locations.push_back( boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon,
+             boost::assign::list_of( MT_Vector2D( 100, 100 ) )
+                                   ( MT_Vector2D( 101, 100 ) )
+                                   ( MT_Vector2D( 100, 101 ) ) ) );
+    locations.push_back( boost::make_shared< TER_Localisation >( TER_Localisation::eLine,
+             boost::assign::list_of( MT_Vector2D( 103, 100 ) )
+                                   ( MT_Vector2D( 103, 98 ) ) ) );
+    MT_Vector2D mtPoint( 98, 98 );
     std::vector< MT_Vector2D > listPoints;
-    listPoints.push_back( pointVector );
+    listPoints.push_back( mtPoint );
     boost::shared_ptr< TER_Localisation > point( boost::make_shared< TER_Localisation >() );
     point->Reset( TER_Localisation::ePoint, listPoints, 1 );
     locations.push_back( point );
@@ -174,6 +173,6 @@ BOOST_AUTO_TEST_CASE( GeometryComputeConvexHull )
     expected.push_back( MT_Vector2D( 100, 101 ) );
     expected.push_back( MT_Vector2D( 103, 100 ) );
     expected.push_back( MT_Vector2D( 103, 98 ) );
-    BOOST_CHECK_EQUAL( true, result->GetPoints() == expected );
+    BOOST_CHECK_EQUAL_COLLECTIONS( result->GetPoints().begin(), result->GetPoints().end(), expected.begin(), expected.end() );
     TER_World::DestroyWorld();
 }
