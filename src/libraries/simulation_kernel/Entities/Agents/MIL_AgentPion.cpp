@@ -1019,27 +1019,35 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[3] must be an enumeration" );
 
     sword::UnitAttributes::EnumUnitTiredness tiredness = static_cast< sword::UnitAttributes::EnumUnitTiredness >( paramTiredness.value( 0 ).enumeration() );
+    sword::UnitAttributes::EnumUnitMorale morale = static_cast< sword::UnitAttributes::EnumUnitMorale >( paramMorale.value( 0 ).enumeration() );
+    sword::UnitAttributes::EnumUnitExperience experience = static_cast< sword::UnitAttributes::EnumUnitExperience >( paramExperience.value( 0 ).enumeration() );
+    sword::UnitAttributes::EnumUnitStress stress = static_cast< sword::UnitAttributes::EnumUnitStress >( paramStress.value( 0 ).enumeration() );
+
+    if( tiredness < sword::UnitAttributes::EnumUnitTiredness_MIN || tiredness > sword::UnitAttributes::EnumUnitTiredness_MAX )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid tiredness enumeration");
+    if( morale < sword::UnitAttributes::EnumUnitMorale_MIN || morale > sword::UnitAttributes::EnumUnitMorale_MAX )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid morale enumeration");
+    if( experience < sword::UnitAttributes::EnumUnitExperience_MIN || experience > sword::UnitAttributes::EnumUnitExperience_MAX )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid experience enumeration");
+    if( stress < sword::UnitAttributes::EnumUnitStress_MIN || stress > sword::UnitAttributes::EnumUnitStress_MAX )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid stress enumeration");
+
     const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
     if( !pTiredness )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid tiredness enumeration" );
-    GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness, true );
-
-    sword::UnitAttributes::EnumUnitMorale morale = static_cast< sword::UnitAttributes::EnumUnitMorale >( paramMorale.value( 0 ).enumeration() );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid tiredness" );
     const PHY_Morale* pMoral = PHY_Morale::Find( morale );
     if( !pMoral )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid morale enumeration" );
-    GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
-
-    sword::UnitAttributes::EnumUnitExperience experience = static_cast< sword::UnitAttributes::EnumUnitExperience >( paramExperience.value( 0 ).enumeration() );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid morale" );
     const PHY_Experience* pExperience = PHY_Experience::Find( experience );
     if( !pExperience )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid experience enumeration" );
-    GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
-
-    sword::UnitAttributes::EnumUnitStress stress = static_cast< sword::UnitAttributes::EnumUnitStress >( paramStress.value( 0 ).enumeration() );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid experience" );
     const PHY_Stress* pStress = PHY_Stress::Find( stress );
     if( !pStress )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid stress enumeration" );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid stress" );
+
+    GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness, true );
+    GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
+    GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     GetRole< PHY_RolePion_HumanFactors >().SetStress( *pStress, true );
 }
 
