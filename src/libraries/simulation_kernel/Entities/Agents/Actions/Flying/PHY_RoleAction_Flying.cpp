@@ -157,9 +157,10 @@ void PHY_RoleAction_Flying::Apply( double rHeight )
 // Name: PHY_RoleAction_Flying::Update
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Flying::Update( bool /*bIsDead*/ )
+void PHY_RoleAction_Flying::Update( bool bIsDead )
 {
-    // NOTHING
+    if( bIsDead  )
+        SetFlyingHeight( 0 );
 }
 
 // -----------------------------------------------------------------------------
