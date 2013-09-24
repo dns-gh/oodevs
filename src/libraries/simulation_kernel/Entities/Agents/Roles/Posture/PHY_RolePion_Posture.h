@@ -81,14 +81,7 @@ public:
     virtual void EnableDiscreteMode();
     virtual void DisableDiscreteMode();
     //@}
-
-    //! @name Installation
-    //@{
-    virtual bool IsInstalled() const;
-    virtual bool IsUninstalled() const;
-    virtual void Install();
-    //@}
-
+    
     //! @name Perception
     //@{
     virtual void SetStealthFactor( double rValue );
@@ -107,8 +100,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const;
-    virtual void SendFullState( client::UnitAttributes& asnMsg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState( client::UnitAttributes& msg ) const;
     //@}
     
     //! @name Follow
@@ -124,7 +117,6 @@ private:
     bool HasChanged() const;
     bool ChangePosture( const PHY_Posture& newPosture );
     void ChangePostureCompletionPercentage( double rNewPercentage );
-    void Uninstall();
     bool UpdatePosture( bool bIsDead );
     //@}
 
@@ -143,20 +135,16 @@ private:
     double rTimingFactor_;
     double rStealthFactor_;
     // Installation
-    double              rInstallationState_;
-    bool                bInstallationSetUpInProgress_;
     bool bIsParkedOnEngineerArea_;
     bool bDiscreteModeEnabled_;
     bool bIsStealth_;
     // Network
-    bool                bInstallationStateHasChanged_;
     bool                bPostureHasChanged_;
     bool                bStealthFactorHasChanged_;
     bool                bPercentageHasChanged_;
     bool                bAmbianceSafetyHasChanged_;
-    mutable double      rLastPostureCompletionPercentageSent_;
-    mutable double      rLastInstallationStateSent_;
     bool                bAmbianceSafety_;
+    mutable double      rLastPostureCompletionPercentageSent_;
     //@}
 };
 

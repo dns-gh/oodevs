@@ -9,22 +9,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Posture.h"
+#include "AlgorithmsFactories.h"
+#include "ConsumptionComputer_ABC.h"
+#include "DetectionComputer.h"
+#include "MIL_Random.h"
+#include "MIL_Random_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "PostureComputer_ABC.h"
+#include "PostureComputerFactory_ABC.h"
+#include "UrbanLocationComputer_ABC.h"
+#include "VisionConeNotificationHandler_ABC.h"
+#include "MoveComputer_ABC.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
-#include "simulation_kernel/PostureComputerFactory_ABC.h"
-#include "simulation_kernel/ConsumptionComputer_ABC.h"
-#include "simulation_kernel/DetectionComputer.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "simulation_kernel/UrbanLocationComputer_ABC.h"
-#include "simulation_kernel/MoveComputer_ABC.h"
-#include "MIL_Random_ABC.h"
-#include "MIL_Random.h"
 
 using namespace posture;
 
@@ -43,19 +43,15 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
     , rPostureCompletionPercentage_        ( 0. )
     , rTimingFactor_                       ( 1. )
     , rStealthFactor_                      ( 1. ) // 1. == Non furtif
-    , rInstallationState_                  ( 0. )
     , bDiscreteModeEnabled_                ( false )
     , bPostureHasChanged_                  ( true  )
     , bStealthFactorHasChanged_            ( true  )
     , bPercentageHasChanged_               ( true  )
     , bAmbianceSafetyHasChanged_           ( true  )
     , bIsStealth_                          ( false )
-    , bInstallationSetUpInProgress_        ( false )
     , bIsParkedOnEngineerArea_             ( false )
-    , bInstallationStateHasChanged_        ( true )
-    , rLastPostureCompletionPercentageSent_( 0. )
-    , rLastInstallationStateSent_          ( 0. )
     , bAmbianceSafety_                     ( false )
+    , rLastPostureCompletionPercentageSent_( 0. )
 {
     // NOTHING
 }
@@ -87,8 +83,6 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
          >> rStealthFactor_
          >> bIsStealth_
          >> rLastPostureCompletionPercentageSent_
-         >> rInstallationState_
-         >> rLastInstallationStateSent_
          >> bIsParkedOnEngineerArea_
          >> bAmbianceSafety_;
 }
@@ -110,8 +104,6 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned 
          << rStealthFactor_
          << bIsStealth_
          << rLastPostureCompletionPercentageSent_
-         << rInstallationState_
-         << rLastInstallationStateSent_
          << bIsParkedOnEngineerArea_
          << bAmbianceSafety_;
 }
@@ -181,7 +173,6 @@ bool PHY_RolePion_Posture::UpdatePosture( bool bIsDead )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Update( bool bIsDead )
 {
-    Uninstall();
     bool updated = UpdatePosture( bIsDead );
     while( 1. == rPostureCompletionPercentage_ && updated )
         updated = UpdatePosture( bIsDead );
@@ -211,47 +202,6 @@ void PHY_RolePion_Posture::UnsetPosturePostePrepareGenie()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::Install
-// Created: NLD 2006-08-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::Install()
-{
-    bInstallationSetUpInProgress_ = true;
-    if( rInstallationState_ >= 1. )
-        return;
-    const double rTime = owner_.GetType().GetUnitType().GetInstallationTime();
-    if( rTime == 0 )
-        rInstallationState_ = 1.;
-    else
-    {
-        rInstallationState_ += 1. / rTime;
-        rInstallationState_ = std::min( 1., rInstallationState_ );
-    }
-    if( fabs( rLastInstallationStateSent_ - rInstallationState_ ) > rDeltaPercentageForNetwork || rInstallationState_ == 0. || rInstallationState_ == 1. )
-        bInstallationStateHasChanged_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::Uninstall
-// Created: NLD 2006-08-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::Uninstall()
-{
-    if( rInstallationState_ <= 0. || bInstallationSetUpInProgress_ )
-        return;
-    const double rTime = owner_.GetType().GetUnitType().GetUninstallationTime();
-    if( rTime == 0 )
-        rInstallationState_ = 0.;
-    else
-    {
-        rInstallationState_ -= 1. / rTime;
-        rInstallationState_ = std::max( 0., rInstallationState_ );
-    }
-    if( fabs( rLastInstallationStateSent_ - rInstallationState_ ) > rDeltaPercentageForNetwork || rInstallationState_ == 0. || rInstallationState_ == 1. )
-        bInstallationStateHasChanged_ = true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
@@ -269,11 +219,6 @@ void PHY_RolePion_Posture::SendChangedState( client::UnitAttributes& msg ) const
     }
     if( bStealthFactorHasChanged_ )
         msg().set_stealth( ( rStealthFactor_ < 1. ) );
-    if( bInstallationStateHasChanged_ )
-    {
-        msg().set_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
-        rLastInstallationStateSent_ = rInstallationState_;
-    }
     if( bAmbianceSafetyHasChanged_ )
     {
         msg().set_ambiance_safety( bAmbianceSafety_ );
@@ -291,9 +236,7 @@ void PHY_RolePion_Posture::SendFullState( client::UnitAttributes& msg ) const
     msg().set_posture_transition( static_cast< unsigned int >( rPostureCompletionPercentage_ * 100. ) );
     rLastPostureCompletionPercentageSent_ = rPostureCompletionPercentage_;
     msg().set_stealth( rStealthFactor_ < 1. );
-    msg().set_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
     msg().set_ambiance_safety( bAmbianceSafety_ );
-    rLastInstallationStateSent_ = rInstallationState_;
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +292,7 @@ void PHY_RolePion_Posture::DisableDiscreteMode()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Posture::HasChanged() const
 {
-    return bPostureHasChanged_ || bPercentageHasChanged_ || bInstallationStateHasChanged_ || bAmbianceSafetyHasChanged_;
+    return bPostureHasChanged_ || bPercentageHasChanged_ || bAmbianceSafetyHasChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -361,8 +304,6 @@ void PHY_RolePion_Posture::Clean()
     bPostureHasChanged_           = false;
     bPercentageHasChanged_        = false;
     bStealthFactorHasChanged_     = false;
-    bInstallationSetUpInProgress_ = false;
-    bInstallationStateHasChanged_ = false;
     bAmbianceSafetyHasChanged_    = false;
 }
 
@@ -407,24 +348,6 @@ void PHY_RolePion_Posture::SetPosture( const PHY_Posture& posture )
 bool PHY_RolePion_Posture::IsStealth() const
 {
     return bIsStealth_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::IsInstalled
-// Created: NLD 2006-08-10
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Posture::IsInstalled() const
-{
-    return rInstallationState_ >= 1.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::IsUninstalled
-// Created: NLD 2006-08-10
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Posture::IsUninstalled() const
-{
-    return rInstallationState_ <= 0.;
 }
 
 // -----------------------------------------------------------------------------

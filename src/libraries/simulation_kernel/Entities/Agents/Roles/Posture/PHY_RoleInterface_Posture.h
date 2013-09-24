@@ -59,13 +59,6 @@ public:
     virtual void DisableDiscreteMode() = 0;
     //@}
 
-    //! @name Installation
-    //@{
-    virtual bool IsInstalled() const = 0;
-    virtual bool IsUninstalled() const = 0;
-    virtual void Install() = 0;
-    //@}
-
     //! @name Perception
     //@{
     virtual void SetStealthFactor( double rValue ) = 0;
