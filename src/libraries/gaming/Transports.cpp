@@ -81,7 +81,7 @@ void Transports::DoUpdate( const sword::UnitDestruction& destruction )
     if( transporter_ && transporter_->GetId() == id )
         transporter_ = 0;
     boost::remove_erase_if( transported_,
-        [&]( const kernel::Agent_ABC* agent ) -> bool { return id == agent->GetId(); } );
+        [&]( const kernel::Agent_ABC* agent ) { return id == agent->GetId(); } );
 }
 
 // -----------------------------------------------------------------------------
