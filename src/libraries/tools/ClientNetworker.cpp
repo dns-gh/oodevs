@@ -22,42 +22,6 @@
 
 using namespace tools;
 
-namespace
-{
-
-struct CommitStatistics : public MessageCallback_ABC, boost::noncopyable
-{
-    CommitStatistics( MessageCallback_ABC& wrapped )
-        : wrapped_( wrapped )
-        , messages_( 0 )
-        , messagesSize_( 0 )
-    {
-    }
-
-    virtual void OnError( const std::string& endpoint, const std::string& error )
-    {
-        wrapped_.OnError( endpoint, error );
-    }
-
-    virtual void OnWarning( const std::string& endpoint, const std::string& warning )
-    {
-        wrapped_.OnWarning( endpoint, warning );
-    }
-
-    virtual void OnMessage( const std::string& endpoint, Message& message )
-    {
-        wrapped_.OnMessage( endpoint, message );
-        messages_++;
-        messagesSize_ += message.Size();
-    }
-
-    MessageCallback_ABC& wrapped_;
-    unsigned long messages_;
-    size_t messagesSize_;
-};
-
-}  // namespace
-
 // -----------------------------------------------------------------------------
 // Name: ClientNetworker constructor
 // Created: NLD 2006-09-20
@@ -120,6 +84,42 @@ void ClientNetworker::Disconnect()
 {
     sockets_->Disconnect();
 }
+
+namespace
+{
+
+struct CommitStatistics : public MessageCallback_ABC, boost::noncopyable
+{
+    CommitStatistics( MessageCallback_ABC& wrapped )
+        : wrapped_( wrapped )
+        , messages_( 0 )
+        , messagesSize_( 0 )
+    {
+    }
+
+    virtual void OnError( const std::string& endpoint, const std::string& error )
+    {
+        wrapped_.OnError( endpoint, error );
+    }
+
+    virtual void OnWarning( const std::string& endpoint, const std::string& warning )
+    {
+        wrapped_.OnWarning( endpoint, warning );
+    }
+
+    virtual void OnMessage( const std::string& endpoint, Message& message )
+    {
+        wrapped_.OnMessage( endpoint, message );
+        messages_++;
+        messagesSize_ += message.Size();
+    }
+
+    MessageCallback_ABC& wrapped_;
+    unsigned long messages_;
+    size_t messagesSize_;
+};
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: ClientNetworker::Update
