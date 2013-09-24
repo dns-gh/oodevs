@@ -57,29 +57,18 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonHull )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
 {
-    MT_Vector2D Point1( -10, 0 );
-    MT_Vector2D Point2( 0, 10 );
-    MT_Vector2D Point3( 10, 0 );
-    MT_Vector2D Point4( 0, 0 );
-    MT_Vector2D Point5( 0, -10 );
-    T_PointVector input;
-    input.push_back( Point1 );
-    input.push_back( Point2 );
-    input.push_back( Point3 );
-    input.push_back( Point4 );
-    input.push_back( Point5 );
+    T_PointVector input = boost::assign::list_of( MT_Vector2D( -10, 0 ) )
+                                                ( MT_Vector2D( 0, 10 ) )
+                                                ( MT_Vector2D( 10, 0 ) )
+                                                ( MT_Vector2D( 0, 0 ) )
+                                                ( MT_Vector2D( 0, -10 ) );
     TER_Polygon output;
     MIL_Geometry::Scale( output, input, 10.f );
-    T_PointVector result;
-    MT_Vector2D Point6( -20, 0 );
-    MT_Vector2D Point7( 0, 20 );
-    MT_Vector2D Point8( 20, 0 );
-    MT_Vector2D Point9( 0, -20 );
-    result.push_back( Point7 );
-    result.push_back( Point8 );
-    result.push_back( Point9 );
-    result.push_back( Point6 );
-    result.push_back( Point7 );
+    T_PointVector result = boost::assign::list_of( MT_Vector2D( 0, 20 ) )
+                                                 ( MT_Vector2D( 20, 0 ) )
+                                                 ( MT_Vector2D( 0, -20 ) )
+                                                 ( MT_Vector2D( -20, 0 ) )
+                                                 ( MT_Vector2D( 0, 20 ) );
     BOOST_CHECK_EQUAL_COLLECTIONS( output.GetBorderPoints().begin(), output.GetBorderPoints().end(), result.begin(), result.end() );
 }
 
@@ -89,13 +78,12 @@ BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
     {
         MT_Vector2D result;
         MT_Vector2D orientation( 1, 1 );
-        std::vector< MT_Vector2D > leftLimit;
-        leftLimit.push_back( MT_Vector2D(10,10) );
-        leftLimit.push_back( MT_Vector2D(20,10) );
-        std::vector< MT_Vector2D > rightLimit;
-        rightLimit.push_back( MT_Vector2D(10,20) );
-        rightLimit.push_back( MT_Vector2D(15,20) );
-        rightLimit.push_back( MT_Vector2D(20,30) );
+        std::vector< MT_Vector2D > leftLimit = 
+                boost::assign::list_of( MT_Vector2D( 10, 10 ) )
+                                      ( MT_Vector2D( 20, 10 ) );
+        std::vector< MT_Vector2D > rightLimit = boost::assign::list_of( MT_Vector2D( 10, 20 ) )
+                                                                      ( MT_Vector2D( 15, 20 ) )
+                                                                      ( MT_Vector2D( 20, 30 ) );
         MIL_Fuseau fuseau( orientation, leftLimit, rightLimit, 0, 0 );
         result = fuseau.GetPositionAtAdvance( 7 );
         BOOST_CHECK_EQUAL( result.rX_, 17 );
@@ -110,13 +98,11 @@ BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
     {
         MT_Vector2D result;
         MT_Vector2D orientation( 1, 1 );
-        std::vector< MT_Vector2D > leftLimit;
-        leftLimit.push_back( MT_Vector2D(100,100) );
-        leftLimit.push_back( MT_Vector2D(200,100) );
-        std::vector< MT_Vector2D > rightLimit;
-        rightLimit.push_back( MT_Vector2D(100,200) );
-        rightLimit.push_back( MT_Vector2D(150,200) );
-        rightLimit.push_back( MT_Vector2D(200,300) );
+        std::vector< MT_Vector2D > leftLimit = boost::assign::list_of( MT_Vector2D( 100, 100 ) )
+                                                                     ( MT_Vector2D( 200, 100 ) );
+        std::vector< MT_Vector2D > rightLimit = boost::assign::list_of( MT_Vector2D( 100, 200 ) )
+                                                                      ( MT_Vector2D( 150, 200 ) )
+                                                                      ( MT_Vector2D( 200, 300 ) );
         MIL_Fuseau fuseau( orientation, leftLimit, rightLimit, 0, 0 );
         result = fuseau.GetPositionAtAdvance( 70 );
         BOOST_CHECK_EQUAL( result.rX_, 170 );
@@ -131,12 +117,10 @@ BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
     {
         MT_Vector2D result;
         MT_Vector2D orientation( 1, 1 );
-        std::vector< MT_Vector2D > leftLimit;
-        leftLimit.push_back( MT_Vector2D(10,10) );
-        leftLimit.push_back( MT_Vector2D(30,10) );
-        std::vector< MT_Vector2D > rightLimit;
-        rightLimit.push_back( MT_Vector2D(10,30) );
-        rightLimit.push_back( MT_Vector2D(30,30) );
+        std::vector< MT_Vector2D > leftLimit = boost::assign::list_of( MT_Vector2D( 10, 10 ) )
+                                                                     ( MT_Vector2D( 30, 10 ) );
+        std::vector< MT_Vector2D > rightLimit = boost::assign::list_of( MT_Vector2D( 10, 30 ) )
+                                                                      ( MT_Vector2D( 30, 30 ) );
         MIL_Fuseau fuseau( orientation, leftLimit, rightLimit, 0, 0 );
         result = fuseau.GetPositionAtAdvance( 6 );
         BOOST_CHECK_EQUAL( result.rX_, 16 );
@@ -165,14 +149,14 @@ BOOST_AUTO_TEST_CASE( GeometryComputeConvexHull )
     locations.push_back( point );
     boost::shared_ptr< TER_Localisation > result = DEC_GeometryFunctions::ComputeConvexHull( locations );
     
-    T_PointVector expected;
-    expected.push_back( MT_Vector2D( 103, 98 ) );
-    expected.push_back( MT_Vector2D( 99, 97 ) );
-    expected.push_back( MT_Vector2D( 97, 97 ) );
-    expected.push_back( MT_Vector2D( 97, 99 ) );
-    expected.push_back( MT_Vector2D( 100, 101 ) );
-    expected.push_back( MT_Vector2D( 103, 100 ) );
-    expected.push_back( MT_Vector2D( 103, 98 ) );
+    T_PointVector expected = boost::assign::list_of( MT_Vector2D( 103, 98 ) )
+                                                   ( MT_Vector2D( 99, 97 ) )
+                                                   ( MT_Vector2D( 97, 97 ) )
+                                                   ( MT_Vector2D( 97, 99 ) )
+                                                   ( MT_Vector2D( 100, 101 ) )
+                                                   ( MT_Vector2D( 103, 100 ) )
+                                                   ( MT_Vector2D( 103, 98 ) );
+
     BOOST_CHECK_EQUAL_COLLECTIONS( result->GetPoints().begin(), result->GetPoints().end(), expected.begin(), expected.end() );
     TER_World::DestroyWorld();
 }
