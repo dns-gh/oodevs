@@ -66,13 +66,13 @@ void ADN_Crowds_Data::FireEffectProtectionInfos::ReadArchive( xml::xistream& inp
 // Name: ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output )
 {
     if( !GetCrossedElement() )
         return;
-    output << xml::start( "protection" )
-                << xml::attribute( "name", GetCrossedElement()->strName_ )
-                << xml::start( "unarmed" )
+    output << xml::start( "protection" );
+    ADN_CrossedRef< ADN_Armors_Data::ArmorInfos >::WriteArchive( output );
+    output      << xml::start( "unarmed" )
                     << xml::attribute( "destruction",                   rUnarmedDestruction_.GetData() /100.0 )
                     << xml::attribute( "repairable-with-evacuation",    rUnarmedFixableWithEvacuation_.GetData() /100.0 )
                     << xml::attribute( "repairable-without-evacuation", rUnarmedFixableWithoutEvacuation_.GetData() /100.0 )
@@ -218,7 +218,7 @@ void ADN_Crowds_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& output ) 
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true, "unit-size" )
     , rDensity_( 0. )
     , rMaxSpeed_( 0. )
 {
@@ -239,15 +239,15 @@ void ADN_Crowds_Data::SpeedEffectVolumeInfos::ReadArchive( xml::xistream& input 
 // Name: ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& output )
 {
     if( rDensity_ == 0. && rMaxSpeed_ == 0. )
         return;
     if( !GetCrossedElement() )
         return;
-    output << xml::start( "unit" )
-             << xml::attribute( "unit-size", GetCrossedElement()->strName_ )
-             << xml::attribute( "population-density", rDensity_  )
+    output << xml::start( "unit" );
+    ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >::WriteArchive( output );
+    output   << xml::attribute( "population-density", rDensity_  )
              << xml::attribute( "max-speed", rMaxSpeed_  )
            << xml::end;
 }

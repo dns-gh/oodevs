@@ -9,7 +9,7 @@ using namespace helpers;
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 AttritionInfos::AttritionInfos( ADN_Armors_Data::ArmorInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), ptr, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos(), ptr, true, "protection" )
     , rDestroy_( 0 )
     , rRepairWithEvac_( 0 )
     , rRepairNoEvac_( 0 )
@@ -48,12 +48,12 @@ void AttritionInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void AttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "attrition"*/ )
 {
-    output << xml::start( tag )
-        << xml::attribute( "protection", GetCrossedElement()->strName_ )
-        << xml::attribute( "destruction", rDestroy_.GetData() / 100.0 )
-        << xml::attribute( "repairable-with-evacuation", rRepairWithEvac_.GetData() / 100.0 )
-        << xml::attribute( "repairable-without-evacuation", rRepairNoEvac_.GetData() / 100.0 )
-        << xml::end;
+    output << xml::start( tag );
+    ADN_CrossedRef< ADN_Armors_Data::ArmorInfos >::WriteArchive( output );
+    output << xml::attribute( "destruction", rDestroy_.GetData() / 100.0 )
+           << xml::attribute( "repairable-with-evacuation", rRepairWithEvac_.GetData() / 100.0 )
+           << xml::attribute( "repairable-without-evacuation", rRepairNoEvac_.GetData() / 100.0 )
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
