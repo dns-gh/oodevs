@@ -72,8 +72,8 @@ public:
     virtual unsigned long GetNbMessagesSent() const; // $$$$ MCO : make a proxy on MessageSender_ABC instead
     virtual bool HasAnsweredSinceLastTick( const std::string& endpoint );
     // Return the total size of received messages in bytes.
-    size_t GetReceivedAmount() const;
-    size_t GetSentAmount() const;
+    uint64_t GetReceivedAmount() const;
+    uint64_t GetSentAmount() const;
     //@}
 
 protected:
@@ -117,7 +117,7 @@ private:
     bool                                            retry_;
     boost::thread                                   thread_;
     unsigned long                                   inMessages_;
-    size_t                                          inBytes_;
+    uint64_t                                        inBytes_;
    //@}
 };
 

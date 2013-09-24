@@ -120,7 +120,7 @@ bool SocketManager::HasAnsweredSinceLastTick( const std::string& endpoint )
     return it->second->HasAnsweredSinceLastTick();
 }
 
-size_t SocketManager::GetSentAmount() const
+uint64_t SocketManager::GetSentAmount() const
 {
     return outBytes_;
 }

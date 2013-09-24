@@ -223,7 +223,7 @@ unsigned long ClientNetworker::GetNbMessagesReceived() const
     return inMessages_;
 }
 
-size_t ClientNetworker::GetReceivedAmount() const
+uint64_t ClientNetworker::GetReceivedAmount() const
 {
     return inBytes_;
 }
@@ -237,7 +237,7 @@ unsigned long ClientNetworker::GetNbMessagesSent() const
     return sockets_->GetNbMessagesSent();
 }
 
-size_t ClientNetworker::GetSentAmount() const
+uint64_t ClientNetworker::GetSentAmount() const
 {
     return sockets_->GetSentAmount();
 }

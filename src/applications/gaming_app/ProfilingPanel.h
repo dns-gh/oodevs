@@ -66,8 +66,8 @@ private:
     QLabel* memoryUsage_;
     QLabel* virtualMemoryUsage_;
 
-    size_t previousTotalBytesReceived_;
-    size_t previousTotalBytesSent_;
+    uint64_t previousTotalBytesReceived_;
+    uint64_t previousTotalBytesSent_;
     unsigned long previousTotalMsgsReceived_;
     unsigned long previousTotalMsgsSent_;
     unsigned int ticks_;
