@@ -37,9 +37,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< PostureComputer_ABC > Create( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& posture,
-                                                         bool bIsDead, bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
-                                                         double rTimingFactor, bool isParkedOnEngineerArea ) const = 0;
+    virtual std::auto_ptr< PostureComputer_ABC > Create( const MIL_Random_ABC& random, const PostureTime_ABC& time, 
+                                                         const PHY_Posture& previousPosture, const PHY_Posture& currentPosture,
+                                                         bool bIsDead, bool bDiscreteModeEnabled, double rCompletionPercentage,
+                                                         double rStealthFactor, double rTimingFactor, bool isParkedOnEngineerArea ) const = 0;
     //@}
 };
 

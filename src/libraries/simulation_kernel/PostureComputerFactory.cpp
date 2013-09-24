@@ -35,10 +35,10 @@ PostureComputerFactory::~PostureComputerFactory()
 // Name: PostureComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-std::auto_ptr< PostureComputer_ABC > PostureComputerFactory::Create( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
-                                                                     bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
-                                                                     double rTimingFactor, bool isParkedOnEngineerArea ) const
+std::auto_ptr< PostureComputer_ABC > PostureComputerFactory::Create( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& previousPosture, const PHY_Posture& currentPosture,
+                                                         bool bIsDead, bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
+                                                         double rTimingFactor, bool isParkedOnEngineerArea ) const
 {
-    return std::auto_ptr< PostureComputer_ABC >( new DefaultPostureComputer( random, time, posture, bIsDead, bDiscreteModeEnabled, rCompletionPercentage,
+    return std::auto_ptr< PostureComputer_ABC >( new DefaultPostureComputer( random, time, previousPosture, currentPosture, bIsDead, bDiscreteModeEnabled, rCompletionPercentage,
                                                                              rStealthFactor, rTimingFactor, isParkedOnEngineerArea ) );
 }
