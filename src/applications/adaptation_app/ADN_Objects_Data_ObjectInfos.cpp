@@ -128,6 +128,15 @@ void ADN_Objects_Data_ObjectInfos::ReadGeometry( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data_ObjectInfos::GenerateNextType
+// Created: ABR 2013-09-24
+// -----------------------------------------------------------------------------
+std::string ADN_Objects_Data_ObjectInfos::GenerateNextType()
+{
+    return QString( "T_Object_%1" ).arg( ++typeId_ ).toStdString();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos::ReadArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
@@ -165,7 +174,7 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
     if( pointSize_.GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );
     if( strType_.GetData().empty() )
-        strType_ = QString( "T_Object_%1" ).arg( ++typeId_ ).toStdString();
+        strType_ = GenerateNextType();
     xos << xml::attribute( "type", strType_ );
     if( !description_.GetData().empty() )
         xos << xml::attribute( "description", description_ );

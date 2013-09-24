@@ -39,6 +39,11 @@ public:
     std::string GetAllGeometries() const;
     //@}
 
+    //! @name Static method
+    //@{
+    static std::string GenerateNextType();
+    //@}
+
 private:
     //! @name Helpers
     //@{

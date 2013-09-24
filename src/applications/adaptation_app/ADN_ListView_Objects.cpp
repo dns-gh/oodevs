@@ -320,7 +320,7 @@ namespace
             {
                 if( !object->strType_.GetData().empty() )
                     ADN_Workspace::GetWorkspace().GetProject().addedObjects_[ object->strName_.GetData() ] = object->strType_.GetData();
-                object->strType_ = object->strName_.GetData();
+                object->strType_ = ADN_Objects_Data_ObjectInfos::GenerateNextType();
             }
             return object;
         }
