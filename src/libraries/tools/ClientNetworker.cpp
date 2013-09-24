@@ -72,8 +72,8 @@ ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry
     , quit_            ( new WaitEvent() )
     , retry_           ( retry )
     , thread_          ( boost::bind( &ClientNetworker::Run, this ) )
-    , inBytes_         ( 0 )
     , inMessages_      ( 0 )
+    , inBytes_         ( 0 )
 {
     messageService_->RegisterErrorCallback( boost::bind( &ClientNetworker::ConnectionError, this, _1, _2 ) );
     messageService_->RegisterWarningCallback( boost::bind( &ClientNetworker::ConnectionWarning, this, _1, _2 ) );
@@ -235,6 +235,11 @@ size_t ClientNetworker::GetReceivedAmount() const
 unsigned long ClientNetworker::GetNbMessagesSent() const
 {
     return sockets_->GetNbMessagesSent();
+}
+
+size_t ClientNetworker::GetSentAmount() const
+{
+    return sockets_->GetSentAmount();
 }
 
 // -----------------------------------------------------------------------------

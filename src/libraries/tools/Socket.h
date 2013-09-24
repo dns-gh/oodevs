@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    int Send( unsigned long tag, Message& message );
+    size_t Send( unsigned long tag, Message& message );
     void StartReading();
     void Close();
     const std::string& Endpoint() const;

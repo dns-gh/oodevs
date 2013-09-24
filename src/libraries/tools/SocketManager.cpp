@@ -27,6 +27,7 @@ SocketManager::SocketManager( boost::shared_ptr< MessageCallback_ABC > message,
     , connection_    ( connection )
     , nbMessagesSent_( 0 )
     , timeOut_       ( timeOut )
+    , outBytes_      ( 0 )
 {
     // NOTHING
 }
@@ -103,8 +104,8 @@ void SocketManager::Send( const std::string& endpoint, unsigned long tag, Messag
     const CIT_Sockets it = sockets_.find( endpoint );
     if( it == sockets_.end() )
         throw MASA_EXCEPTION( "Not connected to " + endpoint );
-    /*int nMessagesQueued =*/ it->second->Send( tag, message );
-    // MT_LOG_INFO_MSG( "Queued " << nMessagesQueued << " messages for " << endpoint );
+    size_t sent = it->second->Send( tag, message );
+    outBytes_ += sent;
     ++nbMessagesSent_;
 }
 
@@ -118,4 +119,9 @@ bool SocketManager::HasAnsweredSinceLastTick( const std::string& endpoint )
     if( it == sockets_.end() )
         return false;
     return it->second->HasAnsweredSinceLastTick();
+}
+
+size_t SocketManager::GetSentAmount() const
+{
+    return outBytes_;
 }

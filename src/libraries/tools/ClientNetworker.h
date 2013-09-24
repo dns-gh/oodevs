@@ -73,6 +73,7 @@ public:
     virtual bool HasAnsweredSinceLastTick( const std::string& endpoint );
     // Return the total size of received messages in bytes.
     size_t GetReceivedAmount() const;
+    size_t GetSentAmount() const;
     //@}
 
 protected:

@@ -53,11 +53,6 @@ public:
     CommandHandler& GetCommands();
     //@}
 
-    //! @name Statistics
-    //@{
-    size_t GetSentAmount() const;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
