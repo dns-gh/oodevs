@@ -104,8 +104,7 @@ void SocketManager::Send( const std::string& endpoint, unsigned long tag, Messag
     const CIT_Sockets it = sockets_.find( endpoint );
     if( it == sockets_.end() )
         throw MASA_EXCEPTION( "Not connected to " + endpoint );
-    size_t sent = it->second->Send( tag, message );
-    outBytes_ += sent;
+    outBytes_ += it->second->Send( tag, message );
     ++nbMessagesSent_;
 }
 
