@@ -278,9 +278,14 @@ integration.initializeListenFrontElement = function()
     integration.listenFrontElementCallbacks[meKnowledge] = {}
 end
 
+-- if the entity is already an agent, return it, otherwise, transform the agenKnowledge into agent
 integration.getAgentFromKnowledge = function( entity )
-    local agent = DEC_ConnaissanceAgent_EnAgent(entity.source)
-    return CreateKnowledge(integration.ontology.types.agent, agent)
+    if masalife.brain.core.class.isOfType( entity, integration.ontology.types.agent) then
+        return entity
+    else
+        local agent = DEC_ConnaissanceAgent_EnAgent(entity.source)
+        return CreateKnowledge(integration.ontology.types.agent, agent)
+    end
 end
 
 integration.getAgentFromAutomatKnowledge = function( entity )
