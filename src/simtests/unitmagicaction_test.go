@@ -704,6 +704,42 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 	CheckUnitSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
 }
 
+func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	f2 := CreateFormation(c, client, 2)
+
+	// Create 2 automats
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	a2 := CreateAutomat(c, client, f2.Id, 2)
+
+	// Create 2 mortar units
+	const infMortarTroopType = 31
+	reporter, err := client.CreateUnit(a1.Id, infMortarTroopType, swapi.Point{X: -15.8219, Y: 28.2456})
+	c.Assert(err, IsNil)
+	target, err := client.CreateUnit(a2.Id, infMortarTroopType, swapi.Point{X: -15.8219, Y: 28.2456})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindUnit(target.Id).Neutralized == false
+	})
+
+	const identifiedLevel = 0
+	targetKnowledge, err := client.AddUnitKnowledgeInKnowledgeGroup(a1.KnowledgeGroupId, target.Id, identifiedLevel)
+	c.Assert(err, IsNil)
+
+	// error: no tasker
+	const dotation81mmHighExplosiveShell = 9
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, 1)
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindUnit(target.Id).Neutralized == true
+	})
+}
+
 func (s *TestSuite) TestPcChangeSuperior(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
