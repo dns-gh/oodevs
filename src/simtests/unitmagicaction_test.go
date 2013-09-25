@@ -736,7 +736,8 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(target.Id).Neutralized == true
+		unit := data.FindUnit(target.Id)
+		return unit.Neutralized == true && unit.OperationalState < 100
 	})
 }
 
