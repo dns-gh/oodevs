@@ -106,8 +106,6 @@ public:
 
     unsigned long GetMemory() const;                //!< last memory usage
     unsigned long GetVirtualMemory() const;         //!< last virtual memory usage
-    unsigned long GetShortPathfinds() const;        //!< last short pathfinds count
-    unsigned long GetLongPathfinds() const;         //!< last long pathfinds count
     //@}
 
 private:

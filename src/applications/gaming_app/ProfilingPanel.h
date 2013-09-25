@@ -65,11 +65,9 @@ private:
     QLabel* networkTotalMsgsSent_;
     QLabel* memoryUsage_;
     QLabel* virtualMemoryUsage_;
-    QLabel* shortPathfindsCount_;
-    QLabel* longPathfindsCount_;
 
-    unsigned long previousTotalBytesReceived_;
-    unsigned long previousTotalBytesSent_;
+    uint64_t previousTotalBytesReceived_;
+    uint64_t previousTotalBytesSent_;
     unsigned long previousTotalMsgsReceived_;
     unsigned long previousTotalMsgsSent_;
     unsigned int ticks_;

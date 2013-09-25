@@ -378,21 +378,3 @@ unsigned long Simulation::GetVirtualMemory() const
 {
     return profiling_.GetVirtualMemory();
 }
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::GetShortPathfinds
-// Created: SBO 2007-06-19
-// -----------------------------------------------------------------------------
-unsigned long Simulation::GetShortPathfinds() const
-{
-    return profiling_.GetShortPathfinds();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::GetLongPathfinds
-// Created: SBO 2007-06-19
-// -----------------------------------------------------------------------------
-unsigned long Simulation::GetLongPathfinds() const
-{
-    return profiling_.GetLongPathfinds();
-}

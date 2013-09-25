@@ -77,22 +77,6 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
         virtualMemory_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Usage (MiB)" ) );
         tabWidget_->addTab( vBox, tools::translate( "ProfilingPanel", "Memory" ) );
     }
-
-    {
-        Q3VBox* vBox = new Q3VBox( tabWidget_ );
-        Q3HBox* box = new Q3HBox( vBox );
-        new QLabel( tools::translate( "ProfilingPanel", "Shorts: " ), box );
-        shortPathfindsCount_ = new QLabel( box );
-        shortPathfinds_ = new StatisticsWidget( vBox );
-        shortPathfinds_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Count" ) );
-
-        box = new Q3HBox( vBox );
-        new QLabel( tools::translate( "ProfilingPanel", "Longs: " ), box );
-        longPathfindsCount_ = new QLabel( box );
-        longPathfinds_ = new StatisticsWidget( vBox );
-        longPathfinds_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Count" ) );
-        tabWidget_->addTab( vBox, tools::translate( "ProfilingPanel", "Pathfinds" ) );
-    }
     controllers_.Update( *this );
 }
 
@@ -107,11 +91,12 @@ ProfilingPanel::~ProfilingPanel()
 
 namespace
 {
-    QString ToUSI( unsigned long bytes )
+    QString ToUSI( uint64_t bytes )
     {
         static const char* units[] = { "B", "KiB", "MiB", "GiB" };
+        static const int unitsCount = sizeof( units ) / sizeof( *units );
         unsigned int i = 0;
-        while( bytes >> 10 > 0 && i < 4 )
+        while( ( bytes / 1024 ) > 0 && i < unitsCount - 1 )
         {
             bytes /= 1024;
             ++i;
@@ -130,16 +115,18 @@ void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& )
 {
     ++ticks_;
     {
-        unsigned long bytesReceived = network_.GetReceivedAmount();
+        const uint64_t bytesReceived = network_.GetReceivedAmount();
         networkTotalBytesReceived_->setText( ToUSI( bytesReceived ) + " - " + ToUSI( bytesReceived / ticks_ ) + "/tick" );
-        networkBytesReceived_->AddValue( ticks_, bytesReceived - previousTotalBytesReceived_ );
+        networkBytesReceived_->AddValue( ticks_,
+                static_cast< unsigned long >( bytesReceived - previousTotalBytesReceived_ ));
         previousTotalBytesReceived_ = bytesReceived;
     }
 
     {
-        unsigned long bytesSent = network_.GetSentAmount();
+        const uint64_t bytesSent = network_.GetSentAmount();
         networkTotalBytesSent_->setText( ToUSI( bytesSent ) + " - " + ToUSI( bytesSent / ticks_ ) + "/tick" );
-        networkBytesSent_->AddValue( ticks_, bytesSent - previousTotalBytesSent_ );
+        networkBytesSent_->AddValue( ticks_,
+                static_cast< unsigned long >( bytesSent - previousTotalBytesSent_ ));
         previousTotalBytesSent_ = bytesSent;
     }
 
@@ -167,17 +154,5 @@ void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& )
         unsigned long vm = simulation_.GetVirtualMemory();
         virtualMemory_->AddValue( ticks_, unsigned long( vm / 1048576. ) );
         virtualMemoryUsage_->setText( ToUSI( vm ) );
-    }
-
-    {
-        unsigned long shortPathfinds = simulation_.GetShortPathfinds();
-        shortPathfinds_->AddValue( ticks_, shortPathfinds );
-        shortPathfindsCount_->setText( locale().toString( static_cast< unsigned int >( shortPathfinds ) ) );
-    }
-
-    {
-        unsigned long longPathfinds = simulation_.GetLongPathfinds();
-        longPathfinds_->AddValue( ticks_, longPathfinds );
-        longPathfindsCount_->setText( locale().toString( static_cast< unsigned int >( longPathfinds ) ) );
     }
 }

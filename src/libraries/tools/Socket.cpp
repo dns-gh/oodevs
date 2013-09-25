@@ -61,9 +61,9 @@ namespace
 // Name: Socket::Send
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-int Socket::Send( unsigned long tag, Message& message )
+size_t Socket::Send( unsigned long tag, Message& message )
 {
-    int size = 0;
+    const size_t queued = message.Size();
     std::pair< unsigned long, Message > pair( tag, message );
     {
         boost::mutex::scoped_lock locker( mutex_ );
@@ -73,13 +73,13 @@ int Socket::Send( unsigned long tag, Message& message )
             boost::asio::async_write( *socket_, message.MakeOutputBuffer( tag ),
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
-        size = static_cast< int >( queue_.size() );
-        if( 0 == ( size % bigSize ))
+        const size_t queued = queue_.size();
+        if( 0 == ( queued % bigSize ))
         {
-            MT_LOG_INFO_MSG( "Queuing " << size << " messages queued for " << endpoint_ );
+            MT_LOG_INFO_MSG( "Queuing " << queued << " messages queued for " << endpoint_ );
         }
     }
-    return size;
+    return queued;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
         }
-        size_t size = queue_.size();
+        const size_t size = queue_.size();
         if( size && ( 0 == ( size % bigSize )))
         {
             MT_LOG_INFO_MSG( "There are " << size << " messages queued for " << endpoint_ );

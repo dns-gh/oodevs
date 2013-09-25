@@ -53,12 +53,6 @@ public:
     CommandHandler& GetCommands();
     //@}
 
-    //! @name Statistics
-    //@{
-    unsigned long GetReceivedAmount() const;
-    unsigned long GetSentAmount() const;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

@@ -50,6 +50,7 @@ public:
     //@{
     virtual unsigned long GetNbMessagesSent() const { return nbMessagesSent_; }
     virtual bool HasAnsweredSinceLastTick( const std::string& endpoint );
+    uint64_t GetSentAmount() const;
     //@}
 
 private:
@@ -74,6 +75,7 @@ private:
     const DWORD timeOut_;
     T_Sockets sockets_;
     unsigned long nbMessagesSent_;
+    uint64_t outBytes_;
     //@}
 };
 

@@ -2648,22 +2648,6 @@ This data can&apos;t be projected.</source>
         <translation>Memoria</translation>
     </message>
     <message>
-        <source>Shorts: </source>
-        <translation>Cortos: </translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation>Cuenta</translation>
-    </message>
-    <message>
-        <source>Longs: </source>
-        <translation>Largos: </translation>
-    </message>
-    <message>
-        <source>Pathfinds</source>
-        <translation>Búsqueda de rutas</translation>
-    </message>
-    <message>
         <source>Incoming bytes: </source>
         <translation type="unfinished"></translation>
     </message>

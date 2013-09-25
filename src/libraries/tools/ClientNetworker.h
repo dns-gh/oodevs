@@ -68,9 +68,12 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetNbMessagesReceived() const; // $$$$ MCO : make a proxy on MessageDispatcher_ABC instead
+    virtual unsigned long GetNbMessagesReceived() const;
     virtual unsigned long GetNbMessagesSent() const; // $$$$ MCO : make a proxy on MessageSender_ABC instead
     virtual bool HasAnsweredSinceLastTick( const std::string& endpoint );
+    // Return the total size of received messages in bytes.
+    uint64_t GetReceivedAmount() const;
+    uint64_t GetSentAmount() const;
     //@}
 
 protected:
@@ -113,6 +116,8 @@ private:
     std::string                                     host_;
     bool                                            retry_;
     boost::thread                                   thread_;
+    unsigned long                                   inMessages_;
+    uint64_t                                        inBytes_;
    //@}
 };
 
