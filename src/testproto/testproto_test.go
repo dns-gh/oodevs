@@ -10,9 +10,31 @@ package testproto
 
 import (
 	"code.google.com/p/goprotobuf/proto"
+	"flag"
 	. "launchpad.net/gocheck"
 	"testing"
 )
+
+// Command line options are not used but left here so gosword tests can
+// be run with the same arguments from ant. Without these, go test whines input
+// options are unsupported instead of ignoring them.
+var (
+	application string
+	rootdir     string
+	rundir      string
+	testPort    int
+)
+
+func init() {
+	flag.StringVar(&application, "application", "",
+		"path to simulation_app executable")
+	flag.StringVar(&rootdir, "root-dir", "",
+		"path to simulation root directory")
+	flag.StringVar(&rundir, "run-dir", "",
+		"path application run directory, default to application directory")
+	flag.IntVar(&testPort, "test-port", 35000,
+		"base port for spawned simulations")
+}
 
 func Test(t *testing.T) { TestingT(t) }
 
@@ -46,5 +68,5 @@ func (s *TestSuite) TestNewEnumValue(c *C) {
 		},
 	})
 	c.Assert(err, IsNil)
-	c.Assert(msg.EnumNewValue1Msg.GetValue(), IsNil)
+	c.Assert(msg.EnumNewValue1Msg.GetValue(), NotNil)
 }
