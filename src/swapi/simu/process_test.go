@@ -137,6 +137,51 @@ func (s *TestSuite) TestDelayedStartupFailure(c *C) {
 	}
 }
 
+func (s *TestSuite) TestRotatingLogs(c *C) {
+	opts := MakeOpts()
+
+	exDir := opts.GetExerciseDir()
+	session := CreateDefaultSession()
+	session.EndTick = 2
+	session.Paused = false
+	session.SimLog.Count = 3
+	session.SimLog.Size = 256
+	session.SimLog.Unit = "bytes"
+	sessionPath, err := WriteNewSessionFile(session, exDir)
+	c.Assert(err, IsNil)
+	sessionDir := filepath.Dir(sessionPath)
+	opts.DebugDir = sessionDir
+
+	opts.SessionName = filepath.Base(sessionDir)
+	sim, err := StartSim(opts)
+	defer sim.Stop()
+	sim.Wait(60 * time.Second)
+	c.Assert(sim.Success(), Equals, true)
+
+	// Check log files
+	found := map[string]struct{}{}
+	matcher := regexp.MustCompile(`Sim(?:\.\d{8}T\d{6})?\.log(\.\d+)?`)
+	entries, err := ioutil.ReadDir(sessionDir)
+	c.Assert(err, IsNil)
+	for _, d := range entries {
+		matches := matcher.FindStringSubmatch(d.Name())
+		if len(matches) == 0 {
+			continue
+		}
+		found[matches[1]] = struct{}{}
+		st, err := os.Stat(filepath.Join(sessionDir, d.Name()))
+		c.Assert(err, IsNil)
+		c.Assert(st.IsDir(), Equals, false)
+		// Files are rotated when the size exceeds the threshold, keep some
+		// room for an additional line.
+		c.Assert(st.Size(), Lesser, int64(2*session.SimLog.Size))
+	}
+	c.Assert(len(found), Equals, session.SimLog.Count)
+	c.Assert(found[""], NotNil)
+	c.Assert(found["1"], NotNil)
+	c.Assert(found["2"], NotNil)
+}
+
 // Test starting gaming process
 func (s *TestSuite) TestStartGamingFromSim(c *C) {
 	simOpts := MakeOpts()
