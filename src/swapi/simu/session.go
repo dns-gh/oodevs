@@ -18,10 +18,17 @@ import (
 	"time"
 )
 
+type LogOpts struct {
+	Size  int
+	Count int
+	Unit  string
+}
+
 type Session struct {
 	GamingServer string
 	EndTick      int
 	Paused       bool
+	SimLog       LogOpts
 }
 
 func ReadBool(value string) bool {
@@ -42,12 +49,24 @@ func (s *Session) syncSession(x *xmlSession) error {
 	s.GamingServer = x.GamingNetwork.Server
 	s.EndTick = x.Sim.Time.EndTick
 	s.Paused = ReadBool(x.Sim.Time.Paused)
+	s.SimLog.Count = x.Sim.Debug.LogFiles
+	if s.SimLog.Count == 1 {
+		s.SimLog.Count = 0
+	}
+	s.SimLog.Size = x.Sim.Debug.LogSize
+	s.SimLog.Unit = x.Sim.Debug.SizeUnit
 	return nil
 }
 
 func (s *Session) syncXml(x *xmlSession) error {
 	x.GamingNetwork.Server = s.GamingServer
 	x.Dispatcher.Network.Server = s.GamingServer
+	x.Sim.Debug.LogFiles = s.SimLog.Count
+	if x.Sim.Debug.LogFiles == 1 {
+		x.Sim.Debug.LogFiles = 0
+	}
+	x.Sim.Debug.LogSize = s.SimLog.Size
+	x.Sim.Debug.SizeUnit = s.SimLog.Unit
 	x.Sim.Time.EndTick = s.EndTick
 	x.Sim.Time.Paused = WriteBool(s.Paused)
 	return nil
@@ -85,9 +104,12 @@ type xmlDebug struct {
 	Decisional        string `xml:"decisional,attr"`
 	DiaDebugger       string `xml:"diadebugger,attr"`
 	DiaDebuggerPort   string `xml:"diadebuggerport,attr"`
+	LogFiles          int    `xml:"logfiles,attr,omitempty"`
+	LogSize           int    `xml:"logsize,attr,omitempty"`
 	NetworkLogger     string `xml:"networklogger,attr"`
 	NetworkLoggerPort string `xml:"networkloggerport,attr"`
 	Pathfind          string `xml:"pathfind,attr"`
+	SizeUnit          string `xml:"sizeunit,attr,omitempty"`
 }
 
 type xmlDecisional struct {
