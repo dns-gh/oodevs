@@ -129,7 +129,10 @@ void MergingTacticalHierarchies::UpdateSymbol()
     UpdateLevel();
     entity_.Get< SymbolHierarchy_ABC >().ResetSymbol( highestCount );
     if( TacticalHierarchies* superior = SuperiorHierarchy() )
-        entity_.Get< SymbolHierarchy_ABC >().UpdateKarma( superior->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+    {
+        if( const kernel::Diplomacies_ABC* diplomacy = superior->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
+            entity_.Get< SymbolHierarchy_ABC >().UpdateKarma( diplomacy->GetKarma() );
+    }
     if( GetSymbol() != oldSymbol || GetLevel() != oldLevel )
         controller_.Update( *static_cast< Symbol_ABC* >( this ) );
 }
