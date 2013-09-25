@@ -162,6 +162,7 @@ public:
     virtual bool IsInEmissionBlackout() const = 0;
     virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const double time, bool bBoundOnPath ) const = 0;
     virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const double time, bool bBoundOnPath ) const = 0;
+    virtual std::string ExecuteScript( const std::string& funcName, const std::string& script );
     //@}
 
     //! @name Error management
