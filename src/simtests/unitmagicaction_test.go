@@ -722,54 +722,54 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	target, err := client.CreateUnit(a2.Id, infMortarTroopType, swapi.Point{X: -15.8219, Y: 28.2456})
 	c.Assert(err, IsNil)
 
-    // Waiting for the target initialization
+	// Waiting for the target initialization
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-        unit := data.FindUnit(target.Id)
+		unit := data.FindUnit(target.Id)
 		return unit.Neutralized == false && unit.OperationalState == 100
 	})
 
-    // Adding the target in reporter's knowledges
+	// Adding the target in reporter's knowledges
 	const identifiedLevel = 0
 	targetKnowledge, err := client.AddUnitKnowledgeInKnowledgeGroup(a1.KnowledgeGroupId, target.Id, identifiedLevel)
 	c.Assert(err, IsNil)
 
-    // Launching a magic strike with good parameters
+	// Launching a magic strike with good parameters
 	const dotation81mmHighExplosiveShell = 9
 	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, 1)
 	c.Assert(err, IsNil)
 
-    // testing strike effect: neutralization and attrition
+	// testing strike effect: neutralization and attrition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		unit := data.FindUnit(target.Id)
 		return unit.Neutralized == true && unit.OperationalState < 100
 	})
-    
-    // Testing wrong reporter identifier
-    err = client.CreateFireOrderOnUnit(0, targetKnowledge.Id, dotation81mmHighExplosiveShell, 1)
-    c.Assert(err, IsSwordError, "error_invalid_unit")
-    
-    // Testing wrong knowledge identifier
-    err = client.CreateFireOrderOnUnit(reporter.Id, 0, dotation81mmHighExplosiveShell, 1)
-    c.Assert(err, IsSwordError, "error_invalid_parameter")
-    
-    // Testing wrong dotation identifier
-    err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, 0, 1)
-    c.Assert(err, IsSwordError, "error_invalid_parameter")
-    
-    // Testing direct fire dotation
-    err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, 0, 1)
-    c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-    // Testing negative or empty iterations
-    err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, -1)
-    c.Assert(err, IsSwordError, "error_invalid_parameter")
-    err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, 0)
-    c.Assert(err, IsSwordError, "error_invalid_parameter")
-    
-    // Testing strike on non illuminated target with guided dotation
-    const dotation120mmHightExplosiveShellGuided = 34
-    err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation120mmHightExplosiveShellGuided, 1)
-    c.Assert(err, IsSwordError, "error_invalid_parameter")
+	// Testing wrong reporter identifier
+	err = client.CreateFireOrderOnUnit(0, targetKnowledge.Id, dotation81mmHighExplosiveShell, 1)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// Testing wrong knowledge identifier
+	err = client.CreateFireOrderOnUnit(reporter.Id, 0, dotation81mmHighExplosiveShell, 1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Testing wrong dotation identifier
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, 0, 1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Testing direct fire dotation
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, 0, 1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Testing negative or empty iterations
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, -1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, 0)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Testing strike on non illuminated target with guided dotation
+	const dotation120mmHightExplosiveShellGuided = 34
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation120mmHightExplosiveShellGuided, 1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 }
 
 func (s *TestSuite) TestPcChangeSuperior(c *C) {

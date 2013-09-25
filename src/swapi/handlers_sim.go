@@ -85,6 +85,8 @@ func (model *Model) handleUnitCreation(m *sword.SimToClient_Content) error {
 		EquipmentDotations: map[uint32]*EquipmentDotation{},
 		LentEquipments:     []*LentEquipment{},
 		BorrowedEquipments: []*BorrowedEquipment{},
+		OperationalState:   100,
+		Neutralized:        false,
 	}
 	if !model.data.addUnit(unit) {
 		return fmt.Errorf("cannot insert created unit: %d", unit.Id)
@@ -112,7 +114,7 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 		unit.DebugBrain = *mm.BrainDebug
 	}
 	if mm.RawOperationalState != nil {
-		unit.OperationalState = uint32(mm.GetRawOperationalState())
+		unit.OperationalState = *mm.RawOperationalState
 	}
 	if mm.Neutralized != nil {
 		unit.Neutralized = *mm.Neutralized

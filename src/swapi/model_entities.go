@@ -160,7 +160,7 @@ type Unit struct {
 	TransporterId      uint32
 	Adhesions          map[uint32]float32
 	HumanFactors       HumanFactors
-	OperationalState   uint32
+	OperationalState   int32
 	Neutralized        bool
 }
 
