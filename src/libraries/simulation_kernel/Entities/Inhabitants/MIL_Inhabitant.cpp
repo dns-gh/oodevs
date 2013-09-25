@@ -54,6 +54,8 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
         ::new( population )MIL_Inhabitant( *pType );
 }
 
+#define MASA_BADPARAM( name ) MASA_BADPARAM_ASN( sword::MagicActionAck_ErrorCode, sword::MagicActionAck::error_invalid_parameter, name )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant constructor
 // Created: SLG 2010-11-29
@@ -324,12 +326,6 @@ void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
     case sword::UnitMagicAction::inhabitant_change_health_state:
         OnReceiveMsgChangeHealthState( msg );
         break;
-    case sword::UnitMagicAction::inhabitant_change_alerted_state:
-        OnReceiveMsgChangeAlertedState( msg );
-        break;
-    case sword::UnitMagicAction::inhabitant_change_confined_state:
-        OnReceiveMsgChangeConfinedState( msg );
-        break;
     case sword::UnitMagicAction::inhabitant_change_affinities:
         pAffinities_->OnReceiveMsgChangeAffinities( msg );
         break;
@@ -342,30 +338,39 @@ void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
     }
 }
 
+namespace
+{
+    void CheckQuantity( const sword::MissionParameters& parameters, unsigned int index )
+    {
+        const sword::MissionParameter& parameter = parameters.elem( index );
+        if( !parameter.value().Get( 0 ).has_quantity() )
+            throw MASA_BADPARAM( "parameters[" + boost::lexical_cast< std::string >( index )
+            + "] must be a Quantity" );
+        int quantity = parameter.value().Get( 0 ).quantity();
+        if( quantity < 0 )
+            throw MASA_BADPARAM( "parameters[" + boost::lexical_cast< std::string >( index )
+                + "] must be a positive number" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::OnReceiveMsgChangeHealthState
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
 {
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
+        throw MASA_BADPARAM( "invalid parameters count, 3 parameters expected" );
 
-    const sword::MissionParameter& healthy = msg.parameters().elem( 0 );
-    const sword::MissionParameter& wounded = msg.parameters().elem( 1 );
-    const sword::MissionParameter& dead    = msg.parameters().elem( 2 );
+    const sword::MissionParameters& parameters = msg.parameters();
+    CheckQuantity( parameters, 0 );
+    CheckQuantity( parameters, 1 );
+    CheckQuantity( parameters, 2 );
 
-    if( healthy.value_size() != 1 || !healthy.value().Get( 0 ).has_quantity() ||
-        wounded.value_size() != 1 || !wounded.value().Get( 0 ).has_quantity() ||
-        dead.value_size() != 1    || !dead.value().Get( 0 ).has_quantity() ||
-        healthy.value().Get( 0 ).quantity() < 0 ||
-        wounded.value().Get( 0 ).quantity() < 0 ||
-        dead.value().Get( 0 ).quantity() < 0 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+    nNbrHealthyHumans_ = parameters.elem( 0 ).value().Get( 0 ).quantity();
+    nNbrWoundedHumans_ = parameters.elem( 1 ).value().Get( 0 ).quantity();
+    nNbrDeadHumans_ = parameters.elem( 2 ).value().Get( 0 ).quantity();
 
-    nNbrHealthyHumans_ = healthy.value().Get( 0 ).quantity();
-    nNbrWoundedHumans_ = wounded.value().Get( 0 ).quantity();
-    nNbrDeadHumans_ = dead.value().Get( 0 ).quantity();
     healthStateChanged_ = true;
     pLivingArea_->DistributeHumans( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ );
     if( movingObjectId_ )
@@ -374,30 +379,6 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
         if( obj )
             obj->Get< CrowdCapacity >().SetDensityFactor( static_cast< double >( nNbrHealthyHumans_ ) /( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::OnReceiveMsgChangeAlertedState
-// Created: BCI 2011-02-03
-// -----------------------------------------------------------------------------
-void MIL_Inhabitant::OnReceiveMsgChangeAlertedState( const sword::UnitMagicAction& msg )
-{
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-    pLivingArea_->SetAlerted( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::OnReceiveMsgChangeConfinedState
-// Created: BCI 2011-02-03
-// -----------------------------------------------------------------------------
-void MIL_Inhabitant::OnReceiveMsgChangeConfinedState( const sword::UnitMagicAction& msg )
-{
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-
-    pLivingArea_->SetConfined( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
 }
 
 // -----------------------------------------------------------------------------

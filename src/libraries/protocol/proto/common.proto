@@ -2061,12 +2061,24 @@ message UnitMagicAction {
         //! @deprecated
         create_wound                      = 31;
         //! A change of health state on inhabitant magic action
+        //! The tasker must be a population identifier.
+        //! parameters[0], Quantity: healty persons count.
+        //! parameters[1], Quantity: wounded persons count.
+        //! parameters[2], Quantity: dead persons count.
         inhabitant_change_health_state    = 32;
-        //! A change of affinities on inhabitant magic action
+        //! Change population affinities.
+        //! The tasker must be a population identifier.
+        //! parameters[0], List: a parameter value list:
+        //! value { list { identifier: 1 }
+        //!         list { aReal: -0.55  } }
+        //! Identifier, a party identifier
+        //! AReal, a real between -1 and 1.
+        //!    -1 is enemy affinity and.
+        //!     1 is friend affinity.
         inhabitant_change_affinities      = 33;
-        //! A change of alerted state on inhabitant magic action
+        //! @deprecated
         inhabitant_change_alerted_state   = 34;
-        //! A change of confined state on inhabitant magic action
+        //! @deprecated
         inhabitant_change_confined_state  = 35;
         //! A change of affinities on unit magic action
         unit_change_affinities            = 36;
