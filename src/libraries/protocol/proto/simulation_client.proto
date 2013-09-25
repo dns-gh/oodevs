@@ -478,10 +478,9 @@ message LogSupplyChangeQuotasAck {
     optional ErrorCode error_code = 1;
 }
 
-/** @struct ActionCreateFireOrderAck
-    @brief Acknowledges a creation fire order request
-    @see ActionCreateFireOrder
-*/
+//! DEPRECATED in 5.3
+//!
+//! This message is replaced by UnitActionAck.
 message ActionCreateFireOrderAck {
     /** @enum ErrorCode
         @brief Reason for the failure of the create fire order.
