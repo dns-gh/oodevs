@@ -14,6 +14,7 @@
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
