@@ -342,7 +342,7 @@ void PHY_DotationCategory_IndirectFire::ApplyStrikeEffect( const MIL_Agent_ABC& 
         {
             PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
             targetRoleComposantes.Neutralize();
-            targetRoleComposantes.ApplyDirectFireOnMajorComposantes( dotationCategory_, fireResult );
+            targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, rInterventionTypeFired );
 
             if( firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 MIL_Report::PostEvent( firer, report::eRC_TirIndirectFratricide );
