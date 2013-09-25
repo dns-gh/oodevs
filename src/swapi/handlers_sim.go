@@ -178,6 +178,12 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	if mm.PostureTransition != nil {
 		unit.Posture.Transition = *mm.PostureTransition
 	}
+	if mm.Adhesions != nil {
+		unit.Adhesions = map[uint32]float32{}
+		for _, value := range mm.Adhesions.Adhesion {
+			unit.Adhesions[value.GetParty().GetId()] = value.GetValue()
+		}
+	}
 	return nil
 }
 

@@ -155,17 +155,17 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	c.Assert(len(crowd.Adhesions), Equals, 0)
 
 	// Error : missing parameter
-	err := client.ChangeAdhesions(crowd.Id, map[uint32]float32{})
+	err := client.ChangeCrowdAdhesions(crowd.Id, map[uint32]float32{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error : adhesion must be between -1 and 1
 	adhesions := map[uint32]float32{0: 1.1, 1: 5.2}
-	err = client.ChangeAdhesions(crowd.Id, adhesions)
+	err = client.ChangeCrowdAdhesions(crowd.Id, adhesions)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Change crowd adhesions
 	adhesions = map[uint32]float32{0: 0.7, 1: -0.5}
-	err = client.ChangeAdhesions(crowd.Id, adhesions)
+	err = client.ChangeCrowdAdhesions(crowd.Id, adhesions)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.FindCrowd(crowd.Id).Adhesions) != 0
@@ -174,7 +174,7 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
 	// No change adhesions if new adhesions are invalid
-	err = client.ChangeAdhesions(crowd.Id,
+	err = client.ChangeCrowdAdhesions(crowd.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	newAdhesions = client.Model.GetData().FindCrowd(crowd.Id).Adhesions
@@ -182,7 +182,7 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 
 	// Partial change
 	adhesions = map[uint32]float32{0: 0.5}
-	err = client.ChangeAdhesions(crowd.Id, map[uint32]float32{0: 0.5})
+	err = client.ChangeCrowdAdhesions(crowd.Id, map[uint32]float32{0: 0.5})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		updated := data.FindCrowd(crowd.Id)

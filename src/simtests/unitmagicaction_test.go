@@ -1622,3 +1622,52 @@ func (s *TestSuite) TestUnitChangePosture(c *C) {
 			unit.Posture.Transition == 0
 	})
 }
+
+func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	u1 := CreateUnit(c, client, a1.Id)
+
+	// By default, adhesions are empty
+	c.Assert(len(u1.Adhesions), Equals, 0)
+
+	// Error : missing parameter
+	err := client.ChangeUnitAdhesions(u1.Id, map[uint32]float32{})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid parameters count, one parameter expected`)
+
+	// Error : adhesion must be between -1 and 1
+	adhesions := map[uint32]float32{0: 1.1, 1: 5.2}
+	err = client.ChangeUnitAdhesions(u1.Id, adhesions)
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: adhesion must be between -1 and 1`)
+
+	// Change unit adhesions
+	adhesions = map[uint32]float32{0: 0.7, 1: -0.5}
+	err = client.ChangeUnitAdhesions(u1.Id, adhesions)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindUnit(u1.Id).Adhesions) != 0
+	})
+	newAdhesions := client.Model.GetData().FindUnit(u1.Id).Adhesions
+	c.Assert(adhesions, DeepEquals, newAdhesions)
+
+	// No change adhesions if new adhesions are invalid
+	err = client.ChangeUnitAdhesions(u1.Id,
+		map[uint32]float32{0: -1.1, 1: -5.2})
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: adhesion must be between -1 and 1`)
+	newAdhesions = client.Model.GetData().FindUnit(u1.Id).Adhesions
+	c.Assert(adhesions, DeepEquals, newAdhesions)
+
+	// Partial change
+	adhesions = map[uint32]float32{0: 0.5}
+	err = client.ChangeUnitAdhesions(u1.Id, map[uint32]float32{0: 0.5})
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		updated := data.FindUnit(u1.Id)
+		return math.Abs(float64(updated.Adhesions[0]-0.5)) < 1e-5
+	})
+	newAdhesions = client.Model.GetData().FindUnit(u1.Id).Adhesions
+	c.Assert(adhesions, DeepEquals, newAdhesions)
+}

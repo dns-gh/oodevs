@@ -960,13 +960,24 @@ func (c *Client) ChangeHealthState(crowdId uint32, healthy, wounded, contaminate
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) ChangeAdhesions(crowdId uint32, adhesions map[uint32]float32) error {
+func (c *Client) ChangeCrowdAdhesions(crowdId uint32, adhesions map[uint32]float32) error {
 	params := MakeParameters()
 	if len(adhesions) != 0 {
 		params = MakeParameters(MakeAdhesions(adhesions))
 	}
 	msg := createMagicActionMessage(params, makeCrowdTasker(crowdId),
 		sword.UnitMagicAction_crowd_change_affinities.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangeUnitAdhesions(unitId uint32, adhesions map[uint32]float32) error {
+	params := MakeParameters()
+	if len(adhesions) != 0 {
+		params = MakeParameters(MakeAdhesions(adhesions))
+	}
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_unit_change_affinities.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
