@@ -1610,16 +1610,16 @@ func (s *TestSuite) TestUnitChangePosture(c *C) {
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\] must be a valid posture enumeration value`)
 
 	// Valid: change posture
-	c.Assert(client.Model.GetUnit(11).Posture.Old, Not(Equals), 3)
-	c.Assert(client.Model.GetUnit(11).Posture.New, Not(Equals), 4)
-	c.Assert(client.Model.GetUnit(11).Posture.Transition, Not(Equals), 100)
-	err = client.ChangePosture(11, sword.UnitAttributes_short_stopping)
+	unit := client.Model.GetUnit(11)
+	c.Assert(unit.Posture.Old, Not(Equals), sword.UnitAttributes_parked)
+	c.Assert(unit.Posture.New, Not(Equals), sword.UnitAttributes_parked_on_self_prepared_area)
+	err = client.ChangePosture(unit.Id, sword.UnitAttributes_parked)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.FindUnit(11)
-		return unit.Posture.Old == sword.UnitAttributes_short_stopping &&
-			unit.Posture.New == sword.UnitAttributes_parked &&
-			unit.Posture.Transition == 0
+		u := data.FindUnit(unit.Id)
+		return u.Posture.Old == sword.UnitAttributes_parked &&
+			u.Posture.New == sword.UnitAttributes_parked_on_self_prepared_area &&
+			u.Posture.Transition > 0
 	})
 }
 
