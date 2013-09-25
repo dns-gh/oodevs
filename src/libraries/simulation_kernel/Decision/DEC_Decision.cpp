@@ -903,7 +903,7 @@ bool PathListFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRe
     if( element.ToList( list ) )
     {
         knowledgeCreateFunction( refMission, "beginlist", name );
-        for( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >::const_iterator it = list.begin(); it != list.end(); ++it )
+        for( auto it = list.begin(); it != list.end(); ++it )
             PathFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it );
         knowledgeCreateFunction( refMission, "endlist", name );
         return true;
@@ -1428,7 +1428,7 @@ bool LocationCompositeListFunctionBM( sword::Brain& brain, directia::tools::bind
     if( element.ToList( list ) )
     {
         knowledgeCreateFunction( refMission, "beginlist", name );
-        for( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >::const_iterator it = list.begin(); it != list.end(); ++it )
+        for( auto it = list.begin(); it != list.end(); ++it )
         {
             PointFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
         || PathFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
