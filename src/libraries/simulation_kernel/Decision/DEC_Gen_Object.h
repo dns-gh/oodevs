@@ -97,6 +97,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( DEC_Gen_Object )
 
-#include "DEC_Gen_Object.inl"
-
 #endif // __DEC_Gen_Object_h_
