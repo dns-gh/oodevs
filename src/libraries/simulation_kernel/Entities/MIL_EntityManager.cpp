@@ -1933,7 +1933,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
     if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
         throw MASA_BADPARAM_UNIT( "parameters[1] must be a dotation category "
-                                    "identifier that can be used for indirect fire" );
+                                  "identifier that can be used for indirect fire" );
 
     if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
         throw MASA_BADPARAM_UNIT( "parameters[1] is a guided dotation but the target is not illuminated" );
@@ -1944,7 +1944,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
         throw MASA_BADPARAM_UNIT("parameters[2] must be a real" );
 
     const float value = iterations.value().Get( 0 ).areal();
-    if( value < 0.f )
+    if( value <= 0.f )
         throw MASA_BADPARAM_UNIT( "parameters[2] must be a positive real number" );
 
     PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
