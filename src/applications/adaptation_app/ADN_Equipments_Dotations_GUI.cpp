@@ -166,11 +166,8 @@ void ADN_Equipments_Dotations_GUI::AddRow( int row, void* data )
     CategoryInfos* pCategory = static_cast< CategoryInfos* >( data );
     if( !pCategory )
         return;
-    if( pCategory->GetCrossedElement() )
-    {
-        AddItem( row, 0, data, &pCategory->GetCrossedElement()->strName_, ADN_StandardItem::eString );
-        AddItem( row, 1, data, &pCategory->rNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
-        AddItem( row, 2, data, &pCategory->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-        AddItem( row, 3, data, &pCategory->rNormalizedConsumption_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-    }
+    AddItem( row, 0, data, &pCategory->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pCategory->rNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pCategory->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 3, data, &pCategory->rNormalizedConsumption_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

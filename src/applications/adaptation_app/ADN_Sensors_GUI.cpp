@@ -520,10 +520,8 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
             if( nSubRow > 0 )
                 pTable->AddItem( nRow + nSubRow, 0, &sensor, sensor.strName_.GetData().c_str() );
             ADN_Sensors_Data::TargetInfos& target = **it2;
-            if( !target.GetCrossedElement() )
-                continue;
             int row = nRow + nSubRow;
-            pTable->AddItem( row, 1, &sensor, target.GetCrossedElement()->strName_.GetData().c_str() );
+            pTable->AddItem( row, 1, &sensor, &target.strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
             pTable->GetDelegate().AddSpinBox( row, row, 2, 2, 0, std::numeric_limits< int >::max() );
             pTable->AddItem( row, 2, &sensor, &target.rDistanceDetection_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
             pTable->GetDelegate().AddDoubleSpinBox( row, row, 3, 2 + eNbrUnitPosture, 0, 1, 0.001, 3 );

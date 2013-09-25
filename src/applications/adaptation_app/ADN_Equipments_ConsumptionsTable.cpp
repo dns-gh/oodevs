@@ -75,7 +75,7 @@ void ADN_Equipments_ConsumptionsTable::AddRow( int /* row */, void* data )
         }
     }
     if( !resourceItem )
-        resourceItem = AddItem( numRows(), 0, data, &catInfos->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+        resourceItem = AddItem( numRows(), 0, data, &catInfos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
 
     AddItem( resourceItem->row(), 1 + pConsumption->nConsumptionType_, data, &pConsumption->nQuantityUsedPerHour_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

@@ -138,10 +138,9 @@ void ADN_FuneralPackagingResources_GUI::AddNewDotation( ADN_Resources_Data::Cate
 void ADN_FuneralPackagingResources_GUI::AddRow( int row, void* data )
 {
     ADN_FuneralPackagingResource* pInfo = static_cast< ADN_FuneralPackagingResource* >( data );
-    if( !pInfo || !pInfo->GetCrossedElement() )
+    if( !pInfo )
         return;
-
-    AddItem( row, 0, data, &pInfo->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 0, data, &pInfo->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pInfo->processDuration_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
     AddItem( row, 2, data, &pInfo->terminal_, ADN_StandardItem::eBool, Qt::ItemIsUserCheckable );
 }

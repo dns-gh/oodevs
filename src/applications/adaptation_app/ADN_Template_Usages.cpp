@@ -100,8 +100,8 @@ bool ADN_Template_Usages::Contains( ADN_Urban_Data::AccommodationInfos& accommod
 void ADN_Template_Usages::AddRow( int row, void* data )
 {
     ADN_Urban_Data::UsageTemplateInfos* pInfos = static_cast< ADN_Urban_Data::UsageTemplateInfos* >( data );
-    if( !pInfos || !pInfos->GetCrossedElement() )
+    if( !pInfos )
         return;
-    AddItem( row, 0, data, &pInfos->GetCrossedElement()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 0, data, &pInfos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pInfos->proportion_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

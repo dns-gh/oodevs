@@ -67,10 +67,9 @@ ADN_Units_Composantes_GUI::~ADN_Units_Composantes_GUI()
 void ADN_Units_Composantes_GUI::AddRow( int row, void* data )
 {
     UnitComposanteInfos* composante = static_cast< UnitComposanteInfos* >( data );
-    if( !composante || !composante->GetCrossedElement() )
+    if( !composante )
         return;
-
-    AddItem( row, 0, data, &composante->GetCrossedElement()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 0, data, &composante->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &composante->nNb_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     AddItem( row, 2, data, &composante->bMajor_, ADN_StandardItem::eBool, Qt::ItemIsEditable );
     AddItem( row, 3, data, &composante->bLoadable_, ADN_StandardItem::eBool, Qt::ItemIsEditable );
