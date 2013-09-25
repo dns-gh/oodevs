@@ -29,8 +29,8 @@ ADN_MissionGenObjectTypes_Table::ADN_MissionGenObjectTypes_Table( QCheckBox* all
     horizontalHeaders << tr( "Type" ) << tr( "Allowed" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     delegate_.AddCheckBoxOnColumn( 1 );
-    proxyModel_.setDynamicSortFilter( true );
-    proxyModel_.sort( 0, Qt::AscendingOrder );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0, Qt::AscendingOrder );
     setSortingEnabled( false );
     connect( all_, SIGNAL( stateChanged( int ) ), this, SLOT( OnStateChanged( int ) ) );
 }

@@ -459,14 +459,6 @@ Parked engine running</source>
         <source>Percentage</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>New warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete warning</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_Data</name>
@@ -6112,14 +6104,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Percentage (PH)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Ph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete Ph</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -459,14 +459,6 @@ Parked engine running</source>
         <source>Percentage</source>
         <translation type="unfinished">النسبة المئوية</translation>
     </message>
-    <message>
-        <source>New warning</source>
-        <translation type="unfinished">تحذير جديد</translation>
-    </message>
-    <message>
-        <source>Delete warning</source>
-        <translation type="unfinished">حذف إنذار</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_Data</name>
@@ -6118,14 +6110,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Percentage (PH)</source>
         <translation type="unfinished">النسبة المئوية (PH)</translation>
-    </message>
-    <message>
-        <source>New Ph</source>
-        <translation type="unfinished">الرقم الهيدروجيني جديدة</translation>
-    </message>
-    <message>
-        <source>Delete Ph</source>
-        <translation type="unfinished">حذف الرقم الهيدروجيني</translation>
     </message>
 </context>
 <context>

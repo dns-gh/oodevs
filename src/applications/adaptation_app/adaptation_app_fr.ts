@@ -471,14 +471,6 @@ Arrêt moteur allumé</translation>
         <source>Percentage</source>
         <translation>Pourcentage</translation>
     </message>
-    <message>
-        <source>New warning</source>
-        <translation>Nouvelle alerte</translation>
-    </message>
-    <message>
-        <source>Delete warning</source>
-        <translation>Effacer cette alerte</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_Data</name>
@@ -6153,14 +6145,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Percentage (PH)</source>
         <translation>Pourcentage (PH)</translation>
-    </message>
-    <message>
-        <source>New Ph</source>
-        <translation>Nouveau PH</translation>
-    </message>
-    <message>
-        <source>Delete Ph</source>
-        <translation>Supprimer PH</translation>
     </message>
 </context>
 <context>

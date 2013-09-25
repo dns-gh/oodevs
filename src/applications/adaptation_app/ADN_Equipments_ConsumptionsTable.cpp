@@ -34,8 +34,8 @@ ADN_Equipments_ConsumptionsTable::ADN_Equipments_ConsumptionsTable( const QStrin
     horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
     verticalHeader()->setVisible( false );
 
-    proxyModel_.setDynamicSortFilter( true );
-    proxyModel_.sort( 0, Qt::DescendingOrder );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0, Qt::DescendingOrder );
     setSortingEnabled( false );
 
     hideColumn( 0 );

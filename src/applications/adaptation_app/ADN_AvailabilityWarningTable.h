@@ -32,14 +32,6 @@ public:
     virtual void OnContextMenu( const QPoint& pt );
     virtual void AddRow( int row, void* data );
     //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void CreateNewElement();
-    void DeleteCurrentElement();
-    //@}
-
 };
 
 #endif // __ADN_AvailabilityWarningTable_h_

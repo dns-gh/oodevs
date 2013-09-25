@@ -20,7 +20,6 @@
 // =============================================================================
 class ADN_Weapons_PhTable : public ADN_Table
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -33,9 +32,6 @@ public:
     virtual void AddRow( int row, void* data );
     virtual void OnContextMenu( const QPoint& pt );
     virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
-
-    void CreateNewElement();
-    void DeleteCurrentElement();
     //@}
 };
 

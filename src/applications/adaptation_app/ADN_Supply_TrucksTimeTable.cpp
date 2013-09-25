@@ -41,6 +41,8 @@ ADN_Supply_TrucksTimeTable::ADN_Supply_TrucksTimeTable( const QString& objectNam
     verticalHeader()->setVisible( false );
     delegate_.AddSpinBoxOnColumn( 0, 1, INT_MAX );
     delegate_.AddDelayEditOnColumn( 1 );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0, Qt::AscendingOrder );
 }
 
 // -----------------------------------------------------------------------------

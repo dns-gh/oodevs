@@ -42,8 +42,8 @@ ADN_Equipments_Dotations_GUI::ADN_Equipments_Dotations_GUI( const QString& objec
     verticalHeader()->setVisible( false );
     setMaximumHeight( 270 );
 
-    proxyModel_.setDynamicSortFilter( true );
-    proxyModel_.sort( 0, Qt::DescendingOrder );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0, Qt::DescendingOrder );
     setSortingEnabled( false );
 
     if( !( visibleColumns & eColumn_Category ) )

@@ -37,8 +37,8 @@ ADN_ThresholdConcentrationsTable::ADN_ThresholdConcentrationsTable( const QStrin
     delegate_.AddDoubleSpinBoxOnColumn( 2, 0., std::numeric_limits< double >::max(), 1, 5 );
     delegate_.AddCheckBoxOnColumn( 3 );
 
-    proxyModel_.setDynamicSortFilter( true );
-    proxyModel_.sort( 2, Qt::AscendingOrder );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 2, Qt::AscendingOrder );
     setSortingEnabled( false );
 }
 

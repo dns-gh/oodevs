@@ -26,8 +26,8 @@ ADN_MissionTypes_Table::ADN_MissionTypes_Table( const QString& objectName, ADN_C
     horizontalHeaders << qApp->translate( "ADN_Missions_GUI", "Type" ) << qApp->translate( "ADN_Missions_GUI", "Allowed" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     delegate_.AddCheckBoxOnColumn( 1 );
-    proxyModel_.setDynamicSortFilter( true );
-    proxyModel_.sort( 0, Qt::AscendingOrder );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0, Qt::AscendingOrder );
     setSortingEnabled( false );
 }
 
