@@ -36,10 +36,6 @@ MOCK_BASE_CLASS( MockRoleInterface_Posture, PHY_RoleInterface_Posture )
     MOCK_METHOD( EnableDiscreteMode, 0 );
     MOCK_METHOD( DisableDiscreteMode, 0 );
 
-    MOCK_METHOD( IsInstalled, 0 );
-    MOCK_METHOD( IsUninstalled, 0 );
-    MOCK_METHOD( Install, 0 );
-
     MOCK_METHOD( SetStealthFactor, 1 );
 
     MOCK_METHOD( IsStealth, 0 );
