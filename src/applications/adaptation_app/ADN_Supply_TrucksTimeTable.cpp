@@ -43,6 +43,7 @@ ADN_Supply_TrucksTimeTable::ADN_Supply_TrucksTimeTable( const QString& objectNam
     delegate_.AddDelayEditOnColumn( 1 );
     proxyModel_->setDynamicSortFilter( true );
     proxyModel_->sort( 0, Qt::AscendingOrder );
+    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------

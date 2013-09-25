@@ -38,6 +38,7 @@ ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( const QStr
     verticalHeader()->setVisible( false );
     delegate_.AddDelayEditOnColumn( 1 );
     delegate_.AddCheckBoxOnColumn( 2 );
+    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->AddItem( 0 );
 }
 
 //-----------------------------------------------------------------------------
