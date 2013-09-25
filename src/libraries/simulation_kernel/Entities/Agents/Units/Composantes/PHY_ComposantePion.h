@@ -181,6 +181,7 @@ public:
     const PHY_RoleInterface_Composantes& GetRole() const;
     double GetWeight() const;
     bool IsMajor() const;
+    bool IsAway() const;
     const PHY_ComposanteState& GetState() const;
     double GetMaxSpeed() const;
     double GetMaxSpeed( const TerrainData& data ) const;

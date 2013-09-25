@@ -186,7 +186,7 @@ void PHY_RolePion_Transported::RecoverHumanTransporters()
 {
     if( pTransporter_ )
         return;
-
+    owner_->Apply( &transport::TransportNotificationHandler_ABC::RecoverComposantes );
     vHumanTransporterPosition_.Reset();
     bHasChanged_ = true;
 }

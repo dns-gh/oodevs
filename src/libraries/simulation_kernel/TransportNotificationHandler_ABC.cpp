@@ -106,3 +106,12 @@ void TransportNotificationHandler_ABC::CheckConsistency()
 {
 
 }
+
+// -----------------------------------------------------------------------------
+// Name: TransportNotificationHandler_ABC::RecoverComposantes
+// Created: LGY 2013-09-25
+// -----------------------------------------------------------------------------
+void TransportNotificationHandler_ABC::RecoverComposantes()
+{
+    // NOTHING
+}
