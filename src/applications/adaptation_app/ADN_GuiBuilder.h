@@ -629,7 +629,7 @@ void ADN_GuiBuilder::SetValidator( QRegExpValidator& validator, E_Validator nVal
     if( nValidator == eNone )
         return;
     assert( nValidator == eDIAType );
-    validator.setRegExp( QRegExp( "([\\x0020-\\x007E])*" ) ); // $$$$ ABR 2013-09-19: ASCII printable characters
+    validator.setRegExp( QRegExp( "([ -~])*" ) ); // $$$$ 2013-09-19: ASCII printable characters
 }
 
 // -----------------------------------------------------------------------------

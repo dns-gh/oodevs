@@ -67,16 +67,6 @@ public:
     ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbols_[ 4 ];
     T_CapacityMap capacities_;
     //@}
-
-    //! @name Static member data
-    //@{
-    static unsigned int typeId_;
-    static int VAL;
-    //@}
-    template< typename T > struct Enumerator
-    {
-        enum E { value = VAL++ };
-    };
 };
 
 #endif // __ADN_Objects_Data_ObjectInfos_h_

@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2013 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
@@ -20,18 +20,15 @@ public:
         : QRegExpValidator( regExp, parent )
     {}
 
-    ~ADN_ExcludeRegExpValidator(){}
-
-    virtual void fixUp( QString& input ) const
+    virtual void fixup( QString& input ) const
     {
         int index = regExp().lastIndexIn( input );
         if( index != -1 )
             input.remove( index, 1 );
     }
-
     virtual State validate( QString& input, int& ) const
     {
-        return ( regExp().lastIndexIn( input ) == -1 ) ? Acceptable : Invalid;
+        return regExp().lastIndexIn( input ) == -1 ? Acceptable : Invalid;
     }
 };
 

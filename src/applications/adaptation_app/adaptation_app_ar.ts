@@ -2731,10 +2731,6 @@ PNG (*.png)
         <translation type="unfinished">متوفرة بدون بعثة</translation>
     </message>
     <message>
-        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
-        <translation type="unfinished">لا يمكن أن يحتوي اسم البعثة حرف التالي:/ &lt;&gt; * \: &quot;|</translation>
-    </message>
-    <message>
         <source>Definition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2837,6 +2833,10 @@ PNG (*.png)
     <message>
         <source>DIA type</source>
         <translation type="unfinished">نوع ديا</translation>
+    </message>
+    <message>
+        <source>Mission name cannot contain the following characters: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

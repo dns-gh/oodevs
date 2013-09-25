@@ -15,16 +15,16 @@
 namespace
 {
     static const std::string locations[ 4 ] = { "polygon", "point", "line", "circle" };
+    const std::string baseType = "T_Object_";
+    unsigned int typeId = 0;
 }
-
-unsigned int ADN_Objects_Data_ObjectInfos::typeId_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
-    : pointSize_ ( 0. )
+    : pointSize_ ( 0 )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eObjects, "objects" ) );
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
@@ -133,7 +133,7 @@ void ADN_Objects_Data_ObjectInfos::ReadGeometry( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 std::string ADN_Objects_Data_ObjectInfos::GenerateNextType()
 {
-    return QString( "T_Object_%1" ).arg( ++typeId_ ).toStdString();
+    return baseType + QString::number( ++typeId ).toStdString();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,12 +154,12 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
         >> xml::list( "geometry", *this, &ADN_Objects_Data_ObjectInfos::ReadGeometry )
         >> xml::end
         >> xml::list( *this, &ADN_Objects_Data_ObjectInfos::ReadCapacityArchive );
-    if( strType_.GetData().substr( 0, 9 ) == "T_Object_" )
+    if( strType_.GetData().substr( 0, baseType.size() ) == baseType )
     {
-        QString strId = strType_.GetData().substr( 9, strType_.GetData().size() ).c_str();
+        QString strId = strType_.GetData().substr( baseType.size() ).c_str();
         unsigned int id = strId.toUInt();
-        if( id && id > typeId_ )
-            typeId_ = id;
+        if( id && id > typeId )
+            typeId = id;
     }
 }
 

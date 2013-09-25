@@ -2746,10 +2746,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Definition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2852,6 +2848,10 @@ PNG (*.png)
     <message>
         <source>DIA type</source>
         <translation type="unfinished">Tipo DIA</translation>
+    </message>
+    <message>
+        <source>Mission name cannot contain the following characters: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

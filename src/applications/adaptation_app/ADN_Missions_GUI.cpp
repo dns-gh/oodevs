@@ -135,7 +135,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     ADN_EditLine_ABC* nameField = builder.AddLocalizedField( missions, pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->SetToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
+    nameField->SetToolTip( tr( "Mission name cannot contain the following characters: %1" ).arg( "/ < > * \\ : \" |" ) );
     builder.SetValidator( new ADN_ExcludeRegExpValidator( "[/\"<>|*\?:\\\\]", nameField ) );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "DIA type" ), vInfosConnectors[ eDiaType ], 0, eDIAType );
     if( eMissionType != eMissionType_FragOrder )
