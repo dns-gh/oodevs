@@ -1445,7 +1445,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Equipments in maintenance or surrendered state have been reset to on site fixable.</source>
-        <translation>Des équipements rendus ou en maintenance ont été passés à l'état "réparable sur place".</translation>
+        <translation>Des équipements rendus ou en maintenance ont été passés à l&apos;état &quot;réparable sur place&quot;.</translation>
     </message>
 </context>
 <context>
