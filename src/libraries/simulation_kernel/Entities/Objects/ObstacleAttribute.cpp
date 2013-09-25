@@ -145,15 +145,6 @@ bool ObstacleAttribute::IsTimesUndefined() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::IsActivable
-// Created: JCR 2008-06-12
-// -----------------------------------------------------------------------------
-bool ObstacleAttribute::IsActivable() const
-{
-    return !bActivated_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::IsActivated
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------

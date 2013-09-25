@@ -54,7 +54,6 @@ public:
     int GetActivityTime() const;
     int GetEndActivity() const;
     bool IsTimesUndefined() const;
-    bool IsActivable() const;
     bool IsActivated() const;
     void Activate( bool activate );
     //@}
