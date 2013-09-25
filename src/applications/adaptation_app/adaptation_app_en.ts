@@ -2743,10 +2743,6 @@ PNG (*.png)
         <translation>Available without mission</translation>
     </message>
     <message>
-        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
-        <translation>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</translation>
-    </message>
-    <message>
         <source>Definition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2844,6 +2840,14 @@ PNG (*.png)
     </message>
     <message>
         <source>Update Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished">DIA type</translation>
+    </message>
+    <message>
+        <source>Mission name cannot contain the following characters: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3541,6 +3545,10 @@ PNG (*.png)
     <message>
         <source>Description</source>
         <translation type="unfinished">Description</translation>
+    </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished">DIA type</translation>
     </message>
 </context>
 <context>

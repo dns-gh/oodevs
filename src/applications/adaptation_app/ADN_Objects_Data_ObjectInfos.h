@@ -20,13 +20,12 @@
 */
 // Created: ABR 2011-12-06
 // =============================================================================
-class ADN_Objects_Data_ObjectInfos : public ADN_RefWithName
+class ADN_Objects_Data_ObjectInfos : public ADN_RefWithLocalizedName
 {
 public:
     //! @name Constructors/Destructor
     //@{
              ADN_Objects_Data_ObjectInfos();
-    explicit ADN_Objects_Data_ObjectInfos( const std::string& name );
     virtual ~ADN_Objects_Data_ObjectInfos();
     //@}
 
@@ -38,6 +37,11 @@ public:
     virtual void CheckValidity();
     void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     std::string GetAllGeometries() const;
+    //@}
+
+    //! @name Static method
+    //@{
+    static std::string GenerateNextType();
     //@}
 
 private:
@@ -63,15 +67,6 @@ public:
     ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbols_[ 4 ];
     T_CapacityMap capacities_;
     //@}
-
-    //! @name Static member data
-    //@{
-    static int VAL;
-    //@}
-    template< typename T > struct Enumerator
-    {
-        enum E { value = VAL++ };
-    };
 };
 
 #endif // __ADN_Objects_Data_ObjectInfos_h_

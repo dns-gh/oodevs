@@ -2755,10 +2755,6 @@ PNG (*.png)</translation>
         <translation>Disponible sans mission</translation>
     </message>
     <message>
-        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
-        <translation>Un nom de mission ne peut contenir les caractères suivants : / &lt; &gt; * \ : &quot; |</translation>
-    </message>
-    <message>
         <source>Definition</source>
         <translation>Définition</translation>
     </message>
@@ -2857,6 +2853,14 @@ PNG (*.png)</translation>
     <message>
         <source>Update Preview</source>
         <translation>Mise à jour Prévisualisation</translation>
+    </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished">Type DIA</translation>
+    </message>
+    <message>
+        <source>Mission name cannot contain the following characters: %1</source>
+        <translation>Un nom de mission ne peut contenir les caractères suivants : %1</translation>
     </message>
 </context>
 <context>
@@ -3553,6 +3557,10 @@ PNG (*.png)</translation>
     <message>
         <source>Description</source>
         <translation>Description</translation>
+    </message>
+    <message>
+        <source>DIA type</source>
+        <translation type="unfinished">Type DIA</translation>
     </message>
 </context>
 <context>

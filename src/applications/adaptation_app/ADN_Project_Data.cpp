@@ -554,6 +554,8 @@ namespace
         unsigned int objectId = 0;
         for( auto it = objects.begin(); it != objects.end(); ++it, ++objectId )
         {
+            if( ( *it )->strType_.GetData().empty() )
+                ( *it )->strType_ = ADN_Objects_Data_ObjectInfos::GenerateNextType();
             xos << xml::start( "object" )
                     << xml::attribute( "id", objectId )
                     << xml::attribute( "type", ( *it )->strType_.GetData() )

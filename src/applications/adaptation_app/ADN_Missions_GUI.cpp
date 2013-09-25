@@ -30,37 +30,9 @@
 #include "ADN_TextEdit.h"
 #include "ADN_HtmlViewer.h"
 #include "ADN_enums.h"
+#include "ADN_ExcludeRegExpValidator.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/lexical_cast.hpp>
-
-namespace
-{
-    class MissionNameValidator : public QValidator
-    {
-    public:
-        MissionNameValidator( QObject * parent = 0 )
-            : QValidator( parent )
-            , regExp_( "[/\"<>|*\?:\\\\]" )
-        {}
-
-        ~MissionNameValidator(){}
-
-        virtual void fixUp( QString& input ) const
-        {
-            int index = regExp_.lastIndexIn( input );
-            if( index != -1 )
-                input.remove( index, 1 );
-        }
-
-        virtual State validate( QString& input, int& ) const
-        {
-            return ( regExp_.lastIndexIn( input ) == -1 ) ? Acceptable : Invalid;
-        }
-
-    private:
-        QRegExp regExp_;
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI constructor
@@ -163,10 +135,9 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     ADN_EditLine_ABC* nameField = builder.AddLocalizedField( missions, pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
-
-    builder.SetValidator( new MissionNameValidator() );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[ eDiaType ] );
+    nameField->SetToolTip( tr( "Mission name cannot contain the following characters: %1" ).arg( "/ < > * \\ : \" |" ) );
+    builder.SetValidator( new ADN_ExcludeRegExpValidator( "[/\"<>|*\?:\\\\]", nameField ) );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "DIA type" ), vInfosConnectors[ eDiaType ], 0, eDIAType );
     if( eMissionType != eMissionType_FragOrder )
     {
         if( eMissionType == eMissionType_Automat )

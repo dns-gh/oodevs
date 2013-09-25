@@ -41,7 +41,7 @@ enum E_Validator
     ePercentage,
     eZeroOne,
     eDegrees,
-    eVarName
+    eDIAType
 };
 
 // =============================================================================
@@ -628,9 +628,8 @@ void ADN_GuiBuilder::SetValidator( QRegExpValidator& validator, E_Validator nVal
 {
     if( nValidator == eNone )
         return;
-
-    assert( nValidator == eVarName );
-    validator.setRegExp( QRegExp( "([A-Z]|[a-z]|[0-9])*" ) );
+    assert( nValidator == eDIAType );
+    validator.setRegExp( QRegExp( "([ -~])*" ) ); // $$$$ 2013-09-19: ASCII printable characters
 }
 
 // -----------------------------------------------------------------------------
@@ -650,6 +649,17 @@ void ADN_GuiBuilder::DoValidator( T* /*pWidget*/, E_Validator /*nValidator*/ )
 template<>
 inline
 void ADN_GuiBuilder::DoValidator< ADN_EditLine_String >( ADN_EditLine_String* pWidget, E_Validator nValidator )
+{
+    SetValidator( pWidget->GetValidator(), nValidator );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::DoValidator
+// Created: APE 2005-04-14
+// -----------------------------------------------------------------------------
+template<>
+inline
+void ADN_GuiBuilder::DoValidator< ADN_EditLine_LocalizedString >( ADN_EditLine_LocalizedString* pWidget, E_Validator nValidator )
 {
     SetValidator( pWidget->GetValidator(), nValidator );
 }

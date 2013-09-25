@@ -15,22 +15,8 @@
 namespace
 {
     static const std::string locations[ 4 ] = { "polygon", "point", "line", "circle" };
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos
-// Created: JDY 03-07-09
-//-----------------------------------------------------------------------------
-ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& type )
-    : strType_   ( type )
-    , pointSize_ ( 0. )
-{
-    for( int i = 0; i < 4; ++i )
-    {
-        geometries_[ i ] = false;
-    }
-
-    InitializeCapacities();
+    const std::string baseType = "T_Object_";
+    unsigned int typeId = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -38,9 +24,9 @@ ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& t
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
-    : strType_   ()
-    , pointSize_ ( 0. )
+    : pointSize_ ( 0 )
 {
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eObjects, "objects" ) );
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
     for( int i = 0; i < 4; ++i )
     {
@@ -142,6 +128,15 @@ void ADN_Objects_Data_ObjectInfos::ReadGeometry( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data_ObjectInfos::GenerateNextType
+// Created: ABR 2013-09-24
+// -----------------------------------------------------------------------------
+std::string ADN_Objects_Data_ObjectInfos::GenerateNextType()
+{
+    return baseType + QString::number( ++typeId ).toStdString();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos::ReadArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
@@ -159,6 +154,13 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
         >> xml::list( "geometry", *this, &ADN_Objects_Data_ObjectInfos::ReadGeometry )
         >> xml::end
         >> xml::list( *this, &ADN_Objects_Data_ObjectInfos::ReadCapacityArchive );
+    if( strType_.GetData().substr( 0, baseType.size() ) == baseType )
+    {
+        QString strId = strType_.GetData().substr( baseType.size() ).c_str();
+        unsigned int id = strId.toUInt();
+        if( id && id > typeId )
+            typeId = id;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -171,10 +173,9 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
         << xml::attribute( "name", strName_ );
     if( pointSize_.GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );
-    if( strType_ == "" )
-        xos << xml::attribute( "type", strName_ );
-    else
-        xos << xml::attribute( "type", strType_ );
+    if( strType_.GetData().empty() )
+        strType_ = GenerateNextType();
+    xos << xml::attribute( "type", strType_ );
     if( !description_.GetData().empty() )
         xos << xml::attribute( "description", description_ );
 
