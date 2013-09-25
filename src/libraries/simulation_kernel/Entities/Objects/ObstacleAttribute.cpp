@@ -226,11 +226,7 @@ bool ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
-        asn.mutable_obstacle()->set_type( bActivated_ ? sword::ObstacleType_DemolitionTargetType_preliminary : sword::ObstacleType_DemolitionTargetType_reserved );
-        asn.mutable_obstacle()->set_activated( bActivated_ );
-        asn.mutable_obstacle()->set_activation_time( activationTime_ );
-        asn.mutable_obstacle()->set_activity_time( activityTime_ );
-        asn.mutable_obstacle()->set_creation_time( creationTime_ );
+        SendFullState( asn );
         Reset( eOnUpdate );
         return true;
     }
