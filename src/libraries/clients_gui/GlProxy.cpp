@@ -36,7 +36,7 @@ GlProxy::GlProxy()
 // -----------------------------------------------------------------------------
 GlProxy::~GlProxy()
 {
-    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
         delete *it;
 }
 
@@ -65,7 +65,7 @@ void GlProxy::Register( TooltipsLayer_ABC& layer )
 // -----------------------------------------------------------------------------
 void GlProxy::Unregister( Layer& layer )
 {
-    IT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
+    auto it = std::find( layers_.begin(), layers_.end(), &layer );
     if( it != layers_.end() )
         layers_.erase( it );
 }
@@ -96,7 +96,7 @@ void GlProxy::ChangeTo( GlWidget* newWidget )
 // -----------------------------------------------------------------------------
 void GlProxy::RegisterTo( Gl3dWidget* newWidget )
 {
-    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->RegisterIn( *newWidget );
 }
 
@@ -106,7 +106,7 @@ void GlProxy::RegisterTo( Gl3dWidget* newWidget )
 // -----------------------------------------------------------------------------
 void GlProxy::RegisterTo( GlWidget* newWidget )
 {
-    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->RegisterIn( *newWidget );
 }
 
@@ -370,6 +370,16 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /* = -1.f*
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawHalfDisc
+// Created: JSR 2013-09-25
+// -----------------------------------------------------------------------------
+void GlProxy::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+{
+    if( tools_ )
+        tools_->DrawHalfDisc( center, angleDegrees, radius, unit );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawLife
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
@@ -515,7 +525,7 @@ void GlProxy::DrawTacticalGraphics( const std::string& symbol, const kernel::Loc
 // -----------------------------------------------------------------------------
 void GlProxy::Reset2d()
 {
-    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->Reset2d();
 }
 
@@ -525,7 +535,7 @@ void GlProxy::Reset2d()
 // -----------------------------------------------------------------------------
 void GlProxy::Reset3d()
 {
-    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->Reset3d();
 }
 

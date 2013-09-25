@@ -63,6 +63,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , circle_      ( 0 )
+    , halfCircle_  ( 0 )
     , viewport_    ( 0, 0, width, height )
     , frame_       ( 0 )
     , iconLayout_  ( iconLayout )
@@ -87,6 +88,7 @@ GlWidget::~GlWidget()
 {
     if( tesselator_ )
         gluDeleteTess( tesselator_ );
+    glDeleteLists( halfCircle_, 1 );
     glDeleteLists( circle_, 1 );
 }
 
@@ -101,6 +103,7 @@ void GlWidget::initializeGL()
     //glDisable( GL_DEPTH_TEST );
     //glShadeModel( GL_FLAT );
     circle_ = GenerateCircle();
+    halfCircle_ = GenerateHalfCircle();
     glEnableClientState( GL_VERTEX_ARRAY );
     gl::Initialize();
     glShadeModel( GL_SMOOTH );
@@ -287,20 +290,37 @@ std::string GlWidget::GetCurrentPass() const
     return currentPass_;
 }
 
+namespace
+{
+    unsigned int GenerateCirclePart( float maxAngle )
+    {
+        const float step = std::acos( -1.f ) / 20.f + 1e-7f;
+        unsigned int id = glGenLists( 1 );
+        glNewList( id, GL_COMPILE );
+            for( float angle = 0; angle < maxAngle; angle += step )
+                glVertex2f( std::cos( angle ), std::sin( angle ) );
+            glVertex2f( std::cos( maxAngle ), std::sin( maxAngle ) );
+        glEndList();
+        return id;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::GenerateCircle
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
 unsigned int GlWidget::GenerateCircle()
 {
-    const float twoPi = 2.f * std::acos( -1.f );
-    unsigned int id = glGenLists(1);
-    glNewList( id, GL_COMPILE);
-        for( float angle = 0; angle < twoPi; angle += twoPi / 40.f + 1e-7f )
-            glVertex2f( std::cos( angle ), std::sin( angle ) );
-        glVertex2f( 1.f, 0.f );
-    glEndList();
-    return id;
+    return GenerateCirclePart( 2.f * std::acos( -1.f ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::GenerateHalfCircle
+// Created: JSR 2013-09-25
+// -----------------------------------------------------------------------------
+unsigned int GlWidget::GenerateHalfCircle()
+{
+    return GenerateCirclePart( std::acos( -1.f ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -769,29 +789,48 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
     glPopAttrib();
 }
 
+namespace
+{
+    void DrawDiscPart( const geometry::Point2f& center, float pixels, int glList, float angleDegrees, float radius, GlTools_ABC::E_Unit unit )
+    {
+        if( radius < 0 )
+            radius = 10.f * pixels;
+        else if( unit == GlTools_ABC::pixels )
+            radius *= pixels;
+
+        glPushAttrib( GL_LINE_BIT );
+        glEnable( GL_LINE_SMOOTH );
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+            glTranslatef( center.X(), center.Y(), 0.f );
+            glScalef( radius, radius, 1.f );
+            if( angleDegrees != 0 )
+                glRotatef( -angleDegrees, 0, 0, 1 );
+            glBegin( GL_TRIANGLE_FAN );
+                glVertex2f( 0.f, 0.f );
+                glCallList( glList );
+            glEnd();
+        glPopMatrix();
+        glPopAttrib();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawDisc
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
 void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( radius < 0 )
-        radius = 10.f * Pixels();
-    else if( unit == pixels )
-        radius *= Pixels();
+    DrawDiscPart( center, Pixels(), circle_, 0, radius, unit );
+}
 
-    glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-        glTranslatef( center.X(), center.Y(), 0.f );
-        glScalef    ( radius, radius, 1.f );
-        glBegin( GL_TRIANGLE_FAN );
-            glVertex2f( 0.f, 0.f );
-            glCallList( circle_ );
-        glEnd();
-    glPopMatrix();
-    glPopAttrib();
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawHalfDisc
+// Created: JSR 2013-09-25
+// -----------------------------------------------------------------------------
+void GlWidget::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+{
+    DrawDiscPart( center, Pixels(), halfCircle_, angleDegrees, radius, unit );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,6 +15,11 @@
 #include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
+namespace kernel
+{
+    class Controllers;
+}
+
 namespace tools
 {
     class ExerciseConfig;
