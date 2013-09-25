@@ -155,7 +155,18 @@ function AppendTaskParameterFunction( params, strKnowledgeType, name, knowledgeS
         InitTaskParameterList[ strKnowledgeType ]( params, name )
         return
     end
-    params[name][#params[name]+1] = CreateKnowledge( strKnowledgeType, knowledgeSource )
+    if list then
+        if #knowledgeSource > 0 then
+            local currentIndex = #params[name]+1
+            params[name][currentIndex] = {};
+            local currentParam = params[name][currentIndex] 
+            for i = 1, #knowledgeSource do
+              currentParam[#currentParam+1] = CreateKnowledge( strKnowledgeType, knowledgeSource[i] )
+            end
+        end
+    else
+        params[name][#params[name]+1] = CreateKnowledge( strKnowledgeType, knowledgeSource )
+    end
 end
 
 InitTaskParameter = InitTaskParameterFunction
