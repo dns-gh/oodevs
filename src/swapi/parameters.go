@@ -83,6 +83,15 @@ func MakeIdentifier(value uint32) *sword.MissionParameter {
 		})
 }
 
+func MakeAgent(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Agent: &sword.UnitId{
+				Id: proto.Uint32(value),
+			},
+		})
+}
+
 func MakeAutomat(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{

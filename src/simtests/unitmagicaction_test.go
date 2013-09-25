@@ -1622,3 +1622,204 @@ func (s *TestSuite) TestUnitChangePosture(c *C) {
 			unit.Posture.Transition == 0
 	})
 }
+
+func CreateTransportedAndCarrier(c *C, client *swapi.Client) (*swapi.Unit, *swapi.Unit) {
+	pos := swapi.Point{X: -15.9219, Y: 28.3456}
+	formation := CreateFormation(c, client, 1)
+	automat := CreateAutomat(c, client, formation.Id, 0)
+
+	// INF.Mechanized infantry platoon with 3 vehicles
+	transported, err := client.CreateUnit(automat.Id, 8, pos)
+	c.Assert(err, IsNil)
+
+	// AIR.Transport Helicopter Patrol
+	carrier, err := client.CreateUnit(automat.Id, 7, pos)
+	c.Assert(err, IsNil)
+
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+
+	return transported, carrier
+}
+
+func Helitransport(c *C, client *swapi.Client, transported, carrier *swapi.Unit) {
+	pos := swapi.Point{X: -15.9219, Y: 28.3456}
+	to := swapi.Point{X: -15.9220, Y: 28.3456}
+
+	// Check vehicles aren't away
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindUnit(transported.Id).EquipmentDotations) != 0
+	})
+
+	// Mission 'COMMON - Get transported' on the transported
+	null := swapi.MakeNullValue()
+	heading := swapi.MakeHeading(0)
+	dest := swapi.MakePointParam(pos)
+	params := swapi.MakeParameters(heading, null, null, null, dest)
+	_, err := client.SendUnitOrder(transported.Id, 44528, params)
+	c.Assert(err, IsNil)
+
+	// Mission 'LEG_AIR - helitransport' on the carrier
+	params = swapi.MakeParameters(heading, null, null, null, swapi.MakeAgent(transported.Id),
+		swapi.MakePointParam(to), dest, dest,
+		null, swapi.MakeBoolean(false), swapi.MakeEnumeration(0))
+	_, err = client.SendUnitOrder(carrier.Id, 13, params)
+	c.Assert(err, IsNil)
+}
+
+func CheckAwayEquipment(c *C, client *swapi.Client, awayEquipmentId, transportedId,
+	carrierId uint32, number int32) {
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		transported := data.FindUnit(transportedId)
+		return transported.EquipmentDotations[awayEquipmentId].Away == number &&
+			transported.TransporterId == carrierId
+	})
+}
+
+func (s *TestSuite) TestUnitRecoverTransporters(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	awayEquipmentId := uint32(15)
+	transported, carrier := CreateTransportedAndCarrier(c, client)
+	Helitransport(c, client, transported, carrier)
+
+	// Check vehicles are away
+	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 3)
+
+	// Check unit is unloaded
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindUnit(transported.Id).TransporterId == 0
+	})
+
+	// Send recover_transporters magic action
+	err := client.RecoverTransporters(transported.Id)
+	c.Assert(err, IsNil)
+
+	// Check vehicles aren't away
+	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, 0, 0)
+}
+
+func (s *TestSuite) TestDeleteUnitWithAwayEquipments(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	awayEquipmentId := uint32(15)
+	transported, carrier := CreateTransportedAndCarrier(c, client)
+	Helitransport(c, client, transported, carrier)
+
+	// Check vehicles are away
+	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 3)
+
+	// Delete unit during the transport
+	err := client.DeleteUnit(transported.Id)
+	c.Assert(err, IsNil)
+
+	transported, carrier = CreateTransportedAndCarrier(c, client)
+	Helitransport(c, client, transported, carrier)
+	// Check vehicles are away
+	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 3)
+
+	// Delete unit after the transport
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindUnit(transported.Id).TransporterId == 0
+	})
+	err = client.DeleteUnit(transported.Id)
+	c.Assert(err, IsNil)
+}
+
+func (s *TestSuite) TestUnitRecoverTransportersWithDestroyedEquipments(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	transported, carrier := CreateTransportedAndCarrier(c, client)
+	awayEquipmentId := uint32(15)
+	awayEquipment := swapi.EquipmentDotation{
+		Available:     3,
+		Unavailable:   0,
+		Repairable:    0,
+		OnSiteFixable: 0,
+		Repairing:     0,
+		Captured:      0,
+		Breakdowns:    nil,
+	}
+	// Transported has 3 equipments no loadable
+	c.Assert(*client.Model.GetData().FindUnit(transported.Id).EquipmentDotations[awayEquipmentId],
+		DeepEquals, awayEquipment)
+
+	// Destroy 2 equipments no loadable
+	awayEquipment = swapi.EquipmentDotation{
+		Available:     1,
+		Unavailable:   2,
+		Repairable:    0,
+		OnSiteFixable: 0,
+		Repairing:     0,
+		Captured:      0,
+		Breakdowns:    nil,
+	}
+	err := client.ChangeEquipmentState(transported.Id,
+		map[uint32]*swapi.EquipmentDotation{awayEquipmentId: &awayEquipment})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.FindUnit(transported.Id).EquipmentDotations[awayEquipmentId],
+			&awayEquipment)
+	})
+
+	Helitransport(c, client, transported, carrier)
+	// Check vehicles are away
+	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 3)
+
+	// Check unit is unloaded
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindUnit(transported.Id).TransporterId == 0
+	})
+
+	// Send recover_transporters magic action
+	err = client.RecoverTransporters(transported.Id)
+	c.Assert(err, IsNil)
+
+	// Check vehicles aren't away
+	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, 0, 0)
+}
+
+func (s *TestSuite) TestTransferAwayEquipment(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	pos := swapi.Point{X: -15.9219, Y: 28.3456}
+	awayEquipmentId := uint32(15)
+	unitType := uint32(1)
+	transported, carrier := CreateTransportedAndCarrier(c, client)
+
+	unit, err := client.CreateUnit(transported.AutomatId, unitType, pos)
+	c.Assert(err, IsNil)
+
+	// Transfer 2 equipments no loadable
+	err = client.TransferEquipment(transported.Id, unit.Id, []swapi.Equipment{{awayEquipmentId, 2}})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(unit.Id)
+		if len(unit.BorrowedEquipments) == 0 {
+			return false
+		}
+		return unit.BorrowedEquipments[0].TypeId == awayEquipmentId &&
+			unit.BorrowedEquipments[0].Quantity == 2 &&
+			unit.BorrowedEquipments[0].Owner == transported.Id
+	})
+
+	Helitransport(c, client, transported, carrier)
+	// Check only one equipment is away
+	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 1)
+
+	// Transfering back
+	err = client.TransferEquipment(unit.Id, transported.Id, []swapi.Equipment{{awayEquipmentId, 2}})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(unit.Id)
+		return len(unit.BorrowedEquipments) == 0
+	})
+
+	// Check 3 equipments no loadable is away
+	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 3)
+}

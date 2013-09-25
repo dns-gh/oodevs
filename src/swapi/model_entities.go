@@ -86,6 +86,7 @@ type EquipmentDotation struct {
 	Repairing     int32
 	Captured      int32
 	Breakdowns    []int32
+	Away          int32
 }
 
 type LentEquipment struct {
@@ -149,6 +150,7 @@ type Unit struct {
 	ResourceDotations  []*ResourceDotation
 	Posture            Posture
 	VisionCones        VisionCones
+	TransporterId      uint32
 }
 
 type Automat struct {
