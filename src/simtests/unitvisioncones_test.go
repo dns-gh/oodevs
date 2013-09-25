@@ -73,7 +73,9 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	// registering allows to receive vision cones
 	check(client.EnableVisionCones(true, 11))
 	// vision cones sent after posture changes
-	check(client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area))
+	check(client.ChangePosture(11, sword.UnitAttributes_parked))
+	err = client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area)
+	c.Assert(err, IsNil)
 	// vision cones sent after position changes
 	check(client.TeleportUnit(11, swapi.Point{X: -15.8219, Y: 28.2456}))
 	// vision cones sent after direction changes
