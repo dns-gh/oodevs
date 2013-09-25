@@ -160,7 +160,7 @@ func (s *TestSuite) TestRotatingLogs(c *C) {
 
 	// Check log files
 	found := map[string]struct{}{}
-	matcher := regexp.MustCompile(`Sim(?:\.\d{8}T\d{6})?\.log(\.\d+)?`)
+	matcher := regexp.MustCompile(`Sim(?:\.\d{8}T\d{6})?\.log(?:\.(\d+))?`)
 	entries, err := ioutil.ReadDir(sessionDir)
 	c.Assert(err, IsNil)
 	for _, d := range entries {
@@ -176,10 +176,11 @@ func (s *TestSuite) TestRotatingLogs(c *C) {
 		// room for an additional line.
 		c.Assert(st.Size(), Lesser, int64(2*session.SimLog.Size))
 	}
-	c.Assert(len(found), Equals, session.SimLog.Count)
-	c.Assert(found[""], NotNil)
-	c.Assert(found["1"], NotNil)
-	c.Assert(found["2"], NotNil)
+	c.Assert(found, DeepEquals, map[string]struct{}{
+		"":  struct{}{},
+		"1": struct{}{},
+		"2": struct{}{},
+	})
 }
 
 // Test starting gaming process
