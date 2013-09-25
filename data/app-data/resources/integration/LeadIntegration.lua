@@ -1033,7 +1033,7 @@ integration.leadDelayActivate = function( self, disengageTask )
         and meKnowledge.arrivedUnits
         and #meKnowledge.arrivedUnits >= tableSize( myself.leadData.pionsLima1 ) then
         local fragOrder = integration.createFragOrder("Disengage")
-        local fragOrderKn = CreateKnowledge( military.world.FragOrder, fragOrder )
+        local fragOrderKn = CreateKnowledge( integration.ontology.types.fragOrder, fragOrder )
 
         meKnowledge.pionsToAwait = copyTable( myself.leadData.pionsLima1 )
 
