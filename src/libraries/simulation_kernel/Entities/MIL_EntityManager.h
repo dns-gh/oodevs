@@ -240,7 +240,7 @@ private:
     void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message );
     void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message );
     void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message );
     void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack );
     void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx, sword::UnitMagicActionAck& ack );
     void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, unsigned int parentId, unsigned int context, sword::UnitMagicActionAck& ack );
