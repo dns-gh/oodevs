@@ -56,8 +56,7 @@ public:
     bool IsTimesUndefined() const;
     bool IsActivable() const;
     bool IsActivated() const;
-    void Activate();
-    void Deactivate();
+    void Activate( bool activate );
     //@}
 
     //! @name Operations

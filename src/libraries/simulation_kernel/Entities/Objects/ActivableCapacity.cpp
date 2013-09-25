@@ -91,7 +91,7 @@ void ActivableCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void ActivableCapacity::Activate( MIL_Object_ABC& object )
 {
-    return object.GetAttribute< ObstacleAttribute >().Activate();
+    return object.GetAttribute< ObstacleAttribute >().Activate( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,28 +121,18 @@ void ActivableCapacity::Update( MIL_Object_ABC& object, unsigned int time )
         double activationTime = MIL_Tools::ConvertSecondsToSim( attr.GetActivationTime() );
         if( attr.IsTimesUndefined() )
         {
-            if( !attr.IsActivable() && !attr.IsActivated() )
-                attr.Activate();
-        }
-        else if( attr.GetActivityTime() > 0 )
-        {
-            if( delta > MIL_Tools::ConvertSecondsToSim( attr.GetEndActivity() ) )
-            {
-                if( attr.IsActivated() )
-                    attr.Deactivate();
-            }
-            else if( delta > activationTime )
-            {
-                if( !attr.IsActivated() )
-                    attr.Activate();
-            }
+            attr.Activate( true );
         }
         else
         {
-            if( delta > activationTime )
+            if( attr.GetActivityTime() > 0 &&
+                delta > MIL_Tools::ConvertSecondsToSim( attr.GetEndActivity() ) )
             {
-                if( !attr.IsActivated() )
-                    attr.Activate();
+                attr.Activate( false );
+            }
+            else if( delta > activationTime )
+            {
+                attr.Activate( true );
             }
         }
     }

@@ -166,24 +166,11 @@ bool ObstacleAttribute::IsActivated() const
 // Name: ObstacleAttribute::Activate
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::Activate()
+void ObstacleAttribute::Activate( bool activate )
 {
-    if( !bActivated_ )
+    if( bActivated_ != activate )
     {
-        bActivated_ = true;
-        NotifyAttributeUpdated( eOnUpdate );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::Deactivate
-// Created: LGY 2011-08-31
-// -----------------------------------------------------------------------------
-void ObstacleAttribute::Deactivate()
-{
-    if( bActivated_)
-    {
-        bActivated_ = false;
+        bActivated_ = activate;
         NotifyAttributeUpdated( eOnUpdate );
     }
 }

@@ -111,10 +111,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const st
     attributes_->Initialize( *object );
     if( ObstacleAttribute* pObstacle = object->RetrieveAttribute< ObstacleAttribute >() )
     {
-        if( activated )
-            pObstacle->Activate();
-        else
-            pObstacle->Deactivate();
+        pObstacle->Activate( activated );
     }
     if( density )
     {
