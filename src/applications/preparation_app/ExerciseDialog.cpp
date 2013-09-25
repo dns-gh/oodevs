@@ -224,7 +224,7 @@ void ExerciseDialog::AddResource( const QString& name, const tools::Path& file )
 {
     QStandardItem* item1 = new QStandardItem( name );
     QStandardItem* item2 = new QStandardItem( file.Relative( config_.GetExerciseFile().Parent() ).ToUTF8().c_str() );
-    item1->setEditable( false );
+    item1->setEditable( true );
     item2->setEditable( false );
     QList< QStandardItem* > items;
     items << item1 << item2;
