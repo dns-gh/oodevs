@@ -173,7 +173,7 @@ bool MIL_Effect_IndirectFire::Execute()
             {
                 boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = bbKg->GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
                 if( pTargetKnowledge && pTargetKnowledge->IsValid() )
-                    indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, pTargetKnowledge->GetAgentKnown(), nNbrAmmoFired_, *pFireResult_ );
+                    indirectDotationCategory_.GetDotationCategory().ApplyStrikeEffect( firer_, pTargetKnowledge->GetAgentKnown(), nNbrAmmoFired_, *pFireResult_ );
             }
         }
         //LTO end

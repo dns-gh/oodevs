@@ -1950,7 +1950,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
 
         MIL_Report::PostEvent( *reporter, report::eRC_TirIndirectSurCible, targetKn );
 
-        pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
+        pDotationCategory->ApplyStrikeEffect( *reporter, targetKn->GetAgentKnown(), ammos, fireResult );    }
     }
     catch( const NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
     {

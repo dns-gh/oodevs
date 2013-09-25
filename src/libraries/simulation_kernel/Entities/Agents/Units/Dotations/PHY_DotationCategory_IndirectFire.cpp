@@ -321,13 +321,13 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory_IndirectFire::ApplyEffect
+// Name: PHY_DotationCategory_IndirectFire::ApplyStrikeEffect
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double /*rInterventionTypeFired*/, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory_IndirectFire::ApplyStrikeEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
 {
     //Active Protection Management
-    if( ! (target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 ) )
+    if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() <= 0 )
     {
         PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
         if( targetRoleProtection.DestroyIndirectFire( dotationCategory_ ) )
