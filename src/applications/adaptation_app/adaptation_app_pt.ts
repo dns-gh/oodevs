@@ -4677,6 +4677,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid time duration &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Tr</name>
@@ -6495,13 +6499,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TimeField</name>
-    <message>
-        <source>Invalid time duration &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -128,6 +128,22 @@ namespace ADN_Tools
     // -----------------------------------------------------------------------------
     E_EntityType ConvertMissionToEntityType( E_MissionType type );
     E_MissionType ConvertEntityTypeToMissionType( E_EntityType type );
+
+    // -----------------------------------------------------------------------------
+    // Delay conversions
+    // -----------------------------------------------------------------------------
+    QString BuildLongString( const std::string& hours, const std::string& minutes,
+                             const std::string& seconds, const std::string& microseconds,
+                             const std::string& decimalPoint );
+
+    QString ConvertDelayToLongString( const QString& delay );           // from 12m / 12s / 12.3s to HH:MM:SS.MS
+    QString ConvertLongStringToDelay( const QString& text );          // from HH:MM:SS.MS to 720s / 12s / 12.3s
+
+    int ConvertDelayToCentiseconds( const QString& delay );             // from 12m / 12s / 12.3s to 720. / 12. / 12.3
+    QString ConvertCentisecondsToDelay( int value );                  // from 720. / 12. / 12.3 to 720s / 12s / 12.3s
+
+    QString ConvertCentisecondsToLongString( int );                     //
+    int ConvertLongStringToCentiseconds( const QString& text );         //
 }
 
 #endif // __ADN_Tools_h_

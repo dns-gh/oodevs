@@ -4695,6 +4695,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid time duration &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Tr</name>
@@ -6517,13 +6521,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TimeField</name>
-    <message>
-        <source>Invalid time duration &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
