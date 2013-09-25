@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Gen_Object.h"
 #include "MIL_AgentServer.h"
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/CapacityRetriever.h"
@@ -18,8 +20,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
-
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Gen_Object )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Gen_Object constructor
