@@ -1911,12 +1911,10 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
     if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
         throw MASA_BADPARAM_UNIT( "invalid parameters count, 3 parameters expected" );
 
-    // Reporter
-    MIL_Agent_ABC* reporter = ( msg.tasker().has_unit() && msg.tasker().unit().has_id() ) ? FindAgentPion( msg.tasker().unit().id() ) : 0;
+    MIL_Agent_ABC* reporter = msg.tasker().has_unit() && msg.tasker().unit().has_id() ? FindAgentPion( msg.tasker().unit().id() ) : 0;
     if( !reporter )
         throw MASA_BADPARAM_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit, "invalid tasker, the receiver must be a valid unit" );
 
-    // Target
     const MissionParameter& target = msg.parameters().elem( 0 );
     if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
         throw MASA_BADPARAM_UNIT( "parameters[0] must be an identifier" );
@@ -1925,7 +1923,6 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
     if( !targetKn )
         throw MASA_BADPARAM_UNIT( "parameters[0] must be a valid knowledge identifier in reporter's knowledge group" );
 
-    // Ammo
     const MissionParameter& ammo = msg.parameters().elem( 1 );
     if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
         throw MASA_BADPARAM_UNIT( "parameters[1] must be a resource type" );
@@ -1938,7 +1935,6 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
     if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
         throw MASA_BADPARAM_UNIT( "parameters[1] is a guided dotation but the target is not illuminated" );
 
-    // Iterations
     const MissionParameter& iterations = msg.parameters().elem( 2 );
     if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
         throw MASA_BADPARAM_UNIT("parameters[2] must be a real" );
