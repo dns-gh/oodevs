@@ -413,13 +413,51 @@ func (model *Model) handlePopulationCreation(m *sword.SimToClient_Content) error
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	population := &Population{
+	population := NewPopulation(
 		mm.GetId().GetId(),
 		mm.GetParty().GetId(),
 		mm.GetName(),
-	}
+	)
 	if !model.data.addPopulation(population) {
 		return fmt.Errorf("cannot insert population: %d", population.Id)
+	}
+	for _, o := range mm.GetObjects() {
+		population.LivingArea[o.GetId()] = NewBlock(map[string]int32{})
+	}
+	return nil
+}
+
+func (model *Model) handlePopulationUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetPopulationUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	population := model.data.FindPopulation(mm.GetId().GetId())
+	if population == nil {
+		return fmt.Errorf("cannot find population to update: %d",
+			mm.GetId().GetId())
+	}
+	if mm.Healthy != nil {
+		population.Healthy = *mm.Healthy
+	}
+	if mm.Wounded != nil {
+		population.Wounded = *mm.Wounded
+	}
+	if mm.Dead != nil {
+		population.Dead = *mm.Dead
+	}
+	for _, o := range mm.GetOccupations() {
+		residents := map[string]int32{}
+		for _, p := range o.GetPersons() {
+			residents[*p.Usage] = *p.Number
+		}
+		population.LivingArea[o.GetObject().GetId()] = NewBlock(residents)
+	}
+	if mm.Adhesions != nil {
+		population.Adhesions = map[uint32]float32{}
+		for _, value := range mm.Adhesions.Adhesion {
+			population.Adhesions[value.GetParty().GetId()] = value.GetValue()
+		}
 	}
 	return nil
 }

@@ -36,6 +36,14 @@ func makeUnitTasker(unitId uint32) *sword.Tasker {
 	}
 }
 
+func makePopulationTasker(populationId uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Population: &sword.PopulationId{
+			Id: proto.Uint32(populationId),
+		},
+	}
+}
+
 func makeCrowdTasker(crowdId uint32) *sword.Tasker {
 	return &sword.Tasker{
 		Crowd: &sword.CrowdId{
@@ -1446,4 +1454,27 @@ func (c *Client) CreateCheckpoint(name string) (string, error) {
 		return nil
 	})
 	return checkpoint, err
+}
+
+func (c *Client) ChangePopulationHealthState(populationId uint32, healthy, wounded,
+	dead int32) error {
+	params := MakeParameters(MakeQuantity(healthy),
+		MakeQuantity(wounded),
+		MakeQuantity(dead),
+		)
+	msg := createMagicActionMessage(params, makePopulationTasker(populationId),
+		sword.UnitMagicAction_inhabitant_change_health_state.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangePopulationAdhesions(populationId uint32, adhesions map[uint32]float32) error {
+	params := MakeParameters()
+	if len(adhesions) != 0 {
+		params = MakeParameters(MakeAdhesions(adhesions))
+	}
+	msg := createMagicActionMessage(params, makePopulationTasker(populationId),
+		sword.UnitMagicAction_inhabitant_change_affinities.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
 }

@@ -9,15 +9,24 @@
           <urban-objects>
             <urban-object id="21" name="Bloc urbain [21]">
               <footprint>
-                <point location="28RDS1954136230"/>
                 <point location="28RDS1942136419"/>
                 <point location="28RDS1935236317"/>
                 <point location="28RDS1931736137"/>
+                <point location="28RDS1954136230"/>
               </footprint>
               <color alpha="0.701961" blue="80" green="80" red="80"/>
               <resources>
                 <node resource-type="Running Water"/>
               </resources>
+            </urban-object>
+            <urban-object id="35" name="Bloc urbain [35]">
+              <footprint>
+                <point location="28RDS1931035909"/>
+                <point location="28RDS1960535963"/>
+                <point location="28RDS1959236147"/>
+                <point location="28RDS1930036064"/>
+              </footprint>
+              <color alpha="0.701961" blue="80" green="80" red="80"/>
             </urban-object>
           </urban-objects>
         </urban-object>

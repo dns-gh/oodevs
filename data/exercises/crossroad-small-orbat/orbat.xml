@@ -50,6 +50,7 @@
           <information></information>
           <living-area>
             <urban-block id="21"/>
+            <urban-block id="35"/>
           </living-area>
           <adhesions>
             <adhesion party="1" value="0"/>

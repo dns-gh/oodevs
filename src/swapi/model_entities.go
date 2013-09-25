@@ -41,10 +41,37 @@ type Profile struct {
 	Supervisor bool
 }
 
+type Block struct {
+	Residents map[string]int32
+	Alerted   bool
+	Confined  bool
+}
+
+func NewBlock(residents map[string]int32) *Block {
+	return &Block{
+		Residents: residents,
+	}
+}
+
 type Population struct {
-	Id      uint32
-	PartyId uint32
-	Name    string
+	Id         uint32
+	PartyId    uint32
+	Name       string
+	Healthy    int32
+	Wounded    int32
+	Dead       int32
+	LivingArea map[uint32]*Block
+	Adhesions  map[uint32]float32
+}
+
+func NewPopulation(id, partyId uint32, name string) *Population {
+	return &Population{
+		Id:         id,
+		PartyId:    partyId,
+		Name:       name,
+		LivingArea: map[uint32]*Block{},
+		Adhesions:  map[uint32]float32{},
+	}
 }
 
 type CrowdElement struct {
@@ -651,6 +678,15 @@ func (model *ModelData) addPopulation(population *Population) bool {
 		return true
 	}
 	return false
+}
+
+func (model *ModelData) FindPopulation(populationId uint32) *Population {
+	for _, u := range model.ListPopulations() {
+		if u.Id == populationId {
+			return u
+		}
+	}
+	return nil
 }
 
 func (model *ModelData) addProfile(profile *Profile) bool {
