@@ -82,10 +82,9 @@ void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const tool
             for( auto it = detectionPath.begin(); it != detectionPath.end(); ++it )
                 if( !it->IsDirectory() && it->Extension() == ".dat" )
                     terrainMemSize += static_cast< float >( it->FileSize() );
-        terrainMemSize += static_cast< float >( config.GetPathfindGraphFile().Exists() ? config.GetPathfindGraphFile().FileSize() : 0 );
-        terrainMemSize += static_cast< float >( config.GetPathfindLinksFile().Exists() ? config.GetPathfindLinksFile().FileSize() : 0 );
-        terrainMemSize += static_cast< float >( config.GetPathfindNodesFile().Exists() ? config.GetPathfindNodesFile().FileSize() : 0 );
-
+        terrainMemSize += static_cast< float >( config.GetPathfindGraphFile().FileSize() );
+        terrainMemSize += static_cast< float >( config.GetPathfindLinksFile().FileSize() );
+        terrainMemSize += static_cast< float >( config.GetPathfindNodesFile().FileSize() );
         if( file.Exists() )
         {
             config.GetLoader().CheckFile( file );
