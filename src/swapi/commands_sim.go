@@ -1366,6 +1366,21 @@ func (c *Client) ChangePosture(unitId uint32, posture sword.UnitAttributes_Postu
 	return c.ChangePostureTest(unitId, MakeParameters(MakeEnumeration(int32(posture))))
 }
 
+func (c *Client) ChangeHumanFactorsTest(unitId uint32, params *sword.MissionParameters) error {
+	msg := createMagicActionMessage(params, makeUnitTasker(unitId),
+		sword.UnitMagicAction_change_human_factors.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) ChangeHumanFactors(unitId uint32, tiredness sword.UnitAttributes_EnumUnitTiredness,
+	morale sword.UnitAttributes_EnumUnitMorale, experience sword.UnitAttributes_EnumUnitExperience,
+	stress sword.UnitAttributes_EnumUnitStress) error {
+	params := MakeParameters(MakeEnumeration(int32(tiredness)), MakeEnumeration(int32(morale)),
+		MakeEnumeration(int32(experience)), MakeEnumeration(int32(stress)))
+	return c.ChangeHumanFactorsTest(unitId, params)
+}
+
 func (c *Client) EnableVisionCones(enabled bool, unitIds ...uint32) error {
 	var units []*sword.UnitId = nil
 	for _, unitId := range unitIds {

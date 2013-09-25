@@ -184,6 +184,18 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 			unit.Adhesions[value.GetParty().GetId()] = value.GetValue()
 		}
 	}
+	if mm.Tiredness != nil {
+		unit.HumanFactors.Tiredness = *mm.Tiredness
+	}
+	if mm.Morale != nil {
+		unit.HumanFactors.Morale = *mm.Morale
+	}
+	if mm.Experience != nil {
+		unit.HumanFactors.Experience = *mm.Experience
+	}
+	if mm.Stress != nil {
+		unit.HumanFactors.Stress = *mm.Stress
+	}
 	return nil
 }
 
