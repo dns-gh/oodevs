@@ -69,3 +69,49 @@ ADN_MissionGenObjectTypes_Infos* ADN_MissionGenObjectTypes_Infos::CreateCopy()
     infos->isAllowed_ = isAllowed_.GetData();
     return infos;
 }
+
+// -----------------------------------------------------------------------------
+// Name: T_MissionGenObjectTypes_Infos_Vector::T_MissionGenObjectTypes_Infos_Vector
+// Created: ABR 2013-09-25
+// -----------------------------------------------------------------------------
+T_MissionGenObjectTypes_Infos_Vector::T_MissionGenObjectTypes_Infos_Vector()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: T_MissionGenObjectTypes_Infos_Vector::~T_MissionGenObjectTypes_Infos_Vector
+// Created: ABR 2013-09-25
+// -----------------------------------------------------------------------------
+T_MissionGenObjectTypes_Infos_Vector::~T_MissionGenObjectTypes_Infos_Vector()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: T_MissionGenObjectTypes_Infos_Vector::AutoCreatePrivate
+// Created: ABR 2013-09-25
+// -----------------------------------------------------------------------------
+void T_MissionGenObjectTypes_Infos_Vector::AutoCreatePrivate( void* ptr )
+{
+    if( ptr && std::find_if( begin(), end(), ADN_MissionGenObjectTypes_Infos::CmpRef( ( ADN_MissionGenObjectTypes_Infos::T_Item* ) ptr ) ) == end() )
+    {
+        ADN_MissionGenObjectTypes_Infos* pNewItem = new ADN_MissionGenObjectTypes_Infos( ( ADN_MissionGenObjectTypes_Infos::T_Item* ) ptr );
+        pNewItem->isAllowed_ = IsAllChecked();
+        AddItemPrivate( pNewItem );
+        AddItem( 0 );
+        emit ItemAdded( pNewItem );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: T_MissionGenObjectTypes_Infos_Vector::IsAllChecked
+// Created: ABR 2013-09-25
+// -----------------------------------------------------------------------------
+bool T_MissionGenObjectTypes_Infos_Vector::IsAllChecked() const
+{
+    for( auto it = begin(); it != end(); ++it )
+        if( !( *it )->isAllowed_.GetData() )
+            return false;
+    return true;
+}

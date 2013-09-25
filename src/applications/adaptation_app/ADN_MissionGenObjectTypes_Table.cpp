@@ -30,7 +30,7 @@ ADN_MissionGenObjectTypes_Table::ADN_MissionGenObjectTypes_Table( QCheckBox* all
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     delegate_.AddCheckBoxOnColumn( 1 );
     proxyModel_->setDynamicSortFilter( true );
-    proxyModel_->sort( 0, Qt::AscendingOrder );
+    proxyModel_->sort( 0, Qt::DescendingOrder );
     setSortingEnabled( false );
     connect( all_, SIGNAL( stateChanged( int ) ), this, SLOT( OnStateChanged( int ) ) );
 }
