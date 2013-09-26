@@ -796,6 +796,15 @@
             <arg value="compare"/>
             <arg value="${bin.dir}/protolint/proto/proto-5.2.x"/>
             <arg value="${src.dir}/libraries/protocol/proto"/>
+            <!-- New error codes are probably fine, the ack's were not sent most
+                 of the time anyway.
+            -->
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupUpdateAck.KnowledgeGroupAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupCreationAck.KnowledgeGroupAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupMagicActionAck.KnowledgeGroupAck.ErrorCode"/>
+            <!-- New magic actions are fine -->
+            <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
         </python>
     </target>
 
