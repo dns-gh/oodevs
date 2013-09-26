@@ -12,7 +12,6 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 // =============================================================================
@@ -24,9 +23,6 @@
 class ObstacleAttribute : public ObjectAttribute_ABC
                         , public UpdatableAttribute_ABC
 {
-public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > T_KnowledgeProxyType;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -58,10 +54,8 @@ public:
     int GetActivityTime() const;
     int GetEndActivity() const;
     bool IsTimesUndefined() const;
-    bool IsActivable() const;
     bool IsActivated() const;
-    void Activate();
-    void Deactivate();
+    void Activate( bool activate );
     //@}
 
     //! @name Operations

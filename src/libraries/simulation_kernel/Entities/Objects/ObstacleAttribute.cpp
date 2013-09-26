@@ -14,6 +14,7 @@
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
@@ -144,15 +145,6 @@ bool ObstacleAttribute::IsTimesUndefined() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::IsActivable
-// Created: JCR 2008-06-12
-// -----------------------------------------------------------------------------
-bool ObstacleAttribute::IsActivable() const
-{
-    return !bActivated_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::IsActivated
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
@@ -165,24 +157,11 @@ bool ObstacleAttribute::IsActivated() const
 // Name: ObstacleAttribute::Activate
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::Activate()
+void ObstacleAttribute::Activate( bool activate )
 {
-    if( !bActivated_ )
+    if( bActivated_ != activate )
     {
-        bActivated_ = true;
-        NotifyAttributeUpdated( eOnUpdate );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::Deactivate
-// Created: LGY 2011-08-31
-// -----------------------------------------------------------------------------
-void ObstacleAttribute::Deactivate()
-{
-    if( bActivated_)
-    {
-        bActivated_ = false;
+        bActivated_ = activate;
         NotifyAttributeUpdated( eOnUpdate );
     }
 }
@@ -226,11 +205,7 @@ bool ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
-        asn.mutable_obstacle()->set_type( bActivated_ ? sword::ObstacleType_DemolitionTargetType_preliminary : sword::ObstacleType_DemolitionTargetType_reserved );
-        asn.mutable_obstacle()->set_activated( bActivated_ );
-        asn.mutable_obstacle()->set_activation_time( activationTime_ );
-        asn.mutable_obstacle()->set_activity_time( activityTime_ );
-        asn.mutable_obstacle()->set_creation_time( creationTime_ );
+        SendFullState( asn );
         Reset( eOnUpdate );
         return true;
     }

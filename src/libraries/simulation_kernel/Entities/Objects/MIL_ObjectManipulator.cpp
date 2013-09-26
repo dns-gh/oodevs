@@ -300,7 +300,8 @@ bool MIL_ObjectManipulator::CanBePerceived() const
 bool MIL_ObjectManipulator::CanBeActivated() const
 {
     return !object_.IsMarkedForDestruction() &&
-            object_.Retrieve< ActivableCapacity >() && object_.GetAttribute< ObstacleAttribute >().IsActivable() ;
+            object_.Retrieve< ActivableCapacity >() &&
+           !object_.GetAttribute< ObstacleAttribute >().IsActivated() ;
 }
 
 // -----------------------------------------------------------------------------

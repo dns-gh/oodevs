@@ -1,28 +1,28 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 03-08-27 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Genie/DEC_Gen_Object.h $
-// $Author: Nld $
-// $Modtime: 26/04/04 11:20 $
-// $Revision: 1 $
-// $Workfile: DEC_Gen_Object.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __DEC_Gen_Object_h_
 #define __DEC_Gen_Object_h_
 
-#include "MIL.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include <boost/serialization/export.hpp>
 
 namespace sword
 {
     class PlannedWork;
 }
 
+class MIL_Automate;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 class MIL_EntityManager_ABC;
 class ObjectTypeResolver_ABC;
-class MIL_Automate;
 
 // =============================================================================
 /** @class  DEC_Gen_Object
@@ -42,7 +42,7 @@ public:
                              const ObjectTypeResolver_ABC& resolver );
              DEC_Gen_Object( std::string type, TER_Localisation* location, bool activated );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
-    virtual ~DEC_Gen_Object();
+            ~DEC_Gen_Object();
     //@}
 
     //! @name Accessors
@@ -94,9 +94,5 @@ private:
     bool mining_;
     //@}
 };
-
-BOOST_CLASS_EXPORT_KEY( DEC_Gen_Object )
-
-#include "DEC_Gen_Object.inl"
 
 #endif // __DEC_Gen_Object_h_
