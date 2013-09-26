@@ -13,8 +13,8 @@ import (
 	"flag"
 	. "launchpad.net/gocheck"
 	"testing"
-    "testproto/before"
-    "testproto/after"
+	"testproto/after"
+	"testproto/before"
 )
 
 // Command line options are not used but left here so gosword tests can
@@ -71,4 +71,27 @@ func (s *TestSuite) TestNewEnumValue(c *C) {
 	})
 	c.Assert(err, IsNil)
 	c.Assert(msg.EnumNewValueMsg.GetValue(), NotNil)
+}
+
+func (s *TestSuite) TestOptionalNewEnumValue(c *C) {
+	// Pass an existing enumeration value
+	msg, err := RoundTrip(c, &after.Root{
+		EnumNewValueMsg: &after.EnumNewValueMsg{
+			Value:    after.EnumNewValue_value0.Enum(),
+			Optional: after.EnumNewValue_value0.Enum(),
+		},
+	})
+	c.Assert(err, IsNil)
+	c.Assert(msg.EnumNewValueMsg.GetValue(), Equals, before.EnumNewValue(0))
+
+	// Pass a missing enumeration value. Strangely, Go successfully deserializes
+	// the message.
+	msg, err = RoundTrip(c, &after.Root{
+		EnumNewValueMsg: &after.EnumNewValueMsg{
+			Value:    after.EnumNewValue_value0.Enum(),
+			Optional: after.EnumNewValue_value1.Enum(),
+		},
+	})
+	c.Assert(err, IsNil)
+	c.Assert(msg.EnumNewValueMsg.GetValue(), Equals, before.EnumNewValue(0))
 }
