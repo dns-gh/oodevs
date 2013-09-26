@@ -243,6 +243,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         vInfosConnectors[ eDescriptionParametersText ] = &parametersField->GetConnector();
         ADN_ApplyButton* applyButton = new ADN_ApplyButton();
         applyButton->Connect( parametersField );
+        connect( applyButton, SIGNAL( TypeChanged( int ) ), parametersListView, SLOT( Warn() ) );
         parametersListView->SetItemConnectors( vInfosConnectors );
         parameterLayout->addWidget( parametersListView, 1 );
         parameterLayout->addWidget( parametersField, 4 );
