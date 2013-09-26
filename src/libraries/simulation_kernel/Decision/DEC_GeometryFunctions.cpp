@@ -1564,6 +1564,40 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ListLocal
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeConvexHull
+// Created: LDC 2013-09-23
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeConvexHull( const std::vector< boost::shared_ptr< TER_Localisation > >& locations )
+{
+    std::vector< MT_Vector2D > points;
+    for( auto it = locations.cbegin(); it != locations.cend(); ++it )
+    {
+        const auto& next = *it;
+        if( !next )
+            continue;
+        TER_Localisation::E_LocationType type = next->GetType();
+        if( type != TER_Localisation::ePolygon && type != TER_Localisation::eLine )
+        {
+            MT_Rect rect = next->GetBoundingBox();
+            points.push_back( rect.GetPointUpLeft() );
+            points.push_back( rect.GetPointUpRight() );
+            points.push_back( rect.GetPointDownRight() );
+            points.push_back( rect.GetPointDownLeft() );
+        }
+        else
+        {
+            const T_PointVector& nextPoints = next->GetPoints();
+            points.insert( points.end(), nextPoints.begin(), nextPoints.end() );
+        }
+    }
+    if( points.empty() )
+        return boost::make_shared< TER_Localisation >();
+    auto result = boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon, points );
+    result->Convexify();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ListUncoordinatedPawns
 // Created: NLD 2005-03-18
 // -----------------------------------------------------------------------------

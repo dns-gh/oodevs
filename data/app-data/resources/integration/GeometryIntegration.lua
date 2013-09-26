@@ -108,6 +108,11 @@ integration.convertAORtoLocalisation = function ( fuseau )
     return DEC_Geometrie_ConvertirFuseauEnLocalisation( fuseau.source )
 end
 
+-- returns the convex hull of a list of locations. Both the list and return values are simulation locations.
+integration.getConvexHull = function( locationList )
+    return DEC_Geometrie_ConvexHull( locationList )
+end
+
 startSettleCalcul = function()
     local listePions = integration.getAgentsWithHQ()
     return DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion( DEC_GetAutomate( meKnowledge.source ), listePions )

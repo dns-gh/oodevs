@@ -61,7 +61,6 @@ private:
     //! @name Helpers
     //@{
     void UpdateChildrenPositions() const;
-    void ComputeHull() const;
     //@}
 
 private:

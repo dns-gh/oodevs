@@ -64,6 +64,8 @@ public:
     static float ComputeDistanceFromMiddleLine( const std::vector< DEC_Decision_ABC*>& selPions, DEC_Decision_ABC* pReferencePion );
     static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenter( TER_Localisation* pLocalisation );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ListLocalisationPoints( TER_Localisation* pLocalisation );
+    // Returns the convex hull of a list of locations. Shapes other than lines and polygons are first converted into their bounding box.
+    static boost::shared_ptr< TER_Localisation > ComputeConvexHull( const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
 
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( MIL_UrbanObject_ABC* pUrbanObject );
 

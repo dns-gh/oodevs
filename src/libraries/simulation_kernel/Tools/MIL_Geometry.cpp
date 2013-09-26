@@ -20,29 +20,6 @@
 
 namespace bg = boost::geometry;
 
-namespace
-{
-    bool FindOuterPoint( const T_PointVector& vertices, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
-    {
-        bool bFound = false;
-        double rMaxProjection = 0;
-        for( auto it = vertices.begin(); it != vertices.end(); ++it )
-        {
-            const double rProjection = CrossProduct( direction, MT_Vector2D( *it - from ) );
-            if( rProjection < -1 ) // epsilon
-            {
-                bFound = true;
-                if( rMaxProjection > rProjection )
-                {
-                    rMaxProjection = rProjection;
-                    worst = *it;
-                }
-            }
-        }
-        return bFound;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Geometry::Scale
 // Created: SLG 2010-04-30
@@ -69,32 +46,14 @@ void MIL_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertic
 {
     if( vertices.empty() )
         return;
-    CIT_PointVector maxLeft = vertices.begin();
-    CIT_PointVector maxRight = vertices.begin();
-    for( auto it = vertices.begin(); it != vertices.end() ; ++it )
+    if( vertices.size() < 3 )
     {
-        if( it->rX_ < maxLeft->rX_ )
-            maxLeft = it;
-        if( it->rX_ > maxRight->rX_ )
-            maxRight = it;
+        hull = vertices;
+        return;
     }
-    hull.push_back( *maxLeft );
-    hull.push_back( *maxRight );
-    unsigned int nPoint = 0;
-    MT_Vector2D worst;
-    while( nPoint != hull.size() )
-    {
-        unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
-        MT_Vector2D direction( hull[ nFollowingPoint ] - hull[ nPoint ] );
-        direction.Normalize();
-        if( FindOuterPoint( vertices, hull[ nPoint ], direction, worst ) )
-        {
-            hull.insert( hull.begin() + nFollowingPoint, worst );
-            nPoint = 0;
-        }
-        else
-            ++nPoint;
-    }
+    TER_Polygon polygon;
+    polygon.Reset( vertices, true );
+    hull = polygon.GetBorderPoints();
 }
 
 namespace
