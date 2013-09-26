@@ -40,3 +40,16 @@ BOOST_AUTO_TEST_CASE( compat_extra_enum_value )
     BOOST_CHECK( !EncodeDecode( msg ) );
 }
 
+// Unknown values of optional enums are set to the default value or the first
+// enumerated value.
+BOOST_AUTO_TEST_CASE( compat_extra_enum_value_with_default )
+{
+    after::Root msg;
+    msg.mutable_enum_new_value_msg()->set_value( static_cast< after::EnumNewValue>( 0 ));
+    msg.mutable_enum_new_value_msg()->set_optional( static_cast< after::EnumNewValue>( 0 ));
+    BOOST_CHECK( EncodeDecode( msg ) );
+
+    msg.mutable_enum_new_value_msg()->set_optional( static_cast< after::EnumNewValue>( 1 ));
+    BOOST_CHECK( EncodeDecode( msg ) );
+}
+

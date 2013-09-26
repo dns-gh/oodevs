@@ -16,6 +16,7 @@ enum EnumNewValue {
 
 message EnumNewValueMsg {
     required EnumNewValue value = 1;
+    optional EnumNewValue optional = 2;
 }
 
 message Root {
