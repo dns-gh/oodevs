@@ -142,8 +142,7 @@ void ADN_Type_LocalizedString::SetKey( const std::string& key )
 // -----------------------------------------------------------------------------
 kernel::E_TranslationType ADN_Type_LocalizedString::GetType() const
 {
-    kernel::E_TranslationType type = translation_->Type();
-    return type;
+    return translation_->Type();
 }
 
 // -----------------------------------------------------------------------------
@@ -152,10 +151,28 @@ kernel::E_TranslationType ADN_Type_LocalizedString::GetType() const
 // -----------------------------------------------------------------------------
 void ADN_Type_LocalizedString::SetType( kernel::E_TranslationType type )
 {
+    SetType( kernel::Language::Current(), type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_LocalizedString::GetType
+// Created: ABR 2013-09-26
+// -----------------------------------------------------------------------------
+kernel::E_TranslationType ADN_Type_LocalizedString::GetType( const std::string& language ) const
+{
+    return translation_->Type( language );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_LocalizedString::SetType
+// Created: ABR 2013-09-26
+// -----------------------------------------------------------------------------
+void ADN_Type_LocalizedString::SetType( const std::string& language, kernel::E_TranslationType type )
+{
     if( translation_->Key().empty() )
         return;
     InitTranslation( translation_->Key() );
-    translation_->SetType( type );
+    translation_->SetType( language, type );
     emit TypeChanged( type );
     CheckValidity();
 }

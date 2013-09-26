@@ -91,6 +91,9 @@ public:
     kernel::E_TranslationType GetType() const;
     void SetType( kernel::E_TranslationType type );
 
+    kernel::E_TranslationType GetType( const std::string& language ) const;
+    void SetType( const std::string& language, kernel::E_TranslationType type );
+
     const std::string& GetKey() const;
     void SetKey( const std::string& key );
 
