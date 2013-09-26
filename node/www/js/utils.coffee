@@ -160,7 +160,7 @@ display_error = (id, template, text) ->
     ctl.html template content: text
     ctl.show()
     $("html, body").animate scrollTop: 0, "fast"
-    setTimeout (-> ctl.hide()), 3000
+    setTimeout (-> ctl.hide()), 4000
 
 text_compare = (lhs, rhs) ->
     lhs = lhs.toLowerCase()

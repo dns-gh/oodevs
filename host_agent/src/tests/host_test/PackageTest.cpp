@@ -15,6 +15,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Scoper.h"
 #include "web/Chunker_ABC.h"
+#include "web/HttpException.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -369,6 +370,24 @@ BOOST_FIXTURE_TEST_CASE( package_reinstall_silently, Fixture )
     mock::verify();
 
     install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 2 ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( installing_an_unknown_package_throws, Fixture )
+{
+    InstallSomePackage();
+
+    Async async( pool );
+    install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 0 ) );
+    BOOST_CHECK_THROW( install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 51 ) ), web::HttpException );
+    BOOST_CHECK_THROW( install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 1 )( 51 ) ), web::HttpException );
+}
+
+BOOST_FIXTURE_TEST_CASE( installing_a_package_missing_a_dependency_throws, Fixture )
+{
+    AddCheckPackages( cache, false );
+
+    Async async( pool );
+    BOOST_CHECK_THROW( install.Install( async, install.GetPath() / GetFileIndex(), cache, boost::assign::list_of( 2 ) ), web::HttpException );
 }
 
 namespace

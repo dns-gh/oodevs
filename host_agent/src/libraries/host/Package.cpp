@@ -56,8 +56,9 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual bool        IsLinked() const = 0;
     virtual bool        IsValid() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
+    virtual void        CheckDependencies( const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
     virtual void        Install( Async& async, const FileSystem_ABC& fs, const Path& tomb,
-                                 const Path& output, const Package_ABC& dst, const Package::T_Items& targets,
+                                 const Path& output, const Package_ABC& dst,
                                  const PathOperand& operand, bool move ) const = 0;
     virtual void        Uninstall( Async& async, const FileSystem_ABC& fs, const Path& dst ) = 0;
     virtual void        Reinstall( const FileSystem_ABC& fs ) = 0;
@@ -389,13 +390,17 @@ namespace
             return fs.Rename( path, dst / Path( path ).filename() );
         }
 
-        void Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& root, const Package_ABC& dst,
-                      const Package::T_Items& targets, const PathOperand& operand, bool move ) const
+        void CheckDependencies( const Package_ABC& dst, const Package::T_Items& targets ) const
         {
             BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
                 if( !dst.Find( *dep, true ) && !HasItem( targets, *dep ) )
-                    return;
+                    throw web::HttpException( web::BAD_REQUEST, "Missing dependency "
+                        + Utf8( dep->GetName() ) + " on package " + Utf8( GetName() ) );
+        }
 
+        void Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& root, const Package_ABC& dst,
+                      const PathOperand& operand, bool move ) const
+        {
             Package_ABC::T_Item old = dst.Find( *this, false );
             const std::string checksum = GetChecksum();
             if( old && old->GetChecksum() == checksum )
@@ -1012,6 +1017,10 @@ void Package::InstallWith( Async& io, const Path& tomb, const T_Items& install, 
     if( install.empty() )
         return;
 
+    // before installing anything, check all packages are installable
+    for( auto it = install.begin(); it != install.end(); ++it )
+        (*it)->CheckDependencies( *this, install );
+
     fs_.MakePaths( path_ );
     Async async( pool_ );
     boost::mutex access;
@@ -1019,7 +1028,7 @@ void Package::InstallWith( Async& io, const Path& tomb, const T_Items& install, 
     PathOperand op = boost::bind( &AddItemPath, boost::ref( access ), boost::ref( paths ), _1 );
     BOOST_FOREACH( const T_Items::value_type& item, install )
         async.Post( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( fs_ ),
-                  tomb, path_, boost::cref( *this ), boost::cref( install ), op, move ) );
+                  tomb, path_, boost::cref( *this ), op, move ) );
     async.Join();
 
     BOOST_FOREACH( const Path& path, paths )
@@ -1040,8 +1049,10 @@ void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, cons
     BOOST_FOREACH( size_t id, ids )
     {
         T_Item item = src.Find( id, true );
-        if( item )
-            install.push_back( item );
+        if( !item )
+            throw web::HttpException( web::BAD_REQUEST, "Missing package "
+                + boost::lexical_cast< std::string >( id ) );
+        install.push_back( item );
     }
     InstallWith( io, tomb, install, false );
 }

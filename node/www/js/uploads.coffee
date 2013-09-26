@@ -100,9 +100,12 @@ class PackageView extends Backbone.View
                     @toggle_load disable_list, $ btns
                     @model.set item
                     @enabled = true
-                =>
+                (event) =>
                     @toggle_load disable_list, $ btns
-                    print_error "Unable to save package(s)"
+                    msg = "Unable to save package(s)"
+                    if event.responseText?.length
+                        msg += ": #{event.responseText}"
+                    print_error msg
                     @enabled = true
 
         $(".toggle a").click ->
