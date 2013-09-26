@@ -216,31 +216,6 @@ void UrbanPositions::ComputeCachedValues( std::vector< geometry::Point2f >& poin
     }
 }
 
-namespace
-{
-    template< typename IT >
-    bool FindOuterPoint( IT begin, IT end, const geometry::Point2f& from, const geometry::Vector2f& direction, geometry::Point2f& worst )
-    {
-        bool bFound = false;
-        float rMaxProjection = 0;
-        for( IT it = begin; it != end; ++it )
-        {
-            const geometry::Vector2f v( from, *it );
-            const float rProjection = direction.CrossProduct( v );
-            if( rProjection < -1.f ) // epsilon
-            {
-                bFound = true;
-                if( rMaxProjection > rProjection )
-                {
-                    rMaxProjection = rProjection;
-                    worst = *it;
-                }
-            }
-        }
-        return bFound;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions::ResetConvexHull
 // Created: JSR 2012-06-07

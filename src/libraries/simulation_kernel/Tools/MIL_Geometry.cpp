@@ -20,29 +20,6 @@
 
 namespace bg = boost::geometry;
 
-namespace
-{
-    bool FindOuterPoint( const T_PointVector& vertices, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
-    {
-        bool bFound = false;
-        double rMaxProjection = 0;
-        for( auto it = vertices.begin(); it != vertices.end(); ++it )
-        {
-            const double rProjection = CrossProduct( direction, MT_Vector2D( *it - from ) );
-            if( rProjection < -1 ) // epsilon
-            {
-                bFound = true;
-                if( rMaxProjection > rProjection )
-                {
-                    rMaxProjection = rProjection;
-                    worst = *it;
-                }
-            }
-        }
-        return bFound;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Geometry::Scale
 // Created: SLG 2010-04-30
