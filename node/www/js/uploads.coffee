@@ -96,7 +96,7 @@ class PackageView extends Backbone.View
             @toggle_load disable_list
             ajax "/api/install_from_cache", id: uuid, items: list.join(','),
                 (item) =>
-                    $(@el).empty()
+                    @reset()
                     @toggle_load disable_list, $ btns
                     @model.set item
                     @enabled = true
