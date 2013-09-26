@@ -50,10 +50,9 @@ int main( int, char** )
     char** argv = const_cast< char** >( winArgs.Argv() );
     gui::ApplicationMonitor monitor( argc, argv );
 
-#ifdef _DEBUG
-    // Set library path for Qt plugins when debug because the repertory used is not the run dir
-    monitor.setLibraryPaths( monitor.libraryPaths() << QDir::currentPath() );
-#endif
+    // Set library path for Qt plugins
+    monitor.addLibraryPath( QDir::currentPath() );
+
     SetConsoleTitle( szADN_Version.c_str() );
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );

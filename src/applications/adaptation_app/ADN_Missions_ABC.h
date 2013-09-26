@@ -68,16 +68,15 @@ private:
     //@{
     void ReadMissionSheetParametersDescriptions( xml::xistream& xis, const std::string& language );
     void ReadMissionSheetAttachments( xml::xistream& xis );
-    void WriteMissionSheetParametersDescriptions( xml::xostream& xos, const std::string& language );
+    void WriteMissionSheetParametersDescriptions( xml::xostream& xos, const std::string& language, bool isMergedXml );
     void WriteMissionSheetAttachments( xml::xostream& xos );
+    void InternalWriteMissionSheet( xml::xostream& xos, const std::string& language, bool isMergedXml = false );
 
     void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );
     void Initialize();
     void CheckFieldDataConsistency( const std::string& fieldData, ADN_ConsistencyChecker& checker );
     void ParseImagesInImageDirectory( const tools::Path& imageDir );
     bool IsFileInAttachmentList( const std::string& fileName );
-    bool IsEmptyMissionSheet( const std::string& language );
-    bool IsEmptyParameterList( const std::string& language );
     //@}
 
 public:

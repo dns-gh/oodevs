@@ -227,7 +227,6 @@ tools::Path ADN_Missions_Data::GenerateMissionSheet( int index, boost::shared_pt
         throw MASA_EXCEPTION( "Mission not found: " + text->Key() );
     const tools::Path tempDir = CreateMissionDirectory( kernel::Language::Current(), GetTemporaryPath( index ) );
     GetCssFile().Copy( GetTemporaryCssFile(), tools::Path::OverwriteIfExists );
-    tempDir.CreateDirectories();
     mission->WriteMissionSheet( tempDir, kernel::Language::Current() );
     mission->SetNeedsSaving( true );
     return tempDir / tools::Path::FromUTF8( mission->strName_.GetData() ) + ".html";
