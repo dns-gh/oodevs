@@ -34,6 +34,7 @@
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
+#include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )
 
@@ -606,7 +607,7 @@ void MIL_PopulationFlow::SendRC( const MIL_DecisionalReport& reportId, const std
 // Name: MIL_PopulationFlow::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double /*rSeed*/ ) const
+boost::shared_ptr< MT_Vector2D > MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double /*rSeed*/ ) const
 {
     const MT_Vector2D& agentPosition = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D nearestPointOnFlow;
@@ -619,12 +620,12 @@ MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, d
         if( MT_Line( *itStart, *itEnd ).IsInside( nearestPointOnFlow, 10.0f ) ) // $$$$ SBO 2006-02-22: epsilon should be 0
             break;
     if( itEnd == flowShape_.end() ) // $$$$ SBO 2006-02-22: should not happen
-        return MT_Vector2D();
+        return boost::shared_ptr< MT_Vector2D >();
     MT_Vector2D evadeDirection = ( *itEnd - *itStart ).Normalize().Rotate( MT_PI / 2 );
     if( evadeDirection.IsZero() )
         evadeDirection = -agent.GetOrderManager().GetDirDanger();
-    MT_Vector2D safetyPos = nearestPointOnFlow + evadeDirection * rMinDistance;
-    TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
+    auto safetyPos = boost::make_shared< MT_Vector2D >( nearestPointOnFlow + evadeDirection * rMinDistance );
+    TER_World::GetWorld().ClipPointInsideWorld( *safetyPos );
     return safetyPos;
 }
 

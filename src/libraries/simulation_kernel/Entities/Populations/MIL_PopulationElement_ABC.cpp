@@ -35,8 +35,9 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <boost/serialization/vector.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/serialization/set.hpp>
+#include <boost/serialization/vector.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor
@@ -275,11 +276,11 @@ double MIL_PopulationElement_ABC::GetPionReloadingTimeFactor() const
 // Name: MIL_PopulationElement_ABC::GetSecuringPoint
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_PopulationElement_ABC::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
+boost::shared_ptr< MT_Vector2D > MIL_PopulationElement_ABC::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
 {
     MT_Vector2D result;
     GetLocation().ComputeNearestPoint( securingAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), result );
-    return result;
+    return boost::make_shared< MT_Vector2D >( result );
 }
 
 // -----------------------------------------------------------------------------

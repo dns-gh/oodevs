@@ -87,10 +87,7 @@ boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::SecuringPoint( 
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
-        {
-            MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetSecuringPoint( caller ) );
-            return boost::shared_ptr< MT_Vector2D >( pResult );
-        }
+            return pKnowledge->GetSecuringPoint( caller );
     }
     return boost::shared_ptr< MT_Vector2D >();
 }

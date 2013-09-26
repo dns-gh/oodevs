@@ -105,8 +105,8 @@ public:
     MT_Vector2D GetClosestPoint( const MT_Vector2D& refPos ) const;
     MT_Vector2D GetClosestPoint( const TER_Localisation& loc ) const;
     double GetDistanceTo( const TER_Localisation& loc ) const;
-    MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
-    MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
+    boost::shared_ptr< MT_Vector2D > GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
+    boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
     boost::shared_ptr< MT_Vector2D > GetBarycenter() const;
     boost::shared_ptr< MT_Vector2D > GetConcentrationPosition( unsigned int concentrationId ) const;
     MT_Vector2D GetFlowHeadPosition();

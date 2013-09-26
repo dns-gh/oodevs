@@ -41,6 +41,7 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
@@ -744,36 +745,85 @@ double MIL_Population::GetDistanceTo( const TER_Localisation& loc ) const
 // Name: MIL_Population::GetSecuringPoint
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_Population::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
+boost::shared_ptr< MT_Vector2D > MIL_Population::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
 {
     MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( securingAgent );
     if( !pClosestElement )
-        return MT_Vector2D();
+        return boost::shared_ptr< MT_Vector2D >();
     return pClosestElement->GetSecuringPoint( securingAgent );
+}
+
+namespace
+{
+    class SafetyPositionFunctor : private boost::noncopyable
+    {
+    public:
+        virtual ~SafetyPositionFunctor() {}
+        virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) = 0;
+    };
+
+    class ElementSafetyPositionFunctor : public SafetyPositionFunctor
+    {
+    public:
+        explicit ElementSafetyPositionFunctor( const MIL_PopulationElement_ABC& closestElement ) : closestElement_( closestElement ) {}
+        virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed )
+        {
+            return closestElement_.GetSafetyPosition( agent, rMinDistance, rSeed );
+        }
+    private:
+        const MIL_PopulationElement_ABC& closestElement_;
+    };
+
+    class DeadSafetyPositionFunctor : public SafetyPositionFunctor
+    {
+    public:
+        DeadSafetyPositionFunctor( const MT_Vector2D& agentPosition, const MT_Vector2D& closestPoint )
+            : agentPosition_( agentPosition )
+            , closestPoint_( closestPoint )
+        {}
+        virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed )
+        {
+            MT_Vector2D evadeDirection = ( agentPosition_ - closestPoint_ ).Normalize().Rotate( rSeed );
+            if( evadeDirection.IsZero() )
+                evadeDirection = -agent.GetOrderManager().GetDirDanger();
+            MT_Vector2D safetyPos = closestPoint_ + evadeDirection * rMinDistance;
+            TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
+            return boost::make_shared< MT_Vector2D >( safetyPos );
+        }
+    private:
+        const MT_Vector2D& agentPosition_;
+        const MT_Vector2D& closestPoint_;
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const
+boost::shared_ptr< MT_Vector2D > MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const
 {
     MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( agent );
+    std::auto_ptr< SafetyPositionFunctor > functor;
     if( !pClosestElement )
-        return MT_Vector2D();
-    MT_Vector2D safetyPoint;
+    {
+        const MT_Vector2D& agentPosition = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
+        MT_Vector2D closestPoint = GetClosestPoint( agentPosition );
+        functor.reset( new DeadSafetyPositionFunctor( agentPosition, closestPoint ) );        
+    }
+    else
+        functor.reset( new ElementSafetyPositionFunctor( *pClosestElement ) );
     double rSeed = 0.0f;
     int nIteration = 1;
     while( rSeed < MT_PI )
     {
-        safetyPoint = pClosestElement->GetSafetyPosition( agent, rMinDistance, rSeed );
+        auto safetyPoint = functor->GetSafetyPosition( agent, rMinDistance, rSeed );
         // $$$$ SBO 2006-02-22: { 0; pi/4; -pi/4; pi/2; -pi/2; 3pi/4; -3pi/4; pi }
         rSeed += ( nIteration % 2 ? nIteration : -nIteration ) * MT_PI / 4;
         ++nIteration;
-        if( GetClosestPoint( safetyPoint ).Distance( safetyPoint ) >= rMinDistance )
+        if( GetClosestPoint( *safetyPoint ).Distance( *safetyPoint ) >= rMinDistance )
             return safetyPoint;
     }
-    return safetyPoint;
+    return boost::shared_ptr< MT_Vector2D >();
 }
 
 // -----------------------------------------------------------------------------

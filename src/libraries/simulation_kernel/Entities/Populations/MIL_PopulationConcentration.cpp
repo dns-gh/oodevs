@@ -28,9 +28,10 @@
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/serialization/set.hpp>
+#include <boost/serialization/vector.hpp>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
 
@@ -235,14 +236,14 @@ void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow 
 // Name: MIL_PopulationConcentration::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const
+boost::shared_ptr< MT_Vector2D > MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const
 {
     const MT_Vector2D& agentPosition = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D evadeDirection = ( agentPosition - position_ ).Normalize().Rotate( rSeed );
     if( evadeDirection.IsZero() )
         evadeDirection = -agent.GetOrderManager().GetDirDanger();
-    MT_Vector2D safetyPos = location_.GetCircleCenter() + evadeDirection * ( location_.GetCircleRadius() + rMinDistance );
-    TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
+    auto safetyPos = boost::make_shared< MT_Vector2D >( location_.GetCircleCenter() + evadeDirection * ( location_.GetCircleRadius() + rMinDistance ) );
+    TER_World::GetWorld().ClipPointInsideWorld( *safetyPos );
     return safetyPos;
 }
 
@@ -432,9 +433,9 @@ const TER_Localisation& MIL_PopulationConcentration::GetLocation() const
 // Name: MIL_PopulationConcentration::GetSecuringPoint
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_PopulationConcentration::GetSecuringPoint( const MIL_Agent_ABC& /*securingAgent*/ ) const
+boost::shared_ptr< MT_Vector2D > MIL_PopulationConcentration::GetSecuringPoint( const MIL_Agent_ABC& /*securingAgent*/ ) const
 {
-    return position_; // $$$$ SBO 2005-12-16: should maybe return a random point into concentration
+    return boost::make_shared< MT_Vector2D >( position_ ); // $$$$ SBO 2005-12-16: should maybe return a random point into concentration
 }
 
 // -----------------------------------------------------------------------------

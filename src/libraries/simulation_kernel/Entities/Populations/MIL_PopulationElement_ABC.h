@@ -111,8 +111,8 @@ public:
     const T_FlowVector& GetCollidingFlows() const;
 
     virtual const TER_Localisation& GetLocation() const = 0;
-    virtual MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
-    virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const = 0;
+    virtual boost::shared_ptr< MT_Vector2D > GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
+    virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const = 0;
     virtual double GetDefaultDensity( const MIL_PopulationType& type ) const = 0;
     virtual bool CanBePerceived() const = 0;
     virtual bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& shape ) const = 0;
