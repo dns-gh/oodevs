@@ -339,7 +339,7 @@ integration.getObjectSearchState = function( object )
     return ( object.bActionSearchFinished and 100 ) or 0
 end
 integration.startSearchObject = function( object )
-    area = CreateKnowledge( military.world.Area, object:getLocalisation() )
+    area = CreateKnowledge( integration.ontology.types.area, object:getLocalisation() )
     object.actionSearch = 
         DEC_Perception_ActivateLocationProgressiveRecce( area.source, objectSearchSpeed )
     object.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), objectSearchSpeed )

@@ -587,7 +587,7 @@ integration.getAgentsHiddenInCrowd = function( crowd )
     local hiddenAgents = {}
     local simAgents = DEC_GetAgentsHiddenInCrowd( crowd.source ) 
     for _, simAgent in pairs( simAgents ) do
-        hiddenAgents[ #hiddenAgents + 1 ] = CreateKnowledge( military.world.PlatoonAlly, simAgent )
+        hiddenAgents[ #hiddenAgents + 1 ] = CreateKnowledge( integration.ontology.types.agent, simAgent )
     end
     return hiddenAgents
 end
