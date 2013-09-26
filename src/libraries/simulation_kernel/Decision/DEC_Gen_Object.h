@@ -42,7 +42,7 @@ public:
                              const ObjectTypeResolver_ABC& resolver );
              DEC_Gen_Object( std::string type, TER_Localisation* location, bool activated );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
-    virtual ~DEC_Gen_Object();
+            ~DEC_Gen_Object();
     //@}
 
     //! @name Accessors
@@ -94,7 +94,5 @@ private:
     bool mining_;
     //@}
 };
-
-BOOST_CLASS_EXPORT_KEY( DEC_Gen_Object )
 
 #endif // __DEC_Gen_Object_h_
