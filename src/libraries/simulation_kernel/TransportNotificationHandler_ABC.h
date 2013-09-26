@@ -48,6 +48,7 @@ public:
     virtual void NotifyComposanteChanged( const PHY_ComposantePion& composante );
 
     virtual void CheckConsistency();
+    virtual void RecoverComposantes();
     //@}
 };
 

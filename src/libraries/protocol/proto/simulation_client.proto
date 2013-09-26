@@ -960,6 +960,8 @@ message EquipmentDotations {
         //! "repairable" element, matching a breakdown identifier
         //! defined in the physical database.
         repeated int32         breakdowns      = 8;
+        //! The number of away equipments
+        optional int32         away            = 9;
     }
     repeated EquipmentDotation elem = 1;
 }

@@ -667,6 +667,16 @@ bool PHY_ComposantePion::CanBeUsed( bool bWithLoaded ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::IsAway
+// Created: LGY 2013-09-24
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::IsAway() const
+{
+    const auto roleTransported = pRole_->GetPion().RetrieveRole< transport::PHY_RoleInterface_Transported >();
+    return !bLoadable_ && roleTransported && roleTransported->HasHumanTransportersToRecover();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanComponentBeUsed
 // Created: LDC 2012-01-04
 // Same as CanBeUsed() but doesn't check stuff that can be used at pion level (performance)

@@ -1127,15 +1127,20 @@ void PHY_RolePion_Composantes::AddEquipmentDotation( client::UnitAttributes& msg
     value.set_repairing( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
     value.set_captured( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ] );
 
+    int32_t away = 0;
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
+        if( composante.IsAway() )
+            ++away;
+
         if( composante.GetType() != compType || composante.GetState().GetID() != PHY_ComposanteState::repairableWithEvacuation_.GetID() )
             continue;
         const PHY_Breakdown* breakdown = composante.GetBreakdown();
         if( breakdown )
             value.add_breakdowns( breakdown->GetID() );
     }
+    value.set_away( away );
     assert( value.repairable() == value.breakdowns_size() );
 }
 
@@ -2129,4 +2134,44 @@ unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& b
         RetrieveLentComposante( borrower, *pComposante );
     }
     return nNbrDone;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::LoadForTransport
+// Created: LGY 2013-09-24
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::LoadForTransport( const MIL_Agent_ABC& /*transporter*/, bool bTransportOnlyLoadable, bool& /*bTransportedByAnother*/ )
+{
+    if( bTransportOnlyLoadable )
+        MarkAwayComposantesAsChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::RecoverComposantes
+// Created: LGY 2013-09-24
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::RecoverComposantes()
+{
+    MarkAwayComposantesAsChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::MarkAwayComposantesAsChanged
+// Created: LGY 2013-09-24
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::MarkAwayComposantesAsChanged()
+{
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.IsAway() )
+        {
+            T_ComposanteTypeProperties& properties =  composanteTypes_[ &composante.GetType() ];
+            if( !properties.bHasChanged_ )
+            {
+                ++nNbrComposanteChanged_;
+                properties.bHasChanged_ = true;
+            }
+        }
+    }
 }

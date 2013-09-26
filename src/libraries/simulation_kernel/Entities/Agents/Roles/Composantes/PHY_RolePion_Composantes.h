@@ -114,6 +114,7 @@ public:
     virtual void NotifyHumanHasChanged();
     virtual void NotifyIsLoadedInVab();
     virtual void NotifyIsUnLoadedInVab();
+    virtual void RecoverComposantes();
 
     virtual void Update( bool bIsDead );
     virtual void Clean ();
@@ -220,6 +221,7 @@ public:
     unsigned int GetCrowdTransporterCapacity() const;
     double GetCrowdTransporterLoadedPerTimeStep() const;
     double GetCrowdTransporterUnloadedPerTimeStep() const;
+    virtual void LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, bool& bTransportedByAnother );
     //@}
 
     //! @name Notifications (internal)
@@ -320,6 +322,7 @@ private:
     void ReadHuman    ( xml::xistream& xis );
     void GetStockTransporterCapacity( const PHY_DotationNature& nature, double& rWeightMax, double& rVolumeMax ) const;
     void AddEquipmentDotation( client::UnitAttributes& msg, const PHY_ComposanteTypePion& compType, const T_ComposanteTypeProperties& properties ) const;
+    void MarkAwayComposantesAsChanged();
     //@}
 
 private:
