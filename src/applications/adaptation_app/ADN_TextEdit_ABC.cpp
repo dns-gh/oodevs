@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_TextEdit_ABC.h"
 #include "moc_ADN_TextEdit_ABC.cpp"
+#include "ADN_Connector_String.h"
 #include "ADN_Ref_ABC.h"
 
 //-----------------------------------------------------------------------------
@@ -22,7 +23,6 @@ ADN_TextEdit_ABC::ADN_TextEdit_ABC( QWidget* parent /* = 0 */, const char * name
     , originalPalette_( palette() )
     , originalToolTip_( "" )
 {
-    // connect edit line & connector
     connect( this, SIGNAL( textChanged() ), this, SLOT( TextChanged() ) );
 }
 
@@ -36,6 +36,15 @@ ADN_TextEdit_ABC::~ADN_TextEdit_ABC()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_TextEdit_ABC::TextChanged
+// Created: ABR 2013-09-26
+// -----------------------------------------------------------------------------
+void ADN_TextEdit_ABC::TextChanged()
+{
+    static_cast< ADN_Connector_String< ADN_TextEdit_ABC >* >( pConnector_ )->SetDataChanged( toPlainText() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_TextEdit_ABC::SetToolTip
 // Created: ABR 2013-01-16
 // -----------------------------------------------------------------------------
@@ -46,26 +55,19 @@ void ADN_TextEdit_ABC::SetToolTip( const QString& toolTip )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_TextEdit_ABC::ConnectWithRefValidity
-// Created: ABR 2013-01-16
-// -----------------------------------------------------------------------------
-void ADN_TextEdit_ABC::ConnectWithRefValidity( const ADN_Ref_ABC& ref )
-{
-    connect( this, SIGNAL( textChanged( const QString& ) ), &ref, SLOT( CheckValidity() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_TextEdit_ABC::ChangeBackgroundColor
 // Created: ABR 2013-09-20
 // -----------------------------------------------------------------------------
 void ADN_TextEdit_ABC::ChangeBackgroundColor( const QColor& color )
 {
+    blockSignals( true );
     QString str = toHtml();
     if( str.contains( "bgcolor=" ) )
         str.replace( QRegExp( "bgcolor=\"#[a-fA-F0-9]{6}\"" ), QString( "bgcolor=\"%1\"" ).arg( color.name() ) );
     else
         str.replace( "<body", QString( "<body bgcolor=\"%1\"" ).arg( color.name() ) );
     setHtml( str );
+    blockSignals( false );
 }
 
 // -----------------------------------------------------------------------------
