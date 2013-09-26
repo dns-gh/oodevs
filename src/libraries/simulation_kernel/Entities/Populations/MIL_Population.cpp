@@ -755,23 +755,25 @@ boost::shared_ptr< MT_Vector2D > MIL_Population::GetSecuringPoint( const MIL_Age
 
 namespace
 {
-    class SafetyPositionFunctor
+    class SafetyPositionFunctor : private boost::noncopyable
     {
     public:
         virtual ~SafetyPositionFunctor() {}
-        virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) = 0; 
+        virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) = 0;
     };
+
     class ElementSafetyPositionFunctor : public SafetyPositionFunctor
     {
     public:
-        ElementSafetyPositionFunctor( MIL_PopulationElement_ABC* pClosestElement ) : pClosestElement_( pClosestElement ) {}
+        explicit ElementSafetyPositionFunctor( const MIL_PopulationElement_ABC& closestElement ) : closestElement_( closestElement ) {}
         virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed )
         {
-            return pClosestElement_->GetSafetyPosition( agent, rMinDistance, rSeed );
+            return closestElement_.GetSafetyPosition( agent, rMinDistance, rSeed );
         }
     private:
-        MIL_PopulationElement_ABC* pClosestElement_;
+        const MIL_PopulationElement_ABC& closestElement_;
     };
+
     class DeadSafetyPositionFunctor : public SafetyPositionFunctor
     {
     public:
@@ -789,8 +791,8 @@ namespace
             return boost::make_shared< MT_Vector2D >( safetyPos );
         }
     private:
-        MT_Vector2D agentPosition_;
-        MT_Vector2D closestPoint_;
+        const MT_Vector2D& agentPosition_;
+        const MT_Vector2D& closestPoint_;
     };
 }
 
@@ -809,7 +811,7 @@ boost::shared_ptr< MT_Vector2D > MIL_Population::GetSafetyPosition( const MIL_Ag
         functor.reset( new DeadSafetyPositionFunctor( agentPosition, closestPoint ) );        
     }
     else
-        functor.reset( new ElementSafetyPositionFunctor( pClosestElement ) );
+        functor.reset( new ElementSafetyPositionFunctor( *pClosestElement ) );
     double rSeed = 0.0f;
     int nIteration = 1;
     while( rSeed < MT_PI )
