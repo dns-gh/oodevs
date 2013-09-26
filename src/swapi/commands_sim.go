@@ -1462,3 +1462,10 @@ func (c *Client) CreateCheckpoint(name string) (string, error) {
 	})
 	return checkpoint, err
 }
+
+func (c *Client) RecoverTransporters(unitId uint32) error {
+	msg := createMagicActionMessage(MakeParameters(), makeUnitTasker(unitId),
+		sword.UnitMagicAction_recover_transporters.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}

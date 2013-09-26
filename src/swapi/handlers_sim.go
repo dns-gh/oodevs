@@ -120,7 +120,8 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 				OnSiteFixable: dotation.GetOnSiteFixable(),
 				Repairing:     dotation.GetRepairing(),
 				Captured:      dotation.GetCaptured(),
-				Breakdowns:    dotation.GetBreakdowns()}
+				Breakdowns:    dotation.GetBreakdowns(),
+				Away:          dotation.GetAway()}
 		}
 	}
 	if lentEquipments := mm.GetLentEquipments(); lentEquipments != nil {
@@ -177,6 +178,9 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	}
 	if mm.PostureTransition != nil {
 		unit.Posture.Transition = *mm.PostureTransition
+	}
+	if transportingUnit := mm.GetTransportingUnit(); transportingUnit != nil {
+		unit.TransporterId = transportingUnit.GetId()
 	}
 	if mm.Adhesions != nil {
 		unit.Adhesions = map[uint32]float32{}
