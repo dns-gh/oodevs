@@ -59,6 +59,7 @@ void Brain::ExecuteScript( const std::string& script )
 {
     brain_->Execute( script );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Brain::GetScriptRef
 // Created: MCO 2012-10-31

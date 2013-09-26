@@ -214,7 +214,6 @@ namespace
         throw MASA_INVALIDTASKER;
     }
 
-
     std::string GetStringParam( const sword::MissionParameters& params, int index )
     {
         const auto& elem = params.elem( index );
@@ -1182,8 +1181,8 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else
                 throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
             break;
-        case UnitMagicAction::exec_brain:
-            ProcessExecBrain( message, id, ack() );
+        case UnitMagicAction::exec_script:
+            ProcessExecScript( message, id, ack() );
             break;
         default:
             if( MIL_Formation* pFormation = FindFormation( id ) )
@@ -2692,8 +2691,8 @@ void MIL_EntityManager::ProcessFormationChangeSuperior( const UnitMagicAction& m
     resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
-void MIL_EntityManager::ProcessExecBrain( const sword::UnitMagicAction& msg,
-        unsigned int id, sword::UnitMagicActionAck& ack )
+void MIL_EntityManager::ProcessExecScript( const sword::UnitMagicAction& msg,
+        unsigned int brainOwnerId, sword::UnitMagicActionAck& ack )
 {
     const auto& params = msg.parameters();
     if( params.elem_size() != 2 )
@@ -2702,7 +2701,7 @@ void MIL_EntityManager::ProcessExecBrain( const sword::UnitMagicAction& msg,
     const std::string script = GetStringParam( params, 1 );
 
     std::string result;
-    if( MIL_AgentPion* unit = FindAgentPion( id ) )
+    if( MIL_AgentPion* unit = FindAgentPion( brainOwnerId ) )
         result = unit->GetDecision().ExecuteScript( function, script );
     else
         throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );

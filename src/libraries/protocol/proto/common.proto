@@ -2215,7 +2215,7 @@ message UnitMagicAction {
         //! parameters[0], Enumeration: the new posture, among
         //!   UnitAttributes::Posture
         change_posture                    = 57;
-        //! Execute a script in specified brain then invoke a function
+        //! Load a script in specified brain then invoke a function
         //! without argument, returning a string. This action is used
         //! for debugging/testing purpose. The caller sets up a testing
         //! environment with a script, including a root test function,
@@ -2227,7 +2227,7 @@ message UnitMagicAction {
         //! parameters[1], ACharStr: source code defining at least the
         //!   function to execute, referenced above.
         //! result[0], ACharStr: function result.
-        exec_brain                        = 58;
+        exec_script                       = 58;
     }
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;
