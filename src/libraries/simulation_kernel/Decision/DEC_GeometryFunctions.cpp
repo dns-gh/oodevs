@@ -1587,7 +1587,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeConvexHull( 
         }
         else
         {
-            T_PointVector nextPoints = next->GetPoints();
+            const T_PointVector& nextPoints = next->GetPoints();
             points.insert( points.end(), nextPoints.begin(), nextPoints.end() );
         }
     }
