@@ -101,8 +101,8 @@ public:
     double GetDominationState() const;
     const MIL_PopulationAttitude& GetAttitude() const;
     MT_Vector2D GetClosestPoint( const MT_Vector2D& refPos ) const;
-    MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
-    MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
+    boost::shared_ptr< MT_Vector2D > GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
+    boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
     const std::string& GetCriticalIntelligence() const;
     const T_ConcentrationMap& GetConcentrationMap() const;
     const T_FlowMap& GetFlowMap() const;

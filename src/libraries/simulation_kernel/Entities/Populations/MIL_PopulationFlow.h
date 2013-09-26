@@ -57,7 +57,7 @@ public:
     virtual const MT_Vector2D& GetDirection() const;
     virtual const TER_Localisation& GetLocation() const;
     double GetSpeed() const;
-    virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
+    virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
     virtual double GetDefaultDensity( const MIL_PopulationType& type ) const;
     virtual bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& shape ) const;
     //@}

@@ -454,7 +454,7 @@ MT_Vector2D DEC_Knowledge_Population::GetClosestPoint( const MT_Vector2D& refPos
 // Name: DEC_Knowledge_Population::GetSecuringPoint
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D DEC_Knowledge_Population::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
+boost::shared_ptr< MT_Vector2D > DEC_Knowledge_Population::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
 {
     assert( pPopulationKnown_ );
     return pPopulationKnown_->GetSecuringPoint( securingAgent );
@@ -464,7 +464,7 @@ MT_Vector2D DEC_Knowledge_Population::GetSecuringPoint( const MIL_Agent_ABC& sec
 // Name: DEC_Knowledge_Population::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D DEC_Knowledge_Population::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const
+boost::shared_ptr< MT_Vector2D > DEC_Knowledge_Population::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const
 {
     assert( pPopulationKnown_ );
     return pPopulationKnown_->GetSafetyPosition( agent, rMinDistance );
