@@ -55,6 +55,11 @@ void Brain::TriggerSelectedActions( double elapsedTime /*= 1*/ ) const
     brain_->TriggerSelectedActions( elapsedTime );
 }
 
+void Brain::ExecuteScript( const std::string& script )
+{
+    brain_->Execute( script );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Brain::GetScriptRef
 // Created: MCO 2012-10-31

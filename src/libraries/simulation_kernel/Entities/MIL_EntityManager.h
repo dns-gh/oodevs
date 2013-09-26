@@ -246,6 +246,8 @@ private:
     void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, unsigned int parentId, unsigned int context, sword::UnitMagicActionAck& ack );
     void ProcessTransferEquipmentRequest    ( const sword::UnitMagicAction&      message, MIL_AgentPion& pion );
     void ProcessFormationChangeSuperior     ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessExecScript( const sword::UnitMagicAction& message, unsigned int brainOwnerId,
+            sword::UnitMagicActionAck& ack );
     //@}
 
     //! @name Init

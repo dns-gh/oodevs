@@ -122,7 +122,10 @@
 
 #include "Adapters/Legacy/Sink.h"
 
-#define MASA_BADPARAM_UNIT( name ) MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, name )
+#define MASA_BADPARAM_UNIT(reason)                      \
+    MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, \
+        sword::UnitActionAck::error_invalid_parameter,  \
+        static_cast< std::stringstream& >( std::stringstream() << reason ).str().c_str() )
 
 #define MASA_BADPARAM_MAGIC( name ) MASA_BADPARAM_ASN( sword::MagicActionAck_ErrorCode, sword::MagicActionAck::error_invalid_parameter, name )
 
@@ -210,7 +213,19 @@ namespace
             return tasker.population().id();
         throw MASA_INVALIDTASKER;
     }
+
+    std::string GetStringParam( const sword::MissionParameters& params, int index )
+    {
+        const auto& elem = params.elem( index );
+        if( elem.value_size() != 1 )
+            throw MASA_BADPARAM_UNIT( "parameters[" << index << "] value size must be 1,"
+                    " got " << elem.value_size() );
+        if( !elem.value( 0 ).has_acharstr() )
+            throw MASA_BADPARAM_UNIT( "parameters[" << index << "] must be an ACharStr" );
+        return elem.value( 0 ).acharstr(); 
+    }
 }
+
 MIL_Automate* TaskerToAutomat( MIL_EntityManager_ABC& manager, const Tasker& tasker )
 {
     return tasker.has_automat() && tasker.automat().has_id() ? manager.FindAutomate( tasker.automat().id() ) : 0;
@@ -1165,6 +1180,9 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                 ProcessTransferEquipmentRequest( message, *pPion );
             else
                 throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
+            break;
+        case UnitMagicAction::exec_script:
+            ProcessExecScript( message, id, ack() );
             break;
         default:
             if( MIL_Formation* pFormation = FindFormation( id ) )
@@ -2671,6 +2689,24 @@ void MIL_EntityManager::ProcessFormationChangeSuperior( const UnitMagicAction& m
 
     pFormation->OnReceiveChangeSuperior( message, *formationFactory_ );
     resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
+void MIL_EntityManager::ProcessExecScript( const sword::UnitMagicAction& msg,
+        unsigned int brainOwnerId, sword::UnitMagicActionAck& ack )
+{
+    const auto& params = msg.parameters();
+    if( params.elem_size() != 2 )
+        throw MASA_BADPARAM_UNIT( "2 parameters expected, got " << params.elem_size() );
+    const std::string function = GetStringParam( params, 0 );
+    const std::string script = GetStringParam( params, 1 );
+
+    std::string result;
+    if( MIL_AgentPion* unit = FindAgentPion( brainOwnerId ) )
+        result = unit->GetDecision().ExecuteScript( function, script );
+    else
+        throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
+
+    ack.mutable_result()->add_elem()->add_value()->set_acharstr( result );
 }
 
 // -----------------------------------------------------------------------------

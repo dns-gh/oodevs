@@ -63,6 +63,7 @@ public:
     //@{
     void SelectActions();
     void TriggerSelectedActions( double elapsedTime = 1 ) const;
+    void ExecuteScript( const std::string& script );
 
     directia::tools::binders::ScriptRef GetScriptRef( const std::string& );
     directia::tools::binders::ScriptRef GetScriptRef();

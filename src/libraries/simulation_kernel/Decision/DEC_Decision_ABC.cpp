@@ -40,3 +40,12 @@ directia::tools::binders::ScriptRef DEC_Decision_ABC::GetScriptRef( const std::s
         throw MASA_EXCEPTION( "Trying to access a deleted brain." );
     return brain->GetScriptRef( id );
 }
+
+std::string DEC_Decision_ABC::ExecuteScript( const std::string& funcName, const std::string& script )
+{
+    sword::Brain* brain = GetBrain();
+    if( !brain )
+        throw MASA_EXCEPTION( "Trying to access a deleted brain." );
+    brain->ExecuteScript( script );
+    return brain->GetScriptRef( funcName ).Call< std::string >();
+}
