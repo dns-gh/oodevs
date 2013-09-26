@@ -50,6 +50,25 @@
             -->
             <arg value="--exclude=SimToClient.Content.UnitAttributes.RulesOfEngagement.Value"/>
             <arg value="--exclude=SimToClient.Content.AutomatAttributes.RulesOfEngagement.Value"/>
+            <!-- A forbidden error code was added to several acknowledgment messages.
+                 This is probably not a big deal as the ack's were not returned at
+                 all before this change.
+            -->
+            <arg value="--exclude=SimToClient.Content.ControlResumeAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.ControlStopAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.ControlDateTimeChangeAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.ControlChangeTimeFactorAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.ControlPauseAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlChangeTimeFactorAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlResumeAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlPauseAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlSkipToTickAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=ReplayToClient.Content.ControlStopAck.ControlAck.ErrorCode"/>
+            <arg value="--exclude=AuthenticationToClient.Content.ProfileCreationRequestAck.ErrorCode"/>
+            <arg value="--exclude=AuthenticationToClient.Content.ProfileDestructionRequestAck.ErrorCode"/>
+            <arg value="--exclude=AuthenticationToClient.Content.ProfileUpdateRequestAck.ErrorCode"/>
+            <!-- New magic actions are fine, they are always sent by the client -->
+            <arg value="--exclude=ClientToSim.Content.UnitMagicAction"/>
         </compare-proto>
         <compare-proto olddir="${data.dir}/proto-5.2.1" newdir="${data.dir}/proto-5.2.2"/>
     </target>

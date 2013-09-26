@@ -319,15 +319,25 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype,
             if not _isenum(newt):
                 return writeerr('error: old field is an enum but not the new one')
             # Old enum values must exist in the new one
-            oldvalues, newvalues = [set(v.value for v in t.values)
-                for t in (oldt, newt)]
-            delta = oldvalues - newvalues
-            if delta:
-                writeerr('error: old enumeration has values not in new one')
-                for v in sorted(delta):
-                    name = [e for e in oldt.values if e.value == v][0].name
-                    ui.writeerr('    %s = %s\n' % (name, v))
-                    ret += 1
+            # New enum values must also exist in the old one unless we use some
+            # trick with default value and unknown value (let's support this
+            # once we know exactly what to do.
+            enums = [
+                ('old', oldt),
+                ('new', newt),
+                ]
+            for i in xrange(len(enums)):
+                n0, t0 = enums[i]
+                n1, t1 = enums[(i + 1) % len(enums)]
+                v0 = set(v.value for v in t0.values)
+                v1 = set(v.value for v in t1.values)
+                delta = v0 - v1
+                if delta:
+                    writeerr('error: %s enumeration has values not in %s one' %  (n0, n1))
+                    for v in sorted(delta):
+                        name = [e for e in t0.values if e.value == v][0].name
+                        ui.writeerr('    %s = %s\n' % (name, v))
+                        ret += 1
         elif _isenum(newt):
             return writeerr('error: new field is an enum but not the old one')
         return ret
