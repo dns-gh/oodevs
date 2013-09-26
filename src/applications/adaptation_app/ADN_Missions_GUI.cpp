@@ -375,6 +375,7 @@ void ADN_Missions_GUI::OnChangeMission( int type )
 {
     ADN_Missions_ABC* mission = static_cast< ADN_Missions_ABC* >( listViews_[ type ]->GetCurrentData() );
     assert( mission != 0 );
+    mission->CheckValidity();
     if( mission->NeedsSaving() )
         OnGenerate( type, false );
 }

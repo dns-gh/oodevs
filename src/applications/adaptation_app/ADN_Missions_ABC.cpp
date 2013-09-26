@@ -480,3 +480,18 @@ void ADN_Missions_ABC::FillContextParameters()
         break;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_ABC::CheckValidity
+// Created: ABR 2013-09-26
+// -----------------------------------------------------------------------------
+void ADN_Missions_ABC::CheckValidity()
+{
+    ADN_RefWithLocalizedName::CheckValidity();
+    CheckTypeValidity( descriptionContext_ );
+    CheckTypeValidity( descriptionBehavior_ );
+    CheckTypeValidity( descriptionSpecific_ );
+    CheckTypeValidity( descriptionComment_ );
+    CheckTypeValidity( descriptionMissionEnd_ );
+    parameters_.CheckValidity();
+}

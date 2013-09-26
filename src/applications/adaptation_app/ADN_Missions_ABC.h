@@ -60,6 +60,7 @@ public:
     void WriteMissionSheet( const tools::Path& missionDir, const std::string& language );
     bool NeedsSaving();
     void SetNeedsSaving( bool saving );
+    virtual void CheckValidity();
     //@}
 
 private:

@@ -294,3 +294,13 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
         Write( output, knowledgeObjects_, type_.GetData(), eMissionParameterTypeObjectKnowledge, "objects" );
     output << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::CheckValidity
+// Created: ABR 2013-09-26
+// -----------------------------------------------------------------------------
+void ADN_Missions_Parameter::CheckValidity()
+{
+    ADN_RefWithLocalizedName::CheckValidity();
+    CheckTypeValidity( description_ );
+}
