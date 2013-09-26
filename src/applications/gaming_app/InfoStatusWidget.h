@@ -19,6 +19,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class HumanFactors_ABC;
+    class Population_ABC;
     class Profile_ABC;
 }
 
@@ -43,6 +44,7 @@ class InfoStatusWidget : public Q3VBox
                        , public tools::SelectionObserver< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< Attributes >
                        , public tools::ElementObserver_ABC< kernel::HumanFactors_ABC >
+                       , public tools::ElementObserver_ABC< kernel::Population_ABC >
                        , public tools::ElementObserver_ABC< Reinforcements >
 {
     Q_OBJECT
@@ -67,6 +69,7 @@ private:
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const Attributes& element );
     virtual void NotifyUpdated( const kernel::HumanFactors_ABC& element );
+    virtual void NotifyUpdated( const kernel::Population_ABC& element );
     virtual void NotifyUpdated( const Reinforcements& element );
 
     void SetDefault();

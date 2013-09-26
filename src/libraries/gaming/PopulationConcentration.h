@@ -63,15 +63,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationConcentration( const PopulationConcentration& );            //!< Copy constructor
-    PopulationConcentration& operator=( const PopulationConcentration& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::CrowdConcentrationUpdate& message );
+    void SelectRightPartColor() const;
     //@}
 
 private:

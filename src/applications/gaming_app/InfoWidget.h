@@ -39,7 +39,7 @@ class StaticModel;
 // =============================================================================
 class InfoWidget : public Q3HBox
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -47,13 +47,6 @@ public:
              InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
                          gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
     virtual ~InfoWidget();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    InfoWidget( const InfoWidget& );            //!< Copy constructor
-    InfoWidget& operator=( const InfoWidget& ); //!< Assignment operator
     //@}
 };
 

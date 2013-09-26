@@ -10,21 +10,19 @@
 #include "gaming_app_pch.h"
 #include "InfoStatusWidget.h"
 #include "moc_InfoStatusWidget.cpp"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/tools.h"
+#include "clients_gui/EntitySymbols.h"
 #include "gaming/Attributes.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/Reinforcements.h"
-#include "clients_kernel/tools.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_gui/EntitySymbols.h"
 #include "icons.h"
-#pragma warning( push, 0 )
-#include <QtGui/qevent.h>
-#pragma warning( pop )
 
 namespace
 {
@@ -274,13 +272,60 @@ void InfoStatusWidget::SetDefault()
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::SetIcon()
 {
-    QImage img;
-    if( selected_ )
-        img = icons_.GetSymbol( *selected_, QSize( 64, 64 ) );
-    if( !img.isNull() )
-        icon_->setPixmap( QPixmap::fromImage( img ) );
+    if( selected_ && selected_->GetTypeName() == kernel::Population_ABC::typeName_ )
+    {
+        const kernel::Entity_ABC* entity = static_cast< const kernel::Entity_ABC* >( selected_ );
+        const kernel::Population_ABC* population = static_cast< const kernel::Population_ABC* >( entity );
+        const unsigned int healthy = population->GetHealthyHumans();
+        const unsigned int contaminated = population->GetContaminatedHumans();
+        const unsigned int wounded = population->GetWoundedHumans();
+        const unsigned int dead = population->GetDeadHumans();
+
+        // QPainter::drawPie is specified in 1/16th of a degree
+        const float ratio = 16.f * 360 / ( healthy + contaminated + wounded + dead );
+
+        const int healthySpanAngle = - static_cast< int >( healthy * ratio );
+        const int contaminatedSpanAngle = - static_cast< int >( contaminated * ratio );
+        const int woundedSpanAngle = - static_cast< int >( wounded * ratio );
+        const int deadSpanAngle = - static_cast< int >( dead * ratio );
+
+        QPixmap p( 64, 64 );
+        const QRect r = p.rect();
+        p.fill( Qt::transparent );
+        QPainter painter( &p );
+        painter.setPen( Qt::NoPen );
+        int angleStart = 90 * 16;
+        // healthy
+        painter.setBrush( QBrush( Qt::blue ) );
+        painter.drawPie( r, angleStart, healthySpanAngle );
+        angleStart += healthySpanAngle;
+        // contaminated
+        painter.setBrush( QBrush( Qt::green ) );
+        painter.drawPie( r, angleStart, contaminatedSpanAngle );
+        angleStart += contaminatedSpanAngle;
+        // wounded
+        painter.setBrush( QBrush( Qt::red ) );
+        painter.drawPie( r, angleStart, woundedSpanAngle );
+        angleStart += woundedSpanAngle;
+        // dead
+        painter.setBrush( QBrush( Qt::black ) );
+        painter.drawPie( r, angleStart, deadSpanAngle );
+        painter.end();
+        icon_->setPixmap( p );
+    }
     else
-        QTimer::singleShot( 200, this, SLOT( SetIcon() ) );
+    {
+        QImage img;
+        if( selected_ )
+            img = icons_.GetSymbol( *selected_, QSize( 64, 64 ) );
+        if( !img.isNull() )
+        {
+            if( img.width() > 1 && img.height() > 1 )
+                icon_->setPixmap( QPixmap::fromImage( img ) );
+        }
+        else
+            QTimer::singleShot( 200, this, SLOT( SetIcon() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -422,6 +467,16 @@ void InfoStatusWidget::NotifyUpdated( const kernel::HumanFactors_ABC& element )
         return;
     const HumanFactors& humans = static_cast< const HumanFactors& >( element );
     SetHumanFactors( humans );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoStatusWidget::NotifyUpdated
+// Created: JSR 2013-09-26
+// -----------------------------------------------------------------------------
+void InfoStatusWidget::NotifyUpdated( const kernel::Population_ABC& element )
+{
+    if( selected_ == &element )
+        SetIcon();
 }
 
 // -----------------------------------------------------------------------------

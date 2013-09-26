@@ -178,17 +178,37 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationConcentration::SelectRightPartColor
+// Created: JSR 2013-09-25
+// -----------------------------------------------------------------------------
+void PopulationConcentration::SelectRightPartColor() const
+{
+    if( nWoundedHumans_ == 0 && nContaminatedHumans_ == 0 && nDeadHumans_ == 0 )
+        glColor4f( COLOR_BLUE );
+    else if( nHealthyHumans_ == 0 && nWoundedHumans_ == 0 && nContaminatedHumans_ == 0 )
+        glColor4f( COLOR_BLACK );
+    else if( nHealthyHumans_ >= nContaminatedHumans_ && nHealthyHumans_ >= nWoundedHumans_ )
+        glColor4f( COLOR_YELLOW );
+    else if( nContaminatedHumans_ > nHealthyHumans_ && nContaminatedHumans_ > nWoundedHumans_ )
+        glColor4f( COLOR_GREEN );
+    else // nWoundedHumans_ > nHealthyHumans_ && nWoundedHumans_ > nContaminatedHumans_
+        glColor4f( COLOR_RED );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationConcentration::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
 {
-    tools.DrawDisc( position_, radius_ );
-    if( !tools.IsPickingMode() )
+    if( tools.IsPickingMode() )
+        tools.DrawDisc( position_, radius_ );
+    else
     {
+        tools.DrawHalfDisc( position_, -90, radius_ );
         glPushAttrib( GL_CURRENT_BIT );
-        glColor4f( COLOR_BLACK );
-        tools.DrawDisc( position_, deadRadius_ );
+        SelectRightPartColor();
+        tools.DrawHalfDisc( position_, 90, radius_ );
         SelectColor( attitude_ );
         tools.DrawCircle( position_, radius_ );
         glPopAttrib();
