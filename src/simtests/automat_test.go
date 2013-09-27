@@ -10,6 +10,8 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"swapi"
+	"sword"
 )
 
 func (s *TestSuite) TestSetAutomatMode(c *C) {
@@ -53,4 +55,45 @@ func (s *TestSuite) TestSetAutomatMode(c *C) {
 
 	// Reengaging the parent, reengage the child
 	checkEngage(automat.Id, subAutomat.Id, true)
+}
+
+func (s *TestSuite) TestAutomatReloadBrain(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	automat := createAutomat(c, client)
+	tasker := swapi.MakeAutomatTasker(automat.Id)
+
+	// too many parameters
+	err := client.ReloadBrainTest(tasker, swapi.MakeParameters(
+		swapi.MakeString("blah"),
+		swapi.MakeNullValue(),
+	))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid type
+	err = client.ReloadBrainTest(tasker, swapi.MakeParameters(
+		swapi.MakeBoolean(true),
+	))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid automat id
+	empty := swapi.MakeParameters()
+	err = client.ReloadBrainTest(swapi.MakeAutomatTasker(automat.Id+1), empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// missing id
+	err = client.ReloadBrainTest(&sword.Tasker{}, empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// invalid model
+	err = client.ReloadBrain(tasker, "bad_brain")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// reload current brain
+	err = client.ReloadBrain(tasker, "")
+	c.Assert(err, IsNil)
+
+	// Reload automat decisional model
+	err = client.ReloadBrain(tasker, "Journalists")
+	c.Assert(err, IsNil)
 }

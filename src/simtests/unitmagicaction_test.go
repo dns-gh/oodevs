@@ -1924,3 +1924,47 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 	// Check 3 equipments not loadable are away
 	CheckAwayEquipment(c, client, awayEquipmentId, transported.Id, carrier.Id, 3)
 }
+
+func (s *TestSuite) TestUnitReloadBrain(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	automat := createAutomat(c, client)
+	from := swapi.Point{X: -15.9219, Y: 28.3456}
+	unit, err := client.CreateUnit(automat.Id, UnitType, from)
+	c.Assert(err, IsNil)
+	tasker := swapi.MakeUnitTasker(unit.Id)
+
+	// too many parameters
+	err = client.ReloadBrainTest(tasker, swapi.MakeParameters(
+		swapi.MakeString("blah"),
+		swapi.MakeNullValue(),
+	))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid type
+	err = client.ReloadBrainTest(tasker, swapi.MakeParameters(
+		swapi.MakeBoolean(true),
+	))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid unit id
+	empty := swapi.MakeParameters()
+	err = client.ReloadBrainTest(swapi.MakeUnitTasker(unit.Id+1), empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// missing id
+	err = client.ReloadBrainTest(&sword.Tasker{}, empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// invalid model
+	err = client.ReloadBrain(tasker, "bad_brain")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// reload current brain
+	err = client.ReloadBrain(tasker, "")
+	c.Assert(err, IsNil)
+
+	// Reload automat decisional model
+	err = client.ReloadBrain(tasker, "Journalist")
+	c.Assert(err, IsNil)
+}
