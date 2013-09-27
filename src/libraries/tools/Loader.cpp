@@ -24,7 +24,16 @@ Loader::Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observ
     : DefaultLoader( observer )
     , config_      ( config )
 {
-    // NOTHING
+    auto xis = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
+    *xis >> xml::start( "physical" )
+        >> xml::list( [&]( const std::string&, const std::string& name, xml::xistream& x )
+        {
+            std::string file;
+            x >> xml::optional >> xml::attribute( "file", file );
+            if( !file.empty() )
+                allowedFiles_[ name ] = file;
+        } )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -36,22 +45,28 @@ Loader::~Loader()
     // NOTHING
 }
 
+Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const
+{
+    auto it = allowedFiles_.find( rootTag );
+    if( it == allowedFiles_.cend() )
+    {
+        if( !optional )
+            throw MASA_EXCEPTION( "cannot load disallowed physical file entry: " + rootTag );
+        return Path();
+    }
+    const Path childFile = config_.BuildPhysicalChildFile( Path::FromUTF8( it->second ) );
+    if( !optional || childFile.Exists() )
+        LoadFile( childFile, loader );
+    return childFile;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Loader::LoadPhysicalFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
 Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
-    std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
-    std::string childFileName;
-    *physicalFileXis >> xml::start( "physical" )
-                         >> xml::start( rootTag )
-                             >> xml::attribute( "file", childFileName )
-                         >> xml::end
-                     >> xml::end;
-    Path childFile = config_.BuildPhysicalChildFile( Path::FromUTF8( childFileName ) );
-    LoadFile( childFile, loader );
-    return childFile;
+    return LoadPhysicalFile( rootTag, loader, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,17 +75,5 @@ Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) con
 // -----------------------------------------------------------------------------
 Path Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
-    std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
-    std::string childFileName;
-    *physicalFileXis >> xml::start( "physical" )
-                         >> xml::optional >> xml::start( rootTag )
-                             >> xml::attribute( "file", childFileName )
-                         >> xml::end
-                     >> xml::end;
-    if( childFileName.empty() )
-        return Path();
-    Path childFile = config_.BuildPhysicalChildFile( Path::FromUTF8( childFileName ) );
-    if( childFile.Exists() )
-        LoadFile( childFile, loader );
-    return childFile;
+    return LoadPhysicalFile( rootTag, loader, true );
 }

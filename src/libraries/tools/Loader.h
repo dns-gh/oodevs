@@ -42,9 +42,13 @@ public:
     //@}
 
 private:
+    Path LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const;
+
+private:
     //! @name Member data
     //@{
     const ExerciseConfig& config_;
+    std::map< std::string, std::string > allowedFiles_;
     //@}
 };
 

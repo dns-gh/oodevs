@@ -210,6 +210,7 @@ private:
     //@{
     std::auto_ptr< tools::Loader_ABC > fileLoader_;
     std::auto_ptr< const tools::WorldParameters > pWorldParameters_;
+    RealFileLoaderObserver_ABC& observer_;
 
     std::string modelVersion_;
 
