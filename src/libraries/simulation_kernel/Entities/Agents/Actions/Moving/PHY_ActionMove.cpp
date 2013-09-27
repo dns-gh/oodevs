@@ -49,6 +49,8 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
         pMainPath_->AddRef();
     if( suspended )
         Suspend();
+    if( pMainPath_->GetState() == DEC_Path_ABC::eCanceled )
+       CreateNewPath();
 }
 
 // -----------------------------------------------------------------------------
