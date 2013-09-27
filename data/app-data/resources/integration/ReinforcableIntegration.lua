@@ -89,6 +89,30 @@ integration.setNeedReinforcement = function( unit, action, obstacle, needDotatio
     end
 end
 
+integration.setObjectNeedingReinforcementForCapacity = function( unit, object )
+    unit.source.needReinforcementForCapacity = object
+end
+
+integration.setObjectNeedingReinforcementForDotation = function( unit, dotation )
+    unit.source.needReinforcementForDotation = dotation
+end
+
+integration.setObjectNeedingReinforcementForNumberMissing = function( unit, numberMissing )
+    unit.source.needReinforcementForNumberMissing = numberMissing
+end
+
+integration.setObjectNeedingReinforcementForObstacle = function( unit, object )
+    unit.source.needReinforcementForObstacle = object
+end
+
+integration.setObjectNeedingReinforcementForAction = function( unit, object )
+    unit.source.needReinforcementForAction = object
+end
+
+integration.setObjectStopNeedingReinforcement = function( unit, boolean )
+    unit.source.stopNeedReinforcement = boolean
+end
+
 integration.canReinforceWithDotation = function ( unitToSupport, support, object, action, dotation, quantite )
     return ( integration.dotationAgentPourConstruire( support, unitToSupport.source.needReinforcementForObstacle ) >= unitToSupport.source.needReinforcementForDotation )
 end
