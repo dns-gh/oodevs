@@ -47,17 +47,16 @@ Loader::~Loader()
 
 Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const
 {
-    auto it = allowedFiles_.find( rootTag );
-    if( it == allowedFiles_.cend() )
+    const Path path = GetPhysicalChildFile( rootTag );
+    if( path.IsEmpty() )
     {
         if( !optional )
             throw MASA_EXCEPTION( "cannot load disallowed physical file entry: " + rootTag );
-        return Path();
+        return path;
     }
-    const Path childFile = config_.BuildPhysicalChildFile( Path::FromUTF8( it->second ) );
-    if( !optional || childFile.Exists() )
-        LoadFile( childFile, loader );
-    return childFile;
+    if( !optional || path.Exists() )
+        LoadFile( path, loader );
+    return path;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,4 +75,12 @@ Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) con
 Path Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
     return LoadPhysicalFile( rootTag, loader, true );
+}
+
+Path Loader::GetPhysicalChildFile( const std::string& rootTag ) const
+{
+    auto it = allowedFiles_.find( rootTag );
+    if( it == allowedFiles_.end() )
+        return Path();
+    return config_.BuildPhysicalChildFile( Path::FromUTF8( it->second ) );
 }

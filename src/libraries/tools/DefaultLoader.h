@@ -43,6 +43,7 @@ public:
 
     virtual Path                           LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
     virtual Path                           LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
+    virtual Path GetPhysicalChildFile( const std::string& rootTag ) const; // Invalid for this class
 
     virtual const RealFileLoaderObserver_ABC& GetObserver() const;
     //@}
