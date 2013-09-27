@@ -28,36 +28,34 @@ func invalid(name string, value interface{}) error {
 	return fmt.Errorf("invalid %v: %v", name, value)
 }
 
-func makeUnitTasker(unitId uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Unit: &sword.UnitId{
-			Id: proto.Uint32(unitId),
-		},
+func makeTasker(automat, crowd, formation, party, unit uint32) *sword.Tasker {
+	tasker := &sword.Tasker{}
+	if automat != 0 {
+		tasker.Automat = &sword.AutomatId{
+			Id: proto.Uint32(automat),
+		}
 	}
-}
-
-func makeCrowdTasker(crowdId uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Crowd: &sword.CrowdId{
-			Id: proto.Uint32(crowdId),
-		},
+	if crowd != 0 {
+		tasker.Crowd = &sword.CrowdId{
+			Id: proto.Uint32(crowd),
+		}
 	}
-}
-
-func makeAutomatTasker(automatId uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Automat: &sword.AutomatId{
-			Id: proto.Uint32(automatId),
-		},
+	if formation != 0 {
+		tasker.Formation = &sword.FormationId{
+			Id: proto.Uint32(formation),
+		}
 	}
-}
-
-func makeFormationTasker(formationId uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Formation: &sword.FormationId{
-			Id: proto.Uint32(formationId),
-		},
+	if party != 0 {
+		tasker.Party = &sword.PartyId{
+			Id: proto.Uint32(party),
+		}
 	}
+	if unit != 0 {
+		tasker.Unit = &sword.UnitId{
+			Id: proto.Uint32(unit),
+		}
+	}
+	return tasker
 }
 
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
@@ -106,24 +104,15 @@ func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan err
 
 func (c *Client) CreateFormationTest(partyId uint32, parentId uint32,
 	params *sword.MissionParameters) (*Formation, error) {
-	tasker := &sword.Tasker{}
-	taskerId := uint32(0)
-	if parentId != 0 {
-		tasker.Formation = &sword.FormationId{
-			Id: proto.Uint32(parentId),
-		}
-		taskerId = parentId
-	} else if partyId != 0 {
-		tasker.Party = &sword.PartyId{
-			Id: proto.Uint32(partyId),
-		}
+	taskerId := parentId
+	if partyId != 0 {
 		taskerId = partyId
 	}
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     tasker,
+					Tasker:     makeTasker(0, 0, parentId, partyId, 0),
 					Type:       sword.UnitMagicAction_formation_creation.Enum(),
 					Parameters: params,
 				},
@@ -182,12 +171,6 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 
 func (c *Client) createUnit(automatId, unitType uint32, location Point,
 	name *string, pc *bool) (*Unit, error) {
-	tasker := &sword.Tasker{}
-	if automatId != 0 {
-		tasker.Automat = &sword.AutomatId{
-			Id: proto.Uint32(automatId),
-		}
-	}
 	params := []*sword.MissionParameter{
 		MakeIdentifier(unitType),
 		MakePointParam(location),
@@ -202,7 +185,7 @@ func (c *Client) createUnit(automatId, unitType uint32, location Point,
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     tasker,
+					Tasker:     makeTasker(automatId, 0, 0, 0, 0),
 					Type:       sword.UnitMagicAction_unit_creation.Enum(),
 					Parameters: MakeParameters(params...),
 				},
@@ -302,14 +285,14 @@ func (c *Client) SendUnitOrder(unitId, missionType uint32,
 	})
 }
 
-func (c *Client) SendAutomatOrder(unitId, missionType uint32,
+func (c *Client) SendAutomatOrder(automatId, missionType uint32,
 	params *sword.MissionParameters) (*Order, error) {
 	return c.sendOrder(SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				AutomatOrder: &sword.AutomatOrder{
 					Tasker: &sword.AutomatId{
-						Id: proto.Uint32(unitId),
+						Id: proto.Uint32(automatId),
 					},
 					Type: &sword.MissionType{
 						Id: proto.Uint32(missionType),
@@ -326,7 +309,7 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeUnitTasker(unitId),
+					Tasker:     makeTasker(0, 0, 0, 0, unitId),
 					Type:       sword.UnitMagicAction_delete_unit.Enum(),
 					Parameters: MakeParameters(),
 				},
@@ -363,22 +346,11 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 
 func (c *Client) CreateAutomat(formationId, automatId, automatType,
 	knowledgeGroupId uint32) (*Automat, error) {
-	tasker := &sword.Tasker{}
-	if automatId != 0 {
-		tasker.Automat = &sword.AutomatId{
-			Id: proto.Uint32(automatId),
-		}
-	}
-	if formationId != 0 {
-		tasker.Formation = &sword.FormationId{
-			Id: proto.Uint32(formationId),
-		}
-	}
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker: tasker,
+					Tasker: makeTasker(automatId, 0, formationId, 0, 0),
 					Type:   sword.UnitMagicAction_automat_creation.Enum(),
 					Parameters: MakeParameters(
 						MakeIdentifier(automatType),
@@ -415,17 +387,6 @@ func (c *Client) CreateAutomat(formationId, automatId, automatType,
 
 func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 	location Point, healthy, wounded, dead int32, name string) (*Crowd, error) {
-	tasker := &sword.Tasker{}
-	if partyId != 0 {
-		tasker.Party = &sword.PartyId{
-			Id: proto.Uint32(partyId),
-		}
-	}
-	if formationId != 0 {
-		tasker.Formation = &sword.FormationId{
-			Id: proto.Uint32(formationId),
-		}
-	}
 
 	params := []*sword.MissionParameter{
 		MakeString(crowdType),
@@ -440,7 +401,7 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     tasker,
+					Tasker:     makeTasker(0, 0, formationId, partyId, 0),
 					Type:       sword.UnitMagicAction_crowd_creation.Enum(),
 					Parameters: MakeParameters(params...),
 				},
@@ -473,14 +434,14 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 	return created, err
 }
 
-func (c *Client) SendCrowdOrder(unitId, missionType uint32,
+func (c *Client) SendCrowdOrder(crowdId, missionType uint32,
 	params *sword.MissionParameters) (*Order, error) {
 	return c.sendOrder(SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				CrowdOrder: &sword.CrowdOrder{
 					Tasker: &sword.CrowdId{
-						Id: proto.Uint32(unitId),
+						Id: proto.Uint32(crowdId),
 					},
 					Type: &sword.MissionType{
 						Id: proto.Uint32(missionType),
@@ -605,25 +566,11 @@ func (c *Client) Stop() error {
 
 func (c *Client) SendFragOrder(automatId, crowdId, unitId, fragOrderType uint32,
 	params *sword.MissionParameters) (*Order, error) {
-	tasker := &sword.Tasker{}
-	if automatId != 0 {
-		tasker.Automat = &sword.AutomatId{
-			Id: proto.Uint32(automatId),
-		}
-	} else if crowdId != 0 {
-		tasker.Crowd = &sword.CrowdId{
-			Id: proto.Uint32(crowdId),
-		}
-	} else if unitId != 0 {
-		tasker.Unit = &sword.UnitId{
-			Id: proto.Uint32(unitId),
-		}
-	}
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				FragOrder: &sword.FragOrder{
-					Tasker: tasker,
+					Tasker: makeTasker(automatId, crowdId, 0, 0, unitId),
 					Type: &sword.FragOrderType{
 						Id: proto.Uint32(fragOrderType),
 					},
@@ -652,14 +599,14 @@ func (c *Client) SendFragOrder(automatId, crowdId, unitId, fragOrderType uint32,
 	return c.waitOrder(id)
 }
 
-func (c *Client) SendAutomatFragOrder(unitId, fragOrderType uint32,
+func (c *Client) SendAutomatFragOrder(automatId, fragOrderType uint32,
 	params *sword.MissionParameters) (*Order, error) {
-	return c.SendFragOrder(unitId, 0, 0, fragOrderType, params)
+	return c.SendFragOrder(automatId, 0, 0, fragOrderType, params)
 }
 
-func (c *Client) SendCrowdFragOrder(unitId, fragOrderType uint32,
+func (c *Client) SendCrowdFragOrder(crowdId, fragOrderType uint32,
 	params *sword.MissionParameters) (*Order, error) {
-	return c.SendFragOrder(0, unitId, 0, fragOrderType, params)
+	return c.SendFragOrder(0, crowdId, 0, fragOrderType, params)
 }
 
 func (c *Client) SendUnitFragOrder(unitId, fragOrderType uint32,
@@ -697,17 +644,17 @@ func defaultKnowledgeGroupMagicHandler(msg *sword.SimToClient_Content) error {
 	return err
 }
 
-type Enumer interface {
+type UnitMagicEnumer interface {
 	Enum() *sword.UnitMagicAction_Type
 }
 
-func (c *Client) sendUnitMagicAction(tasker *sword.Tasker, params *sword.MissionParameters,
-	magicAction Enumer) error {
+func (c *Client) sendUnitMagicAction(automat, crowd, formation, unit uint32,
+	params *sword.MissionParameters, magicAction UnitMagicEnumer) error {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     tasker,
+					Tasker:     makeTasker(automat, crowd, formation, 0, unit),
 					Type:       magicAction.Enum(),
 					Parameters: params,
 				},
@@ -735,13 +682,14 @@ func createKnowledgeMagicActionMessage(params *sword.MissionParameters, knowledg
 }
 
 func (c *Client) TeleportUnit(unitId uint32, location Point) error {
-	return c.sendUnitMagicAction(makeUnitTasker(unitId),
+	return c.sendUnitMagicAction(0, 0, 0, unitId,
 		MakeParameters(MakePointParam(location)),
 		sword.UnitMagicAction_move_to)
 }
 
 func (c *Client) TeleportCrowd(crowdId uint32, location Point) error {
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId), MakeParameters(MakePointParam(location)),
+	return c.sendUnitMagicAction(0, crowdId, 0, 0,
+		MakeParameters(MakePointParam(location)),
 		sword.UnitMagicAction_move_to)
 }
 
@@ -923,7 +871,7 @@ func (c *Client) ChangeResourceNetwork(urban *Urban) error {
 }
 
 func (c *Client) SendTotalDestruction(crowdId uint32) error {
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId),
+	return c.sendUnitMagicAction(0, crowdId, 0, 0,
 		MakeParameters(), sword.UnitMagicAction_crowd_total_destruction)
 }
 
@@ -932,7 +880,7 @@ func (c *Client) ChangeArmedIndividuals(crowdId uint32, armedIndividuals int32) 
 	if armedIndividuals != 0 {
 		params = MakeParameters(MakeQuantity(armedIndividuals))
 	}
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId), params,
+	return c.sendUnitMagicAction(0, crowdId, 0, 0, params,
 		sword.UnitMagicAction_crowd_change_armed_individuals)
 }
 
@@ -941,7 +889,7 @@ func (c *Client) ChangeCriticalIntelligence(crowdId uint32, criticalIntelligence
 	if criticalIntelligence != "" {
 		params = MakeParameters(MakeString(criticalIntelligence))
 	}
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId), params,
+	return c.sendUnitMagicAction(0, crowdId, 0, 0, params,
 		sword.UnitMagicAction_change_critical_intelligence)
 }
 
@@ -950,7 +898,7 @@ func (c *Client) ChangeHealthState(crowdId uint32, healthy, wounded, contaminate
 		MakeQuantity(wounded),
 		MakeQuantity(contaminated),
 		MakeQuantity(dead))
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId), params,
+	return c.sendUnitMagicAction(0, crowdId, 0, 0, params,
 		sword.UnitMagicAction_crowd_change_health_state)
 }
 
@@ -959,7 +907,7 @@ func (c *Client) ChangeCrowdAdhesions(crowdId uint32, adhesions map[uint32]float
 	if len(adhesions) != 0 {
 		params = MakeParameters(MakeAdhesions(adhesions))
 	}
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId), params,
+	return c.sendUnitMagicAction(0, crowdId, 0, 0, params,
 		sword.UnitMagicAction_crowd_change_affinities)
 }
 
@@ -968,7 +916,7 @@ func (c *Client) ChangeUnitAdhesions(unitId uint32, adhesions map[uint32]float32
 	if len(adhesions) != 0 {
 		params = MakeParameters(MakeAdhesions(adhesions))
 	}
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_unit_change_affinities)
 }
 
@@ -977,7 +925,7 @@ func (c *Client) ReloadBrain(crowdId uint32, model string) error {
 	if model != "" {
 		params = MakeParameters(MakeString(model))
 	}
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId), params,
+	return c.sendUnitMagicAction(0, crowdId, 0, 0, params,
 		sword.UnitMagicAction_reload_brain)
 }
 
@@ -986,7 +934,7 @@ func (c *Client) ChangeExtensions(crowdId uint32, extensions *map[string]string)
 	if extensions != nil {
 		params = MakeParameters(MakeExtensions(extensions))
 	}
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId), params,
+	return c.sendUnitMagicAction(0, crowdId, 0, 0, params,
 		sword.UnitMagicAction_change_extension)
 }
 
@@ -995,7 +943,7 @@ func (c *Client) ChangeAttitude(crowdId uint32, attitude int32) error {
 	if attitude != 0 {
 		params = MakeParameters(MakeEnumeration(attitude))
 	}
-	return c.sendUnitMagicAction(makeCrowdTasker(crowdId), params,
+	return c.sendUnitMagicAction(0, crowdId, 0, 0, params,
 		sword.UnitMagicAction_crowd_change_attitude)
 }
 
@@ -1004,7 +952,7 @@ func (c *Client) LogisticsChangeLinks(automatId uint32, superiors []uint32) erro
 	for _, s := range superiors {
 		params = append(params, MakeIdentifier(s))
 	}
-	return c.sendUnitMagicAction(makeAutomatTasker(automatId),
+	return c.sendUnitMagicAction(automatId, 0, 0, 0,
 		MakeParameters(params...),
 		sword.UnitMagicAction_change_logistic_links)
 }
@@ -1016,13 +964,13 @@ func (c *Client) LogisticsSupplyChangeQuotas(supplierId uint32, suppliedId uint3
 		values = append(values, MakeList(MakeIdentifier(dotation), MakeQuantity(qty)))
 	}
 	params = append(params, MakeParameter(values...))
-	return c.sendUnitMagicAction(makeAutomatTasker(suppliedId),
+	return c.sendUnitMagicAction(suppliedId, 0, 0, 0,
 		MakeParameters(params...),
 		sword.UnitMagicAction_log_supply_change_quotas)
 }
 
 func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.MissionParameters) error {
-	return c.sendUnitMagicAction(makeUnitTasker(supplierId), params,
+	return c.sendUnitMagicAction(0, 0, 0, supplierId, params,
 		sword.UnitMagicAction_log_supply_push_flow)
 }
 
@@ -1038,7 +986,7 @@ func (c *Client) LogisticsSupplyPullFlow(supplierId uint32, suppliedId uint32) e
 	supplier := &sword.ParentEntity{Formation: &sword.FormationId{Id: proto.Uint32(supplierId)}}
 	pullFlowParams := &sword.PullFlowParameters{Supplier: supplier}
 	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
-	return c.sendUnitMagicAction(makeAutomatTasker(suppliedId), MakeParameters(param),
+	return c.sendUnitMagicAction(suppliedId, 0, 0, 0, MakeParameters(param),
 		sword.UnitMagicAction_log_supply_pull_flow)
 }
 
@@ -1101,36 +1049,24 @@ func (c *Client) CreateKnowledgeGroup(partyId uint32,
 
 func (c *Client) ChangeUnitSuperior(unitId, automatId uint32) error {
 	params := MakeParameters()
-	tasker := &sword.Tasker{}
-	if unitId != 0 {
-		tasker = makeUnitTasker(unitId)
-	}
 	if automatId != 0 {
 		params = MakeParameters(MakeAutomat(automatId))
 	}
-	return c.sendUnitMagicAction(tasker, params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_unit_change_superior)
 }
 
 func (c *Client) ChangeAutomatSuperior(automatId, formationId uint32) error {
 	params := MakeParameters()
-	tasker := &sword.Tasker{}
-	if automatId != 0 {
-		tasker = makeAutomatTasker(automatId)
-	}
 	if formationId != 0 {
 		params = MakeParameters(MakeFormation(formationId))
 	}
-	return c.sendUnitMagicAction(tasker, params,
+	return c.sendUnitMagicAction(automatId, 0, 0, 0, params,
 		sword.UnitMagicAction_change_formation_superior)
 }
 
 func (c *Client) ChangeFormationSuperior(formationId, parentId uint32, isParty bool) error {
 	params := MakeParameters()
-	tasker := &sword.Tasker{}
-	if formationId != 0 {
-		tasker = makeFormationTasker(formationId)
-	}
 	if parentId != 0 {
 		if isParty {
 			params = MakeParameters(MakeParty(parentId))
@@ -1138,7 +1074,7 @@ func (c *Client) ChangeFormationSuperior(formationId, parentId uint32, isParty b
 			params = MakeParameters(MakeFormation(parentId))
 		}
 	}
-	return c.sendUnitMagicAction(tasker, params,
+	return c.sendUnitMagicAction(0, 0, formationId, 0, params,
 		sword.UnitMagicAction_change_formation_superior)
 }
 
@@ -1212,7 +1148,7 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 
 func (c *Client) ChangeKnowledgeGroupTest(automatId uint32,
 	params *sword.MissionParameters) error {
-	return c.sendUnitMagicAction(makeAutomatTasker(automatId), params,
+	return c.sendUnitMagicAction(automatId, 0, 0, 0, params,
 		sword.UnitMagicAction_change_knowledge_group)
 }
 
@@ -1222,12 +1158,8 @@ func (c *Client) ChangeKnowledgeGroup(automatId, knowledgeGroupId uint32) error 
 }
 
 func (c *Client) DebugBrainTest(id uint32, params *sword.MissionParameters) error {
-	tasker := &sword.Tasker{}
 	// Abusing the super tolerant simulation tasker parser
-	if id != 0 {
-		tasker = makeUnitTasker(id)
-	}
-	return c.sendUnitMagicAction(tasker, params,
+	return c.sendUnitMagicAction(0, 0, 0, id, params,
 		sword.UnitMagicAction_change_brain_debug)
 }
 
@@ -1238,12 +1170,12 @@ func (c *Client) DebugBrain(automatId uint32, enable bool) error {
 
 func (c *Client) TransferEquipment(unitId uint32, targetId uint32, equipments []Equipment) error {
 	params := MakeParameters(MakeIdentifier(targetId), MakeEquipments(equipments))
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_transfer_equipment)
 }
 
 func (c *Client) SurrenderTest(automatId uint32, params *sword.MissionParameters) error {
-	return c.sendUnitMagicAction(makeAutomatTasker(automatId), params,
+	return c.sendUnitMagicAction(automatId, 0, 0, 0, params,
 		sword.UnitMagicAction_surrender_to)
 }
 
@@ -1253,7 +1185,7 @@ func (c *Client) Surrender(automatId, partyId uint32) error {
 
 func (c *Client) CancelSurrender(automatId uint32) error {
 	params := MakeParameters()
-	return c.sendUnitMagicAction(makeAutomatTasker(automatId), params,
+	return c.sendUnitMagicAction(automatId, 0, 0, 0, params,
 		sword.UnitMagicAction_cancel_surrender)
 }
 
@@ -1262,7 +1194,7 @@ func (c *Client) CreateWounds(unitId uint32, humans map[int32]int32) error {
 	if len(humans) != 0 {
 		params = MakeParameters(MakeHumans(humans))
 	}
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_create_wounds)
 }
 
@@ -1271,7 +1203,7 @@ func (c *Client) ChangeHumanState(unitId uint32, humans []*HumanDotation) error 
 	if len(humans) != 0 {
 		params = MakeParameters(MakeHumansDotation(humans))
 	}
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_change_human_state)
 }
 
@@ -1280,7 +1212,7 @@ func (c *Client) ChangeDotation(unitId uint32, resources []*ResourceDotation) er
 	if len(resources) != 0 {
 		params = MakeParameters(MakeResourcesDotation(resources))
 	}
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_change_dotation)
 }
 
@@ -1289,7 +1221,7 @@ func (c *Client) ChangeEquipmentState(unitId uint32, equipments map[uint32]*Equi
 	if len(equipments) != 0 {
 		params = MakeParameters(MakeEquipmentDotation(equipments))
 	}
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_change_equipment_state)
 }
 
@@ -1298,12 +1230,12 @@ func (c *Client) CreateBreakdowns(unitId uint32, equipments map[uint32]*Equipmen
 	if len(equipments) != 0 {
 		params = MakeParameters(MakeBreakdowns(equipments))
 	}
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_create_breakdowns)
 }
 
 func (c *Client) ChangePostureTest(unitId uint32, params *sword.MissionParameters) error {
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_change_posture)
 }
 
@@ -1312,7 +1244,7 @@ func (c *Client) ChangePosture(unitId uint32, posture sword.UnitAttributes_Postu
 }
 
 func (c *Client) ChangeHumanFactorsTest(unitId uint32, params *sword.MissionParameters) error {
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), params,
+	return c.sendUnitMagicAction(0, 0, 0, unitId, params,
 		sword.UnitMagicAction_change_human_factors)
 }
 
@@ -1407,6 +1339,6 @@ func (c *Client) CreateCheckpoint(name string) (string, error) {
 }
 
 func (c *Client) RecoverTransporters(unitId uint32) error {
-	return c.sendUnitMagicAction(makeUnitTasker(unitId), MakeParameters(),
+	return c.sendUnitMagicAction(0, 0, 0, unitId, MakeParameters(),
 		sword.UnitMagicAction_recover_transporters)
 }
