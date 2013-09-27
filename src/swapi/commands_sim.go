@@ -156,7 +156,8 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	params := MakeParameters(
 		MakeFloat(float32(level)),
 		MakeString(name),
-		MakeString(logLevel))
+		MakeString(logLevel),
+	)
 	return c.CreateFormationTest(partyId, parentId, params)
 }
 
@@ -678,8 +679,7 @@ func createMagicAction(params *sword.MissionParameters,
 func (c *Client) DestroyLocalWeather(id uint32) error {
 	params := MakeParameters()
 	if id != 0 {
-		params = MakeParameters(
-			MakeIdentifier(id))
+		params = MakeParameters(MakeIdentifier(id))
 	}
 	msg := createMagicAction(params, sword.MagicAction_local_weather_destruction)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
@@ -695,7 +695,8 @@ func (c *Client) UpdateGlobalWeather(global *Weather) error {
 			MakeFloat(global.CloudFloor),
 			MakeFloat(global.CloudCeil),
 			MakeFloat(global.CloudDensity),
-			MakeEnumeration(int32(global.Precipitation)))
+			MakeEnumeration(int32(global.Precipitation)),
+		)
 	}
 	msg := createMagicAction(params, sword.MagicAction_global_weather)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
@@ -704,7 +705,8 @@ func (c *Client) UpdateGlobalWeather(global *Weather) error {
 func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) {
 	params := MakeParameters()
 	if local != nil {
-		params = MakeParameters(MakeFloat(local.Temperature),
+		params = MakeParameters(
+			MakeFloat(local.Temperature),
 			MakeFloat(local.WindSpeed),
 			MakeHeading(local.WindDirection),
 			MakeFloat(local.CloudFloor),
@@ -758,7 +760,8 @@ func (c *Client) ChangeDiplomacy(party1Id uint32, party2Id uint32, diplomacy swo
 	params := MakeParameters(
 		MakeIdentifier(party1Id),
 		MakeIdentifier(party2Id),
-		MakeEnumeration(int32(diplomacy)))
+		MakeEnumeration(int32(diplomacy)),
+	)
 	return c.ChangeDiplomacyTest(params)
 }
 
@@ -771,7 +774,8 @@ func (c *Client) CreateFireOnLocation(location Point, ammoType uint32, salvoCoun
 	params := MakeParameters(
 		MakePointParam(location),
 		MakeResourceType(ammoType),
-		MakeFloat(float32(salvoCount)))
+		MakeFloat(float32(salvoCount)),
+	)
 	return c.CreateFireOnLocationTest(params)
 }
 
@@ -822,10 +826,12 @@ func (c *Client) ChangeCriticalIntelligence(crowdId uint32, criticalIntelligence
 }
 
 func (c *Client) ChangeHealthState(crowdId uint32, healthy, wounded, contaminated, dead int32) error {
-	params := MakeParameters(MakeQuantity(healthy),
+	params := MakeParameters(
+		MakeQuantity(healthy),
 		MakeQuantity(wounded),
 		MakeQuantity(contaminated),
-		MakeQuantity(dead))
+		MakeQuantity(dead),
+	)
 	return c.sendUnitMagicAction(0, crowdId, 0, 0, params,
 		sword.UnitMagicAction_crowd_change_health_state)
 }
