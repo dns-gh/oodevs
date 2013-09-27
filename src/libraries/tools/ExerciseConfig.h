@@ -62,7 +62,6 @@ public:
     virtual Path GetExerciseFile() const;
     virtual Path BuildExerciseChildFile( const Path& file ) const;
 
-    virtual Path GetPhysicalFile() const;
     virtual Path BuildPhysicalChildFile( const Path& file ) const;
     virtual Path GetOptionalPhysicalChildFile( const std::string& rootTag ) const;
     Path GetPhysicalChildPath( const std::string& rootTag ) const;
@@ -154,6 +153,7 @@ private:
     //@{
     void ReadExercise( xml::xistream& xis );
     void ReadOrder( xml::xistream& xis );
+    Path GetPhysicalFile() const;
     //@}
 
 protected:

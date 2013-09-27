@@ -20,11 +20,12 @@ using namespace tools;
 // Name: Loader constructor
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-Loader::Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observer )
+Loader::Loader( const Path& physicalFile, const ExerciseConfig& config,
+        RealFileLoaderObserver_ABC& observer )
     : DefaultLoader( observer )
     , config_      ( config )
 {
-    auto xis = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
+    auto xis = fileLoader_->LoadFile( physicalFile, observer_ );
     *xis >> xml::start( "physical" )
         >> xml::list( [&]( const std::string&, const std::string& name, xml::xistream& x )
         {

@@ -31,7 +31,8 @@ class Loader : public DefaultLoader
 public:
     //! @name Constructors/Destructor
     //@{
-             Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observer );
+             Loader( const Path& physicalFile, const ExerciseConfig& config,
+                     RealFileLoaderObserver_ABC& observer );
     virtual ~Loader();
     //@}
 

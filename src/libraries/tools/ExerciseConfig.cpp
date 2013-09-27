@@ -92,7 +92,7 @@ void ExerciseConfig::LoadExercise( const Path& file )
         loader.LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
         if( GetExerciseFile() != file )
             SetExerciseName( file );
-        fileLoader_.reset( new Loader( *this, observer_ ) );
+        fileLoader_.reset( new Loader( GetPhysicalFile(), *this, observer_ ) );
         pWorldParameters_.reset( new WorldParameters( GetLoader(), dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
     }
     catch( const xml::exception& )
