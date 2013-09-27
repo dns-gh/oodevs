@@ -250,6 +250,30 @@
         <source>Totally destroyed:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Crowds health state color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mostly healthy:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
