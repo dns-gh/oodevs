@@ -108,17 +108,8 @@ func (c *Client) CreateFormationTest(partyId uint32, parentId uint32,
 	if partyId != 0 {
 		taskerId = partyId
 	}
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeTasker(0, 0, parentId, partyId, 0),
-					Type:       sword.UnitMagicAction_formation_creation.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
+	msg := createUnitMagicAction(0, 0, parentId, partyId, 0,
+		params, sword.UnitMagicAction_formation_creation)
 	var created *Formation
 	receivedTaskerId := uint32(0)
 	handler := func(msg *sword.SimToClient_Content) error {
@@ -181,17 +172,8 @@ func (c *Client) createUnit(automatId, unitType uint32, location Point,
 	if pc != nil {
 		params = append(params, MakeBoolean(*pc))
 	}
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeTasker(automatId, 0, 0, 0, 0),
-					Type:       sword.UnitMagicAction_unit_creation.Enum(),
-					Parameters: MakeParameters(params...),
-				},
-			},
-		},
-	}
+	msg := createUnitMagicAction(automatId, 0, 0, 0, 0,
+		MakeParameters(params...), sword.UnitMagicAction_unit_creation)
 	var created *Unit
 	handler := func(msg *sword.SimToClient_Content) error {
 		if reply := msg.GetUnitCreation(); reply != nil {
@@ -305,17 +287,8 @@ func (c *Client) SendAutomatOrder(automatId, missionType uint32,
 }
 
 func (c *Client) DeleteUnit(unitId uint32) error {
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeTasker(0, 0, 0, 0, unitId),
-					Type:       sword.UnitMagicAction_delete_unit.Enum(),
-					Parameters: MakeParameters(),
-				},
-			},
-		},
-	}
+	msg := createUnitMagicAction(0, 0, 0, 0, unitId,
+		MakeParameters(), sword.UnitMagicAction_delete_unit)
 	destroyed := false
 	handler := func(msg *sword.SimToClient_Content) error {
 		if reply := msg.GetUnitDestruction(); reply != nil {
@@ -346,20 +319,11 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 
 func (c *Client) CreateAutomat(formationId, automatId, automatType,
 	knowledgeGroupId uint32) (*Automat, error) {
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker: makeTasker(automatId, 0, formationId, 0, 0),
-					Type:   sword.UnitMagicAction_automat_creation.Enum(),
-					Parameters: MakeParameters(
-						MakeIdentifier(automatType),
-						MakeIdentifier(knowledgeGroupId),
-					),
-				},
-			},
-		},
-	}
+	msg := createUnitMagicAction(automatId, 0, formationId, 0, 0,
+		MakeParameters(
+			MakeIdentifier(automatType),
+			MakeIdentifier(knowledgeGroupId),
+		), sword.UnitMagicAction_automat_creation)
 	var created *Automat
 	handler := func(msg *sword.SimToClient_Content) error {
 		if reply := msg.GetAutomatCreation(); reply != nil {
@@ -397,17 +361,8 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 		MakeString(name),
 	}
 
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeTasker(0, 0, formationId, partyId, 0),
-					Type:       sword.UnitMagicAction_crowd_creation.Enum(),
-					Parameters: MakeParameters(params...),
-				},
-			},
-		},
-	}
+	msg := createUnitMagicAction(0, 0, formationId, partyId, 0,
+		MakeParameters(params...), sword.UnitMagicAction_crowd_creation)
 
 	var created *Crowd
 	handler := func(msg *sword.SimToClient_Content) error {
@@ -648,32 +603,41 @@ type UnitMagicEnumer interface {
 	Enum() *sword.UnitMagicAction_Type
 }
 
-func (c *Client) sendUnitMagicAction(automat, crowd, formation, unit uint32,
-	params *sword.MissionParameters, magicAction UnitMagicEnumer) error {
-	msg := SwordMessage{
+func createUnitMagicAction(automat, crowd, formation, party, unit uint32,
+	params *sword.MissionParameters, enumer UnitMagicEnumer) SwordMessage {
+	return SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeTasker(automat, crowd, formation, 0, unit),
-					Type:       magicAction.Enum(),
+					Tasker:     makeTasker(automat, crowd, formation, party, unit),
+					Type:       enumer.Enum(),
 					Parameters: params,
 				},
 			},
 		},
 	}
+}
+
+func (c *Client) sendUnitMagicAction(automat, crowd, formation, unit uint32,
+	params *sword.MissionParameters, enumer UnitMagicEnumer) error {
+	msg := createUnitMagicAction(automat, crowd, formation, 0, unit, params, enumer)
 	return <-c.postSimRequest(msg, defaultUnitMagicHandler)
 }
 
+type KnowledgeMagicEnumer interface {
+	Enum() *sword.KnowledgeMagicAction_Type
+}
+
 func createKnowledgeMagicActionMessage(params *sword.MissionParameters, knowledgeGroupId uint32,
-	magicAction *sword.KnowledgeMagicAction_Type) *SwordMessage {
-	return &SwordMessage{
+	enumer KnowledgeMagicEnumer) SwordMessage {
+	return SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				KnowledgeMagicAction: &sword.KnowledgeMagicAction{
 					KnowledgeGroup: &sword.KnowledgeGroupId{
 						Id: &knowledgeGroupId,
 					},
-					Type:       magicAction,
+					Type:       enumer.Enum(),
 					Parameters: params,
 				},
 			},
@@ -693,22 +657,31 @@ func (c *Client) TeleportCrowd(crowdId uint32, location Point) error {
 		sword.UnitMagicAction_move_to)
 }
 
+type MagicEnumer interface {
+	Enum() *sword.MagicAction_Type
+}
+
+func createMagicAction(params *sword.MissionParameters,
+	enumer MagicEnumer) SwordMessage {
+	return SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       enumer.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+}
+
 func (c *Client) DestroyLocalWeather(id uint32) error {
 	params := MakeParameters()
 	if id != 0 {
 		params = MakeParameters(
 			MakeIdentifier(id))
 	}
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				MagicAction: &sword.MagicAction{
-					Type:       sword.MagicAction_local_weather_destruction.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
+	msg := createMagicAction(params, sword.MagicAction_local_weather_destruction)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
@@ -724,16 +697,7 @@ func (c *Client) UpdateGlobalWeather(global *Weather) error {
 			MakeFloat(global.CloudDensity),
 			MakeEnumeration(int32(global.Precipitation)))
 	}
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				MagicAction: &sword.MagicAction{
-					Type:       sword.MagicAction_global_weather.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
+	msg := createMagicAction(params, sword.MagicAction_global_weather)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
@@ -754,16 +718,7 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 		)
 	}
 	// FIXME lighting is ignored because it's completely broken
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				MagicAction: &sword.MagicAction{
-					Type:       sword.MagicAction_local_weather.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
+	msg := createMagicAction(params, sword.MagicAction_local_weather)
 	var id uint32
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetMagicActionAck()
@@ -795,16 +750,7 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 }
 
 func (c *Client) ChangeDiplomacyTest(params *sword.MissionParameters) error {
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				MagicAction: &sword.MagicAction{
-					Type:       sword.MagicAction_change_diplomacy.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
+	msg := createMagicAction(params, sword.MagicAction_change_diplomacy)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
@@ -817,16 +763,7 @@ func (c *Client) ChangeDiplomacy(party1Id uint32, party2Id uint32, diplomacy swo
 }
 
 func (c *Client) CreateFireOnLocationTest(params *sword.MissionParameters) error {
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				MagicAction: &sword.MagicAction{
-					Type:       sword.MagicAction_create_fire_order_on_location.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
+	msg := createMagicAction(params, sword.MagicAction_create_fire_order_on_location)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
@@ -839,16 +776,7 @@ func (c *Client) CreateFireOnLocation(location Point, ammoType uint32, salvoCoun
 }
 
 func (c *Client) ChangeResourceNetworkTest(params *sword.MissionParameters) error {
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				MagicAction: &sword.MagicAction{
-					Type:       sword.MagicAction_change_resource_network_properties.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
+	msg := createMagicAction(params, sword.MagicAction_change_resource_network_properties)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
@@ -991,16 +919,7 @@ func (c *Client) LogisticsSupplyPullFlow(supplierId uint32, suppliedId uint32) e
 }
 
 func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*KnowledgeGroup, error) {
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				MagicAction: &sword.MagicAction{
-					Type:       sword.MagicAction_create_knowledge_group.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
+	msg := createMagicAction(params, sword.MagicAction_create_knowledge_group)
 	var id uint32
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetMagicActionAck()
@@ -1080,7 +999,7 @@ func (c *Client) ChangeFormationSuperior(formationId, parentId uint32, isParty b
 
 func (c *Client) KnowledgeGroupMagicActionTest(actionType sword.KnowledgeMagicAction_Type, params *sword.MissionParameters, knowledgeGroupId uint32) error {
 	msg := createKnowledgeMagicActionMessage(params, knowledgeGroupId, &actionType)
-	return <-c.postSimRequest(*msg, defaultKnowledgeGroupMagicHandler)
+	return <-c.postSimRequest(msg, defaultKnowledgeGroupMagicHandler)
 }
 
 func (c *Client) EnableKnowledgeGroup(knowledgeGroupId uint32, enable bool) error {
@@ -1102,20 +1021,8 @@ func (c *Client) ChangeKnowledgeGroupType(knowledgeGroupId uint32, knowledgeGrou
 
 func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entityId uint32, perceptionLevel int32) (*UnitKnowledge, error) {
 	params := MakeParameters(MakeIdentifier(entityId), MakeEnumeration(perceptionLevel))
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				KnowledgeMagicAction: &sword.KnowledgeMagicAction{
-					KnowledgeGroup: &sword.KnowledgeGroupId{
-						Id: &knowledgeGroupId,
-					},
-					Type:       sword.KnowledgeMagicAction_add_knowledge.Enum(),
-					Parameters: params,
-				},
-			},
-		},
-	}
-
+	msg := createKnowledgeMagicActionMessage(params, knowledgeGroupId,
+		sword.KnowledgeMagicAction_add_knowledge)
 	var created *UnitKnowledge
 	handler := func(msg *sword.SimToClient_Content) error {
 
