@@ -156,3 +156,25 @@ end
 integration.unitesDetecteesDansFuseau = function()
     return DEC_Connaissances_UnitesDetecteesDansFuseau()
 end
+
+-- Convert a list of elements (companies and units) into a list of valid agents
+-- @param a list of elements like companies or units
+-- @return a list of valid agents
+integration.getAgentFromListOfElements = function ( elements )
+    local entities = {}
+    for _, element in pairs( elements ) do
+        if masalife.brain.core.class.isOfType( element, integration.ontology.types.automat ) then -- it can be a company
+            local entitiesFromAutomat = integration.getEntitiesFromAutomat( element, "none", true)
+            for j = 1, #entitiesFromAutomat do
+                if entitiesFromAutomat[j]:isValid() then
+                    entities[#entities + 1] = entitiesFromAutomat[j]
+                end
+            end
+        else -- wa can support units
+            if element:isValid() then
+                entities[#entities + 1] = integration.getAgentFromKnowledge(element)
+            end
+        end
+    end
+    return entities
+end
