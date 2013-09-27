@@ -253,14 +253,7 @@ Path ExerciseConfig::GetOptionalPhysicalChildFile( const std::string& rootTag ) 
 // -----------------------------------------------------------------------------
 Path ExerciseConfig::GetPhysicalChildPath( const std::string& rootTag ) const
 {
-    std::auto_ptr< xml::xistream > physicalFileXis = GetLoader().LoadFile( GetPhysicalFile() );
-    std::string childFilePath;
-    *physicalFileXis >> xml::start( "physical" )
-                         >> xml::start( rootTag )
-                            >> xml::attribute( "path", childFilePath )
-                         >> xml::end
-                     >> xml::end;
-    return !childFilePath.empty() ? BuildPhysicalChildFile( Path::FromUTF8( childFilePath ) ) : Path();
+    return GetLoader().GetPhysicalChildPath( rootTag );
 }
 
 // -----------------------------------------------------------------------------

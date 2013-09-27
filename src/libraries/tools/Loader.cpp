@@ -28,10 +28,17 @@ Loader::Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observ
     *xis >> xml::start( "physical" )
         >> xml::list( [&]( const std::string&, const std::string& name, xml::xistream& x )
         {
-            std::string file;
-            x >> xml::optional >> xml::attribute( "file", file );
-            if( !file.empty() )
-                allowedFiles_[ name ] = file;
+            std::string path;
+            x >> xml::optional >> xml::attribute( "file", path );
+            if( !path.empty() )
+            {
+                allowedFiles_[ name ] = path;
+                return;
+            }
+            x >> xml::optional >> xml::attribute( "path", path );
+            if( !path.empty() )
+                allowedPaths_[ name ] = path;
+
         } )
         >> xml::end;
 }
@@ -77,10 +84,26 @@ Path Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader load
     return LoadPhysicalFile( rootTag, loader, true );
 }
 
+namespace
+{
+
+Path GetPhysicalChildEntry( const std::string& tag, const ExerciseConfig& config,
+        const std::map< std::string, std::string >& entries )
+{
+    auto it = entries.find( tag );
+    if( it == entries.end() )
+        return Path();
+    return config.BuildPhysicalChildFile( Path::FromUTF8( it->second ) );
+}
+
+} // namespace
+
 Path Loader::GetPhysicalChildFile( const std::string& rootTag ) const
 {
-    auto it = allowedFiles_.find( rootTag );
-    if( it == allowedFiles_.end() )
-        return Path();
-    return config_.BuildPhysicalChildFile( Path::FromUTF8( it->second ) );
+    return GetPhysicalChildEntry( rootTag, config_, allowedFiles_ );
+}
+
+Path Loader::GetPhysicalChildPath( const std::string& rootTag ) const
+{
+    return GetPhysicalChildEntry( rootTag, config_, allowedPaths_ );
 }

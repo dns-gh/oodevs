@@ -40,6 +40,7 @@ public:
     virtual Path LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
     virtual Path LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
     virtual Path GetPhysicalChildFile( const std::string& rootTag ) const;
+    virtual Path GetPhysicalChildPath( const std::string& rootTag ) const;
     //@}
 
 private:
@@ -50,6 +51,7 @@ private:
     //@{
     const ExerciseConfig& config_;
     std::map< std::string, std::string > allowedFiles_;
+    std::map< std::string, std::string > allowedPaths_;
     //@}
 };
 

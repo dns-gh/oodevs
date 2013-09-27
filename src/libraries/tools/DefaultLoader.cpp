@@ -93,6 +93,11 @@ Path DefaultLoader::GetPhysicalChildFile( const std::string& ) const
     throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::GetPhysicalChildFile" );
 }
 
+Path DefaultLoader::GetPhysicalChildPath( const std::string& ) const
+{
+    throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::GetPhysicalChildPath" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DefaultLoader::CheckFile
 // Created: NLD 2010-02-23
