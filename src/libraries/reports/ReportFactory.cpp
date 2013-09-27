@@ -66,12 +66,10 @@ ReportFactory::~ReportFactory()
 void ReportFactory::Load( const tools::ExerciseConfig& config  )
 {
     stages_->Load( config );
-    tools::Xifstream scipio( config.GetPhysicalFile() );
-    tools::Path reports;
-    scipio >> xml::start( "physical" )
-                >> xml::start( "reports" )
-                    >> xml::attribute( "file", reports );
-    tools::Xifstream xis( config.BuildPhysicalChildFile( reports ) );
+    const tools::Path reports = config.GetOptionalPhysicalChildFile( "reports" );
+    if( reports.IsEmpty() )
+        throw MASA_EXCEPTION( "cannot load reports file: " + reports.ToUTF8() );
+    tools::Xifstream xis( reports );
     xis >> xml::start( "reports" )
             >> xml::list( "report", *this, &ReportFactory::ReadReport )
         >> xml::end;
