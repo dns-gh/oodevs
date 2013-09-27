@@ -898,6 +898,19 @@ bool PathFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRef& k
     }
     return false;
 }
+bool PathListFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > list;
+    if( element.ToList( list ) )
+    {
+        knowledgeCreateFunction( refMission, "beginlist", name );
+        for( auto it = list.begin(); it != list.end(); ++it )
+            PathFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it );
+        knowledgeCreateFunction( refMission, "endlist", name );
+        return true;
+    }
+    return false;
+}
 bool DirectionFunction( const directia::tools::binders::ScriptRef& /*refMission*/, const std::string& /*name*/, MIL_MissionParameter_ABC& /*element*/ )
 {
     // $$$$ LDC: FIXME The only existing Direction argument is dangerDirection_ which is never used by the brains.
@@ -1416,7 +1429,7 @@ bool LocationCompositeListFunctionBM( sword::Brain& brain, directia::tools::bind
     if( element.ToList( list ) )
     {
         knowledgeCreateFunction( refMission, "beginlist", name );
-        for( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >::const_iterator it = list.begin(); it != list.end(); ++it )
+        for( auto it = list.begin(); it != list.end(); ++it )
         {
             PointFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
         || PathFunctionBM( brain, knowledgeCreateFunction, refMission, name, **it )
@@ -1524,7 +1537,7 @@ void InitFunctions()
         functorsBM[ "Polygon" ] = AreaFunctionBM;
         functorsBM[ "PolygonList" ] = AreaListFunctionBM;
         functorsBM[ "Path" ] = PathFunctionBM;
-        functorsBM[ "PathList" ] = PathFunctionBM;
+        functorsBM[ "PathList" ] = PathListFunctionBM;
         functorsBM[ "Heading" ] = DirectionFunctionBM;
         functorsBM[ "Automat" ] = AutomatFunctionBM;
         functorsBM[ "AutomatList" ] = AutomatListFunctionBM;
