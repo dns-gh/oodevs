@@ -12,26 +12,26 @@
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( const sword::CrowdConcentrationCreation& message, const CoordinateConverter_ABC& converter, float density )
-    : position_           ( converter.ConvertToXY( message.position() ) )
-    , nID_                ( message.concentration().id() )
-    , density_            ( density )
-    , nHealthyHumans_     ( 0 )
-    , nWoundedHumans_     ( 0 )
+PopulationConcentration::PopulationConcentration( kernel::Options& options, const sword::CrowdConcentrationCreation& message, const kernel::CoordinateConverter_ABC& converter, float density )
+    : options_( options )
+    , position_( converter.ConvertToXY( message.position() ) )
+    , nID_( message.concentration().id() )
+    , density_( density )
+    , nHealthyHumans_( 0 )
+    , nWoundedHumans_( 0 )
     , nContaminatedHumans_( 0 )
-    , nDeadHumans_        ( 0 )
-    , radius_             ( 0 )
-    , deadRadius_         ( 0 )
-    , attitude_           ( static_cast< E_PopulationAttitude > ( 0 ) )
+    , nDeadHumans_( 0 )
+    , radius_( 0 )
+    , deadRadius_( 0 )
+    , attitude_( static_cast< E_PopulationAttitude > ( 0 ) )
 {
     AddExtension( *this );
 }
@@ -178,21 +178,41 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetColor
+// Created: JSR 2013-09-26
+// -----------------------------------------------------------------------------
+QColor PopulationConcentration::GetColor( const std::string& option, const QColor& defaultColor ) const
+{
+    const QString clrString = options_.GetOption( option, QString( "" ) ).To< QString >();
+    if( clrString.isEmpty() )
+        return defaultColor;
+    return QColor( clrString );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationConcentration::SelectRightPartColor
 // Created: JSR 2013-09-25
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SelectRightPartColor() const
 {
+    static const QColor defaultHealthy( 32, 128, 255 );
+    static const QColor defaultContaminated( Qt::green );
+    static const QColor defaultWounded( Qt::red );
+    static const QColor defaultDead( Qt::black );
+    static const QColor defaultMostlyHealthy( Qt::yellow );
+    QColor c;
     if( nWoundedHumans_ == 0 && nContaminatedHumans_ == 0 && nDeadHumans_ == 0 )
-        glColor4f( COLOR_BLUE );
+        c = GetColor( "Color/Healthy", defaultHealthy );
     else if( nHealthyHumans_ == 0 && nWoundedHumans_ == 0 && nContaminatedHumans_ == 0 )
-        glColor4f( COLOR_BLACK );
-    else if( nHealthyHumans_ >= nContaminatedHumans_ && nHealthyHumans_ >= nWoundedHumans_ )
-        glColor4f( COLOR_YELLOW );
+        c = GetColor( "Color/Dead", defaultDead );
     else if( nContaminatedHumans_ > nHealthyHumans_ && nContaminatedHumans_ > nWoundedHumans_ )
-        glColor4f( COLOR_GREEN );
-    else // nWoundedHumans_ > nHealthyHumans_ && nWoundedHumans_ > nContaminatedHumans_
-        glColor4f( COLOR_RED );
+        c = GetColor( "Color/Contaminated", defaultContaminated );
+    else if( nWoundedHumans_ > nHealthyHumans_ && nWoundedHumans_ > nContaminatedHumans_ )
+        c = GetColor( "Color/Wounded", defaultWounded );
+    else // nHealthyHumans_ >= nContaminatedHumans_ && nHealthyHumans_ >= nWoundedHumans_
+        c = GetColor( "Color/MostlyHealthy", defaultMostlyHealthy );
+
+    glColor4f( c.red() / 255.f, c.green() / 255.f, c.blue() / 255.f, 1.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,7 +265,7 @@ geometry::Rectangle2f PopulationConcentration::GetBoundingBox() const
 // Name: PopulationConcentration::Accept
 // Created: SBO 2009-05-25
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Accept( LocationVisitor_ABC& visitor ) const
+void PopulationConcentration::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitCircle( position_, radius_ );
 }

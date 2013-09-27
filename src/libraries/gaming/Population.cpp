@@ -188,7 +188,7 @@ void Population::DoUpdate( const sword::CrowdConcentrationCreation& message )
 {
     if( ! tools::Resolver< PopulationConcentration_ABC >::Find( message.concentration().id() ) )
     {
-        PopulationConcentration* entity = new PopulationConcentration( message, converter_, Get< gui::EntityType< kernel::PopulationType > >().GetType().GetDensity() );
+        PopulationConcentration* entity = new PopulationConcentration( controllers_.options_, message, converter_, Get< gui::EntityType< kernel::PopulationType > >().GetType().GetDensity() );
         entity->Attach< Positions >( *new PopulationPartPositionsProxy( *entity ) );
         tools::Resolver< PopulationConcentration_ABC >::Register( message.concentration().id(), *entity );
         ComputeCenter();
