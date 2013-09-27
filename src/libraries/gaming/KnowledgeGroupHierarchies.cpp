@@ -69,6 +69,15 @@ bool KnowledgeGroupHierarchies::CanCommunicate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: KnowledgeGroupHierarchies::CanReceive
+// Created: LDC 2013-09-27
+// -----------------------------------------------------------------------------
+bool KnowledgeGroupHierarchies::CanReceive() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: KnowledgeGroupHierarchies::IsJammed
 // Created: HBD 2010-07-30
 // -----------------------------------------------------------------------------

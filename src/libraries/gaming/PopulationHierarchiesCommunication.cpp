@@ -40,6 +40,15 @@ bool PopulationHierarchiesCommunication::CanCommunicate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationHierarchiesCommunication::CanReceive
+// Created: LDC 2013-09-27
+// -----------------------------------------------------------------------------
+bool PopulationHierarchiesCommunication::CanReceive() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationHierarchiesCommunication::IsJammed
 // Created: JSR 2013-07-10
 // -----------------------------------------------------------------------------

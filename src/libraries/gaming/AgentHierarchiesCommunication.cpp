@@ -101,6 +101,15 @@ bool AgentHierarchiesCommunication::CanCommunicate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentHierarchiesCommunication::CanReceive
+// Created: LDC 2013-09-27
+// -----------------------------------------------------------------------------
+bool AgentHierarchiesCommunication::CanReceive() const
+{
+    return !jammed_ && !radioReceiverDisabled_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentHierarchiesCommunication::IsJammed
 // Created: HBD 2010-07-30
 // -----------------------------------------------------------------------------

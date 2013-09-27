@@ -50,6 +50,15 @@ bool EntityCommunications::CanCommunicate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityCommunications::CanReceive
+// Created: LDC 2013-09-27
+// -----------------------------------------------------------------------------
+bool EntityCommunications::CanReceive() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityCommunications::IsJammed
 // Created: HBD 2010-07-30
 // -----------------------------------------------------------------------------

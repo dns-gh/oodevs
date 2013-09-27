@@ -65,7 +65,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitDetection& message );
-    bool IsSameTeam( const kernel::Entity_ABC& entity ) const;
+    bool IsSameKnowledgeGroup( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
