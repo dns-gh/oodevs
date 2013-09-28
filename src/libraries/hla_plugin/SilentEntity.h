@@ -37,16 +37,21 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        archive << numberOfEntitiesOfThisType_ << numberOfAppearanceRecords_;
+        uint16_t numberOfAppearanceRecords = static_cast< uint16_t >( entityAppearance_.size() );
+        archive << numberOfEntitiesOfThisType_ << numberOfAppearanceRecords;
         entityType_.Serialize( archive );
-        archive << entityAppearance_;
+        for(auto it=entityAppearance_.begin(); it != entityAppearance_.end(); ++it )
+            archive << *it;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        archive >> numberOfEntitiesOfThisType_ >> numberOfAppearanceRecords_;
+        uint16_t numberOfAppearanceRecords = 0;
+        archive >> numberOfEntitiesOfThisType_ >> numberOfAppearanceRecords;
         entityType_.Deserialize( archive );
-        archive >> entityAppearance_;
+        entityAppearance_.resize(numberOfAppearanceRecords, 0);
+        for(auto it=entityAppearance_.begin(); it != entityAppearance_.end(); ++it )
+            archive >> *it;
     }
     //@}
 
@@ -54,9 +59,8 @@ public:
     //! @name Member data
     //@{
     uint16_t numberOfEntitiesOfThisType_;
-    uint16_t numberOfAppearanceRecords_;
     rpr::EntityType entityType_;
-    uint32_t entityAppearance_;
+    std::vector< uint32_t > entityAppearance_;
     //@}
 };
 

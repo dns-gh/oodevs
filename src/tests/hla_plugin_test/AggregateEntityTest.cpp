@@ -136,7 +136,7 @@ namespace
         BOOST_CHECK_EQUAL( size, serializer->GetSize() );
         return true;
     }
-    const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16_t ) + 6 * sizeof( int8_t ) + 1 * sizeof( int16_t ) + sizeof( int32_t );
+    const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16_t ) + 6 * sizeof( int8_t ) + 1 * sizeof( int16_t );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_has_entity_identifier, RegisteredFixture )

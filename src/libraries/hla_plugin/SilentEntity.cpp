@@ -27,7 +27,6 @@ SilentEntity::SilentEntity()
 // -----------------------------------------------------------------------------
 SilentEntity::SilentEntity( const rpr::EntityType& type, unsigned short number )
     : numberOfEntitiesOfThisType_( number )
-    , numberOfAppearanceRecords_ ( 0 )
     , entityType_                ( type )
     , entityAppearance_          ( 0 )
 {
