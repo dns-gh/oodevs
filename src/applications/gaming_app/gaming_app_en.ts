@@ -960,57 +960,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>IndicatorReports</name>
-    <message>
-        <source>Create report</source>
-        <translation>Create report</translation>
-    </message>
-    <message>
-        <source>Template</source>
-        <translation>Template</translation>
-    </message>
-    <message>
-        <source>File: </source>
-        <translation>File: </translation>
-    </message>
-    <message>
-        <source>Browse...</source>
-        <translation>Browse...</translation>
-    </message>
-    <message>
-        <source>Output</source>
-        <translation>Output</translation>
-    </message>
-    <message>
-        <source>Show generated report</source>
-        <translation>Show generated report</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Report template (*.html)</source>
-        <translation>Report template (*.html)</translation>
-    </message>
-    <message>
-        <source>Load report template file</source>
-        <translation>Load report template file</translation>
-    </message>
-    <message>
-        <source>Report (*.html)</source>
-        <translation>Report (*.html)</translation>
-    </message>
-    <message>
-        <source>Save report to</source>
-        <translation>Save report to</translation>
-    </message>
-</context>
-<context>
     <name>Indicators</name>
     <message>
         <source>Time</source>
@@ -1023,10 +972,6 @@ Reason: %3
     <message>
         <source>Export score data...</source>
         <translation>Export score data...</translation>
-    </message>
-    <message>
-        <source>Create report...</source>
-        <translation>Create report...</translation>
     </message>
 </context>
 <context>

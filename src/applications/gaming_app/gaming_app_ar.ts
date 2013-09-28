@@ -960,57 +960,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>IndicatorReports</name>
-    <message>
-        <source>Create report</source>
-        <translation type="unfinished">إنشاء تقرير</translation>
-    </message>
-    <message>
-        <source>Template</source>
-        <translation type="unfinished">قالب</translation>
-    </message>
-    <message>
-        <source>File: </source>
-        <translation type="unfinished">ملف:</translation>
-    </message>
-    <message>
-        <source>Browse...</source>
-        <translation type="unfinished">استعراض...</translation>
-    </message>
-    <message>
-        <source>Output</source>
-        <translation type="unfinished">الإخراج</translation>
-    </message>
-    <message>
-        <source>Show generated report</source>
-        <translation type="unfinished">إظهار التقرير الذي تم إنشاؤه</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>Report template (*.html)</source>
-        <translation type="unfinished">قالب التقرير (*.html)</translation>
-    </message>
-    <message>
-        <source>Load report template file</source>
-        <translation type="unfinished">تحميل ملف قالب التقرير</translation>
-    </message>
-    <message>
-        <source>Report (*.html)</source>
-        <translation type="unfinished">تقرير (*.html)</translation>
-    </message>
-    <message>
-        <source>Save report to</source>
-        <translation type="unfinished">حفظ التقرير إلى</translation>
-    </message>
-</context>
-<context>
     <name>Indicators</name>
     <message>
         <source>Time</source>
@@ -1023,10 +972,6 @@ Reason: %3
     <message>
         <source>Export score data...</source>
         <translation type="unfinished">تصدير نقاط البيانات...</translation>
-    </message>
-    <message>
-        <source>Create report...</source>
-        <translation type="unfinished">إنشاء تقرير...</translation>
     </message>
 </context>
 <context>

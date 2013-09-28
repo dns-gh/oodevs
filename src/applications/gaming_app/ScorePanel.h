@@ -13,21 +13,11 @@
 #include "clients_gui/RichDockWidget.h"
 #include "tools/ElementObserver_ABC.h"
 
-namespace gui
-{
-    class LinkInterpreter_ABC;
-}
-
 namespace kernel
 {
     class Controllers;
     class DisplayExtractor_ABC;
     class ModelUnLoaded;
-}
-
-namespace tools
-{
-    class ExerciseConfig;
 }
 
 class IndicatorRequest;
@@ -52,7 +42,7 @@ class ScorePanel : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config );
+             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model );
     virtual ~ScorePanel();
     //@}
 
@@ -86,7 +76,6 @@ private:
     IndicatorPlotFactory& plotFactory_;
     ScoreModel& model_;
     IndicatorExportDialog& exportDialog_;
-    QDialog* reportDialog_;
     QTreeWidget* scores_;
     T_PendingRequests graphRequests_;
     T_PendingRequests exportRequests_;
