@@ -22,6 +22,11 @@ namespace xml
     class xistream;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace tools
 {
     class Path;
@@ -69,6 +74,7 @@ private:
     const ExerciseConfig& config_;
     std::map< std::string, std::string > allowedFiles_;
     std::map< std::string, std::string > allowedPaths_;
+    mutable std::map< std::string, boost::shared_ptr< xml::xistream > > cached_;
     //@}
 };
 
