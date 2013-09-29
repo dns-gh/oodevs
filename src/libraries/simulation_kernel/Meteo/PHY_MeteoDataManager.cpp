@@ -41,7 +41,6 @@ namespace
 PHY_RawVisionData* CreateRawVisionData( PHY_MeteoDataManager* m,
         weather::Meteo& globalMeteo, MIL_Config& config )
 {
-    config.AddFileToCRC( config.GetDetectionFile() );
     return new PHY_RawVisionData( globalMeteo, config.GetDetectionFile(), m );
 }
 
@@ -71,7 +70,6 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     , pRawData_    ( 0 )
 {
     config.GetLoader().LoadFile( config.GetWeatherFile(), boost::bind( &PHY_MeteoDataManager::Load, this, _1, boost::ref( config ) ) );
-    config.AddFileToCRC( config.GetWeatherFile() );
 }
 
 // -----------------------------------------------------------------------------

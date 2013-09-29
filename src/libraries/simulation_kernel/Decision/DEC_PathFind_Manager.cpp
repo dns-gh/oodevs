@@ -16,7 +16,6 @@
 #include "DEC_PathType.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Population_PathClass.h"
-#include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
@@ -38,9 +37,8 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "pathfinder",
+    config.GetPhyLoader().LoadPhysicalFile( "pathfinder",
         boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, boost::ref( config ), boost::cref( dangerousObjects ) ) );
-    config.AddFileToCRC( fileLoaded );
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     const unsigned len = bUseInSameThread_ ? 1 : config.GetPathFinderThreads();

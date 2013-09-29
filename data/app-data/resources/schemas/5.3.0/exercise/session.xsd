@@ -235,9 +235,9 @@
                 <xs:documentation xml:lang="en">Defines the number of checkpoints to keep. Older checkpoints are deleted after saving the newest one.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="usecrc" type="xs:boolean" use="required">
+            <xs:attribute name="usecrc" type="xs:boolean" use="optional">
               <xs:annotation>
-                <xs:documentation xml:lang="en">Enables cyclic redundancy checks (CRC) files saving along with the checkpoints.</xs:documentation>
+                <xs:documentation xml:lang="en">DEPRECATED - Enabled cyclic redundancy checks (CRC) files saving along with the checkpoints.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
           </xs:complexType>

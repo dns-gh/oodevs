@@ -15,10 +15,6 @@
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MT_Tools/MT_String.h"
 #include <spatialcontainer/TerrainData.h>
-#pragma warning ( push )
-#pragma warning ( disable : 4244 4245 )
-#include <boost/CRC.hpp>
-#pragma warning ( pop )
 
 namespace tools
 {
@@ -89,11 +85,6 @@ public:
     //@{
     static const std::string& GetEnvironnementTypeName( PHY_RawVisionData::E_VisionObject );
     static std::string  GetLandTypeName( const TerrainData& data );
-    //@}
-
-    //! @name CRC
-    //@{
-    static boost::crc_32_type::value_type ComputeCRC( const tools::Path& strFileName );
     //@}
 
 private:

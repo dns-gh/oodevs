@@ -22,9 +22,6 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning ( push, 0 )
-#include <boost/CRC.hpp>
-#pragma warning ( pop )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <direct.h>
 
@@ -41,9 +38,7 @@ bool IsValidCheckpointName( const std::wstring& name )
     return true;
 }
 
-void CreateMetaData( const tools::Path& filename, const tools::Path& name,
-        const boost::crc_32_type::value_type& dataCRC,
-        const boost::crc_32_type::value_type& crcCRC )
+void CreateMetaData( const tools::Path& filename, const tools::Path& name )
 {
     try
     {
@@ -52,12 +47,13 @@ void CreateMetaData( const tools::Path& filename, const tools::Path& name,
         xos << xml::start( "checkpoint" )
                 << xml::content( "name", name )
                 << xml::content( "date", bpt::to_iso_string( realTime ) )
+                // CRCs are deprecated
                 << xml::start( "crc" )
                     << xml::start( "configuration" )
-                        << xml::attribute( "crc", crcCRC )
+                        << xml::attribute( "crc", 0 )
                     << xml::end
                     << xml::start( "save" )
-                        << xml::attribute( "crc", dataCRC );
+                        << xml::attribute( "crc", 0 );
     }
     catch( const std::exception& )
     {
@@ -65,7 +61,7 @@ void CreateMetaData( const tools::Path& filename, const tools::Path& name,
     }
 }
 
-boost::crc_32_type::value_type CreateData( const tools::Path& filename )
+void CreateData( const tools::Path& filename )
 {
     tools::Ofstream file( filename, std::ios::out | std::ios::binary );
     if( !file || !file.is_open() )
@@ -73,43 +69,6 @@ boost::crc_32_type::value_type CreateData( const tools::Path& filename )
     MIL_CheckPointOutArchive archive( file );
     MIL_AgentServer::GetWorkspace().save( archive );
     file.close();
-    return MIL_Tools::ComputeCRC( filename );
-}
-
-void ReadCrc( xml::xistream& xis )
-{
-    tools::Path filename;
-    boost::crc_32_type::value_type nCRC;
-    xis >> xml::attribute( "name", filename )
-        >> xml::attribute( "crc", nCRC );
-    if( MIL_Tools::ComputeCRC( filename ) != nCRC )
-        MT_LOG_ERROR_MSG( "Problem loading checkpoint - File '" + filename.ToUTF8() + "' has changed since the checkpoint creation" );
-}
-
-void CheckFilesCRC( const MIL_Config& config )
-{
-    tools::Xifstream xis( config.BuildCheckpointChildFile( "CRCs.xml" ) );
-    xis >> xml::start( "files" )
-        >> xml::list( "file", &ReadCrc );
-}
-
-void CheckCRC( const MIL_Config& config )
-{
-    tools::Xifstream xis( config.BuildCheckpointChildFile( "MetaData.xml" ) );
-
-    boost::crc_32_type::value_type  nCRC;
-    xis >> xml::start( "checkpoint" )
-        >> xml::start( "crc" )
-        >> xml::start( "configuration" )
-            >> xml::attribute( "crc", nCRC )
-        >> xml::end;
-    if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "CRCs.xml" ) ) != nCRC )
-        MT_LOG_ERROR_MSG( "Problem loading checkpoint - File 'CRCs.xml' has changed since the checkpoint creation" );
-    CheckFilesCRC( config );
-    xis >> xml::start( "save" )
-            >> xml::attribute( "crc", nCRC );
-    if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "data" ) ) != nCRC )
-        MT_LOG_ERROR_MSG( "Problem loading checkpoint - File 'data' has changed since the checkpoint creation" );
 }
 
 }  // namespace
@@ -165,8 +124,6 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config, const Obje
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_INFO_MSG( "Loading from checkpoint '" << config.BuildCheckpointChildFile( "" ) << "'" );
-    if( config.UseCheckPointCRC() )
-        CheckCRC( config );
     tools::Ifstream file( config.BuildCheckpointChildFile( "data" ), std::ios::in | std::ios::binary );
     if( !file || !file.is_open() )
         throw MASA_EXCEPTION( "Cannot open file '" + config.BuildCheckpointChildFile( "data" ).ToUTF8() + "'" );
@@ -305,10 +262,8 @@ std::string MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name,
     const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     try
     {
-        CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ),
-                userName,
-                CreateData( config.BuildCheckpointChildFile( "data", name ) ),
-                config.serialize( config.BuildCheckpointChildFile( "CRCs.xml" , name ) ));
+        CreateData( config.BuildCheckpointChildFile( "data", name ) );
+        CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ), userName );
     }
     catch( const tools::Exception& e )
     {
