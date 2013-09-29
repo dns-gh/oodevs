@@ -88,7 +88,8 @@ private:
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type );
-    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number );
+    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int available,
+            unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages );
     virtual void UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );
@@ -107,9 +108,21 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::pair< unsigned int, unsigned int > T_Component;
+    struct T_Component
+    {
+        T_Component();
+        T_Component( unsigned int avail, unsigned int dead, unsigned int light, unsigned int heavy);
+        bool operator == (const T_Component& rhs );
+        unsigned int available_;
+        unsigned int dead_;
+        unsigned int lightDamages_;
+        unsigned int heavyDamages_;
+    };
     typedef std::map< std::string, T_Component > T_Components;
     typedef std::map< std::string, T_Components > T_Agents;
+    typedef std::pair< unsigned int, unsigned int > T_StaticComponent;
+    typedef std::map< std::string, T_StaticComponent > T_StaticComponents;
+    typedef std::map< std::string, T_StaticComponents > T_AgentsTypes;
     typedef boost::bimap< std::string, unsigned int > T_Identifiers;
     //@}
 
@@ -125,7 +138,7 @@ private:
     dispatcher::Logger_ABC& logger_;
     T_Identifiers identifiers_;
     T_Agents remoteAgents_;
-    T_Agents agentTypes_;
+    T_AgentsTypes agentTypes_;
     //@}
 };
 

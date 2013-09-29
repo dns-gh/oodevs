@@ -85,7 +85,8 @@ private:
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type );
-    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number );
+    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int available,
+            unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages );
     virtual void UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );

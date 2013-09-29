@@ -89,7 +89,7 @@ BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_entity_type_attribute_and_no
     const rpr::EntityType type( "1 2 3" );
     type.Serialize( serializer );
     MOCK_EXPECT( listener.TypeChanged ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ) );
-    MOCK_EXPECT( listener.EquipmentUpdated ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ), 1u );
+    MOCK_EXPECT( listener.EquipmentUpdated ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ), 1u, 0u, 0u, 0u );
     ::hla::Deserializer deserializer( Deserialize() );
     vessel.Deserialize( "EntityType", deserializer );
 }

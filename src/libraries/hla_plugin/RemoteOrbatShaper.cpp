@@ -173,7 +173,8 @@ void RemoteOrbatShaper::TypeChanged( const std::string& identifier, const rpr::E
 // Name: RemoteOrbatShaper::EquipmentUpdated
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
-void RemoteOrbatShaper::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void RemoteOrbatShaper::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*available*/,
+        unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

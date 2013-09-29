@@ -180,7 +180,8 @@ void UnitTeleporter::TypeChanged( const std::string& /*identifier*/, const rpr::
 // Name: UnitTeleporter::EquipmentUpdated
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void UnitTeleporter::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void UnitTeleporter::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*available*/,
+                    unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

@@ -32,10 +32,13 @@ namespace
     class ComponentVisitor : public ComponentTypeVisitor_ABC
     {
     public:
-        ComponentVisitor( unsigned int componentTypeIdentifier, unsigned int available, const rpr::EntityTypeResolver_ABC& componentTypeResolver, 
-                          EventListener_ABC& listener, dispatcher::Logger_ABC& logger )
+        ComponentVisitor( unsigned int componentTypeIdentifier, unsigned int available, unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages,
+                const rpr::EntityTypeResolver_ABC& componentTypeResolver, EventListener_ABC& listener, dispatcher::Logger_ABC& logger )
             : componentTypeIdentifier_( componentTypeIdentifier )
             , available_              ( available )
+            , dead_                   ( dead )
+            , lightDamages_           ( lightDamages )
+            , heavyDamages_           ( heavyDamages )
             , componentTypeResolver_  ( componentTypeResolver )
             , listener_               ( listener )
             , logger_                 ( logger )
@@ -49,12 +52,15 @@ namespace
                 rpr::EntityType entityType;
                 if( ! componentTypeResolver_.Find( typeName, entityType ) )
                     logger_.LogWarning( std::string( "Could not find EntityType for equipment: " ) + typeName );
-                listener_.EquipmentChanged( typeIdentifier, entityType, available_ );
+                listener_.EquipmentChanged( typeIdentifier, entityType, available_, dead_, lightDamages_, heavyDamages_ );
             }
         }
     private:
         const unsigned int componentTypeIdentifier_;
         const unsigned int available_;
+        const unsigned int dead_;
+        const unsigned int lightDamages_;
+        const unsigned int heavyDamages_;
         const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
         EventListener_ABC& listener_;
         dispatcher::Logger_ABC& logger_;
@@ -62,7 +68,8 @@ namespace
     void NotifyEquipment( EventListener_ABC& listener, const dispatcher::Equipment& equipment, const ComponentTypes_ABC& componentTypes, 
                         const rpr::EntityTypeResolver_ABC& componentTypeResolver, unsigned long agentTypeIdentifier, dispatcher::Logger_ABC& logger )
     {
-        ComponentVisitor visitor( equipment.nEquipmentType_, equipment.nNbrAvailable_, componentTypeResolver, listener, logger );
+        ComponentVisitor visitor( equipment.nEquipmentType_, equipment.nNbrAvailable_, equipment.nNbrUnavailable_,
+                equipment.nNbrOnSiteFixable_, equipment.nNbrRepairable_, componentTypeResolver, listener, logger );
         componentTypes.Apply( agentTypeIdentifier, visitor );
     }
 }

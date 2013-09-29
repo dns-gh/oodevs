@@ -19,6 +19,7 @@
 
 #include "rpr/EntityType.h"
 #include "rpr/EntityIdentifier.h"
+#include "rpr/EntityAppearance.h"
 
 #include <hla/Deserializer_ABC.h>
 
@@ -95,6 +96,8 @@ void FOM_Serializer::ReadNumberOfSilentEntities( ::hla::Deserializer_ABC& deseri
     deserializer >> numberOfSilentEntities;
 }
 
+#pragma warning( push )
+#pragma warning( disable : 4700 ) // uninitialized variable for union
 // -----------------------------------------------------------------------------
 // Name: FOM_Serializer::ReadSilentEntities
 // Created: AHC 2012-09-03
@@ -105,9 +108,33 @@ void FOM_Serializer::ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, 
     {
         SilentEntity entity;
         entity.Deserialize( deserializer );
-        listener.EquipmentUpdated( identifier, entity.entityType_, entity.numberOfEntitiesOfThisType_ );
+        unsigned int available = entity.numberOfEntitiesOfThisType_, dead = 0, lightDamages = 0, heavyDamages = 0;
+        for( auto it = entity.entityAppearance_.begin(); it != entity.entityAppearance_.end(); ++it )
+        {
+            rpr::EntityAppearance_Land app;
+            app.appearance_.value_ = *it;
+            switch( app.appearance_.fields_.damage )
+            {
+            case 0:
+                break;
+            case 1:
+                available--;
+                lightDamages++;
+                break;
+            case 2:
+                available--;
+                heavyDamages++;
+                break;
+            case 3:
+                available--;
+                dead++;
+                break;
+            }
+        }
+        listener.EquipmentUpdated( identifier, entity.entityType_, available, dead, lightDamages, heavyDamages );
     }
 }
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: FOM_Serializer::ReadEntityIdentifier

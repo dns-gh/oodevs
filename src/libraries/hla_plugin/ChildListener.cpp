@@ -45,7 +45,8 @@ void ChildListener::FormationChanged( bool /*isOnRoad*/ )
 // Name: ChildListener::EquipmentChanged
 // Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-void ChildListener::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
+void ChildListener::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/,
+        unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

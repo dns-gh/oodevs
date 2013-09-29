@@ -151,7 +151,8 @@ void SideChecker::TypeChanged( const std::string& /*identifier*/, const rpr::Ent
 // Name: SideChecker::EquipmentUpdated
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void SideChecker::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void SideChecker::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*available*/,
+                    unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

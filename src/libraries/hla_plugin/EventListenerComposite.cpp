@@ -74,10 +74,11 @@ void EventListenerComposite::FormationChanged( bool isOnRoad )
 // Name: EventListenerComposite::Unregister
 // Created: AHC 2012-02-21
 // -----------------------------------------------------------------------------
-void EventListenerComposite::EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available )
+void EventListenerComposite::EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
+        unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages )
 {
     BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
-        listener->EquipmentChanged( type, entityType, available );
+        listener->EquipmentChanged( type, entityType, available, dead, lightDamages, heavyDamages );
 }
 
 // -----------------------------------------------------------------------------

@@ -22,6 +22,7 @@
 #include "FOM_Serializer_ABC.h"
 #include "ObjectListenerComposite.h"
 #include "EntityIdentifierResolver_ABC.h"
+#include "rpr/EntityAppearance.h"
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer_ABC.h>
 #include <boost/bind.hpp>
@@ -126,22 +127,48 @@ namespace
     }
 }
 
+namespace
+{
+    void FillAppearance( std::size_t count, uint8_t status, std::vector< uint32_t >& values )
+    {
+        rpr::EntityAppearance_Land app;
+        app.appearance_.fields_.damage = status;
+        for( ; count > 0; --count )
+            values.push_back( app.appearance_.value_ );
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity::EquipmentChanged
 // Created: SLI 2011-02-07
 // -----------------------------------------------------------------------------
-void AggregateEntity::EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available )
+void AggregateEntity::EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
+        unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages )
 {
     IT_Equipments result = std::find_if( equipments_.begin(), equipments_.end(), boost::bind( &::Find< T_Equipment >, type, _1 ) );
     if( result == equipments_.end() )
-        equipments_.push_back( T_Equipment( type, available, entityType ) );
+        equipments_.push_back( T_Equipment( type, available, dead, lightDamages, heavyDamages, entityType ) );
     else
+    {
         result->available_ = available;
+        result->dead_ = dead;
+        result->lightDamages_ = lightDamages;
+        result->heavyDamages_ = heavyDamages;
+    }
     numberOfSilentEntities_ = static_cast< unsigned short >( equipments_.size() );
     attributesUpdater_->Update( "NumberOfSilentEntities", Wrapper< unsigned short >( numberOfSilentEntities_ ) );
     std::vector< SilentEntity > entities;
     BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
-        entities.push_back( SilentEntity( equipment.entityType_, static_cast< unsigned short >( equipment.available_ ) ) );
+    {
+        const uint16_t count = static_cast< uint16_t >( equipment.available_ + equipment.dead_ + equipment.lightDamages_ + equipment.heavyDamages_ );
+        SilentEntity silent(equipment.entityType_, count );
+        if( equipment.available_ != count )
+        {
+            FillAppearance( equipment.dead_, 3, silent.entityAppearance_ );
+            FillAppearance( equipment.lightDamages_, 1, silent.entityAppearance_ );
+            FillAppearance( equipment.heavyDamages_, 2, silent.entityAppearance_ );
+        }
+        entities.push_back( silent );
+    }
     attributesUpdater_->Update( "SilentEntities", Wrapper< std::vector< SilentEntity > >( entities ) );
 }
 

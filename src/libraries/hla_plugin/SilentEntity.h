@@ -11,6 +11,7 @@
 #define plugins_hla_SilentEntity_h
 
 #include "rpr/EntityType.h"
+#include "SerializationTools.h"
 
 namespace plugins
 {
@@ -40,8 +41,8 @@ public:
         uint16_t numberOfAppearanceRecords = static_cast< uint16_t >( entityAppearance_.size() );
         archive << numberOfEntitiesOfThisType_ << numberOfAppearanceRecords;
         entityType_.Serialize( archive );
-        for(auto it=entityAppearance_.begin(); it != entityAppearance_.end(); ++it )
-            archive << *it;
+        if( numberOfAppearanceRecords )
+            archive << entityAppearance_;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
@@ -50,8 +51,8 @@ public:
         archive >> numberOfEntitiesOfThisType_ >> numberOfAppearanceRecords;
         entityType_.Deserialize( archive );
         entityAppearance_.resize(numberOfAppearanceRecords, 0);
-        for(auto it=entityAppearance_.begin(); it != entityAppearance_.end(); ++it )
-            archive >> *it;
+        if( numberOfAppearanceRecords )
+            archive >> entityAppearance_;
     }
     //@}
 

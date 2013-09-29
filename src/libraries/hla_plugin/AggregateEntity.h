@@ -83,7 +83,8 @@ private:
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
-    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
+    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
+            unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages );
     virtual void EmbarkmentChanged( bool mounted );
     virtual void PlatformAdded( const std::string& name, unsigned int id );
     virtual void ChildrenChanged( const T_ChildrenIds& children );
@@ -104,14 +105,23 @@ private:
         T_Equipment()
             : type_( 0 )
             , available_( 0 )
+            , dead_( 0 )
+            , lightDamages_( 0 )
+            , heavyDamages_( 0 )
         {}
-        T_Equipment( unsigned int type, unsigned int available, const rpr::EntityType& entityType )
+        T_Equipment( unsigned int type, unsigned int available, unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages, const rpr::EntityType& entityType )
             : type_      ( type )
             , available_ ( available )
+            , dead_( dead )
+            , lightDamages_( lightDamages )
+            , heavyDamages_( heavyDamages )
             , entityType_( entityType )
         {}
         unsigned int type_;
         unsigned int available_;
+        unsigned int dead_;
+        unsigned int lightDamages_;
+        unsigned int heavyDamages_;
         rpr::EntityType entityType_;
     };
     typedef std::vector< T_Equipment >  T_Equipments;

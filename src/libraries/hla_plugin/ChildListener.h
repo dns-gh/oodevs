@@ -78,7 +78,8 @@ struct ChildListener : public EventListener_ABC
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
-    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
+    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
+            unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages );
     virtual void EmbarkmentChanged( bool mounted );
     virtual void ChildrenChanged( const EventListener_ABC::T_ChildrenIds& children );
     virtual void ParentChanged( const std::string& parentId );

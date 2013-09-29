@@ -96,7 +96,8 @@ void Human::FormationChanged( bool /*isOnRoad*/ )
 // Name: Human::EquipmentChanged
 // Created: AHC 2012-11-12
 // -----------------------------------------------------------------------------
-void Human::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
+void Human::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/,
+        unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

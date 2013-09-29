@@ -47,7 +47,8 @@ public:
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction ) = 0;
     virtual void FormationChanged( bool isOnRoad ) = 0;
-    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available ) = 0;
+    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
+            unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages ) = 0;
     virtual void EmbarkmentChanged( bool mounted ) = 0;
     virtual void PlatformAdded( const std::string& name, unsigned int id ) = 0;
     virtual void ChildrenChanged( const T_ChildrenIds& children ) = 0;

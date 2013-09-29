@@ -24,6 +24,30 @@
 
 using namespace plugins::hla;
 
+EquipmentUpdater::T_Component::T_Component()
+    : available_( 0u )
+    , dead_( 0u )
+    , lightDamages_( 0u )
+    , heavyDamages_( 0u )
+{
+    //NOTHING
+}
+EquipmentUpdater::T_Component::T_Component( unsigned int avail, unsigned int dead, unsigned int light, unsigned int heavy )
+    : available_( avail )
+    , dead_( dead )
+    , lightDamages_( light )
+    , heavyDamages_( heavy )
+{
+    //NOTHING
+}
+
+bool EquipmentUpdater::T_Component::operator == (const T_Component& rhs )
+{
+    return available_ == rhs.available_ &&
+        dead_ == rhs.dead_ &&
+        lightDamages_ == rhs.lightDamages_ &&
+        heavyDamages_ == rhs.heavyDamages_;
+}
 // -----------------------------------------------------------------------------
 // Name: EquipmentUpdater constructor
 // Created: SLI 2011-09-29
@@ -84,7 +108,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EquipmentUpdater::Notify( const sword::UnitCreation& message, const std::string& identifier )
 {
-    ComponentTypeVisitor< T_Agents > visitor( identifier, agentTypes_ );
+    ComponentTypeVisitor< T_AgentsTypes > visitor( identifier, agentTypes_ );
     componentTypes_.Apply( message.type().id(), visitor );
     identifiers_.left.insert( T_Identifiers::left_value_type( identifier, message.unit().id() ) );
     SendUpdate( identifier );
@@ -104,17 +128,17 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
     bool mustSend = false;
     const std::string& identifier = it->second;
     const T_Components& remoteComponents = remoteAgents_[ identifier ];
-    const T_Components& staticComponents = agentTypes_[ identifier ];
+    const T_StaticComponents& staticComponents = agentTypes_[ identifier ];
     for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
     {
         const sword::EquipmentDotations::EquipmentDotation& dotation = message.equipment_dotations().elem( i );
         std::string equipmentName;
-        BOOST_FOREACH( const T_Components::value_type& staticComponent, staticComponents )
+        BOOST_FOREACH( const T_StaticComponents::value_type& staticComponent, staticComponents )
             if( staticComponent.second.first == dotation.type().id() )
                 equipmentName = staticComponent.first;
         const T_Components::const_iterator remoteComponent = remoteComponents.find( equipmentName );
         mustSend = mustSend || ( remoteComponent != remoteComponents.end() && 
-            static_cast< int >( remoteComponent->second.second ) != dotation.available() );
+            static_cast< int >( remoteComponent->second.available_ ) != dotation.available() );
     }
     if( mustSend )
         SendUpdate( identifier );
@@ -178,15 +202,17 @@ void EquipmentUpdater::TypeChanged( const std::string& /*identifier*/, const rpr
 // Name: EquipmentUpdater::EquipmentUpdated
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number )
+void EquipmentUpdater::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int available,
+        unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages )
 {
     std::string equipmentName;
     if (! resolver_.Resolve( equipmentType, equipmentName ) )
         logger_.LogWarning( std::string( "Could not find equipment for EntityType: ") + equipmentType.str() );
     T_Component& component = remoteAgents_[ identifier ][ equipmentName ];
-    if( component.second == number )
+    T_Component newValue( available, dead, lightDamages, heavyDamages );
+    if( component == newValue )
         return;
-    component.second = number;
+    component = newValue;
     SendUpdate( identifier );
 }
 
@@ -214,7 +240,7 @@ void EquipmentUpdater::CallsignChanged( const std::string& /*identifier*/, const
 // -----------------------------------------------------------------------------
 void EquipmentUpdater::SendUpdate( const std::string& identifier )
 {
-    T_Agents::const_iterator agentType = agentTypes_.find( identifier );
+    T_AgentsTypes::const_iterator agentType = agentTypes_.find( identifier );
     T_Agents::const_iterator remoteAgent = remoteAgents_.find( identifier );
     if( agentType == agentTypes_.end() || remoteAgent == remoteAgents_.end() )
         return;
@@ -224,22 +250,20 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
     message().set_type( sword::UnitMagicAction::change_equipment_state );
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
-    BOOST_FOREACH( const T_Components::value_type& component, agentType->second )
+    BOOST_FOREACH( const T_StaticComponents::value_type& component, agentType->second )
     {
         const std::string& componentTypeName = component.first;
         const unsigned int componentTypeIdentifier = component.second.first;
         const unsigned int componentStaticNumber = component.second.second;
         const T_Components::const_iterator remoteComponent = remoteAgent->second.find( componentTypeName );
-        if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.second <= componentStaticNumber )
+        if( remoteComponent != remoteAgent->second.end() && remoteComponent->second.available_ <= componentStaticNumber )
         {
-            const unsigned int remoteComponentAvailable = remoteComponent->second.second;
-            const int remoteComponentDead = componentStaticNumber - remoteComponentAvailable;
             sword::MissionParameter_Value* componentChanged = parameter.add_value();
             componentChanged->add_list()->set_identifier( componentTypeIdentifier );
-            componentChanged->add_list()->set_quantity( remoteComponentAvailable );
-            componentChanged->add_list()->set_quantity( remoteComponentDead );
-            componentChanged->add_list()->set_quantity( 0 );
-            componentChanged->add_list()->set_quantity( 0 );
+            componentChanged->add_list()->set_quantity( remoteComponent->second.available_ );
+            componentChanged->add_list()->set_quantity( remoteComponent->second.dead_ );
+            componentChanged->add_list()->set_quantity( remoteComponent->second.heavyDamages_ );
+            componentChanged->add_list()->set_quantity( remoteComponent->second.lightDamages_ );
             componentChanged->add_list()->set_quantity( 0 );
             componentChanged->add_list()->set_quantity( 0 );
             componentChanged->add_list()->mutable_list();
