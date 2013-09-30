@@ -52,12 +52,10 @@ ADN_Units_LogThreshold_GUI::~ADN_Units_LogThreshold_GUI()
 void ADN_Units_LogThreshold_GUI::AddRow( int row, void* data )
 {
     ADN_Units_Data::StockLogThresholdInfos* pInfo = static_cast< ADN_Units_Data::StockLogThresholdInfos* >( data );
-
-    if( pInfo && pInfo->GetCrossedElement() )
-    {
-        AddItem( row, 0, data, &pInfo->GetCrossedElement()->strName_, ADN_StandardItem::eString );
-        AddItem( row, 1, data, &pInfo->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-    }
+    if( !pInfo )
+        return;
+    AddItem( row, 0, data, &pInfo->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pInfo->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }
 
 //-----------------------------------------------------------------------------

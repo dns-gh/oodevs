@@ -160,9 +160,6 @@ void ADN_Equipments_BreakdownsTable::AddRow( int row, void* data )
     BreakdownInfos* pBreakdown = static_cast<BreakdownInfos*>( data );
     if( !pBreakdown )
         return;
-    if( pBreakdown->GetCrossedElement() )
-    {
-        AddItem( row, 0, data, &pBreakdown->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
-        AddItem( row, 1, data, &pBreakdown->rPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-    }
+    AddItem( row, 0, data, &pBreakdown->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pBreakdown->rPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

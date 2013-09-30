@@ -59,22 +59,12 @@ void ADN_Type_LocalizedString::Initialize()
 // -----------------------------------------------------------------------------
 void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
 {
-    if( translation_ && !translation_.unique() )
-        return;
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized string: " + data );
+    if( translation_ && !( kernel::Language::IsCurrentDefault() && !data.empty() && translation_->Key().empty() || translation_.unique() ) )
+        return;
     translation_ = ( *context_ )[ data ];
     translation_->Initialize( ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_LocalizedString::CheckTranslation
-// Created: ABR 2013-07-18
-// -----------------------------------------------------------------------------
-void ADN_Type_LocalizedString::CheckTranslation() const
-{
-    if( !translation_ )
-        throw MASA_EXCEPTION( "Translation not set yet for localized string" );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +102,6 @@ void ADN_Type_LocalizedString::SetData( const std::string& data )
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetValue( const std::string& language ) const
 {
-    CheckTranslation();
     if( !kernel::Language::IsDefault( language ) && translation_->Value( language ).empty() )
         return translation_->Key();
     return translation_->Value( language );
@@ -134,7 +123,6 @@ void ADN_Type_LocalizedString::SetValue( const std::string& language, const std:
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetKey() const
 {
-    CheckTranslation();
     return translation_->Key();
 }
 
@@ -154,7 +142,6 @@ void ADN_Type_LocalizedString::SetKey( const std::string& key )
 // -----------------------------------------------------------------------------
 kernel::E_TranslationType ADN_Type_LocalizedString::GetType() const
 {
-    CheckTranslation();
     kernel::E_TranslationType type = translation_->Type();
     return type;
 }
@@ -165,6 +152,8 @@ kernel::E_TranslationType ADN_Type_LocalizedString::GetType() const
 // -----------------------------------------------------------------------------
 void ADN_Type_LocalizedString::SetType( kernel::E_TranslationType type )
 {
+    if( translation_->Key().empty() )
+        return;
     InitTranslation( translation_->Key() );
     translation_->SetType( type );
     emit TypeChanged( type );
@@ -246,6 +235,7 @@ void ADN_Type_LocalizedString::OnTypeChanged( int type )
 void ADN_Type_LocalizedString::SetContext( boost::shared_ptr< kernel::Context > context )
 {
     context_ = context;
+    InitTranslation( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +256,6 @@ bool ADN_Type_LocalizedString::CheckUniqueTranslation() const
 {
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized string." );
-    CheckTranslation();
     for( auto it = context_->begin(); it != context_->end(); ++it )
         if( *it != translation_ && translation_->Key() == ( *it )->Key() && *translation_ != **it )
             return false;

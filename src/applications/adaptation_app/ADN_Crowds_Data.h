@@ -36,7 +36,7 @@ public:
         virtual ~FireEffectProtectionInfos();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Double rUnarmedDestruction_;
@@ -128,7 +128,7 @@ public:
         virtual ~SpeedEffectVolumeInfos();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Double rDensity_;

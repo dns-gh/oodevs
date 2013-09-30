@@ -17,7 +17,7 @@ using namespace helpers;
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
 ADN_UrbanAttritionInfos::ADN_UrbanAttritionInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true, "material-type" )
     , rCoeff_( 0. )
 {
     // NOTHING
@@ -47,8 +47,8 @@ void ADN_UrbanAttritionInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_UrbanAttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "urbanModifier"*/ )
 {
-    output << xml::start( tag )
-        << xml::attribute( "material-type", GetCrossedElement() ? GetCrossedElement()->strName_.GetData() : "" )
-        << xml::attribute( "value", rCoeff_.GetData() )
-        << xml::end;
+    output << xml::start( tag );
+    ADN_CrossedRef< ADN_Urban_Data::UrbanMaterialInfos >::WriteArchive( output );
+    output << xml::attribute( "value", rCoeff_.GetData() )
+           << xml::end;
 }

@@ -459,14 +459,6 @@ Parked engine running</source>
         <source>Percentage</source>
         <translation type="unfinished">النسبة المئوية</translation>
     </message>
-    <message>
-        <source>New warning</source>
-        <translation type="unfinished">تحذير جديد</translation>
-    </message>
-    <message>
-        <source>Delete warning</source>
-        <translation type="unfinished">حذف إنذار</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_Data</name>
@@ -4690,6 +4682,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid time duration &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Tr</name>
@@ -6119,14 +6115,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Percentage (PH)</source>
         <translation type="unfinished">النسبة المئوية (PH)</translation>
     </message>
-    <message>
-        <source>New Ph</source>
-        <translation type="unfinished">الرقم الهيدروجيني جديدة</translation>
-    </message>
-    <message>
-        <source>Delete Ph</source>
-        <translation type="unfinished">حذف الرقم الهيدروجيني</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Weapons_WizardPage</name>
@@ -6517,13 +6505,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
         <translation type="unfinished">نظام الإمداد اللوجستي-البعثة غير صالح &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>TimeField</name>
-    <message>
-        <source>Invalid time duration &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

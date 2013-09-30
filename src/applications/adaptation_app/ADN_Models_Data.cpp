@@ -155,8 +155,8 @@ void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "mission" )
-            << xml::attribute( "name", GetCrossedElement()->strName_ );
+    output << xml::start( "mission" );
+    ADN_CrossedRef< ADN_Missions_ABC >::WriteArchive( output );
     for( auto it = vOrders_.begin(); it != vOrders_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

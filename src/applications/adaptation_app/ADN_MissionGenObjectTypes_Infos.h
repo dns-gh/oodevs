@@ -66,7 +66,25 @@ public:
     };
 };
 
-typedef ADN_Type_VectorFixed_ABC< ADN_MissionGenObjectTypes_Infos > T_MissionGenObjectTypes_Infos_Vector;
+class T_MissionGenObjectTypes_Infos_Vector : public ADN_Type_VectorFixed_ABC< ADN_MissionGenObjectTypes_Infos >
+{
+public:
+    T_MissionGenObjectTypes_Infos_Vector();
+    virtual ~T_MissionGenObjectTypes_Infos_Vector();
+
+    template< class U >
+    explicit T_MissionGenObjectTypes_Infos_Vector( const ADN_Type_Vector_ABC< U >& v )
+        : ADN_Type_VectorFixed_ABC< ADN_MissionGenObjectTypes_Infos >( v )
+    {
+        // NOTHING
+    }
+
+    bool IsAllChecked() const;
+
+protected:
+    virtual void AutoCreatePrivate( void* ptr );
+
+};
 
 } // end namespace helpers
 

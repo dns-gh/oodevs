@@ -122,9 +122,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
         ADN_Equipments_Data::CategoryInfos* infos = reinterpret_cast< ADN_Equipments_Data::CategoryInfos* >( *it );
         if( infos )
         {
-            xos << xml::start( "resource" )
-                  << xml::attribute( "name", infos->GetCrossedElement() ? infos->GetCrossedElement()->strName_.GetData() : "" )
-                  << xml::attribute( "count", infos->rNbr_ )
+            xos << xml::start( "resource" );
+            infos->ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
+            xos << xml::attribute( "count", infos->rNbr_ )
                 << xml::end;
         }
     }
@@ -187,8 +187,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
         if( infos )
         {
             xos << xml::start( "resource" );
-            xos << xml::attribute( "name", infos->GetCrossedElement() ? infos->GetCrossedElement()->strName_.GetData() : "" )
-                << xml::attribute( "count", infos->rNbr_ )
+            infos->ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
+            xos << xml::attribute( "count", infos->rNbr_ )
                 << xml::end;
         }
     }

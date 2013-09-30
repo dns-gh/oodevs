@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_StandardItem.h"
+#include "ADN_Tools.h"
 #include "clients_gui/Roles.h"
 
 // -----------------------------------------------------------------------------
@@ -67,15 +68,15 @@ void ADN_Connector_StandardItem::SetDataPrivate( void* data )
             item_.setData( text, gui::Roles::DataRole );
             break;
         }
-    case ADN_StandardItem::eTime:
     case ADN_StandardItem::eDelay:
-    case ADN_StandardItem::eString:
         {
             std::string* text = static_cast< std::string* >( data );
-            item_.setData( text->c_str(), Qt::EditRole );
-            item_.setData( text->c_str(), gui::Roles::DataRole );
+            item_.setData( ADN_Tools::ConvertDelayToLongString( text->c_str() ), Qt::EditRole );
+            item_.setData( ADN_Tools::ConvertDelayToCentiseconds( text->c_str() ), gui::Roles::DataRole );
             break;
         }
+    case ADN_StandardItem::eTime:
+    case ADN_StandardItem::eString:
     case ADN_StandardItem::eLocalizedString:
         {
             std::string* text = static_cast< std::string* >( data );
@@ -126,15 +127,15 @@ void ADN_Connector_StandardItem::SetDataChanged( const QString& text )
             emit DataChanged( &newval );
             break;
         }
-    case ADN_StandardItem::eTime:
     case ADN_StandardItem::eDelay:
-    case ADN_StandardItem::eColor:
-    case ADN_StandardItem::eString:
         {
-            std::string newval = text.toStdString();
+            std::string newval = ADN_Tools::ConvertLongStringToDelay( text );
             emit DataChanged( &newval );
             break;
         }
+    case ADN_StandardItem::eTime:
+    case ADN_StandardItem::eColor:
+    case ADN_StandardItem::eString:
     case ADN_StandardItem::eLocalizedString:
         {
             std::string newval = text.toStdString();

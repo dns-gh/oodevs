@@ -140,9 +140,6 @@ void ADN_Equipments_Sensors_GUI::AddRow( int row, void* data )
     SensorInfos* infos = static_cast< SensorInfos* >( data );
     if( !infos )
         return;
-    if( infos->GetCrossedElement() )
-    {
-        AddItem( row, 0, data, &infos->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
-        AddItem( row, 1, data, &infos->rHeight_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-    }
+    AddItem( row, 0, data, &infos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &infos->rHeight_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

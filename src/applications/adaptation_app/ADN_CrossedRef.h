@@ -148,5 +148,4 @@ void ADN_CrossedRef< T >::CheckValidity( ADN_ConsistencyChecker& checker, const 
     ptr_.CheckValidity( checker, name, tab, subTab, optional );
 }
 
-
 #endif // __ADN_CrossedRef_h_

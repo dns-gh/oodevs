@@ -17,8 +17,34 @@
 #include "ADN_Languages_GUI.h"
 #include "excel/ExcelFormat.h"
 #include "clients_kernel/VariantPointer.h"
+#include "clients_gui/LocaleAwareSortFilterProxyModel.h"
 
 using namespace ExcelFormat;
+
+class CustomSortFilterProxyModel : public gui::LocaleAwareSortFilterProxyModel
+{
+public:
+    CustomSortFilterProxyModel( ADN_Table& parent )
+        : LocaleAwareSortFilterProxyModel( &parent )
+        , parent_( parent )
+    {}
+
+protected:
+    virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
+    {
+        ADN_StandardItem* lhs = static_cast< ADN_StandardItem* >( parent_.GetItemFromIndex( left ) );
+        ADN_StandardItem* rhs = static_cast< ADN_StandardItem* >( parent_.GetItemFromIndex( right ) );
+        if( !lhs || !rhs ||
+            ( lhs->GetType() != ADN_StandardItem::eString &&
+              lhs->GetType() != ADN_StandardItem::eLocalizedString &&
+              lhs->GetType() != ADN_StandardItem::ePtrInVector ) )
+            return QSortFilterProxyModel::lessThan( left, right );
+        return LocaleAwareSortFilterProxyModel::lessThan( left, right );
+    }
+
+private:
+    ADN_Table& parent_;
+};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::ADN_Table
@@ -70,9 +96,10 @@ void ADN_Table::Initialize( const QString& objectName )
 {
     setObjectName( objectName );
     setContextMenuPolicy( Qt::CustomContextMenu );
-    proxyModel_.setSourceModel( &dataModel_ );
-    proxyModel_.setSortRole( gui::Roles::DataRole );
-    setModel( &proxyModel_ );
+    proxyModel_.reset( new CustomSortFilterProxyModel( *this ) );
+    proxyModel_->setSourceModel( &dataModel_ );
+    proxyModel_->setSortRole( gui::Roles::DataRole );
+    setModel( proxyModel_.get() );
     setItemDelegate( &delegate_ );
     setEditTriggers( AllEditTriggers );
 
@@ -244,7 +271,7 @@ QStandardItem* ADN_Table::GetItemFromIndex( const QModelIndex& index ) const
 {
     if( !index.isValid() )
         return 0;
-    return dataModel_.itemFromIndex( index.model() == &dataModel_ ? index : proxyModel_.mapToSource( index ) );
+    return dataModel_.itemFromIndex( index.model() == &dataModel_ ? index : proxyModel_->mapToSource( index ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +280,7 @@ QStandardItem* ADN_Table::GetItemFromIndex( const QModelIndex& index ) const
 // -----------------------------------------------------------------------------
 QStandardItem* ADN_Table::GetItem( int row, int col ) const
 {
-    return GetItemFromIndex( proxyModel_.index( row, col ) );
+    return GetItemFromIndex( proxyModel_->index( row, col ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -464,7 +491,7 @@ void ADN_Table::SaveToXls( const tools::Path& path, const QString& sheetName ) c
             format.set_borderlines( left, right, top, bottom, EGA_BLACK, EGA_BLACK );
 
             // If Merged, apply border and continue
-            QStandardItem* qItem = GetItemFromIndex( proxyModel_.index( row, col ) );
+            QStandardItem* qItem = GetItemFromIndex( proxyModel_->index( row, col ) );
             if( mergedCells[ row ][ col ] || !qItem )
             {
                 BasicExcelCell* cell = sheet->Cell( row + baseCellRow, col );
@@ -634,7 +661,7 @@ QString ADN_Table::GetToolTips( int nRow, int nCol ) const
 // -----------------------------------------------------------------------------
 void ADN_Table::Sort( int column, Qt::SortOrder order )
 {
-    proxyModel_.sort( column, order );
+    proxyModel_->sort( column, order );
 }
 
 // -----------------------------------------------------------------------------

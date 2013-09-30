@@ -47,12 +47,8 @@ void ADN_Breakdowns_PartsTable::AddRow( int row, void* data )
     ADN_Breakdowns_Data::RepairPartInfo* pInfos = static_cast< ADN_Breakdowns_Data::RepairPartInfo* >( data );
     if( !pInfos )
         return;
-    ADN_Resources_Data::CategoryInfo* info = pInfos->GetCrossedElement();
-    if( info )
-    {
-        AddItem( row, 0, data, &info->strName_, ADN_StandardItem::eString );
-        AddItem( row, 1, data, &pInfos->nNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
-    }
+    AddItem( row, 0, data, &pInfos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pInfos->nNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }
 
 // -----------------------------------------------------------------------------

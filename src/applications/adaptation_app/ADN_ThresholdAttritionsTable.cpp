@@ -40,8 +40,8 @@ ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objec
     for( std::size_t i = 2; i<= 6; ++i )
         delegate_.AddSpinBoxOnColumn( static_cast< int >( i ) );
     delegate_.AddCheckBoxOnColumn( 7 );
-    proxyModel_.setDynamicSortFilter( true );
-    proxyModel_.sort( 1, Qt::AscendingOrder );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 1, Qt::AscendingOrder );
     setSortingEnabled( false );
 }
 

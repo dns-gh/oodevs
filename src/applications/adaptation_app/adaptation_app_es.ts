@@ -471,14 +471,6 @@ estacionado con motor encendido</translation>
         <source>Percentage</source>
         <translation>Porcentaje</translation>
     </message>
-    <message>
-        <source>New warning</source>
-        <translation>Nueva alerta</translation>
-    </message>
-    <message>
-        <source>Delete warning</source>
-        <translation>Borrar alerta</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_Data</name>
@@ -4703,6 +4695,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid time duration &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Tr</name>
@@ -6136,14 +6132,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Percentage (PH)</source>
         <translation></translation>
     </message>
-    <message>
-        <source>New Ph</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Delete Ph</source>
-        <translation></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Weapons_WizardPage</name>
@@ -6533,13 +6521,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TimeField</name>
-    <message>
-        <source>Invalid time duration &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

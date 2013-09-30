@@ -76,9 +76,9 @@ void ADN_Automata_SubUnitsTable::RemoveCurrentElement()
 void ADN_Automata_SubUnitsTable::AddRow( int row, void* data )
 {
     AutomatUnitInfos* info = static_cast< AutomatUnitInfos* >( data );
-    if( !info )
+    if( !info || !info->GetCrossedElement() )
         return;
-    AddItem( row, 0, data, &info->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 0, data, &info->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &info->min_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     AddItem( row, 2, data, &info->max_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     emit ItemAdded( info->GetCrossedElement()->strName_.GetData() );

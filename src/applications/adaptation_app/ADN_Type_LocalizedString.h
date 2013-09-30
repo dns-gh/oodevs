@@ -103,7 +103,6 @@ private:
     //@{
     void Initialize();
     void InitTranslation( const std::string& data );
-    void CheckTranslation() const;
     void AddTranslationCheckers();
     //@}
 

@@ -55,8 +55,8 @@ void ADN_ExtinguisherAgentInfos::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_ExtinguisherAgentInfos::WriteArchive( xml::xostream& xos, const std::string& tag )
 {
-    xos << xml::start( tag )
-            << xml::attribute( "agent", GetCrossedElement()->strName_ )
-            << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
+    xos << xml::start( tag );
+    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
+    xos << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
         << xml::end;
 }

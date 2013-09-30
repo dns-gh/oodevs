@@ -34,8 +34,8 @@ ADN_Equipments_ConsumptionsTable::ADN_Equipments_ConsumptionsTable( const QStrin
     horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
     verticalHeader()->setVisible( false );
 
-    proxyModel_.setDynamicSortFilter( true );
-    proxyModel_.sort( 0, Qt::DescendingOrder );
+    proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0, Qt::DescendingOrder );
     setSortingEnabled( false );
 
     hideColumn( 0 );
@@ -75,7 +75,7 @@ void ADN_Equipments_ConsumptionsTable::AddRow( int /* row */, void* data )
         }
     }
     if( !resourceItem )
-        resourceItem = AddItem( numRows(), 0, data, &catInfos->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+        resourceItem = AddItem( numRows(), 0, data, &catInfos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
 
     AddItem( resourceItem->row(), 1 + pConsumption->nConsumptionType_, data, &pConsumption->nQuantityUsedPerHour_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }
