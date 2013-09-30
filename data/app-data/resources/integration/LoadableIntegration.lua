@@ -106,9 +106,18 @@ integration.unloadFriend = function( unit )
     return true
 end
 
-integration.isFriendTranported = function( unit )
+-- Returns true if the agent body is transported, false otherwise
+integration.isBodyTransported = function()
+    return DEC_Agent_EstTransporte()
+end
+
+-- Returns true if the provided friendly unit is transported, false otherwise
+-- @param unit : knowledge of a friendly agent
+integration.isFriendTransported = function( unit )
     return unit.source:DEC_Agent_EstTransporte()
 end
+
+integration.isFriendTranported = integration.isFriendTransported -- To ensure backward compatibility
 
 -- -----------------------------------------------------------------------------------
 -- Non magic Load Integration
