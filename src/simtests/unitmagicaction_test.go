@@ -2058,3 +2058,114 @@ func (s *TestSuite) TestUnitReloadBrain(c *C) {
 	err = client.ReloadBrain(tasker, "Journalist")
 	c.Assert(err, IsNil)
 }
+
+func (s *TestSuite) TestLoadUnit(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// some prerequisites
+	formation := CreateFormation(c, client, 1)
+	automat := CreateAutomat(c, client, formation.Id, 0)
+	unit1 := CreateUnit(c, client, automat.Id)
+	unit2 := CreateUnit(c, client, automat.Id)
+
+	// missing tasker
+	empty := swapi.MakeParameters()
+	err := client.LoadUnitTest(&sword.Tasker{}, empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// invalid tasker
+	err = client.LoadUnitTest(swapi.MakeUnitTasker(unit2.Id+1), empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// missing parameters
+	tasker := swapi.MakeUnitTasker(unit1.Id)
+	err = client.LoadUnitTest(tasker, swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// too many parameters
+	err = client.LoadUnitTest(tasker, swapi.MakeParameters(
+		swapi.MakeNullValue(),
+		swapi.MakeNullValue(),
+	))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid parameter type
+	err = client.LoadUnitTest(tasker, swapi.MakeParameters(
+		swapi.MakeBoolean(true),
+	))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// loading invalid unit
+	err = client.LoadUnit(unit1.Id, unit2.Id+1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// loading itself
+	err = client.LoadUnit(unit1.Id, unit1.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	err = client.LoadUnit(unit1.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		u1 := data.FindUnit(unit1.Id)
+		u2 := data.FindUnit(unit2.Id)
+		return u2.TransporterId == u1.Id &&
+			reflect.DeepEqual(u1.TransportedIds, []uint32{u2.Id})
+	})
+}
+
+func (s *TestSuite) TestUnloadUnit(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// some prerequisites
+	formation := CreateFormation(c, client, 1)
+	automat := CreateAutomat(c, client, formation.Id, 0)
+	unit1 := CreateUnit(c, client, automat.Id)
+	unit2 := CreateUnit(c, client, automat.Id)
+	err := client.LoadUnit(unit1.Id, unit2.Id)
+
+	// missing tasker
+	empty := swapi.MakeParameters()
+	err = client.UnloadUnitTest(&sword.Tasker{}, empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// invalid tasker
+	err = client.UnloadUnitTest(swapi.MakeUnitTasker(unit2.Id+1), empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// missing parameters
+	tasker := swapi.MakeUnitTasker(unit1.Id)
+	err = client.UnloadUnitTest(tasker, swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// too many parameters
+	err = client.UnloadUnitTest(tasker, swapi.MakeParameters(
+		swapi.MakeNullValue(),
+		swapi.MakeNullValue(),
+	))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid parameter type
+	err = client.UnloadUnitTest(tasker, swapi.MakeParameters(
+		swapi.MakeBoolean(true),
+	))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// unloading invalid unit
+	err = client.UnloadUnit(unit1.Id, unit2.Id+1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// unloading itself
+	err = client.UnloadUnit(unit1.Id, unit1.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	err = client.UnloadUnit(unit1.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		u1 := data.FindUnit(unit1.Id)
+		u2 := data.FindUnit(unit2.Id)
+		return u2.TransporterId == 0 &&
+			len(u1.TransportedIds) == 0
+	})
+}

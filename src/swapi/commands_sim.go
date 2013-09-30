@@ -1296,3 +1296,19 @@ func (c *Client) CreateFireOrderOnUnit(taskerId uint32, targetKnowledgeId uint32
 	return c.sendUnitMagicAction(MakeUnitTasker(taskerId), params,
 		sword.UnitMagicAction_create_fire_order)
 }
+
+func (c *Client) LoadUnitTest(tasker *sword.Tasker, params *sword.MissionParameters) error {
+	return c.sendUnitMagicAction(tasker, params, sword.UnitMagicAction_load_unit)
+}
+
+func (c *Client) LoadUnit(loader, loadee uint32) error {
+	return c.LoadUnitTest(MakeUnitTasker(loader), MakeParameters(MakeAgent(loadee)))
+}
+
+func (c *Client) UnloadUnitTest(tasker *sword.Tasker, params *sword.MissionParameters) error {
+	return c.sendUnitMagicAction(tasker, params, sword.UnitMagicAction_unload_unit)
+}
+
+func (c *Client) UnloadUnit(loader, loadee uint32) error {
+	return c.UnloadUnitTest(MakeUnitTasker(loader), MakeParameters(MakeAgent(loadee)))
+}

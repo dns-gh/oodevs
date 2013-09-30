@@ -185,6 +185,7 @@ type Unit struct {
 	Posture             Posture
 	VisionCones         VisionCones
 	TransporterId       uint32
+	TransportedIds      []uint32
 	Adhesions           map[uint32]float32
 	HumanFactors        HumanFactors
 	RawOperationalState int32

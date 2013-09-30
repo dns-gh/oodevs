@@ -190,6 +190,12 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	if transportingUnit := mm.GetTransportingUnit(); transportingUnit != nil {
 		unit.TransporterId = transportingUnit.GetId()
 	}
+	if transported := mm.GetTransportedUnits(); transported != nil {
+		unit.TransportedIds = make([]uint32, 0, len(transported.Elem))
+		for _, it := range transported.Elem {
+			unit.TransportedIds = append(unit.TransportedIds, it.GetId())
+		}
+	}
 	if mm.Adhesions != nil {
 		unit.Adhesions = map[uint32]float32{}
 		for _, value := range mm.Adhesions.Adhesion {
