@@ -63,6 +63,15 @@ bool AutomatHierarchies::CanCommunicate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::CanReceive
+// Created: LDC 2013-09-27
+// -----------------------------------------------------------------------------
+bool AutomatHierarchies::CanReceive() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatHierarchies::IsJammed
 // Created: HBD 2010-07-30
 // -----------------------------------------------------------------------------

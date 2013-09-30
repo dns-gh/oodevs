@@ -59,6 +59,7 @@ private:
     //! @name Helpers
     //@{
     virtual bool CanCommunicate() const;
+    virtual bool CanReceive() const;
     virtual bool IsJammed() const;
     virtual void DoUpdate( const sword::AutomatCreation& message );
     virtual void DoUpdate( const sword::AutomatChangeKnowledgeGroup& message );

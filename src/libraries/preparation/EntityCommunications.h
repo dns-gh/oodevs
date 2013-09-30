@@ -38,6 +38,7 @@ public:
     //@{
     void ChangeSuperior( kernel::Entity_ABC& superior );
     virtual bool CanCommunicate() const;
+    virtual bool CanReceive() const;
     virtual bool IsJammed() const;
     //@}
 

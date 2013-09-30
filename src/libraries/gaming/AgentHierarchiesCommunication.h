@@ -48,6 +48,7 @@ public:
     //@}
 
     virtual bool CanCommunicate() const;
+    virtual bool CanReceive() const;
     virtual bool IsJammed() const;
     void DoUpdate( const sword::UnitCreation& message );
     virtual void DoUpdate( const sword::UnitAttributes& message );

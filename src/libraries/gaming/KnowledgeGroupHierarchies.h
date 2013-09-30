@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual bool CanCommunicate() const;
+    virtual bool CanReceive() const;
     virtual bool IsJammed() const;
     virtual void DoUpdate( const sword::KnowledgeGroupUpdate& updateMessage );
     //@}

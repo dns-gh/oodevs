@@ -72,7 +72,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
     for( auto it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent_ABC& agent = *it->first;
-        if( ! IsSameTeam( agent ) && it->second != sword::UnitVisibility::invisible )
+        if( ! IsSameKnowledgeGroup( agent ) && it->second != sword::UnitVisibility::invisible )
         {
             if( it->second == sword::UnitVisibility::recognized )
                 glColor4f( COLOR_RECO );
@@ -89,11 +89,34 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentDetections::IsSameTeam
+// Name: AgentDetections::IsSameKnowledgeGroup
 // Created: AGE 2006-10-04
 // -----------------------------------------------------------------------------
-bool AgentDetections::IsSameTeam( const Entity_ABC& entity ) const
+bool AgentDetections::IsSameKnowledgeGroup( const Entity_ABC& entity ) const
 {
-    return entity. Get< CommunicationHierarchies >().IsSubordinateOf(
-           holder_.Get< CommunicationHierarchies >().GetTop() );
+    const CommunicationHierarchies* entityHierarchy = entity.Retrieve< CommunicationHierarchies >();
+    const CommunicationHierarchies* holderHierarchy = holder_.Retrieve< CommunicationHierarchies >();
+    if( !holderHierarchy->CanReceive() || !entityHierarchy->CanReceive() )
+        return false;
+    const Entity_ABC* firstKnowledgeGroup = &entity;
+    const Entity_ABC* currentEntity = &entity;
+    for( ;; )
+    {
+        entityHierarchy = currentEntity->Retrieve< CommunicationHierarchies >();
+        const Entity_ABC* superior = entityHierarchy->GetSuperior();
+        if( superior )
+            firstKnowledgeGroup = currentEntity;
+        else
+            break;
+        currentEntity = superior;
+    }
+    currentEntity = &holder_;
+    while( currentEntity )
+    {
+        entityHierarchy = currentEntity->Retrieve< CommunicationHierarchies >();
+        currentEntity = entityHierarchy->GetSuperior();
+        if( currentEntity == firstKnowledgeGroup )
+            return true;
+    }
+    return false;
 }
