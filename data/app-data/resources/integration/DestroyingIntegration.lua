@@ -9,6 +9,9 @@
 -- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 -------------------------------------------------------------------------------
 
-integration.isInFiringRange = function( target )
-    return integration.distance( meKnowledge, target ) < integration.getMaxRangeToFireOnAgent( target.source, 0.7)
+integration.isInFiringRange = function( target, ph )
+    if not ph then
+        ph = 0.7
+    end
+    return integration.distance( meKnowledge, target ) < integration.getMaxRangeToFireOnAgent( target.source,ph )
 end
