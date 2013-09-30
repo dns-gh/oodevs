@@ -2009,14 +2009,11 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveLoadUnit( const sword::MissionParameters& msg )
 {
-    if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
-    if( target == 0 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    transport::PHY_RoleAction_Transport* role = RetrieveRole< transport::PHY_RoleAction_Transport >();
-    if( !role )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+    const uint32_t id = parameters::GetAgentId( msg, 0 );
+    auto target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
+    parameters::Check( target && target != this, "is an invalid target", 0 );
+    auto role = RetrieveRole< transport::PHY_RoleAction_Transport >();
+    parameters::Check( role, "is missing transport role", 0 );
     role->MagicLoadPion( *target, false );
 }
 
@@ -2026,14 +2023,11 @@ void MIL_AgentPion::OnReceiveLoadUnit( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveUnloadUnit( const sword::MissionParameters& msg )
 {
-    if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
-    if( target == 0 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    transport::PHY_RoleAction_Transport* role = RetrieveRole< transport::PHY_RoleAction_Transport >();
-    if( !role )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+    const uint32_t id = parameters::GetAgentId( msg, 0 );
+    auto target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
+    parameters::Check( target && target != this, "is an invalid target", 0 );
+    auto role = RetrieveRole< transport::PHY_RoleAction_Transport >();
+    parameters::Check( role, "is missing transport role", 0 );
     role->MagicUnloadPion( *target );
 }
 

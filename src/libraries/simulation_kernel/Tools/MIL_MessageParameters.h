@@ -69,6 +69,7 @@ namespace parameters
     int          GetEnumeration( const google::protobuf::EnumDescriptor* descriptor, const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     sword::Point GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     int          GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    uint32_t     GetAgentId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
 
     typedef boost::function< const DEC_Model_ABC*( const std::string& model ) > ModelFinder;
     const DEC_Model_ABC* GetModel( const sword::MissionParameters& params, const ModelFinder& finder );
