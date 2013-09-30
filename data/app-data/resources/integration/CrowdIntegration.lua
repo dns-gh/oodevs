@@ -67,7 +67,7 @@ integration.updateAttackingIt = function( target )
    local currentIntensity = coeffAgressionForCurrentAttitude()
    if currentIntensity ~= target[myself].intensity then
      DEC__StopAction( target[myself].actionTir )
-    target[myself].intensity = currentIntensity
+     target[myself].intensity = currentIntensity
      target[myself].actionTir = DEC_StartTirSurPion( currentIntensity, target.source )
      return false
    end
