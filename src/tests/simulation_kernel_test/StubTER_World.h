@@ -3,7 +3,6 @@
 
 #include "simulation_terrain/TER_World.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader.h"
 #include "tools/NullFileLoaderObserver.h"
 
 inline void WorldInitialize( const std::string& exercise )

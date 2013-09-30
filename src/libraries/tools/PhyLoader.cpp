@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "tools_pch.h"
-#include "Loader.h"
+#include "PhyLoader.h"
 #include "RealFileLoader.h"
 #include "SchemaVersionExtractor.h"
 #include "ExerciseConfig.h"
@@ -17,10 +17,10 @@
 using namespace tools;
 
 // -----------------------------------------------------------------------------
-// Name: Loader constructor
+// Name: PhyLoader constructor
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-Loader::Loader( const Path& physicalFile, const ExerciseConfig& config,
+PhyLoader::PhyLoader( const Path& physicalFile, const ExerciseConfig& config,
         RealFileLoaderObserver_ABC& observer )
     : DefaultLoader( observer )
     , config_      ( config )
@@ -44,15 +44,15 @@ Loader::Loader( const Path& physicalFile, const ExerciseConfig& config,
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader destructor
+// Name: PhyLoader destructor
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-Loader::~Loader()
+PhyLoader::~PhyLoader()
 {
     // NOTHING
 }
 
-Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const
+Path PhyLoader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool optional ) const
 {
     const Path path = GetPhysicalChildFile( rootTag );
     if( path.IsEmpty() )
@@ -67,19 +67,19 @@ Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, bool
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader::LoadPhysicalFile
+// Name: PhyLoader::LoadPhysicalFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const
+Path PhyLoader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
     return LoadPhysicalFile( rootTag, loader, false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader::LoadOptionalPhysicalFile
+// Name: PhyLoader::LoadOptionalPhysicalFile
 // Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-Path Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const
+Path PhyLoader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
     return LoadPhysicalFile( rootTag, loader, true );
 }
@@ -98,12 +98,12 @@ Path GetPhysicalChildEntry( const std::string& tag, const ExerciseConfig& config
 
 } // namespace
 
-Path Loader::GetPhysicalChildFile( const std::string& rootTag ) const
+Path PhyLoader::GetPhysicalChildFile( const std::string& rootTag ) const
 {
     return GetPhysicalChildEntry( rootTag, config_, allowedFiles_ );
 }
 
-Path Loader::GetPhysicalChildPath( const std::string& rootTag ) const
+Path PhyLoader::GetPhysicalChildPath( const std::string& rootTag ) const
 {
     return GetPhysicalChildEntry( rootTag, config_, allowedPaths_ );
 }

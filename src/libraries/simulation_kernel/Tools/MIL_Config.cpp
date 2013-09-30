@@ -14,8 +14,8 @@
 #include "MIL_Tools.h"
 #include "tools/Codec.h"
 #include "tools/FileWrapper.h"
-#include "tools/Loader.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 #include "tools/XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )

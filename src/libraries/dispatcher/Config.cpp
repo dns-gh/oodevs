@@ -11,7 +11,6 @@
 #include "Config.h"
 #include "tools/XmlStreamOperators.h"
 #include "tools/FileWrapper.h"
-#include "tools/Loader.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>

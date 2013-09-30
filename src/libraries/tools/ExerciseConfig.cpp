@@ -9,7 +9,7 @@
 
 #include "tools_pch.h"
 #include "ExerciseConfig.h"
-#include "Loader.h"
+#include "PhyLoader.h"
 #include "WorldParameters.h"
 #include "MT_Tools/MT_Logger.h"
 #include "FileWrapper.h"
@@ -92,7 +92,7 @@ void ExerciseConfig::LoadExercise( const Path& file )
         loader.LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
         if( GetExerciseFile() != file )
             SetExerciseName( file );
-        fileLoader_.reset( new Loader( GetPhysicalFile(), *this, observer_ ) );
+        fileLoader_.reset( new PhyLoader( GetPhysicalFile(), *this, observer_ ) );
         pWorldParameters_.reset( new WorldParameters( GetLoader(), dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
     }
     catch( const xml::exception& )

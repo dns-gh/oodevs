@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef tools_FileLoader_h
-#define tools_FileLoader_h
+#ifndef tools_PhyLoader_h
+#define tools_PhyLoader_h
 
 #include "DefaultLoader.h"
 #include <memory>
@@ -21,19 +21,19 @@ namespace tools
     class ExerciseConfig;
 
 // =============================================================================
-/** @class  Loader
-    @brief  Loader
+/** @class  PhyLoader
+    @brief  PhyLoader
 */
 // Created: NLD 2011-02-14
 // =============================================================================
-class Loader : public DefaultLoader
+class PhyLoader : public DefaultLoader
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Loader( const Path& physicalFile, const ExerciseConfig& config,
+             PhyLoader( const Path& physicalFile, const ExerciseConfig& config,
                      RealFileLoaderObserver_ABC& observer );
-    virtual ~Loader();
+    virtual ~PhyLoader();
     //@}
 
     //! @name Operations
@@ -58,4 +58,4 @@ private:
 
 }
 
-#endif // tools_FileLoader_h
+#endif // tools_PhyLoader_h
