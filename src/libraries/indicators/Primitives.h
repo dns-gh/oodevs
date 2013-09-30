@@ -14,12 +14,7 @@
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )
-
-namespace tools
-{
-    class ExerciseConfig;
-    class Path;
-}
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -37,7 +32,8 @@ namespace indicators
 */
 // Created: SBO 2009-04-06
 // =============================================================================
-class Primitives : public tools::Resolver< Primitive, QString >
+class Primitives : public tools::Resolver< Primitive, QString >,
+                   private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,21 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config, const tools::Path& file );
+    void Load( xml::xistream& xis );
     void Purge();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Primitives( const Primitives& );            //!< Copy constructor
-    Primitives& operator=( const Primitives& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadPrimitive( xml::xistream& xis );
-    void Read( xml::xistream& xis );
     //@}
 
 private:

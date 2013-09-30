@@ -11,10 +11,7 @@
 #include "Primitives.h"
 #include "DataTypeFactory.h"
 #include "Primitive.h"
-#include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/bind.hpp>
 
 using namespace indicators;
 
@@ -41,30 +38,15 @@ Primitives::~Primitives()
 // Name: Primitives::Load
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void Primitives::Load( const tools::ExerciseConfig& config, const tools::Path& file )
-{
-    config.GetLoader().LoadFile( file, boost::bind( &Primitives::Read, this, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Primitives::Read
-// Created: SBO 2009-04-20
-// -----------------------------------------------------------------------------
-void Primitives::Read( xml::xistream& xis )
+void Primitives::Load( xml::xistream& xis )
 {
     xis >> xml::start( "primitives" )
-            >> xml::list( "primitive", *this, &Primitives::ReadPrimitive )
+            >> xml::list( "primitive", [&]( xml::xistream& x )
+                {
+                    Primitive* primitive = new Primitive( x, *types_ );
+                    Register( primitive->GetName(), *primitive );
+                } )
         >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Primitives::ReadPrimitive
-// Created: SBO 2009-04-06
-// -----------------------------------------------------------------------------
-void Primitives::ReadPrimitive( xml::xistream& xis )
-{
-    Primitive* primitive = new Primitive( xis, *types_ );
-    Register( primitive->GetName(), *primitive );
 }
 
 // -----------------------------------------------------------------------------

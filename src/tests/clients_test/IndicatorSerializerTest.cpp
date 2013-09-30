@@ -31,7 +31,8 @@ namespace
         {
             tools::NullFileLoaderObserver observer;
             tools::ExerciseConfig config( observer );
-            primitives_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+            xml::xifstream xis( BOOST_RESOLVE( "../../app-data/resources/IndicatorPrimitives.xml" ));
+            primitives_.Load( xis );
         }
 
         void ParseAndCheck( const std::string& text, const std::string& expected )

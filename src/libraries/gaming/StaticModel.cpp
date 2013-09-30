@@ -17,6 +17,7 @@
 #include "indicators/Primitives.h"
 #include "reports/ReportFactory.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: StaticModel constructor
@@ -52,7 +53,8 @@ StaticModel::~StaticModel()
 void StaticModel::Load( const tools::ExerciseConfig& config )
 {
     kernel::StaticModel::Load( config );
-    indicators_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+    indicators_.Load( *config.GetLoader().LoadFile(
+        tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) ));
     gaugeTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
     drawings_.Load( config );
     reportFactory_.Load( config );

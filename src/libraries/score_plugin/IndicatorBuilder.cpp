@@ -16,6 +16,7 @@
 #include "indicators/Serializer.h"
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
+#include "tools/Loader_ABC.h"
 #include "tools/SessionConfig.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -36,7 +37,8 @@ IndicatorBuilder::IndicatorBuilder( const tools::SessionConfig& config )
     , variables_  ( 0 )
     , factory_    ( 0 )
 {
-    primitives_->Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+    primitives_->Load( *config.GetLoader().LoadFile(
+        tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) ));
 }
 
 // -----------------------------------------------------------------------------
