@@ -126,27 +126,6 @@ std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const Path&
     return xis;
 }
 
-// =============================================================================
-// Operations
-// =============================================================================
-namespace
-{
-    bool ReadFile( const Path& path, std::string& data )
-    {
-        tools::Ifstream file( path, std::ios::in | std::ios::binary );
-        if( !file.is_open() )
-            return false;
-        file.seekg( 0, file.end );
-        const size_t length = static_cast< size_t >( file.tellg() );
-        file.seekg( 0, file.beg );
-        if( !length )
-            return false;
-        data.resize( length, 0 );
-        file.read( &data[0], length );
-        return !file.fail();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: RealFileLoader::LoadFile
 // Created: NLD 2011-02-14
@@ -155,7 +134,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInpu
 {
     std::string data;
     Path inputFileName = initialInputFileName;
-    if( !ReadFile( inputFileName, data ) )
+    if( !tools::ReadFile( inputFileName, data ) )
     {
         const std::string genericInputFileName = initialInputFileName.ToUTF8();
         BOOST_FOREACH( const T_AddedFile& addedFile, addedFiles_ )
@@ -167,7 +146,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInpu
                 break;
             }
         }
-        if( !ReadFile( inputFileName, data ) )
+        if( !tools::ReadFile( inputFileName, data ) )
             throw MASA_EXCEPTION( "failed to open " + inputFileName.ToUTF8() );
     }
 
