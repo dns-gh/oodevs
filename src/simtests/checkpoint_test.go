@@ -165,3 +165,50 @@ func (s *TestSuite) TestCheckpointCrowd(c *C) {
 	}
 	c.Assert(found, Equals, true)
 }
+
+func (s *TestSuite) TestCheckpointUnit(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	defer sim.Stop()
+	party := client.Model.GetData().FindPartyByName("party1")
+	c.Assert(party, NotNil)
+	CreateFormation(c, client, party.Id)
+	automat := createAutomatForParty(c, client, "party1")
+	from := swapi.Point{X: -15.9219, Y: 28.3456}
+	unit, err := client.CreateUnitWithName(automat.Id, UnitType, from,
+		"some unit name", false)
+	c.Assert(err, IsNil)
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+
+	// Give a mission
+	null := swapi.MakeNullValue()
+	heading := swapi.MakeHeading(0)
+	dest := swapi.MakePointParam(swapi.Point{X: -15.8193, Y: 28.3456})
+	params := swapi.MakeParameters(heading, null, null, null, dest)
+	order, err := client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	c.Assert(err, IsNil)
+
+	sim, client = checkpointAndRestart(c, sim, client)
+	defer sim.Stop()
+	data := client.Model.GetData()
+	unit2 := data.FindUnit(unit.Id)
+	c.Assert(unit2, NotNil)
+	c.Assert(unit2.Name, Equals, unit.Name)
+	c.Assert(unit2.Pc, Equals, unit.Pc)
+	automat2 := data.FindAutomat(automat.Id)
+	c.Assert(automat2, NotNil)
+	c.Assert(automat2.Engaged, Equals, false)
+	c.Assert(automat2.FormationId, Equals, automat.FormationId)
+	formation2 := data.FindFormation(automat.FormationId)
+	c.Assert(formation2, NotNil)
+
+	hasOrder := false
+	for _, o := range data.Orders {
+		if o.Kind == order.Kind && o.MissionType == order.MissionType &&
+			o.TaskerId == order.TaskerId {
+			hasOrder = true
+			break
+		}
+	}
+	c.Assert(hasOrder, Equals, true)
+}
