@@ -1597,13 +1597,21 @@ void MIL_Automate::OnReloadBrain( const sword::MissionParameters& msg )
 {
     CancelAllActions();
     bool modelChanged = false;
-    if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_acharstr() )
+    if( msg.elem_size() > 0 )
     {
-        const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
+        if( msg.elem_size() != 1 )
+            throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
+
+        const sword::MissionParameter& parameter = msg.elem( 0 );
+        if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
+            throw MASA_BADPARAM_UNIT( "parameters[0] must be a a char string" );
+
+        const std::string& model = parameter.value( 0 ).acharstr();
         const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( model );
         if( !pModel )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        modelChanged = ( &GetRole< DEC_AutomateDecision >().GetModel() != pModel );
+            throw MASA_BADPARAM_UNIT( "Unknown decisional model" );
+
+        modelChanged = &GetRole< DEC_AutomateDecision >().GetModel() != pModel;
         if( modelChanged )
             GetRole< DEC_AutomateDecision >().SetModel( *pModel );
     }

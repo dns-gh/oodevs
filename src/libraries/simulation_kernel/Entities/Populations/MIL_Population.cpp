@@ -1913,21 +1913,24 @@ void MIL_Population::OnReloadBrain( const sword::UnitMagicAction& msg )
 {
     CancelAllActions();
     bool modelChanged = false;
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-         throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
+    if( msg.has_parameters() && msg.parameters().elem_size() > 0 )
+    {
+        if( msg.parameters().elem_size() != 1 )
+            throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
 
-    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
-    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Acharstr" );
+        const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
+        if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
+            throw MASA_BADPARAM_UNIT( "parameters[0] must be a char string" );
 
-    const std::string model = parameter.value( 0 ).acharstr();
-    const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( model );
-    if( !pModel )
-        throw MASA_BADPARAM_UNIT( "Unknown decisional model" );
+        const std::string& model = parameter.value( 0 ).acharstr();
+        const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( model );
+        if( !pModel )
+            throw MASA_BADPARAM_UNIT( "Unknown decisional model" );
 
-    modelChanged = ( &GetRole< DEC_PopulationDecision >().GetModel() != pModel );
-    if( modelChanged )
-        GetRole< DEC_PopulationDecision >().SetModel( *pModel );
+        modelChanged = &GetRole< DEC_PopulationDecision >().GetModel() != pModel;
+        if( modelChanged )
+            GetRole< DEC_PopulationDecision >().SetModel( *pModel );
+    }
 
     GetDecision().Reload( !modelChanged );
     orderManager_->CancelMission();
