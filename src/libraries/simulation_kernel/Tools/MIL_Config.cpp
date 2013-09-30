@@ -180,6 +180,8 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
     ConfigureRandom( xis );
     ReadCheckPointConfiguration( xis );
     ReadDebugConfiguration     ( xis );
+    if( timeFactor_ <= 0 )
+        throw MASA_EXCEPTION( "time factor must be a positive integer" );
 }
 
 // -----------------------------------------------------------------------------

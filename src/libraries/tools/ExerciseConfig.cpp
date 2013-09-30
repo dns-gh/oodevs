@@ -30,8 +30,8 @@ namespace tools
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
-    : fileLoader_      ( new Loader( *this, observer ) )
-    , pWorldParameters_( 0 )
+    : pWorldParameters_( 0 )
+    , observer_( observer )
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
@@ -88,10 +88,12 @@ void ExerciseConfig::LoadExercise( const Path& file )
 {
     try
     {
-        fileLoader_->LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
+        DefaultLoader loader( observer_ );
+        loader.LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
         if( GetExerciseFile() != file )
             SetExerciseName( file );
-        pWorldParameters_.reset( new WorldParameters( *fileLoader_, dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
+        fileLoader_.reset( new Loader( GetPhysicalFile(), *this, observer_ ) );
+        pWorldParameters_.reset( new WorldParameters( GetLoader(), dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
     }
     catch( const xml::exception& )
     {
@@ -224,7 +226,7 @@ Path ExerciseConfig::BuildExerciseChildFile( const Path& file ) const
 void ExerciseConfig::LoadTerrain( const Path& terrainName )
 {
     terrain_ = terrainName;
-    pWorldParameters_.reset( new WorldParameters( *fileLoader_, dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
+    pWorldParameters_.reset( new WorldParameters( GetLoader(), dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,14 +244,7 @@ Path ExerciseConfig::GetPhysicalFile() const
 // -----------------------------------------------------------------------------
 Path ExerciseConfig::GetOptionalPhysicalChildFile( const std::string& rootTag ) const
 {
-    std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( GetPhysicalFile() );
-    std::string childFileName;
-    *physicalFileXis >> xml::start( "physical" )
-                         >> xml::optional >> xml::start( rootTag )
-                             >> xml::attribute( "file", childFileName )
-                         >> xml::end
-                     >> xml::end;
-    return !childFileName.empty() ? BuildPhysicalChildFile( Path::FromUTF8( childFileName ) ) : Path();
+    return GetLoader().GetPhysicalChildFile( rootTag );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,14 +253,7 @@ Path ExerciseConfig::GetOptionalPhysicalChildFile( const std::string& rootTag ) 
 // -----------------------------------------------------------------------------
 Path ExerciseConfig::GetPhysicalChildPath( const std::string& rootTag ) const
 {
-    std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( GetPhysicalFile() );
-    std::string childFilePath;
-    *physicalFileXis >> xml::start( "physical" )
-                         >> xml::start( rootTag )
-                            >> xml::attribute( "path", childFilePath )
-                         >> xml::end
-                     >> xml::end;
-    return !childFilePath.empty() ? BuildPhysicalChildFile( Path::FromUTF8( childFilePath ) ) : Path();
+    return GetLoader().GetPhysicalChildPath( rootTag );
 }
 
 // -----------------------------------------------------------------------------
@@ -541,6 +529,8 @@ Path ExerciseConfig::GetPopulationFile() const
 // -----------------------------------------------------------------------------
 const tools::Loader_ABC& ExerciseConfig::GetLoader() const
 {
+    if( !fileLoader_.get() )
+        throw std::logic_error( "cannot load resources before initializing exercise configuration" );
     return *fileLoader_;
 }
 

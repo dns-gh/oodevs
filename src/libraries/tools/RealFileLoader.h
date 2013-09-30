@@ -56,7 +56,6 @@ private:
     void ReadAddedFile  ( xml::xistream& xis );
     void ReadMigration  ( xml::xistream& xis );
 
-    const Path&                    CheckIfAddedFile    ( const Path& initialInputFileName ) const;
     bool                           AssignDefaultSchema ( const Path& inputFileName, xml::xistream& xis, Path& newSchema ) const;
     std::auto_ptr< xml::xistream > UpgradeToLastVersion( const Path& inputFileName, std::auto_ptr< xml::xistream > xis, const Path& initialSchema, const Path& initialVersion, RealFileLoaderObserver_ABC& observer ) const;
     //@}

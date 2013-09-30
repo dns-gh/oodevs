@@ -17,10 +17,8 @@
 #include "FileWrapper.h"
 #include "SchemaVersionExtractor_ABC.h"
 #include "XmlStreamOperators.h"
-#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <boost/format.hpp>
-#include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string.hpp>
 #include <boost/iterator/reverse_iterator.hpp>
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
@@ -129,49 +127,36 @@ std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const Path&
 }
 
 // -----------------------------------------------------------------------------
-// Name: RealFileLoader::CheckIfAddedFile
-// Created: NLD 2011-02-14
-// -----------------------------------------------------------------------------
-const Path& RealFileLoader::CheckIfAddedFile( const Path& initialInputFileName ) const
-{
-    const std::string genericInputFileName = initialInputFileName.ToUTF8();
-    if( !initialInputFileName.Exists() )
-    {
-        BOOST_FOREACH( const T_AddedFile& addedFile, addedFiles_ )
-        {
-            const std::string& match = addedFile.first.ToUTF8();
-            if( genericInputFileName.size() >= match.size() &&
-                genericInputFileName.compare( genericInputFileName.size() - match.size(), match.size(), match ) == 0 )
-                    return addedFile.second;
-        }
-    }
-    return initialInputFileName;
-}
-
-// =============================================================================
-// Operations
-// =============================================================================
-namespace
-{
-    void ExtractSchemaName( xml::xistream& xis, Path& schema )
-    {
-        schema = xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: RealFileLoader::LoadFile
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
 std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInputFileName, RealFileLoaderObserver_ABC& observer ) const
 {
-    // Return default file if it's been explicitly added
-    const Path& inputFileName = CheckIfAddedFile( initialInputFileName );
+    std::string data;
+    Path inputFileName = initialInputFileName;
+    if( !tools::ReadFile( inputFileName, data ) )
+    {
+        const std::string genericInputFileName = initialInputFileName.ToUTF8();
+        BOOST_FOREACH( const T_AddedFile& addedFile, addedFiles_ )
+        {
+            const std::string& match = addedFile.first.ToUTF8();
+            if( boost::algorithm::ends_with( genericInputFileName, match ) )
+            {
+                inputFileName = addedFile.second;
+                break;
+            }
+        }
+        if( !tools::ReadFile( inputFileName, data ) )
+            throw MASA_EXCEPTION( "failed to open " + inputFileName.ToUTF8() );
+    }
 
     // Get schema and version
-    std::auto_ptr< xml::xistream > xis( new Xifstream( inputFileName ) );
     Path schema;
-    *xis >> xml::list( boost::bind( &ExtractSchemaName, _3, boost::ref( schema ) ) );
+    std::auto_ptr< xml::xistream > xis( new xml::xistringstream( data ));
+    *xis >> xml::list( [&]( const std::string&, const std::string&, xml::xistream& x )
+        {
+            schema = x.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
+        } );
 
     Path version = versionExtractor_.ExtractVersion( schema );
     if( version.IsEmpty() )
@@ -185,12 +170,14 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInpu
         if( schema.IsEmpty() )
             observer.NotifyNoXmlSchemaSpecified( inputFileName );
     }
-    // Check XML against its schema, only if it was initially set, and contains a version number
     else
     {
+        // Check XML against its schema, only if it was initially set, and
+        // contains a version number
         try
         {
-            Xifstream( inputFileName, xml::external_grammar( GeneralConfig::BuildResourceChildFile( schema ).ToUTF8() ) );
+            const std::string schemaPath = GeneralConfig::BuildResourceChildFile( schema ).ToUTF8();
+            xml::xistringstream( data, xml::external_grammar( schemaPath ));
         }
         catch( const xml::exception& e )
         {
