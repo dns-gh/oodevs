@@ -421,3 +421,43 @@ func GetParameterValue(params *sword.MissionParameters,
 	}
 	return nil
 }
+
+func MakeAutomatTasker(id uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Automat: &sword.AutomatId{
+			Id: proto.Uint32(id),
+		},
+	}
+}
+
+func MakeCrowdTasker(id uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Crowd: &sword.CrowdId{
+			Id: proto.Uint32(id),
+		},
+	}
+}
+
+func MakeFormationTasker(id uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Formation: &sword.FormationId{
+			Id: proto.Uint32(id),
+		},
+	}
+}
+
+func MakePartyTasker(id uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Party: &sword.PartyId{
+			Id: proto.Uint32(id),
+		},
+	}
+}
+
+func MakeUnitTasker(id uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Unit: &sword.UnitId{
+			Id: proto.Uint32(id),
+		},
+	}
+}
