@@ -40,8 +40,7 @@ Loader::Loader( const Path& physicalFile, const ExerciseConfig& config,
             if( !path.empty() )
                 allowedPaths_[ name ] = path;
 
-        } )
-        >> xml::end;
+        } );
 }
 
 // -----------------------------------------------------------------------------

@@ -18,8 +18,7 @@
 #include "SchemaVersionExtractor_ABC.h"
 #include "XmlStreamOperators.h"
 #include <boost/foreach.hpp>
-#include <boost/format.hpp>
-#include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string.hpp>
 #include <boost/iterator/reverse_iterator.hpp>
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
@@ -162,9 +161,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialInpu
         BOOST_FOREACH( const T_AddedFile& addedFile, addedFiles_ )
         {
             const std::string& match = addedFile.first.ToUTF8();
-            if( genericInputFileName.size() >= match.size() &&
-                genericInputFileName.compare( genericInputFileName.size() - match.size(),
-                    match.size(), match ) == 0 )
+            if( boost::algorithm::ends_with( genericInputFileName, match ) )
             {
                 inputFileName = addedFile.second;
                 break;
