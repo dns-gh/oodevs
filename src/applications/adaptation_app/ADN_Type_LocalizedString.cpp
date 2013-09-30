@@ -61,7 +61,7 @@ void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
 {
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized string: " + data );
-    if( !( kernel::Language::IsCurrentDefault() && !data.empty() && translation_->Key().empty() || translation_.unique() ) )
+    if( translation_ && !( kernel::Language::IsCurrentDefault() && !data.empty() && translation_->Key().empty() || translation_.unique() ) )
         return;
     translation_ = ( *context_ )[ data ];
     translation_->Initialize( ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
@@ -235,7 +235,7 @@ void ADN_Type_LocalizedString::OnTypeChanged( int type )
 void ADN_Type_LocalizedString::SetContext( boost::shared_ptr< kernel::Context > context )
 {
     context_ = context;
-    translation_ = ( *context_ )[ "" ];
+    InitTranslation( "" );
 }
 
 // -----------------------------------------------------------------------------
