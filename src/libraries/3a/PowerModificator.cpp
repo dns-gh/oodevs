@@ -9,7 +9,7 @@
 
 #include "PowerModificator.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -48,7 +48,7 @@ PowerModificator::~PowerModificator()
 // -----------------------------------------------------------------------------
 void PowerModificator::Load( const tools::ExerciseConfig& config )
 {
-    config.GetLoader().LoadPhysicalFile( "decisional", boost::bind( &PowerModificator::ReadPowerModificator, this, _1 ) );
+    config.GetPhyLoader().LoadPhysicalFile( "decisional", boost::bind( &PowerModificator::ReadPowerModificator, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

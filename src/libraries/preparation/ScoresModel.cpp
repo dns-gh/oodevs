@@ -18,6 +18,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/bind.hpp>
@@ -125,7 +126,7 @@ void ScoresModel::Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& 
 // Name: ScoresModel::GenerateScoresFromTemplate
 // Created: JSR 2011-02-08
 // -----------------------------------------------------------------------------
-void ScoresModel::GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader )
+void ScoresModel::GenerateScoresFromTemplate( const tools::PhyLoader& fileLoader )
 {
     fileLoader.LoadPhysicalFile( "scores", boost::bind( &ScoresModel::ReadTemplate, this, _1 ) );
 }

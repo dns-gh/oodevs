@@ -79,7 +79,7 @@
 #include "Populations/MIL_Population.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_InfrastructureType.h"
 #include "Urban/PHY_MaterialCompositionType.h"
@@ -96,7 +96,7 @@ namespace
     template < typename T >
     void InitializeType( MIL_Config& config, const std::string& strSection )
     {
-        const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( strSection.c_str(), &T::Initialize );
+        const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( strSection.c_str(), &T::Initialize );
         config.AddFileToCRC( fileLoaded );
     }
 }
@@ -192,7 +192,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
 // -----------------------------------------------------------------------------
 void MIL_EntityManagerStaticMethods::InitializeObjects( MIL_Config& config, MIL_ObjectFactory& objectFactory )
 {
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "objects", boost::bind( &MIL_ObjectFactory::Initialize, &objectFactory, _1 ) );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "objects", boost::bind( &MIL_ObjectFactory::Initialize, &objectFactory, _1 ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -203,7 +203,7 @@ void MIL_EntityManagerStaticMethods::InitializeObjects( MIL_Config& config, MIL_
 void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ), boost::cref( resolver ) ) );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ), boost::cref( resolver ) ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -214,7 +214,7 @@ void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, cons
 void MIL_EntityManagerStaticMethods::InitializeFuneral( MIL_Config& config, const MIL_Time_ABC& time )
 {
     MT_LOG_INFO_MSG( "Initializing funeral" );
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "funeral", boost::bind( &logistic::FuneralConfig::Initialize, _1, time.GetTickDuration() ) );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "funeral", boost::bind( &logistic::FuneralConfig::Initialize, _1, time.GetTickDuration() ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -239,7 +239,7 @@ void MIL_EntityManagerStaticMethods::LoadSensors( xml::xistream& xis, const MIL_
 void MIL_EntityManagerStaticMethods::InitializeMedical( MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing medical data" );
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "health", &MIL_EntityManagerStaticMethods::LoadMedical );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "health", &MIL_EntityManagerStaticMethods::LoadMedical );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -260,7 +260,7 @@ void MIL_EntityManagerStaticMethods::LoadMedical( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
 {
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1, boost::cref( resolver ) ) );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1, boost::cref( resolver ) ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -270,6 +270,6 @@ void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, 
 // -----------------------------------------------------------------------------
 void MIL_EntityManagerStaticMethods::InitializeWeapons( MIL_Config& config, const MIL_Time_ABC& time )
 {
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ) );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ) );
     config.AddFileToCRC( fileLoaded );
 }

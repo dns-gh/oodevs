@@ -15,7 +15,7 @@
 #include "FilterCsv.h"
 #include "clients_kernel/Tools.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -65,7 +65,7 @@ void FilterDialogs::Load()
     Register( "export", *new FilterDialog( "export", parent_, tools::translate( "FilterDialogs", "Export..." ), config_ ) );
     Get( "export" ).AddFilter( *new FilterCsv( &Get( "export" ), config_, model_, converter_ ) );
     Get( "import" ).AddFilter( *new FilterOrbatReIndexer( parent_, config_, model_ ) );
-    config_.GetLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );
+    config_.GetPhyLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         emit AddFilterMenuEntry( it->second->GetName(), it->second, SLOT( exec() ), it->second->GetKeySequence() );
 }

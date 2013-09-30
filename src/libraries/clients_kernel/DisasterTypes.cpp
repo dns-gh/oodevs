@@ -11,7 +11,7 @@
 #include "DisasterTypes.h"
 #include "DisasterType.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -41,7 +41,7 @@ DisasterTypes::~DisasterTypes()
 void DisasterTypes::Load( const tools::ExerciseConfig& config )
 {
     Purge();
-    config.GetLoader().LoadPhysicalFile( "disasters", boost::bind( &DisasterTypes::ReadDisasters, this, _1 ) );
+    config.GetPhyLoader().LoadPhysicalFile( "disasters", boost::bind( &DisasterTypes::ReadDisasters, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

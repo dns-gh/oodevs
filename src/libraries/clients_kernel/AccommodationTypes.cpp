@@ -11,7 +11,7 @@
 #include "AccommodationTypes.h"
 #include "AccommodationType.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -42,7 +42,7 @@ AccommodationTypes::~AccommodationTypes()
 void AccommodationTypes::Load( const tools::ExerciseConfig& config )
 {
     DeleteAll();
-    const tools::Loader_ABC& loader = config.GetLoader();
+    const tools::PhyLoader& loader = config.GetPhyLoader();
     loader.LoadPhysicalFile( "urban", boost::bind( &AccommodationTypes::ReadAccommodations, this, _1 ) );
 }
 

@@ -24,7 +24,7 @@
 #include "WeaponSystemType.h"
 #include "LogisticSupplyClass.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -57,7 +57,7 @@ ObjectTypes::ObjectTypes( const tools::ExerciseConfig& config )
 void ObjectTypes::Load( const tools::ExerciseConfig& config )
 {
     Purge();
-    const tools::Loader_ABC& loader = config.GetLoader();
+    const tools::PhyLoader& loader = config.GetPhyLoader();
     loader.LoadPhysicalFile( "logistic-supply-classes", boost::bind( &ObjectTypes::ReadLogisticSupplyClasses, this, _1 ) );;
     loader.LoadPhysicalFile( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) );
     loader.LoadPhysicalFile( "resources", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) );

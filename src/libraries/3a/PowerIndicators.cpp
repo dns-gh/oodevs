@@ -9,7 +9,7 @@
 
 #include "PowerIndicators.h"
 #include "PowerIndicator.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -50,7 +50,7 @@ PowerIndicators::~PowerIndicators()
 void PowerIndicators::Load( const tools::ExerciseConfig& config )
 {
     Purge();
-    config.GetLoader().LoadPhysicalFile( "components", boost::bind( &PowerIndicators::ReadEquipment, this, _1 ) );
+    config.GetPhyLoader().LoadPhysicalFile( "components", boost::bind( &PowerIndicators::ReadEquipment, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

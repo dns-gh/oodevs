@@ -10,14 +10,23 @@
 #ifndef tools_PhyLoader_h
 #define tools_PhyLoader_h
 
-#include "DefaultLoader.h"
+#include <boost/function.hpp>
+#include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
+#include <map>
 #include <memory>
+#include <string>
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace tools
 {
-    class RealFileLoader_ABC;
-    class SchemaVersionExtractor_ABC;
-    class RealFileLoaderObserver_ABC;
+    class Path;
+
+    class Loader_ABC;
     class ExerciseConfig;
 
 // =============================================================================
@@ -26,13 +35,19 @@ namespace tools
 */
 // Created: NLD 2011-02-14
 // =============================================================================
-class PhyLoader : public DefaultLoader
+class PhyLoader : private boost::noncopyable
 {
+public:
+    //! @name Types
+    //@{
+    typedef boost::function< void ( xml::xistream& ) > T_Loader;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
              PhyLoader( const Path& physicalFile, const ExerciseConfig& config,
-                     RealFileLoaderObserver_ABC& observer );
+                     const boost::shared_ptr< Loader_ABC >& loader );
     virtual ~PhyLoader();
     //@}
 
@@ -50,6 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const boost::shared_ptr< Loader_ABC > loader_;
     const ExerciseConfig& config_;
     std::map< std::string, std::string > allowedFiles_;
     std::map< std::string, std::string > allowedPaths_;

@@ -12,6 +12,8 @@
 
 #include "tools/Resolver.h"
 #include "AttributeType.h"
+#include "DictionaryType.h"
+#include "ExtensionType.h"
 
 namespace tools
 {
@@ -26,9 +28,6 @@ namespace xml
 
 namespace kernel
 {
-    class DictionaryType;
-    class ExtensionType;
-
 // =============================================================================
 /** @class  ExtensionTypes
     @brief  Extension types

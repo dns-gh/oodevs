@@ -20,7 +20,7 @@
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
@@ -38,7 +38,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder",
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "pathfinder",
         boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, boost::ref( config ), boost::cref( dangerousObjects ) ) );
     config.AddFileToCRC( fileLoaded );
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;

@@ -9,6 +9,7 @@
 
 #include "tools_pch.h"
 #include "ExerciseConfig.h"
+#include "DefaultLoader.h"
 #include "PhyLoader.h"
 #include "WorldParameters.h"
 #include "MT_Tools/MT_Logger.h"
@@ -32,6 +33,7 @@ namespace tools
 ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
     : pWorldParameters_( 0 )
     , observer_( observer )
+    , loader_( new DefaultLoader( observer ))
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
@@ -92,7 +94,7 @@ void ExerciseConfig::LoadExercise( const Path& file )
         loader.LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
         if( GetExerciseFile() != file )
             SetExerciseName( file );
-        fileLoader_.reset( new PhyLoader( GetPhysicalFile(), *this, observer_ ) );
+        phyLoader_.reset( new PhyLoader( GetPhysicalFile(), *this, loader_ ) );
         pWorldParameters_.reset( new WorldParameters( GetLoader(), dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
     }
     catch( const xml::exception& )
@@ -244,7 +246,7 @@ Path ExerciseConfig::GetPhysicalFile() const
 // -----------------------------------------------------------------------------
 Path ExerciseConfig::GetOptionalPhysicalChildFile( const std::string& rootTag ) const
 {
-    return GetLoader().GetPhysicalChildFile( rootTag );
+    return GetPhyLoader().GetPhysicalChildFile( rootTag );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +255,7 @@ Path ExerciseConfig::GetOptionalPhysicalChildFile( const std::string& rootTag ) 
 // -----------------------------------------------------------------------------
 Path ExerciseConfig::GetPhysicalChildPath( const std::string& rootTag ) const
 {
-    return GetLoader().GetPhysicalChildPath( rootTag );
+    return GetPhyLoader().GetPhysicalChildPath( rootTag );
 }
 
 // -----------------------------------------------------------------------------
@@ -529,9 +531,14 @@ Path ExerciseConfig::GetPopulationFile() const
 // -----------------------------------------------------------------------------
 const tools::Loader_ABC& ExerciseConfig::GetLoader() const
 {
-    if( !fileLoader_.get() )
+    return *loader_;
+}
+
+const tools::PhyLoader& ExerciseConfig::GetPhyLoader() const
+{
+    if( !phyLoader_.get() )
         throw std::logic_error( "cannot load resources before initializing exercise configuration" );
-    return *fileLoader_;
+    return *phyLoader_;
 }
 
 // -----------------------------------------------------------------------------

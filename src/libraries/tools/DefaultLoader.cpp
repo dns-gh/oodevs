@@ -71,34 +71,6 @@ std::auto_ptr< xml::xistream > DefaultLoader::LoadFile( const Path& fileName ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultLoader::LoadPhysicalFile
-// Created: NLD 2010-02-23
-// -----------------------------------------------------------------------------
-Path DefaultLoader::LoadPhysicalFile( const std::string&, T_Loader ) const
-{
-    throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::LoadPhysicalFile" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultLoader::LoadOptionalPhysicalFile
-// Created: ABR 2011-05-24
-// -----------------------------------------------------------------------------
-Path DefaultLoader::LoadOptionalPhysicalFile( const std::string&, T_Loader ) const
-{
-    throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::LoadOptionalPhysicalFile" );
-}
-
-Path DefaultLoader::GetPhysicalChildFile( const std::string& ) const
-{
-    throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::GetPhysicalChildFile" );
-}
-
-Path DefaultLoader::GetPhysicalChildPath( const std::string& ) const
-{
-    throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::GetPhysicalChildPath" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DefaultLoader::CheckFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------

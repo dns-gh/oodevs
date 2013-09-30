@@ -15,7 +15,7 @@
 #include "SymbolCase.h"
 #include "SymbolRule.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <boost/bind.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
@@ -76,7 +76,7 @@ void SymbolFactory::Load( const tools::ExerciseConfig& config )
 {
     availableSymbols_.clear();
     symbolNatureMap_.clear();
-    config.GetLoader().LoadPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
+    config.GetPhyLoader().LoadPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
     ListSymbols();
     initialized_ = true;
 }

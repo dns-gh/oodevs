@@ -27,6 +27,7 @@ namespace xml
 namespace tools
 {
     class Loader_ABC;
+    class PhyLoader;
     class SchemaWriter_ABC;
 }
 
@@ -58,7 +59,7 @@ public:
     bool CheckValidity( const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const;
-    void GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader );
+    void GenerateScoresFromTemplate( const tools::PhyLoader& fileLoader );
     //@}
 
 private:

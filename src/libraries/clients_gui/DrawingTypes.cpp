@@ -11,7 +11,7 @@
 #include "DrawingTypes.h"
 #include "DrawingCategory.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <svgl/TextRenderer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
@@ -44,7 +44,7 @@ DrawingTypes::~DrawingTypes()
 // -----------------------------------------------------------------------------
 void DrawingTypes::Load( const tools::ExerciseConfig& config )
 {
-    config.GetLoader().LoadPhysicalFile( "drawing-templates", boost::bind( &DrawingTypes::Read, this, _1 ) );
+    config.GetPhyLoader().LoadPhysicalFile( "drawing-templates", boost::bind( &DrawingTypes::Read, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

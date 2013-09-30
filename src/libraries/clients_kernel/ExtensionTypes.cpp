@@ -13,7 +13,7 @@
 #include "DictionaryType.h"
 #include "ExtensionType.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -43,7 +43,7 @@ ExtensionTypes::~ExtensionTypes()
 // -----------------------------------------------------------------------------
 void ExtensionTypes::Load( const tools::ExerciseConfig& config )
 {
-    config.GetLoader().LoadOptionalPhysicalFile( "extensions", boost::bind( &ExtensionTypes::ReadExtensions, this, _1 ) );
+    config.GetPhyLoader().LoadOptionalPhysicalFile( "extensions", boost::bind( &ExtensionTypes::ReadExtensions, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

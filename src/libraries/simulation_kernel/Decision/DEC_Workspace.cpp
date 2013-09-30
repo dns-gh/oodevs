@@ -27,7 +27,8 @@
 #include "MIL_AgentServer.h"
 #include "tools/Codec.h"
 #include "tools/Loader_ABC.h"
-#include "Tools/MIL_AffinitiesMap.h"
+#include "tools/MIL_AffinitiesMap.h"
+#include "tools/PhyLoader.h"
 #include "tools/VersionHelper.h"
 #include "tools/XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
@@ -80,7 +81,7 @@ DEC_Workspace::~DEC_Workspace()
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
     const unsigned int tickDuration = config.GetTimeStep();
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -204,7 +205,7 @@ void DEC_Workspace::RegisterSourcePath( xml::xistream& xis, MIL_Config& config, 
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeMissions( MIL_Config& config )
 {
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -226,7 +227,7 @@ void DEC_Workspace::LoadMissions( xml::xistream& xisMission )
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::string, tools::Path >& strSourcePaths )
 {
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "models", boost::bind(
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "models", boost::bind(
         &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ), config.GetIntegrationDir() ) );
     config.AddFileToCRC( fileLoaded );
 
@@ -310,6 +311,6 @@ float DEC_Workspace::GetTime() const
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 {
-    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
+    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
     config.AddFileToCRC( fileLoaded );
 }

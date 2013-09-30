@@ -100,7 +100,7 @@ void ScoreList::OnDelete()
 void ScoreList::OnGenerate()
 {
     if( config_.GetOptionalPhysicalChildFile( "scores" ).Exists() )
-        model_.GenerateScoresFromTemplate( config_.GetLoader() );
+        model_.GenerateScoresFromTemplate( config_.GetPhyLoader() );
 }
 
 // -----------------------------------------------------------------------------

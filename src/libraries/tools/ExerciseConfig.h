@@ -24,6 +24,7 @@ namespace xml
 namespace tools
 {
     class Loader_ABC;
+    class PhyLoader;
     class RealFileLoaderObserver_ABC;
     class WorldParameters;
 
@@ -127,6 +128,7 @@ public:
     //! @name Operations
     //@{
     const Loader_ABC& GetLoader() const;
+    const PhyLoader& GetPhyLoader() const;
 
     virtual std::size_t GetDispatcherProtobufLogFiles() const;
     virtual std::size_t GetDispatcherProtobufLogSize() const;
@@ -208,7 +210,8 @@ protected:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< tools::Loader_ABC > fileLoader_;
+    boost::shared_ptr< tools::Loader_ABC > loader_;
+    std::auto_ptr< tools::PhyLoader > phyLoader_;
     std::auto_ptr< const tools::WorldParameters > pWorldParameters_;
     RealFileLoaderObserver_ABC& observer_;
 

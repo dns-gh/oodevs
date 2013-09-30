@@ -9,9 +9,8 @@
 
 #include "tools_pch.h"
 #include "PhyLoader.h"
-#include "RealFileLoader.h"
-#include "SchemaVersionExtractor.h"
 #include "ExerciseConfig.h"
+#include "Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace tools;
@@ -21,11 +20,11 @@ using namespace tools;
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
 PhyLoader::PhyLoader( const Path& physicalFile, const ExerciseConfig& config,
-        RealFileLoaderObserver_ABC& observer )
-    : DefaultLoader( observer )
-    , config_      ( config )
+        const boost::shared_ptr< Loader_ABC >& loader )
+    : loader_( loader )
+    , config_( config )
 {
-    auto xis = fileLoader_->LoadFile( physicalFile, observer_ );
+    auto xis = loader_->LoadFile( physicalFile );
     *xis >> xml::start( "physical" )
         >> xml::list( [&]( const std::string&, const std::string& name, xml::xistream& x )
         {
@@ -62,7 +61,7 @@ Path PhyLoader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, b
         return path;
     }
     if( !optional || path.Exists() )
-        LoadFile( path, loader );
+        loader_->LoadFile( path, loader );
     return path;
 }
 

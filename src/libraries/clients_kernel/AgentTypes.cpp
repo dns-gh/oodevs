@@ -29,7 +29,7 @@
 #include "protocol/Helpers.h"
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -63,7 +63,7 @@ void AgentTypes::Load( const tools::ExerciseConfig& config )
     Purge();
     symbolFactory_.reset( new SymbolFactory() );
     symbolFactory_->Load( config );
-    const tools::Loader_ABC& loader = config.GetLoader();
+    const tools::PhyLoader& loader = config.GetPhyLoader();
     loader.LoadPhysicalFile( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ) );
     loader.LoadPhysicalFile( "missions", boost::bind( &AgentTypes::ReadOrderTypes, this, _1 ) );
     //loader.LoadPhysicalFile( "magic-orders", boost::bind( &AgentTypes::ReadMagicOrderTypes, this, _1 ) );

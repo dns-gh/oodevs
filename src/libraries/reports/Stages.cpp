@@ -9,7 +9,7 @@
 
 #include "Stages.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Loader_ABC.h"
+#include "tools/PhyLoader.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <iostream>
@@ -48,7 +48,7 @@ void Stages::Purge()
 // -----------------------------------------------------------------------------
 void Stages::Load( const tools::ExerciseConfig& config )
 {
-    config.GetLoader().LoadPhysicalFile( "stages", boost::bind( &Stages::Read, this, _1 ) );
+    config.GetPhyLoader().LoadPhysicalFile( "stages", boost::bind( &Stages::Read, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

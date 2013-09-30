@@ -540,7 +540,7 @@ void MainWindow::LoadExercise()
         dockContainer_->Load();
         if( config_.HasGenerateScores() )
         {
-            model_.scores_->GenerateScoresFromTemplate( config_.GetLoader() );
+            model_.scores_->GenerateScoresFromTemplate( config_.GetPhyLoader() );
             const tools::SchemaWriter schemaWriter;
             if( model_.scores_->CheckValidity( schemaWriter ) )
                 model_.scores_->Serialize( config_.GetScoresFile(), schemaWriter );
