@@ -1237,3 +1237,31 @@ func (c *Client) RecoverTransporters(unitId uint32) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(),
 		sword.UnitMagicAction_recover_transporters)
 }
+
+func (c *Client) ExecScript(id uint32, function, script string) (string, error) {
+	params := MakeParameters(
+		MakeString(function),
+		MakeString(script),
+	)
+	msg := createUnitMagicAction(MakeUnitTasker(id), params,
+		sword.UnitMagicAction_exec_script)
+	var result string
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetUnitMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		_, err := GetUnitMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		result = value.GetACharStr()
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return result, err
+}
