@@ -12,6 +12,7 @@ import (
 	"errors"
 	"io"
 	"net"
+	"sync/atomic"
 	"time"
 )
 
@@ -84,7 +85,7 @@ type Client struct {
 	quit        chan bool
 	// This channel is signaled by the write() goroutine to notify termination
 	writer chan bool
-	eof    bool
+	eof    int32
 }
 
 func NewClient(address string) (*Client, error) {
@@ -135,7 +136,8 @@ func Connect(host string) (*Client, error) {
 }
 
 func (c *Client) Close() {
-	c.eof = true
+	// Connection might closed remotely while we set this flag.
+	atomic.StoreInt32(&c.eof, 1)
 	// Close all serve() inputs then ask it to terminate
 	c.ticker.Stop()
 	close(c.registers)
@@ -267,7 +269,7 @@ func (c *Client) listen(errors chan<- error) {
 		msg := SwordMessage{}
 		err := reader.Decode(&msg)
 		if err != nil {
-			if c.eof {
+			if atomic.LoadInt32(&c.eof) != 0 {
 				err = io.EOF
 			}
 			errors <- err
