@@ -757,7 +757,8 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Testing direct fire dotation
-	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, 0, 1)
+	const directFireDotation9mmBullet = 17
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, directFireDotation9mmBullet, 1)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Testing negative or empty iterations
