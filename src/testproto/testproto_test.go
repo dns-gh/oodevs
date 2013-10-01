@@ -23,7 +23,7 @@ var (
 	rootdir     string
 	rundir      string
 	testPort    int
-    showlog    bool
+	showlog     bool
 )
 
 func init() {

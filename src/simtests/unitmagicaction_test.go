@@ -722,10 +722,11 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	target, err := client.CreateUnit(a2.Id, infMortarTroopType, swapi.Point{X: -15.8219, Y: 28.2456})
 	c.Assert(err, IsNil)
 
+	const fullyOperational = 100
 	// Waiting for the target initialization
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		unit := data.FindUnit(target.Id)
-		return unit.Neutralized == false && unit.RawOperationalState == 100
+		return !unit.Neutralized && unit.RawOperationalState == fullyOperational
 	})
 
 	// Adding the target in reporter's knowledges
@@ -741,7 +742,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	// testing strike effect: neutralization and attrition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		unit := data.FindUnit(target.Id)
-		return unit.Neutralized == true && unit.RawOperationalState < 100
+		return unit.Neutralized && unit.RawOperationalState < fullyOperational
 	})
 
 	// Testing wrong reporter identifier
