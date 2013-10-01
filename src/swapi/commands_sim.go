@@ -1270,9 +1270,7 @@ func (c *Client) CreateFireOrderOnUnit(taskerId uint32, targetKnowledgeId uint32
 	params := MakeParameters(MakeIdentifier(targetKnowledgeId),
 		MakeResourceType(resourceTypeId),
 		MakeFloat(interventions))
-	tasker := makeUnitTasker(taskerId)
-	msg := createMagicActionMessage(params, tasker,
-		sword.UnitMagicAction_create_fire_order.Enum())
-	handler := defaultUnitMagicHandler
-	return <-c.postSimRequest(msg, handler)
+	tasker := MakeUnitTasker(taskerId)
+	return c.sendUnitMagicAction(tasker, params,
+		sword.UnitMagicAction_create_fire_order)
 }
