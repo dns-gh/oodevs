@@ -11,9 +11,7 @@
 #define __MT_FileLogger_h_
 
 #include "MT_Logger_ABC.h"
-#include "tools/RotatingLog.h"
-#include "tools/Log_ABC.h"
-#include <boost/scoped_ptr.hpp>
+#include "tools/Log.h"
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
@@ -30,7 +28,7 @@ namespace tools
 */
 // Created:  NLD 00-06-05
 //=============================================================================
-class MT_FileLogger : public MT_Logger_ABC, private tools::Log_ABC
+class MT_FileLogger : public MT_Logger_ABC
 {
 public:
     MT_FileLogger( const tools::Path& filename, std::size_t files, std::size_t size, int levels,
@@ -40,13 +38,9 @@ public:
 private:
     virtual void WriteString( const std::string& s );
 
-    virtual std::size_t Write( std::ostream& os, const std::string& line );
-    virtual std::streamoff ComputeSize( const tools::Path& filename ) const;
-
 private:
-    bool sizeInBytes_;
     boost::mutex mutex_;
-    boost::scoped_ptr< tools::RotatingLog > log_;
+    tools::Log log_;
 };
 
 #endif // __MT_FileLogger_h_

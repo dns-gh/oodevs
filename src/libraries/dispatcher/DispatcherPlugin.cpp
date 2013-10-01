@@ -26,7 +26,7 @@ using namespace dispatcher;
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 DispatcherPlugin::DispatcherPlugin( SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
-                                    AuthenticatedLinkResolver_ABC& resolver, OrderResolver_ABC& order, tools::RotatingLog& log )
+                                    AuthenticatedLinkResolver_ABC& resolver, OrderResolver_ABC& order, Log_ABC& log )
     : simulation_( simulation )
     , resolver_  ( resolver )
     , order_     ( order )

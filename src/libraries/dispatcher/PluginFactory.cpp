@@ -41,7 +41,7 @@ using namespace plugins;
 // -----------------------------------------------------------------------------
 PluginFactory::PluginFactory( const Config& config, Model& model, const dispatcher::StaticModel& staticModel,
                               SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler,
-                              CompositeRegistrable& registrables, const Services& services, tools::RotatingLog& log, int maxConnections )
+                              CompositeRegistrable& registrables, const Services& services, Log_ABC& log, int maxConnections )
     : config_      ( config )
     , model_       ( model )
     , staticModel_ ( staticModel )

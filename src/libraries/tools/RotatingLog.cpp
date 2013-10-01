@@ -49,8 +49,10 @@ void RotatingLog::Populate()
     std::sort( history_.begin(), history_.end() );
 }
 
-void RotatingLog::DoWrite( const std::string& line )
+void RotatingLog::Write( const std::string& line )
 {
+    if( files_ == 0 )
+        return;
     try
     {
         if( size_ != 0 && count_ >= size_ && stream_ )

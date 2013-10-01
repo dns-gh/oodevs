@@ -9,14 +9,21 @@
 
 #include "dispatcher_pch.h"
 #include "Log.h"
+#include "Config.h"
 #include <ctime>
-#include <tools/Path.h>
-#include <tools/StdFileWrapper.h>
 
 using namespace dispatcher;
 
-Log::Log( bool sizeInBytes )
-    : sizeInBytes_( sizeInBytes )
+Log::Log( const Config& config )
+    : dispatcher::Log_ABC( config.GetDispatcherProtobufLogFiles() > 0 )
+    , log_(
+        config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(),
+        config.GetDispatcherProtobufLogSize(), true, config.IsDispatcherProtobufLogInBytes() )
+{
+    // NOTHING
+}
+
+Log::~Log()
 {
     // NOTHING
 }
@@ -32,17 +39,10 @@ namespace
     }
 }
 
-std::size_t Log::Write( std::ostream& os, const std::string& line )
+void Log::DoWrite( const std::string& line )
 {
+    std::stringstream s;
     const std::string time = GetTime();
-    os << "[" << time << "] " << line << std::endl;
-    return sizeInBytes_ ? time.size() + line.size() + 3 : 1;
-}
-
-std::streamoff Log::ComputeSize( const tools::Path& filename ) const
-{
-    if( sizeInBytes_ )
-        return filename.FileSize();
-    tools::Ifstream file( filename );
-    return std::count( std::istreambuf_iterator< char >( file ), std::istreambuf_iterator< char >(), '\n');
+    s << "[" << time << "] " << line << std::endl;
+    log_.Write( line );
 }

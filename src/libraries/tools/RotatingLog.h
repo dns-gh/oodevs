@@ -38,18 +38,12 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Serializable >
-    void Write( const Serializable& s )
-    {
-        if( files_ > 0 )
-            DoWrite( boost::lexical_cast< std::string >( s ) );
-    }
+    void Write( const std::string& line );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void DoWrite( const std::string& line );
     void Populate();
     void Log( const std::string& line );
     void Prune();

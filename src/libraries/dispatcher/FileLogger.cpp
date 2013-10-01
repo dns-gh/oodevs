@@ -10,8 +10,6 @@
 #include "dispatcher_pch.h"
 #include "FileLogger.h"
 #include "Config.h"
-#include "tools/RotatingLog.h"
-#include <tools/Path.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 using namespace dispatcher;
@@ -21,8 +19,7 @@ using namespace dispatcher;
 // Created: SBO 2011-05-19
 // -----------------------------------------------------------------------------
 FileLogger::FileLogger( const tools::Path& filename, const Config& config )
-    : log_( new tools::RotatingLog( *this, filename, config.GetDispatcherLogFiles(), config.GetDispatcherLogSize(), ! config.HasCheckpoint() ) )
-    , sizeInBytes_( config.IsDispatcherLogInBytes() )
+    : log_( filename, config.GetDispatcherLogFiles(), config.GetDispatcherLogSize(), ! config.HasCheckpoint(), config.IsDispatcherLogInBytes() )
 {
     // NOTHING
 }
@@ -81,19 +78,5 @@ void FileLogger::LogMessage( const std::string& severity, const std::string& mes
     std::stringstream s;
     s << "[" << Timestamp() << "] " << severity << " - " << message;
     boost::mutex::scoped_lock locker( mutex_ );
-    log_->Write( s.str() );
-}
-
-std::size_t FileLogger::Write( std::ostream& os, const std::string& line )
-{
-    os << line << std::flush;
-    return sizeInBytes_ ? line.size() : 1;
-}
-
-std::streamoff FileLogger::ComputeSize( const tools::Path& filename ) const
-{
-    if( sizeInBytes_ )
-        return filename.FileSize();
-    tools::Ifstream file( filename );
-    return std::count( std::istreambuf_iterator< char >( file ), std::istreambuf_iterator< char >(), '\n');
+    log_.Write( s.str() );
 }

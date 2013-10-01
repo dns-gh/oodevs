@@ -7,31 +7,35 @@
 //
 // *****************************************************************************
 
-#ifndef dispatcher_LogFactory_h
-#define dispatcher_LogFactory_h
+#ifndef dispatcher_Log_h
+#define dispatcher_Log_h
 
-#include "tools/Log_ABC.h"
+#include "Log_ABC.h"
+#include "tools/Log.h"
 
 namespace dispatcher
 {
+    class Config;
+
 // =============================================================================
 /** @class  Log
     @brief  Log definition
 */
 // Created: MCO 2011-06-27
 // =============================================================================
-class Log : public tools::Log_ABC
+class Log : public Log_ABC
 {
 public:
-    explicit Log( bool sizeInBytes );
-
-    virtual std::size_t Write( std::ostream& os, const std::string& line );
-    virtual std::streamoff ComputeSize( const tools::Path& filename ) const;
+    explicit Log( const Config& config );
+    virtual ~Log();
 
 private:
-    bool sizeInBytes_;
+    virtual void DoWrite( const std::string& line );
+
+private:
+    tools::Log log_;
 };
 
 }
 
-#endif // dispatcher_LogFactory_h
+#endif // dispatcher_Log_h
