@@ -15,6 +15,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/NET_AsnException.h"
 #include "Tools/MIL_Config.h"
+#include "Tools/MessageReader.h"
 
 #include "MT_Tools/MT_Logger.h"
 
@@ -46,8 +47,6 @@ PHY_RawVisionData* CreateRawVisionData( PHY_MeteoDataManager* m,
 }
 
 } // namespace
-
-#define MASA_BADPARAM( name ) MASA_BADPARAM_ASN( sword::MagicActionAck_ErrorCode, sword::MagicActionAck::error_invalid_parameter, name )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
@@ -178,13 +177,13 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, un
     try
     {
         if( msg.parameters().elem_size() != 10 && msg.parameters().elem_size() != 11 )
-            throw MASA_BADPARAM( "invalid parameters count, 10 or 11 parameters expected" );
+            throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, 10 or 11 parameters expected" );
 
         if( msg.parameters().elem_size() == 11 )
         {
             const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
             if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
-                throw MASA_BADPARAM( "parameters[10] must be an Identifier" );
+                throw MASA_BADPARAM_MAGICACTION( "parameters[10] must be an Identifier" );
             id = idParameter.value().Get( 0 ).identifier();
         }
         if( id == 0 )
@@ -197,7 +196,7 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, un
         {
             auto meteo = Find( id );
             if( !meteo )
-                throw MASA_BADPARAM( "unknown local weather id" );
+                throw MASA_BADPARAM_MAGICACTION( "unknown local weather id" );
             static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
         }
     }
@@ -228,14 +227,14 @@ void PHY_MeteoDataManager::RemoveLocalWeather( const sword::MagicAction& msg, un
     try
     {
         if( msg.parameters().elem_size() != 1 )
-            throw MASA_BADPARAM( "invalid parameters count, one parameter expected" );
+            throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, one parameter expected" );
         if(  msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
-            throw MASA_BADPARAM( "parameters[0] must be an Identifier" );
+            throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be an Identifier" );
 
         unsigned int id = msg.parameters().elem( 0 ).value().Get( 0 ).identifier();
         weather::Meteo* meteo = Find( id );
         if( !meteo )
-            throw MASA_BADPARAM( "parameters[0] must be a local weather identifier" );
+            throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a local weather identifier" );
 
         meteo->SendDestruction();
         Remove( id );

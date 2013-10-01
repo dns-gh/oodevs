@@ -27,6 +27,7 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/foreach.hpp>
+#include "Tools/MessageReader.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Inhabitant )
 
@@ -54,7 +55,6 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
         ::new( population )MIL_Inhabitant( *pType );
 }
 
-#define MASA_BADPARAM( name ) MASA_BADPARAM_ASN( sword::MagicActionAck_ErrorCode, sword::MagicActionAck::error_invalid_parameter, name )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant constructor
@@ -344,11 +344,11 @@ namespace
     {
         const sword::MissionParameter& parameter = parameters.elem( index );
         if( !parameter.value().Get( 0 ).has_quantity() )
-            throw MASA_BADPARAM( "parameters[" + boost::lexical_cast< std::string >( index )
+            throw MASA_BADPARAM_MAGICACTION( "parameters[" + boost::lexical_cast< std::string >( index )
             + "] must be a Quantity" );
         int quantity = parameter.value().Get( 0 ).quantity();
         if( quantity < 0 )
-            throw MASA_BADPARAM( "parameters[" + boost::lexical_cast< std::string >( index )
+            throw MASA_BADPARAM_MAGICACTION( "parameters[" + boost::lexical_cast< std::string >( index )
                 + "] must be a positive number" );
     }
 }
@@ -360,7 +360,7 @@ namespace
 void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
-        throw MASA_BADPARAM( "invalid parameters count, 3 parameters expected" );
+        throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, 3 parameters expected" );
 
     const sword::MissionParameters& parameters = msg.parameters();
     CheckQuantity( parameters, 0 );

@@ -48,6 +48,7 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/NET_AsnException.h"
+#include "Tools/MessageReader.h"
 
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
@@ -55,7 +56,6 @@
 
 using namespace sword;
 
-#define MASA_BADPARAM_UNIT( name ) MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, name )
 
 namespace
 {
