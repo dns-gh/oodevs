@@ -11,7 +11,6 @@
 #include "ObjectPrototype.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_Object_ABC.h"
-#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototype constructor

@@ -13,7 +13,6 @@
 #include "PHY_UrbanAttritionData.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "Urban/PHY_MaterialCompositionType.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_UrbanAttritionData::T_UrbanAttritionVector PHY_UrbanAttritionData::globalAttritionFactors_;
 

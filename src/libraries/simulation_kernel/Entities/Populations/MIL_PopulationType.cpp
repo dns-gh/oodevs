@@ -21,7 +21,6 @@
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_AgentServer.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 double MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;

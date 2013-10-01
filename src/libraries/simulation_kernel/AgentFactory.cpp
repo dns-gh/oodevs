@@ -17,9 +17,7 @@
 #include "Checkpoints/SerializationTools.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
-#include <boost/serialization/vector.hpp>
 #include <boost/serialization/map.hpp>
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 

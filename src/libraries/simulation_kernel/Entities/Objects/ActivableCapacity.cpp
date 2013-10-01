@@ -13,7 +13,6 @@
 #include "MIL_Object_ABC.h"
 #include "ObstacleAttribute.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ActivableCapacity )
 

@@ -19,7 +19,6 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Color.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 

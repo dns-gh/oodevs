@@ -19,7 +19,6 @@
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DisasterCapacity )
 

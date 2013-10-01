@@ -15,9 +15,6 @@
 #include "protocol/Protocol.h"
 #include "MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterFactory.h"
-#include <boost/bind.hpp>
-#include <boost/shared_ptr.hpp>
-#include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC constructor

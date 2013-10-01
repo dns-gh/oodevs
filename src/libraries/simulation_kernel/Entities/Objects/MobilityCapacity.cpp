@@ -11,7 +11,6 @@
 #include "MobilityCapacity.h"
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MobilityCapacity )
 

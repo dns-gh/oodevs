@@ -54,8 +54,6 @@
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_Logger.h"
 #include <tools/Map.h>
-#include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>

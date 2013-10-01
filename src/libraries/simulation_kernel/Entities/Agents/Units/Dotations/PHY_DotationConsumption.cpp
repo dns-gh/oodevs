@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationConsumption.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumption constructor

@@ -11,7 +11,6 @@
 #include "MaterialAttribute.h"
 #include "MIL_Object_ABC.h"
 #include "Urban/PHY_MaterialCompositionType.h"
-#include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MaterialAttribute )
 

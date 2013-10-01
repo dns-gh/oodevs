@@ -17,7 +17,6 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "MIL_Time_ABC.h"
-#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataRecognition )
 

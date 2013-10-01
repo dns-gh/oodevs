@@ -21,7 +21,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
 unsigned int                          PHY_RadarType::nNextID_ = 0;

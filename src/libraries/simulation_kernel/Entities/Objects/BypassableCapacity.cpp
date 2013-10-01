@@ -11,7 +11,6 @@
 #include "BypassableCapacity.h"
 #include "BypassAttribute.h"
 #include "MIL_Object_ABC.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BypassableCapacity )
 

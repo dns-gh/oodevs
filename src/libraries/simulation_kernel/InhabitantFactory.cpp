@@ -11,7 +11,6 @@
 #include "InhabitantFactory.h"
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Inhabitants/MIL_InhabitantType.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InhabitantFactory )
 

@@ -23,7 +23,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <boost/shared_ptr.hpp>
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationConcentration )

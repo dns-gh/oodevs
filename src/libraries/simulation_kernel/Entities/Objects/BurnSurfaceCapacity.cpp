@@ -14,7 +14,6 @@
 #include "MIL_Object_ABC.h"
 #include "MIL_BurningCells.h"
 #include "MIL_AgentServer.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BurnSurfaceCapacity )
 

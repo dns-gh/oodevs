@@ -12,7 +12,6 @@
 #include "MIL_Time_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_Stress::T_StressMap PHY_Stress::stresses_;
 PHY_Stress::Evolution PHY_Stress::evolution_;

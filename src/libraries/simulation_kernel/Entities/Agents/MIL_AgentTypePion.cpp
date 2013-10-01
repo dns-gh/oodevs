@@ -71,7 +71,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;

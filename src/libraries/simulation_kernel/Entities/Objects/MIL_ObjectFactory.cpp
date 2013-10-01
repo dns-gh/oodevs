@@ -23,7 +23,6 @@
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory constructor

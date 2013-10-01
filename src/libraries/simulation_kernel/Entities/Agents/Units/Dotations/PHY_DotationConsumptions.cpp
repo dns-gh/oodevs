@@ -15,7 +15,6 @@
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationConsumption.h"
 #include "PHY_DotationGroupContainer.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationConsumptions constructor

@@ -13,7 +13,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Knowledge/DEC_Knowledge_PopulationCollision.h"
 #include "PHY_RoleAction_InterfaceMoving.h"
-#include <boost/bind.hpp>
 
 using namespace moving;
 

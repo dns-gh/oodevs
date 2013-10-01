@@ -21,7 +21,6 @@
 #include "tools/Codec.h"
 #include "MIL_NbcAgentType.h"
 #include "NBCAttribute.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_GUID( SpawnCapacity, "SpawnCapacity" )
 

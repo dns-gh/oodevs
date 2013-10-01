@@ -16,7 +16,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_IndirectFire constructor

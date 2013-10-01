@@ -25,7 +25,6 @@
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include <geometry/Types.h>
-#include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 

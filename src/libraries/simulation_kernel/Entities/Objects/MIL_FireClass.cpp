@@ -20,7 +20,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
 #include "Urban/PHY_MaterialCompositionType.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_FireClass::T_FireClassMap MIL_FireClass::classes_;
 unsigned int MIL_FireClass::cellSize_;

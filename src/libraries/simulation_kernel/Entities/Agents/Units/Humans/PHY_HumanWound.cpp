@@ -16,7 +16,6 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_HumanWound::T_HumanWoundMap PHY_HumanWound::humanWounds_;
 

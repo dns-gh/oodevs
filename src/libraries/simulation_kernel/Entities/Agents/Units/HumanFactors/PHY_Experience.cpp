@@ -13,7 +13,6 @@
 #include "PHY_Experience.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
 

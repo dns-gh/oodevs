@@ -16,7 +16,6 @@
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_PopulationInteraction )
 

@@ -17,7 +17,6 @@
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "tools/Codec.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypeObjectData constructor

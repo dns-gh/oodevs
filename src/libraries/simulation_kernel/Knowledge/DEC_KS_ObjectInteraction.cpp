@@ -22,7 +22,6 @@
 #include "Entities/Objects/DisasterCapacity.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/serialization/utility.hpp>
-#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectInteraction )
 

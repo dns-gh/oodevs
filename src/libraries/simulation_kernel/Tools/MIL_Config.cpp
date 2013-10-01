@@ -17,7 +17,6 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/XmlStreamOperators.h"
-#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )

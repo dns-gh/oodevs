@@ -14,7 +14,6 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_NBCType::T_NBCTypeMap MIL_NBCType::nbcAgentTypes_;
 unsigned int MIL_NBCType::length_;

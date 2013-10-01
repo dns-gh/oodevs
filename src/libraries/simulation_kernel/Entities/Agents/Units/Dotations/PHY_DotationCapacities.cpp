@@ -14,7 +14,6 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationGroupContainer.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacities constructor

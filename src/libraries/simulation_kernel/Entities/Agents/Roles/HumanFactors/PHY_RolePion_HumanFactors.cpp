@@ -26,7 +26,6 @@
 #include "MIL_AgentServer.h"
 #include "tools/ExerciseSettings.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_HumanFactors )
 

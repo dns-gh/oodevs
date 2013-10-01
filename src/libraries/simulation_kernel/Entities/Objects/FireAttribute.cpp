@@ -16,7 +16,6 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 #include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FireAttribute )

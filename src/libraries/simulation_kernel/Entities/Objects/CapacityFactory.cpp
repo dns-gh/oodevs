@@ -57,8 +57,6 @@
 #include "WorkableCapacity.h"
 #include "TrafficabilityCapacity.h"
 #include "DisasterCapacity.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/bind.hpp>
 
 namespace
 {

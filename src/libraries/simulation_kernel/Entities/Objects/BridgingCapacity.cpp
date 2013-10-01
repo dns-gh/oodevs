@@ -13,7 +13,6 @@
 #include "TimeLimitedAttribute.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "simulation_terrain/TER_DynamicData.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BridgingCapacity )
 

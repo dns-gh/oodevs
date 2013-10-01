@@ -12,7 +12,6 @@
 #include "MIL_Object_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InteractWithSideCapacity )
 

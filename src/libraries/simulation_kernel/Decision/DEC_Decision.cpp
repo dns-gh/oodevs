@@ -45,7 +45,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include <directia/tools/binders/ScriptRef.h>
 #include <geometry/Point2.h>
-#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ScriptRefs

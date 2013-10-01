@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MedicalCapacity.h"
 #include "Object.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MedicalCapacity )
 

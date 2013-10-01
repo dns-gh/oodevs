@@ -35,7 +35,6 @@
 #include "protocol/ClientSenders.h"
 #include "tools/ExerciseSettings.h"
 #include "Urban/PHY_ResourceNetworkType.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Supply )
     

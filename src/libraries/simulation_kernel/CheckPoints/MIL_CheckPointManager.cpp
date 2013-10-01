@@ -21,7 +21,6 @@
 #include "tools/XmlStreamOperators.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 #pragma warning ( push, 0 )
 #include <boost/CRC.hpp>
 #pragma warning ( pop )

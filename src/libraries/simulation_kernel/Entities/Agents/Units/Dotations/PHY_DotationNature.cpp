@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationNature.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_DotationNature::T_DotationNatureMap PHY_DotationNature::natures_;
 unsigned int PHY_DotationNature::nNextID_ = 0;

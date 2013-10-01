@@ -19,7 +19,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <xeumeuleu/xml.hpp>
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 

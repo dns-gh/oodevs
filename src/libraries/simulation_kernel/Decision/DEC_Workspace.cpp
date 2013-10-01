@@ -31,9 +31,7 @@
 #include "tools/PhyLoader.h"
 #include "tools/VersionHelper.h"
 #include "tools/XmlStreamOperators.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/bind.hpp>
 #include <sys/stat.h>
 
 namespace

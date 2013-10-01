@@ -19,7 +19,6 @@
 #include "Entities/Objects/ObjectTypeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObject constructor

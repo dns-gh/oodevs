@@ -28,7 +28,6 @@
 #include "CheckPoints/SerializationTools.h"
 #include "Entities/MIL_Army.h"
 #include "protocol/Protocol.h"
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_KnowledgeGroup )
 

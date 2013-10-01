@@ -85,7 +85,6 @@
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
-#include <xeumeuleu/xml.hpp>
 
 namespace
 {

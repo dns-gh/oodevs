@@ -46,11 +46,8 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include "MT_Tools/MT_FormatString.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/serialization/scoped_ptr.hpp>
-#include <boost/serialization/vector.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/bind.hpp>
 
 MIL_IDManager MIL_KnowledgeGroup::idManager_;
 

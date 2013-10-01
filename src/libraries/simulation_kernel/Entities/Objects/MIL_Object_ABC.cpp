@@ -37,7 +37,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "protocol/Protocol.h"
-#include <boost/serialization/vector.hpp>
 
 MIL_IDManager MIL_Object_ABC::idManager_;
 

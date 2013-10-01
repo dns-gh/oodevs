@@ -18,7 +18,6 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectObjectCreationFire::Create

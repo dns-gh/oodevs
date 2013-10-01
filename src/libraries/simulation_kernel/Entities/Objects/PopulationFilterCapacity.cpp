@@ -11,7 +11,6 @@
 #include "PopulationFilterCapacity.h"
 #include "PopulationAttribute.h"
 #include "MIL_Object_ABC.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFilterCapacity )
 

@@ -12,7 +12,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
-#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_PerceptionSurfaceAgent )
 

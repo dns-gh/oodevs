@@ -20,7 +20,6 @@
 #include "Entities/Agents/Units/Weapons/PHY_UrbanAttritionData.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Urban/PHY_MaterialCompositionType.h"
-#include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::PHY_DotationCategory

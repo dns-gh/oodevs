@@ -24,7 +24,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_Report::T_ReportMap MIL_Report::reports_;
 MIL_Report::T_KeyMap    MIL_Report::keys_;

@@ -11,7 +11,6 @@
 #include "UndergroundAttribute.h"
 #include "MIL_Object_ABC.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundAttribute )
 
