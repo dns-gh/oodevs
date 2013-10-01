@@ -40,7 +40,7 @@ App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPWSTR lpCmdLine, i
     , test_    ( false )
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( "Sword(tm) Replayer" );
+    MT_LOG_STARTUP_MESSAGE( "Sword Replayer" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
 
     // win32 argument parsing

@@ -22,7 +22,7 @@ Application::Application( int argc, char** argv, int maxConnections )
     : quit_( new tools::WaitEvent() )
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( "Sword Officer Training(tm) Dispatcher" );
+    MT_LOG_STARTUP_MESSAGE( "Sword Officer Training Dispatcher" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     dispatcher_.reset( new dispatcher::DispatcherLoader( argc, argv, maxConnections ) );
 }
