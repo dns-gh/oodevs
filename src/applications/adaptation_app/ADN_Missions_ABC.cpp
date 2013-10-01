@@ -317,10 +317,6 @@ void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const s
     tools::Xofstream xos( filePath + ".xml" );
     InternalWriteMissionSheet( xos, language, false );
 
-    xml::xobufferstream mergedXml;
-    if( !kernel::Language::IsDefault( language ) )
-        InternalWriteMissionSheet( mergedXml, language, true );
-
     //mission sheet html creation
     xsl::xstringtransform xst( ( tools::Path::TemporaryPath() / ADN_Missions_Data::xslTemporaryFile_ ).ToUTF8() );
 
@@ -340,7 +336,11 @@ void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const s
         xst << xisXML;
     }
     else
+    {
+        xml::xobufferstream mergedXml;
+        InternalWriteMissionSheet( mergedXml, languageId, true );
         xst << mergedXml;
+    }
 
     tools::Ofstream fileStream( filePath + ".html", std::ios::out | std::ios::trunc );
     fileStream << xst.str();

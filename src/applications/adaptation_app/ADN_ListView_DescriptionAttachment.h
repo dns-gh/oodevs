@@ -10,8 +10,6 @@
 #ifndef __ADN_ListView_DescriptionAttachment_h_
 #define __ADN_ListView_DescriptionAttachment_h_
 
-#include <boost/noncopyable.hpp>
-#include "ADN_EditLine_ABC.h"
 #include "ADN_ListView.h"
 
 class ADN_Type_LocalizedString;
@@ -39,13 +37,19 @@ public:
     bool IsFileInList( const QString& fileName );
     //@}
 
+public slots:
     //! @name slots
     //@{
-public slots:
     void AddFile();
     void CopyName();
     void RemoveFile();
     void OnItemSelected( void* );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    tools::Path GetImageDir( std::string key ) const;
     //@}
 
 private:

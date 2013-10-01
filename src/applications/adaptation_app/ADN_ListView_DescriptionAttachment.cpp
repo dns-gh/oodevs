@@ -56,6 +56,16 @@ void ADN_ListView_DescriptionAttachment::OnItemSelected( void* pData )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_ListView_DescriptionAttachment::GetImageDir
+// Created: ABR 2013-10-01
+// -----------------------------------------------------------------------------
+tools::Path ADN_ListView_DescriptionAttachment::GetImageDir( std::string key ) const
+{
+    std::replace( key.begin(), key.end(), '\'', ' ' );
+    return ADN_Missions_Data::GetTemporaryImagesPath( missionType_ ) / tools::Path::FromUTF8( key );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_ListView_DescriptionAttachment::AddFile
 // Created: NPT 2013-01-16
 // -----------------------------------------------------------------------------
@@ -72,9 +82,7 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         );
     if( fileName.IsEmpty() || !missionName_ )
         return;
-    std::string key = missionName_->GetKey();
-    std::replace( key.begin(), key.end(), '\'', ' ' );
-    const tools::Path imageDir = ADN_Missions_Data::GetTemporaryImagesPath( missionType_ ) / tools::Path::FromUTF8( key );
+    const tools::Path imageDir = GetImageDir( missionName_->GetKey() );
     if( !imageDir.IsDirectory() )
         imageDir.CreateDirectories();
     tools::Path newFileName = imageDir / fileName.FileName();
@@ -123,9 +131,7 @@ void ADN_ListView_DescriptionAttachment::RemoveFile()
     if( !missionName_ )
         return;
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    std::string key = missionName_->GetKey();
-    std::replace( key.begin(), key.end(), '\'', ' ' );
-    tools::Path imageDir = ADN_Missions_Data::GetTemporaryImagesPath( missionType_ ) / tools::Path::FromUTF8( key );
+    tools::Path imageDir = GetImageDir( missionName_->GetKey() );
     imageDir /= tools::Path::FromUnicode( GetModel().item( currentIndex().row() )->text().toStdWString() );
     if( imageDir.Exists() && imageDir.IsRegularFile() )
         imageDir.Remove();
@@ -149,7 +155,6 @@ void ADN_ListView_DescriptionAttachment::contextMenuEvent( QContextMenuEvent* ev
     }
     menu->exec( event->globalPos() );
 }
-
 
 bool ADN_ListView_DescriptionAttachment::IsFileInList( const QString& fileName )
 {
