@@ -200,7 +200,7 @@ void MIL_AgentServer::ReadStaticData()
     ReadTerData();
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     PHY_MeteoDataManager::Initialize();
-    MIL_EntityManager::Initialize( config_, *this, *pObjectFactory_ );
+    MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
     pAgentServer_ = new NET_AgentServer( config_, *this );
 }
 

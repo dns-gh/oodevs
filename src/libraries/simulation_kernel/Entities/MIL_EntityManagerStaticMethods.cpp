@@ -94,9 +94,9 @@ namespace
     // Created: RPD 2010-02-07
     // -----------------------------------------------------------------------------
     template < typename T >
-    void InitializeType( MIL_Config& config, const std::string& strSection )
+    void InitializeType( const tools::PhyLoader& loader, const std::string& strSection )
     {
-        config.GetPhyLoader().LoadPhysicalFile( strSection.c_str(), &T::Initialize );
+        loader.LoadPhysicalFile( strSection.c_str(), &T::Initialize );
     }
 }
 
@@ -122,7 +122,7 @@ MIL_EntityManagerStaticMethods::~MIL_EntityManagerStaticMethods()
 // Name: MIL_EntityManagerStaticMethods::Initialize
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_ObjectFactory& objectFactory )
+void MIL_EntityManagerStaticMethods::Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time, MIL_ObjectFactory& objectFactory )
 {
     // Static types
     PHY_ComposanteState          ::Initialize();
@@ -145,73 +145,73 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     MIL_PopulationAttitude       ::Initialize();
     MIL_LimaFunction             ::Initialize();
 
-    InitializeType< PHY_MaterialCompositionType    >( config, "urban"              );
-    InitializeType< PHY_AccomodationType           >( config, "urban"              );
-    InitializeType< PHY_InfrastructureType         >( config, "urban"              );
-    InitializeType< PHY_RoofShapeType              >( config, "urban"              );
-    InitializeType< MIL_Report                     >( config, "reports"            );
-    InitializeType< PHY_MaintenanceWorkRate        >( config, "maintenance"        );
-    InitializeType< PHY_MaintenanceResourcesAlarms >( config, "maintenance"        );
-    InitializeType< PHY_Experience                 >( config, "human-factors"      );
-    InitializeType< PHY_Stress                     >( config, "human-factors"      );
-    InitializeType< PHY_Tiredness                  >( config, "human-factors"      );
-    InitializeType< PHY_Volume                     >( config, "volumes"            );
-    InitializeType< PHY_Protection                 >( config, "protections"        );
-    InitializeType< PHY_DotationNature             >( config, "resource-natures"   );
-    InitializeType< PHY_DotationLogisticType       >( config, "logistic-supply-classes" );
-    InitializeType< PHY_DotationType               >( config, "resources"          );
-    InitializeType< PHY_ResourceNetworkType        >( config, "resource-networks"  );
-    InitializeType< MIL_FireClass                  >( config, "fires"              );
-    InitializeType< PHY_BreakdownType              >( config, "breakdowns"         );
-    InitializeType< PHY_LauncherType               >( config, "launchers"          );
-    InitializeType< MIL_DisasterType               >( config, "disasters"          );
-    InitializeType< PHY_ActiveProtection           >( config, "active-protections" );
-    InitializeObjects( config, objectFactory );
-    InitializeSensors( config, time, objectFactory );
-    InitializeWeapons( config, time );
-    InitializeComposantes( config, time, objectFactory );
-    InitializeType< MIL_AgentTypePion              >( config, "units"              );
-    InitializeType< MIL_AutomateType               >( config, "automats"           );
-    InitializeType< MIL_KnowledgeGroupType         >( config, "knowledge-groups"   );
-    InitializeType< MIL_NbcAgentType               >( config, "nbc"                );
-    InitializeType< PHY_SupplyResourcesAlarms      >( config, "supply"             );
-    InitializeType< logistic::SupplyConvoyConfig   >( config, "supply"             );
-    InitializeType< PHY_MedicalResourcesAlarms     >( config, "health"             );
-    InitializeType< PHY_RolePion_Communications    >( config, "communications"     );
-    InitializeType< MIL_PopulationType             >( config, "populations"        );
-    InitializeType< MIL_InhabitantType             >( config, "inhabitants"        );
+    InitializeType< PHY_MaterialCompositionType    >( loader, "urban"              );
+    InitializeType< PHY_AccomodationType           >( loader, "urban"              );
+    InitializeType< PHY_InfrastructureType         >( loader, "urban"              );
+    InitializeType< PHY_RoofShapeType              >( loader, "urban"              );
+    InitializeType< MIL_Report                     >( loader, "reports"            );
+    InitializeType< PHY_MaintenanceWorkRate        >( loader, "maintenance"        );
+    InitializeType< PHY_MaintenanceResourcesAlarms >( loader, "maintenance"        );
+    InitializeType< PHY_Experience                 >( loader, "human-factors"      );
+    InitializeType< PHY_Stress                     >( loader, "human-factors"      );
+    InitializeType< PHY_Tiredness                  >( loader, "human-factors"      );
+    InitializeType< PHY_Volume                     >( loader, "volumes"            );
+    InitializeType< PHY_Protection                 >( loader, "protections"        );
+    InitializeType< PHY_DotationNature             >( loader, "resource-natures"   );
+    InitializeType< PHY_DotationLogisticType       >( loader, "logistic-supply-classes" );
+    InitializeType< PHY_DotationType               >( loader, "resources"          );
+    InitializeType< PHY_ResourceNetworkType        >( loader, "resource-networks"  );
+    InitializeType< MIL_FireClass                  >( loader, "fires"              );
+    InitializeType< PHY_BreakdownType              >( loader, "breakdowns"         );
+    InitializeType< PHY_LauncherType               >( loader, "launchers"          );
+    InitializeType< MIL_DisasterType               >( loader, "disasters"          );
+    InitializeType< PHY_ActiveProtection           >( loader, "active-protections" );
+    InitializeObjects( loader, objectFactory );
+    InitializeSensors( loader, time, objectFactory );
+    InitializeWeapons( loader, time );
+    InitializeComposantes( loader, time, objectFactory );
+    InitializeType< MIL_AgentTypePion              >( loader, "units"              );
+    InitializeType< MIL_AutomateType               >( loader, "automats"           );
+    InitializeType< MIL_KnowledgeGroupType         >( loader, "knowledge-groups"   );
+    InitializeType< MIL_NbcAgentType               >( loader, "nbc"                );
+    InitializeType< PHY_SupplyResourcesAlarms      >( loader, "supply"             );
+    InitializeType< logistic::SupplyConvoyConfig   >( loader, "supply"             );
+    InitializeType< PHY_MedicalResourcesAlarms     >( loader, "health"             );
+    InitializeType< PHY_RolePion_Communications    >( loader, "communications"     );
+    InitializeType< MIL_PopulationType             >( loader, "populations"        );
+    InitializeType< MIL_InhabitantType             >( loader, "inhabitants"        );
 
-    InitializeMedical( config );
-    InitializeFuneral( config, time );
+    InitializeMedical( loader );
+    InitializeFuneral( loader, time );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeObjects
 // Created: LGY 2012-09-14
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeObjects( MIL_Config& config, MIL_ObjectFactory& objectFactory )
+void MIL_EntityManagerStaticMethods::InitializeObjects( const tools::PhyLoader& loader, MIL_ObjectFactory& objectFactory )
 {
-    config.GetPhyLoader().LoadPhysicalFile( "objects", boost::bind( &MIL_ObjectFactory::Initialize, &objectFactory, _1 ) );
+    loader.LoadPhysicalFile( "objects", boost::bind( &MIL_ObjectFactory::Initialize, &objectFactory, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeSensors
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
+void MIL_EntityManagerStaticMethods::InitializeSensors( const tools::PhyLoader& loader, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
-    config.GetPhyLoader().LoadPhysicalFile( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ), boost::cref( resolver ) ) );
+    loader.LoadPhysicalFile( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ), boost::cref( resolver ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeFuneral
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeFuneral( MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::InitializeFuneral( const tools::PhyLoader& loader, const MIL_Time_ABC& time )
 {
     MT_LOG_INFO_MSG( "Initializing funeral" );
-    config.GetPhyLoader().LoadPhysicalFile( "funeral", boost::bind( &logistic::FuneralConfig::Initialize, _1, time.GetTickDuration() ) );
+    loader.LoadPhysicalFile( "funeral", boost::bind( &logistic::FuneralConfig::Initialize, _1, time.GetTickDuration() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,10 +232,10 @@ void MIL_EntityManagerStaticMethods::LoadSensors( xml::xistream& xis, const MIL_
 // Name: MIL_EntityManagerStaticMethods::InitializeMedical
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeMedical( MIL_Config& config )
+void MIL_EntityManagerStaticMethods::InitializeMedical( const tools::PhyLoader& loader )
 {
     MT_LOG_INFO_MSG( "Initializing medical data" );
-    config.GetPhyLoader().LoadPhysicalFile( "health", &MIL_EntityManagerStaticMethods::LoadMedical );
+    loader.LoadPhysicalFile( "health", &MIL_EntityManagerStaticMethods::LoadMedical );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,16 +253,16 @@ void MIL_EntityManagerStaticMethods::LoadMedical( xml::xistream& xis )
 // Name: MIL_EntityManagerStaticMethods::InitializeComposantes
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
+void MIL_EntityManagerStaticMethods::InitializeComposantes( const tools::PhyLoader& loader, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver )
 {
-    config.GetPhyLoader().LoadPhysicalFile( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1, boost::cref( resolver ) ) );
+    loader.LoadPhysicalFile( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1, boost::cref( resolver ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeWeapons
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeWeapons( MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::InitializeWeapons( const tools::PhyLoader& loader, const MIL_Time_ABC& time )
 {
-    config.GetPhyLoader().LoadPhysicalFile( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ) );
+    loader.LoadPhysicalFile( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ) );
 }
