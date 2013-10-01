@@ -29,8 +29,6 @@
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
 #include "protocol/ClientSenders.h"
-#include <boost/serialization/vector.hpp>
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
 

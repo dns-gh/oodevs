@@ -30,8 +30,6 @@
 #include "Tools/MIL_IDManager.h"
 #include <boost/make_shared.hpp>
 #include <boost/serialization/set.hpp>
-#include <boost/serialization/vector.hpp>
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
 

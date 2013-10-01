@@ -11,7 +11,6 @@
 #include "WorkableCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "AnimatorAttribute.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( WorkableCapacity )
 

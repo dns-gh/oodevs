@@ -11,8 +11,6 @@
 #include "DEC_Knowledge_Population.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_KnowledgeSynthetizer )
 

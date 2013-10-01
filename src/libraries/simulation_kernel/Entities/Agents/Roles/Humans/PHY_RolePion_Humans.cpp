@@ -33,7 +33,6 @@
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( human::PHY_RolePion_Humans )
 

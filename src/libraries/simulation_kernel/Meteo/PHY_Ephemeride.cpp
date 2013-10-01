@@ -13,7 +13,6 @@
 #include "PHY_Ephemeride.h"
 #include "MIL_AgentServer.h"
 #include "meteo/PHY_Lighting.h"
-#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )

@@ -14,8 +14,6 @@
 #include "Decision/DEC_Logger.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include <boost/serialization/map.hpp>
-#include <boost/serialization/vector.hpp>
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 

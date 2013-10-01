@@ -14,7 +14,6 @@
 #include "MIL_BurningCells.h"
 #include "MIL_AgentServer.h"
 #include "MIL_FireClass.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FirePropagationModifierCapacity )
 

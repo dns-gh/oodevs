@@ -53,7 +53,6 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire constructor

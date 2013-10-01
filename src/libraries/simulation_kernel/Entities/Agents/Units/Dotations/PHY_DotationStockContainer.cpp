@@ -25,7 +25,6 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStockContainer )
 

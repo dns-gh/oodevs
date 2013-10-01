@@ -13,7 +13,6 @@
 #include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;
 unsigned int MIL_KnowledgeGroupType::nNextID_ = 0;

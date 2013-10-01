@@ -11,7 +11,6 @@
 #include "MIL_PopulationPionAttritionData.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationPionAttritionData::sAttritionData

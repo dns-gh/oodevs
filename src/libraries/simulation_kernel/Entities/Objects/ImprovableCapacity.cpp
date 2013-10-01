@@ -15,7 +15,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ImprovableCapacity )
 

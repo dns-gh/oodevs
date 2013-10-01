@@ -24,7 +24,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_AutomateType::T_AutomateTypeAllocatorMap  MIL_AutomateType::automateTypeAllocators_;
 MIL_AutomateType::T_AutomateTypeMap           MIL_AutomateType::automateTypes_;

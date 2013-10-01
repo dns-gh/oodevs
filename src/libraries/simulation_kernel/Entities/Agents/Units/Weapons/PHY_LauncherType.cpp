@@ -14,7 +14,6 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_LauncherType::T_LauncherTypeMap PHY_LauncherType::launcherTypes_;
 

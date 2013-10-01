@@ -13,7 +13,6 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 DEC_Population_PathClass::T_Rules DEC_Population_PathClass::rules_;
 

@@ -51,7 +51,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Tools/NET_AsnException.h"
 #include "protocol/Protocol.h"
-#include <boost/shared_ptr.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------

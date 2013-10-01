@@ -19,7 +19,6 @@
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( CrowdCapacity )
 

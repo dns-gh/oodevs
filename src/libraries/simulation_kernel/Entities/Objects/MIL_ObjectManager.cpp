@@ -35,7 +35,6 @@
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_RoofShapeType.h"
 #include "Tools/MIL_DictionaryExtensions.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/map.hpp>

@@ -20,7 +20,6 @@
 #include "resource_network/NodeProperties.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "Urban/PHY_ResourceNetworkType.h"
-#include <xeumeuleu/xml.hpp>
 
 using namespace resource;
 

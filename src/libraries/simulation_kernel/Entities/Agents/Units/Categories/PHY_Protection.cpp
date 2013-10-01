@@ -16,7 +16,6 @@
 #include "Tools/MIL_Tools.h"
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
 unsigned int PHY_Protection::nNextID_ = 0;

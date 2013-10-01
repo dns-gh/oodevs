@@ -14,8 +14,6 @@
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "MIL_Agent_ABC.h"
 #include "Tools/MIL_IDManager.h"
-#include <xeumeuleu/xml.hpp>
-
 
 namespace
 {

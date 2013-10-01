@@ -25,7 +25,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectKnowledgeSynthetizer )
 

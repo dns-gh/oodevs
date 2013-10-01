@@ -14,7 +14,6 @@
 #include "MIL_Object_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_InfrastructureType.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InfrastructureCapacity )
 

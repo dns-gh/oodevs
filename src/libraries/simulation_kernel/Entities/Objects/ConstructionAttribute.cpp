@@ -14,7 +14,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Authentication.h"
-#include <xeumeuleu/xml.hpp>
 #include "Entities/MIL_EntityManager.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ConstructionAttribute )

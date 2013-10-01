@@ -20,7 +20,6 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Scipio_enum.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::sComposanteTypeData::sComposanteTypeData

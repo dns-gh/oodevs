@@ -27,7 +27,6 @@
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 

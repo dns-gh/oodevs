@@ -36,7 +36,6 @@
 #include "ImprovableCapacity.h"
 #include "TrafficabilityAttribute.h"
 #include "protocol/Protocol.h"
-#include <boost/bind.hpp>
 
 using namespace sword;
 

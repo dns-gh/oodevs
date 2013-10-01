@@ -41,7 +41,6 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MIL_AgentServer.h"
 #include "tools/ExerciseSettings.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( dotation::PHY_RolePion_Dotations )
 

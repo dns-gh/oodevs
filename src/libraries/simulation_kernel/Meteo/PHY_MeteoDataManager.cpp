@@ -22,7 +22,6 @@
 #include "tools/SchemaWriter.h"
 #include "meteo/PHY_Lighting.h"
 
-#include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 
 #pragma warning( push, 1 )

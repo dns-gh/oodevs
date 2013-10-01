@@ -15,7 +15,6 @@
 #include "tools/Codec.h"
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Schedule constructor

@@ -47,7 +47,6 @@
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
 

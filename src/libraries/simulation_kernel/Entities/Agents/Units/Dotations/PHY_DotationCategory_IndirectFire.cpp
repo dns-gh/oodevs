@@ -47,7 +47,6 @@
 #include "Tools/MIL_Geometry.h"
 #include "Urban/MIL_UrbanCache.h"
 #include <boost/tuple/tuple.hpp>
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create

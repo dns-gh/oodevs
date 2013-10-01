@@ -22,7 +22,6 @@
 #include "CheckPoints/SerializationTools.h"
 #include <boost/assign/list_of.hpp>
 #include <boost/lexical_cast.hpp>
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
 

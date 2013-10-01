@@ -13,8 +13,6 @@
 #include "simulation_terrain/TER_DynamicData.h"
 #include "MIL_Object_ABC.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AvoidanceCapacity )
 

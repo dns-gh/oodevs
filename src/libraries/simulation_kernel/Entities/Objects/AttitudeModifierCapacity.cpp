@@ -14,7 +14,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AttitudeModifierCapacity )
 

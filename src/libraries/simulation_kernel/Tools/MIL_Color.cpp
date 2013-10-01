@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Color.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Color )
 

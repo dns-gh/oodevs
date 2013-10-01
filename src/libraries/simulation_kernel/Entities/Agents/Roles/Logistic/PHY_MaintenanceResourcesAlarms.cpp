@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceResourcesAlarms.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 namespace
 {

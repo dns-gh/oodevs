@@ -40,7 +40,6 @@
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/range/algorithm.hpp>
 
 namespace

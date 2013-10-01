@@ -21,7 +21,6 @@
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_AccomodationType.h"
 #include <boost/foreach.hpp>
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingArea )
 

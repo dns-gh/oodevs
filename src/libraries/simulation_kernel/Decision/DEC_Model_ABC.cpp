@@ -15,7 +15,6 @@
 #include "MT_Tools/MT_String.h"
 #include "tools/XmlStreamOperators.h"
 #include <sys/stat.h>
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC constructor

@@ -49,8 +49,6 @@
 #include "Tools/MIL_Tools.h"
 #include "Tools/NET_AsnException.h"
 
-#include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 
 using namespace sword;

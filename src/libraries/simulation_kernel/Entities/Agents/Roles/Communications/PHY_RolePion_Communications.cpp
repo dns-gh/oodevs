@@ -27,7 +27,6 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/serialization/set.hpp>
 
 double PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;

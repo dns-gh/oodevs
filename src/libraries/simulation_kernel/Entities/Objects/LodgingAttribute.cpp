@@ -17,7 +17,6 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 
 using namespace refugee;
 using namespace surrender;

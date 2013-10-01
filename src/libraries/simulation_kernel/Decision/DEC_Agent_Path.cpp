@@ -48,7 +48,6 @@
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
-#include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path constructor

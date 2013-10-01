@@ -17,7 +17,6 @@
 #include "PHY_Sensor.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_SensorType::T_SensorTypeMap PHY_SensorType::sensorTypes_;
 unsigned int PHY_SensorType::nNextID_ = 0;

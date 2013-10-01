@@ -15,7 +15,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Objects/InteractWithSideCapacity.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InterferenceCapacity )
 

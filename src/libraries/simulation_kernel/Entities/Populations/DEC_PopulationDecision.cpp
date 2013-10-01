@@ -34,8 +34,6 @@
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionUrbanDestruction.h"
 #include "protocol/ClientSenders.h"
-#include <boost/serialization/vector.hpp>
-#include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationDecision )

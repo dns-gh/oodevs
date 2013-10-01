@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AttritionData.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_AttritionData constructor

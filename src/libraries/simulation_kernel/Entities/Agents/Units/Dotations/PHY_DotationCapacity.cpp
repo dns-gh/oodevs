@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCapacity.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacity constructor

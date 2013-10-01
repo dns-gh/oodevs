@@ -117,7 +117,6 @@
 #include "Urban/PHY_AccomodationType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include "Adapters/Legacy/Sink.h"

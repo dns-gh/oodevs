@@ -17,7 +17,6 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOGConvoy )
 

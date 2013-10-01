@@ -25,7 +25,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <xeumeuleu/xml.hpp>
 
 namespace
 {

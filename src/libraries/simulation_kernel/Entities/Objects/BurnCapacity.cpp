@@ -20,8 +20,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 
-#include <xeumeuleu/xml.hpp>
-
 BOOST_CLASS_EXPORT_IMPLEMENT( BurnCapacity )
 
 // -----------------------------------------------------------------------------

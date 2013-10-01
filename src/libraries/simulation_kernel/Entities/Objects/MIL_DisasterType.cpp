@@ -13,7 +13,6 @@
 #include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_DisasterType::T_DisasterTypes MIL_DisasterType::disasterTypes_;
 unsigned int MIL_DisasterType::thresholdIds_ = 0;

@@ -18,7 +18,6 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Tools/MIL_Tools.h"
-#include <xeumeuleu/xml.hpp>
 
 double PHY_PerceptionFlyingShell::rRadius_ = 0;
 

@@ -19,8 +19,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
-#include <boost/serialization/vector.hpp>
-#include <xeumeuleu/xml.hpp>
 #include "Tools/MIL_Geometry.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( IntoxicationCapacity )

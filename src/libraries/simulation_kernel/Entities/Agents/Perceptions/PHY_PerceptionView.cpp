@@ -22,7 +22,6 @@
 #include "DetectionComputer.h"
 #include "MIL_Random.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView constructor

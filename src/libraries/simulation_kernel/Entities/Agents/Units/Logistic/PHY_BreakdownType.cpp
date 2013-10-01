@@ -17,7 +17,6 @@
 #include "tools/Codec.h"
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
 unsigned int                      PHY_BreakdownType::nDiagnosticTime_ = 0;

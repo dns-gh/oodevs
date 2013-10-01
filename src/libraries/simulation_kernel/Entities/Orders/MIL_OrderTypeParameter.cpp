@@ -14,7 +14,6 @@
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 
 namespace
 {

@@ -38,7 +38,6 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
-#include <boost/shared_ptr.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #include <boost/foreach.hpp>
 

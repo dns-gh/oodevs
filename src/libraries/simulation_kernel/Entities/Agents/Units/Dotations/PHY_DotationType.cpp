@@ -15,7 +15,6 @@
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationLogisticType.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/make_shared.hpp>
 
 PHY_DotationType* PHY_DotationType::munition_ = 0;

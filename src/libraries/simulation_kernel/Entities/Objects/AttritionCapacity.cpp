@@ -22,7 +22,6 @@
 #include "ObstacleAttribute.h"
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
-#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AttritionCapacity )
 

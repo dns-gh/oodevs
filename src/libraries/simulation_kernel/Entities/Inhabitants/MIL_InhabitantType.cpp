@@ -14,7 +14,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_Schedule_ABC.h"
 #include "Urban/PHY_ResourceNetworkType.h"
-#include <xeumeuleu/xml.hpp>
 
 MIL_InhabitantType::T_InhabitantMap MIL_InhabitantType::inhabitants_;
 

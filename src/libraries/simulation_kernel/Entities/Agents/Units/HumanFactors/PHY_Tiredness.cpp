@@ -14,7 +14,6 @@
 #include "MIL_Time_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
 PHY_Tiredness::Evolution PHY_Tiredness::evolution_;
