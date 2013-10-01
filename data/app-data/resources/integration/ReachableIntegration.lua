@@ -806,9 +806,9 @@ integration.updateMoveToListPointCrowd = function( objective, pathType, wayPoint
 end
 
 integration.isUrbanBlockTrafficable = function( self, loaded )
-    if not loaded then return 100 end
+    if not loaded then return true end
     if not self.isUrbanBlockTrafficableCache then
-        self.isUrbanBlockTrafficableCache = ( DEC_ConnaissanceBlocUrbain_Traficabilite( self.source ) >= 0 and 100 ) or 0
+        self.isUrbanBlockTrafficableCache = ( DEC_ConnaissanceBlocUrbain_Traficabilite( self.source ) >= 0 )
     end
     return self.isUrbanBlockTrafficableCache
 end
@@ -826,26 +826,26 @@ integration.moveToItItinerary = masalife.brain.integration.startStopAction( {
         stop = integration.deselectMoveToIt } )
         
 integration.isPointInUrbanBlockTrafficableForProxy = function( self, loaded )
-    if not loaded then return 100 end
+    if not loaded then return true end
     local pos = self:getPosition()
-    return ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
+    return ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) )
 end
 
 integration.isPointInUrbanBlockTrafficable = function( self, loaded )
-    if not loaded then return 100 end
+    if not loaded then return true end
     local isTrafficable = false
     if not self.isPointInUrbanBlockTrafficableCache then
         local pos = self:getPosition()
-        if masalife.brain.core.class.isOfType( meKnowledge, integration.ontology.types.automat  ) then 
+        if masalife.brain.core.class.isOfType( meKnowledge, integration.ontology.types.automat ) then 
             local platoons = DEC_Automate_PionsAvecPC()
             for i = 1, #platoons do -- Est ce que ce point est trafficable pour tous les pions de l'automate
                 if integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i], self.source ) then
                     isTrafficable = true
                 end
             end
-            self.isPointInUrbanBlockTrafficableCache = ( pos and isTrafficable and 100 ) or 0   
+            self.isPointInUrbanBlockTrafficableCache = ( pos and isTrafficable ) or false
         else
-          self.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
+          self.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) )
         end
     end
     return self.isPointInUrbanBlockTrafficableCache
@@ -870,7 +870,7 @@ end
 integration.isPointTrafficable = function( self )
     if not self.isPointInUrbanBlockTrafficableCache then
         local pos = self:getPosition()
-        self.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and true ) or false
+        self.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) )
     end
     return self.isPointInUrbanBlockTrafficableCache
 end
