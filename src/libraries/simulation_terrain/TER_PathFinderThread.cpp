@@ -217,7 +217,6 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
     }
     catch( ... )
     {
-        _clearfp();
         MT_LOG_ERROR_MSG( "Unknown exception caught in pathfinder thread" );
         assert( false );
     }
