@@ -75,7 +75,6 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
         }
         catch( ... )
         {
-            _clearfp();
             MT_LOG_ERROR_MSG( "Can't save checkpoint ( Unknown error )" );
         }
         MT_LOG_INFO_MSG( "End save checkpoint" );

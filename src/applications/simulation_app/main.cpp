@@ -83,9 +83,6 @@ int main( int /*argc*/, char* /*argv*/[] )
         }
 #endif
 
-        // Float exceptions
-        unsigned int control_word;
-        _controlfp_s( &control_word, _EM_OVERFLOW | _EM_UNDERFLOW | _EM_INEXACT | _EM_INVALID, _MCW_EM ); // Exception raised for _EM_DENORMAL and _EM_ZERODIVIDE
 
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;

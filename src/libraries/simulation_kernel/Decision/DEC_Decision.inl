@@ -190,7 +190,6 @@ template< class T >
 void DEC_Decision< T >::CleanStateAfterCrash()
 {
     assert( pEntity_ );
-    _clearfp();
 //    DEC_Tools::DisplayDiaStack( GetCurrentInstance(), GetCurrentDebugInfo() ); // $$$$ LDC: Is there a way to dump lua state?
 //    Reset();
     EndCleanStateAfterCrash();
