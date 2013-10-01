@@ -87,12 +87,4 @@ void clear_owned_ptrs( T_Cont& container )
     container.clear();
 }
 
-inline std::string& trim( std::string& str )
-{
-    static const std::string spaces = " \t\n\r";
-    str.erase( 0, str.find_first_not_of( spaces ) );
-    str.resize( str.find_last_not_of( spaces ) + 1 );
-    return str;
-}
-
 #endif // __ADN_APPLICATION_PCH_H_

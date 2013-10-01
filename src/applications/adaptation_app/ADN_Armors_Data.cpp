@@ -105,9 +105,8 @@ void ADN_Armors_Data::ArmorInfos::WriteArchive( xml::xostream& output )
         rBreakdownNEVA_ = 0.;
     }
 
-    std::string strData( strName_.GetData() );
     output << xml::start( "protection" )
-        << xml::attribute( "name", trim( strData ) )
+        << xml::attribute( "name", strName_ )
         << xml::attribute( "type", ADN_Tr::ConvertFromProtectionType( nType_.GetData() ) );
 
     output << xml::start( "neutralization" )

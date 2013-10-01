@@ -117,11 +117,10 @@ void ADN_LogisticSupplyClasses_Data::WriteArchive( xml::xostream& output )
     {
         if( ( *it )->strName_.GetData().empty() )
             throw MASA_EXCEPTION( tools::translate( "Categories_Data","Categories - Invalid resource nature" ).toStdString() );
-        std::string strData( ( *it )->strName_.GetData() );
         output << xml::start( "logistic-supply-class" )
-            << xml::attribute( "type", trim( strData ) )
-            << xml::attribute( "id", ( *it )->nId_ )
-            << xml::end;
+                 << xml::attribute( "type", ( *it )->strName_ )
+                 << xml::attribute( "id", ( *it )->nId_ )
+               << xml::end;
     }
     output << xml::end;
 }
