@@ -12,29 +12,34 @@
 
 #include "Logger_ABC.h"
 #include "tools/FileWrapper.h"
+#include "tools/Log_ABC.h"
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
+#include <boost/scoped_ptr.hpp>
 
 namespace tools
 {
     class Path;
+    class RotatingLog;
 }
 
 namespace dispatcher
 {
+    class Config;
+
 // =============================================================================
 /** @class  FileLogger
     @brief  File logger
 */
 // Created: SBO 2011-05-19
 // =============================================================================
-class FileLogger : public Logger_ABC
+class FileLogger : public Logger_ABC, private tools::Log_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FileLogger( const tools::Path& filename );
+             FileLogger( const tools::Path& filename, const Config& config );
     virtual ~FileLogger();
     //@}
 
@@ -51,12 +56,19 @@ private:
     void LogMessage( const std::string& severity, const std::string& message );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual std::size_t Write( std::ostream& os, const std::string& line );
+    virtual std::streamoff ComputeSize( const tools::Path& filename ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{
-    tools::Ofstream output_;
     boost::mutex mutex_;
-    //@}
+    boost::scoped_ptr< tools::RotatingLog > log_;
+    bool sizeInBytes_;
+//@}
 };
 }
 
