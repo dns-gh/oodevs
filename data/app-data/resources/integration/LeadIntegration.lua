@@ -459,7 +459,8 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
 
     -- Si un pion est de nouveau operationnel et/ou un pion a été ajouté à l'automate
    if #newOperationnalEntities > #self.operationnalEntities then
-        for i, entity in pairs( newOperationnalEntities ) do
+        for i=1, #newOperationnalEntities do
+            local entity = newOperationnalEntities[i]
             if not exists( self.operationnalEntities, entity ) then
                 -- Si le pion n'a pas de mission ou si c'est de la LOG on donne Se deployer; si c'est un pion Convoi, il ne faut pas le prendre en compte
                 if not integration.isLogisticAutomat() and not integration.isLogisticConvoy( entity.source ) then 
@@ -467,10 +468,12 @@ integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, dise
                     redone = true
                     local tasksForNewEntity = ""
                     if myself.taskParams.echelonNumber == 1 or self.nbrFront > #echelons[1] then
-                          tasksForNewEntity = myself.leadData.dynamicEchelonTasks[eEtatEchelon_First] or self.params.mainTasks..";"..self.params.supportTasks..";"..self.params.defaultTask
+                          tasksForNewEntity = ( myself.leadData.dynamicEchelonTasks or emptyTable )[ eEtatEchelon_First ]
+                                        or self.params.mainTasks..";"..self.params.supportTasks..";"..self.params.defaultTask
                           integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_First, { entity }, false, findBestsFunction, disengageTask )
                     else
-                          tasksForNewEntity = myself.leadData.dynamicEchelonTasks[eEtatEchelon_Second] or self.params.supportTasks..";"..self.params.defaultTask
+                          tasksForNewEntity = ( myself.leadData.dynamicEchelonTasks or emptyTable )[ eEtatEchelon_Second ]
+                                        or self.params.supportTasks..";"..self.params.defaultTask
                           integration.issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity }, false, findBestsFunction, disengageTask )
                     end
                 end
