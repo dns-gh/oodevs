@@ -80,6 +80,11 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         "GIF (*.gif)\n"
         "PNG (*.png)\n" )
         );
+    if( fileName.ToUTF8().find( '$' ) != std::string::npos )
+    {
+        QMessageBox::warning( this, tr( "Warning" ), tr( "'$' character if forbidden in image's path." ) );
+        return;
+    }
     if( fileName.IsEmpty() || !missionName_ )
         return;
     const tools::Path imageDir = GetImageDir( missionName_->GetKey() );
