@@ -22,11 +22,6 @@ namespace xml
     class xistream;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace tools
 {
     class Path;

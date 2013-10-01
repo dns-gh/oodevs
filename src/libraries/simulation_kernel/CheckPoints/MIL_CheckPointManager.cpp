@@ -46,14 +46,7 @@ void CreateMetaData( const tools::Path& filename, const tools::Path& name )
         tools::Xofstream xos( filename );
         xos << xml::start( "checkpoint" )
                 << xml::content( "name", name )
-                << xml::content( "date", bpt::to_iso_string( realTime ) )
-                // CRCs are deprecated
-                << xml::start( "crc" )
-                    << xml::start( "configuration" )
-                        << xml::attribute( "crc", 0 )
-                    << xml::end
-                    << xml::start( "save" )
-                        << xml::attribute( "crc", 0 );
+                << xml::content( "date", bpt::to_iso_string( realTime ) );
     }
     catch( const std::exception& )
     {
