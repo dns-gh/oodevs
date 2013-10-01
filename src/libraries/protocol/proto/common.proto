@@ -1957,6 +1957,7 @@ message UnitMagicAction {
         //! parameters[3], BooleanValue, optional: if true, force the unit to
         //!    become the new PC for this automat.
         unit_creation                     = 12;
+        //! Launch a strike on a unit knowledge
         //! The tasker (reporter) must be a valid unit identifier.
         //! parameters[0], Identifier: the target's knowledge identifier in
         //!  reporters's knowledges.
