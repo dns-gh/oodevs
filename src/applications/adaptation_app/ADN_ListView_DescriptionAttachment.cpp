@@ -61,7 +61,6 @@ void ADN_ListView_DescriptionAttachment::OnItemSelected( void* pData )
 // -----------------------------------------------------------------------------
 tools::Path ADN_ListView_DescriptionAttachment::GetImageDir( std::string key ) const
 {
-    std::replace( key.begin(), key.end(), '\'', ' ' );
     return ADN_Missions_Data::GetTemporaryImagesPath( missionType_ ) / tools::Path::FromUTF8( key );
 }
 
