@@ -142,26 +142,26 @@ type HumanFactors struct {
 }
 
 type Unit struct {
-	Id                 uint32
-	AutomatId          uint32
-	Name               string
-	Pc                 bool
-	Position           Point
-	PathPoints         uint32
-	DebugBrain         bool
-	EquipmentDotations map[uint32]*EquipmentDotation
-	LentEquipments     []*LentEquipment
-	BorrowedEquipments []*BorrowedEquipment
-	PartySurrenderedTo uint32
-	HumanDotations     []*HumanDotation
-	ResourceDotations  []*ResourceDotation
-	Posture            Posture
-	VisionCones        VisionCones
-	TransporterId      uint32
-	Adhesions          map[uint32]float32
-	HumanFactors       HumanFactors
-	OperationalState   int32
-	Neutralized        bool
+	Id                  uint32
+	AutomatId           uint32
+	Name                string
+	Pc                  bool
+	Position            Point
+	PathPoints          uint32
+	DebugBrain          bool
+	EquipmentDotations  map[uint32]*EquipmentDotation
+	LentEquipments      []*LentEquipment
+	BorrowedEquipments  []*BorrowedEquipment
+	PartySurrenderedTo  uint32
+	HumanDotations      []*HumanDotation
+	ResourceDotations   []*ResourceDotation
+	Posture             Posture
+	VisionCones         VisionCones
+	TransporterId       uint32
+	Adhesions           map[uint32]float32
+	HumanFactors        HumanFactors
+	RawOperationalState int32
+	Neutralized         bool
 }
 
 type Automat struct {

@@ -75,18 +75,18 @@ func (model *Model) handleUnitCreation(m *sword.SimToClient_Content) error {
 		return ErrSkipHandler
 	}
 	unit := &Unit{
-		Id:                 mm.GetUnit().GetId(),
-		AutomatId:          mm.GetAutomat().GetId(),
-		Name:               mm.GetName(),
-		Pc:                 mm.GetPc(),
-		Position:           Point{},
-		PathPoints:         0,
-		DebugBrain:         false,
-		EquipmentDotations: map[uint32]*EquipmentDotation{},
-		LentEquipments:     []*LentEquipment{},
-		BorrowedEquipments: []*BorrowedEquipment{},
-		OperationalState:   100,
-		Neutralized:        false,
+		Id:                  mm.GetUnit().GetId(),
+		AutomatId:           mm.GetAutomat().GetId(),
+		Name:                mm.GetName(),
+		Pc:                  mm.GetPc(),
+		Position:            Point{},
+		PathPoints:          0,
+		DebugBrain:          false,
+		EquipmentDotations:  map[uint32]*EquipmentDotation{},
+		LentEquipments:      []*LentEquipment{},
+		BorrowedEquipments:  []*BorrowedEquipment{},
+		RawOperationalState: 100,
+		Neutralized:         false,
 	}
 	if !model.data.addUnit(unit) {
 		return fmt.Errorf("cannot insert created unit: %d", unit.Id)
@@ -114,7 +114,7 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 		unit.DebugBrain = *mm.BrainDebug
 	}
 	if mm.RawOperationalState != nil {
-		unit.OperationalState = *mm.RawOperationalState
+		unit.RawOperationalState = *mm.RawOperationalState
 	}
 	if mm.Neutralized != nil {
 		unit.Neutralized = *mm.Neutralized
