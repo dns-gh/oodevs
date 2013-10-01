@@ -36,6 +36,7 @@ BOOST_AUTO_TEST_CASE( compat_extra_enum_value )
     msg.mutable_enum_new_value_msg()->set_value( static_cast< after::EnumNewValue>( 0 ));
     BOOST_CHECK( EncodeDecode( msg ) );
 
+    ::google::protobuf::LogSilencer silencer;
     msg.mutable_enum_new_value_msg()->set_value( static_cast< after::EnumNewValue>( 1 ));
     BOOST_CHECK( !EncodeDecode( msg ) );
 }
