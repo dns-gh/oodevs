@@ -111,8 +111,8 @@ integration.getPositionInAORToSupportFriendWithIndirectFires = function( friendT
 end
 
 integration.getPositionToSupportFriendWithIndirectFires = function( friendToSupport )
-    local rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2  -- indirect fire case
     if integration.hasMission( meKnowledge.source ) then
+        local rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2  -- indirect fire case
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = integration.getDangerousDirection( mission )
         local friendPos = friendToSupport:getPosition()

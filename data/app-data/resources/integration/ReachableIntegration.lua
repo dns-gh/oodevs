@@ -843,7 +843,7 @@ integration.isPointInUrbanBlockTrafficable = function( self, loaded )
                     isTrafficable = true
                 end
             end
-            self.isPointInUrbanBlockTrafficableCache = ( pos and isTrafficable ) or false
+            self.isPointInUrbanBlockTrafficableCache = ( pos and isTrafficable )
         else
           self.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) )
         end
