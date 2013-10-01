@@ -607,7 +607,7 @@ void ExerciseConfig::SetLoggerPluginLogSettings( const LogSettingsData& settings
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetDispatcherLogFiles
+// Name: ExerciseConfig::GetDispatcherProtobufLogFiles
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
 std::size_t ExerciseConfig::GetDispatcherProtobufLogFiles() const
@@ -616,7 +616,7 @@ std::size_t ExerciseConfig::GetDispatcherProtobufLogFiles() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetDispatcherLogSize
+// Name: ExerciseConfig::GetDispatcherProtobufLogSize
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
 std::size_t ExerciseConfig::GetDispatcherProtobufLogSize() const
