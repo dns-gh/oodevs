@@ -376,9 +376,9 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
 // -----------------------------------------------------------------------------
 void MainWindow::New()
 {
-    static ExerciseCreationDialog* exerciseCreationDialog_ = new ExerciseCreationDialog( this, config_ );
-    if( exerciseCreationDialog_->exec() == QDialog::Accepted )
-        DoLoad( exerciseCreationDialog_->GetFileName() );
+    ExerciseCreationDialog exerciseCreationDialog( this, config_ );
+    if( exerciseCreationDialog.exec() == QDialog::Accepted )
+        DoLoad( exerciseCreationDialog.GetFileName() );
 }
 
 // -----------------------------------------------------------------------------
