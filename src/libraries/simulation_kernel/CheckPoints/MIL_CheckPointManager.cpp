@@ -292,13 +292,11 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const tools::Path& name )
     }
     catch( const xml::exception& e )
     {
-        _clearfp();
         MT_LOG_ERROR_MSG( "Can't save backup checkpoint ( " << tools::GetExceptionMsg( e ) << " )" );
         return false;
     }
     catch( ... )
     {
-        _clearfp();
         MT_LOG_ERROR_MSG( "Can't save backup checkpoint ( Unknown error )" );
         return false;
     }
@@ -330,7 +328,6 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const tools::Path& name, const t
     }
     catch( ... )
     {
-        _clearfp();
         MT_LOG_ERROR_MSG( "Can't save checkpoint ( Unknown error )" );
         return false;
     }
