@@ -29,7 +29,7 @@ func (s *TestSuite) TestLogin(c *C) {
 
 	// Test invalid version
 	client = connectClient(c, sim)
-	err = client.LoginWithVersion("admin", "user", "1.0")
+	err = client.LoginWithVersion("admin", "user", "1.0", "")
 	c.Assert(err, IsSwordError, "mismatched_protocol_version")
 	client.Close()
 
@@ -47,6 +47,26 @@ func (s *TestSuite) TestLogin(c *C) {
 	c.Assert(ok, Equals, true) // second wait for model initialization timed out
 	c.Assert(client.Model.IsReady(), Equals, true)
 	client.Close()
+
+	// Test retrieve authentication key
+	client = connectClient(c, sim)
+	key, err := client.GetAuthenticationKey()
+	c.Assert(key, Not(IsNil))
+	c.Assert(err, IsNil)
+
+	// For a non-connected client, the simulation send a same key
+	key2, err := client.GetAuthenticationKey()
+	c.Assert(key2, Not(IsNil))
+	c.Assert(err, IsNil)
+	c.Assert(key, Equals, key2)
+
+	// Test invalid authentication key
+	err = client.LoginWithAuthenticationKey("admin", "", "5.0", "invalid")
+	c.Assert(err, IsSwordError, "invalid_authentication_key")
+
+	// Test valid login
+	err = client.LoginWithAuthenticationKey("admin", "", "5.0", key)
+	c.Assert(err, IsNil)
 }
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {

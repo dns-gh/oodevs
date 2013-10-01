@@ -10,6 +10,9 @@ package swapi
 
 import (
 	"code.google.com/p/goprotobuf/proto"
+	"crypto/hmac"
+	"crypto/md5"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"io"
@@ -78,7 +81,34 @@ func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler) <-chan e
 	return c.postAuthRequestWithCheckingClientId(msg, handler, true)
 }
 
-func (c *Client) LoginWithVersion(username, password, version string) error {
+func (c *Client) GetAuthenticationKey() (string, error) {
+	msg := SwordMessage{
+		ClientToAuthentication: &sword.ClientToAuthentication{
+			Message: &sword.ClientToAuthentication_Content{
+				AuthenticationKeyRequest: &sword.AuthenticationKeyRequest{},
+			},
+		},
+	}
+	key := ""
+	handler := func(msg *sword.AuthenticationToClient_Content, clientId int32) error {
+		reply := msg.GetAuthenticationKeyResponse()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		key = reply.GetAuthenticationKey()
+		return nil
+	}
+	err := <-c.postAuthRequest(msg, handler)
+	return key, err
+}
+
+func (c *Client) LoginWithVersion(username, password, version, key string) error {
+	var keyVal *string
+	if len(key) != 0 {
+		mac := hmac.New(md5.New, []byte("29Ma500SaGroUp75"))
+		mac.Write([]byte(key))
+		keyVal = proto.String(hex.EncodeToString(mac.Sum(nil)))
+	}
 	msg := SwordMessage{
 		ClientToAuthentication: &sword.ClientToAuthentication{
 			Message: &sword.ClientToAuthentication_Content{
@@ -88,6 +118,7 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 					Version: &sword.ProtocolVersion{
 						Value: proto.String(version),
 					},
+					AuthenticationKey: keyVal,
 				},
 			},
 		},
@@ -115,8 +146,12 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 	return err
 }
 
+func (c *Client) LoginWithAuthenticationKey(username, password, version, key string) error {
+	return c.LoginWithVersion(username, password, "5.0", key)
+}
+
 func (c *Client) Login(username, password string) error {
-	return c.LoginWithVersion(username, password, "5.0")
+	return c.LoginWithVersion(username, password, "5.0", "")
 }
 
 func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
