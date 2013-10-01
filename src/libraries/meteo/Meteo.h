@@ -15,7 +15,6 @@
 #include <geometry/Types.h>
 #include <cassert>
 #include <boost/shared_ptr.hpp>
-#include <boost/serialization/extended_type_info.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
 

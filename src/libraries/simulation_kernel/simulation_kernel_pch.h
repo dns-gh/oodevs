@@ -15,7 +15,6 @@
 #pragma warning( disable: 4786 ) // identifier was truncated to '255' characters in the debug information
 #pragma warning( disable: 4355 ) // 'this' : used in base member initializer list
 
-#include <boost/serialization/extended_type_info.hpp> // $$$$ MCO : see http://old.nabble.com/-Serialization--extended_type_info.hpp-to27448440.html
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/function.hpp>
