@@ -18,6 +18,15 @@ package sword;
  *  @{
  */
 
+/** @struct AuthenticationKeyResponse
+    @brief A response message to an authentication key request
+
+    @see AuthenticationKeyRequest
+*/
+message AuthenticationKeyResponse {
+    required string authentication_key = 1;
+}
+
 /** @struct AuthenticationResponse
     @brief A response message to an authentication request
 
@@ -45,6 +54,8 @@ message AuthenticationResponse {
         //! Authentication failed because of a mismatched protocol
         //! version between client and server
         mismatched_protocol_version = 4;
+        //! Authentication failed because an invalid authentication key
+        invalid_authentication_key  = 5;
     }
     //! Reason for the failure of an authentication operation
     required ErrorCode              error_code        = 1;
@@ -315,6 +326,8 @@ message AuthenticationToClient {
             profile_destruction_request_ack = 7;
         //! List of profiles actually connected
         optional ConnectedProfileList      connected_profile_list       = 8;
+        //! A response message to an authentication key request.
+        optional AuthenticationKeyResponse authentication_key_response  = 9;
     }
     /** @property context
         @brief Identifies the request matching the response.

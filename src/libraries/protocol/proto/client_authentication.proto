@@ -18,12 +18,19 @@ package sword;
  *  @{
  */
 
+/** @struct AuthenticationKeyRequest
+    @brief A message sent to request authentication key.
+
+    @see AuthenticationKeyResponse
+*/
+message AuthenticationKeyRequest {
+}
+
 /** @struct ConnectedProfilesRequest
     @brief A message sent to request list of connected profiles.
 */
 message ConnectedProfilesRequest {
 }
-
 
 /** @struct AuthenticationRequest
     @brief A message sent to request authentication.
@@ -34,17 +41,20 @@ message AuthenticationRequest {
     //! The login uniquely identifies a profile loaded from
     //! "exercise/profiles.xml" or dynamically created during the game.
     //! @note An error message is sent if login does not exist
-    required string          login    = 1;
+    required string          login              = 1;
     //! The password is checked the one associated with login in the
     //! profile loaded from "exercise/profiles.xml" or dynamically created
     //! during the game. @note An error message is sent if password does
     //! not match
-    required string          password = 2;
+    required string          password           = 2;
     //! The protocol version used by the client is compared to the
     //! server protocol version in order to determine if protocols are
     //! compatible. @note An error message is sent if there is a protocol
     //! mismatch
-    required ProtocolVersion version  = 3;
+    required ProtocolVersion version            = 3;
+    //! The key is used to authenticate the client. An authenticated client
+    //! doesn't increment the server connections.
+    optional string          authentication_key = 4;
 }
 
 /** @struct ProfileCreationRequest
@@ -139,6 +149,8 @@ message ClientToAuthentication {
         optional ConnectedProfilesRequest  connected_profiles_request  = 5;
         //! Disconnection request message
         optional DisconnectionRequest      disconnection_request       = 6;
+        //! Authentication key request message
+        optional AuthenticationKeyRequest  authentication_key_request  = 7;
     }
     /** @property context
         @brief Identifies the request matching the response.
