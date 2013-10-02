@@ -15,7 +15,9 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
+#pragma warning( push, 0 )
 #include <boost/range/algorithm.hpp>
+#pragma warning( pop )
 
 using namespace logistic;
 

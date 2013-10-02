@@ -6,6 +6,7 @@
 // Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
+#include <boost/preprocessor/repetition/enum_shifted_params.hpp>
 
 #define BRAIN_COMMA BOOST_PP_COMMA_IF(BRAIN_NUM_ARGS)
 
