@@ -13,7 +13,6 @@
 #define __weather_PHY_Lighting_h_
 
 #include "ENT/ENT_Enums_Gen.h"
-#include "MT_Tools/MT_String.h"
 #include "protocol/Protocol.h"
 #include <boost/noncopyable.hpp>
 #include <map>
@@ -82,8 +81,6 @@ private:
 private:
     static T_LightingMap lightings_;
 };
-
-#include "PHY_Lighting.inl"
 
 }
 
