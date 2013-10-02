@@ -39,8 +39,6 @@ def parseenum(ui, headerpath, lineno, lines, restart, reval):
                         % (line,))
                 result = 1
                 continue
-            if m.group(1) != m.group(2):
-                ui.error( 'In ' + headerpath + ': report name "' + m.group(1) + '" different from its key "' + m.group(2) + '"' );
             reports.append(m.group(1))
     if state != 2:
         ui.error('error: reached end of %s before seeing all expected enums'
@@ -86,7 +84,7 @@ def parsecpp(ui, swordpath):
         'src/libraries/simulation_kernel/Entities/Orders/MIL_DecisionalReport.h')
 
     redecstart = re.compile(r'^\s*namespace\s+report\s*$')
-    redecval = re.compile(r'^\s*const\s+MIL_DecisionalReport\s*(eRC_[^\s,]+)\s*\(\s*"(eRC[^\s,]+)\"\s*\)\s*;')
+    redecval = re.compile(r'^\s*extern\s*const\s+MIL_DecisionalReport\s*(eRC_[^\s,]+)\s*;')
     lines = list(file(headerpath))
     result = 0
     decreports = parseenum(ui, headerpath, 0, lines, redecstart, redecval)[1]
