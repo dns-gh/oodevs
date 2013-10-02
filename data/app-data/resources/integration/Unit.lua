@@ -93,7 +93,7 @@ integration.reactivate = function( behaviour )
     local myself = myself
     myself.deactivations = myself.deactivations or {}
     if not myself.deactivations[ behaviour ] then
-        error("Reactivating " .. behaviour .. " which has not been deactivated.")
+        error("Reactivating " .. tostring( behaviour ) .. " which has not been deactivated.")
     end
     myself.deactivations[ behaviour ] = myself.deactivations[ behaviour ] - 1
     if myself.deactivations[ behaviour ] == 0 then
