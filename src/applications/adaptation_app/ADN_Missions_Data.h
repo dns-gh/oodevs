@@ -68,7 +68,7 @@ public:
     QStringList GetMissionsThatUse( E_MissionType type, ADN_Objects_Data_ObjectInfos& object );
 
     tools::Path GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text );
-    const boost::shared_ptr< kernel::Context >& GetMissionSheetContext() const;
+    const boost::shared_ptr< kernel::Context >& GetMissionSheetContext( E_MissionType type ) const;
     //@}
 
     //! @name Static Helpers
@@ -91,6 +91,7 @@ public slots:
     //@}
 
 private:
+    void AddMissionType( const std::string& xmltag );
     void ReadArchive( xml::xistream& input );
     void ReadMission( xml::xistream& input, E_MissionType modelType );
     void WriteArchive( xml::xostream& output );
@@ -100,8 +101,8 @@ private:
 
 private:
     std::vector< std::pair< std::string, T_Mission_Vector > > missionsVector_;
+    std::vector< boost::shared_ptr< kernel::Context > > missionSheetContexts_;
     tools::Path::T_Paths toDeleteMissionSheets_;
-    boost::shared_ptr< kernel::Context > missionSheetContext_;
 
 public:
     static tools::IdManager idManager_;

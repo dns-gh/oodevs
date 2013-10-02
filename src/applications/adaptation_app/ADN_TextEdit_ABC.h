@@ -27,16 +27,17 @@ public:
     virtual ~ADN_TextEdit_ABC();
 
     void SetToolTip( const QString& toolTip );
-    void ConnectWithRefValidity( const ADN_Ref_ABC& ref );
 
 signals:
     void TypeChanged( int );
     void OnTypeChanged( int );
-    void textChanged( const QString& );
 
 protected slots:
-    virtual void TextChanged() = 0;
+    virtual void TextChanged();
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
+
+private:
+    void ChangeBackgroundColor( const QColor& color );
 
 private:
     const QPalette originalPalette_;

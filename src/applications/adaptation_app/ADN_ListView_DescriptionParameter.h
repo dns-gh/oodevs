@@ -33,6 +33,7 @@ public:
     //@{
     void ConnectItem( bool bConnect );
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMsg );
+    virtual void OnLanguageChanged();
     //@}
 };
 

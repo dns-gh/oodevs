@@ -64,8 +64,6 @@ void ADN_ListView_FragOrderTypes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Missions_GUI::eParameters]                      ->Connect( &pInfos->parameters_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eFragOrderAvailableWithoutMission]->Connect( &pInfos->isAvailableWithoutMission_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eDiaType]                         ->Connect( &pInfos->diaType_, bConnect );
-
-    emit SelectionChanged();
 }
 
 namespace

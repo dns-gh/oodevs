@@ -77,16 +77,14 @@ namespace
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::ADN_Missions_Data()
     : ADN_Data_ABC( eMissions )
-    , missionSheetContext_( boost::make_shared< kernel::Context >() )
 {
     // $$$$ ABR 2013-04-23: Must be in E_MissionType order
-    missionsVector_.push_back( std::make_pair( "units", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair( "automats", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair( "populations", T_Mission_Vector() ) );
-    missionsVector_.push_back( std::make_pair( "fragorders", T_Mission_Vector() ) );
-
-    for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
-        it->second.AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
+    AddMissionType( "units" );
+    AddMissionType( "automats" );
+    AddMissionType( "populations" );
+    AddMissionType( "fragorders" );
+    // $$$$ ABR 2013-09-20: It would be great to synchronize xml tags (units, automats, etc.) with E_MissionType eToSim translation used for object name and translation context (unit, automat, etc.)
+    // to avoid this kind of list, and allow us to iterate over E_MissionType
 }
 
 // -----------------------------------------------------------------------------
@@ -96,6 +94,17 @@ ADN_Missions_Data::ADN_Missions_Data()
 ADN_Missions_Data::~ADN_Missions_Data()
 {
     PurgePath( GetTemporaryPath() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::AddMissionType
+// Created: ABR 2013-09-20
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::AddMissionType( const std::string& xmltag )
+{
+    missionsVector_.push_back( std::make_pair( xmltag, ADN_Missions_Data::T_Mission_Vector() ) );
+    missionsVector_.back().second.AddUniquenessChecker( eError, ADN_Missions_Data::duplicateName_, &ADN_Tools::NameExtractor );
+    missionSheetContexts_.push_back( boost::make_shared< kernel::Context >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,7 +227,6 @@ tools::Path ADN_Missions_Data::GenerateMissionSheet( int index, boost::shared_pt
         throw MASA_EXCEPTION( "Mission not found: " + text->Key() );
     const tools::Path tempDir = CreateMissionDirectory( kernel::Language::Current(), GetTemporaryPath( index ) );
     GetCssFile().Copy( GetTemporaryCssFile(), tools::Path::OverwriteIfExists );
-    tempDir.CreateDirectories();
     mission->WriteMissionSheet( tempDir, kernel::Language::Current() );
     mission->SetNeedsSaving( true );
     return tempDir / tools::Path::FromUTF8( mission->strName_.GetData() ) + ".html";
@@ -567,7 +575,7 @@ void ADN_Missions_Data::CheckAndFixLoadingErrors() const
 // Name: ADN_Missions_Data::GetMissionSheetContext
 // Created: ABR 2013-08-28
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetContext() const
+const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetContext( E_MissionType type ) const
 {
-    return missionSheetContext_;
+    return missionSheetContexts_[ type ];
 }

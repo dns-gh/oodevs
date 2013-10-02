@@ -23,10 +23,10 @@
 // Name: ADN_ListView_DescriptionAttachment constructor
 // Created: NPT 2013-01-16
 // -----------------------------------------------------------------------------
-ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_MissionType missionType, ADN_EditLine_ABC* missionName )
+ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_MissionType missionType )
     : ADN_ListView( 0, "ADN_ListView_DescriptionAttachment", tr( "Attachments" ) )
     , missionType_( missionType )
-    , missionName_( missionName )
+    , missionName_( 0 )
 {
     pConnector_ = new ADN_Connector_ListView< ADN_Missions_ABC::ADN_Missions_Attachment >( *this );
     setHeaderHidden( true );
@@ -39,6 +39,29 @@ ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_Missio
 ADN_ListView_DescriptionAttachment::~ADN_ListView_DescriptionAttachment()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_DescriptionAttachment::OnItemSelected
+// Created: ABR 2013-09-20
+// -----------------------------------------------------------------------------
+void ADN_ListView_DescriptionAttachment::OnItemSelected( void* pData )
+{
+    if( !pData )
+    {
+        missionName_ = 0;
+        return;
+    }
+    missionName_ = &static_cast< ADN_Missions_ABC* >( pData )->strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_DescriptionAttachment::GetImageDir
+// Created: ABR 2013-10-01
+// -----------------------------------------------------------------------------
+tools::Path ADN_ListView_DescriptionAttachment::GetImageDir( std::string key ) const
+{
+    return ADN_Missions_Data::GetTemporaryImagesPath( missionType_ ) / tools::Path::FromUTF8( key );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,10 +79,14 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         "GIF (*.gif)\n"
         "PNG (*.png)\n" )
         );
-    if( fileName.IsEmpty() )
+    if( fileName.ToUTF8().find( '$' ) != std::string::npos )
+    {
+        QMessageBox::warning( this, tr( "Warning" ), tr( "'$' character if forbidden in image's path." ) );
         return;
-    const tools::Path namePath = tools::Path::FromUnicode( missionName_->text().replace( "\'", " ").toStdWString() );
-    const tools::Path imageDir = ADN_Missions_Data::GetTemporaryImagesPath( missionType_ ) / namePath;
+    }
+    if( fileName.IsEmpty() || !missionName_ )
+        return;
+    const tools::Path imageDir = GetImageDir( missionName_->GetKey() );
     if( !imageDir.IsDirectory() )
         imageDir.CreateDirectories();
     tools::Path newFileName = imageDir / fileName.FileName();
@@ -105,9 +132,10 @@ void ADN_ListView_DescriptionAttachment::CopyName()
 // -----------------------------------------------------------------------------
 void ADN_ListView_DescriptionAttachment::RemoveFile()
 {
+    if( !missionName_ )
+        return;
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    tools::Path namePath = tools::Path::FromUnicode( missionName_->text().replace( "\'", " ").toStdWString() );
-    tools::Path imageDir = ADN_Missions_Data::GetTemporaryImagesPath( missionType_ ) / namePath;
+    tools::Path imageDir = GetImageDir( missionName_->GetKey() );
     imageDir /= tools::Path::FromUnicode( GetModel().item( currentIndex().row() )->text().toStdWString() );
     if( imageDir.Exists() && imageDir.IsRegularFile() )
         imageDir.Remove();
@@ -131,7 +159,6 @@ void ADN_ListView_DescriptionAttachment::contextMenuEvent( QContextMenuEvent* ev
     }
     menu->exec( event->globalPos() );
 }
-
 
 bool ADN_ListView_DescriptionAttachment::IsFileInList( const QString& fileName )
 {

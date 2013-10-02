@@ -72,8 +72,6 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
         vItemConnectors_[ADN_Missions_GUI::eCDTBehavior]->Connect( &pInfos->cdtDiaBehavior_, bConnect );
     }
     vItemConnectors_[ ADN_Missions_GUI::eSymbol ]->Connect( &pInfos->symbol_, bConnect );
-
-    emit SelectionChanged();
 }
 
 // -----------------------------------------------------------------------------

@@ -289,6 +289,12 @@ namespace
             return editLine_;
         }
 
+        virtual void focusInEvent( QFocusEvent* /*e*/ )
+        {
+            editLine_->setFocus( Qt::MouseFocusReason );
+            editLine_->setSelection( 0, editLine_->text().size() );
+        }
+
     private:
         ADN_EditLine_LocalizedString* editLine_;
         ADN_ApplyButton* applyButton_;

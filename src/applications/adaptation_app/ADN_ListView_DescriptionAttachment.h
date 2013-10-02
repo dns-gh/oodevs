@@ -10,9 +10,9 @@
 #ifndef __ADN_ListView_DescriptionAttachment_h_
 #define __ADN_ListView_DescriptionAttachment_h_
 
-#include <boost/noncopyable.hpp>
-#include "ADN_EditLine_ABC.h"
 #include "ADN_ListView.h"
+
+class ADN_Type_LocalizedString;
 
 // =============================================================================
 /** @class  ADN_ListView_DescriptionAttachment
@@ -27,7 +27,7 @@ class ADN_ListView_DescriptionAttachment : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_DescriptionAttachment( E_MissionType missionType, ADN_EditLine_ABC* missionName );
+             ADN_ListView_DescriptionAttachment( E_MissionType missionType );
     virtual ~ADN_ListView_DescriptionAttachment();
     //@}
 
@@ -37,19 +37,26 @@ public:
     bool IsFileInList( const QString& fileName );
     //@}
 
+public slots:
     //! @name slots
     //@{
-public slots:
     void AddFile();
     void CopyName();
     void RemoveFile();
+    void OnItemSelected( void* );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    tools::Path GetImageDir( std::string key ) const;
     //@}
 
 private:
     //! @name members
     //@{
     E_MissionType missionType_;
-    ADN_EditLine_ABC* missionName_;
+    ADN_Type_LocalizedString* missionName_;
     //@}
 };
 

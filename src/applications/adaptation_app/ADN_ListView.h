@@ -84,7 +84,7 @@ public slots:
     bool SetCurrentItem( const QString& itemName );
     void OnFilterChanged( const QString& );
     void OnFilterChanged( const QStringList& );
-    void OnLanguageChanged();
+    virtual void OnLanguageChanged();
 
 protected:
     void keyReleaseEvent( QKeyEvent* pEvent );

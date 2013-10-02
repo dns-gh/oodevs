@@ -2241,6 +2241,14 @@ PNG (*.png)
         <source>Remove File</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_DescriptionParameter</name>

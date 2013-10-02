@@ -30,7 +30,7 @@ ADN_Missions_Parameter::ADN_Missions_Parameter(E_MissionType type)
     if( type != eMissionType_FragOrder )
         context += "-missions";
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context + "-parameters" ) );
-    description_.SetContext( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetContext() );
+    description_.SetContext( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetContext( missionType_ ) );
     FillChoices();
 }
 
@@ -293,4 +293,14 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
     if( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject != knowledgeObjects_.size() )
         Write( output, knowledgeObjects_, type_.GetData(), eMissionParameterTypeObjectKnowledge, "objects" );
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::CheckValidity
+// Created: ABR 2013-09-26
+// -----------------------------------------------------------------------------
+void ADN_Missions_Parameter::CheckValidity()
+{
+    ADN_RefWithLocalizedName::CheckValidity();
+    CheckTypeValidity( description_ );
 }
