@@ -66,7 +66,8 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpC
     tools::ExerciseConfig* exerciceConfig = static_cast< tools::ExerciseConfig* >( config_.get() );
     logger_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Sim.log" ),
         exerciceConfig->GetSimLogFiles(), exerciceConfig->GetSimLogSize(),
-        exerciceConfig->GetSimLogLevel(), bClearPreviousLog, MT_Logger_ABC::eSimulation, exerciceConfig->IsSimLogInBytes() ) );
+        exerciceConfig->GetSimLogLevel(), bClearPreviousLog,
+        MT_Logger_ABC::eSimulation, exerciceConfig->IsSimLogInBytes() ) );
     MT_LOG_REGISTER_LOGGER( *logger_ );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( ( "Sword Simulation - Version " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE ).c_str() );

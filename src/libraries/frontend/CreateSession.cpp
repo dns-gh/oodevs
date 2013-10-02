@@ -68,7 +68,6 @@ void CreateSession::SetDefaultValues()
     {
         try
         {
-            //bpt::from_iso_string( session_.ToUTF8() );
             setter_->SetValue( "session/meta/date", session_ );
         }
         catch( ... )
