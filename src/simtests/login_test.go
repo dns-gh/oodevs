@@ -61,11 +61,11 @@ func (s *TestSuite) TestLogin(c *C) {
 	c.Assert(key, Equals, key2)
 
 	// Test invalid authentication key
-	err = client.LoginWithAuthenticationKey("admin", "", "5.0", "invalid")
+	err = client.LoginWithAuthenticationKey("admin", "", "invalid")
 	c.Assert(err, IsSwordError, "invalid_authentication_key")
 
 	// Test valid login
-	err = client.LoginWithAuthenticationKey("admin", "", "5.0", key)
+	err = client.LoginWithAuthenticationKey("admin", "", key)
 	c.Assert(err, IsNil)
 }
 

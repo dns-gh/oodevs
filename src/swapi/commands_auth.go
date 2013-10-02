@@ -146,7 +146,7 @@ func (c *Client) LoginWithVersion(username, password, version, key string) error
 	return err
 }
 
-func (c *Client) LoginWithAuthenticationKey(username, password, version, key string) error {
+func (c *Client) LoginWithAuthenticationKey(username, password, key string) error {
 	return c.LoginWithVersion(username, password, "5.0", key)
 }
 
