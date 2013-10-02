@@ -118,22 +118,12 @@ void ActivableCapacity::Update( MIL_Object_ABC& object, unsigned int time )
     {
         unsigned int delta = static_cast< int >( time - timeOfCreation_ );
         ObstacleAttribute& attr = object.GetAttribute< ObstacleAttribute >();
-        double activationTime = MIL_Tools::ConvertSecondsToSim( attr.GetActivationTime() );
-        if( attr.IsTimesUndefined() )
+        if( !attr.IsTimesUndefined() )
         {
-            attr.Activate( true );
-        }
-        else
-        {
-            if( attr.GetActivityTime() > 0 &&
-                delta > MIL_Tools::ConvertSecondsToSim( attr.GetEndActivity() ) )
-            {
+            if( attr.GetActivityTime() > 0 && delta > MIL_Tools::ConvertSecondsToSim( attr.GetEndActivity() ) )
                 attr.Activate( false );
-            }
-            else if( delta > activationTime )
-            {
+            else if( delta > MIL_Tools::ConvertSecondsToSim( attr.GetActivationTime() ) )
                 attr.Activate( true );
-            }
         }
     }
 }
