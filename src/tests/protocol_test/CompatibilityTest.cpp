@@ -16,15 +16,17 @@
 namespace
 {
 
-bool EncodeDecode( const after::Root& input )
+boost::shared_ptr< before::Root > EncodeDecode( const after::Root& input )
 {
     if( !input.IsInitialized() )
         throw std::logic_error( "input message is not initialized" );
     std::vector< google::protobuf::uint8 > buffer( input.ByteSize() );
     if( !input.SerializeWithCachedSizesToArray( &buffer[0] ) )
         throw std::logic_error( "could not serialize input message" );
-    before::Root output;
-    return output.ParseFromArray( &buffer[0], static_cast< int >( buffer.size() ));
+    boost::shared_ptr< before::Root > output( new before::Root );
+    if( !output->ParseFromArray( &buffer[0], static_cast< int >( buffer.size() )))
+        output.reset();
+    return output;
 }
 
 }  // namespace
@@ -54,3 +56,11 @@ BOOST_AUTO_TEST_CASE( compat_extra_enum_value_with_default )
     BOOST_CHECK( EncodeDecode( msg ) );
 }
 
+BOOST_AUTO_TEST_CASE( compat_turning_uint_into_int )
+{
+    after::Root msg;
+    msg.mutable_uint_to_int_msg()->set_uint_to_int( -29 );
+    auto decoded = EncodeDecode( msg );
+    BOOST_REQUIRE( decoded );
+    BOOST_CHECK_EQUAL( uint32_t( -29 ), decoded->uint_to_int_msg().uint_to_int() );
+}

@@ -19,6 +19,12 @@ message EnumNewValueMsg {
     optional EnumNewValue optional = 2;
 }
 
+message UintToIntMsg {
+    required int32 uint_to_int = 1;
+}
+
 message Root {
     optional EnumNewValueMsg enum_new_value_msg = 1;
+    optional UintToIntMsg uint_to_int_msg = 2;
 }
+
