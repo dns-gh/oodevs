@@ -818,7 +818,7 @@ func (c *Client) ChangeHealthState(crowdId uint32, healthy, wounded, contaminate
 		sword.UnitMagicAction_crowd_change_health_state)
 }
 
-func (c *Client) changeAdhesions(tasker *sword.Tasker, action *sword.UnitMagicAction_Type,
+func (c *Client) changeAdhesions(tasker *sword.Tasker, action UnitMagicEnumerator,
 	adhesions map[uint32]float32) error {
 	params := MakeParameters()
 	if len(adhesions) != 0 {
