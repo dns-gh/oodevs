@@ -11,6 +11,9 @@
 #include "MobilityCapacity.h"
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MobilityCapacity )
 
@@ -56,11 +59,11 @@ void MobilityCapacity::InitializeSpeed( xml::xistream& xis )
 void MobilityCapacity::InitializeSpeedPolicy( xml::xistream& xis )
 {
     std::string strSpeedPolicy( xis.attribute< std::string >( "unit-speed-impact-mode", std::string() ) );
-    if( sCaseInsensitiveEqual()( strSpeedPolicy, "AuPlusLent" ) )
+    if( boost::iequals( strSpeedPolicy, "AuPlusLent" ) )
         nSpeedPolicy_ = eSpeedPolicy_Slowest;
-    else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseMaxObjet" ) )
+    else if( boost::iequals( strSpeedPolicy, "VitesseMaxObjet" ) )
         nSpeedPolicy_ = eSpeedPolicy_ObjectMaxSpeed;
-    else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseMaxAgent" ) )
+    else if( boost::iequals( strSpeedPolicy, "VitesseMaxAgent" ) )
     {
         nSpeedPolicy_ = eSpeedPolicy_AgentMaxSpeed;
         xis >> xml::attribute( "max-unit-percentage-speed", rSpeedPolicyMaxSpeedAgentFactor_ );
@@ -68,7 +71,7 @@ void MobilityCapacity::InitializeSpeedPolicy( xml::xistream& xis )
             throw MASA_EXCEPTION( xis.context() + "max-unit-percentage-speed not in [0..100]" );
         rSpeedPolicyMaxSpeedAgentFactor_ /= 100.;
     }
-    else if( sCaseInsensitiveEqual()( strSpeedPolicy, "VitesseBlocUrbain" ) )
+    else if( boost::iequals( strSpeedPolicy, "VitesseBlocUrbain" ) )
         nSpeedPolicy_ = eSpeedPolicy_UrbanObjectMaxSpeed;
 }
 

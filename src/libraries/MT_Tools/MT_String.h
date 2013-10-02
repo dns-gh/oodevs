@@ -18,29 +18,6 @@
 //-------------------------------------------------------------------------
 /** @name Comparaison de chaînes de caractère */
 //-------------------------------------------------------------------------
-struct sCaseInsensitiveEqual
-{
-    bool operator () ( const char* lhs, const char* rhs ) const
-    {
-        return boost::iequals( lhs, rhs );
-    }
-
-    bool operator () ( const std::string& lhs, const std::string& rhs ) const
-    {
-        return operator () ( lhs.c_str(), rhs.c_str() );
-    }
-
-    bool operator () ( const char* lhs, const std::string& rhs ) const
-    {
-        return operator () ( lhs, rhs.c_str() );
-    }
-
-    bool operator () ( const std::string& lhs, const char* rhs ) const
-    {
-        return operator () ( lhs.c_str(), rhs );
-    }
-};
-
 struct sCaseInsensitiveLess
 {
     bool operator () ( const char* lhs, const char* rhs ) const
