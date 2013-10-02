@@ -1957,7 +1957,15 @@ message UnitMagicAction {
         //! parameters[3], BooleanValue, optional: if true, force the unit to
         //!    become the new PC for this automat.
         unit_creation                     = 12;
-        //! A create fire order magic action
+        //! Launch a strike on a unit knowledge
+        //! The tasker (reporter) must be a valid unit identifier.
+        //! parameters[0], Identifier: the target's knowledge identifier in
+        //!  reporters's knowledges.
+        //! parameters[1], ResourceType: the ammunition type identifier
+        //!  to launch, must be compatible with indirect fire.
+        //!  If the ammunition is guided, the target must be illuminated.
+        //! parameters[2], AReal: real multiplied with the resource
+        //!  intervention type to get the number of iterations.
         create_fire_order                 = 13;
         //! A crowd total destruction magic action
         //! Kill all humans in a crowd

@@ -1565,15 +1565,6 @@ void AgentServerMsgMgr::OnReceiveNoteDestruction( const sword::MarkerDestruction
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveActionCreateFireOrderAck
-// Created: MGD 2010-02-24
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveActionCreateFireOrderAck( const sword::ActionCreateFireOrderAck& message, unsigned long /*nCtx*/ )
-{
-    CheckAcknowledge( logger_, message );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAarInformation
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
@@ -2014,8 +2005,6 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         OnReceiveKnowledgeGroupUpdateAck( wrapper.message().knowledge_group_update_ack(), wrapper.context() );
     else if( wrapper.message().has_knowledge_group_creation_ack() )
         OnReceiveKnowledgeGroupCreationAck( wrapper.message().knowledge_group_creation_ack(), wrapper.context() );
-    else if( wrapper.message().has_action_create_fire_order_ack() )
-        OnReceiveActionCreateFireOrderAck( wrapper.message().action_create_fire_order_ack(), wrapper.context() );
     else if( wrapper.message().has_control_global_weather() )
         OnReceiveControlMeteoGlobal        ( wrapper.message().control_global_weather() );
     else if( wrapper.message().has_control_local_weather_creation() )

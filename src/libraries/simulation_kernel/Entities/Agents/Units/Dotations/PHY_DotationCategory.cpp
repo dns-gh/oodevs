@@ -303,14 +303,14 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::ApplyIndirectFireEffect
+// Name: PHY_DotationCategory::ApplyStrikeEffect
 // Created: MGD 2010-10-15
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory::ApplyStrikeEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
     for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
-        (*it)->ApplyEffect( firer, target, rInterventionTypeFired, fireResult );
+        (*it)->ApplyStrikeEffect( firer, target, rInterventionTypeFired, fireResult );
 }
 
 // -----------------------------------------------------------------------------

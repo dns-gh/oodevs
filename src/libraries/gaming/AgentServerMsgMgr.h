@@ -19,7 +19,6 @@ namespace sword
     class Tasker;
     class AarInformation;
     class AarToClient;
-    class ActionCreateFireOrderAck;
     class AuthenticationResponse;
     class AuthenticationToClient;
     class AutomatAttributes;
@@ -491,11 +490,6 @@ private:
     // Burn surface
     void OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long nCtx );
     //@}
-
-    // LTO begin
-    // CreateFireOrder
-    void OnReceiveActionCreateFireOrderAck( const sword::ActionCreateFireOrderAck& message, unsigned long nCtx );
-    // LTO end
 
     //! @name Helpers
     //@{

@@ -1119,7 +1119,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                 throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::create_fire_order:
-            ProcessMagicActionCreateFireOrder( message, nCtx );
+            ProcessMagicActionCreateFireOrder( message );
             break;
         case UnitMagicAction::change_knowledge_group:
             ProcessAutomateChangeKnowledgeGroup( message, nCtx );
@@ -1208,6 +1208,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     catch( const NET_AsnException< UnitActionAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
     }
     catch( const std::exception& e )
     {
@@ -1923,58 +1924,49 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 // Created: MGD 2010-02-24
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction& msg, unsigned int nCtx )
+void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction& msg )
 {
-    client::ActionCreateFireOrderAck ack;
-    ack().set_error_code( ActionCreateFireOrderAck::no_error );
-    try
-    {
-        if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, 3 parameters expected" );
 
-        // Reporter
-        MIL_Agent_ABC* reporter = ( msg.tasker().has_unit() && msg.tasker().unit().has_id() ) ? FindAgentPion( msg.tasker().unit().id() ) : 0;
-        if( !reporter )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_reporter );
+    MIL_Agent_ABC* reporter = msg.tasker().has_unit() && msg.tasker().unit().has_id() ? FindAgentPion( msg.tasker().unit().id() ) : 0;
+    if( !reporter )
+        throw MASA_BADPARAM_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit, "invalid tasker, the receiver must be a valid unit" );
 
-        // Target
-        const MissionParameter& target = msg.parameters().elem( 0 );
-        if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
+    const MissionParameter& target = msg.parameters().elem( 0 );
+    if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be an identifier" );
 
-        boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
-        if( !targetKn )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
+    boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
+    if( !targetKn )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a valid knowledge identifier in reporter's knowledge group" );
 
-        // Ammo
-        const MissionParameter& ammo = msg.parameters().elem( 1 );
-        if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition );
+    const MissionParameter& ammo = msg.parameters().elem( 1 );
+    if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
+        throw MASA_BADPARAM_UNIT( "parameters[1] must be a resource type" );
 
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
-        if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition );
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
+    if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
+        throw MASA_BADPARAM_UNIT( "parameters[1] must be a dotation category "
+                                  "identifier that can be used for indirect fire" );
 
-        if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_target_not_illuminated );
+    if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
+        throw MASA_BADPARAM_UNIT( "parameters[1] is a guided dotation but the target is not illuminated" );
 
-        // Iterations
-        const MissionParameter& iterations = msg.parameters().elem( 2 );
-        if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_iteration );
+    const MissionParameter& iterations = msg.parameters().elem( 2 );
+    if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
+        throw MASA_BADPARAM_UNIT("parameters[2] must be a real" );
 
-        PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
-        unsigned int ammos = (unsigned int) pDotationCategory->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
+    const float value = iterations.value().Get( 0 ).areal();
+    if( value <= 0.f )
+        throw MASA_BADPARAM_UNIT( "parameters[2] must be a positive real number" );
 
-        MIL_Report::PostEvent( *reporter, report::eRC_TirIndirectSurCible, targetKn );
+    PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
+    const unsigned int ammos = static_cast< unsigned int >( pDotationCategory->ConvertToNbrAmmo( value ) );
 
-        pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
-    }
-    catch( const NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    MIL_Report::PostEvent( *reporter, report::eRC_TirIndirectSurCible, targetKn );
+
+    pDotationCategory->ApplyStrikeEffect( *reporter, targetKn->GetAgentKnown(), ammos, fireResult );
 }
 
 // -----------------------------------------------------------------------------
