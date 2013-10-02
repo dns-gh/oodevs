@@ -18,6 +18,7 @@
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
 #include "MissionController.h"
+#include "MIL_EntityManagerStaticMethods.h"
 #include "PopulationFactory.h"
 #include "InhabitantFactory.h"
 #include "KnowledgesVisitor_ABC.h"
@@ -279,6 +280,12 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
     ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(), MIL_EffectManager::GetEffectManager(),
                                        pSink,
                                        MIL_AgentServer::GetWorkspace().GetConfig() );
+}
+
+void MIL_EntityManager::Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
+        MIL_ObjectFactory& objectFactory )
+{
+    MIL_EntityManagerStaticMethods::Initialize( loader, time, objectFactory );
 }
 
 // -----------------------------------------------------------------------------

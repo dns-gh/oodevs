@@ -15,10 +15,6 @@
 #include "MIL_Random.h"
 #include "tools/SessionConfig.h"
 #include <boost/optional.hpp>
-#pragma warning ( push )
-#pragma warning ( disable : 4244 4245 )
-#include <boost/CRC.hpp>
-#pragma warning ( pop )
 #include <map>
 
 namespace xml
@@ -58,7 +54,6 @@ public:
     unsigned long      GetNetworkTimeout           () const;
     bool               IsThreadedNetwork           () const;
 
-    bool               UseCheckPointCRC            () const;
     bool               UseNetworkLogger            () const;
     unsigned short     GetNetworkLoggerPort        () const;
     unsigned int       GetCheckPointsFrequency     () const;
@@ -92,12 +87,6 @@ public:
     virtual tools::Path GetOrbatFile() const;
     //@}
 
-    //! @name CheckPoints
-    //@{
-    void AddFileToCRC( const tools::Path& fileName );
-    boost::crc_32_type::value_type serialize( const tools::Path& strFileName ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{
@@ -106,11 +95,6 @@ private:
     void ReadCheckPointConfiguration( xml::xistream& xis );
     void ReadDebugConfiguration     ( xml::xistream& xis );
     void ConfigureRandom            ( xml::xistream& xis );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< const tools::Path, boost::crc_32_type::value_type > T_CRCMap;
     //@}
 
 private:
@@ -128,7 +112,6 @@ private:
     std::string    networkAddress_;
     unsigned long  networkTimeOut_;
     bool           bCheckPointOrbat_;
-    bool           bUseCheckPointCRC_;
     bool           bCheckAutomateComposition_;
     bool           bUseDecDebug_;
     bool           bUsePathDebug_;
@@ -142,7 +125,6 @@ private:
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
     tools::Path    strCheckPointNameTestMode_;
-    T_CRCMap       CRCMap_;
     int            randomSeed_;
     bool           randomGaussian_[ MIL_Random::eContextsNbr ];
     double         randomDeviation_[ MIL_Random::eContextsNbr ];

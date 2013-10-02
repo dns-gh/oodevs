@@ -39,7 +39,6 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , networkLoggerPort_( 0 )
     , networkTimeOut_( 10000 )
     , bCheckPointOrbat_( false )
-    , bUseCheckPointCRC_( false )
     , bCheckAutomateComposition_( false )
     , bUseDecDebug_( false )
     , bUsePathDebug_( false )
@@ -213,7 +212,6 @@ void MIL_Config::ReadCheckPointConfiguration( xml::xistream& xis )
     xis >> xml::start( "checkpoint" )
             >> xml::attribute( "frequency", frequency )
             >> xml::attribute( "keep", checkPointsKept_ )
-            >> xml::attribute( "usecrc", bUseCheckPointCRC_ )
         >> xml::end;
     if( !tools::DecodeTime( frequency, checkPointsFrequency_ ) )
         throw MASA_EXCEPTION( xis.context() + "Invalid time specified for checkpoint frequency" );
@@ -235,40 +233,6 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> logSim
         >> xml::end;
     SetSimLogSettings( logSim );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::AddFileToCRC
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-void MIL_Config::AddFileToCRC( const tools::Path& fileName )
-{
-    if( CRCMap_.find( fileName ) == CRCMap_.end() )
-        CRCMap_[ fileName ] = MIL_Tools::ComputeCRC( fileName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::serialize
-// Created: JVT 2005-03-22
-// -----------------------------------------------------------------------------
-boost::crc_32_type::value_type MIL_Config::serialize( const tools::Path& strFileName ) const
-{
-    try
-    {
-        tools::Xofstream xos( strFileName );
-        xos << xml::start( "files" );
-        for( auto it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
-            xos << xml::start( "file" )
-                    << xml::attribute( "name", it->first )
-                    << xml::attribute( "crc", it->second )
-                << xml::end;
-        xos << xml::end;
-    }
-    catch( const xml::exception& e )
-    {
-        throw MASA_EXCEPTION( "Cannot create file '" + strFileName.ToUTF8() + "', " + tools::GetExceptionMsg( e ) );
-    }
-    return MIL_Tools::ComputeCRC( strFileName );
 }
 
 // -----------------------------------------------------------------------------
@@ -381,15 +345,6 @@ bool MIL_Config::IsHookProfilingEnabled() const
 bool MIL_Config::IsCommandProfilingEnabled() const
 {
     return bCommandProfilingEnabled_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::UseCheckPointCRC
-// Created: NLD 2005-04-15
-// -----------------------------------------------------------------------------
-bool MIL_Config::UseCheckPointCRC() const
-{
-    return bUseCheckPointCRC_;
 }
 
 // -----------------------------------------------------------------------------

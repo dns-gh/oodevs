@@ -46,30 +46,6 @@ const weather::Meteo::sWindData& MIL_Tools::GetWind( const MT_Vector2D& vPos )
     return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetWind( vPos );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Tools::ComputeCRC
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-boost::crc_32_type::value_type MIL_Tools::ComputeCRC( const tools::Path& fileName )
-{
-    static const unsigned int nBufferSize = 4096;
-
-    char buffer[ nBufferSize ];
-    boost::crc_32_type CRC;
-
-    tools::Ifstream file( fileName, std::ios::in | std::ios::binary );
-
-    while( file )
-    {
-        file.read( buffer, nBufferSize );
-        CRC.process_bytes( buffer, static_cast< size_t >( file.gcount() ));
-    }
-
-    file.close();
-
-    return CRC.checksum();
-}
-
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertCoordMosToSim
 // Created: NLD 2002-08-06

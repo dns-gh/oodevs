@@ -129,7 +129,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     AgentServerInit initGuard( pTheAgentServer_ );
 
     MIL_IDManager::SetKeepIdsMode( true, FindMaxId( config_ ) );
-    config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();
     pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
@@ -200,7 +199,7 @@ void MIL_AgentServer::ReadStaticData()
     ReadTerData();
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     PHY_MeteoDataManager::Initialize();
-    MIL_EntityManager::Initialize( config_, *this, *pObjectFactory_ );
+    MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
     pAgentServer_ = new NET_AgentServer( config_, *this );
 }
 
@@ -211,7 +210,6 @@ void MIL_AgentServer::ReadStaticData()
 void MIL_AgentServer::ReadTerData()
 {
     MT_LOG_INFO_MSG( "Initializing terrain" );
-    config_.AddFileToCRC( config_.GetTerrainFile() );
     MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
     TER_World::Initialize( config_ );
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );

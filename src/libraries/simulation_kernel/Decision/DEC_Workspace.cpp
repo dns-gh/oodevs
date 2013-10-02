@@ -79,8 +79,7 @@ DEC_Workspace::~DEC_Workspace()
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
     const unsigned int tickDuration = config.GetTimeStep();
-    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
-    config.AddFileToCRC( fileLoaded );
+    config.GetPhyLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +152,6 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
 {
     //DIA4
     config.GetLoader().LoadFile( config.GetDecisionalFile(), boost::bind( &DEC_Workspace::LoadDIA, this, boost::ref( config ), _1 ) );
-    config.AddFileToCRC( config.GetDecisionalFile() );
 }
 
 //-----------------------------------------------------------------------------
@@ -203,8 +201,7 @@ void DEC_Workspace::RegisterSourcePath( xml::xistream& xis, MIL_Config& config, 
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeMissions( MIL_Config& config )
 {
-    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
-    config.AddFileToCRC( fileLoaded );
+    config.GetPhyLoader().LoadPhysicalFile( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,10 +222,8 @@ void DEC_Workspace::LoadMissions( xml::xistream& xisMission )
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::string, tools::Path >& strSourcePaths )
 {
-    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "models", boost::bind(
+    config.GetPhyLoader().LoadPhysicalFile( "models", boost::bind(
         &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ), config.GetIntegrationDir() ) );
-    config.AddFileToCRC( fileLoaded );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -309,6 +304,5 @@ float DEC_Workspace::GetTime() const
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 {
-    const tools::Path fileLoaded = config.GetPhyLoader().LoadPhysicalFile( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
-    config.AddFileToCRC( fileLoaded );
+    config.GetPhyLoader().LoadPhysicalFile( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
 }

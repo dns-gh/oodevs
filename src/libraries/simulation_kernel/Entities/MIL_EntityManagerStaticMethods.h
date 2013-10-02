@@ -10,8 +10,12 @@
 #ifndef __MIL_EntityManagerStaticMethods_h_
 #define __MIL_EntityManagerStaticMethods_h_
 
-#include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.hpp>
+
+namespace tools
+{
+    class PhyLoader;
+}
 
 class MIL_Time_ABC;
 class MIL_ObjectFactory;
@@ -34,7 +38,7 @@ public:
 
     //! @name static Initialization
     //@{
-    static void Initialize( MIL_Config& config, const MIL_Time_ABC& time, MIL_ObjectFactory& objectFactory );
+    static void Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time, MIL_ObjectFactory& objectFactory );
     //@}
 
 private:
@@ -48,12 +52,12 @@ protected:
     //! @name static Type Initializations
     //@{
 
-    static void InitializeFuneral         ( MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeMedical         ( MIL_Config& config );
-    static void InitializeComposantes     ( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
-    static void InitializeWeapons         ( MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeObjects         ( MIL_Config& config, MIL_ObjectFactory& objectFactory );
-    static void InitializeSensors         ( MIL_Config& config, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
+    static void InitializeFuneral         ( const tools::PhyLoader& loader, const MIL_Time_ABC& time );
+    static void InitializeMedical         ( const tools::PhyLoader& loader );
+    static void InitializeComposantes     ( const tools::PhyLoader& loader, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
+    static void InitializeWeapons         ( const tools::PhyLoader& loader, const MIL_Time_ABC& time );
+    static void InitializeObjects         ( const tools::PhyLoader& loader, MIL_ObjectFactory& objectFactory );
+    static void InitializeSensors         ( const tools::PhyLoader& loader, const MIL_Time_ABC& time, const ObjectTypeResolver_ABC& resolver );
     //@}
 };
 

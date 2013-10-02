@@ -23,6 +23,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/optional.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationMission )
 

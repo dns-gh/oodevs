@@ -14,10 +14,14 @@
 
 #include "MIL.h"
 #include "MIL_EntityManager_ABC.h"
-#include "MIL_EntityManagerStaticMethods.h"
 #include "tools/Resolver.h"
 #include "propagation/ElevationGetter_ABC.h"
 #include <map>
+
+namespace tools
+{
+    class PhyLoader;
+}
 
 namespace sword
 {
@@ -80,6 +84,7 @@ class MIL_KnowledgeGroup;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
+class MIL_ObjectFactory;
 class MIL_UrbanObject_ABC;
 class MIL_Population;
 class MIL_Inhabitant;
@@ -101,12 +106,15 @@ void TerminateLogisticsSingletons();
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_EntityManager : public MIL_EntityManager_ABC
-                        , public MIL_EntityManagerStaticMethods
+class MIL_EntityManager : public MIL_EntityManager_ABC,
+                          private boost::noncopyable
 {
 public:
              MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, const MIL_Config& config );
     virtual ~MIL_EntityManager();
+
+    static void Initialize( const tools::PhyLoader& loader, const MIL_Time_ABC& time,
+        MIL_ObjectFactory& objectFactory );
 
     //! @name Factory
     //@{
