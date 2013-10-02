@@ -147,7 +147,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Score panel
     {
-        ScorePanel* scorePanel = new ScorePanel( parent, controllers, *displayExtractor_, interpreter, *plotFactory_, indicatorExportDialog, model.scores_, config );
+        ScorePanel* scorePanel = new ScorePanel( parent, controllers, *displayExtractor_, *plotFactory_, indicatorExportDialog, model.scores_ );
         scorePanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, scorePanel );
     }

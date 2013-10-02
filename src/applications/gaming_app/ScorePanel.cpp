@@ -13,7 +13,6 @@
 #include "IndicatorExportDialog.h"
 #include "IndicatorPlot.h"
 #include "IndicatorPlotFactory.h"
-#include "IndicatorReportDialog.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
@@ -31,10 +30,9 @@ namespace
     class MyList : public QTreeWidget
     {
     public:
-        MyList( ScorePanel* parent, QDialog* reportDialog, ScoreModel& model )
+        MyList( ScorePanel* parent, ScoreModel& model )
             : QTreeWidget( parent )
             , parent_( parent )
-            , reportDialog_( reportDialog )
             , model_( model )
         {
             setColumnCount( 4 );
@@ -70,12 +68,10 @@ namespace
                 menu->insertItem( tools::translate( "Indicators", "Export score data..." ), parent_, SLOT( OnExportData() ) );
                 menu->insertSeparator();
             }
-            menu->insertItem( tools::translate( "Indicators", "Create report..." ), reportDialog_, SLOT( show() ) );
             menu->popup( event->globalPos() );
         }
 
     private:
-        QDialog* reportDialog_;
         ScorePanel* parent_;
         ScoreModel& model_;
     };
@@ -85,17 +81,16 @@ namespace
 // Name: ScorePanel constructor
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config )
+ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model )
     : gui::RichDockWidget( controllers, mainWindow, "score" )
     , extractor_( extractor )
     , plotFactory_( plotFactory )
     , model_( model )
     , exportDialog_( exportDialog )
-    , reportDialog_( new IndicatorReportDialog( this, model_, config, interpreter ) )
 {
     setObjectName( "scores" );
     setCaption( tools::translate( "ScorePanel", "Scores" ) );
-    scores_ = new MyList( this, reportDialog_, model_ );
+    scores_ = new MyList( this, model_ );
     connect( scores_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnShowGraph() ) );
     setWidget( scores_ );
     controllers_.Update( *this );
