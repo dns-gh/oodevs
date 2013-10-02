@@ -77,6 +77,36 @@ end
 integration.getKnowledgeAgentOperationalState = function( agent )
     return DEC_ConnaissanceAgent_EtatOps( agent )
 end
+
+-- Allows the unit to deactivate default behaviours, such as self-protection for instance.
+-- The table myself.deactivations contains all the current deactivated behaviours.
+-- @param behaviour : A string describing a behaviour (e.g. "selfprotect")
+integration.deactivate = function( behaviour )
+    local myself = myself
+    myself.deactivations = myself.deactivations or {}
+    myself.deactivations[ behaviour ] = ( myself.deactivations[ behaviour ] or 0 ) + 1
+end
+
+-- Allows the unit to reactivate previously deactivated behaviours.
+-- @param behaviour : A string describing a behaviour (e.g. "selfprotect")
+integration.reactivate = function( behaviour )
+    local myself = myself
+    myself.deactivations = myself.deactivations or {}
+    if not myself.deactivations[ behaviour ] then
+        error("Reactivating " .. tostring( behaviour ) .. " which has not been deactivated.")
+    end
+    myself.deactivations[ behaviour ] = myself.deactivations[ behaviour ] - 1
+    if myself.deactivations[ behaviour ] == 0 then
+        myself.deactivations[ behaviour ] = nil
+    end
+end
+
+-- Returns true if the provided behaviour is currently inactive, false otherwise
+-- @param behaviour : A string describing a behaviour (e.g. "selfprotect")
+integration.isInactive = function( behaviour )
+    return myself.deactivations and myself.deactivations[ behaviour ]
+end
+
 ------------------------------------------------------------------
 --- SAFEGUARDABLE INTERFACE IMPLEMENTATION SPECIFIC TO AN UNIT
 ------------------------------------------------------------------
