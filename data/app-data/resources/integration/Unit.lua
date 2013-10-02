@@ -92,7 +92,10 @@ end
 integration.reactivate = function( behaviour )
     local myself = myself
     myself.deactivations = myself.deactivations or {}
-    myself.deactivations[ behaviour ] = ( myself.deactivations[ behaviour ] or 0 ) - 1
+    if not myself.deactivations[ behaviour ] then
+        error("Reactivating " .. behaviour .. " which has not been deactivated.")
+    end
+    myself.deactivations[ behaviour ] = myself.deactivations[ behaviour ] - 1
     if myself.deactivations[ behaviour ] == 0 then
         myself.deactivations[ behaviour ] = nil
     end
@@ -101,7 +104,7 @@ end
 -- Returns true if the provided behaviour is currently inactive, false otherwise
 -- @param behaviour : A string describing a behaviour (e.g. "selfprotect")
 integration.isInactive = function( behaviour )
-    return myself.deactivations and myself.deactivations[ behaviour ] > 0
+    return myself.deactivations and myself.deactivations[ behaviour ]
 end
 
 ------------------------------------------------------------------
