@@ -18,11 +18,8 @@ package sword;
  *  @{
  */
 
-/** @struct AuthenticationKeyRequest
-    @brief A message sent to request authentication key.
-
-    @see AuthenticationKeyResponse
-*/
+//! Ask the simulation to generate an authentication key for the client.
+//! The client can then sign and resend it during login.
 message AuthenticationKeyRequest {
 }
 

@@ -22,6 +22,7 @@
 #include "protocol/RightsHelper.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include <openssl/hmac.h>
+#include <iomanip>
 
 using namespace dispatcher;
 
@@ -147,23 +148,18 @@ void RightsPlugin::Logout( ClientPublisher_ABC& client )
         }
     }
 }
-
 namespace
 {
-    static const char Alphanum[] =
-        "0123456789"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
-
-    static const std::string secretKey = "29Ma500SaGroUp75";
-    static const unsigned int MD5_Length = 16u;
+    const std::string K1 = "29Ma500";
+    const std::string K2 = "SaGro";
+    const std::string K3 = "Up75";
 
     std::string GenerateKey()
     {
-        std::string key;
-        for( auto i = 0; i < 32; ++i )
-            key += Alphanum[ std::rand() % ( sizeof( Alphanum ) - 1 ) ];
-        return key;
+        std::stringstream s;
+        for( unsigned int i = 0; i < 16; ++i )
+            s << std::setbase( 16 ) << ( std::rand() % 256 );
+        return s.str();
     }
 
     std::string MakeHmac( const std::string& key, const std::string& data )
@@ -271,7 +267,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     if( message.has_authentication_key() )
     {
         auto it = authenticationKeys_.find( link );
-        if( it == authenticationKeys_.end() || MakeHmac( secretKey, it->second ) != message.authentication_key() )
+        if( it == authenticationKeys_.end() || MakeHmac( K1 + K2 + K3, it->second ) != message.authentication_key() )
         {
             ack->set_error_code( sword::AuthenticationResponse::invalid_authentication_key );
             profiles_->Send( *ack );

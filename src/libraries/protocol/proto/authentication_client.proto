@@ -18,11 +18,6 @@ package sword;
  *  @{
  */
 
-/** @struct AuthenticationKeyResponse
-    @brief A response message to an authentication key request
-
-    @see AuthenticationKeyRequest
-*/
 message AuthenticationKeyResponse {
     required string authentication_key = 1;
 }
