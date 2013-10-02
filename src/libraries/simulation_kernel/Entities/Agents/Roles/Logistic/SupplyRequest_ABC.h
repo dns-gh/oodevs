@@ -10,6 +10,8 @@
 #ifndef __SupplyRequest_ABC_h_
 #define __SupplyRequest_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 class PHY_DotationCategory;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
@@ -32,7 +34,7 @@ namespace logistic
 */
 // Created: NLD 2011-01-10
 // =============================================================================
-class SupplyRequest_ABC
+class SupplyRequest_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity ) = 0;
+    virtual void AddResource( const boost::shared_ptr< SupplyResource_ABC >& resource, const MIL_AgentPion& pion, double quantity ) = 0;
     virtual bool AffectSupplier( SupplySupplier_ABC& supplier ) = 0;
     virtual bool AffectSupplier( SupplyRecipient_ABC& recipient, boost::shared_ptr< LogisticLink_ABC > supplier ) = 0;
 

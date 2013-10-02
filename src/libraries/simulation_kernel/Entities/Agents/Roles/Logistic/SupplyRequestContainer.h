@@ -45,7 +45,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SupplyRequestContainer( boost::shared_ptr< SupplyRequestBuilder_ABC > builder );
+    explicit SupplyRequestContainer( const boost::shared_ptr< SupplyRequestBuilder_ABC >& builder );
              SupplyRequestContainer();
     virtual ~SupplyRequestContainer();
     //@}
@@ -63,7 +63,7 @@ public:
     virtual void SetPathToTransportersProvider( const T_PointVector& wayPoints );
     virtual void SetPathToSupplier            ( const T_PointVector& wayPoints );
     virtual void SetConvoyFactory             ( const SupplyConvoyFactory_ABC& convoyFactory );
-    virtual void AddResource                  ( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion, boost::shared_ptr< SupplyResource_ABC > resource, double quantity );
+    virtual void AddResource                  ( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion, const boost::shared_ptr< SupplyResource_ABC >& resource, double quantity );
     //@}
 
     //! @name SupplyRequestParameters_ABC

@@ -126,16 +126,8 @@ void FuneralConsign::SetState( E_State newState )
     }
 }
 
-// =============================================================================
-// Operations
-// =============================================================================
-
-// =============================================================================
-// FSM
-// =============================================================================
-
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::IsActionDone
+// Name: FuneralConsign::IsActionDone
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 bool FuneralConsign::IsActionDone( unsigned timeRemaining )
@@ -162,7 +154,7 @@ unsigned FuneralConsign::MoveTo( const MT_Vector2D& position )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::DoWaitForHandling
+// Name: FuneralConsign::DoWaitForHandling
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 void FuneralConsign::DoWaitForHandling()
@@ -183,7 +175,7 @@ void FuneralConsign::DoWaitForHandling()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::DoTransportUnpackaged
+// Name: FuneralConsign::DoTransportUnpackaged
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 void FuneralConsign::DoTransportUnpackaged()
@@ -194,7 +186,7 @@ void FuneralConsign::DoTransportUnpackaged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::DoWaitForPackaging
+// Name: FuneralConsign::DoWaitForPackaging
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 void FuneralConsign::DoWaitForPackaging()
@@ -210,7 +202,7 @@ void FuneralConsign::DoWaitForPackaging()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::DoPackage
+// Name: FuneralConsign::DoPackage
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 void FuneralConsign::DoPackage()
@@ -224,7 +216,7 @@ void FuneralConsign::DoPackage()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::DoPackage
+// Name: FuneralConsign::DoPackage
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 void FuneralConsign::DoTransitionAfterPackaging()
