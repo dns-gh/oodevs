@@ -103,7 +103,9 @@
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_ProfilerManager.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/NET_AsnException.h"
 #include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MessageReader.h"
 #include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
@@ -121,14 +123,6 @@
 #include <boost/lexical_cast.hpp>
 
 #include "Adapters/Legacy/Sink.h"
-
-#define MASA_BADPARAM_UNIT(reason)                      \
-    MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, \
-        sword::UnitActionAck::error_invalid_parameter,  \
-        static_cast< std::stringstream& >( std::stringstream() << reason ).str().c_str() )
-
-#define MASA_BADPARAM_MAGIC( name ) MASA_BADPARAM_ASN( sword::MagicActionAck_ErrorCode, sword::MagicActionAck::error_invalid_parameter, name )
-
 
 using namespace sword;
 
@@ -1994,33 +1988,33 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     try
     {
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
-            throw MASA_BADPARAM_MAGIC( "invalid parameters count, 3 parameters expected" );
+            throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, 3 parameters expected" );
 
         // Location
         const MissionParameter& location = msg.parameters().elem( 0 );
         if( location.value_size() != 1 || !( location.value().Get( 0 ).has_location()
                     || location.value().Get( 0 ).has_point() ) )
-            throw MASA_BADPARAM_MAGIC( "parameters[0] must be a location" );
+            throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a location" );
 
         // Ammo
         const MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
-            throw MASA_BADPARAM_MAGIC( "parameters[1] must be a resource type" );
+            throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a resource type" );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory(
                 ammo.value().Get( 0 ).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw MASA_BADPARAM_MAGIC( "parameters[1] must be a dotation category "
+            throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a dotation category "
                     "identifier that can be used for indirect fire" );
 
         // Iterations
         const MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
-            throw MASA_BADPARAM_MAGIC("parameters[2] must be a real" );
+            throw MASA_BADPARAM_MAGICACTION("parameters[2] must be a real" );
 
         const float value = iterations.value().Get( 0 ).areal();
         if( value < 0.f )
-            throw MASA_BADPARAM_MAGIC( "parameters[2] must be a positive real number" );
+            throw MASA_BADPARAM_MAGICACTION( "parameters[2] must be a positive real number" );
 
         unsigned int ammos = static_cast< unsigned int >(
                 pDotationCategory->ConvertToNbrAmmo( value ) );
@@ -2034,7 +2028,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
             const sword::Point& point = location.value().Get( 0 ).point();
             if( point.location().type() != sword::Location::point ||
                     point.location().coordinates().elem_size() != 1 )
-                throw MASA_BADPARAM_MAGIC( "parameters[0] must be a point with one coordinate" );
+                throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a point with one coordinate" );
             MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), targetPos );
         }
         PHY_FireResults_Default fireResult;

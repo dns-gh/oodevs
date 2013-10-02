@@ -14,6 +14,7 @@
 #include "PHY_MeteoDataManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/NET_AsnException.h"
+#include "Tools/MessageReader.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
@@ -22,8 +23,6 @@
 #pragma warning( pop )
 
 namespace bpt = boost::posix_time;
-
-#define MASA_BADPARAM( name ) MASA_BADPARAM_ASN( sword::MagicActionAck_ErrorCode, sword::MagicActionAck::error_invalid_parameter, name )
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_LocalMeteo )
 
@@ -136,23 +135,23 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
     {
         const sword::MissionParameter& startTime = msg.elem( 7 );
         if( startTime.value_size() != 1 || !startTime.value().Get( 0 ).has_datetime() )
-            throw MASA_BADPARAM( "parameters[7] must be a StartTime" );
+            throw MASA_BADPARAM_MAGICACTION( "parameters[7] must be a StartTime" );
         startTime_ = ( bpt::from_iso_string( startTime.value().Get( 0 ).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
         const sword::MissionParameter& endTime = msg.elem( 8 );
         if( endTime.value_size() != 1 || !endTime.value().Get( 0 ).has_datetime() )
-            throw MASA_BADPARAM( "parameters[8] must be a StartTime" );
+            throw MASA_BADPARAM_MAGICACTION( "parameters[8] must be a StartTime" );
         endTime_ = ( bpt::from_iso_string( endTime.value().Get( 0 ).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
     }
     const sword::MissionParameter& location = msg.elem( 9 );
     if( location.value_size() != 1 || !location.value().Get( 0 ).has_location() )
-            throw MASA_BADPARAM( "parameters[9] must be a Location" );
+            throw MASA_BADPARAM_MAGICACTION( "parameters[9] must be a Location" );
     if( location.value().Get( 0 ).location().coordinates().elem_size() == 2 ) // $$$$ ABR 2011-09-29: Sword protocol
     {
         NET_ASN_Tools::ReadPoint( location.value().Get( 0 ).location().coordinates().elem( 0 ), upLeft_    );
         NET_ASN_Tools::ReadPoint( location.value().Get( 0 ).location().coordinates().elem( 1 ), downRight_ );
     }
     else
-        throw MASA_BADPARAM( "parameters[9] is bad location" );
+        throw MASA_BADPARAM_MAGICACTION( "parameters[9] is bad location" );
 }
 
 // -----------------------------------------------------------------------------

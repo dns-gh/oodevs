@@ -37,6 +37,7 @@
 #include "Tools/MIL_Geometry.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/MessageReader.h"
 #include "Tools/NET_AsnException.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 
@@ -77,8 +78,6 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
     assert( pType );
     ::new( population ) MIL_Population( *pType, *controller );
 }
-
-#define MASA_BADPARAM_UNIT( name ) MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, name )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population constructor
