@@ -1008,7 +1008,7 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 
 	// error: invalid unit identifier
 	err = client.TransferEquipment(1000, 12, []swapi.Equipment{{11, 1}})
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, ErrorMatches, "error_invalid_unit.*")
 
 	// error: target does not have equipment
 	err = client.TransferEquipment(11, 12, []swapi.Equipment{{1000, 1}})

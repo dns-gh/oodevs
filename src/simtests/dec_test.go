@@ -30,7 +30,7 @@ func (s *TestSuite) TestExecScript(c *C) {
 
 	// Invalid tasker
 	_, err = client.ExecScript(1234, function, script)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	c.Assert(err, ErrorMatches, "error_invalid_unit.*")
 
 	// Invalid function
 	_, err = client.ExecScript(unit.Id, "IAmNotAFunction", script)
