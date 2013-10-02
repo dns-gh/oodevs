@@ -88,8 +88,8 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_HumanRepartition.h"
 #include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_MessageParameters.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/NET_AsnException.h"
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
@@ -1001,47 +1001,23 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& as
 // -----------------------------------------------------------------------------
 void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters& msg )
 {
-    if( msg.elem_size() != 4 )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid parameters count, 4 parameters expected" );
+    parameters::CheckCount( msg, 4 );
 
-    const sword::MissionParameter& paramTiredness = msg.elem( 0 );
-    const sword::MissionParameter& paramMorale = msg.elem( 1 );
-    const sword::MissionParameter& paramExperience = msg.elem( 2 );
-    const sword::MissionParameter& paramStress = msg.elem( 3 );
-    if( paramTiredness.value_size() != 1 || !paramTiredness.value( 0 ).has_enumeration() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[0] must be an enumeration" );
-    if( paramMorale.value_size() != 1 || !paramMorale.value( 0 ).has_enumeration() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[1] must be an enumeration" );
-    if( paramExperience.value_size() != 1 || !paramExperience.value( 0 ).has_enumeration() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[2] must be an enumeration" );
-    if( paramStress.value_size() != 1 || !paramStress.value( 0 ).has_enumeration() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "parameters[3] must be an enumeration" );
-
-    if( !sword::UnitAttributes::EnumUnitTiredness_IsValid( paramTiredness.value( 0 ).enumeration() ) )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid tiredness enumeration");
-    if( !sword::UnitAttributes::EnumUnitMorale_IsValid( paramMorale.value( 0 ).enumeration() ) )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid morale enumeration");
-    if( !sword::UnitAttributes::EnumUnitExperience_IsValid( paramExperience.value( 0 ).enumeration() ) )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid experience enumeration");
-    if( !sword::UnitAttributes::EnumUnitStress_IsValid( paramStress.value( 0 ).enumeration() ) )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid stress enumeration");
-
-    sword::UnitAttributes::EnumUnitTiredness tiredness = static_cast< sword::UnitAttributes::EnumUnitTiredness >( paramTiredness.value( 0 ).enumeration() );
+    const auto tiredness = GET_ENUMERATION( sword::UnitAttributes::EnumUnitTiredness, msg, 0 );
     const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
-    if( !pTiredness )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid tiredness" );
-    sword::UnitAttributes::EnumUnitMorale morale = static_cast< sword::UnitAttributes::EnumUnitMorale >( paramMorale.value( 0 ).enumeration() );
+    parameters::Check( !!pTiredness, "must be a valid tiredness", 0 );
+
+    const auto morale = GET_ENUMERATION( sword::UnitAttributes::EnumUnitMorale, msg, 1 );
     const PHY_Morale* pMoral = PHY_Morale::Find( morale );
-    if( !pMoral )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid morale" );
-    sword::UnitAttributes::EnumUnitExperience experience = static_cast< sword::UnitAttributes::EnumUnitExperience >( paramExperience.value( 0 ).enumeration() );
+    parameters::Check( !!pMoral, "must be a valid morale", 1 );
+
+    const auto experience = GET_ENUMERATION( sword::UnitAttributes::EnumUnitExperience, msg, 2 );
     const PHY_Experience* pExperience = PHY_Experience::Find( experience );
-    if( !pExperience )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid experience" );
-    sword::UnitAttributes::EnumUnitStress stress = static_cast< sword::UnitAttributes::EnumUnitStress >( paramStress.value( 0 ).enumeration() );
+    parameters::Check( !!pExperience, "must be a valid experience", 2 );
+
+    const auto stress = GET_ENUMERATION( sword::UnitAttributes::EnumUnitStress, msg, 3 );
     const PHY_Stress* pStress = PHY_Stress::Find( stress );
-    if( !pStress )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid stress" );
+    parameters::Check( !!pStress, "must be a valid stress", 3 );
 
     auto& role = GetRole< PHY_RolePion_HumanFactors >();
     role.SetTiredness( *pTiredness, true );
@@ -1115,7 +1091,7 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 0 ).value().Get( i ).list( 1 ).has_quantity() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            
+
             sword::EquipmentType type;
             type.set_id( msg.elem( 0 ).value().Get( i ).list( 0 ).identifier() );
             int number = msg.elem( 0 ).value().Get( i ).list( 1 ).quantity();
@@ -1283,7 +1259,7 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
     case sword::UnitMagicAction::change_critical_intelligence:
-        OnReceiveCriticalIntelligence( msg );
+        OnReceiveCriticalIntelligence( msg.parameters() );
         break;
     case sword::UnitMagicAction::reload_brain:
         OnReloadBrain( msg.parameters() );
@@ -1319,7 +1295,7 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveUnloadUnit( msg.parameters() );
         break;
     case sword::UnitMagicAction::log_finish_handlings:
-        OnReceiveFinishLogisticHandlings(); 
+        OnReceiveFinishLogisticHandlings();
         break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
@@ -1462,7 +1438,7 @@ void MIL_AgentPion::NotifyAttacking( MIL_Population& /*target*/ ) const
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::CanInteractWithTraffic() const
 {
-    if ( GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() != 0 || 
+    if ( GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() != 0 ||
         GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() ||
         GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() ||
         GetRole< transport::PHY_RolePion_Transported >().IsTransported() )
@@ -1689,13 +1665,12 @@ bool MIL_AgentPion::IsImmobilized() const
 // Name: MIL_AgentPion::OnReceiveCriticalIntelligence
 // Created: LGY 2011-05-27
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
+void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::MissionParameters& msg )
 {
     if( markedForDestruction_ )
         return;
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
+    parameters::CheckCount( msg, 1 );
+    criticalIntelligence_ = parameters::GetString( msg, 0 );
     client::UnitAttributes message;
     message().mutable_unit()->set_id( GetID() );
     message().set_critical_intelligence( criticalIntelligence_ );
@@ -1802,33 +1777,27 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& msg )
 {
-    CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
+    parameters::CheckCount( msg, 1 );
     std::vector< std::tuple< const PHY_ComposanteTypePion*, unsigned int, const PHY_BreakdownType* > > content;
-    for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+    for( int i = 0; i < parameters::GetCount( msg, 0 ); ++ i )
     {
-        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
-        CheckSubParameterCount( elem.list_size() != 2 && elem.list_size() != 3, i, "must have 2 or 3 parameters" );
-
-        CHECK_PARAM( elem, i, 0, identifier, "must be an Identifer" );
-        CHECK_PARAM( elem, i, 1, quantity, "must be a Quantity" );
-        if( elem.list_size() == 3 )
-            CHECK_PARAM( elem, i, 2, identifier, "must be an Identifer" );
-
+        parameters::CheckCount( 0, i, msg, 2, 3 );
+        const int identifier = parameters::GetIdentifier( msg, 0, i, 0 );
         sword::EquipmentType type;
-        type.set_id( elem.list( 0 ).identifier() );
-        int number = elem.list( 1 ).quantity();
+        type.set_id( identifier );
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
-        CheckSubSubParameterCount( !pComposanteType || !pComposanteType->CanHaveBreakdown(), i, 0,
-            "must be an composante type which can have breakdown" );
-        CheckSubSubParameterCount( number <= 0, i, 1, "must be positive a non-zero positive number" );
-
-        const PHY_BreakdownType* breakdown = 0;
-        if( elem.list_size() == 3 )
+        parameters::Check( pComposanteType && pComposanteType->CanHaveBreakdown(),
+            "must be a composante type which can breakdown", 0, i, 0 );
+        const int quantity = parameters::GetQuantity( msg, 0, i, 1 );
+        parameters::Check( quantity > 0, "must be positive", 0, i, 1 );
+        const PHY_BreakdownType* breakdown = nullptr;
+        if( parameters::GetCount( msg, 0, i ) == 3 )
         {
-            breakdown = PHY_BreakdownType::Find( elem.list( 2 ).identifier() );
-            CheckSubSubParameterCount( !breakdown, i, 2, "must be a breakdown type identifier" );
+            const int id = parameters::GetIdentifier( msg, 0, i, 2 );
+            breakdown = PHY_BreakdownType::Find( id );
+            parameters::Check( !!breakdown, "must be a breakdown type identifier", 0, i, 2 );
         }
-        content.push_back( std::make_tuple( pComposanteType, number, breakdown ) );
+        content.push_back( std::make_tuple( pComposanteType, quantity, breakdown ) );
     }
     PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
     for( auto it = content.begin(); it != content.end(); ++it )
@@ -2102,28 +2071,14 @@ bool MIL_AgentPion::CanBeDeleted() const
 void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
 {
     CancelAllActions();
-    bool modelChanged = false;
-    if( msg.elem_size() > 0 )
-    {
-        if( msg.elem_size() != 1 )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                     "invalid parameters count, one parameter expected" );
-
-        const auto& parameter = msg.elem( 0 );
-        if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                     "parameters[0] must be a a char string" );
-
-        const std::string& model = parameter.value( 0 ).acharstr();
-        const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( model );
-        if( !pModel )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "unknown decisional model" );
-
-        modelChanged = &GetRole< DEC_RolePion_Decision >().GetModel() != pModel;
-        if( modelChanged )
-            GetRole< DEC_RolePion_Decision >().SetModel( *pModel );
-    }
-    GetDecision().Reload( !modelChanged );
+    auto model = parameters::GetModel( msg, []( const std::string& model ){
+        return MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( model );
+    } );
+    auto& role = GetRole< DEC_RolePion_Decision >();
+    const bool modified = model && model != &role.GetModel();
+    if( modified )
+        role.SetModel( *model );
+    GetDecision().Reload( !modified );
     pOrderManager_->CancelMission();
 }
 
@@ -2133,13 +2088,9 @@ void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
-    if( msg.elem_size() != 1 )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "invalid parameters count, 1 parameter expected" );
-    if( msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value().Get( 0 ).has_booleanvalue() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "parameters[0] must be a boolean" );
-    if( msg.elem( 0 ).value( 0 ).booleanvalue() )
+    parameters::CheckCount( msg, 1 );
+    const bool activate = parameters::GetBool( msg, 0 );
+    if( activate )
         GetRole< DEC_RolePion_Decision >().ActivateBrainDebug();
     else
         GetRole< DEC_RolePion_Decision >().DeactivateBrainDebug();
@@ -2151,17 +2102,8 @@ void MIL_AgentPion::OnChangeBrainDebug( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnChangePosture( const sword::MissionParameters& msg )
 {
-    if( msg.elem_size() != 1 )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "invalid parameter count, 1 parameter expected" );
-    if( msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value().Get( 0 ).has_enumeration() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "parameters[0] must be an enumeration" );
-    const auto value = msg.elem( 0 ).value().Get( 0 ).enumeration();
-    if( ! sword::UnitAttributes::Posture_IsValid( value ) )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "parameters[0] must be a valid posture enumeration value" );
-    const sword::UnitAttributes::Posture posture = static_cast< sword::UnitAttributes::Posture >( value );
+    parameters::CheckCount( msg, 1 );
+    const auto posture = GET_ENUMERATION( sword::UnitAttributes::Posture, msg, 0 );
     GetRole< PHY_RoleInterface_Posture >().SetPosture( PHY_Posture::FindPosture( posture ) );
 }
 

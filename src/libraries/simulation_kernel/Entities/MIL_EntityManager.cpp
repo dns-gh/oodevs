@@ -103,9 +103,8 @@
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_ProfilerManager.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/NET_AsnException.h"
 #include "Tools/MIL_DictionaryExtensions.h"
-#include "Tools/MessageReader.h"
+#include "Tools/MIL_MessageParameters.h"
 #include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
@@ -216,7 +215,7 @@ namespace
                     " got " << elem.value_size() );
         if( !elem.value( 0 ).has_acharstr() )
             throw MASA_BADPARAM_UNIT( "parameters[" << index << "] must be an ACharStr" );
-        return elem.value( 0 ).acharstr(); 
+        return elem.value( 0 ).acharstr();
     }
 }
 
@@ -1539,9 +1538,9 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
     client::MagicActionAck magicAck;
     client::ChangeDiplomacy changeDiplomacyMes;
     int party1 ( 0 ), party2 ( 0 );
-    if( !message.has_parameters() ||message.parameters().elem_size() != 3 
-        || !message.parameters().elem( 0 ).value_size() == 1 
-        || !message.parameters().elem( 1 ).value_size() == 1 
+    if( !message.has_parameters() ||message.parameters().elem_size() != 3
+        || !message.parameters().elem( 0 ).value_size() == 1
+        || !message.parameters().elem( 1 ).value_size() == 1
         || !message.parameters().elem( 2 ).value_size() == 1 )
     {
         magicAck().set_error_code( MagicActionAck::error_invalid_parameter );
@@ -1702,7 +1701,7 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
 
     client::AutomatChangeSuperior resendMessage;
     resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-    
+
     if( message.parameters().elem( 0 ).value().Get( 0 ).has_formation() )
     {
         MIL_Formation* pFormation = FindFormation( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
@@ -1860,7 +1859,7 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message
     else if( message.tasker().has_crowd() && message.tasker().crowd().has_id() )
     {
         if( MIL_Population* pPopulation = populationFactory_->Find( message.tasker().crowd().id() ) )
-            return pPopulation->OnReceiveCrowdMagicActionMoveTo( message );
+            return pPopulation->OnReceiveCrowdMagicActionMoveTo( message.parameters() );
     }
     throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
 }

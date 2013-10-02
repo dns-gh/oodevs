@@ -181,8 +181,7 @@ public:
     void SendFullState() const;
     void UpdateNetwork();
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& asnMsg );
-    void OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn );
-    void OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg );
+    void OnReceiveCrowdMagicActionMoveTo( const sword::MissionParameters& msg );
     //@}
 
     //! @name CheckPoints
@@ -209,10 +208,11 @@ private:
     //! @name Magic actions
     //@{
     void OnReceiveMsgDestroyAll();
-    void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& asn );
-    void OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& asn );
-    void OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& asn );
-    void OnReloadBrain( const sword::UnitMagicAction& msg );
+    void OnReceiveCriticalIntelligence( const sword::MissionParameters& msg );
+    void OnReceiveMsgChangeHealthState( const sword::MissionParameters& asn );
+    void OnReceiveMsgChangeArmedIndividuals( const sword::MissionParameters& asn );
+    void OnReceiveMsgChangeAttitude( const sword::MissionParameters& asn );
+    void OnReloadBrain( const sword::MissionParameters& msg );
     void OnChangeBrainDebug( const sword::MissionParameters& msg );
     //@}
 
