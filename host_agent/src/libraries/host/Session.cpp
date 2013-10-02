@@ -481,6 +481,16 @@ void WritePlugin( Tree& tree, const std::string& prefix, const web::session::Plu
         tree.put( prefix + XpathToXml( value.first ), value.second );
 }
 
+void WriteLogConfiguration( Tree& tree, const std::string& prefix, const Config& cfg )
+{
+    if( cfg.logs.rotate )
+    {
+        tree.put( prefix + "logfiles", cfg.logs.max_files + 1 );
+        tree.put( prefix + "logsize", cfg.logs.max_size );
+        tree.put( prefix + "sizeunit", cfg.logs.size_unit );
+    }
+}
+
 void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
 {
     const std::string prefix = "session.config.dispatcher.";
@@ -490,6 +500,9 @@ void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
     tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin" );
     tree.put( prefix + "plugins.recorder.<xmlattr>.fragmentfreq", cfg.recorder.frequency );
     tree.put( prefix + "reports.<xmlattr>.frequency", cfg.reports.clean_frequency );
+    WriteLogConfiguration( tree, prefix + "log.<xmlattr>.", cfg );
+    WriteLogConfiguration( tree, prefix + "messages.<xmlattr>.", cfg );
+    WriteLogConfiguration( tree, prefix + "debug.<xmlattr>.", cfg );
     BOOST_FOREACH( const Config::T_Plugins::value_type& value, cfg.plugins )
         WritePlugin( tree, prefix + "plugins." + value.first + ".", value.second );
 }
@@ -503,16 +516,6 @@ void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConf
             tree.put( prefix + "<xmlattr>.deviation", cfg.deviation );
             tree.put( prefix + "<xmlattr>.mean", cfg.mean );
             break;
-    }
-}
-
-void WriteLogConfiguration( Tree& tree, const std::string& prefix, const Config& cfg )
-{
-    if( cfg.logs.rotate )
-    {
-        tree.put( prefix + "logfiles", cfg.logs.max_files + 1 );
-        tree.put( prefix + "logsize", cfg.logs.max_size );
-        tree.put( prefix + "sizeunit", cfg.logs.size_unit );
     }
 }
 
