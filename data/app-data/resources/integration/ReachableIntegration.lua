@@ -307,8 +307,8 @@ end
 -- ****************************************************************************
 integration.moveToItGeneric = masalife.brain.integration.startStopAction( 
 { 
-    start = function( entity, pathType )
-        return integration.startMoveToIt( entity, pathType ) 
+    start = function( entity, pathType, waypoints )
+        return integration.startMoveToIt( entity, pathType, waypoints ) 
     end,
     started = function( entity, pathType )
         return integration.updateMoveToIt( entity, pathType )
