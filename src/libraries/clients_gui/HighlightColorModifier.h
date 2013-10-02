@@ -93,7 +93,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
     std::set< const kernel::Entity_ABC* > highlighted_;
-    kernel::SafePointer< const kernel::Entity_ABC > selected_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     bool blink_;
     //@}
 };

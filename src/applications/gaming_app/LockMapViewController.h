@@ -89,8 +89,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::View_ABC& view_;
-    kernel::SafePointer< const kernel::Entity_ABC > locked_;
-    kernel::SafePointer< const kernel::Entity_ABC > selected_;
+    kernel::SafePointer< kernel::Entity_ABC > locked_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     geometry::Point2f center_;
     //@}
 };
