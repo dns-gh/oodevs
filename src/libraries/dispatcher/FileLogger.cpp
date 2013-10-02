@@ -76,7 +76,7 @@ namespace
 void FileLogger::LogMessage( const std::string& severity, const std::string& message )
 {
     std::stringstream s;
-    s << "[" << Timestamp() << "] " << severity << " - " << message;
     boost::mutex::scoped_lock locker( mutex_ );
+    s << "[" << Timestamp() << "] " << severity << " - " << message;
     log_.Write( s.str() );
 }
