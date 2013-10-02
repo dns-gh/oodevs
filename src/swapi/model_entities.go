@@ -169,24 +169,26 @@ type HumanFactors struct {
 }
 
 type Unit struct {
-	Id                 uint32
-	AutomatId          uint32
-	Name               string
-	Pc                 bool
-	Position           Point
-	PathPoints         uint32
-	DebugBrain         bool
-	EquipmentDotations map[uint32]*EquipmentDotation
-	LentEquipments     []*LentEquipment
-	BorrowedEquipments []*BorrowedEquipment
-	PartySurrenderedTo uint32
-	HumanDotations     []*HumanDotation
-	ResourceDotations  []*ResourceDotation
-	Posture            Posture
-	VisionCones        VisionCones
-	TransporterId      uint32
-	Adhesions          map[uint32]float32
-	HumanFactors       HumanFactors
+	Id                  uint32
+	AutomatId           uint32
+	Name                string
+	Pc                  bool
+	Position            Point
+	PathPoints          uint32
+	DebugBrain          bool
+	EquipmentDotations  map[uint32]*EquipmentDotation
+	LentEquipments      []*LentEquipment
+	BorrowedEquipments  []*BorrowedEquipment
+	PartySurrenderedTo  uint32
+	HumanDotations      []*HumanDotation
+	ResourceDotations   []*ResourceDotation
+	Posture             Posture
+	VisionCones         VisionCones
+	TransporterId       uint32
+	Adhesions           map[uint32]float32
+	HumanFactors        HumanFactors
+	RawOperationalState int32
+	Neutralized         bool
 }
 
 type Automat struct {
@@ -743,6 +745,19 @@ func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
 func (model *ModelData) FindKnowledgeGroup(knowledgeGroupId uint32) *KnowledgeGroup {
 	for _, u := range model.ListKnowledgeGroups() {
 		if u.Id == knowledgeGroupId {
+			return u
+		}
+	}
+	return nil
+}
+
+func (model *ModelData) FindUnitKnowledge(knowledgeGroupId uint32, unitId uint32) *UnitKnowledge {
+	knowledgeGroup := model.FindKnowledgeGroup(knowledgeGroupId)
+	if knowledgeGroup == nil {
+		return nil
+	}
+	for _, u := range knowledgeGroup.UnitKnowledges {
+		if u.UnitId == unitId {
 			return u
 		}
 	}

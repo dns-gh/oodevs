@@ -23,6 +23,7 @@ var (
 	rootdir     string
 	rundir      string
 	testPort    int
+	showlog     bool
 )
 
 func init() {
@@ -34,6 +35,8 @@ func init() {
 		"path application run directory, default to application directory")
 	flag.IntVar(&testPort, "test-port", 35000,
 		"base port for spawned simulations")
+	flag.BoolVar(&showlog, "show-log", false,
+		"show log")
 }
 
 func Test(t *testing.T) { TestingT(t) }

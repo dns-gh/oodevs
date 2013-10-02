@@ -704,6 +704,76 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 	CheckUnitSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
 }
 
+func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	f1 := CreateFormation(c, client, 1)
+	f2 := CreateFormation(c, client, 2)
+
+	// Create 2 automats
+	a1 := CreateAutomat(c, client, f1.Id, 0)
+	a2 := CreateAutomat(c, client, f2.Id, 2)
+
+	// Create 2 mortar units
+	const infMortarTroopType = 31
+	reporter, err := client.CreateUnit(a1.Id, infMortarTroopType, swapi.Point{X: -15.8219, Y: 28.2456})
+	c.Assert(err, IsNil)
+	target, err := client.CreateUnit(a2.Id, infMortarTroopType, swapi.Point{X: -15.8219, Y: 28.2456})
+	c.Assert(err, IsNil)
+
+	const fullyOperational = 100
+	// Waiting for the target initialization
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(target.Id)
+		return !unit.Neutralized && unit.RawOperationalState == fullyOperational
+	})
+
+	// Adding the target in reporter's knowledges
+	const identifiedLevel = 0
+	targetKnowledge, err := client.AddUnitKnowledgeInKnowledgeGroup(a1.KnowledgeGroupId, target.Id, identifiedLevel)
+	c.Assert(err, IsNil)
+
+	// Launching a magic strike with good parameters
+	const dotation81mmHighExplosiveShell = 9
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, 1)
+	c.Assert(err, IsNil)
+
+	// testing strike effect: neutralization and attrition
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(target.Id)
+		return unit.Neutralized && unit.RawOperationalState < fullyOperational
+	})
+
+	// Testing wrong reporter identifier
+	err = client.CreateFireOrderOnUnit(0, targetKnowledge.Id, dotation81mmHighExplosiveShell, 1)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// Testing wrong knowledge identifier
+	err = client.CreateFireOrderOnUnit(reporter.Id, 0, dotation81mmHighExplosiveShell, 1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Testing wrong dotation identifier
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, 0, 1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Testing direct fire dotation
+	const directFireDotation9mmBullet = 17
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, directFireDotation9mmBullet, 1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Testing negative or empty iterations
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, -1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation81mmHighExplosiveShell, 0)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Testing strike on non illuminated target with guided dotation
+	const dotation120mmHightExplosiveShellGuided = 34
+	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation120mmHightExplosiveShellGuided, 1)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+}
+
 func (s *TestSuite) TestPcChangeSuperior(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()

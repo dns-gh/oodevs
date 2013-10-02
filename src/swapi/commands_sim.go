@@ -1284,3 +1284,11 @@ func (c *Client) ChangePopulationAdhesions(populationId uint32, adhesions map[ui
 	return c.sendUnitMagicAction(MakeUnitTasker(populationId), params,
 		sword.UnitMagicAction_inhabitant_change_affinities)
 }
+
+func (c *Client) CreateFireOrderOnUnit(taskerId uint32, targetKnowledgeId uint32, resourceTypeId uint32, interventions float32) error {
+	params := MakeParameters(MakeIdentifier(targetKnowledgeId),
+		MakeResourceType(resourceTypeId),
+		MakeFloat(interventions))
+	return c.sendUnitMagicAction(MakeUnitTasker(taskerId), params,
+		sword.UnitMagicAction_create_fire_order)
+}
