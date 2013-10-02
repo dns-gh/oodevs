@@ -10,7 +10,9 @@
 #ifndef dispatcher_Log_ABC_h
 #define dispatcher_Log_ABC_h
 
+#include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
+#include <string>
 
 namespace dispatcher
 {
