@@ -23,10 +23,10 @@
 #include "tools/Loader_ABC.h"
 #include "tools/SessionConfig.h"
 #include "tools/FileWrapper.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string/erase.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/bind.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::logger;
 
