@@ -361,7 +361,7 @@ func (s *TestSuite) TestModelInitialization(c *C) {
     KnowledgeGroup[-]
       Id: -
       PartyId: -
-      Name: knowledge group[43]
+      Name: knowledge group[44]
       IsCrowdDefaultGroup: true
 Party[-]
   Name: empty-party
@@ -372,7 +372,7 @@ Party[-]
     KnowledgeGroup[-]
       Id: -
       PartyId: -
-      Name: knowledge group[45]
+      Name: knowledge group[47]
       IsCrowdDefaultGroup: true
 Party[-]
   Name: another-party
@@ -383,7 +383,7 @@ Party[-]
     KnowledgeGroup[-]
       Id: -
       PartyId: -
-      Name: knowledge group[47]
+      Name: knowledge group[50]
       IsCrowdDefaultGroup: true
 `
 	c.Assert(dump, Equals, expected)

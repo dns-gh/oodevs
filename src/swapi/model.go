@@ -167,6 +167,7 @@ var (
 		(*Model).handleObjectKnowledgeCreation,
 		(*Model).handlePartyCreation,
 		(*Model).handlePopulationCreation,
+		(*Model).handlePopulationUpdate,
 		(*Model).handleUnitAttributes,
 		(*Model).handleUnitChangeSuperior,
 		(*Model).handleUnitCreation,

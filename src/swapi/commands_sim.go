@@ -1265,3 +1265,22 @@ func (c *Client) ExecScript(id uint32, function, script string) (string, error) 
 	err := <-c.postSimRequest(msg, handler)
 	return result, err
 }
+
+func (c *Client) ChangePopulationHealthState(populationId uint32, healthy, wounded,
+	dead int32) error {
+	params := MakeParameters(MakeQuantity(healthy),
+		MakeQuantity(wounded),
+		MakeQuantity(dead),
+	)
+	return c.sendUnitMagicAction(MakeUnitTasker(populationId), params,
+		sword.UnitMagicAction_inhabitant_change_health_state)
+}
+
+func (c *Client) ChangePopulationAdhesions(populationId uint32, adhesions map[uint32]float32) error {
+	params := MakeParameters()
+	if len(adhesions) != 0 {
+		params = MakeParameters(MakeAdhesions(adhesions))
+	}
+	return c.sendUnitMagicAction(MakeUnitTasker(populationId), params,
+		sword.UnitMagicAction_inhabitant_change_affinities)
+}

@@ -454,6 +454,14 @@ func MakePartyTasker(id uint32) *sword.Tasker {
 	}
 }
 
+func MakePopulationTasker(populationId uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Population: &sword.PopulationId{
+			Id: proto.Uint32(populationId),
+		},
+	}
+}
+
 func MakeUnitTasker(id uint32) *sword.Tasker {
 	return &sword.Tasker{
 		Unit: &sword.UnitId{
