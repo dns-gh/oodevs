@@ -11,6 +11,9 @@ require 'debug'
 -- @release 2010-01-22
 LinearInterpolation = function( min, max, start, stop, upslope, value )
     local res = 0;
+    if( start == stop ) then
+        error( "Can't interpolate if start == stop" )
+    end
     if( upslope ) then
         if( value < start ) then
             res = min
