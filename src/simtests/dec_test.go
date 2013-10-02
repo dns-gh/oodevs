@@ -10,17 +10,21 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"swapi"
 )
+
+func getRandomUnit(c *C, client *swapi.Client) *swapi.Unit {
+	data := client.Model.GetData()
+	units := data.ListUnits()
+	c.Assert(len(units), Greater, 0)
+	unit := units[0]
+	return unit
+}
 
 func (s *TestSuite) TestExecScript(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
-	model := client.Model
-	data := model.GetData()
-
-	units := data.ListUnits()
-	c.Assert(len(units), Greater, 0)
-	unit := units[0]
+	unit := getRandomUnit(c, client)
 
 	function := "TestFunc"
 	script := `function TestFunc() return "foo" end`
@@ -50,4 +54,19 @@ func (s *TestSuite) TestExecScript(c *C) {
 	script = `function TestFunc() return nil end`
 	_, err = client.ExecScript(unit.Id, function, script)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter:.*string expected, got nil.*")
+}
+
+func checkScript(c *C, client *swapi.Client, script, expectedPattern string) {
+	unit := getRandomUnit(c, client)
+	output, err := client.ExecScript(unit.Id, "TestFunction", script)
+	c.Assert(err, IsNil)
+	c.Assert(output, Matches, expectedPattern)
+}
+
+func (s *TestSuite) TestGenericLuaErrors(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// Floating point division by zero used to trigger exceptions in the sim
+	checkScript(c, client, `function TestFunction() return 1.0/0.0 end`, "(?i).*inf.*")
 }
