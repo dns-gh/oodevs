@@ -18,7 +18,6 @@
 #include "protocol/DispatcherSenders.h"
 #include "MT_Tools/MT_Logger.h"
 
-using namespace tools;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -27,7 +26,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients,
                                           MessageHandler_ABC& handler, const Config& config,
-                                          Log_ABC& log )
+                                          tools::Log& log )
     : ClientNetworker( config.GetNetworkSimulationParameters(), true, config.GetNetworkTimeout() )
     , model_  ( model )
     , clients_( clients )

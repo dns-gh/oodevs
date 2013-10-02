@@ -14,8 +14,9 @@
 
 using namespace tools;
 
-Log::Log( const tools::Path& filename, std::size_t files, std::size_t size, bool truncate, bool sizeInBytes )
-    : sizeInBytes_( sizeInBytes )
+Log::Log( const Path& filename, std::size_t files, std::size_t size, bool truncate, bool sizeInBytes )
+    : active_     ( files > 0 )
+    , sizeInBytes_( sizeInBytes )
     , log_        ( new RotatingLog( *this, filename, files, size, truncate ) )
 {
     // NOTHING
@@ -26,7 +27,7 @@ Log::~Log()
     // NOTHING
 }
 
-void Log::Write( const std::string& s )
+void Log::DoWrite( const std::string& s )
 {
     log_->Write( s );
 }
@@ -37,10 +38,10 @@ std::size_t Log::Write( std::ostream& os, const std::string& line )
     return sizeInBytes_ ? line.size() : 1;
 }
 
-std::streamoff Log::ComputeSize( const tools::Path& filename ) const
+std::streamoff Log::ComputeSize( const Path& filename ) const
 {
     if( sizeInBytes_ )
         return filename.FileSize();
-    tools::Ifstream file( filename );
+    Ifstream file( filename );
     return std::count( std::istreambuf_iterator< char >( file ), std::istreambuf_iterator< char >(), '\n');
 }

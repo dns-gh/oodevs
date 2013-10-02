@@ -18,6 +18,11 @@ namespace sword
     class SimToClient;
 }
 
+namespace tools
+{
+    class Log;
+}
+
 namespace dispatcher
 {
     class Model;
@@ -25,7 +30,6 @@ namespace dispatcher
     class MessageHandler_ABC;
     class Simulation;
     class Config;
-    class Log_ABC;
 
 // =============================================================================
 /** @class  SimulationNetworker
@@ -41,7 +45,7 @@ public:
     //@{
              SimulationNetworker( Model& model, ClientsNetworker& clients,
                                   MessageHandler_ABC& handler, const Config& config,
-                                  Log_ABC& log );
+                                  tools::Log& log );
     virtual ~SimulationNetworker();
     //@}
 

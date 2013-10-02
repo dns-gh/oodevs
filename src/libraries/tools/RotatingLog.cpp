@@ -12,11 +12,12 @@
 #include "Log_ABC.h"
 #include <tools/StdFileWrapper.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 
 using namespace tools;
 
-RotatingLog::RotatingLog( tools::Log_ABC& log, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate )
+RotatingLog::RotatingLog( Log_ABC& log, const Path& filename, std::size_t files, std::size_t size, bool truncate )
     : log_     ( log )
     , filename_( filename.Normalize() )
     , files_   ( files )
@@ -36,7 +37,7 @@ RotatingLog::~RotatingLog()
 
 void RotatingLog::Populate()
 {
-    const tools::Path stem = filename_.Parent() / filename_.BaseName();
+    const Path stem = filename_.Parent() / filename_.BaseName();
     const boost::regex regex( "\\Q" + stem.ToUTF8() + "\\E\\.\\d{8}T\\d{6}\\.log(\\.\\d+)*" );
     filename_.Parent().ListElements(
         [&]( const Path& path ) -> bool
@@ -90,9 +91,9 @@ void RotatingLog::Prune()
 
 void RotatingLog::Rotate()
 {
-    const tools::Path filename = filename_.Parent() / filename_.BaseName() + "." +
+    const Path filename = filename_.Parent() / filename_.BaseName() + "." +
         boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ).c_str() + filename_.Extension();
-    tools::Path to = filename;
+    Path to = filename;
     for( int i = 1; to.Exists(); ++i )
         to = filename + "." + boost::lexical_cast< std::string >( i ).c_str();
     stream_.reset();

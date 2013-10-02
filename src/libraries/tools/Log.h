@@ -11,6 +11,7 @@
 #define tools_Log_h
 
 #include "Log_ABC.h"
+#include <boost/lexical_cast.hpp>
 #include <boost/scoped_ptr.hpp>
 
 namespace tools
@@ -27,17 +28,25 @@ namespace tools
 class Log : private Log_ABC
 {
 public:
-             Log( const tools::Path& filename, std::size_t files, std::size_t size, bool truncate, bool sizeInBytes );
+             Log( const Path& filename, std::size_t files, std::size_t size, bool truncate, bool sizeInBytes );
     virtual ~Log();
 
-    void Write( const std::string& s );
+    template< typename Serializable >
+    void Write( const Serializable& s )
+    {
+        if( active_ )
+            DoWrite( boost::lexical_cast< std::string >( s ) );
+    }
 
 private:
+    void DoWrite( const std::string& s );
+
     virtual std::size_t Write( std::ostream& os, const std::string& line );
-    virtual std::streamoff ComputeSize( const tools::Path& filename ) const;
+    virtual std::streamoff ComputeSize( const Path& filename ) const;
 
 private:
-    bool sizeInBytes_;
+    const bool active_;
+    const bool sizeInBytes_;
     boost::scoped_ptr< RotatingLog > log_;
 };
 
