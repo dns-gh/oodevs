@@ -34,7 +34,7 @@ void Log::DoWrite( const std::string& s )
 
 std::size_t Log::Write( std::ostream& os, const std::string& line )
 {
-    os << line << std::flush;
+    os << line << std::endl;
     return sizeInBytes_ ? line.size() : 1;
 }
 

@@ -32,5 +32,5 @@ MT_ConsoleLogger::~MT_ConsoleLogger()
 void MT_ConsoleLogger::WriteString( const std::string& s )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    printf( "%s", s.c_str() );
+    std::cout << s << std::endl;
 }
