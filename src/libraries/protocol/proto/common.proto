@@ -2101,7 +2101,7 @@ message UnitMagicAction {
         //! will capped on the number of available ones.
         //! Deleting a unit cancels its lendings and borrowings.
         transfer_equipment                = 39;
-        //! A change equipment human size magic action
+        //! @deprecated
         change_equipment_human_size       = 40;
         //! Breaks down unit equipments
         //! The tasker is set to target unit.
@@ -2116,7 +2116,7 @@ message UnitMagicAction {
         //! The breakdowns are described in a following UnitAttributes
         //! equipment_dotations fields.
         create_breakdowns                 = 41;
-        //! DEPRECATED
+        //! @deprecated
         //!
         //! You can achieve the same effect with change_human_state
         //! magic action, except for the random part.
