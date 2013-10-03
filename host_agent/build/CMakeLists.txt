@@ -2,6 +2,9 @@ cmake_minimum_required( VERSION 2.8 )
 project( host_agent )
 enable_testing()
 
+get_filename_component( root_dir "${CMAKE_SOURCE_DIR}/.." REALPATH )
+include_directories( ${root_dir}/src/libraries )
+
 include( ${MASA_MACROS} )
 
 # 4127 conditional expression is constant
@@ -11,12 +14,9 @@ add_flag( CMAKE_CXX_FLAGS "/wd4505" )
 # set warnings as errors
 add_flag( CMAKE_CXX_FLAGS "/WX" )
 
-get_filename_component( root_dir "${CMAKE_SOURCE_DIR}/.." REALPATH )
-
 set( COMPANY "MASA Group" )
 set( PRODUCT "Sword Cloud" )
 
-include_directories( ${root_dir}/src/libraries )
 add_definitions( -D_CRT_SECURE_NO_WARNINGS )
 add_definitions( -D_SCL_SECURE_NO_WARNINGS )
 add_definitions( -DBOOST_SPIRIT_THREADSAFE )
