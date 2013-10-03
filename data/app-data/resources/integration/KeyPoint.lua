@@ -17,7 +17,7 @@ end
 --- IDENTIFYING INTERFACE IMPLEMENTATION SPECIFIC TO A KEYPOINT
 -------------------------------------------------------------------
 integration.identificationEfficiency = function( self, objective )
-    return ( self:proximityLevel() / 100 + masalife.brain.knowledge.me.body:computeIdentificationCapability( objective, self ) ) / 100
+    return ( self:proximityLevel() / 100 + masalife.brain.knowledge.me.body:computeIdentificationCapability( objective, self ) ) / 101
 end
 
 ------------------------------------------------------------------
@@ -46,7 +46,7 @@ local estimateReconnaissanceLevel = function( self, objective )
 end
 
 integration.reconnaissanceEfficiency = function( self, objective )
-    return ( self:proximityLevel() / 100 + estimateReconnaissanceLevel( self, objective ) ) / 100
+    return ( self:proximityLevel() / 100 + estimateReconnaissanceLevel( self, objective ) ) / 101
 end
 
 ---
