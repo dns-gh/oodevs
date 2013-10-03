@@ -299,7 +299,7 @@ void HierarchyTreeView_ABC::Drop( const QString& mimeType, void* data, QStandard
     }
     else
     {
-        kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( data );
+        kernel::SafePointer< kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::Entity_ABC >* >( data );
         if( !safePtr || !*safePtr )
             return;
         if( mimeType == typeid( kernel::Agent_ABC ).name() )

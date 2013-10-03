@@ -70,8 +70,6 @@ float HighlightColorModifier::Apply( const kernel::Entity_ABC& /*entity*/, float
 }
 
 // -----------------------------------------------------------------------------
-// Name: HighlightColorModifier::NotifyContextMenu
-// Created: AGE 2008-05-15
 // Name: HighlightColorModifier::UpdateContextMenu
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------

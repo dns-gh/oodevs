@@ -478,7 +478,7 @@ void LogisticTreeView::Drop( const QString& mimeType, void* data, QStandardItem&
              mimeType == typeid( kernel::Formation_ABC ).name() ||
              mimeType == typeid( kernel::Ghost_ABC ).name() )
     {
-        kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( data );
+        kernel::SafePointer< kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< kernel::Entity_ABC >* >( data );
         if( !safePtr || !*safePtr )
             return;
         if( targetEntity )
