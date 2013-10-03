@@ -1900,10 +1900,7 @@ void MIL_Population::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
     parameters::CheckCount( msg, 1 );
     const bool activate = parameters::GetBool( msg, 0 );
-    if( activate )
-        GetRole< DEC_PopulationDecision >().ActivateBrainDebug();
-    else
-        GetRole< DEC_PopulationDecision >().DeactivateBrainDebug();
+    GetRole< DEC_PopulationDecision >().ActivateBrainDebug( activate );
 }
 
 // -----------------------------------------------------------------------------

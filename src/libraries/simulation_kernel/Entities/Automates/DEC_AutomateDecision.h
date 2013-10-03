@@ -54,8 +54,7 @@ public:
     //@{
     void Clean();
     virtual void Reload( bool doInitBrain );
-    virtual void ActivateBrainDebug();
-    virtual void DeactivateBrainDebug();
+    virtual void ActivateBrainDebug( bool activate );
 
     bool HasStateChanged() const;
 

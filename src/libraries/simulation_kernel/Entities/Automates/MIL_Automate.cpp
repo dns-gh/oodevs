@@ -1613,8 +1613,5 @@ void MIL_Automate::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
     parameters::CheckCount( msg, 1 );
     const bool activate = parameters::GetBool( msg, 0 );
-    if( activate )
-        GetRole< DEC_AutomateDecision >().ActivateBrainDebug();
-    else
-        GetRole< DEC_AutomateDecision >().DeactivateBrainDebug();
+    GetRole< DEC_AutomateDecision >().ActivateBrainDebug( activate );
 }

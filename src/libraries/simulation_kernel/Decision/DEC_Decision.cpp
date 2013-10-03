@@ -61,7 +61,6 @@ ScriptRefs::ScriptRefs( sword::Brain& brain  )
     , removeAction_           ( brain.GetScriptRef( "RemoveAction" ) )
     , initTaskParameter_      ( brain.GetScriptRef( "InitTaskParameter" ) )
     , activateBrainDebug_     ( brain.GetScriptRef( "ActivateBrainDebug" ) )
-    , deactivateBrainDebug_   ( brain.GetScriptRef( "DeactivateBrainDebug" ) )
 {
     // NOTHING
 }

@@ -901,18 +901,9 @@ int DEC_AutomateDecision::GetRulesOfEngagementState() const
 // Name: DEC_AutomateDecision::ActivateBrainDebug
 // Created: SLI 2013-06-21
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::ActivateBrainDebug()
+void DEC_AutomateDecision::ActivateBrainDebug( bool activate )
 {
-    DEC_Decision< MIL_Automate >::ActivateBrainDebug();
+    DEC_Decision< MIL_Automate >::ActivateBrainDebug( activate );
     bStateHasChanged_ = true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::DeactivateBrainDebug
-// Created: SLI 2013-06-21
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::DeactivateBrainDebug()
-{
-    DEC_Decision< MIL_Automate >::DeactivateBrainDebug();
-    bStateHasChanged_ = true;
-}

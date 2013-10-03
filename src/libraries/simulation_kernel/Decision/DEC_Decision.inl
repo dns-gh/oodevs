@@ -1188,21 +1188,10 @@ bool DEC_Decision< T >::IsUsedByDIA() const
 // Created: SLI 2013-06-18
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::ActivateBrainDebug()
+void DEC_Decision< T >::ActivateBrainDebug( bool activate )
 {
-    brainDebug_ = true;
-    pRefs_->activateBrainDebug_();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Decision::DeactivateBrainDebug
-// Created: SLI 2013-06-18
-// -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision< T >::DeactivateBrainDebug()
-{
-    brainDebug_ = false;
-    pRefs_->deactivateBrainDebug_();
+    brainDebug_ = activate;
+    pRefs_->activateBrainDebug_( activate );
 }
 
 // -----------------------------------------------------------------------------

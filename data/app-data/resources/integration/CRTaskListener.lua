@@ -253,29 +253,29 @@ end
 
 local enabledTraces = {}
 
-function ActivateBrainDebug()
-    if next( enabledTraces ) == nil then -- table is empty
-        masalife.brain.core.getModelData( -- list all skills
-            { 
-                NotifySkill = function( self, package, name )
-                    local function listener( calltree )
-                        if enabledTraces[myself] ~= nil then
-                            DEC_Trace( formattodot( calltree, name ) )
+function ActivateBrainDebug( activate )
+    if activate then
+        if next( enabledTraces ) == nil then -- table is empty
+            masalife.brain.core.getModelData( -- list all skills
+                { 
+                    NotifySkill = function( self, package, name )
+                        local function listener( calltree )
+                            if enabledTraces[myself] ~= nil then
+                                DEC_Trace( formattodot( calltree, name ) )
+                            end
                         end
+                        masalife.brain.core.enableTrace( package, listener, "select", 2 )
                     end
-                    masalife.brain.core.enableTrace( package, listener, "select", 2 )
-                end
-            } )
-    end
-    enabledTraces[myself] = true
-end
-
-function DeactivateBrainDebug()
-    enabledTraces[myself] = nil
-    if next( enabledTraces ) == nil then -- table is empty
-        masalife.brain.core.getModelData(
-            {
-                NotifySkill = function( self, package ) masalife.brain.core.disableTrace( package, listener, "select", 2 ) end
-            } )
+                } )
+        end
+        enabledTraces[myself] = true
+    else
+        enabledTraces[myself] = nil
+        if next( enabledTraces ) == nil then -- table is empty
+            masalife.brain.core.getModelData(
+                {
+                    NotifySkill = function( self, package ) masalife.brain.core.disableTrace( package, listener, "select", 2 ) end
+                } )
+        end
     end
 end

@@ -2090,10 +2090,7 @@ void MIL_AgentPion::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
     parameters::CheckCount( msg, 1 );
     const bool activate = parameters::GetBool( msg, 0 );
-    if( activate )
-        GetRole< DEC_RolePion_Decision >().ActivateBrainDebug();
-    else
-        GetRole< DEC_RolePion_Decision >().DeactivateBrainDebug();
+    GetRole< DEC_RolePion_Decision >().ActivateBrainDebug( activate );
 }
 
 // -----------------------------------------------------------------------------
