@@ -68,8 +68,8 @@ namespace
         if( value >= min && value <= max )
             return;
         if( min == max )
-            throw MASA_BADPARAM_UNIT( "invalid number of parameters: want " << min << ", got " << value );
-        throw MASA_BADPARAM_UNIT( "invalid number of parameters: want between " << min << " and " << max << ", got " << value );
+            throw MASA_EXCEPTION( STR( "invalid number of parameters: want " << min << ", got " << value ) );
+        throw MASA_EXCEPTION( STR( "invalid number of parameters: want between " << min << " and " << max << ", got " << value ) );
     }
 }
 
@@ -78,8 +78,8 @@ void parameters::Check( bool valid, const std::string& msg, int i, int j, int k 
     if( valid )
         return;
     if( i < 0 )
-        throw MASA_BADPARAM_UNIT( msg );
-    throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, k ) << " " << msg );
+        throw MASA_EXCEPTION( msg );
+    throw MASA_EXCEPTION( STR( "parameter" << GetIndex( i, j, k ) << " " << msg ) );
 }
 
 void parameters::Check( const void* pointer, const std::string& msg, int i, int j, int k )
@@ -136,9 +136,8 @@ int parameters::GetEnumeration( const ::google::protobuf::EnumDescriptor* descri
                                 int i, int j, int k )
 {
     const int value = GetValue< Enumeration >( params, i, j, k );
-    Check( descriptor->FindValueByNumber( value ), static_cast< std::stringstream& >( std::stringstream()
-        << "is an invalid " << descriptor->full_name() << " enumeration value " << value ).str(),
-        i, j, k );
+    Check( descriptor->FindValueByNumber( value ), STR( "is an invalid "
+        << descriptor->full_name() << " enumeration value " << value ), i, j, k );
     return value;
 }
 
