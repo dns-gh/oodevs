@@ -387,6 +387,11 @@ integration.getAgentDecisionalState = function( agent )
     return F_Pion_GeteEtatDec( agent )
 end
 
+integration.getKnowledgeAgentDecisionalState = function( kAgent )
+    local agent = DEC_ConnaissanceAgent_EnAgent( kAgent)
+    return F_Pion_GeteEtatDec( agent )
+end
+
 integration.setAgentDecisionalState = function( agent, decisionalState )
     F_Pion_SeteEtatDec( agent, decisionalState )
 end
