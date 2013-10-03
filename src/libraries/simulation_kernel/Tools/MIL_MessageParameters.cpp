@@ -14,6 +14,23 @@
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
 
+// code is currently unused
+#define EXCEPTION( WHAT ) parameters::Exception( __FILE__, __FUNCTION__, __LINE__, 400, (WHAT) )
+
+parameters::Exception::Exception( const std::string& file, const std::string& function, int line, int code, const std::string& what )
+    : tools::Exception( file, function, line, what )
+    , code            ( code  )
+{
+    // NOTHING
+}
+
+parameters::Exception::Exception( const Exception& other )
+    : tools::Exception( other )
+    , code            ( other.code )
+{
+    // NOTHING
+}
+
 namespace
 {
     #define MAKE_DESCRIPTOR( NAME, TYPE, OPERAND, TEXT )\
@@ -68,8 +85,8 @@ namespace
         if( value >= min && value <= max )
             return;
         if( min == max )
-            throw MASA_EXCEPTION( STR( "invalid number of parameters: want " << min << ", got " << value ) );
-        throw MASA_EXCEPTION( STR( "invalid number of parameters: want between " << min << " and " << max << ", got " << value ) );
+            throw EXCEPTION( STR( "invalid number of parameters: want " << min << ", got " << value ) );
+        throw EXCEPTION( STR( "invalid number of parameters: want between " << min << " and " << max << ", got " << value ) );
     }
 }
 
@@ -78,8 +95,8 @@ void parameters::Check( bool valid, const std::string& msg, int i, int j, int k 
     if( valid )
         return;
     if( i < 0 )
-        throw MASA_EXCEPTION( msg );
-    throw MASA_EXCEPTION( STR( "parameter" << GetIndex( i, j, k ) << " " << msg ) );
+        throw EXCEPTION( msg );
+    throw EXCEPTION( STR( "parameter" << GetIndex( i, j, k ) << " " << msg ) );
 }
 
 void parameters::Check( const void* pointer, const std::string& msg, int i, int j, int k )
