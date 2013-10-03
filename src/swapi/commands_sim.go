@@ -818,22 +818,23 @@ func (c *Client) ChangeHealthState(crowdId uint32, healthy, wounded, contaminate
 		sword.UnitMagicAction_crowd_change_health_state)
 }
 
-func (c *Client) ChangeCrowdAdhesions(crowdId uint32, adhesions map[uint32]float32) error {
+func (c *Client) changeAdhesions(tasker *sword.Tasker, action UnitMagicEnumerator,
+	adhesions map[uint32]float32) error {
 	params := MakeParameters()
 	if len(adhesions) != 0 {
 		params = MakeParameters(MakeAdhesions(adhesions))
 	}
-	return c.sendUnitMagicAction(MakeCrowdTasker(crowdId), params,
-		sword.UnitMagicAction_crowd_change_affinities)
+	return c.sendUnitMagicAction(tasker, params, action)
+}
+
+func (c *Client) ChangeCrowdAdhesions(crowdId uint32, adhesions map[uint32]float32) error {
+	return c.changeAdhesions(MakeCrowdTasker(crowdId),
+		sword.UnitMagicAction_crowd_change_affinities, adhesions)
 }
 
 func (c *Client) ChangeUnitAdhesions(unitId uint32, adhesions map[uint32]float32) error {
-	params := MakeParameters()
-	if len(adhesions) != 0 {
-		params = MakeParameters(MakeAdhesions(adhesions))
-	}
-	return c.sendUnitMagicAction(MakeUnitTasker(unitId), params,
-		sword.UnitMagicAction_unit_change_affinities)
+	return c.changeAdhesions(MakeUnitTasker(unitId),
+		sword.UnitMagicAction_unit_change_affinities, adhesions)
 }
 
 func (c *Client) ReloadBrain(crowdId uint32, model string) error {

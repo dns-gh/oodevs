@@ -22,7 +22,8 @@
 
     <target name="proto">
         <go_proto input="${src.dir}/sword"/>
-        <go_proto input="${src.dir}/testproto"/>
+        <go_proto input="${src.dir}/testproto/before"/>
+        <go_proto input="${src.dir}/testproto/after"/>
     </target>
 
     <target name="configure" depends="update,proto"/>

@@ -266,7 +266,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		args = append(args, "--checkpoint="+opts.CheckpointName)
 	}
 	if len(opts.DebugDir) > 0 {
-		args = append(args, "--debug-dir"+opts.DebugDir)
+		args = append(args, "--debug-dir="+opts.DebugDir)
 	}
 
 	cmd := exec.Command(opts.Executable, args...)

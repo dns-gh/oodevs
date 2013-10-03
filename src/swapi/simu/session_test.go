@@ -49,6 +49,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
 	session.GamingServer = "masagroup.net"
 	session.EndTick = 42
 	session.Paused = true
+	session.TimeFactor = 999
 	data, err := WriteSession(session)
 	c.Assert(err, IsNil)
 
@@ -76,7 +77,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
       <random1 deviation="0.5" distribution="0" mean="0.5"></random1>
       <random2 deviation="0.5" distribution="0" mean="0.5"></random2>
       <random3 deviation="0.5" distribution="0" mean="0.5"></random3>
-      <time end-tick="42" latency="0" factor="10" paused="true" step="10"></time>
+      <time end-tick="42" latency="0" factor="999" paused="true" step="10"></time>
     </simulation>
   </config>
   <meta>

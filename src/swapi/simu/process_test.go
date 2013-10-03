@@ -17,6 +17,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"strings"
 	"time"
 )
 
@@ -150,7 +151,7 @@ func (s *TestSuite) TestRotatingLogs(c *C) {
 	sessionPath, err := WriteNewSessionFile(session, exDir)
 	c.Assert(err, IsNil)
 	sessionDir := filepath.Dir(sessionPath)
-	opts.DebugDir = sessionDir
+	opts.DebugDir = filepath.Join(sessionDir, "debug")
 
 	opts.SessionName = filepath.Base(sessionDir)
 	sim, err := StartSim(opts)
@@ -178,6 +179,33 @@ func (s *TestSuite) TestRotatingLogs(c *C) {
 	}
 	c.Assert(found, HasLen, 3)
 	c.Assert(found[""], NotNil)
+}
+
+func (s *TestSuite) TestTimeOptions(c *C) {
+	opts := MakeOpts()
+
+	factors := []int{0, -1}
+	for _, factor := range factors {
+		exDir := opts.GetExerciseDir()
+		session := CreateDefaultSession()
+		session.EndTick = 2
+		session.TimeFactor = factor
+		sessionPath, err := WriteNewSessionFile(session, exDir)
+		c.Assert(err, IsNil)
+		sessionDir := filepath.Dir(sessionPath)
+		opts.DebugDir = filepath.Join(sessionDir, "debug")
+		opts.SessionName = filepath.Base(sessionDir)
+		sim, err := StartSim(opts)
+		defer sim.Stop()
+		sim.Wait(60 * time.Second)
+		c.Assert(sim.Success(), Equals, false)
+
+		entries, err := ioutil.ReadDir(opts.DebugDir)
+		c.Assert(err, IsNil)
+		for _, d := range entries {
+			c.Assert(strings.HasSuffix(d.Name(), ".dmp"), Equals, false)
+		}
+	}
 }
 
 // Test starting gaming process

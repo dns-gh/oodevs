@@ -303,10 +303,30 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	err := client.DeleteUnit(1234)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
-	// Find some unit
+	// Find some unit and make it move
 	units := data.ListUnits()
 	c.Assert(len(units), Greater, 0)
-	unit := units[0]
+	var unit *swapi.Unit
+	for _, u := range units {
+		if strings.Contains(u.Name, "ARMOR.MBT") {
+			unit = u
+		}
+	}
+	c.Assert(unit, NotNil)
+	parent := model.GetAutomat(unit.AutomatId)
+	c.Assert(parent, NotNil)
+	err = client.SetAutomatMode(parent.Id, false)
+	c.Assert(err, IsNil)
+
+	null := swapi.MakeNullValue()
+	heading := swapi.MakeHeading(0)
+	dest := swapi.MakePointParam(swapi.Point{X: -15.8193, Y: 28.3456})
+	params := swapi.MakeParameters(heading, null, null, null, dest)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return !Nearby(data.FindUnit(unit.Id).Position, unit.Position)
+	})
 
 	// Blast it
 	err = client.DeleteUnit(unit.Id)
