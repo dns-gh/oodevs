@@ -1527,7 +1527,7 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 
 	// Error: Invalid parameters count
 	err := client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	equipment := swapi.EquipmentDotation{
 		Available:     0,
@@ -1541,21 +1541,21 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 
 	// Error: Invalid equipment type
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{123: &equipment})
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be an composante type which can have breakdown`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: Quantity must be non-zero positive
 	equipment.Repairable = -1
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be positive a non-zero positive number`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	equipment.Repairable = 0
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be positive a non-zero positive number`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	equipment.Repairable = 1
 	// Error: invalid breakdown
 	equipment.Breakdowns = []int32{1523}
 	err = client.CreateBreakdowns(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[2\] must be a breakdown type identifier`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Create breakdown
 	equipment.Breakdowns = []int32{82}
@@ -1599,15 +1599,15 @@ func (s *TestSuite) TestUnitChangePosture(c *C) {
 
 	// Error: invalid parameter count
 	err := client.ChangePostureTest(11, swapi.MakeParameters())
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid parameter count, 1 parameter expected`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid parameter type
 	err = client.ChangePostureTest(11, swapi.MakeParameters(swapi.MakeString("invalid")))
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\] must be an enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid enumeration value
 	err = client.ChangePostureTest(11, swapi.MakeParameters(swapi.MakeEnumeration(1000)))
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\] must be a valid posture enumeration value`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Valid: change posture
 	unit := client.Model.GetUnit(11)
@@ -1682,35 +1682,35 @@ func (s *TestSuite) TestUnitChangeHumanFactors(c *C) {
 
 	// Error: invalid parameter count
 	err := client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters())
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid parameters count, 4 parameters expected`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid parameter type
 	invalidString := swapi.MakeString("invalid")
 	validEnumeration := swapi.MakeEnumeration(0)
 	err = client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters(invalidString, validEnumeration, validEnumeration, validEnumeration))
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\] must be an enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	err = client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters(validEnumeration, invalidString, validEnumeration, validEnumeration))
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[1\] must be an enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	err = client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters(validEnumeration, validEnumeration, invalidString, validEnumeration))
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[2\] must be an enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	err = client.ChangeHumanFactorsTest(u1.Id, swapi.MakeParameters(validEnumeration, validEnumeration, validEnumeration, invalidString))
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[3\] must be an enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid tiredness
 	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_EnumUnitTiredness(42), sword.UnitAttributes_fanatical, sword.UnitAttributes_veteran, sword.UnitAttributes_calm)
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid tiredness enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid morale
 	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_rested, sword.UnitAttributes_EnumUnitMorale(42), sword.UnitAttributes_veteran, sword.UnitAttributes_calm)
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid morale enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid experience
 	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_rested, sword.UnitAttributes_fanatical, sword.UnitAttributes_EnumUnitExperience(42), sword.UnitAttributes_calm)
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid experience enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: invalid stress
 	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_rested, sword.UnitAttributes_fanatical, sword.UnitAttributes_veteran, sword.UnitAttributes_EnumUnitStress(42))
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: invalid stress enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Valid: change human factors
 	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_tired, sword.UnitAttributes_high, sword.UnitAttributes_expert, sword.UnitAttributes_worried)
