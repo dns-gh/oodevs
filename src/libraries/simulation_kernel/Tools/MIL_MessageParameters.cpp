@@ -31,6 +31,7 @@ namespace
     MAKE_DESCRIPTOR( Enumeration, int, enumeration, "enumeration" );
     MAKE_DESCRIPTOR( Point, sword::Point, point, "point" );
     MAKE_DESCRIPTOR( Identifier, int, identifier, "identifier" );
+    #undef MAKE_DESCRIPTOR
 
     std::string GetIndex( int i, int j, int k )
     {
@@ -46,21 +47,17 @@ namespace
     template< typename T >
     typename T::value_type GetValue( const sword::MissionParameters& params, int i, int j, int k )
     {
-        if( params.elem_size() < i+1 )
-            throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, k ) << " is missing" );
+        parameters::Check( params.elem_size() > i, "is missing", i, j, k );
         const auto& values = params.elem( i );
         const int jmax = std::max( 0, j );
-        if( values.value_size() < jmax+1 )
-            throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, k ) << " is missing" );
+        parameters::Check( values.value_size() > jmax, "is missing", i, j, k );
         const auto* value = &values.value( jmax );
         if( k >= 0 )
         {
-            if( value->list_size() < k+1 )
-                throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, k ) << " must be a list" );
+            parameters::Check( value->list_size() > k, "must be a list", i, j, k );
             value = &value->list( k );
         }
-        if( !T::Has( *value ) )
-            throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, k ) << " must be a " << T::GetName() );
+        parameters::Check( T::Has( *value ), "must be a " + T::GetName(), i, j, k );
         return T::Get( *value );
     }
 
@@ -78,8 +75,11 @@ namespace
 
 void parameters::Check( bool valid, const std::string& msg, int i, int j, int k )
 {
-    if( !valid )
-        throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, k ) << " " << msg );
+    if( valid )
+        return;
+    if( i < 0 )
+        throw MASA_BADPARAM_UNIT( msg );
+    throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, k ) << " " << msg );
 }
 
 int parameters::GetCount( const sword::MissionParameters& params, int i, int j )
@@ -87,14 +87,12 @@ int parameters::GetCount( const sword::MissionParameters& params, int i, int j )
     const int icount = params.elem_size();
     if( i < 0 )
         return icount;
-    if( icount < i + 1 )
-        throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, -1 ) << " is missing" );
+    parameters::Check( icount > i, "is missing", i );
     const auto& values = params.elem( i );
     const int jcount = values.value_size();
     if( j < 0 )
         return jcount;
-    if( jcount < j + 1 )
-        throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, -1 ) << " is missing" );
+    parameters::Check( jcount > j, "is missing", i, j );
     return params.elem( i ).value( j ).list_size();
 }
 
@@ -154,7 +152,7 @@ const DEC_Model_ABC* parameters::GetModel( const sword::MissionParameters& param
     if( !params.elem_size() )
         return nullptr;
     const std::string name = GetString( params, 0 );
-    const auto* model = finder( name );
+    auto model = finder( name );
     Check( !!model, "must be a valid model", 0 );
     return model;
 }

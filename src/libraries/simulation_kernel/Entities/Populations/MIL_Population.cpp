@@ -1345,15 +1345,12 @@ namespace
 void MIL_Population::OnReceiveMsgChangeHealthState( const sword::MissionParameters& msg )
 {
     parameters::CheckCount( msg, 4 );
-    int i = 0;
-    unsigned int healthy = GetParameter( msg, i++ );
-    unsigned int wounded = GetParameter( msg, i++ );
-    unsigned int contaminated = GetParameter( msg, i++ );
-    unsigned int dead = GetParameter( msg, i++ );
+    unsigned int healthy = GetParameter( msg, 0 );
+    unsigned int wounded = GetParameter( msg, 1 );
+    unsigned int contaminated = GetParameter( msg, 2 );
+    unsigned int dead = GetParameter( msg, 3 );
     unsigned int total = healthy + wounded + contaminated + dead;
-    if( total == 0u )
-        throw MASA_BADPARAM_UNIT( "at least one parameter must be non-zero" );
-
+    parameters::Check( total > 0, "at least one parameter must be positive" );
     ChangeComposition( healthy, wounded, contaminated, dead );
 }
 

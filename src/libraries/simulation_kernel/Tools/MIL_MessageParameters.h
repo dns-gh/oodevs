@@ -10,17 +10,20 @@
 #ifndef MIL_MessageParameters_h_
 #define MIL_MessageParameters_h_
 
+// BAX migrate everybody to parameters::Check
+// and remove this include and the following macros
 #include "tools/NET_AsnException.h"
+#define STR( WHAT ) static_cast< std::stringstream& >( std::stringstream() << WHAT ).str()
 
-#define MASA_BADPARAM_MAGICACTION(reason)               \
+#define MASA_BADPARAM_MAGICACTION( reason )\
     MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode,\
-        sword::MagicActionAck::error_invalid_parameter, \
-        static_cast< std::stringstream& >( std::stringstream() << reason ).str().c_str() )
+        sword::MagicActionAck::error_invalid_parameter,\
+        STR( reason ) )
 
-#define MASA_BADPARAM_UNIT(reason)                      \
-    MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, \
-        sword::UnitActionAck::error_invalid_parameter,  \
-        static_cast< std::stringstream& >( std::stringstream() << reason ).str().c_str() )
+#define MASA_BADPARAM_UNIT( reason )\
+    MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,\
+        sword::UnitActionAck::error_invalid_parameter,\
+        STR( reason ) )
 
 namespace sword
 {
@@ -45,7 +48,7 @@ class DEC_Model_ABC;
 
 namespace parameters
 {
-    void         Check( bool valid, const std::string& msg, int i, int j = -1, int k = -1 );
+    void         Check( bool valid, const std::string& msg, int i = -1, int j = -1, int k = -1 );
     void         CheckCount( const sword::MissionParameters& params, int min, int max = 0 );
     void         CheckCount( int i, const sword::MissionParameters& params, int min, int max = 0 );
     void         CheckCount( int i, int j, const sword::MissionParameters& params, int min, int max = 0 );
@@ -62,6 +65,6 @@ namespace parameters
     const DEC_Model_ABC* GetModel( const sword::MissionParameters& params, const ModelFinder& finder );
 }
 
-#define GET_ENUMERATION( ENUM, ... ) static_cast< ENUM >( parameters::GetEnumeration( ENUM ## _descriptor(), __VA_ARGS__ ) )
+#define GET_ENUMERATION( ENUM, I, ... ) static_cast< ENUM >( parameters::GetEnumeration( ENUM ## _descriptor(), I, __VA_ARGS__ ) )
 
 #endif // MIL_MessageParameters_h_
