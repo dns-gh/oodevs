@@ -26,8 +26,8 @@
 #include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_MessageParameters.h"
 #include <boost/foreach.hpp>
-#include "Tools/MessageReader.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Inhabitant )
 
@@ -54,7 +54,6 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
     if( pType )
         ::new( population )MIL_Inhabitant( *pType );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant constructor

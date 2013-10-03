@@ -36,9 +36,8 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Geometry.h"
 #include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_MessageParameters.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/MessageReader.h"
-#include "Tools/NET_AsnException.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 
 #include <boost/foreach.hpp>
@@ -807,7 +806,7 @@ boost::shared_ptr< MT_Vector2D > MIL_Population::GetSafetyPosition( const MIL_Ag
     {
         const MT_Vector2D& agentPosition = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
         MT_Vector2D closestPoint = GetClosestPoint( agentPosition );
-        functor.reset( new DeadSafetyPositionFunctor( agentPosition, closestPoint ) );        
+        functor.reset( new DeadSafetyPositionFunctor( agentPosition, closestPoint ) );
     }
     else
         functor.reset( new ElementSafetyPositionFunctor( *pClosestElement ) );
@@ -1016,7 +1015,6 @@ void MIL_Population::Move( const MT_Vector2D& destination )
     UpdateBarycenter();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::MoveAlong
 // Created: LDC 2013-03-29
@@ -1217,13 +1215,13 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
         OnReceiveMsgDestroyAll();
         break;
     case sword::UnitMagicAction::crowd_change_health_state:
-        OnReceiveMsgChangeHealthState( msg );
+        OnReceiveMsgChangeHealthState( msg.parameters() );
         break;
     case sword::UnitMagicAction::crowd_change_armed_individuals:
-        OnReceiveMsgChangeArmedIndividuals( msg);
+        OnReceiveMsgChangeArmedIndividuals( msg.parameters() );
         break;
     case sword::UnitMagicAction::crowd_change_attitude:
-        OnReceiveMsgChangeAttitude( msg );
+        OnReceiveMsgChangeAttitude( msg.parameters() );
         break;
     case sword::UnitMagicAction::crowd_change_affinities:
         pAffinities_->OnReceiveMsgChangeAffinities( msg );
@@ -1232,10 +1230,10 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
     case sword::UnitMagicAction::change_critical_intelligence:
-        OnReceiveCriticalIntelligence( msg );
+        OnReceiveCriticalIntelligence( msg.parameters() );
         break;
     case sword::UnitMagicAction::reload_brain:
-        OnReloadBrain( msg );
+        OnReloadBrain( msg.parameters() );
         break;
     case sword::UnitMagicAction::change_brain_debug:
         OnChangeBrainDebug( msg.parameters() );
@@ -1250,16 +1248,13 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 // Name: MIL_Population::OnReceiveCrowdMagicActionMoveTo
 // Created: JSR 2010-04-08
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn )
+void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParameters& msg )
 {
-    if( !asn.has_parameters() || asn.parameters().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
-    const sword::MissionParameter& parameter = asn.parameters().elem( 0 );
-    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_point() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Point" );
-    const sword::Point& point = parameter.value().Get( 0 ).point();
-    if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a point type with one coordinate" );
+    parameters::CheckCount( msg, 1 );
+    const sword::Point point = parameters::GetPoint( msg, 0 );
+    parameters::Check( point.location().type() == sword::Location::point
+        && point.location().coordinates().elem_size() == 1,
+        "must be a point with one coordinate", 0 );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
    // merge all concentrations into new
@@ -1298,20 +1293,16 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 // Name: MIL_Population::OnReceiveMsgChangeAttitude
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& msg )
+void MIL_Population::OnReceiveMsgChangeAttitude( const sword::MissionParameters& msg )
 {
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
-    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
-    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_enumeration() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be an attitude Enumeration" );
-    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parameter.value().Get( 0 ).enumeration() );
-    if( !pAttitude )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be an attitude Enumeration" );
+    parameters::CheckCount( msg, 1 );
+    const auto value = GET_ENUMERATION( sword::EnumCrowdAttitude, msg, 0 );
+    const MIL_PopulationAttitude* attitude = MIL_PopulationAttitude::Find( value );
+    parameters::Check( attitude, "must be a valid attitude enumeration", 0 );
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SetAttitude( *pAttitude );
+        ( **it ).SetAttitude( *attitude );
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SetAttitude( *pAttitude );
+        ( **it ).SetAttitude( *attitude );
 }
 
 namespace
@@ -1337,17 +1328,13 @@ namespace
     }
 }
 
-
 namespace
 {
-    unsigned int GetParameter( const std::string& parameter, const sword::MissionParameter& msg )
+    unsigned int GetParameter( const sword::MissionParameters& params, int idx )
     {
-        if( msg.value_size() != 1 || !msg.value().Get( 0 ).has_quantity() )
-            throw MASA_BADPARAM_UNIT( "parameters[" + parameter + "] must be a Quantity" );
-        int number = msg.value().Get( 0 ).quantity();
-        if( number < 0 )
-            throw MASA_BADPARAM_UNIT( "parameters[" + parameter + "] must be a positive number" );
-        return number;
+        const int quantity = parameters::GetQuantity( params, idx );
+        parameters::Check( quantity >= 0, "must be positive", idx );
+        return quantity;
     }
 }
 
@@ -1355,19 +1342,15 @@ namespace
 // Name: MIL_Population::OnReceiveMsgChangeHealthState
 // Created: JSR 2011-03-16
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
+void MIL_Population::OnReceiveMsgChangeHealthState( const sword::MissionParameters& msg )
 {
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 4 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count, 4 parameters expected" );
-
-    unsigned int healthy = GetParameter( "0", msg.parameters().elem( 0 ) );
-    unsigned int wounded = GetParameter( "1", msg.parameters().elem( 1 ) );
-    unsigned int contaminated = GetParameter( "2", msg.parameters().elem( 2 ) );
-    unsigned int dead = GetParameter( "3", msg.parameters().elem( 3 ) );
+    parameters::CheckCount( msg, 4 );
+    unsigned int healthy = GetParameter( msg, 0 );
+    unsigned int wounded = GetParameter( msg, 1 );
+    unsigned int contaminated = GetParameter( msg, 2 );
+    unsigned int dead = GetParameter( msg, 3 );
     unsigned int total = healthy + wounded + contaminated + dead;
-    if( total == 0u )
-        throw MASA_BADPARAM_UNIT( "at least one parameter must be non-zero" );
-
+    parameters::Check( total > 0, "at least one parameter must be positive" );
     ChangeComposition( healthy, wounded, contaminated, dead );
 }
 
@@ -1447,20 +1430,12 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
 // Name: MIL_Population::OnReceiveMsgChangeArmedIndividuals
 // Created: JSR 2011-03-16
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& msg )
+void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::MissionParameters& msg )
 {
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
-
-    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
-    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_quantity() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
-
-    const int quantity = parameter.value().Get( 0 ).quantity();
-    if( quantity < 0 || quantity > 100 )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a percentage between 0 and 100" );
-
-    rArmedIndividuals_ = 0.01 * parameter.value().Get( 0 ).quantity();
+    parameters::CheckCount( msg, 1 );
+    const int quantity = parameters::GetQuantity( msg, 0 );
+    parameters::Check( quantity >= 0 && quantity <= 100, "must be between 0 and 100", 0 );
+    rArmedIndividuals_ = 0.01 * quantity;
     rNewArmedIndividuals_ = rArmedIndividuals_;
     armedIndividualsChanged_ = true;
 }
@@ -1892,16 +1867,10 @@ MT_Vector2D MIL_Population::GetFlowHeadPosition()
 // Name: MIL_Population::OnReceiveCriticalIntelligence
 // Created: LGY 2011-05-27
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
+void MIL_Population::OnReceiveCriticalIntelligence( const sword::MissionParameters& msg )
 {
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
-
-    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
-    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Acharstr" );
-
-    criticalIntelligence_ = parameter.value( 0 ).acharstr();
+    parameters::CheckCount( msg, 1 );
+    criticalIntelligence_ = parameters::GetString( msg, 0 );
     criticalIntelligenceChanged_ = true;
 }
 
@@ -1909,27 +1878,17 @@ void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction
 // Name: MIL_AgentPion::OnReloadBrain
 // Created: AHC 2010-01-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReloadBrain( const sword::UnitMagicAction& msg )
+void MIL_Population::OnReloadBrain( const sword::MissionParameters& msg )
 {
     CancelAllActions();
-    bool modelChanged = false;
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-         throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
-
-    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
-    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Acharstr" );
-
-    const std::string model = parameter.value( 0 ).acharstr();
-    const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( model );
-    if( !pModel )
-        throw MASA_BADPARAM_UNIT( "Unknown decisional model" );
-
-    modelChanged = ( &GetRole< DEC_PopulationDecision >().GetModel() != pModel );
-    if( modelChanged )
-        GetRole< DEC_PopulationDecision >().SetModel( *pModel );
-
-    GetDecision().Reload( !modelChanged );
+    auto model = parameters::GetModel( msg, []( const std::string& model ){
+        return MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( model );
+    } );
+    auto& role = GetRole< DEC_PopulationDecision >();
+    const bool modified = model && model != &role.GetModel();
+    if( modified )
+        role.SetModel( *model );
+    GetDecision().Reload( !modified );
     orderManager_->CancelMission();
 }
 
@@ -1939,13 +1898,9 @@ void MIL_Population::OnReloadBrain( const sword::UnitMagicAction& msg )
 // -----------------------------------------------------------------------------
 void MIL_Population::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
-    if( msg.elem_size() != 1 )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "invalid parameters count, 1 parameter expected" );
-    if( msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value().Get( 0 ).has_booleanvalue() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "parameters[0] must be a boolean" );
-    if( msg.elem( 0 ).value( 0 ).booleanvalue() )
+    parameters::CheckCount( msg, 1 );
+    const bool activate = parameters::GetBool( msg, 0 );
+    if( activate )
         GetRole< DEC_PopulationDecision >().ActivateBrainDebug();
     else
         GetRole< DEC_PopulationDecision >().DeactivateBrainDebug();

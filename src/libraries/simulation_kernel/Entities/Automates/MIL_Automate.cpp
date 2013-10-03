@@ -46,14 +46,12 @@
 #include "protocol/SimulationSenders.h"
 #include "Tools/MIL_Color.h"
 #include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_MessageParameters.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/NET_AsnException.h"
-#include "Tools/MessageReader.h"
 
 #include <boost/foreach.hpp>
 
 using namespace sword;
-
 
 namespace
 {
@@ -1596,18 +1594,14 @@ void MIL_Automate::NotifyQuotaExceeded( const PHY_DotationCategory& dotationCate
 void MIL_Automate::OnReloadBrain( const sword::MissionParameters& msg )
 {
     CancelAllActions();
-    bool modelChanged = false;
-    if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_acharstr() )
-    {
-        const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
-        const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( model );
-        if( !pModel )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        modelChanged = ( &GetRole< DEC_AutomateDecision >().GetModel() != pModel );
-        if( modelChanged )
-            GetRole< DEC_AutomateDecision >().SetModel( *pModel );
-    }
-    GetDecision().Reload( !modelChanged );
+    auto model = parameters::GetModel( msg, []( const std::string& model ){
+        return MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( model );
+    } );
+    auto& role = GetRole< DEC_AutomateDecision >();
+    const bool modified = model && model != &role.GetModel();
+    if( modified )
+        role.SetModel( *model );
+    GetDecision().Reload( !modified );
     pOrderManager_->CancelMission();
 }
 
@@ -1617,13 +1611,9 @@ void MIL_Automate::OnReloadBrain( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
-    if( msg.elem_size() != 1 )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "invalid parameters count, 1 parameter expected" );
-    if( msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value().Get( 0 ).has_booleanvalue() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                                 "parameters[0] must be a boolean" );
-    if( msg.elem( 0 ).value( 0 ).booleanvalue() )
+    parameters::CheckCount( msg, 1 );
+    const bool activate = parameters::GetBool( msg, 0 );
+    if( activate )
         GetRole< DEC_AutomateDecision >().ActivateBrainDebug();
     else
         GetRole< DEC_AutomateDecision >().DeactivateBrainDebug();
