@@ -37,7 +37,7 @@ PHY_Human::PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante
     , pWound_( &PHY_HumanWound::notWounded_ )
     , bMentalDiseased_( false )
     , bContamined_( false )
-    , nLocation_( eBattleField )
+    , nLocation_( eHumanLocation_Battlefield )
     , pMedicalState_( 0 )
     , nDeathTimeStep_( std::numeric_limits< unsigned int >::max() )
 {
@@ -73,7 +73,7 @@ PHY_Human::PHY_Human()
     , pWound_( 0 )
     , bMentalDiseased_( false )
     , bContamined_( false )
-    , nLocation_( eBattleField )
+    , nLocation_( eHumanLocation_Battlefield )
     , pMedicalState_( 0 )
     , nDeathTimeStep_( std::numeric_limits< unsigned int >::max() )
 {
@@ -168,9 +168,9 @@ void PHY_Human::CancelMedicalLogisticRequest()
         PHY_Human oldHumanState( *this );
         const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanBackFromMedical, *pMedicalState_ );
         if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
-            nLocation_ = eMaintenance;
+            nLocation_ = eHumanLocation_Maintenance;
         else
-            nLocation_ = eBattleField;
+            nLocation_ = eHumanLocation_Battlefield;
         pMedicalState_->Cancel();
         delete pMedicalState_;
         pMedicalState_ = 0;
@@ -371,10 +371,10 @@ bool PHY_Human::NotifyBackToWar()
 // -----------------------------------------------------------------------------
 void PHY_Human::NotifyHandledByMedical()
 {
-    if( nLocation_ != eMedical )
+    if( nLocation_ != eHumanLocation_Medical )
     {
         PHY_Human oldHumanState( *this );
-        nLocation_ = eMedical;
+        nLocation_ = eHumanLocation_Medical;
         NotifyHumanChanged( oldHumanState );
     }
 }
@@ -385,10 +385,10 @@ void PHY_Human::NotifyHandledByMedical()
 // -----------------------------------------------------------------------------
 void PHY_Human::NotifyComposanteHandledByMaintenance()
 {
-    if( nLocation_ == eBattleField )
+    if( nLocation_ == eHumanLocation_Battlefield )
     {
         PHY_Human oldHumanState( *this );
-        nLocation_ = eMaintenance;
+        nLocation_ = eHumanLocation_Maintenance;
         NotifyHumanChanged( oldHumanState );
     }
 }
@@ -400,10 +400,10 @@ void PHY_Human::NotifyComposanteHandledByMaintenance()
 void PHY_Human::NotifyComposanteBackFromMaintenance()
 {
     //assert( nLocation_ != eBattleField ); <== Peut asserter si la composante meurt avant d'avoir été récupérée par le remorqueur (=> appel de NotifyComposanteBackFromMaintenance(), mais composante pas encore dans maintenance, juste pMaintenanceState pour la demande)
-    if( nLocation_ == eMaintenance )
+    if( nLocation_ == eHumanLocation_Maintenance )
     {
         PHY_Human oldHumanState( *this );
-        nLocation_ = eBattleField;
+        nLocation_ = eHumanLocation_Battlefield;
         NotifyHumanChanged( oldHumanState );
     }
 }
@@ -415,7 +415,7 @@ void PHY_Human::NotifyComposanteBackFromMaintenance()
 void PHY_Human::NotifyHandledByFuneral()
 {
     PHY_Human oldHumanState( *this );
-    nLocation_ = eFuneral;
+    nLocation_ = eHumanLocation_Funeral;
     NotifyHumanChanged( oldHumanState );
 }
 
@@ -428,9 +428,9 @@ void PHY_Human::NotifyBackFromFuneral()
     PHY_Human oldHumanState( *this );
     assert( pComposante_ );
     if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::maintenance_ )
-        nLocation_ = eMaintenance;
+        nLocation_ = eHumanLocation_Maintenance;
     else
-        nLocation_ = eBattleField;
+        nLocation_ = eHumanLocation_Battlefield;
     NotifyHumanChanged( oldHumanState );
 }
 
@@ -522,7 +522,7 @@ const PHY_HumanWound& PHY_Human::GetWound() const
 // Name: PHY_Human::GetLocation
 // Created: NLD 2005-01-13
 // -----------------------------------------------------------------------------
-PHY_Human::E_Location PHY_Human::GetLocation() const
+E_HumanLocation PHY_Human::GetLocation() const
 {
     return nLocation_;
 }
@@ -552,7 +552,7 @@ bool PHY_Human::IsSeriouslyPhysicallyWounded() const
 // -----------------------------------------------------------------------------
 bool PHY_Human::IsUsable() const
 {
-    return !IsDead() && nLocation_ != eMedical;
+    return !IsDead() && nLocation_ != eHumanLocation_Medical;
 }
 
 // -----------------------------------------------------------------------------

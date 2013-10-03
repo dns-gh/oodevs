@@ -358,7 +358,8 @@ ENT_Tr::T_ConverterHumanLocation ENT_Tr::HumanLocationConverter_ [] =
 {
     T_ConverterHumanLocation( "battlefield", QT_TRANSLATE_NOOP( "ENT_Tr", "On battlefield" ), eHumanLocation_Battlefield ),
     T_ConverterHumanLocation( "maintenance", QT_TRANSLATE_NOOP( "ENT_Tr", "Assigned to maintenance" ), eHumanLocation_Maintenance ),
-    T_ConverterHumanLocation( "medical",     QT_TRANSLATE_NOOP( "ENT_Tr", "In medical treatment" ), eHumanLocation_Medical),
+    T_ConverterHumanLocation( "medical",     QT_TRANSLATE_NOOP( "ENT_Tr", "In medical treatment" ), eHumanLocation_Medical ),
+    T_ConverterHumanLocation( "funeral",     QT_TRANSLATE_NOOP( "ENT_Tr", "In funeral system" ), eHumanLocation_Funeral ),
     T_ConverterHumanLocation( "", "", ( E_HumanLocation ) - 1 )
 };
 

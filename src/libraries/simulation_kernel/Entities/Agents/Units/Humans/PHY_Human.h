@@ -64,7 +64,7 @@ public:
     //@{
     const PHY_HumanRank& GetRank() const;
     const PHY_HumanWound& GetWound() const;
-    E_Location GetLocation() const;
+    E_HumanLocation GetLocation() const;
     bool IsUsable() const;
     bool IsDead() const;
     bool IsSeriouslyPhysicallyWounded() const;
@@ -142,7 +142,7 @@ private:
     const PHY_HumanWound* pWound_;
     bool bMentalDiseased_;
     bool bContamined_;
-    E_Location nLocation_;
+    E_HumanLocation nLocation_;
     PHY_MedicalHumanState* pMedicalState_;
     boost::shared_ptr< logistic::FuneralConsign_ABC > funeralConsign_;
     unsigned int nDeathTimeStep_;

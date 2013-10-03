@@ -25,7 +25,7 @@ PHY_HumanState::PHY_HumanState()
     : number_               ( 0 )
     , rank_                 ( &PHY_HumanRank::officier_ )
     , state_                ( &PHY_HumanWound::notWounded_ )
-    , location_             ( Human_ABC::eBattleField )
+    , location_             ( eHumanLocation_Battlefield )
     , contaminated_         ( false )
     , psyop_                ( false )
 {
@@ -36,7 +36,7 @@ PHY_HumanState::PHY_HumanState()
 // Name: PHY_HumanState constructor
 // Created: ABR 2011-07-18
 // -----------------------------------------------------------------------------
-PHY_HumanState::PHY_HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, Human_ABC::E_Location location /*= Human_ABC::eBattleField*/, bool contaminated /*= false*/, bool psyop /*= false*/ )
+PHY_HumanState::PHY_HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, E_HumanLocation location /*= eHumanLocation_Battlefield*/, bool contaminated /*= false*/, bool psyop /*= false*/ )
     : number_               ( number )
     , rank_                 ( &rank )
     , state_                ( &state )

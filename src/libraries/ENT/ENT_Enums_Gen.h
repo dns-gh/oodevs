@@ -389,7 +389,8 @@ enum E_HumanLocation
     eHumanLocation_Battlefield = 0,
     eHumanLocation_Maintenance = 1,
     eHumanLocation_Medical     = 2,
-    eNbrHumanLocation          = 3
+    eHumanLocation_Funeral     = 3,
+    eNbrHumanLocation          = 4
 };
 
 enum E_InjuriesSeriousness

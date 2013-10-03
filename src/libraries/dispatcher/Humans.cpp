@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Humans.h"
+#include "protocol/CompatibilityHelper.h"
 #include "protocol/Protocol.h"
 
 using namespace dispatcher;
@@ -69,6 +70,7 @@ void Humans::Send( sword::HumanDotations_HumanDotation& message ) const
     message.set_rank( rank_ );
     message.set_state( state_ );
     message.set_location( location_ );
+    message.set_location_deprecated( protocol::RemapHumanLocation( message.location() ));
     for( unsigned int i = 0; i < injuries_.size(); ++i )
     {
         sword::Injury* injury = message.mutable_injuries()->Add();

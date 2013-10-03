@@ -984,11 +984,15 @@ enum EnumHumanState {
 //! Defines the status of crew members on the battlefield.
 enum EnumHumanLocation {
     //! Located on the battlefield
-    battlefield = 0;
+    battlefield         = 0;
     //! Assigned to maintenance
-    maintenance = 1;
+    maintenance         = 1;
     //! In treatment
-    medical     = 2;
+    medical             = 2;
+    //! In funeral system
+    funeral             = 3;
+    //! unknown location
+    unknown_location    = 4;
 }
 
 enum EnumInjuriesSeriousness {
@@ -1016,12 +1020,13 @@ message HumanDotations {
         required int32               quantity         = 1;
         required EnumHumanRank       rank             = 2;
         required EnumHumanState      state            = 3;
-        required EnumHumanLocation   location         = 4;
+        required EnumHumanLocation   location_DEPRECATED = 4;
         repeated Injury              injuries         = 5;
         //! Whether the group is mentally wounded or not
         optional bool                mentally_wounded = 6;
         //! Whether the group is NBC contaminated or not
         optional bool                contaminated     = 7;
+        optional EnumHumanLocation   location         = 8 [default = unknown_location];
     }
     //! Each element describes a set of humans sharing the same state,
     //! that is the same attributes combination.

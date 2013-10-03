@@ -951,5 +951,9 @@
         <source>Deactivated</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>In funeral system</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -256,7 +256,7 @@ BOOST_FIXTURE_TEST_CASE( HumanNotifyHandledByMedical, Fixture )
 {
     MOCK_EXPECT( composante.NotifyHumanChanged ).once();
     human.NotifyHandledByMedical();
-    BOOST_CHECK_EQUAL( human.GetLocation(), PHY_Human::eMedical );
+    BOOST_CHECK_EQUAL( human.GetLocation(), eHumanLocation_Medical );
 }
 
 BOOST_FIXTURE_TEST_CASE( HumanNotifyBackToWar, Fixture )
@@ -269,10 +269,10 @@ BOOST_FIXTURE_TEST_CASE( HumanMaintenanceManagement, Fixture )
 {
     MOCK_EXPECT( composante.NotifyHumanChanged ).once();
     human.NotifyComposanteHandledByMaintenance();
-    BOOST_CHECK_EQUAL( human.GetLocation(), PHY_Human::eMaintenance );
+    BOOST_CHECK_EQUAL( human.GetLocation(), eHumanLocation_Maintenance );
     MOCK_EXPECT( composante.NotifyHumanChanged ).once();
     human.NotifyComposanteBackFromMaintenance();
-    BOOST_CHECK_EQUAL( human.GetLocation(), PHY_Human::eBattleField );
+    BOOST_CHECK_EQUAL( human.GetLocation(), eHumanLocation_Battlefield );
 }
 
 // $$$$ TODO MGD find a  way to serialize MockHumansComposante
