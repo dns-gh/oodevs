@@ -303,6 +303,9 @@ add_plugin( order_plugin )
 add_plugin( positions_plugin )
 add_plugin( replay_plugin )
 add_plugin( rights_plugin )
+target_link_libraries( rights_plugin
+    ${OPENSSL_LIBRARIES}
+)
 add_plugin( rpr )
 add_plugin( saver_plugin )
 add_plugin( score_plugin )

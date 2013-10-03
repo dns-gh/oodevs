@@ -13,6 +13,7 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/AuthenticatedLinkResolver_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <set>
 #include <map>
 
 namespace sword
@@ -100,6 +101,8 @@ private:
     typedef std::map< std::string, boost::shared_ptr< dispatcher::Profile > > T_Profiles;
 
     typedef std::map< std::string, unsigned int > T_ClientsID;
+    typedef std::map< std::string, std::string >  T_AuthenticationKeys;
+    typedef std::set< std::string >               T_SilentClients;
     //@}
 
 private:
@@ -115,6 +118,8 @@ private:
     int                                         currentConnections_;
     T_ClientsID                                 clientsID_;
     unsigned int                                countID_;
+    T_AuthenticationKeys                        authenticationKeys_;
+    T_SilentClients                             silentClients_;
     //@}
 };
 

@@ -21,6 +21,8 @@
 #include "protocol/Version.h"
 #include "protocol/RightsHelper.h"
 #include "tools/MessageDispatcher_ABC.h"
+#include <openssl/hmac.h>
+#include <iomanip>
 
 using namespace dispatcher;
 
@@ -130,15 +132,54 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::str
 void RightsPlugin::Logout( ClientPublisher_ABC& client )
 {
     for( auto it = authenticated_.begin(); it != authenticated_.end(); ++it )
-        if( &GetPublisher( it->first ) == &client )
+    {
+        const std::string link = it->first;
+        if( &GetPublisher( link ) == &client )
         {
             authenticated_.erase( it );
-            --currentConnections_;
+            auto it = silentClients_.find( link );
+            if( it == silentClients_.end() )
+                --currentConnections_;
+            silentClients_.erase( it );
             AuthenticationSender sender( client, clients_, 0 );
             SendProfiles( sender );
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
             return;
         }
+    }
+}
+namespace
+{
+    const std::string K1 = "29Ma500";
+    const std::string K2 = "SaGro";
+    const std::string K3 = "Up75";
+
+    std::string GenerateKey()
+    {
+        std::stringstream s;
+        for( unsigned int i = 0; i < 16; ++i )
+            s << std::setbase( 16 ) << ( std::rand() % 256 );
+        return s.str();
+    }
+
+    std::string MakeHmac( const std::string& key, const std::string& data )
+    {
+        const unsigned int hashLen = 16;
+        unsigned char hash[ hashLen ];
+        unsigned int written = hashLen;
+
+        HMAC( EVP_md5(), key.c_str(), int( key.size() ), (unsigned char*)data.c_str(),
+            data.size(), hash, &written );
+
+        std::string result;
+        for( unsigned int i = 0; i < written; i++ )
+        {
+            char hex[3];
+            sprintf(hex, "%02x", (unsigned int)hash[i]);
+            result.append(hex);
+        }
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -156,6 +197,18 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 
     unsigned int ctx = wrapper.has_context() ? wrapper.context() : 0;
     AuthenticationSender sender( resolver_.GetPublisher( link ), clients_, ctx );
+    if( wrapper.message().has_authentication_key_request() )
+    {
+        sword::AuthenticationToClient ack;
+        auto m = ack.mutable_message()->mutable_authentication_key_response();
+        auto it = authenticationKeys_.find( link );
+        const std::string key = it == authenticationKeys_.end() ? GenerateKey() : it->second;
+        m->set_authentication_key( key );
+        authenticationKeys_[ link ] = key;
+        SendReponse( ack, sender, link );
+        return;
+    }
+
     if( wrapper.message().has_authentication_request() )
     {
         // Cannot forbid an authentication request
@@ -205,10 +258,26 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         sender.Send( reply );
         return;
     }
+
     auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
         container_.NotifyClientLeft( sender.GetClient(), link );
-    if( maxConnections_ && maxConnections_ <= currentConnections_ )
+
+    bool keyAuthenticated = false;
+    if( message.has_authentication_key() )
+    {
+        auto it = authenticationKeys_.find( link );
+        if( it == authenticationKeys_.end() || MakeHmac( K1 + K2 + K3, it->second ) != message.authentication_key() )
+        {
+            ack->set_error_code( sword::AuthenticationResponse::invalid_authentication_key );
+            profiles_->Send( *ack );
+            sender.Send( reply );
+            return;
+        }
+        keyAuthenticated = true;
+    }
+
+    if( !keyAuthenticated && maxConnections_ && maxConnections_ <= currentConnections_ )
     {
         ack->set_error_code( sword::AuthenticationResponse::too_many_connections );
         profiles_->Send( *ack );
@@ -225,6 +294,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     }
     else
     {
+        authenticationKeys_.erase( link );
         ack->set_terrain_name( config_.GetTerrainName().ToUTF8() );
         ack->set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack->mutable_profile() );
@@ -232,7 +302,9 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         sender.Send( reply );
         authenticated_[ link ] = profile;
         clientsID_[ link ] = countID_;
-        ++currentConnections_;
+        if( !keyAuthenticated )
+            ++currentConnections_;
+        silentClients_.insert( link );
         SendProfiles( sender );
         container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile );
         ++countID_;
