@@ -30,6 +30,7 @@
 #include "MIL_Time_ABC.h"
 #include "tools/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/CompatibilityHelper.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>
@@ -413,22 +414,20 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         switch( state.location_ )
         {
         case eHumanLocation_Battlefield:
-            personnel.set_location_deprecated( sword::battlefield );
             personnel.set_location( sword::battlefield );
             break;
         case eHumanLocation_Maintenance:
-            personnel.set_location_deprecated( sword::maintenance );
             personnel.set_location( sword::maintenance );
             break;
         case eHumanLocation_Medical:
-            personnel.set_location_deprecated( sword::medical );
             personnel.set_location( sword::medical );
             break;
         case eHumanLocation_Funeral:
-            personnel.set_location_deprecated( sword::medical );
             personnel.set_location( sword::funeral );
             break;
         }
+        personnel.set_location_deprecated(
+                protocol::RemapHumanLocation( personnel.location() ));
         // Psyop && contaminated
         if( state.psyop_ )
             personnel.set_mentally_wounded( true );
