@@ -15,18 +15,16 @@
 #pragma warning( pop )
 
 // code is currently unused
-#define EXCEPTION( WHAT ) parameters::Exception( __FILE__, __FUNCTION__, __LINE__, 400, (WHAT) )
+#define EXCEPTION( WHAT ) parameters::Exception( __FILE__, __FUNCTION__, __LINE__, (WHAT) )
 
-parameters::Exception::Exception( const std::string& file, const std::string& function, int line, int code, const std::string& what )
+parameters::Exception::Exception( const std::string& file, const std::string& function, int line, const std::string& what )
     : tools::Exception( file, function, line, what )
-    , code            ( code  )
 {
     // NOTHING
 }
 
 parameters::Exception::Exception( const Exception& other )
     : tools::Exception( other )
-    , code            ( other.code )
 {
     // NOTHING
 }
