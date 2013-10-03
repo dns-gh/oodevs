@@ -829,12 +829,12 @@ func (c *Client) changeAdhesions(tasker *sword.Tasker, action UnitMagicEnumerato
 
 func (c *Client) ChangeCrowdAdhesions(crowdId uint32, adhesions map[uint32]float32) error {
 	return c.changeAdhesions(MakeCrowdTasker(crowdId),
-		sword.UnitMagicAction_crowd_change_affinities.Enum(), adhesions)
+		sword.UnitMagicAction_crowd_change_affinities, adhesions)
 }
 
 func (c *Client) ChangeUnitAdhesions(unitId uint32, adhesions map[uint32]float32) error {
 	return c.changeAdhesions(MakeUnitTasker(unitId),
-		sword.UnitMagicAction_unit_change_affinities.Enum(), adhesions)
+		sword.UnitMagicAction_unit_change_affinities, adhesions)
 }
 
 func (c *Client) ReloadBrain(crowdId uint32, model string) error {
