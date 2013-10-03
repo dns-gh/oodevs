@@ -324,6 +324,9 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	params := swapi.MakeParameters(heading, null, null, null, dest)
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return !Nearby(data.FindUnit(unit.Id).Position, unit.Position)
+	})
 
 	// Blast it
 	err = client.DeleteUnit(unit.Id)
