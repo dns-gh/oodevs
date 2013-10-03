@@ -116,7 +116,7 @@ void ActivableCapacity::Update( MIL_Object_ABC& object, unsigned int time )
     }
     if( timeOfCreation_ != 0 )
     {
-        unsigned int delta = static_cast< int >( time - timeOfCreation_ );
+        unsigned int delta = time - timeOfCreation_;
         ObstacleAttribute& attr = object.GetAttribute< ObstacleAttribute >();
         if( !attr.IsTimesUndefined() )
         {
