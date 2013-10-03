@@ -204,6 +204,7 @@ private:
     MIL_BurningCells* pBurningCells_;
     ProcessMonitor* pProcessMonitor_;
     std::auto_ptr< MIL_ObjectFactory > pObjectFactory_;
+    double pathfindTime_;
     //@}
 
 private:
