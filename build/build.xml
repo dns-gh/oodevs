@@ -805,6 +805,12 @@
             <!-- New magic actions are fine -->
             <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
             <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
+            <!-- We took care to preserve compatibility with human location -->
+            <arg value="--exclude=SimToClient.Content.UnitAttributes.HumanDotations.HumanDotation.EnumHumanLocation"/>
+            <!-- This authentication return code is only sent upon a new message
+                 only available to new clients.
+            -->
+            <arg value="--exclude=AuthenticationToClient.Content.AuthenticationResponse.ErrorCode"/>
         </python>
     </target>
 
