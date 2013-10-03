@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathPoint.h"
+#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathPoint constructor
@@ -89,10 +90,10 @@ void DEC_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 // -----------------------------------------------------------------------------
 void DEC_PathPoint::Dump() const
 {
-    std::cout << "    PathPoint " << vPos_
+    MT_LOG_ERROR_MSG( "    PathPoint " << vPos_
               << " - Type : " << nObjectTypes_.DumpToString()
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
-              << std::endl;
+              << std::endl );
 }
 
 // -----------------------------------------------------------------------------

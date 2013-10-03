@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Representations.h"
+#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Front constructor
@@ -73,10 +74,10 @@ boost::shared_ptr< DEC_PathPoint > DEC_Rep_PathPoint_Front::GetDestPoint() const
 // -----------------------------------------------------------------------------
 void DEC_Rep_PathPoint_Front::Dump() const
 {
-    std::cout << "    DEC_Rep_PathPoint_Front " << vPos_
+    MT_LOG_ERROR_MSG( "    DEC_Rep_PathPoint_Front " << vPos_
               << " - Type : " << nObjectTypes_.DumpToString()
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
               << " - DestPoint : " << destPoint_->GetPos()
               << " - Dest Type : " << destPoint_->GetTypeTerrain().DumpToString()
-              << std::endl;
+              << std::endl );
 }

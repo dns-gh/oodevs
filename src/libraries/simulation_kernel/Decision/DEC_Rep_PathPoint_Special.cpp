@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Special.h"
+#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Special constructor
@@ -38,10 +39,10 @@ DEC_Rep_PathPoint_Special::~DEC_Rep_PathPoint_Special()
 // -----------------------------------------------------------------------------
 void DEC_Rep_PathPoint_Special::Dump() const
 {
-    std::cout << "    DEC_Rep_PathPoint_Special " << vPos_
+    MT_LOG_ERROR_MSG( "    DEC_Rep_PathPoint_Special " << vPos_
               << " - Type : " << nObjectTypes_.DumpToString()
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
               << " - nTypePoint_ " << (unsigned int)GetTypePoint()
               << " - Type particulier " << (unsigned int)nTypePointParticulier_
-              << std::endl;
+              << std::endl );
 }

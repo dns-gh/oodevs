@@ -38,7 +38,7 @@ ADN_FileLoaderObserver::~ADN_FileLoaderObserver()
 // -----------------------------------------------------------------------------
 bool ADN_FileLoaderObserver::NotifyInvalidXml( const tools::Path& fileName, const xml::exception& e )
 {
-    std::cout << boost::format( "Invalid xml file %s - %s" ) % fileName.ToUTF8() % tools::GetExceptionMsg( e ) << std::endl;
+    MT_LOG_ERROR_MSG( boost::format( "Invalid xml file %s - %s" ) % fileName.ToUTF8() % tools::GetExceptionMsg( e ) << std::endl );
     return true;
 }
 
@@ -48,7 +48,7 @@ bool ADN_FileLoaderObserver::NotifyInvalidXml( const tools::Path& fileName, cons
 // -----------------------------------------------------------------------------
 void ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified( const tools::Path& fileName )
 {
-    std::cout << boost::format( "Xml file %s doesn't have any schema" ) % fileName.ToUTF8() << std::endl;
+    MT_LOG_ERROR_MSG( boost::format( "Xml file %s doesn't have any schema" ) % fileName.ToUTF8() << std::endl );
 }
 
 // -----------------------------------------------------------------------------

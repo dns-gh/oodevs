@@ -109,6 +109,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include "ENT/ENT_Tr_Gen.h"
+#include "MT_Tools/MT_Logger.h"
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
@@ -418,11 +419,11 @@ bool MainWindow::MigrateExercise( const tools::Path& path )
     {
         try
         {
-            std::cout << "Loading exercise " << path.FileName() << "...\n";
+            MT_LOG_ERROR_MSG( "Loading exercise " << path.FileName() << "...\n" );
             config_.LoadExercise( child );
             staticModel_.Load( config_ );
             LoadExercise();
-            std::cout << "Saving exercise " << path.FileName() << "...\n";
+            MT_LOG_ERROR_MSG( "Saving exercise " << path.FileName() << "...\n" );
             needsSaving_ = true;
             Save();
         }

@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Orders/MIL_LimaFunction.h"
+#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima constructor
@@ -40,11 +41,11 @@ DEC_Rep_PathPoint_Lima::~DEC_Rep_PathPoint_Lima()
 // -----------------------------------------------------------------------------
 void DEC_Rep_PathPoint_Lima::Dump() const
 {
-    std::cout << "    DEC_Rep_PathPoint_Lima " << vPos_
+    MT_LOG_ERROR_MSG( "    DEC_Rep_PathPoint_Lima " << vPos_
               << " - Type : " << nObjectTypes_.DumpToString()
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
               << " - nTypePoint_ " << (unsigned int)GetTypePoint()
-              << std::endl;
+              << std::endl );
 }
 
 // -----------------------------------------------------------------------------

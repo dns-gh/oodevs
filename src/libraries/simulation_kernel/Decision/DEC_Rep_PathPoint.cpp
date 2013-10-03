@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint.h"
 #include "Decision/DEC_Representations.h"
+#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint constructor
@@ -63,12 +64,12 @@ void DEC_Rep_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 // -----------------------------------------------------------------------------
 void DEC_Rep_PathPoint::Dump() const
 {
-    std::cout << "    Rep_PathPoint " << vPos_
+    MT_LOG_ERROR_MSG( "    Rep_PathPoint " << vPos_
               << " - Type : " << nObjectTypes_.DumpToString()
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
               << " - Type terrain " << nTypeTerrain_.DumpToString()
               << " - nTypePoint_ " << (unsigned int)GetTypePoint()
-              << std::endl;
+              << std::endl );
 }
 
 //-----------------------------------------------------------------------------
