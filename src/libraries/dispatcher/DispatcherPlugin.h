@@ -15,7 +15,7 @@
 
 namespace tools
 {
-    class RotatingLog;
+    class Log;
 }
 
 namespace dispatcher
@@ -37,7 +37,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              DispatcherPlugin( SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
-                               AuthenticatedLinkResolver_ABC& resolver, OrderResolver_ABC& order, tools::RotatingLog& log );
+                               AuthenticatedLinkResolver_ABC& resolver, OrderResolver_ABC& order,
+                               tools::Log& log );
     virtual ~DispatcherPlugin();
     //@}
 

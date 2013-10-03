@@ -11,9 +11,8 @@
 #define tools_RotatingLog_h
 
 #include <tools/Path.h>
-#include <boost/scoped_ptr.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/lexical_cast.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <deque>
 
 namespace tools
@@ -32,24 +31,18 @@ class RotatingLog : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     RotatingLog( tools::Log_ABC& log, const tools::Path& filename, std::size_t files, std::size_t size, bool truncate );
+     RotatingLog( Log_ABC& log, const Path& filename, std::size_t files, std::size_t size, bool truncate );
     ~RotatingLog();
     //@}
 
     //! @name Operations
     //@{
-    template< typename Serializable >
-    void Write( const Serializable& s )
-    {
-        if( files_ > 0 )
-            DoWrite( boost::lexical_cast< std::string >( s ) );
-    }
+    void Write( const std::string& line );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void DoWrite( const std::string& line );
     void Populate();
     void Log( const std::string& line );
     void Prune();
@@ -61,11 +54,11 @@ private:
     //! @name Member data
     //@{
     Log_ABC& log_;
-    tools::Path filename_;
+    Path filename_;
     std::size_t files_;
     std::streamoff size_, count_;
-    std::deque< tools::Path > history_;
-    boost::scoped_ptr< tools::Ofstream > stream_;
+    std::deque< Path > history_;
+    boost::scoped_ptr< Ofstream > stream_;
     //@}
 };
 

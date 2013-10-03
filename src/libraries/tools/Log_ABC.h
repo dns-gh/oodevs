@@ -12,7 +12,6 @@
 
 #include <boost/noncopyable.hpp>
 #include <iosfwd>
-#include <memory>
 #include <string>
 
 namespace tools

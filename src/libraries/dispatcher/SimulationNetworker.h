@@ -20,7 +20,7 @@ namespace sword
 
 namespace tools
 {
-    class RotatingLog;
+    class Log;
 }
 
 namespace dispatcher
@@ -45,7 +45,7 @@ public:
     //@{
              SimulationNetworker( Model& model, ClientsNetworker& clients,
                                   MessageHandler_ABC& handler, const Config& config,
-                                  tools::RotatingLog& log );
+                                  tools::Log& log );
     virtual ~SimulationNetworker();
     //@}
 

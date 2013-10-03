@@ -11,7 +11,7 @@
 #define __dispatcher_FileLogger_h_
 
 #include "Logger_ABC.h"
-#include "tools/FileWrapper.h"
+#include "tools/Log.h"
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
@@ -23,6 +23,8 @@ namespace tools
 
 namespace dispatcher
 {
+    class Config;
+
 // =============================================================================
 /** @class  FileLogger
     @brief  File logger
@@ -34,7 +36,7 @@ class FileLogger : public Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FileLogger( const tools::Path& filename );
+             FileLogger( const tools::Path& filename, const Config& config );
     virtual ~FileLogger();
     //@}
 
@@ -54,9 +56,9 @@ private:
 private:
     //! @name Member data
     //@{
-    tools::Ofstream output_;
     boost::mutex mutex_;
-    //@}
+    tools::Log log_;
+//@}
 };
 }
 

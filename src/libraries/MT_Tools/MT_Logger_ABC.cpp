@@ -58,7 +58,6 @@ void MT_Logger_ABC::Log( E_LogLevel nLevel, const char* strMessage, const char* 
         output << "(" << nCode << ") ";
     if( strContext )
         output << "[Context: " << strContext << "]";
-    output << std::endl;
     WriteString( output.str() );
 }
 

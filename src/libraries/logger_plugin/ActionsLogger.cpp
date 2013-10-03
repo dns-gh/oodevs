@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "ActionsLogger.h"
-
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Time_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -24,10 +23,9 @@
 #include "tools/Loader_ABC.h"
 #include "tools/SessionConfig.h"
 #include "tools/FileWrapper.h"
-
-#include <boost/bind.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string/erase.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::logger;
@@ -40,9 +38,9 @@ typedef sword::ClientToSim_Content Content;
 // -----------------------------------------------------------------------------
 ActionsLogger::ActionsLogger( const tools::SessionConfig& config,
                               const dispatcher::Model_ABC& model,
-                              const kernel::Time_ABC& timer )
+                              const kernel::Time_ABC& time )
     : config_   ( config )
-    , timer_    ( timer )
+    , time_     ( time )
     , entities_ ( new dispatcher::ModelAdapter( model ) )
     , converter_( new kernel::CoordinateConverter( config ) )
     , loaded_   ( !config_.HasCheckpoint() )
@@ -170,7 +168,7 @@ void ActionsLogger::LogActionFrom( const T& message, const U& mutator )
     LoadOrdersIfCheckpoint();
     sword::ClientToSim msg;
     *( msg.mutable_message()->*mutator )() = message;
-    actions_.push_back( std::make_pair( tools::QTimeToBoostTime( timer_.GetDateTime() ), msg ) );
+    actions_.push_back( std::make_pair( tools::QTimeToBoostTime( time_.GetDateTime() ), msg ) );
 }
 
 // -----------------------------------------------------------------------------

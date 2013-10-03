@@ -71,8 +71,7 @@ void ReportFactory::Load( const tools::ExerciseConfig& config  )
         throw MASA_EXCEPTION( "cannot load reports file: " + reports.ToUTF8() );
     tools::Xifstream xis( reports );
     xis >> xml::start( "reports" )
-            >> xml::list( "report", *this, &ReportFactory::ReadReport )
-        >> xml::end;
+            >> xml::list( "report", *this, &ReportFactory::ReadReport );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,11 +101,12 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 QDateTime ReportFactory::GetTime( const sword::DateTime& d ) const
 {
-    const std::string date( (const char*)d.data().c_str() );
-    QString extended( date.c_str() );
-    extended.insert( 13, ':' ); extended.insert( 11, ':' );
-    extended.insert(  6, '-' ); extended.insert(  4, '-' );
-    return QDateTime::fromString( extended, Qt::ISODate );
+    QString date( d.data().c_str() );
+    date.insert( 13, ':' );
+    date.insert( 11, ':' );
+    date.insert( 6, '-' );
+    date.insert( 4, '-' );
+    return QDateTime::fromString( date, Qt::ISODate );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,6 +15,7 @@
 #include "tools/Codec.h"
 #include "tools/WinArguments.h"
 #include <license_gui/LicenseDialog.h>
+#include <tools/Path.h>
 #include <tools/Exception.h>
 #include <tools/win32/CrashHandler.h>
 #include <windows.h>

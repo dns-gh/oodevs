@@ -12,8 +12,7 @@
 
 #include "CompositePlugin.h"
 #include "CompositeRegistrable.h"
-#include "Log.h"
-#include "tools/RotatingLog.h"
+#include "tools/Log.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 
@@ -58,8 +57,7 @@ private:
     std::auto_ptr< CompositePlugin >      handler_;
     std::auto_ptr< CompositeRegistrable > registrables_;
     std::auto_ptr< Services >             services_;
-    Log                                   log_;
-    tools::RotatingLog                    rlog_;
+    tools::Log                            log_;
     boost::shared_ptr< ClientsNetworker > clientsNetworker_;
     std::auto_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< PluginFactory >        factory_;

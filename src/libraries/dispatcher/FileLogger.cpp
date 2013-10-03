@@ -9,10 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "FileLogger.h"
-#include <tools/Path.h>
-#pragma warning( push, 0 )
+#include "Config.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
 
 using namespace dispatcher;
 
@@ -20,8 +18,8 @@ using namespace dispatcher;
 // Name: FileLogger constructor
 // Created: SBO 2011-05-19
 // -----------------------------------------------------------------------------
-FileLogger::FileLogger( const tools::Path& filename )
-    : output_( filename, std::ios::out | std::ios::trunc )
+FileLogger::FileLogger( const tools::Path& filename, const Config& config )
+    : log_( filename, config.GetDispatcherLogFiles(), config.GetDispatcherLogSize(), ! config.HasCheckpoint(), config.IsDispatcherLogInBytes() )
 {
     // NOTHING
 }
@@ -77,9 +75,8 @@ namespace
 // -----------------------------------------------------------------------------
 void FileLogger::LogMessage( const std::string& severity, const std::string& message )
 {
+    std::stringstream s;
     boost::mutex::scoped_lock locker( mutex_ );
-    output_ << "[" << Timestamp() << "] "
-            << severity << " - "
-            << message << std::endl;
-    output_.flush();
+    s << "[" << Timestamp() << "] " << severity << " - " << message;
+    log_.Write( s.str() );
 }

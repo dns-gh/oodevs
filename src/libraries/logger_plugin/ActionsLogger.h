@@ -68,10 +68,10 @@ class ActionsLogger : public boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsLogger( const tools::SessionConfig& config,
-                            const dispatcher::Model_ABC& model,
-                            const kernel::Time_ABC& timer );
-    virtual ~ActionsLogger();
+     ActionsLogger( const tools::SessionConfig& config,
+                    const dispatcher::Model_ABC& model,
+                    const kernel::Time_ABC& timer );
+    ~ActionsLogger();
     //@}
 
     //! @name Operations
@@ -82,14 +82,12 @@ public:
     void Log( const sword::FragOrder& message );
     void Log( const sword::UnitMagicActionAck& ack );
     void Close();
-    //@}
 
-    //! @name Checkpoint
-    //@{
     void SaveCheckpointActiveMissions( const std::string& name );
     //@}
 
-    //! @name Typedef helpers
+public:
+    //! @name Types
     //@{
     typedef std::pair< boost::posix_time::ptime, sword::ClientToSim > T_Action;
     typedef std::vector< T_Action >                                   T_Actions;
@@ -112,7 +110,7 @@ private:
     //! @name Member data
     //@{
     const tools::SessionConfig&                      config_;
-    const kernel::Time_ABC&                          timer_;
+    const kernel::Time_ABC&                          time_;
     std::auto_ptr< kernel::EntityResolver_ABC >      entities_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     T_Actions                                        actions_;

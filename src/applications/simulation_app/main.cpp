@@ -10,6 +10,7 @@
 #include "tools/WinArguments.h"
 #include "simulation_terrain/TER_Logger.h"
 #include <license_gui/LicenseDialog.h>
+#include <tools/Path.h>
 #include <tools/win32/FlexLm.h>
 #include <tools/win32/CrashHandler.h>
 #pragma warning( push, 0 )

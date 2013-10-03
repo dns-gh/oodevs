@@ -34,7 +34,7 @@ namespace order
 namespace tools
 {
     class Path;
-    class RotatingLog;
+    class Log;
 }
 
 namespace dispatcher
@@ -46,7 +46,6 @@ namespace dispatcher
     class ClientsNetworker;
     class CompositePlugin;
     class CompositeRegistrable;
-    class Logger_ABC;
     class PluginFactory_ABC;
     class Services;
 
@@ -64,7 +63,7 @@ public:
              PluginFactory( const Config& config, Model& model, const dispatcher::StaticModel& staticModel,
                             SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
                             CompositePlugin& handler, CompositeRegistrable& registrables,
-                            const Services& services, tools::RotatingLog& log, int maxConnections );
+                            const Services& services, tools::Log& log, int maxConnections );
     virtual ~PluginFactory();
     //@}
 

@@ -41,7 +41,7 @@ using namespace plugins;
 // -----------------------------------------------------------------------------
 PluginFactory::PluginFactory( const Config& config, Model& model, const dispatcher::StaticModel& staticModel,
                               SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler,
-                              CompositeRegistrable& registrables, const Services& services, tools::RotatingLog& log, int maxConnections )
+                              CompositeRegistrable& registrables, const Services& services, tools::Log& log, int maxConnections )
     : config_      ( config )
     , model_       ( model )
     , staticModel_ ( staticModel )
@@ -188,7 +188,7 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
             throw MASA_EXCEPTION( "failed to load library: '" + library.ToUTF8() + "'" );
         CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
-        boost::shared_ptr< Logger_ABC > logger( new FileLogger( config_.BuildSessionChildFile( name + "_plugin.log" ) ) );
+        boost::shared_ptr< Logger_ABC > logger( new FileLogger( name + "_plugin.log", config_ ) );
         boost::shared_ptr< Plugin_ABC > plugin( createFunction( model_, staticModel_, simulation_, clients_, config_, *logger, xis ), boost::bind( destroyFunction, _1, boost::ref( *logger ) ) );
         if( !plugin.get() )
             throw MASA_EXCEPTION( "CreateFunctor returned an error (see details in plugin log file)" );
