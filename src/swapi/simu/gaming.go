@@ -10,6 +10,7 @@ package simu
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -78,10 +79,7 @@ func (gaming *GamingProcess) Wait(d time.Duration) bool {
 }
 
 func StartGaming(opts *GamingOpts) (*GamingProcess, error) {
-	err := opts.Check()
-	if err != nil {
-		return nil, err
-	}
+
 	args := []string{
 		"--root-dir=" + opts.RootDir,
 		"--data-dir=" + opts.DataDir,
@@ -90,6 +88,17 @@ func StartGaming(opts *GamingOpts) (*GamingProcess, error) {
 	}
 	cmd := exec.Command(opts.Executable, args...)
 	cmd.Dir = *opts.RunDir
+	makeErr := func(err error) error {
+		if err == nil {
+			return err
+		}
+		return fmt.Errorf("cannot start gaming at %s with %s in %s: %s",
+			opts.Executable, args, cmd.Dir, err.Error())
+	}
+	err := opts.Check()
+	if err != nil {
+		return nil, makeErr(err)
+	}
 	gaming := GamingProcess{
 		cmd:       cmd,
 		waitqueue: make(chan chan int, 1),
@@ -125,7 +134,7 @@ func StartGaming(opts *GamingOpts) (*GamingProcess, error) {
 			}
 		}
 	}()
-	return &gaming, err
+	return &gaming, makeErr(err)
 }
 
 // Start a gaming from simulation options and supplied executable and run
