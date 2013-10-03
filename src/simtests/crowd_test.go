@@ -12,6 +12,7 @@ import (
 	. "launchpad.net/gocheck"
 	"math"
 	"swapi"
+	"sword"
 )
 
 func CheckHumans(healthy, wounded, dead, contaminated int32, crowd *swapi.Crowd) bool {
@@ -196,17 +197,40 @@ func (s *TestSuite) TestCrowdReloadBrain(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
+	tasker := swapi.MakeCrowdTasker(crowd.Id)
 
-	// Error : missing parameter
-	err := client.ReloadBrain(crowd.Id, "")
+	// too many parameters
+	err := client.ReloadBrainTest(tasker, swapi.MakeParameters(
+		swapi.MakeString("blah"),
+		swapi.MakeNullValue(),
+	))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	// Error : invalid model
-	err = client.ReloadBrain(crowd.Id, "invalid")
+	// invalid type
+	err = client.ReloadBrainTest(tasker, swapi.MakeParameters(
+		swapi.MakeBoolean(true),
+	))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid crowd id
+	empty := swapi.MakeParameters()
+	err = client.ReloadBrainTest(swapi.MakeCrowdTasker(crowd.Id+1), empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// missing id
+	err = client.ReloadBrainTest(&sword.Tasker{}, empty)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// invalid model
+	err = client.ReloadBrain(tasker, "bad_brain")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// reload current brain
+	err = client.ReloadBrain(tasker, "")
+	c.Assert(err, IsNil)
 
 	// Reload crowd decisional model
-	err = client.ReloadBrain(crowd.Id, "Rioters")
+	err = client.ReloadBrain(tasker, "Rioters")
 	c.Assert(err, IsNil)
 }
 

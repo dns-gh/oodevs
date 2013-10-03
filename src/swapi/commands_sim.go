@@ -837,13 +837,16 @@ func (c *Client) ChangeUnitAdhesions(unitId uint32, adhesions map[uint32]float32
 		sword.UnitMagicAction_unit_change_affinities, adhesions)
 }
 
-func (c *Client) ReloadBrain(crowdId uint32, model string) error {
+func (c *Client) ReloadBrainTest(tasker *sword.Tasker, params *sword.MissionParameters) error {
+	return c.sendUnitMagicAction(tasker, params, sword.UnitMagicAction_reload_brain)
+}
+
+func (c *Client) ReloadBrain(tasker *sword.Tasker, model string) error {
 	params := MakeParameters()
 	if model != "" {
 		params = MakeParameters(MakeString(model))
 	}
-	return c.sendUnitMagicAction(MakeCrowdTasker(crowdId), params,
-		sword.UnitMagicAction_reload_brain)
+	return c.ReloadBrainTest(tasker, params)
 }
 
 func (c *Client) ChangeExtensions(crowdId uint32, extensions *map[string]string) error {
