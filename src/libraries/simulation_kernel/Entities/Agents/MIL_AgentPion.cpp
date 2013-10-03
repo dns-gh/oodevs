@@ -1005,19 +1005,19 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
 
     const auto tiredness = GET_ENUMERATION( sword::UnitAttributes::EnumUnitTiredness, msg, 0 );
     const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
-    parameters::Check( !!pTiredness, "must be a valid tiredness", 0 );
+    parameters::Check( pTiredness, "must be a valid tiredness", 0 );
 
     const auto morale = GET_ENUMERATION( sword::UnitAttributes::EnumUnitMorale, msg, 1 );
     const PHY_Morale* pMoral = PHY_Morale::Find( morale );
-    parameters::Check( !!pMoral, "must be a valid morale", 1 );
+    parameters::Check( pMoral, "must be a valid morale", 1 );
 
     const auto experience = GET_ENUMERATION( sword::UnitAttributes::EnumUnitExperience, msg, 2 );
     const PHY_Experience* pExperience = PHY_Experience::Find( experience );
-    parameters::Check( !!pExperience, "must be a valid experience", 2 );
+    parameters::Check( pExperience, "must be a valid experience", 2 );
 
     const auto stress = GET_ENUMERATION( sword::UnitAttributes::EnumUnitStress, msg, 3 );
     const PHY_Stress* pStress = PHY_Stress::Find( stress );
-    parameters::Check( !!pStress, "must be a valid stress", 3 );
+    parameters::Check( pStress, "must be a valid stress", 3 );
 
     auto& role = GetRole< PHY_RolePion_HumanFactors >();
     role.SetTiredness( *pTiredness, true );
@@ -1795,7 +1795,7 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
         {
             const int id = parameters::GetIdentifier( msg, 0, i, 2 );
             breakdown = PHY_BreakdownType::Find( id );
-            parameters::Check( !!breakdown, "must be a breakdown type identifier", 0, i, 2 );
+            parameters::Check( breakdown, "must be a breakdown type identifier", 0, i, 2 );
         }
         content.push_back( std::make_tuple( pComposanteType, quantity, breakdown ) );
     }

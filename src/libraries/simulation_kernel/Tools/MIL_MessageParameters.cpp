@@ -82,6 +82,11 @@ void parameters::Check( bool valid, const std::string& msg, int i, int j, int k 
     throw MASA_BADPARAM_UNIT( "parameter" << GetIndex( i, j, k ) << " " << msg );
 }
 
+void parameters::Check( const void* pointer, const std::string& msg, int i, int j, int k )
+{
+    Check( !!pointer, msg, i, j, k );
+}
+
 int parameters::GetCount( const sword::MissionParameters& params, int i, int j )
 {
     const int icount = params.elem_size();
@@ -131,7 +136,7 @@ int parameters::GetEnumeration( const ::google::protobuf::EnumDescriptor* descri
                                 int i, int j, int k )
 {
     const int value = GetValue< Enumeration >( params, i, j, k );
-    Check( !!descriptor->FindValueByNumber( value ), static_cast< std::stringstream& >( std::stringstream()
+    Check( descriptor->FindValueByNumber( value ), static_cast< std::stringstream& >( std::stringstream()
         << "is an invalid " << descriptor->full_name() << " enumeration value " << value ).str(),
         i, j, k );
     return value;
@@ -153,6 +158,6 @@ const DEC_Model_ABC* parameters::GetModel( const sword::MissionParameters& param
         return nullptr;
     const std::string name = GetString( params, 0 );
     auto model = finder( name );
-    Check( !!model, "must be a valid model", 0 );
+    Check( model, "must be a valid model", 0 );
     return model;
 }

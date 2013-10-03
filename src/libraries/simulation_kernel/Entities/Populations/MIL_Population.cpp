@@ -1298,7 +1298,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::MissionParameters&
     parameters::CheckCount( msg, 1 );
     const auto value = GET_ENUMERATION( sword::EnumCrowdAttitude, msg, 0 );
     const MIL_PopulationAttitude* attitude = MIL_PopulationAttitude::Find( value );
-    parameters::Check( !!attitude, "must be a valid attitude enumeration", 0 );
+    parameters::Check( attitude, "must be a valid attitude enumeration", 0 );
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SetAttitude( *attitude );
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
@@ -1434,8 +1434,7 @@ void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::MissionPar
 {
     parameters::CheckCount( msg, 1 );
     const int quantity = parameters::GetQuantity( msg, 0 );
-    parameters::Check( quantity >= 0 && quantity <= 100,
-        "must be between 0 and 100", 0 );
+    parameters::Check( quantity >= 0 && quantity <= 100, "must be between 0 and 100", 0 );
     rArmedIndividuals_ = 0.01 * quantity;
     rNewArmedIndividuals_ = rArmedIndividuals_;
     armedIndividualsChanged_ = true;
