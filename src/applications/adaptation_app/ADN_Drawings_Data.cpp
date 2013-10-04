@@ -176,7 +176,7 @@ void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& nam
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error reading drawing template " << tools::GetExceptionMsg( e ) << std::endl );
+        MT_LOG_ERROR_MSG( "Error reading drawing template " << tools::GetExceptionMsg( e ) );
     }
 }
 

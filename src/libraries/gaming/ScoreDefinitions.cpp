@@ -58,8 +58,8 @@ void ScoreDefinitions::Update( const sword::AarInformation& asnMsg )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( asnMsg.information() << std::endl << std::endl );
-        MT_LOG_ERROR_MSG( "Error reading indicator definitions: " << tools::GetExceptionMsg( e ) << std::endl );
+        MT_LOG_ERROR_MSG( asnMsg.information() );
+        MT_LOG_ERROR_MSG( "Error reading indicator definitions: " << tools::GetExceptionMsg( e ) );
     }
 }
 
