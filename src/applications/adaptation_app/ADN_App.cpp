@@ -131,7 +131,6 @@ int ADN_App::Run()
             throw MASA_EXCEPTION( tools::translate( "ADN_App" , "New base creation and input/output file options cannot be used together." ).toStdString() );
         if( !newFile.IsEmpty() )
         {
-            ADN_Workspace::GetWorkspace().Initialize();
             if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( newFile ) )
                 return EXIT_FAILURE;
             ADN_Workspace::GetWorkspace().New( newFile, false );
@@ -142,7 +141,6 @@ int ADN_App::Run()
         {
             if( outputFile.IsEmpty() )
                 mainWindow_.showMaximized();
-            ADN_Workspace::GetWorkspace().Initialize();
             ADN_Workspace::GetWorkspace().Load( inputFile, outputFile.IsEmpty() );
         }
         if( !outputFile.IsEmpty() )
