@@ -42,13 +42,24 @@ namespace
         static value_type Get( const sword::MissionParameter_Value& value ) { return value.OPERAND(); }\
     }
 
+    #define MAKE_DESCRIPTOR2( NAME, TYPE, OPERAND_1, OPERAND_2, TEXT )\
+    struct NAME\
+    {\
+        typedef TYPE value_type;\
+        static bool Has( const sword::MissionParameter_Value& value ) { return value.has_ ## OPERAND_1() && value.OPERAND_1().has_ ## OPERAND_2(); }\
+        static std::string GetName() { return TEXT; }\
+        static value_type Get( const sword::MissionParameter_Value& value ) { return value.OPERAND_1().OPERAND_2(); }\
+    }
+
     MAKE_DESCRIPTOR( String, std::string, acharstr, "char string" );
     MAKE_DESCRIPTOR( Bool, bool, booleanvalue, "boolean" );
     MAKE_DESCRIPTOR( Quantity, int, quantity, "quantity" );
     MAKE_DESCRIPTOR( Enumeration, int, enumeration, "enumeration" );
     MAKE_DESCRIPTOR( Point, sword::Point, point, "point" );
     MAKE_DESCRIPTOR( Identifier, int, identifier, "identifier" );
+    MAKE_DESCRIPTOR2( AgentId, uint32_t, agent, id, "agent id" );
     #undef MAKE_DESCRIPTOR
+    #undef MAKE_DESCRIPTOR2
 
     std::string GetIndex( int i, int j, int k )
     {
@@ -166,6 +177,11 @@ sword::Point parameters::GetPoint( const sword::MissionParameters& params, int i
 int parameters::GetIdentifier( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< Identifier >( params, i, j, k );
+}
+
+uint32_t parameters::GetAgentId( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< AgentId >( params, i, j, k );
 }
 
 const DEC_Model_ABC* parameters::GetModel( const sword::MissionParameters& params, const ModelFinder& finder )

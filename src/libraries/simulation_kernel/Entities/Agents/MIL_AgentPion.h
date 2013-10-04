@@ -214,8 +214,7 @@ private:
     void OnReceiveChangeHumanState( const sword::MissionParameters& msg );
     void OnReceiveChangeDotation( const sword::MissionParameters& msg );
     void OnReceiveCreateDirectFireOrder( const sword::MissionParameters& msg );
-    void OnReceiveLoadUnit( const sword::MissionParameters& msg );
-    void OnReceiveUnloadUnit( const sword::MissionParameters& msg );
+    void OnReceiveLoadUnit( const sword::MissionParameters& msg, bool load );
     void OnReloadBrain( const sword::MissionParameters& msg );
     void OnChangeBrainDebug( const sword::MissionParameters& msg );
     void OnChangePosture( const sword::MissionParameters& msg );
