@@ -41,7 +41,7 @@ NullFileLoaderObserver::~NullFileLoaderObserver()
 // -----------------------------------------------------------------------------
 bool NullFileLoaderObserver::NotifyInvalidXml( const Path& fileName, const xml::exception& e )
 {
-    MT_LOG_ERROR_MSG( boost::format( "Invalid xml file %s - %s" ) % fileName.ToUTF8() % tools::GetExceptionMsg( e ) );
+    MT_LOG_ERROR_MSG( "Invalid xml file " << fileName.ToUTF8() << " - " << tools::GetExceptionMsg( e ) );
     return true;
 }
 
@@ -51,7 +51,7 @@ bool NullFileLoaderObserver::NotifyInvalidXml( const Path& fileName, const xml::
 // -----------------------------------------------------------------------------
 void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const Path& fileName )
 {
-    MT_LOG_ERROR_MSG( boost::format( "Xml file %s doesn't have any schema" ) % fileName.ToUTF8() );
+    MT_LOG_ERROR_MSG( "Xml file %s doesn't have any schema " << fileName.ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------

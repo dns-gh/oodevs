@@ -419,11 +419,11 @@ bool MainWindow::MigrateExercise( const tools::Path& path )
     {
         try
         {
-            MT_LOG_ERROR_MSG( "Loading exercise " << path.FileName() << "...\n" );
+            MT_LOG_ERROR_MSG( "Loading exercise " << path.FileName() );
             config_.LoadExercise( child );
             staticModel_.Load( config_ );
             LoadExercise();
-            MT_LOG_ERROR_MSG( "Saving exercise " << path.FileName() << "...\n" );
+            MT_LOG_ERROR_MSG( "Saving exercise " << path.FileName() );
             needsSaving_ = true;
             Save();
         }
