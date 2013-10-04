@@ -127,10 +127,21 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu )
 {
+    selectedEntity_ = &agent;
+    // Display if the profile controls the automat
+    if( profile_.CanBeOrdered( agent ) )
+        if( const AutomatDecisions* decisions = static_cast< const AutomatDecisions* >( agent.Retrieve< kernel::AutomatDecisions_ABC >() ) )
+        {
+            if( !decisions->IsEmbraye() )
+                menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
+            else if( decisions->CanBeOrdered() )
+                menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
+        }
+
+    // Display if the profile is supervisor
     if( !profile_.CanDoMagic( agent ) )
         return;
 
-    selectedEntity_ = &agent;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
@@ -142,11 +153,6 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
             AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
         else
             AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
-
-        if( !decisions->IsEmbraye() )
-            menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
-        else if( bMoveAllowed )
-            menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
     AddReloadBrainMenu( magicMenu, static_.types_.automatModels_, decisions ? decisions->ModelName() : "unknown",
