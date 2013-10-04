@@ -17,6 +17,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
+#include "protocol/EnumMaps.h"
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
@@ -194,7 +195,7 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_cloud_density( cloud_.nDensityPercentage_ );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( temperature_ );
-    att->set_lighting( pLighting_->GetAsnID() );
+    att->set_lighting( protocol::ToProtoLighting( pLighting_->GetID() ));
     sword::CoordLatLong longlat;
     MIL_Tools::ConvertCoordSimToMos( downRight_, longlat );
     msg().mutable_bottom_right()->set_latitude( longlat.latitude()  );

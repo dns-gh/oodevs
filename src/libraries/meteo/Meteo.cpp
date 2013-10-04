@@ -13,6 +13,7 @@
 #include "ReadDirections.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "protocol/EnumMaps.h"
 #include "Tools/NET_AsnException.h"
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
@@ -187,7 +188,7 @@ void Meteo::Update( const sword::WeatherAttributes& msg )
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
     // Lighting
-    pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
+    pLighting_ = PHY_Lighting::FindLighting( protocol::FromProtoLighting( msg.lighting() ));
     if( !pLighting_ )
         pLighting_ = &PHY_Lighting::jourSansNuage_;
 }
@@ -370,7 +371,7 @@ void Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_density( cloud_.nDensityPercentage_ );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( temperature_ );
-    att->set_lighting( pLighting_->GetAsnID() );
+    att->set_lighting( protocol::ToProtoLighting( pLighting_->GetID() ));
     msg.Send( publisher );
 }
 

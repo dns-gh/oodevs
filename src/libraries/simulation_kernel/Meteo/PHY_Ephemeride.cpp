@@ -13,6 +13,7 @@
 #include "PHY_Ephemeride.h"
 #include "MIL_AgentServer.h"
 #include "meteo/PHY_Lighting.h"
+#include "protocol/EnumMaps.h"
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
@@ -101,8 +102,10 @@ void PHY_Ephemeride::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> sunsetTime_
          >> dayId
          >> nightId;
-    pDayBase_ = weather::PHY_Lighting::FindLighting( static_cast< sword::WeatherAttributes::EnumLightingType >( dayId ) );
-    pNightBase_ = weather::PHY_Lighting::FindLighting( static_cast< sword::WeatherAttributes::EnumLightingType >( nightId ) );
+    pDayBase_ = weather::PHY_Lighting::FindLighting( protocol::FromProtoLighting(
+                static_cast< sword::WeatherAttributes::EnumLightingType >( dayId ) ));
+    pNightBase_ = weather::PHY_Lighting::FindLighting( protocol::FromProtoLighting(
+                static_cast< sword::WeatherAttributes::EnumLightingType >( nightId ) ));
 }
 
 // -----------------------------------------------------------------------------
@@ -111,8 +114,8 @@ void PHY_Ephemeride::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void PHY_Ephemeride::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int dayId = pDayBase_->GetAsnID();
-    unsigned int nightId = pNightBase_->GetAsnID();
+    unsigned int dayId = protocol::ToProtoLighting( pDayBase_->GetID() );
+    unsigned int nightId = protocol::ToProtoLighting( pNightBase_->GetID() );
     file << bIsNight_
          << sunriseTime_
          << sunsetTime_

@@ -13,6 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "protocol/EnumMaps.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace weather;
@@ -263,7 +264,7 @@ void MeteoLocal::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) cons
     att->set_cloud_density( static_cast< int >( cloud_.rDensity_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( temperature_ );
-    att->set_lighting( pLighting_->GetAsnID() );
+    att->set_lighting( protocol::ToProtoLighting( pLighting_->GetID() ));
     msg().mutable_top_left()->set_longitude( topLeft_.X() );
     msg().mutable_top_left()->set_latitude( topLeft_.Y() );
     msg().mutable_bottom_right()->set_longitude( bottomRight_.X() );

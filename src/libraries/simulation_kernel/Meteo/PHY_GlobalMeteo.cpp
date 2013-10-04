@@ -14,6 +14,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/EnumMaps.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_GlobalMeteo )
 
@@ -61,6 +62,6 @@ void PHY_GlobalMeteo::SendCreation() const
     att->set_cloud_density( cloud_.nDensityPercentage_ );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( temperature_ );
-    att->set_lighting( GetLighting().GetAsnID() );
+    att->set_lighting( protocol::ToProtoLighting( GetLighting().GetID() ));
     msg.Send( NET_Publisher_ABC::Publisher() );
 }

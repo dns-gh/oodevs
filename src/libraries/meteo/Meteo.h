@@ -179,7 +179,8 @@ void weather::Meteo::load( Archive& file, const unsigned int )
          >> precipitation
          >> conversionFactor_
          >> modified_;
-    pLighting_ = PHY_Lighting::FindLighting( static_cast< sword::WeatherAttributes::EnumLightingType >( lighting) );
+    pLighting_ = PHY_Lighting::FindLighting( protocol::FromProtoLighting(
+                static_cast< sword::WeatherAttributes::EnumLightingType >( lighting) ));
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation ) );
 }
 
@@ -190,7 +191,7 @@ void weather::Meteo::load( Archive& file, const unsigned int )
 template< typename Archive >
 void weather::Meteo::save( Archive& file, const unsigned int ) const
 {
-    unsigned int lighting = pLighting_->GetAsnID();
+    unsigned int lighting = protocol::ToProtoLighting( pLighting_->GetID() );
     unsigned int precipitation = pPrecipitation_->GetAsnID();
     file <<  id_
          << name_
