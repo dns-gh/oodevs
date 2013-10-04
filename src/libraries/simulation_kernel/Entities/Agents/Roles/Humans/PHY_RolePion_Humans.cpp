@@ -517,10 +517,9 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
         owner_->Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanHasChanged );
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
-    else
-        boost::remove_erase_if(
-            humansStates_,
-            []( const PHY_HumanState& s ) { return s.number_ <= 0; } );
+    boost::remove_erase_if(
+        humansStates_,
+        []( const PHY_HumanState& s ) { return s.number_ <= 0; } );
 }
 
 // -----------------------------------------------------------------------------
