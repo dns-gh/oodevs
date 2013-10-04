@@ -44,18 +44,11 @@ void Troops::DoUpdate( const sword::UnitAttributes& message )
 {
     if( !message.has_human_dotations() )
         return;
-
     T_HumanStateVector differences( elements_ );
-    for( IT_HumanStateVector it = differences.begin(); it != differences.end(); ++it )
+    for( auto it = differences.begin(); it != differences.end(); ++it )
         it->quantity_ = -it->quantity_;
     for( int i = 0; i < message.human_dotations().elem_size(); ++i )
-    {
-        HumanState current( message.human_dotations().elem( i ) );
-        if( HumanState* difference = FindHumanState( differences, current ) )
-            difference->quantity_ += current.quantity_;
-        else
-            differences.push_back( current );
-    }
+        UpdateHumanState( differences, message.human_dotations().elem( i ) );
     Update( differences );
 }
 
@@ -66,18 +59,10 @@ void Troops::DoUpdate( const sword::UnitAttributes& message )
 void Troops::Update( const T_HumanStateVector& differences )
 {
     for( auto it = differences.begin(); it != differences.end(); ++it )
-    {
-        if( it->quantity_ == 0 )
-            continue;
-        HumanState* humanState = FindHumanState( elements_, *it );
-        if( !humanState )
-            elements_.push_back( HumanState( *it ) );
-        else
-            humanState->quantity_ += it->quantity_;
-    }
-    RemoveHumanStates();
-    if( const kernel::Entity_ABC* superior = GetSuperior() )
-        if( Troops* troops = const_cast< Troops* >( superior->Retrieve< Troops >() ) )
+        UpdateHumanState( elements_, *it );
+    CleanHumanStates();
+    if( kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( GetSuperior() ) )
+        if( Troops* troops = superior->Retrieve< Troops >() )
             troops->Update( differences );
     controller_.Update( *this );
 }
@@ -89,21 +74,20 @@ void Troops::Update( const T_HumanStateVector& differences )
 void Troops::SetSuperior( const kernel::Entity_ABC& superior )
 {
     kernel::Entity_ABC* currentSuperior = const_cast< kernel::Entity_ABC* >( GetSuperior() );
-    if( !currentSuperior || &superior != currentSuperior )
+    if( &superior == currentSuperior )
+        return;
+    // add troops to new superior
+    if( Troops* troops = const_cast< kernel::Entity_ABC& >( superior ).Retrieve< Troops >() )
+        troops->Update( elements_ );
+    if( ! currentSuperior )
+        return;
+    // remove troops from previous superior
+    if( Troops* troops = currentSuperior->Retrieve< Troops >() )
     {
-        // create troops differences
         T_HumanStateVector differences( elements_ );
-        // add troops to new superior
-        if( Troops* troops = const_cast< kernel::Entity_ABC& >( superior ).Retrieve< Troops >() )
-            troops->Update( differences );
-        // remove troops from previous superior
-        if( currentSuperior )
-            if( Troops* troops = currentSuperior->Retrieve< Troops >() )
-            {
-                for( IT_HumanStateVector it = differences.begin(); it != differences.end(); ++it )
-                    it->quantity_ = -it->quantity_;
-                troops->Update( differences );
-            }
+        for( auto it = differences.begin(); it != differences.end(); ++it )
+            it->quantity_ = -it->quantity_;
+        troops->Update( differences );
     }
 }
 
@@ -114,7 +98,7 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
 unsigned int Troops::GetTotalHumans() const
 {
     unsigned int result = 0;
-    for( unsigned i = 0; i < elements_.size(); ++i )
+    for( std::size_t i = 0; i < elements_.size(); ++i )
         result += elements_[ i ].quantity_;
     return result;
 }
@@ -126,38 +110,32 @@ unsigned int Troops::GetTotalHumans() const
 unsigned int Troops::GetTotalByRank( E_HumanRank rank ) const
 {
     unsigned int result = 0;
-    for( unsigned i = 0; i < elements_.size(); ++i )
+    for( std::size_t i = 0; i < elements_.size(); ++i )
         if( elements_[ i ].rank_ == rank )
             result += elements_[ i ].quantity_;
     return result;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Troops::FindHumanState
+// Name: Troops::UpdateHumanState
 // Created: ABR 2011-07-28
 // -----------------------------------------------------------------------------
-HumanState* Troops::FindHumanState( T_HumanStateVector& container, const HumanState& state ) const
+void Troops::UpdateHumanState( T_HumanStateVector& states, const HumanState& state ) const
 {
-    for( auto it = container.begin(); it != container.end(); ++it )
-        if( *it == state )
-        {
-            unsigned int i = 0;
-            for( ; i < state.injuries_.size(); ++i )
-                if( state.injuries_[ i ].first != it->injuries_[ i ].first || state.injuries_[ i ].second != it->injuries_[ i ].second )
-                    break;
-            if( i == state.injuries_.size() )
-                return const_cast< HumanState* >( &( *it ) );
-        }
-        return 0;
+    auto it = std::find( states.begin(), states.end(), state );
+    if( it == states.end() )
+        states.push_back( state );
+    else
+        it->quantity_ += state.quantity_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Troops::RemoveHumanStates
+// Name: Troops::CleanHumanStates
 // Created: ABR 2011-08-29
 // -----------------------------------------------------------------------------
-void Troops::RemoveHumanStates()
+void Troops::CleanHumanStates()
 {
-    for( IT_HumanStateVector it = elements_.begin(); it != elements_.end(); )
+    for( auto it = elements_.begin(); it != elements_.end(); )
         if( it->quantity_ == 0 )
             it = elements_.erase( it );
         else

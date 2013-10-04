@@ -35,7 +35,7 @@ class PHY_HumanState
     public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_HumanState();
+             PHY_HumanState();
              PHY_HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, E_HumanLocation location = eHumanLocation_Battlefield, bool contaminated = false, bool psyop = false );
     virtual ~PHY_HumanState();
     //@}

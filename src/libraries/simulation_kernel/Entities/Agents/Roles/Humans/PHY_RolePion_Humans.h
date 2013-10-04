@@ -98,15 +98,13 @@ public:
     //@}
 
 private:
-    //! @name Tools
+    //! @name Helpers
     //@{
     unsigned int GetNbrTotal( const PHY_HumanRank& rank ) const;
     unsigned int GetNbrOperational( const PHY_HumanRank& rank ) const;
 
     void UpdateDataWhenHumanRemoved( const Human_ABC& human );
     void UpdateDataWhenHumanAdded( const Human_ABC& human );
-
-    void RemoveUselessStates();
     //@}
 
     //! @name Types

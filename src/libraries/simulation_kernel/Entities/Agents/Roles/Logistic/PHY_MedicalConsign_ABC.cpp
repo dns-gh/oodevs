@@ -250,7 +250,7 @@ PHY_RoleInterface_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceConsign_ABC::GetPionMaintenance
+// Name: PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay
 // Created: NLD 2006-08-11
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::FinishSuccessfullyWithoutDelay()

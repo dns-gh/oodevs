@@ -34,12 +34,12 @@ HumanState::HumanState( const HumanState& other )
     : rank_        ( other.rank_ )
     , state_       ( other.state_ )
     , location_    ( other.location_ )
+    , injuries_    ( other.injuries_ )
     , psyop_       ( other.psyop_ )
     , contaminated_( other.contaminated_ )
     , quantity_    ( other.quantity_ )
 {
-    for( unsigned int i = 0; i < other.injuries_.size(); ++i )
-        injuries_.push_back( other.injuries_[ i ] );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ HumanState::HumanState( const sword::HumanDotations_HumanDotation& msg )
 // -----------------------------------------------------------------------------
 HumanState::~HumanState()
 {
-    injuries_.clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,6 @@ void HumanState::Update( const sword::HumanDotations_HumanDotation& message )
     psyop_        = message.has_mentally_wounded() ? message.mentally_wounded() : false;
     contaminated_ = message.has_contaminated() ? message.contaminated() : false;
     quantity_     = message.quantity();
-
     assert( state_ == eHumanState_Injured && message.injuries_size() > 0 || state_ != eHumanState_Injured );
     injuries_.resize( message.injuries_size() );
     for( int i = 0; i < message.injuries_size(); ++i )
@@ -88,5 +87,7 @@ void HumanState::Update( const sword::HumanDotations_HumanDotation& message )
 // -----------------------------------------------------------------------------
 bool HumanState::operator==( const HumanState& other ) const
 {
-    return( rank_ == other.rank_ && state_ == other.state_ && psyop_ == other.psyop_ && contaminated_ == other.contaminated_ && location_ == other.location_ && injuries_.size() == other.injuries_.size() );
+    return rank_ == other.rank_ && state_ == other.state_ &&
+        psyop_ == other.psyop_ && contaminated_ == other.contaminated_ &&
+        location_ == other.location_ && injuries_ == other.injuries_;
 }

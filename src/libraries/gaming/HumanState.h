@@ -31,7 +31,7 @@ public:
     //@{
              HumanState();
              HumanState( const HumanState& );
-    explicit HumanState( const sword::HumanDotations_HumanDotation& );
+             HumanState( const sword::HumanDotations_HumanDotation& );
     virtual ~HumanState();
     //@}
 
@@ -45,11 +45,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::pair< unsigned int, E_InjuriesSeriousness >  T_Injury;
-
-    typedef std::vector< T_Injury >                           T_Injuries;
-    typedef T_Injuries::iterator                             IT_Injuries;
-    typedef T_Injuries::const_iterator                      CIT_Injuries;
+    typedef std::vector< std::pair< unsigned int, E_InjuriesSeriousness > > T_Injuries;
     //@}
 
 public:

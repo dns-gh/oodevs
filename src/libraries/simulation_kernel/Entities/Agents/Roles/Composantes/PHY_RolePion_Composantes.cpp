@@ -1946,7 +1946,7 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
     repartition.push_back( T_Repartition( &PHY_ComposanteState::maintenance_,                 message.list( 5 ).quantity() ) );
     repartition.push_back( T_Repartition( &PHY_ComposanteState::prisoner_,                    message.list( 6 ).quantity() ) );
 
-    std::vector< T_Repartition >::iterator stateIt = repartition.begin();
+    auto stateIt = repartition.begin();
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;

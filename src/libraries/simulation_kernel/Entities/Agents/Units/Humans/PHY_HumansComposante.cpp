@@ -328,9 +328,7 @@ void PHY_HumansComposante::NotifyHumanChanged( Human_ABC& human, const Human_ABC
         --nNbrUsableHumans_;
     }
     if( !human.IsDead() )
-    {
         ++nNbrUsableHumans_;
-    }
     assert( pComposante_ );
     const_cast< MIL_Agent_ABC& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanChanged, human, copyOfOldHumanState );
     if( !IsViable() )
@@ -366,12 +364,12 @@ bool PHY_HumansComposante::HasWoundedHumansToEvacuate() const
 double PHY_HumansComposante::GetOperationalState() const
 {
     if( humans_.empty() )
-        return 1.;
-    unsigned int state = 0;
+        return 1;
+    double state = 0;
     for( auto it = humans_.begin(); it != humans_.end(); ++it )
         if( !(*it)->IsSeriouslyPhysicallyWounded() && !(*it)->IsDead() )
             ++state;
-    return static_cast< double >( state ) / humans_.size();
+    return state / humans_.size();
 }
 
 // -----------------------------------------------------------------------------

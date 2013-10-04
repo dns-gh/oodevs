@@ -373,6 +373,21 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& message ) co
         SendFullState( message );
 }
 
+namespace
+{
+    sword::EnumInjuriesSeriousness Convert( const PHY_HumanWound& wound )
+    {
+        unsigned int stateId = wound.GetID();
+        if( stateId == PHY_HumanWound::woundedU1_.GetID() )
+            return sword::wounded_u1;
+        else if( stateId == PHY_HumanWound::woundedU2_.GetID() )
+            return sword::wounded_u2;
+        else if( stateId == PHY_HumanWound::woundedU3_.GetID() )
+            return sword::wounded_u3;
+        return sword::wounded_ue;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::SendFullState
 // Created: NLD 2004-09-07
@@ -384,7 +399,6 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
     {
         const PHY_HumanState& state = *it;
         sword::HumanDotations::HumanDotation& personnel = *message().mutable_human_dotations()->add_elem();
-
         // Quantity
         personnel.set_quantity( state.number_ );
         // Rank
@@ -400,14 +414,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
             personnel.set_state( sword::injured );
             sword::Injury* injury = personnel.add_injuries();
             injury->set_id( 0 );  // Never used but "required", default to 0.
-            if( stateId == PHY_HumanWound::woundedU1_.GetID() )
-                injury->set_seriousness( sword::wounded_u1 );
-            else if( stateId == PHY_HumanWound::woundedU2_.GetID() )
-                injury->set_seriousness( sword::wounded_u2 );
-            else if( stateId == PHY_HumanWound::woundedU3_.GetID() )
-                injury->set_seriousness( sword::wounded_u3 );
-            else if( stateId == PHY_HumanWound::woundedUE_.GetID() )
-                injury->set_seriousness( sword::wounded_ue );
+            injury->set_seriousness( Convert( *state.state_ ) );
         }
         // Location
         switch( state.location_ )
@@ -428,10 +435,8 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         personnel.set_location_deprecated(
                 protocol::RemapHumanLocation( personnel.location() ));
         // Psyop && contaminated
-        if( state.psyop_ )
-            personnel.set_mentally_wounded( true );
-        if( state.contaminated_ )
-            personnel.set_contaminated( true );
+        personnel.set_mentally_wounded( state.psyop_ );
+        personnel.set_contaminated( state.contaminated_ );
     }
 }
 
@@ -489,7 +494,7 @@ unsigned int PHY_RolePion_Humans::ReduceHumansAvailability( const PHY_HumanRank&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::CureAllHumans
+// Name: PHY_RolePion_Humans::HealAllHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::HealAllHumans( bool withLog )
@@ -513,7 +518,9 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
     else
-        RemoveUselessStates();
+        boost::remove_erase_if(
+            humansStates_,
+            []( const PHY_HumanState& s ) { return s.number_ <= 0; } );
 }
 
 // -----------------------------------------------------------------------------
@@ -601,26 +608,6 @@ unsigned int PHY_RolePion_Humans::GetNumber() const
 {
     unsigned int result = 0;
     for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
-    {
-        const PHY_HumanState& state = *it;
-        result += state.number_;
-    }
+        result += it->number_;
     return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::RemoveUselessStates
-// Created: MMC 2013-03-08
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::RemoveUselessStates()
-{
-    for( auto it = humansStates_.begin(); it != humansStates_.end(); )
-    {
-        if( it->number_ <= 0 )
-        {
-            it = humansStates_.erase( it );
-        }
-        else
-            ++it;
-    }
 }
