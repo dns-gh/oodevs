@@ -10,7 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_FragOrderType.h"
 #include "MT_Tools/MT_Logger.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
+#pragma warning( pop )
 
 MIL_FragOrderType::T_MissionIDMap MIL_FragOrderType::missionIDs_;
 MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::missionNames_;
