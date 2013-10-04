@@ -40,10 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const sword::SimToClient& wrapper ) const
-    {
-        return ( wrapper.message().has_log_medical_handling_update() && wrapper.message().log_medical_handling_update().has_state() );
-    }
+    bool HasValue( const sword::SimToClient& wrapper ) const;
     int Extract( const sword::SimToClient& wrapper );
     //@}
 

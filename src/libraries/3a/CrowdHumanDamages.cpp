@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "CrowdHumanDamages.h"
+#include "protocol/Simulation.h"
 
 using namespace sword;
 using namespace extractors;
@@ -97,6 +98,11 @@ CrowdHumanDamages::CrowdHumanDamages( xml::xistream& xis )
     , crowdFilter_( xis, "crowd" )
 {
     // NOTHING
+}
+
+bool CrowdHumanDamages::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return wrapper.message().has_unit_damaged_by_crowd_fire();
 }
 
 // -----------------------------------------------------------------------------

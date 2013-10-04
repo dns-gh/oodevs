@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "Equipments.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 using namespace sword;
@@ -65,6 +66,11 @@ Equipments::Equipments( xml::xistream& xis )
     , stateMask_( ReadMask( xis ) )
 {
     // NOTHING
+}
+
+bool Equipments::HasFlag( const sword::UnitAttributes& attributes ) const
+{
+    return attributes.has_equipment_dotations();
 }
 
 // -----------------------------------------------------------------------------

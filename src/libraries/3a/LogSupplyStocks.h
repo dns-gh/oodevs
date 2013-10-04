@@ -41,10 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const sword::SimToClient& wrapper ) const
-    {
-        return ( wrapper.message().has_log_supply_state() && wrapper.message().log_supply_state().has_stocks() );
-    }
+    bool HasValue( const sword::SimToClient& wrapper ) const;
     float Extract( const sword::SimToClient& wrapper );
     //@}
 

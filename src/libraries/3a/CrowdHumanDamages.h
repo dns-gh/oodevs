@@ -40,10 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const sword::SimToClient& wrapper ) const
-    {
-        return wrapper.message().has_unit_damaged_by_crowd_fire();
-    }
+    bool HasValue( const sword::SimToClient& wrapper ) const;
     int Extract( const sword::SimToClient& wrapper ) const;
     //@}
 

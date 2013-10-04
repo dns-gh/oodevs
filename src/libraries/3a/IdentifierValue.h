@@ -10,6 +10,8 @@
 #ifndef __IdentifierValue_h_
 #define __IdentifierValue_h_
 
+#include "protocol/Protocol.h"
+
 // =============================================================================
 /** @class  IdentifierValue
     @brief  IdentifierValue

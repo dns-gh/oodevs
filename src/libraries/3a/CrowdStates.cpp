@@ -9,6 +9,7 @@
 
 #include "CrowdStates.h"
 #include "MT_Tools/MT_Logger.h"
+#include "protocol/Simulation.h"
 
 using namespace sword;
 using namespace extractors;
@@ -56,6 +57,11 @@ CrowdStates::CrowdStates( xml::xistream& xis )
     , contaminated_( ReadMask ( xis, "contaminated" ) )
 {
     // NOTHING
+}
+
+bool CrowdStates::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return ( wrapper.message().has_crowd_update() );
 }
 
 // -----------------------------------------------------------------------------

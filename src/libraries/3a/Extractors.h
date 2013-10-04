@@ -11,11 +11,21 @@
 #define __Extractors_h_
 
 #include "Position.h"
-#include "PowerIndicator.h"
-#include "PowerIndicators.h"
-#include "StaticModel.h"
 #include "Types.h"
-#include "protocol/Protocol.h"
+#include <map>
+
+namespace aar
+{
+    class PowerIndicator;
+    class StaticModel_ABC;
+}
+
+namespace sword
+{
+    class EquipmentDotations_EquipmentDotation;
+    class SimToClient;
+    class UnitAttributes;
+}
 
 // =============================================================================
 /** @namespace Extractors
@@ -35,146 +45,70 @@ namespace extractors
     // Attributes
     struct OperationalState : public Extractor< NumericValue >
     {
-        bool HasFlag( const sword::UnitAttributes& attributes ) const
-        {
-            return attributes.has_raw_operational_state();
-        }
-        NumericValue Extract( const sword::UnitAttributes& attributes ) const
-        {
-            return NumericValue( attributes.raw_operational_state() * 0.01f );
-        }
+        bool HasFlag( const sword::UnitAttributes& attributes ) const;
+        NumericValue Extract( const sword::UnitAttributes& attributes ) const;
     };
 
     struct Positions : public Extractor< ::Position >
     {
-        bool HasFlag( const sword::UnitAttributes& attributes ) const
-        {
-            return attributes.has_position();
-        }
-        ::Position Extract( const sword::UnitAttributes& attributes ) const
-        {
-            return ::Position( attributes.position() );
-        }
+        bool HasFlag( const sword::UnitAttributes& attributes ) const;
+        ::Position Extract( const sword::UnitAttributes& attributes ) const;
     };
 
     struct Mounted : public Extractor< NumericValue >
     {
-        bool HasFlag( const sword::UnitAttributes& attributes ) const
-        {
-            return attributes.has_embarked();
-        }
-        NumericValue Extract( const sword::UnitAttributes& attributes ) const
-        {
-            return NumericValue( attributes.embarked() ? 0.f : 1.f );
-        }
+        bool HasFlag( const sword::UnitAttributes& attributes ) const;
+        NumericValue Extract( const sword::UnitAttributes& attributes ) const;
     };
 
     struct Contaminated : public Extractor< NumericValue >
     {
-        bool HasFlag( const sword::UnitAttributes& attributes ) const
-        {
-            return attributes.has_contamination_state() && attributes.contamination_state().has_contaminated();
-        }
-        NumericValue Extract( const sword::UnitAttributes& attributes ) const
-        {
-            return NumericValue( attributes.contamination_state().contaminated() ? 1.f : 0.f );
-        }
+        bool HasFlag( const sword::UnitAttributes& attributes ) const;
+        NumericValue Extract( const sword::UnitAttributes& attributes ) const;
     };
 
     struct NbcDose : public Extractor< NumericValue >
     {
-        bool HasFlag( const sword::UnitAttributes& attributes ) const
-        {
-            return attributes.has_contamination_state() && attributes.contamination_state().has_dose();
-        }
-        NumericValue Extract( const sword::UnitAttributes& attributes ) const
-        {
-            return NumericValue( attributes.contamination_state().dose() );
-        }
+        bool HasFlag( const sword::UnitAttributes& attributes ) const;
+        NumericValue Extract( const sword::UnitAttributes& attributes ) const;
     };
 
     // Existences
     struct MaintenanceHandlingUnitId : public Extractor< NumericValue >
     {
-        bool IsCreation( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_log_maintenance_handling_creation();
-        }
-        NumericValue Extract( const sword::SimToClient& wrapper ) const
-        {
-            return NumericValue( wrapper.message().log_maintenance_handling_creation().unit().id() );
-        }
-        bool IsDestruction( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_log_maintenance_handling_destruction();
-        }
+        bool IsCreation( const sword::SimToClient& wrapper ) const;
+        NumericValue Extract( const sword::SimToClient& wrapper ) const;
+        bool IsDestruction( const sword::SimToClient& wrapper ) const;
     };
 
     struct DirectFireTargetsId : public Extractor< NumericValue >
     {
-        bool HasValue( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_start_unit_fire() &&
-                wrapper.message().start_unit_fire().type() == sword::StartUnitFire::direct &&
-                wrapper.message().start_unit_fire().target().has_unit();
-        }
-        NumericValue Extract( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().start_unit_fire().target().unit().id();
-        }
+        bool HasValue( const sword::SimToClient& wrapper ) const;
+        NumericValue Extract( const sword::SimToClient& wrapper ) const;
     };
 
     struct IndirectFireTargetsPositions : public Extractor< ::Position >
     {
-        bool HasValue( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_start_unit_fire() &&
-                   wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect &&
-                   wrapper.message().start_unit_fire().target().has_position();
-        }
-        ::Position Extract( const sword::SimToClient& wrapper ) const
-        {
-            return ::Position( wrapper.message().start_unit_fire().target().position() );
-        }
+        bool HasValue( const sword::SimToClient& wrapper ) const;
+        ::Position Extract( const sword::SimToClient& wrapper ) const;
     };
 
     struct DamageIndirectFire : public Extractor< NumericValue >
     {
-        bool HasValue( const sword::SimToClient& wrapper ) const
-        {
-            return ( wrapper.message().has_unit_damaged_by_unit_fire()
-                 && !wrapper.message().unit_damaged_by_unit_fire().direct_fire() );
-        }
-        NumericValue Extract( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().unit_damaged_by_unit_fire().firer().id();
-        }
+        bool HasValue( const sword::SimToClient& wrapper ) const;
+        NumericValue Extract( const sword::SimToClient& wrapper ) const;
     };
 
     struct DirectFireUnitsId : public Extractor< NumericValue >
     {
-        bool HasValue( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_start_unit_fire() &&
-                wrapper.message().start_unit_fire().type() == sword::StartUnitFire::direct;
-        }
-        NumericValue Extract( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().start_unit_fire().firing_unit().id();
-        }
+        bool HasValue( const sword::SimToClient& wrapper ) const;
+        NumericValue Extract( const sword::SimToClient& wrapper ) const;
     };
 
     struct IndirectFireUnitsId : public Extractor< NumericValue >
     {
-        bool HasValue( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_start_unit_fire() &&
-                wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect;
-        }
-        NumericValue Extract( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().start_unit_fire().firing_unit().id();
-        }
+        bool HasValue( const sword::SimToClient& wrapper ) const;
+        NumericValue Extract( const sword::SimToClient& wrapper ) const;
     };
 
     // Power
@@ -193,20 +127,8 @@ namespace extractors
         explicit PowerExtractor( const aar::StaticModel_ABC& model ) : model_( &model ) {}
         const aar::StaticModel_ABC* model_;
 
-        bool HasFlag( const sword::UnitAttributes& message ) const
-        {
-            return message.has_equipment_dotations();
-        }
-        NumericValue Extract( const sword::UnitAttributes& message )
-        {
-            for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
-            {
-                int index = message.equipment_dotations().elem( i ).type().id();
-                const sword::EquipmentDotations_EquipmentDotation& value = message.equipment_dotations().elem( i );
-                equipments_[ index ] = value;
-            }
-            return NumericValue( model_->ComputePower( equipments_, *this ) );
-        }
+        bool HasFlag( const sword::UnitAttributes& message ) const;
+        NumericValue Extract( const sword::UnitAttributes& message );
     };
 
     struct DirectFirePower : public PowerExtractor
@@ -214,10 +136,7 @@ namespace extractors
         explicit DirectFirePower( const aar::StaticModel_ABC& model ) : PowerExtractor( model ) {}
 
     private:
-        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const
-        {
-            return powerIndicator.GetDirectFire();
-        }
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const;
     };
 
     struct IndirectFirePower : public PowerExtractor
@@ -225,10 +144,7 @@ namespace extractors
         explicit IndirectFirePower( const aar::StaticModel_ABC& model ) : PowerExtractor( model ) {}
 
     private:
-        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const
-        {
-            return powerIndicator.GetIndirectFire();
-        }
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const;
     };
 
     struct CloseCombatPower : public PowerExtractor
@@ -236,10 +152,7 @@ namespace extractors
         explicit CloseCombatPower( const aar::StaticModel_ABC& model ) : PowerExtractor( model ) {}
 
     private:
-        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const
-        {
-            return powerIndicator.GetCloseCombat();
-        }
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const;
     };
 
     struct EngineeringPower : public PowerExtractor
@@ -247,10 +160,7 @@ namespace extractors
         explicit EngineeringPower( const aar::StaticModel_ABC& model ) : PowerExtractor( model ) {}
 
     private:
-        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const
-        {
-            return powerIndicator.GetEngineering();
-        }
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const;
     };
 
 } // namespace extractor

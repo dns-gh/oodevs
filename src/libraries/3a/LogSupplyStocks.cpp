@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "LogSupplyStocks.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 
@@ -37,6 +38,12 @@ LogSupplyStocks::LogSupplyStocks( xml::xistream& xis )
 LogSupplyStocks::~LogSupplyStocks()
 {
     // NOTHING
+}
+
+bool LogSupplyStocks::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return ( wrapper.message().has_log_supply_state()
+            && wrapper.message().log_supply_state().has_stocks() );
 }
 
 // -----------------------------------------------------------------------------

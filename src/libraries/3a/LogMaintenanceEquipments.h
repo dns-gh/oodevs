@@ -40,12 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const sword::SimToClient& wrapper ) const
-    {
-        return ( wrapper.message().has_log_maintenance_state() && (
-            wrapper.message().log_maintenance_state().has_repairers() ||
-            wrapper.message().log_maintenance_state().has_haulers() ) );
-    }
+    bool HasValue( const sword::SimToClient& wrapper ) const;
     int Extract( const sword::SimToClient& wrapper );
     //@}
 

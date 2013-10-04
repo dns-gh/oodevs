@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "ForceRatioValue.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 using namespace sword;
@@ -54,6 +55,11 @@ ForceRatioValue::ForceRatioValue( xml::xistream& xis )
 ForceRatioValue::~ForceRatioValue()
 {
     // NOTHING
+}
+
+bool ForceRatioValue::HasFlag( const sword::UnitAttributes& attributes ) const
+{
+    return ( attributes.has_force_ratio() && attributes.force_ratio() != sword::ForceRatio::none );
 }
 
 // -----------------------------------------------------------------------------

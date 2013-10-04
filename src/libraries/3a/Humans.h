@@ -47,10 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasFlag( const sword::UnitAttributes& attributes ) const
-    {
-        return attributes.has_human_dotations();
-    }
+    bool HasFlag( const sword::UnitAttributes& attributes ) const;
     int Extract( const sword::UnitAttributes& attributes );
     //@}
 

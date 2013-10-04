@@ -11,6 +11,7 @@
 #define __Derivate_h_
 
 #include "Functions.h"
+#include <deque>
 
 #pragma warning( push )
 #pragma warning( disable : 4800 )

@@ -43,10 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasFlag( const sword::UnitAttributes& attributes ) const
-    {
-        return ( attributes.has_force_ratio() && attributes.force_ratio() != sword::ForceRatio::none );
-    }
+    bool HasFlag( const sword::UnitAttributes& attributes ) const;
     int Extract( const sword::UnitAttributes& attributes );
     //@}
 

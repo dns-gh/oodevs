@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "FireHumanDamages.h"
+#include "protocol/Simulation.h"
 
 using namespace sword;
 using namespace extractors;
@@ -115,6 +116,11 @@ FireHumanDamages::FireHumanDamages( xml::xistream& xis )
     , partyFilter_( xis, "party" )
 {
     // NOTHING
+}
+
+bool FireHumanDamages::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return wrapper.message().has_unit_damaged_by_unit_fire();
 }
 
 // -----------------------------------------------------------------------------

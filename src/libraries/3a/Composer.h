@@ -11,6 +11,7 @@
 #define __Composer_h_
 
 #include "Reductor_ABC.h"
+#include <map>
 
 #pragma warning( push )
 #pragma warning( disable : 4355 )

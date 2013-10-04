@@ -41,10 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const sword::SimToClient& wrapper ) const
-    {
-        return wrapper.message().has_unit_damaged_by_unit_fire();
-    }
+    bool HasValue( const sword::SimToClient& wrapper ) const;
     NumericValue Extract( const sword::SimToClient& wrapper ) const;
     //@}
 

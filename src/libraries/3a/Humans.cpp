@@ -117,6 +117,11 @@ Humans::Humans( xml::xistream& xis )
     // NOTHING
 }
 
+bool Humans::HasFlag( const sword::UnitAttributes& attributes ) const
+{
+    return attributes.has_human_dotations();
+}
+
 // -----------------------------------------------------------------------------
 // Name: Humans::Extract
 // Created: AGE 2007-10-29

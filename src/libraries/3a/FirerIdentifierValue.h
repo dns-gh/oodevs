@@ -13,6 +13,11 @@
 #include "Values.h"
 #include "Types.h"
 
+namespace sword
+{
+    class SimToClient;
+}
+
 // =============================================================================
 /** @class  FirerIdentifierValue
     @brief  FirerIdentifierValue
@@ -24,11 +29,22 @@ struct FirerIdentifierValue : public Value< NumericValue >
     enum { has_parameter = false };
     //! @name Operations
     //@{
-    virtual void Receive( const sword::SimToClient& wrapper )
-    {
-        if( wrapper.message().has_unit_damaged_by_unit_fire() )
-            Set( wrapper.message().unit_damaged_by_unit_fire().firer().id() );
-    }
+    void Receive( const sword::SimToClient& wrapper );
+    //@}
+};
+
+// =============================================================================
+/** @class  TargetIdentifierValue
+    @brief  TargetIdentifierValue
+*/
+// Created: JSR 2012-12-11
+// =============================================================================
+struct TargetIdentifierValue : public Value< NumericValue >
+{
+    enum { has_parameter = false };
+    //! @name Operations
+    //@{
+    virtual void Receive( const sword::SimToClient& wrapper );
     //@}
 };
 

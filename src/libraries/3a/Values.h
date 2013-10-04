@@ -12,6 +12,11 @@
 
 #include "ValueHandler_ABC.h"
 
+namespace sword
+{
+    class SimToClient;
+}
+
 // =============================================================================
 /** @class  Value
     @brief  Always pushes a value, with default one if not set
