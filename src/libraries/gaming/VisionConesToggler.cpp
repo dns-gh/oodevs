@@ -9,10 +9,11 @@
 
 #include "gaming_pch.h"
 #include "VisionConesToggler.h"
+#include "Profile.h"
+#include "Simulation.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
-#include "Services.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;
@@ -28,7 +29,7 @@ VisionConesToggler::VisionConesToggler( Controllers& controllers, Publisher_ABC&
     , displayCones_   ( false )
     , displaySurfaces_( false )
     , displayFog_     ( false )
-    , simulation_     ( false )
+    , connected_      ( false )
 {
     controllers_.Register( *this );
 }
@@ -69,8 +70,9 @@ void VisionConesToggler::OptionChanged( const std::string& name, const OptionVar
 // Name: VisionConesToggler::NotifyUpdated
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void VisionConesToggler::NotifyUpdated( const Profile_ABC& )
+void VisionConesToggler::NotifyUpdated( const Profile& profile )
 {
+    connected_ = profile.IsLoggedIn();
     SendControlEnableVisionCones();
 }
 
@@ -78,9 +80,10 @@ void VisionConesToggler::NotifyUpdated( const Profile_ABC& )
 // Name: VisionConesToggler::NotifyUpdated
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void VisionConesToggler::NotifyUpdated( const Services& services )
+void VisionConesToggler::NotifyUpdated( const Simulation& simulation )
 {
-    simulation_ = services.HasService< simulation::Service >();
+    if( !simulation.IsConnected() )
+        connected_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +92,7 @@ void VisionConesToggler::NotifyUpdated( const Services& services )
 // -----------------------------------------------------------------------------
 void VisionConesToggler::SendControlEnableVisionCones()
 {
-    if( simulation_ )
+    if( connected_ )
     {
         simulation::ControlEnableVisionCones msg;
         msg().set_vision_cones( displayCones_ || displaySurfaces_ || displayFog_ );
