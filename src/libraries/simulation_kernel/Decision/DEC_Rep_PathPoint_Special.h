@@ -34,11 +34,6 @@ public:
              DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain );
     virtual ~DEC_Rep_PathPoint_Special();
 
-    //! @name Debug
-    //@{
-    virtual void Dump() const;
-    //@}
-
 private:
     E_TypePointParticulier nTypePointParticulier_;
 };

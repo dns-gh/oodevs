@@ -36,11 +36,6 @@ public:
     virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
     //@}
 
-    //! @name Debug
-    //@{
-    virtual void Dump() const;
-    //@}
-
 private:
     TerrainData nTypeTerrain_;
     mutable DEC_Representations* pSentToDiaAgent_;

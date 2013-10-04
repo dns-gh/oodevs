@@ -85,18 +85,6 @@ void DEC_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathPoint::Dump
-// Created: NLD 2005-08-10
-// -----------------------------------------------------------------------------
-void DEC_PathPoint::Dump() const
-{
-    MT_LOG_ERROR_MSG( "    PathPoint " << vPos_
-              << " - Type : " << nObjectTypes_.DumpToString()
-              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
-              << std::endl );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathPoint::GetDIAType
 // Created: LDC 2009-07-09
 // -----------------------------------------------------------------------------
