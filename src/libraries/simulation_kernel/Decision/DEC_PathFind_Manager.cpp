@@ -25,6 +25,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <boost/make_shared.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor
@@ -147,16 +148,13 @@ void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
     }
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     for( auto it = paths.begin(); it != paths.end(); ++it )
-        for( auto itReq = toCleanup_.begin(); itReq != toCleanup_.end(); )
+        boost::remove_erase_if( toCleanup_, [&]( const T_Cleanups::value_type& v ) -> bool
         {
-            if( itReq->first.get() == it->get() )
-            {
-                pathfindTime_ += itReq->second;
-                itReq = toCleanup_.erase( itReq );
-            }
-            else
-                ++itReq;
-        }
+            if( v.first != *it )
+                return false;
+            pathfindTime_ += v.second;
+            return true;
+        } );
 }
 
 // -----------------------------------------------------------------------------
