@@ -72,7 +72,8 @@ void AarPlugin::Register( dispatcher::Services& services )
 // Name: AarPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string&, dispatcher::Profile_ABC& )
+void AarPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string&,
+                                           dispatcher::Profile_ABC&, bool /*uncounted*/ )
 {
     ::aar::AarInformation info;
     const std::string description = "<functions/>"; // $$$$ AGE 2008-08-04:

@@ -115,7 +115,7 @@ void RightsPlugin::Receive( const sword::SimToClient& message )
 // Name: RightsPlugin::NotifyClientAuthenticated
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/, Profile_ABC& /*profile*/ )
+void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& /*link*/, Profile_ABC& /*profile*/, bool /*uncounted*/ )
 {
     profiles_->Send( client );
 }
@@ -306,7 +306,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
             ++currentConnections_;
         silentClients_.insert( link );
         SendProfiles( sender );
-        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile );
+        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, keyAuthenticated );
         ++countID_;
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }

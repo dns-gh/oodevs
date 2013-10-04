@@ -166,8 +166,10 @@ void WebControl::Receive( const sword::SimToClient& client )
 // Name: WebControl::NotifyClientAuthenticated
 // Created: BAX 2012-07-30
 // -----------------------------------------------------------------------------
-void WebControl::NotifyClientAuthenticated( const std::string& link )
+void WebControl::NotifyClientAuthenticated( const std::string& link, bool uncounted )
 {
+    if( uncounted )
+        return;
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     clients_.insert( link );
 }

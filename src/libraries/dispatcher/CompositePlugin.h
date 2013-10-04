@@ -75,10 +75,10 @@ public:
             (*it)->Register( services );
     }
 
-    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& link, Profile_ABC& profile )
+    virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& link, Profile_ABC& profile, bool uncounted )
     {
         for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
-            (*it)->NotifyClientAuthenticated( client, link, profile );
+            (*it)->NotifyClientAuthenticated( client, link, profile, uncounted );
     }
 
     virtual void NotifyClientLeft( ClientPublisher_ABC& client, const std::string& link )
