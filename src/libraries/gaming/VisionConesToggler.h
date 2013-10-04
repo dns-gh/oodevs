@@ -17,12 +17,12 @@
 namespace kernel
 {
     class Controllers;
-    class Profile_ABC;
     class OptionVariant;
 }
 
 class Publisher_ABC;
-class Services;
+class Profile;
+class Simulation;
 
 // =============================================================================
 /** @class  VisionConesToggler
@@ -33,8 +33,8 @@ class Services;
 class VisionConesToggler : public QObject
                          , public tools::Observer_ABC
                          , public kernel::OptionsObserver_ABC
-                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
-                         , public tools::ElementObserver_ABC< Services >
+                         , public tools::ElementObserver_ABC< Profile >
+                         , public tools::ElementObserver_ABC< Simulation >
 {
 public:
     //! @name Constructors/Destructor
@@ -47,8 +47,8 @@ protected:
     //! @name Operations
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    virtual void NotifyUpdated( const kernel::Profile_ABC& );
-    virtual void NotifyUpdated( const Services& );
+    virtual void NotifyUpdated( const Simulation& );
+    virtual void NotifyUpdated( const Profile& );
     //@}
 
 private:
@@ -65,7 +65,7 @@ private:
     bool displayCones_;
     bool displaySurfaces_;
     bool displayFog_;
-    bool simulation_;
+    bool connected_;
     //@}
 };
 

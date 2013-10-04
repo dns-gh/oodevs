@@ -50,10 +50,9 @@ namespace parameters
 {
     struct Exception : public tools::Exception
     {
-        Exception( const std::string& file, const std::string& function, int line, int code, const std::string& what );
+        Exception( const std::string& file, const std::string& function, int line, const std::string& what );
         Exception( const Exception& other );
         virtual ~Exception() {}
-        const int code;
     };
 
     void         Check( bool valid, const std::string& msg, int i = -1, int j = -1, int k = -1 );

@@ -431,18 +431,9 @@ void DEC_PopulationDecision::Reload( bool doInitBrain )
 // Name: DEC_PopulationDecision::ActivateBrainDebug
 // Created: SLI 2013-06-21
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::ActivateBrainDebug()
+void DEC_PopulationDecision::ActivateBrainDebug( bool activate )
 {
-    DEC_Decision< MIL_Population >::ActivateBrainDebug();
+    DEC_Decision< MIL_Population >::ActivateBrainDebug( activate );
     bStateHasChanged_ = true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::DeactivateBrainDebug
-// Created: SLI 2013-06-21
-// -----------------------------------------------------------------------------
-void DEC_PopulationDecision::DeactivateBrainDebug()
-{
-    DEC_Decision< MIL_Population >::DeactivateBrainDebug();
-    bStateHasChanged_ = true;
-}

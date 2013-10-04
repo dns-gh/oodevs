@@ -23,7 +23,9 @@
 #include "tools/Codec.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Profiler.h"
 #include <boost/make_shared.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor
@@ -35,6 +37,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
     , nMaxEndConnections_     ( 8 )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
+    , pathfindTime_           ( 0 )
 {
     config.GetPhyLoader().LoadPhysicalFile( "pathfinder",
         boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, boost::ref( config ), boost::cref( dangerousObjects ) ) );
@@ -145,13 +148,13 @@ void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
     }
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     for( auto it = paths.begin(); it != paths.end(); ++it )
-        for( auto itReq = requestsToCleanAfterComputation_.begin(); itReq != requestsToCleanAfterComputation_.end(); )
+        boost::remove_erase_if( toCleanup_, [&]( const T_Cleanups::value_type& v ) -> bool
         {
-            if( itReq->get() == it->get() )
-                itReq = requestsToCleanAfterComputation_.erase( itReq );
-            else
-                ++itReq;
-        }
+            if( v.first != *it )
+                return false;
+            pathfindTime_ += v.second;
+            return true;
+        } );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,25 +300,29 @@ int DEC_PathFind_Manager::GetCurrentThread() const
 // Name: DEC_PathFind_Manager::CleanPathAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC>& pPath )
+void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC>& pPath, double duration )
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-    requestsToCleanAfterComputation_.push_back( pPath );
+    toCleanup_.push_back( std::make_pair( pPath, duration ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::Update
 // Created: NLD 2005-09-20
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::Update()
+double DEC_PathFind_Manager::Update()
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-    while( ! requestsToCleanAfterComputation_.empty() )
+    double pathfindTime = pathfindTime_;
+    pathfindTime_ = 0;
+    while( ! toCleanup_.empty() )
     {
-        boost::shared_ptr< DEC_Path_ABC >& pRequest = requestsToCleanAfterComputation_.back();
-        pRequest->CleanAfterComputation();
-        requestsToCleanAfterComputation_.pop_back();
+        auto rq = toCleanup_.back();
+        toCleanup_.pop_back();
+        rq.first->CleanAfterComputation();
+        pathfindTime += rq.second;
     }
+    return pathfindTime;
 }
 
 // -----------------------------------------------------------------------------

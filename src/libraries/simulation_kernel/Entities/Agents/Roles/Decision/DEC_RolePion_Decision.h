@@ -47,7 +47,7 @@ public:
     //@{
              DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
     virtual ~DEC_RolePion_Decision();
-    //@}
+   //@}
 
     //! @name CheckPoints
     //@{
@@ -62,9 +62,7 @@ public:
     void Clean();
 
     virtual void Reload( bool doInitBrain );
-    virtual void ActivateBrainDebug();
-    virtual void DeactivateBrainDebug();
-
+    virtual void ActivateBrainDebug( bool activate );
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );

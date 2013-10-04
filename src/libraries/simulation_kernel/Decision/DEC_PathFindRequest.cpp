@@ -27,12 +27,13 @@ DEC_PathFindRequest::~DEC_PathFindRequest()
 
 void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfind )
 {
+    profiler_.Start();
     path_->Execute( pathfind );
 }
 
 void DEC_PathFindRequest::CleanAfterComputation()
 {
-    manager_->CleanPathAfterComputation( path_ );
+    manager_->CleanPathAfterComputation( path_, profiler_.Stop() );
 }
 
 const boost::shared_ptr< DEC_Path_ABC >& DEC_PathFindRequest::GetPath() const

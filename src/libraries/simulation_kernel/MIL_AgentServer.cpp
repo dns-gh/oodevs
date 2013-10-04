@@ -116,6 +116,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
     , pObjectFactory_       ( new MIL_ObjectFactory() )
+    , pathfindTime_         ( 0 )
 {
     MIL_Time_ABC::RegisterTime( *this );
     loopTimer_.Start();
@@ -234,7 +235,7 @@ void MIL_AgentServer::WaitForNextStep()
 {
     assert( pAgentServer_ );
     pAgentServer_->Update();
-    pPathFindManager_->Update();
+    pathfindTime_ += pPathFindManager_->Update();
     long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {
@@ -267,17 +268,6 @@ void MIL_AgentServer::OnTimer()
         Pause( 0, 0 );
 }
 
-namespace
-{
-    double UpdatePathfind( DEC_PathFind_Manager& manager )
-    {
-        MT_Profiler profiler;
-        profiler.Start();
-        manager.UpdateInSimulationThread();
-        return profiler.Stop();
-    }
-}
-
 //-----------------------------------------------------------------------------
 // Name:  MIL_AgentServer::mainSimLoop
 // Created: JVT 02-06-21
@@ -290,7 +280,7 @@ void MIL_AgentServer::MainSimLoop()
     pEntityManager_->Update();
     pMeteoDataManager_->Update( nRealTime_ );
     pResourceNetworkModel_->Update();
-    const double pathfindTime = UpdatePathfind( *pPathFindManager_ );
+    pPathFindManager_->UpdateInSimulationThread();
     SendMsgEndTick();
     pProcessMonitor_->MonitorProcess();
     const double lastTime = loopTimer_.Stop();
@@ -299,8 +289,9 @@ void MIL_AgentServer::MainSimLoop()
         nCurrentTimeStep_, lastTime, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
         pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), pEntityManager_->GetPopulationsDecisionTime(), sword::Brain::GetTotalTime(),
         pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(),
-        profiler_.GetLastTime(), waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfindTime,
+        profiler_.GetLastTime(), waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfindTime_,
         pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
+    pathfindTime_ = 0;
     pEntityManager_->LogInfo();
     sword::Brain::ResetProfiling( config_.IsDecisionalProfilingEnabled() );
     pEntityManager_->Clean();

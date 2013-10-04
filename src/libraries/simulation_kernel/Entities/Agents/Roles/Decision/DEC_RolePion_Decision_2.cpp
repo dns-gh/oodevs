@@ -400,6 +400,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< void( double ) >( boost::bind( &DEC_MiscFunctions::SetCurrentSpeedModificator, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ModulationVitesseMax",
         boost::function< void( double ) >( boost::bind( &DEC_MiscFunctions::SetMaxSpeedModificator, boost::ref( GetPion() ), _1 ) ) );
+    // Elongation factor concept was removed but we keep the DEC function around
+    // to avoid breaking old models. This should be removed after their migration.
+    RegisterFunction( "DEC_Elongation"     , boost::function< void(double) >( []( double ) {} ));
     RegisterFunction( "DEC_ReleverPion"    ,
         boost::function< bool( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::RelievePion, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_PeutReleverPion",

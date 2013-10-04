@@ -1162,18 +1162,9 @@ std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetCommunicationPionsWit
 // Name: DEC_RolePion_Decision::ActivateBrainDebug
 // Created: SLI 2013-06-21
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::ActivateBrainDebug()
+void DEC_RolePion_Decision::ActivateBrainDebug( bool activate )
 {
-    DEC_Decision< MIL_AgentPion >::ActivateBrainDebug();
+    DEC_Decision< MIL_AgentPion >::ActivateBrainDebug( activate );
     NotifyHasChanged();
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::DeactivateBrainDebug
-// Created: SLI 2013-06-21
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::DeactivateBrainDebug()
-{
-    DEC_Decision< MIL_AgentPion >::DeactivateBrainDebug();
-    NotifyHasChanged();
-}
