@@ -35,6 +35,17 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision constructor
+// Created: LDC 2013-10-04
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( MIL_Population& population )
+    : DEC_Knowledge_ABC()
+    , pAgentColliding_( 0 )
+    , pPopulation_    ( &population )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision constructor
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision()
@@ -104,7 +115,8 @@ void DEC_Knowledge_PopulationCollision::PublishKnowledges( DEC_Knowledge_Populat
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 {
-    assert( pAgentColliding_ );
+    if( !pAgentColliding_ )
+        throw std::runtime_error( "Collision has no agent" );
     double rMaxSpeed = std::numeric_limits< double >::max();
     auto volumes = pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes();
     for( auto itVolume = volumes.begin(); itVolume != volumes.end(); ++itVolume )
@@ -123,7 +135,8 @@ double DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor() const
 {
-    assert( pAgentColliding_ );
+    if( !pAgentColliding_ )
+        throw std::runtime_error( "Collision has no agent" );
     double rFactor = 1.;
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
         rFactor = std::max( rFactor, (*it)->GetPionReloadingTimeFactor() );
@@ -147,13 +160,21 @@ double DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_PopulationCollision::GetPosition
+// Name: DEC_Knowledge_PopulationCollision::GetPositions
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------
-const MT_Vector2D& DEC_Knowledge_PopulationCollision::GetPosition() const
+void DEC_Knowledge_PopulationCollision::GetPositions( std::vector< MT_Vector2D >& positions ) const
 {
-    assert( pAgentColliding_ );
-    return pAgentColliding_->GetRole< PHY_RoleInterface_Location >().GetPosition();
+    if( pAgentColliding_ )
+        positions.push_back( pAgentColliding_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    else
+    {
+        for ( auto it = flows_.begin(); it != flows_.end(); ++it )
+        {
+            const T_PointList& flowShape = (*it)->GetFlowShape();
+            positions.insert( positions.end(), flowShape.begin(), flowShape.end() );
+}
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +193,8 @@ MIL_Population& DEC_Knowledge_PopulationCollision::GetPopulation() const
 // -----------------------------------------------------------------------------
 const MIL_Agent_ABC& DEC_Knowledge_PopulationCollision::GetAgentColliding() const
 {
-    assert( pAgentColliding_ );
+    if( !pAgentColliding_ )
+        throw std::runtime_error( "Collision has no agent" );
     return *pAgentColliding_;
 }
 

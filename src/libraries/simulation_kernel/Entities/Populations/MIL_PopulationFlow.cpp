@@ -1020,3 +1020,12 @@ bool MIL_PopulationFlow::IsReady() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetFlowShape
+// Created: LDC 2013-10-04
+// -----------------------------------------------------------------------------
+const T_PointList& MIL_PopulationFlow::GetFlowShape() const
+{
+    return flowShape_;
+}

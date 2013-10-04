@@ -134,7 +134,8 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCol
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( bPerceived_ )
         return false;
-    T_PointVector shape( 1, collision.GetPosition() );
+    T_PointVector shape;
+    collision.GetPositions( shape );
     if( shape_ != shape )
     {
         shape_ = shape;

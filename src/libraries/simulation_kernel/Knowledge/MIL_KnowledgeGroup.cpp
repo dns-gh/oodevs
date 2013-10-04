@@ -1117,6 +1117,78 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
     }
 }
 
+namespace
+{
+    template< class T >
+    class sCollidingPopulationVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
+    {
+        typedef const std::vector< T* >&( MIL_PopulationElement_ABC::*T_Getter )() const;
+    public:
+        explicit sCollidingPopulationVisitor( boost::function< void( T& ) > fun, T_Getter getter )
+            : fun_( fun )
+            , getter_( getter )
+        {
+            //NOTHING
+        }
+        virtual ~sCollidingPopulationVisitor()
+        {
+            //NOTHING
+        }
+        virtual void Visit( const MIL_PopulationElement_ABC& element )
+        {
+            auto collidingAgents = ( element.*getter_)();
+            for( auto it = collidingAgents.begin(); it != collidingAgents.end(); ++it )
+                fun_( **it );
+        }
+    private:
+        boost::function< void( T& ) > fun_;
+        T_Getter getter_;
+    };
+        
+    class sPopulationsCollidingPopulationVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
+    {
+    public:
+        sPopulationsCollidingPopulationVisitor( MIL_KnowledgeGroup& group, const MIL_Population& perceiver )
+            : group_( group )
+            , perceiver_( perceiver )
+        {
+            //NOTHING
+        }
+        ~sPopulationsCollidingPopulationVisitor()
+        {
+        }
+        virtual void Visit( const MIL_PopulationElement_ABC& element )
+        {
+            auto collidingPopulationFlows = element.GetCollidingPopulationFlows();
+            unsigned int perceiverId = perceiver_.GetID();
+            for( auto it = collidingPopulationFlows.begin(); it != collidingPopulationFlows.end(); ++it )
+            {
+                MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
+                if( flow->GetPopulation().GetID() == perceiverId )
+                    continue;
+                DEC_Knowledge_Population& knownPopulation = group_.GetPopulationKnowledgeToUpdate( flow->GetPopulation() );
+                DEC_Knowledge_PopulationCollision collision( flow->GetPopulation() );
+                collision.Update( *flow );
+                knownPopulation.Update( collision, *flow );
+            }
+            auto collidingPopulationConcentrations = element.GetCollidingPopulationConcentrations();
+            for( auto it = collidingPopulationConcentrations.begin(); it != collidingPopulationConcentrations.end(); ++it )
+            {
+                MIL_PopulationConcentration* concentration = static_cast< MIL_PopulationConcentration* >( *it );
+                if( concentration->GetPopulation().GetID() == perceiverId )
+                    continue;
+                DEC_Knowledge_Population& knownPopulation = group_.GetPopulationKnowledgeToUpdate( concentration->GetPopulation() );
+                DEC_Knowledge_PopulationCollision collision( concentration->GetPopulation() );
+                collision.Update( *concentration );
+                knownPopulation.Update( collision, *concentration );
+            }
+        }
+    private:
+        MIL_KnowledgeGroup& group_;
+        const MIL_Population& perceiver_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception
 // Created: FDS 2010-04-08
@@ -1150,36 +1222,13 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
         auto functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep)  );
         knowledgeBlackboard.GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( functorPopulationCollision  );
     }
-   // knowledgeBlackBoard_->SendFullState();
-}
-
-namespace
-{
-    template< class T >
-    class sCollidingPopulationVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
+    // Crowds
+    for( auto it = populations_.begin(); it != populations_.end(); ++it )
     {
-        typedef const std::vector< T* >&( MIL_PopulationElement_ABC::*T_Getter )() const;
-    public:
-        explicit sCollidingPopulationVisitor( boost::function< void( T& ) > fun, T_Getter getter )
-            : fun_( fun )
-            , getter_( getter )
-        {
-            //NOTHING
-        }
-        virtual ~sCollidingPopulationVisitor()
-        {
-            //NOTHING
-        }
-        virtual void Visit( const MIL_PopulationElement_ABC& element )
-        {
-            auto collidingAgents = ( element.*getter_)();
-            for( auto it = collidingAgents.begin(); it != collidingAgents.end(); ++it )
-                fun_( **it );
-        }
-    private:
-        boost::function< void( T& ) > fun_;
-        T_Getter getter_;
-    };
+        sPopulationsCollidingPopulationVisitor visitor( *this, **it );
+        ( *it )->Apply( visitor );
+    }
+   // knowledgeBlackBoard_->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1207,17 +1256,6 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
             }
         }
 
-        // Crowds
-        for( auto it = populations_.begin(); it != populations_.end(); ++it )
-        {
-            sCollidingPopulationVisitor< MIL_Agent_ABC > visitor1( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception, this, _1, currentTimeStep ), &MIL_PopulationElement_ABC::GetCollidingAgents );
-            ( *it )->Apply( visitor1 );
-            sCollidingPopulationVisitor< TER_PopulationConcentration_ABC > visitor2( boost::bind( &MIL_KnowledgeGroup::UpdateConcentrationKnowledgeFromCrowdPerception, this, _1, currentTimeStep ), &MIL_PopulationElement_ABC::GetCollidingConcentrations );
-            ( *it )->Apply( visitor2 );
-            sCollidingPopulationVisitor< TER_PopulationFlow_ABC > visitor3( boost::bind( &MIL_KnowledgeGroup::UpdateFlowKnowledgeFromCrowdPerception, this, _1, currentTimeStep ), &MIL_PopulationElement_ABC::GetCollidingFlows );
-            ( *it )->Apply( visitor3 );
-        }
-
         // LTO begin
         // acquisition des connaissances des groupes fils
         for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
@@ -1231,6 +1269,14 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         }
         // LTO end
     }
+    // Crowds
+
+    for( auto it = populations_.begin(); it != populations_.end(); ++it )
+    {
+        sCollidingPopulationVisitor< MIL_Agent_ABC > visitor1( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception, this, _1, currentTimeStep ), &MIL_PopulationElement_ABC::GetCollidingAgents );
+        ( *it )->Apply( visitor1 );
+    }
+
     const PHY_RolePion_Communications* communications = jammedPion_ ? jammedPion_->RetrieveRole< PHY_RolePion_Communications >() : 0;
     if( !IsJammed() || ( communications && communications->CanReceive() ) )
     {
@@ -1310,7 +1356,7 @@ DEC_Knowledge_Population& MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate( MI
 void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception( MIL_Agent_ABC& agent, int currentTimeStep )
 {
     DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( agent );
-    knowledgeAgent.UpdateFromCrowdPerception( currentTimeStep);
+    knowledgeAgent.UpdateFromCrowdPerception( currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------

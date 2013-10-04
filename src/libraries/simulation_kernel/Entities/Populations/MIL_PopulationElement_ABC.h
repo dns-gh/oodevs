@@ -20,6 +20,7 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Object_ABC;
 class MIL_BurnEffectManipulator;
+
 class MIL_Population;
 class MIL_PopulationAttitude;
 class MIL_PopulationType;
@@ -27,13 +28,15 @@ class MIL_IntoxicationEffect;
 class MIL_ContaminationEffect;
 class MIL_DecontaminationEffect;
 class MT_Circle;
-class PHY_Volume;
 class PHY_FireResults_ABC;
 class PHY_FireResults_Population;
+class PHY_Volume;
 class TER_Localisation;
+
 class TER_PopulationConcentration_ABC;
 class TER_PopulationFlow_ABC;
 class MIL_NbcAgentType;
+
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -45,8 +48,8 @@ public:
     //@{
     typedef std::vector< MIL_Agent_ABC* > T_AgentVector;
     typedef std::vector< MIL_Object_ABC* > T_ObjectVector;
-    typedef std::vector< TER_PopulationConcentration_ABC* > T_ConcentrationVector;
-    typedef std::vector< TER_PopulationFlow_ABC* > T_FlowVector;
+    typedef std::vector< TER_PopulationConcentration_ABC* > T_PopulationConcentrationVector;
+    typedef std::vector< TER_PopulationFlow_ABC* > T_PopulationFlowVector;
     //@}
 
 public:
@@ -107,8 +110,8 @@ public:
     bool IsInZone( const TER_Localisation& loc ) const;
     const T_AgentVector& GetCollidingAgents() const;
     const T_ObjectVector& GetCollidingObjects() const;
-    const T_ConcentrationVector& GetCollidingConcentrations() const;
-    const T_FlowVector& GetCollidingFlows() const;
+    const T_PopulationFlowVector& GetCollidingPopulationFlows() const;
+    const T_PopulationConcentrationVector& GetCollidingPopulationConcentrations() const;
 
     virtual const TER_Localisation& GetLocation() const = 0;
     virtual boost::shared_ptr< MT_Vector2D > GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
@@ -178,8 +181,8 @@ private:
     const MIL_PopulationAttitude* pAttitude_;
     T_AgentVector collidingAgents_;
     T_ObjectVector collidingObjects_;
-    T_ConcentrationVector collidingConcentrations_;
-    T_FlowVector collidingFlows_;
+    T_PopulationConcentrationVector collidingPopulationConcentrations_;
+    T_PopulationFlowVector collidingPopulationFlows_;
     // Network
     bool bAttitudeUpdated_;
     bool bHumansUpdated_;
