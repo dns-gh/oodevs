@@ -72,7 +72,8 @@ void MessengerPlugin::Receive( const sword::SimToClient& wrapper )
 // Name: MessengerPlugin::NotifyClientAuthenticated
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/, dispatcher::Profile_ABC& profile )
+void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/,
+                                                 dispatcher::Profile_ABC& profile, bool /*silent*/ )
 {
     model_->SendStateToNewClient( client );
     chat_->NotifyClientAuthenticated( client, profile );

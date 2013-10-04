@@ -36,7 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/, dispatcher::Profile_ABC& /*profile*/ )
+    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/,
+                                            dispatcher::Profile_ABC& /*profile*/, bool /*silent*/ )
     {}
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/ )
     {}

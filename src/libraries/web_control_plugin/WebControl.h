@@ -64,7 +64,7 @@ public:
     //! @name Public methods
     //@{
     void Receive( const sword::SimToClient& client );
-    void NotifyClientAuthenticated( const std::string& link );
+    void NotifyClientAuthenticated( const std::string& link, bool silent );
     void NotifyClientLeft( const std::string& link );
     //@}
 

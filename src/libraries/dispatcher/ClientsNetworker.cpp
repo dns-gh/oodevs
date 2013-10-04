@@ -84,7 +84,8 @@ void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 // Name: ClientsNetworker::NotifyClientAuthenticated
 // Created: MCO 2011-11-07
 // -----------------------------------------------------------------------------
-void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link, dispatcher::Profile_ABC& /*profile*/ )
+void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link,
+                                                  dispatcher::Profile_ABC& /*profile*/, bool /*silent*/ )
 {
     boost::shared_ptr< Client > pClient = clients_[ link ];
     internals_[ link ] = pClient;
