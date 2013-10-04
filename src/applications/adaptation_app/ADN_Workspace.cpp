@@ -563,6 +563,10 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
     if( !( dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ ).Exists() )
         tools::zipextractor::ExtractArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
                                              dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ );
+
+    // Clean local directories
+    GetLanguages().GetData().CleanLocalDirectories();
+
     mainWindow_.SetIsLoading( false );
 
     // Save is ended

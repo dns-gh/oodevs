@@ -50,7 +50,9 @@ ADN_Type_LocalizedString::~ADN_Type_LocalizedString()
 void ADN_Type_LocalizedString::Initialize()
 {
     AddTranslationCheckers();
-    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
+    QObject* languagesGui = &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC();
+    connect( languagesGui, SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
+    connect( languagesGui, SIGNAL( LanguagesEdited() ), this, SLOT( OnLanguagesEdited() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,6 +242,15 @@ void ADN_Type_LocalizedString::OnLanguageChanged()
         SetData( GetData() );
     }
     SetType( GetType() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_LocalizedString::OnLanguagesEdited
+// Created: ABR 2013-10-03
+// -----------------------------------------------------------------------------
+void ADN_Type_LocalizedString::OnLanguagesEdited()
+{
+    translation_->Initialize( ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages() );
 }
 
 // -----------------------------------------------------------------------------

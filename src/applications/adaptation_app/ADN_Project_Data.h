@@ -169,6 +169,8 @@ public:
     FileInfos&           GetFileInfos();
     tools::Path          GetMissionDir( E_MissionType missionType );
     static WorkDirInfos& GetWorkDirInfos();
+    tools::Path          GetLocalDir() const;
+    tools::Path          GetLocalMissionDir( E_MissionType missionType );
 
 private:
     void FilterNode( const std::string& node, xml::xistream& xis, xml::xostream& xos );

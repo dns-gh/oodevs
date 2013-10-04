@@ -37,15 +37,20 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& files ) const;
+    void PurgeActiveLanguages();
+    void AddActiveLanguage( const std::string& language );
+    bool HasActiveLanguage( const std::string& language ) const;
+    void CleanLocalDirectories() const;
     //@}
 
     //! @name Accessors
     //@{
-    const std::string& Master();
+    const std::string& Master() const;
     void SetMaster( const std::string& language );
 
-    bool IsMaster( const std::string& language );
-    bool IsCurrentMaster();
+    bool IsMaster( const std::string& language ) const;
+    bool IsMasterEmpty() const;
+    bool IsCurrentMaster() const;
 
     const kernel::Languages& GetAllLanguages() const;
     const kernel::Languages::T_Languages& GetActiveLanguages() const;
@@ -59,10 +64,6 @@ private:
     void WriteArchive( xml::xostream& output );
 
     void InternalSetMaster( const std::string& language );
-    //@}
-
-    //! @name Static helpers
-    //@{
     //@}
 
 private:

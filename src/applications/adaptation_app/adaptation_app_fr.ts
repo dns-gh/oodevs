@@ -2091,14 +2091,80 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
-    <name>ADN_Languages_GUI</name>
+    <name>ADN_Languages_Dialog</name>
     <message>
-        <source>Default</source>
-        <translation>Défaut</translation>
+        <source>Languages</source>
+        <translation>Langues</translation>
     </message>
+    <message>
+        <source>Master</source>
+        <translation>Référence</translation>
+    </message>
+    <message>
+        <source>Translations</source>
+        <translation>Traductions</translation>
+    </message>
+    <message>
+        <source>Unused</source>
+        <translation>Inutilisées</translation>
+    </message>
+    <message>
+        <source>Used</source>
+        <translation>Utilisées</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>Déplacer vers le haut</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Déplacer vers le bas</translation>
+    </message>
+    <message>
+        <source>Add language</source>
+        <translation>Ajouter une langue</translation>
+    </message>
+    <message>
+        <source>Remove language</source>
+        <translation>Supprimer une langue</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Valider</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Languages_GUI</name>
     <message>
         <source>Edit...</source>
         <translation>Editer...</translation>
+    </message>
+    <message>
+        <source>(master)</source>
+        <translation>(référence)</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Languages_MasterDialog</name>
+    <message>
+        <source>Master language editor</source>
+        <translation>Editeur de la langue de référence</translation>
+    </message>
+    <message>
+        <source>Choose a master language</source>
+        <translation>Choisissez une langue de référence</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Valider</translation>
     </message>
 </context>
 <context>

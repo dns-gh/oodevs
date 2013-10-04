@@ -78,7 +78,7 @@ void ADN_Languages_Data::WriteArchive( xml::xostream& output )
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Languages" );
 
-    if( !master_.empty() )
+    if( !IsMasterEmpty() )
         output << xml::start( "language" )
                  << xml::attribute( "code", master_ )
                  << xml::attribute( "master", true )
@@ -94,7 +94,7 @@ void ADN_Languages_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Languages_Data::Master
 // Created: ABR 2013-08-29
 // -----------------------------------------------------------------------------
-const std::string& ADN_Languages_Data::Master()
+const std::string& ADN_Languages_Data::Master() const
 {
     return master_;
 }
@@ -114,7 +114,7 @@ void ADN_Languages_Data::SetMaster( const std::string& language )
             activeLanguages_.erase( it );
             break;
         }
-    if( !master_.empty() )
+    if( !IsMasterEmpty() )
         activeLanguages_.push_back( allLanguages_->Get( master_ ) );
     InternalSetMaster( language );
 }
@@ -134,16 +134,25 @@ void ADN_Languages_Data::InternalSetMaster( const std::string& language )
 // Name: ADN_Languages_Data::IsMaster
 // Created: ABR 2013-08-22
 // -----------------------------------------------------------------------------
-bool ADN_Languages_Data::IsMaster( const std::string& language )
+bool ADN_Languages_Data::IsMaster( const std::string& language ) const
 {
     return language == master_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::IsMasterEmpty
+// Created: ABR 2013-10-07
+// -----------------------------------------------------------------------------
+bool ADN_Languages_Data::IsMasterEmpty() const
+{
+    return master_.empty();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data::IsCurrentMaster
 // Created: ABR 2013-08-21
 // -----------------------------------------------------------------------------
-bool ADN_Languages_Data::IsCurrentMaster()
+bool ADN_Languages_Data::IsCurrentMaster() const
 {
     return IsMaster( kernel::Language::Current() );
 }
@@ -164,4 +173,60 @@ const kernel::Languages& ADN_Languages_Data::GetAllLanguages() const
 const kernel::Languages::T_Languages& ADN_Languages_Data::GetActiveLanguages() const
 {
     return activeLanguages_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::PurgeActiveLanguages
+// Created: ABR 2013-10-07
+// -----------------------------------------------------------------------------
+void ADN_Languages_Data::PurgeActiveLanguages()
+{
+    activeLanguages_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::AddActiveLanguage
+// Created: ABR 2013-10-07
+// -----------------------------------------------------------------------------
+void ADN_Languages_Data::AddActiveLanguage( const std::string& language )
+{
+    activeLanguages_.push_back( allLanguages_->Get( language ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::HasActiveLanguage
+// Created: ABR 2013-10-07
+// -----------------------------------------------------------------------------
+bool ADN_Languages_Data::HasActiveLanguage( const std::string& language ) const
+{
+    for( auto it = activeLanguages_.begin(); it != activeLanguages_.end(); ++it )
+        if( ( *it )->GetCode() == language )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::CleanLocalDirectories
+// Created: ABR 2013-10-03
+// -----------------------------------------------------------------------------
+void ADN_Languages_Data::CleanLocalDirectories() const
+{
+    tools::Path::T_Paths localPaths;
+    localPaths.push_back( ADN_Workspace::GetWorkspace().GetProject().GetLocalDir() );
+    for( int i = 0; i < eNbrMissionTypes; ++i )
+        localPaths.push_back( ADN_Workspace::GetWorkspace().GetProject().GetLocalMissionDir( static_cast< E_MissionType >( i ) ) );
+
+    for( auto itLocalPath = localPaths.begin(); itLocalPath != localPaths.end(); ++itLocalPath )
+    {
+        tools::Path::T_Paths languagesPaths = itLocalPath->ListDirectories( false );
+        for( auto itLanguagePath = languagesPaths.begin(); itLanguagePath != languagesPaths.end(); ++itLanguagePath )
+        {
+            bool founded = false;
+            for( auto itLanguage = activeLanguages_.begin(); !founded && itLanguage != activeLanguages_.end(); ++itLanguage )
+                founded = itLanguagePath->ToUTF8() == ( *itLanguage )->GetCode();
+
+            if( !founded )
+                ( *itLocalPath / *itLanguagePath ).RemoveAll();
+        }
+    }
 }

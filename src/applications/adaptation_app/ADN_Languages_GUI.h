@@ -13,6 +13,7 @@
 #include "ADN_GUI_ABC.h"
 
 class ADN_Languages_Data;
+class ADN_Languages_Dialog;
 
 // =============================================================================
 /** @class  ADN_Languages_GUI
@@ -34,12 +35,13 @@ public:
     //! @name Operations
     //@{
     virtual void Build();
-    void FillMenu( QMenu* menu );
+    void SetMenu( QMenu* menu );
     //@}
 
 signals:
     //! @name Signals
     //@{
+    void LanguagesEdited();
     void LanguageChanged();
     void PostLanguageChanged();
     //@}
@@ -48,12 +50,14 @@ private slots:
     //! @name Slots
     //@{
     void OnLanguageChanged( const QString& name );
-    void OnEditLanguages();
+    void OnLanguagesEdited();
+    void OnMasterChanged();
     //@}
 
 private:
     //! @name Helpers
     //@{
+    QString CreateMasterText() const;
     void ChangeLanguage( const std::string& language );
     //@}
 
@@ -61,10 +65,12 @@ private:
     //! @name Member data
     //@{
     ADN_Languages_Data& data_;
+    QMenu* menu_;
+    std::auto_ptr< ADN_Languages_Dialog > dialog_;
     std::vector< QAction* > actions_;
     QSignalMapper* mapper_;
     QAction* currentAction_;
-    QAction* defaultAction_;
+    QAction* masterAction_;
     //@}
 };
 

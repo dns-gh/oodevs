@@ -57,6 +57,7 @@ namespace ADN_Gui_Tools
         }
     }
 
+    QPushButton* CreatePushButton( const QString& objectName, const QString& text, const QIcon& icon, const QObject* receiver, const char* slot );
 }
 
 #endif // __ADN_Gui_Tools_h_

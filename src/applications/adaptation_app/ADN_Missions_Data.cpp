@@ -56,7 +56,9 @@ namespace
     }
     tools::Path CreateMissionDirectory( const std::string& language, const tools::Path& basePath )
     {
-        return ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language ) ? basePath : basePath / "locale" / tools::Path::FromUTF8( language );
+        return ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language )
+            ? basePath
+            : basePath / ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLocalesDirectory_ / tools::Path::FromUTF8( language );
     }
     void PurgePath( const tools::Path& path )
     {

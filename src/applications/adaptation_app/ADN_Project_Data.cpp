@@ -611,3 +611,21 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szExtensions_, "Extensions" );
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_, "Stages" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::GetLocalDir
+// Created: ABR 2013-10-03
+// -----------------------------------------------------------------------------
+tools::Path ADN_Project_Data::GetLocalDir() const
+{
+    return workDir_.GetWorkingDirectory().GetData() / dataInfos_.szLocalesDirectory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::GetLocalMissionDir
+// Created: ABR 2013-10-03
+// -----------------------------------------------------------------------------
+tools::Path ADN_Project_Data::GetLocalMissionDir( E_MissionType missionType )
+{
+    return workDir_.GetWorkingDirectory().GetData() / GetMissionDir( missionType ) / dataInfos_.szLocalesDirectory_;
+}

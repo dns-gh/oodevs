@@ -242,7 +242,7 @@ void ADN_MainWindow::BuildGUI()
     if( isLoaded_ )
         return;
     // Languages menu
-    ADN_Workspace::GetWorkspace().GetLanguages().GetGui().FillMenu( menuLanguages_ );
+    ADN_Workspace::GetWorkspace().GetLanguages().GetGui().SetMenu( menuLanguages_ );
     // Main tab widget
     mainTabWidget_.reset( new ADN_MainTabWidget() );
     mainLayout_->addWidget( mainTabWidget_.get() );
@@ -286,8 +286,6 @@ void ADN_MainWindow::PurgeGUI()
     disconnect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), actionForward_, SLOT( setEnabled( bool ) ) );
     mainLayout_->removeWidget( mainTabWidget_.get() );
     mainTabWidget_.reset();
-    // Languages menu
-    menuLanguages_->clear();
     kernel::Language::SetCurrent( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
     // ObjectNameManager
     gui::ObjectNameManager::getInstance()->Purge();
