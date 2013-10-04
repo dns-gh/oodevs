@@ -49,9 +49,9 @@ void WebPlugin::Receive( const sword::SimToClient& client )
 // Created: BAX 2012-07-30
 // -----------------------------------------------------------------------------
 void WebPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link,
-                                           dispatcher::Profile_ABC& /*profile*/, bool silent )
+                                           dispatcher::Profile_ABC& /*profile*/, bool uncounted )
 {
-    control_->NotifyClientAuthenticated( link, silent );
+    control_->NotifyClientAuthenticated( link, uncounted );
 }
 
 // -----------------------------------------------------------------------------
