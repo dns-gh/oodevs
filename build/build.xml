@@ -36,23 +36,16 @@
     <condition property="gocheck.filter" value="-gocheck.f ${gocheck.f}" else="">
         <isset property="gocheck.f"/>
     </condition>
-    <condition property="gocheck.verbose" value="-gocheck.v" else="">
-        <isset property="gocheck.v"/>
-    </condition>
     <condition property="go.race" value="-race" else="">
         <equals arg1="${platform}" arg2="vc100_x64"/>
     </condition>
     <condition property="showlog" value="true" else="false">
         <isset property="show-log"/>
     </condition>
-    <condition property="test.verbose" value="-test.v" else="">
-        <isset property="test.v"/>
-    </condition>
     <property name="application" value="${run.dir}/simulation_app.exe"/>
     <macrodef name="runtests">
         <element name="args" implicit="true" optional="true"/>
         <sequential>
-            <echo taskname="runtests" message="test.port=${test.port}"/>
             <go cmd="vet"/>
             <go cmd="test">
                 <arg value="-i"/>
@@ -68,8 +61,8 @@
                 <arg value="${go.race}"/>
                 <arg value="-test.parallel=1"/>
                 <arg value="-test.timeout=15m"/>
-                <arg value="${gocheck.verbose}"/>
-                <arg value="${test.verbose}"/>
+                <arg value="-test.v"/>
+                <arg value="-gocheck.v"/>
                 <arg line="${gocheck.filter}"/>
                 <arg value="-show-log=${showlog}"/>
                 <arg value="--application=${application}"/>
