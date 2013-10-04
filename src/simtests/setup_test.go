@@ -113,6 +113,7 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 
 func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	client, err := swapi.Connect(sim.DispatcherAddr)
+	c.Assert(err, IsNil) // failed to connect to simulation
 	client.PostTimeout = 10 * time.Second
 	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
 		err error) error {
@@ -121,7 +122,6 @@ func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 		}
 		return nil
 	})
-	c.Assert(err, IsNil) // failed to connect to simulation
 	return client
 }
 
