@@ -49,14 +49,18 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void OnLanguageChanged( const QString& name );
+    void OnLanguageChanged( const QString& name = "" );
     void OnLanguagesEdited();
     void OnMasterChanged();
+    void OnSwap();
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void BuildMenu();
+    void UpdateMenu();
+    void UpdateCurrentAction( const QString& name );
     QString CreateMasterText() const;
     void ChangeLanguage( const std::string& language );
     //@}
@@ -68,6 +72,8 @@ private:
     QMenu* menu_;
     std::auto_ptr< ADN_Languages_Dialog > dialog_;
     std::vector< QAction* > actions_;
+    QAction* swapAction_;
+    QAction* swapSeparator_;
     QSignalMapper* mapper_;
     QAction* currentAction_;
     QAction* masterAction_;

@@ -2147,6 +2147,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>(master)</source>
         <translation>(référence)</translation>
     </message>
+    <message>
+        <source>Set current language as master</source>
+        <translation>Définir en tant que langue principale</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Languages_MasterDialog</name>

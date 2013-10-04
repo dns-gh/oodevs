@@ -2142,6 +2142,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>(master)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set current language as master</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Languages_MasterDialog</name>
