@@ -17,6 +17,7 @@
 #include "Tools/MIL_IDManager.h"
 #include <tools/Map.h>
 #include <deque>
+#include "MIL.h"
 
 class PHY_DotationCategory;
 class MIL_Agent_ABC;
@@ -77,9 +78,9 @@ public:
     virtual void SendFullState   () const;
     virtual void Clean           ();
 
-    BOOST_SERIALIZATION_SPLIT_MEMBER()        
-    template< class Archive > void load( Archive& archive, const unsigned int );
-    template< class Archive > void save( Archive& archive, const unsigned int ) const;
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& archive, const unsigned int );
+    void save( MIL_CheckPointOutArchive& archive, const unsigned int ) const;
     //@}
 
 private:

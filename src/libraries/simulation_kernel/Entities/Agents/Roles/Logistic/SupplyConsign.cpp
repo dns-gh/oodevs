@@ -665,7 +665,7 @@ boost::shared_ptr< SupplyConvoy_ABC > SupplyConsign::GetConvoy() const
 // Name: SupplyConsign::load
 // Created: LDC 2013-01-15
 // -----------------------------------------------------------------------------
-template< class Archive > void SupplyConsign::load( Archive& archive, const unsigned int )
+void SupplyConsign::load( MIL_CheckPointInArchive& archive, const unsigned int )
 {
     size_t resourcesSize;
     archive >> boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
@@ -713,7 +713,7 @@ template< class Archive > void SupplyConsign::load( Archive& archive, const unsi
 // Name: SupplyConsign::save
 // Created: LDC 2013-01-15
 // -----------------------------------------------------------------------------
-template< class Archive > void SupplyConsign::save( Archive& archive, const unsigned int ) const
+void SupplyConsign::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
 {
     archive << boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
     archive << boost::serialization::base_object< SupplyConsign_ABC >( *this );
