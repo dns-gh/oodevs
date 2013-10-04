@@ -17,6 +17,7 @@
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
+#include <boost/ptr_container/ptr_list.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 
 namespace client
@@ -133,7 +134,7 @@ private:
 
     typedef std::list< PHY_MedicalConsign_ABC* > T_MedicalConsignList;
 
-    typedef std::list< PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesList;
+    typedef boost::ptr_list< PHY_MedicalCollectionAmbulance > T_CollectionAmbulancesList;
 
     typedef std::vector< std::pair< const MIL_Automate*, T_MedicalConsignList > > T_MedicalConsigns;
 

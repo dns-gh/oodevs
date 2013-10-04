@@ -37,7 +37,7 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/serialization/set.hpp>
-#include <boost/serialization/map.hpp>
+#include <boost/ptr_container/serialize_ptr_list.hpp>
 #include <boost/ptr_container/serialize_ptr_map.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 
@@ -238,8 +238,8 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
 PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionAmbulance( PHY_MedicalCollectionConsign& consign )
 {
     for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); ++it )
-        if( (**it).RegisterHuman( consign ) )
-            return *it;
+        if( it->RegisterHuman( consign ) )
+            return &*it;
     if( !consign.HasValidHumanState() )
         return 0;
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
@@ -643,16 +643,10 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
         else
             ++it;
     for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); )
-    {
-        PHY_MedicalCollectionAmbulance& ambulance = **it;
-        if( ambulance.Update() )
-        {
-            delete &ambulance;
+        if( it->Update() )
             it = collectionAmbulances_.erase( it );
-        }
         else
             ++it;
-    }
     for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
             if( (**itConsign).Update() )
@@ -890,7 +884,7 @@ void PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
     for( auto it = evacuationAmbulances_.begin(); it != evacuationAmbulances_.end(); ++it )
         it->second->Cancel();
     for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); ++it )
-        (*it)->Cancel();
+        it->Cancel();
     for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             (*itConsign)->FinishSuccessfullyWithoutDelay();
