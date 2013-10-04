@@ -41,8 +41,10 @@ void ADN_ListView_DescriptionParameter::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
-    ADN_Missions_Parameter* pInfos = ( ADN_Missions_Parameter* )pCurData_;
+    ADN_Missions_Parameter* pInfos = static_cast< ADN_Missions_Parameter* >( pCurData_ );
     vItemConnectors_[ ADN_Missions_GUI::eDescriptionParametersText ]->Connect( &pInfos->description_, bConnect );
+    if( bConnect )
+        pInfos->CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
