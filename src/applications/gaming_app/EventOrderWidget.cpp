@@ -636,10 +636,16 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
     if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
         if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
         {
+            const kernel::Entity_ABC* selectedEntity = 0;
             if( decisions->IsEmbraye() && profile_.CanBeOrdered( *automat ) )
-                selectedEntity_ = automat;
+                selectedEntity = automat;
             else if( profile_.CanBeOrdered( agent ) )
-                selectedEntity_ = &agent;
+                selectedEntity = &agent;
+
+            if( !selectedEntity )
+                return;
+            selectedEntity_ = selectedEntity;
+
             QAction* action = menu.InsertItem( "Order", tr( "Order" ), this, SLOT( ActivateMissionPanel() ), false, 2 );
             if( decisions->IsEmbraye() )
                 action->setIcon( MAKE_PIXMAP( lock ) );
@@ -705,7 +711,9 @@ void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::ActivateMissionPanel()
 {
-    assert( selectedEntity_ );
+    if( !selectedEntity_ )
+        return;
+
     previousEntityType_ = currentEntityType_;
     currentEntityType_ = selectedEntity_->GetTypeName() == kernel::Population_ABC::typeName_? eMissionType_Population : selectedEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ ? eMissionType_Automat : eMissionType_Pawn ;
 
