@@ -121,8 +121,6 @@ namespace ADN_Tools
     // -----------------------------------------------------------------------------
     std::string Scriptify( const std::string& strFieldName );
     std::string ComputePostureScriptName( E_UnitPosture nPosture );
-
-    void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
     void SortMenu( Q3PopupMenu& menu );
 
     // -----------------------------------------------------------------------------
@@ -144,6 +142,13 @@ namespace ADN_Tools
 
     QString ConvertCentisecondsToLongString( int );                     //
     int ConvertLongStringToCentiseconds( const QString& text );         //
+
+    // -----------------------------------------------------------------------------
+    // connector helpers
+    // -----------------------------------------------------------------------------
+    void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
+    void SetAutoClear( T_ConnectorVector& v, bool b );
+
 }
 
 #endif // __ADN_Tools_h_
