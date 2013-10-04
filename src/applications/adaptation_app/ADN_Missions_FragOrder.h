@@ -18,7 +18,6 @@ class ADN_Missions_FragOrder : public ADN_Missions_ABC
 {
 public:
              ADN_Missions_FragOrder();
-    explicit ADN_Missions_FragOrder( E_MissionType type );
              ADN_Missions_FragOrder( E_MissionType type, unsigned int id );
     virtual ~ADN_Missions_FragOrder();
 

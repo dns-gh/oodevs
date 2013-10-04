@@ -25,14 +25,7 @@
 #include <xeuseuleu/xsl.hpp>
 
 ADN_Missions_FragOrder::ADN_Missions_FragOrder()
-    : ADN_Missions_ABC()
-    , isAvailableWithoutMission_( false )
-{
-    assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
-}
-
-ADN_Missions_FragOrder::ADN_Missions_FragOrder( E_MissionType type )
-    : ADN_Missions_ABC( type )
+    : ADN_Missions_ABC( eMissionType_FragOrder )
     , isAvailableWithoutMission_( false )
 {
     // NOTHING
@@ -52,7 +45,7 @@ ADN_Missions_FragOrder::~ADN_Missions_FragOrder()
 
 ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
 {
-    ADN_Missions_FragOrder* newFragOrder = new ADN_Missions_FragOrder( type_ );
+    ADN_Missions_FragOrder* newFragOrder = new ADN_Missions_FragOrder();
     newFragOrder->strName_ = strName_.GetData();
     newFragOrder->missionSheetPath_ = missionSheetPath_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
