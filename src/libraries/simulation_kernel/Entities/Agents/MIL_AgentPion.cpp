@@ -1289,10 +1289,8 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveCreateDirectFireOrder( msg.parameters() );
         break;
     case sword::UnitMagicAction::load_unit:
-        OnReceiveLoadUnit( msg.parameters() );
-        break;
     case sword::UnitMagicAction::unload_unit:
-        OnReceiveUnloadUnit( msg.parameters() );
+        OnReceiveLoadUnit( msg.parameters(), msg.type() == sword::UnitMagicAction::load_unit );
         break;
     case sword::UnitMagicAction::log_finish_handlings:
         OnReceiveFinishLogisticHandlings();
@@ -2007,28 +2005,17 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
 // Name: MIL_AgentPion::OnReceiveLoadUnit
 // Created: SLI 2011-10-17
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveLoadUnit( const sword::MissionParameters& msg )
+void MIL_AgentPion::OnReceiveLoadUnit( const sword::MissionParameters& msg, bool load )
 {
     const uint32_t id = parameters::GetAgentId( msg, 0 );
     auto target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
     parameters::Check( target && target != this, "is an invalid target", 0 );
     auto role = RetrieveRole< transport::PHY_RoleAction_Transport >();
-    parameters::Check( role, "is missing transport role", 0 );
-    role->MagicLoadPion( *target, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveUnloadUnit
-// Created: SLI 2011-10-17
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveUnloadUnit( const sword::MissionParameters& msg )
-{
-    const uint32_t id = parameters::GetAgentId( msg, 0 );
-    auto target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
-    parameters::Check( target && target != this, "is an invalid target", 0 );
-    auto role = RetrieveRole< transport::PHY_RoleAction_Transport >();
-    parameters::Check( role, "is missing transport role", 0 );
-    role->MagicUnloadPion( *target );
+    parameters::Check( role, "is missing transport role" );
+    if( load )
+        role->MagicLoadPion( *target, false );
+    else
+        role->MagicUnloadPion( *target );
 }
 
 // -----------------------------------------------------------------------------
