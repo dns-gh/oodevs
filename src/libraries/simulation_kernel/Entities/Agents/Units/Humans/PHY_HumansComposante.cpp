@@ -226,6 +226,8 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
         --nNbrWounded;
         ++it;
     }
+    if( !nNbrUsableHumans_ && !humans_.empty() )
+        pComposante_->OnNoAvailableHuman();
 }
 
 // -----------------------------------------------------------------------------

@@ -1663,6 +1663,15 @@ void PHY_ComposantePion::RemoveHealthyHumans( const PHY_HumanRank& rank, unsigne
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::OnNoAvailableHuman
+// Created: LDC 2013-10-02
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::OnNoAvailableHuman()
+{
+    ApplyNewComposanteState( PHY_ComposanteState::dead_, *pState_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanPerceive
 // Created: MMC 2013-01-11
 // -----------------------------------------------------------------------------
