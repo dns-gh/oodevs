@@ -82,8 +82,6 @@ private:
     //@}
 };
 
-#include "PHY_Precipitation.inl"
-
 }
 
 #endif // __weather_PHY_Precipitation_h_
