@@ -19,6 +19,7 @@
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"

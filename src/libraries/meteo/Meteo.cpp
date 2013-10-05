@@ -184,7 +184,8 @@ void Meteo::Update( const sword::WeatherAttributes& msg )
     temperature_ = msg.temperature();
 
     // Précipitation
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( protocol::FromProtoPrecipitation(
+                msg.precipitation() ));
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
     // Lighting
@@ -289,9 +290,10 @@ void Meteo::Update( const sword::MissionParameters& msg )
     if( precipitation.null_value() || !precipitation.value().Get( 0 ).has_enumeration() )
         throw MASA_BADPARAM( "parameters[6] must be an Enumeration" );
     const PHY_Precipitation* pPrecipitation = PHY_Precipitation::FindPrecipitation(
-        static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation.value().Get( 0 ).enumeration() ) );
+        protocol::FromProtoPrecipitation( static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation.value().Get( 0 ).enumeration() ) ));
     if( !pPrecipitation )
         throw MASA_BADPARAM( "parameters[6] must be a precipitation Enumeration" );
+    pPrecipitation_ = pPrecipitation;
 
     temperature_ = static_cast< int >( temperature.value().Get( 0 ).areal() );
     wind_.rSpeed_ = conversionFactor_ * windSpeed.value().Get( 0 ).areal();
@@ -301,10 +303,6 @@ void Meteo::Update( const sword::MissionParameters& msg )
     cloud_.nCeiling_ =  static_cast< int >( cloudCeiling.value().Get( 0 ).areal() );
     cloud_.nDensityPercentage_ = std::min( std::max( static_cast< int >( cloudDensity.value().Get( 0 ).areal() ), 0 ), 100 );
     cloud_.rDensity_ = cloud_.nDensityPercentage_ / 100.;
-
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::WeatherAttributes::EnumPrecipitationType ) precipitation.value().Get( 0 ).enumeration() );
-    if( !pPrecipitation_ )
-        pPrecipitation_ = &PHY_Precipitation::none_;
 }
 
 //-----------------------------------------------------------------------------
@@ -369,7 +367,7 @@ void Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_floor( cloud_.nFloor_ );
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( cloud_.nDensityPercentage_ );
-    att->set_precipitation( pPrecipitation_->GetAsnID() );
+    att->set_precipitation( protocol::ToProtoPrecipitation( pPrecipitation_->GetID() ));
     att->set_temperature( temperature_ );
     att->set_lighting( protocol::ToProtoLighting( pLighting_->GetID() ));
     msg.Send( publisher );

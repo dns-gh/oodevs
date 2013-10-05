@@ -21,6 +21,7 @@
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
 #include "meteo/PHY_Lighting.h"
+#include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
 
 #include <boost/lexical_cast.hpp>

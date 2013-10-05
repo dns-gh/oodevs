@@ -73,5 +73,36 @@ WeatherAttributes::EnumLightingType ToProtoLighting( E_LightingType value )
     return FindE2FromE1( value, lightings, lightingsSize, "ent lighting" );
 }
 
+
+namespace
+{
+
+typedef std::pair< E_WeatherType, WeatherAttributes::EnumPrecipitationType > PrecipitationPair;
+
+const PrecipitationPair precipitations[] =
+{
+    PrecipitationPair( eWeatherType_None     , sword::WeatherAttributes::dry                       ),
+    PrecipitationPair( eWeatherType_SandStorm, sword::WeatherAttributes::sand_storm                ),
+    PrecipitationPair( eWeatherType_Fog      , sword::WeatherAttributes::fog                       ),
+    PrecipitationPair( eWeatherType_Drizzle  , sword::WeatherAttributes::drizzle                   ),
+    PrecipitationPair( eWeatherType_Rain     , sword::WeatherAttributes::rain                      ),
+    PrecipitationPair( eWeatherType_Snow     , sword::WeatherAttributes::snow                      ),
+    PrecipitationPair( eWeatherType_Smoke    , (sword::WeatherAttributes::EnumPrecipitationType) - 1 ), // $$$$ MCO : huhh ?!
+};
+
+const size_t precipitationsSize = COUNT_OF( precipitations );
+
+} // namespace
+
+E_WeatherType FromProtoPrecipitation( WeatherAttributes::EnumPrecipitationType value )
+{
+    return FindE1FromE2( value, precipitations, precipitationsSize, "protobuf precipitations" );
+}
+
+WeatherAttributes::EnumPrecipitationType ToProtoPrecipitation( E_WeatherType value )
+{
+    return FindE2FromE1( value, precipitations, precipitationsSize, "ent precipitations" );
+}
+
 }  // protocol
 

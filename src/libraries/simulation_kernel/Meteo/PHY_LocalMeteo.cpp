@@ -17,6 +17,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
+#include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -193,7 +194,7 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_cloud_floor ( cloud_.nFloor_ );
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( cloud_.nDensityPercentage_ );
-    att->set_precipitation( pPrecipitation_->GetAsnID() );
+    att->set_precipitation( protocol::ToProtoPrecipitation( pPrecipitation_->GetID() ));
     att->set_temperature( temperature_ );
     att->set_lighting( protocol::ToProtoLighting( pLighting_->GetID() ));
     sword::CoordLatLong longlat;

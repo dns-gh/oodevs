@@ -21,6 +21,9 @@ namespace protocol
 E_LightingType FromProtoLighting( sword::WeatherAttributes::EnumLightingType value );
 sword::WeatherAttributes::EnumLightingType ToProtoLighting( E_LightingType value );
 
+E_WeatherType FromProtoPrecipitation( sword::WeatherAttributes::EnumPrecipitationType value );
+sword::WeatherAttributes::EnumPrecipitationType ToProtoPrecipitation( E_WeatherType value );
+
 }  // protocol
 
 #endif // PROTOCOL_ENUM_MAPS

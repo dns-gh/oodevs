@@ -14,13 +14,13 @@
 using namespace weather;
 
 PHY_Precipitation::T_PrecipitationMap PHY_Precipitation::precipitations_;
-PHY_Precipitation PHY_Precipitation::none_     ( "PasDePrecipitation", eWeatherType_None     , sword::WeatherAttributes::dry                       );
-PHY_Precipitation PHY_Precipitation::sandStorm_( "TempeteDeSable"    , eWeatherType_SandStorm, sword::WeatherAttributes::sand_storm                );
-PHY_Precipitation PHY_Precipitation::fog_      ( "Brouillard"        , eWeatherType_Fog      , sword::WeatherAttributes::fog                       );
-PHY_Precipitation PHY_Precipitation::drizzle_  ( "Crachin"           , eWeatherType_Drizzle  , sword::WeatherAttributes::drizzle                   );
-PHY_Precipitation PHY_Precipitation::rain_     ( "Pluie"             , eWeatherType_Rain     , sword::WeatherAttributes::rain                      );
-PHY_Precipitation PHY_Precipitation::snow_     ( "Neige"             , eWeatherType_Snow     , sword::WeatherAttributes::snow                      );
-PHY_Precipitation PHY_Precipitation::smoke_    ( "Fumigene"          , eWeatherType_Smoke    , (sword::WeatherAttributes::EnumPrecipitationType)-1 ); // $$$$ MCO : huhh ?!
+PHY_Precipitation PHY_Precipitation::none_     ( "PasDePrecipitation", eWeatherType_None );
+PHY_Precipitation PHY_Precipitation::sandStorm_( "TempeteDeSable"    , eWeatherType_SandStorm );
+PHY_Precipitation PHY_Precipitation::fog_      ( "Brouillard"        , eWeatherType_Fog );
+PHY_Precipitation PHY_Precipitation::drizzle_  ( "Crachin"           , eWeatherType_Drizzle );
+PHY_Precipitation PHY_Precipitation::rain_     ( "Pluie"             , eWeatherType_Rain );
+PHY_Precipitation PHY_Precipitation::snow_     ( "Neige"             , eWeatherType_Snow );
+PHY_Precipitation PHY_Precipitation::smoke_    ( "Fumigene"          , eWeatherType_Smoke );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Precipitation::Initialize
@@ -51,10 +51,9 @@ void PHY_Precipitation::Terminate()
 // Name: PHY_Precipitation constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Precipitation::PHY_Precipitation( const std::string& strName, E_WeatherType nType, sword::WeatherAttributes::EnumPrecipitationType nAsnID )
+PHY_Precipitation::PHY_Precipitation( const std::string& strName, E_WeatherType nType )
     : strName_( strName )
     , nType_  ( nType   )
-    , nAsnID_ ( nAsnID  )
 {
     // NOTHING
 }
@@ -93,12 +92,12 @@ const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( const std::string
 // Name: PHY_Precipitation::FindPrecipitation
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( sword::WeatherAttributes::EnumPrecipitationType nAsnID )
+const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( E_WeatherType type )
 {
     for( auto it = precipitations_.begin(); it != precipitations_.end(); ++it )
     {
         const PHY_Precipitation& precipitation = *it->second;
-        if( precipitation.GetAsnID() == nAsnID )
+        if( precipitation.GetID() == type )
             return &precipitation;
     }
     return 0;
@@ -120,13 +119,4 @@ const std::string& PHY_Precipitation::GetName() const
 E_WeatherType PHY_Precipitation::GetID() const
 {
     return nType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Precipitation::GetAsnID
-// Created: NLD 2004-08-31
-// -----------------------------------------------------------------------------
-sword::WeatherAttributes::EnumPrecipitationType PHY_Precipitation::GetAsnID() const
-{
-    return nAsnID_;
 }

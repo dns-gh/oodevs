@@ -181,7 +181,8 @@ void weather::Meteo::load( Archive& file, const unsigned int )
          >> modified_;
     pLighting_ = PHY_Lighting::FindLighting( protocol::FromProtoLighting(
                 static_cast< sword::WeatherAttributes::EnumLightingType >( lighting) ));
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation ) );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( protocol::FromProtoPrecipitation(
+                static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation ) ));
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +193,7 @@ template< typename Archive >
 void weather::Meteo::save( Archive& file, const unsigned int ) const
 {
     unsigned int lighting = protocol::ToProtoLighting( pLighting_->GetID() );
-    unsigned int precipitation = pPrecipitation_->GetAsnID();
+    unsigned int precipitation = protocol::ToProtoPrecipitation( pPrecipitation_->GetID() );
     file <<  id_
          << name_
          << wind_.eAngle_

@@ -13,10 +13,9 @@
 #define __weather_PHY_Precipitation_h_
 
 #include "ENT/ENT_Enums_Gen.h"
-#include "protocol/ClientSenders.h"
-#include "MT_Tools/MT_String.h"
 #include <boost/noncopyable.hpp>
 #include <map>
+#include <string>
 
 namespace weather
 {
@@ -42,14 +41,13 @@ public:
 
     static const T_PrecipitationMap& GetPrecipitations();
     static const PHY_Precipitation* FindPrecipitation( const std::string& strName );
-    static const PHY_Precipitation* FindPrecipitation( sword::WeatherAttributes::EnumPrecipitationType nAsnID );
+    static const PHY_Precipitation* FindPrecipitation( E_WeatherType type );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&            GetName () const;
     E_WeatherType                 GetID   () const;
-    sword::WeatherAttributes::EnumPrecipitationType GetAsnID() const;
     //@}
 
 public:
@@ -64,7 +62,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-     PHY_Precipitation( const std::string& strName, E_WeatherType nType, sword::WeatherAttributes::EnumPrecipitationType nAsnID );
+     PHY_Precipitation( const std::string& strName, E_WeatherType nType );
     ~PHY_Precipitation();
     //@}
 
@@ -73,7 +71,6 @@ private:
     //@{
     const std::string strName_;
     const E_WeatherType nType_;
-    const sword::WeatherAttributes::EnumPrecipitationType nAsnID_;
     //@}
 
     //! @name Static data
