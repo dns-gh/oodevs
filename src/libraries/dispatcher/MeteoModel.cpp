@@ -12,6 +12,7 @@
 #include "Config.h"
 #include "Model.h"
 #include "EntityPublisher.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"

@@ -10,10 +10,8 @@
 #ifndef __weather_Meteo_h_
 #define __weather_Meteo_h_
 
-#include "clients_kernel/Entity_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <geometry/Types.h>
-#include <cassert>
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
@@ -37,6 +35,7 @@ namespace kernel
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 namespace weather
@@ -151,8 +150,6 @@ protected:
     bool                     modified_;
     //@}
 };
-
-#include "Meteo.inl"
 
 }
 
