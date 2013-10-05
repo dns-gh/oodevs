@@ -17,6 +17,7 @@
 #include "DispatchedFunctionHelper.h"
 #include "Connectors.h"
 #include "Task.h"
+#include "protocol/Simulation.h"
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <map>

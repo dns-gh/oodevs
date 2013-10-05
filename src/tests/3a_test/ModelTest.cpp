@@ -14,6 +14,7 @@
 #include "3a/IdentifierValue.h"
 #include "3a/Types.h"
 #include "MockValueHandler.h"
+#include "protocol/Protocol.h"
 
 namespace
 {
