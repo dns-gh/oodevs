@@ -10,10 +10,18 @@
 #ifndef __Plotter_h_
 #define __Plotter_h_
 
-#include "protocol/ClientPublisher_ABC.h"
 #include "Functions.h"
 #include "Result_ABC.h"
-#include "protocol/AarSenders.h"
+#include <vector>
+
+namespace dispatcher
+{
+    class ClientPublisher_ABC;
+}
+
+void SendPlotResult( int context, const std::vector< float >& values,
+        dispatcher::ClientPublisher_ABC& pub, unsigned int skippedFrames,
+        unsigned int firstTick );
 
 // =============================================================================
 /** @class  Plotter
@@ -50,38 +58,21 @@ public:
     virtual void SetKey( const K& ) {}
     virtual void Apply( const T& arg )
     {
-        values_.push_back( arg );
+        values_.push_back( static_cast< float >( arg ));
     }
     virtual void EndTick() {}
     virtual void Commit( unsigned int skippedFrames, unsigned int firstTick ) const
     {
-        aar::PlotResult result;
-        result().set_identifier( context_ );
-        result().set_error( "" );
-        for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
-        {
-            if( skippedFrames == 0 )
-                result().mutable_values()->Add( static_cast< float >( *it ) );
-            else
-                --skippedFrames;
-        }
-        if( firstTick != 0 )
-            result().set_begin_tick( firstTick );
-        result.Send( publisher_, 0 );
+        return SendPlotResult( context_, values_, publisher_, skippedFrames, firstTick );
     }
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< T > T_Values;
-    //@}
-
     //! @name Member data
     //@{
     dispatcher::ClientPublisher_ABC& publisher_;
     int context_;
-    T_Values values_;
+    std::vector< float > values_;
     //@}
 };
 
