@@ -18,6 +18,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Population.h"
 #include "dispatcher/Services.h"
+#include "protocol/Simulation.h"
 #include "tools/SessionConfig.h"
 #include "reports/ReportFactory.h"
 #include "MT_Tools/MT_FileLogger.h"

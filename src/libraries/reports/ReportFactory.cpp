@@ -19,7 +19,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
-#include "protocol/Protocol.h"
+#include "protocol/Simulation.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/FileWrapper.h"
 #include "tools/XmlStreamOperators.h"

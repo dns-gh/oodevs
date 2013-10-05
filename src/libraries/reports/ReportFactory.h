@@ -11,7 +11,6 @@
 #define __ReportFactory_h_
 
 #include "tools/Resolver.h"
-#include "protocol/Simulation.h"
 #include <boost/shared_ptr.hpp>
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
@@ -40,6 +39,9 @@ namespace sword
 {
     class DateTime;
     class MissionParameter;
+    class MissionParameter_Value;
+    class Report;
+    class Trace;
 }
 
 class Stages;
