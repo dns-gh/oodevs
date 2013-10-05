@@ -45,7 +45,7 @@ public:
         envBits GetEnv() const             { return e; }
         const weather::PHY_Precipitation&    GetPrecipitation() const;
         const weather::PHY_Lighting&         GetLighting     () const;
-        const weather::Meteo::sWindData& GetWind         () const;
+        const weather::WindData&             GetWind         () const;
 
         bool operator == ( const sCell& rhs ) const
         {

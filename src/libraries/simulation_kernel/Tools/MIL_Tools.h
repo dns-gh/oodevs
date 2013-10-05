@@ -69,7 +69,7 @@ public:
     static double ConvertSimToMinutes( double ); // DeltaT       -> min
 
     static double GetAltitude( const MT_Vector2D& );
-    static const weather::Meteo::sWindData& GetWind( const MT_Vector2D& );
+    static const weather::WindData& GetWind( const MT_Vector2D& );
     //@}
 
     //-------------------------------------------------------------------------

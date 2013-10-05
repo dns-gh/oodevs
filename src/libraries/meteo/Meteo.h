@@ -44,6 +44,14 @@ namespace weather
     class PHY_Precipitation;
     class PHY_RawVisionData_ABC;
 
+struct WindData
+{
+    double       rSpeed_;
+    unsigned int eAngle_;
+    MT_Vector2D  vDirection_;
+    WindData() : rSpeed_( 0.), eAngle_( 0 ) {}
+};
+
 // =============================================================================
 /** @class  Meteo
     @brief  Meteo
@@ -53,13 +61,6 @@ namespace weather
 class Meteo
 {
 public:
-    struct sWindData
-    {
-        double       rSpeed_;
-        unsigned int eAngle_;
-        MT_Vector2D  vDirection_;
-        sWindData() : rSpeed_( 0.), eAngle_( 0 ) {}
-    };
     struct sCloudData
     {
         int          nFloor_;
@@ -97,7 +98,7 @@ public:
     const std::string& GetName() const;
     const PHY_Precipitation& GetPrecipitation   () const;
     const PHY_Lighting&      GetLighting        () const;
-    const sWindData&         GetWind            () const;
+    const WindData&          GetWind            () const;
     int                      GetTemperature     () const;
     const sCloudData&        GetCloud           () const;
     double                   GetConversionFactor() const;
@@ -107,7 +108,7 @@ public:
 
     void SetPrecipitation( const PHY_Precipitation& precipitation );
     void SetLighting     ( const PHY_Lighting& light );
-    void SetWind         ( const sWindData& wind );
+    void SetWind         ( const WindData& wind );
     void SetTemperature  ( int temperature );
     void SetCloud        ( const sCloudData& cloud );
     void SetModified     ( bool modified );
@@ -141,7 +142,7 @@ protected:
     //@{
     unsigned int             id_;
     std::string              name_;
-    sWindData                wind_;
+    WindData                 wind_;
     sCloudData               cloud_;
     int                      temperature_;
     const PHY_Lighting*      pLighting_;

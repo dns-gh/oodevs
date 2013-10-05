@@ -478,7 +478,7 @@ const PHY_Precipitation& Meteo::GetPrecipitation() const
 // Name: Meteo::GetWind
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-const Meteo::sWindData& Meteo::GetWind() const
+const WindData& Meteo::GetWind() const
 {
     return wind_;
 }
@@ -518,7 +518,7 @@ void Meteo::SetLighting( const PHY_Lighting& light )
 // Name: Meteo::SetWind
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
-void Meteo::SetWind( const sWindData& wind )
+void Meteo::SetWind( const WindData& wind )
 {
     if( wind_.eAngle_ != wind.eAngle_ || wind_.rSpeed_ != wind.rSpeed_ )
         modified_ = true;

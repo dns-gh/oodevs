@@ -182,7 +182,7 @@ void WeatherWidget::Update( const weather::Meteo& meteo )
 // -----------------------------------------------------------------------------
 void WeatherWidget::CommitTo( weather::Meteo& meteo ) const
 {
-    weather::Meteo::sWindData wind;
+    weather::WindData wind;
     wind.rSpeed_ = windSpeed_->value() * meteo.GetConversionFactor();
     wind.eAngle_ = windDirection_->value();
     weather::Meteo::sCloudData cloud;

@@ -63,7 +63,7 @@ public:
     ElevationGrid::envBits GetVisionObject( const MT_Vector2D& pos ) const;
     ElevationGrid::envBits GetVisionObject( double rX_, double rY_ ) const;
 
-    const weather::Meteo::sWindData& GetWind( const MT_Vector2D& vPos ) const;
+    const weather::WindData& GetWind( const MT_Vector2D& vPos ) const;
 
     void ModifyAltitude( const TER_Localisation& localisation, short heightOffset, unsigned int objectId );
     double GetMinAltitude() const;
