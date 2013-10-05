@@ -11,7 +11,6 @@
 #define __Trace_h_
 
 #include "Report.h"
-#include "protocol/SimulationSenders.h"
 
 namespace kernel
 {
