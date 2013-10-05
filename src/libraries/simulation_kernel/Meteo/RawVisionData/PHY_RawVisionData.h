@@ -23,6 +23,12 @@ namespace tools
     class Path;
 }
 
+namespace weather
+{
+    class PHY_Precipitation;
+    struct WindData;
+}
+
 //*****************************************************************************
 // Created: JVT 02-11-05
 // Last modified: JVT 04-03-24

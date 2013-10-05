@@ -10,10 +10,17 @@
 #ifndef ElevationGrid_h
 #define ElevationGrid_h
 
-#include "meteo/Meteo.h"
 #include <graphics/ElevationBaseGrid.h>
 
 class PHY_AmmoEffect;
+
+namespace weather
+{
+    class Meteo;
+    class PHY_Lighting;
+    class PHY_Precipitation;
+    struct WindData;
+}
 
 // =============================================================================
 /** @class  ElevationGrid

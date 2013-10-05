@@ -11,7 +11,13 @@
 #define __PHY_RawVisionDataIterator_h_
 
 #include "ElevationGrid.h"
+#include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
+
+namespace weather
+{
+    class PHY_Precipitation;
+}
 
 //*****************************************************************************
 // Created: JVT 03-06-05

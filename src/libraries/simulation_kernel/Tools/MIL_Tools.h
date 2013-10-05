@@ -26,6 +26,11 @@ namespace sword
     class CoordLatLong;
 }
 
+namespace weather
+{
+    struct WindData;
+}
+
 class MIL_Time_ABC;
 
 enum E_TerrainObjectTypeID;
