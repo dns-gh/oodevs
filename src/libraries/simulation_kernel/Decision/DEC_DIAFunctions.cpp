@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_DIAFunctions.h"
+#include "Meteo/PHY_Ephemeride.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"

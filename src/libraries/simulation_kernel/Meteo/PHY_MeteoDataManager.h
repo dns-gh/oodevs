@@ -12,10 +12,6 @@
 
 #include "MIL.h"
 #include "meteo/MeteoManager_ABC.h"
-#include "meteo/PHY_Precipitation.h"
-#include "meteo/Meteo.h"
-#include "Meteo/PHY_GlobalMeteo.h"
-#include "PHY_Ephemeride.h"
 
 namespace sword
 {
@@ -27,10 +23,11 @@ namespace xml
     class xistream;
 }
 
-class PHY_GlobalMeteo;
 class MIL_Config;
-class PHY_RawVisionData;
 class MT_Ellipse;
+class PHY_Ephemeride;
+class PHY_GlobalMeteo;
+class PHY_RawVisionData;
 class PHY_IndirectFireDotationClass;
 
 //*****************************************************************************
