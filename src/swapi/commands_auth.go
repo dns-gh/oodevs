@@ -64,7 +64,7 @@ func (c *Client) postAuthRequestWithCheckingClientId(msg SwordMessage, handler a
 		}
 		if msg.AuthenticationToClient == nil ||
 			msg.AuthenticationToClient.GetMessage() == nil ||
-			(checkClientId && msg.ClientId != c.clientId) ||
+			(checkClientId && (msg.ClientId != c.clientId || msg.ClientId == 0)) ||
 			msg.Context != context {
 			return false
 		}
@@ -98,7 +98,7 @@ func (c *Client) GetAuthenticationKey() (string, error) {
 		key = reply.GetAuthenticationKey()
 		return nil
 	}
-	err := <-c.postAuthRequest(msg, handler)
+	err := <-c.postAuthRequestWithCheckingClientId(msg, handler, false)
 	return key, err
 }
 
