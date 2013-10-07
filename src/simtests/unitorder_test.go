@@ -99,7 +99,7 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	checkParams(".*must be both null.*", heading, nil, nil, limit2)
 
 	// Limit2 is empty but not limit1
-	checkParams(".*must be both nil.*", heading, nil, limit1, nil)
+	checkParams(".*must be both null.*", heading, nil, limit1, nil)
 
 	// Limits are equal
 	checkParams(".*or different.*", heading, nil, limit1, limit1)
