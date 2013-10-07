@@ -410,10 +410,27 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Un
 // Name: Gl3dwidget::DrawHalfDisc
 // Created: JSR 2013-09-25
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawHalfDisc( const geometry::Point2f& center, float /*angleDegrees*/, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+void Gl3dWidget::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-    // $$$$ JSR 2013-09-25: TODO To implement if necessary
+    double clipPlane[ 4 ];
+    clipPlane[ 1 ] = 0;
+    clipPlane[ 2 ] = 0;
+    const bool right = angleDegrees >= 0;
+    if( center.X() == 0 )
+    {
+        clipPlane[ 0 ] = right ? 1. : -1;
+        clipPlane[ 3 ] = 0;
+    }
+    else
+    {
+        const double invCenter = 1. / center.X();
+        clipPlane[ 0 ] = right ?  invCenter : -invCenter;
+        clipPlane[ 3 ] = right ? -1. : 1.;
+    }
+    glClipPlane( GL_CLIP_PLANE0, clipPlane );
+    glEnable( GL_CLIP_PLANE0 );
     DrawDisc( center, radius, unit );
+    glDisable( GL_CLIP_PLANE0 );
 }
 
 // -----------------------------------------------------------------------------
