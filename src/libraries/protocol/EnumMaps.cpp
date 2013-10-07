@@ -10,6 +10,7 @@
 #include "EnumMaps.h"
 #include <sstream>
 #include <utility>
+#include <boost/static_assert.hpp>
 
 using namespace sword;
 
@@ -60,6 +61,8 @@ const LightingPair lightings[] =
     LightingPair( eLightingType_Eclairant              , WeatherAttributes::artificial_light ),
 };
 const size_t lightingsSize = COUNT_OF( lightings );
+// +1 because of global_weather value (wat?)
+BOOST_STATIC_ASSERT( WeatherAttributes::EnumLightingType_ARRAYSIZE == lightingsSize + 1 );
 
 } // namespce
 
@@ -91,6 +94,8 @@ const PrecipitationPair precipitations[] =
 };
 
 const size_t precipitationsSize = COUNT_OF( precipitations );
+// See huhh ?! above for the -1
+BOOST_STATIC_ASSERT( WeatherAttributes::EnumPrecipitationType_ARRAYSIZE == precipitationsSize - 1 );
 
 } // namespace
 
