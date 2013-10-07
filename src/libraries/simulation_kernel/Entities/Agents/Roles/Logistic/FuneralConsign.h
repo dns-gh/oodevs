@@ -12,9 +12,9 @@
 
 #include "FuneralConsign_ABC.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
-#include "Tools/MIL_IDManager.h"
 
-namespace logistic {
+namespace logistic
+{
     class FuneralRequest_ABC;
     class FuneralHandler_ABC;
     class FuneralPackagingResource;
@@ -25,7 +25,6 @@ class LogisticVirtualAction
 {
 public:
     LogisticVirtualAction();
-    ~LogisticVirtualAction();
     unsigned GetTimeRemaining( unsigned actionId, unsigned duration );
 
 private:
@@ -34,8 +33,8 @@ private:
 };
 
 // =============================================================================
-/** @class  FuneralConsign_ABC
-    @brief  FuneralConsign_ABC
+/** @class  FuneralConsign
+    @brief  FuneralConsign
 */
 // Created: NLD 2011-08-24
 // =============================================================================
@@ -44,7 +43,7 @@ class FuneralConsign : public FuneralConsign_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FuneralConsign( boost::shared_ptr< FuneralRequest_ABC > request );
+    explicit FuneralConsign( const boost::shared_ptr< FuneralRequest_ABC >& request );
     virtual ~FuneralConsign();
     //@}
 
@@ -61,11 +60,11 @@ public:
     virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign );
     //@}
 
-    //! @name Network - A refactorer
+    //! @name Network
     //@{
     virtual void SendChangedState() const;
-    virtual void SendFullState   ( unsigned int context ) const;
-    virtual void Clean           ();
+    virtual void SendFullState( unsigned int context ) const;
+    virtual void Clean();
     //@}
 
 private:
@@ -86,20 +85,20 @@ private:
 private:
     //! @name Network
     //@{
-    void SendMsgCreation   () const;
+    void SendMsgCreation() const;
     void SendMsgDestruction() const;
     //@}
 
     //! @name Operations
     //@{
-    void UpdateTimer ( unsigned timeRemaining );
-    void SetState    ( E_State newState );
+    void UpdateTimer( unsigned timeRemaining );
+    void SetState( E_State newState );
     bool IsActionDone( unsigned timeRemaining );
 
-    void DoWaitForHandling    ();
+    void DoWaitForHandling();
     void DoTransportUnpackaged();
-    void DoWaitForPackaging   ();
-    void DoPackage            ();
+    void DoWaitForPackaging();
+    void DoPackage();
     void DoTransitionAfterPackaging();
     
     unsigned MoveTo( const MT_Vector2D& position );
@@ -109,7 +108,7 @@ private:
     unsigned long id_;
     unsigned long creationTick_;
     boost::shared_ptr< FuneralRequest_ABC > request_;
-    FuneralHandler_ABC* handler_; // pkoi pas shared_ptr ??
+    FuneralHandler_ABC* handler_;
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;
     const FuneralPackagingResource* packaging_;
 
@@ -118,13 +117,9 @@ private:
     LogisticVirtualAction currentAction_;
     MT_Vector2D position_; //$$$ TMP - wrapper dans un 'convoi virtuel'
 
-    // Network
     bool needNetworkUpdate_;
-
-private:
-    static MIL_IDManager idManager_; //$$ Still relevant ?
 };
 
-} // end namespace logistic
+}
 
 #endif // __FuneralConsign_h_

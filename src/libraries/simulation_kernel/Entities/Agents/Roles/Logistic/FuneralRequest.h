@@ -11,11 +11,11 @@
 #define __FuneralRequest_h_
 
 #include "FuneralRequest_ABC.h"
-#include <boost/noncopyable.hpp>
 
 class Human_ABC;
 
-namespace logistic {
+namespace logistic
+{
     class LogisticHierarchy_ABC;
 
 // =============================================================================
@@ -25,19 +25,18 @@ namespace logistic {
 // Created: NLD 2011-08-24
 // =============================================================================
 class FuneralRequest : public FuneralRequest_ABC
-                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             FuneralRequest( Human_ABC& human );
+    explicit FuneralRequest( Human_ABC& human );
     virtual ~FuneralRequest();
     //@}
 
     //! @name Operations
     //@{
     virtual const LogisticHierarchy_ABC& GetLogisticHierarchy() const;
-    virtual const MT_Vector2D&           GetPosition() const;
+    virtual const MT_Vector2D& GetPosition() const;
     //@}
 
     //! @name Events
@@ -56,6 +55,6 @@ private:
     Human_ABC& human_;
 };
 
-} // end namespace logistic
+}
 
 #endif // __FuneralRequest_h_

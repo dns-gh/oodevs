@@ -23,8 +23,6 @@ namespace logistic
     class FuneralConsign_ABC;
 }
 
-//$$$ Clarifier l'interface (trop de trucs différents pour trop de fonctionnalités proches) (Log vs Magic vs attrition)
-
 // =============================================================================
 // @class  PHY_Human
 // Created: JVT 2004-08-03

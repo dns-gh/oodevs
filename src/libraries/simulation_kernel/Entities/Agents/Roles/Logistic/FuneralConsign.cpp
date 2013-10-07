@@ -22,6 +22,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Tools/MIL_IDManager.h"
 #include <tools/iterator.h>
 
 using namespace logistic;
@@ -31,11 +32,6 @@ using namespace logistic;
 LogisticVirtualAction::LogisticVirtualAction()
     : currentActionId_( std::numeric_limits< unsigned >::max() )
     , timeRemainingForCurrentAction_( std::numeric_limits< unsigned >::max() )
-{
-    // NOTHING
-}
-
-LogisticVirtualAction::~LogisticVirtualAction()
 {
     // NOTHING
 }
@@ -58,14 +54,17 @@ unsigned LogisticVirtualAction::GetTimeRemaining( unsigned actionId, unsigned du
 }
 //$$$$ TMP
 
-MIL_IDManager FuneralConsign::idManager_;
+namespace
+{
+    MIL_IDManager idManager;
+}
 
 // -----------------------------------------------------------------------------
 // Name: FuneralConsign constructor
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
-FuneralConsign::FuneralConsign( boost::shared_ptr< FuneralRequest_ABC > request )
-    : id_                     ( idManager_.GetId() )
+FuneralConsign::FuneralConsign( const boost::shared_ptr< FuneralRequest_ABC >& request )
+    : id_                     ( idManager.GetId() )
     , creationTick_           ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , request_                ( request )
     , handler_                ( 0 )
@@ -91,10 +90,6 @@ FuneralConsign::~FuneralConsign()
     SendMsgDestruction();
 }
 
-// =============================================================================
-// Tools
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: FuneralConsign::UpdateTimer
 // Created: NLD 2011-08-24
@@ -104,7 +99,6 @@ void FuneralConsign::UpdateTimer( unsigned timeRemaining )
     unsigned tmp = std::numeric_limits< unsigned >::max();
     if( timeRemaining != std::numeric_limits< unsigned >::max() )
         tmp = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + timeRemaining;
-
     if( tmp != currentStateEndTimeStep_ )
     {
         currentStateEndTimeStep_ = tmp;
@@ -274,10 +268,6 @@ bool FuneralConsign::IsFinished() const
     return convoy_ && ( convoy_->IsConvoyDestroyed() || convoy_->IsFinished() );
 }
 
-// =============================================================================
-// Events
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: FuneralConsign::OnSupplyConvoyLeaving
 // Created: NLD 2011-07-25
@@ -286,7 +276,6 @@ void FuneralConsign::OnSupplyConvoyLeaving( boost::shared_ptr< const SupplyConsi
 {
     if( state_ != eWaitingForTransporter )
         return;
-    
     assert( !convoy_ );
     assert( handler_ );
 
@@ -326,10 +315,6 @@ void FuneralConsign::OnSupplyConvoyArriving( boost::shared_ptr< const SupplyCons
     else
         DoTransitionAfterPackaging();
 }
-
-// =============================================================================
-// Network
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: FuneralConsign::SendMsgCreation

@@ -11,13 +11,16 @@
 #define __FuneralRequest_ABC_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include <boost/noncopyable.hpp>
 
-namespace sword {
+namespace sword
+{
     class UnitId;
     enum EnumHumanRank;
 }
 
-namespace logistic {
+namespace logistic
+{
     class LogisticHierarchy_ABC;
 
 // =============================================================================
@@ -26,7 +29,7 @@ namespace logistic {
 */
 // Created: NLD 2011-08-24
 // =============================================================================
-class FuneralRequest_ABC
+class FuneralRequest_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -38,7 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual const LogisticHierarchy_ABC& GetLogisticHierarchy() const = 0;
-    virtual const MT_Vector2D&           GetPosition() const = 0;
+    virtual const MT_Vector2D& GetPosition() const = 0;
     //@}
 
     //! @name Events
@@ -54,6 +57,6 @@ public:
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __FuneralRequest_ABC_h_
