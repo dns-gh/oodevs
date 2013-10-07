@@ -10,12 +10,14 @@
 #include "simulation_kernel_pch.h"
 #include "FuneralConsign.h"
 #include "FuneralPackagingResource.h"
-#include "FuneralRequest_ABC.h"
 #include "FuneralConfig.h"
 #include "MIL_Time_ABC.h"
 #include "SupplyConsign_ABC.h"
 #include "SupplyConvoy_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Orders/MIL_DecisionalReport.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
@@ -63,18 +65,18 @@ namespace
 // Name: FuneralConsign constructor
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
-FuneralConsign::FuneralConsign( const boost::shared_ptr< FuneralRequest_ABC >& request )
+FuneralConsign::FuneralConsign( Human_ABC& human )
     : id_                     ( idManager.GetId() )
     , creationTick_           ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
-    , request_                ( request )
+    , human_                  ( human )
     , handler_                ( 0 )
-    , position_               ( request->GetPosition() )
+    , position_               ( human.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , packaging_              ( 0 )
     , state_                  ( eWaitingForHandling )
     , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
     , needNetworkUpdate_      ( true )
 {
-    request_->OnHandledByFuneral();
+    human_.NotifyHandledByFuneral();
     SendMsgCreation();
 }
 
@@ -84,7 +86,7 @@ FuneralConsign::FuneralConsign( const boost::shared_ptr< FuneralRequest_ABC >& r
 // -----------------------------------------------------------------------------
 FuneralConsign::~FuneralConsign()
 {
-    request_->OnBackFromFuneral();
+    human_.NotifyBackFromFuneral();
     if( handler_ )
         handler_->RemoveSupplyConvoysObserver( *this );
     SendMsgDestruction();
@@ -153,7 +155,7 @@ unsigned FuneralConsign::MoveTo( const MT_Vector2D& position )
 // -----------------------------------------------------------------------------
 void FuneralConsign::DoWaitForHandling()
 {
-    tools::Iterator< MIL_AutomateLOG& > it = request_->GetLogisticHierarchy().CreateSuperiorsIterator();
+    tools::Iterator< MIL_AutomateLOG& > it = human_.GetPion().GetLogisticHierarchy().CreateSuperiorsIterator();
     while( it.HasMoreElements() )
     {
         FuneralHandler_ABC& handler = it.NextElement();
@@ -307,7 +309,6 @@ void FuneralConsign::OnSupplyConvoyArriving( boost::shared_ptr< const SupplyCons
 {
     if( state_ != eTransportingPackaged || supplyConsign->GetConvoy() != convoy_ )
         return;
-
     handler_->RemoveSupplyConvoysObserver( *this );
     convoy_.reset();
     if( !packaging_->IsTerminal() )
@@ -323,11 +324,10 @@ void FuneralConsign::OnSupplyConvoyArriving( boost::shared_ptr< const SupplyCons
 void FuneralConsign::SendMsgCreation() const
 {
     client::LogFuneralHandlingCreation msg;
-
     msg().mutable_request()->set_id( id_ );
     msg().set_tick( creationTick_ );
-    msg().set_rank( request_->GetRank() );
-    request_->Serialize( *msg().mutable_unit() );
+    msg().set_rank( human_.GetRank().GetAsnID() );
+    msg().mutable_unit()->set_id( human_.GetPion().GetID() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -338,7 +338,6 @@ void FuneralConsign::SendMsgCreation() const
 void FuneralConsign::SendFullState( unsigned int context ) const
 {
     SendMsgCreation();
-
     client::LogFuneralHandlingUpdate msg;
     msg().mutable_request()->set_id( id_ );
     msg().set_state( (sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus)state_ );

@@ -20,7 +20,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConsign.h"
-#include "Entities/Agents/Roles/Logistic/FuneralRequest.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Orders/MIL_Report.h"
 
@@ -482,10 +481,7 @@ void PHY_Human::Update()
 
         // Funeral
         if( IsDead() && !funeralConsign_ )
-        {
-            boost::shared_ptr< logistic::FuneralRequest_ABC > request( new logistic::FuneralRequest( *this ) );
-            funeralConsign_.reset( new logistic::FuneralConsign( request ) );
-        }
+            funeralConsign_.reset( new logistic::FuneralConsign( *this ) );
         else if( funeralConsign_ && ( !IsDead() || funeralConsign_->IsFinished() ) )
         {
             funeralConsign_->Cancel();

@@ -13,9 +13,10 @@
 #include "FuneralConsign_ABC.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 
+class Human_ABC;
+
 namespace logistic
 {
-    class FuneralRequest_ABC;
     class FuneralHandler_ABC;
     class FuneralPackagingResource;
     class SupplyConvoy_ABC;
@@ -43,7 +44,7 @@ class FuneralConsign : public FuneralConsign_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FuneralConsign( const boost::shared_ptr< FuneralRequest_ABC >& request );
+    explicit FuneralConsign( Human_ABC& human );
     virtual ~FuneralConsign();
     //@}
 
@@ -107,7 +108,7 @@ private:
 private:
     unsigned long id_;
     unsigned long creationTick_;
-    boost::shared_ptr< FuneralRequest_ABC > request_;
+    Human_ABC& human_;
     FuneralHandler_ABC* handler_;
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;
     const FuneralPackagingResource* packaging_;

@@ -10,15 +10,16 @@
 #ifndef __FuneralHandler_ABC_h_
 #define __FuneralHandler_ABC_h_
 
-namespace logistic {
+namespace logistic
+{
     class LogisticHierarchy_ABC;
     class FuneralConsign_ABC;
     class FuneralPackagingResource;
     class SupplyConvoysObserver_ABC;
 
 // =============================================================================
-/** @class  FuneralConsign_ABC
-    @brief  FuneralConsign_ABC
+/** @class  FuneralHandler_ABC
+    @brief  FuneralHandler_ABC
 */
 // Created: NLD 2011-08-24
 // =============================================================================
@@ -49,6 +50,6 @@ public:
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __FuneralHandler_ABC_h_
