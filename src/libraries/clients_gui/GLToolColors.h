@@ -35,6 +35,7 @@
 #define COLOR_RED           1.0f,  0.0f,  0.0f,  1.0f
 #define COLOR_GREEN         0.0f,  1.0f,  0.0f,  1.0f
 #define COLOR_BLUE          0.0f,  0.0f,  1.0f,  1.0f
+#define COLOR_LIGHT_BLUE    0.13f, 0.5f,  1.0f,  1.0f
 #define COLOR_YELLOW        1.0f,  1.0f,  0.0f,  1.0f
 #define COLOR_LIGHT_YELLOW  1.0f,  1.0f,  0.7f,  1.0f
 #define COLOR_MAROON        0.5f,  0.0f,  0.0f,  1.0f

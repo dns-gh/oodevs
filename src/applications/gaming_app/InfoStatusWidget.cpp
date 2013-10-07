@@ -20,6 +20,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/tools.h"
 #include "clients_gui/EntitySymbols.h"
+#include "clients_gui/GLToolColors.h"
 #include "gaming/Attributes.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/Reinforcements.h"
@@ -273,10 +274,10 @@ void InfoStatusWidget::SetDefault()
 // -----------------------------------------------------------------------------
 QBrush InfoStatusWidget::GetCrowdBrush( const std::string& option, QColor defaultColor )
 {
-    const QString clrString = controllers_.options_.GetOption( option, QString( "" ) ).To< QString >();
-    if( clrString.isEmpty() )
+    const QString colorString = controllers_.options_.GetOption( option, QString( "" ) ).To< QString >();
+    if( colorString.isEmpty() )
         return QBrush( defaultColor );
-    return QBrush( QColor( clrString ) );
+    return QBrush( QColor( colorString ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +305,7 @@ void InfoStatusWidget::DrawCrowdChartPie( QPixmap& pixmap, const kernel::Populat
     QRect r = pixmap.rect();
     r.setSize( QSize( r.width() - 1, r.height() - 1 ) );
     // healthy
-    painter.setBrush( GetCrowdBrush( "Color/Healthy", QColor( 32, 128, 255 ) ) );
+    painter.setBrush( GetCrowdBrush( "Color/Healthy", QColor::fromRgbF( COLOR_LIGHT_BLUE ) ) );
     painter.drawPie( r, angleStart, healthySpanAngle );
     angleStart += healthySpanAngle;
     // contaminated
@@ -345,13 +346,10 @@ void InfoStatusWidget::SetIcon()
         QImage img;
         if( selected_ )
             img = icons_.GetSymbol( *selected_, QSize( 64, 64 ) );
-        if( !img.isNull() )
-        {
-            if( img.width() > 1 && img.height() > 1 )
-                icon_->setPixmap( QPixmap::fromImage( img ) );
-        }
-        else
+        if( img.isNull() )
             QTimer::singleShot( 200, this, SLOT( SetIcon() ) );
+        else if( img.width() > 1 && img.height() > 1 )
+            icon_->setPixmap( QPixmap::fromImage( img ) );
     }
 }
 

@@ -11,6 +11,7 @@
 #include "OrbatPanel.h"
 #include "moc_OrbatPanel.cpp"
 #include "ColorButton.h"
+#include "GLToolColors.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 
@@ -58,31 +59,31 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
         // Healthy
         QHBoxLayout* healthyLayout = new QHBoxLayout();
         healthyLayout->addWidget( new QLabel( tr( "Healthy:" ) ) );
-        pHealthyColor_ = new gui::ColorButton( "pHealthyColor", box, "", QColor( 32, 128, 255 ) );
+        pHealthyColor_ = new gui::ColorButton( "pHealthyColor", box, "", QColor::fromRgbF( COLOR_LIGHT_BLUE ) );
         healthyLayout->addWidget( pHealthyColor_ );
         mainLayout->addLayout( healthyLayout );
         // Contaminated
         QHBoxLayout* contaminatedLayout = new QHBoxLayout();
         contaminatedLayout->addWidget( new QLabel( tr( "Contaminated:" ) ) );
-        pContaminatedColor_ = new gui::ColorButton( "pContaminatedColor", box, "", QColor( 0, 255, 0 ) );
+        pContaminatedColor_ = new gui::ColorButton( "pContaminatedColor", box, "", QColor( Qt::green ) );
         contaminatedLayout->addWidget( pContaminatedColor_ );
         mainLayout->addLayout( contaminatedLayout );
         // Wounded
         QHBoxLayout* woundedLayout = new QHBoxLayout();
         woundedLayout->addWidget( new QLabel( tr( "Wounded:" ) ) );
-        pWoundedColor_ = new gui::ColorButton( "pWoundedColor", box, "", QColor( 255, 0, 0 ) );
+        pWoundedColor_ = new gui::ColorButton( "pWoundedColor", box, "", QColor( Qt::red ) );
         woundedLayout->addWidget( pWoundedColor_ );
         mainLayout->addLayout( woundedLayout );
         // Dead
         QHBoxLayout* deadLayout = new QHBoxLayout();
         deadLayout->addWidget( new QLabel( tr( "Dead:" ) ) );
-        pDeadColor_ = new gui::ColorButton( "pDeadColor", box, "", QColor( 0, 0, 0 ) );
+        pDeadColor_ = new gui::ColorButton( "pDeadColor", box, "", QColor( Qt::black ) );
         deadLayout->addWidget( pDeadColor_ );
         mainLayout->addLayout( deadLayout );
         // Mostly healthy
         QHBoxLayout* mostlyHealthyLayout = new QHBoxLayout();
         mostlyHealthyLayout->addWidget( new QLabel( tr( "Mostly healthy:" ) ) );
-        pMostlyHealthyColor_ = new gui::ColorButton( "pMostlyHealthyColor", box, "", QColor( 255, 255, 0 ) );
+        pMostlyHealthyColor_ = new gui::ColorButton( "pMostlyHealthyColor", box, "", QColor( Qt::yellow ) );
         mostlyHealthyLayout->addWidget( pMostlyHealthyColor_ );
         mainLayout->addLayout( mostlyHealthyLayout );
 

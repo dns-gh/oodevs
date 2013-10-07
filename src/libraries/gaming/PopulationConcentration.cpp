@@ -195,7 +195,7 @@ QColor PopulationConcentration::GetColor( const std::string& option, const QColo
 // -----------------------------------------------------------------------------
 void PopulationConcentration::SelectRightPartColor() const
 {
-    static const QColor defaultHealthy( 32, 128, 255 );
+    static const QColor defaultHealthy( QColor::fromRgbF( COLOR_LIGHT_BLUE) );
     static const QColor defaultContaminated( Qt::green );
     static const QColor defaultWounded( Qt::red );
     static const QColor defaultDead( Qt::black );
