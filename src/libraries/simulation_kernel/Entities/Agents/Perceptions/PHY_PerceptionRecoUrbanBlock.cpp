@@ -67,6 +67,15 @@ bool PHY_PerceptionRecoUrbanBlockReco::CanSeeIt() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoUrbanBlockReco::GeturbanBlock
+// Created: LDC 2013-10-07
+// -----------------------------------------------------------------------------
+const MIL_UrbanObject_ABC* PHY_PerceptionRecoUrbanBlockReco::GeturbanBlock() const
+{
+    return pUrbanBlock_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoUrbanBlock constructor
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
@@ -157,4 +166,16 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MIL_Agen
 bool PHY_PerceptionRecoUrbanBlock::HasLocalisationToHandle() const
 {
     return !recos_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRecoUrbanBlock::IsReconnoitering
+// Created: LDC 2013-10-07
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionRecoUrbanBlock::IsReconnoitering( MIL_UrbanObject_ABC* urbanBlock ) const
+{
+    for ( auto it = recos_.begin(); it != recos_.end(); ++it )
+        if ( (*it)->GeturbanBlock() == urbanBlock )
+            return true;
+    return false;
 }

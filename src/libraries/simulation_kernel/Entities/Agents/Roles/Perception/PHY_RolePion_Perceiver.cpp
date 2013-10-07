@@ -1660,3 +1660,13 @@ double PHY_RolePion_Perceiver::GetPerception( const MT_Vector2D& from, const MT_
     const_cast< MIL_Agent_ABC& >( *owner_ ).Execute( *dataComputer );
     return dataFunctor.GetEnergy();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::IsReconnoitering
+// Created: LDC 2013-10-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::IsReconnoitering( MIL_UrbanObject_ABC* pUrbanBlock ) const
+{
+    return pPerceptionRecoUrbanBlock_ && pPerceptionRecoUrbanBlock_->IsReconnoitering( pUrbanBlock );
+}
+

@@ -25,6 +25,7 @@ public:
     bool IsInside( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint ) const;
     void GetAgentsInside( const PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
     bool CanSeeIt() const;
+    const MIL_UrbanObject_ABC* GeturbanBlock() const;
 
 private:
     PHY_PerceptionRecoUrbanBlockReco& operator = ( const PHY_PerceptionRecoUrbanBlockReco& );
@@ -51,6 +52,7 @@ public:
     void RemoveUrbanBlock( int );
 
     bool HasLocalisationToHandle() const;
+    bool IsReconnoitering( MIL_UrbanObject_ABC* urbanBlock ) const;
     //@}
 
     //! @name Execution

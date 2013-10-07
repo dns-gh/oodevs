@@ -22,6 +22,8 @@
 #include "MockMIL_Time_ABC.h"
 #include "MockSink.h"
 #include "MockNET_Publisher_ABC.h"
+#include "MockPHY_RoleInterface_Perceiver.h"
+
 #include <memory>
 
 namespace
@@ -67,11 +69,14 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
         PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *pion.pPion_ );
         urbanRole->NotifyMovingInsideObject( *pObject);
         pion.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
+        MockPHY_RoleInterface_Perceiver* perceiver = new MockPHY_RoleInterface_Perceiver();
+        pion.pPion_->RegisterRole< PHY_RoleInterface_Perceiver >( *perceiver );
         {
             MockMIL_Time_ABC time;
             MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
             MOCK_EXPECT( army.GetID ).returns( 1u );
             MOCK_EXPECT( publisher.Send ).at_least( 1 );
+            MOCK_EXPECT( perceiver->IsReconnoitering ).returns( false );
             DEC_Knowledge_Urban kn( army, *pObject );
             DEC_Knowledge_UrbanPerception perception( *pion.pPion_, pObject->GetID() );
             perception.SetPerceptionLevel( PHY_PerceptionLevel::detected_ );

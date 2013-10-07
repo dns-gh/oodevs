@@ -93,6 +93,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( IsFireObserver, 0 );
     MOCK_METHOD( CanPerceive, 1 );
     MOCK_METHOD( GetPerception, 2 );
+    MOCK_METHOD( IsReconnoitering, 1 );
 
     MOCK_METHOD( SendChangedState, 1 );
     MOCK_METHOD( SendFullState, 1 );
