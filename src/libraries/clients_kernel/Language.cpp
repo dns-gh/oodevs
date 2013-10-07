@@ -12,8 +12,6 @@
 #include <boost/algorithm/string.hpp>
 
 using namespace kernel;
-
-const std::string Language::master_ = "default";
 std::string Language::current_ = "default";
 
 // -----------------------------------------------------------------------------
@@ -135,37 +133,10 @@ const std::string& Language::Current()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Language::Master
-// Created: ABR 2013-08-29
-// -----------------------------------------------------------------------------
-const std::string& Language::Master()
-{
-    return master_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Language::SetCurrent
 // Created: ABR 2013-08-21
 // -----------------------------------------------------------------------------
 void Language::SetCurrent( const std::string& language )
 {
     current_ = language;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Language::IsMaster
-// Created: ABR 2013-08-22
-// -----------------------------------------------------------------------------
-bool Language::IsMaster( const std::string& language )
-{
-    return language == master_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Language::IsCurrentMaster
-// Created: ABR 2013-08-21
-// -----------------------------------------------------------------------------
-bool Language::IsCurrentMaster()
-{
-    return IsMaster( current_ );
 }

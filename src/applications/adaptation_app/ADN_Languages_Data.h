@@ -44,6 +44,13 @@ public:
     void FilesNeeded( tools::Path::T_Paths& files ) const;
     //@}
 
+    //! @name Static methods
+    //@{
+    static const std::string& Master();
+    static bool IsMaster( const std::string& language );
+    static bool IsCurrentMaster();
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -56,6 +63,12 @@ public:
     //! @name Member data
     //@{
     T_Languages languages_;
+    //@}
+
+private:
+    //! @name Static member data
+    //@{
+    static const std::string master_;
     //@}
 };
 

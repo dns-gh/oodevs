@@ -12,7 +12,7 @@
 
 #include "ADN_Connector_String.h"
 #include "ADN_Type_LocalizedString.h"
-#include "clients_kernel/Language.h"
+#include "ADN_Languages_Data.h"
 
 // =============================================================================
 /** @class  ADN_Connector_LocalizedString

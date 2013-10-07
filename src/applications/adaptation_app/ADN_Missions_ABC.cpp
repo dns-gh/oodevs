@@ -11,7 +11,7 @@
 #include "ADN_Missions_ABC.h"
 #include "ADN_Missions_Data.h"
 #include "clients_gui/WikiXmlConverter.h"
-#include "clients_kernel/Language.h"
+#include "ADN_Languages_Data.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -321,7 +321,7 @@ void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const s
     xsl::xstringtransform xst( ( tools::Path::TemporaryPath() / ADN_Missions_Data::xslTemporaryFile_ ).ToUTF8() );
 
     std::string directoryName = strName_.GetKey();
-    const tools::Path relativePath = kernel::Language::IsMaster( language ) ? "./" : "./../..";
+    const tools::Path relativePath = ADN_Languages_Data::IsMaster( language ) ? "./" : "./../..";
 
     const tools::Path imageDirectory = relativePath / ADN_Missions_Data::imagePath_ / tools::Path::FromUTF8( directoryName ) + "/";
     directoryName = imageDirectory.Normalize().ToUTF8();
@@ -333,7 +333,7 @@ void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const s
     const tools::Path cssFile = relativePath / ".." / ADN_Missions_Data::cssFile_;
     xst.parameter( "cssFile", cssFile.Normalize().ToUTF8() );
 
-    if( kernel::Language::IsMaster( language ) )
+    if( ADN_Languages_Data::IsMaster( language ) )
     {
         tools::Xifstream xisXML( filePath + ".xml" );
         xst << xisXML;

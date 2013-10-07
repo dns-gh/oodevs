@@ -61,7 +61,7 @@ void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
 {
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized string: " + data );
-    if( translation_ && !( kernel::Language::IsCurrentMaster() && !data.empty() && translation_->Key().empty() || translation_.unique() ) )
+    if( translation_ && !( ADN_Languages_Data::IsCurrentMaster() && !data.empty() && translation_->Key().empty() || translation_.unique() ) )
         return;
     translation_ = ( *context_ )[ data ];
     translation_->Initialize( ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
@@ -73,7 +73,7 @@ void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetData() const
 {
-    return kernel::Language::IsCurrentMaster() ? GetKey() : GetValue( kernel::Language::Current() );
+    return ADN_Languages_Data::IsCurrentMaster() ? GetKey() : GetValue( kernel::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,13 +85,13 @@ void ADN_Type_LocalizedString::SetData( const std::string& data )
     InitTranslation( data );
     if( swappingLanguage_ )
         return;
-    if( kernel::Language::IsCurrentMaster() && translation_.use_count() > 2 && data != translation_->Key() )
+    if( ADN_Languages_Data::IsCurrentMaster() && translation_.use_count() > 2 && data != translation_->Key() )
     {
         boost::shared_ptr< kernel::LocalizedString > newTranslation = context_->CreateNew( data );
         newTranslation->CopyValues( *translation_ );
         translation_ = newTranslation;
     }
-    else if( kernel::Language::IsCurrentMaster() )
+    else if( ADN_Languages_Data::IsCurrentMaster() )
         translation_->SetKey( data );
     else
         translation_->SetValue( kernel::Language::Current(), data );
@@ -104,7 +104,7 @@ void ADN_Type_LocalizedString::SetData( const std::string& data )
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetValue( const std::string& language ) const
 {
-    if( kernel::Language::IsMaster( language ) || translation_->Value( language ).empty() )
+    if( ADN_Languages_Data::IsMaster( language ) || translation_->Value( language ).empty() )
         return GetKey();
     return translation_->Value( language );
 }
@@ -116,7 +116,7 @@ const std::string& ADN_Type_LocalizedString::GetValue( const std::string& langua
 void ADN_Type_LocalizedString::SetValue( const std::string& language, const std::string& data )
 {
     InitTranslation( data );
-    if( kernel::Language::IsMaster( language ) )
+    if( ADN_Languages_Data::IsMaster( language ) )
         translation_->SetKey( data );
     else
         translation_->SetValue( language, data );
@@ -165,7 +165,7 @@ void ADN_Type_LocalizedString::SetType( kernel::E_TranslationType type )
 // -----------------------------------------------------------------------------
 kernel::E_TranslationType ADN_Type_LocalizedString::GetType( const std::string& language ) const
 {
-    return kernel::Language::IsMaster( language ) || GetKey().empty()
+    return ADN_Languages_Data::IsMaster( language ) || GetKey().empty()
         ? kernel::eTranslationType_None
         : translation_->Type( language );
 }
@@ -176,7 +176,7 @@ kernel::E_TranslationType ADN_Type_LocalizedString::GetType( const std::string& 
 // -----------------------------------------------------------------------------
 void ADN_Type_LocalizedString::SetType( const std::string& language, kernel::E_TranslationType type )
 {
-    if( kernel::Language::IsMaster( language ) || GetKey().empty() )
+    if( ADN_Languages_Data::IsMaster( language ) || GetKey().empty() )
         return;
     InitTranslation( translation_->Key() );
     translation_->SetType( language, type );
@@ -229,7 +229,7 @@ void ADN_Type_LocalizedString::OnLanguageChanged()
 {
     if( !translation_ )
         return;
-    if( !kernel::Language::IsCurrentMaster() && translation_->Value( kernel::Language::Current() ).empty() )
+    if( !ADN_Languages_Data::IsCurrentMaster() && translation_->Value( kernel::Language::Current() ).empty() )
     {
         swappingLanguage_ = true;
         emit DataChanged( ( void* ) &translation_->Key() );

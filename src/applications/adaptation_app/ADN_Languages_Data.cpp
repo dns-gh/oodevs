@@ -13,6 +13,8 @@
 #include "ADN_Project_Data.h"
 #include "clients_kernel/Language.h"
 
+const std::string ADN_Languages_Data::master_ = "default";
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data constructor
 // Created: ABR 2013-07-08
@@ -73,4 +75,31 @@ void ADN_Languages_Data::WriteArchive( xml::xostream& output )
     for( auto it = languages_.begin(); it != languages_.end(); ++it )
         output << *it;
     output << xml::end; //! languages
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::Master
+// Created: ABR 2013-08-29
+// -----------------------------------------------------------------------------
+const std::string& ADN_Languages_Data::Master()
+{
+    return master_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::IsMaster
+// Created: ABR 2013-08-22
+// -----------------------------------------------------------------------------
+bool ADN_Languages_Data::IsMaster( const std::string& language )
+{
+    return language == master_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::IsCurrentMaster
+// Created: ABR 2013-08-21
+// -----------------------------------------------------------------------------
+bool ADN_Languages_Data::IsCurrentMaster()
+{
+    return IsMaster( kernel::Language::Current() );
 }

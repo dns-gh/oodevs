@@ -14,6 +14,7 @@
 #include "ADN_ConsistencyDialog.h"
 #include "ADN_Enums.h"
 #include "ADN_GeneralConfig.h"
+#include "ADN_Languages_Data.h"
 #include "ADN_Languages_GUI.h"
 #include "ADN_ListView.h"
 #include "ADN_ListViewDialog.h"
@@ -287,7 +288,7 @@ void ADN_MainWindow::PurgeGUI()
     mainTabWidget_.reset();
     // Languages menu
     menuLanguages_->clear();
-    kernel::Language::SetCurrent( kernel::Language::Master() );
+    kernel::Language::SetCurrent( ADN_Languages_Data::Master() );
     // ObjectNameManager
     gui::ObjectNameManager::getInstance()->Purge();
 }
