@@ -99,13 +99,13 @@ void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, const std::string& language )
 {
-    CheckFieldDataConsistency( descriptionContext_.GetTranslation()->Value( language ), checker );
+    CheckFieldDataConsistency( descriptionContext_.GetValue( language ), checker );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
-        CheckFieldDataConsistency( (*it)->description_.GetTranslation()->Value( language ), checker );
-    CheckFieldDataConsistency( descriptionBehavior_.GetTranslation()->Value( language ), checker );
-    CheckFieldDataConsistency( descriptionSpecific_.GetTranslation()->Value( language ), checker );
-    CheckFieldDataConsistency( descriptionComment_.GetTranslation()->Value( language ), checker );
-    CheckFieldDataConsistency( descriptionMissionEnd_.GetTranslation()->Value( language ), checker );
+        CheckFieldDataConsistency( (*it)->description_.GetValue( language ), checker );
+    CheckFieldDataConsistency( descriptionBehavior_.GetValue( language ), checker );
+    CheckFieldDataConsistency( descriptionSpecific_.GetValue( language ), checker );
+    CheckFieldDataConsistency( descriptionComment_.GetValue( language ), checker );
+    CheckFieldDataConsistency( descriptionMissionEnd_.GetValue( language ), checker );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +225,7 @@ void ADN_Missions_ABC::ReadMissionSheet( const tools::Path& missionDir, const st
 void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const tools::Path& missionDir, const std::string& language )
 {
     const std::string& newValue = strName_.GetValue( language );
-    const std::string& oldValue = tools::Path::FromUTF8( missionSheetPath_.GetTranslation()->Value( language ) ).BaseName().ToUTF8();
+    const std::string& oldValue = tools::Path::FromUTF8( missionSheetPath_.GetValue( language ) ).BaseName().ToUTF8();
     if( !oldValue.empty() && newValue != oldValue )
     {
         const tools::Path newPath = missionDir / tools::Path::FromUTF8( newValue );
@@ -244,7 +244,7 @@ namespace
     void LocalizedFromWikiToXml( xml::xostream& xos, const ADN_Type_LocalizedString& localizedField, const std::string& language, bool isMergedXml )
     {
         xos << localizedField.GetType( language );
-        FromWikiToXml( xos, isMergedXml && localizedField.GetType( language ) == kernel::eTranslationType_Unfinished ? localizedField.GetKey() : localizedField.GetTranslation()->Value( language ) );
+        FromWikiToXml( xos, isMergedXml && localizedField.GetType( language ) == kernel::eTranslationType_Unfinished ? localizedField.GetKey() : localizedField.GetValue( language ) );
     }
     void WriteMissionSheetField( xml::xostream& xos, const std::string& xmltag, const ADN_Type_LocalizedString& localizedField, const std::string& language, bool isMergedXml )
     {
@@ -348,7 +348,7 @@ void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const s
     tools::Ofstream fileStream( filePath + ".html", std::ios::out | std::ios::trunc );
     fileStream << xst.str();
     fileStream.close();
-    if( missionSheetPath_.GetTranslation()->Value( language ).empty() )
+    if( missionSheetPath_.GetValue( language ).empty() )
         missionSheetPath_.SetValue( language, filePath.ToUTF8() + ".html" );
 }
 

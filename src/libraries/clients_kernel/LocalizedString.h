@@ -41,6 +41,10 @@ class LocalizedString
             , value_( value )
         {}
         virtual ~TranslationText() {}
+        bool operator==( const TranslationText& other ) const
+        {
+            return type_ == other.type_ && value_ == other.value_;
+        }
 
         E_TranslationType type_;
         std::string value_;
@@ -71,16 +75,18 @@ public:
     //! @name Accessors
     //@{
     const std::string& Key() const;
-    const std::string& Value() const;
     const std::string& Value( const std::string& language ) const;
-    E_TranslationType Type() const;
     E_TranslationType Type( const std::string& language ) const;
 
     void SetKey( const std::string& key );
-    void SetValue( const std::string& value );
     void SetValue( const std::string& language, const std::string& value );
-    void SetType( E_TranslationType type );
     void SetType( const std::string& language, E_TranslationType type );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void CheckLanguageValidity( const std::string& language ) const;
     //@}
 
 private:

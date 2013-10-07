@@ -73,7 +73,7 @@ void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetData() const
 {
-    return GetValue( kernel::Language::Current() );
+    return kernel::Language::IsCurrentMaster() ? GetKey() : GetValue( kernel::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,8 +91,10 @@ void ADN_Type_LocalizedString::SetData( const std::string& data )
         newTranslation->CopyValues( *translation_ );
         translation_ = newTranslation;
     }
+    else if( kernel::Language::IsCurrentMaster() )
+        translation_->SetKey( data );
     else
-        translation_->SetValue( data );
+        translation_->SetValue( kernel::Language::Current(), data );
     emit DataChanged( ( void* ) &data );
 }
 
@@ -102,8 +104,8 @@ void ADN_Type_LocalizedString::SetData( const std::string& data )
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetValue( const std::string& language ) const
 {
-    if( !kernel::Language::IsMaster( language ) && translation_->Value( language ).empty() )
-        return translation_->Key();
+    if( kernel::Language::IsMaster( language ) || translation_->Value( language ).empty() )
+        return GetKey();
     return translation_->Value( language );
 }
 
@@ -114,7 +116,10 @@ const std::string& ADN_Type_LocalizedString::GetValue( const std::string& langua
 void ADN_Type_LocalizedString::SetValue( const std::string& language, const std::string& data )
 {
     InitTranslation( data );
-    translation_->SetValue( language, data );
+    if( kernel::Language::IsMaster( language ) )
+        translation_->SetKey( data );
+    else
+        translation_->SetValue( language, data );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +147,7 @@ void ADN_Type_LocalizedString::SetKey( const std::string& key )
 // -----------------------------------------------------------------------------
 kernel::E_TranslationType ADN_Type_LocalizedString::GetType() const
 {
-    return translation_->Type();
+    return GetType( kernel::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +165,9 @@ void ADN_Type_LocalizedString::SetType( kernel::E_TranslationType type )
 // -----------------------------------------------------------------------------
 kernel::E_TranslationType ADN_Type_LocalizedString::GetType( const std::string& language ) const
 {
-    return translation_->Type( language );
+    return kernel::Language::IsMaster( language ) || GetKey().empty()
+        ? kernel::eTranslationType_None
+        : translation_->Type( language );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +176,7 @@ kernel::E_TranslationType ADN_Type_LocalizedString::GetType( const std::string& 
 // -----------------------------------------------------------------------------
 void ADN_Type_LocalizedString::SetType( const std::string& language, kernel::E_TranslationType type )
 {
-    if( translation_->Key().empty() )
+    if( kernel::Language::IsMaster( language ) || GetKey().empty() )
         return;
     InitTranslation( translation_->Key() );
     translation_->SetType( language, type );
@@ -222,7 +229,7 @@ void ADN_Type_LocalizedString::OnLanguageChanged()
 {
     if( !translation_ )
         return;
-    if( !kernel::Language::IsCurrentMaster() && translation_->Value().empty() )
+    if( !kernel::Language::IsCurrentMaster() && translation_->Value( kernel::Language::Current() ).empty() )
     {
         swappingLanguage_ = true;
         emit DataChanged( ( void* ) &translation_->Key() );
@@ -232,7 +239,7 @@ void ADN_Type_LocalizedString::OnLanguageChanged()
     {
         SetData( GetData() );
     }
-    SetType( translation_->Type() );
+    SetType( GetType() );
 }
 
 // -----------------------------------------------------------------------------
