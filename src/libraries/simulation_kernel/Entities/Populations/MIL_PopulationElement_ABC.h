@@ -20,7 +20,6 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Object_ABC;
 class MIL_BurnEffectManipulator;
-
 class MIL_Population;
 class MIL_PopulationAttitude;
 class MIL_PopulationType;
@@ -32,11 +31,9 @@ class PHY_FireResults_ABC;
 class PHY_FireResults_Population;
 class PHY_Volume;
 class TER_Localisation;
-
 class TER_PopulationConcentration_ABC;
 class TER_PopulationFlow_ABC;
 class MIL_NbcAgentType;
-
 
 // =============================================================================
 // Created: NLD 2005-09-28

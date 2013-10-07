@@ -27,8 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationCollision )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_Agent_ABC& agentColliding, MIL_Population& population )
-    : DEC_Knowledge_ABC()
-    , pAgentColliding_( &agentColliding )
+    : pAgentColliding_( &agentColliding )
     , pPopulation_    ( &population )
 {
 }
@@ -38,8 +37,7 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_
 // Created: LDC 2013-10-04
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( MIL_Population& population )
-    : DEC_Knowledge_ABC()
-    , pAgentColliding_( 0 )
+    : pAgentColliding_( 0 )
     , pPopulation_    ( &population )
 {
 }
@@ -49,8 +47,7 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( MIL_Popula
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision()
-    : DEC_Knowledge_ABC()
-    , pAgentColliding_( 0 )
+    : pAgentColliding_( 0 )
     , pPopulation_    ( 0 )
 {
     // NOTHING

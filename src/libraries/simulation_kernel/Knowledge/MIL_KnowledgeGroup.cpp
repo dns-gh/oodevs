@@ -1130,10 +1130,6 @@ namespace
         {
             //NOTHING
         }
-        virtual ~sCollidingPopulationVisitor()
-        {
-            //NOTHING
-        }
         virtual void Visit( const MIL_PopulationElement_ABC& element )
         {
             auto collidingAgents = ( element.*getter_)();
@@ -1153,9 +1149,6 @@ namespace
             , perceiver_( perceiver )
         {
             //NOTHING
-        }
-        ~sPopulationsCollidingPopulationVisitor()
-        {
         }
         virtual void Visit( const MIL_PopulationElement_ABC& element )
         {
@@ -1228,7 +1221,6 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
         sPopulationsCollidingPopulationVisitor visitor( *this, **it );
         ( *it )->Apply( visitor );
     }
-   // knowledgeBlackBoard_->SendFullState();
 }
 
 // -----------------------------------------------------------------------------

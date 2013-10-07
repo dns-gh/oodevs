@@ -33,8 +33,8 @@
 #include "Tools/MIL_Geometry.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
+#include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
 #include <boost/serialization/set.hpp>
@@ -241,18 +241,10 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
     }
 
     collidingPopulationConcentrations_.clear();
-    TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
-    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocation(), concentrations );
-    collidingPopulationConcentrations_.reserve( concentrations.size() );
-    for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
-        collidingPopulationConcentrations_.push_back( *it );
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocation(), collidingPopulationConcentrations_ );
 
     collidingPopulationFlows_.clear();
-    TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
-    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocation(), flows );
-    collidingPopulationFlows_.reserve( flows.size() );
-    for( auto it = flows.begin(); it != flows.end(); ++it )
-        collidingPopulationFlows_.push_back( *it );
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocation(), collidingPopulationFlows_ );
 
     ClearCollidingAttackingAgents();
 }

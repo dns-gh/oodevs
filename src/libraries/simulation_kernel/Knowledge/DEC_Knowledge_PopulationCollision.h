@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_PopulationCollision( const MIL_Agent_ABC& agentColliding, MIL_Population& population );
-             explicit DEC_Knowledge_PopulationCollision( MIL_Population& population );
+    explicit DEC_Knowledge_PopulationCollision( MIL_Population& population );
              DEC_Knowledge_PopulationCollision ();
     virtual ~DEC_Knowledge_PopulationCollision();
     //@}
