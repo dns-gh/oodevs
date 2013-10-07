@@ -15,18 +15,24 @@
 #include "SupplyRecipient_ABC.h"
 #include "SupplyRequestParameters_ABC.h"
 #include "SupplySupplier_ABC.h"
+#include "Checkpoints/MIL_CheckPointInArchive.h"
+#include "Checkpoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "MIL_Time_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Tools/MIL_IDManager.h"
 #include <boost/foreach.hpp>
 #include <boost/serialization/deque.hpp>
 #include <boost/serialization/export.hpp>
 
 using namespace logistic;
 
-MIL_IDManager SupplyConsign::idManager_;
+namespace
+{
+    MIL_IDManager idManager_;
+}
 
 BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConsign )
 
@@ -665,7 +671,7 @@ boost::shared_ptr< SupplyConvoy_ABC > SupplyConsign::GetConvoy() const
 // Name: SupplyConsign::load
 // Created: LDC 2013-01-15
 // -----------------------------------------------------------------------------
-template< class Archive > void SupplyConsign::load( Archive& archive, const unsigned int )
+void SupplyConsign::load( MIL_CheckPointInArchive& archive, const unsigned int )
 {
     size_t resourcesSize;
     archive >> boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
@@ -713,7 +719,7 @@ template< class Archive > void SupplyConsign::load( Archive& archive, const unsi
 // Name: SupplyConsign::save
 // Created: LDC 2013-01-15
 // -----------------------------------------------------------------------------
-template< class Archive > void SupplyConsign::save( Archive& archive, const unsigned int ) const
+void SupplyConsign::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
 {
     archive << boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
     archive << boost::serialization::base_object< SupplyConsign_ABC >( *this );

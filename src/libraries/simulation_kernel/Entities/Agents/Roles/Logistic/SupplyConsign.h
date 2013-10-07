@@ -14,14 +14,16 @@
 #include "SupplyConvoyEventsObserver_ABC.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Tools/MIL_IDManager.h"
 #include <tools/Map.h>
 #include <deque>
 
 class PHY_DotationCategory;
 class MIL_Agent_ABC;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
-namespace logistic {
+namespace logistic
+{
     class SupplyConvoy_ABC;
     class SupplySupplier_ABC;
     class SupplyRequestParameters_ABC;
@@ -77,9 +79,9 @@ public:
     virtual void SendFullState   () const;
     virtual void Clean           ();
 
-    BOOST_SERIALIZATION_SPLIT_MEMBER()        
-    template< class Archive > void load( Archive& archive, const unsigned int );
-    template< class Archive > void save( Archive& archive, const unsigned int ) const;
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& archive, const unsigned int );
+    void save( MIL_CheckPointOutArchive& archive, const unsigned int ) const;
     //@}
 
 private:
@@ -149,9 +151,6 @@ private:
     // Network
     bool needNetworkUpdate_;
     bool requestsNeedNetworkUpdate_;
-
-private:
-    static MIL_IDManager idManager_; //$$ Still relevant ?
 };
 
 } // end namespace logistic
