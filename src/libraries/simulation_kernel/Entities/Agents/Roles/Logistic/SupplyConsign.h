@@ -17,12 +17,14 @@
 #include "Tools/MIL_IDManager.h"
 #include <tools/Map.h>
 #include <deque>
-#include "MIL.h"
 
 class PHY_DotationCategory;
 class MIL_Agent_ABC;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
-namespace logistic {
+namespace logistic
+{
     class SupplyConvoy_ABC;
     class SupplySupplier_ABC;
     class SupplyRequestParameters_ABC;

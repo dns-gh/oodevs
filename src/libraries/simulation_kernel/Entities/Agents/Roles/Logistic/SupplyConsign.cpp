@@ -15,6 +15,8 @@
 #include "SupplyRecipient_ABC.h"
 #include "SupplyRequestParameters_ABC.h"
 #include "SupplySupplier_ABC.h"
+#include "Checkpoints/MIL_CheckPointInArchive.h"
+#include "Checkpoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "MIL_Time_ABC.h"
