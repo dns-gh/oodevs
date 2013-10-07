@@ -184,12 +184,12 @@ void Meteo::Update( const sword::WeatherAttributes& msg )
     temperature_ = msg.temperature();
 
     // Précipitation
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( protocol::FromProtoPrecipitation(
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( protocol::FromProto(
                 msg.precipitation() ));
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
     // Lighting
-    pLighting_ = PHY_Lighting::FindLighting( protocol::FromProtoLighting( msg.lighting() ));
+    pLighting_ = PHY_Lighting::FindLighting( protocol::FromProto( msg.lighting() ));
     if( !pLighting_ )
         pLighting_ = &PHY_Lighting::jourSansNuage_;
 }
@@ -290,7 +290,7 @@ void Meteo::Update( const sword::MissionParameters& msg )
     if( precipitation.null_value() || !precipitation.value().Get( 0 ).has_enumeration() )
         throw MASA_BADPARAM( "parameters[6] must be an Enumeration" );
     const PHY_Precipitation* pPrecipitation = PHY_Precipitation::FindPrecipitation(
-        protocol::FromProtoPrecipitation( static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation.value().Get( 0 ).enumeration() ) ));
+        protocol::FromProto( static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation.value().Get( 0 ).enumeration() ) ));
     if( !pPrecipitation )
         throw MASA_BADPARAM( "parameters[6] must be a precipitation Enumeration" );
     pPrecipitation_ = pPrecipitation;
@@ -367,9 +367,9 @@ void Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_floor( cloud_.nFloor_ );
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( cloud_.nDensityPercentage_ );
-    att->set_precipitation( protocol::ToProtoPrecipitation( pPrecipitation_->GetID() ));
+    att->set_precipitation( protocol::ToProto( pPrecipitation_->GetID() ));
     att->set_temperature( temperature_ );
-    att->set_lighting( protocol::ToProtoLighting( pLighting_->GetID() ));
+    att->set_lighting( protocol::ToProto( pLighting_->GetID() ));
     msg.Send( publisher );
 }
 

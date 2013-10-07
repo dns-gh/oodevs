@@ -66,12 +66,12 @@ BOOST_STATIC_ASSERT( WeatherAttributes::EnumLightingType_ARRAYSIZE == lightingsS
 
 } // namespce
 
-E_LightingType FromProtoLighting( WeatherAttributes::EnumLightingType value )
+E_LightingType FromProto( WeatherAttributes::EnumLightingType value )
 {
     return FindE1FromE2( value, lightings, lightingsSize, "protobuf lighting" );
 }
 
-WeatherAttributes::EnumLightingType ToProtoLighting( E_LightingType value )
+WeatherAttributes::EnumLightingType ToProto( E_LightingType value )
 {
     return FindE2FromE1( value, lightings, lightingsSize, "ent lighting" );
 }
@@ -99,12 +99,12 @@ BOOST_STATIC_ASSERT( WeatherAttributes::EnumPrecipitationType_ARRAYSIZE == preci
 
 } // namespace
 
-E_WeatherType FromProtoPrecipitation( WeatherAttributes::EnumPrecipitationType value )
+E_WeatherType FromProto( WeatherAttributes::EnumPrecipitationType value )
 {
     return FindE1FromE2( value, precipitations, precipitationsSize, "protobuf precipitations" );
 }
 
-WeatherAttributes::EnumPrecipitationType ToProtoPrecipitation( E_WeatherType value )
+WeatherAttributes::EnumPrecipitationType ToProto( E_WeatherType value )
 {
     return FindE2FromE1( value, precipitations, precipitationsSize, "ent precipitations" );
 }

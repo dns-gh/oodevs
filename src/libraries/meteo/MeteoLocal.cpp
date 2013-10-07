@@ -262,9 +262,9 @@ void MeteoLocal::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) cons
     att->set_cloud_floor ( cloud_.nFloor_ );
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( static_cast< int >( cloud_.rDensity_ ) );
-    att->set_precipitation( protocol::ToProtoPrecipitation( pPrecipitation_->GetID() ));
+    att->set_precipitation( protocol::ToProto( pPrecipitation_->GetID() ));
     att->set_temperature( temperature_ );
-    att->set_lighting( protocol::ToProtoLighting( pLighting_->GetID() ));
+    att->set_lighting( protocol::ToProto( pLighting_->GetID() ));
     msg().mutable_top_left()->set_longitude( topLeft_.X() );
     msg().mutable_top_left()->set_latitude( topLeft_.Y() );
     msg().mutable_bottom_right()->set_longitude( bottomRight_.X() );

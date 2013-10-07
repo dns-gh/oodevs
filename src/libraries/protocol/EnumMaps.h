@@ -18,11 +18,11 @@
 namespace protocol
 {
 
-E_LightingType FromProtoLighting( sword::WeatherAttributes::EnumLightingType value );
-sword::WeatherAttributes::EnumLightingType ToProtoLighting( E_LightingType value );
+E_LightingType FromProto( sword::WeatherAttributes::EnumLightingType value );
+sword::WeatherAttributes::EnumLightingType ToProto( E_LightingType value );
 
-E_WeatherType FromProtoPrecipitation( sword::WeatherAttributes::EnumPrecipitationType value );
-sword::WeatherAttributes::EnumPrecipitationType ToProtoPrecipitation( E_WeatherType value );
+E_WeatherType FromProto( sword::WeatherAttributes::EnumPrecipitationType value );
+sword::WeatherAttributes::EnumPrecipitationType ToProto( E_WeatherType value );
 
 }  // protocol
 
