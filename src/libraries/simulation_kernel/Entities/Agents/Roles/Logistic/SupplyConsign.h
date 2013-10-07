@@ -14,7 +14,6 @@
 #include "SupplyConvoyEventsObserver_ABC.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Tools/MIL_IDManager.h"
 #include <tools/Map.h>
 #include <deque>
 
@@ -152,9 +151,6 @@ private:
     // Network
     bool needNetworkUpdate_;
     bool requestsNeedNetworkUpdate_;
-
-private:
-    static MIL_IDManager idManager_; //$$ Still relevant ?
 };
 
 } // end namespace logistic

@@ -22,13 +22,17 @@
 #include "MIL_Time_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Tools/MIL_IDManager.h"
 #include <boost/foreach.hpp>
 #include <boost/serialization/deque.hpp>
 #include <boost/serialization/export.hpp>
 
 using namespace logistic;
 
-MIL_IDManager SupplyConsign::idManager_;
+namespace
+{
+    MIL_IDManager idManager_;
+}
 
 BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConsign )
 
