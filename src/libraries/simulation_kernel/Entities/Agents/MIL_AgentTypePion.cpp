@@ -72,9 +72,7 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 
-#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
-#pragma warning( pop )
 
 MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
