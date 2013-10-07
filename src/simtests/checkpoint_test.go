@@ -212,3 +212,57 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 	}
 	c.Assert(hasOrder, Equals, true)
 }
+
+func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
+	sim, client := connectAndWaitModelWithStep(c, "admin", "", ExCrossroadSmallLog, 300)
+	defer sim.Stop()
+
+	// Find the supply base
+	model := client.Model.GetData()
+	automats := model.ListAutomats()
+	var supplyAutomat *swapi.Automat
+	for _, a := range automats {
+		if strings.Contains(a.Name, "LOG.Supply logistic area") {
+			supplyAutomat = a
+		}
+	}
+	c.Assert(supplyAutomat, NotNil)
+
+	// Deploy it
+	MissionLogDeploy := uint32(44584)
+	null := swapi.MakeNullValue()
+	heading := swapi.MakeHeading(0)
+	limit1 := swapi.MakeLimit(
+		swapi.Point{X: -15.8302, Y: 28.3765},
+		swapi.Point{X: -15.825, Y: 28.3413})
+	limit2 := swapi.MakeLimit(
+		swapi.Point{X: -15.7983, Y: 28.3765},
+		swapi.Point{X: -15.7991, Y: 28.3413})
+	params := swapi.MakeParameters(heading, null, limit1, limit2, null)
+	_, err := client.SendAutomatOrder(supplyAutomat.Id, MissionLogDeploy, params)
+	c.Assert(err, IsNil)
+
+	// A scout ammunitions are depleted, a convoy should be generated, with
+	// a pathfind, eventually.
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, u := range data.ListUnits() {
+			if strings.Contains(u.Name, "LOG.Convoy") && u.PathPoints > 0 {
+				return true
+			}
+		}
+		return false
+	})
+
+	sim, client = checkpointAndRestart(c, sim, client)
+	defer sim.Stop()
+	model = client.Model.GetData()
+
+	// Is the convoy still there?
+	var convoy *swapi.Unit
+	for _, u := range model.ListUnits() {
+		if strings.Contains(u.Name, "LOG.Convoy") {
+			convoy = u
+		}
+	}
+	c.Assert(convoy, NotNil)
+}

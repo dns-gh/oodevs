@@ -57,6 +57,7 @@ func init() {
 
 const ExCrossroadSmallOrbat = "crossroad-small-orbat"
 const ExCrossroadSmallEmpty = "crossroad-small-empty"
+const ExCrossroadSmallLog = "crossroad-small-log"
 
 func MakeOpts() *simu.SimOpts {
 	opts := simu.SimOpts{}
@@ -81,8 +82,8 @@ func MakeOpts() *simu.SimOpts {
 	return &opts
 }
 
-func startSimOnExercise(c *C, exercise string, endTick int,
-	paused bool) *simu.SimProcess {
+func startSimOnExercise(c *C, exercise string, endTick int, paused bool,
+	step int) *simu.SimProcess {
 
 	opts := MakeOpts()
 	opts.ExerciseName = exercise
@@ -91,6 +92,9 @@ func startSimOnExercise(c *C, exercise string, endTick int,
 	session := simu.CreateDefaultSession()
 	session.Paused = paused
 	session.GamingServer = opts.DispatcherAddr
+	if step > 0 {
+		session.TimeStep = step
+	}
 	WriteSession(c, opts, session)
 	sim, err := simu.StartSim(opts)
 	c.Assert(err, IsNil) // failed to start the simulation

@@ -241,10 +241,18 @@ func loginAndWaitModel(c *C, sim *simu.SimProcess, user, password string) *swapi
 	return client
 }
 
+func connectAndWaitModelWithStep(c *C, user, password, exercise string, step int) (
+	*simu.SimProcess, *swapi.Client) {
+
+	sim := startSimOnExercise(c, exercise, 1000, false, step)
+	client := loginAndWaitModel(c, sim, user, password)
+	return sim, client
+}
+
 func connectAndWaitModel(c *C, user, password, exercise string) (
 	*simu.SimProcess, *swapi.Client) {
 
-	sim := startSimOnExercise(c, exercise, 1000, false)
+	sim := startSimOnExercise(c, exercise, 1000, false, 0)
 	client := loginAndWaitModel(c, sim, user, password)
 	return sim, client
 }
