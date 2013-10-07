@@ -11,12 +11,9 @@
 #define CLIENTS_GUI_GLTOOLS_ABC_H__
 
 #include "GLToolColors.h"
-#include "clients_kernel/Types.h"
 #include "Layer_ABC.h"
-
-#pragma warning( push, 0 )
+#include "clients_kernel/Types.h"
 #include <QtGui/qfont.h>
-#pragma warning( pop )
 #include <boost/noncopyable.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <vector>
@@ -26,17 +23,13 @@ class QCursor;
 
 namespace kernel
 {
-    class Controllers;
     class Location_ABC;
 }
 
 namespace gui
 {
     class GlTooltip_ABC;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  GlTools_ABC
     @brief  GlTools definition
@@ -61,8 +54,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             GlTools_ABC() {};
-    virtual ~GlTools_ABC() {};
+             GlTools_ABC() {}
+    virtual ~GlTools_ABC() {}
     //@}
 
     //! @name Options
@@ -117,6 +110,7 @@ public:
     virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to, float width = 1. ) const = 0;
     virtual void DrawCircle       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawDisc         ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const = 0;
+    virtual void DrawHalfDisc     ( const geometry::Point2f& center, float angleDegrees, float radius = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const = 0;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const = 0;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const = 0;

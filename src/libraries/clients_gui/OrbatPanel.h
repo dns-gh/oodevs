@@ -62,6 +62,11 @@ private:
     gui::ColorButton* pNColor_;
     gui::ColorButton* pADColor_;
     gui::ColorButton* pODColor_;
+    gui::ColorButton* pHealthyColor_;
+    gui::ColorButton* pContaminatedColor_;
+    gui::ColorButton* pWoundedColor_;
+    gui::ColorButton* pDeadColor_;
+    gui::ColorButton* pMostlyHealthyColor_;
     //@}
 };
 

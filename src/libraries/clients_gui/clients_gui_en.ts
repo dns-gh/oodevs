@@ -254,6 +254,30 @@
         <source>Totally destroyed:</source>
         <translation>Totally destroyed:</translation>
     </message>
+    <message>
+        <source>Crowds health state color</source>
+        <translation>Crowds health state color</translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation>Healthy:</translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation>Contaminated:</translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Wounded:</translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation>Dead:</translation>
+    </message>
+    <message>
+        <source>Mostly healthy:</source>
+        <translation>Mostly healthy:</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

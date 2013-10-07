@@ -76,7 +76,7 @@ void Gl3dWidget::Register( Layer& layer )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::Unregister( Layer& layer )
 {
-    IT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
+    auto it = std::find( layers_.begin(), layers_.end(), &layer );
     if( it != layers_.end() )
         layers_.erase( it );
 }
@@ -404,6 +404,33 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Un
     glPopAttrib();
     glPopMatrix();
     gluDeleteQuadric( quad );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dwidget::DrawHalfDisc
+// Created: JSR 2013-09-25
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawHalfDisc( const geometry::Point2f& center, float angleDegrees, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
+{
+    double clipPlane[ 4 ];
+    clipPlane[ 1 ] = 0;
+    clipPlane[ 2 ] = 0;
+    const bool right = angleDegrees >= 0;
+    if( center.X() == 0 )
+    {
+        clipPlane[ 0 ] = right ? 1. : -1;
+        clipPlane[ 3 ] = 0;
+    }
+    else
+    {
+        const double invCenter = 1. / center.X();
+        clipPlane[ 0 ] = right ?  invCenter : -invCenter;
+        clipPlane[ 3 ] = right ? -1. : 1.;
+    }
+    glClipPlane( GL_CLIP_PLANE0, clipPlane );
+    glEnable( GL_CLIP_PLANE0 );
+    DrawDisc( center, radius, unit );
+    glDisable( GL_CLIP_PLANE0 );
 }
 
 // -----------------------------------------------------------------------------

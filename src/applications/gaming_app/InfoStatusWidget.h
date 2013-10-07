@@ -13,12 +13,14 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
     class HumanFactors_ABC;
+    class Population_ABC;
     class Profile_ABC;
 }
 
@@ -43,7 +45,9 @@ class InfoStatusWidget : public Q3VBox
                        , public tools::SelectionObserver< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< Attributes >
                        , public tools::ElementObserver_ABC< kernel::HumanFactors_ABC >
+                       , public tools::ElementObserver_ABC< kernel::Population_ABC >
                        , public tools::ElementObserver_ABC< Reinforcements >
+                       , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 
@@ -67,7 +71,9 @@ private:
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const Attributes& element );
     virtual void NotifyUpdated( const kernel::HumanFactors_ABC& element );
+    virtual void NotifyUpdated( const kernel::Population_ABC& element );
     virtual void NotifyUpdated( const Reinforcements& element );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     void SetDefault();
     void SetLifeBar( const Attributes& attributes );
@@ -77,6 +83,9 @@ private:
     void SetMorale( const HumanFactors& humans );
     void SetTiredness( const HumanFactors& humans );
     void SetReinforcements( const Reinforcements& reinforcements );
+
+    void DrawCrowdChartPie( QPixmap& pixmap, const kernel::Population_ABC& population );
+    QBrush GetCrowdBrush( const std::string& option, QColor defaultColor );
 
     virtual void resizeEvent( QResizeEvent* ev );
     //@}

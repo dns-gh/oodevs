@@ -45,13 +45,6 @@ public:
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationConcentration_ABC( const PopulationConcentration_ABC& );            //!< Copy constructor
-    PopulationConcentration_ABC& operator=( const PopulationConcentration_ABC& ); //!< Assignment operator
-    //@}
 };
 
 }

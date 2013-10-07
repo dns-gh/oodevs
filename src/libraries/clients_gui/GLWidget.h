@@ -35,7 +35,7 @@ namespace gui
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GlWidget :  private SetGlOptions
+class GlWidget : private SetGlOptions
                , public MapWidget
                , public MapWidget_ABC
                , public GlToolsBase
@@ -84,6 +84,7 @@ public:
     virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2, float width = 1. ) const;
     virtual void DrawCircle       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
     virtual void DrawDisc         ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
+    virtual void DrawHalfDisc     ( const geometry::Point2f& center, float angleDegrees, float radius = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const;
@@ -133,12 +134,6 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GlWidget( const GlWidget& );            //!< Copy constructor
-    GlWidget& operator=( const GlWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     struct passLess
@@ -158,11 +153,8 @@ private:
     };
 
     typedef std::map< QFont, int, sFontLess > T_Fonts;
-    typedef T_Fonts::const_iterator         CIT_Fonts;
-
     typedef std::vector< GLdouble > T_Points;
     typedef std::vector< T_Points > T_Geometry;
-
     //@}
 
     //! @name Helpers
@@ -173,6 +165,7 @@ private:
     virtual void resizeGL( int w, int h );
     virtual void updateGL();
     unsigned int GenerateCircle();
+    unsigned int GenerateHalfCircle();
     void UpdateStipple() const;
     void DrawTextLabel( const std::string& message, const geometry::Point2f& where, int baseSize = 12);
 
@@ -188,6 +181,7 @@ private:
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;
+    unsigned int halfCircle_;
     int minVisuScale_;
     int maxVisuScale_;
     geometry::Rectangle2f viewport_;

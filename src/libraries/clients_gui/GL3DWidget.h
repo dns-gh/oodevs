@@ -76,6 +76,7 @@ public:
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawCircle       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
     virtual void DrawDisc         ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
+    virtual void DrawHalfDisc     ( const geometry::Point2f& center, float angleDegrees, float radius = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const;
@@ -117,13 +118,6 @@ protected:
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    Gl3dWidget( const Gl3dWidget& );            //!< Copy constructor
-    Gl3dWidget& operator=( const Gl3dWidget& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Helpers
     //@{
@@ -146,9 +140,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer* >      T_Layers;
-    typedef T_Layers::iterator        IT_Layers;
-    typedef T_Layers::const_iterator CIT_Layers;
+    typedef std::vector< Layer* > T_Layers;
     //@}
 
 private:

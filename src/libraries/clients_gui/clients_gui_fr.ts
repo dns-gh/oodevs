@@ -250,6 +250,30 @@
         <source>Totally destroyed:</source>
         <translation>Détruit totalement :</translation>
     </message>
+    <message>
+        <source>Crowds health state color</source>
+        <translation>Couleur des états de santé des foules</translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation>Sain:</translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation>Contaminé:</translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Blessé:</translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation>Mort:</translation>
+    </message>
+    <message>
+        <source>Mostly healthy:</source>
+        <translation>Majoritairement sain:</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

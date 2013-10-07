@@ -10,21 +10,21 @@
 #include "gaming_app_pch.h"
 #include "InfoStatusWidget.h"
 #include "moc_InfoStatusWidget.cpp"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/tools.h"
+#include "clients_gui/EntitySymbols.h"
+#include "clients_gui/GLToolColors.h"
 #include "gaming/Attributes.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/Reinforcements.h"
-#include "clients_kernel/tools.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_gui/EntitySymbols.h"
 #include "icons.h"
-#pragma warning( push, 0 )
-#include <QtGui/qevent.h>
-#pragma warning( pop )
 
 namespace
 {
@@ -269,18 +269,88 @@ void InfoStatusWidget::SetDefault()
 }
 
 // -----------------------------------------------------------------------------
+// Name: InfoStatusWidget::GetCrowdBrush
+// Created: JSR 2013-09-27
+// -----------------------------------------------------------------------------
+QBrush InfoStatusWidget::GetCrowdBrush( const std::string& option, QColor defaultColor )
+{
+    const QString colorString = controllers_.options_.GetOption( option, QString( "" ) ).To< QString >();
+    if( colorString.isEmpty() )
+        return QBrush( defaultColor );
+    return QBrush( QColor( colorString ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoStatusWidget::DrawCrowdChartPie
+// Created: JSR 2013-09-27
+// -----------------------------------------------------------------------------
+void InfoStatusWidget::DrawCrowdChartPie( QPixmap& pixmap, const kernel::Population_ABC& population )
+{
+    const unsigned int healthy = population.GetHealthyHumans();
+    const unsigned int contaminated = population.GetContaminatedHumans();
+    const unsigned int wounded = population.GetWoundedHumans();
+    const unsigned int dead = population.GetDeadHumans();
+
+    // QPainter::drawPie is specified in 1/16th of a degree
+    const float ratio = 16.f * 360 / ( healthy + contaminated + wounded + dead );
+
+    const int healthySpanAngle      = - static_cast< int >( healthy * ratio );
+    const int contaminatedSpanAngle = - static_cast< int >( contaminated * ratio );
+    const int woundedSpanAngle      = - static_cast< int >( wounded * ratio );
+    const int deadSpanAngle         = - static_cast< int >( dead * ratio );
+
+    QPainter painter( &pixmap );
+    painter.setPen( Qt::NoPen );
+    int angleStart = 90 * 16;
+    QRect r = pixmap.rect();
+    r.setSize( QSize( r.width() - 1, r.height() - 1 ) );
+    // healthy
+    painter.setBrush( GetCrowdBrush( "Color/Healthy", QColor::fromRgbF( COLOR_LIGHT_BLUE ) ) );
+    painter.drawPie( r, angleStart, healthySpanAngle );
+    angleStart += healthySpanAngle;
+    // contaminated
+    painter.setBrush( GetCrowdBrush( "Color/Contaminated", QColor( Qt::green ) ) );
+    painter.drawPie( r, angleStart, contaminatedSpanAngle );
+    angleStart += contaminatedSpanAngle;
+    // wounded
+    painter.setBrush( GetCrowdBrush( "Color/Wounded", QColor( Qt::red ) ) );
+    painter.drawPie( r, angleStart, woundedSpanAngle );
+    angleStart += woundedSpanAngle;
+    // dead
+    painter.setBrush( GetCrowdBrush( "Color/Dead", QColor( Qt::black ) ) );
+    painter.drawPie( r, angleStart, deadSpanAngle );
+
+    painter.setPen( QColor( Qt::black ) );
+    painter.setBrush( Qt::NoBrush );
+    painter.drawArc( r, 0, 16 * 360 );
+    painter.end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: InfoStatusWidget::SetIcon
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::SetIcon()
 {
-    QImage img;
-    if( selected_ )
-        img = icons_.GetSymbol( *selected_, QSize( 64, 64 ) );
-    if( !img.isNull() )
-        icon_->setPixmap( QPixmap::fromImage( img ) );
+    if( selected_ && selected_->GetTypeName() == kernel::Population_ABC::typeName_ )
+    {
+        QPixmap pixmap( 128, 128 );
+        pixmap.fill( Qt::transparent );
+        const kernel::Entity_ABC* entity = static_cast< const kernel::Entity_ABC* >( selected_ );
+        DrawCrowdChartPie( pixmap, static_cast< const kernel::Population_ABC& >( *entity ) );
+        pixmap = pixmap.scaled( QSize( 64, 64 ), Qt::KeepAspectRatio, Qt::SmoothTransformation );
+        icon_->setPixmap( pixmap );
+    }
     else
-        QTimer::singleShot( 200, this, SLOT( SetIcon() ) );
+    {
+        QImage img;
+        if( selected_ )
+            img = icons_.GetSymbol( *selected_, QSize( 64, 64 ) );
+        if( img.isNull() )
+            QTimer::singleShot( 200, this, SLOT( SetIcon() ) );
+        else if( img.width() > 1 && img.height() > 1 )
+            icon_->setPixmap( QPixmap::fromImage( img ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -426,6 +496,16 @@ void InfoStatusWidget::NotifyUpdated( const kernel::HumanFactors_ABC& element )
 
 // -----------------------------------------------------------------------------
 // Name: InfoStatusWidget::NotifyUpdated
+// Created: JSR 2013-09-26
+// -----------------------------------------------------------------------------
+void InfoStatusWidget::NotifyUpdated( const kernel::Population_ABC& element )
+{
+    if( selected_ == &element )
+        SetIcon();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoStatusWidget::NotifyUpdated
 // Created: SBO 2008-07-09
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::NotifyUpdated( const Reinforcements& element )
@@ -446,4 +526,15 @@ void InfoStatusWidget::GotoParent()
     if( const kernel::TacticalHierarchies* hierarchies = selected_->Retrieve< kernel::TacticalHierarchies >() )
         if( const kernel::Entity_ABC* parent = hierarchies->GetSuperior() )
             controllers_.actions_.Select( *parent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoStatusWidget::OptionChanged
+// Created: JSR 2013-09-27
+// -----------------------------------------------------------------------------
+void InfoStatusWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& )
+{
+    if( selected_ && selected_->GetTypeName() == kernel::Population_ABC::typeName_
+        && ( name == "Color/Healthy" || name == "Color/Wounded" || name == "Color/Contaminated" || name == "Color/Dead" ) )
+        SetIcon();
 }
