@@ -13,6 +13,11 @@
 #include "MIL.h"
 #include "meteo/MeteoManager_ABC.h"
 
+namespace client
+{
+    class MagicActionAck;
+}
+
 namespace sword
 {
     class MagicAction;
@@ -90,9 +95,9 @@ private:
     void ReadPatchLocal( xml::xistream& xis );
     void ReadPatchGlobal( xml::xistream& xis );
     void Load( xml::xistream& xis, MIL_Config& config );
-    void UpdateGlobalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
-    void ManageLocalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
-    void RemoveLocalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
+    void UpdateGlobalWeather( const sword::MagicAction& msg );
+    void ManageLocalWeather( const sword::MagicAction& msg, client::MagicActionAck& ack );
+    void RemoveLocalWeather( const sword::MagicAction& msg );
     //@}
 
 private:
