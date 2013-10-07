@@ -75,6 +75,8 @@ public:
     const std::string& Value( const std::string& language ) const;
     E_TranslationType Type() const;
     E_TranslationType Type( const std::string& language ) const;
+    const std::string& Translate() const;
+    const std::string& Translate( const std::string& language ) const;
 
     void SetKey( const std::string& key );
     void SetValue( const std::string& value );

@@ -210,3 +210,24 @@ bool LocalizedString::operator!=( const LocalizedString& other ) const
 {
     return !( *this == other );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LocalizedString::Translate
+// Created: JSR 2013-10-04
+// -----------------------------------------------------------------------------
+const std::string& LocalizedString::Translate() const
+{
+    return Translate( Language::Current() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalizedString::Translate
+// Created: JSR 2013-10-04
+// -----------------------------------------------------------------------------
+const std::string& LocalizedString::Translate( const std::string& language ) const
+{
+    auto it = values_.find( language );
+    if( it != values_.end() && it->second.type_ != eTranslationType_Unfinished && !it->second.value_.empty() )
+        return it->second.value_;
+    return key_;
+}
