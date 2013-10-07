@@ -201,15 +201,9 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 	formation2 := data.FindFormation(automat.FormationId)
 	c.Assert(formation2, NotNil)
 
-	hasOrder := false
-	for _, o := range data.Orders {
-		if o.Kind == order.Kind && o.MissionType == order.MissionType &&
-			o.TaskerId == order.TaskerId {
-			hasOrder = true
-			break
-		}
-	}
-	c.Assert(hasOrder, Equals, true)
+	order2 := data.Orders[order.Id]
+	c.Assert(order2, NotNil)
+	c.Assert(order2, DeepEquals, order)
 }
 
 func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
@@ -240,7 +234,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	_, err := client.SendAutomatOrder(supplyAutomat.Id, MissionLogDeploy, params)
 	c.Assert(err, IsNil)
 
-	// A scout ammunitions are depleted, a convoy should be generated, with
+	// One scout ammunitions are depleted, a convoy should be generated, with
 	// a pathfind, eventually.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, u := range data.ListUnits() {
