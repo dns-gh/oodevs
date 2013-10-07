@@ -10,8 +10,9 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ComboBox.h"
 #include "moc_ADN_ComboBox.cpp"
-#include "ADN_Workspace.h"
 #include "ADN_Connector_Combo_ABC.h"
+#include "ADN_Workspace.h"
+#include "ADN_Tools.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox constructor
@@ -58,12 +59,6 @@ void ADN_ComboBox::DisconnectItem()
     // NOTHING
 }
 
-inline void SetAutoClear(T_ConnectorVector& v,bool b)
-{
-    for( T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
-        (*itConnector)->SetAutoClear(b);
-}
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::SetCurrentData
 // Created: JDY 03-07-21
@@ -71,7 +66,7 @@ inline void SetAutoClear(T_ConnectorVector& v,bool b)
 void ADN_ComboBox::SetCurrentData( void* data )
 {
     if( !data )
-        SetAutoClear( vItemConnectors_, true );
+        ADN_Tools::SetAutoClear( vItemConnectors_, true );
 
     DisconnectItem();
 
@@ -80,7 +75,7 @@ void ADN_ComboBox::SetCurrentData( void* data )
     ConnectItem();
 
     if( !data )
-        SetAutoClear( vItemConnectors_, false );
+        ADN_Tools::SetAutoClear( vItemConnectors_, false );
 }
 
 //-----------------------------------------------------------------------------

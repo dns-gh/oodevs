@@ -260,4 +260,15 @@ int ADN_Tools::ConvertLongStringToCentiseconds( const QString& text )
     return ComputeValue( buffer );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Tools::SetAutoClear
+// Created: ABR 2013-10-04
+// -----------------------------------------------------------------------------
+void ADN_Tools::SetAutoClear( T_ConnectorVector& v, bool b )
+{
+    for( auto itConnector = v.begin(); itConnector != v.end(); ++itConnector )
+        if( *itConnector != 0 )
+            ( *itConnector )->SetAutoClear( b );
+}
+
 }

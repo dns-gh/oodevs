@@ -241,13 +241,6 @@ void ADN_ListView::CreateTableFrom( std::stringstream& stream ) const
     stream << "</table>\n";
 }
 
-inline void SetAutoClear( T_ConnectorVector& v, bool b )
-{
-    for( T_ConnectorVector::iterator itConnector = v.begin(); itConnector != v.end(); ++itConnector )
-        if( *itConnector != 0 )
-            ( *itConnector )->SetAutoClear( b );
-}
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::SetCurrentItem
 // Created: JDY 03-07-03
@@ -258,7 +251,7 @@ bool ADN_ListView::SetCurrentItem( void* pData )
         return false;
 
     if( pData == 0 )
-        SetAutoClear( vItemConnectors_, true );
+        ADN_Tools::SetAutoClear( vItemConnectors_, true );
 
     bool wasModified = topLevelWidget()->isWindowModified(); // $$$$ ABR 2012-11-16: Hack to avoid window modifier to appear when connecting an item (because of weapon graph and unit icon)
 
@@ -271,7 +264,7 @@ bool ADN_ListView::SetCurrentItem( void* pData )
     ADN_Workspace::GetWorkspace().SetMainWindowModified( wasModified );
 
     if( pData == 0 )
-        SetAutoClear( vItemConnectors_, false );
+        ADN_Tools::SetAutoClear( vItemConnectors_, false );
 
     this->blockSignals( true );
     QStandardItem* pItem = this->FindItem( pData );

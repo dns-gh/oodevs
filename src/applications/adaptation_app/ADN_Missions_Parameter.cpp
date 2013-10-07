@@ -48,6 +48,7 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
 {
     ADN_Missions_Parameter* newParam = new ADN_Missions_Parameter( missionType_ );
     newParam->strName_    = strName_.GetData();
+    newParam->description_ = description_.GetData();
     newParam->type_       = type_.GetData();
     newParam->isOptional_ = isOptional_.GetData();
     newParam->minOccurs_  = minOccurs_.GetData();
