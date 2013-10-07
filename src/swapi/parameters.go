@@ -21,6 +21,9 @@ const (
 func MakeParameters(args ...*sword.MissionParameter) *sword.MissionParameters {
 	reply := &sword.MissionParameters{}
 	for _, arg := range args {
+		if arg == nil {
+			arg = MakeNullValue()
+		}
 		reply.Elem = append(reply.Elem, arg)
 	}
 	return reply

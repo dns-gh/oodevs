@@ -318,10 +318,9 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	err = client.SetAutomatMode(parent.Id, false)
 	c.Assert(err, IsNil)
 
-	null := swapi.MakeNullValue()
 	heading := swapi.MakeHeading(0)
 	dest := swapi.MakePointParam(swapi.Point{X: -15.8193, Y: 28.3456})
-	params := swapi.MakeParameters(heading, null, null, null, dest)
+	params := swapi.MakeParameters(heading, nil, nil, nil, dest)
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -972,11 +971,7 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
 	params = swapi.MakeParameters(
-		swapi.MakeHeading(0),
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue(),
-		swapi.MakePointParam(to))
+		swapi.MakeHeading(0), nil, nil, nil, swapi.MakePointParam(to))
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
 
@@ -1134,11 +1129,11 @@ func (s *TestSuite) TestSurrender(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: parameter not a party
-	err = client.SurrenderTest(automat.Id, swapi.MakeParameters(swapi.MakeNullValue()))
+	err = client.SurrenderTest(automat.Id, swapi.MakeParameters(nil))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: bad number of parameters
-	err = client.SurrenderTest(automat.Id, swapi.MakeParameters(swapi.MakeNullValue(), swapi.MakeNullValue()))
+	err = client.SurrenderTest(automat.Id, swapi.MakeParameters(nil, nil))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: surrender to own party
@@ -1843,17 +1838,16 @@ func Helitransport(c *C, client *swapi.Client, transported, carrier *swapi.Unit)
 	})
 
 	// Mission 'COMMON - Get transported' on the transported
-	null := swapi.MakeNullValue()
 	heading := swapi.MakeHeading(0)
 	dest := swapi.MakePointParam(pos)
-	params := swapi.MakeParameters(heading, null, null, null, dest)
+	params := swapi.MakeParameters(heading, nil, nil, nil, dest)
 	_, err := client.SendUnitOrder(transported.Id, 44528, params)
 	c.Assert(err, IsNil)
 
 	// Mission 'LEG_AIR - helitransport' on the carrier
-	params = swapi.MakeParameters(heading, null, null, null, swapi.MakeAgent(transported.Id),
+	params = swapi.MakeParameters(heading, nil, nil, nil, swapi.MakeAgent(transported.Id),
 		swapi.MakePointParam(to), dest, dest,
-		null, swapi.MakeBoolean(false), swapi.MakeEnumeration(0))
+		nil, swapi.MakeBoolean(false), swapi.MakeEnumeration(0))
 	_, err = client.SendUnitOrder(carrier.Id, 13, params)
 	c.Assert(err, IsNil)
 }
@@ -2027,7 +2021,7 @@ func (s *TestSuite) TestUnitReloadBrain(c *C) {
 	// too many parameters
 	err = client.ReloadBrainTest(tasker, swapi.MakeParameters(
 		swapi.MakeString("blah"),
-		swapi.MakeNullValue(),
+		nil,
 	))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
@@ -2084,10 +2078,7 @@ func (s *TestSuite) TestLoadUnit(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// too many parameters
-	err = client.LoadUnitTest(tasker, swapi.MakeParameters(
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue(),
-	))
+	err = client.LoadUnitTest(tasker, swapi.MakeParameters(nil, nil))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// invalid parameter type
@@ -2140,10 +2131,7 @@ func (s *TestSuite) TestUnloadUnit(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// too many parameters
-	err = client.UnloadUnitTest(tasker, swapi.MakeParameters(
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue(),
-	))
+	err = client.UnloadUnitTest(tasker, swapi.MakeParameters(nil, nil))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// invalid parameter type

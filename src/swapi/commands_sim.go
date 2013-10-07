@@ -767,7 +767,7 @@ func (c *Client) ChangeResourceNetworkTest(params *sword.MissionParameters) erro
 }
 
 func (c *Client) ChangeResourceNetwork(urban *Urban) error {
-	params := MakeParameters(MakeNullValue(), MakeNullValue())
+	params := MakeParameters(nil, nil)
 	params.Elem[0] = MakeIdentifier(urban.Id)
 	resources := []*sword.MissionParameter_Value{}
 	for _, r := range urban.ResourceNetworks {

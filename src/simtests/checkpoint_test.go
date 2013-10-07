@@ -181,10 +181,9 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 	c.Assert(err, IsNil)
 
 	// Give a mission
-	null := swapi.MakeNullValue()
 	heading := swapi.MakeHeading(0)
 	dest := swapi.MakePointParam(swapi.Point{X: -15.8193, Y: 28.3456})
-	params := swapi.MakeParameters(heading, null, null, null, dest)
+	params := swapi.MakeParameters(heading, nil, nil, nil, dest)
 	order, err := client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
 
@@ -230,7 +229,6 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 
 	// Deploy it
 	MissionLogDeploy := uint32(44584)
-	null := swapi.MakeNullValue()
 	heading := swapi.MakeHeading(0)
 	limit1 := swapi.MakeLimit(
 		swapi.Point{X: -15.8302, Y: 28.3765},
@@ -238,7 +236,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	limit2 := swapi.MakeLimit(
 		swapi.Point{X: -15.7983, Y: 28.3765},
 		swapi.Point{X: -15.7991, Y: 28.3413})
-	params := swapi.MakeParameters(heading, null, limit1, limit2, null)
+	params := swapi.MakeParameters(heading, nil, limit1, limit2, nil)
 	_, err := client.SendAutomatOrder(supplyAutomat.Id, MissionLogDeploy, params)
 	c.Assert(err, IsNil)
 

@@ -22,11 +22,7 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 	unit, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
-	params := swapi.MakeParameters(
-		swapi.MakeHeading(0),
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue(),
+	params := swapi.MakeParameters(swapi.MakeHeading(0), nil, nil, nil,
 		swapi.MakePointParam(to))
 
 	// Should work with disengaged unit
