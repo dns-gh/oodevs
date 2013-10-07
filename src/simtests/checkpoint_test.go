@@ -88,7 +88,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
 	*simu.SimProcess, *swapi.Client) {
-	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, false)
+	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, true)
 	client := loginAndWaitModel(c, sim, user, password)
 	return sim, client
 }
