@@ -62,6 +62,7 @@ public:
     //! @name Translations operations
     //@{
     void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& language );
+    void LoadTranslationXmlStream( xml::xistream& xis, const std::string& language );
     void LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages );
     void MergeDuplicateTranslations();
     void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages ) const;
@@ -71,9 +72,8 @@ public:
     //@{
     bool HasDuplicateErrors() const;
 
-    const std::string Translate( const std::string& key, const std::string& context = "", const std::string& language = "" ) const;
     const boost::shared_ptr< Context >& GetContext( const std::string& context );
-    const boost::shared_ptr< LocalizedString >& GetTranslation( const std::string& context, const std::string& key ) const;
+    const boost::shared_ptr< LocalizedString >& GetTranslation( const std::string& context, const std::string& key );
     //@}
 
 private:

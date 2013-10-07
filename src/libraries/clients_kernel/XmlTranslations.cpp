@@ -185,6 +185,15 @@ void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const too
     if( !translationPath.Exists() )
         return;
     tools::Xifstream xis( translationPath );
+    LoadTranslationXmlStream( xis, language );
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlTranslations::LoadTranslationXmlStream
+// Created: JSR 2013-09-30
+// -----------------------------------------------------------------------------
+void XmlTranslations::LoadTranslationXmlStream( xml::xistream& xis, const std::string& language )
+{
     xis >> xml::start( "TS" )
             >> xml::list( "context", *this, &XmlTranslations::ReadContext, language )
         >> xml::end;
@@ -198,10 +207,7 @@ void XmlTranslations::ReadContext( xml::xistream& xis, const std::string& langua
 {
     std::string context = "";
     xis >> xml::start( "name" ) >> context >> xml::end;
-    if( context.empty() )
-        return;
-    auto it = contexts_.find( context );
-    if( it != contexts_.end() )
+    if( !context.empty() )
         xis >> xml::list( "message", *this, &XmlTranslations::ReadMessage, language, context );
 }
 
@@ -289,6 +295,12 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
             << xml::attribute( "language", itLanguage->GetShortName() );
         for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         {
+            bool validContext = false;
+            for( auto itQuery = queries_.begin(); itQuery != queries_.end() && !validContext; ++itQuery )
+                validContext = itQuery->GetContext() == itContext->first;
+            if( !validContext )
+                continue;
+
             xos << xml::start( "context" )
                 << xml::start( "name" ) << itContext->first << xml::end;
             for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
@@ -313,32 +325,6 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: XmlTranslations::Translate
-// Created: ABR 2013-07-09
-// -----------------------------------------------------------------------------
-const std::string XmlTranslations::Translate( const std::string& key, const std::string& context /*= ""*/, const std::string& language /*= ""*/ ) const
-{
-    if( currentLanguage_.empty() && language.empty() )
-        return "";
-
-    const std::string lang = language.empty() ? currentLanguage_ : language;
-    if( context.empty() )
-    {
-        for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
-            if( !it->first.empty() )
-            {
-                const std::string result = Translate( key, it->first, lang );
-                if( !result.empty() )
-                    return result;
-            }
-        return "";
-    }
-
-    const std::string& translation = contexts_.at( context )->at( key )->Value( lang );
-    return ( !translation.empty() ) ? translation : key;
-}
-
-// -----------------------------------------------------------------------------
 // Name: XmlTranslations::SetTranslation
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
@@ -356,9 +342,12 @@ void XmlTranslations::SetTranslation( const std::string& context, const std::str
 // Name: XmlTranslations::GetTranslation
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( const std::string& context, const std::string& key ) const
+const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( const std::string& strContext, const std::string& key )
 {
-    return contexts_.at( context )->at( key );
+    const boost::shared_ptr< Context >& context = GetContext( strContext );
+    if( context->find( key ) == context->end() )
+        context->CreateNew( key );
+    return context->at( key );
 }
 
 // -----------------------------------------------------------------------------
