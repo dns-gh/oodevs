@@ -162,6 +162,7 @@ public:
     bool IsNewBaseReadOnly( const tools::Path& filename ) const;
     bool IsDevMode() const;
 
+    const ADN_GeneralConfig& GetConfig() const;
     ADN_MainWindow& GetMainWindow() const;
     void SetMainWindowModified( bool isModified );
     void SetIsSwappingLanguage( bool isSwappingLanguage );

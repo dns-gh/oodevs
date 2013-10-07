@@ -900,7 +900,7 @@ void ADN_ListView::RemoveCurrentElement()
 // -----------------------------------------------------------------------------
 void ADN_ListView::OnLanguageChanged()
 {
-    bEditionEnabled_ = ADN_Languages_Data::IsCurrentMaster();
+    bEditionEnabled_ = ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster();
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
             if( ADN_Ref_ABC* parentData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )

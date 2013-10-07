@@ -11,6 +11,7 @@
 #include "XmlTranslations.h"
 #include "Context.h"
 #include "Language.h"
+#include "Languages.h"
 #include "TranslationQuery.h"
 #include "Tools.h"
 #include "tools/FileWrapper.h"
@@ -27,7 +28,6 @@ using namespace kernel;
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
 XmlTranslations::XmlTranslations()
-    : currentLanguage_( tools::readLang() )
 {
     // NOTHING
 }
@@ -95,14 +95,14 @@ void XmlTranslations::ReadTranslationQuery( xml::xistream& xis )
 // Name: XmlTranslations::EvaluateTranslationQueries
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void XmlTranslations::EvaluateTranslationQueries( const tools::Path& xmlFile, const T_Languages& languages )
+void XmlTranslations::EvaluateTranslationQueries( const tools::Path& xmlFile, const Languages::T_Languages& languages )
 {
     for( auto it = queries_.begin(); it != queries_.end(); ++it )
     {
         QStringList result = it->Evaluate( xmlFile );
         for( auto itKey = result.begin(); itKey != result.end(); ++itKey )
             for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
-                SetTranslation( it->GetContext(), itKey->toStdString(), itLanguage->GetCode(), "" );
+                SetTranslation( it->GetContext(), itKey->toStdString(), ( *itLanguage )->GetCode(), "" );
     }
 }
 
@@ -167,26 +167,26 @@ void XmlTranslations::SaveTranslationQueries( xml::xostream& xos ) const
 // Name: XmlTranslations::LoadTranslations
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-void XmlTranslations::LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages )
+void XmlTranslations::LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages )
 {
     for( auto it = languages.begin(); it != languages.end(); ++it )
-        LoadTranslationFile( xmlFile, localesDirectory, it->GetCode() );
+        LoadTranslationFile( xmlFile, localesDirectory, **it );
 }
 
 // -----------------------------------------------------------------------------
 // Name: XmlTranslations::LoadTranslation
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& language )
+void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Language& language )
 {
-    if( language.size() != 2 )
-        throw MASA_EXCEPTION( "Invalid language " + language );
-    const tools::Path translationPath = localesDirectory / tools::Path::FromUTF8( language ) / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( language ) + ".ts";
+    if( language.GetCode().size() != 2 )
+        throw MASA_EXCEPTION( "Invalid language " + language.GetName() );
+    const tools::Path translationPath = localesDirectory / tools::Path::FromUTF8( language.GetCode() ) / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( language.GetCode() ) + ".ts";
     if( !translationPath.Exists() )
         return;
     tools::Xifstream xis( translationPath );
     xis >> xml::start( "TS" )
-            >> xml::list( "context", *this, &XmlTranslations::ReadContext, language )
+        >> xml::list( "context", *this, &XmlTranslations::ReadContext, language )
         >> xml::end;
 }
 
@@ -194,7 +194,7 @@ void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const too
 // Name: XmlTranslations::ReadContext
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-void XmlTranslations::ReadContext( xml::xistream& xis, const std::string& language )
+void XmlTranslations::ReadContext( xml::xistream& xis, const Language& language )
 {
     std::string context = "";
     xis >> xml::start( "name" ) >> context >> xml::end;
@@ -209,7 +209,7 @@ void XmlTranslations::ReadContext( xml::xistream& xis, const std::string& langua
 // Name: XmlTranslations::ReadMessage
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-void XmlTranslations::ReadMessage( xml::xistream& xis, const std::string& language, const std::string& context )
+void XmlTranslations::ReadMessage( xml::xistream& xis, const Language& language, const std::string& context )
 {
     std::string source = "";
     xis >> xml::start( "source" ) >> source >> xml::end;
@@ -219,7 +219,7 @@ void XmlTranslations::ReadMessage( xml::xistream& xis, const std::string& langua
         >> xml::optional >> translation
         >> type
         >> xml::end;
-    SetTranslation( context, source, language, translation, type );
+    SetTranslation( context, source, language.GetCode(), translation, type );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,27 +228,18 @@ void XmlTranslations::ReadMessage( xml::xistream& xis, const std::string& langua
 // -----------------------------------------------------------------------------
 void XmlTranslations::CleanTranslations()
 {
-    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); )
-    {
-        if( itContext->second->empty() || itContext->second.unique() )
-        {
-            auto toDelete = itContext;
-            ++itContext;
-            contexts_.erase( toDelete );
-            continue;
-        }
-
+    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); )
-        {
-            if( ( *itTranslation )->Key().empty() || itTranslation->unique()  )
-            {
+            if( itTranslation->unique() )
                 itTranslation = itContext->second->erase( itTranslation );
-                continue;
-            }
-            ++itTranslation;
-        }
-        ++itContext;
-    }
+            else
+                ++itTranslation;
+
+    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); )
+        if( itContext->second->empty() || itContext->second.unique() )
+            itContext = contexts_.erase( itContext );
+        else
+            ++itContext;
 }
 
 // -----------------------------------------------------------------------------
@@ -271,34 +262,38 @@ void XmlTranslations::MergeDuplicateTranslations()
 // Name: XmlTranslations::SaveTranslations
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages ) const
+void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages ) const
 {
     if( contexts_.empty() )
         return;
     for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
     {
-        const tools::Path languageDirectory = localesDirectory / tools::Path::FromUTF8( itLanguage->GetCode() );
+        const tools::Path languageDirectory = localesDirectory / tools::Path::FromUTF8( ( *itLanguage )->GetCode() );
         if( !languageDirectory.Exists() )
             languageDirectory.CreateDirectories();
 
-        const tools::Path translationPath = languageDirectory / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( itLanguage->GetCode() ) + ".ts";
+        const tools::Path translationPath = languageDirectory / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( ( *itLanguage )->GetCode() ) + ".ts";
         tools::Xofstream xos( translationPath );
         // $$$$ ABR 2013-07-10: TODO: Insert <!DOCTYPE TS> here when xeumeuleu will handle it
         xos << xml::start( "TS" )
             << xml::attribute( "version", "2.0" )
-            << xml::attribute( "language", itLanguage->GetCode() );
+            << xml::attribute( "language", ( *itLanguage )->GetCode() );
         for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         {
+            if( itContext->second->empty() )
+                continue;
             xos << xml::start( "context" )
                 << xml::start( "name" ) << itContext->first << xml::end;
             for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
             {
+                if( ( *itTranslation )->Key().empty() )
+                    continue;
                 xos << xml::start( "message" )
-                        << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
-                        << xml::start( "translation" )
-                            << ( *itTranslation )->Value( itLanguage->GetCode() )
-                            << ( *itTranslation )->Type( itLanguage->GetCode() )
-                        << xml::end //! translation
+                    << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
+                    << xml::start( "translation" )
+                    << ( *itTranslation )->Value( ( *itLanguage )->GetCode() )
+                    << ( *itTranslation )->Type( ( *itLanguage )->GetCode() )
+                    << xml::end //! translation
                     << xml::end; //! message
             }
             xos << xml::end; //! context
@@ -313,43 +308,17 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: XmlTranslations::Translate
-// Created: ABR 2013-07-09
-// -----------------------------------------------------------------------------
-const std::string XmlTranslations::Translate( const std::string& key, const std::string& context /*= ""*/, const std::string& language /*= ""*/ ) const
-{
-    if( currentLanguage_.empty() && language.empty() )
-        return "";
-
-    const std::string lang = language.empty() ? currentLanguage_ : language;
-    if( context.empty() )
-    {
-        for( auto it = contexts_.begin(); it != contexts_.end(); ++it )
-            if( !it->first.empty() )
-            {
-                const std::string result = Translate( key, it->first, lang );
-                if( !result.empty() )
-                    return result;
-            }
-        return "";
-    }
-
-    const std::string& translation = contexts_.at( context )->at( key )->Value( lang );
-    return ( !translation.empty() ) ? translation : key;
-}
-
-// -----------------------------------------------------------------------------
 // Name: XmlTranslations::SetTranslation
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void XmlTranslations::SetTranslation( const std::string& context, const std::string& key, const std::string& language, const std::string& translation, E_TranslationType type /* = kernel::eTranslationType_Unfinished */ )
+void XmlTranslations::SetTranslation( const std::string& context, const std::string& key, const std::string& languageCode, const std::string& translation, E_TranslationType type /* = kernel::eTranslationType_Unfinished */ )
 {
     auto it = contexts_.find( context );
     if( it == contexts_.end() )
         contexts_[ context ] = boost::make_shared< Context >();
     boost::shared_ptr< LocalizedString > string = ( *contexts_[ context ] )[ key ];
-    string->SetValue( language, translation );
-    string->SetType( language, type );
+    string->SetValue( languageCode, translation );
+    string->SetType( languageCode, type );
 }
 
 // -----------------------------------------------------------------------------

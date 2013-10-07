@@ -70,8 +70,8 @@ void ADN_Languages_GUI::FillMenu( QMenu* menu )
     actions_.push_back( defaultAction_ );
     currentAction_ = defaultAction_;
 
-    for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
-        actions_.push_back( AddToMenu( it->GetName().c_str(), menu, mapper_ ) );
+    for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
+        actions_.push_back( AddToMenu( ( *it )->GetName().c_str(), menu, mapper_ ) );
 
     menu->addSeparator();
     QAction* editAction = menu->addAction( tr( "Edit..." ), this, SLOT( OnEditLanguages() ) );
@@ -103,13 +103,13 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
         currentAction_ = defaultAction_;
 
     currentAction_->setChecked( true );
-    for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
-        if( it->GetName() == language.toStdString() )
+    for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
+        if( ( *it )->GetName() == language.toStdString() )
         {
-            ChangeLanguage( it->GetCode() );
+            ChangeLanguage( ( *it )->GetCode() );
             return;
         }
-    ChangeLanguage( ADN_Languages_Data::Master() );
+    ChangeLanguage( data_.Master() );
 }
 
 // -----------------------------------------------------------------------------

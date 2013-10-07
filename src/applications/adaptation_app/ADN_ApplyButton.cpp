@@ -73,5 +73,5 @@ void ADN_ApplyButton::OnTypeChanged( int newType )
 // -----------------------------------------------------------------------------
 void ADN_ApplyButton::OnLanguageChanged()
 {
-    setVisible( !ADN_Languages_Data::IsCurrentMaster() );
+    setVisible( !ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() );
 }

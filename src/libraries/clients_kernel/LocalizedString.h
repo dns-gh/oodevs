@@ -10,9 +10,12 @@
 #ifndef __LocalizedString_h_
 #define __LocalizedString_h_
 
+#include "Languages.h"
+#include <boost/container/flat_map.hpp>
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
-    class Language;
 
 enum E_TranslationType
 {
@@ -29,7 +32,7 @@ xml::xistream& operator>>( xml::xistream& xis, E_TranslationType& type );
 */
 // Created: ABR 2013-08-22
 // =============================================================================
-class LocalizedString
+class LocalizedString : private boost::noncopyable
 {
     //! @name Types
     //@{
@@ -49,7 +52,7 @@ class LocalizedString
         E_TranslationType type_;
         std::string value_;
     };
-    typedef std::map< const std::string, TranslationText > T_Texts;
+    typedef boost::container::flat_map< std::string, TranslationText > T_Texts;
     //@}
 
 public:
@@ -62,7 +65,7 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( const std::vector< Language >& languages );
+    void Initialize( const Languages::T_Languages& languages );
     void CopyValues( const LocalizedString& other );
     //@}
 

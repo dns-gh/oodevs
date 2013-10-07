@@ -288,7 +288,7 @@ void ADN_MainWindow::PurgeGUI()
     mainTabWidget_.reset();
     // Languages menu
     menuLanguages_->clear();
-    kernel::Language::SetCurrent( ADN_Languages_Data::Master() );
+    kernel::Language::SetCurrent( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
     // ObjectNameManager
     gui::ObjectNameManager::getInstance()->Purge();
 }

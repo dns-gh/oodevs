@@ -10,6 +10,14 @@
 #ifndef __Language_h_
 #define __Language_h_
 
+#include <boost/noncopyable.hpp>
+
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
+
 namespace kernel
 {
 
@@ -19,25 +27,17 @@ namespace kernel
 */
 // Created: ABR 2013-07-09
 // =============================================================================
-class Language
+class Language : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Language();
-             Language( const Language& );
     explicit Language( xml::xistream& xis );
     virtual ~Language();
     //@}
 
     //! @name Operations
-    //@{
-    void Read( xml::xistream& xis );
-    void Write( xml::xostream& xos ) const;
-    //@}
-
-    //! @name Accessors
     //@{
     const std::string& GetName() const;
     const std::string& GetCode() const;
@@ -52,8 +52,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::string name_;
-    std::string code_;
+    const std::string name_;
+    const std::string code_;
     //@}
 
     //! @name Static member data
@@ -61,9 +61,6 @@ private:
     static std::string current_;
     //@}
 };
-
-xml::xostream& operator<<( xml::xostream& xos, const Language& language );
-xml::xistream& operator>>( xml::xistream& xis, Language& language );
 
 } //! namespace kernel
 

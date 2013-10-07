@@ -14,10 +14,10 @@
 						<xs:documentation xml:lang="fr">Une langue</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
-						<xs:attribute name="name" type="xs:string" use="required">
+						<xs:attribute name="master" type="xs:boolean" use="optional">
 							<xs:annotation>
-								<xs:documentation xml:lang="en">Language name</xs:documentation>
-								<xs:documentation xml:lang="fr">Nom de la langue</xs:documentation>
+								<xs:documentation xml:lang="en">Define if this language is the master</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit si cette langue est la langue de référence</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
 						<xs:attribute name="code" type="xs:string" use="required">
