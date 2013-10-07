@@ -40,7 +40,7 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-    const std::string& GetShortName() const;
+    const std::string& GetCode() const;
     //@}
 
     //! @name Static methods
@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     std::string name_;
-    std::string shortname_;
+    std::string code_;
     //@}
 
     //! @name Static member data

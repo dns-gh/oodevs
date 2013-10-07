@@ -106,7 +106,7 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
     for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
         if( it->GetName() == language.toStdString() )
         {
-            ChangeLanguage( it->GetShortName() );
+            ChangeLanguage( it->GetCode() );
             return;
         }
     ChangeLanguage( kernel::Language::Default() );

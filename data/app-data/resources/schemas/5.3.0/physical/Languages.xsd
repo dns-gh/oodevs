@@ -20,10 +20,10 @@
 								<xs:documentation xml:lang="fr">Nom de la langue</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
-						<xs:attribute name="shortname" type="xs:string" use="required">
+						<xs:attribute name="code" type="xs:string" use="required">
 							<xs:annotation>
-								<xs:documentation xml:lang="en">Language short name</xs:documentation>
-								<xs:documentation xml:lang="fr">Nom court de la langue</xs:documentation>
+								<xs:documentation xml:lang="en">Language code</xs:documentation>
+								<xs:documentation xml:lang="fr">Code de la langue</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
 					</xs:complexType>

@@ -210,8 +210,8 @@ void ADN_Missions_Data::OnElementDeleted( boost::shared_ptr< kernel::LocalizedSt
     const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
-        const std::string& value = name->Value( it->GetShortName() );
-        DeleteMissionSheet( CreateMissionDirectory( it->GetShortName(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ) );
+        const std::string& value = name->Value( it->GetCode() );
+        DeleteMissionSheet( CreateMissionDirectory( it->GetCode(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ) );
     }
 }
 
@@ -305,7 +305,7 @@ namespace
         spNew->ReadArchive( xis );
         spNew->ReadMissionSheet( missionPath, kernel::Language::Default() );
         for( auto it = languages.begin(); it != languages.end(); ++it )
-            spNew->ReadMissionSheet( CreateMissionDirectory( it->GetShortName(), missionPath ), it->GetShortName() );
+            spNew->ReadMissionSheet( CreateMissionDirectory( it->GetCode(), missionPath ), it->GetCode() );
         missions.AddItem( spNew.release() );
     }
 }
@@ -367,7 +367,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     {
         WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, kernel::Language::Default() );
         for( auto it = languages.begin(); it != languages.end(); ++it )
-            WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, it->GetShortName() );
+            WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, it->GetCode() );
     }
 
     // move mission sheets to obsolete directory when mission is deleted
@@ -514,7 +514,7 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
             const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
             ( *it )->CheckMissionDataConsistency( checker, kernel::Language::Default() );
             for( auto itLang = languages.begin(); itLang != languages.end(); ++itLang )
-                ( *it )->CheckMissionDataConsistency( checker, itLang->GetShortName() );
+                ( *it )->CheckMissionDataConsistency( checker, itLang->GetCode() );
         }
 }
 

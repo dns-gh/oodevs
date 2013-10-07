@@ -22,7 +22,7 @@ std::string Language::current_ = "default";
 // -----------------------------------------------------------------------------
 Language::Language()
     : name_()
-    , shortname_()
+    , code_()
 {
     // NOTHING
 }
@@ -33,7 +33,7 @@ Language::Language()
 // -----------------------------------------------------------------------------
 Language::Language( const Language& other )
     : name_( other.name_ )
-    , shortname_( other.shortname_ )
+    , code_( other.code_ )
 {
     // NOTHING
 }
@@ -44,7 +44,7 @@ Language::Language( const Language& other )
 // -----------------------------------------------------------------------------
 Language::Language( xml::xistream& xis )
     : name_()
-    , shortname_()
+    , code_()
 {
     Read( xis );
 }
@@ -65,12 +65,12 @@ Language::~Language()
 void Language::Read( xml::xistream& xis )
 {
     xis >> xml::attribute( "name", name_ )
-        >> xml::attribute( "shortname", shortname_ );
-    shortname_ = boost::algorithm::to_lower_copy( shortname_ );
-    if( name_.empty() || shortname_.empty() )
-        throw MASA_EXCEPTION( QString( "Incomplete language '%1' / '%2'" ).arg( name_.c_str() ).arg( shortname_.c_str() ).toStdString() );
-    else if( shortname_.size() != 2 )
-        throw MASA_EXCEPTION( QString( "Invalid language shortname '%1'" ).arg( shortname_.c_str() ).toStdString() );
+        >> xml::attribute( "code", code_ );
+    code_ = boost::algorithm::to_lower_copy( code_ );
+    if( name_.empty() || code_.empty() )
+        throw MASA_EXCEPTION( QString( "Incomplete language '%1' / '%2'" ).arg( name_.c_str() ).arg( code_.c_str() ).toStdString() );
+    else if( code_.size() != 2 )
+        throw MASA_EXCEPTION( QString( "Invalid language shortname '%1'" ).arg( code_.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void Language::Read( xml::xistream& xis )
 void Language::Write( xml::xostream& xos ) const
 {
     xos << xml::attribute( "name", name_ )
-        << xml::attribute( "shortname", shortname_ );
+        << xml::attribute( "code", code_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,12 +93,12 @@ const std::string& Language::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Language::GetShortName
+// Name: Language::GetCode
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-const std::string& Language::GetShortName() const
+const std::string& Language::GetCode() const
 {
-    return shortname_;
+    return code_;
 }
 
 // -----------------------------------------------------------------------------

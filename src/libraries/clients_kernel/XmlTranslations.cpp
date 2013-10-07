@@ -102,7 +102,7 @@ void XmlTranslations::EvaluateTranslationQueries( const tools::Path& xmlFile, co
         QStringList result = it->Evaluate( xmlFile );
         for( auto itKey = result.begin(); itKey != result.end(); ++itKey )
             for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
-                SetTranslation( it->GetContext(), itKey->toStdString(), itLanguage->GetShortName(), "" );
+                SetTranslation( it->GetContext(), itKey->toStdString(), itLanguage->GetCode(), "" );
     }
 }
 
@@ -170,7 +170,7 @@ void XmlTranslations::SaveTranslationQueries( xml::xostream& xos ) const
 void XmlTranslations::LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages )
 {
     for( auto it = languages.begin(); it != languages.end(); ++it )
-        LoadTranslationFile( xmlFile, localesDirectory, it->GetShortName() );
+        LoadTranslationFile( xmlFile, localesDirectory, it->GetCode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,16 +277,16 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
         return;
     for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
     {
-        const tools::Path languageDirectory = localesDirectory / tools::Path::FromUTF8( itLanguage->GetShortName() );
+        const tools::Path languageDirectory = localesDirectory / tools::Path::FromUTF8( itLanguage->GetCode() );
         if( !languageDirectory.Exists() )
             languageDirectory.CreateDirectories();
 
-        const tools::Path translationPath = languageDirectory / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( itLanguage->GetShortName() ) + ".ts";
+        const tools::Path translationPath = languageDirectory / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( itLanguage->GetCode() ) + ".ts";
         tools::Xofstream xos( translationPath );
         // $$$$ ABR 2013-07-10: TODO: Insert <!DOCTYPE TS> here when xeumeuleu will handle it
         xos << xml::start( "TS" )
             << xml::attribute( "version", "2.0" )
-            << xml::attribute( "language", itLanguage->GetShortName() );
+            << xml::attribute( "language", itLanguage->GetCode() );
         for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         {
             xos << xml::start( "context" )
@@ -296,8 +296,8 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
                 xos << xml::start( "message" )
                         << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
                         << xml::start( "translation" )
-                            << ( *itTranslation )->Value( itLanguage->GetShortName() )
-                            << ( *itTranslation )->Type( itLanguage->GetShortName() )
+                            << ( *itTranslation )->Value( itLanguage->GetCode() )
+                            << ( *itTranslation )->Type( itLanguage->GetCode() )
                         << xml::end //! translation
                     << xml::end; //! message
             }

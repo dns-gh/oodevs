@@ -170,11 +170,11 @@ void LocalizedString::Initialize( const std::vector< Language >& languages )
 {
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
-        auto valueIt = values_.find( it->GetShortName() );
+        auto valueIt = values_.find( it->GetCode() );
         if( valueIt == values_.end() )
         {
-            values_[ it->GetShortName() ].value_ = "";
-            values_[ it->GetShortName() ].type_ = eTranslationType_Unfinished;
+            values_[ it->GetCode() ].value_ = "";
+            values_[ it->GetCode() ].type_ = eTranslationType_Unfinished;
         }
     }
 }
