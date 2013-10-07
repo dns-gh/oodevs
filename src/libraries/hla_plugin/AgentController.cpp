@@ -197,7 +197,7 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
     T_Agent proxy( new AgentProxy( agent, componentTypes_, componentTypeResolver_, localAgentResolver_, doDisaggregation_, logger_ ) );
     agents_.insert( T_Agents::value_type( agent.GetId(), proxy ) );
     const kernel::AgentType& agentType = agent.GetType();
-    const std::string typeName = agentType.GetName();
+    const std::string typeName = agentType.GetKeyName();
     rpr::EntityType entityType = ComputeEntityType( agent, logger_, aggregatesResolver_, typeName );
     const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( agent.GetSuperior().GetTeam().GetId() );
     for( auto it = listeners_.begin(); it != listeners_.end(); ++it )

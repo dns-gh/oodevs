@@ -34,7 +34,7 @@ using namespace kernel;
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
 Agent::Agent( const AgentType& type, Controller& controller, tools::IdManager& idManager )
-    : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
+    : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetKeyName().c_str() )
     , type_                ( type )
     , symbolPath_          ( type_.GetSymbol() )
     , moveSymbol_          ( type_.GetMoveSymbol() )
@@ -48,22 +48,12 @@ Agent::Agent( const AgentType& type, Controller& controller, tools::IdManager& i
     CreateDictionary();
 }
 
-namespace
-{
-    QString ReadName( xml::xistream& xis )
-    {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 Agent::Agent( xml::xistream& xis, Controller& controller, tools::IdManager& idManager, const AgentType& type, const kernel::SymbolFactory& symbolFactory )
-    : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
+    : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , type_           ( type )
     , symbolPath_     ( type_.GetSymbol() )
     , moveSymbol_          ( type_.GetMoveSymbol() )
@@ -172,7 +162,7 @@ void Agent::CreateDictionary()
 void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
     gui::EntityImplementation< kernel::Agent_ABC >::SerializeAttributes( xos );
-    xos << xml::attribute( "type", type_.GetName() );
+    xos << xml::attribute( "type", type_.GetKeyName() );
     if( level_ != ENT_Tr::ConvertToNatureLevel( type_.GetNature().GetLevel() ) )
         xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
     if( overridenSymbol_ )

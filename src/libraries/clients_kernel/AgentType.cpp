@@ -15,6 +15,7 @@
 #include "ComponentType.h"
 #include "SymbolFactory.h"
 #include "LogisticSupplyClass.h"
+#include "XmlTranslations.h"
 #include <xeumeuleu/xml.hpp>
 #include "ENT/ENT_Tr.h"
 
@@ -24,15 +25,17 @@ using namespace kernel;
 // Name: AgentType constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& componentResolver, const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver, const SymbolFactory& symbolFactory )
-    : nature_            ( 0 )
-    , nbrOfficers_       ( 0 )
+AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& componentResolver,
+                      const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver,
+                      const SymbolFactory& symbolFactory, kernel::XmlTranslations& translations )
+    : name_( translations.GetTranslation( "units", xis.attribute< std::string >( "name" ) ) )
+    , nature_( 0 )
+    , nbrOfficers_( 0 )
     , nbrWarrantOfficers_( 0 )
-    , nbcSuit_           ( eAgentNone )
+    , nbcSuit_( eAgentNone )
 {
     std::string modelName, nbcSuit;
-    xis >> xml::attribute( "name", name_ )
-        >> xml::attribute( "type", type_ )
+    xis >> xml::attribute( "type", type_ )
         >> xml::attribute( "id", id_ )
         >> xml::attribute( "decisional-model", modelName );
     model_ = & modelResolver.Get( modelName );
@@ -141,12 +144,21 @@ unsigned long AgentType::GetId() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentType::GetName
-// Created: AGE 2006-02-14
+// Name: AgentType::GetLocalizedName
+// Created: JSR 2013-09-30
 // -----------------------------------------------------------------------------
-std::string AgentType::GetName() const
+const std::string& AgentType::GetLocalizedName() const
 {
-    return name_;
+    return name_->Translate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetKeyName
+// Created: JSR 2013-09-30
+// -----------------------------------------------------------------------------
+const std::string& AgentType::GetKeyName() const
+{
+    return name_->Key();
 }
 
 // -----------------------------------------------------------------------------

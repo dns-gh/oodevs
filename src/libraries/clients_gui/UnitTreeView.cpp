@@ -136,7 +136,7 @@ void UnitTreeView::FillListBy( const std::string&( kernel::AgentNature::*functio
         QStandardItem* parent = dataModel_.FindTextItem( text );
         if( !parent )
             parent = dataModel_.AddRootTextItem( dataModel_.rowCount(), 0, text, "" );
-        QStandardItem* item = dataModel_.AddChildDataItem( parent, parent->rowCount(), 0, type.GetName().c_str(), "", type, Qt::ItemIsDragEnabled );
+        QStandardItem* item = dataModel_.AddChildDataItem( parent, parent->rowCount(), 0, type.GetLocalizedName().c_str(), "", type, Qt::ItemIsDragEnabled );
         FillAgentComposition( *item, type );
     }
 }
@@ -184,7 +184,7 @@ void UnitTreeView::FillListByNature()
         const kernel::AgentType& type = it.NextElement();
         const std::string& nature = type.GetNature().GetNature();
         QStandardItem* parentItem = CreateNaturePath( nature );
-        QStandardItem* item = dataModel_.AddChildDataItem( parentItem, parentItem->rowCount(), 0, type.GetName().c_str(), "", type, Qt::ItemIsDragEnabled );
+        QStandardItem* item = dataModel_.AddChildDataItem( parentItem, parentItem->rowCount(), 0, type.GetLocalizedName().c_str(), "", type, Qt::ItemIsDragEnabled );
         FillAgentComposition( *item, type );
     }
 }
@@ -200,7 +200,7 @@ void UnitTreeView::FillAutomatComposition( QStandardItem& parent, const kernel::
     {
         const int row = parent.rowCount();
         const kernel::AgentType& agentType = composition->GetType();
-        QStandardItem* item = dataModel_.AddChildDataItem( &parent, row, 0, agentType.GetName().c_str(), "", agentType, Qt::ItemIsDragEnabled );
+        QStandardItem* item = dataModel_.AddChildDataItem( &parent, row, 0, agentType.GetLocalizedName().c_str(), "", agentType, Qt::ItemIsDragEnabled );
         item->setSelectable( !selectOnlyAutomats_ );
         if( &agentType == type.GetTypePC() )
             item->setIcon( QIcon( MAKE_PIXMAP( commandpost ) ) );
@@ -268,5 +268,5 @@ void UnitTreeView::Select( const kernel::Automat_ABC& element )
 // -----------------------------------------------------------------------------
 void UnitTreeView::Select( const kernel::Agent_ABC& element )
 {
-    SearchAndSelect( element.GetType().GetName().c_str(), Qt::MatchExactly, Qt::DisplayRole );
+    SearchAndSelect( element.GetType().GetLocalizedName().c_str(), Qt::MatchExactly, Qt::DisplayRole );
 }

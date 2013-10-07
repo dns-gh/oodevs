@@ -11,9 +11,13 @@
 #define __AgentType_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 #include "ENT/ENT_Tr.h"
 
-namespace xml { class xistream; };
+namespace xml
+{
+    class xistream;
+}
 
 namespace tools
 {
@@ -28,8 +32,10 @@ namespace kernel
     class ComponentType;
     class DecisionalModel;
     class DotationCapacityType;
+    class LocalizedString;
     class SymbolFactory;
     class LogisticSupplyClass;
+    class XmlTranslations;
 
 // =============================================================================
 /** @class  AgentType
@@ -44,14 +50,15 @@ public:
     //@{
              AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& componentResolver
                                           , const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver
-                                          , const SymbolFactory& symbolFactory );
+                                          , const SymbolFactory& symbolFactory, kernel::XmlTranslations& translations );
     virtual ~AgentType();
     //@}
 
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    std::string GetName() const;
+    const std::string& GetLocalizedName() const;
+    const std::string& GetKeyName() const;
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
     tools::Iterator< const AgentComposition& > CreateIterator() const;
@@ -86,11 +93,8 @@ private:
     //! @name Types
     //@{
     typedef std::vector< AgentComposition* >      T_Components;
-    typedef T_Components::const_iterator        CIT_Components;
     typedef std::vector< DotationCapacityType* >  T_Resources;
-    typedef T_Resources::const_iterator         CIT_Resources;
     typedef std::map< std::string, unsigned int > T_StocksThresholds;
-    typedef T_StocksThresholds::const_iterator  CIT_StocksThresholds;
     //@}
 
     //! @name Helpers
@@ -105,7 +109,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string name_;
+    const boost::shared_ptr< LocalizedString > name_;
     std::string type_;
     unsigned long id_;
 
