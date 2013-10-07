@@ -72,6 +72,10 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
+
 MIL_AgentTypePion::T_PionTypeAllocatorMap  MIL_AgentTypePion::pionTypeAllocators_;
 MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
 
@@ -254,7 +258,7 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
 {
     std::string strTypePoint;
     xis >> xml::attribute( "type", strTypePoint );
-    if( sCaseInsensitiveEqual()( strTypePoint, "lima" ) )
+    if( boost::iequals( strTypePoint, "lima" ) )
     {
         xis >> xml::attribute( "value", rDistanceAvantLimas_ );
         rDistanceAvantLimas_ = MIL_Tools::ConvertMeterToSim( rDistanceAvantLimas_ );

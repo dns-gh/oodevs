@@ -12,7 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ComposanteState.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_String.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 const PHY_ComposanteState PHY_ComposanteState::undamaged_                  ( "Disponible"             , eUndamaged                  , true  , false ); // bUsable, bDamaged
 const PHY_ComposanteState PHY_ComposanteState::repairableWithEvacuation_   ( "ReparableAvecEvacuation", eRepairableWithEvacuation   , true  , true  );
@@ -149,7 +151,7 @@ const PHY_ComposanteState& PHY_ComposanteState::Find( unsigned int nID )
 const PHY_ComposanteState* PHY_ComposanteState::Find( const std::string& strName )
 {
     for( auto it = composanteStates_.begin(); it != composanteStates_.end(); ++it )
-        if( sCaseInsensitiveEqual()( (**it).GetName(), strName ) )
+        if( boost::iequals( (**it).GetName(), strName ) )
             return *it;
     return 0;
 }

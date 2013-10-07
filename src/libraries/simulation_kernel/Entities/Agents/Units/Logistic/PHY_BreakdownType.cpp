@@ -17,6 +17,9 @@
 #include "tools/Codec.h"
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
 unsigned int                      PHY_BreakdownType::nDiagnosticTime_ = 0;
@@ -28,9 +31,9 @@ unsigned int                      PHY_BreakdownType::nDiagnosticTime_ = 0;
 inline
 PHY_BreakdownType::E_Type PHY_BreakdownType::ConvertType( const std::string& strType )
 {
-    if( sCaseInsensitiveEqual()( strType, "M" ) )
+    if( boost::iequals( strType, "M" ) )
         return eMobility;
-    if( sCaseInsensitiveEqual()( strType, "EA" ) )
+    if( boost::iequals( strType, "EA" ) )
         return eElectronic;
     return eUnknown;
 }

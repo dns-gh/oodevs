@@ -37,6 +37,9 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 

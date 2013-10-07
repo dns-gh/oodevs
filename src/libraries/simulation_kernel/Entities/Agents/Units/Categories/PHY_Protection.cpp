@@ -16,6 +16,9 @@
 #include "Tools/MIL_Tools.h"
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
 unsigned int PHY_Protection::nNextID_ = 0;
@@ -80,7 +83,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     , rBreakdownProbabilityNeva_( 0. )
     , attritionEffectsOnHumans_ ( PHY_ComposanteState::GetNbrStates(), T_HumanEffect() )
 {
-    nType_ = sCaseInsensitiveEqual()( xis.attribute< std::string >( "type" ), "humain" ) ? eHuman : eMaterial;
+    nType_ = boost::iequals( xis.attribute< std::string >( "type" ), "humain" ) ? eHuman : eMaterial;
 
     std::string timeString, varianceString;
     xis >> xml::start( "neutralization" )

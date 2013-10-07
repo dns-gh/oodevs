@@ -12,7 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoDotationClass.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_String.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , 0 );
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", 1 );
@@ -84,7 +86,7 @@ const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( int nID )
 const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( const std::string& strName )
 {
     for( auto it = types_.begin(); it != types_.end(); ++it )
-        if( sCaseInsensitiveEqual()( strName, it->second->GetName() ) )
+        if( boost::iequals( strName, it->second->GetName() ) )
             return it->second;
     return 0;
 }

@@ -15,7 +15,9 @@
 #include "PHY_DotationCategory_IndirectObjectCreationFire.h"
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_String.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::explosif_  ( "Explosif"  , eExplosif  , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::fumigene_  ( "Fumigene"  , eFumigene  , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
@@ -88,7 +90,7 @@ const PHY_IndirectFireDotationClass* PHY_IndirectFireDotationClass::Find( const 
 {
     for( auto it = types_.begin(); it != types_.end(); ++it )
     {
-        if( sCaseInsensitiveEqual()( strName, it->second->GetName() ) )
+        if( boost::iequals( strName, it->second->GetName() ) )
             return it->second;
     }
     return 0;
