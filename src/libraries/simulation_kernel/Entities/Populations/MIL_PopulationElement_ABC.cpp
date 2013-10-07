@@ -33,6 +33,7 @@
 #include "Tools/MIL_Geometry.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
@@ -227,6 +228,7 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
         collidingAgents_.push_back( &agent );
         NotifyCollision( agent );
     }
+
     TER_ObjectManager::T_ObjectVector objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
     collidingObjects_.clear();
@@ -237,18 +239,13 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
         collidingObjects_.push_back( &object );
         object.NotifyPopulationMovingInside( *this );
     }
-    TER_PopulationConcentrationManager::T_PopulationConcentrationVector concentrations;
-    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocation(), concentrations );
-    collidingConcentrations_.clear();
-    collidingConcentrations_.reserve( concentrations.size() );
-    for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
-         collidingConcentrations_.push_back( *it );
-    TER_PopulationFlowManager::T_PopulationFlowVector flows;
-    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocation(), flows );
-    collidingFlows_.clear();
-    collidingFlows_.reserve( flows.size() );
-    for( auto it = flows.begin(); it != flows.end(); ++it )
-        collidingFlows_.push_back( *it );
+
+    collidingPopulationConcentrations_.clear();
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocation(), collidingPopulationConcentrations_ );
+
+    collidingPopulationFlows_.clear();
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocation(), collidingPopulationFlows_ );
+
     ClearCollidingAttackingAgents();
 }
 
@@ -292,8 +289,8 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
          >> rDensity_
          >> collidingAgents_
          >> collidingObjects_
-         >> collidingConcentrations_
-         >> collidingFlows_;
+         >> collidingPopulationConcentrations_
+         >> collidingPopulationFlows_;
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
@@ -313,8 +310,8 @@ void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const unsi
          << rDensity_
          << collidingAgents_
          << collidingObjects_
-         << collidingConcentrations_
-         << collidingFlows_
+         << collidingPopulationConcentrations_
+         << collidingPopulationFlows_
          << attitude;
     file << intoxicationEffects_;
     file << contaminationEffects_;
@@ -569,24 +566,27 @@ const MIL_PopulationElement_ABC::T_ObjectVector& MIL_PopulationElement_ABC::GetC
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::GetCollidingConcentrations
-// Created: JSR 2013-07-11
+
+
+// Name: MIL_PopulationElement_ABC::GetCollidingPopulationFlows
+// Created: LDC 2013-10-04
 // -----------------------------------------------------------------------------
-const MIL_PopulationElement_ABC::T_ConcentrationVector& MIL_PopulationElement_ABC::GetCollidingConcentrations() const
+const MIL_PopulationElement_ABC::T_PopulationFlowVector& MIL_PopulationElement_ABC::GetCollidingPopulationFlows() const
 {
-    return collidingConcentrations_;
+    return collidingPopulationFlows_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::GetCollidingFlows
-// Created: JSR 2013-07-11
+// Name: MIL_PopulationElement_ABC::GetCollidingPopulationConcentrations
+// Created: LDC 2013-10-04
 // -----------------------------------------------------------------------------
-const MIL_PopulationElement_ABC::T_FlowVector& MIL_PopulationElement_ABC::GetCollidingFlows() const
+const MIL_PopulationElement_ABC::T_PopulationConcentrationVector& MIL_PopulationElement_ABC::GetCollidingPopulationConcentrations() const
 {
-    return collidingFlows_;
+    return collidingPopulationConcentrations_;
 }
 
 // -----------------------------------------------------------------------------
+
 // Name: MIL_PopulationElement_ABC::ClearCollisions
 // Created: NLD 2005-12-06
 // -----------------------------------------------------------------------------
@@ -594,8 +594,10 @@ void MIL_PopulationElement_ABC::ClearCollisions()
 {
     collidingAgents_.clear();
     collidingObjects_.clear();
-    collidingConcentrations_.clear();
-    collidingFlows_.clear();
+
+    collidingPopulationConcentrations_.clear();
+    collidingPopulationFlows_.clear();
+
 }
 
 // -----------------------------------------------------------------------------
