@@ -66,17 +66,3 @@ boost::shared_ptr< DEC_PathPoint > DEC_Rep_PathPoint_Front::GetDestPoint() const
 {
     return destPoint_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Front::Dump
-// Created: NLD 2005-08-10
-// -----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Front::Dump() const
-{
-    std::cout << "    DEC_Rep_PathPoint_Front " << vPos_
-              << " - Type : " << nObjectTypes_.DumpToString()
-              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
-              << " - DestPoint : " << destPoint_->GetPos()
-              << " - Dest Type : " << destPoint_->GetTypeTerrain().DumpToString()
-              << std::endl;
-}

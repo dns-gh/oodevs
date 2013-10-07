@@ -81,11 +81,6 @@ public:
     const std::string& GetDIAType() const;
     //@}
 
-    //! @name Debug
-    //@{
-    virtual void Dump() const;
-    //@}
-
 protected:
     //! @name Member data
     //@{

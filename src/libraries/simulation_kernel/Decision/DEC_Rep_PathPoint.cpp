@@ -57,20 +57,6 @@ void DEC_Rep_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
         pSentToDiaAgent_->RemoveFromPointsCategory( self );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint::Dump
-// Created: NLD 2005-08-10
-// -----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::Dump() const
-{
-    std::cout << "    Rep_PathPoint " << vPos_
-              << " - Type : " << nObjectTypes_.DumpToString()
-              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
-              << " - Type terrain " << nTypeTerrain_.DumpToString()
-              << " - nTypePoint_ " << (unsigned int)GetTypePoint()
-              << std::endl;
-}
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint::GetTypeTerrain
 // Created: AGN 03-03-25

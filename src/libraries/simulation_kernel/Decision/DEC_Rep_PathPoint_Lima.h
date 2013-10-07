@@ -31,11 +31,6 @@ public:
     unsigned int GetLimaID();
     //@}
 
-    //! @name Debug
-    //@{
-    virtual void Dump() const;
-    //@}
-
 private:
     int typeLima_;
     unsigned int limaID_;

@@ -11,6 +11,7 @@
 #include "ScoreDefinitions.h"
 #include "ScoreDefinition.h"
 #include "indicators/GaugeFactory_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -57,8 +58,7 @@ void ScoreDefinitions::Update( const sword::AarInformation& asnMsg )
     }
     catch( const std::exception& e )
     {
-        std::cout << asnMsg.information() << std::endl << std::endl;
-        std::cout << "Error reading indicator definitions: " << tools::GetExceptionMsg( e ) << std::endl;
+        MT_LOG_ERROR_MSG( asnMsg.information() << "Error reading indicator definitions: " << tools::GetExceptionMsg( e ) );
     }
 }
 

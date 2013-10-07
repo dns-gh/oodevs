@@ -35,19 +35,6 @@ DEC_Rep_PathPoint_Lima::~DEC_Rep_PathPoint_Lima()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Lima::Dump
-// Created: NLD 2005-08-10
-// -----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Lima::Dump() const
-{
-    std::cout << "    DEC_Rep_PathPoint_Lima " << vPos_
-              << " - Type : " << nObjectTypes_.DumpToString()
-              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString()
-              << " - nTypePoint_ " << (unsigned int)GetTypePoint()
-              << std::endl;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima::GetTypeLima
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------

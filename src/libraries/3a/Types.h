@@ -13,7 +13,7 @@
 #pragma warning( push, 0 )
 #include <boost/variant.hpp>
 #pragma warning( pop )
-#include <iostream>
+#include <iosfwd>
 
 typedef boost::variant< int, unsigned int, long, unsigned long, float, double > NumericVariant;
 

@@ -12,7 +12,6 @@
 #include "dispatcher/Logger_ABC.h"
 #include "tools/EncodingConverter.h"
 #include <boost/lexical_cast.hpp>
-#include <iostream>
 #pragma warning( disable : 4503 4355 )
 
 using namespace plugins::dis;
@@ -58,7 +57,7 @@ UdpNetwork::~UdpNetwork()
     }
     catch( const std::exception& e )
     {
-        logger_.LogError( std::string( "Error destroying udp network: " ) + tools::GetExceptionMsg( e ) );
+        logger_.LogError( "Error destroying udp network: " + tools::GetExceptionMsg( e ) );
     }
 }
 

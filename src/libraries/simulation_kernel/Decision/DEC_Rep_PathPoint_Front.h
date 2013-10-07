@@ -33,11 +33,6 @@ public:
     boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
     //@}
 
-    //! @name Debug
-    //@{
-    virtual void Dump() const;
-    //@}
-
 private:
     boost::shared_ptr< DEC_PathPoint > destPoint_;
     mutable DEC_Representations* pSentToDiaAgent_;
