@@ -79,7 +79,7 @@ const std::string& LocalizedString::Key() const
 // -----------------------------------------------------------------------------
 const std::string& LocalizedString::Value() const
 {
-    return Language::IsCurrentDefault() || key_.empty() ? key_ : values_.at( Language::Current() ).value_;
+    return Language::IsCurrentMaster() || key_.empty() ? key_ : values_.at( Language::Current() ).value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ const std::string& LocalizedString::Value() const
 // -----------------------------------------------------------------------------
 const std::string& LocalizedString::Value( const std::string& language ) const
 {
-    return Language::IsDefault( language ) || key_.empty() ? key_ : values_.at( language ).value_;
+    return Language::IsMaster( language ) || key_.empty() ? key_ : values_.at( language ).value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ const std::string& LocalizedString::Value( const std::string& language ) const
 // -----------------------------------------------------------------------------
 E_TranslationType LocalizedString::Type() const
 {
-    return Language::IsCurrentDefault() || key_.empty() ? eTranslationType_None : values_.at( Language::Current() ).type_;
+    return Language::IsCurrentMaster() || key_.empty() ? eTranslationType_None : values_.at( Language::Current() ).type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ E_TranslationType LocalizedString::Type() const
 // -----------------------------------------------------------------------------
 E_TranslationType LocalizedString::Type( const std::string& language ) const
 {
-    return Language::IsDefault( language ) || key_.empty() ? eTranslationType_None : values_.at( language ).type_;
+    return Language::IsMaster( language ) || key_.empty() ? eTranslationType_None : values_.at( language ).type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ void LocalizedString::SetKey( const std::string& key )
 // -----------------------------------------------------------------------------
 void LocalizedString::SetValue( const std::string& value )
 {
-    if( Language::IsCurrentDefault() )
+    if( Language::IsCurrentMaster() )
         key_ = value;
     else
         values_[ Language::Current() ].value_ = value;
@@ -136,7 +136,7 @@ void LocalizedString::SetValue( const std::string& value )
 // -----------------------------------------------------------------------------
 void LocalizedString::SetValue( const std::string& language, const std::string& value )
 {
-    if( Language::IsDefault( language ) )
+    if( Language::IsMaster( language ) )
         key_ = value;
     else
         values_[ language ].value_ = value;
@@ -148,7 +148,7 @@ void LocalizedString::SetValue( const std::string& language, const std::string& 
 // -----------------------------------------------------------------------------
 void LocalizedString::SetType( E_TranslationType type )
 {
-    if( !Language::IsCurrentDefault() )
+    if( !Language::IsCurrentMaster() )
         values_[ Language::Current() ].type_ = type;
 }
 
@@ -158,7 +158,7 @@ void LocalizedString::SetType( E_TranslationType type )
 // -----------------------------------------------------------------------------
 void LocalizedString::SetType( const std::string& language, E_TranslationType type )
 {
-    if( !Language::IsDefault( language ) )
+    if( !Language::IsMaster( language ) )
         values_[ language ].type_ = type;
 }
 

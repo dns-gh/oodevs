@@ -56,7 +56,7 @@ namespace
     }
     tools::Path CreateMissionDirectory( const std::string& language, const tools::Path& basePath )
     {
-        return kernel::Language::IsDefault( language ) ? basePath : basePath / "locale" / tools::Path::FromUTF8( language );
+        return kernel::Language::IsMaster( language ) ? basePath : basePath / "locale" / tools::Path::FromUTF8( language );
     }
     void PurgePath( const tools::Path& path )
     {
@@ -206,7 +206,7 @@ void ADN_Missions_Data::DeleteMissionSheet( const tools::Path& filename )
 void ADN_Missions_Data::OnElementDeleted( boost::shared_ptr< kernel::LocalizedString > name, E_MissionType missionType )
 {
     const tools::Path missionPath = GetMissionSheetsPath( missionType );
-    DeleteMissionSheet( CreateMissionDirectory( kernel::Language::Default(), missionPath ) / tools::Path::FromUTF8( name->Key() ) );
+    DeleteMissionSheet( CreateMissionDirectory( kernel::Language::Master(), missionPath ) / tools::Path::FromUTF8( name->Key() ) );
     const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
@@ -303,7 +303,7 @@ namespace
         const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
         std::auto_ptr< T > spNew( new T( type, xis.attribute< unsigned int >( "id" ) ) );
         spNew->ReadArchive( xis );
-        spNew->ReadMissionSheet( missionPath, kernel::Language::Default() );
+        spNew->ReadMissionSheet( missionPath, kernel::Language::Master() );
         for( auto it = languages.begin(); it != languages.end(); ++it )
             spNew->ReadMissionSheet( CreateMissionDirectory( it->GetCode(), missionPath ), it->GetCode() );
         missions.AddItem( spNew.release() );
@@ -365,7 +365,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
     for( int type = 0; type < eNbrMissionTypes; ++type )
     {
-        WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, kernel::Language::Default() );
+        WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, kernel::Language::Master() );
         for( auto it = languages.begin(); it != languages.end(); ++it )
             WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, it->GetCode() );
     }
@@ -512,7 +512,7 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
             CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetKey(), 0 );
 
             const std::vector< kernel::Language >& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_;
-            ( *it )->CheckMissionDataConsistency( checker, kernel::Language::Default() );
+            ( *it )->CheckMissionDataConsistency( checker, kernel::Language::Master() );
             for( auto itLang = languages.begin(); itLang != languages.end(); ++itLang )
                 ( *it )->CheckMissionDataConsistency( checker, itLang->GetCode() );
         }

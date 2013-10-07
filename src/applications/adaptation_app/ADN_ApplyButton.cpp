@@ -73,5 +73,5 @@ void ADN_ApplyButton::OnTypeChanged( int newType )
 // -----------------------------------------------------------------------------
 void ADN_ApplyButton::OnLanguageChanged()
 {
-    setVisible( !kernel::Language::IsCurrentDefault() );
+    setVisible( !kernel::Language::IsCurrentMaster() );
 }

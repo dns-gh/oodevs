@@ -61,7 +61,7 @@ void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
 {
     if( !context_ )
         throw MASA_EXCEPTION( "Translation context not set for localized string: " + data );
-    if( translation_ && !( kernel::Language::IsCurrentDefault() && !data.empty() && translation_->Key().empty() || translation_.unique() ) )
+    if( translation_ && !( kernel::Language::IsCurrentMaster() && !data.empty() && translation_->Key().empty() || translation_.unique() ) )
         return;
     translation_ = ( *context_ )[ data ];
     translation_->Initialize( ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
@@ -85,7 +85,7 @@ void ADN_Type_LocalizedString::SetData( const std::string& data )
     InitTranslation( data );
     if( swappingLanguage_ )
         return;
-    if( kernel::Language::IsCurrentDefault() && translation_.use_count() > 2 && data != translation_->Key() )
+    if( kernel::Language::IsCurrentMaster() && translation_.use_count() > 2 && data != translation_->Key() )
     {
         boost::shared_ptr< kernel::LocalizedString > newTranslation = context_->CreateNew( data );
         newTranslation->CopyValues( *translation_ );
@@ -102,7 +102,7 @@ void ADN_Type_LocalizedString::SetData( const std::string& data )
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetValue( const std::string& language ) const
 {
-    if( !kernel::Language::IsDefault( language ) && translation_->Value( language ).empty() )
+    if( !kernel::Language::IsMaster( language ) && translation_->Value( language ).empty() )
         return translation_->Key();
     return translation_->Value( language );
 }
@@ -222,7 +222,7 @@ void ADN_Type_LocalizedString::OnLanguageChanged()
 {
     if( !translation_ )
         return;
-    if( !kernel::Language::IsCurrentDefault() && translation_->Value().empty() )
+    if( !kernel::Language::IsCurrentMaster() && translation_->Value().empty() )
     {
         swappingLanguage_ = true;
         emit DataChanged( ( void* ) &translation_->Key() );

@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const std::string Language::default_ = "default";
+const std::string Language::master_ = "default";
 std::string Language::current_ = "default";
 
 // -----------------------------------------------------------------------------
@@ -135,12 +135,12 @@ const std::string& Language::Current()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Language::Default
+// Name: Language::Master
 // Created: ABR 2013-08-29
 // -----------------------------------------------------------------------------
-const std::string& Language::Default()
+const std::string& Language::Master()
 {
-    return default_;
+    return master_;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,19 +153,19 @@ void Language::SetCurrent( const std::string& language )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Language::IsDefault
+// Name: Language::IsMaster
 // Created: ABR 2013-08-22
 // -----------------------------------------------------------------------------
-bool Language::IsDefault( const std::string& language )
+bool Language::IsMaster( const std::string& language )
 {
-    return language == default_;
+    return language == master_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Language::IsCurrentDefault
+// Name: Language::IsCurrentMaster
 // Created: ABR 2013-08-21
 // -----------------------------------------------------------------------------
-bool Language::IsCurrentDefault()
+bool Language::IsCurrentMaster()
 {
-    return IsDefault( current_ );
+    return IsMaster( current_ );
 }
