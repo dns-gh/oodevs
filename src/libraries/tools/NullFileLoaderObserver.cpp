@@ -11,9 +11,6 @@
 #include "NullFileLoaderObserver.h"
 #include "MT_Tools/MT_Logger.h"
 #include <tools/Path.h>
-#include <xeumeuleu/xml.hpp>
-#include <boost/format.hpp>
-#include <iostream>
 
 using namespace tools;
 
@@ -41,7 +38,7 @@ NullFileLoaderObserver::~NullFileLoaderObserver()
 // -----------------------------------------------------------------------------
 bool NullFileLoaderObserver::NotifyInvalidXml( const Path& fileName, const xml::exception& e )
 {
-    MT_LOG_ERROR_MSG( "Invalid xml file " << fileName.ToUTF8() << " - " << tools::GetExceptionMsg( e ) );
+    MT_LOG_ERROR_MSG( "Invalid xml file " << fileName << " - " << tools::GetExceptionMsg( e ) );
     return true;
 }
 
@@ -51,7 +48,7 @@ bool NullFileLoaderObserver::NotifyInvalidXml( const Path& fileName, const xml::
 // -----------------------------------------------------------------------------
 void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const Path& fileName )
 {
-    MT_LOG_ERROR_MSG( "Xml file %s doesn't have any schema " << fileName.ToUTF8() );
+    MT_LOG_ERROR_MSG( "Xml file " << fileName << " doesn't have any schema " );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Special.h"
-#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Special constructor
@@ -32,4 +31,3 @@ DEC_Rep_PathPoint_Special::~DEC_Rep_PathPoint_Special()
 {
     // NOTHING
 }
-

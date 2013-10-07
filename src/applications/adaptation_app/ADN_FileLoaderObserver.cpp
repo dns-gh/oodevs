@@ -9,8 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_FileLoaderObserver.h"
-#include <boost/format.hpp>
-#include <iostream>
 
 using namespace tools;
 
@@ -38,7 +36,7 @@ ADN_FileLoaderObserver::~ADN_FileLoaderObserver()
 // -----------------------------------------------------------------------------
 bool ADN_FileLoaderObserver::NotifyInvalidXml( const tools::Path& fileName, const xml::exception& e )
 {
-    MT_LOG_ERROR_MSG( "Invalid xml file " << fileName.ToUTF8() << " - " << tools::GetExceptionMsg( e ) );
+    MT_LOG_ERROR_MSG( "Invalid xml file " << fileName << " - " << tools::GetExceptionMsg( e ) );
     return true;
 }
 
@@ -48,7 +46,7 @@ bool ADN_FileLoaderObserver::NotifyInvalidXml( const tools::Path& fileName, cons
 // -----------------------------------------------------------------------------
 void ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified( const tools::Path& fileName )
 {
-    MT_LOG_ERROR_MSG( "Xml file %s doesn't have any schema" << fileName.ToUTF8() );
+    MT_LOG_ERROR_MSG( "Xml file " << fileName << " doesn't have any schema" );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Representations.h"
-#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Front constructor

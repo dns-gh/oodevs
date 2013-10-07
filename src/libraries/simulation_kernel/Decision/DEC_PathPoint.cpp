@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathPoint.h"
-#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathPoint constructor

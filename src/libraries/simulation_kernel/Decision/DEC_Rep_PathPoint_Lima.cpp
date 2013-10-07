@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Lima.h"
 #include "Entities/Orders/MIL_LimaFunction.h"
-#include "MT_Tools/MT_Logger.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima constructor
