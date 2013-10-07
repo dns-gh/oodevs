@@ -770,6 +770,7 @@ integration.selfDecontaminate = function( self )
 end
 
 integration.changeHeight = function( height )
+    myself.altitude = height
     DEC_Agent_HauteurDeVol( height )
 end
 
