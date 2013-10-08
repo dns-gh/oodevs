@@ -70,11 +70,11 @@ public:
     virtual const MT_Vector2D&   GetPosition() const;
     virtual const MIL_AgentPion* GetPC      () const;
     virtual bool                 BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
-    virtual void OnSupplyScheduled     ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyCanceled      ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyDone          ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyScheduled     ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
+    virtual void OnSupplyCanceled      ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
+    virtual void OnSupplyDone          ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
+    virtual void OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
+    virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
     virtual void Serialize( sword::AutomatId& msg ) const;
     //@}
 

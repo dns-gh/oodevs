@@ -274,7 +274,7 @@ bool FuneralConsign::IsFinished() const
 // Name: FuneralConsign::OnSupplyConvoyLeaving
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void FuneralConsign::OnSupplyConvoyLeaving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign )
+void FuneralConsign::OnSupplyConvoyLeaving( const boost::shared_ptr< const SupplyConsign_ABC >& consign )
 {
     if( state_ != eWaitingForTransporter )
         return;
@@ -285,16 +285,16 @@ void FuneralConsign::OnSupplyConvoyLeaving( boost::shared_ptr< const SupplyConsi
     while( it.HasMoreElements() )
     {
         MIL_AutomateLOG& logisticBase = it.NextElement();
-        if( supplyConsign->WillGoTo( logisticBase ) && ( !packaging_ || supplyConsign->GetConvoy()->CanTransport( packaging_->GetDotationCategory() ) ) )
+        if( consign->WillGoTo( logisticBase ) && ( !packaging_ || consign->GetConvoy()->CanTransport( packaging_->GetDotationCategory() ) ) )
         {
             handler_->RemoveSupplyConvoysObserver( *this );
             handler_ = &logisticBase;
             handler_->AddSupplyConvoysObserver( *this );
-            convoy_ = supplyConsign->GetConvoy();
+            convoy_ = consign->GetConvoy();
             needNetworkUpdate_ = true;
             const MIL_Agent_ABC* reporter = convoy_ ? convoy_->GetReporter() : 0;
             if( reporter )
-                MIL_Report::PostEvent<MIL_Agent_ABC>( *reporter, report::eRC_CorpseTransported, packaging_->GetDotationCategory() );
+                MIL_Report::PostEvent< MIL_Agent_ABC >( *reporter, report::eRC_CorpseTransported, packaging_->GetDotationCategory() );
             SetState( eTransportingPackaged );
             return;
         }
@@ -305,9 +305,9 @@ void FuneralConsign::OnSupplyConvoyLeaving( boost::shared_ptr< const SupplyConsi
 // Name: FuneralConsign::OnSupplyConvoyArriving
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void FuneralConsign::OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign )
+void FuneralConsign::OnSupplyConvoyArriving( const boost::shared_ptr< const SupplyConsign_ABC >& consign )
 {
-    if( state_ != eTransportingPackaged || supplyConsign->GetConvoy() != convoy_ )
+    if( state_ != eTransportingPackaged || consign->GetConvoy() != convoy_ )
         return;
     handler_->RemoveSupplyConvoysObserver( *this );
     convoy_.reset();

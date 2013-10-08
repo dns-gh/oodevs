@@ -46,6 +46,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
+#include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
@@ -570,25 +571,23 @@ MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dota
 }
 
 // -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::OnSupplyConvoyArriving
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_AutomateLOG::OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     auto tmp = supplyConvoysObserver_;
-    std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, supplyConsign ) );
+    boost::for_each( tmp, boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::OnSupplyConvoyLeaving
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnSupplyConvoyLeaving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_AutomateLOG::OnSupplyConvoyLeaving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     auto tmp = supplyConvoysObserver_;
-    std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, supplyConsign ) );
+    boost::for_each( tmp, boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -599,10 +598,6 @@ bool MIL_AutomateLOG::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase
 {
     return &logisticBase == this;
 }
-
-// =============================================================================
-// Funeral
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::BelongsToLogisticBase

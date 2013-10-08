@@ -57,8 +57,8 @@ public:
 
     //! @name Events
     //@{
-    virtual void OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyConvoyArriving( const boost::shared_ptr< const SupplyConsign_ABC >& supplyConsign );
+    virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< const SupplyConsign_ABC >& supplyConsign );
     //@}
 
     //! @name Network

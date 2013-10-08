@@ -138,8 +138,8 @@ public:
     virtual MIL_AgentPion* SupplyCreateConvoyPion             ( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy );
     virtual void           SupplyDestroyConvoyPion            ( MIL_AgentPion& convoyPion );
 
-    virtual void           OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void           OnSupplyConvoyLeaving ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
+    virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
 
     virtual const MT_Vector2D& GetPosition() const;
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;

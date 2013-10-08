@@ -10,7 +10,8 @@
 #ifndef __SupplyConvoysObserver_ABC_h_
 #define __SupplyConvoysObserver_ABC_h_
 
-namespace logistic {
+namespace logistic
+{
     class SupplyConsign_ABC;
 
 // =============================================================================
@@ -30,11 +31,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyConvoyArriving( const boost::shared_ptr< const SupplyConsign_ABC >& consign ) = 0;
+    virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< const SupplyConsign_ABC >& consign ) = 0;
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyConvoysObserver_ABC_h_
