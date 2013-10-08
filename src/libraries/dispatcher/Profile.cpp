@@ -30,10 +30,11 @@ using namespace kernel;
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
 Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis )
-    : model_       ( model )
-    , clients_     ( clients )
-    , strLogin_    ( strLogin )
-    , bSupervision_( false )
+    : model_           ( model )
+    , clients_         ( clients )
+    , strLogin_        ( strLogin )
+    , bSupervision_    ( false )
+    , createdOnNetwork_( true )
 {
     std::string role;
     xis >> xml::attribute( "password", strPassword_ )
@@ -64,9 +65,25 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword:
     , strLogin_     ( message.profile().login() )
     , strPassword_  ( message.profile().has_password() ? message.profile().password() : "" )
     , bSupervision_ ( message.profile().supervisor() )
+    , createdOnNetwork_( true )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile constructor
+// Created: LGY 2013-07-10
+// -----------------------------------------------------------------------------
+Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin,
+                  bool createdOnNetwork )
+    : model_   ( model )
+    , clients_ ( clients )
+    , strLogin_( strLogin )
+    , createdOnNetwork_( createdOnNetwork )
+{
+    if( createdOnNetwork_ )
+        SendCreation( clients_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,9 +92,12 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword:
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    authentication::ProfileDestruction message;
-    message().set_login( strLogin_ );
-    message.Send( clients_ );
+    if( createdOnNetwork_ )
+    {
+        authentication::ProfileDestruction message;
+        message().set_login( strLogin_ );
+        message.Send( clients_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -294,22 +314,41 @@ namespace
     }
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: Profile::Send
-// Created: NLD 2006-10-09
+// Created: LGY 2013-10-08
 // -----------------------------------------------------------------------------
-void Profile::Send( sword::Profile& message ) const
+void Profile::Send( sword::ConnectedProfileList& msg ) const
 {
-    message.set_login( strLogin_ );
-    message.set_supervisor( bSupervision_ );
-    Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );
-    Serialize( *message.mutable_read_write_automates(), readWriteAutomats_ );
-    Serialize( *message.mutable_read_only_parties(), readOnlySides_ );
-    Serialize( *message.mutable_read_write_parties(), readWriteSides_ );
-    Serialize( *message.mutable_read_only_formations(), readOnlyFormations_ );
-    Serialize( *message.mutable_read_write_formations(), readWriteFormations_ );
-    Serialize( *message.mutable_read_only_crowds(), readOnlyPopulations_ );
-    Serialize( *message.mutable_read_write_crowds(), readWritePopulations_ );
+    Send( *msg.add_elem() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Send
+// Created: LGY 2013-10-08
+// -----------------------------------------------------------------------------
+void Profile::Send( sword::AuthenticationResponse& msg ) const
+{
+    Send( *msg.mutable_profile() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Send
+// Created: LGY 2013-10-08
+// -----------------------------------------------------------------------------
+void Profile::Send( sword::Profile& profile ) const
+{
+    profile.set_login( strLogin_ );
+    profile.set_supervisor( bSupervision_ );
+    Serialize( *profile.mutable_read_only_automates(), readOnlyAutomats_ );
+    Serialize( *profile.mutable_read_write_automates(), readWriteAutomats_ );
+    Serialize( *profile.mutable_read_only_parties(), readOnlySides_ );
+    Serialize( *profile.mutable_read_write_parties(), readWriteSides_ );
+    Serialize( *profile.mutable_read_only_formations(), readOnlyFormations_ );
+    Serialize( *profile.mutable_read_write_formations(), readWriteFormations_ );
+    Serialize( *profile.mutable_read_only_crowds(), readOnlyPopulations_ );
+    Serialize( *profile.mutable_read_write_crowds(), readWritePopulations_ );
 }
 
 // -----------------------------------------------------------------------------

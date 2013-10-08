@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "ProfileManager.h"
 #include "Profile.h"
+#include "Supervisor.h"
 #include "Config.h"
 #include "Model.h"
 #include "Automat.h"
@@ -38,6 +39,7 @@ ProfileManager::ProfileManager( Model& model, ClientPublisher_ABC& clients, cons
     , config_       ( config )
     , profiles_     ()
     , pSchemaWriter_( new tools::SchemaWriter() )
+    , supervisor_   ( boost::make_shared< Supervisor >( model, clients ) )
 {
     //NOTHING
 }
@@ -160,8 +162,11 @@ void ProfileManager::Reset()
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Profile > ProfileManager::Authenticate( const std::string& strName,
-        const std::string& strPassword, const std::string& link ) const
+        const std::string& strPassword, const std::string& link, bool keyAuthenticated ) const
 {
+    if( keyAuthenticated && strName.empty() && strPassword.empty() )
+        return supervisor_;
+
     auto it = profiles_.find( strName );
     if( it == profiles_.end() )
     {

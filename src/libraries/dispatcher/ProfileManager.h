@@ -64,7 +64,7 @@ public:
     //@{
     void Reset();
     boost::shared_ptr< Profile > Authenticate( const std::string& strName,
-            const std::string& strPassword, const std::string& link ) const;
+            const std::string& strPassword, const std::string& link, bool keyAuthenticated ) const;
 
     void Send( ClientPublisher_ABC& publisher ) const;
     void Send( sword::AuthenticationResponse& message ) const;
@@ -97,6 +97,7 @@ private:
     ClientPublisher_ABC& clients_;
     std::map< std::string, boost::shared_ptr< Profile > > profiles_;
     std::auto_ptr< tools::SchemaWriter > pSchemaWriter_;
+    boost::shared_ptr< Profile > supervisor_;
 };
 
 }
