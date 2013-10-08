@@ -802,7 +802,7 @@ void DEC_Knowledge_Object::CopyFrom( const DEC_Knowledge_Object& object )
 void DEC_Knowledge_Object::Recon( const MIL_Agent_ABC& agent )
 {
     reconByAgentTypes_.insert( &agent.GetType() );
-    if( !IsValid() || !pObjectKnown_ || ( GetArmy() && agent.GetArmy().GetID() != GetArmy()->GetID() ) )
+    if( !IsValid() || !pObjectKnown_ )
         return;
     if( DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute >* proxy = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute > >() )
         if( proxy->ForceUpdateAttributeFromObject( *pObjectKnown_ ) )
