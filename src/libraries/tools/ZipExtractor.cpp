@@ -48,8 +48,6 @@ void ZipExtractor::ExtractCurrentFile( tools::Path dest )
     dest.SystemComplete();
     if( dest.FileName() == "." )
         return;
-    if( archive_.getCurrentFileSize() < 0 )
-        return;
 
     if( !dest.Parent().Exists() )
         dest.Parent().CreateDirectories();
