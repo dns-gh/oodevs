@@ -221,11 +221,11 @@ void ADN_Languages_Data::CleanLocalDirectories() const
         tools::Path::T_Paths languagesPaths = itLocalPath->ListDirectories( false );
         for( auto itLanguagePath = languagesPaths.begin(); itLanguagePath != languagesPaths.end(); ++itLanguagePath )
         {
-            bool founded = false;
-            for( auto itLanguage = activeLanguages_.begin(); !founded && itLanguage != activeLanguages_.end(); ++itLanguage )
-                founded = itLanguagePath->ToUTF8() == ( *itLanguage )->GetCode();
+            bool found = false;
+            for( auto itLanguage = activeLanguages_.begin(); !found && itLanguage != activeLanguages_.end(); ++itLanguage )
+                found = itLanguagePath->ToUTF8() == ( *itLanguage )->GetCode();
 
-            if( !founded )
+            if( !found )
                 ( *itLocalPath / *itLanguagePath ).RemoveAll();
         }
     }

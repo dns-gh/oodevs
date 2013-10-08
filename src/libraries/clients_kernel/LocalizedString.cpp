@@ -93,7 +93,7 @@ const std::string& LocalizedString::Value( const std::string& language ) const
     auto it = values_.find( language );
     if( it == values_.end() )
         throw MASA_EXCEPTION( "Language not initialized: " + language );
-    return values_.at( language ).value_;
+    return it->second.value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ E_TranslationType LocalizedString::Type( const std::string& language ) const
     auto it = values_.find( language );
     if( it == values_.end() )
         throw MASA_EXCEPTION( "Language not initialized: " + language );
-    return values_.at( language ).type_;
+    return it->second.type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,8 +161,7 @@ void LocalizedString::Initialize( const Languages::T_Languages& languages )
 // -----------------------------------------------------------------------------
 void LocalizedString::CopyValues( const LocalizedString& other )
 {
-    values_.clear();
-    values_.insert( other.values_.begin(), other.values_.end() );
+    values_ = other.values_;
 }
 
 // -----------------------------------------------------------------------------
