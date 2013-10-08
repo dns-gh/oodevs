@@ -487,6 +487,7 @@ add_dependencies( replayer_app
 add_target( simulation_app server "applications/simulation_app" OPTIONS executable )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
 set_property( TARGET simulation_app APPEND PROPERTY LINK_FLAGS "/LARGEADDRESSAWARE" )
+set_property( TARGET simulation_app APPEND_STRING PROPERTY LINK_FLAGS " /STACK:15000000" )
 target_link_libraries( simulation_app
     simulation_kernel
     dispatcher
