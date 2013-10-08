@@ -14,6 +14,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/DEC_Knowledge_UrbanPerception.h"
@@ -142,8 +143,11 @@ void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
         progress = 10 / complexity;// $$$$ @TODO MGD Add true physical configuration in ADN
     const MIL_UrbanObject_ABC* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     float maxRecce = ( urbanBlock && object == urbanBlock ) ? 1.0f : 0.25f;
+    if( agent.Get< PHY_RoleInterface_Perceiver >().IsReconnoitering( object ) )
+        maxRecce = 1.f;
+    progress = std::max( progress, 0.001f );
     maxRecce = std::max( maxRecce, rProgressPercent_ );
-    SetProgress( std::min( std::max( rProgressPercent_ + progress, rProgressPercent_ + 0.001f ), maxRecce ) );
+    SetProgress( std::min( rProgressPercent_ + progress, maxRecce ) );
 }
 
 // -----------------------------------------------------------------------------
