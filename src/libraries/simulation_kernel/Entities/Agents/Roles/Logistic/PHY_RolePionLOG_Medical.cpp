@@ -37,9 +37,11 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/serialization/set.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 #include <boost/ptr_container/serialize_ptr_list.hpp>
 #include <boost/ptr_container/serialize_ptr_map.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
+#include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Medical )
 
@@ -349,7 +351,6 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human,
     return functor.result_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::InsertConsigns
 // Created: JVT 2005-05-03
@@ -358,7 +359,7 @@ void PHY_RolePionLOG_Medical::InsertConsigns( const T_MedicalConsigns& oldConsig
 {
     for ( auto it = oldConsigns.begin(); it != oldConsigns.end(); ++it )
         for ( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
-            InsertConsign( **it2 );
+            InsertConsign( *it2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,29 +412,26 @@ PHY_RolePionLOG_Medical::T_MedicalPriorityVector PHY_RolePionLOG_Medical::GetMed
 
 namespace
 {
-    struct sIsPriorityEqual
+    bool IsPriorityEqual( const boost::shared_ptr< PHY_MedicalConsign_ABC >& consign, const PHY_HumanWound* pWound )
     {
-        bool operator() ( const PHY_MedicalConsign_ABC* pConsign, const PHY_HumanWound* pWound )
-        {
-            if( pConsign->IsFinished() || !pConsign->HasValidHumanState() )
-                return false;
-            return *pWound == pConsign->GetHumanState().GetHuman().GetWound();
-        }
-    };
+        if( consign->IsFinished() || ! consign->HasValidHumanState() )
+            return false;
+        return *pWound == consign->GetHumanState().GetHuman().GetWound();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::InsertConsign
 // Created: JVT 2005-05-03
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
+void PHY_RolePionLOG_Medical::InsertConsign( const boost::shared_ptr< PHY_MedicalConsign_ABC >& consign )
 {
-    if( !consign.HasValidHumanState() )
+    if( !consign->HasValidHumanState() )
         return;
     auto itTact = consigns_.begin();
-    const MIL_Automate* pAutomate = &consign.GetHumanState().GetAutomate();
+    const MIL_Automate& automate = consign->GetHumanState().GetAutomate();
     for( ; itTact != consigns_.end(); ++itTact )
-        if( pAutomate == itTact->first ) // TODO AHC || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
+        if( &automate == itTact->first ) // TODO AHC || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
     if( itTact == consigns_.end() )
     {
@@ -441,14 +439,14 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
         itTact = consigns_.end() - 1;
         assert( itTact->first == 0 );
     }
-    auto itPriority = std::find( priorities_.begin(), priorities_.end(), &consign.GetHumanState().GetHuman().GetWound() );
+    auto itPriority = std::find( priorities_.begin(), priorities_.end(), &consign->GetHumanState().GetHuman().GetWound() );
     if( itPriority == priorities_.end() )
-        itTact->second.push_back( &consign );
+        itTact->second.push_back( consign );
     else
     {
         ++itPriority;
-        auto itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriority, sIsPriorityEqual() );
-        itTact->second.insert( itConsign.base(), &consign );
+        auto itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriority, &IsPriorityEqual );
+        itTact->second.insert( itConsign.base(), consign );
     }
 }
 
@@ -461,8 +459,7 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
     if( !bSystemEnabled_ )
         return 0;
     PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human, true ); // true is for 'evacuated by third party'
-    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *owner_, *pHumanState );
-    InsertConsign( *pConsign );
+    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( *pHumanState ) ) );
     return pHumanState;
 }
 
@@ -475,8 +472,7 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_Ag
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return 0;
     PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human );
-    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *owner_, *pHumanState );
-    InsertConsign( *pConsign );
+    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( *pHumanState ) ) );
     return pHumanState;
 }
 
@@ -488,8 +484,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForEvacuation( PHY_MedicalHumanState& h
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( humanState.GetHuman() ) )
         return false;
-    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *owner_, humanState );
-    InsertConsign( *pConsign );
+    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( humanState ) ) );
     return true;
 }
 
@@ -534,8 +529,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForCollection( PHY_MedicalHumanState& h
 {
     if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return false;
-    PHY_MedicalCollectionConsign* pConsign = new PHY_MedicalCollectionConsign( *owner_, humanState );
-    InsertConsign( *pConsign );
+    InsertConsign( boost::make_shared< PHY_MedicalCollectionConsign >( boost::ref( *owner_ ), boost::ref( humanState ) ) );
     return true;
 }
 
@@ -564,8 +558,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::HandleHumanForSorting( PHY_MedicalHumanState& humanState )
 {
-    PHY_MedicalSortingConsign* pConsign = new PHY_MedicalSortingConsign( *owner_, humanState );
-    InsertConsign( *pConsign );
+    InsertConsign( boost::make_shared< PHY_MedicalSortingConsign >( boost::ref( *owner_ ), boost::ref( humanState ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -598,8 +591,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& huma
 {
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return false;
-    PHY_MedicalHealingConsign* pConsign = new PHY_MedicalHealingConsign( *owner_, humanState );
-    InsertConsign( *pConsign );
+    InsertConsign( boost::make_shared< PHY_MedicalHealingConsign >( boost::ref( *owner_ ), boost::ref( humanState ) ) );
     return true;
 }
 
@@ -649,11 +641,8 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
             ++it;
     for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
-            if( (**itConsign).Update() )
-            {
-                delete *itConsign;
+            if( (*itConsign)->Update() )
                 itConsign = itConsigns->second.erase( itConsign );
-            }
             else
                 ++itConsign;
 }

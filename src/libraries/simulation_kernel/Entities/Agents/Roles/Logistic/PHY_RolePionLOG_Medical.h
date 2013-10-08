@@ -132,7 +132,7 @@ private:
 
     typedef std::vector< const PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesSet;
 
-    typedef std::list< PHY_MedicalConsign_ABC* > T_MedicalConsignList;
+    typedef std::list< boost::shared_ptr< PHY_MedicalConsign_ABC > > T_MedicalConsignList;
 
     typedef boost::ptr_list< PHY_MedicalCollectionAmbulance > T_CollectionAmbulancesList;
 
@@ -147,8 +147,8 @@ private:
     //! @name Tools
     //@{
     void Initialize();
-    void InsertConsign( PHY_MedicalConsign_ABC& );
-    void InsertConsigns( const T_MedicalConsigns& );
+    void InsertConsign( const boost::shared_ptr< PHY_MedicalConsign_ABC >& consign );
+    void InsertConsigns( const T_MedicalConsigns& consigns );
 
     bool HasUsableEvacuationAmbulance( const Human_ABC& human ) const;
     bool HasUsableCollectionAmbulance( const Human_ABC& human ) const;
