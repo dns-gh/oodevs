@@ -11,7 +11,6 @@
 #include "CommandLineTools.h"
 #include "ConfigurationManipulator.h"
 #include "StartTimeline.h"
-#include "frontend/Profile.h"
 
 // warning C4503: decorated name length exceeded, name was truncated
 #pragma warning( disable: 4503 )
@@ -39,8 +38,7 @@ namespace
         }
     }
 
-    void WriteRunScript( const tools::Path& run, const Profile& profile,
-                         int port )
+    void WriteRunScript( const tools::Path& run, int port )
     {
         tools::Ofstream output( run );
         output << "[";
@@ -69,18 +67,14 @@ namespace
         "                \"name\": \"simulation\","
         "                \"clock\": true,"
         "                \"sword\": {"
-        "                    \"address\": \"localhost:%2\","
-        "                    \"username\": \"%3\","
-        "                    \"password\": \"%4\""
+        "                    \"address\": \"localhost:%2\""
         "                }"
         "            }"
         "        }"
         "    }"
         "}," );
         output << attach.arg( QString::fromStdString( ::uuid ) )
-                        .arg( port )
-                        .arg( profile.GetLogin() )
-                        .arg( profile.GetPassword() );
+                        .arg( port );
 
         bpt::ptree start;
         start.put( "type", "SESSION_START" );
@@ -97,8 +91,7 @@ namespace
 StartTimeline::StartTimeline( const tools::GeneralConfig& config,
                               const tools::Path& exercise,
                               const tools::Path& session,
-                              int index,
-                              const Profile& profile )
+                              int index )
     : SpawnCommand( config, "timeline_server.exe", "timeline_server" )
 {
     AddArgument( "port", boost::lexical_cast< std::string >( GetPort( index, TIMELINE_PORT ) ) );
@@ -108,7 +101,7 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
     AddArgument( "log", log.ToUTF8() );
     const tools::Path run = root / "timeline.run";
     AddArgument( "run", run.ToUTF8() );
-    WriteRunScript( run, profile, GetPort( index, DISPATCHER_PORT ) );
+    WriteRunScript( run, GetPort( index, DISPATCHER_PORT ) );
 }
 
 // -----------------------------------------------------------------------------

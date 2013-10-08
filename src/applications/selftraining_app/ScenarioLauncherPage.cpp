@@ -283,7 +283,7 @@ void ScenarioLauncherPage::OnStart()
             config_, exerciseName, session, profile_.GetLogin() ) );
     if( hasTimeline_ )
         process->Add( boost::make_shared< frontend::StartTimeline >(
-        config_, exerciseName, session, exerciseNumber_, profile_ ) );
+        config_, exerciseName, session, exerciseNumber_ ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();
