@@ -50,7 +50,6 @@ public:
     //! @name Operations
     //@{
     virtual bool Update();
-    virtual void Cancel();
     virtual bool IsFinished() const;
     //@}
 

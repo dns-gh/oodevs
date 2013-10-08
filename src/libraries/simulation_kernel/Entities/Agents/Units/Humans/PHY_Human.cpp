@@ -148,11 +148,7 @@ void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
 void PHY_Human::CancelLogisticRequests()
 {
     CancelMedicalLogisticRequest();
-    if( funeralConsign_ )
-    {
-        funeralConsign_->Cancel();
-        funeralConsign_.reset();
-    }
+    funeralConsign_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -478,11 +474,8 @@ void PHY_Human::Update()
             const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
         if( IsDead() && !funeralConsign_ )
             funeralConsign_.reset( new logistic::FuneralConsign( *this ) );
-        else if( funeralConsign_ && ( !IsDead() || funeralConsign_->IsFinished() ) )
-        {
-            funeralConsign_->Cancel();
+        else if( !IsDead() || funeralConsign_ && funeralConsign_->IsFinished() )
             funeralConsign_.reset();
-        }
     }
     if( funeralConsign_ )
         funeralConsign_->Update();

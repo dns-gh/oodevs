@@ -10,6 +10,8 @@
 #ifndef __SupplyConvoysObserver_ABC_h_
 #define __SupplyConvoysObserver_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace logistic
 {
     class SupplyConsign_ABC;
@@ -20,7 +22,7 @@ namespace logistic
 */
 // Created: NLD 2011-01-10
 // =============================================================================
-class SupplyConvoysObserver_ABC
+class SupplyConvoysObserver_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

@@ -241,19 +241,6 @@ bool FuneralConsign::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FuneralConsign::Cancel
-// Created: NLD 2011-07-25
-// -----------------------------------------------------------------------------
-void FuneralConsign::Cancel()
-{
-    SetState( eFinished );
-    convoy_.reset();
-    if( handler_ )
-        handler_->RemoveSupplyConvoysObserver( *this );
-    handler_ = 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: FuneralConsign::IsFinished
 // Created: JSR 2013-02-19
 // -----------------------------------------------------------------------------
