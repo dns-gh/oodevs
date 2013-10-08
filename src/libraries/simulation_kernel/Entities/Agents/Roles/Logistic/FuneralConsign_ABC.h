@@ -11,7 +11,6 @@
 #define __FuneralConsign_ABC_h_
 
 #include "SupplyConvoysObserver_ABC.h"
-#include <boost/enable_shared_from_this.hpp>
 
 namespace logistic
 {
@@ -23,8 +22,7 @@ namespace logistic
 */
 // Created: NLD 2011-08-24
 // =============================================================================
-class FuneralConsign_ABC : public boost::enable_shared_from_this< FuneralConsign_ABC >
-                         , public SupplyConvoysObserver_ABC
+class FuneralConsign_ABC : public SupplyConvoysObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
