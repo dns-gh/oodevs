@@ -303,7 +303,6 @@ void ADN_MainWindow::OnNew()
     if( isLoaded_ && !OnClose() )
         return;
     path /= "physical.xml";
-    ADN_Workspace::GetWorkspace().Initialize();
     ADN_Workspace::GetWorkspace().New( path, true );
 }
 
@@ -320,7 +319,6 @@ void ADN_MainWindow::OnOpen()
     {
         if( isLoaded_ && !OnClose() )
             return;
-        ADN_Workspace::GetWorkspace().Initialize();
         ADN_Workspace::GetWorkspace().Load( filename, true );
         if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
             consistencyDialog_->CheckConsistency();

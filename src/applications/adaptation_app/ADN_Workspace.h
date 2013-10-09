@@ -137,7 +137,6 @@ public:
 
     //! @name Data operations
     //@{
-    void Initialize();
     void Purge();
 
     void New( const tools::Path& filename, bool loadGui );
@@ -219,6 +218,7 @@ private:
     //! @name Helpers
     //@{
     void AddPage( E_WorkspaceElements element );
+    void Initialize();
     void LoadDefaultSymbols();
     //@}
 
