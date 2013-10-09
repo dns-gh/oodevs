@@ -581,3 +581,17 @@ const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetCo
 {
     return missionSheetContexts_[ type ];
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::function< bool
+// Created: ABR 2013-10-08
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Data::ApplyOnTranslations( const boost::function< bool ( kernel::LocalizedString& ) >& functor )
+{
+    if( ADN_Data_ABC::ApplyOnTranslations( functor ) )
+        return true;
+    for( auto it = missionSheetContexts_.begin(); it != missionSheetContexts_.end(); ++it )
+        if( *it && ( *it )->Apply( functor ) )
+            return true;
+    return false;
+}
