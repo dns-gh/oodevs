@@ -30,11 +30,10 @@ using namespace kernel;
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
 Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis )
-    : model_           ( model )
-    , clients_         ( clients )
-    , strLogin_        ( strLogin )
-    , bSupervision_    ( false )
-    , createdOnNetwork_( true )
+    : model_       ( model )
+    , clients_     ( clients )
+    , strLogin_    ( strLogin )
+    , bSupervision_( false )
 {
     std::string role;
     xis >> xml::attribute( "password", strPassword_ )
@@ -65,7 +64,6 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword:
     , strLogin_     ( message.profile().login() )
     , strPassword_  ( message.profile().has_password() ? message.profile().password() : "" )
     , bSupervision_ ( message.profile().supervisor() )
-    , createdOnNetwork_( true )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
@@ -75,15 +73,12 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword:
 // Name: Profile constructor
 // Created: LGY 2013-07-10
 // -----------------------------------------------------------------------------
-Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin,
-                  bool createdOnNetwork )
+Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin )
     : model_   ( model )
     , clients_ ( clients )
     , strLogin_( strLogin )
-    , createdOnNetwork_( createdOnNetwork )
 {
-    if( createdOnNetwork_ )
-        SendCreation( clients_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -92,12 +87,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    if( createdOnNetwork_ )
-    {
-        authentication::ProfileDestruction message;
-        message().set_login( strLogin_ );
-        message.Send( clients_ );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -462,4 +452,15 @@ void Profile::SerializeRights( xml::xostream& xos, const std::string& tag, const
         xos << xml::start( tag )
             << xml::attribute( "id", (*it)->GetId() )
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::SendDestruction
+// Created: LGY 2013-10-09
+// -----------------------------------------------------------------------------
+void Profile::SendDestruction() const
+{
+    authentication::ProfileDestruction message;
+    message().set_login( strLogin_ );
+    message.Send( clients_ );
 }

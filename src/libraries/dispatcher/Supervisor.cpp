@@ -18,7 +18,7 @@ using namespace kernel;
 // Created: LGY 2013-10-07
 // -----------------------------------------------------------------------------
 Supervisor::Supervisor( const Model& model, ClientPublisher_ABC& clients )
-    : Profile( model, clients, "MAsuperivisorSA", false )
+    : Profile( model, clients, "MAsupervisorSA" )
 {
     // NOTHING
 }
@@ -100,6 +100,24 @@ void Supervisor::Send( sword::ProfileDescription& ) const
 // Created: LGY 2013-10-07
 // -----------------------------------------------------------------------------
 void Supervisor::SendCreation( ClientPublisher_ABC& ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Supervisor::SerializeProfile
+// Created: LGY 2013-10-07
+// -----------------------------------------------------------------------------
+void Supervisor::SerializeProfile( xml::xostream& ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Supervisor::SendDestruction
+// Created: LGY 2013-10-07
+// -----------------------------------------------------------------------------
+void Supervisor::SendDestruction() const
 {
     // NOTHING
 }

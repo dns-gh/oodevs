@@ -57,7 +57,7 @@ public:
     //@{
              Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
              Profile( const Model& model, ClientPublisher_ABC& clients, const sword::ProfileCreationRequest& message );
-             Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, bool createdOnNetwork );
+             Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin );
     virtual ~Profile();
     //@}
 
@@ -81,13 +81,14 @@ public:
     virtual void Send( sword::AuthenticationResponse& msg ) const;
     virtual void Send( sword::ProfileDescription& msg ) const;
     virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction() const;
     //@}
 
     //! @name Operations
     //@{
     void Update( const sword::ProfileUpdateRequest& message );
     void SetRight( const kernel::Automat_ABC& entity, bool readonly, bool readwrite );
-    void SerializeProfile( xml::xostream& xos ) const;
+    virtual void SerializeProfile( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -100,12 +101,6 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Profile( const Profile& );            //!< Copy constructor
-    Profile& operator=( const Profile& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container );
@@ -141,7 +136,6 @@ private:
 
     // Supervision
     bool bSupervision_;
-    bool createdOnNetwork_;
     //@}
 };
 

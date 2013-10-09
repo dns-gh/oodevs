@@ -50,13 +50,9 @@ public:
     virtual void Send( sword::AuthenticationResponse& msg ) const;
     virtual void Send( sword::ProfileDescription& msg ) const;
     virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
-    //@}
+    virtual void SendDestruction() const;
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    Supervisor( const Supervisor& );            //!< Copy constructor
-    Supervisor& operator=( const Supervisor& ); //!< Assignment operator
+    virtual void SerializeProfile( xml::xostream& xos ) const;
     //@}
 };
 

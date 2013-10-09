@@ -50,7 +50,8 @@ ProfileManager::ProfileManager( Model& model, ClientPublisher_ABC& clients, cons
 // -----------------------------------------------------------------------------
 ProfileManager::~ProfileManager()
 {
-    // NOTHING
+    for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
+        it->second->SendDestruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -142,6 +143,8 @@ void ProfileManager::ReadProfile( xml::xistream& xis )
 void ProfileManager::Reset()
 {
     MT_LOG_INFO_MSG( "Loading profiles" );
+    for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
+        it->second->SendDestruction();
     profiles_.clear();
 
     try
@@ -259,6 +262,7 @@ sword::ProfileDestructionRequestAck_ErrorCode ProfileManager::Destroy( const swo
     auto it = profiles_.find( message.login() );
     if( it == profiles_.end() )
         return sword::ProfileDestructionRequestAck::invalid_profile;
+    it->second->SendDestruction();
     profiles_.erase( it );
     return sword::ProfileDestructionRequestAck::success;
 }

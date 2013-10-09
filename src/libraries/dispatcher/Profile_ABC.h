@@ -10,6 +10,8 @@
 #ifndef __Profile_ABC_h_
 #define __Profile_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace sword
 {
     class ClientToSim;
@@ -26,7 +28,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class Profile_ABC
+class Profile_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
