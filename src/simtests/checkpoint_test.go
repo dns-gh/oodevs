@@ -88,7 +88,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
 	*simu.SimProcess, *swapi.Client) {
-	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, false)
+	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, true)
 	client := loginAndWaitModel(c, sim, user, password)
 	return sim, client
 }
@@ -164,4 +164,97 @@ func (s *TestSuite) TestCheckpointCrowd(c *C) {
 		}
 	}
 	c.Assert(found, Equals, true)
+}
+
+func (s *TestSuite) TestCheckpointUnit(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	defer sim.Stop()
+	party := client.Model.GetData().FindPartyByName("party1")
+	c.Assert(party, NotNil)
+	CreateFormation(c, client, party.Id)
+	automat := createAutomatForParty(c, client, "party1")
+	from := swapi.Point{X: -15.9219, Y: 28.3456}
+	unit, err := client.CreateUnitWithName(automat.Id, UnitType, from,
+		"some unit name", false)
+	c.Assert(err, IsNil)
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+
+	// Give a mission
+	heading := swapi.MakeHeading(0)
+	dest := swapi.MakePointParam(swapi.Point{X: -15.8193, Y: 28.3456})
+	params := swapi.MakeParameters(heading, nil, nil, nil, dest)
+	order, err := client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	c.Assert(err, IsNil)
+
+	sim, client = checkpointAndRestart(c, sim, client)
+	defer sim.Stop()
+	data := client.Model.GetData()
+	unit2 := data.FindUnit(unit.Id)
+	c.Assert(unit2, NotNil)
+	c.Assert(unit2.Name, Equals, unit.Name)
+	c.Assert(unit2.Pc, Equals, unit.Pc)
+	automat2 := data.FindAutomat(automat.Id)
+	c.Assert(automat2, NotNil)
+	c.Assert(automat2.Engaged, Equals, false)
+	c.Assert(automat2.FormationId, Equals, automat.FormationId)
+	formation2 := data.FindFormation(automat.FormationId)
+	c.Assert(formation2, NotNil)
+
+	order2 := data.Orders[order.Id]
+	c.Assert(order2, NotNil)
+	c.Assert(order2, DeepEquals, order)
+}
+
+func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
+	sim, client := connectAndWaitModelWithStep(c, "admin", "", ExCrossroadSmallLog, 300)
+	defer sim.Stop()
+
+	// Find the supply base
+	model := client.Model.GetData()
+	automats := model.ListAutomats()
+	var supplyAutomat *swapi.Automat
+	for _, a := range automats {
+		if strings.Contains(a.Name, "LOG.Supply logistic area") {
+			supplyAutomat = a
+		}
+	}
+	c.Assert(supplyAutomat, NotNil)
+
+	// Deploy it
+	MissionLogDeploy := uint32(44584)
+	heading := swapi.MakeHeading(0)
+	limit1 := swapi.MakeLimit(
+		swapi.Point{X: -15.8302, Y: 28.3765},
+		swapi.Point{X: -15.825, Y: 28.3413})
+	limit2 := swapi.MakeLimit(
+		swapi.Point{X: -15.7983, Y: 28.3765},
+		swapi.Point{X: -15.7991, Y: 28.3413})
+	params := swapi.MakeParameters(heading, nil, limit1, limit2, nil)
+	_, err := client.SendAutomatOrder(supplyAutomat.Id, MissionLogDeploy, params)
+	c.Assert(err, IsNil)
+
+	// One scout ammunitions are depleted, a convoy should be generated, with
+	// a pathfind, eventually.
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, u := range data.ListUnits() {
+			if strings.Contains(u.Name, "LOG.Convoy") && u.PathPoints > 0 {
+				return true
+			}
+		}
+		return false
+	})
+
+	sim, client = checkpointAndRestart(c, sim, client)
+	defer sim.Stop()
+	model = client.Model.GetData()
+
+	// Is the convoy still there?
+	var convoy *swapi.Unit
+	for _, u := range model.ListUnits() {
+		if strings.Contains(u.Name, "LOG.Convoy") {
+			convoy = u
+		}
+	}
+	c.Assert(convoy, NotNil)
 }

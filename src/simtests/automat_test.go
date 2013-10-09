@@ -65,9 +65,7 @@ func (s *TestSuite) TestAutomatReloadBrain(c *C) {
 
 	// too many parameters
 	err := client.ReloadBrainTest(tasker, swapi.MakeParameters(
-		swapi.MakeString("blah"),
-		swapi.MakeNullValue(),
-	))
+		swapi.MakeString("blah"), nil))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// invalid type

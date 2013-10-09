@@ -30,6 +30,7 @@ type Session struct {
 	Paused       bool
 	SimLog       LogOpts
 	TimeFactor   int
+	TimeStep     int
 }
 
 func ReadBool(value string) bool {
@@ -57,6 +58,7 @@ func (s *Session) syncSession(x *xmlSession) error {
 	s.SimLog.Size = x.Sim.Debug.LogSize
 	s.SimLog.Unit = x.Sim.Debug.SizeUnit
 	s.TimeFactor = x.Sim.Time.Factor
+	s.TimeStep = x.Sim.Time.Step
 	return nil
 }
 
@@ -71,6 +73,7 @@ func (s *Session) syncXml(x *xmlSession) error {
 	x.Sim.Debug.SizeUnit = s.SimLog.Unit
 	x.Sim.Time.EndTick = s.EndTick
 	x.Sim.Time.Factor = s.TimeFactor
+	x.Sim.Time.Step = s.TimeStep
 	x.Sim.Time.Paused = WriteBool(s.Paused)
 	return nil
 }
@@ -157,7 +160,7 @@ type xmlTime struct {
 	Latency string `xml:"latency,attr"`
 	Factor  int    `xml:"factor,attr"`
 	Paused  string `xml:"paused,attr"`
-	Step    string `xml:"step,attr"`
+	Step    int    `xml:"step,attr"`
 }
 
 type xmlSimulation struct {
@@ -249,7 +252,7 @@ const defaultSession = `
       <random1 deviation="0.5" distribution="0" mean="0.5"/>
       <random2 deviation="0.5" distribution="0" mean="0.5"/>
       <random3 deviation="0.5" distribution="0" mean="0.5"/>
-      <time end-tick="100000" latency="0" factor="1000" paused="false" step="10"/>
+      <time end-tick="100000" latency="0" factor="10000" paused="false" step="10"/>
     </simulation>
   </config>
   <meta>

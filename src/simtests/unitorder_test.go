@@ -34,10 +34,9 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	unit, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
-	null := swapi.MakeNullValue()
 	heading := swapi.MakeHeading(0)
 	dest := swapi.MakePointParam(to)
-	params := swapi.MakeParameters(heading, null, null, null, dest)
+	params := swapi.MakeParameters(heading, nil, nil, nil, dest)
 
 	// Cannot send order with an invalid unit identifier
 	_, err = client.SendUnitOrder(InvalidIdentifier, MissionMoveId, params)
@@ -73,50 +72,50 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	checkParams(".*invalid.*heading expected.*", dest)
 
 	// Missing limit 1
-	checkParams(".*missing.*limit expected.*", heading, null)
+	checkParams(".*missing.*limit expected.*", heading, nil)
 
 	// Invalid limit 1
-	checkParams(".*must be a limit.*", heading, null, dest)
+	checkParams(".*must be a limit.*", heading, nil, dest)
 
 	// Limit1 is empty
-	checkParams(".*limit value is invalid.*", heading, null, swapi.MakeLimit())
+	checkParams(".*limit value is invalid.*", heading, nil, swapi.MakeLimit())
 
 	// Missing limit 2
 	limit1 := swapi.MakeLimit(
 		swapi.Point{X: from.X + 0.001, Y: from.Y},
 		swapi.Point{X: to.X + 0.001, Y: to.Y})
-	checkParams(".*missing.*limit expected.*", heading, null, limit1)
+	checkParams(".*missing.*limit expected.*", heading, nil, limit1)
 
 	// Invalid limit 2
-	checkParams(".*must be a limit.*", heading, null, limit1, swapi.MakeHeading(0))
+	checkParams(".*must be a limit.*", heading, nil, limit1, swapi.MakeHeading(0))
 
 	// Limit2 is empty
-	checkParams(".*limit value is invalid.*", heading, null, limit1, swapi.MakeLimit())
+	checkParams(".*limit value is invalid.*", heading, nil, limit1, swapi.MakeLimit())
 
 	// Limit1 is null but not limit2
 	limit2 := swapi.MakeLimit(
 		swapi.Point{X: from.X - 0.001, Y: from.Y},
 		swapi.Point{X: to.X - 0.001, Y: to.Y})
-	checkParams(".*must be both null.*", heading, null, null, limit2)
+	checkParams(".*must be both null.*", heading, nil, nil, limit2)
 
 	// Limit2 is empty but not limit1
-	checkParams(".*must be both null.*", heading, null, limit1, null)
+	checkParams(".*must be both null.*", heading, nil, limit1, nil)
 
 	// Limits are equal
-	checkParams(".*or different.*", heading, null, limit1, limit1)
+	checkParams(".*or different.*", heading, nil, limit1, limit1)
 
 	// Missing destination
 	checkParams(".*got 4 parameters, an additional LocationComposite is expected.*",
-		heading, null, limit1, limit2)
+		heading, nil, limit1, limit2)
 
 	// Invalid destination type
-	checkParams(".*must be a LocationComposite.*", heading, null, limit1, limit2, heading)
+	checkParams(".*must be a LocationComposite.*", heading, nil, limit1, limit2, heading)
 
-	// With null limits
-	checkParams("", heading, null, null, null, dest)
+	// With nil limits
+	checkParams("", heading, nil, nil, nil, dest)
 
 	// With valid limits
-	checkParams("", heading, null, limit1, limit2, dest)
+	checkParams("", heading, nil, limit1, limit2, dest)
 }
 
 // Test we can send a automat mission and get a successful acknowledgement.
@@ -136,10 +135,10 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 
 	params := swapi.MakeParameters(
 		swapi.MakeHeading(0),
-		swapi.MakeNullValue(),
+		nil,
 		swapi.MakeLimit(limit11, limit12),
 		swapi.MakeLimit(limit21, limit22),
-		swapi.MakeNullValue())
+		nil)
 
 	// Cannot send order with an invalid unit identifier
 	_, err = client.SendAutomatOrder(InvalidIdentifier, MissionAutomatAttackId, params)

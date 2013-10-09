@@ -184,12 +184,27 @@ func (s *TestSuite) TestRotatingLogs(c *C) {
 func (s *TestSuite) TestTimeOptions(c *C) {
 	opts := MakeOpts()
 
-	factors := []int{0, -1}
-	for _, factor := range factors {
+	keys := []struct {
+		Name  string
+		Value int
+	}{
+		{"factor", 0},
+		{"factor", -1},
+		{"step", 0},
+		{"step", -1},
+	}
+
+	for _, key := range keys {
 		exDir := opts.GetExerciseDir()
 		session := CreateDefaultSession()
 		session.EndTick = 2
-		session.TimeFactor = factor
+		if key.Name == "factor" {
+			session.TimeFactor = key.Value
+		} else if key.Name == "step" {
+			session.TimeStep = key.Value
+		} else {
+			c.Fatalf("unknown key %s", key.Name)
+		}
 		sessionPath, err := WriteNewSessionFile(session, exDir)
 		c.Assert(err, IsNil)
 		sessionDir := filepath.Dir(sessionPath)

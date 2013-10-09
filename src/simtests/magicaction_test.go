@@ -73,10 +73,7 @@ func (s *TestSuite) TestFireOrderOnLocationCreation(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a location or a point
-	params = swapi.MakeParameters(
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue())
+	params = swapi.MakeParameters(nil, nil, nil)
 	err = client.CreateFireOnLocationTest(params)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
@@ -129,7 +126,7 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a location or an identifier
-	params = swapi.MakeParameters(swapi.MakeNullValue(), swapi.MakeNullValue())
+	params = swapi.MakeParameters(nil, nil)
 	err = client.ChangeResourceNetworkTest(params)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
@@ -201,9 +198,7 @@ func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be an identifier
-	params = swapi.MakeParameters(
-		swapi.MakeNullValue(),
-		swapi.MakeNullValue())
+	params = swapi.MakeParameters(nil, nil)
 	group, err = client.CreateKnowledgeGroupTest(params)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
