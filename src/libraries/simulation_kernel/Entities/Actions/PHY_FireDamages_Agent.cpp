@@ -16,7 +16,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "protocol/Protocol.h"
 

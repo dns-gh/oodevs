@@ -23,7 +23,7 @@
 #include "PHY_MedicalResourcesAlarms.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_ComposantePredicates.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"

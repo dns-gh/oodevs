@@ -61,7 +61,7 @@ public:
 
     //! @name Operations
     //@{
-    void NotifyHumanChanged    (); // Called when the human state changed by PHY_Human
+    void NotifyHumanChanged    ();
     void NotifyHandledByMedical();
     bool GoBackToWar           ();
     void Cancel                ();
