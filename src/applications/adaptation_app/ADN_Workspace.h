@@ -28,6 +28,7 @@ class ADN_Communications_Data;
 class ADN_Communications_GUI;
 class ADN_Crowds_Data;
 class ADN_Crowds_GUI;
+class ADN_Data_ABC;
 class ADN_Disasters_Data;
 class ADN_Disasters_GUI;
 class ADN_Drawings_Data;
@@ -38,6 +39,7 @@ class ADN_FileLoaderObserver;
 class ADN_Fires_Data;
 class ADN_Fires_GUI;
 class ADN_GeneralConfig;
+class ADN_GUI_ABC;
 class ADN_HumanFactors_Data;
 class ADN_HumanFactors_GUI;
 class ADN_Inhabitants_Data;
@@ -155,6 +157,9 @@ public:
 
     //! @name Accessors
     //@{
+    bool ApplyOnData( const boost::function< bool ( ADN_Data_ABC& data ) >& functor );
+    bool ApplyOnGui( const boost::function< bool ( ADN_GUI_ABC& data ) >& functor );
+
     const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, const std::string& context );
     const boost::shared_ptr< kernel::Context >& GetContext( E_WorkspaceElements element, int subElement, const std::string& context );
 

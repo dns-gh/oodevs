@@ -14,6 +14,7 @@
 #include "ADN_XmlStreamOperators.h"
 #include "ADN_Tools.h"
 #include "ADN_WorkspaceElement.h"
+#include "clients_kernel/Languages.h"
 
 namespace kernel
 {
@@ -53,6 +54,8 @@ public:
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
     virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
+    virtual bool ApplyOnTranslations( const boost::function< bool ( kernel::LocalizedString& ) >& functor );
+
     virtual std::string GetInvalidDataErrorMsg() const;
     const boost::shared_ptr< kernel::Context >& GetContext( const std::string& context ) const;
     //@}

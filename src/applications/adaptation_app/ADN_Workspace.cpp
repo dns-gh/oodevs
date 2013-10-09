@@ -899,3 +899,27 @@ void ADN_Workspace::SetIsSwappingLanguage( bool isSwappingLanguage )
 {
     isSwappingLanguage_ = isSwappingLanguage;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::ApplyOnData
+// Created: ABR 2013-10-08
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::ApplyOnData( const boost::function< bool ( ADN_Data_ABC& ) >& functor )
+{
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
+        if( functor( elements_[ n ]->GetDataABC() ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::ApplyOnGui
+// Created: ABR 2013-10-08
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::ApplyOnGui( const boost::function< bool ( ADN_GUI_ABC& data ) >& functor )
+{
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
+        if( functor( elements_[ n ]->GetGuiABC() ) )
+            return true;
+    return false;
+}
