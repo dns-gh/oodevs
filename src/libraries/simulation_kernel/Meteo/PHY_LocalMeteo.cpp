@@ -19,6 +19,7 @@
 #include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
+#include "protocol/MessageParameters.h"
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
@@ -134,25 +135,16 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
 {
     if( isCreation )
     {
-        const sword::MissionParameter& startTime = msg.elem( 7 );
-        if( startTime.value_size() != 1 || !startTime.value().Get( 0 ).has_datetime() )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[7] must be a StartTime" );
-        startTime_ = ( bpt::from_iso_string( startTime.value().Get( 0 ).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-        const sword::MissionParameter& endTime = msg.elem( 8 );
-        if( endTime.value_size() != 1 || !endTime.value().Get( 0 ).has_datetime() )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[8] must be a StartTime" );
-        endTime_ = ( bpt::from_iso_string( endTime.value().Get( 0 ).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+        const std::string start = protocol::GetDateTimeStr( msg, 7 );
+        startTime_ = ( bpt::from_iso_string( start ) - bpt::from_time_t( 0 ) ).total_seconds();
+        const std::string end = protocol::GetDateTimeStr( msg, 8 );
+        endTime_ = ( bpt::from_iso_string( end ) - bpt::from_time_t( 0 ) ).total_seconds();
     }
-    const sword::MissionParameter& location = msg.elem( 9 );
-    if( location.value_size() != 1 || !location.value().Get( 0 ).has_location() )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[9] must be a Location" );
-    if( location.value().Get( 0 ).location().coordinates().elem_size() == 2 ) // $$$$ ABR 2011-09-29: Sword protocol
-    {
-        NET_ASN_Tools::ReadPoint( location.value().Get( 0 ).location().coordinates().elem( 0 ), upLeft_    );
-        NET_ASN_Tools::ReadPoint( location.value().Get( 0 ).location().coordinates().elem( 1 ), downRight_ );
-    }
-    else
-        throw MASA_BADPARAM_MAGICACTION( "parameters[9] is bad location" );
+    std::vector< sword::CoordLatLong > points;
+    protocol::GetLocation( msg, 9, points );
+    protocol::Check( points.size() == 2u, "must have two points" );
+    NET_ASN_Tools::ReadPoint( points[0], upLeft_    );
+    NET_ASN_Tools::ReadPoint( points[1], downRight_ );
 }
 
 // -----------------------------------------------------------------------------

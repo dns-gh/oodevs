@@ -26,6 +26,7 @@
 #include "meteo/PHY_Lighting.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
+#include "protocol/MessageParameters.h"
 
 #include <boost/lexical_cast.hpp>
 
@@ -158,20 +159,14 @@ void PHY_MeteoDataManager::UpdateGlobalWeather( const sword::MagicAction& msg )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, client::MagicActionAck& ack )
 {
-    unsigned int id = 0;
-    if( msg.parameters().elem_size() != 10 && msg.parameters().elem_size() != 11 )
-        throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, 10 or 11 parameters expected" );
-
-    if( msg.parameters().elem_size() == 11 )
-    {
-        const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
-        if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[10] must be an Identifier" );
-        id = idParameter.value().Get( 0 ).identifier();
-    }
+    const auto& params = msg.parameters();
+    uint32_t id = 0;
+    protocol::CheckCount( params, 10, 11 );
+    if( protocol::GetCount( params ) == 11 )
+        id = protocol::GetIdentifier( params, 10 );
     if( id == 0 )
     {
-        auto meteo = new PHY_LocalMeteo( localCounter_++, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
+        auto meteo = new PHY_LocalMeteo( localCounter_++, params, pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
         id = meteo->GetId();
         AddMeteo( *meteo );
     }
@@ -180,7 +175,7 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, cl
         auto meteo = Find( id );
         if( !meteo )
             throw MASA_BADPARAM_MAGICACTION( "unknown local weather id" );
-        static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
+        static_cast< PHY_LocalMeteo* >( meteo )->Update( params );
     }
     if( id )
     {
@@ -196,12 +191,9 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, cl
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::RemoveLocalWeather( const sword::MagicAction& msg )
 {
-    if( msg.parameters().elem_size() != 1 )
-        throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, one parameter expected" );
-    if(  msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
-        throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be an Identifier" );
-
-    unsigned int id = msg.parameters().elem( 0 ).value().Get( 0 ).identifier();
+    const auto& params = msg.parameters();
+    protocol::CheckCount( params, 1 );
+    const uint32_t id = protocol::GetIdentifier( params, 0 );
     weather::Meteo* meteo = Find( id );
     if( !meteo )
         throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a local weather identifier" );

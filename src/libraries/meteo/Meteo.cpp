@@ -14,6 +14,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/EnumMaps.h"
+#include "protocol/MessageParameters.h"
 #include "Tools/NET_AsnException.h"
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
@@ -239,16 +240,12 @@ void Meteo::Serialize( xml::xostream& xos ) const
 
 namespace
 {
-    void CheckRealParameter( const sword::MissionParameter& parameter, const std::string& text, bool positive = true )
+    float GetReal( const sword::MissionParameters& params, int i, bool positive = true )
     {
-        if( parameter.null_value() || !parameter.value().Get( 0 ).has_areal() )
-            throw MASA_BADPARAM( "parameters[" + text + "] must be a Areal" );
-        if( positive )
-        {
-            float value = parameter.value().Get( 0 ).areal();
-            if( value < 0.f )
-                throw MASA_BADPARAM( "parameters[" + text + "] must be a positive number" );
-        }
+        const float value = protocol::GetReal( params, i );
+        if( positive && value < 0.f )
+            throw MASA_BADPARAM( STR( "parameters[" << i << "] must be a positive number" ) );
+        return value;
     }
 }
 
@@ -258,50 +255,30 @@ namespace
 // -----------------------------------------------------------------------------
 void Meteo::Update( const sword::MissionParameters& msg )
 {
-    modified_ = true;
-    if( msg.elem_size() < 6u )
-        throw MASA_BADPARAM( "invalid parameters count, 7 parameters expected" );
-
-    // Temperature
-    const sword::MissionParameter& temperature = msg.elem( 0 );
-    CheckRealParameter( temperature, "0", false );
-    // Vitesse du vent
-    const sword::MissionParameter& windSpeed = msg.elem( 1 );
-    CheckRealParameter( windSpeed, "1" );
-    // Direction du vent
-    const sword::MissionParameter& windDirection = msg.elem( 2 );
-    if( windDirection.null_value() || !windDirection.value().Get( 0 ).has_heading() )
-        throw MASA_BADPARAM( "parameters[2] must be a Heading" );
-    int angle = windDirection.value().Get( 0 ).heading().heading();
+    protocol::Check( protocol::GetCount( msg ) >= 7, " at least 7 parameters expected" );
+    const int temperature = static_cast< int >( GetReal( msg, 0, false ));
+    const float windSpeed = GetReal( msg, 1 );
+    const int angle = protocol::GetHeading( msg, 2 );
     if( angle < 0 || angle > 360 )
         throw MASA_BADPARAM( "parameters[2] must be a number between 0 and 360" );
-
-    // Plancher de couverture nuageuse
-    const sword::MissionParameter& cloudFloor = msg.elem( 3 );
-    CheckRealParameter( cloudFloor, "3" );
-    // Plafond de couverture nuageuse
-    const sword::MissionParameter& cloudCeiling = msg.elem( 4 );
-    CheckRealParameter( cloudCeiling, "4" );
-    // Densite moyenne de couverture nuageuse
-    const sword::MissionParameter& cloudDensity = msg.elem( 5 );
-    CheckRealParameter( cloudDensity, "5" );
-    // Précipitation
-    const sword::MissionParameter& precipitation = msg.elem( 6 );
-    if( precipitation.null_value() || !precipitation.value().Get( 0 ).has_enumeration() )
-        throw MASA_BADPARAM( "parameters[6] must be an Enumeration" );
+    const int cloudFloor = static_cast< int >( GetReal( msg, 3 ) );
+    const int cloudCeiling = static_cast< int >( GetReal( msg, 4 ) );
+    const int cloudDensity = static_cast< int >( GetReal( msg, 5 ) );
+    const auto precipitation = GET_ENUMERATION( sword::WeatherAttributes::EnumPrecipitationType, msg, 6 );
     const PHY_Precipitation* pPrecipitation = PHY_Precipitation::FindPrecipitation(
-        protocol::FromProto( static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation.value().Get( 0 ).enumeration() ) ));
+        protocol::FromProto( precipitation ) );
     if( !pPrecipitation )
         throw MASA_BADPARAM( "parameters[6] must be a precipitation Enumeration" );
-    pPrecipitation_ = pPrecipitation;
 
-    temperature_ = static_cast< int >( temperature.value().Get( 0 ).areal() );
-    wind_.rSpeed_ = conversionFactor_ * windSpeed.value().Get( 0 ).areal();
+    modified_ = true;
+    pPrecipitation_ = pPrecipitation;
+    temperature_ = temperature;
+    wind_.rSpeed_ = conversionFactor_ * windSpeed;
     wind_.eAngle_ = angle;
     wind_.vDirection_ = weather::ReadDirection( wind_.eAngle_ );
-    cloud_.nFloor_ = static_cast< int >( cloudFloor.value().Get( 0 ).areal() );
-    cloud_.nCeiling_ =  static_cast< int >( cloudCeiling.value().Get( 0 ).areal() );
-    cloud_.nDensityPercentage_ = std::min( std::max( static_cast< int >( cloudDensity.value().Get( 0 ).areal() ), 0 ), 100 );
+    cloud_.nFloor_ = cloudFloor;
+    cloud_.nCeiling_ = cloudCeiling;
+    cloud_.nDensityPercentage_ = std::min( std::max( cloudDensity, 0 ), 100 );
     cloud_.rDensity_ = cloud_.nDensityPercentage_ / 100.;
 }
 

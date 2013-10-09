@@ -51,11 +51,14 @@ namespace
 
     MAKE_DESCRIPTOR( String, std::string, acharstr, "char string" );
     MAKE_DESCRIPTOR( Bool, bool, booleanvalue, "boolean" );
+    MAKE_DESCRIPTOR( Real, float, areal, "real" );
     MAKE_DESCRIPTOR( Quantity, int, quantity, "quantity" );
     MAKE_DESCRIPTOR( Enumeration, int, enumeration, "enumeration" );
     MAKE_DESCRIPTOR( Point, sword::Point, point, "point" );
     MAKE_DESCRIPTOR( Identifier, int, identifier, "identifier" );
     MAKE_DESCRIPTOR2( AgentId, uint32_t, agent, id, "agent id" );
+    MAKE_DESCRIPTOR2( DateTime, std::string, datetime, data, "datetime" );
+    MAKE_DESCRIPTOR2( Heading, int, heading, heading, "heading" );
     #undef MAKE_DESCRIPTOR
     #undef MAKE_DESCRIPTOR2
 
@@ -152,6 +155,21 @@ bool protocol::GetBool( const sword::MissionParameters& params, int i, int j, in
     return GetValue< Bool >( params, i, j, k );
 }
 
+float protocol::GetReal( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< Real >( params, i, j, k );
+}
+
+std::string protocol::GetDateTimeStr( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< DateTime >( params, i, j, k );
+}
+
+int protocol::GetHeading( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< Heading >( params, i, j, k );
+}
+
 int protocol::GetQuantity( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< Quantity >( params, i, j, k );
@@ -170,6 +188,20 @@ int protocol::GetEnumeration( const ::google::protobuf::EnumDescriptor* descript
 sword::Point protocol::GetPoint( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< Point >( params, i, j, k );
+}
+
+void protocol::GetLocation( const sword::MissionParameters& params, int i,
+        std::vector< sword::CoordLatLong >& points )
+{
+    protocol::Check( params.elem_size() > i, "is missing", i );
+    const auto& values = params.elem( i );
+    protocol::Check( values.value_size() > 0, "is missing", i );
+    const auto& value = values.value( 0 );
+    protocol::Check( value.has_location(), "must be a location", i );
+    const auto& coords = value.location().coordinates();
+    const int count = coords.elem_size();
+    for( int n = 0; n != count; ++n )
+        points.push_back( coords.elem( n ) );
 }
 
 int protocol::GetIdentifier( const sword::MissionParameters& params, int i, int j, int k )

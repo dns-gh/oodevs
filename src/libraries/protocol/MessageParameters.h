@@ -12,11 +12,13 @@
 
 #include <tools/Exception.h>
 #include <stdint.h>
+#include <vector>
 
 #define STR( WHAT ) static_cast< std::stringstream& >( std::stringstream() << WHAT ).str()
 
 namespace sword
 {
+    class CoordLatLong;
     class MissionParameters;
     class Point;
 }
@@ -47,7 +49,11 @@ namespace protocol
 
     std::string  GetString( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     bool         GetBool( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    float        GetReal( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    std::string  GetDateTimeStr( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    int          GetHeading( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     int          GetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    void         GetLocation( const sword::MissionParameters& params, int i, std::vector< sword::CoordLatLong >& points );
     int          GetEnumeration( const google::protobuf::EnumDescriptor* descriptor, const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     sword::Point GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     int          GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
