@@ -550,34 +550,37 @@ end
 -- -------------------------------------------------------------------------------- 
 -- Param ally commander
 -- Param old supported platoons ally list
--- Return plattons to support
+-- Return platoons to support
 -- @author GGE
 -- @release 2012-10-30
 -- --------------------------------------------------------------------------------
 integration.query.getEntitiesToCombatSupportTask = function( commander, oldSupportedPlatoonList )
     local integration = integration
-    local platoonToSupport = {}
-    local index = 0
+    local platoonsToSupport = {}
     -- Platoon ally in first echelon
     local entitiesInFirstEchelon = integration.filterPionWithEchelon( 
           integration.getEntitiesFromAutomatCommunication( commander, "none", true), eEtatEchelon_First )
     if next(entitiesInFirstEchelon) then
-        platoonToSupport = entitiesInFirstEchelon
+        platoonsToSupport = entitiesInFirstEchelon
     else -- no platoon in first echelon, return all unit from commander
-        platoonToSupport = integration.getEntitiesFromAutomatCommunication( commander, "none", true)
+        platoonsToSupport = integration.getEntitiesFromAutomatCommunication( commander, "none", true)
     end
-    --Test if source items of each list are the same. If number of items is different for each list so we are sure that lists are differents => no test.
-    if #platoonToSupport == #oldSupportedPlatoonList then
-        for i = 1, #platoonToSupport do
-            for j = 1, #oldSupportedPlatoonList do
-                if oldSupportedPlatoonList[j].source == platoonToSupport[i].source then
-                    index = index + 1
-                end
-            end
-        end
-        if index == #oldSupportedPlatoonList then -- list have same elements return old one
-            return oldSupportedPlatoonList
+    --Return new elements
+    return platoonsToSupport
+end
+
+-- -------------------------------------------------------------------------------- 
+-- Param ally platoons
+-- Param old supported platoons ally list
+-- Return platoons to support
+-- --------------------------------------------------------------------------------
+integration.query.getEntitiesToCombatSupportPlatoonsTask = function( platoons, oldSupportedPlatoonList )
+    local platoonsToSupport = {}
+    for i = 1, #platoons do
+        if platoons[i]:isValid() and platoons[i]:isOperational() then -- operational and valid platoons only
+            platoonsToSupport[ #platoonsToSupport + 1 ] = platoons[i]
         end
     end
-    return platoonToSupport
+    --Return new elements
+    return platoonsToSupport
 end
