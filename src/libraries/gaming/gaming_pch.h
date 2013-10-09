@@ -10,7 +10,10 @@
 #ifndef __gaming_pch_h_
 #define __gaming_pch_h_
 
-#pragma warning( disable : 4290 4702 4355 )
+#pragma warning( disable: 4290 ) // C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+#pragma warning( disable: 4702 ) // unreachable code
+#pragma warning( disable: 4355 ) // 'this' : used in base member initializer list
+#pragma warning( disable: 4503 ) // decorated name length exceeded, name was truncated
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
