@@ -47,7 +47,7 @@ void MIL_OrderType_ABC::ReadParameter( xml::xistream& xis, unsigned int& index, 
 {
     index++;
     if( index > contextLength )
-        parameters_.push_back( new MIL_OrderTypeParameter( *this, xis ) );
+        parameters_.push_back( new MIL_OrderTypeParameter( xis ) );
 }
 
 //-----------------------------------------------------------------------------

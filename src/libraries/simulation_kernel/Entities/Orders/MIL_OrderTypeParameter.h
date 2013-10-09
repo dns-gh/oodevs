@@ -20,7 +20,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_OrderType_ABC;
 class MIL_ParameterType_ABC;
 class MIL_MissionParameter_ABC;
 
@@ -36,7 +35,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_OrderTypeParameter( xml::xistream& xis );
-             MIL_OrderTypeParameter( const MIL_OrderType_ABC& orderType, xml::xistream& xis );
     virtual ~MIL_OrderTypeParameter();
     //@}
 

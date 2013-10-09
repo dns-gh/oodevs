@@ -15,16 +15,6 @@
 #include "Decision/DEC_Tools.h"
 #include "protocol/Protocol.h"
 
-namespace
-{
-    bool InitIsList(  xml::xistream& xis )
-    {
-        std::string maxOccurs = xis.attribute< std::string >( "max-occurs", "1" );
-        if( maxOccurs != "1" )
-            return true;
-        return false;
-    }
-}
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderTypeParameter constructor
 // Created: SBO 2008-03-03
@@ -33,27 +23,11 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
     : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
     , strName_      ( xis.attribute< std::string >( "name" ) )
     , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
-    , bIsList_      ( InitIsList( xis ) )
+    , bIsList_      ( "1" != xis.attribute< std::string >( "max-occurs", "1" ) )
     , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
         throw MASA_EXCEPTION( xis.context() + "Unknown parameter type" );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_OrderTypeParameter constructor
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& /*orderType*/, xml::xistream& xis )
-    : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
-    , strName_      ( xis.attribute< std::string >( "name" ) )
-    , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
-    , bIsList_      ( InitIsList( xis ) )
-    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
-{
-    if( !pParameter_ )
-        throw MASA_EXCEPTION( xis.context() + "Unknown parameter type" );
-    //$$$$ Checker type DIA si c possible
 }
 
 //-----------------------------------------------------------------------------
