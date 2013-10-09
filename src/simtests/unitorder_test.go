@@ -133,12 +133,14 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	_, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
+	// Test trailing optional parameters can be left out
+	// There is a "lastEchelonNumber" optional parameter for Attack
 	params := swapi.MakeParameters(
 		swapi.MakeHeading(0),
 		nil,
 		swapi.MakeLimit(limit11, limit12),
 		swapi.MakeLimit(limit21, limit22),
-		nil)
+	)
 
 	// Cannot send order with an invalid unit identifier
 	_, err = client.SendAutomatOrder(InvalidIdentifier, MissionAutomatAttackId, params)
