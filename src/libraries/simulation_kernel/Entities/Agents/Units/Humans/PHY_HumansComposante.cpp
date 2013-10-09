@@ -465,25 +465,6 @@ void PHY_HumansComposante::ChangeHumanState( sword::MissionParameters& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ChangeHumanSize
-// Created: ABR 2011-12-05
-// -----------------------------------------------------------------------------
-void PHY_HumansComposante::ChangeHumanSize( unsigned int newHumanSize )
-{
-    while( humans_.size() > newHumanSize )
-    {
-        humans_.back()->CancelLogisticRequests();
-        NotifyHumanRemoved( *humans_.back() );
-        humans_.pop_back();
-    }
-    while( humans_.size() < newHumanSize )
-    {
-        humans_.push_back( boost::shared_ptr< Human_ABC >( new PHY_Human( MIL_Time_ABC::GetTime(), *this ) ) );
-        NotifyHumanAdded( *humans_.back() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::GetNbrHealthyHumans
 // Created: LDC 2012-10-26
 // -----------------------------------------------------------------------------
