@@ -106,14 +106,23 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParame
     int i = firstIndex;
     for( MIL_OrderType_ABC::CIT_MissionParameterVector it = parameterTypes.begin(); it != parameterTypes.end(); ++it, ++i )
     {
-        const MIL_OrderTypeParameter& parameterType = **it;
-        if( parameters.elem_size() <= i )
-            throw ORDER_BADPARAM(
-                "got " << parameters.elem_size() << " parameters, an additional "
-                    << parameterType.GetType().GetName() << " is expected" );
         try
         {
-            boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( parameterType, parameters.elem( i ), knowledgeResolver_ );
+            boost::shared_ptr< MIL_MissionParameter_ABC > pParameter;
+            const MIL_OrderTypeParameter& parameterType = **it;
+            if( parameters.elem_size() <= i )
+            {
+                if( !parameterType.IsOptional() )
+                    throw ORDER_BADPARAM(
+                        "got " << parameters.elem_size() << " parameters, an additional "
+                        << parameterType.GetType().GetName() << " is expected" );
+                pParameter = boost::make_shared< MIL_NullParameter >();
+            }
+            else
+            {
+                pParameter = MIL_MissionParameterFactory::Create( parameterType,
+                        parameters.elem( i ), knowledgeResolver_ );
+            }
             if( !pParameter->IsOfType( parameterType.GetType().GetType() ) )
                 throw ORDER_BADPARAM( "parameter[" << i << "] must be a "
                         << parameterType.GetType().GetName() );
