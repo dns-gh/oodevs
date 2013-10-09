@@ -244,7 +244,10 @@ namespace
     void LocalizedFromWikiToXml( xml::xostream& xos, const ADN_Type_LocalizedString& localizedField, const std::string& language, bool isMergedXml )
     {
         xos << localizedField.GetType( language );
-        FromWikiToXml( xos, isMergedXml && localizedField.GetType( language ) == kernel::eTranslationType_Unfinished ? localizedField.GetKey() : localizedField.GetValue( language ) );
+        FromWikiToXml( xos, ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language ) ||
+                            isMergedXml && localizedField.GetType( language ) == kernel::eTranslationType_Unfinished
+                            ? localizedField.GetKey()
+                            : localizedField.GetTranslation()->Value( language ) );
     }
     void WriteMissionSheetField( xml::xostream& xos, const std::string& xmltag, const ADN_Type_LocalizedString& localizedField, const std::string& language, bool isMergedXml )
     {
