@@ -847,7 +847,7 @@ integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
                     local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
 
                     for _, entity in pairs( dynamicEntities or emptyTable ) do
-                        integration.ListenFrontElement( entity )
+                       integration.ListenFrontElement( entity )
                         if not myself.leadData.dynamicEntityTasks[entity] then
                             myself.leadData.dynamicEntityTasks[entity] = dynamicTasks
                         end
@@ -1115,13 +1115,15 @@ end
 -- @param self: The leading skill
 -- @author NMI
 -- @release 2013-07-05
-integration.leadDroneActivate = function( self )
+integration.leadDroneActivate = function( self, findBestsFunction )
     local Activate = Activate
     local integration = integration
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
     local pionsPE = echelons[1]
     local pionsSE = echelons[2]
     local pionsEE = echelons[3]
+
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     
     if meKnowledge.availableDrone then
         local drones = { meKnowledge.availableDrone }
@@ -1132,6 +1134,9 @@ integration.leadDroneActivate = function( self )
         end
         meKnowledge.availableDrone = nil
     end
+
+    -- Dynamicity managing
+    integration.manageDynamicTask( self, findBestsFunction, disengageTask )
     
     integration.manageEndMission( self )
 end
