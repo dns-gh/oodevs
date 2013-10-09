@@ -31,7 +31,7 @@ namespace
 SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool isTheoric )
     : isMax_      ( isMaxSpeed )
     , isTheoric_  ( isTheoric )
-    , compFunctor_( boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
+    , compFunctor_( std::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
     , pionFunctor_( boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeed, _1 ) )
 {
     // NOTHING

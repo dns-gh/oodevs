@@ -101,7 +101,7 @@ void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigne
 void MIL_StockSupplyManager::Update()
 {
     autoSupplyRequest_->Update();
-    boost::remove_erase_if( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Update ) );
+    boost::remove_erase_if( manualSupplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::Update ) );
     if( !bSupplyNeeded_ )
         return;
     MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
@@ -119,7 +119,7 @@ void MIL_StockSupplyManager::Update()
 void MIL_StockSupplyManager::Clean()
 {
     autoSupplyRequest_->Clean();
-    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Clean ) );
+    boost::for_each( manualSupplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::Clean ) );
     MIL_SupplyManager::Clean();
 }
 
@@ -310,7 +310,7 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowPa
 void MIL_StockSupplyManager::SendChangedState() const
 {
     autoSupplyRequest_->SendChangedState();
-    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::SendChangedState ) );
+    boost::for_each( manualSupplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,5 +320,5 @@ void MIL_StockSupplyManager::SendChangedState() const
 void MIL_StockSupplyManager::SendFullState() const
 {
     autoSupplyRequest_->SendFullState();
-    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::SendFullState ) );
+    boost::for_each( manualSupplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::SendFullState ) );
 }

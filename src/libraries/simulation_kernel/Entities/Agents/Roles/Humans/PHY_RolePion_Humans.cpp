@@ -443,7 +443,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::SendChangedState() const
 {
-    boost::for_each( humansToUpdate_, boost::mem_fn( &Human_ABC::SendChangedState ) );
+    boost::for_each( humansToUpdate_, std::mem_fn( &Human_ABC::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -508,7 +508,7 @@ void PHY_RolePion_Humans::HealAllHumans( bool withLog )
 void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 {
     const std::vector< Human_ABC* > humans = humansToUpdate_;
-    boost::for_each( humans, boost::mem_fn( &Human_ABC::Update ) ); // !!! Can erase the human from humansToUpdate_ = bullshit ...
+    boost::for_each( humans, std::mem_fn( &Human_ABC::Update ) ); // !!! Can erase the human from humansToUpdate_ = bullshit ...
     if( hasChanged_ )
     {
         owner_->Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanHasChanged );
@@ -526,7 +526,7 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 void PHY_RolePion_Humans::Clean()
 {
     hasChanged_ = false;
-    boost::for_each( humansToUpdate_, boost::mem_fn( &Human_ABC::Clean ) );
+    boost::for_each( humansToUpdate_, std::mem_fn( &Human_ABC::Clean ) );
 }
 
 // -----------------------------------------------------------------------------

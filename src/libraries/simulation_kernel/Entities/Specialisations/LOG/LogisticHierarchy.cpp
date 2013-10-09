@@ -343,7 +343,7 @@ void LogisticHierarchy::SendChangedState() const
     }
     else
         // Links attributes
-        boost::for_each( superiorLinks_, boost::mem_fn( &LogisticLink_ABC::SendChangedState ) );
+        boost::for_each( superiorLinks_, std::mem_fn( &LogisticLink_ABC::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------

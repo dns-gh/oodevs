@@ -607,7 +607,7 @@ void PHY_RolePion_Composantes::Clean()
     bLoansChanged_            = false;
     bExternalMustChange_      = false;
     bOperationalStateChanged_ = false;
-    boost::for_each( maintenanceComposanteStates_, boost::mem_fn( &PHY_MaintenanceComposanteState::Clean ) );
+    boost::for_each( maintenanceComposanteStates_, std::mem_fn( &PHY_MaintenanceComposanteState::Clean ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1051,7 +1051,7 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendChangedState() const
 {
-    boost::for_each( maintenanceComposanteStates_, boost::mem_fn( &PHY_MaintenanceComposanteState::SendChangedState ) );
+    boost::for_each( maintenanceComposanteStates_, std::mem_fn( &PHY_MaintenanceComposanteState::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1818,7 +1818,7 @@ double  PHY_RolePion_Composantes::GetAttritionIndexComposante ( const PHY_Materi
 // -----------------------------------------------------------------------------
 std::size_t PHY_RolePion_Composantes::GetConvoyTransportersTotal() const
 {
-    auto convoyable = boost::mem_fn( &PHY_ComposantePion::CouldBePartOfConvoy );
+    auto convoyable = std::mem_fn( &PHY_ComposantePion::CouldBePartOfConvoy );
     std::size_t total = boost::count_if( composantes_, convoyable );
     for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
         total += boost::count_if( it->second, convoyable );

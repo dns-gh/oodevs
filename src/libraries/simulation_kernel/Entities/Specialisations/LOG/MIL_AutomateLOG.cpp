@@ -629,8 +629,8 @@ const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagi
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::UpdateLogistic()
 {
-    boost::remove_erase_if( supplyConsigns_, boost::mem_fn( &logistic::SupplyConsign_ABC::Update ) );
-    boost::remove_erase_if( supplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Update ) );
+    boost::remove_erase_if( supplyConsigns_, std::mem_fn( &logistic::SupplyConsign_ABC::Update ) );
+    boost::remove_erase_if( supplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::Update ) );
 }
 
 // -----------------------------------------------------------------------------
