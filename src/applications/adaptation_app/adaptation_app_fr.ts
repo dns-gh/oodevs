@@ -2149,7 +2149,19 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
     <message>
         <source>Set current language as master</source>
-        <translation>Définir en tant que langue principale</translation>
+        <translation>Définir en tant que langue de référence</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to set the database master as &apos;%1&apos;?</source>
+        <translation>Etes vous sûre de vouloir définir &apos;%1&apos; en tant que langue de référence ?</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>Some translations are empty or unfinished. If you continue you will have values in both %1 and %2 as reference language, and may lost some unfinished translations. Proceed anyway?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

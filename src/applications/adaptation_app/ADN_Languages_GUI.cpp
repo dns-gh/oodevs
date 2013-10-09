@@ -201,11 +201,41 @@ void ADN_Languages_GUI::OnMasterChanged()
     masterAction_->setText( CreateMasterText() );
 }
 
+namespace
+{
+    bool Confirm( const QString& text )
+    {
+        return QMessageBox::Ok == QMessageBox::warning( 0, tools::translate( "ADN_Languages_GUI", "Warning" ),
+                                                        text, QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_GUI::OnSwap
 // Created: ABR 2013-10-04
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::OnSwap()
 {
-    // Process language swap here
+    if( data_.IsMasterEmpty() )
+        throw MASA_EXCEPTION( "Not supposed to swap with an empty master" );
+    const QString& current = data_.GetAllLanguages().Get( kernel::Language::Current() )->GetName().c_str();
+    const QString& master = data_.GetAllLanguages().Get( data_.Master() )->GetName().c_str();
+
+    if( !Confirm( tr( "Are you sure you want to set the database master as '%1'?" ).arg( current ) ) )
+        return;
+    if( ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
+                                                   boost::bind( &kernel::LocalizedString::IsUnfinished, _1, kernel::Language::Current() ) ) ) )
+        && !Confirm( tr( "Some translations are empty or unfinished. If you continue you will have values in both "
+                         "%1 and %2 as reference language, and may lost some unfinished translations. "
+                         "Proceed anyway?" ).arg( current ).arg( master ) ) )
+        return;
+
+    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
+                                               boost::bind( &kernel::LocalizedString::SwapKey, _1, data_.Master(), kernel::Language::Current() ) ) ) );
+
+    data_.SwapMaster();
+    ChangeLanguage( data_.Master() );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
+    BuildMenu();
+    UpdateMenu();
 }

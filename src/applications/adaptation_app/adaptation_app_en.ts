@@ -2143,6 +2143,18 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <source>Set current language as master</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Are you sure you want to set the database master as &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Warning</translation>
+    </message>
+    <message>
+        <source>Some translations are empty or unfinished. If you continue you will have values in both %1 and %2 as reference language, and may lost some unfinished translations. Proceed anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Languages_MasterDialog</name>

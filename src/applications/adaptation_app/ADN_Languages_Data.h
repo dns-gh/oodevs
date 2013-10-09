@@ -47,6 +47,7 @@ public:
     //@{
     const std::string& Master() const;
     void SetMaster( const std::string& language );
+    void SwapMaster();
 
     bool IsMaster( const std::string& language ) const;
     bool IsMasterEmpty() const;
