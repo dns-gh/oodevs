@@ -284,7 +284,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         sender.Send( reply );
         return;
     }
-    auto profile = profiles_->Authenticate( message.login(), message.password(), link );
+    auto profile = profiles_->Authenticate( message.login(), message.password(), link, keyAuthenticated );
     if( !profile )
     {
         ack->set_error_code( sword::AuthenticationResponse::invalid_login );
@@ -297,7 +297,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         authenticationKeys_.erase( link );
         ack->set_terrain_name( config_.GetTerrainName().ToUTF8() );
         ack->set_error_code( sword::AuthenticationResponse::success );
-        profile->Send( *ack->mutable_profile() );
+        profile->Send( *ack );
         reply.set_client_id( countID_ );
         sender.Send( reply );
         authenticated_[ link ] = profile;
@@ -363,7 +363,7 @@ void RightsPlugin::OnReceiveConnectedProfilesRequest( const sword::ConnectedProf
     sword::AuthenticationToClient reply;
     auto response = reply.mutable_message()->mutable_connected_profile_list();
     for( auto it = authenticated_.begin(); it != authenticated_.end(); ++it )
-        it->second->Send( *response->add_elem() );
+        it->second->Send( *response );
     SendReponse( reply, sender, link );
 }
 
@@ -425,7 +425,7 @@ void RightsPlugin::SendProfiles( AuthenticationSender& sender ) const
     sword::AuthenticationToClient reply;
     auto response = reply.mutable_message()->mutable_connected_profile_list();
     for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
-        it->second->Send( *response->add_elem() );
+        it->second->Send( *response );
     sender.Broadcast( reply );
 }
 

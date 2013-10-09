@@ -21,6 +21,8 @@ namespace sword
     class ProfileCreationRequest;
     class ProfileUpdateRequest;
     class ClientToReplay;
+    class ConnectedProfileList;
+    class AuthenticationResponse;
 }
 
 namespace xml
@@ -55,16 +57,17 @@ public:
     //@{
              Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
              Profile( const Model& model, ClientPublisher_ABC& clients, const sword::ProfileCreationRequest& message );
+             Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin );
     virtual ~Profile();
     //@}
 
     //! @name Main
     //@{
     bool CheckPassword( const std::string& strPassword ) const;
-    bool CheckRights( const sword::ClientToSim& msg ) const;
-    bool CheckRights( const sword::ClientToAuthentication& msg ) const;
-    bool CheckRights( const sword::ClientToReplay& msg ) const;
-    bool CheckRights( const sword::ChatTarget& source, const sword::ChatTarget& target ) const;
+    virtual bool CheckRights( const sword::ClientToSim& msg ) const;
+    virtual bool CheckRights( const sword::ClientToAuthentication& msg ) const;
+    virtual bool CheckRights( const sword::ClientToReplay& msg ) const;
+    virtual bool CheckRights( const sword::ChatTarget& source, const sword::ChatTarget& target ) const;
     //@}
 
     //! @name Accessors
@@ -74,16 +77,18 @@ public:
 
     //! @name Network
     //@{
-    void Send( sword::Profile& asn ) const;
-    void Send( sword::ProfileDescription& asn ) const;
-    void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void Send( sword::ConnectedProfileList& msg ) const;
+    virtual void Send( sword::AuthenticationResponse& msg ) const;
+    virtual void Send( sword::ProfileDescription& msg ) const;
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction() const;
     //@}
 
     //! @name Operations
     //@{
     void Update( const sword::ProfileUpdateRequest& message );
     void SetRight( const kernel::Automat_ABC& entity, bool readonly, bool readwrite );
-    void SerializeProfile( xml::xostream& xos ) const;
+    virtual void SerializeProfile( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -96,12 +101,6 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Profile( const Profile& );            //!< Copy constructor
-    Profile& operator=( const Profile& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container );
@@ -109,6 +108,7 @@ private:
     void ReadFormationRights( xml::xistream& xis, T_FormationSet& container );
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
     void ReadRights( const sword::Profile& message );
+    void Send( sword::Profile& msg ) const;
 
     template< typename T >
     void SerializeRights( xml::xostream& xos, const std::string& tag, const T& list ) const;
@@ -135,7 +135,7 @@ private:
     T_PopulationSet readWritePopulations_;
 
     // Supervision
-    bool  bSupervision_;
+    bool bSupervision_;
     //@}
 };
 

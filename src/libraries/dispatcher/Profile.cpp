@@ -70,14 +70,24 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword:
 }
 
 // -----------------------------------------------------------------------------
+// Name: Profile constructor
+// Created: LGY 2013-07-10
+// -----------------------------------------------------------------------------
+Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin )
+    : model_   ( model )
+    , clients_ ( clients )
+    , strLogin_( strLogin )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Profile destructor
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    authentication::ProfileDestruction message;
-    message().set_login( strLogin_ );
-    message.Send( clients_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -294,22 +304,41 @@ namespace
     }
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: Profile::Send
-// Created: NLD 2006-10-09
+// Created: LGY 2013-10-08
 // -----------------------------------------------------------------------------
-void Profile::Send( sword::Profile& message ) const
+void Profile::Send( sword::ConnectedProfileList& msg ) const
 {
-    message.set_login( strLogin_ );
-    message.set_supervisor( bSupervision_ );
-    Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );
-    Serialize( *message.mutable_read_write_automates(), readWriteAutomats_ );
-    Serialize( *message.mutable_read_only_parties(), readOnlySides_ );
-    Serialize( *message.mutable_read_write_parties(), readWriteSides_ );
-    Serialize( *message.mutable_read_only_formations(), readOnlyFormations_ );
-    Serialize( *message.mutable_read_write_formations(), readWriteFormations_ );
-    Serialize( *message.mutable_read_only_crowds(), readOnlyPopulations_ );
-    Serialize( *message.mutable_read_write_crowds(), readWritePopulations_ );
+    Send( *msg.add_elem() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Send
+// Created: LGY 2013-10-08
+// -----------------------------------------------------------------------------
+void Profile::Send( sword::AuthenticationResponse& msg ) const
+{
+    Send( *msg.mutable_profile() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Send
+// Created: LGY 2013-10-08
+// -----------------------------------------------------------------------------
+void Profile::Send( sword::Profile& profile ) const
+{
+    profile.set_login( strLogin_ );
+    profile.set_supervisor( bSupervision_ );
+    Serialize( *profile.mutable_read_only_automates(), readOnlyAutomats_ );
+    Serialize( *profile.mutable_read_write_automates(), readWriteAutomats_ );
+    Serialize( *profile.mutable_read_only_parties(), readOnlySides_ );
+    Serialize( *profile.mutable_read_write_parties(), readWriteSides_ );
+    Serialize( *profile.mutable_read_only_formations(), readOnlyFormations_ );
+    Serialize( *profile.mutable_read_write_formations(), readWriteFormations_ );
+    Serialize( *profile.mutable_read_only_crowds(), readOnlyPopulations_ );
+    Serialize( *profile.mutable_read_write_crowds(), readWritePopulations_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -423,4 +452,15 @@ void Profile::SerializeRights( xml::xostream& xos, const std::string& tag, const
         xos << xml::start( tag )
             << xml::attribute( "id", (*it)->GetId() )
         << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::SendDestruction
+// Created: LGY 2013-10-09
+// -----------------------------------------------------------------------------
+void Profile::SendDestruction() const
+{
+    authentication::ProfileDestruction message;
+    message().set_login( strLogin_ );
+    message.Send( clients_ );
 }
