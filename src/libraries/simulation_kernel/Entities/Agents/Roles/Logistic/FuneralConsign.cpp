@@ -64,7 +64,6 @@ namespace
 // -----------------------------------------------------------------------------
 FuneralConsign::FuneralConsign( Human_ABC& human )
     : id_                     ( idManager.GetId() )
-    , creationTick_           ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , human_                  ( human )
     , handler_                ( 0 )
     , position_               ( human.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() )
@@ -304,7 +303,7 @@ void FuneralConsign::SendMsgCreation() const
 {
     client::LogFuneralHandlingCreation msg;
     msg().mutable_request()->set_id( id_ );
-    msg().set_tick( creationTick_ );
+    msg().set_tick( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ); //$$$ Huge shit
     msg().set_rank( human_.GetRank().GetAsnID() );
     msg().mutable_unit()->set_id( human_.GetPion().GetID() );
     msg.Send( NET_Publisher_ABC::Publisher() );
