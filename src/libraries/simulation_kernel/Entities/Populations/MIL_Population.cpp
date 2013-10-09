@@ -1250,9 +1250,9 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
-    const sword::Point point = parameters::GetPoint( msg, 0 );
-    parameters::Check( point.location().type() == sword::Location::point
+    protocol::CheckCount( msg, 1 );
+    const sword::Point point = protocol::GetPoint( msg, 0 );
+    protocol::Check( point.location().type() == sword::Location::point
         && point.location().coordinates().elem_size() == 1,
         "must be a point with one coordinate", 0 );
     MT_Vector2D vPosTmp;
@@ -1295,10 +1295,10 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveMsgChangeAttitude( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
+    protocol::CheckCount( msg, 1 );
     const auto value = GET_ENUMERATION( sword::EnumCrowdAttitude, msg, 0 );
     const MIL_PopulationAttitude* attitude = MIL_PopulationAttitude::Find( value );
-    parameters::Check( attitude, "must be a valid attitude enumeration", 0 );
+    protocol::Check( attitude, "must be a valid attitude enumeration", 0 );
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SetAttitude( *attitude );
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
@@ -1332,8 +1332,8 @@ namespace
 {
     unsigned int GetParameter( const sword::MissionParameters& params, int idx )
     {
-        const int quantity = parameters::GetQuantity( params, idx );
-        parameters::Check( quantity >= 0, "must be positive", idx );
+        const int quantity = protocol::GetQuantity( params, idx );
+        protocol::Check( quantity >= 0, "must be positive", idx );
         return quantity;
     }
 }
@@ -1344,13 +1344,13 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveMsgChangeHealthState( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 4 );
+    protocol::CheckCount( msg, 4 );
     unsigned int healthy = GetParameter( msg, 0 );
     unsigned int wounded = GetParameter( msg, 1 );
     unsigned int contaminated = GetParameter( msg, 2 );
     unsigned int dead = GetParameter( msg, 3 );
     unsigned int total = healthy + wounded + contaminated + dead;
-    parameters::Check( total > 0, "at least one parameter must be positive" );
+    protocol::Check( total > 0, "at least one parameter must be positive" );
     ChangeComposition( healthy, wounded, contaminated, dead );
 }
 
@@ -1432,9 +1432,9 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
-    const int quantity = parameters::GetQuantity( msg, 0 );
-    parameters::Check( quantity >= 0 && quantity <= 100, "must be between 0 and 100", 0 );
+    protocol::CheckCount( msg, 1 );
+    const int quantity = protocol::GetQuantity( msg, 0 );
+    protocol::Check( quantity >= 0 && quantity <= 100, "must be between 0 and 100", 0 );
     rArmedIndividuals_ = 0.01 * quantity;
     rNewArmedIndividuals_ = rArmedIndividuals_;
     armedIndividualsChanged_ = true;
@@ -1869,8 +1869,8 @@ MT_Vector2D MIL_Population::GetFlowHeadPosition()
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveCriticalIntelligence( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
-    criticalIntelligence_ = parameters::GetString( msg, 0 );
+    protocol::CheckCount( msg, 1 );
+    criticalIntelligence_ = protocol::GetString( msg, 0 );
     criticalIntelligenceChanged_ = true;
 }
 
@@ -1898,8 +1898,8 @@ void MIL_Population::OnReloadBrain( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_Population::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
-    const bool activate = parameters::GetBool( msg, 0 );
+    protocol::CheckCount( msg, 1 );
+    const bool activate = protocol::GetBool( msg, 0 );
     GetRole< DEC_PopulationDecision >().ActivateBrainDebug( activate );
 }
 

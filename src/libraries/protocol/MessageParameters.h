@@ -1,0 +1,59 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2013 Mathematiques Appliquees SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef PROTOCOL_MESSAGE_PARAMETERS_H
+#define PROTOCOL_MESSAGE_PARAMETERS_H
+
+#include <tools/Exception.h>
+#include <stdint.h>
+
+#define STR( WHAT ) static_cast< std::stringstream& >( std::stringstream() << WHAT ).str()
+
+namespace sword
+{
+    class MissionParameters;
+    class Point;
+}
+
+namespace google
+{
+namespace protobuf
+{
+    class EnumDescriptor;
+}
+}
+
+namespace protocol
+{
+    struct Exception : public tools::Exception
+    {
+        Exception( const std::string& file, const std::string& function, int line, const std::string& what );
+        Exception( const Exception& other );
+        virtual ~Exception() {}
+    };
+
+    void         Check( bool valid, const std::string& msg, int i = -1, int j = -1, int k = -1 );
+    void         Check( const void* pointer, const std::string& msg, int i = -1, int j = -1, int k = -1 );
+    void         CheckCount( const sword::MissionParameters& params, int min, int max = 0 );
+    void         CheckCount( int i, const sword::MissionParameters& params, int min, int max = 0 );
+    void         CheckCount( int i, int j, const sword::MissionParameters& params, int min, int max = 0 );
+    int          GetCount( const sword::MissionParameters& params, int i = -1, int j = -1 );
+
+    std::string  GetString( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    bool         GetBool( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    int          GetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    int          GetEnumeration( const google::protobuf::EnumDescriptor* descriptor, const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    sword::Point GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    int          GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    uint32_t     GetAgentId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+}
+
+#define GET_ENUMERATION( ENUM, I, ... ) static_cast< ENUM >( protocol::GetEnumeration( ENUM ## _descriptor(), I, __VA_ARGS__ ) )
+
+#endif // PROTOCOL_MESSAGE_PARAMETERS_H

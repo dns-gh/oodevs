@@ -1611,7 +1611,7 @@ void MIL_Automate::OnReloadBrain( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
-    const bool activate = parameters::GetBool( msg, 0 );
+    protocol::CheckCount( msg, 1 );
+    const bool activate = protocol::GetBool( msg, 0 );
     GetRole< DEC_AutomateDecision >().ActivateBrainDebug( activate );
 }
