@@ -267,7 +267,7 @@ void ADN_Missions_ABC::WriteMissionSheetParametersDescriptions( xml::xostream& x
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         xos << xml::start( "parameter" )
-            << xml::attribute( "name", ( *it )->strName_ )
+            << xml::attribute( "name", ( *it )->strName_.GetValue( language ) )
             << xml::attribute( "optional", ( *it )->isOptional_ );
         LocalizedFromWikiToXml( xos, ( *it )->description_, language, isMergedXml );
         xos << xml::end;

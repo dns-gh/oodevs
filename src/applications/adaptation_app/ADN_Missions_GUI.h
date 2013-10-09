@@ -79,6 +79,7 @@ private:
     //! @name Helpers
     //@{
     QWidget* BuildMissions( E_MissionType eMissionType );
+    E_MissionType GetCurrentType() const;
     //@}
 
 private:
@@ -90,17 +91,14 @@ private:
     ADN_HtmlViewer* missionViewers_[ eNbrMissionTypes ];
     QCheckBox* availableState_;
     QGroupBox* helpPanel_[ eNbrMissionTypes ];
-    QSignalMapper* generateMapper_;
-    QSignalMapper* helpMapper_;
-    QSignalMapper* missionChangedMapper_;
     //@}
 
 private slots:
     //! @name slots
     //@{
-    void OnGenerate( int, bool changeTab = true );
-    void OnHelpNeeded( int );
-    void OnChangeMission( int );
+    void OnGenerate( bool changeTab = true );
+    void OnHelpNeeded();
+    void OnChangeMission();
     //@}
 };
 

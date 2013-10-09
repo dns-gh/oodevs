@@ -32,6 +32,7 @@
 #include "ADN_HtmlViewer.h"
 #include "ADN_enums.h"
 #include "ADN_ExcludeRegExpValidator.h"
+#include "ADN_Languages_GUI.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/lexical_cast.hpp>
 
@@ -41,14 +42,9 @@
 // -----------------------------------------------------------------------------
 ADN_Missions_GUI::ADN_Missions_GUI( ADN_Missions_Data& data )
     : ADN_Tabbed_GUI_ABC( eMissions )
-    , data_      ( data )
+    , data_( data )
 {
-    generateMapper_ = new QSignalMapper( this );
-    helpMapper_ = new QSignalMapper( this );
-    missionChangedMapper_ = new QSignalMapper( this );
-    connect( generateMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnGenerate( int ) ) );
-    connect( helpMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnHelpNeeded( int ) ) );
-    connect( missionChangedMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnChangeMission( int ) ) );
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGui(), SIGNAL( PostLanguageChanged() ), this, SLOT( OnChangeMission() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,8 +222,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         subHelpLayout->setMargin( 1 );
 
         helpButton->setFixedSize( helpButton->sizeHint() );
-        connect( helpButton, SIGNAL( clicked() ), helpMapper_, SLOT( map() ) );
-        helpMapper_->setMapping( helpButton, eMissionType );
+        connect( helpButton, SIGNAL( clicked() ), this, SLOT( OnHelpNeeded() ) );
 
         QVBoxLayout* helpLayout = new QVBoxLayout();
         helpLayout->addWidget( helpButton );
@@ -257,9 +252,6 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         attachmentLayout->addWidget( attachmentListView );
 
         QPushButton* generateButton = builder.AddWidget< QPushButton >( "preview", tr( "Update Preview" ) );
-        connect( generateButton, SIGNAL( clicked() ), generateMapper_, SLOT( map() ) );
-        generateMapper_->setMapping( generateButton, eMissionType );
-
         descriptionLayout->addWidget( helpButton );
         descriptionLayout->addWidget( helpPanel_[ eMissionType ] );
         AddTextEditField( descriptionLayout, builder.GetChildName( "context" ), tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
@@ -277,6 +269,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         //Mission Sheet Viewer
         missionViewers_[ eMissionType ] = builder.AddWidget< ADN_HtmlViewer >( "viewer" );
         vInfosConnectors[ eDescriptionSheetPath ] = &missionViewers_[ eMissionType ]->GetConnector();
+        connect( generateButton, SIGNAL( clicked() ), this, SLOT( OnGenerate() ) );
         connect( generateButton, SIGNAL( clicked() ), missionViewers_[ eMissionType ], SLOT( reload() ) );
 
         builder.PopSubName(); //! viewer-tab
@@ -330,52 +323,60 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     {
         pSearchListView = builder.AddSearchListView< ADN_ListView_MissionTypes >( this, eMissionType, missions, missions, vInfosConnectors, eMissionType );
         connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), paramList, SLOT( OnMissionSelectionChanged() ) );
-        generateMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
     }
     listViews_[ eMissionType ] = pSearchListView->GetListView();
     // Main page
     builder.PopSubName(); //! eMissionType-tab
-    connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), missionChangedMapper_, SLOT( map() ) );
+    connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), this, SLOT( OnChangeMission() ) );
     connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), attachmentListView, SLOT( OnItemSelected( void* ) ) );
-    missionChangedMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
 
     connect( pSearchListView->GetListView(), SIGNAL( NotifyElementDeleted( boost::shared_ptr< kernel::LocalizedString >, E_MissionType ) ), &data_, SLOT( OnElementDeleted( boost::shared_ptr< kernel::LocalizedString >, E_MissionType ) ) );
     return CreateScrollArea( builder.GetName(), *missionTabs_[ eMissionType ], pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::GetCurrentType
+// Created: ABR 2013-10-09
+// -----------------------------------------------------------------------------
+E_MissionType ADN_Missions_GUI::GetCurrentType() const
+{
+    assert( pTabWidget_->currentIndex() >= 0 && pTabWidget_->currentIndex() < eNbrMissionTypes );
+    return static_cast< E_MissionType >( pTabWidget_->currentIndex() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::OnGenerate
 // Created: NPT 2013-01-30
 // -----------------------------------------------------------------------------
-void ADN_Missions_GUI::OnGenerate( int type, bool changeTab /* = true */ )
+void ADN_Missions_GUI::OnGenerate( bool changeTab /* = true */ )
 {
-    assert( type >= 0 && type < 4 );
-    ADN_RefWithLocalizedName* ref = static_cast< ADN_RefWithLocalizedName* >( listViews_[ type ]->GetCurrentData() );
+    ADN_RefWithLocalizedName* ref = static_cast< ADN_RefWithLocalizedName* >( listViews_[ GetCurrentType() ]->GetCurrentData() );
     assert( ref != 0 );
-    tools::Path missionPath = data_.GenerateMissionSheet( type, ref->strName_.GetTranslation() );
+    tools::Path missionPath = data_.GenerateMissionSheet( GetCurrentType(), ref->strName_.GetTranslation() );
     if( changeTab )
-        missionTabs_[ type ]->setCurrentIndex( 2 );
-    missionViewers_[ type ]->setText( missionPath.Normalize().ToUTF8().c_str() );
+        missionTabs_[ GetCurrentType() ]->setCurrentIndex( 2 );
+    missionViewers_[ GetCurrentType() ]->setText( missionPath.Normalize().ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::OnHelpNeeded
 // Created: NPT 2013-02-18
 // -----------------------------------------------------------------------------
-void ADN_Missions_GUI::OnHelpNeeded( int type )
+void ADN_Missions_GUI::OnHelpNeeded()
 {
-    helpPanel_[ type ]->setVisible( !helpPanel_[ type ]->isVisible() );
+    helpPanel_[ GetCurrentType() ]->setVisible( !helpPanel_[ GetCurrentType() ]->isVisible() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::OnChangeMission
 // Created: NPT 2013-02-19
 // -----------------------------------------------------------------------------
-void ADN_Missions_GUI::OnChangeMission( int type )
+void ADN_Missions_GUI::OnChangeMission()
 {
-    ADN_Missions_ABC* mission = static_cast< ADN_Missions_ABC* >( listViews_[ type ]->GetCurrentData() );
-    assert( mission != 0 );
+    ADN_Missions_ABC* mission = static_cast< ADN_Missions_ABC* >( listViews_[ GetCurrentType() ]->GetCurrentData() );
+    if( !mission )
+        return;
     mission->CheckValidity();
     if( mission->NeedsSaving() )
-        OnGenerate( type, false );
+        OnGenerate( false );
 }

@@ -213,6 +213,7 @@ ADN_Workspace::~ADN_Workspace()
 // -----------------------------------------------------------------------------
 void ADN_Workspace::Initialize()
 {
+    CREATE_WORKSPACE_ELEMENT( Languages );
     CREATE_WORKSPACE_ELEMENT( Drawings );
     CREATE_WORKSPACE_ELEMENT( Symbols );
     CREATE_WORKSPACE_ELEMENT( Categories );
@@ -241,7 +242,6 @@ void ADN_Workspace::Initialize()
     CREATE_WORKSPACE_ELEMENT( Fires );
     CREATE_WORKSPACE_ELEMENT( Logistic );
     CREATE_WORKSPACE_ELEMENT( Disasters );
-    CREATE_WORKSPACE_ELEMENT( Languages );
 }
 
 // -----------------------------------------------------------------------------
