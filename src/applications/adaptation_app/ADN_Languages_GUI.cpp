@@ -139,7 +139,9 @@ void ADN_Languages_GUI::OnLanguagesEdited()
         OnLanguageChanged();
     else
         UpdateMenu();
-    emit LanguagesEdited();
+
+    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
+                                               boost::bind( &kernel::LocalizedString::Initialize, _1, data_.GetActiveLanguages() ) ) ) );
 }
 
 // -----------------------------------------------------------------------------

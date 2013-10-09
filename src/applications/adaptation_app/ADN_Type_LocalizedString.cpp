@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Type_LocalizedString.h"
+#include "moc_ADN_Type_LocalizedString.cpp"
 #include "ADN_Languages_Data.h"
 #include "clients_kernel/Context.h"
 #include "clients_kernel/Language.h"
@@ -50,9 +51,7 @@ ADN_Type_LocalizedString::~ADN_Type_LocalizedString()
 void ADN_Type_LocalizedString::Initialize()
 {
     AddTranslationCheckers();
-    QObject* languagesGui = &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC();
-    connect( languagesGui, SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
-    connect( languagesGui, SIGNAL( LanguagesEdited() ), this, SLOT( OnLanguagesEdited() ) );
+    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,15 +244,6 @@ void ADN_Type_LocalizedString::OnLanguageChanged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Type_LocalizedString::OnLanguagesEdited
-// Created: ABR 2013-10-03
-// -----------------------------------------------------------------------------
-void ADN_Type_LocalizedString::OnLanguagesEdited()
-{
-    translation_->Initialize( ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Type_LocalizedString::OnApplyClicked
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
@@ -301,7 +291,7 @@ bool ADN_Type_LocalizedString::CheckUniqueTranslation() const
 // Name: boost::shared_ptr< kernel::LocalizedString > ADN_Type_LocalizedString::GetTranslation
 // Created: ABR 2013-08-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< kernel::LocalizedString > ADN_Type_LocalizedString::GetTranslation() const
+const boost::shared_ptr< kernel::LocalizedString >& ADN_Type_LocalizedString::GetTranslation() const
 {
     return translation_;
 }

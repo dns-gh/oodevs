@@ -41,7 +41,6 @@ public:
 signals:
     //! @name Signals
     //@{
-    void LanguagesEdited();
     void LanguageChanged();
     void PostLanguageChanged();
     //@}
