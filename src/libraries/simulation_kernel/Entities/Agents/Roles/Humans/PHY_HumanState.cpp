@@ -36,12 +36,12 @@ PHY_HumanState::PHY_HumanState()
 // Created: ABR 2011-07-18
 // -----------------------------------------------------------------------------
 PHY_HumanState::PHY_HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, E_HumanLocation location /*= eHumanLocation_Battlefield*/, bool contaminated /*= false*/, bool psyop /*= false*/ )
-    : number_       ( number )
-    , rank_         ( &rank )
-    , state_        ( &state )
-    , location_     ( location )
-    , contaminated_ ( contaminated )
-    , psyop_        ( psyop )
+    : number_      ( number )
+    , rank_        ( &rank )
+    , state_       ( &state )
+    , location_    ( location )
+    , contaminated_( contaminated )
+    , psyop_       ( psyop )
 {
     // NOTHING
 }
