@@ -374,7 +374,7 @@ namespace
 {
     sword::EnumInjuriesSeriousness Convert( const PHY_HumanWound& wound )
     {
-        unsigned int stateId = wound.GetID();
+        const unsigned int stateId = wound.GetID();
         if( stateId == PHY_HumanWound::woundedU1_.GetID() )
             return sword::wounded_u1;
         else if( stateId == PHY_HumanWound::woundedU2_.GetID() )
