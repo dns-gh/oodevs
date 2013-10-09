@@ -367,26 +367,7 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
     return bestUnits
 end
 
-integration.findDynamicEchelonTask = function( echelon )
-    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
-    local EchelonTasks = ""
-    local integration = integration
-    for entity,tasks in pairs (myself.leadData.dynamicEntityTasks) do
-        if integration.getEchelonState(entity.source) == echelon then
-            if string.len(EchelonTasks) ~= 0 then
-                EchelonTasks = EchelonTasks..";"
-            end
-            EchelonTasks = EchelonTasks..tasks
-        end
-    end
-    if string.len( EchelonTasks ) == 0 then
-        return nil
-    else
-        return EchelonTasks
-    end
-end
-
-integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
+local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
     myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     local integration = integration
     local myself = myself
@@ -901,7 +882,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     end
 
     if self.params.manageAddedAndDeletedUnits ~= false then
-        integration.manageAddedAndDeletedUnits( self, findBestsFunction, disengageTask)
+        manageAddedAndDeletedUnits( self, findBestsFunction, disengageTask)
     end
 
     local Activate = Activate
@@ -1012,7 +993,7 @@ integration.leadDelayActivate = function( self, disengageTask )
     local meKnowledge = meKnowledge
     local Activate = Activate
 
-    integration.manageAddedAndDeletedUnits( self, findBests, disengageTask )
+    manageAddedAndDeletedUnits( self, findBests, disengageTask )
     
     -- Mis à jour des echelons
     integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
