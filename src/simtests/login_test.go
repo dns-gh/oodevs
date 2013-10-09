@@ -67,6 +67,15 @@ func (s *TestSuite) TestLogin(c *C) {
 	// Test valid login
 	err = client.LoginWithAuthenticationKey("admin", "", key)
 	c.Assert(err, IsNil)
+	client.Close()
+
+	// Test supervisor login
+	client = connectClient(c, sim)
+	key, err = client.GetAuthenticationKey()
+	c.Assert(key, Not(IsNil))
+	c.Assert(err, IsNil)
+	err = client.LoginWithAuthenticationKey("", "", key)
+	c.Assert(err, IsNil)
 }
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
