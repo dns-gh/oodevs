@@ -368,6 +368,7 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
 end
 
 integration.findDynamicEchelonTask = function( echelon )
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     local EchelonTasks = ""
     local integration = integration
     for entity,tasks in pairs (myself.leadData.dynamicEntityTasks) do
@@ -386,6 +387,7 @@ integration.findDynamicEchelonTask = function( echelon )
 end
 
 integration.manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -835,6 +837,7 @@ end
 -- @author LMT
 -- @release 2013-08-13
 integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     local integration = integration
     local myself = myself
     myself.leadData.dynamicEchelonTasks = myself.leadData.dynamicEchelonTasks or {}
@@ -886,7 +889,6 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     local integration = integration
     local myself = myself
 
-    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     if myself.newTask then
       self:create()
     end
@@ -1010,7 +1012,6 @@ integration.leadDelayActivate = function( self, disengageTask )
     local meKnowledge = meKnowledge
     local Activate = Activate
 
-    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     integration.manageAddedAndDeletedUnits( self, findBests, disengageTask )
     
     -- Mis à jour des echelons
@@ -1122,8 +1123,6 @@ integration.leadDroneActivate = function( self, findBestsFunction )
     local pionsPE = echelons[1]
     local pionsSE = echelons[2]
     local pionsEE = echelons[3]
-
-    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     
     if meKnowledge.availableDrone then
         local drones = { meKnowledge.availableDrone }
