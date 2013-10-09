@@ -395,7 +395,7 @@ void ADN_Project_Data::New( const tools::Path& filename )
 // Name: ADN_Project_Data::GetMissionDir
 // Created: NPT 13-07-25
 //-----------------------------------------------------------------------------
-tools::Path ADN_Project_Data::GetMissionDir( E_MissionType missionType )
+tools::Path ADN_Project_Data::GetMissionDir( E_MissionType missionType ) const
 {
     switch( missionType )
     {
@@ -625,7 +625,7 @@ tools::Path ADN_Project_Data::GetLocalDir() const
 // Name: ADN_Project_Data::GetLocalMissionDir
 // Created: ABR 2013-10-03
 // -----------------------------------------------------------------------------
-tools::Path ADN_Project_Data::GetLocalMissionDir( E_MissionType missionType )
+tools::Path ADN_Project_Data::GetLocalMissionDir( E_MissionType missionType ) const
 {
     return workDir_.GetWorkingDirectory().GetData() / GetMissionDir( missionType ) / dataInfos_.szLocalesDirectory_;
 }

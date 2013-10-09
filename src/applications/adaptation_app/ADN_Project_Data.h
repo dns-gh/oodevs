@@ -167,10 +167,10 @@ public:
     DataInfos&           GetDataInfos();
     const DataInfos&     GetDataInfos() const;
     FileInfos&           GetFileInfos();
-    tools::Path          GetMissionDir( E_MissionType missionType );
+    tools::Path          GetMissionDir( E_MissionType missionType ) const;
     static WorkDirInfos& GetWorkDirInfos();
     tools::Path          GetLocalDir() const;
-    tools::Path          GetLocalMissionDir( E_MissionType missionType );
+    tools::Path          GetLocalMissionDir( E_MissionType missionType ) const;
 
 private:
     void FilterNode( const std::string& node, xml::xistream& xis, xml::xostream& xos );
