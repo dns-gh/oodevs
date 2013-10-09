@@ -548,30 +548,6 @@ integration.query.getNearestPositionInAOR = function( objective )
 end
 
 -- -------------------------------------------------------------------------------- 
--- local function uses in toolsQuesries.lua
--- Param platoons ally list
--- Param old supported platoons ally list
--- Return platoons to support
--- --------------------------------------------------------------------------------
-local platoonsToSupportFct = function( platoons, oldPlatoonsList )
-    local index = 0
-    --Test if source items of each list are the same. If number of items is different for each list so we are sure that lists are differents => no test.
-    if #platoons == #oldPlatoonsList then
-        for i = 1, #platoons do
-            for j = 1, #oldPlatoonsList do
-                if oldPlatoonsList[j].source == platoons[i].source then
-                    index = index + 1
-                end
-            end
-        end
-        if index == #oldPlatoonsList then -- list have same elements return old one
-            return oldPlatoonsList
-        end
-    end
-    return platoons
-end
-
--- -------------------------------------------------------------------------------- 
 -- Param ally commander
 -- Param old supported platoons ally list
 -- Return platoons to support
@@ -589,8 +565,8 @@ integration.query.getEntitiesToCombatSupportTask = function( commander, oldSuppo
     else -- no platoon in first echelon, return all unit from commander
         platoonsToSupport = integration.getEntitiesFromAutomatCommunication( commander, "none", true)
     end
-    --Return new elements if needed otherwise return old list.
-    return platoonsToSupportFct( platoonsToSupport, oldSupportedPlatoonList )
+    --Return new elements
+    return platoonsToSupport
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -605,6 +581,6 @@ integration.query.getEntitiesToCombatSupportPlatoonsTask = function( platoons, o
             platoonsToSupport[ #platoonsToSupport + 1 ] = platoons[i]
         end
     end
-    --Return new elements if needed otherwise return old list.
-    return platoonsToSupportFct( platoonsToSupport, oldSupportedPlatoonList )
+    --Return new elements
+    return platoonsToSupport
 end
