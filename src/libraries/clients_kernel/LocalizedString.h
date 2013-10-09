@@ -65,8 +65,10 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( const Languages::T_Languages& languages );
     void CopyValues( const LocalizedString& other );
+    bool IsUnfinished( const std::string& language ) const;
+    bool Initialize( const Languages::T_Languages& languages );
+    bool SwapKey( const std::string& oldKey, const std::string& newKey );
     //@}
 
     //! @name Operators

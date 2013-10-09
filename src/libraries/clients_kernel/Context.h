@@ -11,6 +11,7 @@
 #define __Translations_h_
 
 #include <boost/shared_ptr.hpp>
+#include <boost/function.hpp>
 #include <vector>
 
 namespace kernel
@@ -25,7 +26,6 @@ namespace kernel
 // =============================================================================
 class Context : public std::vector< boost::shared_ptr< LocalizedString > >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -35,6 +35,8 @@ public:
 
     //! @name Operations
     //@{
+    bool Apply( const boost::function< bool ( LocalizedString& ) >& functor );
+
     std::vector< boost::shared_ptr< LocalizedString > >::iterator find( const std::string& key );
     const std::vector< boost::shared_ptr< LocalizedString > >::const_iterator find( const std::string& key ) const;
 

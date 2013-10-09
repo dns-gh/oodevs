@@ -142,7 +142,7 @@ void LocalizedString::SetType( const std::string& language, E_TranslationType ty
 // Name: LocalizedString::InitEmptyValues
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-void LocalizedString::Initialize( const Languages::T_Languages& languages )
+bool LocalizedString::Initialize( const Languages::T_Languages& languages )
 {
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
@@ -153,6 +153,7 @@ void LocalizedString::Initialize( const Languages::T_Languages& languages )
             values_[ ( *it )->GetCode() ].type_ = eTranslationType_Unfinished;
         }
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -201,4 +202,30 @@ const std::string& LocalizedString::Translate( const std::string& language ) con
     if( it != values_.end() && it->second.type_ != eTranslationType_Unfinished && !it->second.value_.empty() )
         return it->second.value_;
     return key_;
+}
+
+// Name: LocalizedString::SwapKey
+// Created: ABR 2013-10-04
+// -----------------------------------------------------------------------------
+bool LocalizedString::SwapKey( const std::string& oldKey, const std::string& newKey )
+{
+    values_[ oldKey ].value_ = key_;
+    values_[ oldKey ].type_ = eTranslationType_None;
+    auto it = values_.find( newKey );
+    if( it == values_.end() )
+        throw MASA_EXCEPTION( "New key doesn't have a translation value: " + newKey );
+    if( !IsUnfinished( newKey ) )
+        key_ = it->second.value_;
+    values_.erase( it );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalizedString::IsUnfinished
+// Created: ABR 2013-10-08
+// -----------------------------------------------------------------------------
+bool LocalizedString::IsUnfinished( const std::string& language ) const
+{
+    const TranslationText& text = values_.at( language );
+    return text.type_ == eTranslationType_Unfinished || text.value_.empty() && !key_.empty();
 }
