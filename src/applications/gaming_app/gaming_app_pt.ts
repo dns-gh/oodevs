@@ -69,15 +69,15 @@
 <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Requests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>After action review</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -108,11 +108,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Request</source>
+        <source>Send request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Send request</source>
+        <source>Create request</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -971,18 +971,6 @@ Reason: %3
     </message>
     <message>
         <source>Export score data...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>IndicatorsReports</name>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The specified output file is the also the input template.
- Are you sure you want to overwrite the template file?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

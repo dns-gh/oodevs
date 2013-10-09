@@ -69,16 +69,16 @@
 <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation>Fonctions</translation>
-    </message>
-    <message>
         <source>Requests</source>
         <translation>Requêtes</translation>
     </message>
     <message>
         <source>After action review</source>
         <translation>Analyse après action</translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation>Création</translation>
     </message>
 </context>
 <context>
@@ -90,10 +90,6 @@
     <message>
         <source>Parameters</source>
         <translation>Paramètres</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Requête</translation>
     </message>
     <message>
         <source>Send request</source>
@@ -114,6 +110,10 @@
     <message>
         <source>After action review</source>
         <translation>Analyse après action</translation>
+    </message>
+    <message>
+        <source>Create request</source>
+        <translation>Créer une requête</translation>
     </message>
 </context>
 <context>
@@ -692,7 +692,7 @@ Raison: %3
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <source>This event is incomplete so it can&apos;t be triggered.</source>
@@ -974,19 +974,6 @@ Raison: %3
     <message>
         <source>Export score data...</source>
         <translation>Exporter les données du score...</translation>
-    </message>
-</context>
-<context>
-    <name>IndicatorsReports</name>
-    <message>
-        <source>Warning</source>
-        <translation>Avertissement</translation>
-    </message>
-    <message>
-        <source>The specified output file is the also the input template.
- Are you sure you want to overwrite the template file?</source>
-        <translation>Le fichier spécifié en entrée est identique au fichier de modèle.
-Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>

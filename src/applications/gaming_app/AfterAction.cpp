@@ -28,7 +28,7 @@ AfterAction::AfterAction( QWidget* parent, kernel::Controllers& controllers, Aft
     functionsTab_ = new QTabWidget;
 
     AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, model, interfaceBuilder );
-    functionsTab_->addTab( list, tools::translate( "AfterAction", "Functions" ) );
+    functionsTab_->addTab( list, tools::translate( "AfterAction", "Creation" ) );
 
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, plotFactory );
     functionsTab_->addTab( requests, tools::translate( "AfterAction", "Requests" ) );

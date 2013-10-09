@@ -110,7 +110,7 @@ void AfterActionFunctionList::NotifyUpdated( const Simulation& simulation )
 void AfterActionFunctionList::CreateRequestButton()
 {
     delete request_;
-    request_ = new QPushButton( tr( "Request" ) );
+    request_ = new QPushButton( tr( "Create request" ) );
     layout()->addWidget( request_ );
     QToolTip::add( request_, tr( "Send request" ) );
     connect( request_, SIGNAL( clicked() ), SLOT( Request() ) );
@@ -247,7 +247,8 @@ void AfterActionFunctionList::CreateParameter( const AfterActionParameter& param
     if( pParameter )
     {
         paramList_.push_back( pParameter );
-        pParameter->BuildInterface( "parameters", parameters_ );
+        QWidget* widget = pParameter->BuildInterface( "parameters", parameters_ );
+        widget->setEnabled( true );
         pParameter->RegisterIn( controllers_.actions_ );
     }
     else

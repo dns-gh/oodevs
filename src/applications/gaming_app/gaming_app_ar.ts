@@ -69,16 +69,16 @@
 <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation type="unfinished">وظائف</translation>
-    </message>
-    <message>
         <source>Requests</source>
         <translation type="unfinished">طلبات</translation>
     </message>
     <message>
         <source>After action review</source>
         <translation type="unfinished">وبعد استعراض العمل</translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished">إنشاء</translation>
     </message>
 </context>
 <context>
@@ -108,12 +108,12 @@
         <translation type="unfinished">المدة</translation>
     </message>
     <message>
-        <source>Request</source>
-        <translation type="unfinished">طلب</translation>
-    </message>
-    <message>
         <source>Send request</source>
         <translation type="unfinished">إرسال الطلب</translation>
+    </message>
+    <message>
+        <source>Create request</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -972,19 +972,6 @@ Reason: %3
     <message>
         <source>Export score data...</source>
         <translation type="unfinished">تصدير نقاط البيانات...</translation>
-    </message>
-</context>
-<context>
-    <name>IndicatorsReports</name>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished">تحذير</translation>
-    </message>
-    <message>
-        <source>The specified output file is the also the input template.
- Are you sure you want to overwrite the template file?</source>
-        <translation type="unfinished">ملف الإخراج المحدد الإدخال القالب أيضا.
- هل أنت متأكد من أنك تريد الكتابة فوق ملف القالب؟</translation>
     </message>
 </context>
 <context>

@@ -69,16 +69,16 @@
 <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation>Funciones</translation>
-    </message>
-    <message>
         <source>Requests</source>
         <translation>Requeridos</translation>
     </message>
     <message>
         <source>After action review</source>
         <translation>Revisión post acción</translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -90,10 +90,6 @@
     <message>
         <source>Parameters</source>
         <translation>Parámetros</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Requerimiento</translation>
     </message>
     <message>
         <source>Send request</source>
@@ -114,6 +110,10 @@
     <message>
         <source>After action review</source>
         <translation type="unfinished">Revisión post acción</translation>
+    </message>
+    <message>
+        <source>Create request</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -972,19 +972,6 @@ Reason: %3
     <message>
         <source>Export score data...</source>
         <translation>Exportar datos de indicadores...</translation>
-    </message>
-</context>
-<context>
-    <name>IndicatorsReports</name>
-    <message>
-        <source>Warning</source>
-        <translation>Alerta</translation>
-    </message>
-    <message>
-        <source>The specified output file is the also the input template.
- Are you sure you want to overwrite the template file?</source>
-        <translation>El archivo de salida especificado es también el archivo de plantilla de entrada.
-¿Desea sobreescribir el archivo de plantilla?</translation>
     </message>
 </context>
 <context>
