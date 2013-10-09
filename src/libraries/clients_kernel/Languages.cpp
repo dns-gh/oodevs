@@ -50,21 +50,15 @@ Languages::~Languages()
 void Languages::Read( xml::xistream& xis )
 {
     xis >> xml::start( "languages" )
-            >> xml::list( "language", *this, &Languages::ReadLanguage )
+            >> xml::list( "language", [&]( xml::xistream& x)
+            {
+                const std::string code = x.attribute( "code", "" );
+                for( auto it = languages_.begin(); it != languages_.end(); ++it )
+                    if( ( *it )->GetCode() == code )
+                        throw MASA_EXCEPTION( "Language code already registered: " + code );
+                languages_.push_back( boost::make_shared< kernel::Language >( x ) );
+            })
         >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Languages::ReadLanguage
-// Created: ABR 2013-09-30
-// -----------------------------------------------------------------------------
-void Languages::ReadLanguage( xml::xistream& xis )
-{
-    std::string code = xis.attribute( "code", "" );
-    for( auto it = languages_.begin(); it != languages_.end(); ++it )
-        if( ( *it )->GetCode() == code )
-            throw MASA_EXCEPTION( "Language code already registered: " + code );
-    languages_.push_back( boost::make_shared< kernel::Language >( xis ) );
 }
 
 // -----------------------------------------------------------------------------

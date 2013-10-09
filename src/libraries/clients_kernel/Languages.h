@@ -54,7 +54,6 @@ private:
     //! @name Helpers
     //@{
     void Read( xml::xistream& xis );
-    void ReadLanguage( xml::xistream& xis );
     //@}
 
 private:
