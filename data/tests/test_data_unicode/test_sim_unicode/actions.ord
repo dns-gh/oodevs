@@ -22,5 +22,6 @@
         </location>
       </parameter>
     </parameter>
+    <parameter/>
   </action>
 </actions>
