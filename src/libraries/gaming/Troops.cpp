@@ -48,7 +48,7 @@ void Troops::DoUpdate( const sword::UnitAttributes& message )
     for( auto it = differences.begin(); it != differences.end(); ++it )
         it->quantity_ = -it->quantity_;
     for( int i = 0; i < message.human_dotations().elem_size(); ++i )
-        UpdateHumanState( differences, message.human_dotations().elem( i ) );
+        UpdateHumanState( differences, HumanState( message.human_dotations().elem( i ) ) );
     Update( differences );
 }
 

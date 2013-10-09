@@ -31,7 +31,7 @@ public:
     //@{
              HumanState();
              HumanState( const HumanState& );
-             HumanState( const sword::HumanDotations_HumanDotation& );
+    explicit HumanState( const sword::HumanDotations_HumanDotation& );
     virtual ~HumanState();
     //@}
 
