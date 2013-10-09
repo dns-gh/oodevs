@@ -29,7 +29,6 @@ namespace kernel
 class AfterActionModel;
 class AfterActionRequest;
 class IndicatorPlotFactory;
-class StaticModel;
 
 // =============================================================================
 /** @class  AfterAction

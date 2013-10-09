@@ -42,10 +42,11 @@ namespace
         QWidget* box = new QWidget( parent );
         QVBoxLayout* layout = new QVBoxLayout( box );
         // Tab
-        Q3VBox* tab = new Q3VBox( parent );
+        QWidget* tab = new QWidget;
+        tab->setLayout( new QVBoxLayout );
         tab->layout()->setAlignment( Qt::AlignTop );
-        tab->setMargin( 5 );
-        tab->setSpacing( 5 );
+        tab->layout()->setMargin( 5 );
+        tab->layout()->setSpacing( 5 );
         // Parent
         scrollArea->setWidget( box );
         parent->addTab( scrollArea, title );
@@ -149,7 +150,8 @@ void MissionInterface::Build( InterfaceBuilder_ABC& builder, const kernel::Order
         if( fileName.IsRegularFile() )
         {
             fileName.MakePreferred();
-            QWebView* missionSheetText = new QWebView( helpTab_ );
+            QWebView* missionSheetText = new QWebView();
+            helpTab_->layout()->addWidget( missionSheetText );
             missionSheetText->setZoomFactor( 0.75 );
             missionSheetText->setContextMenuPolicy( Qt::NoContextMenu );
             missionSheetText->load( QUrl( fileName.Normalize().ToUTF8().c_str() ) );

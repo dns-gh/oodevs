@@ -11,27 +11,21 @@
 #include "AfterAction.h"
 #include "AfterActionFunctionList.h"
 #include "AfterActionRequestList.h"
-#include "actions_gui/InterfaceBuilder_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
-#include "protocol/ReplaySenders.h"
-#include "protocol/AarSenders.h"
-
-using namespace gui;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: AfterAction constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterAction::AfterAction( QWidget* parent, Controllers& controllers, AfterActionModel& model,
+AfterAction::AfterAction( QWidget* parent, kernel::Controllers& controllers, AfterActionModel& model,
                           IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
     : gui::RichDockWidget( controllers, parent, "after-action" )
     , functionsTab_( 0 )
 {
-    Q3VBox* box = new Q3VBox( this );
-    box->setMinimumSize( 250, 200 );
-    functionsTab_ = new QTabWidget( box );
+    QWidget* main = new QWidget;
+    QVBoxLayout* layout = new QVBoxLayout( main );
+    functionsTab_ = new QTabWidget;
 
     AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, model, interfaceBuilder );
     functionsTab_->addTab( list, tools::translate( "AfterAction", "Functions" ) );
@@ -40,9 +34,9 @@ AfterAction::AfterAction( QWidget* parent, Controllers& controllers, AfterAction
     functionsTab_->addTab( requests, tools::translate( "AfterAction", "Requests" ) );
 
     setFeatures( QDockWidget::AllDockWidgetFeatures );
-    setWidget( box );
     setWindowTitle( tools::translate( "AfterAction", "After action review" ) );
-
+    layout->addWidget( functionsTab_ );
+    setWidget( main );
     controllers_.Update( *this );
 }
 

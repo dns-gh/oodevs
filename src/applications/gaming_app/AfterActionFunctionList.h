@@ -29,10 +29,8 @@ namespace actions
 }
 
 class AfterActionParameter;
-class AfterActionFunction;
 class AfterActionModel;
 class Simulation;
-class StaticModel;
 
 // =============================================================================
 /** @class  AfterActionFunctionList
@@ -40,7 +38,7 @@ class StaticModel;
 */
 // Created: AGE 2007-09-21
 // =============================================================================
-class AfterActionFunctionList : public Q3VBox
+class AfterActionFunctionList : public QWidget
                               , public actions::gui::ParamInterface_ABC
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< Simulation >
@@ -89,13 +87,12 @@ private:
     kernel::Controllers& controllers_;
     AfterActionModel& model_;
     QTreeWidget* functions_;
-    Q3GroupBox* parameters_;
-    Q3VGroupBox* timeGroup_;
+    QGroupBox* parameters_;
+    QGroupBox* timeGroup_;
     QSpinBox* firstTick_;
     QSpinBox* duration_;
     QPushButton* request_;
     T_Parameters paramList_;
-    QString title_;
     //@}
 };
 

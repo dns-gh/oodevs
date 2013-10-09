@@ -47,7 +47,6 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
     grid->setMargin( 5 );
     grid->setRowStretch( 1, 5 );
     {
-
         gui::SubObjectName subObject( "Information" );
 
         QLabel* nameLabel = new QLabel( tr( "Name: " ) );
@@ -89,7 +88,8 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
         grid->addWidget( informationBox, 0, 0 );
     }
     {
-        paramBox_ = new Q3VBox( this );
+        paramBox_ = new QWidget();
+        paramBox_->setLayout( new QVBoxLayout );
         grid->addWidget( paramBox_, 1, 0, 1, 2 );
     }
     {
@@ -217,8 +217,9 @@ void ScoreVariableCreationWizard::OnChangeType()
     if( paramBox_ )
     {
         delete paramBox_;
-        paramBox_ = new Q3VBox( this );
-        static_cast< Q3GridLayout* >( layout() )->addWidget( paramBox_, 1, 0, 1, 2 );
+        paramBox_ = new QWidget();
+        paramBox_->setLayout( new QVBoxLayout );
+        static_cast< QGridLayout* >( layout() )->addWidget( paramBox_, 1, 0, 1, 2 );
     }
     gui::SubObjectName subObject( "paramBox" );
 
@@ -230,7 +231,7 @@ void ScoreVariableCreationWizard::OnChangeType()
         parameter_->RegisterIn( controllers_.actions_ );
     }
     else
-        new QLabel( name_->text(), paramBox_ );
+        paramBox_->layout()->addWidget( new QLabel( name_->text() ) );
     paramBox_->show();
 }
 

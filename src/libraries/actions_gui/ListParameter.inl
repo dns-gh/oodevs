@@ -88,10 +88,11 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( const QString& object
     Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     group_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    Q3VBox* vbox = new Q3VBox( parent );
+    QWidget* vbox = new QWidget();
+    vbox->setLayout( new QVBoxLayout );
 
     //list of parameters
-    list_ = new QTreeView( vbox );
+    list_ = new QTreeView();
     list_->setModel( &model_ );
     list_->setContextMenuPolicy( Qt::CustomContextMenu );
     list_->setRootIsDecorated( false );
@@ -102,6 +103,7 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( const QString& object
     connect( list_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), SLOT( OnSelectionChanged( const QItemSelection&, const QItemSelection& ) ) );
     connect( list_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnRequestPopup( const QPoint& ) ) );
 
+    vbox->layout()->addWidget( list_ );
     layout->addWidget( vbox );
     return group_;
 }
@@ -149,7 +151,9 @@ void ListParameter< ConcreteElement >::AddElement( Param_ABC& param )
 {
     //add param to interface
     param.SetOptional( false );
-    Q3VBox* widget = new Q3VBox( list_->parentWidget() );
+    QWidget* widget = new QWidget();
+    widget->setLayout( new QVBoxLayout );
+    list_->parentWidget()->layout()->addWidget( widget );
     widgets_[ &param ] = widget;
     param.BuildInterface( param.GetName(), widget );
     param.SetEntity( entity_ );
