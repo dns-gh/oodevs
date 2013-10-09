@@ -19,7 +19,7 @@
       <orbat checkcomposition="false"/>
       <pathfinder threads="1"/>
       <profiling enabled="false"/>
-      <time factor="10" step="10"/>
+      <time factor="10000" step="10"/>
     </simulation>
   </config>
   <meta>
