@@ -179,6 +179,7 @@ void NotesPanel::AddNoteInfo( const Note& note, QStandardItem* parent )
 void NotesPanel::OnContextMenu( const QPoint& point )
 {
     kernel::ContextMenu* menu = new kernel::ContextMenu( notes_ );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     const QModelIndex index = notes_->indexAt( notes_->mapTo( notes_, point ) );
     if( index.isValid() )
     {

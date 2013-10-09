@@ -75,6 +75,7 @@ void LogisticSupplyExclusiveListWidget::contextMenuEvent( QContextMenuEvent* eve
     if( !event )
         return;
     QMenu* menu = new QMenu( this );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     if( !choice_.empty() )
     {
         QMenu* subMenu = new QMenu( menu );

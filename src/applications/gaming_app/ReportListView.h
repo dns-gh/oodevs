@@ -24,7 +24,6 @@ namespace gui
 
 namespace kernel
 {
-    class ContextMenu;
     class Controllers;
 }
 
@@ -54,7 +53,6 @@ public:
     //@{
     virtual void showEvent( QShowEvent* );
     virtual void contextMenuEvent ( QContextMenuEvent * e );
-    void AddMenuItem( const QString& name, Report::E_Type type ) const;
 
 public slots:
     //! @name Slots
@@ -78,6 +76,7 @@ private:
     void MarkReportsAsRead();
     void SetFilterRegexp();
     QList< QStandardItem* > GetItems( const Report& report ) const;
+    void AddMenuItem( QMenu* menu, const QString& name, Report::E_Type type ) const;
     //@}
 
 private:
@@ -87,7 +86,6 @@ private:
     kernel::Controllers& controllers_;
     gui::DisplayExtractor& extractor_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    kernel::ContextMenu* menu_;
     QTimer* readTimer_;
     QStandardItemModel reportModel_;
     QSortFilterProxyModel* proxyFilter_;

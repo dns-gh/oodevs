@@ -58,6 +58,7 @@ void WeatherListView::contextMenuEvent( QContextMenuEvent* event )
     if( event )
     {
         QMenu* menu = new QMenu( this );
+        connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
         menu->addAction( tr( "Add" ), this, SLOT( CreateItem() ) );
         if( indexAt( event->pos() ) == selectionModel()->currentIndex() )
             menu->addAction( tr( "Delete" ), this, SLOT( DeleteItem() ) );

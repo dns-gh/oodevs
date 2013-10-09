@@ -383,6 +383,7 @@ bool Param_ABC::IsInParam() const
 void Param_ABC::CreateListMenu( QTreeView* list, const QStandardItemModel& model, const QPoint& pos, bool createEnabled )
 {
     kernel::ContextMenu* menu = new kernel::ContextMenu( list );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     if( createEnabled )
         menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
 

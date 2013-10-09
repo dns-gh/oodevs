@@ -151,6 +151,7 @@ void ParamHumanWoundList::OnContextMenu( const QPoint& point )
 {
     //general context menu
     kernel::ContextMenu* menu = new kernel::ContextMenu( list_ );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     kernel::ContextMenu* items = new kernel::ContextMenu( menu );
     for( unsigned int i = eHumanWound_BlesseUrgence1; i < int( eNbrHumanWound ); ++i )
     {
