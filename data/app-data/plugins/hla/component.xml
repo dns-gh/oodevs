@@ -99,7 +99,7 @@
     <!--entry name="Theater High Altitude Aera Defense Device" dis="1 1 225 7 1 0 0"/-->
     <entry name="AAA.Theater High Altitude Radar Vehicle" dis="1 1 225 7 1 0 1"/>
     <entry name="AIR.Tigre helicopter" dis="1 2 225 20 1 0 3"/>
-    <entry name="AIR.Transport helicopter" dis="1 2 225 21 1 0 1"/>
+    <entry name="AAVN.Transport helicopter" dis="1 2 225 21 1 0 1"/>
     <entry name="LOG.TUM 12.7" dis="1 1 225 18 1 0 11"/>
     <entry name="ART.VAB RATAC" dis="1 1 225 3 1 0 6"/>
     <entry name="LOG.VAB SAN" dis="1 1 225 3 1 0 7"/>
