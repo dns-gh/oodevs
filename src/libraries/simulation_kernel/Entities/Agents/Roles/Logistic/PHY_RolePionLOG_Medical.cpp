@@ -38,6 +38,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <boost/serialization/set.hpp>
 #include <boost/serialization/map.hpp>
+#include <boost/ptr_container/serialize_ptr_map.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Medical )
@@ -214,12 +215,9 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
         return 0;
     const MIL_Automate& humanAutomate = consign.GetHumanState().GetAutomate();
     auto range = evacuationAmbulances_.equal_range( humanAutomate.GetID() );
-    for( auto it = range.first; it != range.second; ++it )
-    {
-        PHY_MedicalEvacuationAmbulance& ambulance = *it->second;
-        if( ambulance.RegisterHuman( consign ) )
-            return &ambulance;
-    }
+    for( auto it = range.begin(); it != range.end(); ++it )
+        if( it->second->RegisterHuman( consign ) )
+            return it->second;
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -227,11 +225,10 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
     PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
-    PHY_MedicalEvacuationAmbulance* pAmbulance = new PHY_MedicalEvacuationAmbulance( *this, *pCompAmbulance );
+    std::auto_ptr< PHY_MedicalEvacuationAmbulance > pAmbulance( new PHY_MedicalEvacuationAmbulance( *this, *pCompAmbulance ) );
     if( ! pAmbulance->RegisterHuman( consign ) )
         MT_LOG_ERROR_MSG( __FUNCTION__ << ": Register failed" );
-    evacuationAmbulances_.insert( std::make_pair( humanAutomate.GetID(), pAmbulance ) );
-    return pAmbulance;
+    return evacuationAmbulances_.insert( humanAutomate.GetID(), pAmbulance )->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -641,16 +638,10 @@ void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
 void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
 {
     for( auto it = evacuationAmbulances_.begin(); it != evacuationAmbulances_.end(); )
-    {
-        PHY_MedicalEvacuationAmbulance& ambulance = *it->second;
-        if( ambulance.Update() )
-        {
-            delete &ambulance;
+        if( it->second->Update() )
             it = evacuationAmbulances_.erase( it );
-        }
         else
             ++it;
-    }
     for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); )
     {
         PHY_MedicalCollectionAmbulance& ambulance = **it;

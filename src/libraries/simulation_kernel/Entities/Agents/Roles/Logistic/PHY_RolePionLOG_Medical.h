@@ -17,7 +17,7 @@
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
-#include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
 
 namespace client
 {
@@ -127,7 +127,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::multimap< unsigned int, PHY_MedicalEvacuationAmbulance* > T_EvacuationAmbulancesMMap;
+    typedef boost::ptr_multimap< unsigned int, PHY_MedicalEvacuationAmbulance > T_EvacuationAmbulancesMMap;
 
     typedef std::vector< const PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesSet;
 
