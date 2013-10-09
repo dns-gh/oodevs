@@ -222,9 +222,8 @@ void ADN_Urban_Data::WriteMaterials( xml::xostream& output ) const
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output )
 {
-    std::string strData = strName_.GetData();
     output << xml::start( "material-composition-type" )
-           << xml::attribute( "name",  trim( strData ) )
+           << xml::attribute( "name", strName_ )
               << xml::start( "attritions" );
     for( auto it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
@@ -372,9 +371,8 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& output )
 {
-    std::string strData = strName_.GetData();
     output << xml::start( "accommodation" )
-           << xml::attribute( "role", trim( strData ) )
+           << xml::attribute( "role", strName_ )
            << xml::attribute( "nominal-capacity", nominalCapacity_.GetData() )
            << xml::attribute( "max-capacity", maxCapacity_.GetData() )
            << xml::end;
@@ -465,9 +463,8 @@ void ADN_Urban_Data::WriteInfrastructures( xml::xostream& output ) const
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& output )
 {
-    std::string strData = strName_.GetData();
     output << xml::start( "infrastructure" )
-        << xml::attribute( "name",  trim( strData ) );
+        << xml::attribute( "name", strName_ );
     output << xml::attribute( "symbol", pSymbol_ );
 
     if( bMedical_.GetData() )
@@ -723,11 +720,10 @@ ADN_Urban_Data::RoofShapeInfos::~RoofShapeInfos()
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output )
 {
-    if( strName_.GetData().empty() )
+    if( strName_.GetKey().empty() )
         throw MASA_EXCEPTION( tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).toStdString() );
-    std::string strData = strName_.GetData();
     output << xml::start( "roof-shape-type" )
-               << xml::attribute( "name", trim( strData ) )
+               << xml::attribute( "name", strName_ )
            << xml::end;
 }
 

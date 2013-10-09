@@ -11,8 +11,7 @@
 #define __XmlTranslations_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-
+#include "Languages.h"
 #include "LocalizedString.h"
 
 namespace tools
@@ -39,9 +38,8 @@ class XmlTranslations : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::vector< Language >                               T_Languages;
-    typedef std::vector< TranslationQuery >                       T_TranslationQueries;
-    typedef std::map< std::string, boost::shared_ptr< Context > > T_Contexts;
+    typedef std::vector< TranslationQuery >                                         T_TranslationQueries;
+    typedef boost::container::flat_map< std::string, boost::shared_ptr< Context > > T_Contexts;
     //@}
 
     //! @name Constructors/Destructor
@@ -54,24 +52,22 @@ public:
     //@{
     void Purge();
     bool LoadTranslationQueries( const tools::Path& xmlFile );
-    void EvaluateTranslationQueries( const tools::Path& xmlFile, const T_Languages& languages );
+    void EvaluateTranslationQueries( const tools::Path& xmlFile, const Languages::T_Languages& languages );
     void SaveTranslationQueries( const tools::Path& xmlFile ) const;
     void SaveTranslationQueries( xml::xostream& xos ) const;
     //@}
 
     //! @name Translations operations
     //@{
-    void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& language );
-    void LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages );
+    void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const kernel::Language& language );
+    void LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages );
     void MergeDuplicateTranslations();
-    void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const T_Languages& languages ) const;
+    void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages ) const;
     //@}
 
     //! @name Accessors
     //@{
     bool HasDuplicateErrors() const;
-
-    const std::string Translate( const std::string& key, const std::string& context = "", const std::string& language = "" ) const;
     const boost::shared_ptr< Context >& GetContext( const std::string& context );
     const boost::shared_ptr< LocalizedString >& GetTranslation( const std::string& context, const std::string& key ) const;
     //@}
@@ -79,14 +75,14 @@ public:
 private:
     //! @name Helpers
     //@{
-    void SetTranslation( const std::string& context, const std::string& key, const std::string& language, const std::string& translation, E_TranslationType type = kernel::eTranslationType_Unfinished );
+    void SetTranslation( const std::string& context, const std::string& key, const std::string& languageCode, const std::string& translation, E_TranslationType type = kernel::eTranslationType_Unfinished );
     void CopyAndAddTranslationQueries( const std::string& name, xml::xistream& xis, xml::xostream& xos ) const;
     void CleanTranslations();
 
     void ReadTranslationQueries( const std::string& name, xml::xistream& xis, int depthMax );
     void ReadTranslationQuery( xml::xistream& xis );
-    void ReadContext( xml::xistream& xis, const std::string& language );
-    void ReadMessage( xml::xistream& xis, const std::string& language, const std::string& translations );
+    void ReadContext( xml::xistream& xis, const Language& language );
+    void ReadMessage( xml::xistream& xis, const Language& language, const std::string& translations );
     //@}
 
 private:
@@ -95,7 +91,6 @@ private:
     T_TranslationQueries queries_;
     T_Contexts contexts_;
     bool loadAllLanguages_;
-    std::string currentLanguage_;
     //@}
 };
 

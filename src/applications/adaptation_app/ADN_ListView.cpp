@@ -15,11 +15,11 @@
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
 #include "ADN_Connector_ListView_ABC.h"
+#include "ADN_Languages_Data.h"
 #include "ADN_Languages_GUI.h"
 #include "ADN_MultiRefWarningDialog.h"
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_ListViewToolTip.h"
-#include "clients_kernel/Language.h"
 #include <boost/bind.hpp>
 #include <excel/ExcelFormat.h>
 
@@ -900,7 +900,7 @@ void ADN_ListView::RemoveCurrentElement()
 // -----------------------------------------------------------------------------
 void ADN_ListView::OnLanguageChanged()
 {
-    bEditionEnabled_ = kernel::Language::IsCurrentDefault();
+    bEditionEnabled_ = ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster();
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
             if( ADN_Ref_ABC* parentData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )

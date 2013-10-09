@@ -74,12 +74,13 @@ const std::string& LocalizedString::Key() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalizedString::Value
-// Created: ABR 2013-08-22
+// Name: LocalizedString::CheckLanguageValidity
+// Created: ABR 2013-10-07
 // -----------------------------------------------------------------------------
-const std::string& LocalizedString::Value() const
+void LocalizedString::CheckLanguageValidity( const std::string& language ) const
 {
-    return Language::IsCurrentDefault() || key_.empty() ? key_ : values_.at( Language::Current() ).value_;
+    if( language.size() != 2 )
+        throw MASA_EXCEPTION( "Invalid language: " + language );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,16 +89,11 @@ const std::string& LocalizedString::Value() const
 // -----------------------------------------------------------------------------
 const std::string& LocalizedString::Value( const std::string& language ) const
 {
-    return Language::IsDefault( language ) || key_.empty() ? key_ : values_.at( language ).value_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocalizedString::Type
-// Created: ABR 2013-08-22
-// -----------------------------------------------------------------------------
-E_TranslationType LocalizedString::Type() const
-{
-    return Language::IsCurrentDefault() || key_.empty() ? eTranslationType_None : values_.at( Language::Current() ).type_;
+    CheckLanguageValidity( language );
+    auto it = values_.find( language );
+    if( it == values_.end() )
+        throw MASA_EXCEPTION( "Language not initialized: " + language );
+    return it->second.value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +102,11 @@ E_TranslationType LocalizedString::Type() const
 // -----------------------------------------------------------------------------
 E_TranslationType LocalizedString::Type( const std::string& language ) const
 {
-    return Language::IsDefault( language ) || key_.empty() ? eTranslationType_None : values_.at( language ).type_;
+    CheckLanguageValidity( language );
+    auto it = values_.find( language );
+    if( it == values_.end() )
+        throw MASA_EXCEPTION( "Language not initialized: " + language );
+    return it->second.type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -122,34 +122,10 @@ void LocalizedString::SetKey( const std::string& key )
 // Name: LocalizedString::SetValue
 // Created: ABR 2013-08-22
 // -----------------------------------------------------------------------------
-void LocalizedString::SetValue( const std::string& value )
-{
-    if( Language::IsCurrentDefault() )
-        key_ = value;
-    else
-        values_[ Language::Current() ].value_ = value;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocalizedString::SetValue
-// Created: ABR 2013-08-22
-// -----------------------------------------------------------------------------
 void LocalizedString::SetValue( const std::string& language, const std::string& value )
 {
-    if( Language::IsDefault( language ) )
-        key_ = value;
-    else
-        values_[ language ].value_ = value;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocalizedString::SetType
-// Created: ABR 2013-08-22
-// -----------------------------------------------------------------------------
-void LocalizedString::SetType( E_TranslationType type )
-{
-    if( !Language::IsCurrentDefault() )
-        values_[ Language::Current() ].type_ = type;
+    CheckLanguageValidity( language );
+    values_[ language ].value_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,23 +134,23 @@ void LocalizedString::SetType( E_TranslationType type )
 // -----------------------------------------------------------------------------
 void LocalizedString::SetType( const std::string& language, E_TranslationType type )
 {
-    if( !Language::IsDefault( language ) )
-        values_[ language ].type_ = type;
+    CheckLanguageValidity( language );
+    values_[ language ].type_ = type;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LocalizedString::InitEmptyValues
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-void LocalizedString::Initialize( const std::vector< Language >& languages )
+void LocalizedString::Initialize( const Languages::T_Languages& languages )
 {
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
-        auto valueIt = values_.find( it->GetShortName() );
+        auto valueIt = values_.find( ( *it )->GetCode() );
         if( valueIt == values_.end() )
         {
-            values_[ it->GetShortName() ].value_ = "";
-            values_[ it->GetShortName() ].type_ = eTranslationType_Unfinished;
+            values_[ ( *it )->GetCode() ].value_ = "";
+            values_[ ( *it )->GetCode() ].type_ = eTranslationType_Unfinished;
         }
     }
 }
@@ -185,7 +161,7 @@ void LocalizedString::Initialize( const std::vector< Language >& languages )
 // -----------------------------------------------------------------------------
 void LocalizedString::CopyValues( const LocalizedString& other )
 {
-    values_.insert( other.values_.begin(), other.values_.end() );
+    values_ = other.values_;
 }
 
 // -----------------------------------------------------------------------------
@@ -194,12 +170,7 @@ void LocalizedString::CopyValues( const LocalizedString& other )
 // -----------------------------------------------------------------------------
 bool LocalizedString::operator==( const LocalizedString& other ) const
 {
-    if( key_ != other.key_ || values_.size() != other.values_.size() )
-        return false;
-    for( auto it = values_.begin(); it != values_.end(); ++it )
-        if( it->second.value_ != other.values_.at( it->first ).value_ && it->second.type_ != other.values_.at( it->first ).type_ )
-            return false;
-    return true;
+    return key_ == other.key_ && values_ == other.values_;
 }
 
 // -----------------------------------------------------------------------------

@@ -69,6 +69,7 @@ public:
     //@{
     void Initialize( ADN_Connector_ABC& dest ) const;
     virtual void OnLanguageChanged();
+    virtual void OnLanguagesEdited();
     virtual void OnTypeChanged( int );
     bool CheckUniqueTranslation() const;
     //@}

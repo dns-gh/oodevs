@@ -14,6 +14,7 @@
 #include "ADN_ConsistencyDialog.h"
 #include "ADN_Enums.h"
 #include "ADN_GeneralConfig.h"
+#include "ADN_Languages_Data.h"
 #include "ADN_Languages_GUI.h"
 #include "ADN_ListView.h"
 #include "ADN_ListViewDialog.h"
@@ -241,7 +242,7 @@ void ADN_MainWindow::BuildGUI()
     if( isLoaded_ )
         return;
     // Languages menu
-    ADN_Workspace::GetWorkspace().GetLanguages().GetGui().FillMenu( menuLanguages_ );
+    ADN_Workspace::GetWorkspace().GetLanguages().GetGui().SetMenu( menuLanguages_ );
     // Main tab widget
     mainTabWidget_.reset( new ADN_MainTabWidget() );
     mainLayout_->addWidget( mainTabWidget_.get() );
@@ -285,9 +286,7 @@ void ADN_MainWindow::PurgeGUI()
     disconnect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), actionForward_, SLOT( setEnabled( bool ) ) );
     mainLayout_->removeWidget( mainTabWidget_.get() );
     mainTabWidget_.reset();
-    // Languages menu
-    menuLanguages_->clear();
-    kernel::Language::SetCurrent( kernel::Language::Default() );
+    kernel::Language::SetCurrent( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
     // ObjectNameManager
     gui::ObjectNameManager::getInstance()->Purge();
 }
@@ -304,7 +303,6 @@ void ADN_MainWindow::OnNew()
     if( isLoaded_ && !OnClose() )
         return;
     path /= "physical.xml";
-    ADN_Workspace::GetWorkspace().Initialize();
     ADN_Workspace::GetWorkspace().New( path, true );
 }
 
@@ -321,7 +319,6 @@ void ADN_MainWindow::OnOpen()
     {
         if( isLoaded_ && !OnClose() )
             return;
-        ADN_Workspace::GetWorkspace().Initialize();
         ADN_Workspace::GetWorkspace().Load( filename, true );
         if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
             consistencyDialog_->CheckConsistency();

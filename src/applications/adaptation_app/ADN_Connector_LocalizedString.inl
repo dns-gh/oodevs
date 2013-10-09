@@ -79,5 +79,5 @@ void ADN_Connector_LocalizedString< T >::DisconnectPrivateSub( ADN_Connector_ABC
 template< typename T >
 bool ADN_Connector_LocalizedString< T >::ShouldEnableGfx() const
 {
-    return kernel::Language::IsCurrentDefault() || pTarget_ && !pTarget_->GetKey().empty();
+    return ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() || pTarget_ && !pTarget_->GetKey().empty();
 }

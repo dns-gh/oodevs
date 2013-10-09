@@ -10,10 +10,10 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ApplyButton.h"
 #include "moc_ADN_ApplyButton.cpp"
-#include "clients_kernel/Language.h"
-#include "clients_kernel/LocalizedString.h"
+#include "ADN_Languages_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Languages_GUI.h"
+#include "clients_kernel/LocalizedString.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ApplyButton constructor
@@ -73,5 +73,5 @@ void ADN_ApplyButton::OnTypeChanged( int newType )
 // -----------------------------------------------------------------------------
 void ADN_ApplyButton::OnLanguageChanged()
 {
-    setVisible( !kernel::Language::IsCurrentDefault() );
+    setVisible( !ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() );
 }

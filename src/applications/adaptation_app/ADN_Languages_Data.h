@@ -11,6 +11,7 @@
 #define __ADN_Languages_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "clients_kernel/Languages.h"
 
 namespace kernel
 {
@@ -27,12 +28,6 @@ class ADN_Languages_Data : public ADN_Data_ABC
 {
 
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< kernel::Language > T_Languages;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              ADN_Languages_Data();
@@ -42,6 +37,23 @@ public:
     //! @name Operations
     //@{
     void FilesNeeded( tools::Path::T_Paths& files ) const;
+    void PurgeActiveLanguages();
+    void AddActiveLanguage( const std::string& language );
+    bool HasActiveLanguage( const std::string& language ) const;
+    void CleanLocalDirectories() const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    const std::string& Master() const;
+    void SetMaster( const std::string& language );
+
+    bool IsMaster( const std::string& language ) const;
+    bool IsMasterEmpty() const;
+    bool IsCurrentMaster() const;
+
+    const kernel::Languages& GetAllLanguages() const;
+    const kernel::Languages::T_Languages& GetActiveLanguages() const;
     //@}
 
 private:
@@ -50,12 +62,16 @@ private:
     void ReadArchive( xml::xistream& input );
     void ReadLanguage( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
+
+    void InternalSetMaster( const std::string& language );
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
-    T_Languages languages_;
+    std::auto_ptr< const kernel::Languages > allLanguages_;
+    kernel::Languages::T_Languages activeLanguages_;
+    std::string master_;
     //@}
 };
 

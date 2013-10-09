@@ -10,9 +10,12 @@
 #ifndef __LocalizedString_h_
 #define __LocalizedString_h_
 
+#include "Languages.h"
+#include <boost/container/flat_map.hpp>
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
-    class Language;
 
 enum E_TranslationType
 {
@@ -29,7 +32,7 @@ xml::xistream& operator>>( xml::xistream& xis, E_TranslationType& type );
 */
 // Created: ABR 2013-08-22
 // =============================================================================
-class LocalizedString
+class LocalizedString : private boost::noncopyable
 {
     //! @name Types
     //@{
@@ -41,11 +44,15 @@ class LocalizedString
             , value_( value )
         {}
         virtual ~TranslationText() {}
+        bool operator==( const TranslationText& other ) const
+        {
+            return type_ == other.type_ && value_ == other.value_;
+        }
 
         E_TranslationType type_;
         std::string value_;
     };
-    typedef std::map< const std::string, TranslationText > T_Texts;
+    typedef boost::container::flat_map< std::string, TranslationText > T_Texts;
     //@}
 
 public:
@@ -58,7 +65,7 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( const std::vector< Language >& languages );
+    void Initialize( const Languages::T_Languages& languages );
     void CopyValues( const LocalizedString& other );
     //@}
 
@@ -71,16 +78,18 @@ public:
     //! @name Accessors
     //@{
     const std::string& Key() const;
-    const std::string& Value() const;
     const std::string& Value( const std::string& language ) const;
-    E_TranslationType Type() const;
     E_TranslationType Type( const std::string& language ) const;
 
     void SetKey( const std::string& key );
-    void SetValue( const std::string& value );
     void SetValue( const std::string& language, const std::string& value );
-    void SetType( E_TranslationType type );
     void SetType( const std::string& language, E_TranslationType type );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void CheckLanguageValidity( const std::string& language ) const;
     //@}
 
 private:

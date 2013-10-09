@@ -86,9 +86,9 @@ void ADN_Data_ABC::LoadTranslations( const tools::Path& xmlFile, kernel::XmlTran
     kernel::XmlTranslations* currentTranslation = ( translations ) ?  translations : translations_.get();
     if( currentTranslation && currentTranslation->LoadTranslationQueries( xmlFile ) )
     {
-        ADN_Workspace& workspace = ADN_Workspace::GetWorkspace();
-        currentTranslation->EvaluateTranslationQueries( xmlFile, workspace.GetLanguages().GetData().languages_ );
-        currentTranslation->LoadTranslationFiles( xmlFile, BuildLocalDirectory(), workspace.GetLanguages().GetData().languages_ );
+        const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+        currentTranslation->EvaluateTranslationQueries( xmlFile, languages );
+        currentTranslation->LoadTranslationFiles( xmlFile, BuildLocalDirectory(), languages );
     }
 }
 
@@ -136,7 +136,7 @@ void ADN_Data_ABC::SaveTranslations( const tools::Path& xmlFile, kernel::XmlTran
     {
         currentTranslation->SaveTranslationQueries( xmlFile );
         currentTranslation->MergeDuplicateTranslations();
-        currentTranslation->SaveTranslationFiles( xmlFile, BuildLocalDirectory(), ADN_Workspace::GetWorkspace().GetLanguages().GetData().languages_ );
+        currentTranslation->SaveTranslationFiles( xmlFile, BuildLocalDirectory(), ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages() );
     }
 }
 

@@ -137,7 +137,6 @@ public:
 
     //! @name Data operations
     //@{
-    void Initialize();
     void Purge();
 
     void New( const tools::Path& filename, bool loadGui );
@@ -162,6 +161,7 @@ public:
     bool IsNewBaseReadOnly( const tools::Path& filename ) const;
     bool IsDevMode() const;
 
+    const ADN_GeneralConfig& GetConfig() const;
     ADN_MainWindow& GetMainWindow() const;
     void SetMainWindowModified( bool isModified );
     void SetIsSwappingLanguage( bool isSwappingLanguage );
@@ -218,6 +218,7 @@ private:
     //! @name Helpers
     //@{
     void AddPage( E_WorkspaceElements element );
+    void Initialize();
     void LoadDefaultSymbols();
     //@}
 

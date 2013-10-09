@@ -12,6 +12,7 @@
 #include "moc_ADN_Languages_GUI.cpp"
 #include "ADN_Languages_Data.h"
 #include "clients_kernel/Language.h"
+#include "ADN_Languages_Dialog.h"
 
 namespace
 {
@@ -33,12 +34,16 @@ namespace
 ADN_Languages_GUI::ADN_Languages_GUI( ADN_Languages_Data& data )
     : ADN_GUI_ABC( eLanguages )
     , data_( data )
+    , menu_( 0 )
+    , dialog_( new ADN_Languages_Dialog( data ) )
     , mapper_( 0 )
     , currentAction_( 0 )
-    , defaultAction_( 0 )
+    , masterAction_( 0 )
 {
     mapper_ = new QSignalMapper( this );
     connect( mapper_, SIGNAL( mapped( const QString& ) ), this, SLOT( OnLanguageChanged( const QString& ) ) );
+    connect( dialog_.get(), SIGNAL( LanguagesEdited() ), this, SLOT( OnLanguagesEdited() ) );
+    connect( dialog_.get(), SIGNAL( MasterChanged() ), this, SLOT( OnMasterChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,22 +65,70 @@ void ADN_Languages_GUI::Build()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Languages_GUI::FillMenu
+// Name: ADN_Languages_GUI::SetMenu
+// Created: ABR 2013-10-03
+// -----------------------------------------------------------------------------
+void ADN_Languages_GUI::SetMenu( QMenu* menu )
+{
+    menu_ = menu;
+    OnLanguagesEdited();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_GUI::CreateMasterText
+// Created: ABR 2013-10-03
+// -----------------------------------------------------------------------------
+QString ADN_Languages_GUI::CreateMasterText() const
+{
+    return data_.Master().empty()
+        ? tr( "(master)" )
+        : QString( "%1 %2" ).arg( data_.GetAllLanguages().Get( data_.Master() )->GetName().c_str() ).arg( tr( "(master)" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_GUI::OnLanguagesEdited
 // Created: ABR 2013-07-08
 // -----------------------------------------------------------------------------
-void ADN_Languages_GUI::FillMenu( QMenu* menu )
+void ADN_Languages_GUI::OnLanguagesEdited()
 {
-    defaultAction_ = AddToMenu( tr( "Default" ), menu, mapper_ );
-    defaultAction_->setChecked( true );
-    actions_.push_back( defaultAction_ );
-    currentAction_ = defaultAction_;
+    if( !menu_ )
+        throw MASA_EXCEPTION( "Language Menu not defined" );
 
-    for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
-        actions_.push_back( AddToMenu( it->GetName().c_str(), menu, mapper_ ) );
+    bool wasMaster = currentAction_ && currentAction_ == masterAction_;
+    QString previousLanguage = currentAction_ ? currentAction_->text() : "";
+    actions_.clear();
+    menu_->clear();
 
-    menu->addSeparator();
-    QAction* editAction = menu->addAction( tr( "Edit..." ), this, SLOT( OnEditLanguages() ) );
-    editAction->setEnabled( false );
+    masterAction_ = AddToMenu( CreateMasterText(), menu_, mapper_ );
+    masterAction_->setChecked( wasMaster );
+    currentAction_ = 0;
+    actions_.push_back( masterAction_ );
+
+    for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
+    {
+        QAction* action = AddToMenu( ( *it )->GetName().c_str(), menu_, mapper_ );
+        if( ( *it )->GetName() == previousLanguage.toStdString() )
+            currentAction_ = action;
+        actions_.push_back( action );
+    }
+
+    if( currentAction_ )    // current action found, just check it
+        currentAction_->setChecked( true );
+    else                    // no current action (was master or a deleted language, it fall back to master anyway)
+    {
+        if( wasMaster )         // was master, just check it
+        {
+            currentAction_ = masterAction_;
+            currentAction_->setChecked( true );
+        }
+        else                    // wasn't master, change language
+            OnLanguageChanged( masterAction_->text() );
+    }
+
+    menu_->addSeparator();
+    menu_->addAction( tr( "Edit..." ), dialog_.get(), SLOT( exec() ) );
+
+    emit LanguagesEdited();
 }
 
 // -----------------------------------------------------------------------------
@@ -84,9 +137,7 @@ void ADN_Languages_GUI::FillMenu( QMenu* menu )
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
 {
-    assert( currentAction_ && defaultAction_ );
-
-    if( currentAction_->text() == language )
+    if( currentAction_ && currentAction_->text() == language )
     {
         currentAction_->setChecked( true );
         return;
@@ -98,18 +149,16 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
             currentAction_ = *it;
         else
             ( *it )->setChecked( false );
-
     if( currentAction_ == 0 )
-        currentAction_ = defaultAction_;
-
+        currentAction_ = masterAction_;
     currentAction_->setChecked( true );
-    for( auto it = data_.languages_.begin(); it != data_.languages_.end(); ++it )
-        if( it->GetName() == language.toStdString() )
+    for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
+        if( ( *it )->GetName() == language.toStdString() )
         {
-            ChangeLanguage( it->GetShortName() );
+            ChangeLanguage( ( *it )->GetCode() );
             return;
         }
-    ChangeLanguage( kernel::Language::Default() );
+    ChangeLanguage( data_.Master() );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,10 +175,10 @@ void ADN_Languages_GUI::ChangeLanguage( const std::string& language )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Languages_GUI::OnEditLanguages
-// Created: ABR 2013-07-08
+// Name: ADN_Languages_GUI::OnMasterChanged
+// Created: ABR 2013-10-03
 // -----------------------------------------------------------------------------
-void ADN_Languages_GUI::OnEditLanguages()
+void ADN_Languages_GUI::OnMasterChanged()
 {
-    // $$$$ ABR 2013-07-08: Do something here to edit languages
+    masterAction_->setText( CreateMasterText() );
 }

@@ -119,7 +119,6 @@ void ADN_Workspace::CreateWorkspace( ADN_MainWindow& mainWindow, const ADN_Gener
     if( pWorkspace_ )
         throw MASA_EXCEPTION( "Workspace already created" );
     pWorkspace_ = new ADN_Workspace( mainWindow, config );
-    pWorkspace_->Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -389,8 +388,9 @@ void ADN_Workspace::LoadDefaultSymbols()
 // -----------------------------------------------------------------------------
 void ADN_Workspace::New( const tools::Path& filename, bool loadGui )
 {
-    filename.Parent().CreateDirectories();
     pWorkspace_->GetMainWindow().SetIsLoading( true );
+    Initialize();
+    filename.Parent().CreateDirectories();
     progressIndicator_.SetMaximum( eNbrWorkspaceElements );
     projectData_->New( filename );
     LoadDefaultSymbols();
@@ -407,6 +407,7 @@ void ADN_Workspace::New( const tools::Path& filename, bool loadGui )
 //-----------------------------------------------------------------------------
 void ADN_Workspace::Load( const tools::Path& filename, bool loadGui )
 {
+    Initialize();
     if( loadGui )
         mainWindow_.SetIsLoading( true );
     progressIndicator_.SetMaximum( 2 * eNbrWorkspaceElements );
@@ -563,6 +564,10 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
     if( !( dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ ).Exists() )
         tools::zipextractor::ExtractArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
                                              dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ );
+
+    // Clean local directories
+    GetLanguages().GetData().CleanLocalDirectories();
+
     mainWindow_.SetIsLoading( false );
 
     // Save is ended
@@ -838,6 +843,15 @@ ADN_WorkspaceElement_ABC& ADN_Workspace::GetWorkspaceElement( E_WorkspaceElement
 ADN_Project_Data& ADN_Workspace::GetProject()
 {
     return *projectData_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetConfig
+// Created: ABR 2013-10-01
+// -----------------------------------------------------------------------------
+const ADN_GeneralConfig& ADN_Workspace::GetConfig() const
+{
+    return config_;
 }
 
 // -----------------------------------------------------------------------------
