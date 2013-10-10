@@ -17,6 +17,7 @@
 #include "clients_kernel/MissionFactory.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/SymbolFactory.h"
+#include "clients_kernel/XmlTranslations.h"
 #include <boost/shared_ptr.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <vector>
@@ -51,9 +52,10 @@ boost::shared_ptr< kernel::AgentType > StaticModel::MakeAgentType()
             "<nbc suit='level1'/>"
         "</type>"
     );
+    kernel::XmlTranslations translations;
     xml::xistringstream xis( xml );
     xis >> xml::start( "type" );
-    return boost::shared_ptr< kernel::AgentType >( new kernel::AgentType( xis, componentResolver, modelResolver, symbolFactory ) );
+    return boost::shared_ptr< kernel::AgentType >( new kernel::AgentType( xis, componentResolver, modelResolver, symbolFactory, translations ) );
 }
 
 boost::shared_ptr< kernel::AutomatType > StaticModel::MakeAutomatType( const kernel::SymbolFactory& symbolFactory )

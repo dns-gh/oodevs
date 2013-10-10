@@ -117,7 +117,7 @@ namespace
     std::string GetType( const kernel::Entity_ABC& entity )
     {
         if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-            return pAgent->GetType().GetName();
+            return pAgent->GetType().GetLocalizedName();
         else if( const gui::EntityType< kernel::InhabitantType >* type = entity.Retrieve< gui::EntityType< kernel::InhabitantType > >() )
             return type->GetType().GetName();
         else if( const gui::EntityType< kernel::PopulationType >* type = entity.Retrieve< gui::EntityType< kernel::PopulationType > >() )

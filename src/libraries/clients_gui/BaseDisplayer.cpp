@@ -234,7 +234,7 @@ void BaseDisplayer::Call( const ObjectType& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const kernel::AgentType& value )
 {
-    AddToDisplay( value.GetName() );
+    AddToDisplay( value.GetLocalizedName() );
 }
 
 // -----------------------------------------------------------------------------

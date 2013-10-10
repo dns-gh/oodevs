@@ -16,9 +16,11 @@
 #include "CoordinateConverter.h"
 #include "CoordinateSystems.h"
 #include "DetectionMap.h"
-#include "ExtensionTypes.h"
-#include "ObjectTypes.h"
 #include "DisasterTypes.h"
+#include "ExtensionTypes.h"
+#include "Language.h"
+#include "ObjectTypes.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -37,7 +39,7 @@ StaticModel::StaticModel()
     , accommodationTypes_ ( *new AccommodationTypes() )
     , detection_          ( *new DetectionMap() )
 {
-    // NOTHING
+    Language::SetCurrent( tools::readLang() );
 }
 
 // -----------------------------------------------------------------------------

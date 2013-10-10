@@ -16,14 +16,16 @@
 #include "DecisionalModel.h"
 #include "DotationType.h"
 #include "FragOrderType.h"
+#include "InhabitantType.h"
 #include "KnowledgeGroupType.h"
+#include "Language.h"
 #include "MagicActionType.h"
 #include "MissionFactory.h"
 #include "MissionType.h"
 #include "PopulationType.h"
-#include "InhabitantType.h"
 #include "SensorType.h"
 #include "SymbolFactory.h"
+#include "XmlTranslations.h"
 #include "MT_Tools/MT_Logger.h"
 
 #include "protocol/Helpers.h"
@@ -41,6 +43,7 @@ using namespace protocol;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 AgentTypes::AgentTypes()
+    : agentTypesTranslations_( new kernel::XmlTranslations() )
 {
     // NOTHING
 }
@@ -64,6 +67,8 @@ void AgentTypes::Load( const tools::ExerciseConfig& config )
     symbolFactory_.reset( new SymbolFactory() );
     symbolFactory_->Load( config );
     const tools::PhyLoader& loader = config.GetPhyLoader();
+    const tools::Path localesDirectory = config.GetPhysicalChildPath( "locales-directory" );
+    agentTypesTranslations_->LoadTranslationFile( config.GetOptionalPhysicalChildFile( "units" ), localesDirectory, Language::Current() );
     loader.LoadPhysicalFile( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ) );
     loader.LoadPhysicalFile( "missions", boost::bind( &AgentTypes::ReadOrderTypes, this, _1 ) );
     //loader.LoadPhysicalFile( "magic-orders", boost::bind( &AgentTypes::ReadMagicOrderTypes, this, _1 ) );
@@ -105,6 +110,7 @@ void AgentTypes::Purge()
     tools::Resolver< ComponentType, std::string >::Clear();
     tools::Resolver< SensorType, std::string >::DeleteAll();
     tools::Resolver< MagicActionType, std::string >::DeleteAll();
+    agentTypesTranslations_->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -269,9 +275,9 @@ void AgentTypes::ReadAgentType( xml::xistream& xis )
 {
     try
     {
-        AgentType* type = new AgentType( xis, *this, unitModels_, *symbolFactory_ );
-        tools::Resolver< AgentType >         ::Register( type->GetId(), *type );
-        tools::Resolver< AgentType, std::string >::Register( type->GetName(), *type );
+        AgentType* type = new AgentType( xis, *this, unitModels_, *symbolFactory_, *agentTypesTranslations_ );
+        tools::Resolver< AgentType >::Register( type->GetId(), *type );
+        tools::Resolver< AgentType, std::string >::Register( type->GetKeyName(), *type );
     }
     catch( const std::exception& e )
     {

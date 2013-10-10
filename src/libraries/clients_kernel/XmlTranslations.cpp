@@ -164,29 +164,28 @@ void XmlTranslations::SaveTranslationQueries( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: XmlTranslations::LoadTranslations
-// Created: ABR 2013-07-09
-// -----------------------------------------------------------------------------
-void XmlTranslations::LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages )
-{
-    for( auto it = languages.begin(); it != languages.end(); ++it )
-        LoadTranslationFile( xmlFile, localesDirectory, **it );
-}
-
-// -----------------------------------------------------------------------------
 // Name: XmlTranslations::LoadTranslation
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Language& language )
+void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& languageCode )
 {
-    if( language.GetCode().size() != 2 )
-        throw MASA_EXCEPTION( "Invalid language " + language.GetName() );
-    const tools::Path translationPath = localesDirectory / tools::Path::FromUTF8( language.GetCode() ) / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( language.GetCode() ) + ".ts";
+    if( languageCode.size() != 2 )
+        throw MASA_EXCEPTION( "Invalid language code: " + languageCode );
+    const tools::Path translationPath = localesDirectory / tools::Path::FromUTF8( languageCode ) / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( languageCode ) + ".ts";
     if( !translationPath.Exists() )
         return;
     tools::Xifstream xis( translationPath );
+    LoadTranslationXmlStream( xis, languageCode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlTranslations::LoadTranslationXmlStream
+// Created: JSR 2013-09-30
+// -----------------------------------------------------------------------------
+void XmlTranslations::LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode )
+{
     xis >> xml::start( "TS" )
-        >> xml::list( "context", *this, &XmlTranslations::ReadContext, language )
+        >> xml::list( "context", *this, &XmlTranslations::ReadContext, languageCode )
         >> xml::end;
 }
 
@@ -194,22 +193,19 @@ void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const too
 // Name: XmlTranslations::ReadContext
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-void XmlTranslations::ReadContext( xml::xistream& xis, const Language& language )
+void XmlTranslations::ReadContext( xml::xistream& xis, const std::string& languageCode )
 {
     std::string context = "";
     xis >> xml::start( "name" ) >> context >> xml::end;
-    if( context.empty() )
-        return;
-    auto it = contexts_.find( context );
-    if( it != contexts_.end() )
-        xis >> xml::list( "message", *this, &XmlTranslations::ReadMessage, language, context );
+    if( !context.empty() )
+        xis >> xml::list( "message", *this, &XmlTranslations::ReadMessage, languageCode, context );
 }
 
 // -----------------------------------------------------------------------------
 // Name: XmlTranslations::ReadMessage
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-void XmlTranslations::ReadMessage( xml::xistream& xis, const Language& language, const std::string& context )
+void XmlTranslations::ReadMessage( xml::xistream& xis, const std::string& languageCode, const std::string& context )
 {
     std::string source = "";
     xis >> xml::start( "source" ) >> source >> xml::end;
@@ -219,7 +215,7 @@ void XmlTranslations::ReadMessage( xml::xistream& xis, const Language& language,
         >> xml::optional >> translation
         >> type
         >> xml::end;
-    SetTranslation( context, source, language.GetCode(), translation, type );
+    SetTranslation( context, source, languageCode, translation, type );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,6 +278,12 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
         {
             if( itContext->second->empty() )
                 continue;
+            bool validContext = false;
+            for( auto itQuery = queries_.begin(); itQuery != queries_.end() && !validContext; ++itQuery )
+                validContext = itQuery->GetContext() == itContext->first;
+            if( !validContext )
+                continue;
+
             xos << xml::start( "context" )
                 << xml::start( "name" ) << itContext->first << xml::end;
             for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
@@ -325,9 +327,12 @@ void XmlTranslations::SetTranslation( const std::string& context, const std::str
 // Name: XmlTranslations::GetTranslation
 // Created: ABR 2013-07-15
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( const std::string& context, const std::string& key ) const
+const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( const std::string& strContext, const std::string& key )
 {
-    return contexts_.at( context )->at( key );
+    const boost::shared_ptr< Context >& context = GetContext( strContext );
+    if( context->find( key ) == context->end() )
+        context->CreateNew( key );
+    return context->at( key );
 }
 
 // -----------------------------------------------------------------------------

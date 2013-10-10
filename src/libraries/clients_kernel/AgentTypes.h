@@ -12,8 +12,13 @@
 
 #include "tools/Resolver.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include <boost/noncopyable.hpp>
 
-namespace xml { class xistream; };
+namespace xml
+{
+    class xistream;
+}
+
 namespace tools
 {
     class ExerciseConfig;
@@ -36,6 +41,7 @@ namespace kernel
     class SymbolFactory;
     class KnowledgeGroupType;
     class MagicActionType;
+    class XmlTranslations;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -59,6 +65,7 @@ class AgentTypes : public tools::Resolver< AgentType >
                  , public tools::Resolver< FragOrderType >
                  , public tools::StringResolver< FragOrderType >
                  , public tools::StringResolver< MagicActionType >
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -75,12 +82,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentTypes( const AgentTypes& );            //!< Copy constructor
-    AgentTypes& operator=( const AgentTypes& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef Mission* ( MissionFactory::*T_Resolver )( const std::string& );
@@ -122,6 +123,7 @@ private:
     //@{
     T_MissionResolver missions_[ 3 ];
     std::auto_ptr< SymbolFactory > symbolFactory_;
+    std::auto_ptr< kernel::XmlTranslations > agentTypesTranslations_;
     //@}
 
 public:

@@ -59,8 +59,8 @@ public:
 
     //! @name Translations operations
     //@{
-    void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const kernel::Language& language );
-    void LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages );
+    void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& languageCode );
+    void LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode );
     void MergeDuplicateTranslations();
     void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages ) const;
     //@}
@@ -69,7 +69,7 @@ public:
     //@{
     bool HasDuplicateErrors() const;
     const boost::shared_ptr< Context >& GetContext( const std::string& context );
-    const boost::shared_ptr< LocalizedString >& GetTranslation( const std::string& context, const std::string& key ) const;
+    const boost::shared_ptr< LocalizedString >& GetTranslation( const std::string& context, const std::string& key );
     //@}
 
 private:
@@ -81,8 +81,8 @@ private:
 
     void ReadTranslationQueries( const std::string& name, xml::xistream& xis, int depthMax );
     void ReadTranslationQuery( xml::xistream& xis );
-    void ReadContext( xml::xistream& xis, const Language& language );
-    void ReadMessage( xml::xistream& xis, const Language& language, const std::string& translations );
+    void ReadContext( xml::xistream& xis, const std::string& languageCode );
+    void ReadMessage( xml::xistream& xis, const std::string& languageCode, const std::string& translations );
     //@}
 
 private:
