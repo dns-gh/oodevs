@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "LocalizedString.h"
 #include "Language.h"
+#include "MT_Tools/MT_Logger.h"
 
 using namespace kernel;
 
@@ -180,4 +181,28 @@ bool LocalizedString::operator==( const LocalizedString& other ) const
 bool LocalizedString::operator!=( const LocalizedString& other ) const
 {
     return !( *this == other );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalizedString::Translate
+// Created: JSR 2013-10-04
+// -----------------------------------------------------------------------------
+const std::string& LocalizedString::Translate() const
+{
+    return Translate( Language::Current() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalizedString::Translate
+// Created: JSR 2013-10-04
+// -----------------------------------------------------------------------------
+const std::string& LocalizedString::Translate( const std::string& language ) const
+{
+    auto it = values_.find( language );
+    if( it != values_.end() && it->second.type_ != eTranslationType_Unfinished && !it->second.value_.empty() )
+    {
+        MT_LOG_INFO_MSG( "TRANSLATED " << it->second.value_ );
+        return it->second.value_;
+    }
+    return key_;
 }

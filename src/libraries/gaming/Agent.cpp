@@ -41,7 +41,7 @@ Agent::Agent( const sword::UnitCreation& message, Controller& controller, const 
     , sensorsDirection_( 0 )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
+        name_ = QString( "%1 %L2" ).arg( type_.GetLocalizedName().c_str() ).arg( message.unit().id() );
 
     level_ = ( message.has_level() ) ? "levels/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( message.level() ) ) : type_.GetLevelSymbol();
     symbol_ = ( message.has_app6symbol() ) ? "symbols/" + message.app6symbol() : type_.GetSymbol();

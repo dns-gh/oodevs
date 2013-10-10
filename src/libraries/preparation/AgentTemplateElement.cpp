@@ -75,7 +75,7 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const tools::Re
 {
     ReadName( input, name_ );
     if( name_.isEmpty() )
-        name_ = type_.GetName().c_str();
+        name_ = type_.GetLocalizedName().c_str();
     std::string strColor;
     input >> xml::attribute( "commandPost", cp_ )
           >> xml::optional >> xml::attribute( "color", strColor )
@@ -135,7 +135,7 @@ kernel::Entity_ABC* AgentTemplateElement::Instanciate( kernel::Entity_ABC& super
 void AgentTemplateElement::Serialize( xml::xostream& output )
 {
     output << xml::attribute( "type", "agent" )
-           << xml::attribute( "agentType", type_.GetName() )
+           << xml::attribute( "agentType", type_.GetKeyName() )
            << xml::attribute( "commandPost", cp_ )
            << xml::attribute( "name", name_ );
     if( color_ )
