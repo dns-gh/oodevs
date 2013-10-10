@@ -49,7 +49,7 @@
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "Tools/NET_AsnException.h"
+#include "Tools/MIL_MessageParameters.h"
 #include "protocol/Protocol.h"
 #include <boost/smart_ptr/make_shared.hpp>
 
@@ -111,7 +111,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     {
         ptr = new MIL_PolygonParameter( message.area() );
         if( !static_cast< MIL_PolygonParameter* > ( ptr )->IsValid() )
-            throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
+            throw MASA_BADPARAM_ORDER( "area polygon is invalid" );
     }
     else if( message.has_location() )
         ptr = new MIL_LocationParameter( message.location() );
@@ -167,6 +167,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_ResourceNetworkNodeParameter( message.resourcenetworknode() );
     else if( message.has_resourcenetworktype() )
         ptr = new MIL_ResourceNetworkTypeParameter( message.resourcenetworktype() );
+    else if( message.has_limit() )
+        throw MASA_BADPARAM_ORDER( "limit parameters are only allowed in mission context" );
     else
         ptr = new MIL_ListParameter( resolver, message.list() );
 

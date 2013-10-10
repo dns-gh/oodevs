@@ -26,6 +26,11 @@
         sword::UnitActionAck::error_invalid_parameter,\
         STR( reason ) )
 
+#define MASA_BADPARAM_ORDER( reason )\
+    MASA_BADPARAM_ASN( sword::OrderAck::ErrorCode,\
+        sword::OrderAck::error_invalid_parameter,\
+        STR( reason ) )
+
 namespace boost
 {
     template< typename T > class function;
