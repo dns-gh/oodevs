@@ -14,7 +14,7 @@ const DEC_Model_ABC* parameters::GetModel( const sword::MissionParameters& param
 {
     if( !params.elem_size() )
         return nullptr;
-    const std::string name = protocol::GetString( params, 0 );
+    const auto& name = protocol::GetString( params, 0 );
     auto model = finder( name );
     protocol::Check( model, "must be a valid model", 0 );
     return model;

@@ -1251,7 +1251,7 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParameters& msg )
 {
     protocol::CheckCount( msg, 1 );
-    const sword::Point point = protocol::GetPoint( msg, 0 );
+    const auto& point = protocol::GetPoint( msg, 0 );
     protocol::Check( point.location().type() == sword::Location::point
         && point.location().coordinates().elem_size() == 1,
         "must be a point with one coordinate", 0 );

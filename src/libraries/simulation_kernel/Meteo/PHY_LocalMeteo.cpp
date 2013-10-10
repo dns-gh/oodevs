@@ -135,12 +135,12 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
 {
     if( isCreation )
     {
-        const std::string start = protocol::GetDateTimeStr( msg, 7 );
+        const auto& start = protocol::GetDateTimeStr( msg, 7 );
         startTime_ = ( bpt::from_iso_string( start ) - bpt::from_time_t( 0 ) ).total_seconds();
-        const std::string end = protocol::GetDateTimeStr( msg, 8 );
+        const auto& end = protocol::GetDateTimeStr( msg, 8 );
         endTime_ = ( bpt::from_iso_string( end ) - bpt::from_time_t( 0 ) ).total_seconds();
     }
-    auto points = protocol::GetLocation( msg, 9 );
+    const auto& points = protocol::GetLocation( msg, 9 );
     protocol::Check( points.size() == 2u, "must have two points" );
     NET_ASN_Tools::ReadPoint( points[0], upLeft_    );
     NET_ASN_Tools::ReadPoint( points[1], downRight_ );

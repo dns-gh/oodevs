@@ -49,17 +49,19 @@ namespace
         static value_type Get( const sword::MissionParameter_Value& value ) { return value.OPERAND_1().OPERAND_2(); }\
     }
 
-    MAKE_DESCRIPTOR( String, std::string, acharstr, "char string" );
     MAKE_DESCRIPTOR( Bool, bool, booleanvalue, "boolean" );
-    MAKE_DESCRIPTOR( Real, float, areal, "real" );
-    MAKE_DESCRIPTOR( Quantity, int, quantity, "quantity" );
     MAKE_DESCRIPTOR( Enumeration, int, enumeration, "enumeration" );
-    MAKE_DESCRIPTOR( Point, sword::Point, point, "point" );
     MAKE_DESCRIPTOR( Identifier, int, identifier, "identifier" );
-    MAKE_DESCRIPTOR2( AgentId, uint32_t, agent, id, "agent id" );
-    MAKE_DESCRIPTOR2( DateTime, std::string, datetime, data, "datetime" );
-    MAKE_DESCRIPTOR2( Heading, int, heading, heading, "heading" );
+    MAKE_DESCRIPTOR( Location, const sword::Location&, location, "location" );
+    MAKE_DESCRIPTOR( Point, const sword::Point&, point, "point" );
+    MAKE_DESCRIPTOR( Quantity, int, quantity, "quantity" );
+    MAKE_DESCRIPTOR( Real, float, areal, "real" );
+    MAKE_DESCRIPTOR( String, const std::string&, acharstr, "char string" );
     #undef MAKE_DESCRIPTOR
+
+    MAKE_DESCRIPTOR2( AgentId, uint32_t, agent, id, "agent id" );
+    MAKE_DESCRIPTOR2( DateTime, const std::string&, datetime, data, "datetime" );
+    MAKE_DESCRIPTOR2( Heading, int, heading, heading, "heading" );
     #undef MAKE_DESCRIPTOR2
 
     std::string GetIndex( int i, int j, int k )
@@ -145,7 +147,7 @@ void protocol::CheckCount( int i, int j, const sword::MissionParameters& params,
     return ::CheckCount( GetCount( params, i, j ), min, max );
 }
 
-std::string protocol::GetString( const sword::MissionParameters& params, int i, int j, int k )
+const std::string& protocol::GetString( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< String >( params, i, j, k );
 }
@@ -160,7 +162,7 @@ float protocol::GetReal( const sword::MissionParameters& params, int i, int j, i
     return GetValue< Real >( params, i, j, k );
 }
 
-std::string protocol::GetDateTimeStr( const sword::MissionParameters& params, int i, int j, int k )
+const std::string& protocol::GetDateTimeStr( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< DateTime >( params, i, j, k );
 }
@@ -185,7 +187,7 @@ int protocol::GetEnumeration( const ::google::protobuf::EnumDescriptor* descript
     return value;
 }
 
-sword::Point protocol::GetPoint( const sword::MissionParameters& params, int i, int j, int k )
+const sword::Point& protocol::GetPoint( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< Point >( params, i, j, k );
 }
@@ -193,12 +195,8 @@ sword::Point protocol::GetPoint( const sword::MissionParameters& params, int i, 
 std::vector< sword::CoordLatLong > protocol::GetLocation(
         const sword::MissionParameters& params, int i )
 {
-    protocol::Check( params.elem_size() > i, "is missing", i );
-    const auto& values = params.elem( i );
-    protocol::Check( values.value_size() > 0, "is missing", i );
-    const auto& value = values.value( 0 );
-    protocol::Check( value.has_location(), "must be a location", i );
-    const auto& coords = value.location().coordinates();
+    const auto& location = GetValue< Location >( params, i, -1, -1 );
+    const auto& coords = location.coordinates();
     const int count = coords.elem_size();
     std::vector< sword::CoordLatLong > points;
     points.reserve( count );
