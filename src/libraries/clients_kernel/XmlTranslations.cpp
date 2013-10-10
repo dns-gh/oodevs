@@ -165,16 +165,6 @@ void XmlTranslations::SaveTranslationQueries( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: XmlTranslations::LoadTranslations
-// Created: ABR 2013-07-09
-// -----------------------------------------------------------------------------
-void XmlTranslations::LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::vector< std::string >& languageCodes )
-{
-    for( auto it = languageCodes.begin(); it != languageCodes.end(); ++it )
-        LoadTranslationFile( xmlFile, localesDirectory, *it );
-}
-
-// -----------------------------------------------------------------------------
 // Name: XmlTranslations::LoadTranslation
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------

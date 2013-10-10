@@ -89,11 +89,8 @@ void ADN_Data_ABC::LoadTranslations( const tools::Path& xmlFile, kernel::XmlTran
     {
         const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
         currentTranslation->EvaluateTranslationQueries( xmlFile, languages );
-        std::vector< std::string > codes;
-        codes.reserve( languages.size() );
         for( auto it = languages.cbegin(); it != languages.cend(); ++it )
-            codes.push_back( (*it)->GetCode() );
-        currentTranslation->LoadTranslationFiles( xmlFile, BuildLocalDirectory(), codes );
+            currentTranslation->LoadTranslationFile( xmlFile, BuildLocalDirectory(), (*it)->GetCode() );
     }
 }
 

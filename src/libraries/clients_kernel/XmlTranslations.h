@@ -61,7 +61,6 @@ public:
     //@{
     void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& languageCode );
     void LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode );
-    void LoadTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::vector< std::string >& languageCodes );
     void MergeDuplicateTranslations();
     void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages ) const;
     //@}
