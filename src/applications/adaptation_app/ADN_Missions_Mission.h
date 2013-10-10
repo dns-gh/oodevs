@@ -27,7 +27,8 @@ public:
     virtual ADN_Missions_Mission* CreateCopy();
 
     virtual void ReadArchive( xml::xistream& input );
-    virtual void WriteArchive( xml::xostream& output );
+    virtual void FixConsistency();
+    virtual void WriteArchive( xml::xostream& output ) const;
 
 public:
     ADN_Type_String diaBehavior_;

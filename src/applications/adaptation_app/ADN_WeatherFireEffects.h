@@ -33,7 +33,7 @@ public:
     //@{
     void CopyFrom( ADN_WeatherFireEffects& other );
     void ReadArchive( xml::xistream& );
-    void WriteArchive( xml::xostream&, const std::string& tag = "weather-effect" );
+    void WriteArchive( xml::xostream&, const std::string& tag = "weather-effect" ) const;
     //@}
 
 public:

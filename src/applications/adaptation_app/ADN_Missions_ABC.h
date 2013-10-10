@@ -51,13 +51,14 @@ public:
     void FillContextParameters();
 
     virtual void ReadArchive( xml::xistream& input );
-    virtual void WriteArchive( xml::xostream& output );
+    virtual void FixConsistency();
+    virtual void WriteArchive( xml::xostream& output ) const;
     void ReadParameter( xml::xistream& input );
 
     void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, const std::string& language );
     void ReadMissionSheet( const tools::Path& missionDir, const std::string& language );
     void RenameDifferentNamedMissionSheet( const tools::Path& missionDir, const std::string& language );
-    void WriteMissionSheet( const tools::Path& missionDir, const std::string& language );
+    void WriteMissionSheet( const tools::Path& missionDir, const std::string& language ) const;
     bool NeedsSaving();
     void SetNeedsSaving( bool saving );
     virtual void CheckValidity();
@@ -68,9 +69,9 @@ private:
     //@{
     void ReadMissionSheetParametersDescriptions( xml::xistream& xis, const std::string& language );
     void ReadMissionSheetAttachments( xml::xistream& xis );
-    void WriteMissionSheetParametersDescriptions( xml::xostream& xos, const std::string& language, bool isMergedXml );
-    void WriteMissionSheetAttachments( xml::xostream& xos );
-    void InternalWriteMissionSheet( xml::xostream& xos, const std::string& language, bool isMergedXml = false );
+    void WriteMissionSheetParametersDescriptions( xml::xostream& xos, const std::string& language, bool isMergedXml ) const;
+    void WriteMissionSheetAttachments( xml::xostream& xos ) const;
+    void InternalWriteMissionSheet( xml::xostream& xos, const std::string& language, bool isMergedXml = false ) const;
 
     void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );
     void Initialize();

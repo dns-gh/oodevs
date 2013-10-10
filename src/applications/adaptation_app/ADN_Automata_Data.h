@@ -34,7 +34,7 @@ public:
         UnitInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, const UnitInfos* pc );
+        void WriteArchive( xml::xostream& output, const UnitInfos* pc ) const;
 
     public:
         ADN_Type_Int min_;
@@ -55,7 +55,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadUnit( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& );
 
     public:
@@ -90,7 +90,7 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadAutomat( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     T_AutomatonInfosVector vAutomata_;

@@ -36,7 +36,7 @@ public:
         OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         OrderInfos* CreateCopy();
     };
 
@@ -53,7 +53,7 @@ public:
         MissionInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void ReadFragOrder( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         T_OrderInfos_Vector  vOrders_;
@@ -113,7 +113,7 @@ private:
     void ReadArchive( xml::xistream& input );
     void ReadModels( xml::xistream& input, E_EntityType type );
     void ReadSourcePath( xml::xistream& xis );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 private:
     T_ModelInfos_Vector vModels_[ eNbrEntityTypes ];

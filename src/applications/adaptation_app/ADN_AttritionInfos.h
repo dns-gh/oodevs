@@ -26,7 +26,7 @@ public:
 
     void CopyFrom( AttritionInfos& attritions );
     void ReadArchive( xml::xistream& xis );
-    void WriteArchive( xml::xostream& xos, const std::string& tag = "attrition" );
+    void WriteArchive( xml::xostream& xos, const std::string& tag = "attrition" ) const;
 
     AttritionInfos* CreateCopy();
 

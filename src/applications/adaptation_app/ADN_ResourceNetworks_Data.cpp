@@ -84,7 +84,7 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
 // Name: ResourceNetworkInfos::WriteArchive
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
-void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostream& output )
+void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource-network" )
                << xml::attribute( "name", strName_ )
@@ -176,7 +176,7 @@ void ADN_ResourceNetworks_Data::ReadResourceNetwork( xml::xistream& input )
 // Name: ADN_ResourceNetworks_Data::WriteArchive
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
-void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output )
+void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output ) const
 {
     if( resourceNetworks_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

@@ -13,6 +13,7 @@
 #include "clients_gui/WikiXmlConverter.h"
 #include "ADN_Languages_Data.h"
 #include "ADN_WorkspaceElement.h"
+#include "clients_kernel/Language.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -262,7 +263,7 @@ namespace
 // Name: ADN_Missions_ABC::WriteMissionSheetParametersDescriptions
 // Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::WriteMissionSheetParametersDescriptions( xml::xostream& xos, const std::string& language, bool isMergedXml )
+void ADN_Missions_ABC::WriteMissionSheetParametersDescriptions( xml::xostream& xos, const std::string& language, bool isMergedXml ) const
 {
     xos << xml::start( "parameters" );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
@@ -280,7 +281,7 @@ void ADN_Missions_ABC::WriteMissionSheetParametersDescriptions( xml::xostream& x
 // Name: ADN_Missions_ABC::WriteMissionSheetAttachments
 // Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::WriteMissionSheetAttachments( xml::xostream& xos )
+void ADN_Missions_ABC::WriteMissionSheetAttachments( xml::xostream& xos ) const
 {
     xos << xml::start( "attachments" );
     for( auto it = attachments_.begin(); it != attachments_.end(); ++it )
@@ -294,7 +295,7 @@ void ADN_Missions_ABC::WriteMissionSheetAttachments( xml::xostream& xos )
 // Name: ADN_Missions_ABC::InternalWriteMissionSheet
 // Created: ABR 2013-09-26
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::InternalWriteMissionSheet( xml::xostream& xos, const std::string& language, bool isMergedXml )
+void ADN_Missions_ABC::InternalWriteMissionSheet( xml::xostream& xos, const std::string& language, bool isMergedXml ) const
 {
     xos << xml::start( "mission-sheet" )
         << xml::attribute( "name", strName_.GetValue( language ) );
@@ -312,7 +313,7 @@ void ADN_Missions_ABC::InternalWriteMissionSheet( xml::xostream& xos, const std:
 // Name: ADN_Missions_ABC::WriteMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const std::string& language )
+void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const std::string& language ) const
 {
     tools::Path filePath = missionDir / tools::Path::FromUTF8( strName_.GetValue( language ) );
     ( missionDir / ADN_Missions_Data::obsoletePath_ ).CreateDirectories();
@@ -352,8 +353,6 @@ void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const s
     tools::Ofstream fileStream( filePath + ".html", std::ios::out | std::ios::trunc );
     fileStream << xst.str();
     fileStream.close();
-    if( missionSheetPath_.GetValue( language ).empty() )
-        missionSheetPath_.SetValue( language, filePath.ToUTF8() + ".html" );
 }
 
 // -----------------------------------------------------------------------------
@@ -439,7 +438,7 @@ void ADN_Missions_ABC::ReadArchive( xml::xistream& input )
 // Name: ADN_Missions_ABC::WriteArchive
 // Created: NPT 2013-02-18
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::WriteArchive( xml::xostream& output )
+void ADN_Missions_ABC::WriteArchive( xml::xostream& output ) const
 {
     output << xml::attribute( "name", strName_ )
            << xml::attribute( "dia-type", diaType_ )
@@ -484,4 +483,43 @@ void ADN_Missions_ABC::CheckValidity()
     CheckTypeValidity( descriptionComment_ );
     CheckTypeValidity( descriptionMissionEnd_ );
     parameters_.CheckValidity();
+}
+
+namespace
+{
+    QString BuildDiaType( const QString& name, bool isFragOrder )
+    {
+        QStringList list = QStringList::split( ' ', name );
+        if( isFragOrder )
+        {
+            if( list.front() == "Pion" || list.front() == "Automate" || list.front() == "Population" )
+                list[0].append( "_" );
+            for( int i = 1; i < list.size() - 1; ++i )
+                if( list[i].length() > 1 && list[i] == list[i].upper() )
+                    list[i].append( "_" );
+            return QString( "Rep_OrderConduite_%1" ).arg( list.join( "" ) );
+        }
+        for( int i = 0; i < list.size() - 1; ++i )
+            if( list[i].length() > 1 && ( list[i] == list[i].upper() || list[i].lower() == "test" ) )
+                list[i].append( "_" );
+        return list.join( "" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_ABC::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+void ADN_Missions_ABC::FixConsistency()
+{
+    if( diaType_.GetData().empty() )
+        diaType_ = BuildDiaType( strName_.GetData().c_str(), type_ == eMissionType_FragOrder ).toStdString();
+
+    const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+    for( auto it = languages.begin(); it != languages.end(); ++it )
+    {
+        const tools::Path filePath = ADN_Missions_Data::GetMissionSheetsPath( type_ ) / tools::Path::FromUTF8( strName_.GetValue( ( *it )->GetCode() ) );
+        if( missionSheetPath_.GetValue( ( *it )->GetCode() ).empty() )
+            missionSheetPath_.SetValue( ( *it )->GetCode(), filePath.ToUTF8() + ".html" );
+    }
 }

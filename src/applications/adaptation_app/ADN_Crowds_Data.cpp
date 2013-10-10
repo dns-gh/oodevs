@@ -67,7 +67,7 @@ void ADN_Crowds_Data::FireEffectProtectionInfos::ReadArchive( xml::xistream& inp
 // Name: ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output )
+void ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output ) const
 {
     if( !GetCrossedElement() )
         return;
@@ -240,7 +240,7 @@ void ADN_Crowds_Data::SpeedEffectVolumeInfos::ReadArchive( xml::xistream& input 
 // Name: ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& output )
+void ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& output ) const
 {
     if( rDensity_ == 0. && rMaxSpeed_ == 0. )
         return;
@@ -585,7 +585,7 @@ void ADN_Crowds_Data::CrowdsInfos::ReadUrbanEffect( xml::xistream& input )
 // Name: CrowdsInfos::CrowdsInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output )
+void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
 {
     repartition_.CheckNoError( strName_.GetData().c_str() );
 
@@ -757,7 +757,7 @@ void ADN_Crowds_Data::ReadPopulation( xml::xistream& input )
 // Name: ADN_Crowds_Data::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::WriteArchive( xml::xostream& output )
+void ADN_Crowds_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vCrowds_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

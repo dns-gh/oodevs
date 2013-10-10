@@ -49,7 +49,7 @@ ADN_MissionGenObjectTypes_Infos::~ADN_MissionGenObjectTypes_Infos()
 // Name: ADN_MissionGenObjectTypes_Infos::WriteArchive
 // Created: LGY 2012-04-18
 // -----------------------------------------------------------------------------
-void ADN_MissionGenObjectTypes_Infos::WriteArchive( xml::xostream& output )
+void ADN_MissionGenObjectTypes_Infos::WriteArchive( xml::xostream& output ) const
 {
     if( isAllowed_.GetData() )
     {

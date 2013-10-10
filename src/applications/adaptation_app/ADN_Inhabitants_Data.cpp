@@ -75,7 +75,7 @@ void ADN_Inhabitants_Data::EventInfos::ReadArchive( xml::xistream& input )
 // Name: EventInfos::WriteArchive
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output )
+void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "event" )
            << xml::attribute( "day", day_.Convert() )
@@ -131,7 +131,7 @@ void ADN_Inhabitants_Data::InhabitantsInfosConsumption::ReadArchive( xml::xistre
 // Name: InhabitantsInfosConsumption::WriteArchive
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostream& xos )
+void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "resource" )
           << xml::attribute( "type", *this )
@@ -300,7 +300,7 @@ const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
 // Name: InhabitantsInfos::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output )
+void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output ) const
 {
     const std::string error = CheckErrors();
     if( error != "" )
@@ -430,7 +430,7 @@ void ADN_Inhabitants_Data::ReadPeople( xml::xistream& input )
 // Name: ADN_Inhabitants_Data::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output )
+void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vInhabitants_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

@@ -66,7 +66,7 @@ namespace
               >> xml::end;
     }
 
-    void WriteFile( xml::xostream& output, const std::string& file, tools::Path& outfile )
+    void WriteFile( xml::xostream& output, const std::string& file, const tools::Path& outfile )
     {
         if( outfile.IsEmpty() )
             return;
@@ -75,7 +75,7 @@ namespace
                << xml::end;
     }
 
-    void WritePath( xml::xostream& output, const std::string& file, tools::Path& outfile )
+    void WritePath( xml::xostream& output, const std::string& file, const tools::Path& outfile )
     {
         if( outfile.IsEmpty() )
             return;
@@ -179,7 +179,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
 // Name: DataInfos::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
+void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "physical" );
     if( readOnly_ )

@@ -79,7 +79,7 @@ void ADN_Funeral_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Funeral_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Funeral_Data::WriteArchive( xml::xostream& output )
+void ADN_Funeral_Data::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "funeral" );
     tools::SchemaWriter schemaWriter;

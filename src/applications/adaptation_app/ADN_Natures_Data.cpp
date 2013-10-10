@@ -111,7 +111,7 @@ void ADN_Natures_Data::ReadNature( xml::xistream& input )
 // Name: ADN_Natures_Data::WriteArchive
 // Created: ABR 2013-07-11
 // -----------------------------------------------------------------------------
-void ADN_Natures_Data::WriteArchive( xml::xostream& output )
+void ADN_Natures_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vDotationNatures_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

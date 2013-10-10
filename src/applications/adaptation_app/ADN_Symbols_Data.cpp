@@ -256,7 +256,7 @@ void ADN_Symbols_Data::ReadAndCopyArchive( xml::xistream& xis )
 // Name: ADN_Symbols_Data::WriteArchive
 // Created: ABR 2013-09-20
 // -----------------------------------------------------------------------------
-void ADN_Symbols_Data::WriteArchive( xml::xostream& xos )
+void ADN_Symbols_Data::WriteArchive( xml::xostream& xos ) const
 {
     if( xibs_.get() )
         xos << *xibs_;

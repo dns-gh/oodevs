@@ -31,7 +31,7 @@ public:
     ADN_Weapons_Data_WeaponInfos* CreateCopy();
     void ReadArchive( xml::xistream& input );
     void ReadTargetSize( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
     bool IsValidOnChange( bool bDirect, bool bLauncher ) const;
     void ConnectLauncherAmmunition();

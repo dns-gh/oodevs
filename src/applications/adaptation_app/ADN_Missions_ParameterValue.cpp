@@ -37,7 +37,7 @@ void ADN_Missions_ParameterValue::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", name_ );
 }
 
-void ADN_Missions_ParameterValue::WriteArchive( xml::xostream& output, unsigned int id )
+void ADN_Missions_ParameterValue::WriteArchive( xml::xostream& output, unsigned int id ) const
 {
     output << xml::start( "value" )
                 << xml::attribute( "id", id )

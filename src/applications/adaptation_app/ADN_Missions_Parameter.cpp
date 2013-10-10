@@ -256,7 +256,7 @@ namespace
     }
 }
 
-void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
+void ADN_Missions_Parameter::WriteArchive( xml::xostream& output ) const
 {
     std::string diaName = diaName_.GetData();
     if( diaName.empty() )

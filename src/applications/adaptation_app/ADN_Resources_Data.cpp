@@ -144,7 +144,7 @@ void ADN_Resources_Data::CategoryInfo::ReadArchive( xml::xistream& input )
 // Name: CategoryInfo::WriteArchive
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::CategoryInfo::WriteArchive( xml::xostream& output )
+void ADN_Resources_Data::CategoryInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" );
     WriteContent( output );
@@ -164,7 +164,7 @@ void ADN_Resources_Data::CategoryInfo::Initialize()
 // Name: ADN_Resources_Data:::CategoryInfo::WriteContent
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::CategoryInfo::WriteContent( xml::xostream& output )
+void ADN_Resources_Data::CategoryInfo::WriteContent( xml::xostream& output ) const
 {
     output << xml::attribute( "category", category_ )
            << xml::attribute( "name", strName_ )
@@ -602,7 +602,7 @@ void ADN_Resources_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
 // Name: AmmoCategoryInfo::WriteArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output )
+void ADN_Resources_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" );
     CategoryInfo::WriteContent( output );
@@ -834,7 +834,7 @@ void ADN_Resources_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Resources_Data::WriteArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::WriteArchive( xml::xostream& output )
+void ADN_Resources_Data::WriteArchive( xml::xostream& output ) const
 {
     if( resources_.GetErrorStatus() == eError )
     {

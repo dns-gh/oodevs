@@ -54,7 +54,7 @@ void ADN_ExtinguisherAgentInfos::ReadArchive( xml::xistream& xis )
 // Name: ADN_ExtinguisherAgentInfos::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_ExtinguisherAgentInfos::WriteArchive( xml::xostream& xos, const std::string& tag )
+void ADN_ExtinguisherAgentInfos::WriteArchive( xml::xostream& xos, const std::string& tag ) const
 {
     xos << xml::start( tag )
             << xml::attribute( "agent", *this )

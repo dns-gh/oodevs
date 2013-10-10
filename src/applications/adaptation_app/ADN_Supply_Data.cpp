@@ -213,7 +213,7 @@ void ADN_Supply_Data::SupplyDataInfos::CheckDatabaseValidity( ADN_ConsistencyChe
 // Name: ADN_Supply_Data::SupplyDataInfos::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
+void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "supply" );
     tools::SchemaWriter schemaWriter;
@@ -315,7 +315,7 @@ void ADN_Supply_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Supply_Data::WriteArchive
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::WriteArchive( xml::xostream& output )
+void ADN_Supply_Data::WriteArchive( xml::xostream& output ) const
 {
     infos_.WriteArchive( output );
 }

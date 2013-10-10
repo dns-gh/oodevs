@@ -46,7 +46,7 @@ void ADN_UrbanAttritionInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_UrbanAttritionInfos::WriteArchive
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
-void ADN_UrbanAttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "urbanModifier"*/ )
+void ADN_UrbanAttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "urbanModifier"*/ ) const
 {
     output << xml::start( tag )
              << xml::attribute( "material-type", *this )

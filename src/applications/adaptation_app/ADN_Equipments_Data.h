@@ -44,7 +44,7 @@ public:
         void CopyFrom( AmbulanceInfos& src );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( const std::string& section, xml::xostream& output );
+        void WriteArchive( const std::string& section, xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool transportSkills_[ eNbrDoctorSkills ];
@@ -66,7 +66,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadInfo( const std::string& type, xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool bIsAmbulance_;
@@ -92,7 +92,7 @@ public:
         void CopyFrom( NTIInfos& src );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
         bool IsTypeValid() const;
 
@@ -116,7 +116,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadInfo( const std::string& type, xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
         bool IsRepairTypeValid() const;
 
@@ -141,7 +141,7 @@ public:
         void CopyFrom( LogSupplyInfos& src );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Natures_Data::NatureInfos > ptr_;
@@ -161,7 +161,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadLogisticFunction( const std::string& type, xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
         bool IsRepairTypeValid() const;
 
@@ -183,7 +183,7 @@ public:
 
         BreakdownInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( const std::string& origin, xml::xostream& output );
+        void WriteArchive( const std::string& origin, xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rPercentage_;
@@ -203,7 +203,7 @@ public:
         void CopyFrom( BreakdownGroupInfos& src );
         void ReadArchive( xml::xistream& input, const std::string& parentName );
         void ReadBreakdown( xml::xistream& input, const std::string& parentName );
-        void WriteArchive( xml::xostream& output, const std::string& composante );
+        void WriteArchive( xml::xostream& output, const std::string& composante ) const;
 
     public:
         std::string strName_;
@@ -218,7 +218,7 @@ public:
         virtual ~SpeedInfos() {}
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_Location nTypeTerrain_;
@@ -254,7 +254,7 @@ public:
         SensorInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rHeight_;
@@ -288,7 +288,7 @@ public:
         RadarInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rHeight_;
@@ -306,7 +306,7 @@ public:
 
         WeaponInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
     };
 
     typedef ADN_Type_Vector_ABC< WeaponInfos > T_WeaponInfos_Vector;
@@ -321,7 +321,7 @@ public:
 
         ActiveProtectionsInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         void ReadProtection( xml::xistream& input );
     };
 
@@ -336,7 +336,7 @@ public:
         virtual ~ActiveProtectionInfos() {}
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         void ReadProtection( xml::xistream& input );
 
         std::vector< std::string > protections_;
@@ -351,7 +351,7 @@ public:
 
         CategoryInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Resources_Data::ResourceInfos > ptrDotation_;
@@ -373,7 +373,7 @@ public:
         void ReadCategory( xml::xistream& input, const std::string& parentName );
         void ReadArchive( xml::xistream& input, const std::string& parentName );
         void ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation, const std::string& parentName );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         T_CategoryInfos_Vector categories_;
@@ -388,7 +388,7 @@ public:
 
         ObjectInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool bInitialBuildTime_;
@@ -425,7 +425,7 @@ public:
 
         ConsumptionItem* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_ConsumptionType nConsumptionType_;
@@ -446,7 +446,7 @@ public:
         void ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
         void ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
         void FillMissingConsumptions( T_CategoryInfos_Vector& equipmentCategories );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         T_ConsumptionItem_Vector vConsumptions_;
@@ -469,7 +469,7 @@ public:
         void ReadWeapon( xml::xistream& input );
         void ReadActiveProtection( xml::xistream& input );
         void ReadObject( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         virtual void CheckValidity();
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker );
         void FillMissingConsumptions();
@@ -566,7 +566,7 @@ public:
 private:
     void ReadElement( xml::xistream& input );
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     T_EquipmentInfos_Vector vEquipments_;

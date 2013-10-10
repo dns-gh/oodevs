@@ -53,7 +53,7 @@ void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
 // Name: ADN_FuneralPackagingResource::WriteArchive
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
-void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output )
+void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "packaging" )
              << xml::attribute( "resource", *this )

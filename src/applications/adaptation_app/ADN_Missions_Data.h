@@ -67,7 +67,7 @@ public:
     QStringList GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
     QStringList GetMissionsThatUse( E_MissionType type, ADN_Objects_Data_ObjectInfos& object );
 
-    tools::Path GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text );
+    void GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text );
     const boost::shared_ptr< kernel::Context >& GetMissionSheetContext( E_MissionType type ) const;
     //@}
 
@@ -96,7 +96,8 @@ private:
     void AddMissionType( const std::string& xmltag );
     void ReadArchive( xml::xistream& input );
     void ReadMission( xml::xistream& input, E_MissionType modelType );
-    void WriteArchive( xml::xostream& output );
+    bool FixConsistency();
+    void WriteArchive( xml::xostream& output ) const;
     void MoveMissionSheetsToObsolete( const tools::Path& file ) const;
     void CheckAndFixLoadingErrors() const;
     void DeleteMissionSheet( const tools::Path& filename );
@@ -104,7 +105,6 @@ private:
 private:
     std::vector< std::pair< std::string, T_Mission_Vector > > missionsVector_;
     std::vector< boost::shared_ptr< kernel::Context > > missionSheetContexts_;
-    tools::Path::T_Paths toDeleteMissionSheets_;
 
 public:
     static tools::IdManager idManager_;

@@ -105,7 +105,7 @@ void ADN_LogisticSupplyClasses_Data::ReadLogisticSupplyClass( xml::xistream& inp
 // Name: ADN_LogisticSupplyClasses_Data::WriteArchive
 // Created: ABR 2013-07-11
 // -----------------------------------------------------------------------------
-void ADN_LogisticSupplyClasses_Data::WriteArchive( xml::xostream& output )
+void ADN_LogisticSupplyClasses_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vLogisticSupplyClasses_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

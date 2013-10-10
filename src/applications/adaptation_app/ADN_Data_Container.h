@@ -43,7 +43,7 @@ public:
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
     virtual bool ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor );
-    virtual void Save();
+    virtual void Save() const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}
 
@@ -51,7 +51,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void ReadArchive( xml::xistream& input );
-    virtual void WriteArchive( xml::xostream& output );
+    virtual void WriteArchive( xml::xostream& output ) const;
     //@}
 
 private:

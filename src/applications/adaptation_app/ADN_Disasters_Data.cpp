@@ -328,7 +328,7 @@ void ADN_Disasters_Data::DisasterInfos::ReadContamination( xml::xistream& input 
 // Name: DisasterInfos::WriteArchive
 // Created: LGY 2012-11-13
 // -----------------------------------------------------------------------------
-void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output )
+void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "disaster" )
                << xml::attribute( "name", strName_ )
@@ -403,7 +403,7 @@ void ADN_Disasters_Data::ReadDisaster( xml::xistream& input )
 // Name: ADN_Disasters_Data::WriteArchive
 // Created: LGY 2012-11-13
 // -----------------------------------------------------------------------------
-void ADN_Disasters_Data::WriteArchive( xml::xostream& output )
+void ADN_Disasters_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vDisasters_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

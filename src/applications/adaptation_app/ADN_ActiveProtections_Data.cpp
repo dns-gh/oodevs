@@ -92,7 +92,7 @@ void ADN_ActiveProtections_Data::ReadProtection( xml::xistream& xis )
 // Name: ADN_ActiveProtections_Data::WriteArchive
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
+void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos ) const
 {
     if( activeProtections_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
@@ -138,7 +138,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml
 // Name: ADN_ActiveProtections_Data::WriteArchive
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos )
+void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "weapon" )
           << xml::attribute( "name", *this )
@@ -225,7 +225,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon( xml::xistre
 // Name: ADN_ActiveProtections_Data::Protection::Write
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& xos )
+void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "protection" )
         << xml::attribute( "name", strName_ )

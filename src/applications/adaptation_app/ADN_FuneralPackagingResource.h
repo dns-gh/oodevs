@@ -37,8 +37,8 @@ public:
     //! @name Operations
     //@{
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
-    void WriteArchive( xml::xostream& output, const std::string& attribute, const std::string& value );
+    void WriteArchive( xml::xostream& output ) const;
+    void WriteArchive( xml::xostream& output, const std::string& attribute, const std::string& value ) const;
     void ExchangeData( ADN_FuneralPackagingResource& packResource );
     //@}
 

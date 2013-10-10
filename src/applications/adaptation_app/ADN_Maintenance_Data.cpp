@@ -42,7 +42,7 @@ void ADN_Maintenance_Data::WorkingSchemeInfo::ReadArchive( xml::xistream& input 
 // Name: WorkingSchemeInfo::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( xml::xostream& output )
+void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "working-scheme" )
         << xml::attribute( "type", QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).toStdString() )
@@ -134,7 +134,7 @@ void ADN_Maintenance_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Maintenance_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Maintenance_Data::WriteArchive( xml::xostream& output )
+void ADN_Maintenance_Data::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "maintenance" );
     tools::SchemaWriter schemaWriter;

@@ -42,7 +42,7 @@ void ADN_AvailabilityWarning::ReadArchive( xml::xistream& input )
 // Name: ADN_AvailabilityWarning::WriteArchive
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
-void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output )
+void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource-availability-alert" )
             << xml::attribute( "availability-threshold", percentage_ )
@@ -53,7 +53,7 @@ void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output )
 // Name: ADN_AvailabilityWarning::WriteArchive
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output, const std::string& attribute, const std::string& value )
+void ADN_AvailabilityWarning::WriteArchive( xml::xostream& output, const std::string& attribute, const std::string& value ) const
 {
     output << xml::start( "resource-availability-alert" )
             << xml::attribute( "availability-threshold", percentage_ )

@@ -44,7 +44,7 @@ void ADN_Health_Data::WoundInfo::ReadArchive( xml::xistream& input )
 // Name: WoundInfo::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output, int n )
+void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output, int n ) const
 {
     output << xml::start( "injury" )
              << xml::attribute( "category", ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ) ) )
@@ -165,7 +165,7 @@ void ADN_Health_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Health_Data::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Health_Data::WriteArchive( xml::xostream& output )
+void ADN_Health_Data::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "health" );
     tools::SchemaWriter schemaWriter;

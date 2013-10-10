@@ -57,7 +57,7 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // Name: UnitInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const UnitInfos* pc )
+void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const UnitInfos* pc ) const
 {
     output << xml::start( "unit" )
              << xml::attribute( "type", *this );
@@ -170,7 +170,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 // Name: AutomatonInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output )
+void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "automat" )
             << xml::attribute( "name", strName_ )
@@ -268,7 +268,7 @@ void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 // Name: ADN_Automata_Data::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::WriteArchive( xml::xostream& output )
+void ADN_Automata_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vAutomata_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

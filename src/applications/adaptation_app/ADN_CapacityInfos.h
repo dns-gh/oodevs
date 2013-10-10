@@ -25,6 +25,10 @@ public:
     ADN_TypeCapacity_Infos() : bPresent_ ( false ) {}
     virtual ~ADN_TypeCapacity_Infos() {}
 
+    virtual void FixConsistency()
+    {
+        // NOTHING
+    }
     virtual void ReadArchive( xml::xistream& )
     {
         bPresent_ = true;
@@ -33,7 +37,7 @@ public:
     {
         // NOTHING
     }
-    virtual void WriteArchive( xml::xostream& )
+    virtual void WriteArchive( xml::xostream& ) const
     {
         // NOTHING
     }

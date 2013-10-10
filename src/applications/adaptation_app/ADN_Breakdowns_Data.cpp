@@ -56,7 +56,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 // Name: RepairPartInfo::WriteArchive
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
+void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "part" )
              << xml::attribute( "resource", *this )
@@ -150,7 +150,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 // Name: BreakdownInfo::WriteArchive
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
+void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "breakdown" )
            << xml::attribute( "name", strName_ )
@@ -254,7 +254,7 @@ void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_Breakdown
 // Name: ADN_Breakdowns_Data::WriteArchive
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
+void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vBreakdowns_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

@@ -108,7 +108,7 @@ void ADN_Data_ABC::Initialize()
 // Name: ADN_Data_ABC::Save
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::Save()
+void ADN_Data_ABC::Save() const
 {
     tools::Path::T_Paths fileList;
     FilesNeeded( fileList );
@@ -120,7 +120,7 @@ void ADN_Data_ABC::Save()
 // Name: ADN_Data_ABC::SaveFile
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::SaveFile( const tools::Path& xmlFile, T_Saver saver )
+void ADN_Data_ABC::SaveFile( const tools::Path& xmlFile, T_Saver saver ) const
 {
     xmlFile.Parent().CreateDirectories();
     tools::Xofstream output( xmlFile );
@@ -132,13 +132,12 @@ void ADN_Data_ABC::SaveFile( const tools::Path& xmlFile, T_Saver saver )
 // Name: ADN_Data_ABC::SaveTranslations
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::SaveTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations /*= 0*/ )
+void ADN_Data_ABC::SaveTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations /*= 0*/ ) const
 {
     kernel::XmlTranslations* currentTranslation = ( translations ) ?  translations : translations_.get();
     if( currentTranslation )
     {
         currentTranslation->SaveTranslationQueries( xmlFile );
-        currentTranslation->MergeDuplicateTranslations();
         currentTranslation->SaveTranslationFiles( xmlFile, BuildLocalDirectory(), ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages() );
     }
 }
@@ -156,7 +155,7 @@ void ADN_Data_ABC::ReadArchive( xml::xistream& )
 // Name: ADN_Data_ABC::WriteArchive
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::WriteArchive( xml::xostream& )
+void ADN_Data_ABC::WriteArchive( xml::xostream& ) const
 {
     // NOTHING
 }
@@ -206,4 +205,14 @@ const boost::shared_ptr< kernel::Context >& ADN_Data_ABC::GetContext( const std:
 bool ADN_Data_ABC::ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor )
 {
     return translations_->ApplyOnTranslations( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Data_ABC::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+bool ADN_Data_ABC::FixConsistency()
+{
+    translations_->MergeDuplicateTranslations();
+    return false;
 }

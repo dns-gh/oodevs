@@ -64,7 +64,7 @@ void ADN_Urban_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // Name: ADN_Urban_Data::Save
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::Save()
+void ADN_Urban_Data::Save() const
 {
     tools::Path::T_Paths fileList;
     FilesNeeded( fileList );
@@ -127,10 +127,21 @@ void ADN_Urban_Data::ReadArchive( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+bool ADN_Urban_Data::FixConsistency()
+{
+    ADN_Data_ABC::FixConsistency();
+    templateTranslations_->MergeDuplicateTranslations();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::WriteArchive
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::WriteArchive( xml::xostream& output )
+void ADN_Urban_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vMaterials_.GetErrorStatus() == eError ||
         vRoofShapes_.GetErrorStatus() == eError ||
@@ -166,7 +177,7 @@ void ADN_Urban_Data::ReadTemplates( xml::xistream& input )
 // Name: ADN_Urban_Data::WriteTemplates
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::WriteTemplates( xml::xostream& output )
+void ADN_Urban_Data::WriteTemplates( xml::xostream& output ) const
 {
     output << xml::start( "templates" );
     tools::SchemaWriter schemaWriter;
@@ -221,7 +232,7 @@ void ADN_Urban_Data::WriteMaterials( xml::xostream& output ) const
 // Name: ADN_Urban_Data::WriteMaterial
 // Created: SLG 2010-07-05
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output )
+void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output ) const
 {
     output << xml::start( "material-composition-type" )
            << xml::attribute( "name", strName_ )
@@ -370,7 +381,7 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
 // Name: ADN_Urban_Data::WriteAccommodation
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& output )
+void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& output ) const
 {
     output << xml::start( "accommodation" )
            << xml::attribute( "role", strName_ )
@@ -462,7 +473,7 @@ void ADN_Urban_Data::WriteInfrastructures( xml::xostream& output ) const
 // Name: ADN_Urban_Data::AccommodationInfos::WriteInfrastructure
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& output )
+void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& output ) const
 {
     output << xml::start( "infrastructure" )
         << xml::attribute( "name", strName_ );
@@ -635,7 +646,7 @@ void ADN_Urban_Data::UrbanTemplateInfos::ReadUsage( xml::xistream& xis )
 // Name: ADN_Urban_Data::Write
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output )
+void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output ) const
 {
     output << xml::start( "template" )
                << xml::attribute( "name", strName_ )
@@ -719,7 +730,7 @@ ADN_Urban_Data::RoofShapeInfos::~RoofShapeInfos()
 // Name: ADN_Urban_Data::WriteRoofShape
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output )
+void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output ) const
 {
     if( strName_.GetKey().empty() )
         throw MASA_EXCEPTION( tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).toStdString() );
@@ -774,7 +785,7 @@ ADN_Urban_Data::UsageTemplateInfos::~UsageTemplateInfos()
 // Name: ADN_Urban_Data::Write
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output )
+void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output ) const
 {
     double proportion = static_cast< double >( proportion_.GetData() ) / 100.f;
     output << xml::start( "usage" )

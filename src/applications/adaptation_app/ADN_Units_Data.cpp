@@ -76,7 +76,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
+void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "equipment" )
              << xml::attribute( "type", *this )
@@ -120,7 +120,7 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Units_Data::StockLogThresholdInfos::WriteArchive
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output )
+void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "stock" )
              << xml::attribute( "logistic-supply-class", *this )
@@ -668,7 +668,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // Name: UnitInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
+void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "unit" )
             << xml::attribute( "name", strName_ )
@@ -882,7 +882,7 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Units_Data::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::WriteArchive( xml::xostream& output )
+void ADN_Units_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vUnits_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

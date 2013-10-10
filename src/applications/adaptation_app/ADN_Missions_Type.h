@@ -26,7 +26,7 @@ public:
     std::string GetItemName();
     ADN_Missions_Type* CreateCopy();
 
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 public:
     std::string name_;
     std::string displayName_;

@@ -32,7 +32,7 @@ public:
         explicit ModifiersInfo( const std::string& strName );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         const std::string strName_;
@@ -53,7 +53,7 @@ public:
         ThresholdsInfo();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Int firstThreshold_;
@@ -80,7 +80,7 @@ private:
     //@{
     void ReadArchive( xml::xistream& input );
     void ReadModifier( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
     //@}
 
 public:

@@ -165,17 +165,27 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data_ObjectInfos::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data_ObjectInfos::FixConsistency()
+{
+    if( strType_.GetData().empty() )
+        strType_ = GenerateNextType();
+    for( auto it = capacities_.begin(); it != capacities_.end(); ++it )
+        it->second->FixConsistency();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos::WriteArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
+void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "object" )
         << xml::attribute( "name", strName_ );
     if( pointSize_.GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );
-    if( strType_.GetData().empty() )
-        strType_ = GenerateNextType();
     xos << xml::attribute( "type", strType_ );
     if( !description_.GetData().empty() )
         xos << xml::attribute( "description", description_ );

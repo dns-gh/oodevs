@@ -38,6 +38,8 @@ tools::Path ADN_Missions_Data::obsoletePath_ = "obsolete";
 
 namespace
 {
+    tools::Path::T_Paths toDeleteMissionSheets;
+
     template< typename T >
     void InitializeMissions( const ADN_Type_Vector_ABC< T >& vector )
     {
@@ -198,8 +200,8 @@ void ADN_Missions_Data::Initialize()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::DeleteMissionSheet( const tools::Path& filename )
 {
-    toDeleteMissionSheets_.push_back( filename + ".xml" );
-    toDeleteMissionSheets_.push_back( filename + ".html" );
+    toDeleteMissionSheets.push_back( filename + ".xml" );
+    toDeleteMissionSheets.push_back( filename + ".html" );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +224,7 @@ void ADN_Missions_Data::OnElementDeleted( boost::shared_ptr< kernel::LocalizedSt
 // Name: ADN_Missions_Data::GenerateMissionSheet
 // Created: NPT 2013-01-30
 // -----------------------------------------------------------------------------
-tools::Path ADN_Missions_Data::GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text )
+void ADN_Missions_Data::GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text )
 {
     assert( index >= 0 && index < 4 );
     ADN_Missions_ABC* mission = FindMission( index, text->Key() );
@@ -231,8 +233,8 @@ tools::Path ADN_Missions_Data::GenerateMissionSheet( int index, boost::shared_pt
     const tools::Path tempDir = CreateMissionDirectory( kernel::Language::Current(), GetTemporaryPath( index ) );
     GetCssFile().Copy( GetTemporaryCssFile(), tools::Path::OverwriteIfExists );
     mission->WriteMissionSheet( tempDir, kernel::Language::Current() );
+    mission->missionSheetPath_.SetValue( kernel::Language::Current(), ( tempDir / tools::Path::FromUTF8( mission->strName_.GetData() ) + ".html" ).ToUTF8() );
     mission->SetNeedsSaving( true );
-    return tempDir / tools::Path::FromUTF8( mission->strName_.GetData() ) + ".html";
 }
 
 namespace
@@ -346,10 +348,23 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Data::FixConsistency()
+{
+    ADN_Data_ABC::FixConsistency();
+    for( auto itMissions = missionsVector_.begin(); itMissions != missionsVector_.end(); ++itMissions )
+        for( auto itMission = itMissions->second.begin(); itMission != itMissions->second.end(); ++itMission )
+            ( *itMission )->FixConsistency();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::WriteArchive( xml::xostream& output )
+void ADN_Missions_Data::WriteArchive( xml::xostream& output ) const
 {
     for( int type = 0; type < eNbrMissionTypes; ++type )
         if( missionsVector_[ type ].second.GetErrorStatus() == eError )
@@ -374,9 +389,9 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     }
 
     // move mission sheets to obsolete directory when mission is deleted
-    for( auto it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )
+    for( auto it = toDeleteMissionSheets.begin(); it != toDeleteMissionSheets.end() ; ++it )
        MoveMissionSheetsToObsolete( *it );
-    toDeleteMissionSheets_.clear();
+    toDeleteMissionSheets.clear();
 
     // save Images in temp directory
     for( int type = 0; type < eNbrMissionTypes; ++type )
@@ -584,7 +599,7 @@ const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetCo
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::function< bool
+// Name: ADN_Missions_Data::ApplyOnTranslations
 // Created: ABR 2013-10-08
 // -----------------------------------------------------------------------------
 bool ADN_Missions_Data::ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor )

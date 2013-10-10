@@ -38,7 +38,7 @@ public:
         virtual ~ScoreLocationInfos() {}
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Enum< E_Location, eNbrLocation > nLocation_;
@@ -112,7 +112,7 @@ public:
         virtual ~ADN_CapacityInfos_Disaster() {}
 
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
         virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName ) const;
 
@@ -126,7 +126,7 @@ public:
                  ADN_CapacityInfos_Attrition();
         virtual ~ADN_CapacityInfos_Attrition() {}
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName );
     public:
         ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > ammoCategory_;
@@ -144,7 +144,7 @@ public:
     public:
         ADN_CapacityInfos_UrbanDestruction();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         helpers::T_UrbanAttritionInfos_Vector modifUrbanBlocks_;
@@ -155,7 +155,7 @@ public:
     public:
         ADN_CapacityInfos_Avoidable();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Double rDistance_;
@@ -166,7 +166,7 @@ public:
     public:
         ADN_CapacityInfos_Bridging();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Enum< E_CrossingType, eNbrCrossingType > type_;
@@ -177,7 +177,7 @@ public:
     public:
         ADN_CapacityInfos_Buildable();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
         void ReadDotation( xml::xistream& xis );
 
     public:
@@ -189,7 +189,7 @@ public:
     public:
         ADN_CapacityInfos_Bypassable();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Double  rSpeed_;
@@ -200,7 +200,7 @@ public:
     public:
         ADN_CapacityInfos_Contamination();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_String type_;
@@ -212,7 +212,7 @@ public:
     public:
         ADN_CapacityInfos_Flood();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     private:
         void ReadInjury( xml::xistream& xis );
@@ -230,7 +230,7 @@ public:
     public:
         ADN_CapacityInfos_Improvable();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     private:
         void ReadDotation( xml::xistream& xis );
@@ -244,7 +244,7 @@ public:
     public:
         ADN_CapacityInfos_InteractionHeight();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Double height_;
@@ -255,7 +255,7 @@ public:
     public:
         ADN_CapacityInfos_Intoxication();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_String type_;
@@ -267,7 +267,7 @@ public:
     public:
         ADN_CapacityInfos_Mobility();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Double rDefaultSpeed_;
@@ -280,7 +280,8 @@ public:
     public:
         ADN_CapacityInfos_Trafficability();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void FixConsistency();
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Bool limited_;
@@ -292,7 +293,7 @@ public:
     public:
         ADN_CapacityInfos_Population();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Double density_;
@@ -303,7 +304,7 @@ public:
     public:
         ADN_CapacityInfos_Propagation();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Enum< E_PropagationModel, eNbrPropagationModel > nModel_;
@@ -314,7 +315,7 @@ public:
     public:
         ADN_CapacityInfos_Protection();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Int max_size_;
@@ -326,7 +327,7 @@ public:
     public:
         ADN_CapacityInfos_TerrainHeuristic();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
         void ReadTerrain( xml::xistream& xis );
 
     public:
@@ -338,7 +339,7 @@ public:
     public:
         ADN_CapacityInfos_Workable();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Int worker_;
@@ -349,7 +350,7 @@ public:
     public:
         ADN_CapacityInfos_Constructor();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Enum< E_ConsumptionType, eNbrConsumptionType > nDefaultConsumption_;
@@ -364,7 +365,7 @@ public:
         ADN_CapacityInfos_Detection();
         void ReadArchive( xml::xistream& input ); // LTO
         void ReadAcquisitionTime( xml::xistream& input ); // LTO
-        void WriteArchive( xml::xostream& output ); // LTO
+        void WriteArchive( xml::xostream& output ) const; // LTO
 
     public:
         ADN_Type_Bool bDetectTime_;
@@ -381,7 +382,7 @@ public:
         ADN_CapacityInfos_Spawn();
         void Load( const std::string& parentName );
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName );
 
     public:
@@ -396,7 +397,7 @@ public:
     public:
         ADN_CapacityInfos_Structural();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Int rStructuralState_;
@@ -407,7 +408,7 @@ public:
     public:
         ADN_CapacityInfos_AttitudeModifier();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Enum< E_PopulationAttitude, eNbrPopulationAttitude > attitude_;
@@ -418,7 +419,7 @@ public:
     public:
         ADN_CapacityInfos_Perception();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool blinded_;
@@ -429,7 +430,7 @@ public:
     public:
         ADN_CapacityInfos_Scattering();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Int humanByTimeStep_;
@@ -440,7 +441,7 @@ public:
     public:
         ADN_CapacityInfos_FirePropagationModifier();
         void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName );
 
     public:
@@ -455,7 +456,7 @@ public:
 
         public:
             void ReadArchive( xml::xistream& xis );
-            void WriteArchive( xml::xostream& xos );
+            void WriteArchive( xml::xostream& xos ) const;
 
             typedef ADN_Fires_Data::FireClassInfos T_Item;
 
@@ -463,7 +464,7 @@ public:
             {
             public:
                 void ReadArchive( xml::xistream& xis );
-                void WriteArchive( xml::xostream& xos );
+                void WriteArchive( xml::xostream& xos ) const;
 
                 CmpRef( ADN_Fires_Data::FireClassInfos* val ) : val_( val ){}
                 bool operator()( ModifierByFireClass* other ) const
@@ -503,7 +504,7 @@ public:
         ADN_CapacityInfos_InteractWithSide();
         void ReadArchive( xml::xistream& input );
         void ReadSide( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool bFriendSide_;
@@ -536,7 +537,8 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadObject( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    bool FixConsistency();
+    void WriteArchive( xml::xostream& output ) const;
 
 private:
     T_ObjectsInfos_Vector vObjectInfos_;

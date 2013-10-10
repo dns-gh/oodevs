@@ -65,9 +65,20 @@ ADN_Type_Tab_ABC<T>::~ADN_Type_Tab_ABC()
 // Name: ADN_Type_Tab_ABC<T>::Get
 // Created: JDY 03-09-01
 //-----------------------------------------------------------------------------
-template <class T>
-T& ADN_Type_Tab_ABC<T>::Get(int i,int j)
+template< class T >
+T& ADN_Type_Tab_ABC< T >::Get( int i,int j )
 {
-    ADN_Type_Line_ABC<T>* pLine=operator [](i);
-    return * ( pLine->operator[](j) );
+    ADN_Type_Line_ABC< T >* pLine = operator []( i );
+    return *( pLine->operator[]( j ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_Tab_ABC::Get
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+template< class T >
+const T& ADN_Type_Tab_ABC< T >::Get( int i, int j ) const
+{
+    const ADN_Type_Line_ABC< T >* pLine = operator[]( i );
+    return *( pLine->operator[]( j ) );
 }

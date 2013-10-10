@@ -31,7 +31,7 @@ public:
         virtual ~WorkingSchemeInfo() {}
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Int nIdx_;
@@ -58,7 +58,7 @@ private:
     void ReadArchive( xml::xistream& input );
     void ReadWorkingScheme( xml::xistream& input );
     void ReadAvailabilityAlert( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     T_WorkingSchemeInfo_Vector vWorkingSchemes_;

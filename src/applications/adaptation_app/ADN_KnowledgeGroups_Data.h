@@ -30,7 +30,7 @@ public:
         AgentGroupInfo();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Time maxLifetime_;
@@ -46,7 +46,7 @@ public:
         PopulationGroupInfo();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Time maxLifetime_;
@@ -61,7 +61,7 @@ public:
 
         GroupInfo* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Time communicationDelay_; // LTO
@@ -94,7 +94,7 @@ private:
     //@{
     void ReadArchive( xml::xistream& input );
     void ReadKnowledgeGroup( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
     //@}
 
 public:

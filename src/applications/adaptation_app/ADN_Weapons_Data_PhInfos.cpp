@@ -91,7 +91,7 @@ void ADN_Weapons_Data_PhInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Weapons_Data_PhInfos::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data_PhInfos::WriteArchive( xml::xostream& output )
+void ADN_Weapons_Data_PhInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "hit-probability" )
         << xml::attribute( "distance", nDistance_ )
@@ -143,7 +143,7 @@ void ADN_Weapons_Data_PhSizeInfos::ReadArchive( xml::xistream& input )
 // Name: PhSizeInfos::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data_PhSizeInfos::WriteArchive( xml::xostream& output )
+void ADN_Weapons_Data_PhSizeInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "hit-probabilities" )
         << xml::attribute( "target", ptrSize_ );

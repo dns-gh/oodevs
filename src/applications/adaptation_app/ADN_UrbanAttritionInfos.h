@@ -36,7 +36,7 @@ public:
     //@{
     virtual void CopyFrom( ADN_UrbanAttritionInfos& attritions );
     virtual void ReadArchive( xml::xistream& );
-    virtual void WriteArchive( xml::xostream&, const std::string& tag = "urban-modifier" );
+    virtual void WriteArchive( xml::xostream&, const std::string& tag = "urban-modifier" ) const;
     //@}
 
 public:

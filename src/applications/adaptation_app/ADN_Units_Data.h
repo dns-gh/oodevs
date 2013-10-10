@@ -36,7 +36,7 @@ public:
 
         ComposanteInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool bMajor_;
@@ -75,7 +75,7 @@ public:
 
         StockLogThresholdInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rLogThreshold_;
@@ -162,7 +162,7 @@ public:
         void ReadCrew( xml::xistream& input );
         void ReadPosture( xml::xistream& input );
         void ReadPointDistance( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         void CleanupNature();
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
@@ -243,7 +243,7 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadUnit( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 private:
     T_UnitInfos_Vector  vUnits_;

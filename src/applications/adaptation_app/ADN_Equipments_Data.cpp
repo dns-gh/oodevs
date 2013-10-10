@@ -78,7 +78,7 @@ void ADN_Equipments_Data::AmbulanceInfos::ReadArchive( xml::xistream& input )
 // Name: AmbulanceInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::AmbulanceInfos::WriteArchive( const std::string& section, xml::xostream& output )
+void ADN_Equipments_Data::AmbulanceInfos::WriteArchive( const std::string& section, xml::xostream& output ) const
 {
     std::string woundedTransports;
     for( int n = 0; n < eNbrDoctorSkills; ++n )
@@ -183,7 +183,7 @@ void ADN_Equipments_Data::LogHealthInfos::ReadArchive( xml::xistream& input )
 // Name: LogHealthInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::LogHealthInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::LogHealthInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "health-functions" );
     if( bIsAmbulance_.GetData() )
@@ -267,7 +267,7 @@ void ADN_Equipments_Data::NTIInfos::ReadArchive( xml::xistream& input )
 // Name: NTIInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::NTIInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::NTIInfos::WriteArchive( xml::xostream& output ) const
 {
     if( ! bIsPresent_.GetData() )
         return;
@@ -369,7 +369,7 @@ void ADN_Equipments_Data::LogMaintenanceInfos::ReadArchive( xml::xistream& input
 // Name: LogMaintenanceInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "maintenance-functions" );
     if( bIsTower_.GetData() )
@@ -441,7 +441,7 @@ void ADN_Equipments_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
 // Name: LogSupplyInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::LogSupplyInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::LogSupplyInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "supply-functions" );
     if( bIsCarrier_.GetData() && ptr_.GetData() )
@@ -519,7 +519,7 @@ void ADN_Equipments_Data::LogInfos::ReadArchive( xml::xistream& input )
 // Name: LogInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::LogInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::LogInfos::WriteArchive( xml::xostream& output ) const
 {
     if( ! bHasHealthInfos_.GetData() && ! bHasMaintenanceInfos_.GetData() && ! bHasSupplyInfos_.GetData() )
         return;
@@ -582,7 +582,7 @@ void ADN_Equipments_Data::BreakdownInfos::ReadArchive( xml::xistream& input )
 // Name: BreakdownInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::BreakdownInfos::WriteArchive( const std::string& origin, xml::xostream& output )
+void ADN_Equipments_Data::BreakdownInfos::WriteArchive( const std::string& origin, xml::xostream& output ) const
 {
     output << xml::start( "breakdown" )
             << xml::attribute( "type", *this )
@@ -666,7 +666,7 @@ void ADN_Equipments_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input
 // Name: BreakdownGroupInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output, const std::string& composante )
+void ADN_Equipments_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output, const std::string& composante ) const
 {
     double rSum = 0.0;
     for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
@@ -704,7 +704,7 @@ void ADN_Equipments_Data::SpeedInfos::ReadArchive( xml::xistream& input )
 // Name: SpeedInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::SpeedInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::SpeedInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "speed" )
             << xml::attribute( "terrain", ENT_Tr::ConvertFromLocation( nTypeTerrain_ ) )
@@ -751,7 +751,7 @@ void ADN_Equipments_Data::SensorInfos::ReadArchive( xml::xistream& input )
 // Name: SensorInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::SensorInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::SensorInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "sensor" )
              << xml::attribute( "type", *this )
@@ -796,7 +796,7 @@ void ADN_Equipments_Data::RadarInfos::ReadArchive( xml::xistream& input )
 // Name: RadarInfos::WriteArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::RadarInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::RadarInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "radar" )
              << xml::attribute( "type", *this )
@@ -852,7 +852,7 @@ void ADN_Equipments_Data::WeaponInfos::ReadArchive( xml::xistream& input )
 // Name: WeaponInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::WeaponInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::WeaponInfos::WriteArchive( xml::xostream& output ) const
 {
     if( GetCrossedElement() )
     {
@@ -907,7 +907,7 @@ void ADN_Equipments_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& in
 // Name: ADN_Equipments_Data::WriteArchive
 // Created: LDC 2010-01-12
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "protection" )
             << xml::attribute( "name", *this )
@@ -959,7 +959,7 @@ void ADN_Equipments_Data::CategoryInfos::ReadArchive( xml::xistream& input )
 // Name: CategoryInfos::WriteArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::CategoryInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::CategoryInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" )
              << xml::attribute( "name", *this )
@@ -1027,7 +1027,7 @@ void ADN_Equipments_Data::ResourceInfos::ReadArchive( xml::xistream& input, cons
 // Name: ResourceInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output ) const
 {
     for( uint n = 0; n < eNbrDotationFamily; ++n )
     {
@@ -1147,7 +1147,7 @@ void ADN_Equipments_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 // Name: ObjectInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ObjectInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ObjectInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "object" )
             << xml::attribute( "type", GetCrossedElement() ? GetCrossedElement()->strType_.GetData() : "" );
@@ -1220,7 +1220,7 @@ void ADN_Equipments_Data::ConsumptionItem::ReadArchive( xml::xistream& input )
 // Name: ConsumptionItem::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ConsumptionItem::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" )
              << xml::attribute( "name", *this );
@@ -1318,7 +1318,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::FillMissingConsumptions( T_Category
 // Name: ConsumptionsInfos::WriteArchive
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "consumptions" );
     for( int nType = 0; nType < eNbrConsumptionType; ++nType )
@@ -1820,7 +1820,7 @@ void ADN_Equipments_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker
 // Name: EquipmentInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "equipment" )
                << xml::attribute( "comment", strAdditionalComments_ )
@@ -2019,7 +2019,7 @@ void ADN_Equipments_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Equipments_Data::WriteArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vEquipments_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

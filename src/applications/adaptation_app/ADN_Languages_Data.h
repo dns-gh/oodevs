@@ -62,7 +62,7 @@ private:
     //@{
     void ReadArchive( xml::xistream& input );
     void ReadLanguage( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
     void InternalSetMaster( const std::string& language );
     //@}

@@ -85,7 +85,7 @@ void ADN_Volumes_Data::ReadVolume( xml::xistream& input )
 // Name: ADN_Volumes_Data::WriteArchive
 // Created: ABR 2013-07-11
 // -----------------------------------------------------------------------------
-void ADN_Volumes_Data::WriteArchive( xml::xostream& output )
+void ADN_Volumes_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vSizes_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

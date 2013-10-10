@@ -155,7 +155,7 @@ void ADN_Weapons_Data_WeaponInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Weapons_Data_WeaponInfos::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data_WeaponInfos::WriteArchive( xml::xostream& output )
+void ADN_Weapons_Data_WeaponInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "weapon-system" )
         << xml::attribute( "launcher", ptrLauncher_ )

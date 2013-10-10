@@ -43,7 +43,7 @@ ADN_Missions_Type* ADN_Missions_Type::CreateCopy()
     return newType;
 }
 
-void ADN_Missions_Type::WriteArchive( xml::xostream& output )
+void ADN_Missions_Type::WriteArchive( xml::xostream& output ) const
 {
     if( isAllowed_.GetData() )
     {

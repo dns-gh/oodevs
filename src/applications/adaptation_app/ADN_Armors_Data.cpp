@@ -92,19 +92,26 @@ void ADN_Armors_Data::ArmorInfos::ReadAttrition( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Armors_Data::ArmorInfos::WriteArchive
-// Created: APE 2004-11-16
+// Name: ADN_Armors_Data::ArmorInfos::FixConsistency
+// Created: ABR 2013-10-10
 // -----------------------------------------------------------------------------
-void ADN_Armors_Data::ArmorInfos::WriteArchive( xml::xostream& output )
+void ADN_Armors_Data::ArmorInfos::FixConsistency()
 {
-    if( strName_.GetData().empty() )
-        throw MASA_EXCEPTION( tr( "Categories - Duplicated armor type name" ).toStdString() );
-
     if( nType_ == eProtectionType_Human )
     {
         rBreakdownEVA_  = 0.;
         rBreakdownNEVA_ = 0.;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::ArmorInfos::WriteArchive
+// Created: APE 2004-11-16
+// -----------------------------------------------------------------------------
+void ADN_Armors_Data::ArmorInfos::WriteArchive( xml::xostream& output ) const
+{
+    if( strName_.GetData().empty() )
+        throw MASA_EXCEPTION( tr( "Categories - Duplicated armor type name" ).toStdString() );
 
     output << xml::start( "protection" )
         << xml::attribute( "name", strName_ )
@@ -200,10 +207,22 @@ void ADN_Armors_Data::ReadArmor( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+bool ADN_Armors_Data::FixConsistency()
+{
+    ADN_Data_ABC::FixConsistency();
+    for( auto it = vArmors_.begin(); it != vArmors_.end(); ++it )
+        ( *it )->FixConsistency();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Armors_Data::WriteArchive
 // Created: ABR 2013-07-11
 // -----------------------------------------------------------------------------
-void ADN_Armors_Data::WriteArchive( xml::xostream& output )
+void ADN_Armors_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vArmors_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
@@ -211,7 +230,7 @@ void ADN_Armors_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "protections" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Armors" );
-    for( T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
+    for( auto itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
         ( *itArmor )->WriteArchive( output );
     output << xml::end;
 }

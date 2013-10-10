@@ -34,7 +34,7 @@ public:
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Double coefficient_;
@@ -54,7 +54,7 @@ public:
         ActiveProtectionsInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
         void ReadWeapon( xml::xistream& xis );
         using ADN_RefWithLocalizedName::CheckValidity;
         virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
@@ -100,7 +100,7 @@ private:
     //! @name Helpers
     //@{
     virtual void ReadArchive( xml::xistream& xis );
-    virtual void WriteArchive( xml::xostream& xos );
+    virtual void WriteArchive( xml::xostream& xos ) const;
     virtual void ReadProtection( xml::xistream& xis );
     //@}
 };

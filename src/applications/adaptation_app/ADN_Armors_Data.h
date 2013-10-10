@@ -37,7 +37,8 @@ public:
         ArmorInfos* CreateCopy();
         void ReadArchive( xml::xistream& );
         void ReadAttrition( xml::xistream& );
-        void WriteArchive( xml::xostream& );
+        void FixConsistency();
+        void WriteArchive( xml::xostream& ) const;
         void CreateDefaultAttrition();
 
     public:
@@ -71,9 +72,10 @@ public:
 private:
     //! @name Serialization
     //@{
+    bool FixConsistency();
     void ReadArchive( xml::xistream& input );
     void ReadArmor( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
     //@}
 
 private:

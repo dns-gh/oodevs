@@ -64,7 +64,7 @@ void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
 // Name: OrderInfos::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output )
+void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "fragorder" )
              << xml::attribute( "name", *this )
@@ -154,7 +154,7 @@ void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 // Name: MissionInfos::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output )
+void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "mission" )
              << xml::attribute( "name", *this );
@@ -416,7 +416,7 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Models_Data::WriteArchive
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::WriteArchive( xml::xostream& output )
+void ADN_Models_Data::WriteArchive( xml::xostream& output ) const
 {
     for( int i = 0; i < eNbrEntityTypes; ++i )
         if( vModels_[ i ].GetErrorStatus() == eError )

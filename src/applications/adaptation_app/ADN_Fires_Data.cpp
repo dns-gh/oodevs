@@ -82,7 +82,7 @@ void ADN_Fires_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Fires_Data::FireInjuryInfos::WriteArchive
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_Fires_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireInjuryInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "injuries" );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
@@ -156,7 +156,7 @@ void ADN_Fires_Data::FireSurfaceInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Fires_Data::FireSurfaceInfos::WriteArchive
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-void ADN_Fires_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output ) const
 {
     output  << xml::start( "surface" )
         << xml::attribute( "type", strName_ )
@@ -317,7 +317,7 @@ void ADN_Fires_Data::FireClassInfos::ReadSurface( xml::xistream& input )
 // Name: ADN_Fires_Data::FireClassInfos::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_Fires_Data::FireClassInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireClassInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "fire" )
                << xml::attribute( "name", strName_ )
@@ -407,7 +407,7 @@ void ADN_Fires_Data::ReadFireClass( xml::xistream& input )
 // Name: ADN_Fires_Data::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_Fires_Data::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::WriteArchive( xml::xostream& output ) const
 {
     if( fireClasses_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

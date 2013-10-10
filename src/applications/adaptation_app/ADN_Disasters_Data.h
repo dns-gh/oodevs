@@ -131,7 +131,7 @@ public:
         void ReadContamination( xml::xistream& input );
         void ReadAttrition( xml::xistream& input );
         void ReadProtection( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         //@}
 
     public:
@@ -175,7 +175,7 @@ private:
     //@{
     void ReadDisaster( xml::xistream& input );
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
     //@}
 
 private:
