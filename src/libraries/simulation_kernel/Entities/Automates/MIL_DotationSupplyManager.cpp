@@ -181,7 +181,7 @@ void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCa
 // -----------------------------------------------------------------------------
 bool MIL_DotationSupplyManager::HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory )
 {
-    return ( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) );
+    return bSupplyNeeded_ || IsSupplyInProgress( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +191,10 @@ bool MIL_DotationSupplyManager::HasDotationSupplyNeededNotified( const PHY_Dotat
 bool MIL_DotationSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const
 {
     return boost::find_if( scheduledSupplies_,
-            boost::bind( &logistic::SupplyConsign_ABC::IsSupplying, _1, boost::cref( dotationCategory ), boost::cref( *this ) ) )
+        [&]( const T_Supplies::value_type& consign )
+        {
+            return consign->IsSupplying( dotationCategory, *this );
+        } )
         != scheduledSupplies_.end();
 }
 
