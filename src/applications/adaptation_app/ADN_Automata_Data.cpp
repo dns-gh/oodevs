@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_Automata_Data::idManager_;

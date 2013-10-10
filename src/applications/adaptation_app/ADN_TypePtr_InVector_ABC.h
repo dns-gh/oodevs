@@ -12,6 +12,7 @@
 
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_ConsistencyChecker.h"
+#include "ADN_Tools.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Workspace.h"
 

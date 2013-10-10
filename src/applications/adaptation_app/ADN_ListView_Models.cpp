@@ -18,6 +18,7 @@
 #include "ADN_Automata_Data.h"
 #include "ADN_Crowds_Data.h"
 #include "ADN_enums.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Models_Data::ModelInfos ModelInfos;
 

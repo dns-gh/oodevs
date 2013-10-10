@@ -14,6 +14,7 @@
 #include "ADN_Fires_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Fires_ListView constructor

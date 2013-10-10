@@ -25,6 +25,7 @@
 #include "ADN_TableDialog.h"
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/GlContext.h"
 #include "clients_gui/HelpSystem.h"

@@ -13,6 +13,7 @@
 #include "ADN_Automata_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Automata_Data::AutomatonInfos AutomatonInfos;
 

@@ -13,6 +13,7 @@
 #include "ADN_Resources_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FuneralPackagingResource constructor

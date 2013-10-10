@@ -18,6 +18,7 @@
 #include "ADN_Tr.h"
 #include "ADN_WeaponFilter.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 #include <boost/bind.hpp>
 
 typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;

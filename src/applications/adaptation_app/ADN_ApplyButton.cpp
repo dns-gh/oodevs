@@ -11,8 +11,9 @@
 #include "ADN_ApplyButton.h"
 #include "moc_ADN_ApplyButton.cpp"
 #include "ADN_Languages_Data.h"
-#include "ADN_Workspace.h"
 #include "ADN_Languages_GUI.h"
+#include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/LocalizedString.h"
 
 // -----------------------------------------------------------------------------

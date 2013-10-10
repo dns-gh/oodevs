@@ -18,6 +18,7 @@
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
 #include "ADN_Languages_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/Context.h"
 #include "clients_kernel/Language.h"
 #include "clients_kernel/XmlTranslations.h"

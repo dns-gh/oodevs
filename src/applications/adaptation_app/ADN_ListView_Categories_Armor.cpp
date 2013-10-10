@@ -18,6 +18,7 @@
 #include "ADN_Equipments_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Armors_Data::ArmorInfos ArmorInfos;
 

@@ -11,6 +11,7 @@
 #include "ADN_Type_LocalizedString.h"
 #include "moc_ADN_Type_LocalizedString.cpp"
 #include "ADN_Languages_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/Context.h"
 #include "clients_kernel/Language.h"
 

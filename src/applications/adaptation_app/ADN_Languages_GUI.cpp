@@ -11,8 +11,11 @@
 #include "ADN_Languages_GUI.h"
 #include "moc_ADN_Languages_GUI.cpp"
 #include "ADN_Languages_Data.h"
-#include "clients_kernel/Language.h"
 #include "ADN_Languages_Dialog.h"
+#include "ADN_Workspace.h"
+#include "clients_kernel/Language.h"
+#include "clients_Kernel/LocalizedString.h"
+#include "clients_Kernel/Tools.h"
 
 namespace
 {

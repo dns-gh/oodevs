@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 #include "ADN_Objects_Data.h"
+#include "ADN_WorkspaceElement.h"
 
 using namespace helpers;
 

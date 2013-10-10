@@ -15,6 +15,7 @@
 #include "ADN_Connector_StandardItem.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Languages_GUI.h"
+#include "ADN_WorkspaceElement.h"
 #include "excel/ExcelFormat.h"
 #include "clients_kernel/VariantPointer.h"
 #include "clients_gui/LocaleAwareSortFilterProxyModel.h"

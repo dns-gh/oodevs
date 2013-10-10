@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/Language.h"
 #include "clients_kernel/XmlTranslations.h"
 #include "tools/Loader_ABC.h"

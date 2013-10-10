@@ -12,6 +12,7 @@
 #include "ADN_Missions_Data.h"
 #include "clients_gui/WikiXmlConverter.h"
 #include "ADN_Languages_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>

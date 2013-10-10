@@ -11,6 +11,7 @@
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Project_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------

@@ -17,6 +17,7 @@
 #include "ADN_Connector_Double.h"
 #include "ADN_Connector_LocalizedString.h"
 #include "ADN_Weapons_GUI.h"
+#include "ADN_WorkspaceElement.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-01

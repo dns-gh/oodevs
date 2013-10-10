@@ -12,6 +12,7 @@
 #include "ADN_Resources_GUI.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table

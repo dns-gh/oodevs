@@ -12,6 +12,7 @@
 #include "moc_ADN_Languages_MasterDialog.cpp"
 #include "ADN_Gui_Tools.h"
 #include "ADN_Languages_Data.h"
+#include "ADN_Workspace.h"
 #include "clients_kernel/Language.h"
 #include "clients_kernel/Languages.h"
 

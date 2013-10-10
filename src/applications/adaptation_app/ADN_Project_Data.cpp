@@ -14,6 +14,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Missions_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "XmlResources.cpp"
 #include "tools/Loader_ABC.h"
 #include <boost/lexical_cast.hpp>

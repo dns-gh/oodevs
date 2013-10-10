@@ -12,6 +12,7 @@
 #include "ADN_Sensors_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Sensors_Data::LimitedToSensorsInfos LimitedToSensorsInfos;
 

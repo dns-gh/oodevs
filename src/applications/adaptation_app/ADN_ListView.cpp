@@ -11,15 +11,17 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView.h"
 #include "moc_ADN_ListView.cpp"
-#include "ADN_StandardItem.h"
-#include "ADN_Workspace.h"
-#include "ADN_Enums.h"
 #include "ADN_Connector_ListView_ABC.h"
+#include "ADN_Enums.h"
 #include "ADN_Languages_Data.h"
 #include "ADN_Languages_GUI.h"
+#include "ADN_ListViewToolTip.h"
 #include "ADN_MultiRefWarningDialog.h"
 #include "ADN_ObjectCreator_ABC.h"
-#include "ADN_ListViewToolTip.h"
+#include "ADN_StandardItem.h"
+#include "ADN_Tools.h"
+#include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include <boost/bind.hpp>
 #include <excel/ExcelFormat.h>
 

@@ -13,6 +13,7 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_Languages_MasterDialog.h"
 #include "ADN_Gui_Tools.h"
+#include "ADN_Workspace.h"
 #include "clients_kernel/Language.h"
 #include "clients_gui/resources.h"
 

@@ -15,6 +15,7 @@
 #include "ADN_Equipments_Data.h"
 #include "ADN_Equipments_GUI.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Equipments_Data::ObjectInfos ObjectInfos;
 

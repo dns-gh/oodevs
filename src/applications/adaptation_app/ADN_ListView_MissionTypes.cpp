@@ -17,6 +17,7 @@
 #include "ADN_Tr.h"
 #include "ADN_Missions_Wizard.h"
 #include "ADN_enums.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Missions_Mission Mission;
 

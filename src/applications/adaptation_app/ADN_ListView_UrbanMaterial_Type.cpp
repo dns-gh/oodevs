@@ -15,6 +15,7 @@
 #include "ADN_Urban_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanMaterial_Type constructor

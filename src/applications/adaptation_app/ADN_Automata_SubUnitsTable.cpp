@@ -12,6 +12,7 @@
 #include "moc_ADN_Automata_SubUnitsTable.cpp"
 #include "ADN_Automata_Data.h"
 #include "ADN_Gui_Tools.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Automata_Data::UnitInfos AutomatUnitInfos;
 typedef ADN_Units_Data::UnitInfos    UnitInfos;

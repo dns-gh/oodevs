@@ -19,6 +19,7 @@
 #include "ADN_WeaponFilter.h"
 #include "ADN_Weapons_Data_WeaponInfos.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/bind.hpp>
 

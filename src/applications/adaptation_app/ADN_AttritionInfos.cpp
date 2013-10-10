@@ -1,6 +1,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_AttritionInfos.h"
 #include "ADN_Categories_Data.h"
+#include "ADN_WorkspaceElement.h"
 
 using namespace helpers;
 

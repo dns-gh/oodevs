@@ -14,6 +14,7 @@
 #include "ADN_Equipments_Data.h"
 #include "ADN_Equipments_GUI.h"
 #include "ADN_Resources_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 
 namespace

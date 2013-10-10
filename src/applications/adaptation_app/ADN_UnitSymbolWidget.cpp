@@ -12,6 +12,7 @@
 #include "moc_ADN_UnitSymbolWidget.cpp"
 #include "ADN_Symbols_Data.h"
 #include "ADN_Project_Data.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SymbolWidget constructor

@@ -11,7 +11,8 @@
 #include "ADN_Armors_Data.h"
 #include "ADN_Enums.h"
 #include "ADN_Project_Data.h"
-#include "ADN_tr.h"
+#include "ADN_Tools.h"
+#include "ADN_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
 
 using namespace helpers;
@@ -224,4 +225,25 @@ void ADN_Armors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) c
     ADN_Data_ABC::CheckDatabaseValidity( checker );
     if( vArmors_.size() == 0 )
         checker.AddError( eMissingArmor, "", eCategories );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::GetArmorsInfos
+// Created: ABR 2013-07-11
+// -----------------------------------------------------------------------------
+ADN_Armors_Data::T_ArmorInfos_Vector& ADN_Armors_Data::GetArmorsInfos()
+{
+    return vArmors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Armors_Data::FindArmor
+// Created: ABR 2013-07-11
+// -----------------------------------------------------------------------------
+ADN_Armors_Data::ArmorInfos* ADN_Armors_Data::FindArmor( const std::string& strName )
+{
+    auto it = std::find_if( vArmors_.begin(), vArmors_.end(), ADN_Tools::NameCmp( strName ) );
+    if( it == vArmors_.end() )
+        return 0;
+    return *it;
 }

@@ -13,14 +13,11 @@
 #define __ADN_ListView_h_
 
 #include "ADN_Gfx_ABC.h"
-#include "ADN_Connector_ABC.h"
-#include "ADN_NavigationInfos.h"
 #include "clients_gui/RichTreeView.h"
-#include <boost/function.hpp>
 
-class ADN_Connector_ListView_ABC;
-class ADN_StandardItem;
-class ADN_ObjectCreator_ABC;
+#include "ADN_Connector_ABC.h"
+#include "ADN_Enums.h"
+#include "ADN_NavigationInfos.h"
 
 namespace YExcel
 {
@@ -31,6 +28,10 @@ namespace ExcelFormat
 {
     struct XLSFormatManager;
 }
+
+class ADN_Connector_ListView_ABC;
+class ADN_StandardItem;
+class ADN_ObjectCreator_ABC;
 
 // =============================================================================
 /** @class  ADN_ListView

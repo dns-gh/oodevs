@@ -20,6 +20,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data_PhInfos

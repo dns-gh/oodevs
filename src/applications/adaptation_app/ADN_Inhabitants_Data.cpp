@@ -12,6 +12,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 

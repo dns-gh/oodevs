@@ -12,6 +12,7 @@
 #include "ADN_Launchers_ModifPhs_GUI.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Weapons_GUI.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------

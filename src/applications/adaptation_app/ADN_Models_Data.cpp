@@ -16,6 +16,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
 

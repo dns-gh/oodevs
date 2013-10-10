@@ -12,6 +12,7 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_ConsistencyChecker.h"
+#include "ADN_WorkspaceElement.h"
 #include <tools/Loader_ABC.h>
 #include <tools/EncodingConverter.h>
 #include <boost/regex.hpp>

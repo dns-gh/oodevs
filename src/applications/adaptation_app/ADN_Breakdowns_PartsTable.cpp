@@ -11,6 +11,7 @@
 #include "ADN_Breakdowns_PartsTable.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Breakdowns_Data.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_PartsTable constructor

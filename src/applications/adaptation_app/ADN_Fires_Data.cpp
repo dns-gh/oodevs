@@ -11,6 +11,7 @@
 #include "ADN_Fires_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
 

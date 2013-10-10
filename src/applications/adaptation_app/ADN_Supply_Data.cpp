@@ -17,6 +17,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 #include "ENT/ENT_Tr.h"
 

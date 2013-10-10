@@ -12,6 +12,7 @@
 #include "moc_ADN_EquipementSelector.cpp"
 #include "ADN_Workspace.h"
 #include "ADN_Resources_Data.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector::ADN_EquipementSelector

@@ -13,6 +13,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
 #include "ADN_Objects_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 
 #include <boost/bind.hpp>

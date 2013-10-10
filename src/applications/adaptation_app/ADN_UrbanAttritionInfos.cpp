@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_UrbanAttritionInfos.h"
+#include "ADN_WorkspaceElement.h"
 
 using namespace helpers;
 

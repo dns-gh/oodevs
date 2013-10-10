@@ -24,6 +24,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Wizard.h"
 #include "ADN_Weapons_WizardPage.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Weapons_Data_WeaponInfos WeaponInfos;
 

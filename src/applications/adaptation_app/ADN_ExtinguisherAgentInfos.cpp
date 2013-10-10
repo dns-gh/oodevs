@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ExtinguisherAgentInfos.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ExtinguisherAgentInfos constructor

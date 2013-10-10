@@ -12,6 +12,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include "clients_kernel/XmlTranslations.h"

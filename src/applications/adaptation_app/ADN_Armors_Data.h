@@ -83,27 +83,4 @@ private:
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Armors_Data::GetArmorsInfos
-// Created: ABR 2013-07-11
-// -----------------------------------------------------------------------------
-inline
-ADN_Armors_Data::T_ArmorInfos_Vector& ADN_Armors_Data::GetArmorsInfos()
-{
-    return vArmors_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Armors_Data::FindArmor
-// Created: ABR 2013-07-11
-// -----------------------------------------------------------------------------
-inline
-ADN_Armors_Data::ArmorInfos* ADN_Armors_Data::FindArmor( const std::string& strName )
-{
-    auto it = std::find_if( vArmors_.begin(), vArmors_.end(), ADN_Tools::NameCmp( strName ) );
-    if( it == vArmors_.end() )
-        return 0;
-    return *it;
-}
-
 #endif // __ADN_Armors_Data_h_

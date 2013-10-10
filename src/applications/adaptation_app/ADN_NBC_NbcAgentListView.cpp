@@ -16,6 +16,7 @@
 #include "ADN_NBC_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_NBC_Data::NbcAgentInfos NbcAgentInfos;
 

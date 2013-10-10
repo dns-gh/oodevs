@@ -15,6 +15,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_KnowledgeGroups_Data::GroupInfo GroupInfo;
 
