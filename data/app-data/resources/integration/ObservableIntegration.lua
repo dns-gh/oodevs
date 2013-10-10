@@ -150,3 +150,10 @@ end
 integration.getIdentificationDistance = function()
     return DEC_Identification_DistanceMaxCompMajeure()
 end
+
+-- Return relevance of a unit knowledge
+-- @param knowledge on an unit
+integration.getRelevance = function( knowledge )
+    return knowledge.source:DEC_AgentKnowledge_Relevance()
+end 
+
