@@ -348,7 +348,7 @@ void MIL_BurningCells::PropagateIgnition( const MIL_BurningCellOrigin& fromOrigi
     if( const MIL_BurningCell* pCellFrom = FindCell( fromOrigin ) )
     {
         geometry::Vector2d direction( pCellFrom->center_, cellTo.center_ );
-        const weather::Meteo::sWindData& wind = MIL_Tools::GetWind( MT_Vector2D( pCellFrom->center_.X(), pCellFrom->center_.Y() ) );
+        const weather::WindData& wind = MIL_Tools::GetWind( MT_Vector2D( pCellFrom->center_.X(), pCellFrom->center_.Y() ) );
         if( wind.rSpeed_ > 0.0 )
         {
             double windDirectionScalarProduct = direction.DotProduct( geometry::Vector2d( wind.vDirection_.rX_, wind.vDirection_.rY_ ) );

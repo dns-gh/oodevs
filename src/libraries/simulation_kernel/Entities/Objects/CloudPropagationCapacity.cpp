@@ -136,7 +136,7 @@ void CloudPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time
 // -----------------------------------------------------------------------------
 bool CloudPropagationCapacity::UpdateLocalisation( double angle, TER_Localisation& newLocalisation )
 {
-    const weather::Meteo::sWindData& wind = MIL_Tools::GetWind( origin_ );
+    const weather::WindData& wind = MIL_Tools::GetWind( origin_ );
     if( wind.rSpeed_ <= MIL_Tools::ConvertSpeedMosToSim( MIL_NbcAgentType::GetMinPropagationSpeed() ) || angle >= MT_PI )
     {
         if( wind.rSpeed_ <= 0. )

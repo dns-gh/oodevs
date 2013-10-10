@@ -10,10 +10,17 @@
 #ifndef ElevationGrid_h
 #define ElevationGrid_h
 
-#include "meteo/Meteo.h"
 #include <graphics/ElevationBaseGrid.h>
 
 class PHY_AmmoEffect;
+
+namespace weather
+{
+    class Meteo;
+    class PHY_Lighting;
+    class PHY_Precipitation;
+    struct WindData;
+}
 
 // =============================================================================
 /** @class  ElevationGrid
@@ -45,7 +52,7 @@ public:
         envBits GetEnv() const             { return e; }
         const weather::PHY_Precipitation&    GetPrecipitation() const;
         const weather::PHY_Lighting&         GetLighting     () const;
-        const weather::Meteo::sWindData& GetWind         () const;
+        const weather::WindData&             GetWind         () const;
 
         bool operator == ( const sCell& rhs ) const
         {

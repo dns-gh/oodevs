@@ -26,6 +26,11 @@ namespace sword
     class CoordLatLong;
 }
 
+namespace weather
+{
+    struct WindData;
+}
+
 class MIL_Time_ABC;
 
 enum E_TerrainObjectTypeID;
@@ -69,7 +74,7 @@ public:
     static double ConvertSimToMinutes( double ); // DeltaT       -> min
 
     static double GetAltitude( const MT_Vector2D& );
-    static const weather::Meteo::sWindData& GetWind( const MT_Vector2D& );
+    static const weather::WindData& GetWind( const MT_Vector2D& );
     //@}
 
     //-------------------------------------------------------------------------

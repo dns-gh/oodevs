@@ -41,7 +41,7 @@ double MIL_Tools::GetAltitude( const MT_Vector2D& vPos )
 // Name: MIL_Tools::GetWind
 // Created: JVT 2004-10-29
 // -----------------------------------------------------------------------------
-const weather::Meteo::sWindData& MIL_Tools::GetWind( const MT_Vector2D& vPos )
+const weather::WindData& MIL_Tools::GetWind( const MT_Vector2D& vPos )
 {
     return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetWind( vPos );
 }

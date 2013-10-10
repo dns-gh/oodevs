@@ -13,6 +13,8 @@
 #include "ReadDirections.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "protocol/EnumMaps.h"
+#include "protocol/MessageParameters.h"
 #include "Tools/NET_AsnException.h"
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
@@ -183,11 +185,12 @@ void Meteo::Update( const sword::WeatherAttributes& msg )
     temperature_ = msg.temperature();
 
     // Précipitation
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( protocol::FromProto(
+                msg.precipitation() ));
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
     // Lighting
-    pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
+    pLighting_ = PHY_Lighting::FindLighting( protocol::FromProto( msg.lighting() ));
     if( !pLighting_ )
         pLighting_ = &PHY_Lighting::jourSansNuage_;
 }
@@ -237,16 +240,12 @@ void Meteo::Serialize( xml::xostream& xos ) const
 
 namespace
 {
-    void CheckRealParameter( const sword::MissionParameter& parameter, const std::string& text, bool positive = true )
+    float GetReal( const sword::MissionParameters& params, int i, bool positive = true )
     {
-        if( parameter.null_value() || !parameter.value().Get( 0 ).has_areal() )
-            throw MASA_BADPARAM( "parameters[" + text + "] must be a Areal" );
-        if( positive )
-        {
-            float value = parameter.value().Get( 0 ).areal();
-            if( value < 0.f )
-                throw MASA_BADPARAM( "parameters[" + text + "] must be a positive number" );
-        }
+        const float value = protocol::GetReal( params, i );
+        if( positive && value < 0.f )
+            throw MASA_BADPARAM( STR( "parameters[" << i << "] must be a positive number" ) );
+        return value;
     }
 }
 
@@ -256,54 +255,31 @@ namespace
 // -----------------------------------------------------------------------------
 void Meteo::Update( const sword::MissionParameters& msg )
 {
-    modified_ = true;
-    if( msg.elem_size() < 6u )
-        throw MASA_BADPARAM( "invalid parameters count, 7 parameters expected" );
-
-    // Temperature
-    const sword::MissionParameter& temperature = msg.elem( 0 );
-    CheckRealParameter( temperature, "0", false );
-    // Vitesse du vent
-    const sword::MissionParameter& windSpeed = msg.elem( 1 );
-    CheckRealParameter( windSpeed, "1" );
-    // Direction du vent
-    const sword::MissionParameter& windDirection = msg.elem( 2 );
-    if( windDirection.null_value() || !windDirection.value().Get( 0 ).has_heading() )
-        throw MASA_BADPARAM( "parameters[2] must be a Heading" );
-    int angle = windDirection.value().Get( 0 ).heading().heading();
+    protocol::Check( protocol::GetCount( msg ) >= 7, " at least 7 parameters expected" );
+    const int temperature = static_cast< int >( GetReal( msg, 0, false ));
+    const float windSpeed = GetReal( msg, 1 );
+    const int angle = protocol::GetHeading( msg, 2 );
     if( angle < 0 || angle > 360 )
         throw MASA_BADPARAM( "parameters[2] must be a number between 0 and 360" );
-
-    // Plancher de couverture nuageuse
-    const sword::MissionParameter& cloudFloor = msg.elem( 3 );
-    CheckRealParameter( cloudFloor, "3" );
-    // Plafond de couverture nuageuse
-    const sword::MissionParameter& cloudCeiling = msg.elem( 4 );
-    CheckRealParameter( cloudCeiling, "4" );
-    // Densite moyenne de couverture nuageuse
-    const sword::MissionParameter& cloudDensity = msg.elem( 5 );
-    CheckRealParameter( cloudDensity, "5" );
-    // Précipitation
-    const sword::MissionParameter& precipitation = msg.elem( 6 );
-    if( precipitation.null_value() || !precipitation.value().Get( 0 ).has_enumeration() )
-        throw MASA_BADPARAM( "parameters[6] must be an Enumeration" );
+    const int cloudFloor = static_cast< int >( GetReal( msg, 3 ) );
+    const int cloudCeiling = static_cast< int >( GetReal( msg, 4 ) );
+    const int cloudDensity = static_cast< int >( GetReal( msg, 5 ) );
+    const auto precipitation = GET_ENUMERATION( sword::WeatherAttributes::EnumPrecipitationType, msg, 6 );
     const PHY_Precipitation* pPrecipitation = PHY_Precipitation::FindPrecipitation(
-        static_cast< sword::WeatherAttributes::EnumPrecipitationType >( precipitation.value().Get( 0 ).enumeration() ) );
+        protocol::FromProto( precipitation ) );
     if( !pPrecipitation )
         throw MASA_BADPARAM( "parameters[6] must be a precipitation Enumeration" );
 
-    temperature_ = static_cast< int >( temperature.value().Get( 0 ).areal() );
-    wind_.rSpeed_ = conversionFactor_ * windSpeed.value().Get( 0 ).areal();
+    modified_ = true;
+    pPrecipitation_ = pPrecipitation;
+    temperature_ = temperature;
+    wind_.rSpeed_ = conversionFactor_ * windSpeed;
     wind_.eAngle_ = angle;
     wind_.vDirection_ = weather::ReadDirection( wind_.eAngle_ );
-    cloud_.nFloor_ = static_cast< int >( cloudFloor.value().Get( 0 ).areal() );
-    cloud_.nCeiling_ =  static_cast< int >( cloudCeiling.value().Get( 0 ).areal() );
-    cloud_.nDensityPercentage_ = std::min( std::max( static_cast< int >( cloudDensity.value().Get( 0 ).areal() ), 0 ), 100 );
+    cloud_.nFloor_ = cloudFloor;
+    cloud_.nCeiling_ = cloudCeiling;
+    cloud_.nDensityPercentage_ = std::min( std::max( cloudDensity, 0 ), 100 );
     cloud_.rDensity_ = cloud_.nDensityPercentage_ / 100.;
-
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::WeatherAttributes::EnumPrecipitationType ) precipitation.value().Get( 0 ).enumeration() );
-    if( !pPrecipitation_ )
-        pPrecipitation_ = &PHY_Precipitation::none_;
 }
 
 //-----------------------------------------------------------------------------
@@ -368,9 +344,9 @@ void Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     att->set_cloud_floor( cloud_.nFloor_ );
     att->set_cloud_ceiling( cloud_.nCeiling_ );
     att->set_cloud_density( cloud_.nDensityPercentage_ );
-    att->set_precipitation( pPrecipitation_->GetAsnID() );
+    att->set_precipitation( protocol::ToProto( pPrecipitation_->GetID() ));
     att->set_temperature( temperature_ );
-    att->set_lighting( pLighting_->GetAsnID() );
+    att->set_lighting( protocol::ToProto( pLighting_->GetID() ));
     msg.Send( publisher );
 }
 
@@ -426,4 +402,167 @@ int Meteo::GetTemperature() const
 void Meteo::SetTemperature( int temperature )
 {
     temperature_ = temperature;
+}
+
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2011 MASA Group
+//
+// *****************************************************************************
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::GetID
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+unsigned long Meteo::GetId() const
+{
+    return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::GetName
+// Created: JSR 2011-11-22
+// -----------------------------------------------------------------------------
+const std::string& Meteo::GetName() const
+{
+    return name_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: Meteo::GetLighting
+// Created: JVT 03-08-05
+//-----------------------------------------------------------------------------
+const PHY_Lighting& Meteo::GetLighting() const
+{
+    assert( pLighting_ );
+    return *pLighting_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: Meteo::GetPrecipitation
+// Created: JVT 03-08-05
+//-----------------------------------------------------------------------------
+const PHY_Precipitation& Meteo::GetPrecipitation() const
+{
+    assert( pPrecipitation_ );
+    return *pPrecipitation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::GetWind
+// Created: JVT 2004-10-28
+// -----------------------------------------------------------------------------
+const WindData& Meteo::GetWind() const
+{
+    return wind_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::GetCloud
+// Created: ABR 2011-06-01
+// -----------------------------------------------------------------------------
+const Meteo::sCloudData& Meteo::GetCloud() const
+{
+    return cloud_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::SetPrecipitation
+// Created: ABR 2011-06-01
+// -----------------------------------------------------------------------------
+void Meteo::SetPrecipitation( const PHY_Precipitation& precipitation )
+{
+    if( pPrecipitation_ != &precipitation )
+        modified_ = true;
+    pPrecipitation_ = &precipitation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::SetLighting
+// Created: ABR 2011-06-01
+// -----------------------------------------------------------------------------
+void Meteo::SetLighting( const PHY_Lighting& light )
+{
+    if( pLighting_ != &light )
+        modified_ = true;
+    pLighting_ = &light;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::SetWind
+// Created: ABR 2011-06-01
+// -----------------------------------------------------------------------------
+void Meteo::SetWind( const WindData& wind )
+{
+    if( wind_.eAngle_ != wind.eAngle_ || wind_.rSpeed_ != wind.rSpeed_ )
+        modified_ = true;
+    wind_ = wind;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::SetCloud
+// Created: ABR 2011-06-01
+// -----------------------------------------------------------------------------
+void Meteo::SetCloud( const sCloudData& cloud )
+{
+    if( cloud_.nCeiling_ != cloud.nCeiling_ || cloud_.nFloor_ != cloud.nFloor_ || cloud_.nDensityPercentage_ != cloud.nDensityPercentage_ || cloud_.rDensity_ != cloud.rDensity_ )
+        modified_ = true;
+    cloud_ = cloud;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::GetConversionFactor
+// Created: ABR 2011-06-06
+// -----------------------------------------------------------------------------
+double Meteo::GetConversionFactor() const
+{
+    return conversionFactor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::IsModified
+// Created: ABR 2011-06-07
+// -----------------------------------------------------------------------------
+bool Meteo::IsModified() const
+{
+    return modified_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::SetModified
+// Created: ABR 2011-06-07
+// -----------------------------------------------------------------------------
+void Meteo::SetModified( bool modified )
+{
+    modified_ = modified;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::IsInside
+// Created: ABR 2011-06-06
+// -----------------------------------------------------------------------------
+bool Meteo::IsInside( const geometry::Point2f& /*point*/ ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::IsPatched
+// Created: ABR 2012-03-21
+// -----------------------------------------------------------------------------
+bool Meteo::IsPatched() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::IsYounger
+// Created: ABR 2012-03-23
+// -----------------------------------------------------------------------------
+bool Meteo::IsOlder( const weather::Meteo& /*other*/ ) const
+{
+    return true;
 }

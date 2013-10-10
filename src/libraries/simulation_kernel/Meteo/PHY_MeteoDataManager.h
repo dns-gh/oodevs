@@ -12,10 +12,11 @@
 
 #include "MIL.h"
 #include "meteo/MeteoManager_ABC.h"
-#include "meteo/PHY_Precipitation.h"
-#include "meteo/Meteo.h"
-#include "Meteo/PHY_GlobalMeteo.h"
-#include "PHY_Ephemeride.h"
+
+namespace client
+{
+    class MagicActionAck;
+}
 
 namespace sword
 {
@@ -27,10 +28,11 @@ namespace xml
     class xistream;
 }
 
-class PHY_GlobalMeteo;
 class MIL_Config;
-class PHY_RawVisionData;
 class MT_Ellipse;
+class PHY_Ephemeride;
+class PHY_GlobalMeteo;
+class PHY_RawVisionData;
 class PHY_IndirectFireDotationClass;
 
 //*****************************************************************************
@@ -93,9 +95,9 @@ private:
     void ReadPatchLocal( xml::xistream& xis );
     void ReadPatchGlobal( xml::xistream& xis );
     void Load( xml::xistream& xis, MIL_Config& config );
-    void UpdateGlobalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
-    void ManageLocalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
-    void RemoveLocalWeather( const sword::MagicAction& msg, unsigned context, unsigned client );
+    void UpdateGlobalWeather( const sword::MagicAction& msg );
+    void ManageLocalWeather( const sword::MagicAction& msg, client::MagicActionAck& ack );
+    void RemoveLocalWeather( const sword::MagicAction& msg );
     //@}
 
 private:

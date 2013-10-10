@@ -349,7 +349,7 @@ ElevationGrid::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& po
 // Name: PHY_RawVisionData::GetWind
 // Created: JVT 2004-10-29
 // -----------------------------------------------------------------------------
-const weather::Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
+const weather::WindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
 {
     return operator()( vPos ).GetWind();
 }
@@ -412,7 +412,7 @@ double PHY_RawVisionData::GetMaxAltitude() const
 // Name: PHY_RawVisionData::GetWind
 // Created: JVT 2004-10-29
 // -----------------------------------------------------------------------------
-const weather::Meteo::sWindData& ElevationGrid::sCell::GetWind() const
+const weather::WindData& ElevationGrid::sCell::GetWind() const
 {
     return pMeteo ? pMeteo->GetWind() : pGlobalMeteo_->GetWind();
 }

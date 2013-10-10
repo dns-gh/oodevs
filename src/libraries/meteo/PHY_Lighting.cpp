@@ -15,17 +15,17 @@ using namespace weather;
 
 PHY_Lighting::T_LightingMap PHY_Lighting::lightings_;
 
-PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eLightingType_JourSansNuage          , &jourPeuNuageux_         , sword::WeatherAttributes::clear_day );
-PHY_Lighting PHY_Lighting::jourPeuNuageux_        ( "JourPeuNuageux"        , eLightingType_JourPeuNuageux         , &jourMoyennementNuageux_ , sword::WeatherAttributes::slightly_cloudy_day );
-PHY_Lighting PHY_Lighting::jourMoyennementNuageux_( "JourMoyennementNuageux", eLightingType_JourMoyennementNuageux , &jourAssezNuageux_       , sword::WeatherAttributes::mildly_cloudy_day );
-PHY_Lighting PHY_Lighting::jourAssezNuageux_      ( "JourAssezNuageux"      , eLightingType_JourAssezNuageux       , &jourTresNuageux_        , sword::WeatherAttributes::fairly_cloudy_day );
-PHY_Lighting PHY_Lighting::jourTresNuageux_       ( "JourTresNuageux"       , eLightingType_JourTresNuageux        , 0                        , sword::WeatherAttributes::very_cloudy_day );
-PHY_Lighting PHY_Lighting::nuitPleineLune_        ( "NuitPleineLune"        , eLightingType_NuitPleineLune         , &nuitTroisQuartDeLune_   , sword::WeatherAttributes::full_moon_night );
-PHY_Lighting PHY_Lighting::nuitTroisQuartDeLune_  ( "NuitTroisQuartDeLune"  , eLightingType_NuitTroisQuartDeLune   , &nuitDemiLune_           , sword::WeatherAttributes::three_quater_moon_night );
-PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eLightingType_NuitDemiLune           , &nuitQuartDeLune_        , sword::WeatherAttributes::half_quater_moon_night );
-PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eLightingType_NuitQuartDeLune        , &nuitNouvelleLune_       , sword::WeatherAttributes::quater_moon_night );
-PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eLightingType_NuitNouvelleLune       , 0                        , sword::WeatherAttributes::new_moon_night );
-PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eLightingType_Eclairant              , 0                        , sword::WeatherAttributes::artificial_light );
+PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eLightingType_JourSansNuage          , &jourPeuNuageux_ );
+PHY_Lighting PHY_Lighting::jourPeuNuageux_        ( "JourPeuNuageux"        , eLightingType_JourPeuNuageux         , &jourMoyennementNuageux_ );
+PHY_Lighting PHY_Lighting::jourMoyennementNuageux_( "JourMoyennementNuageux", eLightingType_JourMoyennementNuageux , &jourAssezNuageux_ );
+PHY_Lighting PHY_Lighting::jourAssezNuageux_      ( "JourAssezNuageux"      , eLightingType_JourAssezNuageux       , &jourTresNuageux_ );
+PHY_Lighting PHY_Lighting::jourTresNuageux_       ( "JourTresNuageux"       , eLightingType_JourTresNuageux        , 0 );
+PHY_Lighting PHY_Lighting::nuitPleineLune_        ( "NuitPleineLune"        , eLightingType_NuitPleineLune         , &nuitTroisQuartDeLune_ );
+PHY_Lighting PHY_Lighting::nuitTroisQuartDeLune_  ( "NuitTroisQuartDeLune"  , eLightingType_NuitTroisQuartDeLune   , &nuitDemiLune_ );
+PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eLightingType_NuitDemiLune           , &nuitQuartDeLune_ );
+PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eLightingType_NuitQuartDeLune        , &nuitNouvelleLune_ );
+PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eLightingType_NuitNouvelleLune       , 0 );
+PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eLightingType_Eclairant              , 0 );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Lighting::Initialize
@@ -60,11 +60,10 @@ void PHY_Lighting::Terminate()
 // Name: PHY_Lighting constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Lighting::PHY_Lighting( const std::string& strName, E_LightingType nType, const PHY_Lighting* pNextDegradedLighting, sword::WeatherAttributes::EnumLightingType nAsnID )
+PHY_Lighting::PHY_Lighting( const std::string& strName, E_LightingType nType, const PHY_Lighting* pNextDegradedLighting )
     : strName_              ( strName )
     , nType_                ( nType )
     , pNextDegradedLighting_( pNextDegradedLighting )
-    , nAsnID_               ( nAsnID )
 {
     // NOTHING
 }
@@ -87,4 +86,58 @@ const PHY_Lighting& PHY_Lighting::GetDegradedLighting( unsigned int nDegradation
     if( nDegradationFactor == 0 || !pNextDegradedLighting_ )
         return *this;
     return pNextDegradedLighting_->GetDegradedLighting( nDegradationFactor - 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Lighting::GetLightings
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const PHY_Lighting::T_LightingMap& PHY_Lighting::GetLightings()
+{
+    return lightings_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Lighting::FindLighting
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const PHY_Lighting* PHY_Lighting::FindLighting( const std::string& strName )
+{
+    CIT_LightingMap it = lightings_.find( strName );
+    if( it == lightings_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Lighting::FindPrecipitation
+// Created: SLG 2010-05-26
+// -----------------------------------------------------------------------------
+const PHY_Lighting* PHY_Lighting::FindLighting( E_LightingType value )
+{
+    for( auto it = lightings_.begin(); it != lightings_.end(); ++it )
+    {
+        const PHY_Lighting& lighting = *it->second;
+        if( lighting.GetID() == value )
+            return &lighting;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Lighting::GetName
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+const std::string& PHY_Lighting::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Lighting::GetID
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+E_LightingType PHY_Lighting::GetID() const
+{
+    return nType_;
 }

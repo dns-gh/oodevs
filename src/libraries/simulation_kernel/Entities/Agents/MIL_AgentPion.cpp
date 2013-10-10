@@ -1001,23 +1001,23 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& as
 // -----------------------------------------------------------------------------
 void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 4 );
+    protocol::CheckCount( msg, 4 );
 
     const auto tiredness = GET_ENUMERATION( sword::UnitAttributes::EnumUnitTiredness, msg, 0 );
     const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
-    parameters::Check( pTiredness, "must be a valid tiredness", 0 );
+    protocol::Check( pTiredness, "must be a valid tiredness", 0 );
 
     const auto morale = GET_ENUMERATION( sword::UnitAttributes::EnumUnitMorale, msg, 1 );
     const PHY_Morale* pMoral = PHY_Morale::Find( morale );
-    parameters::Check( pMoral, "must be a valid morale", 1 );
+    protocol::Check( pMoral, "must be a valid morale", 1 );
 
     const auto experience = GET_ENUMERATION( sword::UnitAttributes::EnumUnitExperience, msg, 2 );
     const PHY_Experience* pExperience = PHY_Experience::Find( experience );
-    parameters::Check( pExperience, "must be a valid experience", 2 );
+    protocol::Check( pExperience, "must be a valid experience", 2 );
 
     const auto stress = GET_ENUMERATION( sword::UnitAttributes::EnumUnitStress, msg, 3 );
     const PHY_Stress* pStress = PHY_Stress::Find( stress );
-    parameters::Check( pStress, "must be a valid stress", 3 );
+    protocol::Check( pStress, "must be a valid stress", 3 );
 
     auto& role = GetRole< PHY_RolePion_HumanFactors >();
     role.SetTiredness( *pTiredness, true );
@@ -1667,8 +1667,8 @@ void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::MissionParameter
 {
     if( markedForDestruction_ )
         return;
-    parameters::CheckCount( msg, 1 );
-    criticalIntelligence_ = parameters::GetString( msg, 0 );
+    protocol::CheckCount( msg, 1 );
+    criticalIntelligence_ = protocol::GetString( msg, 0 );
     client::UnitAttributes message;
     message().mutable_unit()->set_id( GetID() );
     message().set_critical_intelligence( criticalIntelligence_ );
@@ -1775,25 +1775,25 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
+    protocol::CheckCount( msg, 1 );
     std::vector< std::tuple< const PHY_ComposanteTypePion*, unsigned int, const PHY_BreakdownType* > > content;
-    for( int i = 0; i < parameters::GetCount( msg, 0 ); ++ i )
+    for( int i = 0; i < protocol::GetCount( msg, 0 ); ++ i )
     {
-        parameters::CheckCount( 0, i, msg, 2, 3 );
-        const int identifier = parameters::GetIdentifier( msg, 0, i, 0 );
+        protocol::CheckCount( 0, i, msg, 2, 3 );
+        const int identifier = protocol::GetIdentifier( msg, 0, i, 0 );
         sword::EquipmentType type;
         type.set_id( identifier );
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
-        parameters::Check( pComposanteType && pComposanteType->CanHaveBreakdown(),
+        protocol::Check( pComposanteType && pComposanteType->CanHaveBreakdown(),
             "must be a composante type which can breakdown", 0, i, 0 );
-        const int quantity = parameters::GetQuantity( msg, 0, i, 1 );
-        parameters::Check( quantity > 0, "must be positive", 0, i, 1 );
+        const int quantity = protocol::GetQuantity( msg, 0, i, 1 );
+        protocol::Check( quantity > 0, "must be positive", 0, i, 1 );
         const PHY_BreakdownType* breakdown = nullptr;
-        if( parameters::GetCount( msg, 0, i ) == 3 )
+        if( protocol::GetCount( msg, 0, i ) == 3 )
         {
-            const int id = parameters::GetIdentifier( msg, 0, i, 2 );
+            const int id = protocol::GetIdentifier( msg, 0, i, 2 );
             breakdown = PHY_BreakdownType::Find( id );
-            parameters::Check( breakdown, "must be a breakdown type identifier", 0, i, 2 );
+            protocol::Check( breakdown, "must be a breakdown type identifier", 0, i, 2 );
         }
         content.push_back( std::make_tuple( pComposanteType, quantity, breakdown ) );
     }
@@ -2007,11 +2007,11 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveLoadUnit( const sword::MissionParameters& msg, bool load )
 {
-    const uint32_t id = parameters::GetAgentId( msg, 0 );
+    const uint32_t id = protocol::GetAgentId( msg, 0 );
     auto target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
-    parameters::Check( target && target != this, "is an invalid target", 0 );
+    protocol::Check( target && target != this, "is an invalid target", 0 );
     auto role = RetrieveRole< transport::PHY_RoleAction_Transport >();
-    parameters::Check( role, "missing transport role" );
+    protocol::Check( role, "missing transport role" );
     if( load )
         role->MagicLoadPion( *target, false );
     else
@@ -2069,8 +2069,8 @@ void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnChangeBrainDebug( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
-    const bool activate = parameters::GetBool( msg, 0 );
+    protocol::CheckCount( msg, 1 );
+    const bool activate = protocol::GetBool( msg, 0 );
     GetRole< DEC_RolePion_Decision >().ActivateBrainDebug( activate );
 }
 
@@ -2080,7 +2080,7 @@ void MIL_AgentPion::OnChangeBrainDebug( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnChangePosture( const sword::MissionParameters& msg )
 {
-    parameters::CheckCount( msg, 1 );
+    protocol::CheckCount( msg, 1 );
     const auto posture = GET_ENUMERATION( sword::UnitAttributes::Posture, msg, 0 );
     GetRole< PHY_RoleInterface_Posture >().SetPosture( PHY_Posture::FindPosture( posture ) );
 }
