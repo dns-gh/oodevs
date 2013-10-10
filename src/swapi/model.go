@@ -184,6 +184,10 @@ var (
 		(*Model).handleProfileDestruction,
 		(*Model).handleProfileUpdate,
 	}
+	aarToClientHandlers = []func(model *Model, m *sword.AarToClient_Content) error{
+		(*Model).handleAarInformation,
+		(*Model).handleIndicator,
+	}
 )
 
 func (model *Model) update(msg *SwordMessage) error {
@@ -195,10 +199,17 @@ func (model *Model) update(msg *SwordMessage) error {
 				return err
 			}
 		}
-	}
-	if msg.AuthenticationToClient != nil {
+	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()
 		for _, handler := range authToClientHandlers {
+			err := handler(model, m)
+			if err != ErrSkipHandler {
+				return err
+			}
+		}
+	} else if msg.AarToClient != nil {
+		m := msg.AarToClient.GetMessage()
+		for _, handler := range aarToClientHandlers {
 			err := handler(model, m)
 			if err != ErrSkipHandler {
 				return err

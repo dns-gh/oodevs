@@ -396,6 +396,9 @@ type ModelData struct {
 	LocalWeathers map[uint32]*LocalWeather
 	Urbans        map[uint32]*Urban
 	Orders        map[uint32]*Order
+	// Available scores definitions
+	KnownScores map[string]struct{}
+	Scores      map[string]float32
 	// Tick and time of the most recent started tick
 	Tick int32
 	Time time.Time
@@ -408,6 +411,8 @@ func NewModelData() *ModelData {
 		LocalWeathers: map[uint32]*LocalWeather{},
 		Urbans:        map[uint32]*Urban{},
 		Orders:        map[uint32]*Order{},
+		KnownScores:   map[string]struct{}{},
+		Scores:        map[string]float32{},
 	}
 }
 
