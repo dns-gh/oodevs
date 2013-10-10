@@ -259,6 +259,11 @@ func (c *Client) SendAutomatOrder(automatId, missionType uint32,
 	})
 }
 
+func (c *Client) DestroyUnit(unitId uint32) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(),
+		sword.UnitMagicAction_destroy_all)
+}
+
 func (c *Client) DeleteUnit(unitId uint32) error {
 	tasker := MakeUnitTasker(unitId)
 	msg := createUnitMagicAction(tasker, MakeParameters(),
