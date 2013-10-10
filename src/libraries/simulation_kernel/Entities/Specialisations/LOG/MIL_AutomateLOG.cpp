@@ -384,7 +384,7 @@ void MIL_AutomateLOG::NotifyQuotaExceeded( const PHY_DotationCategory& dotationC
 // Name: MIL_AutomateLOG::SupplyHandleRequest
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::SupplyHandleRequest( boost::shared_ptr < logistic::SupplyConsign_ABC > consign )
+void MIL_AutomateLOG::SupplyHandleRequest( const boost::shared_ptr < logistic::SupplyConsign_ABC >& consign )
 {
     supplyConsigns_.push_back( consign );
 }
@@ -429,7 +429,7 @@ bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCat
 // Name: MIL_AutomateLOG::SupplyCreateConvoyPion
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy )
+MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion& type, const boost::shared_ptr< logistic::SupplyConvoyReal_ABC >& convoy )
 {
     // Search for the 'chief' automat
     MIL_Automate* pConvoyAutomate = pAssociatedAutomate_;
@@ -476,7 +476,6 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 {
     SupplyConvoyAvailabilityVisitor visitor( dotationCategory );
     Visit( visitor );
-
     pConvoyTransporter     = visitor.pConvoySelected_;
     pConvoyTransporterPion = visitor.selected_;
     return pConvoyTransporter != 0;
@@ -490,7 +489,6 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 {
     SupplyConvoyTransporterVisitor visitor( transporterType );
     Visit( visitor );
-
     pConvoyTransporter     = visitor.pConvoySelected_;
     pConvoyTransporterPion = visitor.selected_;
     return pConvoyTransporter != 0;
