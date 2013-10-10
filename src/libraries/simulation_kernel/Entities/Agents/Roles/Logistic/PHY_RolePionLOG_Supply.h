@@ -16,6 +16,7 @@
 #include "PHY_RoleInterface_Supply.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
+#include <boost/scoped_ptr.hpp>
 
 namespace xml
 {
@@ -126,8 +127,8 @@ private:
     bool                                 bSystemEnabled_;
     bool                                 bHasChanged_;
     bool                                 bExternalMustChangeState_;
-    PHY_DotationStockContainer*          pStocks_;
-    std::auto_ptr< DEC_ResourceNetwork > pResourceNetworkConnected_;
+    boost::scoped_ptr< PHY_DotationStockContainer > pStocks_;
+    boost::scoped_ptr< DEC_ResourceNetwork > pResourceNetworkConnected_;
     mutable int                          resourceNetworkStockSent_;
     mutable bool                         bResourceConnectionChanged_;
     //@}

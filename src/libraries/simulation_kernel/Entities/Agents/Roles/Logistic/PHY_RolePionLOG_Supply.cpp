@@ -18,6 +18,7 @@
 #include "OnComponentFunctorComputerFactory.h"
 #include "OnComponentLendedFunctorComputer_ABC.h"
 #include "OnComponentLendedFunctorComputerFactory.h"
+#include "MIL_AgentServer.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "Decision/DEC_ResourceNetwork.h"
 #include "Entities/MIL_EntityManager.h"
@@ -30,14 +31,14 @@
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "MIL_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Urban/PHY_ResourceNetworkType.h"
 #include "protocol/ClientSenders.h"
 #include "tools/ExerciseSettings.h"
-#include "Urban/PHY_ResourceNetworkType.h"
+#include <boost/serialization/scoped_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Supply )
-    
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
 {
@@ -63,11 +64,11 @@ PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
     , bSystemEnabled_            ( false )
     , bHasChanged_               ( true )
     , bExternalMustChangeState_  ( false )
-    , pStocks_                   ( 0 )
+    , pStocks_                   ( new PHY_DotationStockContainer( *this, MIL_AgentServer::GetWorkspace().GetSettings().GetValue< bool >( "infinite-dotation" ) ) )
     , resourceNetworkStockSent_  ( 0 )
     , bResourceConnectionChanged_( false )
 {
-    pStocks_ = new PHY_DotationStockContainer( *this, MIL_AgentServer::GetWorkspace().GetSettings().GetValue< bool >( "infinite-dotation" ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -76,12 +77,8 @@ PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
 // -----------------------------------------------------------------------------
 PHY_RolePionLOG_Supply::~PHY_RolePionLOG_Supply()
 {
-    delete pStocks_;
+    // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::serialize
@@ -101,13 +98,8 @@ void PHY_RolePionLOG_Supply::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::WriteODB( xml::xostream& xos ) const
 {
-    assert( pStocks_ );
     pStocks_->WriteODB( xos );
 }
-
-// =============================================================================
-// INIT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::ReadOverloading
@@ -115,13 +107,8 @@ void PHY_RolePionLOG_Supply::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::ReadOverloading( xml::xistream& xis )
 {
-    assert( pStocks_ );
     pStocks_->ReadValues( xis );
 }
-
-// =============================================================================
-//
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::FindLogisticManager
@@ -132,39 +119,39 @@ MIL_AutomateLOG* PHY_RolePionLOG_Supply::FindLogisticManager() const
     return owner_.FindLogisticManager();
 }
 
-// =============================================================================
-// Available Convoy //@TODO MGD MERGE all Logistic OnComponentFunctor in one file
-// =============================================================================
-class AvailableConvoyFunctor : public OnComponentFunctor_ABC
+namespace
 {
-public:
-    AvailableConvoyFunctor( const PHY_DotationCategory& dotationCategory )
-        : dotationCategory_( dotationCategory )
-        , pSelectedConvoy_ ( 0 )
-        , rTotalWeightMax_( 0. )
+    class AvailableConvoyFunctor : public OnComponentFunctor_ABC
     {
-        // NOTHING
-    }
-
-    void operator() ( PHY_ComposantePion& composante )
-    {
-        if( composante.CanBePartOfConvoy() && composante.CanTransportStock( dotationCategory_ ) )
+    public:
+        AvailableConvoyFunctor( const PHY_DotationCategory& dotationCategory )
+            : dotationCategory_( dotationCategory )
+            , pSelectedConvoy_ ( 0 )
+            , rTotalWeightMax_( 0. )
         {
-            double rTotalWeightMax = 0.;
-            double rTotalVolumeMax = 0.;
-            composante.GetStockTransporterCapacity( rTotalWeightMax, rTotalVolumeMax );
-            if( !pSelectedConvoy_ || rTotalWeightMax_ > rTotalWeightMax ) // smallest...
+            // NOTHING
+        }
+
+        void operator() ( PHY_ComposantePion& composante )
+        {
+            if( composante.CanBePartOfConvoy() && composante.CanTransportStock( dotationCategory_ ) )
             {
-                rTotalWeightMax_ = rTotalWeightMax;
-                pSelectedConvoy_ = &composante;
+                double rTotalWeightMax = 0.;
+                double rTotalVolumeMax = 0.;
+                composante.GetStockTransporterCapacity( rTotalWeightMax, rTotalVolumeMax );
+                if( !pSelectedConvoy_ || rTotalWeightMax_ > rTotalWeightMax ) // smallest...
+                {
+                    rTotalWeightMax_ = rTotalWeightMax;
+                    pSelectedConvoy_ = &composante;
+                }
             }
         }
-    }
 
-    const PHY_DotationCategory& dotationCategory_;
-    PHY_ComposantePion* pSelectedConvoy_;
-    double rTotalWeightMax_;
-};
+        const PHY_DotationCategory& dotationCategory_;
+        PHY_ComposantePion* pSelectedConvoy_;
+        double rTotalWeightMax_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter
@@ -174,32 +161,34 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 {
     if( !bSystemEnabled_ )
         return 0;
-
     AvailableConvoyFunctor functor( dotationCategory );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *computer );
     return functor.pSelectedConvoy_;
 }
 
-class AvailableConvoyTypeFunctor : public OnComponentFunctor_ABC
+namespace
 {
-public:
-    AvailableConvoyTypeFunctor( const PHY_ComposanteTypePion& type )
-        : type_           ( type )
-        , pSelectedConvoy_( 0 )
+    class AvailableConvoyTypeFunctor : public OnComponentFunctor_ABC
     {
-        // NOTHING
-    }
+    public:
+        AvailableConvoyTypeFunctor( const PHY_ComposanteTypePion& type )
+            : type_           ( type )
+            , pSelectedConvoy_( 0 )
+        {
+            // NOTHING
+        }
 
-    void operator() ( PHY_ComposantePion& composante )
-    {
-        if( &composante.GetType() == &type_ && composante.CanBePartOfConvoy() )
-            pSelectedConvoy_ = &composante;
-    }
+        void operator() ( PHY_ComposantePion& composante )
+        {
+            if( &composante.GetType() == &type_ && composante.CanBePartOfConvoy() )
+                pSelectedConvoy_ = &composante;
+        }
 
-    const PHY_ComposanteTypePion& type_;
-    PHY_ComposantePion* pSelectedConvoy_;
-};
+        const PHY_ComposanteTypePion& type_;
+        PHY_ComposantePion* pSelectedConvoy_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter
@@ -209,7 +198,6 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 {
     if( !bSystemEnabled_ )
         return 0;
-
     AvailableConvoyTypeFunctor functor( type );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *computer );
@@ -245,7 +233,6 @@ namespace
 // -----------------------------------------------------------------------------
 double PHY_RolePionLOG_Supply::AddStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
 {
-    assert( pStocks_ );
     if( !bSystemEnabled_ && !owner_.IsDead() ) // <== Stock à terre quand pion mort = libre service
         return 0.;
     double ret = pStocks_->AddReservation( dotationCategory, rRequestedValue );
@@ -261,7 +248,6 @@ double PHY_RolePionLOG_Supply::AddStockReservation( const PHY_DotationCategory& 
 // -----------------------------------------------------------------------------
 double PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
 {
-    assert( pStocks_ );
     double valueBefore = pStocks_->GetValue( dotationCategory );
     double ret = pStocks_->RemoveReservation( dotationCategory, rRequestedValue );
     double added = pStocks_->GetValue( dotationCategory ) - valueBefore;
@@ -277,15 +263,10 @@ double PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategor
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Supply::CanReserveStock( const PHY_DotationCategory& dotationCategory ) const
 {
-    assert( pStocks_ );
     if( !bSystemEnabled_ && !owner_.IsDead() ) // <== Stock à terre quand pion mort = libre service
         return 0.;
     return GetStockValue( dotationCategory ) + GetResourceNetworkConnectedStockValue( dotationCategory ) > 0;
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // =============================================================================
 // ConvoyTransportersUse //@TODO MGD MERGE all Logictic OnComponentFunctor in one file
@@ -424,7 +405,6 @@ bool PHY_RolePionLOG_Supply::HasSupplyNeededNotified( const PHY_DotationCategory
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::UpdateSupplyNeeded()
 {
-    assert( pStocks_ );
     pStocks_->UpdateSupplyNeeded();
 }
 
@@ -434,7 +414,6 @@ void PHY_RolePionLOG_Supply::UpdateSupplyNeeded()
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
 {
-    assert( pStocks_ );
     pStocks_->Apply( visitor );
 }
 
@@ -444,7 +423,6 @@ void PHY_RolePionLOG_Supply::Apply( boost::function< void( PHY_DotationStock& ) 
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::ResupplyStocks( bool withLog )
 {
-    assert( pStocks_ );
     pStocks_->Resupply( withLog );
 }
 
@@ -454,7 +432,6 @@ void PHY_RolePionLOG_Supply::ResupplyStocks( bool withLog )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::ResupplyStocks( const PHY_DotationCategory& category, double rNbr )
 {
-    assert( pStocks_ );
     pStocks_->Resupply( category, rNbr );
 }
 
@@ -478,17 +455,12 @@ void PHY_RolePionLOG_Supply::DisconnectFromResourceNode()
     bResourceConnectionChanged_ = true;
 }
 
-// =============================================================================
-// STOCK MANAGEMENT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::GetStockValue
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 double PHY_RolePionLOG_Supply::GetStockValue( const PHY_DotationCategory& category ) const
 {
-    assert( pStocks_ );
     return pStocks_->GetValue( category );
 }
 
@@ -510,7 +482,6 @@ double PHY_RolePionLOG_Supply::GetResourceNetworkConnectedStockValue( const PHY_
 // -----------------------------------------------------------------------------
 PHY_DotationStock* PHY_RolePionLOG_Supply::GetStock( const PHY_DotationCategory& category ) const
 {
-    assert( pStocks_ );
     return pStocks_->GetStock( category );
 }
 
@@ -520,7 +491,6 @@ PHY_DotationStock* PHY_RolePionLOG_Supply::GetStock( const PHY_DotationCategory&
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Supply::CanContainStock( const PHY_DotationCategory& category ) const
 {
-    assert( pStocks_ );
     return pStocks_->GetStock( category ) != 0;
 }
 
@@ -530,7 +500,6 @@ bool PHY_RolePionLOG_Supply::CanContainStock( const PHY_DotationCategory& catego
 // -----------------------------------------------------------------------------
 PHY_DotationStock* PHY_RolePionLOG_Supply::AddStock( const PHY_DotationCategory& category ) const
 {
-    assert( pStocks_ );
     return pStocks_->AddStock( category );
 }
 
@@ -540,13 +509,8 @@ PHY_DotationStock* PHY_RolePionLOG_Supply::AddStock( const PHY_DotationCategory&
 // -----------------------------------------------------------------------------
 PHY_DotationStock* PHY_RolePionLOG_Supply::AddEmptyStock( const PHY_DotationCategory& dotationCategory, double capacity ) const
 {
-    assert( pStocks_ );
     return pStocks_->AddEmptyStock( dotationCategory, capacity );
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::Update
@@ -554,7 +518,6 @@ PHY_DotationStock* PHY_RolePionLOG_Supply::AddEmptyStock( const PHY_DotationCate
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::Update( bool /*bIsDead*/ )
 {
-    assert( pStocks_ );
     pStocks_->Update(); // Stock checking
 }
 
@@ -576,33 +539,25 @@ void PHY_RolePionLOG_Supply::Clean()
     bHasChanged_ = false;
     bExternalMustChangeState_ = false;
     bResourceConnectionChanged_ = false;
-    assert( pStocks_ );
     pStocks_->Clean();
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: SendComposanteUse
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-static
-void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogSupplyEquimentAvailability& asn )
+namespace
 {
-    if( data.empty() )
-        return;
-    for( auto itData = data.begin(); itData != data.end(); ++itData )
+    void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogSupplyEquimentAvailability& asn )
     {
-        sword::LogSupplyEquimentAvailability& data = *asn.add_elem();
-        data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
-        assert( itData->second.nNbrTotal_ );
-
-        data.set_total       ( itData->second.nNbrTotal_ );
-        data.set_working  ( itData->second.nNbrUsed_ );
-        data.set_available ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
-        data.set_lent      ( itData->second.nNbrLent_ );
+        if( data.empty() )
+            return;
+        for( auto itData = data.begin(); itData != data.end(); ++itData )
+        {
+            sword::LogSupplyEquimentAvailability& data = *asn.add_elem();
+            data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
+            assert( itData->second.nNbrTotal_ );
+            data.set_total       ( itData->second.nNbrTotal_ );
+            data.set_working  ( itData->second.nNbrUsed_ );
+            data.set_available ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+            data.set_lent      ( itData->second.nNbrLent_ );
+        }
     }
 }
 
@@ -636,9 +591,7 @@ void PHY_RolePionLOG_Supply::SendFullState( unsigned int context ) const
         }
     }
 
-    assert( pStocks_ );
     pStocks_->SendFullState( asn );
-
     asn.Send( NET_Publisher_ABC::Publisher(), context );
 }
 
@@ -648,7 +601,6 @@ void PHY_RolePionLOG_Supply::SendFullState( unsigned int context ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::SendChangedState() const
 {
-    assert( pStocks_ );
     if( !bResourceConnectionChanged_ && pResourceNetworkConnected_.get() )
     {
         if( const PHY_ResourceNetworkType* type = PHY_ResourceNetworkType::Find( pResourceNetworkConnected_->GetResource() ) )
