@@ -56,11 +56,17 @@ func (s *TestSuite) TestExecScript(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter:.*string expected, got nil.*")
 }
 
-func checkScript(c *C, client *swapi.Client, script, expectedPattern string) {
+func checkScript(c *C, client *swapi.Client, script, expectedPattern,
+	errorPattern string) {
+
 	unit := getRandomUnit(c, client)
 	output, err := client.ExecScript(unit.Id, "TestFunction", script)
-	c.Assert(err, IsNil)
-	c.Assert(output, Matches, expectedPattern)
+	if len(errorPattern) == 0 {
+		c.Assert(err, IsNil)
+		c.Assert(output, Matches, expectedPattern)
+	} else {
+		c.Assert(err, ErrorMatches, errorPattern)
+	}
 }
 
 func (s *TestSuite) TestGenericLuaErrors(c *C) {
@@ -68,5 +74,12 @@ func (s *TestSuite) TestGenericLuaErrors(c *C) {
 	defer sim.Stop()
 
 	// Floating point division by zero used to trigger exceptions in the sim
-	checkScript(c, client, `function TestFunction() return 1.0/0.0 end`, "(?i).*inf.*")
+	checkScript(c, client, `function TestFunction() return 1.0/0.0 end`, "(?i).*inf.*", "")
+
+	// Interpolating with start == stop triggers an error()
+	checkScript(c, client, `
+function TestFunction()
+    return LinearInterpolation(1, 2, 3, 3, 0, 1.5)
+end
+`, "", "error_invalid_parameter:.*Can't interpolate.*")
 }
