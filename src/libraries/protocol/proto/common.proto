@@ -2147,12 +2147,15 @@ message UnitMagicAction {
         //!   List elements, Each of them contains:
         //!     parameters[0]: Quantity: the number of affected humans.
         //!     parameters[1]: Optional, Enumeration: the human wound type
-        //!       if not set, appy a random wound type.
+        //!       if not set, apply a random wound type.
         //! The wounds are described in a following UnitAttributes
         //! human_dotations field. The wounds are applied from lowest to
         //! highest ranked crew members.
         create_wounds                     = 42;
-        //! A magic action forcing to reload the brain of the entity
+        //! Reloads the brain of target entity
+        //! The tasker is set to a unit, automat or crowd
+        //! parameters[0], Optional, String: Name of the brain model to reload
+        //!     if not set, reload the current brain model
         reload_brain                      = 43;
         //! No parameters, magically finish the current logistic actions
         log_finish_handlings              = 44;
@@ -2207,9 +2210,13 @@ message UnitMagicAction {
         change_dotation                   = 47;
         //! A direct fire order creation magic action
         create_direct_fire_order          = 48;
-        //! A unit loading magic action
+        //! Loads a unit into another unit
+        //! The tasker is set to the transporter unit
+        //! parameters[0], AgentId: Transported unit id
         load_unit                         = 49;
-        //! A unit unloading magic action
+        //! Unloads a unit from another unit
+        //! The tasker is set to the transporter unit
+        //! parameters[0], AgentId: Transported unit id
         unload_unit                       = 50;
         //! Remove a unit from game
         //! The tasker must be set to selected unit.
