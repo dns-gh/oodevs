@@ -10,25 +10,22 @@
 #include "gaming_pch.h"
 #include "IndicatorRequest.h"
 #include "IndicatorDefinition_ABC.h"
-
 #include "clients_kernel/Controller.h"
 #include "protocol/AarSenders.h"
-#include "protocol/Protocol.h"
-
-using namespace sword;
+#include "protocol/ServerPublisher_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorRequest constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher )
+IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher, const QString& displayName )
     : controller_( controller )
     , definition_( definition )
-    , publisher_ ( publisher )
-    , done_      ( false )
-    , firstTick_ ( 0 )
-    , duration_  ( std::numeric_limits< unsigned int >::max() )
-
+    , publisher_( publisher )
+    , displayName_( displayName )
+    , done_( false )
+    , firstTick_( 0 )
+    , duration_( std::numeric_limits< unsigned int >::max() )
 {
     controller_.Create( *this );
 }
@@ -79,7 +76,7 @@ void IndicatorRequest::Commit() const
     aar::PlotRequest message;
     const std::string request = definition_.Commit( parameters_ );
     message().set_identifier( reinterpret_cast< unsigned int >( this ) );
-    message().set_request( request.c_str() );
+    message().set_request( request );
     if( firstTick_ != 0 || duration_ != std::numeric_limits< unsigned int >::max() )
     {
         message().mutable_time_range()->set_begin_tick( firstTick_ );
@@ -99,7 +96,7 @@ void IndicatorRequest::Update( const sword::PlotResult& message )
         done_ = true;
         result_.resize( message.values_size() );
         for( int i = 0; i < message.values_size(); ++i )
-            result_[i] = message.values(i);
+            result_[ i ] = message.values( i );
         if( message.has_begin_tick() )
             firstTick_ = message.begin_tick();
         error_ = message.error();
@@ -117,8 +114,8 @@ void IndicatorRequest::Update( const sword::Indicator& message )
         newValues_.push_back( message.value() );
     if( IsDone() )
     {
-        for( std::vector< double >::iterator iter = newValues_.begin(); iter != newValues_.end(); ++iter )
-            result_.push_back( *iter );
+        for( auto it = newValues_.begin(); it != newValues_.end(); ++it )
+            result_.push_back( *it );
         newValues_.clear();
     }
     controller_.Update( *this );
@@ -131,6 +128,15 @@ void IndicatorRequest::Update( const sword::Indicator& message )
 QString IndicatorRequest::GetName() const
 {
     return definition_.GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest::GetDisplayName
+// Created: JSR 2013-10-10
+// -----------------------------------------------------------------------------
+QString IndicatorRequest::GetDisplayName() const
+{
+    return displayName_.isEmpty() ? GetName() : displayName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +172,7 @@ bool IndicatorRequest::IsFailed() const
 // -----------------------------------------------------------------------------
 QString IndicatorRequest::ErrorMessage() const
 {
-    return QString( error_.c_str() );
+    return error_.c_str();
 }
 
 // -----------------------------------------------------------------------------

@@ -115,6 +115,10 @@
         <source>Description</source>
         <translation>Description</translation>
     </message>
+    <message>
+        <source>Name:</source>
+        <translation>Name:</translation>
+    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>
@@ -123,16 +127,16 @@
         <translation>Request</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation>Status</translation>
-    </message>
-    <message>
         <source>Delete request</source>
         <translation>Delete request</translation>
     </message>
     <message>
         <source>Clear list</source>
         <translation>Clear list</translation>
+    </message>
+    <message>
+        <source>Function</source>
+        <translation>Function</translation>
     </message>
 </context>
 <context>
@@ -747,7 +751,7 @@ Reason: %3
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>Profiles</source>

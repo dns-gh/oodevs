@@ -35,6 +35,10 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     , model_      ( model )
 {
     QVBoxLayout* layout = new QVBoxLayout;
+    QHBoxLayout* nameLayout = new QHBoxLayout;
+    name_ = new QLineEdit;
+    nameLayout->addWidget( new QLabel( tr( "Name:" ) ) );
+    nameLayout->addWidget( name_ );
     functions_ = new QComboBox;
     QGroupBox* descriptionGroup = new QGroupBox( tr( "Description" ) );
     descriptionGroup->setLayout( new QVBoxLayout );
@@ -69,6 +73,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     request_ = new QPushButton( tr( "Create request" ) );
     QToolTip::add( request_, tr( "Send request" ) );
     setLayout( layout );
+    layout->addLayout( nameLayout );
     layout->addWidget( functions_ );
     layout->addWidget( descriptionGroup );
     layout->addWidget( timeGroup_ );
@@ -190,13 +195,14 @@ void AfterActionFunctionList::Request()
         const AfterActionFunction* function = variant.value< const AfterActionFunction* >();
         if( function )
         {
-            IndicatorRequest& request = model_.CreateRequest( *function );
+            IndicatorRequest& request = model_.CreateRequest( *function, name_->text() );
             if( timeGroup_->isChecked() )
                 request.SetTimeRange( firstTick_->value() - 1, duration_->value() );
             Serializer serializer( request );
             std::for_each( paramList_.begin(), paramList_.end(),
                 boost::bind( &actions::gui::Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );
             request.Commit();
+            name_->clear();
         }
     }
 }

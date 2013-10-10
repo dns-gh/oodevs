@@ -13,13 +13,11 @@
 #include "clients_kernel/Controller.h"
 #include <boost/foreach.hpp>
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: IndicatorRequests constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-IndicatorRequests::IndicatorRequests( Controller& controller, Publisher_ABC& publisher )
+IndicatorRequests::IndicatorRequests( kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
     , publisher_( publisher )
 {
@@ -41,7 +39,7 @@ IndicatorRequests::~IndicatorRequests()
 // -----------------------------------------------------------------------------
 void IndicatorRequests::Purge()
 {
-    for( T_Requests::iterator it = requests_.begin(); it != requests_.end(); ++it )
+    for( auto it = requests_.begin(); it != requests_.end(); ++it )
         delete *it;
     requests_.resize( 0 );
     controller_.Update( *this );
@@ -51,9 +49,9 @@ void IndicatorRequests::Purge()
 // Name: IndicatorRequests::CreateRequest
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-IndicatorRequest& IndicatorRequests::CreateRequest( const IndicatorDefinition_ABC& definition )
+IndicatorRequest& IndicatorRequests::CreateRequest( const IndicatorDefinition_ABC& definition, const QString& name /*= QString()*/ )
 {
-    requests_.push_back( new IndicatorRequest( controller_, definition, publisher_ ) );
+    requests_.push_back( new IndicatorRequest( controller_, definition, publisher_, name ) );
     controller_.Update( *this );
     return *requests_.back();
 }

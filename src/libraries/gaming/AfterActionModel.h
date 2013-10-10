@@ -11,6 +11,7 @@
 #define __AfterActionModel_h_
 
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -40,6 +41,7 @@ class Publisher_ABC;
 // Created: AGE 2007-09-17
 // =============================================================================
 class AfterActionModel : public tools::Resolver< AfterActionFunction, QString >
+                       , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -53,16 +55,10 @@ public:
     void Update( const sword::AarInformation& message );
     void Update( const sword::PlotResult& message );
     void Purge();
-    IndicatorRequest& CreateRequest( const AfterActionFunction& function );
+    IndicatorRequest& CreateRequest( const AfterActionFunction& function, const QString& name );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AfterActionModel( const AfterActionModel& );            //!< Copy constructor
-    AfterActionModel& operator=( const AfterActionModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Load( const tools::Path& functions );

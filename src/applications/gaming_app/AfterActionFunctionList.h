@@ -85,6 +85,7 @@ private:
     actions::gui::InterfaceBuilder_ABC& builder_;
     kernel::Controllers& controllers_;
     AfterActionModel& model_;
+    QLineEdit* name_;
     QComboBox* functions_;
     QLabel* description_;
     QGroupBox* timeGroup_;

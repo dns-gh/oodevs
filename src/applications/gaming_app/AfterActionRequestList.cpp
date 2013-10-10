@@ -27,11 +27,11 @@ namespace
     public:
         MyList()
         {
-            setColumnCount( 2 );
+            setColumnCount( 3 );
             setDragEnabled( true );
             setRootIsDecorated( false );
             setAllColumnsShowFocus( true );
-            header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+            header()->setResizeMode( 0, QHeaderView::ResizeToContents );
             setContextMenuPolicy( Qt::CustomContextMenu );
         }
         virtual void startDrag( Qt::DropActions /*supportedActions*/ )
@@ -59,7 +59,7 @@ AfterActionRequestList::AfterActionRequestList( QWidget* parent, kernel::Control
     setLayout( new QVBoxLayout );
     requests_ = new MyList();
     QStringList headers;
-    headers << tr( "Request" ) << tr( "Status" );
+    headers << " " << tr( "Request" ) << tr( "Function" );
     requests_->setHeaderLabels( headers );
     connect( requests_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnRequestPopup( const QPoint& ) ) );
     connect( requests_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnDoubleClicked() ) );
@@ -174,14 +174,16 @@ void AfterActionRequestList::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void AfterActionRequestList::Display( const IndicatorRequest& request, QTreeWidgetItem* item )
 {
-    item->setText( 0, request.GetName() );
+    item->setIcon( 0, request.IsPending() ? pendingPixmap_ :
+        request.IsDone() ? donePixmap_ :
+        request.IsFailed() ? failedPixmap_ :
+        QPixmap() );
     item->setData( 0, Qt::UserRole, QVariant::fromValue( &request ) );
-    item->setIcon( 1, request.IsPending() ? pendingPixmap_ :
-                      request.IsDone() ? donePixmap_ :
-                      request.IsFailed() ? failedPixmap_ :
-                      QPixmap() );
+    item->setText( 1, request.GetDisplayName() );
+    item->setText( 2, request.GetName() );
     item->setToolTip( 0, request.ErrorMessage() );
     item->setToolTip( 1, request.ErrorMessage() );
+    item->setToolTip( 2, request.ErrorMessage() );
     if( request.IsDone() )
         item->setFlags( item->flags() | Qt::ItemIsDragEnabled );
     else

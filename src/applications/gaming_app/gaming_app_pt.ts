@@ -115,6 +115,10 @@
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>
@@ -123,15 +127,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Function</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

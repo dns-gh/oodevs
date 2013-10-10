@@ -115,6 +115,10 @@
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>
@@ -123,16 +127,16 @@
         <translation type="unfinished">طلب</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation type="unfinished">مركز</translation>
-    </message>
-    <message>
         <source>Delete request</source>
         <translation type="unfinished">حذف الطلب</translation>
     </message>
     <message>
         <source>Clear list</source>
         <translation type="unfinished">قائمة واضحة</translation>
+    </message>
+    <message>
+        <source>Function</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
