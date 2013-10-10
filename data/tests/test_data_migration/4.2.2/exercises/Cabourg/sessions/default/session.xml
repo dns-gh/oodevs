@@ -20,7 +20,7 @@
       <orbat checkcomposition="false"/>
       <pathfinder threads="1"/>
       <profiling enabled="false"/>
-      <time factor="10" step="10"/>
+      <time factor="10000" step="10"/>
       <GarbageCollector setpause="100" setstepmul="200"/>
     </simulation>
   </config>

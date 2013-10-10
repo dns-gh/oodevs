@@ -384,7 +384,7 @@
     </macrodef>
 
     <target name="exercises_test" description="validate some significant exercises">
-        <test-exercise exercise="worldwide/Egypt"/>
+        <test-exercise exercise="worldwide/Egypt" session="fast"/>
         <!-- This should be replaced by an equivalent test on ww-ML
         <test-exercise exercise="scipio/Poseidon VA"/>
         -->

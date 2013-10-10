@@ -9,7 +9,7 @@
           <network port="10000" threaded="true"/>
           <orbat checkcomposition="true"/>
           <profiling enabled="false"/>
-          <time step="10" factor="10"/>
+          <time step="10" factor="10000"/>
           <pathfinder threads="2"/>
           <hla enabled="false" federation="MyFederation" federate="CSword power"/>
       </simulation>

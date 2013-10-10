@@ -24,7 +24,7 @@
       <random1 deviation="0.5" distribution="false" mean="0.5"/>
       <random2 deviation="0.5" distribution="false" mean="0.5"/>
       <random3 deviation="0.5" distribution="false" mean="0.5"/>
-      <time factor="10" step="10"/>
+      <time factor="10000" step="10"/>
     </simulation>
   </config>
   <meta>
