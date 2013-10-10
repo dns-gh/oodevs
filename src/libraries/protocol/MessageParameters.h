@@ -47,17 +47,17 @@ namespace protocol
     void         CheckCount( int i, int j, const sword::MissionParameters& params, int min, int max = 0 );
     int          GetCount( const sword::MissionParameters& params, int i = -1, int j = -1 );
 
-    std::string  GetString( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    bool         GetBool( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    float        GetReal( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    std::string  GetDateTimeStr( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    int          GetHeading( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    int          GetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    const std::string&                 GetString( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    bool                               GetBool( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    float                              GetReal( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    const std::string&                 GetDateTimeStr( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    int                                GetHeading( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    int                                GetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     std::vector< sword::CoordLatLong > GetLocation( const sword::MissionParameters& params, int i );
-    int          GetEnumeration( const google::protobuf::EnumDescriptor* descriptor, const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    sword::Point GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    int          GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    uint32_t     GetAgentId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    int                                GetEnumeration( const google::protobuf::EnumDescriptor* descriptor, const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    const sword::Point&                GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    int                                GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    uint32_t                           GetAgentId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
 }
 
 #define GET_ENUMERATION( ENUM, I, ... ) static_cast< ENUM >( protocol::GetEnumeration( ENUM ## _descriptor(), I, __VA_ARGS__ ) )
