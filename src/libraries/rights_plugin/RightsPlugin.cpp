@@ -137,10 +137,8 @@ void RightsPlugin::Logout( ClientPublisher_ABC& client )
         if( &GetPublisher( link ) == &client )
         {
             authenticated_.erase( it );
-            auto it = silentClients_.find( link );
-            if( it == silentClients_.end() )
+            if( silentClients_.erase( link ) == 0 )
                 --currentConnections_;
-            silentClients_.erase( it );
             AuthenticationSender sender( client, clients_, 0 );
             SendProfiles( sender );
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
@@ -302,9 +300,10 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         sender.Send( reply );
         authenticated_[ link ] = profile;
         clientsID_[ link ] = countID_;
-        if( !keyAuthenticated )
+        if( keyAuthenticated )
+            silentClients_.insert( link );
+        else
             ++currentConnections_;
-        silentClients_.insert( link );
         SendProfiles( sender );
         container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, keyAuthenticated );
         ++countID_;
