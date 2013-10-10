@@ -114,7 +114,7 @@ void SupplyConsign::Activate()
             request->ReserveStock();
             resources_[ &request->GetDotationCategory() ] += request->GetGrantedQuantity();
             if( !provider_ )
-                provider_ = const_cast< MIL_Agent_ABC* >( request->GetProvider() );
+                provider_ = request->GetProvider();
         }
     BOOST_FOREACH( const auto& data, requestsQueued_ )
         data.first->OnSupplyScheduled( shared_from_this() );
