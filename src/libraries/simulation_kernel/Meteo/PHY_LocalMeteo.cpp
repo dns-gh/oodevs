@@ -140,8 +140,7 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
         const std::string end = protocol::GetDateTimeStr( msg, 8 );
         endTime_ = ( bpt::from_iso_string( end ) - bpt::from_time_t( 0 ) ).total_seconds();
     }
-    std::vector< sword::CoordLatLong > points;
-    protocol::GetLocation( msg, 9, points );
+    auto points = protocol::GetLocation( msg, 9 );
     protocol::Check( points.size() == 2u, "must have two points" );
     NET_ASN_Tools::ReadPoint( points[0], upLeft_    );
     NET_ASN_Tools::ReadPoint( points[1], downRight_ );

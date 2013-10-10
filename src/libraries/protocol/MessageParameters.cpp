@@ -190,8 +190,8 @@ sword::Point protocol::GetPoint( const sword::MissionParameters& params, int i, 
     return GetValue< Point >( params, i, j, k );
 }
 
-void protocol::GetLocation( const sword::MissionParameters& params, int i,
-        std::vector< sword::CoordLatLong >& points )
+std::vector< sword::CoordLatLong > protocol::GetLocation(
+        const sword::MissionParameters& params, int i )
 {
     protocol::Check( params.elem_size() > i, "is missing", i );
     const auto& values = params.elem( i );
@@ -200,8 +200,11 @@ void protocol::GetLocation( const sword::MissionParameters& params, int i,
     protocol::Check( value.has_location(), "must be a location", i );
     const auto& coords = value.location().coordinates();
     const int count = coords.elem_size();
+    std::vector< sword::CoordLatLong > points;
+    points.reserve( count );
     for( int n = 0; n != count; ++n )
         points.push_back( coords.elem( n ) );
+    return points;
 }
 
 int protocol::GetIdentifier( const sword::MissionParameters& params, int i, int j, int k )
