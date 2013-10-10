@@ -19,7 +19,6 @@
 #include "tools/XmlStreamOperators.h"
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
-#include "MT_Tools/MT_Logger.h"
 #include <tools/Path.h>
 
 using namespace kernel;
@@ -185,7 +184,6 @@ void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const too
 // -----------------------------------------------------------------------------
 void XmlTranslations::LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode )
 {
-    MT_LOG_INFO_MSG( "LOADING TRANSLATIONS " << languageCode );
     xis >> xml::start( "TS" )
         >> xml::list( "context", *this, &XmlTranslations::ReadContext, languageCode )
         >> xml::end;

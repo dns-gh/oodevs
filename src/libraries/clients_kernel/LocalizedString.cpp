@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "LocalizedString.h"
 #include "Language.h"
-#include "MT_Tools/MT_Logger.h"
 
 using namespace kernel;
 
@@ -200,9 +199,6 @@ const std::string& LocalizedString::Translate( const std::string& language ) con
 {
     auto it = values_.find( language );
     if( it != values_.end() && it->second.type_ != eTranslationType_Unfinished && !it->second.value_.empty() )
-    {
-        MT_LOG_INFO_MSG( "TRANSLATED " << it->second.value_ );
         return it->second.value_;
-    }
     return key_;
 }
