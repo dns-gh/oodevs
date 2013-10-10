@@ -22,6 +22,6 @@
         </location>
       </parameter>
     </parameter>
-    <parameter/>
+    <!-- deliberately omit trailing optional argument -->
   </action>
 </actions>
