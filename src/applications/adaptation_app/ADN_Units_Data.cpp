@@ -33,7 +33,7 @@ tools::IdManager ADN_Units_Data::idManager_;
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
 ADN_Units_Data::ComposanteInfos::ComposanteInfos( const ADN_Equipments_Data::T_EquipmentInfos_Vector& equipments, ADN_Equipments_Data::EquipmentInfos* equipment /* = 0 */ )
-    : ADN_CrossedRef( equipments, equipment, true, "type" )
+    : ADN_CrossedRef( equipments, equipment, true )
     , bLoadable_( false )
     , bMajor_( false )
     , bConveyor_( false )
@@ -64,8 +64,8 @@ ADN_Units_Data::ComposanteInfos* ADN_Units_Data::ComposanteInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef::ReadArchive( input );
-    input >> xml::attribute( "count", nNb_ )
+    input >> xml::attribute( "type", *this )
+          >> xml::attribute( "count", nNb_ )
           >> xml::optional >> xml::attribute( "major", bMajor_ )
           >> xml::optional >> xml::attribute( "crew", nNbrHumanInCrew_ )
           >> xml::optional >> xml::attribute( "convoyer", bConveyor_ )
@@ -78,11 +78,10 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "equipment" );
-    ADN_CrossedRef::WriteArchive( output );
-    output  << xml::attribute( "count", nNb_ )
-            << xml::attribute( "crew", nNbrHumanInCrew_ );
-
+    output << xml::start( "equipment" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "count", nNb_ )
+             << xml::attribute( "crew", nNbrHumanInCrew_ );
     if( bMajor_.GetData() )
         output << xml::attribute( "major", bMajor_ );
     if( bConveyor_.GetData() )
@@ -101,7 +100,7 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
 ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), 0, false, "logistic-supply-class" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_LogisticSupplyClasses_Data >( eLogisticSupplyClasses ).GetLogisticSupplyClasses(), 0, false )
     , rLogThreshold_( 0. )
 {
     // NOTHING
@@ -113,8 +112,8 @@ ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef::ReadArchive( input );
-    input >> xml::attribute( "threshold", rLogThreshold_ );
+    input >> xml::attribute( "logistic-supply-class", *this )
+          >> xml::attribute( "threshold", rLogThreshold_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,9 +122,9 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "stock" );
-    ADN_CrossedRef::WriteArchive( output );
-    output  << xml::attribute( "threshold", rLogThreshold_ )
+    output << xml::start( "stock" )
+             << xml::attribute( "logistic-supply-class", *this )
+             << xml::attribute( "threshold", rLogThreshold_ )
            << xml::end;
 }
 

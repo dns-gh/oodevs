@@ -23,7 +23,7 @@ tools::IdManager ADN_Automata_Data::idManager_;
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::UnitInfos::UnitInfos( const ADN_Units_Data::T_UnitInfos_Vector& vector, ADN_Units_Data::UnitInfos* element /* = 0 */ )
-    : ADN_CrossedRef( vector, element, true, "type" )
+    : ADN_CrossedRef( vector, element, true )
     , min_( 0 )
     , max_( -1 )
 {
@@ -48,8 +48,8 @@ ADN_Automata_Data::UnitInfos* ADN_Automata_Data::UnitInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef::ReadArchive( input );
-    input >> xml::optional >> xml::attribute( "min-occurs", min_ )
+    input >> xml::attribute( "type", *this )
+          >> xml::optional >> xml::attribute( "min-occurs", min_ )
           >> xml::optional >> xml::attribute( "max-occurs", max_ );
 }
 
@@ -59,8 +59,8 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const UnitInfos* pc )
 {
-    output << xml::start( "unit" );
-    ADN_CrossedRef::WriteArchive( output );
+    output << xml::start( "unit" )
+             << xml::attribute( "type", *this );
     if( min_.GetData() != 0 )
         output << xml::attribute( "min-occurs", min_ );
     if( max_.GetData() >= 0 )

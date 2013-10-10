@@ -733,7 +733,7 @@ void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output )
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true )
     , proportion_( 100 )
 {
     // NOTHING
@@ -744,10 +744,10 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true )
     , proportion_   ( static_cast< unsigned int >( input.attribute< double >( "proportion" ) * 100 ) )
 {
-    ADN_CrossedRef::ReadArchive( input );
+    input >> xml::attribute( "type", *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -755,7 +755,7 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( ADN_Urban_Data::AccommodationInfos& accomodation, ADN_Type_Int proportion )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), &accomodation, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), &accomodation )
     , proportion_   ( proportion.GetData() )
 {
     // NOTHING
@@ -777,9 +777,9 @@ ADN_Urban_Data::UsageTemplateInfos::~UsageTemplateInfos()
 void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output )
 {
     double proportion = static_cast< double >( proportion_.GetData() ) / 100.f;
-    output << xml::start( "usage" );
-    ADN_CrossedRef::WriteArchive( output );
-    output << xml::attribute( "proportion", proportion )
+    output << xml::start( "usage" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "proportion", proportion )
            << xml::end;
 }
 

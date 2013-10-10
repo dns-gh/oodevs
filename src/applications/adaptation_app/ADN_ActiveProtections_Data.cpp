@@ -130,8 +130,8 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfo
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml::xistream& xis )
 {
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( xis );
-    xis >> xml::attribute( "coefficient", coefficient_ );
+    xis >> xml::attribute( "name", *this )
+        >> xml::attribute( "coefficient", coefficient_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,9 +140,9 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::start( "weapon" );
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
-    xos << xml::attribute( "coefficient", coefficient_)
+    xos << xml::start( "weapon" )
+          << xml::attribute( "name", *this )
+          << xml::attribute( "coefficient", coefficient_)
         << xml::end;
 }
 

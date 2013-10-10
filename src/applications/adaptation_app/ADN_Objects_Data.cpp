@@ -123,9 +123,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
         ADN_Equipments_Data::CategoryInfos* infos = reinterpret_cast< ADN_Equipments_Data::CategoryInfos* >( *it );
         if( infos )
         {
-            xos << xml::start( "resource" );
-            infos->ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
-            xos << xml::attribute( "count", infos->rNbr_ )
+            xos << xml::start( "resource" )
+                  << xml::attribute( "name", *infos )
+                  << xml::attribute( "count", infos->rNbr_ )
                 << xml::end;
         }
     }
@@ -187,9 +187,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
         ADN_Equipments_Data::CategoryInfos* infos = *it;
         if( infos )
         {
-            xos << xml::start( "resource" );
-            infos->ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
-            xos << xml::attribute( "count", infos->rNbr_ )
+            xos << xml::start( "resource" )
+                  << xml::attribute( "name", *infos )
+                  << xml::attribute( "count", infos->rNbr_ )
                 << xml::end;
         }
     }
@@ -1141,7 +1141,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::CheckDatabaseV
 // Created: BCI 2010-12-06
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_Fires_Data::FireClassInfos* p )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetFires().GetData().GetFireClassesInfos(), p, true, "fire-class" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetFires().GetData().GetFireClassesInfos(), p, true )
     , ignitionThreshold_  ( 0 )
     , maxCombustionEnergy_( 0 )
 {
@@ -1165,13 +1165,11 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFire
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::WriteArchive( xml::xostream& xos )
 {
     if( GetCrossedElement() && GetCrossedElement()->isSurface_.GetData() )
-    {
-        xos << xml::start( "modifier" );
-        ADN_CrossedRef::WriteArchive( xos );
-        xos << xml::attribute( "ignition-threshold", ignitionThreshold_ )
-            << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
+        xos << xml::start( "modifier" )
+              << xml::attribute( "fire-class", *this )
+              << xml::attribute( "ignition-threshold", ignitionThreshold_ )
+              << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
             << xml::end;
-    }
 }
 
 // -----------------------------------------------------------------------------

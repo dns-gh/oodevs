@@ -57,7 +57,7 @@ ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_FragOrder* fragorder, cons
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Missions_ABC >::ReadArchive( input );
+    input >> xml::attribute( "name", *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,9 +66,9 @@ void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "fragorder" );
-    ADN_CrossedRef< ADN_Missions_ABC >::WriteArchive( output );
-    output<< xml::end;
+    output << xml::start( "fragorder" )
+             << xml::attribute( "name", *this )
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -156,8 +156,8 @@ void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "mission" );
-    ADN_CrossedRef< ADN_Missions_ABC >::WriteArchive( output );
+    output << xml::start( "mission" )
+             << xml::attribute( "name", *this );
     for( auto it = vOrders_.begin(); it != vOrders_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

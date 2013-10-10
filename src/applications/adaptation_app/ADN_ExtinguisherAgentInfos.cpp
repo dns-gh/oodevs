@@ -16,7 +16,7 @@
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_ExtinguisherAgentInfos::ADN_ExtinguisherAgentInfos( ADN_Resources_Data::CategoryInfo* agent )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_, agent, true, "agent" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_, agent, true )
     , heatDecreaseRate_( 0 )
 {
     // NOTHING
@@ -56,8 +56,8 @@ void ADN_ExtinguisherAgentInfos::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_ExtinguisherAgentInfos::WriteArchive( xml::xostream& xos, const std::string& tag )
 {
-    xos << xml::start( tag );
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
-    xos << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
+    xos << xml::start( tag )
+            << xml::attribute( "agent", *this )
+            << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
         << xml::end;
 }

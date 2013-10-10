@@ -24,7 +24,7 @@ tools::IdManager ADN_Breakdowns_Data::idManager_;
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0, true, "resource" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0, true )
     , nNbr_( 1 )
 {
     // NOTHING
@@ -48,8 +48,8 @@ ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::Create
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( input );
-    input >> xml::attribute( "quantity", nNbr_ );
+    input >> xml::attribute( "resource", *this )
+          >> xml::attribute( "quantity", nNbr_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +58,10 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "part" );
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( output );
-    output << xml::attribute( "quantity", nNbr_ )
-        << xml::end;
+    output << xml::start( "part" )
+             << xml::attribute( "resource", *this )
+             << xml::attribute( "quantity", nNbr_ )
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------

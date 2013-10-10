@@ -82,7 +82,7 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& outpu
 // Created: JDY 03-08-28
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true )
     , rCoeff_( 0 )
 {
     // NOTHING
@@ -103,9 +103,9 @@ void ADN_Sensors_Data::ModificatorSizeInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "distance-modifier" );
-    ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >::WriteArchive( output );
-    output   << xml::attribute( "value", rCoeff_ )
+    output << xml::start( "distance-modifier" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }
 
@@ -226,7 +226,7 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // Created: SLG 2010-03-02
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true )
     , rCoeff_( 0 )
 {
     // NOTHING
@@ -247,9 +247,9 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::ReadArchive( xml::xistream& i
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "distance-modifier" );
-    ADN_CrossedRef< ADN_Urban_Data::UrbanMaterialInfos >::WriteArchive( output );
-    output   << xml::attribute( "value", rCoeff_ )
+    output << xml::start( "distance-modifier" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }
 
@@ -298,7 +298,7 @@ void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& out
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::TargetInfos::TargetInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true )
     , rDistanceDetection_( 0 )
     , populationInfos_()
 {
@@ -394,7 +394,7 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 // Created: LGY 2012-12-03
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::DisasterInfos::DisasterInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0, true )
     , rDetectionThreshold_( 0)
 {
     // NOTHING
@@ -427,8 +427,8 @@ ADN_Sensors_Data::DisasterInfos* ADN_Sensors_Data::DisasterInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::DisasterInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Disasters_Data::DisasterInfos >::ReadArchive( input );
-    input >> xml::attribute( "detection-threshold", rDetectionThreshold_ );
+    input >> xml::attribute( "type", *this )
+          >> xml::attribute( "detection-threshold", rDetectionThreshold_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -437,9 +437,9 @@ void ADN_Sensors_Data::DisasterInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::DisasterInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "disaster" );
-    ADN_CrossedRef< ADN_Disasters_Data::DisasterInfos >::WriteArchive( output );
-    output     << xml::attribute( "detection-threshold", rDetectionThreshold_ )
+    output << xml::start( "disaster" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "detection-threshold", rDetectionThreshold_ )
            << xml::end;
 }
 

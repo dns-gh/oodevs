@@ -90,7 +90,7 @@ void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output )
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_Data::InhabitantsInfosConsumption::InhabitantsInfosConsumption()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0, true )
     , consumption_( 0 )
 {
     // NOTHING
@@ -123,8 +123,8 @@ ADN_Inhabitants_Data::InhabitantsInfosConsumption* ADN_Inhabitants_Data::Inhabit
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::InhabitantsInfosConsumption::ReadArchive( xml::xistream& xis )
 {
-    ADN_CrossedRef< ADN_ResourceNetworks_Data::ResourceNetworkInfos >::ReadArchive( xis );
-    xis >> xml::attribute( "need", consumption_ );
+    xis >> xml::attribute( "type", *this )
+        >> xml::attribute( "need", consumption_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,9 +133,9 @@ void ADN_Inhabitants_Data::InhabitantsInfosConsumption::ReadArchive( xml::xistre
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::start( "resource" );
-    ADN_CrossedRef< ADN_ResourceNetworks_Data::ResourceNetworkInfos >::WriteArchive( xos );
-    xos   << xml::attribute( "need", consumption_ )
+    xos << xml::start( "resource" )
+          << xml::attribute( "type", *this )
+          << xml::attribute( "need", consumption_ )
         << xml::end;
 }
 
