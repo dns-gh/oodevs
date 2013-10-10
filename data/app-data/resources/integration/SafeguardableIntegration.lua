@@ -27,5 +27,5 @@ end
 
 integration.getAgentKnowledgeForceRatio = function( kAgent )
     local agent = DEC_ConnaissanceAgent_EnAgent( kAgent.source )
-    return DEC_Agent_RapportDeForceLocal( agent.source ) / 5
+    return DEC_Agent_RapportDeForceLocal( agent ) / 5
 end
