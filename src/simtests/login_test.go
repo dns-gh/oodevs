@@ -78,6 +78,45 @@ func (s *TestSuite) TestLogin(c *C) {
 	c.Assert(err, IsNil)
 }
 
+func (s *TestSuite) TestMaxConnections(c *C) {
+	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
+	defer sim.Stop()
+
+	// Authenticate a maximum of clients
+	clients := []*swapi.Client{}
+	for {
+		client := connectClient(c, sim)
+		if client.Login("admin", "") != nil {
+			client.Close()
+			break
+		}
+		clients = append(clients, client)
+		c.Assert(len(clients), Lesser, 100)
+	}
+	c.Assert(len(clients), Greater, 0)
+
+	// Authenticate client with an authentication key
+	client := connectClient(c, sim)
+	key, err := client.GetAuthenticationKey()
+	c.Assert(key, Not(IsNil))
+	c.Assert(err, IsNil)
+	err = client.LoginWithAuthenticationKey("", "", key)
+	c.Assert(err, IsNil)
+	client.Close()
+
+	// Disconnect one client
+	last := len(clients) - 1
+	client = clients[last]
+	client.Close()
+	clients = clients[:last]
+
+	// Reconnect one client
+	client = connectClient(c, sim)
+	err = client.Login("admin", "")
+	c.Assert(err, IsNil)
+	clients = append(clients, client)
+}
+
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 
 	waitForMessages := func(timeout time.Duration, seen chan int) {
