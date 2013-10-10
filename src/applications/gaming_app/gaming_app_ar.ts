@@ -88,10 +88,6 @@
         <translation type="unfinished">وبعد استعراض العمل</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
-    </message>
-    <message>
         <source>Parameters</source>
         <translation type="unfinished">المعلمات</translation>
     </message>
@@ -113,6 +109,10 @@
     </message>
     <message>
         <source>Create request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -84,10 +84,6 @@
 <context>
     <name>AfterActionFunctionList</name>
     <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
         <source>Parameters</source>
         <translation>Parámetros</translation>
     </message>
@@ -113,6 +109,10 @@
     </message>
     <message>
         <source>Create request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

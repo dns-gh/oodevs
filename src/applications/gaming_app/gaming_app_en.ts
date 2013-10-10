@@ -88,10 +88,6 @@
         <translation>After action review</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
         <source>Parameters</source>
         <translation>Parameters</translation>
     </message>
@@ -114,6 +110,10 @@
     <message>
         <source>Create request</source>
         <translation>Create request</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
     </message>
 </context>
 <context>

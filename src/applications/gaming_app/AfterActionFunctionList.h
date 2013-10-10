@@ -62,7 +62,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChange();
+    void OnSelectionChange( int index );
     void Request();
     //@}
 
@@ -70,7 +70,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
-    void CreateRequestButton();
     void CreateParameter( const AfterActionParameter& parameter );
     boost::shared_ptr< actions::gui::Param_ABC > CreateParameter( const std::string& type, const QString& name );
     //@}
@@ -86,11 +85,12 @@ private:
     actions::gui::InterfaceBuilder_ABC& builder_;
     kernel::Controllers& controllers_;
     AfterActionModel& model_;
-    QTreeWidget* functions_;
-    QGroupBox* parameters_;
+    QComboBox* functions_;
+    QLabel* description_;
     QGroupBox* timeGroup_;
     QSpinBox* firstTick_;
     QSpinBox* duration_;
+    QGroupBox* parameters_;
     QPushButton* request_;
     T_Parameters paramList_;
     //@}

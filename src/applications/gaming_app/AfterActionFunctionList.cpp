@@ -33,12 +33,13 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     , builder_    ( interfaceBuilder )
     , controllers_( controllers )
     , model_      ( model )
-    , request_    ( 0 )
 {
     QVBoxLayout* layout = new QVBoxLayout;
-    functions_ = new QTreeWidget;
-    functions_->setHeaderLabel( tr( "Name" ) );
-    functions_->setRootIsDecorated( false );
+    functions_ = new QComboBox;
+    QGroupBox* descriptionGroup = new QGroupBox( tr( "Description" ) );
+    descriptionGroup->setLayout( new QVBoxLayout );
+    description_ = new QLabel( "---" );
+    descriptionGroup->layout()->addWidget( description_ );
     timeGroup_ = new QGroupBox( tr( "Time range" ) );
     QVBoxLayout* timeLayout = new QVBoxLayout;
     timeGroup_->setLayout( timeLayout );
@@ -58,25 +59,25 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
         box->addWidget( duration_ );
         timeLayout->addLayout( box );
     }
-    connect( functions_, SIGNAL( itemSelectionChanged() ), SLOT( OnSelectionChange() ) );
-
     tools::Iterator< const AfterActionFunction& > it = model_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const AfterActionFunction& function = it.NextElement();
-        QTreeWidgetItem* item = new QTreeWidgetItem();
-        item->setText( 0, function.GetName() );
-        item->setToolTip( 0, function.GetComments() );
-        item->setData( 0, Qt::UserRole, QVariant::fromValue( &function ) );
-        functions_->addTopLevelItem( item );
+        functions_->addItem( function.GetName(), QVariant::fromValue( &function ) );
     }
     parameters_ = new QGroupBox( tr( "Parameters" ) );
+    request_ = new QPushButton( tr( "Create request" ) );
+    QToolTip::add( request_, tr( "Send request" ) );
     setLayout( layout );
     layout->addWidget( functions_ );
+    layout->addWidget( descriptionGroup );
     layout->addWidget( timeGroup_ );
     layout->addWidget( parameters_ );
-    CreateRequestButton();
-    request_->setEnabled( false );
+    layout->addStretch();
+    layout->addWidget( request_ );
+    connect( functions_, SIGNAL( currentIndexChanged( int ) ), SLOT( OnSelectionChange( int ) ) );
+    connect( request_, SIGNAL( clicked() ), SLOT( Request() ) );
+    OnSelectionChange( 0 );
     controllers_.controller_.Register( *this );
 }
 
@@ -103,40 +104,40 @@ void AfterActionFunctionList::NotifyUpdated( const Simulation& simulation )
     duration_->setMaxValue( tickCount );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AfterActionFunctionList::CreateRequestButton
-// Created: AGE 2007-09-25
-// -----------------------------------------------------------------------------
-void AfterActionFunctionList::CreateRequestButton()
+namespace
 {
-    delete request_;
-    request_ = new QPushButton( tr( "Create request" ) );
-    layout()->addWidget( request_ );
-    QToolTip::add( request_, tr( "Send request" ) );
-    connect( request_, SIGNAL( clicked() ), SLOT( Request() ) );
-    request_->show();
+    void DeleteLayout( QLayout* layout )
+    {
+        if( layout )
+            while( QLayoutItem* item = layout->takeAt( 0 ) )
+            {
+                delete item->widget();
+                DeleteLayout( item->layout() );
+                delete item;
+            }
+        delete layout;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList::OnSelectionChange
 // Created: AGE 2007-09-24
 // -----------------------------------------------------------------------------
-void AfterActionFunctionList::OnSelectionChange()
+void AfterActionFunctionList::OnSelectionChange( int index )
 {
-    delete request_;
-    request_ = 0;
+    if( index == -1 )
+        return;
     std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &actions::gui::Param_ABC::RemoveFromController, _1 ) );
     paramList_.clear();
-    delete parameters_;
-    parameters_ = new QGroupBox( tr( "Parameters" ) );
+    DeleteLayout( parameters_->layout() );
     parameters_->setLayout( new QVBoxLayout );
-    layout()->addWidget( parameters_ );
     builder_.SetParamInterface( *this );
     builder_.SetParentObject( this );
-    QTreeWidgetItem* selected = functions_->currentItem();
-    if( selected && selected->data( 0, Qt::UserRole ).isValid() )
+    const AfterActionFunction* function = 0;
+    QVariant variant = functions_->itemData( index );
+    if( variant.isValid() )
     {
-        const AfterActionFunction* function = selected->data( 0, Qt::UserRole ).value< const AfterActionFunction* >();
+        function = variant.value< const AfterActionFunction* >();
         if( function )
         {
             tools::Iterator< const AfterActionParameter& > it = function->CreateIterator();
@@ -147,9 +148,9 @@ void AfterActionFunctionList::OnSelectionChange()
             }
         }
     }
-    parameters_->show();
-    CreateRequestButton();
-    request_->setEnabled( selected != 0 );
+    parameters_->setVisible( function && function->Count() > 0 );
+    QString comments = function ? function->GetComments() : QString();
+    description_->setText( comments.isEmpty() ? QString( "---" ) : comments );
 }
 
 namespace
@@ -157,7 +158,7 @@ namespace
     struct Serializer : public actions::ParameterContainer_ABC
                       , private boost::noncopyable
     {
-        Serializer( IndicatorRequest& request )
+        explicit Serializer( IndicatorRequest& request )
             : request_( &request )
         {
             // NOTHING
@@ -180,10 +181,13 @@ namespace
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::Request()
 {
-    QTreeWidgetItem* selected = functions_->currentItem();
-    if( selected && selected->data( 0, Qt::UserRole ).isValid() )
+    int index = functions_->currentIndex();
+    if( index == -1 )
+        return;
+    QVariant variant = functions_->itemData( index );
+    if( variant.isValid() )
     {
-        const AfterActionFunction* function = selected->data( 0, Qt::UserRole ).value< const AfterActionFunction* >();
+        const AfterActionFunction* function = variant.value< const AfterActionFunction* >();
         if( function )
         {
             IndicatorRequest& request = model_.CreateRequest( *function );
