@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "clients_kernel/Language.h"
 #include "clients_kernel/XmlTranslations.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
@@ -88,7 +89,11 @@ void ADN_Data_ABC::LoadTranslations( const tools::Path& xmlFile, kernel::XmlTran
     {
         const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
         currentTranslation->EvaluateTranslationQueries( xmlFile, languages );
-        currentTranslation->LoadTranslationFiles( xmlFile, BuildLocalDirectory(), languages );
+        std::vector< std::string > codes;
+        codes.reserve( languages.size() );
+        for( auto it = languages.cbegin(); it != languages.cend(); ++it )
+            codes.push_back( (*it)->GetCode() );
+        currentTranslation->LoadTranslationFiles( xmlFile, BuildLocalDirectory(), codes );
     }
 }
 
