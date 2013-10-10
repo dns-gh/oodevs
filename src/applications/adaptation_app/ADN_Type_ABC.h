@@ -138,17 +138,27 @@ protected:
     //@}
 };
 
+// -----------------------------------------------------------------------------
+// Stream operators
+// -----------------------------------------------------------------------------
 template< typename T >
-std::ostream& operator<<( std::ostream& os, ADN_Type_ABC< T >& value )
+std::ostream& operator<<( std::ostream& os, const ADN_Type_ABC< T >& type )
 {
-    os << value.GetData();
-    return os;
+    return os << type.GetData();
+}
+
+template< typename T >
+xml::xostream& operator<<( xml::xostream& xos, const ADN_Type_ABC< T >& type )
+{
+    return xos << type.GetData();
 }
 template< typename T >
-xml::xostream& operator<<( xml::xostream& os, const ADN_Type_ABC< T >& value )
+xml::xistream& operator>>( xml::xistream& xis, ADN_Type_ABC< T >& type )
 {
-    os << value.GetData();
-    return os;
+    T value;
+    xis >> value;
+    type = value;
+    return xis;
 }
 
 #include "ADN_Type_ABC.inl"

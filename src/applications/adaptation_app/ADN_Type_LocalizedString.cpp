@@ -295,3 +295,23 @@ const boost::shared_ptr< kernel::LocalizedString >& ADN_Type_LocalizedString::Ge
 {
     return translation_;
 }
+
+// -----------------------------------------------------------------------------
+// Stream operators
+// -----------------------------------------------------------------------------
+std::ostream& operator<<( std::ostream& os, const ADN_Type_LocalizedString& type )
+{
+    return os << type.GetKey();
+}
+
+xml::xostream& operator<<( xml::xostream& xos, const ADN_Type_LocalizedString& type )
+{
+    return xos << type.GetKey();
+}
+xml::xistream& operator>>( xml::xistream& xis, ADN_Type_LocalizedString& type )
+{
+    std::string value;
+    xis >> value;
+    type.SetKey( value );
+    return xis;
+}

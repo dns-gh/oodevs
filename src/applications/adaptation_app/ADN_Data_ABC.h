@@ -11,7 +11,9 @@
 #define __ADN_Data_ABC_h_
 
 #include "ADN_Enums.h"
-#include "ADN_XmlStreamOperators.h"
+#include "ADN_Type_ABC.h"
+#include "ADN_Type_LocalizedString.h"
+#include "ADN_TypePtr_InVector_ABC.h"
 #include "ADN_Tools.h"
 #include "ADN_WorkspaceElement.h"
 #include "clients_kernel/Languages.h"

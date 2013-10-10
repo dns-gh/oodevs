@@ -1,7 +1,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_AttritionEffectOnHuman.h"
 #include "ADN_tr.h"
-#include "ADN_XmlStreamOperators.h"
 
 using namespace helpers;
 
