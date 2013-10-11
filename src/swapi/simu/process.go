@@ -143,13 +143,16 @@ func (sim *SimProcess) Kill() {
 	}
 }
 
-func logAndStop(host, user, password string) error {
+func logAndStop(host string) error {
 	client, err := swapi.NewClient(host)
 	if err == nil {
 		client.EnableModel = false
 		go client.Run()
 		defer client.Close()
-		err = client.Login(user, password)
+		key, err := client.GetAuthenticationKey()
+		if err == nil {
+			err = client.LoginWithAuthenticationKey("", "", key)
+		}
 		if err == nil {
 			err = client.Stop()
 		}
@@ -158,27 +161,17 @@ func logAndStop(host, user, password string) error {
 }
 
 // Connect to the simulation and execute a Login/Stop sequence using
-// supervisor credentials found in the profiles.xml.
+// supervisor.
 func (sim *SimProcess) Stop() error {
 	if sim == nil {
 		return errors.New("simulation is stopped already")
 	}
-	// We need a supervisor to stop the simulation
-	profiles, err := ReadProfilesFile(sim.Opts.GetProfilesFile())
-	if err == nil {
-		admin := profiles.FindSupervisor()
-		if admin != nil {
-			err = logAndStop(sim.DispatcherAddr, admin.Name, admin.Password)
-			if sim.Wait(10 * time.Second) {
-				return nil
-			}
-			err = errors.New("Wait timed out")
-		} else {
-			err = errors.New("could not find supervisor profile")
-		}
+	logAndStop(sim.DispatcherAddr)
+	if sim.Wait(10 * time.Second) {
+		return nil
 	}
 	sim.Kill()
-	return err
+	return errors.New("Wait timed out")
 }
 
 // Return true if the simulation stopped before the timeout. Wait indefinitely
