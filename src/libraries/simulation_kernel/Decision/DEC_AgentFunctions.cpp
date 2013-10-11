@@ -1736,3 +1736,12 @@ void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( false );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetMaxSpeed
+// Created: NMI 2013-10-11
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetMaxSpeed( MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
+}
