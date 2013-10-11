@@ -133,12 +133,14 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	_, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
+	// Test trailing optional parameters can be left out
+	// There is a "lastEchelonNumber" optional parameter for Attack
 	params := swapi.MakeParameters(
 		swapi.MakeHeading(0),
 		nil,
 		swapi.MakeLimit(limit11, limit12),
 		swapi.MakeLimit(limit21, limit22),
-		nil)
+	)
 
 	// Cannot send order with an invalid unit identifier
 	_, err = client.SendAutomatOrder(InvalidIdentifier, MissionAutomatAttackId, params)
@@ -161,6 +163,18 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	order, err := client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
 	c.Assert(err, IsNil)
 	c.Assert(order.Kind, Equals, swapi.AutomatOrder)
+
+    // Send again with an invalid last parameter, to check the mission has an
+    // optional additional parameter.
+	params = swapi.MakeParameters(
+		swapi.MakeHeading(0),
+		nil,
+		swapi.MakeLimit(limit11, limit12),
+		swapi.MakeLimit(limit21, limit22),
+		swapi.MakeLimit(limit21, limit22),
+	)
+	_, err = client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 }
 
 // Test we can send a crowd mission and get a successful acknowledgement.
