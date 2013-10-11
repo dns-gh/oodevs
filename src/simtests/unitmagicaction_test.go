@@ -2201,5 +2201,5 @@ func (s *TestSuite) TestDestroyUnit(c *C) {
 	err = client.DeleteUnit(unit2.Id)
 	c.Assert(err, IsNil)
 	err = client.DestroyUnit(unit2.Id)
-	c.Assert(err, IsNil)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 }
