@@ -12,7 +12,6 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Styles.h"
-#include "Tools.h"
 #include <QtCore/qdatetime.h>
 
 Q_DECLARE_METATYPE( const Report* )

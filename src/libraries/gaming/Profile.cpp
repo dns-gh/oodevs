@@ -12,7 +12,6 @@
 #include "AvailableProfile.h"
 #include "Services.h"
 #include "Simulation.h"
-#include "reports/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
@@ -23,6 +22,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 

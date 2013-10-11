@@ -28,8 +28,9 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
-#include "reports/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
+#include "protocol/Simulation.h"
 
 using namespace kernel;
 using namespace gui;
@@ -418,7 +419,7 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
                 continue;
 
             ParameterList& personalList = list.AddList( CreateName( "Dotation", index ) );
-            personalList.AddIdentifier( "Dotation", tools::DotationFamilyFromString( catetoriesNames_[ nRow ] ) );
+            personalList.AddIdentifier( "Dotation", tools::DotationFamilyFromString( catetoriesNames_[ nRow ].toStdString() ) );
             personalList.AddQuantity( "Number", dotationsTable_->item( nRow, 1 )->text().toInt() );
         }
     }
