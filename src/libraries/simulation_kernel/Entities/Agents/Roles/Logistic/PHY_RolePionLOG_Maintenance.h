@@ -106,7 +106,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::list< PHY_MaintenanceConsign_ABC* > T_MaintenanceConsignList;
+    typedef std::list< boost::shared_ptr< PHY_MaintenanceConsign_ABC > > T_MaintenanceConsignList;
     typedef std::vector< std::pair< const MIL_Automate*, T_MaintenanceConsignList > > T_MaintenanceConsigns;
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
     typedef std::vector< const PHY_ComposanteTypePion* > T_MaintenancePriorityVector;
@@ -115,7 +115,7 @@ private:
 private:
     //! @name Tools
     //@{
-    void InsertConsign ( PHY_MaintenanceConsign_ABC& consign );
+    void InsertConsign ( const boost::shared_ptr< PHY_MaintenanceConsign_ABC >& consign );
     void InsertConsigns( const T_MaintenanceConsigns& );
 
     bool HasUsableHauler( const PHY_ComposanteTypePion& composanteType ) const;

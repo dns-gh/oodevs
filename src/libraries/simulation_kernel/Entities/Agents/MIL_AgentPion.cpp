@@ -2093,12 +2093,8 @@ void MIL_AgentPion::OnChangePosture( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveFinishLogisticHandlings()
 {
-    PHY_RoleInterface_Maintenance* roleMaintenance = RetrieveRole< PHY_RoleInterface_Maintenance >();
-    if( roleMaintenance )
-        roleMaintenance->FinishAllHandlingsSuccessfullyWithoutDelay();
-    PHY_RoleInterface_Medical* roleMedical = RetrieveRole< PHY_RoleInterface_Medical >();
-    if( roleMedical )
-        roleMedical->FinishAllHandlingsSuccessfullyWithoutDelay();
+    CallRole( &PHY_RoleInterface_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay );
+    CallRole( &PHY_RoleInterface_Medical::FinishAllHandlingsSuccessfullyWithoutDelay );
 }
 
 // -----------------------------------------------------------------------------

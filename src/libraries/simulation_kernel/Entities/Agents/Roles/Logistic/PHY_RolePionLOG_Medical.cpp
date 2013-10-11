@@ -112,10 +112,12 @@ namespace boost
         {
             std::size_t size = vector.size();
             for( auto it = vector.begin(); it != vector.end(); ++it )
+            {
                 if( !*it )
                     --size;
+            }
             file << size;
-            for ( auto it = vector.begin(); it != vector.end(); ++it )
+            for( auto it = vector.begin(); it != vector.end(); ++it )
             {
                 if( !*it )
                     continue;
@@ -130,7 +132,7 @@ namespace boost
             std::size_t nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 unsigned int nID;
                 file >> nID;
@@ -358,7 +360,6 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human,
 // Name: PHY_RolePionLOG_Medical::InsertConsigns
 // Created: JVT 2005-05-03
 // -----------------------------------------------------------------------------
-inline
 void PHY_RolePionLOG_Medical::InsertConsigns( const T_MedicalConsigns& oldConsigns )
 {
     for ( auto it = oldConsigns.begin(); it != oldConsigns.end(); ++it )
@@ -414,27 +415,30 @@ PHY_RolePionLOG_Medical::T_MedicalPriorityVector PHY_RolePionLOG_Medical::GetMed
     return priorities_;
 }
 
-struct sIsPriorityEqual
+namespace
 {
-    bool operator() ( const PHY_MedicalConsign_ABC* pConsign, const PHY_HumanWound* pWound )
+    struct sIsPriorityEqual
     {
-        if( pConsign->IsFinished() || !pConsign->HasValidHumanState() )
-            return false;
-        return *pWound == pConsign->GetHumanState().GetHuman().GetWound();
-    }
-};
+        bool operator() ( const PHY_MedicalConsign_ABC* pConsign, const PHY_HumanWound* pWound )
+        {
+            if( pConsign->IsFinished() || !pConsign->HasValidHumanState() )
+                return false;
+            return *pWound == pConsign->GetHumanState().GetHuman().GetWound();
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::InsertConsign
 // Created: JVT 2005-05-03
 // -----------------------------------------------------------------------------
-inline
 void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
 {
     if( !consign.HasValidHumanState() )
         return;
     auto itTact = consigns_.begin();
-    for ( const MIL_Automate* pAutomate = &consign.GetHumanState().GetAutomate(); itTact != consigns_.end(); ++itTact )
+    const MIL_Automate* pAutomate = &consign.GetHumanState().GetAutomate();
+    for( ; itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first ) // TODO AHC || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
     if( itTact == consigns_.end() )
@@ -443,13 +447,13 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
         itTact = consigns_.end() - 1;
         assert( itTact->first == 0 );
     }
-    auto itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetHumanState().GetHuman().GetWound() );
-    if( itPriorityLowerBound == priorities_.end() )
+    auto itPriority = std::find( priorities_.begin(), priorities_.end(), &consign.GetHumanState().GetHuman().GetWound() );
+    if( itPriority == priorities_.end() )
         itTact->second.push_back( &consign );
     else
     {
-        ++itPriorityLowerBound;
-        auto itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriorityLowerBound, sIsPriorityEqual() );
+        ++itPriority;
+        auto itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriority, sIsPriorityEqual() );
         itTact->second.insert( itConsign.base(), &consign );
     }
 }
