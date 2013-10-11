@@ -74,59 +74,68 @@ void NET_AS_MOSServerMsgMgr::Send( sword::SimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const sword::ClientToSim& wrapper )
 {
-    MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
-    unsigned int nCtx = wrapper.context();
-    unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
+    MIL_AgentServer& wk = MIL_AgentServer::GetWorkspace();
+    MIL_EntityManager& em = wk.GetEntityManager();
+    const auto& msg = wrapper.message();
+    const unsigned int nCtx = wrapper.context();
+    const unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
 
-    if( wrapper.message().has_control_stop() )
+    if( msg.has_control_stop() )
         simulation_.Stop( nCtx, clientId );
-    else if( wrapper.message().has_control_pause() )
+    else if( msg.has_control_pause() )
         simulation_.Pause( nCtx, clientId );
-    else if( wrapper.message().has_control_resume() )
-        simulation_.Resume( wrapper.message().control_resume().has_tick() ? wrapper.message().control_resume().tick() : 0, nCtx, clientId );
-    else if( wrapper.message().has_control_change_time_factor() )
-        simulation_.SetTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
-    else if( wrapper.message().has_control_date_time_change() )
-        simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data() );
-    else if( wrapper.message().has_control_checkpoint_save_now() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( wrapper.message().control_checkpoint_save_now(), clientId, nCtx );
-    else if( wrapper.message().has_control_checkpoint_set_frequency() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency      ( wrapper.message().control_checkpoint_set_frequency()          );
-    else if( wrapper.message().has_control_toggle_vision_cones() )
-        workspace.GetEntityManager().OnReceiveControlToggleVisionCones( wrapper.message().control_toggle_vision_cones() );
-    else if( wrapper.message().has_unit_order() )
-        workspace.GetEntityManager        ().OnReceiveUnitOrder                      ( wrapper.message().unit_order()                         , nCtx, clientId );
-    else if( wrapper.message().has_automat_order() )
-        workspace.GetEntityManager        ().OnReceiveAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx, clientId );
-    else if( wrapper.message().has_crowd_order() )
-        workspace.GetEntityManager        ().OnReceiveCrowdOrder                     ( wrapper.message().crowd_order()                        , nCtx, clientId );
-    else if( wrapper.message().has_frag_order() )
-        workspace.GetEntityManager        ().OnReceiveFragOrder                      ( wrapper.message().frag_order()                         , nCtx, clientId );
-    else if( wrapper.message().has_set_automat_mode() )
-        workspace.GetEntityManager        ().OnReceiveSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx, clientId );
-    else if( wrapper.message().has_unit_creation_request() )
-        workspace.GetEntityManager        ().OnReceiveUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx );
-    else if( wrapper.message().has_knowledge_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx, clientId );
-    else if( wrapper.message().has_unit_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx, clientId );
-    else if( wrapper.message().has_object_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx );
-    else if( wrapper.message().has_burning_cell_request() )
-        workspace.GetEntityManager().OnReceiveBurningCellRequest( wrapper.message().burning_cell_request(), nCtx );
-    else if( wrapper.message().has_magic_action() )
-        if( wrapper.message().magic_action().type() == sword::MagicAction::global_weather ||
-            wrapper.message().magic_action().type() == sword::MagicAction::local_weather ||
-            wrapper.message().magic_action().type() == sword::MagicAction::local_weather_destruction )
-            workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                   ( wrapper.message().magic_action()                       , nCtx, clientId );
-        else if( wrapper.message().magic_action().type() == sword::MagicAction::change_diplomacy )
-            workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx, clientId );
-        else if( wrapper.message().magic_action().type() == sword::MagicAction::change_resource_network_properties )
-            workspace.GetEntityManager        ().OnReceiveChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx, clientId );
-        else if( wrapper.message().magic_action().type() == sword::MagicAction::create_fire_order_on_location )
-            workspace.GetEntityManager        ().OnReceiveCreateFireOrderOnLocation  ( wrapper.message().magic_action()                       , nCtx, clientId );
-        else if( wrapper.message().magic_action().type() == sword::MagicAction::create_knowledge_group )
-            workspace.GetEntityManager        ().OnReceiveKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx, clientId );
+    else if( msg.has_control_resume() )
+        simulation_.Resume( msg.control_resume().has_tick() ?
+                msg.control_resume().tick() : 0, nCtx, clientId );
+    else if( msg.has_control_change_time_factor() )
+        simulation_.SetTimeFactor( msg.control_change_time_factor().time_factor() );
+    else if( msg.has_control_date_time_change() )
+        simulation_.SetRealTime( msg.control_date_time_change().date_time().data() );
+    else if( msg.has_control_checkpoint_save_now() )
+        wk.GetCheckPointManager().OnReceiveMsgCheckPointSaveNow(
+                msg.control_checkpoint_save_now(), clientId, nCtx );
+    else if( msg.has_control_checkpoint_set_frequency() )
+        wk.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency(
+                msg.control_checkpoint_set_frequency() );
+    else if( msg.has_control_toggle_vision_cones() )
+        em.OnReceiveControlToggleVisionCones( msg.control_toggle_vision_cones() );
+    else if( msg.has_unit_order() )
+        em.OnReceiveUnitOrder( msg.unit_order(), nCtx, clientId );
+    else if( msg.has_automat_order() )
+        em.OnReceiveAutomatOrder( msg.automat_order(), nCtx, clientId );
+    else if( msg.has_crowd_order() )
+        em.OnReceiveCrowdOrder( msg.crowd_order(), nCtx, clientId );
+    else if( msg.has_frag_order() )
+        em.OnReceiveFragOrder( msg.frag_order(), nCtx, clientId );
+    else if( msg.has_set_automat_mode() )
+        em.OnReceiveSetAutomateMode( msg.set_automat_mode(), nCtx, clientId );
+    else if( msg.has_unit_creation_request() )
+        em.OnReceiveUnitCreationRequest( msg.unit_creation_request(), nCtx );
+    else if( msg.has_knowledge_magic_action() )
+        em.OnReceiveKnowledgeMagicAction( msg.knowledge_magic_action(), nCtx, clientId );
+    else if( msg.has_unit_magic_action() )
+        em.OnReceiveUnitMagicAction( msg.unit_magic_action(), nCtx, clientId );
+    else if( msg.has_object_magic_action() )
+        em.OnReceiveObjectMagicAction( msg.object_magic_action(), nCtx );
+    else if( msg.has_burning_cell_request() )
+        em.OnReceiveBurningCellRequest( msg.burning_cell_request(), nCtx );
+    else if( msg.has_magic_action() )
+    {
+        const auto& action = msg.magic_action();
+        const auto type = action.type();
+        if( type == sword::MagicAction::global_weather ||
+            type == sword::MagicAction::local_weather ||
+            type == sword::MagicAction::local_weather_destruction )
+            wk.GetMeteoDataManager().OnReceiveMsgMeteo( action, nCtx, clientId );
+        else if( type == sword::MagicAction::change_diplomacy )
+            em.OnReceiveChangeDiplomacy( action, nCtx, clientId );
+        else if( type == sword::MagicAction::change_resource_network_properties )
+            em.OnReceiveChangeResourceLinks( action, nCtx, clientId );
+        else if( type == sword::MagicAction::create_fire_order_on_location )
+            em.OnReceiveCreateFireOrderOnLocation( action, nCtx, clientId );
+        else if( type == sword::MagicAction::create_knowledge_group )
+            em.OnReceiveKnowledgeGroupCreation( action, nCtx, clientId );
+    }
 }
 
 // -----------------------------------------------------------------------------
