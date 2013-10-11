@@ -79,7 +79,7 @@ func (s *TestSuite) TestLogin(c *C) {
 }
 
 func (s *TestSuite) TestMaxConnections(c *C) {
-	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
+	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false, 0)
 	defer sim.Stop()
 
 	// Authenticate a maximum of clients
