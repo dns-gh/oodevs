@@ -375,7 +375,7 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 
 	// Invalid automat type
 	_, err = client.CreateAutomat(formation.Id, 0, InvalidIdentifier, kg0.Id)
-	c.Assert(err, IsSwordError, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid knowledge group
 	_, err = client.CreateAutomat(formation.Id, 0, automatType, InvalidIdentifier)
