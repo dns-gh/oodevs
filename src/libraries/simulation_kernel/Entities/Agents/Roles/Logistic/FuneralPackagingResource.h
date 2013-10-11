@@ -10,12 +10,10 @@
 #ifndef __FuneralPackagingResource_ABC_h_
 #define __FuneralPackagingResource_ABC_h_
 
-#include <boost/enable_shared_from_this.hpp>
-
 class PHY_DotationCategory;
 
-namespace logistic {
-
+namespace logistic
+{
 // =============================================================================
 /** @class  FuneralPackingResource
     @brief  FuneralPackingResource
@@ -27,8 +25,7 @@ class FuneralPackagingResource
 public:
     //! @name Constructors/Destructor
     //@{
-    FuneralPackagingResource( xml::xistream& xis );
-    virtual ~FuneralPackagingResource();
+    explicit FuneralPackagingResource( xml::xistream& xis );
     //@}
 
     //! @name Getters
@@ -44,7 +41,7 @@ private:
     bool terminal_;
 };
 
-} // end namespace logistic
+}
 
 #endif // __FuneralPackagingResource_ABC_h_
 

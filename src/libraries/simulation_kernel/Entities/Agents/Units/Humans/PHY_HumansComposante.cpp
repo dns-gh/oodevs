@@ -405,60 +405,62 @@ void PHY_HumansComposante::serialize( Archive& file, const unsigned int )
     assert( pComposante_ );
 }
 
+namespace
+{
+    const PHY_HumanWound& GetWound( const sword::MissionParameter_Value& elem )
+    {
+        sword::EnumHumanState state = static_cast< sword::EnumHumanState >( elem.list( 2 ).enumeration() );
+        sword::EnumInjuriesSeriousness seriousness = sword::wounded_u1;
+        if( state == sword::injured )
+            seriousness = static_cast< sword::EnumInjuriesSeriousness >( elem.list( 3 ).list( 0 ).list( 1 ).enumeration() );
+        switch( state )
+        {
+        case sword::healthy:
+            return PHY_HumanWound::notWounded_;
+        case sword::injured:
+            if( seriousness == sword::wounded_u1 )
+                return PHY_HumanWound::woundedU1_;
+            if( seriousness == sword::wounded_u2 )
+                return PHY_HumanWound::woundedU2_;
+            if( seriousness == sword::wounded_u3 )
+                return PHY_HumanWound::woundedU3_;
+            return PHY_HumanWound::woundedUE_;
+        case sword::deadly:
+        default:
+            return PHY_HumanWound::killed_;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::ChangeHumanState
 // Created: ABR 2011-08-12
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::ChangeHumanState( sword::MissionParameters& msg )
 {
-    std::vector< std::size_t > done;
-    for( int i = 0 ; i < msg.elem( 0 ).value_size(); ++i )
+    std::set< boost::shared_ptr< Human_ABC > > done;
+    for( int i = 0; i < msg.elem( 0 ).value_size() && done.size() != humans_.size(); ++i )
     {
         sword::MissionParameter_Value& elem = *msg.mutable_elem( 0 )->mutable_value()->Mutable( i );
-        const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
-        unsigned int number = static_cast< unsigned int >( elem.list( 0 ).quantity() );
+        const PHY_HumanRank* rank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
+        int32_t number = elem.list( 0 ).quantity();
         if( number == 0 )
             continue;
-        sword::EnumHumanState state = static_cast< sword::EnumHumanState >( elem.list( 2 ).enumeration() );
-        sword::EnumInjuriesSeriousness seriousness = sword::wounded_u1;
-        if( state == sword::injured )
-            seriousness = static_cast< sword::EnumInjuriesSeriousness >( elem.list( 3 ).list( 0 ).list( 1 ).enumeration() );
+        const PHY_HumanWound& wound = GetWound( elem );
         bool psyop = elem.list( 4 ).booleanvalue();
         bool contaminated = elem.list( 5 ).booleanvalue();
-        const PHY_HumanWound* pWound = &PHY_HumanWound::killed_;
-        switch( state ) // $$$$ ABR 2011-08-29: waiting story 660
+        for( auto it = humans_.begin(); it != humans_.end() && number; ++it )
         {
-        case sword::healthy:
-            pWound = &PHY_HumanWound::notWounded_;
-            break;
-        case sword::injured:
-            if( seriousness == sword::wounded_u1 )
-                pWound = &PHY_HumanWound::woundedU1_;
-            else if( seriousness == sword::wounded_u2 )
-                pWound = &PHY_HumanWound::woundedU2_;
-            else if( seriousness == sword::wounded_u3 )
-                pWound = &PHY_HumanWound::woundedU3_;
-            else if( seriousness == sword::wounded_ue )
-                pWound = &PHY_HumanWound::woundedUE_;
-            break;
-        case sword::deadly:
-        default:
-            break;
-        }
-        for( std::size_t i = 0; i < humans_.size() && number; ++i )
-        {
-            if( std::find( done.begin(), done.end(), i ) != done.end() )
+            if( done.find( *it ) != done.end() )
                 continue;
-            const boost::shared_ptr< Human_ABC >& human = humans_[ i ];
-            if( human->GetRank() != *pHumanRank )
+            const boost::shared_ptr< Human_ABC >& human = *it;
+            if( (*it)->GetRank() != *rank )
                 continue;
-            done.push_back( i );
-            human->SetState( *pWound, psyop, contaminated );
+            done.insert( *it );
+            human->SetState( wound, psyop, contaminated );
             --number;
         }
         elem.mutable_list( 0 )->set_quantity( number );
-        if( done.size() == humans_.size() )
-            break;
     }
 }
 

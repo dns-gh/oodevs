@@ -143,10 +143,6 @@ void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
     file & supplyConsigns_;
 }
 
-// =============================================================================
-// INIT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::ReadLogisticLink
 // Created: NLD 2006-10-19
@@ -164,10 +160,6 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
     pLogisticHierarchy_->WriteODB( xos );
 }
-
-// =============================================================================
-// MAINTENANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MaintenanceHandleComposanteForTransport
@@ -388,10 +380,6 @@ void MIL_AutomateLOG::NotifyQuotaExceeded( const PHY_DotationCategory& dotationC
     }
 }
 
-// =============================================================================
-// SUPPLY
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyHandleRequest
 // Created: NLD 2005-02-02
@@ -600,7 +588,7 @@ bool MIL_AutomateLOG::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::AddSupplyConvoysObserver
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
@@ -609,7 +597,7 @@ void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::RemoveSupplyConvoysObserver
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
@@ -618,16 +606,7 @@ void MIL_AutomateLOG::RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserv
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
-// Created: NLD 2011-07-20
-// -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::FuneralHandleConsign( boost::shared_ptr< logistic::FuneralConsign_ABC > consign )
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::FuneralGetNextPackagingResource
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagingResource( const logistic::FuneralPackagingResource* currentPackaging )
@@ -641,13 +620,8 @@ const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagi
         visitor.selected_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, visitor.nextPackagingResource_->GetDotationCategory(), quantity );
         return visitor.nextPackagingResource_;
     }
-    else
-        return 0;
+    return 0;
 }
-
-// =============================================================================
-// Update
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::UpdateLogistic
@@ -668,10 +642,6 @@ void MIL_AutomateLOG::Clean()
     BOOST_FOREACH( T_SupplyRequests::value_type& data, supplyRequests_ )
         data->Clean();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SendFullState
@@ -712,8 +682,7 @@ unsigned int MIL_AutomateLOG::GetLogisticId() const
     assert( pAssociatedFormation_ || pAssociatedAutomate_ );
     if( pAssociatedFormation_ )
         return pAssociatedFormation_->GetID();
-    else // if( pAssociatedAutomate_ )
-        return pAssociatedAutomate_->GetID();
+    return pAssociatedAutomate_->GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -764,7 +733,7 @@ const PHY_LogisticLevel& MIL_AutomateLOG::GetLogisticLevel() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& MIL_AutomateLOG::GetPosition() const
 {
-    static MT_Vector2D none;
+    static const MT_Vector2D none;
     return GetPC() ? GetPC()->GetRole< PHY_RoleInterface_Location >().GetPosition() : none;
 }
 

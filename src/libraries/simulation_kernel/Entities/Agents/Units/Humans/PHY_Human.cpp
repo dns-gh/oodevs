@@ -472,14 +472,10 @@ void PHY_Human::Update()
                 MIL_Report::PostEvent( GetPion(), report::eRC_DecesBlesse );
         }
     }
-
     if( !IsJammed() )
     {
-        // Logistic requests - $$$ A refactorer...
         if( NeedMedical() && !pMedicalState_ )
             const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
-
-        // Funeral
         if( IsDead() && !funeralConsign_ )
             funeralConsign_.reset( new logistic::FuneralConsign( *this ) );
         else if( funeralConsign_ && ( !IsDead() || funeralConsign_->IsFinished() ) )
@@ -488,8 +484,6 @@ void PHY_Human::Update()
             funeralConsign_.reset();
         }
     }
-
-    //$$$ A déplacer dans une action logistique (ou un truc mieux ...)
     if( funeralConsign_ )
         funeralConsign_->Update();
 }
@@ -618,10 +612,11 @@ bool PHY_Human::NeedEvacuation() const
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::SetMedicalState
-// Created: MGd 2009-10-01
+// Created: MGD 2009-10-01
 // -----------------------------------------------------------------------------
 void PHY_Human::SetMedicalState( PHY_MedicalHumanState* pMedicalState )
 {
+    delete pMedicalState_;
     pMedicalState_ = pMedicalState;
 }
 

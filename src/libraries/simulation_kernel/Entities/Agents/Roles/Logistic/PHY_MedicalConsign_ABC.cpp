@@ -73,10 +73,7 @@ bool PHY_MedicalConsign_ABC::HasValidHumanState() const
 // -----------------------------------------------------------------------------
 bool PHY_MedicalConsign_ABC::IsAnEmergency() const
 {
-    assert( pHumanState_ );
-    if( pHumanState_)
-        return pHumanState_->IsAnEmergency();
-    return false;
+    return pHumanState_ && pHumanState_->IsAnEmergency();
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +93,6 @@ void PHY_MedicalConsign_ABC::ClearConsign()
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::Cancel()
 {
-    assert( pHumanState_ );
     SetState( eFinished );
     ResetTimer( 0 );
     pHumanState_ = 0;
@@ -118,7 +114,6 @@ void PHY_MedicalConsign_ABC::EnterStateFinished()
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::SendFullState( client::LogMedicalHandlingUpdate& asn ) const
 {
-    assert( pHumanState_ );
     assert( pMedical_ );
     asn().mutable_provider()->set_id( pMedical_->GetID() );
     asn().set_state( sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus( nState_ ) );
@@ -236,7 +231,7 @@ PHY_RoleInterface_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay
+// Name: PHY_MedicalConsign_ABC::FinishSuccessfullyWithoutDelay
 // Created: NLD 2006-08-11
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::FinishSuccessfullyWithoutDelay()

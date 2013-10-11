@@ -185,11 +185,11 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingFrom()
     assert( pMedical_ );
     assert( pCompAmbulance_ );
     MT_Vector2D vHumansBarycenter;
-    for( auto itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
     {
-        (**itConsign).EnterStateEvacuationGoingFrom();
-        if( (**itConsign).HasValidHumanState() )
-            vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
+        (*it)->EnterStateEvacuationGoingFrom();
+        if( (*it)->HasValidHumanState() )
+            vHumansBarycenter += (*it)->GetHumanState().GetHumanPosition();
     }
     vHumansBarycenter /= static_cast< double >( consigns_.size() );
     nState_ = eGoingFrom;

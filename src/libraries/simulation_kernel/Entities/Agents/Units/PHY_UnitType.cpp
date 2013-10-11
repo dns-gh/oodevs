@@ -232,8 +232,7 @@ void PHY_UnitType::InitializeCommanderRepartition( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
 {
-    const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    PHY_HumanRank::CIT_HumanRankMap it = ranks.find( xis.attribute< std::string >( "type" ) );
+    auto it = PHY_HumanRank::GetHumanRanks().find( xis.attribute< std::string >( "type" ) );
     const PHY_HumanRank& rank = *it->second;
     if( !rank.IsCommander() )
         return;

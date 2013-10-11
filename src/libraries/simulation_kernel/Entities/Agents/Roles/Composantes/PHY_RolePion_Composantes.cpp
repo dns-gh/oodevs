@@ -1974,19 +1974,10 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
 // Name: PHY_RolePion_Composantes::ChangeHumanState
 // Created: ABR 2011-08-11
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters& msg )
+void PHY_RolePion_Composantes::ChangeHumanState( sword::MissionParameters msg )
 {
-    sword::MissionParameters copy = msg;
-    for( auto itCurrentComp = composantes_.begin(); itCurrentComp != composantes_.end(); ++itCurrentComp )
-        ( *itCurrentComp )->ChangeHumanState( copy );
-    int remaining = 0;
-    for( int i = 0 ; i < copy.elem( 0 ).value_size(); ++i )
-    {
-        const sword::MissionParameter_Value& elem = copy.elem( 0 ).value().Get( i );
-        remaining += static_cast< unsigned int >( elem.list( 0 ).quantity() );
-    }
-    if( remaining )
-        MT_LOG_WARNING_MSG( "Agent " << owner_->GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining." );
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        (*it)->ChangeHumanState( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1995,13 +1986,9 @@ void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters&
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::CanEvacuateCasualties() const
 {
-    for( auto itCurrentComp = composantes_.begin(); itCurrentComp != composantes_.end(); ++itCurrentComp )
-    {
-        const PHY_ComposantePion& composante = **itCurrentComp;
-        const PHY_ComposanteTypePion& compType = composante.GetType();
-        if( compType.CanEvacuateCasualties() )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( (*it)->GetType().CanEvacuateCasualties() )
             return true;
-    }
     return false;
 }
 

@@ -29,8 +29,6 @@
 
 using namespace logistic;
 
-//$$$$ TMP
-
 LogisticVirtualAction::LogisticVirtualAction()
     : currentActionId_( std::numeric_limits< unsigned >::max() )
     , timeRemainingForCurrentAction_( std::numeric_limits< unsigned >::max() )
@@ -50,11 +48,10 @@ unsigned LogisticVirtualAction::GetTimeRemaining( unsigned actionId, unsigned du
     else
     {
         currentActionId_ = actionId;
-        timeRemainingForCurrentAction_ = duration;//(unsigned int)( timeComputer( static_cast< double >( conveyors_.size() ) ) );
+        timeRemainingForCurrentAction_ = duration;
     }
     return timeRemainingForCurrentAction_;
 }
-//$$$$ TMP
 
 namespace
 {
@@ -156,17 +153,13 @@ unsigned FuneralConsign::MoveTo( const MT_Vector2D& position )
 void FuneralConsign::DoWaitForHandling()
 {
     tools::Iterator< MIL_AutomateLOG& > it = human_.GetPion().GetLogisticHierarchy().CreateSuperiorsIterator();
-    while( it.HasMoreElements() )
+    if( it.HasMoreElements() )
     {
         FuneralHandler_ABC& handler = it.NextElement();
-        if( handler.FuneralHandleConsign( shared_from_this() ) )
-        {
-            if( handler_ )
-                handler_->RemoveSupplyConvoysObserver( *this );
-            handler_ = &handler;
-            SetState( eTransportingUnpackaged );
-            return;
-        }
+        if( handler_ )
+            handler_->RemoveSupplyConvoysObserver( *this );
+        handler_ = &handler;
+        SetState( eTransportingUnpackaged );
     }
 }
 
@@ -207,7 +200,6 @@ void FuneralConsign::DoPackage()
     assert( packaging_ );
     if( !IsActionDone( currentAction_.GetTimeRemaining( ePackaging, packaging_->GetProcessDuration() ) ) )
         return;
-
     DoTransitionAfterPackaging();
 }
 
@@ -249,7 +241,7 @@ bool FuneralConsign::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FuneralConsign::Update
+// Name: FuneralConsign::Cancel
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 void FuneralConsign::Cancel()
@@ -359,7 +351,6 @@ void FuneralConsign::SendChangedState() const
 {
     if( !needNetworkUpdate_ )
         return;
-
     client::LogFuneralHandlingUpdate msg;
     msg().mutable_request()->set_id( id_ );
     msg().set_state( (sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus)state_ );

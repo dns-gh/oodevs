@@ -326,11 +326,8 @@ void LogisticHierarchy::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void LogisticHierarchy::SendFullState( unsigned int context ) const
 {
-    // Links creation
     SendLinks( context );
-
-    // Links attributes
-    std::for_each( superiorLinks_.begin(), superiorLinks_.end(), boost::bind( &LogisticLink_ABC::SendFullState, _1, context ));
+    boost::for_each( superiorLinks_, boost::bind( &LogisticLink_ABC::SendFullState, _1, context ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +343,7 @@ void LogisticHierarchy::SendChangedState() const
     }
     else
         // Links attributes
-        std::for_each( superiorLinks_.begin(), superiorLinks_.end(), boost::bind( &LogisticLink_ABC::SendChangedState, _1 ) );
+        boost::for_each( superiorLinks_, boost::mem_fn( &LogisticLink_ABC::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------

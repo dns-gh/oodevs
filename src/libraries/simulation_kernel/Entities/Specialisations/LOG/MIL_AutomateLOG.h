@@ -156,7 +156,6 @@ public:
     virtual void AddSupplyConvoysObserver   ( logistic::SupplyConvoysObserver_ABC& observer );
     virtual void RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer );
 
-    virtual bool                            FuneralHandleConsign           ( boost::shared_ptr< logistic::FuneralConsign_ABC > consign );
     virtual const logistic::FuneralPackagingResource* FuneralGetNextPackagingResource( const logistic::FuneralPackagingResource* currentPackaging );
     //@}
 

@@ -34,10 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual const MT_Vector2D&           GetPosition() const = 0;
+    virtual const MT_Vector2D& GetPosition() const = 0;
     virtual const LogisticHierarchy_ABC& GetLogisticHierarchy() const = 0;
 
-    virtual bool                            FuneralHandleConsign           ( boost::shared_ptr< FuneralConsign_ABC > consign ) = 0;
     virtual const FuneralPackagingResource* FuneralGetNextPackagingResource( const FuneralPackagingResource* currentPackaging ) = 0;
 
     virtual void AddSupplyConvoysObserver   ( SupplyConvoysObserver_ABC& observer ) = 0;

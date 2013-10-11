@@ -20,33 +20,17 @@ using namespace logistic;
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 FuneralPackagingResource::FuneralPackagingResource( xml::xistream& xis )
+    : dotationCategory_( PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "resource" ) ) )
+    , processDuration_ ( 0 )
+    , terminal_        ( xis.attribute< bool >( "terminal" ) )
 {
-    std::string resource;
-    xis >> xml::attribute( "resource", resource );
-    dotationCategory_ = PHY_DotationType::FindDotationCategory( resource );
     if( !dotationCategory_ )
         throw MASA_EXCEPTION( xis.context() + "Invalid resource " );
-
     tools::ReadTimeAttribute( xis, "process-duration", processDuration_ );
     if( processDuration_ < 0 )
         throw MASA_EXCEPTION( xis.context() + "Invalid process duration" );
     processDuration_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( processDuration_ ) );
-
-    xis >> xml::attribute( "terminal", terminal_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: FuneralPackagingResource destructor
-// Created: NLD 2011-08-24
-// -----------------------------------------------------------------------------
-FuneralPackagingResource::~FuneralPackagingResource()
-{
-    // NOTHING
-}
-
-// =============================================================================
-// Getters
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: FuneralPackagingResource::GetDotationCategory
@@ -54,7 +38,6 @@ FuneralPackagingResource::~FuneralPackagingResource()
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory& FuneralPackagingResource::GetDotationCategory() const
 {
-    assert( dotationCategory_ );
     return *dotationCategory_;
 }
 

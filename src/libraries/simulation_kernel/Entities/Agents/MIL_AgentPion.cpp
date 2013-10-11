@@ -1927,7 +1927,6 @@ void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& m
                                        !sword::EnumInjuriesSeriousness_IsValid( elem.list( 3 ).list( 0 ).list( 1 ).enumeration() ),
                                        i, 3, "invalid injuries seriousness" );
     }
-
     GetRole< PHY_RolePion_Composantes >().ChangeHumanState( msg );
 }
 

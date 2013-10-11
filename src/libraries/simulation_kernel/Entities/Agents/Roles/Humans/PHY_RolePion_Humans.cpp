@@ -327,8 +327,7 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 )
 {
-    PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( *owner_, human );
-    human.SetMedicalState( pMedicalHumanState );
+    human.SetMedicalState( destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( *owner_, human ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -349,9 +348,7 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
     if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )
         MIL_Report::PostEvent( *owner_, report::eRC_DemandeEvacuationSanitaire );
     nTickRcMedicalQuerySent_ = nCurrentTick;
-
-    PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( *owner_, human );
-    human.SetMedicalState( pMedicalHumanState );
+    human.SetMedicalState( pTC2->MedicalHandleHumanForEvacuation( *owner_, human ) );
 }
 
 // -----------------------------------------------------------------------------

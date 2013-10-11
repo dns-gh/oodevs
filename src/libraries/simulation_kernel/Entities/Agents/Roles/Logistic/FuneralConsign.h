@@ -21,7 +21,6 @@ namespace logistic
     class FuneralPackagingResource;
     class SupplyConvoy_ABC;
 
-//$$$$$ DEGUEU TEST
 class LogisticVirtualAction
 {
 public:
