@@ -42,6 +42,7 @@ ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( const QString& objec
     verticalHeader()->setVisible( false );
     delegate_.AddSpinBoxOnColumn( 0, 1, INT_MAX );
     delegate_.AddDoubleSpinBoxOnColumn( 1 );
+    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
