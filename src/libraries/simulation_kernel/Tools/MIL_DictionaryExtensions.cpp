@@ -182,3 +182,12 @@ void MIL_DictionaryExtensions::ReadExtensions( const sword::Extension& extension
         extensions_[ entry.name() ] = entry.value();
     }
 }
+
+void MIL_DictionaryExtensions::ReadExtensions( const std::vector< Extension >& extensions )
+{
+    for( auto it = extensions.cbegin(); it != extensions.cend(); ++it )
+    {
+        hasChanged_ = hasChanged_ || extensions_[ it->first ] != it->second;
+        extensions_[ it->first ] = it->second;
+    }
+}

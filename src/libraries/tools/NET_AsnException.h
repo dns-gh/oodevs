@@ -43,7 +43,7 @@ private:
     //@}
 };
 
-#define MASA_EXCEPTION_ASN( ErrorIdType, ErrorId ) NET_AsnException< ErrorIdType >( ErrorId, __FILE__, __FUNCTION__, __LINE__, "Invalid parameter in ASN message" )
+#define MASA_EXCEPTION_ASN( ErrorIdType, ErrorId ) NET_AsnException< ErrorIdType >( ErrorId, __FILE__, __FUNCTION__, __LINE__, "invalid message" )
 
 template< typename T>
 class NET_AsnBadParam : public NET_AsnException< T >

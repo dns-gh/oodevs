@@ -26,9 +26,19 @@
         sword::UnitActionAck::error_invalid_parameter,\
         STR( reason ) )
 
+#define MASA_BADUNIT_UNIT( reason )\
+    MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,\
+        sword::UnitActionAck::error_invalid_unit,\
+        STR( reason ) )
+
 #define MASA_BADPARAM_ORDER( reason )\
     MASA_BADPARAM_ASN( sword::OrderAck::ErrorCode,\
         sword::OrderAck::error_invalid_parameter,\
+        STR( reason ) )
+
+#define MASA_BADUNIT_ORDER( reason )\
+    MASA_BADPARAM_ASN( sword::OrderAck::ErrorCode,\
+        sword::OrderAck::error_invalid_unit,\
         STR( reason ) )
 
 namespace boost

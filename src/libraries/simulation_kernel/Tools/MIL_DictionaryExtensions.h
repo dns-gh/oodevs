@@ -34,6 +34,8 @@ class MIL_DictionaryExtensions : private boost::noncopyable
 {
 
 public:
+    typedef std::pair< std::string, std::string > Extension;
+
     //! @name Constructors/Destructor
     //@{
              MIL_DictionaryExtensions();
@@ -51,6 +53,7 @@ public:
     void UpdateNetwork( T& msg );
     void OnReceiveMsgChangeExtensions( const sword::UnitMagicAction& msg );
     void ReadExtensions( const sword::Extension& extensions );
+    void ReadExtensions( const std::vector< Extension >& extensions );
     bool HasChanged() const;
     bool IsEmpty() const;
     //@}

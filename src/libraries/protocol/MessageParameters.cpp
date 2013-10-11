@@ -51,6 +51,7 @@ namespace
 
     MAKE_DESCRIPTOR( Bool, bool, booleanvalue, "boolean" );
     MAKE_DESCRIPTOR( Enumeration, int, enumeration, "enumeration" );
+    MAKE_DESCRIPTOR( ExtensionList, const sword::Extension&, extensionlist, "extensionlist" );
     MAKE_DESCRIPTOR( Identifier, uint32_t, identifier, "identifier" );
     MAKE_DESCRIPTOR( Location, const sword::Location&, location, "location" );
     MAKE_DESCRIPTOR( Point, const sword::Point&, point, "point" );
@@ -60,8 +61,12 @@ namespace
     #undef MAKE_DESCRIPTOR
 
     MAKE_DESCRIPTOR2( AgentId, uint32_t, agent, id, "agent id" );
+    MAKE_DESCRIPTOR2( AutomatId, uint32_t, automat, id, "automat id" );
     MAKE_DESCRIPTOR2( DateTime, const std::string&, datetime, data, "datetime" );
+    MAKE_DESCRIPTOR2( FormationId, uint32_t, formation, id, "formation id" );
     MAKE_DESCRIPTOR2( Heading, int, heading, heading, "heading" );
+    MAKE_DESCRIPTOR2( KnowledgeGroup, uint32_t, knowledgegroup, id, "knowledgegroup" );
+    MAKE_DESCRIPTOR2( PartyId, uint32_t, party, id, "party id" );
     #undef MAKE_DESCRIPTOR2
 
     std::string GetIndex( int i, int j, int k )
@@ -210,8 +215,42 @@ uint32_t protocol::GetIdentifier( const sword::MissionParameters& params, int i,
     return GetValue< Identifier >( params, i, j, k );
 }
 
+uint32_t protocol::GetKnowledgeGroup( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< KnowledgeGroup >( params, i, j, k );
+}
+
 uint32_t protocol::GetAgentId( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< AgentId >( params, i, j, k );
 }
 
+uint32_t protocol::GetAutomatId( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< AutomatId >( params, i, j, k );
+}
+
+uint32_t protocol::GetFormationId( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< FormationId >( params, i, j, k );
+}
+
+uint32_t protocol::GetPartyId( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< PartyId >( params, i, j, k );
+}
+
+std::vector< protocol::Extension > protocol::GetExtensionList(
+        const sword::MissionParameters& params, int i )
+{
+    const auto& extensions = GetValue< ExtensionList >( params, i, -1, -1 );
+    const int count = extensions.entries_size();
+    std::vector< protocol::Extension > values;
+    values.reserve( count );
+    for( int n = 0; n != count; ++n )
+    {
+        const auto& e = extensions.entries( n );
+        values.push_back( protocol::Extension( e.name(), e.value() ));
+    }
+    return values;
+}
