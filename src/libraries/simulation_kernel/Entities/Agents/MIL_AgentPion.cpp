@@ -1182,6 +1182,8 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void  MIL_AgentPion::OnReceiveDestroyAll()
 {
+    if( markedForDestruction_ )
+        throw MASA_BADUNIT_UNIT( "invalid unit: " << GetID() );
     GetRole< PHY_RolePion_Composantes >().DestroyAllComposantes();
     GetRole< PHY_RolePion_Composantes >().KillAllHumans();
 }
