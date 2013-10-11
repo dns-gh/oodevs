@@ -1,0 +1,14 @@
+---
+AccessModifierOffset: -4
+BreakBeforeBraces: Allman
+BreakConstructorInitializersBeforeComma: true
+ColumnLimit: 0
+IndentCaseLabels: true
+IndentWidth: 4
+NamespaceIndentation: Inner
+PointerBindsToType: true
+SpaceAfterControlStatementKeyword: false
+SpaceInEmptyParentheses: false
+SpacesInParentheses: true
+Standard: Auto
+...
