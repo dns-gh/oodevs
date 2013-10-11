@@ -60,7 +60,7 @@ public:
     static std::string GetMilPionName( DEC_Decision_ABC* pion );
     static void ImmunizeAgent( MIL_Agent_ABC& callerAgent );  // deprecated
     static void StopImmunizeAgent( MIL_Agent_ABC& callerAgent );  // deprecated
-    static double GetMaxSpeed( MIL_Agent_ABC& agent );
+    static double GetMaxSpeed( DEC_Decision_ABC* agent );
     static bool AgentHasFuseau( const MIL_Agent_ABC&  agent );
     static bool CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool CanConstructObjectWithLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location );
