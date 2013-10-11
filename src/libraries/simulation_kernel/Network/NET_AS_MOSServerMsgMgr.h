@@ -19,6 +19,7 @@ namespace sword
     class SimToClient;
     class ClientToSim;
     class DispatcherToSim;
+    class MagicAction;
 }
 
 class NET_AgentServer;
@@ -50,6 +51,7 @@ private:
     void OnReceiveClient( const std::string& from, const sword::ClientToSim& message );
     void OnReceiveMiddle( const std::string& from, const sword::DispatcherToSim& message );
     void OnReceiveCtrlClientAnnouncement( const std::string& from );
+    void OnReceiveMagicAction( const sword::MagicAction& msg, uint32_t ctx, uint32_t clientId );
     //@}
 
     //! @name Types

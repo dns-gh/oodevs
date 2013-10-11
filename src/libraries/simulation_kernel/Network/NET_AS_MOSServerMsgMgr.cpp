@@ -120,22 +120,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( msg.has_burning_cell_request() )
         em.OnReceiveBurningCellRequest( msg.burning_cell_request(), nCtx );
     else if( msg.has_magic_action() )
-    {
-        const auto& action = msg.magic_action();
-        const auto type = action.type();
-        if( type == sword::MagicAction::global_weather ||
-            type == sword::MagicAction::local_weather ||
-            type == sword::MagicAction::local_weather_destruction )
-            wk.GetMeteoDataManager().OnReceiveMsgMeteo( action, nCtx, clientId );
-        else if( type == sword::MagicAction::change_diplomacy )
-            em.OnReceiveChangeDiplomacy( action, nCtx, clientId );
-        else if( type == sword::MagicAction::change_resource_network_properties )
-            em.OnReceiveChangeResourceLinks( action, nCtx, clientId );
-        else if( type == sword::MagicAction::create_fire_order_on_location )
-            em.OnReceiveCreateFireOrderOnLocation( action, nCtx, clientId );
-        else if( type == sword::MagicAction::create_knowledge_group )
-            em.OnReceiveKnowledgeGroupCreation( action, nCtx, clientId );
-    }
+        OnReceiveMagicAction( msg.magic_action(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,4 +151,24 @@ void NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement( const std::string&
     client::ControlSendCurrentStateBegin().Send( NET_Publisher_ABC::Publisher() );
     MIL_AgentServer::GetWorkspace().SendStateToNewClient();
     client::ControlSendCurrentStateEnd().Send( NET_Publisher_ABC::Publisher() );
+}
+
+void NET_AS_MOSServerMsgMgr::OnReceiveMagicAction( const sword::MagicAction& msg,
+        uint32_t ctx, uint32_t clientId )
+{
+    MIL_AgentServer& wk = MIL_AgentServer::GetWorkspace();
+    MIL_EntityManager& em = wk.GetEntityManager();
+    const auto type = msg.type();
+    if( type == sword::MagicAction::global_weather ||
+        type == sword::MagicAction::local_weather ||
+        type == sword::MagicAction::local_weather_destruction )
+        wk.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ctx, clientId );
+    else if( type == sword::MagicAction::change_diplomacy )
+        em.OnReceiveChangeDiplomacy( msg, ctx, clientId );
+    else if( type == sword::MagicAction::change_resource_network_properties )
+        em.OnReceiveChangeResourceLinks( msg, ctx, clientId );
+    else if( type == sword::MagicAction::create_fire_order_on_location )
+        em.OnReceiveCreateFireOrderOnLocation( msg, ctx, clientId );
+    else if( type == sword::MagicAction::create_knowledge_group )
+        em.OnReceiveKnowledgeGroupCreation( msg, ctx, clientId );
 }
