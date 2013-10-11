@@ -200,6 +200,7 @@ void RegisterAgentKnowledgeFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ObjectKnowledge_IsPositionInside", &DEC_KnowledgeFunctions::IsPositionInsideObjectOfType );
     brain.RegisterFunction( "DEC_GetModulationVitesseMax", &DEC_MiscFunctions::GetMaxSpeedModificator );
     brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
+    brain.RegisterMethod( "DEC_AgentKnowledge_Relevance", &DEC_Knowledge_Agent::GetRelevance );
 }
 
 // -----------------------------------------------------------------------------
