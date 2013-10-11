@@ -10,14 +10,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MedicalConsign_ABC.h"
-
 #include "PHY_MedicalHumanState.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "MIL_Time_ABC.h"
 #include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
@@ -28,7 +26,7 @@ PHY_MedicalConsign_ABC::PHY_MedicalConsign_ABC( MIL_Agent_ABC& medical, PHY_Medi
     : pMedical_               ( &medical )
     , pHumanState_            ( &humanState )
     , nTimer_                 ( 0 )
-    , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
+    , currentStateEndTimeStep_( std::numeric_limits< int32_t >::max() )
     , bHasChanged_            ( true )
     , nState_                 ( eWaitingForEvacuation )
 {
@@ -43,10 +41,11 @@ PHY_MedicalConsign_ABC::PHY_MedicalConsign_ABC()
     : pMedical_               ( 0 )
     , pHumanState_            ( 0 )
     , nTimer_                 ( 0 )
-    , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
+    , currentStateEndTimeStep_( std::numeric_limits< int32_t >::max() )
     , bHasChanged_            ( true )
     , nState_                 ( eWaitingForEvacuation )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +57,6 @@ PHY_MedicalConsign_ABC::~PHY_MedicalConsign_ABC()
     if( pHumanState_ )
         pHumanState_->SetConsign( 0 );
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC::HasValidHumanState
@@ -95,10 +90,6 @@ void PHY_MedicalConsign_ABC::ClearConsign()
     pHumanState_ = 0;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC::Cancel
 // Created: NLD 2004-12-23
@@ -121,10 +112,6 @@ void PHY_MedicalConsign_ABC::EnterStateFinished()
     ResetTimer( 0 );
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
@@ -144,7 +131,6 @@ void PHY_MedicalConsign_ABC::SendFullState( client::LogMedicalHandlingUpdate& as
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::SendChangedState( client::LogMedicalHandlingUpdate& asn ) const
 {
-    assert( pHumanState_ );
     if( bHasChanged_ )
         SendFullState( asn );
 }
@@ -178,12 +164,12 @@ PHY_MedicalConsign_ABC::E_State PHY_MedicalConsign_ABC::GetState() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalConsign_ABC::ResetTimer
+// Name: PHY_MedicalConsign_ABC::SendExternalTimerValue
 // Created: NLD 2012-01-02
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::SendExternalTimerValue( int timer )
 {
-    unsigned tmp = std::numeric_limits< unsigned >::max();
+    int32_t tmp = std::numeric_limits< int32_t >::max();
     if( timer > 0 )
         tmp = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + timer;
     if( tmp != currentStateEndTimeStep_ )
@@ -259,9 +245,9 @@ void PHY_MedicalConsign_ABC::FinishSuccessfullyWithoutDelay()
     {
         pHumanState_->NotifyHandledByMedical();
         Human_ABC& human = const_cast< Human_ABC& >( pHumanState_->GetHuman() ); //$$$ BEURK
-        human.HealContamination();
         human.HealWound();
         human.HealMentalDisease();
+        human.HealContamination();
         // NB : DO NOT CALL "pHumanState_ = 0; - The consign stays in the last unit forever in the "finished" state
     }
     EnterStateFinished();

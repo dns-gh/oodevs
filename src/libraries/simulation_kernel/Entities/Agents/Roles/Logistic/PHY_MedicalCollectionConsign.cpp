@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MedicalCollectionConsign.h"
 #include "PHY_RoleInterface_Medical.h"
 #include "PHY_MedicalHumanState.h"
@@ -27,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalCollectionConsign )
 // -----------------------------------------------------------------------------
 PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign( MIL_Agent_ABC& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
-    , pCollectionAmbulance_ ( 0 )
+    , pCollectionAmbulance_( 0 )
 {
     EnterStateWaitingForCollection();
 }
@@ -37,8 +36,7 @@ PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign( MIL_Agent_ABC& medic
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign()
-    : PHY_MedicalConsign_ABC()
-    , pCollectionAmbulance_ ( 0 )
+    : pCollectionAmbulance_( 0 )
 {
     // NOTHING
 }
@@ -50,10 +48,7 @@ PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign()
 PHY_MedicalCollectionConsign::~PHY_MedicalCollectionConsign()
 {
     if( pCollectionAmbulance_ )
-    {
         pCollectionAmbulance_->UnregisterHuman( *this );
-        pCollectionAmbulance_ = 0;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -91,23 +86,20 @@ void PHY_MedicalCollectionConsign::EnterStateWaitingForCollection()
 void PHY_MedicalCollectionConsign::CreateCollectionAmbulance()
 {
     assert( pHumanState_ );
-    if( !pCollectionAmbulance_ )
+    if( pCollectionAmbulance_ )
+        return;
+    pCollectionAmbulance_ = GetPionMedical().GetAvailableCollectionAmbulance( *this );
+    if( pCollectionAmbulance_ )
+        return;
+    // Find alternative evacuation unit
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+    if( ! pLogisticManager )
+        return;
+    PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeCollectionHandler( *pHumanState_ );
+    if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForCollection( *pHumanState_ ) )
     {
-        pCollectionAmbulance_ = GetPionMedical().GetAvailableCollectionAmbulance( *this );
-        if( !pCollectionAmbulance_ )
-        {
-            // Find alternative evacuation unit
-            MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
-            if( pLogisticManager )
-            {
-                PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeCollectionHandler( *pHumanState_ );
-                if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForCollection( *pHumanState_ ) )
-                {
-                    EnterStateFinished();
-                    pHumanState_ = 0; // Crade
-                }
-            }
-        }
+        EnterStateFinished();
+        pHumanState_ = 0; // Crade
     }
 }
 
@@ -117,9 +109,7 @@ void PHY_MedicalCollectionConsign::CreateCollectionAmbulance()
 // -----------------------------------------------------------------------------
 void PHY_MedicalCollectionConsign::EnterStateCollectionLoading()
 {
-    // Called by PHY_MedicalCollectionAmbulance
     assert( pHumanState_ );
-//    assert( pCollectionAmbulance_ );
     assert( GetState() == eWaitingForCollection );
     SetState( eCollectionLoading );
     ResetTimer( 0 );
@@ -131,10 +121,8 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionLoading()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalCollectionConsign::EnterStateCollectionWaitingForFullLoading()
 {
-    // Called by PHY_MedicalCollectionAmbulance
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
-
     ResetTimer( 0 );
     if( GetState() == eCollectionLoading )
     {
@@ -151,7 +139,6 @@ bool PHY_MedicalCollectionConsign::EnterStateCollectionWaitingForFullLoading()
 // -----------------------------------------------------------------------------
 void PHY_MedicalCollectionConsign::EnterStateSearchingForDestinationArea()
 {
-    // Called by PHY_MedicalCollectionAmbulance
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
     assert( GetState() == eCollectionWaitingForFullLoading );
@@ -165,7 +152,6 @@ void PHY_MedicalCollectionConsign::EnterStateSearchingForDestinationArea()
 // -----------------------------------------------------------------------------
 void PHY_MedicalCollectionConsign::EnterStateCollectionGoingTo()
 {
-    // Called by PHY_MedicalCollectionAmbulance
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
     assert( GetState() == eSearchingForSortingArea || GetState() == eSearchingForHealingArea );
@@ -179,12 +165,11 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionGoingTo()
 // -----------------------------------------------------------------------------
 void PHY_MedicalCollectionConsign::EnterStateCollectionUnloading()
 {
-    // Called by PHY_MedicalCollectionAmbulance
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
     assert( GetState() == eCollectionGoingTo );
     SetState( eCollectionUnloading );
-    ResetTimer( 0 );;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +188,7 @@ void PHY_MedicalCollectionConsign::TransferToDestinationArea( PHY_RoleInterface_
     else
         destinationArea.HandleHumanForHealing( *pHumanState_ );
     pCollectionAmbulance_ = 0;
-    pHumanState_          = 0;
+    pHumanState_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,10 +202,6 @@ void PHY_MedicalCollectionConsign::NotifyOutOfMedicalSystem()
     pCollectionAmbulance_ = 0;
     ResetTimer( 0 );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionConsign::Update

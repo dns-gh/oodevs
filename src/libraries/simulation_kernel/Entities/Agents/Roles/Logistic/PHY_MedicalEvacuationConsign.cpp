@@ -47,10 +47,10 @@ PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign( MIL_Agent_ABC& medic
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign()
-    : PHY_MedicalConsign_ABC()
-    , pDoctor_              ( 0 )
-    , pEvacuationAmbulance_ ( 0 )
+    : pDoctor_             ( 0 )
+    , pEvacuationAmbulance_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,20 +60,11 @@ PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign()
 PHY_MedicalEvacuationConsign::~PHY_MedicalEvacuationConsign()
 {
     if( pDoctor_ )
-    {
         GetPionMedical().StopUsingForLogistic( *pDoctor_ );
-        pDoctor_ = 0;
-    }
     if( pEvacuationAmbulance_ )
-    {
         pEvacuationAmbulance_->UnregisterHuman( *this );
-        pEvacuationAmbulance_ = 0;
-    }
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationConsign::serialize
 // Created: JVT 2005-04-11
@@ -85,10 +76,6 @@ void PHY_MedicalEvacuationConsign::serialize( Archive& file, const unsigned int 
          & pDoctor_
          & pEvacuationAmbulance_;
 }
-
-// =============================================================================
-// STATES
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationConsign::EnterStateWaitingForEvacuation
@@ -125,24 +112,20 @@ void PHY_MedicalEvacuationConsign::CreateEvacuationAmbulance()
 {
     assert( pHumanState_ );
     assert( !pDoctor_ );
-
-    if( !pEvacuationAmbulance_ )
+    if( pEvacuationAmbulance_ )
+        return;
+    pEvacuationAmbulance_ = GetPionMedical().GetAvailableEvacuationAmbulance( *this );
+    if( pEvacuationAmbulance_ )
+        return;
+    // Find alternative evacuation unit
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+    if( ! pLogisticManager )
+        return;
+    PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeEvacuationHandler( *pHumanState_ );
+    if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForEvacuation( *pHumanState_ ) )
     {
-        pEvacuationAmbulance_ = GetPionMedical().GetAvailableEvacuationAmbulance( *this );
-        if( !pEvacuationAmbulance_ )
-        {
-            // Find alternative evacuation unit
-            MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
-            if( pLogisticManager )
-            {
-                PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeEvacuationHandler( *pHumanState_ );
-                if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForEvacuation( *pHumanState_ ) )
-                {
-                    EnterStateFinished();
-                    pHumanState_ = 0; // Crade
-                }
-            }
-        }
+        EnterStateFinished();
+        pHumanState_ = 0; // Crade
     }
 }
 
@@ -152,9 +135,7 @@ void PHY_MedicalEvacuationConsign::CreateEvacuationAmbulance()
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingTo()
 {
-    // Called by PHY_MedicalEvacuationAmbulance
     assert( pHumanState_ );
-    //    assert( pEvacuationAmbulance_ ); // Peut asserter quand EnterStateEvacuationGoingTo() quand consign associée à une ambulance déjà affectée à un automate
     assert( !pDoctor_ );
     assert( GetState() == eWaitingForEvacuation );
     if( GetState() != eWaitingForEvacuation )
@@ -173,9 +154,7 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingTo()
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationConsign::EnterStateEvacuationLoading()
 {
-    // Called by PHY_MedicalEvacuationAmbulance
     assert( pHumanState_ );
-    //    assert( pEvacuationAmbulance_ ); // Peut asserter quand EnterStateEvacuationGoingTo() quand consign associée à une ambulance déjà affectée à un automate
     assert( !pDoctor_ );
     assert( GetState() == eEvacuationGoingTo || GetState() == eWaitingForEvacuation );
     SetState( eEvacuationLoading );
@@ -195,11 +174,9 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationLoading()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalEvacuationConsign::EnterStateEvacuationWaitingForFullLoading()
 {
-    // Called by PHY_MedicalEvacuationAmbulance
     assert( pHumanState_ );
     assert( pEvacuationAmbulance_ );
     assert( !pDoctor_ );
-
     ResetTimer( 0 );
     if( GetState() == eEvacuationLoading )
     {
@@ -222,7 +199,6 @@ bool PHY_MedicalEvacuationConsign::EnterStateEvacuationWaitingForFullLoading()
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingFrom()
 {
-    // Called by PHY_MedicalEvacuationAmbulance
     assert( pHumanState_ );
     assert( pEvacuationAmbulance_ );
     assert( !pDoctor_ );
@@ -243,7 +219,6 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingFrom()
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationConsign::EnterStateEvacuationUnloading()
 {
-    // Called by PHY_MedicalEvacuationAmbulance
     assert( pHumanState_ );
     assert( pEvacuationAmbulance_ );
     assert( !pDoctor_ );
@@ -264,13 +239,10 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationUnloading()
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationConsign::ChooseStateAfterEvacuation()
 {
-    // Called by PHY_MedicalEvacuationAmbulance
     assert( pHumanState_ );
     assert( !pDoctor_ );
-
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pEvacuationAmbulance_ = 0;
-
     ResetTimer( 0 );
     if( pHumanState_->NeedDiagnosis() )
         SetState( eWaitingForDiagnostic );
@@ -287,11 +259,9 @@ bool PHY_MedicalEvacuationConsign::DoWaitingForDiagnostic()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     assert( !pEvacuationAmbulance_ );
-
     pDoctor_ = GetPionMedical().GetAvailableDoctorForDiagnosing();
     if( !pDoctor_ )
         return false;
-
     GetPionMedical().StartUsingForLogistic( *pDoctor_ );
     return true;
 }
@@ -305,7 +275,6 @@ void PHY_MedicalEvacuationConsign::EnterStateDiagnosing()
     assert( pHumanState_ );
     assert( pDoctor_ );
     assert( !pEvacuationAmbulance_ );
-    
     if( GetState() == eFinished )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
@@ -325,7 +294,6 @@ void PHY_MedicalEvacuationConsign::EnterStateWaitingForCollection()
     assert( pHumanState_ );
     assert( !pEvacuationAmbulance_ );
     assert( pDoctor_ );
-
     if( GetState() == eFinished || !pHumanState_ )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
@@ -348,7 +316,6 @@ bool PHY_MedicalEvacuationConsign::DoWaitingForCollection()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     assert( !pEvacuationAmbulance_ );
-
     MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
@@ -359,10 +326,6 @@ bool PHY_MedicalEvacuationConsign::DoWaitingForCollection()
     return false;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationConsign::Update
 // Created: NLD 2004-12-23
@@ -371,7 +334,6 @@ bool PHY_MedicalEvacuationConsign::Update()
 {
     if( DecrementTimer() )
         return GetState() == eFinished;
-
     switch( GetState() )
     {
         case eWaitingForEvacuation             : CreateEvacuationAmbulance(); break;  // Géré par PHY_MedicalAmbulance

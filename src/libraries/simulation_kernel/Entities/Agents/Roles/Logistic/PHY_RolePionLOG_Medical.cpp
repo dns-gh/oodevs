@@ -197,8 +197,8 @@ bool PHY_RolePionLOG_Medical::CanCollectionAmbulanceGo( const PHY_MedicalCollect
 {
     if( ambulance.IsAnEmergency() )
         return true;
-    for ( auto it = consigns_.begin(); it != consigns_.end(); ++it )
-        for ( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
+        for( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             if( (*it2)->CouldNeedCollectionAmbulance() )
                 return false;
     return true;
@@ -241,11 +241,8 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
 PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionAmbulance( PHY_MedicalCollectionConsign& consign )
 {
     for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); ++it )
-    {
-        PHY_MedicalCollectionAmbulance& ambulance = **it;
-        if( ambulance.RegisterHuman( consign ) )
-            return &ambulance;
-    }
+        if( (**it).RegisterHuman( consign ) )
+            return *it;
     if( !consign.HasValidHumanState() )
         return 0;
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
@@ -702,7 +699,7 @@ double PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     }
     if( nNbrTotal == 0 )
-        return 1.;
+        return 1;
     return (double)nNbrAvailableAllowedToWork / (double)nNbrTotal;
 }
 

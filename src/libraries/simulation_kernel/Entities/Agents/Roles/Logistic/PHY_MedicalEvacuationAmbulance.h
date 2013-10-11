@@ -12,6 +12,7 @@
 #ifndef __PHY_MedicalEvacuationAmbulance_h_
 #define __PHY_MedicalEvacuationAmbulance_h_
 
+#include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
@@ -29,7 +30,7 @@ public:
     //@{
      PHY_MedicalEvacuationAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance );
      PHY_MedicalEvacuationAmbulance();
-    virtual ~PHY_MedicalEvacuationAmbulance();
+    ~PHY_MedicalEvacuationAmbulance();
     //@}
 
     //! @name CheckPoints
@@ -42,7 +43,7 @@ public:
     bool Update();
     void Cancel();
 
-    bool RegisterHuman  ( PHY_MedicalEvacuationConsign& consign );
+    bool RegisterHuman( PHY_MedicalEvacuationConsign& consign );
     void UnregisterHuman( PHY_MedicalEvacuationConsign& consign );
     //@}
 
@@ -54,9 +55,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< PHY_MedicalEvacuationConsign* > T_ConsignVector;
-    typedef T_ConsignVector::iterator                    IT_ConsignVector;
-    typedef T_ConsignVector::const_iterator              CIT_ConsignVector;
+    typedef std::vector< PHY_MedicalEvacuationConsign* > T_Consigns;
 
     enum E_State
     {
@@ -72,13 +71,13 @@ private:
 private:
     //! @name Tools
     //@{
-    void EnterStateGoingTo  ();
-    void EnterStateLoading  ();
+    void EnterStateGoingTo();
+    void EnterStateLoading();
     void EnterStateGoingFrom();
     void EnterStateUnloading();
     void EnterStateFinished ();
 
-    bool DoLoading  ();
+    bool DoLoading();
     bool DoUnloading();
     //@}
 
@@ -87,7 +86,7 @@ private:
     //@{
     PHY_RoleInterface_Medical*  pMedical_;
     PHY_ComposantePion*         pCompAmbulance_;
-    T_ConsignVector             consigns_;
+    T_Consigns                  consigns_;
     E_State                     nState_;
     int                         nTimer_;
     double                      rNbrHumanHandled_;

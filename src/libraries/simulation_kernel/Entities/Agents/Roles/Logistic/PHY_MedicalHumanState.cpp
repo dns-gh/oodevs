@@ -20,18 +20,22 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Tools/MIL_IDManager.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHumanState )
 
-MIL_IDManager PHY_MedicalHumanState::idManager_;
+namespace
+{
+    MIL_IDManager idManager;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, Human_ABC& human, bool bEvacuatedByThirdParty )
-    : nID_                   ( idManager_.GetId() )
+    : nID_                   ( idManager.GetId() )
     , nCreationTick_         ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pPion_                 ( &pion )
     , pHuman_                ( &human )
@@ -53,12 +57,11 @@ PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, Human_ABC& hu
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState()
-    : nID_                   ()
+    : nID_                   ( 0 )
     , nCreationTick_         ( 0 )
     , pPion_                 ( 0 )
     , pHuman_                ( 0 )
     , pConsign_              ( 0 )
-    , vHumanPosition_        ()
     , bHasChanged_           ( true )
     , bHumanStateHasChanged_ ( false )
     , bDiagnosed_            ( false )
@@ -96,7 +99,7 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const unsigned 
          >> bShouldGoBackToWar_
          >> bHandledByMedical_
          >> bEvacuatedByThirdParty_;
-    idManager_.GetId( nID_, true );
+    idManager.GetId( nID_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +170,6 @@ bool PHY_MedicalHumanState::GoBackToWar()
 {
     if( !bShouldGoBackToWar_ )
         return false;
-
     return pHuman_->NotifyBackToWar();
 }
 
@@ -203,10 +205,6 @@ bool PHY_MedicalHumanState::IsInAmbulance() const
 {
     return pConsign_ && pConsign_->IsATransportConsign();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState::SendFullState

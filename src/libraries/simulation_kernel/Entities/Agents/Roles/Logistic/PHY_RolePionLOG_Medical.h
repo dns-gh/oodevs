@@ -17,6 +17,7 @@
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace client
 {
