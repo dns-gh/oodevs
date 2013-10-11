@@ -132,7 +132,7 @@ void ADN_Languages_GUI::UpdateMenu()
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::OnLanguagesEdited()
 {
-    QString previousLanguage = currentAction_ && currentAction_ != masterAction_ ? currentAction_->text() : "";
+    const QString previousLanguage = currentAction_ && currentAction_ != masterAction_ ? currentAction_->text() : "";
     BuildMenu();
     UpdateCurrentAction( previousLanguage );
     if( !previousLanguage.isEmpty() && previousLanguage != currentAction_->text() )
