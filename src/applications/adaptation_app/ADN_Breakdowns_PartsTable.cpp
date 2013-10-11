@@ -25,7 +25,7 @@ ADN_Breakdowns_PartsTable::ADN_Breakdowns_PartsTable( const QString& objectName,
     verticalHeader()->setVisible( false );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Name" ) << tr( "Nbr required" );
+    horizontalHeaders << tools::translate( "ADN_Breakdowns_PartsTable", "Name" ) << tools::translate( "ADN_Breakdowns_PartsTable", "Nbr required" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     delegate_.AddSpinBoxOnColumn( 1, 1, std::numeric_limits< int >::max() );
 }
