@@ -14,7 +14,8 @@ import (
 )
 
 func (s *TestSuite) TestScores(c *C) {
-	scoreName := "available-equipments"
+	scoreEq := "available-equipments"
+	scoreDist := "cp-distance"
 
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallScores)
 	defer sim.Stop()
@@ -23,16 +24,20 @@ func (s *TestSuite) TestScores(c *C) {
 		return len(data.KnownScores) > 0
 	})
 	model := client.Model.GetData()
-	c.Assert(model.KnownScores, HasLen, 1)
-	c.Assert(model.KnownScores[scoreName], NotNil)
+	c.Assert(model.KnownScores, DeepEquals, map[string]struct{}{
+		scoreEq:   struct{}{},
+		scoreDist: struct{}{},
+	})
 
 	// Wait for the values to be populated
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.Scores) > 0
+		return len(data.Scores) > 1
 	})
 	model = client.Model.GetData()
-	c.Assert(model.Scores, HasLen, 1)
-	c.Assert(model.Scores[scoreName], Equals, float32(16))
+	c.Assert(model.Scores, DeepEquals, map[string]float32{
+		scoreEq:   16,
+		scoreDist: 100.48342,
+	})
 
 	// Destroy some equipment
 	units := model.ListUnits()
@@ -44,7 +49,7 @@ func (s *TestSuite) TestScores(c *C) {
 
 	// Wait for the score to change
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Scores[scoreName] == 0
+		return data.Scores[scoreEq] == 0
 	})
 	model = client.Model.GetData()
 	client.Close()
@@ -53,10 +58,11 @@ func (s *TestSuite) TestScores(c *C) {
 	// despite them being restricted to the admin user.
 	client = loginAndWaitModel(c, sim, "alluser", "alluser")
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		value, ok := data.Scores[scoreName]
-		return ok && value == 0
+		return len(data.Scores) > 1
 	})
 	model2 := client.Model.GetData()
-	c.Assert(model2.KnownScores, HasLen, 0)
+	c.Assert(model2.KnownScores, DeepEquals, map[string]struct{}{
+		scoreDist: struct{}{},
+	})
 	c.Assert(model2.Scores, DeepEquals, model.Scores)
 }

@@ -20,4 +20,22 @@
       <profile name="admin"/>
     </profiles>
   </score>
+  <score name="cp-distance">
+    <formula><![CDATA[distance( select(position(),$cp), select(position(),$unit) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$cp" type="unit" value="7"/>
+      <constant id="$unit" type="unit" value="8"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="position" id="1"/>
+        <reduce function="select" id="2" input="1" key="7" type="position"/>
+        <extract function="position" id="3"/>
+        <reduce function="select" id="4" input="3" key="8" type="position"/>
+        <transform function="distance" id="5" input="2,4" type="float"/>
+        <result function="indicator" input="5" name="cp-distance" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
 </scores>
