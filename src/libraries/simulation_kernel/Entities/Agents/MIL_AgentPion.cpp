@@ -1780,7 +1780,7 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
     for( int i = 0; i < protocol::GetCount( msg, 0 ); ++ i )
     {
         protocol::CheckCount( 0, i, msg, 2, 3 );
-        const int identifier = protocol::GetIdentifier( msg, 0, i, 0 );
+        const uint32_t identifier = protocol::GetIdentifier( msg, 0, i, 0 );
         sword::EquipmentType type;
         type.set_id( identifier );
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
@@ -1791,7 +1791,7 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
         const PHY_BreakdownType* breakdown = nullptr;
         if( protocol::GetCount( msg, 0, i ) == 3 )
         {
-            const int id = protocol::GetIdentifier( msg, 0, i, 2 );
+            const uint32_t id = protocol::GetIdentifier( msg, 0, i, 2 );
             breakdown = PHY_BreakdownType::Find( id );
             protocol::Check( breakdown, "must be a breakdown type identifier", 0, i, 2 );
         }

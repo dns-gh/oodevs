@@ -51,7 +51,7 @@ namespace
 
     MAKE_DESCRIPTOR( Bool, bool, booleanvalue, "boolean" );
     MAKE_DESCRIPTOR( Enumeration, int, enumeration, "enumeration" );
-    MAKE_DESCRIPTOR( Identifier, int, identifier, "identifier" );
+    MAKE_DESCRIPTOR( Identifier, uint32_t, identifier, "identifier" );
     MAKE_DESCRIPTOR( Location, const sword::Location&, location, "location" );
     MAKE_DESCRIPTOR( Point, const sword::Point&, point, "point" );
     MAKE_DESCRIPTOR( Quantity, int, quantity, "quantity" );
@@ -205,7 +205,7 @@ std::vector< sword::CoordLatLong > protocol::GetLocation(
     return points;
 }
 
-int protocol::GetIdentifier( const sword::MissionParameters& params, int i, int j, int k )
+uint32_t protocol::GetIdentifier( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< Identifier >( params, i, j, k );
 }
