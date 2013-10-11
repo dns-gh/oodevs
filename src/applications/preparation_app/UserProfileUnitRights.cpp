@@ -113,8 +113,8 @@ bool UserProfileUnitRights::LessThan( const QModelIndex& left, const QModelIndex
         return false;
     valid = true;
     if( IsCommandPost( *entity1 ) )
-        return false;
-    if( IsCommandPost( *entity2 ) )
         return true;
-    return entity2->GetId() < entity1->GetId();
+    if( IsCommandPost( *entity2 ) )
+        return false;
+    return entity1->GetId() < entity2->GetId();
 }

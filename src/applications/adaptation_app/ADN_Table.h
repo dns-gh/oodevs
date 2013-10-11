@@ -43,7 +43,7 @@ public:
     virtual void RemoveCurrentElement();
 
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
-    void Sort( int column, Qt::SortOrder order );
+    void Sort( int column = 0, Qt::SortOrder order = Qt::AscendingOrder );
 
     QStandardItem* GetItem( int row, int col ) const;
     QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;

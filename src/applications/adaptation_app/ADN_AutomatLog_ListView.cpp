@@ -35,7 +35,7 @@ ADN_AutomatLog_ListView::ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidg
     for( int i = 0; i < header()->count(); ++i )
         resizeColumnToContents( i );
     collapseAll();
-    proxyModel_->sort( 0, Qt::DescendingOrder );
+    proxyModel_->sort( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -398,12 +398,12 @@ bool ADN_AutomatLog_ListView::LessThan( const QModelIndex& left, const QModelInd
     if( leftItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_First || rightItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_Last )
     {
         valid = true;
-        return true;
+        return false;
     }
     if( leftItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_Last || rightItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_First )
     {
         valid = true;
-        return false;
+        return true;
     }
-    return false;
+    return true;
 }

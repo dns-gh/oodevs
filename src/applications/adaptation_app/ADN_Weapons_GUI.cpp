@@ -410,7 +410,7 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
         pTable->AddItem( nRow, 3, &weapon, &weapon.nRoundsPerReload_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
         pTable->AddItem( nRow, 4, &weapon, &weapon.reloadDuration_ , ADN_StandardItem::eDelay, Qt::ItemIsEditable );
     }
-    pTable->Sort( 0, Qt::AscendingOrder );
+    pTable->Sort();
     return pTable;
 }
 
@@ -469,7 +469,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
         }
         nRow += static_cast< int >( phsSizeInfos.size() );
     }
-    pTable->Sort( 0, Qt::AscendingOrder );
+    pTable->Sort();
     return pTable;
 }
 

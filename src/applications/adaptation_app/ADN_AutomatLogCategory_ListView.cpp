@@ -37,7 +37,6 @@ ADN_AutomatLogCategory_ListView::ADN_AutomatLogCategory_ListView( ADN_Automata_D
     for( int i = 0; i < header()->count(); ++i )
         resizeColumnToContents( i );
     collapseAll();
-    proxyModel_->sort( 0, Qt::DescendingOrder );
 }
 
 // -----------------------------------------------------------------------------

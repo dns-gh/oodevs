@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "RichTreeView.h"
 #include "moc_RichTreeView.cpp"
-#include "LocaleAwareSortFilterProxyModel.h"
 #include "ObjectNameManager.h"
 #include "StandardModelVisitor_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -19,13 +18,15 @@ using namespace gui;
 
 namespace
 {
-    class CustomSortFilterProxyModel : public LocaleAwareSortFilterProxyModel
+    class CustomSortFilterProxyModel : public QSortFilterProxyModel
     {
     public:
         CustomSortFilterProxyModel( RichTreeView& parent )
-            : LocaleAwareSortFilterProxyModel( &parent )
+            : QSortFilterProxyModel( &parent )
             , parent_( parent )
-        {}
+        {
+            setSortLocaleAware( true );
+        }
 
     protected:
         virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
@@ -34,7 +35,7 @@ namespace
             bool ret = parent_.LessThan( left, right, valid );
             if( valid )
                 return ret;
-            return LocaleAwareSortFilterProxyModel::lessThan( left, right );
+            return QSortFilterProxyModel::lessThan( left, right );
         }
 
     public:
@@ -74,6 +75,7 @@ RichTreeView::RichTreeView( const QString& objectName, QWidget* parent /*= 0*/, 
     proxyModel_->setFilterRole( Roles::FilterRole );
     proxyModel_->setFilterRegExp( StandardModel::showValue_ );
     proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0 );
 
     QPalette p = palette();
     p.setColor( QPalette::Inactive, QPalette::Highlight, Qt::lightGray );

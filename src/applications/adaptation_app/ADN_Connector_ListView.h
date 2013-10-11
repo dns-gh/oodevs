@@ -84,6 +84,7 @@ ADN_StandardItem* ADN_Connector_ListView<T>::CreateItem( void* pObj )
 
     // Connect list item with object's name
     pItem->Connect( & static_cast< T* >( pObj )->strName_ );
+
     return pItem;
 }
 

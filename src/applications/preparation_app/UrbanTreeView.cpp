@@ -320,7 +320,7 @@ bool UrbanTreeView::LessThan( const QModelIndex& left, const QModelIndex& right,
     if( !entity1 || !entity2 )
         return false;
     valid = true;
-    return entity2->GetId() < entity1->GetId();
+    return entity1->GetId() < entity2->GetId();
 }
 
 // -----------------------------------------------------------------------------

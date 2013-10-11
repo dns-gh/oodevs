@@ -113,12 +113,10 @@ bool ObjectTreeView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool ObjectTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
 {
-    valid = true;
     const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
     const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
-    if( entity1 && entity2 )
-        return entity2->GetId() < entity1->GetId();
-    QString txt1 = dataModel_.data( left ).toString();
-    QString txt2 = dataModel_.data( right ).toString();
-    return txt1.localeAwareCompare( txt2 ) > 0;
+    if( !entity1 || !entity2 )
+        return false;
+    valid = true;
+    return entity1->GetId() < entity2->GetId();
 }

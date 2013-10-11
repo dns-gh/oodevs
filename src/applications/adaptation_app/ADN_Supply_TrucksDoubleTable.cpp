@@ -31,7 +31,6 @@ ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( const QString& objec
 : ADN_Table( objectName, vector, pParent )
 {
     setSortingEnabled( true );
-    dataModel_.setSortRole( Qt::Ascending );
     this->setMaximumHeight( 300 );
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;

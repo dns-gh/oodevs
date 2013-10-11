@@ -80,6 +80,8 @@ public:
     virtual std::string GetToolTipFor( const QModelIndex& index );
     void SaveToXls( const tools::Path& path, const QString& sheetName ) const;
 
+    void Sort( int column = 0, Qt::SortOrder order = Qt::AscendingOrder );
+
 public slots:
     bool SetCurrentItem( void* pData );
     bool SetCurrentItem( const QString& itemName );

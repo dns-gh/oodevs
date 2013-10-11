@@ -29,7 +29,7 @@ ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( const QString& objec
     delegate_.AddSpinBoxOnColumn( 0, 0, 100 );
     delegate_.AddColorOnColumn( 0, 0, 100. );
     proxyModel_->setDynamicSortFilter( true );
-    proxyModel_->sort( 0, Qt::AscendingOrder );
+    Sort();
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->AddItem( 0 );
 }
 

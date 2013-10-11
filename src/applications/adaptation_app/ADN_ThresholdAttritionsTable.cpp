@@ -41,7 +41,7 @@ ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objec
         delegate_.AddSpinBoxOnColumn( static_cast< int >( i ) );
     delegate_.AddCheckBoxOnColumn( 7 );
     proxyModel_->setDynamicSortFilter( true );
-    proxyModel_->sort( 1, Qt::AscendingOrder );
+    Sort( 1 );
     setSortingEnabled( false );
 }
 

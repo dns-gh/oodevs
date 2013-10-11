@@ -53,7 +53,7 @@ ADN_Equipments_Resources_ListView::ADN_Equipments_Resources_ListView( const QStr
     setAlternatingRowColors( true );
 
     proxyModel_->setDynamicSortFilter( true );
-    proxyModel_->sort( 0, Qt::DescendingOrder );
+    Sort();
     setSortingEnabled( false );
 }
 

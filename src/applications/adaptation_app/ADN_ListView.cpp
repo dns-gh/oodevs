@@ -81,6 +81,8 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
         dataModel_.setHorizontalHeaderLabels( QStringList( title ) );
     viewport()->installEventFilter( new ADN_ListViewToolTip( viewport(), *this ) );
 
+    proxyModel_->sort( 0 );
+
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( SetCurrentItem() ) );
     connect( &usedByMapper_, SIGNAL( mapped( int ) ), this, SLOT( ContextMenuSearchElements( int ) ) );
     connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( PostLanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
@@ -910,4 +912,13 @@ void ADN_ListView::OnLanguageChanged()
                 parentData->CheckValidity();
                 item->Warn( parentData->GetErrorStatus() );
             }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::Sort
+// Created: ABR 2013-10-11
+// -----------------------------------------------------------------------------
+void ADN_ListView::Sort( int column /*= 0*/, Qt::SortOrder order /*= Qt::AscendingOrder*/ )
+{
+    proxyModel_->sort( column, order );
 }
