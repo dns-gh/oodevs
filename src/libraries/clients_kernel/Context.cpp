@@ -90,7 +90,7 @@ const boost::shared_ptr< LocalizedString >& Context::at( const std::string& key 
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< LocalizedString > Context::CreateNew
+// Name: Context::CreateNew
 // Created: ABR 2013-08-26
 // -----------------------------------------------------------------------------
 boost::shared_ptr< LocalizedString > Context::CreateNew( const std::string& key )

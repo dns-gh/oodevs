@@ -52,7 +52,7 @@ const Entity_ABC& SimpleHierarchies< I >::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Iterator< const Entity_ABC& > SimpleHierarchies::CreateSubordinateIterator
+// Name: SimpleHierarchies::CreateSubordinateIterator
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
 template< typename I >

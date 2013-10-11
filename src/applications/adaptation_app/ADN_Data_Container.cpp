@@ -112,7 +112,7 @@ ADN_Data_ABC& ADN_Data_Container::GetElementABC( int index )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Data_Container::function< bool
+// Name: ADN_Data_Container::ApplyOnTranslations
 // Created: ABR 2013-10-08
 // -----------------------------------------------------------------------------
 bool ADN_Data_Container::ApplyOnTranslations( const boost::function< bool ( kernel::LocalizedString& ) >& functor )

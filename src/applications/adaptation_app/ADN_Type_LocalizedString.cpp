@@ -288,7 +288,7 @@ bool ADN_Type_LocalizedString::CheckUniqueTranslation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< kernel::LocalizedString > ADN_Type_LocalizedString::GetTranslation
+// Name: ADN_Type_LocalizedString::GetTranslation
 // Created: ABR 2013-08-28
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< kernel::LocalizedString >& ADN_Type_LocalizedString::GetTranslation() const

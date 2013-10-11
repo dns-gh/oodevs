@@ -193,7 +193,7 @@ void SvglRenderer::ConfigureWidthList( const geometry::Rectangle2f& viewport, un
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< Style > SvglRenderer::CreateStyle
+// Name: SvglRenderer::CreateStyle
 // Created: AGE 2007-10-31
 // -----------------------------------------------------------------------------
 std::auto_ptr< Style > SvglRenderer::CreateStyle( const std::string& style )

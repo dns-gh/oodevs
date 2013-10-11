@@ -59,7 +59,7 @@ const CoordinateSystems::Projection CoordinateSystems::GetDefault() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::map< int, QString >& CoordinateSystems::GetSystems
+// Name: CoordinateSystems::GetSystems
 // Created: JSR 2013-03-13
 // -----------------------------------------------------------------------------
 const std::map< int, QString >& CoordinateSystems::GetSystems() const

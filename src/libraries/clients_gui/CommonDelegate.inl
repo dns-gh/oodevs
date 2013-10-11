@@ -257,7 +257,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::pair< T, T > CommonDelegate::GetMinMax
+// Name: CommonDelegate::GetMinMax
 // Created: ABR 2011-10-11
 // -----------------------------------------------------------------------------
 template< typename T >
