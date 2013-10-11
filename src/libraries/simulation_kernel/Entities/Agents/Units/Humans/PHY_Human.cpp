@@ -23,6 +23,7 @@
 #include "Entities/Agents/Roles/Logistic/FuneralRequest.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h" 
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Human )
 
@@ -481,7 +482,7 @@ void PHY_Human::Update()
             const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
 
         // Funeral
-        if( IsDead() && !funeralConsign_ )
+        if( IsDead() && !funeralConsign_ && GetPion().GetLogisticHierarchy().GetPrimarySuperior() )
         {
             boost::shared_ptr< logistic::FuneralRequest_ABC > request( new logistic::FuneralRequest( *this ) );
             funeralConsign_.reset( new logistic::FuneralConsign( request ) );
