@@ -334,7 +334,7 @@ integration.changeCrowdDensity = function( blockingStrength, checkpoint ) -- A a
     if not myself.changeDensity then
         if checkpoint then
             myself.changeDensity = true
-            DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, ( 100 - blockingStrength ) / 100 )-- valeur entre 0 et 1
+            DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, ( 100 - blockingStrength ) / 100 )-- valeur entre 0 et 1
         end
     end
 end
@@ -547,10 +547,10 @@ end
 -- $$$ MIA temp for Secu, à merger avec military
 integration.startFilterCrowds = function( intensity, checkpoint )
     meKnowledge:RC( eRC_ControlPointEstablished )
-    DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, ( 100 - intensity ) / 100 )-- value needed is [0;1]
+    DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, ( 100 - intensity ) / 100 )-- value needed is [0;1]
 end
 integration.stopFilterCrowds = function( checkpoint ) -- A appeler une seule fois.
-    DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, 1 )
+    DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, 1 )
 end
 
 integration.hasDotationToBuildObject = function( entity, objectType )

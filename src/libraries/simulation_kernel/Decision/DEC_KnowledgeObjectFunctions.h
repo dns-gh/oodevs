@@ -61,7 +61,6 @@ public:
     static bool CanBeBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static void SetExitingPopulationDensity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density );
-    static void SetExitingPopulationDensityInPercentage( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density );
     static void ResetExitingPopulationDensity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static void Recon( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
