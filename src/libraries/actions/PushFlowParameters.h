@@ -62,7 +62,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< const kernel::DotationType*, unsigned long > T_Resources;
+    typedef tools::Map< const kernel::DotationType*, unsigned long > T_Resources;
     struct Recipient
     {
         T_Resources resources_;

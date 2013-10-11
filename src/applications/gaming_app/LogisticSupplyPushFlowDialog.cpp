@@ -182,17 +182,18 @@ void LogisticSupplyPushFlowDialog::Validate()
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
     actions::parameters::PushFlowParameters* pushFlowParameters = new actions::parameters::PushFlowParameters( it.NextElement(), static_.coordinateConverter_, !isPushFlow_ );
-    BOOST_FOREACH( const T_RecipientSupplies::value_type& recipientSupply, recipientSupplies_ )
+    for( auto it = recipients_.begin(); it != recipients_.end(); ++it )
     {
-        const T_QuantitiesMap& supplyQuantities = recipientSupply.second;
-        for( T_QuantitiesMap::const_iterator it = supplyQuantities.begin(); it != supplyQuantities.end(); ++it )
+        const T_QuantitiesMap& supplyQuantities = recipientSupplies_[ *it ];
+        for( auto itResource = supplyQuantities.begin(); itResource != supplyQuantities.end(); ++itResource )
         {
-            const kernel::DotationType* dotationType = availableSupplies_[ it.key() ].type_;
+            const kernel::DotationType* dotationType = availableSupplies_[ itResource.key() ].type_;
             assert( dotationType );
             if( dotationType )
-                pushFlowParameters->AddResource( *dotationType, it.value(), *recipientSupply.first );
+                pushFlowParameters->AddResource( *dotationType, itResource.value(), **it );
         }
     }
+
     if( carriersUseCheck_->isChecked() )
         for( auto it = carriers_.begin(); it != carriers_.end(); ++it )
             pushFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
