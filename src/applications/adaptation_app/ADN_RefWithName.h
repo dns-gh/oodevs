@@ -51,6 +51,27 @@ public:
     //@}
 };
 
+// -----------------------------------------------------------------------------
+// Stream operators
+// -----------------------------------------------------------------------------
+template< typename T >
+std::ostream& operator<<( std::ostream& os, const ADN_RefWithText< T >& type )
+{
+    return os << type.strName_;
+}
+
+template< typename T >
+xml::xostream& operator<<( xml::xostream& xos, const ADN_RefWithText< T >& type )
+{
+    return xos << type.strName_;
+}
+template< typename T >
+xml::xistream& operator>>( xml::xistream& xis, ADN_RefWithText< T >& type )
+{
+    xis >> type.strName_;
+    return xis;
+}
+
 typedef ADN_RefWithText< ADN_Type_String > ADN_RefWithName;
 typedef ADN_RefWithText< ADN_Type_LocalizedString > ADN_RefWithLocalizedName;
 
