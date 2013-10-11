@@ -109,7 +109,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions( sword::Brain& brain 
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstReconnu", &DEC_KnowledgeObjectFunctions::IsRecon );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_PeutEtreContourne", &DEC_KnowledgeObjectFunctions::CanBeBypassed );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_ChangeDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage", &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensityInPercentage );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_ResetDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_PointEstDansZoneEvitement", &DEC_KnowledgeObjectFunctions::IsInAvoidanceArea );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_PointEstProcheZoneEffet", &DEC_KnowledgeObjectFunctions::IsNearEffectArea );
