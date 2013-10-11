@@ -91,7 +91,7 @@ public slots:
     //@}
 
 private:
-    virtual bool ApplyOnTranslations( const boost::function< bool ( kernel::LocalizedString& ) >& functor );
+    virtual bool ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor );
 
     void AddMissionType( const std::string& xmltag );
     void ReadArchive( xml::xistream& input );

@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Apply( const boost::function< bool ( LocalizedString& ) >& functor );
+    bool Apply( const boost::function< bool( LocalizedString& ) >& functor );
 
     std::vector< boost::shared_ptr< LocalizedString > >::iterator find( const std::string& key );
     const std::vector< boost::shared_ptr< LocalizedString > >::const_iterator find( const std::string& key ) const;

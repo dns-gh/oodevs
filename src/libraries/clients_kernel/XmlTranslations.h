@@ -60,7 +60,7 @@ public:
 
     //! @name Translations operations
     //@{
-    bool ApplyOnTranslations( boost::function< bool ( LocalizedString& ) > function );
+    bool ApplyOnTranslations( boost::function< bool( LocalizedString& ) > function );
     void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& languageCode );
     void LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode );
     void MergeDuplicateTranslations();
