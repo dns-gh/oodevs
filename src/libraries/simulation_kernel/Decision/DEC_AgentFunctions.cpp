@@ -1741,7 +1741,7 @@ void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::GetMaxSpeed
 // Created: NMI 2013-10-11
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetMaxSpeed( DEC_Decision_ABC* agent )
+double DEC_AgentFunctions::GetMaxSpeed( const DEC_Decision_ABC* agent )
 {
     const moving::PHY_RoleAction_InterfaceMoving& roleMoving = agent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >();
     return roleMoving.GetMaxSpeed();
