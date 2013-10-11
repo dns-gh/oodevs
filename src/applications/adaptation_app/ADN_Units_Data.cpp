@@ -545,7 +545,7 @@ void ADN_Units_Data::UnitInfos::ReadPointDistance( xml::xistream& input )
 void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
     std::string strType, nbcSuit;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", strType )
           >> xml::attribute( "decisional-model", ptrModel_ );
 
@@ -671,7 +671,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "unit" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "type", eTypeId_.Convert() )
             << xml::attribute( "decisional-model", ptrModel_ )
             << xml::attribute( "id", nId_ );

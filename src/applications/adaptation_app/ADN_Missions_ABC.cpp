@@ -286,7 +286,7 @@ void ADN_Missions_ABC::WriteMissionSheetAttachments( xml::xostream& xos ) const
     xos << xml::start( "attachments" );
     for( auto it = attachments_.begin(); it != attachments_.end(); ++it )
         xos << xml::start( "attachment" )
-        << xml::attribute( "name", (*it)->strName_ )
+        << xml::attribute( "name", **it )
         << xml::end;
     xos << xml::end;
 }
@@ -430,7 +430,7 @@ void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_M
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "dia-type", diaType_ );
 }
 
@@ -440,7 +440,7 @@ void ADN_Missions_ABC::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::attribute( "name", strName_ )
+    output << xml::attribute( "name", *this )
            << xml::attribute( "dia-type", diaType_ )
            << xml::attribute( "id", id_ );
 }

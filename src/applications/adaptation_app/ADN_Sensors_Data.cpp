@@ -59,7 +59,7 @@ ADN_Sensors_Data::LimitedToSensorsInfos* ADN_Sensors_Data::LimitedToSensorsInfos
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::LimitedToSensorsInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "name", *this );
 }
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive
@@ -69,7 +69,7 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::ReadArchive( xml::xistream& input 
 void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "sensor" )
-                << xml::attribute( "name", strName_ )
+                << xml::attribute( "name", *this )
            << xml::end;
 }
 
@@ -884,7 +884,7 @@ void ADN_Sensors_Data::SensorInfos::ReadDisaster( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "detection-delay", detectionDelay_ )
           >> xml::optional
           >> xml::attribute( "activation-on-request", activatedOnRequest_ )
@@ -898,7 +898,7 @@ void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "sensor" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "detection-delay", detectionDelay_ );
     if( activatedOnRequest_.GetData() )
         output << xml::attribute( "activation-on-request", true );

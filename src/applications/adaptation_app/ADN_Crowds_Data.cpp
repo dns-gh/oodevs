@@ -493,7 +493,7 @@ ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::CrowdsInfos::CreateCopy()
 void ADN_Crowds_Data::CrowdsInfos::ReadArchive( xml::xistream& input )
 {
     double rArmedIndividuals = 0.;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "concentration-density", rConcentrationDensity_ )
           >> xml::attribute( "moving-base-density", rMoveDensity_ )
           >> xml::attribute( "moving-speed", rMoveSpeed_ )
@@ -590,7 +590,7 @@ void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
     repartition_.CheckNoError( strName_.GetData().c_str() );
 
     output << xml::start( "population" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "id", nId_ )
             << xml::attribute( "decisional-model", ptrModel_ )
             << xml::attribute( "concentration-density", rConcentrationDensity_ )

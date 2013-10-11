@@ -274,7 +274,7 @@ ADN_Disasters_Data::DisasterInfos* ADN_Disasters_Data::DisasterInfos::CreateCopy
 // -----------------------------------------------------------------------------
 void ADN_Disasters_Data::DisasterInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
               >> xml::attribute( "toxicity-exponent", toxicityExponent_ )
               >> xml::start( "contamination" )
                   >> xml::list( "threshold", *this, &ADN_Disasters_Data::DisasterInfos::ReadContamination )
@@ -331,7 +331,7 @@ void ADN_Disasters_Data::DisasterInfos::ReadContamination( xml::xistream& input 
 void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "disaster" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::attribute( "toxicity-exponent", toxicityExponent_ )
                    << xml::start( "contamination" );
     for( auto it = concentrationThresholds_.begin(); it != concentrationThresholds_.end(); ++it )

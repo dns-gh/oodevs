@@ -157,7 +157,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 {
     std::string strType;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", strType )
           >> xml::attribute( "decisional-model", ptrModel_ )
           >> xml::optional >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
@@ -173,7 +173,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "automat" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "type", nAgentType_.Convert() )
             << xml::attribute( "decisional-model", ptrModel_ )
             << xml::attribute( "id", nId_ );

@@ -222,7 +222,7 @@ ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::InhabitantsInfos::
 void ADN_Inhabitants_Data::InhabitantsInfos::ReadArchive( xml::xistream& input )
 {
     std::string strModel;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "associated-crowd", strModel )
           >> xml::optional >> xml::attribute( "angry-crowd-mission", strAngryCrowdMission_ );
 
@@ -306,7 +306,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output
     if( error != "" )
         throw MASA_EXCEPTION( error );
     output << xml::start( "population" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "id", nId_ )
             << xml::attribute( "associated-crowd", ptrModel_ );
     if( !strAngryCrowdMission_.GetData().empty() )

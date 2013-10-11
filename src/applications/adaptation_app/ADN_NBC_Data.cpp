@@ -265,7 +265,7 @@ void ADN_NBC_Data::NbcAgentInfos::ReadEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Data::NbcAgentInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::optional >> xml::attribute( "category", category_ );
     liquidInfos_.parentName_ = strName_.GetData();
     input >> xml::list( "effects", *this, &ADN_NBC_Data::NbcAgentInfos::ReadEffect );
@@ -280,7 +280,7 @@ void ADN_NBC_Data::NbcAgentInfos::ReadArchive( xml::xistream& input )
 void ADN_NBC_Data::NbcAgentInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "agent" )
-           << xml::attribute( "name", strName_ )
+           << xml::attribute( "name", *this )
            << xml::attribute( "category", category_ )
            << xml::attribute( "id", nId_ );
     if( bLiquidPresent_.GetData() )

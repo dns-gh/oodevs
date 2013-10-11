@@ -200,7 +200,7 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& xis )
 {
-    xis >> xml::attribute( "name", strName_ )
+    xis >> xml::attribute( "name", *this )
         >> xml::attribute( "coefficient", coefficient_ )
         >> xml::attribute( "hard-kill", hardKill_ )
         >> xml::optional >> xml::start( "resource" )
@@ -228,7 +228,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon( xml::xistre
 void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "protection" )
-        << xml::attribute( "name", strName_ )
+        << xml::attribute( "name", *this )
         << xml::attribute( "coefficient", coefficient_ )
         << xml::attribute( "hard-kill", hardKill_ )
         << xml::start( "resource" )

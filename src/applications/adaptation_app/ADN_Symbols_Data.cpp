@@ -194,7 +194,7 @@ QPixmap ADN_Symbols_Data::SymbolsUnit::GenerateSymbol( std::string& symbol, gui:
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::SymbolsInfra::SymbolsInfra( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "name", *this );
 }
 
 // -----------------------------------------------------------------------------

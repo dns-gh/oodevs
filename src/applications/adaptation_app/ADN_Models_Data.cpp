@@ -142,7 +142,7 @@ void ADN_Models_Data::MissionInfos::ReadFragOrder( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "name", *this );
     ADN_Missions_ABC* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( GetVector(), strName_.GetData() );
     if( !mission )
         throw MASA_EXCEPTION( tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
@@ -289,7 +289,7 @@ void ADN_Models_Data::ModelInfos::ReadOrder( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "dia-type", strDiaType_ )
           >> xml::attribute( "file", strFile_ )
           >> xml::attribute( "masalife", isMasalife_ )
@@ -309,7 +309,7 @@ void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
 void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xostream& output )
 {
     output << xml::start( type )
-            <<  xml::attribute( "name", strName_ )
+            <<  xml::attribute( "name", *this )
             <<  xml::attribute( "dia-type", strDiaType_ )
             <<  xml::attribute( "file", strFile_.GetData().Normalize() )
             <<  xml::attribute( "masalife", isMasalife_ )

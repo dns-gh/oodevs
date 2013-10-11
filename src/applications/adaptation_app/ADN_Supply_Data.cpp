@@ -221,7 +221,7 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output ) con
     if( ptrUnit_.GetData() != 0 && ptrUnit_.GetData()->eTypeId_.GetData() == eAgentTypePionLOGConvoi )
     {
         output  << xml::start( "convoys" )
-                    << xml::attribute( "unit-type", ptrUnit_.GetData()->strName_ )
+                    << xml::attribute( "unit-type", ptrUnit_ )
                     << xml::attribute( "mission", ptrSupplyMission_ );
         {
             output << xml::start( "type" )

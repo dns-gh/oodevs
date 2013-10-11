@@ -83,7 +83,7 @@ public:
     };
 
     //*****************************************************************************
-    class NTIInfos : public ADN_Ref_ABC
+    class NTIInfos : public ADN_RefWithName
     {
     public:
         explicit NTIInfos( const std::string& strName );

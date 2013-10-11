@@ -121,7 +121,7 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::CategoryInfo::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::CategoryInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "category", category_ );
     strCodeEMAT6_ = strName_.GetData();
     strCodeEMAT8_ = strName_.GetData();
@@ -167,7 +167,7 @@ void ADN_Resources_Data::CategoryInfo::Initialize()
 void ADN_Resources_Data::CategoryInfo::WriteContent( xml::xostream& output ) const
 {
     output << xml::attribute( "category", category_ )
-           << xml::attribute( "name", strName_ )
+           << xml::attribute( "name", *this )
            << xml::attribute( "id", nId_ )
            << xml::attribute( "package-size", rNbrInPackage_ )
            << xml::attribute( "package-mass", rPackageWeight_ )

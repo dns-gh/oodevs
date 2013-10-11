@@ -77,7 +77,7 @@ void ADN_Volumes_Data::ReadArchive( xml::xistream& input )
 void ADN_Volumes_Data::ReadVolume( xml::xistream& input )
 {
     VolumeInfos* pNew = new VolumeInfos();
-    input >> xml::attribute( "name", pNew->strName_ );
+    input >> xml::attribute( "name", *pNew );
     vSizes_.AddItem( pNew );
 }
 
@@ -98,7 +98,7 @@ void ADN_Volumes_Data::WriteArchive( xml::xostream& output ) const
         if( ( *itSize )->strName_.GetData().empty() )
             throw MASA_EXCEPTION( tools::translate( "Categories_Data", "Categories - Invalid volume type name" ).toStdString() );
         output << xml::start( "volume" )
-            << xml::attribute( "name", ( *itSize )->strName_ )
+            << xml::attribute( "name", **itSize )
             << xml::end;
     }
     output << xml::end;

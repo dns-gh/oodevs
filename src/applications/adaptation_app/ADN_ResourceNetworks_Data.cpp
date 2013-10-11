@@ -57,7 +57,7 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::Reso
 void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream& input )
 {
     int id;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::start( "resource" )
               >> xml::attribute( "id", id )
           >> xml::end
@@ -87,7 +87,7 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
 void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource-network" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::start( "resource" )
                    << xml::attribute( "id", ptrCategory_.GetData() ? ptrCategory_.GetData()->nId_.GetData() : 0 )
                << xml::end

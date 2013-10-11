@@ -76,7 +76,7 @@ void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std:
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::LauncherInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::optional >> xml::attribute( "indirect-fire", bIndirect_ )
           >> xml::list( "ph-modifiers", *this, &ADN_Launchers_Data::LauncherInfos::ReadPosture );
 }
@@ -88,7 +88,7 @@ void ADN_Launchers_Data::LauncherInfos::ReadArchive( xml::xistream& input )
 void ADN_Launchers_Data::LauncherInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "launcher" )
-           << xml::attribute( "name", strName_ );
+           << xml::attribute( "name", *this );
     if( bDirect_.GetData() == true )
         for( int iPostureTireur=0; iPostureTireur< eNbrUnitPosture;++iPostureTireur)
         {

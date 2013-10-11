@@ -57,7 +57,7 @@ void ADN_Armors_Data::ArmorInfos::CreateDefaultAttrition()
 void ADN_Armors_Data::ArmorInfos::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToProtectionType( type );
     if( nType_ == E_ProtectionType( -1 ) )
@@ -114,7 +114,7 @@ void ADN_Armors_Data::ArmorInfos::WriteArchive( xml::xostream& output ) const
         throw MASA_EXCEPTION( tr( "Categories - Duplicated armor type name" ).toStdString() );
 
     output << xml::start( "protection" )
-        << xml::attribute( "name", strName_ )
+        << xml::attribute( "name", *this )
         << xml::attribute( "type", ADN_Tr::ConvertFromProtectionType( nType_.GetData() ) );
 
     output << xml::start( "neutralization" )

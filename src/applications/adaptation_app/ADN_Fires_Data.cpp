@@ -159,7 +159,7 @@ void ADN_Fires_Data::FireSurfaceInfos::ReadArchive( xml::xistream& input )
 void ADN_Fires_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output ) const
 {
     output  << xml::start( "surface" )
-        << xml::attribute( "type", strName_ )
+        << xml::attribute( "type", *this )
                 << xml::attribute( "ignition-threshold", ignitionThreshold_ )
                 << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
             << xml::end;
@@ -234,7 +234,7 @@ ADN_Fires_Data::FireClassInfos* ADN_Fires_Data::FireClassInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Fires_Data::FireClassInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "initial-heat", initialHeat_ )
           >> xml::attribute( "max-heat", maxHeat_ )
           >> xml::attribute( "increase-rate", increaseRate_ )
@@ -320,7 +320,7 @@ void ADN_Fires_Data::FireClassInfos::ReadSurface( xml::xistream& input )
 void ADN_Fires_Data::FireClassInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "fire" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::attribute( "initial-heat", initialHeat_ )
                << xml::attribute( "max-heat", maxHeat_ )
                << xml::attribute( "increase-rate", increaseRate_ )

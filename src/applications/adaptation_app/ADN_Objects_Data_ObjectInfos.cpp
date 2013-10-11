@@ -147,7 +147,7 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
     for( int i = 0; i < 4; ++i )
         symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ], "graphics" ) );
 
-    xis >> xml::attribute( "name", strName_ )
+    xis >> xml::attribute( "name", *this )
         >> xml::attribute( "type", strType_ )
         >> xml::optional >> xml::attribute( "point-size", pointSize_ )
         >> xml::optional >> xml::attribute( "description", description_ )
@@ -183,7 +183,7 @@ void ADN_Objects_Data_ObjectInfos::FixConsistency()
 void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "object" )
-        << xml::attribute( "name", strName_ );
+        << xml::attribute( "name", *this );
     if( pointSize_.GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );
     xos << xml::attribute( "type", strType_ );

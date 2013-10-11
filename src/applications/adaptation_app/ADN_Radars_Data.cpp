@@ -176,7 +176,7 @@ ADN_Radars_Data::RadarInfos* ADN_Radars_Data::RadarInfos::CreateCopy()
 void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToRadarType( type );
     if( nType_ == E_RadarType(-1 ) )
@@ -227,7 +227,7 @@ void ADN_Radars_Data::RadarInfos::ReadDetectableActivity( xml::xistream& input )
 void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "radar" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "type", nType_.Convert() )
             << xml::attribute( "action-range", rRange_ );
     if( bHasMinHeight_.GetData() )

@@ -1038,7 +1038,7 @@ void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output ) c
                 if( !entered )
                 {
                     output << xml::start( "category" )
-                            << xml::attribute( "name", ( *it )->ptrDotation_.GetData()->strName_ );
+                            << xml::attribute( "name", ( *it )->ptrDotation_ );
                     entered = true;
                 }
                 ( *it )->WriteArchive( output );
@@ -1225,8 +1225,12 @@ void ADN_Equipments_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
     output << xml::start( "resource" )
              << xml::attribute( "name", *this );
     ADN_Resources_Data::CategoryInfo* infos = GetCrossedElement() ? GetCrossedElement()->GetCrossedElement() : 0;
-    output << xml::attribute( "category", infos ? infos->parentResource_.strName_.GetData() : "" )
-            << xml::attribute( "value", nQuantityUsedPerHour_ )
+    if( infos )
+        output << xml::attribute( "category", infos->parentResource_.strName_.GetData() );
+    //else
+    //    output << xml::attribute( "category", "" );
+    //output << xml::attribute( "category", infos ? infos->parentResource_.strName_.GetData() : "" )
+    output << xml::attribute( "value", nQuantityUsedPerHour_ )
            << xml::end;
 }
 
@@ -1658,7 +1662,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadObject( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "comment", strAdditionalComments_ )
           >> xml::optional >> xml::start( "operational-information" )
             >> xml::optional >> xml::attribute( "native-country", strNativeCountry_ )
@@ -1824,7 +1828,7 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) 
 {
     output << xml::start( "equipment" )
                << xml::attribute( "comment", strAdditionalComments_ )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::attribute( "id", nId_ )
                << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
                << xml::attribute( "codeEMAT8", strCodeEMAT8_ )

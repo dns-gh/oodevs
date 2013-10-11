@@ -136,7 +136,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
 void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", type )
           >> xml::attribute( "average-repairing-time", repairTime_ )
           >> xml::attribute( "variance", repairTimeVariance_ );
@@ -153,7 +153,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "breakdown" )
-           << xml::attribute( "name", strName_ )
+           << xml::attribute( "name", *this )
            << xml::attribute( "id", nId_ )
            << xml::attribute( "type", nType_.Convert() )
            << xml::attribute( "average-repairing-time", repairTime_ )

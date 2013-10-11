@@ -123,7 +123,7 @@ ADN_KnowledgeGroups_Data::GroupInfo* ADN_KnowledgeGroups_Data::GroupInfo::Create
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::optional >> xml::attribute( "communication-delay", communicationDelay_ ); // LTO
     agentInfos_.ReadArchive( input );
     populationInfos_.ReadArchive( input );
@@ -136,7 +136,7 @@ void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( xml::xistream& input )
 void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "knowledge-group" )
-           << xml::attribute( "name", strName_ );
+           << xml::attribute( "name", *this );
     if( communicationDelay_ != "0s" ) // LTO
         output << xml::attribute( "communication-delay", communicationDelay_ ); // LTO
     agentInfos_.WriteArchive( output );

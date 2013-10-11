@@ -235,7 +235,7 @@ void ADN_Urban_Data::WriteMaterials( xml::xostream& output ) const
 void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output ) const
 {
     output << xml::start( "material-composition-type" )
-           << xml::attribute( "name", strName_ )
+           << xml::attribute( "name", *this )
               << xml::start( "attritions" );
     for( auto it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
@@ -264,7 +264,7 @@ ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
     : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "material-composition-types" ) );
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::start( "attritions" )
               >> xml::list( "attrition", *this, &ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition )
           >> xml::end;
@@ -384,7 +384,7 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
 void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& output ) const
 {
     output << xml::start( "accommodation" )
-           << xml::attribute( "role", strName_ )
+           << xml::attribute( "role", *this )
            << xml::attribute( "nominal-capacity", nominalCapacity_.GetData() )
            << xml::attribute( "max-capacity", maxCapacity_.GetData() )
            << xml::end;
@@ -411,7 +411,7 @@ ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input )
     , maxCapacity_    ( 0 )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "accomodations" ) );
-    input >> xml::attribute( "role", strName_ )
+    input >> xml::attribute( "role", *this )
           >> xml::attribute( "nominal-capacity", nominalCapacity_ )
           >> xml::attribute( "max-capacity", maxCapacity_ );
 }
@@ -476,7 +476,7 @@ void ADN_Urban_Data::WriteInfrastructures( xml::xostream& output ) const
 void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& output ) const
 {
     output << xml::start( "infrastructure" )
-        << xml::attribute( "name", strName_ );
+        << xml::attribute( "name", *this );
     output << xml::attribute( "symbol", pSymbol_ );
 
     if( bMedical_.GetData() )
@@ -507,7 +507,7 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
     , bMedical_( false )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "infrastructures" ) );
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "symbol", pSymbol_ )
           >> xml::optional >> xml::attribute( "medical", bMedical_ );
 }
@@ -597,7 +597,7 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
     BindExistenceTo( &ptrRoofShape_ );
     unsigned int red, green, blue;
     double alpha;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::start( "architecture" )
               >> xml::attribute( "floor-number", floor_ )
               >> xml::attribute( "height", height_ )
@@ -649,7 +649,7 @@ void ADN_Urban_Data::UrbanTemplateInfos::ReadUsage( xml::xistream& xis )
 void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output ) const
 {
     output << xml::start( "template" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::start( "architecture" )
                    << xml::attribute( "floor-number", floor_ )
                    << xml::attribute( "height", height_ )
@@ -714,7 +714,7 @@ ADN_Urban_Data::RoofShapeInfos::RoofShapeInfos()
 ADN_Urban_Data::RoofShapeInfos::RoofShapeInfos( xml::xistream& input )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "roof-shapes" ) );
-    input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "name", *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -735,7 +735,7 @@ void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output ) con
     if( strName_.GetKey().empty() )
         throw MASA_EXCEPTION( tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).toStdString() );
     output << xml::start( "roof-shape-type" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
            << xml::end;
 }
 
