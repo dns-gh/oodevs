@@ -164,8 +164,8 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(order.Kind, Equals, swapi.AutomatOrder)
 
-    // Send again with an invalid last parameter, to check the mission has an
-    // optional additional parameter.
+	// Send again with an invalid last parameter, to check the mission has an
+	// optional additional parameter.
 	params = swapi.MakeParameters(
 		swapi.MakeHeading(0),
 		nil,
