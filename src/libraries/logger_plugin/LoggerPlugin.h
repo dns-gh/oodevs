@@ -35,6 +35,14 @@ namespace kernel
 
 class MT_FileLogger;
 
+namespace sword
+{
+    class CrowdsFireDamages;
+    class SimToClient;
+    class UnitFireDamages;
+    class UnitsFireDamages;
+}
+
 namespace plugins
 {
 namespace logger

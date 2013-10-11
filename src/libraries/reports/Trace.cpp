@@ -9,6 +9,7 @@
 
 #include "Trace.h"
 #include "clients_kernel/Time_ABC.h"
+#include "protocol/Simulation.h"
 
 //-----------------------------------------------------------------------------
 // Name: Trace constructor

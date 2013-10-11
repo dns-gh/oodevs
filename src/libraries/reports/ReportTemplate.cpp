@@ -9,6 +9,7 @@
 
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
+#include "protocol/Simulation.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
