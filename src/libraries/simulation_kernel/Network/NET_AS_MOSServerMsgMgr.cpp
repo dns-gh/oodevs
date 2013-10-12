@@ -22,14 +22,17 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/DispatcherSenders.h"
 #include "MT_Tools/MT_Logger.h"
+#include "Tools/MIL_MessageParameters.h"
 
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation )
+NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer,
+        NET_Simulation_ABC& simulation, bool enableTestCommands)
     : agentServer_( agentServer )
     , simulation_ ( simulation )
+    , enableTestCommands_( enableTestCommands )
 {
     agentServer.RegisterMessage( *this, & NET_AS_MOSServerMsgMgr::OnReceiveClient );
     agentServer.RegisterMessage( *this, & NET_AS_MOSServerMsgMgr::OnReceiveMiddle );
@@ -171,4 +174,57 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMagicAction( const sword::MagicAction& msg
         em.OnReceiveCreateFireOrderOnLocation( msg, ctx, clientId );
     else if( type == sword::MagicAction::create_knowledge_group )
         em.OnReceiveKnowledgeGroupCreation( msg, ctx, clientId );
+    else
+    {
+        client::MagicActionAck ack;
+        ack().set_error_code( sword::MagicActionAck::no_error );
+        try
+        {
+            if( enableTestCommands_ && type == sword::MagicAction::debug_error )
+                OnReceiveDebugError( msg.parameters() );
+        }
+        catch( const std::exception& e )
+        {
+            ack().set_error_code(sword::MagicActionAck::error_invalid_parameter );
+            ack().set_error_msg( tools::GetExceptionMsg( e ));
+        }
+        ack.Send( Publisher(), ctx, clientId );
+    }
+}
+
+namespace
+{
+
+void NullPointerError()
+{
+    char* p = 0;
+    *p = '!';
+}
+
+int RecursionOfDeath( int count, char* data, size_t length )
+{
+    if( count < 0 )
+        return count;
+    if( data && length > 0 )
+        data[0] = 0;
+    char buffer[1024];
+    return RecursionOfDeath( count + 1, buffer, sizeof( buffer )/sizeof( *buffer ) );
+}
+
+} // namespace
+
+void NET_AS_MOSServerMsgMgr::OnReceiveDebugError( const sword::MissionParameters& params )
+{
+    protocol::CheckCount( params, 1 );
+    const std::string& err = protocol::GetString( params, 0 );
+    if( err == "null_pointer" )
+    {
+        NullPointerError();
+    }
+    else if( err == "stack_overflow" )
+    {
+        RecursionOfDeath( 0, nullptr, 0 );
+    }
+    else
+        throw MASA_BADPARAM_MAGICACTION( "unknown error: " << err );
 }

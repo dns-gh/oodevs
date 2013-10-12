@@ -21,7 +21,7 @@ using namespace tools;
 //-----------------------------------------------------------------------------
 NET_AgentServer::NET_AgentServer( const MIL_Config& config, NET_Simulation_ABC& simulation )
     : ServerNetworker( config.GetNetworkAddress(), config.GetNetworkTimeout() )
-    , manager_( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
+    , manager_( new NET_AS_MOSServerMsgMgr( *this, simulation, config.EnableTestCommands() ) )
 {
     MT_LOG_INFO_MSG( "Starting simulation server on address " << config.GetNetworkAddress() );
     AllowConnections();
