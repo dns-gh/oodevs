@@ -80,19 +80,24 @@ func MakeOpts() *simu.SimOpts {
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
 	opts.EnableTailing = showLog
+	opts.ConnectTimeout = ConnectTimeout
 	return &opts
+}
+
+func makeOptsAndSession() (*simu.SimOpts, *simu.Session) {
+	opts := MakeOpts()
+	session := simu.CreateDefaultSession()
+	session.GamingServer = opts.DispatcherAddr
+	return opts, session
 }
 
 func startSimOnExercise(c *C, exercise string, endTick int, paused bool,
 	step int) *simu.SimProcess {
 
-	opts := MakeOpts()
+	opts, session := makeOptsAndSession()
 	opts.ExerciseName = exercise
-	opts.ConnectTimeout = ConnectTimeout
 
-	session := simu.CreateDefaultSession()
 	session.Paused = paused
-	session.GamingServer = opts.DispatcherAddr
 	if step > 0 {
 		session.TimeStep = step
 	}
@@ -107,7 +112,6 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 
 	opts := MakeOpts()
 	opts.ExerciseName = exercise
-	opts.ConnectTimeout = ConnectTimeout
 	opts.SessionName = session
 	opts.CheckpointName = checkpoint
 
