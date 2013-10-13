@@ -1323,3 +1323,8 @@ func (c *Client) TriggerError(kind string) error {
 	msg := createMagicAction(params, sword.MagicAction_debug_internal)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
+
+func (c *Client) LogFinishHandlings(unitId uint32) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(),
+		sword.UnitMagicAction_log_finish_handlings)
+}
