@@ -66,6 +66,20 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_AgentManager.h"
 
+boost::shared_ptr< DEC_Decision_ABC > DEC_AgentFunctions::GetUnitById( uint32_t id )
+{
+    auto unit = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
+    if( !unit )
+        return boost::shared_ptr< DEC_Decision_ABC >();
+    auto& role = unit->GetRole< DEC_RolePion_Decision >();
+    role.IncDIARef();
+    return boost::shared_ptr< DEC_Decision_ABC >( &role, []( DEC_RolePion_Decision* p )
+        {
+            if( p )
+                p->DecDIARef();
+        } );
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsNeutralized
 // Created: JVT 03-10-01

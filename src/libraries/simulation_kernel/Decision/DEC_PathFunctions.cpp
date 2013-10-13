@@ -14,7 +14,6 @@
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
-#include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
