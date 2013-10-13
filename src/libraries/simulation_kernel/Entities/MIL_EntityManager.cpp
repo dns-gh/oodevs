@@ -1272,13 +1272,13 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
         formation = FindFormation( taskerId );
         if( !formation )
             throw MASA_BADUNIT_UNIT( "invalid party or formation: " << taskerId );
-        army = &(formation->GetArmy());
+        army = &formation->GetArmy();
     }
     const auto& params = message.parameters();
     const int count = protocol::GetCount( params );
     protocol::Check( count >= 3 && count <= 4, "3 or 4 parameters expected" );
-    int level = static_cast< int >( protocol::GetReal( params, 0 ));
-    const std::string name = protocol::GetString( params, 1 );
+    const int level = static_cast< int >( protocol::GetReal( params, 0 ));
+    const std::string& name = protocol::GetString( params, 1 );
     const std::string logLevel = protocol::GetString( params, 2 );
     std::vector< protocol::Extension > extensions;
     if( count > 3 )
@@ -1603,24 +1603,24 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
     MIL_AgentPion* target = FindAgentPion( protocol::GetIdentifier( params, 0 ));
     if( !target )
         throw MASA_BADPARAM_UNIT( "invalid target identifier" );
-    const int eqCount = protocol::GetCount( params, 1 );
-    protocol::Check( eqCount != 0, "invalid empty equipment list" );
+    const int count = protocol::GetCount( params, 1 );
+    protocol::Check( count > 0, "invalid empty equipment list" );
     if( target == &pion )
         throw MASA_BADPARAM_UNIT( "source and target are identical" );
     PHY_RolePion_Composantes& source = pion.GetRole< PHY_RolePion_Composantes >();
     std::map< unsigned int, int > composantes;
-    for( int i = 0; i < eqCount; ++i )
+    for( int i = 0; i < count; ++i )
     {
         const uint32_t id = protocol::GetIdentifier( params, 1, i, 0 );
-        const int count = protocol::GetQuantity( params, 1, i, 1 );
-        if( count < 0 )
+        const int quantity = protocol::GetQuantity( params, 1, i, 1 );
+        if( quantity < 0 )
             throw MASA_BADPARAM_UNIT( "invalid negative equipment count #" << i );
-        if( count == 0 )
+        if( quantity == 0 )
             continue;
         if( ! source.CanLendComposantes( boost::bind( &IsOfType, _1, id ) ) )
             throw MASA_BADPARAM_UNIT( "no equipment type of parameter #" << i
                     << " available to lend in source unit" );
-        composantes[ id ] += count;
+        composantes[ id ] += quantity;
     }
     for( auto it = composantes.begin(); it != composantes.end(); ++it )
         source.LendComposantes( *target, it->second, boost::bind( &IsOfType, _1, it->first ) );
@@ -1797,9 +1797,9 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message
 {
     if( MIL_Automate* pAutomate = FindAutomate( taskerId) )
         return pAutomate->OnReceiveMagicActionMoveTo( message );
-    else if( MIL_AgentPion* pPion = FindAgentPion( taskerId ) )
+    if( MIL_AgentPion* pPion = FindAgentPion( taskerId ) )
         return pPion->OnReceiveMagicActionMoveTo( message );
-    else if( MIL_Population* pPopulation = populationFactory_->Find( taskerId ))
+    if( MIL_Population* pPopulation = populationFactory_->Find( taskerId ))
         return pPopulation->OnReceiveCrowdMagicActionMoveTo( message.parameters() );
     throw MASA_BADUNIT_UNIT( "invalid automa, crowd or unit: " << taskerId );
 }
