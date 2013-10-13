@@ -115,7 +115,12 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
 
         const LogMaintenanceConsigns* maintenanceConsigns = agent.Retrieve< LogMaintenanceConsigns >();
         const LogMedicalConsigns* medicalConsigns = agent.Retrieve< LogMedicalConsigns >();
-        if( ( maintenanceConsigns && maintenanceConsigns->IsHandlingConsigns() ) || ( medicalConsigns && medicalConsigns->IsHandlingConsigns() ) )
+        const LogSupplyConsigns* supplyConsigns = agent.Retrieve< LogSupplyConsigns >();
+        const LogFuneralConsigns* funeralConsigns = agent.Retrieve< LogFuneralConsigns >();
+        if( maintenanceConsigns && maintenanceConsigns->IsHandlingConsigns() ||
+            medicalConsigns && medicalConsigns->IsHandlingConsigns() ||
+            supplyConsigns && supplyConsigns->IsHandlingConsigns() ||
+            funeralConsigns && funeralConsigns->IsHandlingConsigns() )
             AddMagic( tr( "Finish logistic handlings" ), SLOT( FinishLogisticHandlings() ), magicMenu );
         FillCommonOrders( magicMenu );
     }
@@ -158,6 +163,16 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     AddReloadBrainMenu( magicMenu, static_.types_.automatModels_, decisions ? decisions->ModelName() : "unknown",
         agent.Get< gui::EntityType< kernel::AutomatType > >().GetType().GetDecisionalModel().GetName() );
     AddSurrenderMenu( magicMenu, agent );
+
+    const LogMaintenanceConsigns* maintenanceConsigns = agent.Retrieve< LogMaintenanceConsigns >();
+    const LogMedicalConsigns* medicalConsigns = agent.Retrieve< LogMedicalConsigns >();
+    const LogSupplyConsigns* supplyConsigns = agent.Retrieve< LogSupplyConsigns >();
+    const LogFuneralConsigns* funeralConsigns = agent.Retrieve< LogFuneralConsigns >();
+    if( maintenanceConsigns && maintenanceConsigns->IsHandlingConsigns() ||
+        medicalConsigns && medicalConsigns->IsHandlingConsigns() ||
+        supplyConsigns && supplyConsigns->IsHandlingConsigns() ||
+        funeralConsigns && funeralConsigns->IsHandlingConsigns() )
+        AddMagic( tr( "Finish logistic handlings" ), SLOT( FinishLogisticHandlings() ), magicMenu );
     FillCommonOrders( magicMenu );
 }
 
