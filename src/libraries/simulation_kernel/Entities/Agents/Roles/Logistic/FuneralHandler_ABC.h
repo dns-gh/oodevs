@@ -13,7 +13,6 @@
 namespace logistic
 {
     class LogisticHierarchy_ABC;
-    class FuneralConsign_ABC;
     class FuneralPackagingResource;
     class SupplyConvoysObserver_ABC;
 

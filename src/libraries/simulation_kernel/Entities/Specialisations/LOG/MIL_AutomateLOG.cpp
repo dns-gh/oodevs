@@ -30,7 +30,7 @@
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
-#include "Entities/Agents/Roles/Logistic/FuneralConsign_ABC.h"
+#include "Entities/Agents/Roles/Logistic/SupplyConvoysObserver_ABC.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -563,7 +563,7 @@ MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dota
 void MIL_AutomateLOG::OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     auto tmp = supplyConvoysObserver_;
-    boost::for_each( tmp, boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, consign ) );
+    boost::for_each( tmp, boost::bind( &logistic::SupplyConvoysObserver_ABC::OnSupplyConvoyArriving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -573,7 +573,7 @@ void MIL_AutomateLOG::OnSupplyConvoyArriving( const boost::shared_ptr< logistic:
 void MIL_AutomateLOG::OnSupplyConvoyLeaving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     auto tmp = supplyConvoysObserver_;
-    boost::for_each( tmp, boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, consign ) );
+    boost::for_each( tmp, boost::bind( &logistic::SupplyConvoysObserver_ABC::OnSupplyConvoyLeaving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------

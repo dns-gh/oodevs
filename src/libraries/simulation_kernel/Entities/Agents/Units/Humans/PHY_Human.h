@@ -20,7 +20,7 @@ class MIL_Time_ABC;
 
 namespace logistic
 {
-    class FuneralConsign_ABC;
+    class FuneralConsign;
 }
 
 // =============================================================================
@@ -140,7 +140,7 @@ private:
     bool bContamined_;
     E_HumanLocation nLocation_;
     boost::shared_ptr< PHY_MedicalHumanState > pMedicalState_;
-    boost::shared_ptr< logistic::FuneralConsign_ABC > funeralConsign_;
+    boost::shared_ptr< logistic::FuneralConsign > funeralConsign_;
     unsigned int nDeathTimeStep_;
 };
 

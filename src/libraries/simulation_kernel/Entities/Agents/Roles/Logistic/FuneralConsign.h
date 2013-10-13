@@ -10,7 +10,7 @@
 #ifndef __FuneralConsign_h_
 #define __FuneralConsign_h_
 
-#include "FuneralConsign_ABC.h"
+#include "SupplyConvoysObserver_ABC.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 
 class Human_ABC;
@@ -38,7 +38,7 @@ private:
 */
 // Created: NLD 2011-08-24
 // =============================================================================
-class FuneralConsign : public FuneralConsign_ABC
+class FuneralConsign : public SupplyConvoysObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -49,8 +49,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Update();
-    virtual bool IsFinished() const;
+    bool Update();
+    bool IsFinished() const;
     //@}
 
     //! @name Events
@@ -61,9 +61,9 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState() const;
-    virtual void SendFullState( unsigned int context ) const;
-    virtual void Clean();
+    void SendChangedState() const;
+    void SendFullState( unsigned int context ) const;
+    void Clean();
     //@}
 
 private:
