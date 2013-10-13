@@ -77,8 +77,8 @@ void NET_AS_MOSServerMsgMgr::Send( sword::SimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const sword::ClientToSim& wrapper )
 {
-    MIL_AgentServer& wk = MIL_AgentServer::GetWorkspace();
-    MIL_EntityManager& em = wk.GetEntityManager();
+    MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
+    MIL_EntityManager& manager = server.GetEntityManager();
     const auto& msg = wrapper.message();
     const unsigned int nCtx = wrapper.context();
     const unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
@@ -95,33 +95,33 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( msg.has_control_date_time_change() )
         simulation_.SetRealTime( msg.control_date_time_change().date_time().data() );
     else if( msg.has_control_checkpoint_save_now() )
-        wk.GetCheckPointManager().OnReceiveMsgCheckPointSaveNow(
+        server.GetCheckPointManager().OnReceiveMsgCheckPointSaveNow(
                 msg.control_checkpoint_save_now(), clientId, nCtx );
     else if( msg.has_control_checkpoint_set_frequency() )
-        wk.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency(
+        server.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency(
                 msg.control_checkpoint_set_frequency() );
     else if( msg.has_control_toggle_vision_cones() )
-        em.OnReceiveControlToggleVisionCones( msg.control_toggle_vision_cones() );
+        manager.OnReceiveControlToggleVisionCones( msg.control_toggle_vision_cones() );
     else if( msg.has_unit_order() )
-        em.OnReceiveUnitOrder( msg.unit_order(), nCtx, clientId );
+        manager.OnReceiveUnitOrder( msg.unit_order(), nCtx, clientId );
     else if( msg.has_automat_order() )
-        em.OnReceiveAutomatOrder( msg.automat_order(), nCtx, clientId );
+        manager.OnReceiveAutomatOrder( msg.automat_order(), nCtx, clientId );
     else if( msg.has_crowd_order() )
-        em.OnReceiveCrowdOrder( msg.crowd_order(), nCtx, clientId );
+        manager.OnReceiveCrowdOrder( msg.crowd_order(), nCtx, clientId );
     else if( msg.has_frag_order() )
-        em.OnReceiveFragOrder( msg.frag_order(), nCtx, clientId );
+        manager.OnReceiveFragOrder( msg.frag_order(), nCtx, clientId );
     else if( msg.has_set_automat_mode() )
-        em.OnReceiveSetAutomateMode( msg.set_automat_mode(), nCtx, clientId );
+        manager.OnReceiveSetAutomateMode( msg.set_automat_mode(), nCtx, clientId );
     else if( msg.has_unit_creation_request() )
-        em.OnReceiveUnitCreationRequest( msg.unit_creation_request(), nCtx );
+        manager.OnReceiveUnitCreationRequest( msg.unit_creation_request(), nCtx );
     else if( msg.has_knowledge_magic_action() )
-        em.OnReceiveKnowledgeMagicAction( msg.knowledge_magic_action(), nCtx, clientId );
+        manager.OnReceiveKnowledgeMagicAction( msg.knowledge_magic_action(), nCtx, clientId );
     else if( msg.has_unit_magic_action() )
-        em.OnReceiveUnitMagicAction( msg.unit_magic_action(), nCtx, clientId );
+        manager.OnReceiveUnitMagicAction( msg.unit_magic_action(), nCtx, clientId );
     else if( msg.has_object_magic_action() )
-        em.OnReceiveObjectMagicAction( msg.object_magic_action(), nCtx );
+        manager.OnReceiveObjectMagicAction( msg.object_magic_action(), nCtx );
     else if( msg.has_burning_cell_request() )
-        em.OnReceiveBurningCellRequest( msg.burning_cell_request(), nCtx );
+        manager.OnReceiveBurningCellRequest( msg.burning_cell_request(), nCtx );
     else if( msg.has_magic_action() )
         OnReceiveMagicAction( msg.magic_action(), nCtx, clientId );
 }
@@ -159,21 +159,21 @@ void NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement( const std::string&
 void NET_AS_MOSServerMsgMgr::OnReceiveMagicAction( const sword::MagicAction& msg,
         uint32_t ctx, uint32_t clientId )
 {
-    MIL_AgentServer& wk = MIL_AgentServer::GetWorkspace();
-    MIL_EntityManager& em = wk.GetEntityManager();
+    MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
+    MIL_EntityManager& manager = server.GetEntityManager();
     const auto type = msg.type();
     if( type == sword::MagicAction::global_weather ||
         type == sword::MagicAction::local_weather ||
         type == sword::MagicAction::local_weather_destruction )
-        wk.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ctx, clientId );
+        server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ctx, clientId );
     else if( type == sword::MagicAction::change_diplomacy )
-        em.OnReceiveChangeDiplomacy( msg, ctx, clientId );
+        manager.OnReceiveChangeDiplomacy( msg, ctx, clientId );
     else if( type == sword::MagicAction::change_resource_network_properties )
-        em.OnReceiveChangeResourceLinks( msg, ctx, clientId );
+        manager.OnReceiveChangeResourceLinks( msg, ctx, clientId );
     else if( type == sword::MagicAction::create_fire_order_on_location )
-        em.OnReceiveCreateFireOrderOnLocation( msg, ctx, clientId );
+        manager.OnReceiveCreateFireOrderOnLocation( msg, ctx, clientId );
     else if( type == sword::MagicAction::create_knowledge_group )
-        em.OnReceiveKnowledgeGroupCreation( msg, ctx, clientId );
+        manager.OnReceiveKnowledgeGroupCreation( msg, ctx, clientId );
     else
     {
         client::MagicActionAck ack;
@@ -218,13 +218,9 @@ void NET_AS_MOSServerMsgMgr::OnReceiveDebugError( const sword::MissionParameters
     protocol::CheckCount( params, 1 );
     const std::string& err = protocol::GetString( params, 0 );
     if( err == "null_pointer" )
-    {
         NullPointerError();
-    }
     else if( err == "stack_overflow" )
-    {
         RecursionOfDeath( 0, nullptr, 0 );
-    }
     else
         throw MASA_BADPARAM_MAGICACTION( "unknown error: " << err );
 }
