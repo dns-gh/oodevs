@@ -22,6 +22,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/make_shared.hpp>
+#include <boost/optional/optional.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission constructor

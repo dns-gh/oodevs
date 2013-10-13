@@ -44,6 +44,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Tools/MIL_Config.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/foreach.hpp>

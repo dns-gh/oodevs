@@ -28,6 +28,7 @@
 #include "tools/Codec.h"
 #include "tools/Loader_ABC.h"
 #include "tools/MIL_AffinitiesMap.h"
+#include "tools/MIL_Config.h"
 #include "tools/PhyLoader.h"
 #include "tools/VersionHelper.h"
 #include "tools/XmlStreamOperators.h"

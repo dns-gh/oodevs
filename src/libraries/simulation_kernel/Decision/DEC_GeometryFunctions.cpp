@@ -13,6 +13,7 @@
 #include "DEC_GeometryFunctions.h"
 #include "DEC_FrontAndBackLinesComputer.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Random.h"
 #include "DEC_Decision_ABC.h"
 #include "Brain.h"
 #include "Entities/MIL_EntityManager.h"

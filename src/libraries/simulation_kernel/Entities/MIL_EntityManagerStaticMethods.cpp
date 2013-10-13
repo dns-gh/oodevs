@@ -85,6 +85,7 @@
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
+#include <tools/Path.h>
 
 namespace
 {

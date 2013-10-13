@@ -24,6 +24,7 @@
 #include "protocol/ClientSenders.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/optional/optional.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PionMission )
 

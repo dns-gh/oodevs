@@ -12,6 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "protocol/Protocol.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Tools/MIL_Config.h"
 #include "simulation_terrain/TER_Polygon.h"
 #include "simulation_terrain/TER_World.h"
 #include "propagation/PropagationManager.h"

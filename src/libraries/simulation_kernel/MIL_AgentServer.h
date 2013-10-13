@@ -11,7 +11,6 @@
 #define __MIL_AgentServer_h_
 
 #include "MIL.h"
-#include "Tools/MIL_Config.h"
 #include "Network/NET_Simulation_ABC.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_Timer_ABC.h"
@@ -27,6 +26,7 @@ namespace resource
 namespace tools
 {
     class ExerciseSettings;
+    class Path;
 }
 
 namespace xml
@@ -43,6 +43,7 @@ class NET_AgentServer;
 class PHY_MeteoDataManager;
 class ProcessMonitor;
 class MIL_BurningCells;
+class MIL_Config;
 class MIL_UrbanCache;
 class MIL_ObjectFactory;
 

@@ -25,6 +25,7 @@
 #include "MIL_Time_ABC.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Tools/MIL_Config.h"
 #include "protocol/ClientSenders.h"
 #include <tools/Set.h>
 

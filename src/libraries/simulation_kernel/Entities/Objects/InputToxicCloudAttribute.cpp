@@ -13,6 +13,7 @@
 #include "MIL_ToxicEffectManipulator.h"
 #include "NBCAttribute.h"
 #include "MIL_Object_ABC.h"
+#include "Tools/MIL_Config.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/Protocol.h"
 #include "tools/FileWrapper.h"
