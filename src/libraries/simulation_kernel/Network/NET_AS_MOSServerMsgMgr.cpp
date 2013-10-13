@@ -201,14 +201,14 @@ void NullPointerError()
     *p = '!';
 }
 
-int RecursionOfDeath( int count, char* data, size_t length )
+int RecursionOfDeath( int count, char* data )
 {
     if( count < 0 )
         return count;
-    if( data && length > 0 )
+    if( data )
         data[0] = 0;
     char buffer[1024];
-    return RecursionOfDeath( count + 1, buffer, sizeof( buffer )/sizeof( *buffer ) );
+    return RecursionOfDeath( count + 1, buffer );
 }
 
 } // namespace
@@ -220,7 +220,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveDebugError( const sword::MissionParameters
     if( err == "null_pointer" )
         NullPointerError();
     else if( err == "stack_overflow" )
-        RecursionOfDeath( 0, nullptr, 0 );
+        RecursionOfDeath( 0, nullptr );
     else
         throw MASA_BADPARAM_MAGICACTION( "unknown error: " << err );
 }
