@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Model_ABC.h"
 #include "Entities/Orders/MIL_FragOrderType.h"
-#include "MT_Tools/MT_String.h"
 #include "tools/XmlStreamOperators.h"
 #include <sys/stat.h>
 

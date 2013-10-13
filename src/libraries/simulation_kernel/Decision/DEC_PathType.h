@@ -13,7 +13,6 @@
 #define __DEC_PathType_h_
 
 #include "MIL.h"
-#include "MT_Tools/MT_String.h"
 
 //*****************************************************************************
 // Created: JDY 03-04-10

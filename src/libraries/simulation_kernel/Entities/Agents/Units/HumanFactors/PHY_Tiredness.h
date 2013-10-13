@@ -12,7 +12,6 @@
 #ifndef __PHY_Tiredness_h_
 #define __PHY_Tiredness_h_
 
-#include "MT_Tools/MT_String.h"
 #include "PHY_HumanFactor.h"
 
 namespace sword

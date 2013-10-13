@@ -13,7 +13,6 @@
 #define __PHY_Protection_h_
 
 #include "MT_Tools/MT_GaussianRandom.h"
-#include "MT_Tools/MT_String.h"
 
 namespace xml
 {

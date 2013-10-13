@@ -13,7 +13,6 @@
 #define __MIL_Tools_h_
 
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
-#include "MT_Tools/MT_String.h"
 #include <spatialcontainer/TerrainData.h>
 
 namespace tools

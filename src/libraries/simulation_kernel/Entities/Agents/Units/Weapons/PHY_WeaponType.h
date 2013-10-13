@@ -12,7 +12,6 @@
 #ifndef __PHY_WeaponType_h_
 #define __PHY_WeaponType_h_
 
-#include "MT_Tools/MT_String.h"
 
 namespace xml
 {

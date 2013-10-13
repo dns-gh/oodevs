@@ -6,7 +6,6 @@
 #define __DEC_Workspace_h_
 
 #include "MIL.h"
-#include "MT_Tools/MT_String.h"
 
 namespace xml
 {

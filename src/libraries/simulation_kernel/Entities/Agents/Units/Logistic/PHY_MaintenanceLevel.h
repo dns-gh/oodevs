@@ -12,7 +12,6 @@
 #ifndef __PHY_MaintenanceLevel_h_
 #define __PHY_MaintenanceLevel_h_
 
-#include "MT_Tools/MT_String.h"
 
 // =============================================================================
 // @class  PHY_MaintenanceLevel

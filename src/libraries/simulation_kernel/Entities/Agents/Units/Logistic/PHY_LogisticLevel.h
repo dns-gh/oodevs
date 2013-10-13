@@ -12,7 +12,6 @@
 #ifndef __PHY_LogisticLevel_h_
 #define __PHY_LogisticLevel_h_
 
-#include "MT_Tools/MT_String.h"
 #include <map>
 
 // =============================================================================

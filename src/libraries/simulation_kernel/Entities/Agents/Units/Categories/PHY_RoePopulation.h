@@ -13,7 +13,6 @@
 #define __PHY_RoePopulation_h_
 
 #include "protocol/Protocol.h"
-#include "MT_Tools/MT_String.h"
 
 // =============================================================================
 // @class  PHY_RoePopulation

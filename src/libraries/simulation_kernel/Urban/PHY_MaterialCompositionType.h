@@ -10,7 +10,6 @@
 #ifndef __PHY_MaterialCompositionType_h_
 #define __PHY_MaterialCompositionType_h_
 
-#include "MT_Tools/MT_String.h"
 
 // =============================================================================
 /** @class  PHY_MaterialCompositionType

@@ -13,7 +13,6 @@
 #define __MIL_NBCType_h_
 
 #include "MIL_Random.h"
-#include "MT_Tools/MT_String.h"
 
 namespace xml
 {

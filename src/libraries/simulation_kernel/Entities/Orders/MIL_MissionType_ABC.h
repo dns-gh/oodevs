@@ -11,7 +11,6 @@
 #define __MIL_MissionType_ABC_h_
 
 #include "MIL_OrderType_ABC.h"
-#include "MT_Tools/MT_String.h"
 
 // =============================================================================
 /** @class  MIL_MissionType_ABC

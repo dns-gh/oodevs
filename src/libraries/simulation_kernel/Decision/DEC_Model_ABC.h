@@ -13,7 +13,6 @@
 #define __DEC_Model_ABC_h_
 
 #include "MIL.h"
-#include "MT_Tools/MT_String.h"
 #include <tools/Path.h>
 #include <set>
 

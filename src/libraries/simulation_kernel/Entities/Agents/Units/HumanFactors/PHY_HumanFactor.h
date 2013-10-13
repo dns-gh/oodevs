@@ -10,7 +10,6 @@
 #ifndef __PHY_HumanFactor_h_
 #define __PHY_HumanFactor_h_
 
-#include "MT_Tools/MT_String.h"
 
 namespace sword
 {
