@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "FireComponentDamages.h"
+#include "protocol/Simulation.h"
 
 using namespace sword;
 using namespace extractors;
@@ -95,6 +96,11 @@ FireComponentDamages::FireComponentDamages( xml::xistream& xis )
 FireComponentDamages::~FireComponentDamages()
 {
     // NOTHING
+}
+
+bool FireComponentDamages::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return wrapper.message().has_unit_damaged_by_unit_fire();
 }
 
 // -----------------------------------------------------------------------------

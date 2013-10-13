@@ -10,9 +10,16 @@
 #ifndef __Indicator_h_
 #define __Indicator_h_
 
-#include "protocol/ClientPublisher_ABC.h"
 #include "Functions.h"
 #include "Result_ABC.h"
+
+namespace dispatcher
+{
+    class ClientPublisher_ABC;
+}
+
+void SendIndicator( dispatcher::ClientPublisher_ABC& pub, const std::string& name,
+        float value );
 
 // =============================================================================
 /** @class  Indicator
@@ -46,10 +53,7 @@ public:
     virtual void SetKey( const K& ) {}
     virtual void Apply( const T& arg )
     {
-        aar::Indicator result;
-        result().set_name( name_.c_str() );
-        result().set_value( static_cast< float >( arg ) );
-        result.Send( publisher_ );
+        SendIndicator( publisher_, name_, static_cast< float >( arg ) );
     }
     virtual void EndTick() {}
     virtual void Commit( unsigned int /*skippedFrames*/, unsigned int /*firstTick*/ ) const {}

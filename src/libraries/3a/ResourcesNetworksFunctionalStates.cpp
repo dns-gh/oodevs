@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "ResourcesNetworksFunctionalStates.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 
@@ -36,6 +37,14 @@ ResourcesNetworksFunctionalStates::~ResourcesNetworksFunctionalStates()
 ResourcesNetworksFunctionalStates::ResourcesNetworksFunctionalStates( xml::xistream& /*xis*/ )
 {
     // NOTHING
+}
+
+bool ResourcesNetworksFunctionalStates::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return( wrapper.message().has_urban_update()
+         && wrapper.message().urban_update().has_attributes()
+         && wrapper.message().urban_update().attributes().has_infrastructures()
+         && wrapper.message().urban_update().attributes().infrastructures().resource_network_size() != 0 );
 }
 
 // -----------------------------------------------------------------------------

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "LogMedicalWaitingAttention.h"
+#include "protocol/Protocol.h"
 
 using namespace extractors;
 
@@ -36,6 +37,12 @@ LogMedicalWaitingAttention::LogMedicalWaitingAttention( xml::xistream& /*xis*/ )
 LogMedicalWaitingAttention::~LogMedicalWaitingAttention()
 {
     // NOTHING
+}
+
+bool LogMedicalWaitingAttention::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return ( wrapper.message().has_log_medical_handling_update()
+            && wrapper.message().log_medical_handling_update().has_state() );
 }
 
 // -----------------------------------------------------------------------------

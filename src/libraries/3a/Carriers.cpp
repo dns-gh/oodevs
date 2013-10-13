@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "Carriers.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 

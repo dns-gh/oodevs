@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "StructuralStates.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 
@@ -38,6 +39,22 @@ StructuralStates::StructuralStates( xml::xistream& /*xis*/ )
     : hasInfrastructure_( false )
 {
     // NOTHING
+}
+
+bool StructuralStates::HasValue( const sword::SimToClient& wrapper ) const
+{
+    if( wrapper.message().has_urban_update() && wrapper.message().urban_update().has_attributes() )
+    {
+        if( !hasInfrastructure_ )
+        {
+            const sword::UrbanAttributes& attributes = wrapper.message().urban_update().attributes();
+            if( attributes.has_infrastructures() && attributes.infrastructures().has_infrastructure() )
+                hasInfrastructure_ = true;
+        }
+
+        return ( hasInfrastructure_ && wrapper.message().urban_update().attributes().has_structure() );
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

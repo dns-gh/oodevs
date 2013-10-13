@@ -40,13 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const sword::SimToClient& wrapper ) const
-    {
-        return( wrapper.message().has_urban_update()
-             && wrapper.message().urban_update().has_attributes()
-             && wrapper.message().urban_update().attributes().has_infrastructures()
-             && wrapper.message().urban_update().attributes().infrastructures().resource_network_size() != 0 );
-    }
+    bool HasValue( const sword::SimToClient& wrapper ) const;
     float Extract( const sword::SimToClient& wrapper );
     //@}
 };

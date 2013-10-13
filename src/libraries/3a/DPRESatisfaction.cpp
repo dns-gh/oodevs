@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "DPRESatisfaction.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 
@@ -53,6 +54,12 @@ DPRESatisfaction::DPRESatisfaction( xml::xistream& xis )
     , safety_ ( ReadMask ( xis, "safety" ) )
 {
     // NOTHING
+}
+
+bool DPRESatisfaction::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return ( wrapper.message().has_unit_attributes()
+            && wrapper.message().unit_attributes().has_satisfaction() );
 }
 
 // -----------------------------------------------------------------------------

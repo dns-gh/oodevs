@@ -12,6 +12,7 @@
 #include "PowerIndicators.h"
 #include "PowerModificator.h"
 #include "Extractors.h"
+#include "protocol/Simulation.h"
 
 using namespace aar;
 

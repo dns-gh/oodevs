@@ -12,7 +12,11 @@
 
 #include <string>
 #include <geometry/Types.h>
-#include "protocol/Protocol.h"
+
+namespace sword
+{
+    class CoordLatLong;
+}
 
 // =============================================================================
 /** @class  Position
@@ -74,7 +78,7 @@ private:
 private:
     //! @name Member data
     //@{
-    sword::CoordLatLong coord_;
+    geometry::Point2d coord_;
     mutable bool init_;
     mutable geometry::Point2f point_;
     //@}

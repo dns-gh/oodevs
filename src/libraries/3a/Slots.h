@@ -11,6 +11,7 @@
 #define __Slots_h_
 
 #include <tools/Exception.h>
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  Slot_ABC

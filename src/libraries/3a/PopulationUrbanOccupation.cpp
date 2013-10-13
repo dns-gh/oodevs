@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "PopulationUrbanOccupation.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 
@@ -37,6 +38,11 @@ PopulationUrbanOccupation::PopulationUrbanOccupation( xml::xistream& xis )
     : filter_  ( xis, "blocks" )
 {
     // NOTHING
+}
+
+bool PopulationUrbanOccupation::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return ( wrapper.message().has_population_update() );
 }
 
 // -----------------------------------------------------------------------------

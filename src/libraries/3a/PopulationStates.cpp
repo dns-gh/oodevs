@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "PopulationStates.h"
+#include "protocol/Protocol.h"
 
 using namespace sword;
 using namespace extractors;
@@ -54,6 +55,11 @@ PopulationStates::PopulationStates( xml::xistream& xis )
 PopulationStates::~PopulationStates()
 {
     // NOTHING
+}
+
+bool PopulationStates::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return ( wrapper.message().has_population_update() );
 }
 
 // -----------------------------------------------------------------------------

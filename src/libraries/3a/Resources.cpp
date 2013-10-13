@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "Resources.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 
@@ -28,6 +29,11 @@ Resources::Resources( xml::xistream& xis )
     : filter_( xis, "dotations", "resources" )
 {
     // NOTHING
+}
+
+bool Resources::HasFlag( const sword::UnitAttributes& attributes ) const
+{
+    return attributes.has_resource_dotations();
 }
 
 // -----------------------------------------------------------------------------

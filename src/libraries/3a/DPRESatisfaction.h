@@ -40,10 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const sword::SimToClient& wrapper ) const
-    {
-        return ( wrapper.message().has_unit_attributes() && wrapper.message().unit_attributes().has_satisfaction() );
-    }
+    bool HasValue( const sword::SimToClient& wrapper ) const;
     float Extract( const sword::SimToClient& wrapper );
     //@}
 

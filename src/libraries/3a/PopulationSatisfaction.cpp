@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "PopulationSatisfaction.h"
+#include "protocol/Simulation.h"
 
 using namespace extractors;
 
@@ -53,6 +54,12 @@ PopulationSatisfaction::PopulationSatisfaction( xml::xistream& xis )
     , safety_ ( ReadMask ( xis, "safety" ) )
 {
     // NOTHING
+}
+
+bool PopulationSatisfaction::HasValue( const sword::SimToClient& wrapper ) const
+{
+    return ( wrapper.message().has_population_update()
+            && wrapper.message().population_update().has_satisfaction() );
 }
 
 // -----------------------------------------------------------------------------
