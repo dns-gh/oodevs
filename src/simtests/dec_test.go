@@ -105,7 +105,7 @@ end
 `
 	checkScript(c, client, script, map[string]interface{}{"unitid": 123456},
 		"", ".*null pointer.*")
-	// Result is apparently in m/tick
+	// Result is in m/s
 	checkScript(c, client, script, map[string]interface{}{"unitid": unit.Id},
-		`194(\.\d+)?`, "")
+		`19\.4\d*`, "")
 }
