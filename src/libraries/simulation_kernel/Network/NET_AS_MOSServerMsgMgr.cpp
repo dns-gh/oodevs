@@ -180,7 +180,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMagicAction( const sword::MagicAction& msg
         ack().set_error_code( sword::MagicActionAck::no_error );
         try
         {
-            if( enableTestCommands_ && type == sword::MagicAction::debug_error )
+            if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
                 OnReceiveDebugError( msg.parameters() );
         }
         catch( const std::exception& e )
@@ -215,12 +215,18 @@ int RecursionOfDeath( int count, char* data )
 
 void NET_AS_MOSServerMsgMgr::OnReceiveDebugError( const sword::MissionParameters& params )
 {
-    protocol::CheckCount( params, 1 );
-    const std::string& err = protocol::GetString( params, 0 );
-    if( err == "null_pointer" )
-        NullPointerError();
-    else if( err == "stack_overflow" )
-        RecursionOfDeath( 0, nullptr );
+    protocol::CheckCount( params, 2 );
+    const std::string& command = protocol::GetString( params, 0 );
+    const std::string& err = protocol::GetString( params, 1 );
+    if( command == "trigger_error" )
+    {
+        if( err == "null_pointer" )
+            NullPointerError();
+        else if( err == "stack_overflow" )
+            RecursionOfDeath( 0, nullptr );
+        else
+            throw MASA_BADPARAM_MAGICACTION( "unknown error: " << err );
+    }
     else
-        throw MASA_BADPARAM_MAGICACTION( "unknown error: " << err );
+        throw MASA_BADPARAM_MAGICACTION( "unknown command: " << command );
 }
