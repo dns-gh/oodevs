@@ -642,6 +642,19 @@ integration.updateMoveToItArea = function( objective, pathType )
                 integration.stopMoveToIt( objective )
                 return integration.startMoveToItArea( objective, pathType )
            end
+        else
+            -- If the agent has not reached its objective yet, and the followed unit has covered a distance greater
+            -- than the distance that the agent can cover in a fixed short amount of time (defined by the
+            -- delayInSeconds constant), then a new objective should be computed. This is done to ensure
+            -- a better following behaviour.
+            
+            local distance = DEC_Geometrie_DistanceBetweenPoints( objective.destination, objective:getPosition() )
+            local delayInSeconds = 40
+            
+            if distance > integration.getMaxSpeedInKmH( meKnowledge )*delayInSeconds/3.6 then
+                integration.stopMoveToIt( objective )
+                return integration.startMoveToItArea( objective, pathType )
+            end
         end
     end
     return integration.updateMoveToIt( objective )
