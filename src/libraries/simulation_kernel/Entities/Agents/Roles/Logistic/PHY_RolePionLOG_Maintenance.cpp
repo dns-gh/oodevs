@@ -735,11 +735,16 @@ void PHY_RolePionLOG_Maintenance::NotifyComponentHasChanged()
 // Name: PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay
 // Created: NLD 2012-01-09
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay()
+bool PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay()
 {
+    bool handlings = false;
     for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+        {
             (*itConsign)->FinishSuccessfullyWithoutDelay();
+            handlings = true;
+        }
+    return handlings;
 }
 
 // -----------------------------------------------------------------------------
