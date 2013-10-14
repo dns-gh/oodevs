@@ -171,8 +171,9 @@ double PHY_RoleAction_Transport::DoLoad( const double rWeightToLoad )
         it->second.rTransportedWeight_ += rTmpWeight;
         it->second.rRemainingWeight_   -= rTmpWeight;
         rWeightLoaded                  += rTmpWeight;
-
     }
+    if( rWeightLoaded )
+        bHasChanged_ = true;
     return rWeightLoaded;
 }
 
@@ -237,6 +238,8 @@ double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload, MT_Vect
         else
             ++it;
     }
+    if( rWeightUnloaded )
+        bHasChanged_ = true;
     return rWeightUnloaded;
 }
 
