@@ -53,6 +53,7 @@ public:
     const std::string& GetNetworkAddress           () const;
     unsigned long      GetNetworkTimeout           () const;
     bool               IsThreadedNetwork           () const;
+    bool               EnableTestCommands          () const;
 
     bool               UseNetworkLogger            () const;
     unsigned short     GetNetworkLoggerPort        () const;
@@ -134,6 +135,7 @@ private:
     tools::Path    integrationDir_;
     tools::Path    pathfindDir_;
     std::string    pathfindFilter_;
+    bool           bTestCommands_;
     //@}
 };
 

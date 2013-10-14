@@ -19,6 +19,8 @@ namespace sword
     class SimToClient;
     class ClientToSim;
     class DispatcherToSim;
+    class MagicAction;
+    class MissionParameters;
 }
 
 class NET_AgentServer;
@@ -34,7 +36,8 @@ class NET_AS_MOSServerMsgMgr : public NET_Publisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation );
+             NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation,
+                    bool enableTestCommands );
     virtual ~NET_AS_MOSServerMsgMgr();
     //@}
 
@@ -50,6 +53,8 @@ private:
     void OnReceiveClient( const std::string& from, const sword::ClientToSim& message );
     void OnReceiveMiddle( const std::string& from, const sword::DispatcherToSim& message );
     void OnReceiveCtrlClientAnnouncement( const std::string& from );
+    void OnReceiveMagicAction( const sword::MagicAction& msg, uint32_t ctx, uint32_t clientId );
+    void OnReceiveDebugError( const sword::MissionParameters& params );
     //@}
 
     //! @name Types
@@ -64,6 +69,7 @@ private:
     NET_AgentServer& agentServer_;
     NET_Simulation_ABC& simulation_;
     T_Clients clients_;
+    bool enableTestCommands_;
     //@}
 };
 

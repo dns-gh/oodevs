@@ -246,6 +246,7 @@ message MagicAction {
         //! parameters[2], AReal: real multiplied by an intervention type
         //!  of a resource type to calculate the iterations number.
         create_fire_order_on_location      = 6;
+        debug_internal                     = 7;
     }
     required Type              type       = 1;
     required MissionParameters parameters = 2;

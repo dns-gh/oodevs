@@ -55,6 +55,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , setpause_( 0 )
     , setstepmul_( 0 )
     , integrationDir_( "resources" )
+    , bTestCommands_( false )
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
@@ -66,7 +67,8 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
         ( "integration-dir", po::value( &integrationDir_ )                , "set integration directory"                 )
         ( "dump-pathfinds", po::value( &pathfindDir_ )                    , "set pathfind dump directory" )
         ( "filter-pathfinds", po::value( &pathfindFilter_ )               , "set pathfind id filter, separate multiple values with commas" )
-        ( "simulation-address", po::value( &networkAddress_ )             , "specify the simulation server address (ip:port)" );
+        ( "simulation-address", po::value( &networkAddress_ )             , "specify the simulation server address (ip:port)" )
+        ( "test-commands"                                                 , "enable test commands" );
     AddOptions( desc );
 }
 
@@ -87,6 +89,7 @@ void MIL_Config::Parse( int argc, char** argv )
 {
     tools::SessionConfig::Parse( argc, argv );
     bTestMode_ = IsSet( "test" ) || IsSet( "savecheckpoint" );
+    bTestCommands_ = IsSet( "test-commands" );
     bSaveCheckpointTestMode_ = IsSet( "savecheckpoint" );
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
     ReadSessionFile( GetSessionFile() );
@@ -535,4 +538,9 @@ const double* MIL_Config::GetRandomDeviation() const
 const double* MIL_Config::GetRandomMean() const
 {
     return randomMean_;
+}
+
+bool MIL_Config::EnableTestCommands() const
+{
+    return bTestCommands_;
 }
