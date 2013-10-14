@@ -66,6 +66,14 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_AgentManager.h"
 
+DEC_Decision_ABC* DEC_AgentFunctions::GetUnitById( uint32_t id )
+{
+    auto unit = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
+    if( !unit )
+        return nullptr;
+    return &unit->GetRole< DEC_RolePion_Decision >();
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsNeutralized
 // Created: JVT 03-10-01
@@ -1741,8 +1749,8 @@ void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::GetMaxSpeed
 // Created: NMI 2013-10-11
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetMaxSpeed( const DEC_Decision_ABC* agent )
+double DEC_AgentFunctions::GetMaxSpeed( const DEC_Decision_ABC& agent )
 {
-    const moving::PHY_RoleAction_InterfaceMoving& roleMoving = agent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >();
+    const moving::PHY_RoleAction_InterfaceMoving& roleMoving = agent.GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >();
     return roleMoving.GetMaxSpeed();
 }
