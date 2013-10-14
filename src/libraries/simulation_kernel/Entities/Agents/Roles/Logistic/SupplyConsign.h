@@ -56,6 +56,7 @@ public:
     virtual bool ResetConsignsForProvider( const MIL_Agent_ABC& pion );
     virtual void ResetConsign();
     virtual bool GrantsNothing() const;
+    virtual void FinishSuccessfullyWithoutDelay();
     //@}
 
     //! @name TEST
@@ -141,19 +142,15 @@ private:
     E_State state_;
     unsigned int currentStateEndTimeStep_;
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;
-
     T_Resources resources_;
-
-    // Requests
     T_RecipientRequests requestsQueued_;
     SupplyRecipient_ABC* currentRecipient_;
-
-    // Network
     bool needNetworkUpdate_;
     bool requestsNeedNetworkUpdate_;
+    bool instant_;
 };
 
-} // end namespace logistic
+}
 
 BOOST_CLASS_EXPORT_KEY( logistic::SupplyConsign )
 

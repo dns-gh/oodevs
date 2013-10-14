@@ -51,6 +51,7 @@ SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParamet
     , currentRecipient_         ( 0 )
     , needNetworkUpdate_        ( true )
     , requestsNeedNetworkUpdate_( true )
+    , instant_                  ( false )
 {
     SendMsgCreation();
 }
@@ -69,6 +70,7 @@ SupplyConsign::SupplyConsign()
     , currentRecipient_         ( 0 )
     , needNetworkUpdate_        ( true )
     , requestsNeedNetworkUpdate_( true )
+    , instant_                  ( false )
 {
         // NOTHING
 }
@@ -286,9 +288,37 @@ void SupplyConsign::ResetConsign()
 bool SupplyConsign::GrantsNothing() const
 {
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
-        if( it->second != 0. )
+        if( it->second != 0 )
             return false;
     return true;
+}
+
+namespace
+{
+    struct Toggler : boost::noncopyable
+    {
+        explicit Toggler( bool& b )
+            : b_( b )
+        {
+            b_ = ! b_;
+        }
+        ~Toggler()
+        {
+            b_ = ! b_;
+        }
+        bool& b_;
+    };
+}
+
+void SupplyConsign::FinishSuccessfullyWithoutDelay()
+{
+    E_State state = eFinished;
+    while( state != state_ )
+    {
+        state = state_;
+        Toggler t( instant_ );
+        Update();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -315,6 +345,8 @@ void SupplyConsign::SetState( E_State newState )
 // -----------------------------------------------------------------------------
 bool SupplyConsign::IsActionDone( unsigned timeRemaining )
 {
+    if( instant_ )
+        return true;
     UpdateTimer( timeRemaining );
     return currentStateEndTimeStep_ != std::numeric_limits< unsigned >::max() && MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= currentStateEndTimeStep_;
 }

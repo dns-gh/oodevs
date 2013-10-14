@@ -50,6 +50,7 @@ public:
     virtual bool ResetConsignsForProvider( const MIL_Agent_ABC& pion ) = 0;
     virtual void ResetConsign() = 0;
     virtual bool GrantsNothing() const = 0;
+    virtual void FinishSuccessfullyWithoutDelay() = 0;
     //@}
 
     //! @name TMP - A remonter dans une autre interface ?

@@ -751,8 +751,10 @@ void MIL_AutomateLOG::Serialize( sword::ParentEntity& message ) const
 
 bool MIL_AutomateLOG::FinishAllHandlingsSuccessfullyWithoutDelay()
 {
+    boost::for_each( supplyConsigns_,
+        boost::mem_fn( &logistic::SupplyConsign_ABC::FinishSuccessfullyWithoutDelay ) );
     const auto observers = supplyConvoysObserver_;
     boost::for_each( observers,
         boost::mem_fn( &logistic::SupplyConvoysObserver_ABC::FinishSuccessfullyWithoutDelay ) );
-    return ! observers.empty();
+    return ! supplyConsigns_.empty() || ! observers.empty();
 }
