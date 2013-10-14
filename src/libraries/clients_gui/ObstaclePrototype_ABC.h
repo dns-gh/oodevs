@@ -42,6 +42,7 @@ public:
     //@{
     virtual bool CheckValidity( const kernel::Team_ABC& ) const;
     virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
+    virtual void setVisible( bool visible );
     //@}
 
 private slots:
