@@ -853,6 +853,18 @@ integration.getCurrentSpeed = function( agent )
     return DEC_Agent_GetCurrentSpeed( agent )
 end
 
+-- Returns the maximal speed of the provided agent
+-- @param agent : an agent knowledge
+integration.getMaxSpeed = function( agent )
+    return DEC_Agent_MaxSpeed( agent.source )
+end
+
+-- Returns the maximal speed of the provided agent in km/h
+-- @param agent : an agent knowledge
+integration.getMaxSpeedInKmH = function( agent )
+    return 9*DEC_Agent_MaxSpeed( agent.source )/25
+end
+
 integration.getModulationMaxSpeed = function( agent )
     return DEC_GetModulationVitesseMax( agent )
 end
