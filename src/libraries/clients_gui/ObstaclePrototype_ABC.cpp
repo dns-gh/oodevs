@@ -225,3 +225,14 @@ void ObstaclePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
     deactivationDelay_->SetLoader( loader );
     deactivationDate_->SetLoader( loader );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObstaclePrototype_ABC::setVisible
+// Created: JSR 2013-10-14
+// -----------------------------------------------------------------------------
+void ObstaclePrototype_ABC::setVisible( bool visible )
+{
+    ObjectAttributePrototype_ABC::setVisible( visible );
+    activationDate_->GetDefaultValueWidget()->setDateTime( GetCreationDate() );
+    deactivationDate_->GetDefaultValueWidget()->setDateTime( GetCreationDate() );
+}

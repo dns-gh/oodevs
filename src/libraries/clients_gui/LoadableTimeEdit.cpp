@@ -23,6 +23,9 @@ LoadableTimeEdit::LoadableTimeEdit( const QString& objectName, QWidget* parent )
     : LoadableFieldTemplate< QTimeEdit >( parent, objectName )
 {
     SetDefaultValueWidget( new RichWidget< QTimeEdit >( "default" + objectName ,this ) );
+    QString displayFormat = GetDefaultValueWidget()->displayFormat();
+    displayFormat.remove( " ap", Qt::CaseInsensitive );
+    GetDefaultValueWidget()->setDisplayFormat( displayFormat );
 }
 
 // -----------------------------------------------------------------------------
