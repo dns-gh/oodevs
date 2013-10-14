@@ -977,19 +977,6 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>IndicatorsReports</name>
-    <message>
-        <source>Warning</source>
-        <translation>Avertissement</translation>
-    </message>
-    <message>
-        <source>The specified output file is the also the input template.
- Are you sure you want to overwrite the template file?</source>
-        <translation>Le fichier spécifié en entrée est identique au fichier de modèle.
-Etes-vous sûr de vouloir remplacer le modèle ?</translation>
-    </message>
-</context>
-<context>
     <name>InfoCompositionDialog</name>
     <message>
         <source>Composition</source>
