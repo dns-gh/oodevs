@@ -11,11 +11,11 @@
 #define __ADN_Languages_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "clients_kernel/Languages.h"
+#include "clients_kernel/Language.h"
 
 namespace kernel
 {
-    class Language;
+    class Languages;
 }
 
 // =============================================================================
@@ -54,7 +54,7 @@ public:
     bool IsCurrentMaster() const;
 
     const kernel::Languages& GetAllLanguages() const;
-    const kernel::Languages::T_Languages& GetActiveLanguages() const;
+    const kernel::LanguagesVector& GetActiveLanguages() const;
     //@}
 
 private:
@@ -71,7 +71,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< const kernel::Languages > allLanguages_;
-    kernel::Languages::T_Languages activeLanguages_;
+    kernel::LanguagesVector activeLanguages_;
     std::string master_;
     //@}
 };

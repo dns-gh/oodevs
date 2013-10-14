@@ -15,6 +15,17 @@ std::string Language::current_;
 
 // -----------------------------------------------------------------------------
 // Name: Language constructor
+// Created: ABR 2013-10-14
+// -----------------------------------------------------------------------------
+Language::Language( const Language& other )
+    : name_( other.name_ )
+    , code_( other.code_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Language constructor
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
 Language::Language( xml::xistream& xis )

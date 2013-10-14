@@ -11,7 +11,6 @@
 #define __XmlTranslations_h_
 
 #include <boost/noncopyable.hpp>
-#include "Languages.h"
 #include "LocalizedString.h"
 #include <boost/function.hpp>
 
@@ -53,7 +52,7 @@ public:
     //@{
     void Purge();
     bool LoadTranslationQueries( const tools::Path& xmlFile );
-    void EvaluateTranslationQueries( const tools::Path& xmlFile, const Languages::T_Languages& languages );
+    void EvaluateTranslationQueries( const tools::Path& xmlFile, const LanguagesVector& languages );
     void SaveTranslationQueries( const tools::Path& xmlFile ) const;
     void SaveTranslationQueries( xml::xostream& xos ) const;
     //@}
@@ -64,7 +63,7 @@ public:
     void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& languageCode );
     void LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode );
     void MergeDuplicateTranslations();
-    void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages ) const;
+    void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const LanguagesVector& languages ) const;
     //@}
 
     //! @name Accessors

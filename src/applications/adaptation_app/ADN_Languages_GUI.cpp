@@ -13,7 +13,7 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_Languages_Dialog.h"
 #include "ADN_Workspace.h"
-#include "clients_kernel/Language.h"
+#include "clients_kernel/Languages.h"
 #include "clients_Kernel/LocalizedString.h"
 #include "clients_Kernel/Tools.h"
 
@@ -85,7 +85,7 @@ QString ADN_Languages_GUI::CreateMasterText() const
 {
     return data_.Master().empty()
         ? tr( "(master)" )
-        : QString( "%1 %2" ).arg( data_.GetAllLanguages().Get( data_.Master() )->GetName().c_str() ).arg( tr( "(master)" ) );
+        : QString( "%1 %2" ).arg( data_.GetAllLanguages().Get( data_.Master() ).GetName().c_str() ).arg( tr( "(master)" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ void ADN_Languages_GUI::BuildMenu()
     actions_.push_back( masterAction_ );
 
     for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
-        actions_.push_back( AddToMenu( ( *it )->GetName().c_str(), menu_, mapper_ ) );
+        actions_.push_back( AddToMenu( it->GetName().c_str(), menu_, mapper_ ) );
 
     swapSeparator_ = menu_->addSeparator();
     swapAction_ = menu_->addAction( tr( "Set current language as master" ), this, SLOT( OnSwap() ) );
@@ -172,9 +172,9 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
     }
     UpdateCurrentAction( language );
     for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
-        if( ( *it )->GetName() == language.toStdString() )
+        if( it->GetName() == language.toStdString() )
         {
-            ChangeLanguage( ( *it )->GetCode() );
+            ChangeLanguage( it->GetCode() );
             UpdateMenu();
             return;
         }
@@ -221,8 +221,8 @@ void ADN_Languages_GUI::OnSwap()
 {
     if( data_.IsMasterEmpty() )
         throw MASA_EXCEPTION( "Not supposed to swap with an empty master" );
-    const QString& current = data_.GetAllLanguages().Get( kernel::Language::Current() )->GetName().c_str();
-    const QString& master = data_.GetAllLanguages().Get( data_.Master() )->GetName().c_str();
+    const QString& current = data_.GetAllLanguages().Get( kernel::Language::Current() ).GetName().c_str();
+    const QString& master = data_.GetAllLanguages().Get( data_.Master() ).GetName().c_str();
 
     if( !Confirm( tr( "Are you sure you want to set the database master as '%1'?" ).arg( current ) ) )
         return;

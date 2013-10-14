@@ -11,6 +11,7 @@
 #define __Language_h_
 
 #include <boost/noncopyable.hpp>
+#include <vector>
 
 namespace xml
 {
@@ -27,12 +28,13 @@ namespace kernel
 */
 // Created: ABR 2013-07-09
 // =============================================================================
-class Language : private boost::noncopyable
+class Language
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
+             Language( const Language& );
     explicit Language( xml::xistream& xis );
     virtual ~Language();
     //@}
@@ -52,8 +54,8 @@ public:
 private:
     //! @name Member data
     //@{
-    const std::string name_;
-    const std::string code_;
+    std::string name_;
+    std::string code_;
     //@}
 
     //! @name Static member data
@@ -61,6 +63,8 @@ private:
     static std::string current_;
     //@}
 };
+
+typedef std::vector< kernel::Language > LanguagesVector;
 
 } //! namespace kernel
 

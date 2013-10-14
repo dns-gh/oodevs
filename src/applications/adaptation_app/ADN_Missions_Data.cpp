@@ -212,11 +212,11 @@ void ADN_Missions_Data::OnElementDeleted( boost::shared_ptr< kernel::LocalizedSt
 {
     const tools::Path missionPath = GetMissionSheetsPath( missionType );
     DeleteMissionSheet( CreateMissionDirectory( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master(), missionPath ) / tools::Path::FromUTF8( name->Key() ) );
-    const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+    const kernel::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
-        const std::string& value = name->Value( ( *it )->GetCode() );
-        DeleteMissionSheet( CreateMissionDirectory( ( *it )->GetCode(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ) );
+        const std::string& value = name->Value( it->GetCode() );
+        DeleteMissionSheet( CreateMissionDirectory( it->GetCode(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ) );
     }
 }
 
@@ -305,12 +305,12 @@ namespace
     void ReadFullMission( xml::xistream& xis, E_MissionType type, ADN_Missions_Data::T_Mission_Vector& missions )
     {
         const tools::Path missionPath = ADN_Missions_Data::GetMissionSheetsPath( type );
-        const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+        const kernel::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
         std::auto_ptr< T > spNew( new T( type, xis.attribute< unsigned int >( "id" ) ) );
         spNew->ReadArchive( xis );
         spNew->ReadMissionSheet( missionPath, ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
         for( auto it = languages.begin(); it != languages.end(); ++it )
-            spNew->ReadMissionSheet( CreateMissionDirectory( ( *it )->GetCode(), missionPath ), ( *it )->GetCode() );
+            spNew->ReadMissionSheet( CreateMissionDirectory( it->GetCode(), missionPath ), it->GetCode() );
         missions.AddItem( spNew.release() );
     }
 }
@@ -380,12 +380,12 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output ) const
     output << xml::end;
 
     // save mission sheets
-    const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+    const kernel::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
     for( int type = 0; type < eNbrMissionTypes; ++type )
     {
         WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
         for( auto it = languages.begin(); it != languages.end(); ++it )
-            WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, ( *it )->GetCode() );
+            WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, it->GetCode() );
     }
 
     // move mission sheets to obsolete directory when mission is deleted
@@ -529,10 +529,10 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
                 CheckMissionTypeUniqueness( checker, it, missionsVector_[ type ].second, 0 );
             CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetKey(), 0 );
 
-            const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+            const kernel::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
             ( *it )->CheckMissionDataConsistency( checker, ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
             for( auto itLang = languages.begin(); itLang != languages.end(); ++itLang )
-                ( *it )->CheckMissionDataConsistency( checker, ( *itLang )->GetCode() );
+                ( *it )->CheckMissionDataConsistency( checker, itLang->GetCode() );
         }
 }
 

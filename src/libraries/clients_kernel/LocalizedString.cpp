@@ -142,15 +142,15 @@ void LocalizedString::SetType( const std::string& language, E_TranslationType ty
 // Name: LocalizedString::InitEmptyValues
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-bool LocalizedString::Initialize( const Languages::T_Languages& languages )
+bool LocalizedString::Initialize( const LanguagesVector& languages )
 {
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
-        auto valueIt = values_.find( ( *it )->GetCode() );
+        auto valueIt = values_.find( it->GetCode() );
         if( valueIt == values_.end() )
         {
-            values_[ ( *it )->GetCode() ].value_ = "";
-            values_[ ( *it )->GetCode() ].type_ = eTranslationType_Unfinished;
+            values_[ it->GetCode() ].value_ = "";
+            values_[ it->GetCode() ].type_ = eTranslationType_Unfinished;
         }
     }
     return false;

@@ -9,9 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "Languages.h"
-#include "Language.h"
 #include "tools/FileWrapper.h"
-#include <boost/make_shared.hpp>
 
 using namespace kernel;
 
@@ -54,9 +52,9 @@ void Languages::Read( xml::xistream& xis )
             {
                 const std::string code = x.attribute( "code", "" );
                 for( auto it = languages_.begin(); it != languages_.end(); ++it )
-                    if( ( *it )->GetCode() == code )
+                    if( it->GetCode() == code )
                         throw MASA_EXCEPTION( "Language code already registered: " + code );
-                languages_.push_back( boost::make_shared< kernel::Language >( x ) );
+                languages_.push_back( kernel::Language( x ) );
             })
         >> xml::end;
 }
@@ -65,10 +63,10 @@ void Languages::Read( xml::xistream& xis )
 // Name: Languages::Get
 // Created: ABR 2013-10-01
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< Language >& Languages::Get( const std::string& code ) const
+const Language& Languages::Get( const std::string& code ) const
 {
     for( auto it = languages_.begin(); it != languages_.end(); ++it )
-        if( ( *it )->GetCode() == code )
+        if( it->GetCode() == code )
             return *it;
     throw MASA_EXCEPTION( "Unsupported language: " + code );
 }
@@ -77,7 +75,7 @@ const boost::shared_ptr< Language >& Languages::Get( const std::string& code ) c
 // Name: Languages::GetLanguages
 // Created: ABR 2013-10-07
 // -----------------------------------------------------------------------------
-const Languages::T_Languages& Languages::GetLanguages() const
+const LanguagesVector& Languages::GetLanguages() const
 {
     return languages_;
 }

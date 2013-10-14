@@ -515,11 +515,11 @@ void ADN_Missions_ABC::FixConsistency()
     if( diaType_.GetData().empty() )
         diaType_ = BuildDiaType( strName_.GetData().c_str(), type_ == eMissionType_FragOrder ).toStdString();
 
-    const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+    const kernel::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
-        const tools::Path filePath = ADN_Missions_Data::GetMissionSheetsPath( type_ ) / tools::Path::FromUTF8( strName_.GetValue( ( *it )->GetCode() ) );
-        if( missionSheetPath_.GetValue( ( *it )->GetCode() ).empty() )
-            missionSheetPath_.SetValue( ( *it )->GetCode(), filePath.ToUTF8() + ".html" );
+        const tools::Path filePath = ADN_Missions_Data::GetMissionSheetsPath( type_ ) / tools::Path::FromUTF8( strName_.GetValue( it->GetCode() ) );
+        if( missionSheetPath_.GetValue( it->GetCode() ).empty() )
+            missionSheetPath_.SetValue( it->GetCode(), filePath.ToUTF8() + ".html" );
     }
 }
