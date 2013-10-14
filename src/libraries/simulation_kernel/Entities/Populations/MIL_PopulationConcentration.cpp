@@ -78,9 +78,9 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 {
     // Position
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), position_ );
-    xis.start( "composition" );
+    xis >> xml::start( "composition" );
     PushHumans( MIL_PopulationHumans( xis ) );
-    xis.end();
+    xis >> xml::end;
     UpdateLocation();
     UpdateDensity();
 }

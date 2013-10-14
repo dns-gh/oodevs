@@ -184,7 +184,7 @@ void PHY_RolePion_Humans::WriteODB( xml::xostream& xos ) const
                 if( ! found )
                 {
                     found = true;
-                    xos.start( "humans" );
+                    xos << xml::start( "humans" );
                 }
                 state.Write( xos );
             }
@@ -196,7 +196,7 @@ void PHY_RolePion_Humans::WriteODB( xml::xostream& xos ) const
     {
         for( auto it = unwounded.begin(); it != unwounded.end(); ++it )
             (*it)->Write( xos );
-        xos.end(); // humans
+        xos << xml::end; // humans
     }
 }
 

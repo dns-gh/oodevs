@@ -149,26 +149,26 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
 {
     if( IsEquipmentsSaveNeeded() )
     {
-        xos.start( "equipments" );
+        xos << xml::start( "equipments" );
         for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
             if( it->state_ != eEquipmentState_Available || it->borrower_ > 0 )
                 it->Serialize( xos );
-        xos.end();
+        xos << xml::end;
     }
     if( IsCrewsSaveNeeded() )
     {
         assert( crews_.size() > 3 );
-        xos.start( "humans" );
+        xos << xml::start( "humans" );
         for( auto it = crews_.begin() + 3; it != crews_.end(); ++it )
             it->Serialize( xos );
-        xos.end();
+        xos << xml::end;
     }
     if( IsResourcesSaveNeeded() )
     {
-        xos.start( "resources" );
+        xos << xml::start( "resources" );
         for( auto it = resources_.begin(); it != resources_.end(); ++it )
             it->Serialize( xos, RetrieveDefaultLogisticThreshold( it->name_ ) );
-        xos.end();
+        xos << xml::end;
     }
 }
 

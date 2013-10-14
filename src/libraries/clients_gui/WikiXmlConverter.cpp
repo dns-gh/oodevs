@@ -126,20 +126,20 @@ void MakeStringXmlItem( xml::xostream& output, std::string line )
         if( boost::regex_search( line, match, reStyles ) )
         {
             if( match[ 1 ].length() > 0 )
-                xos << xml::start( "text" ) << match[ 1 ] << xml::end;
+                xos << xml::content( "text", match[ 1 ] );
             auto ret = openTags.insert( match[ 2 ] );
             if( ret.second )
-                xos.start( ConvertWikiTagToXmlTag( *ret.first ) );
+                xos << xml::start( ConvertWikiTagToXmlTag( *ret.first ) );
             else
             {
-                xos.end();
+                xos << xml::end;
                 openTags.erase( ret.first );
             }
             line = match[ 3 ];
         }
         else
         {
-            xos << xml::start( "text" ) << line << xml::end;
+            xos << xml::content( "text", line );
             break;
         }
     }

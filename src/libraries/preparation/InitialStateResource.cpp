@@ -64,7 +64,7 @@ void InitialStateResource::Serialize( xml::xostream& xos, double defaultLogistic
         << xml::attribute( "quantity", number_ );
     if( threshold_ != defaultLogisticThreshold )
         xos.attribute( "logistic-threshold", threshold_ );
-    xos.end(); // resource
+    xos << xml::end; // resource
 }
 
 // -----------------------------------------------------------------------------
