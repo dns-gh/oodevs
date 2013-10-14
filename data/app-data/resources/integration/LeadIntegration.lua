@@ -1128,6 +1128,9 @@ end
 -- @release 2013-07-05
 integration.leadDestroy = function ( self, setEchelonNone )
     local integration = integration
+    if self.companyTask.destroy then
+        self.companyTask:destroy()
+    end
     local entities = self.parameters.commandingEntities
     if setEchelonNone then
         for i = 1, #entities do
