@@ -31,6 +31,29 @@ IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const Indica
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorRequest constructor
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+IndicatorRequest::IndicatorRequest( xml::xistream& xis, kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher )
+    : controller_( controller )
+    , definition_( definition )
+    , publisher_( publisher )
+    , displayName_( xis.attribute< std::string >( "name" ).c_str() )
+    , done_( false )
+    , firstTick_( 0 )
+    , duration_( std::numeric_limits< unsigned int >::max() )
+{
+    xis >> xml::start( "parameters" )
+            >> xml::list( "parameter", *this, &IndicatorRequest::ReadParameter )
+        >> xml::end
+        >> xml::optional >> xml::start( "time-range" )
+            >> xml::optional >> xml::attribute( "first-tick", firstTick_ )
+            >> xml::optional >> xml::attribute( "duration", duration_ )
+        >> xml::end;
+    controller_.Create( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorRequest destructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
@@ -83,6 +106,44 @@ void IndicatorRequest::Commit() const
         message().mutable_time_range()->set_end_tick( firstTick_ + duration_ );
     }
     message.Send( publisher_, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest::Save
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void IndicatorRequest::Save( xml::xostream& xos ) const
+{
+    const std::string request = definition_.GetName().toStdString();
+    xos << xml::start( "request" )
+            << xml::attribute( "definition", request )
+            << xml::attribute( "name", displayName_ )
+            << xml::start( "parameters" );
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
+        xos     << xml::start( "parameter")
+                    << xml::attribute( "name", it->first )
+                    << xml::attribute( "value", it->second )
+                << xml::end;
+    xos     << xml::end;
+    if( firstTick_ != 0 || duration_ != std::numeric_limits< unsigned int >::max() )
+    {
+        xos << xml::start( "time-range" );
+        if( firstTick_ != 0 )
+            xos << xml::attribute( "first-tick", firstTick_ );
+        if( duration_ != std::numeric_limits< unsigned int >::max() )
+            xos << xml::attribute( "duration", duration_ );
+         xos << xml::end;
+    }
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest::ReadParameter
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void IndicatorRequest::ReadParameter( xml::xistream& xis )
+{
+    SetParameter( xis.attribute< std::string >( "name" ), xis.attribute< std::string >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------

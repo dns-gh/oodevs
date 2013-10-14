@@ -9,8 +9,12 @@
 
 #include "gaming_pch.h"
 #include "IndicatorRequests.h"
+#include "AfterActionModel.h"
 #include "IndicatorRequest.h"
 #include "clients_kernel/Controller.h"
+#include "tools/FileWrapper.h"
+#include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter.h"
 #include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
@@ -73,4 +77,54 @@ void IndicatorRequests::Update( const sword::PlotResult& message )
 {
     BOOST_FOREACH( T_Requests::value_type& request, requests_ )
         request->Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequests::Save
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void IndicatorRequests::Save( const tools::Path& path ) const
+{
+    tools::SchemaWriter schemaWriter;
+    tools::Xofstream xos( path );
+    xos << xml::start( "requests" );
+    schemaWriter.WriteExerciseSchema( xos, "requests" );
+    BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
+        request->Save( xos );
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequests::Load
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void IndicatorRequests::Load( const tools::Loader_ABC& loader, const tools::Path& path, const AfterActionModel& model )
+{
+    loader.LoadFile( path, boost::bind( &IndicatorRequests::LoadRequests, this, _1, boost::cref( model ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequests::LoadRequests
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void IndicatorRequests::LoadRequests( xml::xistream& xis, const AfterActionModel& model )
+{
+    xis >> xml::start( "requests" )
+            >> xml::list( "request", *this, &IndicatorRequests::LoadRequest, model )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequests::LoadRequest
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void IndicatorRequests::LoadRequest( xml::xistream& xis, const AfterActionModel& model )
+{
+    const IndicatorDefinition_ABC* definition = model.FindDefinition( xis.attribute< std::string >( "definition" ) );
+    if( definition )
+    {
+        requests_.push_back( new IndicatorRequest( xis, controller_, *definition, publisher_ ) );
+        controller_.Update( *this );
+        requests_.back()->Commit();
+    }
 }

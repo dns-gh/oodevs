@@ -80,6 +80,30 @@
         <source>Creation</source>
         <translation>Création</translation>
     </message>
+    <message>
+        <source>Save requests to file</source>
+        <translation>Enregistrer les requêtes dans un fichier</translation>
+    </message>
+    <message>
+        <source>Requests (*.xml)</source>
+        <translation>Requêtes (*.xml)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Load requests file</source>
+        <translation>Charger un fichier de requêtes</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid requests file.</source>
+        <translation>&apos;%1&apos; n'est pas un fichier de requêtes valide.</translation>
+    </message>
+    <message>
+        <source>Unable to save requests to file &apos;%1&apos;.</source>
+        <translation>Imposssible de sauver les requêtes dans le fichier to file &apos;%1&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>AfterActionFunctionList</name>

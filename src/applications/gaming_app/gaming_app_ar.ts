@@ -80,6 +80,30 @@
         <source>Creation</source>
         <translation type="unfinished">إنشاء</translation>
     </message>
+    <message>
+        <source>Save requests to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Requests (*.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">خطأ</translation>
+    </message>
+    <message>
+        <source>Load requests file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid requests file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save requests to file &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AfterActionFunctionList</name>

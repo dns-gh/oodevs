@@ -19,6 +19,12 @@ namespace kernel
     class Controller;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
+class AfterActionModel;
 class IndicatorDefinition_ABC;
 class IndicatorRequest;
 class Publisher_ABC;
@@ -42,6 +48,8 @@ public:
     //@{
     void Purge();
     void Update( const sword::PlotResult& message );
+    void Save( const tools::Path& path ) const;
+    void Load( const tools::Loader_ABC& loader, const tools::Path& path, const AfterActionModel& model );
 
     IndicatorRequest& CreateRequest( const IndicatorDefinition_ABC& definition, const QString& name = QString() );
     tools::Iterator< const IndicatorRequest& > CreateIterator();
@@ -51,6 +59,12 @@ private:
     //! @name Types
     //@{
     typedef std::vector< IndicatorRequest* > T_Requests;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void LoadRequests( xml::xistream& xis, const AfterActionModel& model );
+    void LoadRequest( xml::xistream& xis, const AfterActionModel& model );
     //@}
 
 private:

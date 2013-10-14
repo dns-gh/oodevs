@@ -12,6 +12,7 @@
 
 #include "IndicatorDefinition_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -28,6 +29,7 @@ class AfterActionParameter;
 // =============================================================================
 class AfterActionFunction : public IndicatorDefinition_ABC
                           , public tools::Resolver< AfterActionParameter, std::string >
+                          , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,12 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AfterActionFunction( const AfterActionFunction& );            //!< Copy constructor
-    AfterActionFunction& operator=( const AfterActionFunction& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis );

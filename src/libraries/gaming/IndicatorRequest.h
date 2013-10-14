@@ -44,6 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher, const QString& displayName );
+    IndicatorRequest( xml::xistream& xis, kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher );
     virtual ~IndicatorRequest();
     //@}
 
@@ -52,6 +53,7 @@ public:
     void SetParameter( const std::string& name, const std::string& value );
     void SetTimeRange( unsigned int firstTick, unsigned int duration );
     void Commit() const;
+    void Save( xml::xostream& xos ) const;
 
     QString GetName() const;
     QString GetDisplayName() const;
@@ -70,6 +72,11 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, std::string > T_Parameters;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadParameter( xml::xistream& xis );
     //@}
 
 private:

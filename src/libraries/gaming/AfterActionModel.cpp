@@ -64,6 +64,15 @@ IndicatorRequest& AfterActionModel::CreateRequest( const AfterActionFunction& fu
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionModel::FindDefinition
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+const IndicatorDefinition_ABC* AfterActionModel::FindDefinition( const std::string& definition ) const
+{
+    return Find( definition.c_str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionModel::Load
 // Created: AGE 2007-09-20
 // -----------------------------------------------------------------------------
@@ -83,6 +92,24 @@ void AfterActionModel::ReadFunction( xml::xistream& xis )
 {
     std::auto_ptr< AfterActionFunction > function( new AfterActionFunction( xis ) );
     Register( function->GetName(), *function.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::SaveRequests
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void AfterActionModel::SaveRequests( const tools::Path& path ) const
+{
+    requests_->Save( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::LoadRequests
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void AfterActionModel::LoadRequests( const tools::Loader_ABC& loader, const tools::Path& path )
+{
+    requests_->Load( loader, path, *this );
 }
 
 // -----------------------------------------------------------------------------

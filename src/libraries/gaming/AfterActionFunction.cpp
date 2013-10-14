@@ -13,8 +13,6 @@
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
-
 namespace
 {
     std::string ReadBase( xml::xistream& xis )
@@ -34,14 +32,12 @@ namespace
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
 AfterActionFunction::AfterActionFunction( xml::xistream& xis )
-    : base_    ( ReadBase( xis ) )
-    , name_    ( "" )
-    , comments_( "" )
+    : base_( ReadBase( xis ) )
 {
     xis >> xml::start( "descriptions" )
           >> xml::list( "description", *this, &AfterActionFunction::ReadDescription )
         >> xml::end;
-    if( name_ == "" )
+    if( name_.isEmpty() )
         name_ = xis.attribute< std::string >( "name" ).c_str();
     xis >> xml::start( "parameters" )
           >> xml::list( "parameter", *this, &AfterActionFunction::ReadParameter )
@@ -63,9 +59,9 @@ AfterActionFunction::~AfterActionFunction()
 // -----------------------------------------------------------------------------
 void AfterActionFunction::ReadDescription( xml::xistream& xis )
 {
-    std::string comments;
     if( xis.attribute< std::string >( "lang" ) == tools::readLang() || ( name_.isEmpty() && xis.attribute< std::string >( "lang" ) == "en" ) )
     {
+        std::string comments;
         xis >> comments;
         name_ = xis.attribute< std::string >( "name" ).c_str();
         comments_ = comments.c_str();
@@ -107,7 +103,7 @@ QString AfterActionFunction::GetComments() const
 std::string AfterActionFunction::Commit( const T_Parameters& parameters ) const
 {
     std::string result( base_ );
-    for( T_Parameters::const_iterator it = parameters.begin(); it != parameters.end(); ++it )
+    for( auto it = parameters.begin(); it != parameters.end(); ++it )
         Get( it->first ).Commit( result, it->second );
     return result;
 }

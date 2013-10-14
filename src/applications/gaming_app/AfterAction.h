@@ -11,7 +11,6 @@
 #define __AfterAction_h_
 
 #include "clients_gui/RichDockWidget.h"
-#include "tools/ElementObserver_ABC.h"
 
 namespace actions
 {
@@ -26,8 +25,12 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class AfterActionModel;
-class AfterActionRequest;
 class IndicatorPlotFactory;
 
 // =============================================================================
@@ -37,26 +40,28 @@ class IndicatorPlotFactory;
 // Created: AGE 2007-09-17
 // =============================================================================
 class AfterAction : public gui::RichDockWidget
-                  , public tools::ElementObserver_ABC< AfterActionRequest >
 {
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterAction( QWidget* parent, kernel::Controllers& controllers, AfterActionModel& model,
+             AfterAction( QWidget* parent, kernel::Controllers& controllers, const tools::ExerciseConfig& config, AfterActionModel& model,
                           IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual ~AfterAction();
     //@}
 
-private:
-    //! @name Helpers
+private slots:
+    //! @name 
     //@{
-    virtual void NotifyCreated( const AfterActionRequest& );
+    void OnLoad();
+    void OnSave();
     //@}
 
 private:
-    //! @name Member data
+    //! @Member data
     //@{
-    QTabWidget* functionsTab_;
+    const tools::ExerciseConfig& config_;
+    AfterActionModel& model_;
     //@}
 };
 

@@ -10,12 +10,12 @@
 #include "gaming_app_pch.h"
 #include "AfterActionRequestList.h"
 #include "moc_AfterActionRequestList.cpp"
+#include "IndicatorPlotFactory.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/DragAndDropHelpers.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
-#include "IndicatorPlotFactory.h"
 #include "icons.h"
 
 Q_DECLARE_METATYPE( const IndicatorRequest* )
@@ -50,11 +50,11 @@ namespace
 // -----------------------------------------------------------------------------
 AfterActionRequestList::AfterActionRequestList( QWidget* parent, kernel::Controllers& controllers, IndicatorPlotFactory& plotFactory )
     : QWidget( parent )
-    , controllers_  ( controllers )
-    , plotFactory_  ( plotFactory )
+    , controllers_( controllers )
+    , plotFactory_( plotFactory )
     , pendingPixmap_( MAKE_PIXMAP( aaa_pending ) )
-    , donePixmap_   ( MAKE_PIXMAP( aaa_valid ) )
-    , failedPixmap_ ( MAKE_PIXMAP( aaa_broken ) )
+    , donePixmap_( MAKE_PIXMAP( aaa_valid ) )
+    , failedPixmap_( MAKE_PIXMAP( aaa_broken ) )
 {
     setLayout( new QVBoxLayout );
     requests_ = new MyList();
