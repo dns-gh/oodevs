@@ -167,7 +167,7 @@ bool RichTreeView::LessThan( const QModelIndex& /*left*/, const QModelIndex& /*r
 }
 
 // -----------------------------------------------------------------------------
-// Name: RichTreeView::function< bool
+// Name: RichTreeView::ApplyFilter
 // Created: JSR 2012-09-18
 // -----------------------------------------------------------------------------
 void RichTreeView::ApplyFilter( StandardModel::T_FilterFunction func )

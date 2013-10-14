@@ -120,6 +120,28 @@ void ADN_Languages_Data::SetMaster( const std::string& language )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::SwapMaster
+// Created: ABR 2013-10-08
+// -----------------------------------------------------------------------------
+void ADN_Languages_Data::SwapMaster()
+{
+    if( IsMasterEmpty() )
+        throw MASA_EXCEPTION ( "Can't swap languages if master is empty" );
+    const std::string& current = kernel::Language::Current();
+    if( master_ == current )
+        throw MASA_EXCEPTION( "Can't swap master language with the actual master language" );
+
+    for( auto it = activeLanguages_.begin(); it != activeLanguages_.end(); ++it )
+        if( ( *it )->GetCode() == current )
+        {
+            activeLanguages_.erase( it );
+            break;
+        }
+    activeLanguages_.push_back( allLanguages_->Get( master_ ) );
+    InternalSetMaster( current );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data::InternalSetMaster
 // Created: ABR 2013-10-03
 // -----------------------------------------------------------------------------

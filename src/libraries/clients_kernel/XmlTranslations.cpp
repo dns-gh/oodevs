@@ -304,6 +304,17 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: XmlTranslations::ApplyOnTranslations
+// Created: ABR 2013-10-08
+// -----------------------------------------------------------------------------
+bool XmlTranslations::ApplyOnTranslations( boost::function< bool( LocalizedString& ) > functor )
+{
+    for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
+        if( itContext->second->Apply( functor ) )
+            return true;
+    return false;
+}
 
 // -----------------------------------------------------------------------------
 // Accessors
@@ -336,7 +347,7 @@ const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( con
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Context > XmlTranslations::GetContext
+// Name: XmlTranslations::GetContext
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< Context >& XmlTranslations::GetContext( const std::string& context )

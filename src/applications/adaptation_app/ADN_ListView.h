@@ -103,7 +103,7 @@ private:
     virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; }
     bool ApplyFilterLine( ADN_StandardItem* item );
     bool ApplyFilterList( ADN_StandardItem* item );
-    void ApplyFilter( boost::function< bool ( ADN_StandardItem* ) > func );
+    void ApplyFilter( boost::function< bool( ADN_StandardItem* ) > func );
     void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, QStandardItem* item, int maxDepth, int nbRow ) const;
     void RecursiveFillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
     void FillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;

@@ -13,6 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include "Languages.h"
 #include "LocalizedString.h"
+#include <boost/function.hpp>
 
 namespace tools
 {
@@ -59,6 +60,7 @@ public:
 
     //! @name Translations operations
     //@{
+    bool ApplyOnTranslations( boost::function< bool( LocalizedString& ) > function );
     void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& languageCode );
     void LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode );
     void MergeDuplicateTranslations();

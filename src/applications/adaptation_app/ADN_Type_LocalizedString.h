@@ -26,6 +26,7 @@ namespace kernel
 // =============================================================================
 class ADN_Type_LocalizedString : public ADN_Type_ABC< std::string >
 {
+    Q_OBJECT
 
 public:
     //! @name Types
@@ -68,9 +69,6 @@ public:
     //! @name Operations
     //@{
     void Initialize( ADN_Connector_ABC& dest ) const;
-    virtual void OnLanguageChanged();
-    virtual void OnLanguagesEdited();
-    virtual void OnTypeChanged( int );
     bool CheckUniqueTranslation() const;
     //@}
 
@@ -99,7 +97,19 @@ public:
     void SetKey( const std::string& key );
 
     void SetContext( boost::shared_ptr< kernel::Context > context );
-    boost::shared_ptr< kernel::LocalizedString > GetTranslation() const;;
+    const boost::shared_ptr< kernel::LocalizedString >& GetTranslation() const;;
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnTypeChanged( int );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnLanguageChanged();
     //@}
 
 private:

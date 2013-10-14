@@ -91,7 +91,7 @@ float EquipmentType::GetWeight() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Iterator< const BreakdownOriginType& > EquipmentType::CreateBreakdownsIterator
+// Name: EquipmentType::CreateBreakdownsIterator
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 tools::Iterator< const BreakdownOriginType& > EquipmentType::CreateBreakdownsIterator() const
@@ -100,7 +100,7 @@ tools::Iterator< const BreakdownOriginType& > EquipmentType::CreateBreakdownsIte
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Iterator< const DotationCapacityType& > EquipmentType::CreateResourcesIterator
+// Name: EquipmentType::CreateResourcesIterator
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 tools::Iterator< const DotationCapacityType& > EquipmentType::CreateResourcesIterator() const

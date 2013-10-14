@@ -213,6 +213,7 @@ ADN_Workspace::~ADN_Workspace()
 // -----------------------------------------------------------------------------
 void ADN_Workspace::Initialize()
 {
+    CREATE_WORKSPACE_ELEMENT( Languages );
     CREATE_WORKSPACE_ELEMENT( Drawings );
     CREATE_WORKSPACE_ELEMENT( Symbols );
     CREATE_WORKSPACE_ELEMENT( Categories );
@@ -241,7 +242,6 @@ void ADN_Workspace::Initialize()
     CREATE_WORKSPACE_ELEMENT( Fires );
     CREATE_WORKSPACE_ELEMENT( Logistic );
     CREATE_WORKSPACE_ELEMENT( Disasters );
-    CREATE_WORKSPACE_ELEMENT( Languages );
 }
 
 // -----------------------------------------------------------------------------
@@ -898,4 +898,28 @@ const boost::shared_ptr< kernel::Context >& ADN_Workspace::GetContext( E_Workspa
 void ADN_Workspace::SetIsSwappingLanguage( bool isSwappingLanguage )
 {
     isSwappingLanguage_ = isSwappingLanguage;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::ApplyOnData
+// Created: ABR 2013-10-08
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::ApplyOnData( const boost::function< bool( ADN_Data_ABC& ) >& functor )
+{
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
+        if( functor( elements_[ n ]->GetDataABC() ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::ApplyOnGui
+// Created: ABR 2013-10-08
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::ApplyOnGui( const boost::function< bool( ADN_GUI_ABC& data ) >& functor )
+{
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
+        if( functor( elements_[ n ]->GetGuiABC() ) )
+            return true;
+    return false;
 }

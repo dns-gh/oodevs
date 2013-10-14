@@ -86,49 +86,74 @@ QString ADN_Languages_GUI::CreateMasterText() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Languages_GUI::BuildMenu
+// Created: ABR 2013-10-04
+// -----------------------------------------------------------------------------
+void ADN_Languages_GUI::BuildMenu()
+{
+    if( !menu_ )
+        throw MASA_EXCEPTION( "Language Menu not defined" );
+    actions_.clear();
+    menu_->clear();
+
+    masterAction_ = AddToMenu( CreateMasterText(), menu_, mapper_ );
+    currentAction_ = masterAction_;
+    actions_.push_back( masterAction_ );
+
+    for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
+        actions_.push_back( AddToMenu( ( *it )->GetName().c_str(), menu_, mapper_ ) );
+
+    swapSeparator_ = menu_->addSeparator();
+    swapAction_ = menu_->addAction( tr( "Set current language as master" ), this, SLOT( OnSwap() ) );
+    menu_->addSeparator();
+    menu_->addAction( tr( "Edit..." ), dialog_.get(), SLOT( exec() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_GUI::UpdateMenu
+// Created: ABR 2013-10-04
+// -----------------------------------------------------------------------------
+void ADN_Languages_GUI::UpdateMenu()
+{
+    // uncheck all
+    masterAction_->setChecked( false );
+    for( auto it = actions_.begin(); it != actions_.end(); ++it )
+        ( *it )->setChecked( false );
+    // check current
+    currentAction_->setChecked( true );
+    // set swap actions visible
+    swapSeparator_->setVisible( !data_.IsCurrentMaster() );
+    swapAction_->setVisible( !data_.IsCurrentMaster() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Languages_GUI::OnLanguagesEdited
 // Created: ABR 2013-07-08
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::OnLanguagesEdited()
 {
-    if( !menu_ )
-        throw MASA_EXCEPTION( "Language Menu not defined" );
+    const QString previousLanguage = currentAction_ && currentAction_ != masterAction_ ? currentAction_->text() : "";
+    BuildMenu();
+    UpdateCurrentAction( previousLanguage );
+    if( !previousLanguage.isEmpty() && previousLanguage != currentAction_->text() )
+        OnLanguageChanged();
+    else
+        UpdateMenu();
 
-    bool wasMaster = currentAction_ && currentAction_ == masterAction_;
-    QString previousLanguage = currentAction_ ? currentAction_->text() : "";
-    actions_.clear();
-    menu_->clear();
+    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
+                                               boost::bind( &kernel::LocalizedString::Initialize, _1, data_.GetActiveLanguages() ) ) ) );
+}
 
-    masterAction_ = AddToMenu( CreateMasterText(), menu_, mapper_ );
-    masterAction_->setChecked( wasMaster );
-    currentAction_ = 0;
-    actions_.push_back( masterAction_ );
-
-    for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
-    {
-        QAction* action = AddToMenu( ( *it )->GetName().c_str(), menu_, mapper_ );
-        if( ( *it )->GetName() == previousLanguage.toStdString() )
-            currentAction_ = action;
-        actions_.push_back( action );
-    }
-
-    if( currentAction_ )    // current action found, just check it
-        currentAction_->setChecked( true );
-    else                    // no current action (was master or a deleted language, it fall back to master anyway)
-    {
-        if( wasMaster )         // was master, just check it
-        {
-            currentAction_ = masterAction_;
-            currentAction_->setChecked( true );
-        }
-        else                    // wasn't master, change language
-            OnLanguageChanged( masterAction_->text() );
-    }
-
-    menu_->addSeparator();
-    menu_->addAction( tr( "Edit..." ), dialog_.get(), SLOT( exec() ) );
-
-    emit LanguagesEdited();
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_GUI::UpdateCurrentAction
+// Created: ABR 2013-10-04
+// -----------------------------------------------------------------------------
+void ADN_Languages_GUI::UpdateCurrentAction( const QString& name )
+{
+    currentAction_ = masterAction_;
+    for( auto it = actions_.begin(); it != actions_.end() && currentAction_ == masterAction_; ++it )
+        if( ( *it )->text() == name )
+            currentAction_ = *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,23 +167,16 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
         currentAction_->setChecked( true );
         return;
     }
-
-    currentAction_ = 0;
-    for( auto it = actions_.begin(); it != actions_.end(); ++it )
-        if( ( *it )->text() == language )
-            currentAction_ = *it;
-        else
-            ( *it )->setChecked( false );
-    if( currentAction_ == 0 )
-        currentAction_ = masterAction_;
-    currentAction_->setChecked( true );
+    UpdateCurrentAction( language );
     for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
         if( ( *it )->GetName() == language.toStdString() )
         {
             ChangeLanguage( ( *it )->GetCode() );
+            UpdateMenu();
             return;
         }
     ChangeLanguage( data_.Master() );
+    UpdateMenu();
 }
 
 // -----------------------------------------------------------------------------
@@ -181,4 +199,43 @@ void ADN_Languages_GUI::ChangeLanguage( const std::string& language )
 void ADN_Languages_GUI::OnMasterChanged()
 {
     masterAction_->setText( CreateMasterText() );
+}
+
+namespace
+{
+    bool Confirm( const QString& text )
+    {
+        return QMessageBox::Ok == QMessageBox::warning( 0, tools::translate( "ADN_Languages_GUI", "Warning" ),
+                                                        text, QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_GUI::OnSwap
+// Created: ABR 2013-10-04
+// -----------------------------------------------------------------------------
+void ADN_Languages_GUI::OnSwap()
+{
+    if( data_.IsMasterEmpty() )
+        throw MASA_EXCEPTION( "Not supposed to swap with an empty master" );
+    const QString& current = data_.GetAllLanguages().Get( kernel::Language::Current() )->GetName().c_str();
+    const QString& master = data_.GetAllLanguages().Get( data_.Master() )->GetName().c_str();
+
+    if( !Confirm( tr( "Are you sure you want to set the database master as '%1'?" ).arg( current ) ) )
+        return;
+    if( ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
+                                                   boost::bind( &kernel::LocalizedString::IsUnfinished, _1, kernel::Language::Current() ) ) ) )
+        && !Confirm( tr( "Some translations are empty or unfinished. If you continue you will have values in both "
+                         "%1 and %2 as reference language, and may lost some unfinished translations. "
+                         "Proceed anyway?" ).arg( current ).arg( master ) ) )
+        return;
+
+    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
+                                               boost::bind( &kernel::LocalizedString::SwapKey, _1, data_.Master(), kernel::Language::Current() ) ) ) );
+
+    data_.SwapMaster();
+    ChangeLanguage( data_.Master() );
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
+    BuildMenu();
+    UpdateMenu();
 }

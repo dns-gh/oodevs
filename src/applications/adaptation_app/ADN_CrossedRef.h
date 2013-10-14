@@ -75,7 +75,7 @@ ADN_CrossedRef< T >::~ADN_CrossedRef()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC< T >& ADN_CrossedRef::GetVector
+// Name: ADN_CrossedRef::GetVector
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename T >

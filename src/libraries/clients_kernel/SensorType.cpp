@@ -312,7 +312,7 @@ float SensorType::GetAngle() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< float > SensorType::GetPostureSourceFactors
+// Name: SensorType::GetPostureSourceFactors
 // Created: LDC 2013-02-22
 // -----------------------------------------------------------------------------
 const std::vector< float >& SensorType::GetPostureSourceFactors() const

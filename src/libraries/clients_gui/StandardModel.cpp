@@ -146,7 +146,7 @@ bool StandardModel::HasAnyChildVisible( QStandardItem& root, T_FilterFunction fu
 }
 
 // -----------------------------------------------------------------------------
-// Name: StandardModel::function< bool
+// Name: StandardModel::ApplyFilter
 // Created: ABR 2012-08-17
 // -----------------------------------------------------------------------------
 void StandardModel::ApplyFilter( T_FilterFunction func )

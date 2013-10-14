@@ -125,7 +125,7 @@ void PopulationPanel::DisplayParts( const Population_ABC& population )
 }
 
 // -----------------------------------------------------------------------------
-// Name: QList< QStandardItem* > PopulationPanel::GetPopulationPartInfo
+// Name: PopulationPanel::GetPopulationPartInfo
 // Created: NPT 2012-10-26
 // -----------------------------------------------------------------------------
 void PopulationPanel::AddPopulationPartInfo( int row, const PopulationPart_ABC& part )

@@ -180,7 +180,7 @@ const AgentNature& AgentType::GetNature() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Iterator< const ComponentType& > AgentType::CreateIterator
+// Name: AgentType::CreateIterator
 // Created: SBO 2007-11-09
 // -----------------------------------------------------------------------------
 tools::Iterator< const AgentComposition& > AgentType::CreateIterator() const
@@ -189,7 +189,7 @@ tools::Iterator< const AgentComposition& > AgentType::CreateIterator() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Iterator< const DotationCapacityType& > AgentType::CreateResourcesIterator
+// Name: AgentType::CreateResourcesIterator
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
 tools::Iterator< const DotationCapacityType& > AgentType::CreateResourcesIterator() const

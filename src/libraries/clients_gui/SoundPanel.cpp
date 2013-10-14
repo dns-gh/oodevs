@@ -214,7 +214,7 @@ void SoundPanel::OnChooseSoundsDirectory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::map< std::string, RichSlider*> SoundPanel::GetSoundSliders
+// Name: SoundPanel::GetSoundSliders
 // Created: NPT 2013-07-12
 // -----------------------------------------------------------------------------
 std::map< std::string, RichSlider*>& SoundPanel::GetSoundSliders()

@@ -62,7 +62,7 @@ void Languages::Read( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Language >& Languages::Get
+// Name: Languages::Get
 // Created: ABR 2013-10-01
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< Language >& Languages::Get( const std::string& code ) const

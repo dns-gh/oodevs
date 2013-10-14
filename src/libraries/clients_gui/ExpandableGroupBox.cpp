@@ -96,7 +96,7 @@ void ExpandableGroupBox::AddComponent( QWidget* component )
 }
 
 // -----------------------------------------------------------------------------
-// Name: QList< QWidget* > ExpandableGroupBox::Components
+// Name: ExpandableGroupBox::Components
 // Created: ABR 2012-06-21
 // -----------------------------------------------------------------------------
 QList< QWidget* > ExpandableGroupBox::Components() const
