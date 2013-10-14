@@ -181,5 +181,7 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
         return QString( value.acharstr().c_str() );
     if( value.has_stage() )
         return QString( stages_->FindTranslation( value.stage().c_str() ).c_str() );
+    if( value.has_phase_line_function() )
+        return QString( tools::ToString( E_FuncLimaType( value.phase_line_function() ) ) );
     throw MASA_EXCEPTION( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).toStdString() );
 }

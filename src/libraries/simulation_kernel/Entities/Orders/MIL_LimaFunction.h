@@ -40,20 +40,20 @@ public:
     //@{
     static       void              Initialize();
     static       void              Terminate ();
-    static const MIL_LimaFunction* Find      ( const sword::PhaseLineOrder::Function& asn );
+    static const MIL_LimaFunction* Find      ( const sword::EnumPhaseLineFunction& asn );
     static const MIL_LimaFunction* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int                  GetID   () const;
-    sword::PhaseLineOrder::Function GetAsnID() const;
+    unsigned int                    GetID   () const;
+    sword::EnumPhaseLineFunction    GetAsnID() const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-     MIL_LimaFunction( const sword::PhaseLineOrder::Function& asn, unsigned int nID, const std::string& strName );
+     MIL_LimaFunction( const sword::EnumPhaseLineFunction& asn, unsigned int nID, const std::string& strName );
     ~MIL_LimaFunction();
 
      MIL_LimaFunction( const MIL_LimaFunction& );            //!< Copy constructor
@@ -63,28 +63,11 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< sword::PhaseLineOrder::Function, const MIL_LimaFunction* > T_LimaFunctionMap;
-    //@}
-
-    //! @name Types
-    //@{
-    enum E_Functions
-    {
-        eLimaFuncLD     = 0, // Ligne de débouché
-        eLimaFuncLCA    = 1, // Ligne de changement d'attitude
-        eLimaFuncLC     = 2, // Ligne de coordination
-        eLimaFuncLI     = 3, // Ligne à interdire
-        eLimaFuncLO     = 4, // Ligne d'objectif
-        eLimaFuncLCAR   = 5, // Ligne de coup d'arrêt
-        eLimaFuncLR     = 6, // Ligne de recueil
-        eLimaFuncLDM    = 7, // Ligne de début de mission
-        eLimaFuncLFM    = 8, // Ligne de fin de mission
-        eLimaFuncLIA    = 9  // Ligne d'identification et de recueil
-    };
+    typedef std::map< sword::EnumPhaseLineFunction, const MIL_LimaFunction* > T_LimaFunctionMap;
     //@}
 
 private:
-    const sword::PhaseLineOrder::Function nAsnID_;
+    const sword::EnumPhaseLineFunction  nAsnID_;
     const unsigned int                  nID_;
     const std::string                   strName_;
 

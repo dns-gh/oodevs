@@ -155,6 +155,7 @@ namespace report
     extern const MIL_DecisionalReport eRC_TransportedUnitCannotReceiveOrder;
     extern const MIL_DecisionalReport eRC_UrbanCollisionStarted;
     extern const MIL_DecisionalReport eRC_UrbanCollisionStopped;
+    extern const MIL_DecisionalReport eRC_CrossedLima;
 }
 
 #endif // MIL_DecisionalReport

@@ -80,8 +80,8 @@ QWidget* LimaParameter::BuildInterface( const QString& objectName, QWidget* pare
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     functions_->setSelectionMode( QListWidget::MultiSelection );
-    for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
-        functions_->insertItem( i, tools::ToShortString( (kernel::E_FuncLimaType)i ) );
+    for( unsigned int i = 0; i < eLimaFuncNbr; ++i )
+        functions_->insertItem( i, tools::ToShortString( (E_FuncLimaType)i ) );
 
     QWidget* scheduleBox = schedule_->BuildInterface( objectName, parent );
     layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Line" ), parent ), 0, 0 );
@@ -110,7 +110,7 @@ void LimaParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_
             QStringList functions;
             for( int i = 0; i < functions_->count(); ++i )
                 if( functions_->isItemSelected( functions_->item( i ) ) )
-                    functions.append( tools::ToShortString( (kernel::E_FuncLimaType)i ) );
+                    functions.append( tools::ToShortString( (E_FuncLimaType)i ) );
             const geometry::Point2f position = selectedLine_->Get< kernel::Positions >().GetPosition();
             const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
             if( ! functions.isEmpty() )
@@ -154,9 +154,9 @@ void LimaParameter::CreateInternalMenu( kernel::ContextMenu& menu )
     internalMenu->setTitle( GetMenuName() );
 
     actions_.clear();
-    for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
+    for( unsigned int i = 0; i < eLimaFuncNbr; ++i )
     {
-        QAction* action = internalMenu->InsertItem( "", tools::ToString( (kernel::E_FuncLimaType)i ), i );
+        QAction* action = internalMenu->InsertItem( "", tools::ToString( (E_FuncLimaType)i ), i );
         action->setCheckable( true );
         action->setChecked( functions_->isItemSelected( functions_->item( i ) ) );
         actions_.push_back( action );
@@ -186,7 +186,7 @@ void LimaParameter::OnMenuClick( QAction* action )
     else
     {
         entityLabel_->setText( "---" );
-        for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
+        for( unsigned int i = 0; i < eLimaFuncNbr; ++i )
             functions_->setItemSelected( functions_->item( i ), !functions_->isItemSelected( functions_->item( i ) ) );
     }
     if( group_ && IsOptional() )
@@ -254,8 +254,8 @@ void LimaParameter::Visit( const actions::parameters::Lima& param )
     assert( resolver_ != 0 );
     ActivateOptionalIfNeeded( param );
     const QStringList functions = QStringList::split( ", ", param.GetValue() );
-    for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
-        functions_->setItemSelected( functions_->item( i ), functions.indexOf( tools::ToShortString( (kernel::E_FuncLimaType)i ) ) != -1 );
+    for( unsigned int i = 0; i < eLimaFuncNbr; ++i )
+        functions_->setItemSelected( functions_->item( i ), functions.indexOf( tools::ToShortString( (E_FuncLimaType)i ) ) != -1 );
 }
 
 // -----------------------------------------------------------------------------

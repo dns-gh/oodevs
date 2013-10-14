@@ -172,7 +172,7 @@ namespace
         std::vector< std::string > functions;
         const auto& list = src.fonctions();
         for( auto it = list.begin(); it != list.end(); ++it )
-            if( const auto opt = FindType< mapping::PhaseLineType >( static_cast< PhaseLineOrder::Function >( *it ) ) )
+            if( const auto opt = FindType< mapping::PhaseLineType >( static_cast< EnumPhaseLineFunction >( *it ) ) )
                 functions.push_back( *opt );
         xos << xml::attribute( "value", boost::algorithm::join( functions, "," ) );
         if( src.has_line() )
@@ -221,6 +221,11 @@ namespace
     void WriteUrbanKnowledge( xml::xostream& xos, const Value& src )
     {
         WritePair( xos, "urbanknowledge", src.urbanknowledge().id() );
+    }
+
+    void WriteLimaFunction( xml::xostream& xos, const Value& src )
+    {       
+        WritePair( xos, "limafunction", static_cast< uint32_t >( src.phase_line_function() ) );
     }
 
     void WriteNature( xml::xostream& xos, const Value& src )
@@ -554,6 +559,7 @@ namespace
         { &Value::has_resourcetype,             &WriteResourceType },
         { &Value::has_stage,                    &WriteStage },
         { &Value::has_urbanknowledge,           &WriteUrbanKnowledge },
+        { &Value::has_phase_line_function,      &WriteLimaFunction }
     };
 
     const struct { T_Has Has; T_Convert Write; } converters[] = {

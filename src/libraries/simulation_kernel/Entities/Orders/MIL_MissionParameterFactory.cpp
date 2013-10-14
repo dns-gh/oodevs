@@ -22,6 +22,7 @@
 #include "MIL_EnumerationParameter.h"
 #include "MIL_EquipmentTypeParameter.h"
 #include "MIL_IntegerParameter.h"
+#include "MIL_LimaFunctionParameter.h"
 #include "MIL_LimaListParameter.h"
 #include "MIL_ListParameter.h"
 #include "MIL_LocationParameter.h"
@@ -317,6 +318,16 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateT
     sword::FireId msg;
     msg.set_id( id );
     boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_TirIndirectParameter >( msg );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLimaFunction
+// Created: MMC 2013-10-14
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLimaFunction( int id )
+{
+    boost::shared_ptr< MIL_MissionParameter_ABC > result = boost::make_shared< MIL_LimaFunctionParameter >( sword::EnumPhaseLineFunction( id ) );
     return result;
 }
 

@@ -59,7 +59,8 @@ public:
         ePhaseLine                  = 25,
         eResourceNetworkNode        = 26,
         eResourceNetworkType        = 27,
-        eStage                      = 28
+        eStage                      = 28,
+        eLimaFunction               = 29
     };
 
     //! @name Factory

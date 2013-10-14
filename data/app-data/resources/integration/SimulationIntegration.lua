@@ -9,14 +9,19 @@ emptyTable = {} -- optimization
 
 rawset( getfenv(), "StartEvent", function( task, params )
   if not ( task == "BEH_Defaut" ) then -- MGD Avoid BEH_Defaut Exception for DIA5
+    local myself = myself
     myself.taskParams = params
     myself.newTask = true
     myself.currentMission = task
     masalife.brain.core.startTask( task, params )
+    myself.idActionLIA = integration.startRecoLima( eTypeLima_LIA )
+    myself.idActionLR = integration.startRecoLima( eTypeLima_LR )
   end
 end )
 
 rawset( getfenv(), "StopEvents", function( ... )
+  integration.stopAction( myself.idActionLIA )
+  integration.stopAction( myself.idActionLR )
   masalife.brain.core.stopTasks() --Stop all tasks, main task and fragOrder
   myself.currentMission = nil
   myself.taskParams = {}

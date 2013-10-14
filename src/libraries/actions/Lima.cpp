@@ -154,7 +154,7 @@ void Lima::CommitTo( sword::PhaseLineOrder& message ) const
 {
     QStringList functions = QStringList::split( ", ", GetValue() );
     for( int i = 0; i < functions.count(); ++i )
-        message.add_fonctions( sword::PhaseLineOrder::Function( tools::LimaTypeFromShortString( functions[i] ) ) );
+        message.add_fonctions( sword::EnumPhaseLineFunction( tools::LimaTypeFromShortString( functions[i] ) ) );
 
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
