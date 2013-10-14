@@ -651,8 +651,8 @@ void MIL_EntityManager::LogInfo()
     KnowledgesVisitor visitor;
     Accept( visitor );
     MT_LOG_INFO_MSG(
-        pObjectManager_->Count() << " Objects - " << visitor.Count() << " Knowledges ( " << visitor.agents_ << " agents,"
-            << visitor.objects_ << " objects, " << visitor.populations_ << " populations ) - " << visitor.groups_ << " Knowledge groups" );
+        pObjectManager_->Count() << " Objects - " << visitor.Count() << " Knowledges (" << visitor.agents_ << " agents, "
+            << visitor.objects_ << " objects, " << visitor.populations_ << " populations) - " << visitor.groups_ << " Knowledge groups" );
     MT_LOG_INFO_MSG( sink_->Count() << " Agents - " << automateFactory_->Count() << " Automats - " << populationFactory_->Count() << " Crowds" );
     {
         std::stringstream s;
@@ -2565,6 +2565,7 @@ void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
     for( auto it = armyFactory_->CreateIterator(); it.HasMoreElements(); )
     {
         const auto& groups = it.NextElement().GetKnowledgeGroups();
+        visitor.VisitKnowledgesGroup( groups.size() );
         for( auto it2 = groups.begin(); it2 != groups.end(); ++it2 )
             it2->second->Accept( visitor );
     }
