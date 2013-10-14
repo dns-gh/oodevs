@@ -849,8 +849,16 @@ integration.isAgentFlying = function( agent )
     return DEC_ConnaissanceAgent_EstEnVol( agent )
 end
 
+-- Returns the current speed of the provided agent in m/s
+-- @param agent : an agent
 integration.getCurrentSpeed = function( agent )
     return DEC_Agent_GetCurrentSpeed( agent )
+end
+
+-- Returns the maximal speed of the provided agent in m/s
+-- @param agent : an agent knowledge
+integration.getMaxSpeed = function( agent )
+    return DEC_Agent_MaxSpeed( agent.source )
 end
 
 integration.getModulationMaxSpeed = function( agent )
