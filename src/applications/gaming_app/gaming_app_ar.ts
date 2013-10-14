@@ -975,19 +975,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>IndicatorsReports</name>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished">تحذير</translation>
-    </message>
-    <message>
-        <source>The specified output file is the also the input template.
- Are you sure you want to overwrite the template file?</source>
-        <translation type="unfinished">ملف الإخراج المحدد الإدخال القالب أيضا.
- هل أنت متأكد من أنك تريد الكتابة فوق ملف القالب؟</translation>
-    </message>
-</context>
-<context>
     <name>InfoCompositionDialog</name>
     <message>
         <source>Composition</source>
