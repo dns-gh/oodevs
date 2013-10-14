@@ -13,8 +13,8 @@
 #include "clients_gui/WikiXmlConverter.h"
 #include "ADN_Languages_Data.h"
 #include "ADN_WorkspaceElement.h"
-#include "clients_kernel/Language.h"
 #include "ENT/ENT_Tr.h"
+#include "tools/Languages.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
@@ -515,11 +515,10 @@ void ADN_Missions_ABC::FixConsistency()
     if( diaType_.GetData().empty() )
         diaType_ = BuildDiaType( strName_.GetData().c_str(), type_ == eMissionType_FragOrder ).toStdString();
 
-    const kernel::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+    const tools::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
         const tools::Path filePath = ADN_Missions_Data::GetMissionSheetsPath( type_ ) / tools::Path::FromUTF8( strName_.GetValue( it->GetCode() ) );
-        if( missionSheetPath_.GetValue( it->GetCode() ).empty() )
-            missionSheetPath_.SetValue( it->GetCode(), filePath.ToUTF8() + ".html" );
+        missionSheetPath_.SetValue( it->GetCode(), filePath.ToUTF8() + ".html" );
     }
 }

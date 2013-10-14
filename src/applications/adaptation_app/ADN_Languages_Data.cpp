@@ -12,7 +12,7 @@
 #include "ADN_GeneralConfig.h"
 #include "ADN_Tools.h"
 #include "ADN_Project_Data.h"
-#include "clients_kernel/Languages.h"
+#include "tools/Languages.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data constructor
@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 ADN_Languages_Data::ADN_Languages_Data()
     : ADN_Data_ABC( eLanguages )
-    , allLanguages_( new kernel::Languages( ADN_Workspace::GetWorkspace().GetConfig().BuildResourceChildFile( "languages.xml" ) ) )
+    , allLanguages_( new tools::Languages( ADN_Workspace::GetWorkspace().GetConfig().BuildResourceChildFile( "languages.xml" ) ) )
 {
     // NOTHING
 }
@@ -60,7 +60,7 @@ void ADN_Languages_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::ReadLanguage( xml::xistream& input )
 {
-    const kernel::Language& language = allLanguages_->Get( input.attribute( "code", "" ) );
+    const tools::Language& language = allLanguages_->Get( input.attribute( "code", "" ) );
     if( input.attribute( "master", false ) )
         InternalSetMaster( language.GetCode() );
     else
@@ -126,7 +126,7 @@ void ADN_Languages_Data::SwapMaster()
 {
     if( IsMasterEmpty() )
         throw MASA_EXCEPTION ( "Can't swap languages if master is empty" );
-    const std::string& current = kernel::Language::Current();
+    const std::string& current = tools::Language::Current();
     if( master_ == current )
         throw MASA_EXCEPTION( "Can't swap master language with the actual master language" );
 
@@ -147,7 +147,7 @@ void ADN_Languages_Data::SwapMaster()
 void ADN_Languages_Data::InternalSetMaster( const std::string& language )
 {
     if( IsCurrentMaster() )
-        kernel::Language::SetCurrent( language );
+        tools::Language::SetCurrent( language );
     master_ = language;
 }
 
@@ -175,14 +175,14 @@ bool ADN_Languages_Data::IsMasterEmpty() const
 // -----------------------------------------------------------------------------
 bool ADN_Languages_Data::IsCurrentMaster() const
 {
-    return IsMaster( kernel::Language::Current() );
+    return IsMaster( tools::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data::GetAllLanguages
 // Created: ABR 2013-10-07
 // -----------------------------------------------------------------------------
-const kernel::Languages& ADN_Languages_Data::GetAllLanguages() const
+const tools::Languages& ADN_Languages_Data::GetAllLanguages() const
 {
     return *allLanguages_;
 }
@@ -191,7 +191,7 @@ const kernel::Languages& ADN_Languages_Data::GetAllLanguages() const
 // Name: ADN_Languages_Data::GetActiveLanguages
 // Created: ABR 2013-10-07
 // -----------------------------------------------------------------------------
-const kernel::LanguagesVector& ADN_Languages_Data::GetActiveLanguages() const
+const tools::LanguagesVector& ADN_Languages_Data::GetActiveLanguages() const
 {
     return activeLanguages_;
 }

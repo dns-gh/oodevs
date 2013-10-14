@@ -7,10 +7,13 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "tools_pch.h"
 #include "Language.h"
+#include <xeumeuleu/xml.h>
+#include <QtCore/QString>
 
-using namespace kernel;
+using namespace tools;
+
 std::string Language::current_;
 
 // -----------------------------------------------------------------------------

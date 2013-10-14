@@ -9,7 +9,6 @@
 
 #include "clients_kernel_pch.h"
 #include "LocalizedString.h"
-#include "Language.h"
 
 using namespace kernel;
 
@@ -142,7 +141,7 @@ void LocalizedString::SetType( const std::string& language, E_TranslationType ty
 // Name: LocalizedString::InitEmptyValues
 // Created: ABR 2013-08-23
 // -----------------------------------------------------------------------------
-bool LocalizedString::Initialize( const LanguagesVector& languages )
+bool LocalizedString::Initialize( const tools::LanguagesVector& languages )
 {
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
@@ -189,7 +188,7 @@ bool LocalizedString::operator!=( const LocalizedString& other ) const
 // -----------------------------------------------------------------------------
 const std::string& LocalizedString::Translate() const
 {
-    return Translate( Language::Current() );
+    return Translate( tools::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------

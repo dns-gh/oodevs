@@ -14,8 +14,8 @@
 #include "ADN_Languages_MasterDialog.h"
 #include "ADN_Gui_Tools.h"
 #include "ADN_Workspace.h"
-#include "clients_kernel/Languages.h"
 #include "clients_gui/resources.h"
+#include "tools/Languages.h"
 
 namespace
 {
@@ -102,7 +102,7 @@ ADN_Languages_Dialog::~ADN_Languages_Dialog()
 
 namespace
 {
-    void InsertItem( const kernel::Language& language, QTreeWidget* widget )
+    void InsertItem( const tools::Language& language, QTreeWidget* widget )
     {
         QTreeWidgetItem* item = new QTreeWidgetItem( QStringList() << language.GetName().c_str() << language.GetCode().c_str() );
         widget->insertTopLevelItem( widget->topLevelItemCount(), item );
@@ -120,14 +120,14 @@ int ADN_Languages_Dialog::exec()
     availables_->clear();
     actives_->clear();
 
-    const kernel::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
     for( auto itAll = languages.begin(); itAll != languages.end(); ++itAll )
         if( data_.IsMaster( itAll->GetCode() ) )
             master_->setText( itAll->GetName().c_str() );
         else if( !data_.HasActiveLanguage( itAll->GetCode() ) )
             InsertItem( *itAll, availables_ );
 
-    const kernel::LanguagesVector& activeLanguages = data_.GetActiveLanguages();
+    const tools::LanguagesVector& activeLanguages = data_.GetActiveLanguages();
     for( auto itActive = activeLanguages.begin(); itActive != activeLanguages.end(); ++itActive )
         InsertItem( *itActive, actives_ );
 

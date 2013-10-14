@@ -31,7 +31,7 @@
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
-#include "clients_kernel/Language.h"
+#include "tools/Language.h"
 #include "tools/VersionHelper.h"
 
 namespace
@@ -287,7 +287,7 @@ void ADN_MainWindow::PurgeGUI()
     disconnect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), actionForward_, SLOT( setEnabled( bool ) ) );
     mainLayout_->removeWidget( mainTabWidget_.get() );
     mainTabWidget_.reset();
-    kernel::Language::SetCurrent( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
+    tools::Language::SetCurrent( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
     // ObjectNameManager
     gui::ObjectNameManager::getInstance()->Purge();
 }

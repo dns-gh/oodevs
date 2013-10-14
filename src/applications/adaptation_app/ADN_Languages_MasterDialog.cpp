@@ -13,7 +13,7 @@
 #include "ADN_Gui_Tools.h"
 #include "ADN_Languages_Data.h"
 #include "ADN_Workspace.h"
-#include "clients_kernel/Languages.h"
+#include "tools/Languages.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_MasterDialog constructor
@@ -68,7 +68,7 @@ void ADN_Languages_MasterDialog::showEvent( QShowEvent* pEvent )
 
     model_.clear();
     QString english;
-    const kernel::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
         if( it->GetCode() == "en" )
@@ -90,7 +90,7 @@ void ADN_Languages_MasterDialog::showEvent( QShowEvent* pEvent )
 void ADN_Languages_MasterDialog::accept()
 {
     const QString selectedLanguage = combo_->currentText();
-    const kernel::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
     for( auto it = languages.begin(); it != languages.end(); ++it )
         if( it->GetName() == selectedLanguage.toStdString() )
         {

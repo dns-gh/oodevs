@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Language_h_
-#define __Language_h_
+#ifndef _tools_Language_h_
+#define _tools_Language_h_
 
 #include <boost/noncopyable.hpp>
 #include <vector>
@@ -19,7 +19,7 @@ namespace xml
     class xostream;
 }
 
-namespace kernel
+namespace tools
 {
 
 // =============================================================================
@@ -64,8 +64,8 @@ private:
     //@}
 };
 
-typedef std::vector< kernel::Language > LanguagesVector;
+typedef std::vector< tools::Language > LanguagesVector;
 
-} //! namespace kernel
+} //! namespace tools
 
-#endif // __Language_h_
+#endif // _tools_Language_h_

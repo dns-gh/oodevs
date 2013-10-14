@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "XmlTranslations.h"
 #include "Context.h"
-#include "Language.h"
 #include "TranslationQuery.h"
 #include "Tools.h"
 #include "tools/FileWrapper.h"
@@ -94,7 +93,7 @@ void XmlTranslations::ReadTranslationQuery( xml::xistream& xis )
 // Name: XmlTranslations::EvaluateTranslationQueries
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void XmlTranslations::EvaluateTranslationQueries( const tools::Path& xmlFile, const LanguagesVector& languages )
+void XmlTranslations::EvaluateTranslationQueries( const tools::Path& xmlFile, const tools::LanguagesVector& languages )
 {
     for( auto it = queries_.begin(); it != queries_.end(); ++it )
     {
@@ -257,7 +256,7 @@ void XmlTranslations::MergeDuplicateTranslations()
 // Name: XmlTranslations::SaveTranslations
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const LanguagesVector& languages ) const
+void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const tools::LanguagesVector& languages ) const
 {
     if( contexts_.empty() )
         return;

@@ -10,8 +10,8 @@
 #ifndef __XmlTranslations_h_
 #define __XmlTranslations_h_
 
-#include <boost/noncopyable.hpp>
 #include "LocalizedString.h"
+#include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
 
 namespace tools
@@ -22,7 +22,6 @@ namespace tools
 namespace kernel
 {
     class Context;
-    class Language;
     class LocalizedString;
     class TranslationQuery;
 
@@ -52,7 +51,7 @@ public:
     //@{
     void Purge();
     bool LoadTranslationQueries( const tools::Path& xmlFile );
-    void EvaluateTranslationQueries( const tools::Path& xmlFile, const LanguagesVector& languages );
+    void EvaluateTranslationQueries( const tools::Path& xmlFile, const tools::LanguagesVector& languages );
     void SaveTranslationQueries( const tools::Path& xmlFile ) const;
     void SaveTranslationQueries( xml::xostream& xos ) const;
     //@}
@@ -63,7 +62,7 @@ public:
     void LoadTranslationFile( const tools::Path& xmlFile, const tools::Path& localesDirectory, const std::string& languageCode );
     void LoadTranslationXmlStream( xml::xistream& xis, const std::string& languageCode );
     void MergeDuplicateTranslations();
-    void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const LanguagesVector& languages ) const;
+    void SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const tools::LanguagesVector& languages ) const;
     //@}
 
     //! @name Accessors

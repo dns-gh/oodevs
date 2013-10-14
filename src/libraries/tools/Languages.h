@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef _kernel_Languages_h
-#define _kernel_Languages_h
+#ifndef _tools_Languages_h
+#define _tools_Languages_h
 
 #include "Language.h"
 #include <boost/noncopyable.hpp>
@@ -16,10 +16,6 @@
 namespace tools
 {
     class Path;
-}
-
-namespace kernel
-{
 
 // =============================================================================
 /** @class  Languages
@@ -56,6 +52,6 @@ private:
     //@}
 };
 
-} //! namespace kernel
+} //! namespace tools
 
-#endif // _kernel_Languages_h
+#endif // _tools_Languages_h

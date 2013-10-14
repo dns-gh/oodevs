@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "tools_pch.h"
 #include "Languages.h"
-#include "tools/FileWrapper.h"
+#include "FileWrapper.h"
 
-using namespace kernel;
+using namespace tools;
 
 // -----------------------------------------------------------------------------
 // Name: Languages constructor
@@ -54,7 +54,7 @@ void Languages::Read( xml::xistream& xis )
                 for( auto it = languages_.begin(); it != languages_.end(); ++it )
                     if( it->GetCode() == code )
                         throw MASA_EXCEPTION( "Language code already registered: " + code );
-                languages_.push_back( kernel::Language( x ) );
+                languages_.push_back( tools::Language( x ) );
             })
         >> xml::end;
 }
