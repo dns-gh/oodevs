@@ -651,7 +651,7 @@ integration.updateMoveToItArea = function( objective, pathType )
             local distance = DEC_Geometrie_DistanceBetweenPoints( objective.destination, objective:getPosition() )
             local delayInSeconds = 40
             
-            if distance > integration.getMaxSpeedInKmH( meKnowledge )*delayInSeconds/3.6 then
+            if distance > integration.getMaxSpeed( meKnowledge )*delayInSeconds then
                 integration.stopMoveToIt( objective )
                 return integration.startMoveToItArea( objective, pathType )
             end
