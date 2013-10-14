@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp 1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="5" level="x" name="Formation [5]" symbol="symbols/sfgpucath">
+          <automat engaged="true" id="6" knowledge-group="2" name="ARMOR.MBT squadron" symbol="symbols/sfgpucath" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="7" name="ARMOR.Armored squadron CP" position="28RDS1998835702" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="8" name="ARMOR.MBT platoon" position="28RDS1998935802" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="9" name="ARMOR.MBT platoon" position="28RDS2008935702" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="10" name="ARMOR.MBT platoon" position="28RDS1998835603" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="11" name="ARMOR.MBT platoon" position="28RDS1988835703" type="ARMOR.MBT platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1"/>
+  </diplomacy>
+</orbat>

@@ -58,6 +58,7 @@ func init() {
 const ExCrossroadSmallOrbat = "crossroad-small-orbat"
 const ExCrossroadSmallEmpty = "crossroad-small-empty"
 const ExCrossroadSmallLog = "crossroad-small-log"
+const ExCrossroadSmallScores = "crossroad-small-scores"
 
 func MakeOpts() *simu.SimOpts {
 	opts := simu.SimOpts{}

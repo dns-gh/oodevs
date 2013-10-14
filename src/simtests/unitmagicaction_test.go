@@ -375,7 +375,7 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 
 	// Invalid automat type
 	_, err = client.CreateAutomat(formation.Id, 0, InvalidIdentifier, kg0.Id)
-	c.Assert(err, IsSwordError, "error_invalid_unit")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid knowledge group
 	_, err = client.CreateAutomat(formation.Id, 0, automatType, InvalidIdentifier)
@@ -2156,4 +2156,50 @@ func (s *TestSuite) TestUnloadUnit(c *C) {
 		return u2.TransporterId == 0 &&
 			len(u1.TransportedIds) == 0
 	})
+}
+
+func (s *TestSuite) TestDestroyUnit(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// some prerequisites
+	formation := CreateFormation(c, client, 1)
+	automat := CreateAutomat(c, client, formation.Id, 0)
+	unit1 := CreateUnit(c, client, automat.Id)
+	unit2 := CreateUnit(c, client, automat.Id)
+	err := client.LoadUnit(unit1.Id, unit2.Id)
+
+	// invalid unit
+	err = client.DestroyUnit(123456)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// valid unit
+	err = client.DestroyUnit(unit1.Id)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		u1 := data.FindUnit(unit1.Id)
+		// Equipments are unavailable
+		for _, eq := range u1.EquipmentDotations {
+			if eq.Available != 0 {
+				return false
+			}
+		}
+		// Crew members are dead
+		for _, h := range u1.HumanDotations {
+			if h.Quantity > 0 && h.State != eDead {
+				return false
+			}
+		}
+		return true
+	})
+
+	// It can be destroyed again
+	err = client.DestroyUnit(unit1.Id)
+	c.Assert(err, IsNil)
+
+	// Destroy a deleted unit
+	err = client.DeleteUnit(unit2.Id)
+	c.Assert(err, IsNil)
+	err = client.DestroyUnit(unit2.Id)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
 }

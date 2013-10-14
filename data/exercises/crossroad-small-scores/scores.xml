@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<scores model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/scores.xsd">
+  <score name="available-equipments">
+    <formula><![CDATA[sum( domain( equipments( $eqs, $state ), $units ) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$eqs" type="equipment list" value="11"/>
+      <constant id="$state" type="equipment states" value="available"/>
+      <constant id="$units" type="unit list" value="7,8,9,10,11"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract equipments="11" function="equipments" id="1" states="available"/>
+        <transform function="domain" id="2" input="1" select="7,8,9,10,11" type="unsigned long"/>
+        <reduce function="sum" id="3" input="2" type="unsigned long"/>
+        <result function="indicator" input="3" name="available-equipments" type="float"/>
+      </indicator>
+    </indicators>
+    <profiles>
+      <profile name="admin"/>
+    </profiles>
+  </score>
+  <score name="cp-distance">
+    <formula><![CDATA[distance( select(position(),$cp), select(position(),$unit) )]]></formula>
+    <gauge type="Default"/>
+    <constants>
+      <constant id="$cp" type="unit" value="7"/>
+      <constant id="$unit" type="unit" value="8"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="position" id="1"/>
+        <reduce function="select" id="2" input="1" key="7" type="position"/>
+        <extract function="position" id="3"/>
+        <reduce function="select" id="4" input="3" key="8" type="position"/>
+        <transform function="distance" id="5" input="2,4" type="float"/>
+        <result function="indicator" input="5" name="cp-distance" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+</scores>
