@@ -651,8 +651,8 @@ void MIL_EntityManager::LogInfo()
     KnowledgesVisitor visitor;
     Accept( visitor );
     MT_LOG_INFO_MSG(
-        pObjectManager_->Count() << " Objects - " << visitor.Count() << " Knowledges ( " << visitor.agents_ << " agents,"
-            << visitor.objects_ << " objects, " << visitor.populations_ << " populations ) - " << visitor.groups_ << " Knowledge groups" );
+        pObjectManager_->Count() << " Objects - " << visitor.Count() << " Knowledges (" << visitor.agents_ << " agents, "
+            << visitor.objects_ << " objects, " << visitor.populations_ << " populations) - " << visitor.groups_ << " Knowledge groups" );
     MT_LOG_INFO_MSG( sink_->Count() << " Agents - " << automateFactory_->Count() << " Automats - " << populationFactory_->Count() << " Crowds" );
     {
         std::stringstream s;
