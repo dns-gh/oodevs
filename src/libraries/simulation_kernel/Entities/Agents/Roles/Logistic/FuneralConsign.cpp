@@ -14,6 +14,7 @@
 #include "MIL_Time_ABC.h"
 #include "SupplyConsign_ABC.h"
 #include "SupplyConvoy_ABC.h"
+#include "FuneralHandler_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Humans/Human_ABC.h"
@@ -159,6 +160,7 @@ void FuneralConsign::DoWaitForHandling()
         if( handler_ )
             handler_->RemoveSupplyConvoysObserver( *this );
         handler_ = &handler;
+        handler_->AddSupplyConvoysObserver( *this );
         SetState( eTransportingUnpackaged );
     }
 }
@@ -204,17 +206,14 @@ void FuneralConsign::DoPackage()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FuneralConsign::DoPackage
+// Name: FuneralConsign::DoTransitionAfterPackaging
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 void FuneralConsign::DoTransitionAfterPackaging()
 {
     assert( handler_ );
     if( handler_->GetLogisticHierarchy().HasSuperior() )
-    {
         SetState( eWaitingForTransporter );
-        handler_->AddSupplyConvoysObserver( *this );
-    }
     else
         SetState( eFinished );
 }
@@ -288,7 +287,6 @@ void FuneralConsign::OnSupplyConvoyArriving( const boost::shared_ptr< const Supp
 {
     if( state_ != eTransportingPackaged || consign->GetConvoy() != convoy_ )
         return;
-    handler_->RemoveSupplyConvoysObserver( *this );
     convoy_.reset();
     if( !packaging_->IsTerminal() )
         SetState( eWaitingForPackaging );
