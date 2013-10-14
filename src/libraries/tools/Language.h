@@ -49,6 +49,7 @@ public:
     //@{
     static const std::string& Current();
     static void SetCurrent( const std::string& language );
+    static void InitFromRegistry();
     //@}
 
 private:

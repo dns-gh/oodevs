@@ -70,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< const tools::Languages > allLanguages_;
+    const tools::Languages& allLanguages_;
     tools::LanguagesVector activeLanguages_;
     std::string master_;
     //@}

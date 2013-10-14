@@ -18,7 +18,6 @@
 #include "FragOrderType.h"
 #include "InhabitantType.h"
 #include "KnowledgeGroupType.h"
-#include "Language.h"
 #include "MagicActionType.h"
 #include "MissionFactory.h"
 #include "MissionType.h"
@@ -31,6 +30,7 @@
 #include "protocol/Helpers.h"
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Language.h"
 #include "tools/PhyLoader.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -68,7 +68,7 @@ void AgentTypes::Load( const tools::ExerciseConfig& config )
     symbolFactory_->Load( config );
     const tools::PhyLoader& loader = config.GetPhyLoader();
     const tools::Path localesDirectory = config.GetPhysicalChildPath( "locales-directory" );
-    agentTypesTranslations_->LoadTranslationFile( config.GetOptionalPhysicalChildFile( "units" ), localesDirectory, Language::Current() );
+    agentTypesTranslations_->LoadTranslationFile( config.GetOptionalPhysicalChildFile( "units" ), localesDirectory, tools::Language::Current() );
     loader.LoadPhysicalFile( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ) );
     loader.LoadPhysicalFile( "missions", boost::bind( &AgentTypes::ReadOrderTypes, this, _1 ) );
     //loader.LoadPhysicalFile( "magic-orders", boost::bind( &AgentTypes::ReadMagicOrderTypes, this, _1 ) );

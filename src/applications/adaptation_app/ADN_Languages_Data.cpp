@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 ADN_Languages_Data::ADN_Languages_Data()
     : ADN_Data_ABC( eLanguages )
-    , allLanguages_( new tools::Languages( ADN_Workspace::GetWorkspace().GetConfig().BuildResourceChildFile( "languages.xml" ) ) )
+    , allLanguages_( ADN_Workspace::GetWorkspace().GetConfig().GetLanguages() )
 {
     // NOTHING
 }
@@ -52,6 +52,7 @@ void ADN_Languages_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "languages" )
             >> xml::list( "language", *this, &ADN_Languages_Data::ReadLanguage )
           >> xml::end;
+    tools::Language::SetCurrent( master_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +61,7 @@ void ADN_Languages_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::ReadLanguage( xml::xistream& input )
 {
-    const tools::Language& language = allLanguages_->Get( input.attribute( "code", "" ) );
+    const tools::Language& language = allLanguages_.Get( input.attribute( "code", "" ) );
     if( input.attribute( "master", false ) )
         InternalSetMaster( language.GetCode() );
     else
@@ -114,7 +115,7 @@ void ADN_Languages_Data::SetMaster( const std::string& language )
             break;
         }
     if( !IsMasterEmpty() )
-        activeLanguages_.push_back( allLanguages_->Get( master_ ) );
+        activeLanguages_.push_back( allLanguages_.Get( master_ ) );
     InternalSetMaster( language );
 }
 
@@ -136,7 +137,7 @@ void ADN_Languages_Data::SwapMaster()
             activeLanguages_.erase( it );
             break;
         }
-    activeLanguages_.push_back( allLanguages_->Get( master_ ) );
+    activeLanguages_.push_back( allLanguages_.Get( master_ ) );
     InternalSetMaster( current );
 }
 
@@ -184,7 +185,7 @@ bool ADN_Languages_Data::IsCurrentMaster() const
 // -----------------------------------------------------------------------------
 const tools::Languages& ADN_Languages_Data::GetAllLanguages() const
 {
-    return *allLanguages_;
+    return allLanguages_;
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +212,7 @@ void ADN_Languages_Data::PurgeActiveLanguages()
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::AddActiveLanguage( const std::string& language )
 {
-    activeLanguages_.push_back( allLanguages_->Get( language ) );
+    activeLanguages_.push_back( allLanguages_.Get( language ) );
 }
 
 // -----------------------------------------------------------------------------

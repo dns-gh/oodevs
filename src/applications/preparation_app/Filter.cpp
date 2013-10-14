@@ -10,14 +10,14 @@
 #include "preparation_app_pch.h"
 #include "Filter.h"
 #include "moc_Filter_ABC.cpp"
-#include "clients_kernel/Tools.h"
+#include "tools/Language.h"
 
 // -----------------------------------------------------------------------------
 // Name: Filter constructor
 // Created: ABR 2011-06-17
 // -----------------------------------------------------------------------------
 Filter::Filter()
-    : description_( tools::readLang() )
+    : description_( tools::Language::Current() )
 {
     // NOTHING
 }
@@ -27,7 +27,7 @@ Filter::Filter()
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
 Filter::Filter( xml::xistream& xis )
-    : description_( xis, tools::readLang() )
+    : description_( xis, tools::Language::Current() )
 {
     // NOTHING
 }

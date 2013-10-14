@@ -15,6 +15,7 @@
 #include "PrimitiveParameter.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "tools/Language.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
@@ -110,7 +111,7 @@ void Primitive::ReadComment( xml::xistream& xis )
         return;
     std::string lang = xis.attribute< std::string >( "lang", "" );
     if( lang.empty() || 
-            ( lang == tools::readLang() || 
+            ( lang == tools::Language::Current() || 
             ( comment_.empty() && lang == "en" ) ) )
         comment_ = xis.value< std::string >();
 }

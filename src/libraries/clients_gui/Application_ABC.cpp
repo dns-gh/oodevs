@@ -13,6 +13,7 @@
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/Tools.h"
 #include "tools/Codec.h"
+#include "tools/Language.h"
 #include "tools/VersionHelper.h"
 #include "tools/Win32/BugTrap.h"
 #include "moc_Application_ABC.cpp"
@@ -31,7 +32,7 @@ Application_ABC::Application_ABC( ApplicationMonitor& monitor )
     , invalidLicense_( true )
 {
     connect( &app_, SIGNAL( Error( const QString& ) ), SLOT( DisplayError( const QString& ) ) );
-    SetLocale();
+    QLocale::setDefault( QLocale::system() );
     tools::SetCodec();
 }
 
@@ -45,24 +46,13 @@ Application_ABC::~Application_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Application_ABC::SetLocale
-// Created: ABR 2012-07-13
-// -----------------------------------------------------------------------------
-void Application_ABC::SetLocale()
-{
-    locale_  = tools::readLocale();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Application_ABC::Initialize
 // Created: ABR 2012-07-12
 // -----------------------------------------------------------------------------
 void Application_ABC::Initialize()
 {
-    // Locale
-    QLocale::setDefault( locale_ );
-
     // Translator
+    tools::Language::InitFromRegistry();
     CreateTranslators();
 
     // Post translator initialization
@@ -155,7 +145,7 @@ const QString& Application_ABC::GetExpiration() const
 // -----------------------------------------------------------------------------
 void Application_ABC::AddTranslator( const char* t )
 {
-    QTranslator* translator = tools::AddTranslator( app_, locale_, t );
+    QTranslator* translator = tools::AddTranslator( app_, tools::Language::Current(), t );
     if( translator )
         translators_.push_back( translator );
 }

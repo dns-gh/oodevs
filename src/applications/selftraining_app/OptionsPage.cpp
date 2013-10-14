@@ -15,10 +15,11 @@
 #include "DataWidget.h"
 #include "ImportWidget.h"
 #include "ExportWidget.h"
-#include "clients_gui/FileDialog.h"
-#include "clients_kernel/Tools.h"
 #include "Config.h"
 #include "Launcher.h"
+#include "clients_gui/FileDialog.h"
+#include "clients_kernel/Tools.h"
+#include "tools/Language.h"
 #include <boost/foreach.hpp>
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
@@ -40,7 +41,7 @@ OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pag
     , config_            ( config )
     , loader_            ( loader )
     , controllers_       ( controllers )
-    , selectedLanguage_  ( tools::readLang() )
+    , selectedLanguage_  ( tools::Language::Current() )
     , hasChanged_        ( false )
     , languageHasChanged_( false )
 {
@@ -388,7 +389,7 @@ void OptionsPage::ApplyAction()
     Commit();
     if( languageHasChanged_ )
     {
-        app_.SetLocale();
+        tools::Language::SetCurrent( selectedLanguage_.c_str() );
         app_.CreateTranslators();
         app_.InitializeLayoutDirection();
     }
@@ -418,7 +419,7 @@ void OptionsPage::Reset()
 {
     Reconnect();
 
-    selectedLanguage_ = tools::readLang();
+    selectedLanguage_ = tools::Language::Current();
     selectedDataDir_ = config_.GetRootDir();
 
     assert( languages_.find( selectedLanguage_ ) != languages_.end() );

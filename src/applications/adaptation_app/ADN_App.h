@@ -41,7 +41,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< const ADN_GeneralConfig > config_;
-    ADN_MainWindow mainWindow_;
+    std::auto_ptr< ADN_MainWindow > mainWindow_;
     //@}
 };
 

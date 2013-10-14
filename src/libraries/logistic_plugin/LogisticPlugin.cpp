@@ -17,14 +17,12 @@
 #include "ENT/ENT_Tr_Gen.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include "tools/Language.h"
 #include "tools/SessionConfig.h"
 #include "tools/XmlStreamOperators.h"
 #include <tools/Path.h>
 #pragma warning( push, 0 )
-#include <QtCore/qsettings.h>
-#include <QtCore/qtextcodec.h>
 #include "QtCore/qTranslator.h"
-#include "QtCore/qLocale.h"
 #include <QtGui/qapplication.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
@@ -51,17 +49,14 @@ namespace
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::Path& maintenanceFile,
-                                const tools::Path& supplyFile, const tools::Path& funeralFile, const tools::Path& medicalFile, const char* localeStr )
+                                const tools::Path& supplyFile, const tools::Path& funeralFile, const tools::Path& medicalFile )
     : nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
-    QLocale locale = tools::readLocale();
-    if( localeStr != 0 )
-        locale = QLocale( localeStr );
     if( qApp )
     {
-        tools::AddTranslator( *qApp, locale, "ENT" );
-        tools::AddTranslator( *qApp, locale, "logistic_plugin" );
+        tools::AddTranslator( *qApp, tools::Language::Current(), "ENT" );
+        tools::AddTranslator( *qApp, tools::Language::Current(), "logistic_plugin" );
     }
     ENT_Tr::InitTranslations();
 
@@ -150,8 +145,7 @@ LogisticPlugin* CreateLogisticPlugin(
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "maintenancefile", "LogMaintenance" ) ),
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "supplyfile", "LogSupply" ) ),
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "funeralfile", "LogFuneral" ) ),
-        config.BuildSessionChildFile( xis.attribute< tools::Path >( "medicalfile", "LogMedical" ) ),
-        0 );  // localeStr
+        config.BuildSessionChildFile( xis.attribute< tools::Path >( "medicalfile", "LogMedical" ) ) );
 }
 
 }  // namespace logistic

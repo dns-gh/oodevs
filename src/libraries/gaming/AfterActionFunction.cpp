@@ -11,6 +11,7 @@
 #include "AfterActionFunction.h"
 #include "AfterActionParameter.h"
 #include "clients_kernel/Tools.h"
+#include "tools/Language.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -59,7 +60,7 @@ AfterActionFunction::~AfterActionFunction()
 // -----------------------------------------------------------------------------
 void AfterActionFunction::ReadDescription( xml::xistream& xis )
 {
-    if( xis.attribute< std::string >( "lang" ) == tools::readLang() || ( name_.isEmpty() && xis.attribute< std::string >( "lang" ) == "en" ) )
+    if( xis.attribute< std::string >( "lang" ) == tools::Language::Current() || ( name_.isEmpty() && xis.attribute< std::string >( "lang" ) == "en" ) )
     {
         std::string comments;
         xis >> comments;

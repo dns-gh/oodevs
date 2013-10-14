@@ -46,7 +46,6 @@ public:
     //@{
     virtual void DeleteTranslators();
     virtual void InitializeLayoutDirection();
-    void SetLocale();
     //@}
 
 protected:

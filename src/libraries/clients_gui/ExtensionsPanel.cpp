@@ -34,6 +34,7 @@
 #include "RichWidget.h"
 #include "RichGroupBox.h"
 #include "SubObjectName.h"
+#include <tools/Language.h>
 #include <boost/lexical_cast.hpp>
 
 using namespace gui;
@@ -267,7 +268,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int cur
 {
     if( !selected_ )
         return;
-    static const std::string language = tools::readLang();
+    static const std::string& language = tools::Language::Current();
     const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
     std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
     if( attribute.GetType() == AttributeType::ETypeBoolean )

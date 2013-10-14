@@ -42,6 +42,8 @@ public:
 private:
     //! @name Helpers
     //@{
+    void EnsureCurrentIsPresent() const;
+    const Language* Find( const std::string& code ) const;
     void Read( xml::xistream& xis );
     //@}
 

@@ -9,12 +9,17 @@
 
 #include "tools_pch.h"
 #include "Language.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.h>
 #include <QtCore/QString>
+#pragma warning( push, 0 )
+#pragma warning( disable : 4127 ) // conditional expression is constant
+#include <QtCore/qsettings.h>
+#pragma warning( pop )
 
 using namespace tools;
 
-std::string Language::current_;
+std::string Language::current_ = "en";
 
 // -----------------------------------------------------------------------------
 // Name: Language constructor
@@ -84,4 +89,21 @@ const std::string& Language::Current()
 void Language::SetCurrent( const std::string& language )
 {
     current_ = language;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Language::InitFromRegistry
+// Created: ABR 2013-10-14
+// -----------------------------------------------------------------------------
+void Language::InitFromRegistry()
+{
+    QSettings settings( "MASA Group", "SWORD" );
+    const QString code = settings.value( "/Common/Language", "en" ).value< QString >();
+    if( code.size() == 2 )
+        SetCurrent( code.toStdString() );
+    else
+    {
+        MT_LOG_ERROR_MSG( "Invalid language code: " << code.toStdString() << ". Fall back to default language: English." );
+        SetCurrent( "en" );
+    }
 }

@@ -9,13 +9,14 @@
 
 #include "frontend_pch.h"
 #include "PluginSetting.h"
+#include "moc_PluginSetting.cpp"
 #include "PluginSettingVisitor_ABC.h"
 #include "FileList.h"
-#include "moc_PluginSetting.cpp"
-#include "tools/GeneralConfig.h"
 
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
+#include "tools/GeneralConfig.h"
+#include "tools/Language.h"
 
 #include <QtGui/qcheckbox.h>
 #include <QtGui/qcombobox.h>
@@ -60,7 +61,7 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     : attribute_ ( xis.attribute< std::string >( "attribute" ) )
     , type_ ( xis.attribute< std::string >( "type" ) )
     , config_ ( config )
-    , description_( xis, tools::readLang() )
+    , description_( xis, tools::Language::Current() )
     , label_()
     , stringValue_()
     , integerValue_()
@@ -151,7 +152,7 @@ PluginSetting::~PluginSetting()
 // -----------------------------------------------------------------------------
 void PluginSetting::OnLanguageChanged()
 {
-    description_.SetCurrentLanguage( tools::readLang() );
+    description_.SetCurrentLanguage( tools::Language::Current() );
     label_->setText( description_.GetName().c_str() );
     label_->setToolTip( description_.GetDescription().c_str() );
 
