@@ -80,7 +80,9 @@ QValidator::State ADN_IntValidator::InternalValidate( int top, int bottom, QStri
     input = input.remove( locale.groupSeparator() );
     QValidator::State result;
 
-    if( input.contains( ',' ) || input.contains( '.' ) )
+    if( bottom >= 0 && input.stripWhiteSpace().startsWith( '-' ) )
+        result = Invalid;
+    else if( input.contains( ',' ) || input.contains( '.' ) )
         result = Invalid;
     else
     {
