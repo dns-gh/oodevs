@@ -34,7 +34,7 @@ public:
     //! @name Functions
     //@{
     // Accessors
-    static boost::shared_ptr< DEC_Decision_ABC > GetUnitById( uint32_t id );
+    static DEC_Decision_ABC* GetUnitById( uint32_t id );
     static bool IsPC( const MIL_Agent_ABC& callerAgent );
     static bool CanPerformHealthEvacuation( const DEC_Decision_ABC* agent );
     static bool IsDead( const MIL_Agent_ABC& callerAgent );
