@@ -1374,7 +1374,7 @@ double DEC_AgentFunctions::GetCurrentSpeed( const DEC_Decision_ABC* agent )
     if( !agent )
         throw MASA_EXCEPTION( "Invalid pion in GetCurrentSpeed" );
     const PHY_RoleInterface_Location& roleLocation = agent->GetPion().GetRole< PHY_RoleInterface_Location >();
-    return roleLocation.GetCurrentSpeed();
+    return MIL_Tools::ConvertSecondsToSim( roleLocation.GetCurrentSpeed() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1752,5 +1752,5 @@ void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
 double DEC_AgentFunctions::GetMaxSpeed( const DEC_Decision_ABC& agent )
 {
     const moving::PHY_RoleAction_InterfaceMoving& roleMoving = agent.GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >();
-    return roleMoving.GetMaxSpeed();
+    return MIL_Tools::ConvertSecondsToSim( roleMoving.GetMaxSpeed() );
 }
