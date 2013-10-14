@@ -10,7 +10,6 @@ package simtests
 
 import (
 	"bytes"
-	"fmt"
 	. "launchpad.net/gocheck"
 	"swapi"
 	"text/template"
@@ -59,7 +58,7 @@ func (s *TestSuite) TestExecScript(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter:.*string expected, got nil.*")
 }
 
-func checkScript(c *C, client *swapi.Client, script string, keys map[string]string,
+func checkScript(c *C, client *swapi.Client, script string, keys map[string]interface{},
 	expectedPattern, errorPattern string) {
 
 	w := &bytes.Buffer{}
@@ -104,9 +103,9 @@ func (s *TestSuite) TestDecUnit(c *C) {
     return DEC_Agent_MaxSpeed(DEC_GetUnitById({{.unitid}}))
 end
 `
-	checkScript(c, client, script, map[string]string{"unitid": "123456"},
+	checkScript(c, client, script, map[string]interface{}{"unitid": 123456},
 		"", ".*null pointer.*")
 	// Result is apparently in m/tick
-	checkScript(c, client, script, map[string]string{"unitid": fmt.Sprintf("%d", unit.Id)},
+	checkScript(c, client, script, map[string]interface{}{"unitid": unit.Id},
 		`194(\.\d+)?`, "")
 }
