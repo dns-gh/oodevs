@@ -40,6 +40,8 @@ namespace protocol
         virtual ~Exception() {}
     };
 
+    typedef std::pair< std::string, std::string > Extension;
+
     void         Check( bool valid, const std::string& msg, int i = -1, int j = -1, int k = -1 );
     void         Check( const void* pointer, const std::string& msg, int i = -1, int j = -1, int k = -1 );
     void         CheckCount( const sword::MissionParameters& params, int min, int max = 0 );
@@ -56,8 +58,13 @@ namespace protocol
     std::vector< sword::CoordLatLong > GetLocation( const sword::MissionParameters& params, int i );
     int                                GetEnumeration( const google::protobuf::EnumDescriptor* descriptor, const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     const sword::Point&                GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
-    int                                GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    uint32_t                           GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    uint32_t                           GetKnowledgeGroup( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     uint32_t                           GetAgentId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    uint32_t                           GetAutomatId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    uint32_t                           GetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    uint32_t                           GetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    std::vector< Extension >           GetExtensionList( const sword::MissionParameters& params, int i );
 }
 
 #define GET_ENUMERATION( ENUM, I, ... ) static_cast< ENUM >( protocol::GetEnumeration( ENUM ## _descriptor(), I, __VA_ARGS__ ) )

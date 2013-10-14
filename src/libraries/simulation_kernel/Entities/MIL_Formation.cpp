@@ -500,11 +500,9 @@ void MIL_Formation::Finalize()
 // Name: MIL_Formation::SetExtensions
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
-void MIL_Formation::SetExtensions( const sword::MissionParameter& msg )
+void MIL_Formation::SetExtensions( const std::vector< std::pair< std::string, std::string > > extensions )
 {
-    if( !msg.value().Get(0).has_extensionlist() )
-        return;
-    pExtensions_->ReadExtensions( msg.value().Get(0).extensionlist() );
+    pExtensions_->ReadExtensions( extensions );
 }
 
 // -----------------------------------------------------------------------------

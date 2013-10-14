@@ -97,7 +97,7 @@ public:
     void SendCreation( unsigned int context = 0 ) const;
     void SendFullState( unsigned int context = 0 ) const;
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
-    void SetExtensions( const sword::MissionParameter& msg );
+    void SetExtensions( const std::vector< std::pair< std::string, std::string > > extensions );
     void OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations );
     //@}
 

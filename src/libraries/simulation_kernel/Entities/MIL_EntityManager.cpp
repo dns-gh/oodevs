@@ -1035,7 +1035,7 @@ void MIL_EntityManager::OnReceiveUnitOrder( const UnitOrder& message, unsigned i
     {
         MIL_AgentPion* pPion = FindAgentPion( message.tasker().id() );
         if( !pPion )
-            throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
+            throw MASA_BADUNIT_ORDER( "invalid unit: " << message.tasker().id() );
         ack().set_id( pPion->OnReceiveOrder( message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
@@ -1059,7 +1059,7 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
     {
         MIL_Automate* pAutomate = FindAutomate( message.tasker().id() );
         if( !pAutomate )
-            throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
+            throw MASA_BADUNIT_ORDER( "invalid automat: " << message.tasker().id() );
         ack().set_id( pAutomate->OnReceiveOrder( message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
@@ -1104,7 +1104,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         switch( message.type() )
         {
         case UnitMagicAction::move_to :
-            ProcessMagicActionMoveTo( message, nCtx );
+            ProcessMagicActionMoveTo( message, id );
             break;
         case UnitMagicAction::unit_creation :
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
@@ -1115,7 +1115,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                     ->set_id( unitId );
             }
             else
-                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+                throw MASA_BADUNIT_UNIT( "invalid automat: " << id );
             break;
         case UnitMagicAction::create_fire_order:
             ProcessMagicActionCreateFireOrder( message );
@@ -1127,7 +1127,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             ProcessChangeLogisticLinks( message );
             break;
         case UnitMagicAction::unit_change_superior:
-            ProcessUnitChangeSuperior( message, nCtx, clientId );
+            ProcessUnitChangeSuperior( message, id );
             break;
         case UnitMagicAction::change_automat_superior:
         case UnitMagicAction::change_formation_superior:
@@ -1136,7 +1136,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else if( message.tasker().has_formation() )
                 ProcessFormationChangeSuperior( message, nCtx );
             else
-                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+                throw MASA_BADUNIT_UNIT( "invalid formation or automat: " << id );
             break;
         case UnitMagicAction::log_supply_push_flow:
             ProcessLogSupplyPushFlow( message );
@@ -1153,11 +1153,10 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else if( MIL_Formation* pFormation = FindFormation( id ) )
                 ProcessAutomatCreationRequest( message, *pFormation, nCtx, ack() );
             else
-                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+                throw MASA_BADUNIT_UNIT( "invalid formation or automat: " << id );
             break;
         case UnitMagicAction::formation_creation :
-            ProcessFormationCreationRequest( message, armyFactory_->Find( id ),
-                FindFormation( id ), nCtx, ack() );
+            ProcessFormationCreationRequest( message, id, nCtx, ack() );
             break;
         case UnitMagicAction::crowd_creation:
             try
@@ -1178,7 +1177,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             if( MIL_AgentPion* pPion = FindAgentPion( id ) )
                 ProcessTransferEquipmentRequest( message, *pPion );
             else
-                throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
+                throw MASA_BADUNIT_UNIT( "invalid unit: " << id );
             break;
         case UnitMagicAction::exec_script:
             ProcessExecScript( message, id, ack() );
@@ -1195,7 +1194,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else if( MIL_Inhabitant* pInhabitant = FindInhabitant( id ) )
                 pInhabitant->OnReceiveUnitMagicAction( message );
             else
-                throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
+                throw MASA_BADUNIT_UNIT( "invalid entity: " << id );
             break;
         }
     }
@@ -1223,46 +1222,38 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& msg, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack )
 {
-    if( msg.type() != UnitMagicAction::automat_creation )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-
-    if( !msg.has_parameters() || msg.parameters().elem_size() < 2 )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-
-    const MissionParameter& id = msg.parameters().elem( 0 );
-    if( id.value_size() != 1 || !id.value().Get( 0 ).has_identifier() )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-
-    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get( 0 ).identifier() );
+    const auto& params = msg.parameters();
+    const int count = protocol::GetCount( params );
+    protocol::Check( count > 1, "at least 2 parameters expected" ); 
+    const auto automatType = protocol::GetIdentifier( params, 0 );
+    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( automatType );
     if( !pType )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+        throw MASA_BADPARAM_UNIT( "invalid automat type: " << automatType );
+    unsigned int groupId = 0;
+    try
+    {
+        groupId = protocol::GetKnowledgeGroup( params, 1 );
+    }
+    catch( const protocol::Exception& )
+    {
+        groupId = protocol::GetIdentifier( params, 1 );
+    }
 
-    const MissionParameter& groupId = msg.parameters().elem( 1 );
-    if( groupId.value_size() != 1 || ! ( groupId.value().Get( 0 ).has_identifier() || groupId.value().Get( 0 ).has_knowledgegroup() ) )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-
-    unsigned int theGroupId = groupId.value().Get( 0 ).has_identifier() ? groupId.value().Get( 0 ).identifier() : groupId.value().Get( 0 ).knowledgegroup().id();
-    boost::shared_ptr< MIL_KnowledgeGroup > group = entity.GetArmy().FindKnowledgeGroup( theGroupId );
+    auto group = entity.GetArmy().FindKnowledgeGroup( groupId );
     if( !group || group->IsJammed() )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "knowledge group is invalid or jammed" );
 
     std::string name;
-    if( msg.parameters().elem_size() > 2 )
-    {
-        const MissionParameter& nameParam = msg.parameters().elem( 2 );
-        if( nameParam.value_size() != 1 || !nameParam.value().Get( 0 ).has_acharstr() )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-        name = nameParam.value().Get( 0 ).acharstr();
-    }
+    if( count > 2 )
+        name = protocol::GetString( params, 2 );
 
     MIL_DictionaryExtensions extensions;
-    if( msg.parameters().elem_size() > 3 )
-    {
+    if( count > 3 )
         extensions.ReadExtensions( msg.parameters().elem( 3 ).value().Get(0).extensionlist() );
-    }
+
     // auto-registration
     const MIL_Automate& a = MIL_AgentServer::GetWorkspace().GetEntityManager()
-        .CreateAutomat( *pType, theGroupId, name, entity, nCtx, extensions );
+        .CreateAutomat( *pType, groupId, name, entity, nCtx, extensions );
     ack.mutable_result()->add_elem()->add_value()->mutable_automat()
         ->set_id( a.GetID() );
 }
@@ -1272,34 +1263,30 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message,
-    MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx, sword::UnitMagicActionAck& ack )
+    unsigned int taskerId, unsigned int nCtx, sword::UnitMagicActionAck& ack )
 {
+    MIL_Army_ABC* army = armyFactory_->Find( taskerId );
+    MIL_Formation* formation = 0;
     if( !army )
     {
+        formation = FindFormation( taskerId );
         if( !formation )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode,
-                    UnitActionAck::error_invalid_unit );
-        army = &(formation->GetArmy());
+            throw MASA_BADUNIT_UNIT( "invalid party or formation: " << taskerId );
+        army = &formation->GetArmy();
     }
-    if( !message.has_parameters() || message.parameters().elem_size() < 3 || message.parameters().elem_size() > 4 || !( message.parameters().elem( 0 ).value_size() == 1 ) || !message.parameters().elem( 0 ).value().Get( 0 ).has_areal() )
-    {
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode,
-            UnitActionAck::error_invalid_parameter );
-    }
-    if( message.parameters().elem_size() >= 4 )
-        if( message.parameters().elem( 3 ).value_size() != 1 || !message.parameters().elem( 3 ).value().Get(0).has_extensionlist() )
-        {
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode,
-                UnitActionAck::error_invalid_parameter );
-        }
+    const auto& params = message.parameters();
+    const int count = protocol::GetCount( params );
+    protocol::Check( count >= 3 && count <= 4, "3 or 4 parameters expected" );
+    const int level = static_cast< int >( protocol::GetReal( params, 0 ));
+    const std::string& name = protocol::GetString( params, 1 );
+    const std::string logLevel = protocol::GetString( params, 2 );
+    std::vector< protocol::Extension > extensions;
+    if( count > 3 )
+        extensions = protocol::GetExtensionList( params, 3 );
 
-    const ::MissionParameters& parameters = message.parameters();
-    int level = static_cast< int >( parameters.elem( 0 ).value().Get( 0 ).areal() );
-    std::string name = ( parameters.elem( 1 ).value_size() == 1 && parameters.elem( 1 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 1 ).value().Get( 0 ).acharstr() : std::string();
-    std::string logLevel = ( parameters.elem( 2 ).value_size() == 1 && parameters.elem( 2 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 2 ).value().Get( 0 ).acharstr() : std::string();;
-    MIL_Formation& newFormation = formationFactory_->Create( level, name, logLevel, *army, formation );
-    if( message.parameters().elem_size() >= 4 )
-        newFormation.SetExtensions( message.parameters().elem( 3 ) );
+    auto& newFormation = formationFactory_->Create( level, name, logLevel, *army, formation );
+    if( !extensions.empty() )
+        newFormation.SetExtensions( extensions );
 
     // This MagicActionAck is a leftover of previous protocol iteration, we
     // should get rid of it in future versions.
@@ -1325,7 +1312,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     else if( MIL_Army_ABC* army = armyFactory_->Find( parentId ) )
         parent = army;
     else
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+        throw MASA_BADUNIT_UNIT( "invalid formation or army: " << parentId );
 
     if( !message.has_parameters() || message.parameters().elem_size() != 6 )
         throw MASA_BADPARAM_UNIT( "invalid parameters count, 6 parameters expected" );
@@ -1417,7 +1404,7 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned
     {
         MIL_Population* pPopulation = populationFactory_->Find( message.tasker().id() );
         if( !pPopulation )
-            throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
+            throw MASA_BADUNIT_ORDER( "invalid crowd: " << message.tasker().id() );
         ack().set_id( pPopulation->OnReceiveOrder( message ) );
     }
     catch( const NET_AsnException< OrderAck_ErrorCode >& e )
@@ -1456,7 +1443,7 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
             ack().set_id( pPion->OnReceiveFragOrder( message ) );
         }
         else
-            throw MASA_EXCEPTION_ASN( OrderAck::ErrorCode, OrderAck::error_invalid_unit );
+            throw MASA_BADUNIT_ORDER( "invalid automat, crowd or unit: " << taskerId );
     }
     catch( const NET_AsnException< OrderAck::ErrorCode >& e )
     {
@@ -1488,7 +1475,7 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message,
     {
         MIL_Automate* pAutomate = FindAutomate( message.automate().id() );
         if( !pAutomate )
-            throw MASA_EXCEPTION_ASN( SetAutomatModeAck::ErrorCode, SetAutomatModeAck::error_invalid_unit );
+            throw MASA_BADPARAM_ASN( SetAutomatModeAck::ErrorCode, SetAutomatModeAck::error_invalid_unit, STR( "invalid automat: " << message.automate().id() ));
         pAutomate->OnReceiveSetAutomateMode( message );
     }
     catch( const NET_AsnException< SetAutomatModeAck::ErrorCode >& e )
@@ -1510,7 +1497,7 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
     {
         MIL_Automate* pAutomate = FindAutomate( message.superior().id() );
         if( !pAutomate )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+            throw MASA_BADUNIT_UNIT( "invalid unit: " << message.superior().id() );
         pAutomate->OnReceiveUnitCreationRequest( message, nCtx );
     }
     catch( const NET_AsnException< UnitActionAck_ErrorCode >& e )
@@ -1533,54 +1520,58 @@ void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& mes
 // Name: MIL_EntityManager::OnReceiveChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
+
+namespace
 {
-    client::ChangeDiplomacyAck ack;
-    client::MagicActionAck magicAck;
-    client::ChangeDiplomacy changeDiplomacyMes;
-    int party1 ( 0 ), party2 ( 0 );
-    if( !message.has_parameters() ||message.parameters().elem_size() != 3
-        || !message.parameters().elem( 0 ).value_size() == 1
-        || !message.parameters().elem( 1 ).value_size() == 1
-        || !message.parameters().elem( 2 ).value_size() == 1 )
-    {
-        magicAck().set_error_code( MagicActionAck::error_invalid_parameter );
-        magicAck.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-        throw MASA_EXCEPTION_ASN( MagicActionAck_ErrorCode, MagicActionAck::error_invalid_parameter );
-    }
-    if( message.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
-        party1 = message.parameters().elem( 0 ).value().Get( 0 ).identifier();
-    else if( message.parameters().elem( 0 ).value().Get( 0 ).has_party() )
-        party1 = message.parameters().elem( 0 ).value().Get( 0 ).party().id();
 
-    if( message.parameters().elem( 1 ).value().Get( 0 ).has_identifier() )
-        party2 = message.parameters().elem( 1 ).value().Get( 0 ).identifier();
-    else if( message.parameters().elem( 1 ).value().Get( 0 ).has_party() )
-        party2 = message.parameters().elem( 1 ).value().Get( 0 ).party().id();
-
+uint32_t GetPartyId( const sword::MissionParameters& params, int i )
+{
     try
     {
+        return protocol::GetPartyId( params, i );
+    }
+    catch( const protocol::Exception& )
+    {
+        return protocol::GetIdentifier( params, i );
+    }
+}
+
+} // namespace
+
+void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
+{
+    client::MagicActionAck magicAck;
+    magicAck().set_error_code( MagicActionAck::no_error );
+    try
+    {
+        client::ChangeDiplomacyAck ack;
+        client::ChangeDiplomacy changeDiplomacyMes;
+        const auto& params = message.parameters();
+        protocol::CheckCount( params, 3 );
+        const uint32_t party1 = GetPartyId( params, 0 );
+        const uint32_t party2 = GetPartyId( params, 1 );
+        const sword::EnumDiplomacy value = GET_ENUMERATION( sword::EnumDiplomacy, params, 2 );
+
         MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );
         if( !pArmy1 )
-            throw MASA_EXCEPTION_ASN( ChangeDiplomacyAck_ErrorCode, ChangeDiplomacyAck::error_invalid_party_diplomacy );
+            throw MASA_BADPARAM_ASN( ChangeDiplomacyAck_ErrorCode, ChangeDiplomacyAck::error_invalid_party_diplomacy, STR( "invalid party identifier " << party1 ));
         pArmy1->OnReceiveChangeDiplomacy( message.parameters() );
+
+        changeDiplomacyMes().mutable_party1()->set_id( party1 );
+        changeDiplomacyMes().mutable_party2()->set_id( party2 );
+        changeDiplomacyMes().set_diplomacy( value );
+        changeDiplomacyMes.Send( NET_Publisher_ABC::Publisher(), nCtx );
+        ack().mutable_party1()->set_id( party1 );
+        ack().mutable_party2()->set_id( party2 );
+        ack().set_diplomacy( value );
+        ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
+        ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
     }
-    catch( const NET_AsnException< ChangeDiplomacyAck_ErrorCode >& )
+    catch( const std::exception& e )
     {
         magicAck().set_error_code( MagicActionAck::error_invalid_parameter );
-        magicAck.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-        return;
+        magicAck().set_error_msg( tools::GetExceptionMsg( e ));
     }
-    changeDiplomacyMes().mutable_party1()->set_id( party1 );
-    changeDiplomacyMes().mutable_party2()->set_id( party2 );
-    changeDiplomacyMes().set_diplomacy( ( EnumDiplomacy ) message.parameters().elem( 2 ).value().Get( 0 ).enumeration() );
-    changeDiplomacyMes.Send( NET_Publisher_ABC::Publisher(), nCtx );
-    ack().mutable_party1()->set_id( party1 );
-    ack().mutable_party2()->set_id( party2 );
-    ack().set_diplomacy( ( EnumDiplomacy ) message.parameters().elem( 2 ).value().Get( 0 ).enumeration() );
-    ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
-    magicAck().set_error_code( MagicActionAck::no_error );
     magicAck.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
@@ -1607,36 +1598,29 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicAction& message, MIL_AgentPion& pion )
 {
-    if( !message.has_parameters() || message.parameters().elem_size() != 2 )
-        throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter );
-    const MissionParameters& parameters = message.parameters();
-    if( parameters.elem( 0 ).value_size() != 1 || !parameters.elem( 0 ).value().Get( 0 ).has_identifier() )
-        throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
-    if( parameters.elem( 1 ).value_size() == 0 )
-        throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "invalid empty equipment list" );
-    MIL_AgentPion* target = FindAgentPion( parameters.elem( 0 ).value().Get( 0 ).identifier() );
+    const MissionParameters& params = message.parameters();
+    protocol::CheckCount( params, 2 );
+    MIL_AgentPion* target = FindAgentPion( protocol::GetIdentifier( params, 0 ));
     if( !target )
-        throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "invalid target identifier" );
+        throw MASA_BADPARAM_UNIT( "invalid target identifier" );
+    const int count = protocol::GetCount( params, 1 );
+    protocol::Check( count > 0, "invalid empty equipment list" );
     if( target == &pion )
-        throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter, "source and target are identical" );
+        throw MASA_BADPARAM_UNIT( "source and target are identical" );
     PHY_RolePion_Composantes& source = pion.GetRole< PHY_RolePion_Composantes >();
     std::map< unsigned int, int > composantes;
-    for( int i = 0; i < parameters.elem( 1 ).value_size(); ++i )
+    for( int i = 0; i < count; ++i )
     {
-        const ::sword::MissionParameter_Value& value = parameters.elem( 1 ).value().Get( i );
-        if( value.list_size() != 2 || !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
-            throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
-                "invalid equipment parameter #" + boost::lexical_cast< std::string >( i ) );
-        const int count = value.list( 1 ).quantity();
-        if( count < 0 )
-            throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
-                "invalid negative equipment count #" + boost::lexical_cast< std::string >( i ) );
-        if( count == 0 )
+        const uint32_t id = protocol::GetIdentifier( params, 1, i, 0 );
+        const int quantity = protocol::GetQuantity( params, 1, i, 1 );
+        if( quantity < 0 )
+            throw MASA_BADPARAM_UNIT( "invalid negative equipment count #" << i );
+        if( quantity == 0 )
             continue;
-        if( ! source.CanLendComposantes( boost::bind( &IsOfType, _1, value.list( 0 ).identifier() ) ) )
-            throw MASA_BADPARAM_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter,
-                "no equipment type of parameter #" + boost::lexical_cast< std::string >( i ) + " available to lend in source unit" );
-        composantes[ value.list( 0 ).identifier() ] += count;
+        if( ! source.CanLendComposantes( boost::bind( &IsOfType, _1, id ) ) )
+            throw MASA_BADPARAM_UNIT( "no equipment type of parameter #" << i
+                    << " available to lend in source unit" );
+        composantes[ id ] += quantity;
     }
     for( auto it = composantes.begin(); it != composantes.end(); ++it )
         source.LendComposantes( *target, it->second, boost::bind( &IsOfType, _1, it->first ) );
@@ -1690,32 +1674,28 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& message, unsigned int nCtx )
 {
-    if( message.type() != UnitMagicAction::change_automat_superior && message.type() != UnitMagicAction::change_formation_superior )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-
+    const auto& params = message.parameters();
     MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
     if( !pAutomate )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid automat" );
-
-    if( !message.parameters().elem_size() || !message.parameters().elem( 0 ).value_size() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "wrong parameters number" );
+        throw MASA_BADPARAM_UNIT( "invalid automat" );
 
     client::AutomatChangeSuperior resendMessage;
     resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-
-    if( message.parameters().elem( 0 ).value().Get( 0 ).has_formation() )
+    try
     {
-        MIL_Formation* pFormation = FindFormation( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
+        const uint32_t formationId = protocol::GetFormationId( params, 0 );
+        MIL_Formation* pFormation = FindFormation( formationId );
         if( !pFormation )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new parent formation" );
-        resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
+            throw MASA_BADPARAM_UNIT( "invalid new parent formation" );
+        resendMessage().mutable_superior()->mutable_formation()->set_id( formationId );
     }
-    else if( message.parameters().elem( 0 ).value().Get( 0 ).has_automat() )
+    catch( const protocol::Exception& )
     {
-        MIL_Automate* pAutomat = FindAutomate( message.parameters().elem( 0 ).value().Get( 0 ).automat().id() );
+        const uint32_t automatId = protocol::GetAutomatId( params, 0 );
+        MIL_Automate* pAutomat = FindAutomate( automatId );
         if( !pAutomat )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new parent automat" );
-        resendMessage().mutable_superior()->mutable_automat()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).automat().id() );
+            throw MASA_BADPARAM_UNIT( "invalid new parent automat" );
+        resendMessage().mutable_superior()->mutable_automat()->set_id( automatId );
     }
     pAutomate->OnReceiveChangeSuperior( message, *formationFactory_ );
     resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
@@ -1725,46 +1705,14 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
 // Name: MIL_EntityManager::ProcessUnitChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& message, unsigned int taskerId )
 {
-    client::UnitMagicActionAck ack;
-    unsigned int id = 0;
-    try
-    {
-        const Tasker& tasker = message.tasker();
-        id = TaskerToId( tasker );
-    }
-    catch( const std::exception& )
-    {
-        ack().mutable_unit()->set_id( 0 );
-        ack().set_error_code( UnitActionAck::error_invalid_unit );
-        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
-        return;
-    }
-    ack().mutable_unit()->set_id( id );
-    ack().set_error_code( UnitActionAck::no_error );
-    unsigned int automatId = 0u;
-    try
-    {
-        MIL_AgentPion* pPion = FindAgentPion( id );
-        if( !pPion )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
-        if( !message.has_parameters() || message.parameters().elem_size() != 1 )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                    "invalid parameters count, 1 parameter expected" );
-        const MissionParameter& parameter = message.parameters().elem( 0 );
-        if( parameter.value_size() != 1 || ! parameter.value().Get( 0 ).has_automat() )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter,
-                    "parameters[0] must be an Automat" );
-        automatId = parameter.value().Get( 0 ).automat().id();
-        pPion->OnReceiveChangeSuperior( *this, automatId );
-    }
-    catch( const NET_AsnBadParam< UnitActionAck::ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-        ack().set_error_msg( e.what() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    MIL_AgentPion* pPion = FindAgentPion( taskerId );
+    if( !pPion )
+        throw MASA_BADUNIT_UNIT( "invalid unit: " << taskerId );
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 1 );
+    pPion->OnReceiveChangeSuperior( *this, protocol::GetAutomatId( params, 0 ));
 }
 
 // -----------------------------------------------------------------------------
@@ -1845,33 +1793,16 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
 // Name: MIL_EntityManager::ProcessMagicActionMoveTo
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message, unsigned int )
+void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message, unsigned int taskerId )
 {
-    if( message.tasker().has_automat() && message.tasker().automat().has_id() )
-    {
-        if( MIL_Automate*  pAutomate = FindAutomate ( message.tasker().automat().id() ) )
-            return pAutomate->OnReceiveMagicActionMoveTo( message );
-    }
-    else if( message.tasker().has_unit() && message.tasker().unit().has_id() )
-    {
-        if( MIL_AgentPion* pPion = FindAgentPion( message.tasker().unit().id() ) )
-            return pPion->OnReceiveMagicActionMoveTo( message );
-    }
-    else if( message.tasker().has_crowd() && message.tasker().crowd().has_id() )
-    {
-        if( MIL_Population* pPopulation = populationFactory_->Find( message.tasker().crowd().id() ) )
-            return pPopulation->OnReceiveCrowdMagicActionMoveTo( message.parameters() );
-    }
-    throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+    if( MIL_Automate* pAutomate = FindAutomate( taskerId) )
+        return pAutomate->OnReceiveMagicActionMoveTo( message );
+    if( MIL_AgentPion* pPion = FindAgentPion( taskerId ) )
+        return pPion->OnReceiveMagicActionMoveTo( message );
+    if( MIL_Population* pPopulation = populationFactory_->Find( taskerId ))
+        return pPopulation->OnReceiveCrowdMagicActionMoveTo( message.parameters() );
+    throw MASA_BADUNIT_UNIT( "invalid automa, crowd or unit: " << taskerId );
 }
-
-#define RETURN_ACK_ERROR( code, msg ) \
-    { \
-        ack().set_error_code( code ); \
-        ack().set_error_msg( msg ); \
-        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId ); \
-        return; \
-    }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveKnowledgeGroupCreation
@@ -1880,41 +1811,44 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message
 void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::MagicActionAck ack;
-    if( !message.has_parameters() || message.parameters().elem_size() != 2 )
-        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "invalid parameters count, 2 parameters expected" );
-    const MissionParameter& param1 = message.parameters().elem( 1 );
-    if( param1.value_size() != 1 || ! param1.value().Get( 0 ).has_acharstr() )
-        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[1] must be a string" );
-    const MIL_KnowledgeGroupType* type = MIL_KnowledgeGroupType::FindType( param1.value().Get( 0 ).acharstr() );
-    if( ! type )
-        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[1] must be a valid knowledge group type identifier" );
-    const MissionParameter& param0 = message.parameters().elem( 0 );
-    if( param0.value_size() != 1 || ! param0.value().Get( 0 ).has_identifier() )
-        RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be an identifier" );
-    boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( param0.value().Get( 0 ).identifier() );
-    boost::shared_ptr< MIL_KnowledgeGroup > group;
-    if( parent )
-    {
-        group.reset( new MIL_KnowledgeGroup( *type, *parent ) );
-        parent->RegisterKnowledgeGroup( group );
-    }
-    else
-    {
-        MIL_Army_ABC* army = armyFactory_->Find( param0.value().Get( 0 ).identifier() );
-        if( ! army )
-            RETURN_ACK_ERROR( MagicActionAck::error_invalid_parameter, "parameters[0] must be a valid army or knowledge group identifier" );
-        group.reset( new MIL_KnowledgeGroup( *type, *army, false ) );
-        army->RegisterKnowledgeGroup( group );
-    }
-    if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = group->GetKnowledge() )
-    {
-        const MIL_Army_ABC::T_Objects& objects = group->GetArmy().GetObjects();
-        for( auto it = objects.begin(); it != objects.end(); ++it )
-            blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
-    }
-
-    ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
     ack().set_error_code( MagicActionAck::no_error );
+    try
+    {
+        const auto& params = message.parameters();
+        protocol::CheckCount( params, 2 );
+        const std::string typeStr = protocol::GetString( params, 1 );
+        const auto* type = MIL_KnowledgeGroupType::FindType( typeStr );
+        if( !type )
+            throw MASA_BADPARAM_MAGICACTION( "invalid knowledge group type: " << typeStr );
+        const uint32_t parentId = protocol::GetIdentifier( params, 0 );
+        boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( parentId );
+        boost::shared_ptr< MIL_KnowledgeGroup > group;
+        if( parent )
+        {
+            group.reset( new MIL_KnowledgeGroup( *type, *parent ) );
+            parent->RegisterKnowledgeGroup( group );
+        }
+        else
+        {
+            MIL_Army_ABC* army = armyFactory_->Find( parentId );
+            if( ! army )
+                throw MASA_BADPARAM_MAGICACTION( "invalid party identifier: " << parentId );
+            group.reset( new MIL_KnowledgeGroup( *type, *army, false ) );
+            army->RegisterKnowledgeGroup( group );
+        }
+        if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = group->GetKnowledge() )
+        {
+            const MIL_Army_ABC::T_Objects& objects = group->GetArmy().GetObjects();
+            for( auto it = objects.begin(); it != objects.end(); ++it )
+                blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
+        }
+        ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+    }
+    catch( const std::exception& e )
+    {
+        ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        ack().set_error_msg( tools::GetExceptionMsg( e ));
+    }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
@@ -1954,7 +1888,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
 
     const MissionParameter& iterations = msg.parameters().elem( 2 );
     if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
-        throw MASA_BADPARAM_UNIT("parameters[2] must be a real" );
+        throw MASA_BADPARAM_UNIT( "parameters[2] must be a real" );
 
     const float value = iterations.value().Get( 0 ).areal();
     if( value <= 0.f )
@@ -2695,7 +2629,7 @@ void MIL_EntityManager::ProcessExecScript( const sword::UnitMagicAction& msg,
     if( MIL_AgentPion* unit = FindAgentPion( brainOwnerId ) )
         result = unit->GetDecision().ExecuteScript( function, script );
     else
-        throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
+        throw MASA_BADUNIT_UNIT( "invalid unit: " << brainOwnerId );
 
     ack.mutable_result()->add_elem()->add_value()->set_acharstr( result );
 }

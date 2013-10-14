@@ -243,14 +243,14 @@ private:
     void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessChangeLogisticLinks         ( const sword::UnitMagicAction&      message );
-    void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
+    void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int taskerId );
     void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message );
     void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message );
     void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message );
-    void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int taskerId );
     void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message );
     void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack );
-    void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx, sword::UnitMagicActionAck& ack );
+    void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, unsigned int taskerId, unsigned int nCtx, sword::UnitMagicActionAck& ack );
     void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, unsigned int parentId, unsigned int context, sword::UnitMagicActionAck& ack );
     void ProcessTransferEquipmentRequest    ( const sword::UnitMagicAction&      message, MIL_AgentPion& pion );
     void ProcessFormationChangeSuperior     ( const sword::UnitMagicAction&      message, unsigned int nCtx );
