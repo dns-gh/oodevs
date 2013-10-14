@@ -228,15 +228,15 @@ PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() 
 // Name: PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay
 // Created: NLD 2006-08-11
 // -----------------------------------------------------------------------------
- void PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay()
- {
-     if( pComposanteState_ )
-     {
-         pComposanteState_->NotifyRepaired();
-         pComposanteState_ = 0;
-     }
-     EnterStateFinished();
- }
+void PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay()
+{
+    if( pComposanteState_ )
+    {
+        pComposanteState_->NotifyRepaired();
+        pComposanteState_ = 0;
+    }
+    EnterStateFinished();
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::ClearConsign

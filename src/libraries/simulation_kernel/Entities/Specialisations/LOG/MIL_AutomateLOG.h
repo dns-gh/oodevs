@@ -60,7 +60,6 @@ class PHY_DotationCategory;
 class PHY_DotationType;
 class PHY_ComposantePion;
 class PHY_LogisticLevel;
-template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
 // @class  MIL_AutomateLOG

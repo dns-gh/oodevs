@@ -157,14 +157,9 @@ void SupplyConsign::SupplyCurrentRecipient()
 {
     assert( !requestsQueued_.empty() );
     assert( currentRecipient_ == requestsQueued_.front().first );
-
-    currentRecipient_->OnSupplyDone( shared_from_this() ); //$$$ CRADE MUST BE CALL BEFORE convoy_->Supply() to allow recipient to reschedule supply immediately
+    currentRecipient_->OnSupplyDone( shared_from_this() ); //$$$ CRADE MUST BE CALLED BEFORE convoy_->Supply() to allow recipient to reschedule supply immediately
     BOOST_FOREACH( const auto& data, requestsQueued_.front().second )
-    {
-        boost::shared_ptr< SupplyRequest_ABC > request = data.second;
-        double quantitySupplied = request->Supply();
-        convoy_->Supply( *currentRecipient_, request->GetDotationCategory(), quantitySupplied );
-    }
+        convoy_->Supply( *currentRecipient_, data.second->GetDotationCategory(), data.second->Supply() );
     requestsQueued_.pop_front();
     requestsNeedNetworkUpdate_ = true;
 }
@@ -267,7 +262,6 @@ bool SupplyConsign::ResetConsignsForProvider( const MIL_Agent_ABC& pion )
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign::ResetConsign
 // Created: JSR 2013-02-14
@@ -333,7 +327,6 @@ void SupplyConsign::SupplyAndProceedWithNextRecipient()
 {
     if( currentRecipient_ )
         SupplyCurrentRecipient();
-
     currentRecipient_ = GetCurrentSupplyRecipient();
     convoy_->SetCurrentSupplyRecipient( currentRecipient_ );
     if( !currentRecipient_ )
@@ -430,7 +423,7 @@ void SupplyConsign::DoConvoyMoveToTransportersProvider()
 {
     if( IsActionDone( convoy_->MoveToTransportersProvider() ) )
     {
-        SetState( eFinished ); 
+        SetState( eFinished );
         convoy_->GetTransportersProvider().OnSupplyConvoyArriving( shared_from_this() );
     }
 }

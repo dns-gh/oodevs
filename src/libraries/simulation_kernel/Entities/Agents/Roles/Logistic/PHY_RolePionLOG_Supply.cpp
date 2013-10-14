@@ -373,10 +373,6 @@ void PHY_RolePionLOG_Supply::StopUsingForLogistic( PHY_ComposantePion& composant
     composante.StopUsingForLogistic();
 }
 
-// =============================================================================
-// STOCK SUPPLY
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::NotifySupplyNeeded
 // Created: NLD 2005-01-21
@@ -396,7 +392,7 @@ void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dot
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Supply::HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
 {
-    return owner_.GetAutomate().HasStockSupplyNeededNotified( dotationCategory );  
+    return owner_.GetAutomate().HasStockSupplyNeededNotified( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------

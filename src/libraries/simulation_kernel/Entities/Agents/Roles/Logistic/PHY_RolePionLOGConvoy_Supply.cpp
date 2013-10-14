@@ -225,6 +225,5 @@ void PHY_RolePionLOGConvoy_Supply::NotifyComposanteChanged( PHY_ComposantePion& 
 {
     if( !convoy_ || composante.GetState() != PHY_ComposanteState::dead_ )
         return;
-
     convoy_->NotifyTransporterDestroyed( composante );
 }

@@ -52,7 +52,7 @@ public:
 
     void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
     void ResetConsignsForProvider( const MIL_Agent_ABC& pion );
-    void DeleteRequestsForRequester( MIL_AgentPion& pion );
+    void DeleteRequestsForRequester( const MIL_AgentPion& pion );
     void ResetConsign();
 
     //! @name SupplyRequestContainer_ABC

@@ -84,7 +84,7 @@ public:
 
     //! @name Events
     //@{
-    virtual void NotifyComposanteChanged( PHY_ComposantePion& ) {};
+    virtual void NotifyComposanteChanged( PHY_ComposantePion& ) {}
     //@}
 
     //! @name Main
@@ -110,25 +110,25 @@ public:
 
     //! @name Stock supply
     //@{
-    virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const =0;
+    virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const = 0;
     virtual void Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     virtual void ResupplyStocks( bool withLog );
     virtual void ResupplyStocks( const PHY_DotationCategory& category, double rNbr );
     virtual void ConnectToResourceNode( unsigned int objectId, const std::string& resource );
     virtual void DisconnectFromResourceNode();
-    virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const =0;
+    virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const = 0;
     virtual void UpdateSupplyNeeded() = 0;
     //@}
 
     //! @name Convoy
     //@{
-    virtual void AssignConvoy( boost::shared_ptr< logistic::SupplyConvoyReal_ABC > ) {};
-    virtual void UnassignConvoy() {};
+    virtual void AssignConvoy( boost::shared_ptr< logistic::SupplyConvoyReal_ABC > ) {}
+    virtual void UnassignConvoy() {}
 
-    virtual void ConvoyNotifyMovedToSupplier() {};
-    virtual void ConvoyNotifyMovedToTransportersProvider() {};
-    virtual void ConvoyNotifyMovedToSupplyRecipient() {};
-    virtual void ConvoyEndMission() {};
+    virtual void ConvoyNotifyMovedToSupplier() {}
+    virtual void ConvoyNotifyMovedToTransportersProvider() {}
+    virtual void ConvoyNotifyMovedToSupplyRecipient() {}
+    virtual void ConvoyEndMission() {}
 
     virtual int                            ConvoyGetCurrentAction() const { return 0; };
     virtual logistic::SupplyRecipient_ABC* ConvoyGetCurrentSupplyRecipient() const { return 0; };

@@ -42,7 +42,7 @@ public:
     virtual bool AffectSupplier( SupplySupplier_ABC& supplier );
     virtual bool AffectSupplier( SupplyRecipient_ABC& recipient, boost::shared_ptr< LogisticLink_ABC > supplier );
 
-    virtual bool HasRequester( MIL_AgentPion& pion ) const;
+    virtual bool HasRequester( const MIL_AgentPion& pion ) const;
     virtual bool HasRequesterDestroyed() const;
 
     virtual double Supply          ();

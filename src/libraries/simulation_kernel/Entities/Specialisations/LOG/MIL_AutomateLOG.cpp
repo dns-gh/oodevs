@@ -562,8 +562,8 @@ MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dota
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
-    auto tmp = supplyConvoysObserver_;
-    boost::for_each( tmp, boost::bind( &logistic::SupplyConvoysObserver_ABC::OnSupplyConvoyArriving, _1, consign ) );
+    const auto observers = supplyConvoysObserver_;
+    boost::for_each( observers, boost::bind( &logistic::SupplyConvoysObserver_ABC::OnSupplyConvoyArriving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -572,8 +572,8 @@ void MIL_AutomateLOG::OnSupplyConvoyArriving( const boost::shared_ptr< logistic:
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnSupplyConvoyLeaving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
-    auto tmp = supplyConvoysObserver_;
-    boost::for_each( tmp, boost::bind( &logistic::SupplyConvoysObserver_ABC::OnSupplyConvoyLeaving, _1, consign ) );
+    const auto observers = supplyConvoysObserver_;
+    boost::for_each( observers, boost::bind( &logistic::SupplyConvoysObserver_ABC::OnSupplyConvoyLeaving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
