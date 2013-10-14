@@ -2631,6 +2631,7 @@ void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
     for( auto it = armyFactory_->CreateIterator(); it.HasMoreElements(); )
     {
         const auto& groups = it.NextElement().GetKnowledgeGroups();
+        visitor.VisitKnowledgesGroup( groups.size() );
         for( auto it2 = groups.begin(); it2 != groups.end(); ++it2 )
             it2->second->Accept( visitor );
     }
