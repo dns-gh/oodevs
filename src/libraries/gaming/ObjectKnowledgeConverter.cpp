@@ -103,7 +103,7 @@ const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_
     {
         const kernel::Entity_ABC* entity = hierarchies->GetSuperior();
         if( entity )
-            return Find( base, static_cast< const kernel::KnowledgeGroup_ABC& >( *entity ) );
+            return Find( base, *entity );
     }
     return 0;
 }
