@@ -74,7 +74,7 @@ void ObjectKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_objectknowledge() );
+        Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo( *message.add_value()->mutable_objectknowledge() );
 }
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::CommitTo

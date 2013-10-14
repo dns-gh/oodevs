@@ -96,7 +96,7 @@ void DotationType::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() && type_ )
-        message.mutable_value()->Add()->mutable_resourcetype()->set_id( type_->GetId() );
+        message.add_value()->mutable_resourcetype()->set_id( type_->GetId() );
 }
 // -----------------------------------------------------------------------------
 // Name: DotationType::CommitTo

@@ -91,7 +91,7 @@ void ResourceNetworkType::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() && type_ )
-        message.mutable_value()->Add()->mutable_resourcenetworktype()->set_name( type_->GetName() );
+        message.add_value()->mutable_resourcenetworktype()->set_name( type_->GetName() );
 }
 
 // -----------------------------------------------------------------------------

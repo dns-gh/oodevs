@@ -120,7 +120,7 @@ void Location::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        LocationBase::CommitTo( *message.mutable_value()->Add()->mutable_location() );
+        LocationBase::CommitTo( *message.add_value()->mutable_location() );
 }
 // -----------------------------------------------------------------------------
 // Name: Location::CommitTo

@@ -86,7 +86,7 @@ void MedicalPriorities::CommitTo( sword::MissionParameter& message ) const
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        sword::LogMedicalPriorities* list =message.mutable_value()->Add()->mutable_logmedicalpriorities();
+        sword::LogMedicalPriorities* list =message.add_value()->mutable_logmedicalpriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
             list->add_elem( sword::EnumHumanWound( priorities_.at( i ) ) );
     }

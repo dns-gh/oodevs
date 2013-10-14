@@ -21,7 +21,7 @@ void SendPlotResult( int context, const std::vector< float >& values,
     for( auto it = values.cbegin(); it != values.cend(); ++it )
     {
         if( skippedFrames == 0 )
-            result().mutable_values()->Add( *it );
+            result().add_values( *it );
         else
             --skippedFrames;
     }

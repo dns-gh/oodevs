@@ -51,7 +51,7 @@ bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, sword::
     if( bIsList_ )
         to.set_null_value( !from.ToList( *to.mutable_value() ) );
     else
-        to.set_null_value( !from.ToElement( *to.mutable_value()->Add() ) );
+        to.set_null_value( !from.ToElement( *to.add_value() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional_;

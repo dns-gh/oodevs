@@ -135,7 +135,7 @@ void RemoteTacticalObjectController::Moved( const std::string& identifier, doubl
         return;
     simulation::ObjectMagicAction& message = *it->second;
     sword::Location* loc = message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->size() == 0 ?
-            message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->Add()->mutable_location() :
+            message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_location() :
             message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_location();
 
     loc->set_type( sword::Location_Geometry_point );
@@ -159,7 +159,7 @@ void RemoteTacticalObjectController::SideChanged( const std::string& identifier,
     simulation::ObjectMagicAction& message = *it->second;
     if( message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->size() == 1  )
         return;
-    message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( sideResolver_.ResolveTeam( side ) );
+    message().mutable_parameters()->mutable_elem( 3 )->add_value()->mutable_party()->set_id( sideResolver_.ResolveTeam( side ) );
     Send( message, identifier );
 }
 
@@ -176,7 +176,7 @@ void RemoteTacticalObjectController::NameChanged( const std::string& identifier,
     if( message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->size() == 1  )
         message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Mutable( 0 )->set_acharstr( name.c_str() );
     else
-        message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Add()->set_acharstr( name.c_str() );
+        message().mutable_parameters()->mutable_elem( 2 )->add_value()->set_acharstr( name.c_str() );
     Send( message, identifier );
 }
 
@@ -197,7 +197,7 @@ void RemoteTacticalObjectController::TypeChanged( const std::string& identifier,
     if( message().mutable_parameters()->mutable_elem( 0 )->mutable_value()->size() == 1 )
         message().mutable_parameters()->mutable_elem( 0 )->mutable_value()->Mutable( 0 )->set_acharstr( objTypeName.c_str() );
     else
-        message().mutable_parameters()->mutable_elem( 0 )->mutable_value()->Add()->set_acharstr( objTypeName.c_str() );
+        message().mutable_parameters()->mutable_elem( 0 )->add_value()->set_acharstr( objTypeName.c_str() );
     Send( message, identifier );
 }
 
@@ -260,7 +260,7 @@ void RemoteTacticalObjectController::GeometryChanged( const std::string& identif
     simulation::ObjectMagicAction& message = *it->second;
 
     sword::Location* loc = message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->size() == 0 ?
-            message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->Add()->mutable_location() :
+            message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_location() :
             message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_location();
     loc->mutable_coordinates()->clear_elem();
     if( perimeter.size() == 1 )

@@ -131,7 +131,7 @@ void DateTime::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->Add()->mutable_datetime() );
+        CommitTo( *message.add_value()->mutable_datetime() );
 }
 // -----------------------------------------------------------------------------
 // Name: DateTime::CommitTo

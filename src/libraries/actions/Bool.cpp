@@ -75,7 +75,7 @@ void Bool::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-       message.mutable_value()->Add()->set_booleanvalue( GetValue() );
+       message.add_value()->set_booleanvalue( GetValue() );
 }
 // -----------------------------------------------------------------------------
 // Name: Bool::CommitTo

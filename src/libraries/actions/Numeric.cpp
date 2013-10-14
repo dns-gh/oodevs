@@ -76,7 +76,7 @@ void Numeric::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-       message.mutable_value()->Add()->set_areal( GetValue() );
+       message.add_value()->set_areal( GetValue() );
 }
 // -----------------------------------------------------------------------------
 // Name: Numeric::CommitTo

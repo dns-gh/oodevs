@@ -73,7 +73,7 @@ void Point::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Location::CommitTo( *message.mutable_value()->Add()->mutable_point()->mutable_location() );
+        Location::CommitTo( *message.add_value()->mutable_point()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------

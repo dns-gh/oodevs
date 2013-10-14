@@ -159,7 +159,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     }
     BOOST_FOREACH( const T_UrbanBlocks::value_type& urbanBlock, urbanBlocks_ )
     {
-        sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
+        sword::PopulationUpdate_BlockOccupation& block = *msg().add_occupations();
         block.mutable_object()->set_id( urbanBlock.first );
         for( std::map< std::string, unsigned int >::const_iterator it = urbanBlock.second.persons_.begin(); it != urbanBlock.second.persons_.end(); ++it )
         {

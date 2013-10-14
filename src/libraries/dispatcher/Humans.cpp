@@ -73,7 +73,7 @@ void Humans::Send( sword::HumanDotations_HumanDotation& message ) const
     message.set_location_deprecated( protocol::RemapHumanLocation( message.location() ));
     for( unsigned int i = 0; i < injuries_.size(); ++i )
     {
-        sword::Injury* injury = message.mutable_injuries()->Add();
+        sword::Injury* injury = message.add_injuries();
         injury->set_id( injuries_[ i ].first );
         injury->set_seriousness( injuries_[ i ].second );
     }

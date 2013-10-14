@@ -82,7 +82,7 @@ void Agent::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->Add() );
+        CommitTo( *message.add_value() );
 
 }
 // -----------------------------------------------------------------------------

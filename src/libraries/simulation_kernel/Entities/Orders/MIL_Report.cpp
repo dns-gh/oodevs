@@ -129,7 +129,7 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
         if( !params[ i ]->IsOfType( parameters_[i]->GetType() ) )
             return false;
         sword::MissionParameter& paramProtobuff = *message().mutable_parameters()->add_elem();
-        if( !params[ i ]->ToElement( *paramProtobuff.mutable_value()->Add() ) )
+        if( !params[ i ]->ToElement( *paramProtobuff.add_value() ) )
             return false;
     }
     return true;

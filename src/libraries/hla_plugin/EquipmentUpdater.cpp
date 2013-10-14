@@ -235,14 +235,14 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
             const unsigned int remoteComponentAvailable = remoteComponent->second.second;
             const int remoteComponentDead = componentStaticNumber - remoteComponentAvailable;
             sword::MissionParameter_Value* componentChanged = parameter.add_value();
-            componentChanged->mutable_list()->Add()->set_identifier( componentTypeIdentifier );
-            componentChanged->mutable_list()->Add()->set_quantity( remoteComponentAvailable );
-            componentChanged->mutable_list()->Add()->set_quantity( remoteComponentDead );
-            componentChanged->mutable_list()->Add()->set_quantity( 0 );
-            componentChanged->mutable_list()->Add()->set_quantity( 0 );
-            componentChanged->mutable_list()->Add()->set_quantity( 0 );
-            componentChanged->mutable_list()->Add()->set_quantity( 0 );
-            componentChanged->mutable_list()->Add()->mutable_list();
+            componentChanged->add_list()->set_identifier( componentTypeIdentifier );
+            componentChanged->add_list()->set_quantity( remoteComponentAvailable );
+            componentChanged->add_list()->set_quantity( remoteComponentDead );
+            componentChanged->add_list()->set_quantity( 0 );
+            componentChanged->add_list()->set_quantity( 0 );
+            componentChanged->add_list()->set_quantity( 0 );
+            componentChanged->add_list()->set_quantity( 0 );
+            componentChanged->add_list()->mutable_list();
         }
     }
     if( message().parameters().elem( 0 ).value_size() > 0 )

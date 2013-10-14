@@ -80,7 +80,7 @@ void PopulationKnowledgeOrder::CommitTo( sword::MissionParameter& message ) cons
     unsigned long id = RetrieveId();
     message.set_null_value( id == 0 );
     if( id != 0 )
-        message.mutable_value()->Add()->mutable_crowdknowledge()->set_id( id );
+        message.add_value()->mutable_crowdknowledge()->set_id( id );
 }
 
 // -----------------------------------------------------------------------------

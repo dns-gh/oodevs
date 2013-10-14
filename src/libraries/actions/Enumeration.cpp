@@ -84,7 +84,7 @@ void Enumeration::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() && value_ )
-       message.mutable_value()->Add()->set_enumeration( value_->GetId() );
+       message.add_value()->set_enumeration( value_->GetId() );
 }
 // -----------------------------------------------------------------------------
 // Name: Enumeration::CommitTo

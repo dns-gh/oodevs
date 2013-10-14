@@ -170,7 +170,7 @@ void PushFlowParameters::SetWayBackPath( const T_PointVector& path )
 void PushFlowParameters::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( false );
-    CommitTo( *message.mutable_value()->Add() );
+    CommitTo( *message.add_value() );
 }
 
 // -----------------------------------------------------------------------------

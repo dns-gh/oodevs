@@ -159,7 +159,7 @@ void MIL_OrderContext::WritePhaseLines( sword::MissionParameter& asn ) const
 {
     asn.set_null_value( limas_.empty() );
     for( auto it = limas_.begin(); it != limas_.end(); ++it )
-        it->Serialize( *asn.mutable_value()->Add()->mutable_phaseline()->add_elem() );
+        it->Serialize( *asn.add_value()->mutable_phaseline()->add_elem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,8 +173,8 @@ void MIL_OrderContext::WriteLimits( sword::MissionParameter& limit1, sword::Miss
     limit2.set_null_value( !isValid );
     if( !limit1.null_value() )
     {
-        NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit (), *limit1.mutable_value()->Add()->mutable_limit() );
-        NET_ASN_Tools::WriteLine( fuseau_.GetRightLimit(), *limit2.mutable_value()->Add()->mutable_limit() );
+        NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit (), *limit1.add_value()->mutable_limit() );
+        NET_ASN_Tools::WriteLine( fuseau_.GetRightLimit(), *limit2.add_value()->mutable_limit() );
     }
 }
 
@@ -185,7 +185,7 @@ void MIL_OrderContext::WriteLimits( sword::MissionParameter& limit1, sword::Miss
 void MIL_OrderContext::WriteDirection( sword::MissionParameter& asn ) const
 {
     asn.set_null_value( false );
-    NET_ASN_Tools::WriteDirection( *dirDanger_, *asn.mutable_value()->Add()->mutable_heading() );
+    NET_ASN_Tools::WriteDirection( *dirDanger_, *asn.add_value()->mutable_heading() );
 }
 
 // -----------------------------------------------------------------------------

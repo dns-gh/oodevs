@@ -153,7 +153,7 @@ void AgentManipulator::Teleport( const dispatcher::Position& position )
     sword::Point point;
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
-    sword::Location& location = *parameter.mutable_value()->Add()->mutable_point()->mutable_location();
+    sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();
     location.set_type( sword::Location::point );
     converter_.ConvertToGeo( ToPoint( position ), *location.mutable_coordinates()->add_elem() );
     message.Send( publisher_ );
@@ -184,11 +184,11 @@ void AgentManipulator::Wound( int injury, int type )
 
     sword::MissionParameter& paramInjury = *message().mutable_parameters()->add_elem();
     paramInjury.set_null_value( false );
-    paramInjury.mutable_value()->Add()->set_identifier( injury );
+    paramInjury.add_value()->set_identifier( injury );
 
     sword::MissionParameter& paramType = *message().mutable_parameters()->add_elem();
     paramType.set_null_value( false );
-    paramType.mutable_value()->Add()->set_identifier( type );
+    paramType.add_value()->set_identifier( type );
 
     message.Send( publisher_ );
 }

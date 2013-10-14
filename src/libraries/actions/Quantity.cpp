@@ -64,7 +64,7 @@ void Quantity::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-       message.mutable_value()->Add()->set_quantity( GetValue() );
+       message.add_value()->set_quantity( GetValue() );
 }
 // -----------------------------------------------------------------------------
 // Name: Quantity::CommitTo
