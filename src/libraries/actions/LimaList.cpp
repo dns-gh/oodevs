@@ -92,7 +92,7 @@ void LimaList::CommitTo( sword::MissionParameter& message ) const
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        AsnSerializer serializer( *message.mutable_value()->Add()->mutable_phaseline() );
+        AsnSerializer serializer( *message.add_value()->mutable_phaseline() );
         Accept( serializer );
     }
 }

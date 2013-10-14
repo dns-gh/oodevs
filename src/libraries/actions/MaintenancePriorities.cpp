@@ -91,7 +91,7 @@ void MaintenancePriorities::CommitTo( sword::MissionParameter& message ) const
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        sword::LogMaintenancePriorities* list =message.mutable_value()->Add()->mutable_logmaintenancepriorities();
+        sword::LogMaintenancePriorities* list =message.add_value()->mutable_logmaintenancepriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
             list->add_elem()->set_id( priorities_.at( i )->GetId() );
     }

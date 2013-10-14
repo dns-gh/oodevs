@@ -74,7 +74,7 @@ void String::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-       message.mutable_value()->Add()->set_acharstr( GetValue().toStdString() );
+       message.add_value()->set_acharstr( GetValue().toStdString() );
 }
 // -----------------------------------------------------------------------------
 // Name: String::CommitTo

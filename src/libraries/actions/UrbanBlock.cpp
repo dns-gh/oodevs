@@ -113,7 +113,7 @@ void UrbanBlock::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< UrbanObject_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_urbanknowledge() );
+        Entity< UrbanObject_ABC >::CommitTo( *message.add_value()->mutable_urbanknowledge() );
 }
 // -----------------------------------------------------------------------------
 // Name: UrbanBlock::CommitTo

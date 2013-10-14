@@ -174,7 +174,7 @@ void Lima::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->Add()->mutable_phaseline()->add_elem() );
+        CommitTo( *message.add_value()->mutable_phaseline()->add_elem() );
 }
 // -----------------------------------------------------------------------------
 // Name: Lima::CommitTo

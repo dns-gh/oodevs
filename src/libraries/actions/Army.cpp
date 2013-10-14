@@ -86,7 +86,7 @@ void Army::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< Team_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_party() );
+        Entity< Team_ABC >::CommitTo( *message.add_value()->mutable_party() );
 }
 
 // -----------------------------------------------------------------------------

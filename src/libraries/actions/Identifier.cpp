@@ -64,7 +64,7 @@ void Identifier::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-       message.mutable_value()->Add()->set_identifier( GetValue() );
+       message.add_value()->set_identifier( GetValue() );
 }
 // -----------------------------------------------------------------------------
 // Name: Identifier::CommitTo

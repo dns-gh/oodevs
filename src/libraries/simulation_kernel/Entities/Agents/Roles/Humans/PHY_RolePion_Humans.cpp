@@ -398,7 +398,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         else
         {
             personnel.set_state( sword::injured );
-            sword::Injury* injury = personnel.mutable_injuries()->Add();
+            sword::Injury* injury = personnel.add_injuries();
             injury->set_id( 0 );  // Never used but "required", default to 0.
             if( stateId == PHY_HumanWound::woundedU1_.GetID() )
                 injury->set_seriousness( sword::wounded_u1 );

@@ -74,7 +74,7 @@ void PopulationKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_value()->Add()->mutable_crowdknowledge() );
+        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.add_value()->mutable_crowdknowledge() );
 }
 
 // -----------------------------------------------------------------------------

@@ -107,7 +107,7 @@ void Direction::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-       message.mutable_value()->Add()->mutable_heading()->set_heading( GetValue() );
+       message.add_value()->mutable_heading()->set_heading( GetValue() );
 }
 // -----------------------------------------------------------------------------
 // Name: Direction::CommitTo

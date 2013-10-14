@@ -199,7 +199,7 @@ void PullFlowParameters::SetWayBackPath( const T_PointVector& path )
 void PullFlowParameters::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( false );
-    CommitTo( *message.mutable_value()->Add() );
+    CommitTo( *message.add_value() );
 }
 
 // -----------------------------------------------------------------------------

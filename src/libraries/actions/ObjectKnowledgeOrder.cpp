@@ -89,7 +89,7 @@ void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter& message ) const
     unsigned long id = RetrieveId();
     message.set_null_value( id == 0 );
     if( id != 0 )
-        message.mutable_value()->Add()->mutable_objectknowledge()->set_id( id );
+        message.add_value()->mutable_objectknowledge()->set_id( id );
 }
 
 // -----------------------------------------------------------------------------

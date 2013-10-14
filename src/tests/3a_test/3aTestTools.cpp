@@ -180,7 +180,7 @@ namespace
         personnel.set_rank( sword::officer );
         personnel.set_state( state );
         personnel.set_location( sword::battlefield );
-        sword::Injury* injury = personnel.mutable_injuries()->Add();
+        sword::Injury* injury = personnel.add_injuries();
         injury->set_id( 0 );
         injury->set_seriousness( sword::wounded_u1 );
         personnel.set_mentally_wounded( false );

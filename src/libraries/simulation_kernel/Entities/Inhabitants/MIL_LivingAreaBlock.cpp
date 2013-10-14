@@ -74,7 +74,7 @@ MIL_LivingAreaBlock::~MIL_LivingAreaBlock()
 // -----------------------------------------------------------------------------
 void MIL_LivingAreaBlock::SendFullState( client::PopulationUpdate& msg ) const
 {
-    sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
+    sword::PopulationUpdate_BlockOccupation& block = *msg().add_occupations();
     block.mutable_object()->set_id( urbanObject_->GetID() );
     for( auto it = persons_.begin(); it != persons_.end(); ++it )
     {

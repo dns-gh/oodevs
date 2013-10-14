@@ -157,7 +157,7 @@ void Path::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->Add()->mutable_path()->mutable_location() );
+        CommitTo( *message.add_value()->mutable_path()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------

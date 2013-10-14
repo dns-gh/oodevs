@@ -76,7 +76,7 @@ void Limit::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Location::CommitTo( *message.mutable_value()->Add()->mutable_limit()->mutable_location() );
+        Location::CommitTo( *message.add_value()->mutable_limit()->mutable_location() );
 }
 // -----------------------------------------------------------------------------
 // Name: Limit::CommitTo
