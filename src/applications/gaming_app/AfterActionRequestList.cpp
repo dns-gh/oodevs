@@ -22,23 +22,46 @@ Q_DECLARE_METATYPE( const IndicatorRequest* )
 
 namespace
 {
+    class EditorDelegate: public QItemDelegate
+    {
+    public:
+        EditorDelegate( QObject* parent) : QItemDelegate( parent ) {}
+        QWidget* createEditor( QWidget* parentWidget, const QStyleOptionViewItem& option, const QModelIndex& index ) const
+        {
+            if( index.column() == 1 )
+            {
+                QWidget* widget = QItemDelegate::createEditor( parentWidget, option, index );
+                connect( widget, SIGNAL( editingFinished() ), parent(), SLOT( OnRename() ) );
+                return widget;
+            }
+            return 0;
+        }
+    };
+
+    QVariant VariantFromIndex( const QModelIndex& index, int role )
+    {
+        return index.model()->data( index.model()->index( index.row(), 1, index.parent() ), role );
+    }
+
     class MyList : public QTreeWidget
     {
     public:
-        MyList()
+        MyList( QWidget* parent )
         {
             setColumnCount( 3 );
             setDragEnabled( true );
             setRootIsDecorated( false );
             setAllColumnsShowFocus( true );
+            setEditTriggers( QAbstractItemView::SelectedClicked | QAbstractItemView::EditKeyPressed );
             header()->setResizeMode( 0, QHeaderView::ResizeToContents );
             setContextMenuPolicy( Qt::CustomContextMenu );
+            setItemDelegate( new EditorDelegate( parent ) );
         }
         virtual void startDrag( Qt::DropActions /*supportedActions*/ )
         {
             const QModelIndex index = selectionModel()->currentIndex();
             if( index.isValid() )
-                if( const IndicatorRequest* request = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< const IndicatorRequest* >() )
+                if( const IndicatorRequest* request = VariantFromIndex( index, Qt::UserRole ).value< const IndicatorRequest* >() )
                     dnd::CreateDragObject( request, this );
         }
     };
@@ -57,7 +80,7 @@ AfterActionRequestList::AfterActionRequestList( QWidget* parent, kernel::Control
     , failedPixmap_( MAKE_PIXMAP( aaa_broken ) )
 {
     setLayout( new QVBoxLayout );
-    requests_ = new MyList();
+    requests_ = new MyList( this );
     QStringList headers;
     headers << " " << tr( "Request" ) << tr( "Function" );
     requests_->setHeaderLabels( headers );
@@ -85,9 +108,24 @@ void AfterActionRequestList::OnDoubleClicked()
     const QModelIndex index = requests_->currentIndex();
     if( index.isValid() )
     {
-        const IndicatorRequest* request = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< const IndicatorRequest* >();
+        const IndicatorRequest* request = VariantFromIndex( index, Qt::UserRole ).value< const IndicatorRequest* >();
         if( request && request->IsDone() )
             plotFactory_.CreatePlot( *request );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequestList::OnRename
+// Created: JSR 2013-10-14
+// -----------------------------------------------------------------------------
+void AfterActionRequestList::OnRename()
+{
+    const QModelIndex index = requests_->currentIndex();
+    if( index.isValid() )
+    {
+        IndicatorRequest* request = const_cast< IndicatorRequest* >( VariantFromIndex( index, Qt::UserRole ).value< const IndicatorRequest* >() );
+        if( request )
+            request->SetDisplayName( VariantFromIndex( index, Qt::DisplayRole ).toString() );
     }
 }
 
@@ -137,6 +175,7 @@ void AfterActionRequestList::OnRemoveItem()
 void AfterActionRequestList::NotifyCreated( const IndicatorRequest& request )
 {
     QTreeWidgetItem* item = new QTreeWidgetItem();
+    item->setFlags( item->flags() | Qt::ItemIsEditable );
     requests_->addTopLevelItem( item );
     Display( request, item );
 }
@@ -150,7 +189,7 @@ void AfterActionRequestList::NotifyUpdated( const IndicatorRequest& request )
     for( int i = 0; i < requests_->topLevelItemCount(); ++i )
     {
         QTreeWidgetItem* item = requests_->topLevelItem( i );
-        if( item && item->data( 0, Qt::UserRole ).value< const IndicatorRequest* >() == &request )
+        if( item && item->data( 1, Qt::UserRole ).value< const IndicatorRequest* >() == &request )
         {
             Display( request, item );
             break;
@@ -178,7 +217,7 @@ void AfterActionRequestList::Display( const IndicatorRequest& request, QTreeWidg
         request.IsDone() ? donePixmap_ :
         request.IsFailed() ? failedPixmap_ :
         QPixmap() );
-    item->setData( 0, Qt::UserRole, QVariant::fromValue( &request ) );
+    item->setData( 1, Qt::UserRole, QVariant::fromValue( &request ) );
     item->setText( 1, request.GetDisplayName() );
     item->setText( 2, request.GetName() );
     item->setToolTip( 0, request.ErrorMessage() );

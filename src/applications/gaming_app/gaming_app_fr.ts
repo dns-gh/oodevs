@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>&apos;%1&apos; is not a valid requests file.</source>
-        <translation>&apos;%1&apos; n'est pas un fichier de requêtes valide.</translation>
+        <translation>&apos;%1&apos; n&apos;est pas un fichier de requêtes valide.</translation>
     </message>
     <message>
         <source>Unable to save requests to file &apos;%1&apos;.</source>

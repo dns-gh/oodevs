@@ -53,6 +53,7 @@ public:
     void SetParameter( const std::string& name, const std::string& value );
     void SetTimeRange( unsigned int firstTick, unsigned int duration );
     void Commit() const;
+    void SetDisplayName( const QString& name );
     void Save( xml::xostream& xos ) const;
 
     QString GetName() const;
@@ -85,7 +86,7 @@ private:
     kernel::Controller& controller_;
     const IndicatorDefinition_ABC& definition_;
     Publisher_ABC& publisher_;
-    const QString displayName_;
+    QString displayName_;
     T_Parameters parameters_;
     bool done_;
     unsigned int firstTick_;

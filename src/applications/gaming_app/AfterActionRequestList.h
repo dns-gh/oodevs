@@ -47,6 +47,7 @@ private slots:
     void OnDoubleClicked();
     void OnRequestPopup( const QPoint& pos );
     void OnRemoveItem();
+    void OnRename();
     void ClearList();
     //@}
 

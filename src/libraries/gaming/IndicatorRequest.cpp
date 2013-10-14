@@ -109,6 +109,15 @@ void IndicatorRequest::Commit() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorRequest::SetDisplayName
+// Created: JSR 2013-10-14
+// -----------------------------------------------------------------------------
+void IndicatorRequest::SetDisplayName( const QString& name )
+{
+    displayName_ = name;
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorRequest::Save
 // Created: JSR 2013-10-11
 // -----------------------------------------------------------------------------
