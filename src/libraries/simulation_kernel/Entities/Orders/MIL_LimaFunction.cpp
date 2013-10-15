@@ -14,16 +14,16 @@
 
 MIL_LimaFunction::T_LimaFunctionMap MIL_LimaFunction::limaFunctions_;
 
-const MIL_LimaFunction MIL_LimaFunction::LD_  ( sword::line_of_departure                , eLimaFuncLD  , "LD"   );
-const MIL_LimaFunction MIL_LimaFunction::LCA_ ( sword::attitude_change_line             , eLimaFuncLCA , "LCA"  );
-const MIL_LimaFunction MIL_LimaFunction::LC_  ( sword::coordination_line                , eLimaFuncLC  , "LC"   );
-const MIL_LimaFunction MIL_LimaFunction::LI_  ( sword::denial_line                      , eLimaFuncLI  , "LI"   );
-const MIL_LimaFunction MIL_LimaFunction::LO_  ( sword::objective_line                   , eLimaFuncLO  , "LO"   );
-const MIL_LimaFunction MIL_LimaFunction::LCAR_( sword::blocking_line                    , eLimaFuncLCAR, "LCAR" );
-const MIL_LimaFunction MIL_LimaFunction::LR_  ( sword::handover_line                    , eLimaFuncLR  , "LR"   );
-const MIL_LimaFunction MIL_LimaFunction::LDM_ ( sword::start_of_mission_line            , eLimaFuncLDM , "LDM"  );
-const MIL_LimaFunction MIL_LimaFunction::LFM_ ( sword::end_of_mission_line              , eLimaFuncLFM , "LFM"  );
-const MIL_LimaFunction MIL_LimaFunction::LIA_ ( sword::recognition_and_reception_line   , eLimaFuncLIA , "LIA"  );
+const MIL_LimaFunction MIL_LimaFunction::LD_  ( sword::PhaseLineOrder::line_of_departure                , eLimaFuncLD  , "LD"   );
+const MIL_LimaFunction MIL_LimaFunction::LCA_ ( sword::PhaseLineOrder::attitude_change_line             , eLimaFuncLCA , "LCA"  );
+const MIL_LimaFunction MIL_LimaFunction::LC_  ( sword::PhaseLineOrder::coordination_line                , eLimaFuncLC  , "LC"   );
+const MIL_LimaFunction MIL_LimaFunction::LI_  ( sword::PhaseLineOrder::denial_line                      , eLimaFuncLI  , "LI"   );
+const MIL_LimaFunction MIL_LimaFunction::LO_  ( sword::PhaseLineOrder::objective_line                   , eLimaFuncLO  , "LO"   );
+const MIL_LimaFunction MIL_LimaFunction::LCAR_( sword::PhaseLineOrder::blocking_line                    , eLimaFuncLCAR, "LCAR" );
+const MIL_LimaFunction MIL_LimaFunction::LR_  ( sword::PhaseLineOrder::handover_line                    , eLimaFuncLR  , "LR"   );
+const MIL_LimaFunction MIL_LimaFunction::LDM_ ( sword::PhaseLineOrder::start_of_mission_line            , eLimaFuncLDM , "LDM"  );
+const MIL_LimaFunction MIL_LimaFunction::LFM_ ( sword::PhaseLineOrder::end_of_mission_line              , eLimaFuncLFM , "LFM"  );
+const MIL_LimaFunction MIL_LimaFunction::LIA_ ( sword::PhaseLineOrder::recognition_and_reception_line   , eLimaFuncLIA , "LIA"  );
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaFunction::Initialize
@@ -57,7 +57,7 @@ void MIL_LimaFunction::Terminate()
 // Name: MIL_LimaFunction constructor
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-MIL_LimaFunction::MIL_LimaFunction( const sword::EnumPhaseLineFunction& asn, unsigned int nID, const std::string& strName )
+MIL_LimaFunction::MIL_LimaFunction( const sword::PhaseLineOrder::Function& asn, unsigned int nID, const std::string& strName )
     : nAsnID_ ( asn )
     , nID_    ( nID )
     , strName_( strName )
@@ -78,7 +78,7 @@ MIL_LimaFunction::~MIL_LimaFunction()
 // Name: MIL_LimaFunction::Find
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-const MIL_LimaFunction* MIL_LimaFunction::Find( const sword::EnumPhaseLineFunction& asn )
+const MIL_LimaFunction* MIL_LimaFunction::Find( const sword::PhaseLineOrder::Function& asn )
 {
     auto it = limaFunctions_.find( asn );
     if( it == limaFunctions_.end() )
@@ -111,7 +111,7 @@ unsigned int MIL_LimaFunction::GetID() const
 // Name: MIL_LimaFunction::GetAsnID
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-sword::EnumPhaseLineFunction MIL_LimaFunction::GetAsnID() const
+sword::PhaseLineOrder::Function MIL_LimaFunction::GetAsnID() const
 {
     return nAsnID_;
 }

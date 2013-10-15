@@ -112,6 +112,8 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLimaList( sword::PhaseLinesOrder& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool ToLimaFunction( const MIL_LimaFunction*& ) const
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const

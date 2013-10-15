@@ -11,7 +11,7 @@
 #define __PHY_ActionRecoLima_h_
 
 #include <boost/noncopyable.hpp>
-#include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
@@ -26,20 +26,14 @@ class MIL_LimaOrder;
 */
 // Created: MMC 2013-07-08
 // =============================================================================
-class PHY_ActionRecoLima : public PHY_DecisionCallbackAction_ABC
+class PHY_ActionRecoLima : public PHY_Action_ABC
 {
 public:
     typedef MIL_AgentPion ActorType;
 
-    enum E_ReturnCode
-    {
-        eRunning = 0,
-        eFailedBadLima = 1,
-    };
-
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_ActionRecoLima( MIL_AgentPion& caller, int limaType );
+    explicit PHY_ActionRecoLima( MIL_AgentPion& caller, const MIL_LimaFunction& limaType );
     virtual ~PHY_ActionRecoLima();
     //@}
 
@@ -48,7 +42,6 @@ protected:
     //@{
     virtual void Execute();
     virtual void ExecuteSuspended();
-    virtual void StopAction();
     //@}
 
 private:
@@ -66,7 +59,7 @@ private:
     //@{
     unsigned int simTime_;
     MIL_AgentPion& caller_;
-    const MIL_LimaFunction* limaType_;
+    const MIL_LimaFunction& limaType_;
     std::vector< const MIL_LimaOrder* > limas_;
     std::map< const MIL_Agent_ABC*, MT_Vector2D > previousAgentsPos_;
     std::map< const MIL_Agent_ABC*, MT_Vector2D > agentsPos_;

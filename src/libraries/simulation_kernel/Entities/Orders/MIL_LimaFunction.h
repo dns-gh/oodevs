@@ -40,20 +40,20 @@ public:
     //@{
     static       void              Initialize();
     static       void              Terminate ();
-    static const MIL_LimaFunction* Find      ( const sword::EnumPhaseLineFunction& asn );
+    static const MIL_LimaFunction* Find      ( const sword::PhaseLineOrder::Function& asn );
     static const MIL_LimaFunction* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     unsigned int                    GetID   () const;
-    sword::EnumPhaseLineFunction    GetAsnID() const;
+    sword::PhaseLineOrder::Function GetAsnID() const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-     MIL_LimaFunction( const sword::EnumPhaseLineFunction& asn, unsigned int nID, const std::string& strName );
+     MIL_LimaFunction( const sword::PhaseLineOrder::Function& asn, unsigned int nID, const std::string& strName );
     ~MIL_LimaFunction();
 
      MIL_LimaFunction( const MIL_LimaFunction& );            //!< Copy constructor
@@ -63,11 +63,11 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< sword::EnumPhaseLineFunction, const MIL_LimaFunction* > T_LimaFunctionMap;
+    typedef std::map< sword::PhaseLineOrder::Function, const MIL_LimaFunction* > T_LimaFunctionMap;
     //@}
 
 private:
-    const sword::EnumPhaseLineFunction  nAsnID_;
+    const sword::PhaseLineOrder::Function  nAsnID_;
     const unsigned int                  nID_;
     const std::string                   strName_;
 

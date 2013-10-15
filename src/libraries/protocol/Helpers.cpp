@@ -116,17 +116,17 @@ const size_t mapping::MagicAction::size_ = COUNT_OF( mapping::MagicAction::data_
 BOOST_STATIC_ASSERT( sword::MagicAction::Type_ARRAYSIZE == mapping::MagicAction::size_ );
 
 const mapping::PhaseLineType mapping::PhaseLineType::data_[] = {
-    { "LCA",  sword::attitude_change_line, },
-    { "LD",   sword::line_of_departure },
-    { "LC",   sword::coordination_line },
-    { "LI",   sword::denial_line },
-    { "LO",   sword::objective_line },
-    { "LCAR", sword::blocking_line },
-    { "LR",   sword::handover_line },
-    { "LDM",  sword::start_of_mission_line },
-    { "LFM",  sword::end_of_mission_line },
-    { "LIA",  sword::recognition_and_reception_line },
+    { "LCA",  sword::PhaseLineOrder::attitude_change_line },
+    { "LD",   sword::PhaseLineOrder::line_of_departure },
+    { "LC",   sword::PhaseLineOrder::coordination_line },
+    { "LI",   sword::PhaseLineOrder::denial_line },
+    { "LO",   sword::PhaseLineOrder::objective_line },
+    { "LCAR", sword::PhaseLineOrder::blocking_line },
+    { "LR",   sword::PhaseLineOrder::handover_line },
+    { "LDM",  sword::PhaseLineOrder::start_of_mission_line },
+    { "LFM",  sword::PhaseLineOrder::end_of_mission_line },
+    { "LIA",  sword::PhaseLineOrder::recognition_and_reception_line },
 };
 
 const size_t mapping::PhaseLineType::size_ = COUNT_OF( mapping::PhaseLineType::data_ );
-BOOST_STATIC_ASSERT( sword::EnumPhaseLineFunction_ARRAYSIZE == mapping::PhaseLineType::size_ );
+BOOST_STATIC_ASSERT( sword::PhaseLineOrder::Function_ARRAYSIZE == mapping::PhaseLineType::size_ );

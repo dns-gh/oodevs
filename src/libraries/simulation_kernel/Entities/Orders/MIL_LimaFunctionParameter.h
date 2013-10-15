@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_LimaFunctionParameter();
-    explicit MIL_LimaFunctionParameter( const sword::EnumPhaseLineFunction& phaseLinefunction );
+    explicit MIL_LimaFunctionParameter( const sword::PhaseLineOrder::Function& phaseLinefunction );
     virtual ~MIL_LimaFunctionParameter();
     //@}
 

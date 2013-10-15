@@ -54,7 +54,7 @@ namespace mapping
 
     struct PhaseLineType
     {
-        typedef sword::EnumPhaseLineFunction value_type;
+        typedef sword::PhaseLineOrder::Function value_type;
         std::string                name;
         value_type                 type;
         static const PhaseLineType data_[];

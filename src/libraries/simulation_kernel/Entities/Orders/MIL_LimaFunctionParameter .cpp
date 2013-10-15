@@ -28,7 +28,7 @@ MIL_LimaFunctionParameter::MIL_LimaFunctionParameter()
 // Name: MIL_LimaFunctionParameter constructor
 // Created: MMC 2013-10-14
 // -----------------------------------------------------------------------------
-MIL_LimaFunctionParameter::MIL_LimaFunctionParameter( const sword::EnumPhaseLineFunction& phaseLinefunction )
+MIL_LimaFunctionParameter::MIL_LimaFunctionParameter( const sword::PhaseLineOrder::Function& phaseLinefunction )
     : id_( static_cast< int >( phaseLinefunction ) )
 {
     // NOTHING
@@ -68,7 +68,7 @@ bool MIL_LimaFunctionParameter::ToId( int& id ) const
 // -----------------------------------------------------------------------------
 bool MIL_LimaFunctionParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    elem.set_phase_line_function( sword::EnumPhaseLineFunction( id_ ) );
+    elem.set_phase_line_function( sword::PhaseLineOrder::Function( id_ ) );
     return true;
 }
 

@@ -28,7 +28,6 @@
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_TerrainFunctions.h"
 #include "Entities/Actions/PHY_ActionInterrogate.h"
-#include "Entities/Actions/PHY_ActionRecoLima.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendSpecificComposantes.h"
@@ -241,8 +240,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInterrogate, boost::shared_ptr< DEC_Knowledge_Agent > >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_StartTraverserReseauSouterrain",
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMoveUnderground, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_StartRecoLima",
-        boost::function< unsigned int( int ) >( boost::bind( &DEC_ActionFunctions::StartAction < PHY_ActionRecoLima, int >, boost::ref( GetPion() ), _1 ) ) );
 
     // Embarquement / debarquement
     RegisterFunction( "DEC_Agent_EstEmbarquable",

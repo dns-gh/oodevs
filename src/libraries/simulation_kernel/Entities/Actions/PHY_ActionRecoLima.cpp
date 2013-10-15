@@ -28,13 +28,12 @@
 // Name: PHY_ActionRecoLima Agent constructor
 // Created: MMC 2013-07-08
 // -----------------------------------------------------------------------------
-PHY_ActionRecoLima::PHY_ActionRecoLima( MIL_AgentPion& caller, int limaType )
-    : PHY_DecisionCallbackAction_ABC( caller )
-    , simTime_  ( MIL_AgentServer::GetWorkspace().GetSimTime() )
+PHY_ActionRecoLima::PHY_ActionRecoLima( MIL_AgentPion& caller, const MIL_LimaFunction& limaType )
+    : simTime_  ( MIL_AgentServer::GetWorkspace().GetSimTime() )
     , caller_   ( caller )
-    , limaType_( MIL_LimaFunction::Find( limaType ) )
+    , limaType_ ( limaType )
 {
-    Callback( static_cast< int >( limaType_ ? eRunning : eFailedBadLima ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,9 +66,9 @@ void PHY_ActionRecoLima::Execute()
         for( auto it = lineCrossedAgents_.begin(); it != lineCrossedAgents_.end(); ++it )
         {
             if( caller_.GetAutomate().IsEngaged() )
-                MIL_Report::PostEvent( caller_.GetAutomate(), report::eRC_CrossedLima, *limaType_, (*it)->GetName() );
+                MIL_Report::PostEvent( caller_.GetAutomate(), report::eRC_CrossedLima, limaType_, (*it)->GetName() );
             else
-                MIL_Report::PostEvent( caller_, report::eRC_CrossedLima, *limaType_, (*it)->GetName() );
+                MIL_Report::PostEvent( caller_, report::eRC_CrossedLima, limaType_, (*it)->GetName() );
         }
     }
     lineCrossedAgents_.clear();
@@ -82,12 +81,12 @@ void PHY_ActionRecoLima::Execute()
 bool PHY_ActionRecoLima::ComputeLimas()
 {
     limas_.clear();
-    if( limaType_ && caller_.GetOrderManager().GetCurrentMissionType() && caller_.GetKnowledgeGroup().get()
+    if( caller_.GetOrderManager().GetCurrentMissionType() && caller_.GetKnowledgeGroup().get()
         && !caller_.GetOrderManager().GetLimas().empty() )
     {
         const T_LimaVector& limas = caller_.GetOrderManager().GetLimas();
         for( auto it = limas.begin(); it != limas.end(); ++it )
-            if( it->HasFunction( *limaType_ )  )
+            if( it->HasFunction( limaType_ )  )
                 limas_.push_back( &( *it ) );
     }
     return !limas_.empty();
@@ -160,15 +159,6 @@ bool PHY_ActionRecoLima::IsFirstInAutomatWithMission()
 // Created: MMC 2013-07-08
 // -----------------------------------------------------------------------------
 void PHY_ActionRecoLima::ExecuteSuspended()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ActionRecoLima::StopAction
-// Created: MMC 2013-07-08
-// -----------------------------------------------------------------------------
-void PHY_ActionRecoLima::StopAction()
 {
     // NOTHING
 }

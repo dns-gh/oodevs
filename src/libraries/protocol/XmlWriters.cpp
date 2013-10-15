@@ -172,7 +172,7 @@ namespace
         std::vector< std::string > functions;
         const auto& list = src.fonctions();
         for( auto it = list.begin(); it != list.end(); ++it )
-            if( const auto opt = FindType< mapping::PhaseLineType >( static_cast< EnumPhaseLineFunction >( *it ) ) )
+            if( const auto opt = FindType< mapping::PhaseLineType >( static_cast< PhaseLineOrder::Function >( *it ) ) )
                 functions.push_back( *opt );
         xos << xml::attribute( "value", boost::algorithm::join( functions, "," ) );
         if( src.has_line() )

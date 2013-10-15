@@ -367,7 +367,7 @@ namespace
     void ReadLimaFunction( MissionParameter& dst, xml::xistream& xis )
     {
         if( const auto opt = ReadValue< uint32_t >( dst, xis ) )
-            dst.add_value()->set_phase_line_function ( sword::EnumPhaseLineFunction( *opt ) );
+            dst.add_value()->set_phase_line_function ( sword::PhaseLineOrder::Function( *opt ) );
     }
 
     typedef boost::function< void( Value&, xml::xistream& ) > T_ListOperand;

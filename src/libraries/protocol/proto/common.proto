@@ -629,29 +629,6 @@ enum EnumNatureLevel {
     xxxxx            = 13;
 }
 
-enum EnumPhaseLineFunction {
-    //! Line of departure
-    line_of_departure              = 0;
-    //! Attitude change line
-    attitude_change_line           = 1;
-    //! Coordination line
-    coordination_line              = 2;
-    //! Denial line
-    denial_line                    = 3;
-    //! Objective line
-    objective_line                 = 4;
-    //! Blocking line
-    blocking_line                  = 5;
-    //! Handover line
-    handover_line                  = 6;
-    //! Start of mission line
-    start_of_mission_line          = 7;
-    //! End of mission line
-    end_of_mission_line            = 8;
-    //! Recognition and reception line
-    recognition_and_reception_line = 9;
-}
-
 /** @struct ControlStop
     @brief Stops the simulation
     @see ControlStopAck
@@ -907,13 +884,34 @@ message PhaseLineOrder {
     /** @enum Function
         @brief Defines a phase line function
     */
-
+    enum Function {
+        //! Line of departure
+        line_of_departure              = 0;
+        //! Attitude change line
+        attitude_change_line           = 1;
+        //! Coordination line
+        coordination_line              = 2;
+        //! Denial line
+        denial_line                    = 3;
+        //! Objective line
+        objective_line                 = 4;
+        //! Blocking line
+        blocking_line                  = 5;
+        //! Handover line
+        handover_line                  = 6;
+        //! Start of mission line
+        start_of_mission_line          = 7;
+        //! End of mission line
+        end_of_mission_line            = 8;
+        //! Recognition and reception line
+        recognition_and_reception_line = 9;
+    }
     //! The phase line
     required Line     line      = 1;
     //! The date and time
     required DateTime time      = 2;
     //! The functions
-    repeated EnumPhaseLineFunction fonctions = 3;
+    repeated Function fonctions = 3;
 }
 
 /** @struct PhaseLinesOrder
@@ -1175,7 +1173,7 @@ message MissionParameter {
         //! A crowd identifier
         optional CrowdId                  crowd                    = 52;
         //! A phase line function type
-        optional EnumPhaseLineFunction    phase_line_function      = 53;
+        optional PhaseLineOrder.Function  phase_line_function      = 53;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;
