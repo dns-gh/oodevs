@@ -924,7 +924,7 @@
     <target name="all" depends="configure,check,cmake.configure,build,test,documentation,package"/>
 
     <target name="format">
-        <apply executable="${bin.dir}/llvm/bin/clang-format" parallel="false">
+        <apply executable="${bin.dir}/llvm/bin/clang-format" parallel="true" maxparallel="128">
             <arg value="-i"/>
             <srcfile/>
             <fileset dir="${src.dir}" includes="**/*.c,**/*.cpp,**/*.h,**/*.hpp,**/*.inl"/>
