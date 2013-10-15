@@ -11,6 +11,7 @@
 #define __AfterActionModel_h_
 
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -23,12 +24,18 @@ namespace kernel
     class Controller;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 namespace xml
 {
     class xistream;
 }
 
 class AfterActionFunction;
+class IndicatorDefinition_ABC;
 class IndicatorRequest;
 class IndicatorRequests;
 class Publisher_ABC;
@@ -40,6 +47,7 @@ class Publisher_ABC;
 // Created: AGE 2007-09-17
 // =============================================================================
 class AfterActionModel : public tools::Resolver< AfterActionFunction, QString >
+                       , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -53,16 +61,13 @@ public:
     void Update( const sword::AarInformation& message );
     void Update( const sword::PlotResult& message );
     void Purge();
-    IndicatorRequest& CreateRequest( const AfterActionFunction& function );
+    IndicatorRequest& CreateRequest( const AfterActionFunction& function, const QString& name );
+    const IndicatorDefinition_ABC* FindDefinition( const std::string& definition ) const;
+    void SaveRequests( const tools::Path& path ) const;
+    void LoadRequests( const tools::Loader_ABC& loader, const tools::Path& path );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AfterActionModel( const AfterActionModel& );            //!< Copy constructor
-    AfterActionModel& operator=( const AfterActionModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Load( const tools::Path& functions );

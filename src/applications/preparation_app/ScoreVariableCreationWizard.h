@@ -107,7 +107,7 @@ private:
     gui::RichLineEdit* name_;
     gui::RichPushButton* ok_;
     gui::ValuedComboBox< std::string >* type_;
-    Q3VBox* paramBox_;
+    QWidget* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;
     std::string scoreType_;
     //@}

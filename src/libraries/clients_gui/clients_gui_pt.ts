@@ -765,10 +765,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load drawings file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save drawings to file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -793,12 +789,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid drawings file.</source>
+        <source>Unable to save drawings to file &apos;%1&apos;. 
+Please check access permissions or write protection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to save drawings to file &apos;%1&apos;. 
-Please check access permissions or write protection.</source>
+        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load drawing file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

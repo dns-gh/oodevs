@@ -73,7 +73,6 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
     , controllers_( controllers )
     , extractor_( extractor )
     , selected_( controllers )
-    , menu_( new kernel::ContextMenu( this ) )
     , readTimer_( new QTimer( this ) )
     , proxyFilter_ ( new CustomSortFilterProxyModel( this ) )
     , delegate_( new gui::LinkItemDelegate( this ) )
@@ -115,7 +114,6 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
     connect( this, SIGNAL( doubleClicked( const QModelIndex& ) ), this, SLOT( OnRequestCenter() ) );
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
     connect( readTimer_, SIGNAL( timeout() ), this, SLOT( OnReadTimerOut() ) );
-    connect( menu_, SIGNAL( triggered( QAction* ) ), SLOT( OnToggle( QAction* ) ) );
     connect( delegate_, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
     controllers_.Register( *this );
@@ -149,16 +147,18 @@ void ReportListView::contextMenuEvent( QContextMenuEvent * e )
 {
     if( !selected_ )
         return;
-    menu_->clear();
-    menu_->insertItem( tr( "Clear" ),        this, SLOT( OnClearAll() ) );
-    menu_->insertItem( tr( "Clear traces" ), this, SLOT( OnClearTrace() ) );
-    menu_->insertSeparator();
-    AddMenuItem( tr( "Show reports" ) , Report::eRC      );
-    AddMenuItem( tr( "Show traces" )  , Report::eTrace   );
-    AddMenuItem( tr( "Show events" )  , Report::eEvent   );
-    AddMenuItem( tr( "Show messages" ), Report::eMessage );
-    AddMenuItem( tr( "Show warnings" ), Report::eWarning );
-    menu_->popup( e->globalPos() );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
+    connect( menu, SIGNAL( triggered( QAction* ) ), SLOT( OnToggle( QAction* ) ) );
+    menu->insertItem( tr( "Clear" ),        this, SLOT( OnClearAll() ) );
+    menu->insertItem( tr( "Clear traces" ), this, SLOT( OnClearTrace() ) );
+    menu->insertSeparator();
+    AddMenuItem( menu, tr( "Show reports" ) , Report::eRC      );
+    AddMenuItem( menu, tr( "Show traces" )  , Report::eTrace   );
+    AddMenuItem( menu, tr( "Show events" )  , Report::eEvent   );
+    AddMenuItem( menu, tr( "Show messages" ), Report::eMessage );
+    AddMenuItem( menu, tr( "Show warnings" ), Report::eWarning );
+    menu->popup( e->globalPos() );
 }
 
 // -----------------------------------------------------------------------------
@@ -386,9 +386,9 @@ void ReportListView::OnLinkClicked( const QString& url, const QModelIndex& index
 // Name: ReportListView::AddMenuItem
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-void ReportListView::AddMenuItem( const QString& name, Report::E_Type type ) const
+void ReportListView::AddMenuItem( QMenu* menu, const QString& name, Report::E_Type type ) const
 {
-    QAction* action = menu_->addAction( name );
+    QAction* action = menu->addAction( name );
     action->setData( type );
     action->setCheckable( true );
     action ->setChecked( toDisplay_.find( type ) != toDisplay_.end() );

@@ -10,12 +10,17 @@
 #ifndef __IndicatorRequest_h_
 #define __IndicatorRequest_h_
 
-#include "protocol/AarSenders.h"
-#include "protocol/ServerPublisher_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controller;
+}
+
+namespace sword
+{
+    class Indicator;
+    class PlotResult;
 }
 
 class IndicatorDefinition_ABC;
@@ -27,7 +32,7 @@ class Publisher_ABC;
 */
 // Created: AGE 2007-09-25
 // =============================================================================
-class IndicatorRequest
+class IndicatorRequest : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -38,7 +43,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher );
+    IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher, const QString& displayName );
+    IndicatorRequest( xml::xistream& xis, kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher );
     virtual ~IndicatorRequest();
     //@}
 
@@ -47,8 +53,11 @@ public:
     void SetParameter( const std::string& name, const std::string& value );
     void SetTimeRange( unsigned int firstTick, unsigned int duration );
     void Commit() const;
+    void SetDisplayName( const QString& name );
+    void Save( xml::xostream& xos ) const;
 
     QString GetName() const;
+    QString GetDisplayName() const;
     unsigned int GetFirstTick() const;
     void Update( const sword::PlotResult& message );
     void Update( const sword::Indicator& message );
@@ -61,15 +70,14 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IndicatorRequest( const IndicatorRequest& );            //!< Copy constructor
-    IndicatorRequest& operator=( const IndicatorRequest& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< std::string, std::string > T_Parameters;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadParameter( xml::xistream& xis );
     //@}
 
 private:
@@ -78,6 +86,7 @@ private:
     kernel::Controller& controller_;
     const IndicatorDefinition_ABC& definition_;
     Publisher_ABC& publisher_;
+    QString displayName_;
     T_Parameters parameters_;
     bool done_;
     unsigned int firstTick_;

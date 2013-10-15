@@ -772,10 +772,6 @@
         <translation>Drawings</translation>
     </message>
     <message>
-        <source>Load drawings file</source>
-        <translation>Load drawings file</translation>
-    </message>
-    <message>
         <source>Save drawings to file</source>
         <translation>Save drawings to file</translation>
     </message>
@@ -800,14 +796,18 @@
         <translation>Error</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid drawings file.</source>
-        <translation>&apos;%1&apos; is not a valid drawings file.</translation>
-    </message>
-    <message>
         <source>Unable to save drawings to file &apos;%1&apos;. 
 Please check access permissions or write protection.</source>
         <translation>Unable to save drawings to file &apos;%1&apos;. 
 Please check access permissions or write protection.</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <translation>&apos;%1&apos; is not a valid drawing file.</translation>
+    </message>
+    <message>
+        <source>Load drawing file</source>
+        <translation>Load drawing file</translation>
     </message>
 </context>
 <context>

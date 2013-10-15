@@ -145,7 +145,8 @@ void ParamLocationComposite::Draw( const geometry::Point2f& point, const ::gui::
 // -----------------------------------------------------------------------------
 QWidget* ParamLocationComposite::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    stack_ = new QStackedWidget( parent );
+    stack_ = new QStackedWidget();
+    parent->layout()->addWidget( stack_ );
     stack_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
     ::gui::SubObjectName subObject( objectName );
     InternalBuildInterface();

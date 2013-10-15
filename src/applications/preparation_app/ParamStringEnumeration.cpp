@@ -44,7 +44,8 @@ ParamStringEnumeration::~ParamStringEnumeration()
 // -----------------------------------------------------------------------------
 QWidget* ParamStringEnumeration::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    StringQVButtonGroup* group = new StringQVButtonGroup( title_, parent );
+    StringQVButtonGroup* group = new StringQVButtonGroup( title_, 0 );
+    parent->layout()->addWidget( group );
     gui::SubObjectName subObject( objectName );
     std::for_each( values_.begin(), values_.end(), boost::bind( &ParamStringEnumeration::AddItem, this, boost::ref( group ), _1 ) );
     connect( group, SIGNAL( clicked( const std::string& ) ), SLOT( OnToggle( const std::string& ) ) );

@@ -119,7 +119,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // AfterAction
     {
-        afterAction_ = new AfterAction( parent, controllers, model.aar_, *plotFactory_, *interfaceBuilder_ );
+        afterAction_ = new AfterAction( parent, controllers, config, model.aar_, *plotFactory_, *interfaceBuilder_ );
         afterAction_->SetModes( eModes_Default | eModes_Gaming );
         parent->addDockWidget( Qt::LeftDockWidgetArea, afterAction_ );
     }

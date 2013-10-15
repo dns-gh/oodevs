@@ -16,8 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 #include "protocol/AarSenders.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: AfterActionModel constructor
 // Created: AGE 2007-09-17
@@ -44,7 +42,6 @@ AfterActionModel::~AfterActionModel()
 // -----------------------------------------------------------------------------
 void AfterActionModel::Update( const sword::AarInformation& /*message*/ )
 {
-    // $$$$ AGE 2007-10-10:
     controller_.Update( *this );
 }
 
@@ -61,9 +58,18 @@ void AfterActionModel::Update( const sword::PlotResult& message )
 // Name: AfterActionModel::CreateRequest
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-IndicatorRequest& AfterActionModel::CreateRequest( const AfterActionFunction& function )
+IndicatorRequest& AfterActionModel::CreateRequest( const AfterActionFunction& function, const QString& name )
 {
-    return requests_->CreateRequest( function );
+    return requests_->CreateRequest( function, name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::FindDefinition
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+const IndicatorDefinition_ABC* AfterActionModel::FindDefinition( const std::string& definition ) const
+{
+    return Find( definition.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,8 +91,25 @@ void AfterActionModel::Load( const tools::Path& functions )
 void AfterActionModel::ReadFunction( xml::xistream& xis )
 {
     std::auto_ptr< AfterActionFunction > function( new AfterActionFunction( xis ) );
-    const QString name = function->GetName();
-    Register( name, *function.release() );
+    Register( function->GetName(), *function.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::SaveRequests
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void AfterActionModel::SaveRequests( const tools::Path& path ) const
+{
+    requests_->Save( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionModel::LoadRequests
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void AfterActionModel::LoadRequests( const tools::Loader_ABC& loader, const tools::Path& path )
+{
+    requests_->Load( loader, path, *this );
 }
 
 // -----------------------------------------------------------------------------

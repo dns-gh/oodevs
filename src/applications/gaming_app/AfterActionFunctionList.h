@@ -29,10 +29,8 @@ namespace actions
 }
 
 class AfterActionParameter;
-class AfterActionFunction;
 class AfterActionModel;
 class Simulation;
-class StaticModel;
 
 // =============================================================================
 /** @class  AfterActionFunctionList
@@ -40,7 +38,7 @@ class StaticModel;
 */
 // Created: AGE 2007-09-21
 // =============================================================================
-class AfterActionFunctionList : public Q3VBox
+class AfterActionFunctionList : public QWidget
                               , public actions::gui::ParamInterface_ABC
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< Simulation >
@@ -64,7 +62,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChange();
+    void OnSelectionChange( int index );
     void Request();
     //@}
 
@@ -72,7 +70,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
-    void CreateRequestButton();
     void CreateParameter( const AfterActionParameter& parameter );
     boost::shared_ptr< actions::gui::Param_ABC > CreateParameter( const std::string& type, const QString& name );
     //@}
@@ -88,14 +85,15 @@ private:
     actions::gui::InterfaceBuilder_ABC& builder_;
     kernel::Controllers& controllers_;
     AfterActionModel& model_;
-    QTreeWidget* functions_;
-    Q3GroupBox* parameters_;
-    Q3VGroupBox* timeGroup_;
+    QLineEdit* name_;
+    QComboBox* functions_;
+    QLabel* description_;
+    QGroupBox* timeGroup_;
     QSpinBox* firstTick_;
     QSpinBox* duration_;
+    QGroupBox* parameters_;
     QPushButton* request_;
     T_Parameters paramList_;
-    QString title_;
     //@}
 };
 

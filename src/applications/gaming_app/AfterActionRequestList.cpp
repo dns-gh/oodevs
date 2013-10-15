@@ -10,41 +10,58 @@
 #include "gaming_app_pch.h"
 #include "AfterActionRequestList.h"
 #include "moc_AfterActionRequestList.cpp"
+#include "IndicatorPlotFactory.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/DragAndDropHelpers.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
-#include "IndicatorPlotFactory.h"
 #include "icons.h"
-
-#pragma warning( disable : 4355 )
 
 Q_DECLARE_METATYPE( const IndicatorRequest* )
 
-using namespace kernel;
-using namespace gui;
-
 namespace
 {
+    class EditorDelegate: public QItemDelegate
+    {
+    public:
+        EditorDelegate( QObject* parent) : QItemDelegate( parent ) {}
+        QWidget* createEditor( QWidget* parentWidget, const QStyleOptionViewItem& option, const QModelIndex& index ) const
+        {
+            if( index.column() == 1 )
+            {
+                QWidget* widget = QItemDelegate::createEditor( parentWidget, option, index );
+                connect( widget, SIGNAL( editingFinished() ), parent(), SLOT( OnRename() ) );
+                return widget;
+            }
+            return 0;
+        }
+    };
+
+    QVariant VariantFromIndex( const QModelIndex& index, int role )
+    {
+        return index.model()->data( index.model()->index( index.row(), 1, index.parent() ), role );
+    }
+
     class MyList : public QTreeWidget
     {
     public:
-        MyList( AfterActionRequestList* parent )
-            : QTreeWidget( parent )
+        MyList( QWidget* parent )
         {
-            setColumnCount( 2 );
+            setColumnCount( 3 );
             setDragEnabled( true );
             setRootIsDecorated( false );
             setAllColumnsShowFocus( true );
-            header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+            setEditTriggers( QAbstractItemView::SelectedClicked | QAbstractItemView::EditKeyPressed );
+            header()->setResizeMode( 0, QHeaderView::ResizeToContents );
             setContextMenuPolicy( Qt::CustomContextMenu );
+            setItemDelegate( new EditorDelegate( parent ) );
         }
         virtual void startDrag( Qt::DropActions /*supportedActions*/ )
         {
             const QModelIndex index = selectionModel()->currentIndex();
             if( index.isValid() )
-                if( const IndicatorRequest* request = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< const IndicatorRequest* >() )
+                if( const IndicatorRequest* request = VariantFromIndex( index, Qt::UserRole ).value< const IndicatorRequest* >() )
                     dnd::CreateDragObject( request, this );
         }
     };
@@ -54,21 +71,22 @@ namespace
 // Name: AfterActionRequestList constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& controllers, IndicatorPlotFactory& plotFactory )
-    : Q3VBox( parent, "AfterActionRequestList" )
-    , controllers_  ( controllers )
-    , plotFactory_  ( plotFactory )
+AfterActionRequestList::AfterActionRequestList( QWidget* parent, kernel::Controllers& controllers, IndicatorPlotFactory& plotFactory )
+    : QWidget( parent )
+    , controllers_( controllers )
+    , plotFactory_( plotFactory )
     , pendingPixmap_( MAKE_PIXMAP( aaa_pending ) )
-    , donePixmap_   ( MAKE_PIXMAP( aaa_valid ) )
-    , failedPixmap_ ( MAKE_PIXMAP( aaa_broken ) )
-    , popupMenu_( new kernel::ContextMenu( this ) )
+    , donePixmap_( MAKE_PIXMAP( aaa_valid ) )
+    , failedPixmap_( MAKE_PIXMAP( aaa_broken ) )
 {
+    setLayout( new QVBoxLayout );
     requests_ = new MyList( this );
     QStringList headers;
-    headers << tr( "Request" ) << tr( "Status" );
+    headers << " " << tr( "Request" ) << tr( "Function" );
     requests_->setHeaderLabels( headers );
     connect( requests_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnRequestPopup( const QPoint& ) ) );
     connect( requests_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnDoubleClicked() ) );
+    layout()->addWidget( requests_ );
     controllers_.Register( *this );
 }
 
@@ -90,11 +108,24 @@ void AfterActionRequestList::OnDoubleClicked()
     const QModelIndex index = requests_->currentIndex();
     if( index.isValid() )
     {
-        if( const IndicatorRequest* request = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< const IndicatorRequest* >() )
-        {
-            if( request->IsDone() )
-                plotFactory_.CreatePlot( *request );
-        }
+        const IndicatorRequest* request = VariantFromIndex( index, Qt::UserRole ).value< const IndicatorRequest* >();
+        if( request && request->IsDone() )
+            plotFactory_.CreatePlot( *request );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequestList::OnRename
+// Created: JSR 2013-10-14
+// -----------------------------------------------------------------------------
+void AfterActionRequestList::OnRename()
+{
+    const QModelIndex index = requests_->currentIndex();
+    if( index.isValid() )
+    {
+        IndicatorRequest* request = const_cast< IndicatorRequest* >( VariantFromIndex( index, Qt::UserRole ).value< const IndicatorRequest* >() );
+        if( request )
+            request->SetDisplayName( VariantFromIndex( index, Qt::DisplayRole ).toString() );
     }
 }
 
@@ -104,15 +135,16 @@ void AfterActionRequestList::OnDoubleClicked()
 // -----------------------------------------------------------------------------
 void AfterActionRequestList::OnRequestPopup( const QPoint& pos )
 {
-    popupMenu_->clear();
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     const QModelIndex index = requests_->currentIndex();
     if( index.isValid() )
     {
-        popupMenu_->insertItem( tr( "Delete request" ), this, SLOT( OnRemoveItem() ) );
-        popupMenu_->insertSeparator();
+        menu->insertItem( tr( "Delete request" ), this, SLOT( OnRemoveItem() ) );
+        menu->insertSeparator();
     }
-    popupMenu_->insertItem( tr( "Clear list" ), this, SLOT( ClearList() ) );
-    popupMenu_->popup( requests_->viewport()->mapToGlobal( pos ) );
+    menu->insertItem( tr( "Clear list" ), this, SLOT( ClearList() ) );
+    menu->popup( requests_->viewport()->mapToGlobal( pos ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,6 +175,7 @@ void AfterActionRequestList::OnRemoveItem()
 void AfterActionRequestList::NotifyCreated( const IndicatorRequest& request )
 {
     QTreeWidgetItem* item = new QTreeWidgetItem();
+    item->setFlags( item->flags() | Qt::ItemIsEditable );
     requests_->addTopLevelItem( item );
     Display( request, item );
 }
@@ -156,7 +189,7 @@ void AfterActionRequestList::NotifyUpdated( const IndicatorRequest& request )
     for( int i = 0; i < requests_->topLevelItemCount(); ++i )
     {
         QTreeWidgetItem* item = requests_->topLevelItem( i );
-        if( item->data( 0, Qt::UserRole ).value< const IndicatorRequest* >() == &request )
+        if( item && item->data( 1, Qt::UserRole ).value< const IndicatorRequest* >() == &request )
         {
             Display( request, item );
             break;
@@ -180,14 +213,16 @@ void AfterActionRequestList::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void AfterActionRequestList::Display( const IndicatorRequest& request, QTreeWidgetItem* item )
 {
-    item->setText( 0, request.GetName() );
-    item->setData( 0, Qt::UserRole, QVariant::fromValue( &request ) );
-    item->setIcon( 1, request.IsPending() ? pendingPixmap_ :
-                        request.IsDone() ? donePixmap_ :
-                        request.IsFailed() ? failedPixmap_ :
-                        QPixmap() );
+    item->setIcon( 0, request.IsPending() ? pendingPixmap_ :
+        request.IsDone() ? donePixmap_ :
+        request.IsFailed() ? failedPixmap_ :
+        QPixmap() );
+    item->setData( 1, Qt::UserRole, QVariant::fromValue( &request ) );
+    item->setText( 1, request.GetDisplayName() );
+    item->setText( 2, request.GetName() );
     item->setToolTip( 0, request.ErrorMessage() );
     item->setToolTip( 1, request.ErrorMessage() );
+    item->setToolTip( 2, request.ErrorMessage() );
     if( request.IsDone() )
         item->setFlags( item->flags() | Qt::ItemIsDragEnabled );
     else

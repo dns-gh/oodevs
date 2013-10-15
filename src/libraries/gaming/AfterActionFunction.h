@@ -44,12 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AfterActionFunction( const AfterActionFunction& );            //!< Copy constructor
-    AfterActionFunction& operator=( const AfterActionFunction& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis );

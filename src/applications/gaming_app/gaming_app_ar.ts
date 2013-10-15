@@ -69,10 +69,6 @@
 <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation type="unfinished">وظائف</translation>
-    </message>
-    <message>
         <source>Requests</source>
         <translation type="unfinished">طلبات</translation>
     </message>
@@ -80,16 +76,40 @@
         <source>After action review</source>
         <translation type="unfinished">وبعد استعراض العمل</translation>
     </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished">إنشاء</translation>
+    </message>
+    <message>
+        <source>Save requests to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Requests (*.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">خطأ</translation>
+    </message>
+    <message>
+        <source>Unable to save requests to file &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid request file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load request file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AfterActionFunctionList</name>
     <message>
         <source>After action review</source>
         <translation type="unfinished">وبعد استعراض العمل</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
         <source>Parameters</source>
@@ -108,12 +128,20 @@
         <translation type="unfinished">المدة</translation>
     </message>
     <message>
-        <source>Request</source>
-        <translation type="unfinished">طلب</translation>
-    </message>
-    <message>
         <source>Send request</source>
         <translation type="unfinished">إرسال الطلب</translation>
+    </message>
+    <message>
+        <source>Create request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -123,16 +151,16 @@
         <translation type="unfinished">طلب</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation type="unfinished">مركز</translation>
-    </message>
-    <message>
         <source>Delete request</source>
         <translation type="unfinished">حذف الطلب</translation>
     </message>
     <message>
         <source>Clear list</source>
         <translation type="unfinished">قائمة واضحة</translation>
+    </message>
+    <message>
+        <source>Function</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

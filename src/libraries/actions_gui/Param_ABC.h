@@ -127,8 +127,7 @@ public slots:
 protected:
     //! @name Types
     //@{
-    typedef std::vector< QAction* >     T_Actions;
-    typedef T_Actions::const_iterator CIT_Actions;
+    typedef std::vector< QAction* > T_Actions;
     //@}
 
 protected:

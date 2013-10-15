@@ -62,6 +62,7 @@ namespace
             if( !event )
                 return;
             kernel::ContextMenu* menu = new kernel::ContextMenu( this );
+            connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
             if( indexAt( event->pos() ).isValid() )
             {
                 menu->insertItem( tools::translate( "ScorePanel", "View graph" ), parent_, SLOT( OnShowGraph() ) );

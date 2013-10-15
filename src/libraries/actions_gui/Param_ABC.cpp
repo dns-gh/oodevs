@@ -156,7 +156,8 @@ QWidget* Param_ABC::BuildInterface( const QString& objectName, QWidget* parent )
 {
     if( group_ )
         ::gui::ObjectNameManager::getInstance()->RemoveRegisteredName( group_->objectName() );
-    group_ = new ::gui::RichGroupBox( objectName, GetName(), parent );
+    group_ = new ::gui::RichGroupBox( objectName, GetName() );
+    parent->layout()->addWidget( group_ );
     group_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
     group_->setCheckable( IsOptional() );
     if( group_->isCheckable() )
@@ -383,6 +384,7 @@ bool Param_ABC::IsInParam() const
 void Param_ABC::CreateListMenu( QTreeView* list, const QStandardItemModel& model, const QPoint& pos, bool createEnabled )
 {
     kernel::ContextMenu* menu = new kernel::ContextMenu( list );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     if( createEnabled )
         menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
 

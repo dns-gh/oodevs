@@ -76,7 +76,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     RichWidget< QToolButton >* btn = new RichWidget< QToolButton >( "LoadDrawings", box );
     btn->setAutoRaise( true );
     btn->setIconSet( MAKE_PIXMAP( open ) );
-    QToolTip::add( btn, tr( "Load drawings file" ) );
+    QToolTip::add( btn, tr( "Load drawing file" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
 
     btn = new RichWidget< QToolButton >( "saveDrawings", box );
@@ -306,7 +306,7 @@ void DrawerPanel::StartDrawing()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Open()
 {
-    tools::Path filename = FileDialog::getOpenFileName( this, tr( "Load drawings file" ), config_.BuildExerciseChildFile( "" ), tr( "Drawings (*.xml)" ) );
+    tools::Path filename = FileDialog::getOpenFileName( this, tr( "Load drawing file" ), config_.BuildExerciseChildFile( "" ), tr( "Drawings (*.xml)" ) );
     if( filename.IsEmpty() )
         return;
     filename.MakePreferred();
@@ -316,7 +316,7 @@ void DrawerPanel::Open()
     }
     catch( const xml::exception& )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawings file." ).arg( filename.ToUTF8().c_str() ) );
+        QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawing file." ).arg( filename.ToUTF8().c_str() ) );
     }
 }
 
@@ -330,7 +330,7 @@ void DrawerPanel::Save()
     if( filename.IsEmpty() )
         return;
     filename.MakePreferred();
-    if( !filename.HasExtension() || filename.Extension() != ".xml" )
+    if( filename.Extension() != ".xml" )
         filename.ReplaceExtension( ".xml" );
     try
     {

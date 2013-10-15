@@ -69,10 +69,6 @@
 <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Requests</source>
         <translation type="unfinished"></translation>
     </message>
@@ -80,15 +76,39 @@
         <source>After action review</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save requests to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Requests (*.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save requests to file &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid request file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load request file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AfterActionFunctionList</name>
     <message>
         <source>After action review</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -108,11 +128,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Request</source>
+        <source>Send request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Send request</source>
+        <source>Create request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -123,15 +151,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Function</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -69,10 +69,6 @@
 <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation>Fonctions</translation>
-    </message>
-    <message>
         <source>Requests</source>
         <translation>Requêtes</translation>
     </message>
@@ -80,20 +76,40 @@
         <source>After action review</source>
         <translation>Analyse après action</translation>
     </message>
+    <message>
+        <source>Creation</source>
+        <translation>Création</translation>
+    </message>
+    <message>
+        <source>Save requests to file</source>
+        <translation>Enregistrer les requêtes dans un fichier</translation>
+    </message>
+    <message>
+        <source>Requests (*.xml)</source>
+        <translation>Requêtes (*.xml)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Unable to save requests to file &apos;%1&apos;.</source>
+        <translation>Imposssible de sauver les requêtes dans le fichier to file &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid request file.</source>
+        <translation>&apos;%1&apos; n&apos;est pas un fichier de requêtes valide.</translation>
+    </message>
+    <message>
+        <source>Load request file</source>
+        <translation>Charger un fichier de requêtes</translation>
+    </message>
 </context>
 <context>
     <name>AfterActionFunctionList</name>
     <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
         <source>Parameters</source>
         <translation>Paramètres</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Requête</translation>
     </message>
     <message>
         <source>Send request</source>
@@ -115,6 +131,18 @@
         <source>After action review</source>
         <translation>Analyse après action</translation>
     </message>
+    <message>
+        <source>Create request</source>
+        <translation>Créer une requête</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>
@@ -123,16 +151,16 @@
         <translation>Requête</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation>Statut</translation>
-    </message>
-    <message>
         <source>Delete request</source>
         <translation>Supprimer la requête</translation>
     </message>
     <message>
         <source>Clear list</source>
         <translation>Vider la liste</translation>
+    </message>
+    <message>
+        <source>Function</source>
+        <translation>Fonction</translation>
     </message>
 </context>
 <context>
@@ -692,7 +720,7 @@ Raison: %3
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <source>This event is incomplete so it can&apos;t be triggered.</source>
@@ -749,7 +777,7 @@ Raison: %3
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>Profiles</source>

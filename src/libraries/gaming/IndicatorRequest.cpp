@@ -10,26 +10,46 @@
 #include "gaming_pch.h"
 #include "IndicatorRequest.h"
 #include "IndicatorDefinition_ABC.h"
-
 #include "clients_kernel/Controller.h"
 #include "protocol/AarSenders.h"
-#include "protocol/Protocol.h"
-
-using namespace sword;
+#include "protocol/ServerPublisher_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorRequest constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher )
+IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher, const QString& displayName )
     : controller_( controller )
     , definition_( definition )
-    , publisher_ ( publisher )
-    , done_      ( false )
-    , firstTick_ ( 0 )
-    , duration_  ( std::numeric_limits< unsigned int >::max() )
-
+    , publisher_( publisher )
+    , displayName_( displayName )
+    , done_( false )
+    , firstTick_( 0 )
+    , duration_( std::numeric_limits< unsigned int >::max() )
 {
+    controller_.Create( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest constructor
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+IndicatorRequest::IndicatorRequest( xml::xistream& xis, kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher )
+    : controller_( controller )
+    , definition_( definition )
+    , publisher_( publisher )
+    , displayName_( xis.attribute< std::string >( "name" ).c_str() )
+    , done_( false )
+    , firstTick_( 0 )
+    , duration_( std::numeric_limits< unsigned int >::max() )
+{
+    xis >> xml::start( "parameters" )
+            >> xml::list( "parameter", *this, &IndicatorRequest::ReadParameter )
+        >> xml::end
+        >> xml::optional >> xml::start( "time-range" )
+            >> xml::optional >> xml::attribute( "first-tick", firstTick_ )
+            >> xml::optional >> xml::attribute( "duration", duration_ )
+        >> xml::end;
     controller_.Create( *this );
 }
 
@@ -79,13 +99,60 @@ void IndicatorRequest::Commit() const
     aar::PlotRequest message;
     const std::string request = definition_.Commit( parameters_ );
     message().set_identifier( reinterpret_cast< unsigned int >( this ) );
-    message().set_request( request.c_str() );
+    message().set_request( request );
     if( firstTick_ != 0 || duration_ != std::numeric_limits< unsigned int >::max() )
     {
         message().mutable_time_range()->set_begin_tick( firstTick_ );
         message().mutable_time_range()->set_end_tick( firstTick_ + duration_ );
     }
     message.Send( publisher_, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest::SetDisplayName
+// Created: JSR 2013-10-14
+// -----------------------------------------------------------------------------
+void IndicatorRequest::SetDisplayName( const QString& name )
+{
+    displayName_ = name;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest::Save
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void IndicatorRequest::Save( xml::xostream& xos ) const
+{
+    const std::string request = definition_.GetName().toStdString();
+    xos << xml::start( "request" )
+            << xml::attribute( "definition", request )
+            << xml::attribute( "name", displayName_ )
+            << xml::start( "parameters" );
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
+        xos     << xml::start( "parameter")
+                    << xml::attribute( "name", it->first )
+                    << xml::attribute( "value", it->second )
+                << xml::end;
+    xos     << xml::end;
+    if( firstTick_ != 0 || duration_ != std::numeric_limits< unsigned int >::max() )
+    {
+        xos << xml::start( "time-range" );
+        if( firstTick_ != 0 )
+            xos << xml::attribute( "first-tick", firstTick_ );
+        if( duration_ != std::numeric_limits< unsigned int >::max() )
+            xos << xml::attribute( "duration", duration_ );
+         xos << xml::end;
+    }
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest::ReadParameter
+// Created: JSR 2013-10-11
+// -----------------------------------------------------------------------------
+void IndicatorRequest::ReadParameter( xml::xistream& xis )
+{
+    SetParameter( xis.attribute< std::string >( "name" ), xis.attribute< std::string >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +166,7 @@ void IndicatorRequest::Update( const sword::PlotResult& message )
         done_ = true;
         result_.resize( message.values_size() );
         for( int i = 0; i < message.values_size(); ++i )
-            result_[i] = message.values(i);
+            result_[ i ] = message.values( i );
         if( message.has_begin_tick() )
             firstTick_ = message.begin_tick();
         error_ = message.error();
@@ -117,8 +184,7 @@ void IndicatorRequest::Update( const sword::Indicator& message )
         newValues_.push_back( message.value() );
     if( IsDone() )
     {
-        for( std::vector< double >::iterator iter = newValues_.begin(); iter != newValues_.end(); ++iter )
-            result_.push_back( *iter );
+        result_.insert( result_.end(), newValues_.begin(), newValues_.end() );
         newValues_.clear();
     }
     controller_.Update( *this );
@@ -131,6 +197,15 @@ void IndicatorRequest::Update( const sword::Indicator& message )
 QString IndicatorRequest::GetName() const
 {
     return definition_.GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest::GetDisplayName
+// Created: JSR 2013-10-10
+// -----------------------------------------------------------------------------
+QString IndicatorRequest::GetDisplayName() const
+{
+    return displayName_.isEmpty() ? GetName() : displayName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +241,7 @@ bool IndicatorRequest::IsFailed() const
 // -----------------------------------------------------------------------------
 QString IndicatorRequest::ErrorMessage() const
 {
-    return QString( error_.c_str() );
+    return error_.c_str();
 }
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class ContextMenu;
     class Controllers;
 }
 
@@ -28,7 +27,7 @@ class Simulation;
 */
 // Created: AGE 2007-09-25
 // =============================================================================
-class AfterActionRequestList : public Q3VBox
+class AfterActionRequestList : public QWidget
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< IndicatorRequest >
                              , public tools::ElementObserver_ABC< Simulation >
@@ -48,6 +47,7 @@ private slots:
     void OnDoubleClicked();
     void OnRequestPopup( const QPoint& pos );
     void OnRemoveItem();
+    void OnRename();
     void ClearList();
     //@}
 
@@ -69,7 +69,6 @@ private:
     QPixmap pendingPixmap_;
     QPixmap donePixmap_;
     QPixmap failedPixmap_;
-    kernel::ContextMenu* popupMenu_;
     //@}
 };
 

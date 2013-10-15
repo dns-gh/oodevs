@@ -68,6 +68,7 @@ void TemplateListView::contextMenuEvent( QContextMenuEvent* event )
     if( event && indexAt( event->pos() ) == selectionModel()->currentIndex() )
     {
         QMenu* menu = new QMenu( this  );
+        connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
         menu->addAction( tr( "Rename" ), this, SLOT( OnRename() ) );
         menu->popup( event->globalPos() );
     }

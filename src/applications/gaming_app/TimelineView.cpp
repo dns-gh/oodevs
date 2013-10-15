@@ -311,6 +311,7 @@ void TimelineView::contentsContextMenuEvent( QContextMenuEvent* evt )
     if( !selectedItem_ )
         Select( evt->pos() );
     kernel::ContextMenu* menu = new kernel::ContextMenu( this );
+    connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     if( selectedItem_ )
     {
         selectedItem_->DisplayContextMenu( menu );

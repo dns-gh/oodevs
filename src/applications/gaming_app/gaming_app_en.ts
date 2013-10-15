@@ -69,10 +69,6 @@
 <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation>Functions</translation>
-    </message>
-    <message>
         <source>Requests</source>
         <translation>Requests</translation>
     </message>
@@ -80,16 +76,40 @@
         <source>After action review</source>
         <translation>After action review</translation>
     </message>
+    <message>
+        <source>Creation</source>
+        <translation>Creation</translation>
+    </message>
+    <message>
+        <source>Save requests to file</source>
+        <translation>Save requests to file</translation>
+    </message>
+    <message>
+        <source>Requests (*.xml)</source>
+        <translation>Requests (*.xml)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>Unable to save requests to file &apos;%1&apos;.</source>
+        <translation>Unable to save requests to file &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid request file.</source>
+        <translation>&apos;%1&apos; is not a valid request file.</translation>
+    </message>
+    <message>
+        <source>Load request file</source>
+        <translation>Load request file</translation>
+    </message>
 </context>
 <context>
     <name>AfterActionFunctionList</name>
     <message>
         <source>After action review</source>
         <translation>After action review</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Name</translation>
     </message>
     <message>
         <source>Parameters</source>
@@ -108,12 +128,20 @@
         <translation>Duration</translation>
     </message>
     <message>
-        <source>Request</source>
-        <translation>Request</translation>
-    </message>
-    <message>
         <source>Send request</source>
         <translation>Send request</translation>
+    </message>
+    <message>
+        <source>Create request</source>
+        <translation>Create request</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Name:</translation>
     </message>
 </context>
 <context>
@@ -123,16 +151,16 @@
         <translation>Request</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation>Status</translation>
-    </message>
-    <message>
         <source>Delete request</source>
         <translation>Delete request</translation>
     </message>
     <message>
         <source>Clear list</source>
         <translation>Clear list</translation>
+    </message>
+    <message>
+        <source>Function</source>
+        <translation>Function</translation>
     </message>
 </context>
 <context>
@@ -747,7 +775,7 @@ Reason: %3
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>Profiles</source>
