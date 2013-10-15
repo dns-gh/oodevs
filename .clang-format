@@ -1,11 +1,15 @@
 ---
 AccessModifierOffset: -4
+AlwaysBreakTemplateDeclarations: true
+BinPackParameters: false
+BreakBeforeBinaryOperators: true
 BreakBeforeBraces: Allman
 BreakConstructorInitializersBeforeComma: true
-ColumnLimit: 0
-IndentCaseLabels: true
+ColumnLimit: 120
+IndentCaseLabels: false
 IndentWidth: 4
-NamespaceIndentation: Inner
+NamespaceIndentation: All
+PenaltyReturnTypeOnItsOwnLine: 9999
 PointerBindsToType: true
 SpaceAfterControlStatementKeyword: false
 SpaceInEmptyParentheses: false

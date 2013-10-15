@@ -844,6 +844,7 @@
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="htmlhelp" version="4.74.8702"/>
         <update name="iconv"/>
+        <update name="llvm"/>
         <update name="masalife/brain"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
@@ -921,5 +922,13 @@
         " description="build and run all tests"/>
 
     <target name="all" depends="configure,check,cmake.configure,build,test,documentation,package"/>
+
+    <target name="format">
+        <apply executable="${bin.dir}/llvm/bin/clang-format" parallel="false">
+            <arg value="-i"/>
+            <srcfile/>
+            <fileset dir="${src.dir}" includes="**/*.c,**/*.cpp,**/*.h,**/*.hpp,**/*.inl"/>
+        </apply>
+    </target>
 
 </project>
