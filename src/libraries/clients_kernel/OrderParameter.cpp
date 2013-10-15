@@ -304,6 +304,8 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return type_;
     if( type == "location" && type_ == "locationcomposite")
         return type;
+    if( type == "quantity" && type_ == "enumeration" )
+        return "quantity";
     return "";
 }
 
