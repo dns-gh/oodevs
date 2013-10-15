@@ -28,6 +28,9 @@ AfterAction::AfterAction( QWidget* parent, kernel::Controllers& controllers, con
     , config_( config )
     , model_( model )
 {
+    QScrollArea* scrollArea = new QScrollArea;
+    scrollArea->setWidgetResizable( true );
+
     QWidget* main = new QWidget;
     QVBoxLayout* layout = new QVBoxLayout( main );
     QHBoxLayout* toolbarLayout = new QHBoxLayout;
@@ -51,7 +54,9 @@ AfterAction::AfterAction( QWidget* parent, kernel::Controllers& controllers, con
     setWindowTitle( tools::translate( "AfterAction", "After action review" ) );
     layout->addLayout( toolbarLayout );
     layout->addWidget( functionsTab );
-    setWidget( main );
+
+    scrollArea->setWidget( main );
+    setWidget( scrollArea );
 
     connect( load, SIGNAL( clicked() ), SLOT( OnLoad() ) );
     connect( save, SIGNAL( clicked() ), SLOT( OnSave() ) );
@@ -72,7 +77,7 @@ AfterAction::~AfterAction()
 // -----------------------------------------------------------------------------
 void AfterAction::OnLoad()
 {
-    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load requests file" ), config_.BuildExerciseChildFile( "" ), tr( "Requests (*.xml)" ) );
+    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load request file" ), config_.BuildExerciseChildFile( "" ), tr( "Requests (*.xml)" ) );
     if( filename.IsEmpty() )
         return;
     filename.MakePreferred();
@@ -82,7 +87,7 @@ void AfterAction::OnLoad()
     }
     catch( const xml::exception& )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid requests file." ).arg( filename.ToUTF8().c_str() ) );
+        QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid request file." ).arg( filename.ToUTF8().c_str() ) );
     }
 }
 
@@ -96,7 +101,7 @@ void AfterAction::OnSave()
     if( filename.IsEmpty() )
         return;
     filename.MakePreferred();
-    if( !filename.HasExtension() || filename.Extension() != ".xml" )
+    if( filename.Extension() != ".xml" )
         filename.ReplaceExtension( ".xml" );
     try
     {
@@ -107,3 +112,4 @@ void AfterAction::OnSave()
         QMessageBox::critical( this, tr( "Error" ), tr( "Unable to save requests to file '%1'." ).arg( filename.ToUTF8().c_str() ) );
     }
 }
+

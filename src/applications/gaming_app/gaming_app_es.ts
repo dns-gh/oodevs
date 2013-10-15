@@ -93,15 +93,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load requests file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;%1&apos; is not a valid requests file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to save requests to file &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid request file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load request file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

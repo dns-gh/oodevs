@@ -765,10 +765,6 @@
 <context>
     <name>gui::DrawerPanel</name>
     <message>
-        <source>Load drawings file</source>
-        <translation>Charge le fichier de dessins</translation>
-    </message>
-    <message>
         <source>Save drawings to file</source>
         <translation>Sauvegarder le fichier de dessins</translation>
     </message>
@@ -785,10 +781,6 @@
         <translation>Erreur</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid drawings file.</source>
-        <translation>&apos;%1&apos; n&apos;est pas un fichier de dessins valide.</translation>
-    </message>
-    <message>
         <source>Unable to save drawings to file &apos;%1&apos;. 
 Please check access permissions or write protection.</source>
         <translation>Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
@@ -803,6 +795,14 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Parent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load drawing file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

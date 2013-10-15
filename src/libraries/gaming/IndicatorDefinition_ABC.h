@@ -10,13 +10,15 @@
 #ifndef __IndicatorDefinition_ABC_h_
 #define __IndicatorDefinition_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  IndicatorDefinition_ABC
     @brief  IndicatorDefinition_ABC
 */
 // Created: SBO 2009-04-29
 // =============================================================================
-class IndicatorDefinition_ABC
+class IndicatorDefinition_ABC : private boost::noncopyable
 {
 public:
     //! @name Types

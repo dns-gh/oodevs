@@ -110,21 +110,15 @@ void IndicatorRequests::Load( const tools::Loader_ABC& loader, const tools::Path
 void IndicatorRequests::LoadRequests( xml::xistream& xis, const AfterActionModel& model )
 {
     xis >> xml::start( "requests" )
-            >> xml::list( "request", *this, &IndicatorRequests::LoadRequest, model )
+        >> xml::list( "request", [ & ]( xml::xistream& xis )
+        {
+            const IndicatorDefinition_ABC* definition = model.FindDefinition( xis.attribute< std::string >( "definition" ) );
+            if( definition )
+            {
+                requests_.push_back( new IndicatorRequest( xis, controller_, *definition, publisher_ ) );
+                controller_.Update( *this );
+                requests_.back()->Commit();
+            }
+        })
         >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: IndicatorRequests::LoadRequest
-// Created: JSR 2013-10-11
-// -----------------------------------------------------------------------------
-void IndicatorRequests::LoadRequest( xml::xistream& xis, const AfterActionModel& model )
-{
-    const IndicatorDefinition_ABC* definition = model.FindDefinition( xis.attribute< std::string >( "definition" ) );
-    if( definition )
-    {
-        requests_.push_back( new IndicatorRequest( xis, controller_, *definition, publisher_ ) );
-        controller_.Update( *this );
-        requests_.back()->Commit();
-    }
 }

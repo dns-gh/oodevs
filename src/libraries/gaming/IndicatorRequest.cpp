@@ -184,8 +184,7 @@ void IndicatorRequest::Update( const sword::Indicator& message )
         newValues_.push_back( message.value() );
     if( IsDone() )
     {
-        for( auto it = newValues_.begin(); it != newValues_.end(); ++it )
-            result_.push_back( *it );
+        result_.insert( result_.end(), newValues_.begin(), newValues_.end() );
         newValues_.clear();
     }
     controller_.Update( *this );

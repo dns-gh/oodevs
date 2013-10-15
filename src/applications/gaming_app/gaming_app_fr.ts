@@ -93,16 +93,16 @@
         <translation>Erreur</translation>
     </message>
     <message>
-        <source>Load requests file</source>
-        <translation>Charger un fichier de requêtes</translation>
+        <source>Unable to save requests to file &apos;%1&apos;.</source>
+        <translation>Imposssible de sauver les requêtes dans le fichier to file &apos;%1&apos;.</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid requests file.</source>
+        <source>&apos;%1&apos; is not a valid request file.</source>
         <translation>&apos;%1&apos; n&apos;est pas un fichier de requêtes valide.</translation>
     </message>
     <message>
-        <source>Unable to save requests to file &apos;%1&apos;.</source>
-        <translation>Imposssible de sauver les requêtes dans le fichier to file &apos;%1&apos;.</translation>
+        <source>Load request file</source>
+        <translation>Charger un fichier de requêtes</translation>
     </message>
 </context>
 <context>

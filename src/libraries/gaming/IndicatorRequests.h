@@ -64,7 +64,6 @@ private:
     //! @name Helpers
     //@{
     void LoadRequests( xml::xistream& xis, const AfterActionModel& model );
-    void LoadRequest( xml::xistream& xis, const AfterActionModel& model );
     //@}
 
 private:

@@ -13,7 +13,6 @@
 #include "IndicatorDefinition_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/AarSenders.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -41,7 +40,6 @@ class QTreeWidgetItem;
 // =============================================================================
 class Score : public IndicatorDefinition_ABC
             , public kernel::Displayable_ABC
-            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
