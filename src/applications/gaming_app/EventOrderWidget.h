@@ -12,9 +12,11 @@
 
 #include "EventWidget_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "clients_gui/EventBuilder_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include <boost/scoped_ptr.hpp>
 
 namespace actions
 {
@@ -33,6 +35,7 @@ namespace gui
     template< typename T > class RichWarnWidget;
     class RichGroupBox;
     class RichLabel;
+    class EventManager;
 }
 
 namespace kernel
@@ -72,6 +75,7 @@ class EventOrderWidget : public EventWidget_ABC
                        , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< Decisions_ABC >
+                       , private gui::EventBuilder_ABC
 {
     Q_OBJECT
 
@@ -108,29 +112,20 @@ private:
     //! @name Helpers
     //@{
     const Decisions_ABC* GetTargetDecision() const;
-    void FillMission();
     void SetTarget( const kernel::Entity_ABC* entity );
-    bool AreTargetAndMissionCompatible() const;
-    bool AreTargetAndMissionCompatible( const kernel::OrderType* currentOrder ) const;
-    void WarnTargetAndMission() const;
-    void BuildMissionInterface( bool resetAll );
-    void FillMissionInterface( const EventAction& event );
-    void Publish( timeline::Event* event = 0 ) const;
+    void Publish( timeline::Event* event, bool planned ) const;
 
-    template< typename T >
-    void AddSingleOrder( const T& mission, bool disabled = false );
-    template< typename T >
-    void AddAllOrders();
-    template< typename T >
-    void AddCompatibleOrders( tools::Iterator< const T& > it );
-    void AddCompatibleFragOrders( const Decisions_ABC& decisions );
+
+    virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
+                        const std::vector< std::string >& missions, const std::string& currentMission,
+                        bool invalid = false );
+    bool HasInvalidMission() const;
     //@}
 
 signals:
     //! @name Signals
     //@{
     void StartCreation( E_EventTypes type, const QDateTime& dateTime );
-    void UpdateCreation( E_EventTypes type, const QDateTime& dateTime );
     void SelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
     void EnableTriggerEvent( bool enable );
     //@}
@@ -146,7 +141,6 @@ private slots:
     //@{
     void OnMissionTypeChanged( int index );
     void OnMissionChanged( int id );
-    void OnTargetSelected();
     void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
     void OnSelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
     void OnTargetRemoved();
@@ -172,17 +166,11 @@ private:
     gui::RichLabel* targetLabel_;
     actions::gui::MissionInterface* missionInterface_;
 
-    E_MissionType previousEntityType_;
-    E_MissionType previousMissionType_;
-    E_MissionType currentMissionType_;
-    E_MissionType currentEntityType_;
-    bool missionChoosed_;
-
     const kernel::Entity_ABC* selectedEntity_;
     const kernel::Entity_ABC* target_;
 
-    const kernel::OrderType* lastGivenOrder_;
     bool planningMode_;
+    boost::scoped_ptr< gui::EventManager > manager_;
     //@}
 };
 

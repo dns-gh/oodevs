@@ -11,8 +11,13 @@
 #define __MissionInterface_h_
 
 #include "ParamInterface_ABC.h"
+#include "MissionInterface_ABC.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/SafePointer.h"
+
+
+#include "clients_kernel/FragOrderType.h"
+#include "clients_kernel/MissionType.h"
 
 namespace kernel
 {
@@ -55,6 +60,7 @@ namespace actions
 // =============================================================================
 class MissionInterface : public QTabWidget
                        , public ParamInterface_ABC
+                       , public MissionInterface_ABC
 {
     Q_OBJECT
 
@@ -71,23 +77,19 @@ public:
     bool CheckValidity();
     void AddParameter( const QString& objectName, Param_ABC& parameter );
     void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
-    void Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type );
-    void SetEntity( const kernel::Entity_ABC* entity );
-    void Purge();
-    void SetPlanned( bool planned );
+    virtual void Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type );
+    virtual void SetEntity( const kernel::Entity_ABC* entity );
+    virtual void Purge();
+    virtual void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
-    void FillFrom( const actions::Action_ABC& action );
-    template< typename T >
-    void Publish( actions::ActionsModel& model, timeline::Event* event = 0 ) const
+    virtual void FillFrom( const actions::Action_ABC& action );
+    virtual void PublishFragOrder( actions::ActionsModel& model, timeline::Event* event = 0 ) const
     {
-        if( !order_ )
-            return;
-        Action_ABC* action = model.CreateAction( static_cast< const T& >( *order_ ), entity_ );
-        CommitTo( *action );
-        if( planned_ )
-            emit PlannedMission( *action, event );
-        else
-            model.Publish( *action, 0 );
+        Publish< kernel::FragOrderType >( model, event );
+    }
+    virtual void PublishMissionOrder( actions::ActionsModel& model, timeline::Event* event = 0 ) const
+    {
+        Publish< kernel::MissionType >( model, event );
     }
     //@}
 
@@ -108,6 +110,22 @@ private:
     //@{
     typedef std::vector< Param_ABC* >      T_Parameters; // $$$$ ABR 2012-01-11: Todo : use sharepointer
     typedef T_Parameters::const_iterator CIT_Parameters;
+    //@}
+
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void Publish( actions::ActionsModel& model, timeline::Event* event = 0 ) const
+    {
+        if( !order_ )
+            return;
+        Action_ABC* action = model.CreateAction( static_cast< const T& >( *order_ ), entity_ );
+        CommitTo( *action );
+        if( planned_ )
+            emit PlannedMission( *action, event );
+        else
+            model.Publish( *action, 0 );
+    }
     //@}
 
 private:

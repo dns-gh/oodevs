@@ -119,7 +119,6 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
     connect( orderWidget, SIGNAL( EnableTriggerEvent( bool ) ), bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
     connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
-    connect( orderWidget, SIGNAL( UpdateCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( UpdateCreation( E_EventTypes, const QDateTime& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,18 +144,6 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDockWidget::UpdateCreation
-// Created: LGY 2013-08-20
-// -----------------------------------------------------------------------------
-void EventDockWidget::UpdateCreation( E_EventTypes type, const QDateTime& dateTime )
-{
-    event_.reset( factory_.Create( type ) );
-    if( dateTime.isValid() )
-        emit BeginDateChanged( dateTime );
-    Configure( type, false, false );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventDockWidget::StartEdition
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
@@ -174,7 +161,11 @@ void EventDockWidget::Configure( E_EventTypes type, bool editing, bool purge )
 {
     SetEventType( type );
     if( purge )
-        Purge();
+    {
+        topWidget_->Purge();
+        bottomWidget_->Purge();
+        detailWidget_->Purge();
+    }
     SetEditing( editing );
     Fill();
     SetContentVisible( true );

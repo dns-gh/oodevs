@@ -126,8 +126,6 @@ private slots:
     //! @name Slots
     //@{
     void StartCreation( E_EventTypes type, const QDateTime& dateTime );
-    void UpdateCreation( E_EventTypes type, const QDateTime& dateTime );
-
     void OnEditClicked();
     void OnDeleteClicked();
 
