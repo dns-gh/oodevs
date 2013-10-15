@@ -5849,6 +5849,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Speed reduction modifier</source>
         <translation>Coefficient de réduction de la vitesse</translation>
     </message>
+    <message>
+        <source>Standard flying height</source>
+        <translation>Hauteur de vol standard</translation>
+    </message>
+    <message>
+        <source>Tactical flying height</source>
+        <translation>Hauteur de vol tactique</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

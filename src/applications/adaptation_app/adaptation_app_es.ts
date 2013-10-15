@@ -5831,6 +5831,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Speed reduction modifier</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Standard flying height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical flying height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

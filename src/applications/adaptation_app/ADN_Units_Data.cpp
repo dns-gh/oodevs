@@ -322,6 +322,8 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , rProbeWidth_                      ( 0 )
     , rProbeLength_                     ( 0 )
     , bCanFly_                          ( false )
+    , standardFlyingHeight_             ( 0 )
+    , tacticalFlyingHeight_             ( 0 )
     , eCrossingHeight_                  ( static_cast< E_CrossingHeight >( 0 ) )
     , bIsAutonomous_                    ( false )
     , footprint_                        ( 0. )
@@ -371,6 +373,8 @@ ADN_Units_Data::UnitInfos::UnitInfos( unsigned int id )
     , rProbeWidth_                      ( 0 )
     , rProbeLength_                     ( 0 )
     , bCanFly_                          ( false )
+    , standardFlyingHeight_             ( 0 )
+    , tacticalFlyingHeight_             ( 0 )
     , eCrossingHeight_                  ( static_cast< E_CrossingHeight >( 0 ) )
     , bIsAutonomous_                    ( false )
     , footprint_                        ( 0. )
@@ -437,6 +441,8 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->nNbNCOfficer_ = nNbNCOfficer_.GetData();
     pCopy->decontaminationDelay_ = decontaminationDelay_.GetData();
     pCopy->bCanFly_ = bCanFly_.GetData();
+    pCopy->standardFlyingHeight_ = standardFlyingHeight_.GetData();
+    pCopy->tacticalFlyingHeight_ = tacticalFlyingHeight_.GetData();
     pCopy->eCrossingHeight_ = eCrossingHeight_.GetData();
     pCopy->bIsAutonomous_ = bIsAutonomous_.GetData();
     pCopy->footprint_ = footprint_.GetData();
@@ -661,8 +667,10 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
         throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid crossing height '%1'" ).arg( crossingHeight.c_str() ).toStdString() );
     eCrossingHeight_ = eCrossingHeight;
 
-    input >> xml::optional >> xml::attribute( "can-fly", bCanFly_ );
-    input >> xml::optional >> xml::attribute( "is-autonomous", bIsAutonomous_ );
+    input >> xml::optional >> xml::attribute( "can-fly", bCanFly_ )
+          >> xml::optional >> xml::attribute( "standard-flying-height", standardFlyingHeight_ )
+          >> xml::optional >> xml::attribute( "tactical-flying-height", tacticalFlyingHeight_ )
+          >> xml::optional >> xml::attribute( "is-autonomous", bIsAutonomous_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -788,6 +796,10 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
 
     if( bCanFly_.GetData() )
         output << xml::attribute( "can-fly", bCanFly_ );
+    if( standardFlyingHeight_.GetData() > 0 )
+        output << xml::attribute( "standard-flying-height", standardFlyingHeight_ );
+    if( tacticalFlyingHeight_.GetData() > 0 )
+        output << xml::attribute( "tactical-flying-height", tacticalFlyingHeight_ );
 
     if( bIsAutonomous_.GetData() )
         output << xml::attribute( "is-autonomous", bIsAutonomous_ );

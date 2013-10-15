@@ -183,6 +183,8 @@
 						<xs:attribute name="type" type="T_UnitType" use="required"/>
 						<xs:attribute name="name" type="xs:string" use="required"/>
 						<xs:attribute name="can-fly" type="xs:boolean" use="optional"/>
+						<xs:attribute name="standard-flying-height" type="xs:nonNegativeInteger" use="optional"/>
+						<xs:attribute name="tactical-flying-height" type="xs:nonNegativeInteger" use="optional"/>
 						<xs:attribute name="is-autonomous" type="xs:boolean" use="optional"/>
 					</xs:complexType>
 				</xs:element>

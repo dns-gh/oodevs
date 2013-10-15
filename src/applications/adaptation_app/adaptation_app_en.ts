@@ -5826,6 +5826,14 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Speed reduction modifier</source>
         <translation>Speed reduction modifier</translation>
     </message>
+    <message>
+        <source>Standard flying height</source>
+        <translation>Standard flying height</translation>
+    </message>
+    <message>
+        <source>Tactical flying height</source>
+        <translation>Tactical flying height</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
