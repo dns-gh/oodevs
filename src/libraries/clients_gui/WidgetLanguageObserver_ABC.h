@@ -10,6 +10,8 @@
 #ifndef __gui_WidgetLanguageObserver_ABC_h_
 #define __gui_WidgetLanguageObserver_ABC_h_
 
+#include "tools/LanguageObserver_ABC.h"
+
 namespace gui
 {
 
@@ -21,6 +23,7 @@ namespace gui
 // =============================================================================
 template< typename ParentType >
 class WidgetLanguageObserver_ABC : public ParentType
+                                 , public tools::LanguageObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -32,31 +35,20 @@ public:
     WidgetLanguageObserver_ABC( T1 param1, T2 param2 ) : ParentType( param1, param2 ) {}
     template< typename T1, typename T2, typename T3 >
     WidgetLanguageObserver_ABC( T1 param1, T2 param2, T3 param3 ) : ParentType( param1, param2, param3 ) {}
-
-    virtual ~WidgetLanguageObserver_ABC() {}
-    //@}
-
-public:
-    //! @name Operations
-    //@{
-    virtual void OnLanguageChanged() = 0;
     //@}
 
 private:
     //! @name Member data
     //@{
-    virtual void changeEvent( QEvent * event );
+    virtual void changeEvent( QEvent * event )
+    {
+        if( event->type() == QEvent::LanguageChange )
+            OnLanguageChanged();
+        ParentType::changeEvent( event );
+    }
     //@}
 };
 
-template< typename ParentType >
-void WidgetLanguageObserver_ABC< ParentType >::changeEvent( QEvent * event )
-{
-    if( event->type() == QEvent::LanguageChange )
-        OnLanguageChanged();
-    ParentType::changeEvent( event );
-}
-
-}
+} //! namespace gui
 
 #endif // __gui_WidgetLanguageObserver_ABC_h_

@@ -24,6 +24,7 @@ namespace kernel
 {
     class ActionController;
     class Controller;
+    class LanguageController;
     class ModeController;
     class Options;
 
@@ -60,6 +61,7 @@ public:
     Controller&         controller_;
     ActionController&   actions_;
     ModeController&     modes_;
+    LanguageController& languages_;
     //@}
 };
 
