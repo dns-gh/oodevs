@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_WizardPage.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------

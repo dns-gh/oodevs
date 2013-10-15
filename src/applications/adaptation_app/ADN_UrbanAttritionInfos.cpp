@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_UrbanAttritionInfos.h"
+#include "ADN_WorkspaceElement.h"
 
 using namespace helpers;
 
@@ -17,7 +18,7 @@ using namespace helpers;
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
 ADN_UrbanAttritionInfos::ADN_UrbanAttritionInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true, "material-type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true )
     , rCoeff_( 0. )
 {
     // NOTHING
@@ -45,10 +46,10 @@ void ADN_UrbanAttritionInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_UrbanAttritionInfos::WriteArchive
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
-void ADN_UrbanAttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "urbanModifier"*/ )
+void ADN_UrbanAttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "urbanModifier"*/ ) const
 {
-    output << xml::start( tag );
-    ADN_CrossedRef< ADN_Urban_Data::UrbanMaterialInfos >::WriteArchive( output );
-    output << xml::attribute( "value", rCoeff_.GetData() )
+    output << xml::start( tag )
+             << xml::attribute( "material-type", *this )
+             << xml::attribute( "value", rCoeff_.GetData() )
            << xml::end;
 }

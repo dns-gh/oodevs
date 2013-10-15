@@ -31,7 +31,7 @@ ADN_Weapons_PhTable::ADN_Weapons_PhTable( const QString& objectName, ADN_Connect
     delegate_.AddSpinBoxOnColumn( 0, 0, std::numeric_limits< int >::max() );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0, 100, 1, 5 );
     proxyModel_->setDynamicSortFilter( true );
-    proxyModel_->sort( 0, Qt::AscendingOrder );
+    Sort();
     setSortingEnabled( false );
 }
 

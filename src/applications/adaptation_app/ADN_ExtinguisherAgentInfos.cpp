@@ -9,13 +9,14 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ExtinguisherAgentInfos.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ExtinguisherAgentInfos constructor
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_ExtinguisherAgentInfos::ADN_ExtinguisherAgentInfos( ADN_Resources_Data::CategoryInfo* agent )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_, agent, true, "agent" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_, agent, true )
     , heatDecreaseRate_( 0 )
 {
     // NOTHING
@@ -53,10 +54,10 @@ void ADN_ExtinguisherAgentInfos::ReadArchive( xml::xistream& xis )
 // Name: ADN_ExtinguisherAgentInfos::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_ExtinguisherAgentInfos::WriteArchive( xml::xostream& xos, const std::string& tag )
+void ADN_ExtinguisherAgentInfos::WriteArchive( xml::xostream& xos, const std::string& tag ) const
 {
-    xos << xml::start( tag );
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
-    xos << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
+    xos << xml::start( tag )
+            << xml::attribute( "agent", *this )
+            << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
         << xml::end;
 }

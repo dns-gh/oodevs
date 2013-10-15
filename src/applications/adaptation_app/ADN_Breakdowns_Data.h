@@ -34,7 +34,7 @@ public:
         RepairPartInfo* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Int nNbr_;
@@ -55,7 +55,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadPart( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Enum< E_BreakdownNTI, eNbrBreakdownNTI > nNTI_;
@@ -90,7 +90,7 @@ private:
     void ReadArchive( xml::xistream& input );
     void ReadCategory( xml::xistream& input );
     void ReadBreakdown( xml::xistream& input, const E_BreakdownNTI& nti );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     ADN_Type_String strAverageDiagnosticTime_;

@@ -14,6 +14,7 @@
 #include "ADN_Equipments_Data.h"
 #include "ADN_Equipments_GUI.h"
 #include "ADN_Resources_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 
 namespace
@@ -52,7 +53,7 @@ ADN_Equipments_Resources_ListView::ADN_Equipments_Resources_ListView( const QStr
     setAlternatingRowColors( true );
 
     proxyModel_->setDynamicSortFilter( true );
-    proxyModel_->sort( 0, Qt::DescendingOrder );
+    Sort();
     setSortingEnabled( false );
 }
 

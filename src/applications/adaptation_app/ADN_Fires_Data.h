@@ -38,7 +38,7 @@ public:
 
         void ReadInjury( xml::xistream& input );
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         std::string parentName_;
@@ -59,7 +59,7 @@ public:
         void CopyFrom( FireSurfaceInfos& infos );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Int ignitionThreshold_;
@@ -96,7 +96,7 @@ public:
         //@{
         FireClassInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         //@}
 
     private:
@@ -148,7 +148,7 @@ private:
     //@{
     void ReadArchive( xml::xistream& input );
     void ReadFireClass( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
     //@}
 
 private:

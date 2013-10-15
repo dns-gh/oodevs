@@ -69,7 +69,6 @@ private:
     void FillListByNature();
     void FillAutomatComposition( QStandardItem& parent, const kernel::AutomatType& type );
     void FillAgentComposition( QStandardItem& parent, const kernel::AgentType& type );
-    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
 
     virtual void BeforeSelection() {}
     virtual void AfterSelection() {}

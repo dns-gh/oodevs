@@ -13,13 +13,14 @@
 #include "ADN_Resources_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FuneralPackagingResource constructor
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
 ADN_FuneralPackagingResource::ADN_FuneralPackagingResource()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Funeraire ).GetCategories(), 0, true, "resource" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Funeraire ).GetCategories(), 0, true )
     , processDuration_( "0s" )
     , terminal_( false )
 {
@@ -52,13 +53,13 @@ void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
 // Name: ADN_FuneralPackagingResource::WriteArchive
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
-void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output )
+void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "packaging" );
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( output );
-    output  << xml::attribute( "process-duration", processDuration_ )
-            << xml::attribute( "terminal", terminal_ )
-            << xml::end;
+    output << xml::start( "packaging" )
+             << xml::attribute( "resource", *this )
+             << xml::attribute( "process-duration", processDuration_ )
+             << xml::attribute( "terminal", terminal_ )
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------

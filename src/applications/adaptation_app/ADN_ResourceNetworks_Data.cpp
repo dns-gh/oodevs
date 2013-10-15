@@ -11,6 +11,7 @@
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Project_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------
@@ -56,7 +57,7 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::Reso
 void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream& input )
 {
     int id;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::start( "resource" )
               >> xml::attribute( "id", id )
           >> xml::end
@@ -83,10 +84,10 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
 // Name: ResourceNetworkInfos::WriteArchive
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
-void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostream& output )
+void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource-network" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::start( "resource" )
                    << xml::attribute( "id", ptrCategory_.GetData() ? ptrCategory_.GetData()->nId_.GetData() : 0 )
                << xml::end
@@ -175,7 +176,7 @@ void ADN_ResourceNetworks_Data::ReadResourceNetwork( xml::xistream& input )
 // Name: ADN_ResourceNetworks_Data::WriteArchive
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
-void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output )
+void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output ) const
 {
     if( resourceNetworks_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

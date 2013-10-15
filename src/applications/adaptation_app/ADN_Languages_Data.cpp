@@ -72,7 +72,7 @@ void ADN_Languages_Data::ReadLanguage( xml::xistream& input )
 // Name: ADN_Languages_Data::WriteArchive
 // Created: ABR 2013-07-08
 // -----------------------------------------------------------------------------
-void ADN_Languages_Data::WriteArchive( xml::xostream& output )
+void ADN_Languages_Data::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "languages" );
     tools::SchemaWriter schemaWriter;

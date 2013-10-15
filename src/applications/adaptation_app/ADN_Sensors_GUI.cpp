@@ -55,6 +55,8 @@ public:
         verticalHeader()->setVisible( false );
         horizontalHeader()->setVisible( false );
 
+        //AddItem( 0 , 0, this, "a" );
+        //AddItem( 1 , 0, this, "a" );
         AddItem( 1 , 1, this, tools::translate( "ADN_Sensors_GUI", "Angle" ) );
         AddItem( 1 , 2, this, tools::translate( "ADN_Sensors_GUI", "Detection range" ) );
         AddItem( 1 , 3, this, tools::translate( "ADN_Sensors_GUI", "Recognition range" ) );
@@ -440,7 +442,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
             continue;
 
         pTable->setNumRows( nRow + 1 );
-        pTable->AddItem( nRow, 0, &sensor, sensor.strName_.GetData().c_str() );
+        pTable->AddItem( nRow, 0, &sensor, QString( sensor.strName_.GetData().c_str() ) );
         pTable->AddItem( nRow, 1, &sensor, &sensor.rAngle_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
         pTable->AddItem( nRow, 2, &sensor, &sensor.rDistDetection_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
         pTable->AddItem( nRow, 3, &sensor, &sensor.rDistReco_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
@@ -458,7 +460,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 
         ++nRow;
     }
-    pTable->Sort( 0, Qt::DescendingOrder );
+    pTable->Sort();
     return pTable;
 }
 
@@ -532,7 +534,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
         }
         nRow += static_cast< int >( sensor.vTargets_.size() );
     }
-    pTable->Sort( 0, Qt::DescendingOrder );
+    pTable->Sort();
     return pTable;
 }
 

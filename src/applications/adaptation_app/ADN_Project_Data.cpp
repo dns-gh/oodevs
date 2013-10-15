@@ -14,6 +14,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Missions_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "XmlResources.cpp"
 #include "tools/Loader_ABC.h"
 #include <boost/lexical_cast.hpp>
@@ -65,7 +66,7 @@ namespace
               >> xml::end;
     }
 
-    void WriteFile( xml::xostream& output, const std::string& file, tools::Path& outfile )
+    void WriteFile( xml::xostream& output, const std::string& file, const tools::Path& outfile )
     {
         if( outfile.IsEmpty() )
             return;
@@ -74,7 +75,7 @@ namespace
                << xml::end;
     }
 
-    void WritePath( xml::xostream& output, const std::string& file, tools::Path& outfile )
+    void WritePath( xml::xostream& output, const std::string& file, const tools::Path& outfile )
     {
         if( outfile.IsEmpty() )
             return;
@@ -178,7 +179,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
 // Name: DataInfos::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
+void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "physical" );
     if( readOnly_ )

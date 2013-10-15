@@ -16,6 +16,7 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_Disasters_GUI.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Disasters constructor

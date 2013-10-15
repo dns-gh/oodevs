@@ -64,7 +64,7 @@ void ADN_Data_Container::Initialize()
 // Name: ADN_Data_Container::Save
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-void ADN_Data_Container::Save()
+void ADN_Data_Container::Save() const
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Save();
@@ -94,7 +94,7 @@ void ADN_Data_Container::ReadArchive( xml::xistream& input )
 // Name: ADN_Data_Container::WriteArchive
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-void ADN_Data_Container::WriteArchive( xml::xostream& output )
+void ADN_Data_Container::WriteArchive( xml::xostream& output ) const
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->WriteArchive( output );

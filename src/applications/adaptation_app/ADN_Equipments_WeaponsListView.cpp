@@ -16,6 +16,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Equipments_Data::WeaponInfos WeaponInfos;
 

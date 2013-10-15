@@ -60,7 +60,7 @@ void ADN_Communications_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Communications_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Communications_Data::WriteArchive( xml::xostream& output )
+void ADN_Communications_Data::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "communications" );
     tools::SchemaWriter schemaWriter;

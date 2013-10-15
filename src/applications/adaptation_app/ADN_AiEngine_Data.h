@@ -33,7 +33,7 @@ public:
 
 private:
     void ReadArchive( xml::xistream& );
-    void WriteArchive( xml::xostream& );
+    void WriteArchive( xml::xostream& ) const;
 
 public:
     ADN_Type_Double rPertinenceMaxDecrease_;

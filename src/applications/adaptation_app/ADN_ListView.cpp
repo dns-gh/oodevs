@@ -11,15 +11,17 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView.h"
 #include "moc_ADN_ListView.cpp"
-#include "ADN_StandardItem.h"
-#include "ADN_Workspace.h"
-#include "ADN_Enums.h"
 #include "ADN_Connector_ListView_ABC.h"
+#include "ADN_Enums.h"
 #include "ADN_Languages_Data.h"
 #include "ADN_Languages_GUI.h"
+#include "ADN_ListViewToolTip.h"
 #include "ADN_MultiRefWarningDialog.h"
 #include "ADN_ObjectCreator_ABC.h"
-#include "ADN_ListViewToolTip.h"
+#include "ADN_StandardItem.h"
+#include "ADN_Tools.h"
+#include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include <boost/bind.hpp>
 #include <excel/ExcelFormat.h>
 
@@ -78,6 +80,8 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
     if( !title.isEmpty() )
         dataModel_.setHorizontalHeaderLabels( QStringList( title ) );
     viewport()->installEventFilter( new ADN_ListViewToolTip( viewport(), *this ) );
+
+    proxyModel_->sort( 0 );
 
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( SetCurrentItem() ) );
     connect( &usedByMapper_, SIGNAL( mapped( int ) ), this, SLOT( ContextMenuSearchElements( int ) ) );
@@ -908,4 +912,13 @@ void ADN_ListView::OnLanguageChanged()
                 parentData->CheckValidity();
                 item->Warn( parentData->GetErrorStatus() );
             }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::Sort
+// Created: ABR 2013-10-11
+// -----------------------------------------------------------------------------
+void ADN_ListView::Sort( int column /*= 0*/, Qt::SortOrder order /*= Qt::AscendingOrder*/ )
+{
+    proxyModel_->sort( column, order );
 }

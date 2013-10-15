@@ -11,6 +11,7 @@
 #include "ADN_Type_LocalizedString.h"
 #include "moc_ADN_Type_LocalizedString.cpp"
 #include "ADN_Languages_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/Context.h"
 #include "clients_kernel/Language.h"
 
@@ -294,4 +295,24 @@ bool ADN_Type_LocalizedString::CheckUniqueTranslation() const
 const boost::shared_ptr< kernel::LocalizedString >& ADN_Type_LocalizedString::GetTranslation() const
 {
     return translation_;
+}
+
+// -----------------------------------------------------------------------------
+// Stream operators
+// -----------------------------------------------------------------------------
+std::ostream& operator<<( std::ostream& os, const ADN_Type_LocalizedString& type )
+{
+    return os << type.GetKey();
+}
+
+xml::xostream& operator<<( xml::xostream& xos, const ADN_Type_LocalizedString& type )
+{
+    return xos << type.GetKey();
+}
+xml::xistream& operator>>( xml::xistream& xis, ADN_Type_LocalizedString& type )
+{
+    std::string value;
+    xis >> value;
+    type.SetKey( value );
+    return xis;
 }

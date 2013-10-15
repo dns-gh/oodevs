@@ -16,6 +16,7 @@
 #include "ADN_Health_Data.h"
 #include "ADN_Resources_GUI.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include <boost/noncopyable.hpp>
 
 //-----------------------------------------------------------------------------

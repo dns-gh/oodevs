@@ -12,6 +12,7 @@
 
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_ConsistencyChecker.h"
+#include "ADN_Tools.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Workspace.h"
 
@@ -77,5 +78,29 @@ private:
 };
 
 #include "ADN_TypePtr_InVector_ABC.inl"
+
+// -----------------------------------------------------------------------------
+// Stream operators
+// -----------------------------------------------------------------------------
+template< typename T >
+std::ostream& operator<<( std::ostream& os, const ADN_TypePtr_InVector_ABC< T >& type )
+{
+    return os << *static_cast< T* >( type.GetData() );
+}
+
+template< typename T >
+xml::xostream& operator<<( xml::xostream& xos, const ADN_TypePtr_InVector_ABC< T >& type )
+{
+    return xos << *static_cast< T* >( type.GetData() );
+}
+template< typename T >
+xml::xistream& operator>>( xml::xistream& xis, ADN_TypePtr_InVector_ABC< T >& type )
+{
+    std::string value;
+    xis >> value;
+    type.SetRefName( value );
+    type.Initialize();
+    return xis;
+}
 
 #endif // __ADN_TypePtr_InVector_ABC_h_

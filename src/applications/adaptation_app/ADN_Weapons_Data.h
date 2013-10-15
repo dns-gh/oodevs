@@ -39,7 +39,7 @@ public:
 private:
     void ReadWeapon( xml::xistream& input );
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     ADN_Type_Vector_ABC< ADN_Weapons_Data_WeaponInfos > weapons_;

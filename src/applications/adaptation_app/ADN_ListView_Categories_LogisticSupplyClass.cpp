@@ -16,6 +16,7 @@
 #include "ADN_Tr.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_LogisticSupplyClass::ADN_ListView_Categories_LogisticSupplyClass

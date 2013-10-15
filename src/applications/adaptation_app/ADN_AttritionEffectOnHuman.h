@@ -27,7 +27,7 @@ public:
     std::string GetItemName();
 
     void ReadArchive( xml::xistream& );
-    void WriteArchive( xml::xostream& );
+    void WriteArchive( xml::xostream& ) const;
 
 public:
     ADN_Type_Enum< E_EquipmentState_ADN, eNbrEquipmentState_ADN > nEquipmentState_;

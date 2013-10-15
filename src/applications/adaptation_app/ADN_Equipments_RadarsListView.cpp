@@ -17,6 +17,7 @@
 #include "ADN_Equipments_Data.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Equipments_Data::RadarInfos RadarInfos;
 

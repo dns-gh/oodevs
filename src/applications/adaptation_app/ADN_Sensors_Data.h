@@ -39,7 +39,7 @@ public:
 
         LimitedToSensorsInfos* CreateCopy();
         void ReadArchive ( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
     };
 
     typedef ADN_Type_Vector_ABC< LimitedToSensorsInfos >  T_LimitedToSensorsInfos_Vector;
@@ -52,7 +52,7 @@ public:
         explicit ModificatorSizeInfos( ADN_Volumes_Data::VolumeInfos* ptr );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rCoeff_;
@@ -100,7 +100,7 @@ public:
         explicit ModificatorIlluminationInfos( const E_LightingType& e );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_LightingType eType_;
@@ -132,7 +132,7 @@ public:
         explicit ModificatorMeteoInfos( const E_SensorWeatherModifiers& e );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_SensorWeatherModifiers eType_;
@@ -164,7 +164,7 @@ public:
         explicit ModificatorEnvironmentInfos( const E_VisionObject& e );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_VisionObject eType_;
@@ -196,7 +196,7 @@ public:
         explicit ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rCoeff_;
@@ -243,7 +243,7 @@ public:
         explicit ModificatorPostureInfos( const E_UnitPosture& e );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_UnitPosture eType_;
@@ -279,7 +279,7 @@ public:
         void  CopyFrom( PopulationInfos& populationInfo );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rDensity_;
@@ -296,7 +296,7 @@ public:
         TargetInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void ReadPosture( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rDistanceDetection_;
@@ -316,7 +316,7 @@ public:
 
         DisasterInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rDetectionThreshold_;
@@ -349,7 +349,7 @@ public:
         void ReadTerrain( xml::xistream& input );
         void ReadUrbanBlockMaterial( xml::xistream& input );
         void ReadItem( const std::string& name, xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     public:
@@ -391,7 +391,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadTime( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Time surveyTimes_[ eNbrVisionObjects - 1 ];
@@ -405,7 +405,7 @@ public:
         virtual ~CobraInfos();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rRange_;
@@ -432,7 +432,7 @@ public:
 private:
     void ReadSensor( xml::xistream& input );
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     T_SensorsInfos_Vector vSensors_;

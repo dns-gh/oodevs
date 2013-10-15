@@ -41,11 +41,6 @@ public:
     virtual ~CommunicationTreeView();
     //@}
 
-    //! @name Filters/Sort
-    //@{
-    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
-    //@}
-
     //! @name Operations
     //@{
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;

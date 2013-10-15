@@ -29,7 +29,7 @@ public:
     ADN_Missions_ParameterValue* CreateCopy();
 
     void ReadArchive ( xml::xistream& input );
-    void WriteArchive( xml::xostream& output, unsigned int id );
+    void WriteArchive( xml::xostream& output, unsigned int id ) const;
 
 public:
     ADN_Type_String name_;

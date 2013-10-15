@@ -44,8 +44,8 @@ public:
 
         virtual CategoryInfo* CreateCopy();
         virtual void ReadArchive( xml::xistream& );
-        virtual void WriteArchive( xml::xostream& );
-        virtual void WriteContent( xml::xostream& );
+        virtual void WriteArchive( xml::xostream& ) const;
+        virtual void WriteContent( xml::xostream& ) const;
         virtual void Initialize();
 
     public:
@@ -158,7 +158,7 @@ public:
         void ReadArchive( xml::xistream& );
         void ReadAttrition( xml::xistream& );
         void ReadUrbanModifer( xml::xistream& );
-        void WriteArchive( xml::xostream& );
+        void WriteArchive( xml::xostream& ) const;
         bool HasUrbanAttrition() const;
         virtual void Initialize();
 
@@ -241,7 +241,7 @@ public:
 private:
     void ReadArchive( xml::xistream& );
     void ReadResource( xml::xistream& );
-    void WriteArchive( xml::xostream& );
+    void WriteArchive( xml::xostream& ) const;
 
 private:
     T_ResourceInfos_Vector resources_;

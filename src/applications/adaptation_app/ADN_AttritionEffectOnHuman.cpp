@@ -1,7 +1,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_AttritionEffectOnHuman.h"
 #include "ADN_tr.h"
-#include "ADN_XmlStreamOperators.h"
 
 using namespace helpers;
 
@@ -44,7 +43,7 @@ void AttritionEffectOnHuman::ReadArchive( xml::xistream& input )
 // Name: AttritionEffectOnHuman::WriteArchive
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-void AttritionEffectOnHuman::WriteArchive( xml::xostream& output )
+void AttritionEffectOnHuman::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "attrition-effect" )
         << xml::attribute( "equipment-state", ADN_Tr::ConvertFromEquipmentState_ADN( nEquipmentState_.GetData() ) )

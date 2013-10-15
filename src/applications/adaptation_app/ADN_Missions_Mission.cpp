@@ -12,6 +12,7 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_ConsistencyChecker.h"
+#include "ADN_WorkspaceElement.h"
 #include <tools/Loader_ABC.h>
 #include <tools/EncodingConverter.h>
 #include <boost/regex.hpp>
@@ -120,15 +121,26 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input )
     symbol_.SetData( drawings.GetDrawing( code ) );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::FixConsistency()
 {
-    QString BuildDiaMissionType( const QString& name )
+    ADN_Missions_ABC::FixConsistency();
+    bool isAutomat = type_ == eMissionType_Automat;
+    const QString typeName = type_ == eMissionType_Pawn ? "Pion" : ( isAutomat ? "Automate" : "Population" );
+    if( !isAutomat )
     {
-        QStringList list = QStringList::split( ' ', name );
-        for( int i = 0; i < list.size() - 1; ++i )
-            if( list[i].length() > 1 && ( list[i] == list[i].upper() || list[i].lower() == "test" ) )
-                list[i].append( "_" );
-        return list.join( "" );
+        if( diaBehavior_.GetData().empty() )
+            diaBehavior_ = QString( "MIS_%1_%2" ).arg( typeName ).arg( diaType_.GetData().c_str() ).toStdString();
+    }
+    else
+    {
+        if( cdtDiaBehavior_.GetData().empty() )
+            cdtDiaBehavior_ = QString( "MIS_%1_CDT_%2" ).arg( typeName ).arg( diaType_.GetData().c_str() ).toStdString();
+        if( mrtDiaBehavior_.GetData().empty() )
+            mrtDiaBehavior_ = QString( "MIS_%1_MRT_%2" ).arg( typeName ).arg( diaType_.GetData().c_str() ).toStdString();
     }
 }
 
@@ -136,40 +148,21 @@ namespace
 // Name: ADN_Missions_Mission::WriteArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::WriteArchive( xml::xostream& output )
+void ADN_Missions_Mission::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "mission" );
-    bool isAutomat = type_ == eMissionType_Automat;
-    const QString typeName = type_ == eMissionType_Pawn ? "Pion" : ( isAutomat ? "Automate" : "Population" );
-    const QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
-    if( diaType_.GetData().empty() )
-        diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).toStdString();
-
     ADN_Missions_ABC::WriteArchive( output );
     const std::string code = ( symbol_.GetData() ) ? symbol_.GetData()->GetCode() : "";
     if( code != "" && code != " - " )
         output << xml::attribute( "symbol", code );
-
     if( ! strPackage_.GetData().empty() )
         output << xml::attribute( "package", strPackage_);
-
-    if( !isAutomat )
-    {
-        if( diaBehavior_.GetData().empty() )
-            diaBehavior_ = QString( "MIS_%1_%2" ).arg( typeName ).arg( diaName ).toStdString();
+    if( type_ != eMissionType_Automat )
         output << xml::attribute( "dia-behavior", diaBehavior_ );
-    }
     else
-    {
-        if( cdtDiaBehavior_.GetData().empty() )
-            cdtDiaBehavior_ = QString( "MIS_%1_CDT_%2" ).arg( typeName ).arg( diaName ).toStdString();
-        if( mrtDiaBehavior_.GetData().empty() )
-            mrtDiaBehavior_ = QString( "MIS_%1_MRT_%2" ).arg( typeName ).arg( diaName ).toStdString();
         output << xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
                << xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ );
-    }
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
-
     output << xml::end;
 }

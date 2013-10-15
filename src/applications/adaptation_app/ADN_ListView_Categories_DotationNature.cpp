@@ -17,6 +17,7 @@
 #include "ADN_Natures_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------

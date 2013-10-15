@@ -31,7 +31,7 @@ public:
         WoundInfo();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, int n );
+        void WriteArchive( xml::xostream& output, int n ) const;
 
     public:
         ADN_Type_Time lifeExpectancy_;
@@ -57,7 +57,7 @@ private:
     void ReadArchive( xml::xistream& input );
     void ReadInjury ( xml::xistream& input );
     void ReadResourceAvailability ( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     ADN_Type_Time diagnosticTime_;

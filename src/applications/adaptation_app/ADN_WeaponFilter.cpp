@@ -13,6 +13,7 @@
 #include "ADN_Weapons_Data_WeaponInfos.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Resources_Data.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_WeaponFilter constructor

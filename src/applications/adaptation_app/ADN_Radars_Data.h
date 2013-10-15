@@ -34,7 +34,7 @@ public:
 
         void ReadArchive( xml::xistream& input, bool bHq );
         void ReadAcquisitionTime( xml::xistream& input, bool bHq );
-        void WriteArchive( xml::xostream& output, bool bHq );
+        void WriteArchive( xml::xostream& output, bool bHq ) const;
 
     public:
         ADN_Type_Bool bDetectTime_;
@@ -55,7 +55,7 @@ public:
         RadarInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void ReadDetectableActivity( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Enum< E_RadarType, eNbrRadarType >  nType_;
@@ -87,7 +87,7 @@ public:
 public:
     void ReadArchive( xml::xistream& input );
     void ReadRadar( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     T_RadarInfos_Vector  vRadars_;

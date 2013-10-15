@@ -36,8 +36,8 @@ public:
         void CopyFrom( NbcIntoxInfos& infos );
         void ReadEffect( xml::xistream& input );
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
-        void WriteContent( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
+        void WriteContent( xml::xostream& output ) const;
 
     public:
         std::string parentName_;
@@ -59,7 +59,7 @@ public:
 
         void CopyFrom( NbcGazInfos& infos );
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         NbcIntoxInfos intoxInfos_;
@@ -77,7 +77,7 @@ public:
         NbcAgentInfos* CreateCopy();
         void ReadEffect( xml::xistream& input );
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Int nId_;
@@ -111,7 +111,7 @@ public:
 private:
     void ReadAgent( xml::xistream& input );
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 private:
     T_NbcAgentInfos_Vector vNbcAgent_;

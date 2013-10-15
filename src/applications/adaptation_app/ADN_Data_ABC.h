@@ -11,14 +11,11 @@
 #define __ADN_Data_ABC_h_
 
 #include "ADN_Enums.h"
-#include "ADN_XmlStreamOperators.h"
-#include "ADN_Tools.h"
-#include "ADN_WorkspaceElement.h"
-#include "clients_kernel/Languages.h"
 
 namespace kernel
 {
     class Context;
+    class LocalizedString;
     class XmlTranslations;
 }
 
@@ -49,10 +46,11 @@ public:
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const = 0;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
-    virtual void Save();
+    virtual void Save() const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
+    virtual bool FixConsistency();
     virtual void ReadArchive( xml::xistream& input );
-    virtual void WriteArchive( xml::xostream& output );
+    virtual void WriteArchive( xml::xostream& output ) const;
     virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
     virtual bool ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor );
 
@@ -75,8 +73,8 @@ protected:
     //! @name Helpers
     //@{
     virtual void LoadFile( const tools::Loader_ABC& fileLoader, const tools::Path& xmlFile, T_Loader loader );
-    virtual void SaveFile( const tools::Path& xmlFile, T_Saver saver );
-    virtual void SaveTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
+    virtual void SaveFile( const tools::Path& xmlFile, T_Saver saver ) const;
+    virtual void SaveTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 ) const;
     //@}
 
 protected:

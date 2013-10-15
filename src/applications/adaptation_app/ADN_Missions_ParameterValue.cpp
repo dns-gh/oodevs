@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_ParameterValue.h"
-#include "ADN_XmlStreamOperators.h"
 
 ADN_Missions_ParameterValue::ADN_Missions_ParameterValue()
 {
@@ -38,7 +37,7 @@ void ADN_Missions_ParameterValue::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", name_ );
 }
 
-void ADN_Missions_ParameterValue::WriteArchive( xml::xostream& output, unsigned int id )
+void ADN_Missions_ParameterValue::WriteArchive( xml::xostream& output, unsigned int id ) const
 {
     output << xml::start( "value" )
                 << xml::attribute( "id", id )

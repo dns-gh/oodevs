@@ -54,7 +54,7 @@ void ADN_WeatherFireEffects::ReadArchive( xml::xistream& xis )
 // Name: ADN_WeatherFireEffects::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_WeatherFireEffects::WriteArchive( xml::xostream& xos, const std::string& tag )
+void ADN_WeatherFireEffects::WriteArchive( xml::xostream& xos, const std::string& tag ) const
 {
     xos << xml::start( tag )
             << xml::attribute( "weather", ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( weatherType_ ) ) )

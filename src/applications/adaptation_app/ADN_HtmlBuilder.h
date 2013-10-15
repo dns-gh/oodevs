@@ -56,7 +56,7 @@ public:
     void CreateTableFrom( const ADN_ListView& listView );
     void CreateTableFrom( const QTableView& table );
 
-    void WriteToFile( const tools::Path& strFileName );
+    void WriteToFile( const tools::Path& strFileName ) const;
     //@}
 
 private:

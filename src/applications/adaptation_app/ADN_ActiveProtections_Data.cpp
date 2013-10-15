@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
 
 // -----------------------------------------------------------------------------
@@ -91,7 +92,7 @@ void ADN_ActiveProtections_Data::ReadProtection( xml::xistream& xis )
 // Name: ADN_ActiveProtections_Data::WriteArchive
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
+void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos ) const
 {
     if( activeProtections_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
@@ -129,19 +130,19 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfo
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml::xistream& xis )
 {
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( xis );
-    xis >> xml::attribute( "coefficient", coefficient_ );
+    xis >> xml::attribute( "name", *this )
+        >> xml::attribute( "coefficient", coefficient_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data::WriteArchive
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos )
+void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos ) const
 {
-    xos << xml::start( "weapon" );
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
-    xos << xml::attribute( "coefficient", coefficient_)
+    xos << xml::start( "weapon" )
+          << xml::attribute( "name", *this )
+          << xml::attribute( "coefficient", coefficient_)
         << xml::end;
 }
 
@@ -199,7 +200,7 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& xis )
 {
-    xis >> xml::attribute( "name", strName_ )
+    xis >> xml::attribute( "name", *this )
         >> xml::attribute( "coefficient", coefficient_ )
         >> xml::attribute( "hard-kill", hardKill_ )
         >> xml::optional >> xml::start( "resource" )
@@ -224,10 +225,10 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon( xml::xistre
 // Name: ADN_ActiveProtections_Data::Protection::Write
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& xos )
+void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "protection" )
-        << xml::attribute( "name", strName_ )
+        << xml::attribute( "name", *this )
         << xml::attribute( "coefficient", coefficient_ )
         << xml::attribute( "hard-kill", hardKill_ )
         << xml::start( "resource" )

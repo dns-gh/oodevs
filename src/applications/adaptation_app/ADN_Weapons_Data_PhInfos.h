@@ -30,7 +30,7 @@ public:
     void SetPhModifiers( double phModifier, double distModifier );
     void ApplyPhModifiers();
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     ADN_Type_Int       nDistance_;
@@ -54,7 +54,7 @@ public:
 
     void ReadArchive( xml::xistream& input );
     void ReadHp( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     ADN_TypePtr_InVector_ABC< ADN_Volumes_Data::VolumeInfos > ptrSize_;

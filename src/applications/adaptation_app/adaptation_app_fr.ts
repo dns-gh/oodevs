@@ -491,7 +491,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Required parts</source>
-        <translation>Pièces nécéssaires</translation>
+        <translation>Pièces nécessaires</translation>
     </message>
     <message>
         <source>Seriousness</source>

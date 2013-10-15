@@ -35,7 +35,7 @@ public:
 
         EventInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Enum< E_Days, eNbrDays > day_;
@@ -55,7 +55,7 @@ public:
         InhabitantsInfosConsumption* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_Type_Int consumption_;
@@ -72,7 +72,7 @@ public:
 
         InhabitantsInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
 
     private:
@@ -112,7 +112,7 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadPeople( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     T_InhabitantsInfosVector vInhabitants_;

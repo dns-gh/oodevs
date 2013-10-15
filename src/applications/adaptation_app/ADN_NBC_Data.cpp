@@ -97,7 +97,7 @@ void ADN_NBC_Data::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_NBC_Data::WriteArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Data::NbcIntoxInfos::WriteArchive( xml::xostream& output )
+void ADN_NBC_Data::NbcIntoxInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "effects" )
            << xml::attribute( "type", "liquid" )
@@ -110,7 +110,7 @@ void ADN_NBC_Data::NbcIntoxInfos::WriteArchive( xml::xostream& output )
 // Name: ADN_NBC_Data::NbcIntoxInfos::WriteContent
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_NBC_Data::NbcIntoxInfos::WriteContent( xml::xostream& output )
+void ADN_NBC_Data::NbcIntoxInfos::WriteContent( xml::xostream& output ) const
 {
     if( bIntoxPresent_.GetData() )
     {
@@ -184,7 +184,7 @@ void ADN_NBC_Data::NbcGazInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_NBC_Data::WriteArchive
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ADN_NBC_Data::NbcGazInfos::WriteArchive( xml::xostream& output )
+void ADN_NBC_Data::NbcGazInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "effects" )
             << xml::attribute( "type", "gaseous" )
@@ -265,7 +265,7 @@ void ADN_NBC_Data::NbcAgentInfos::ReadEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Data::NbcAgentInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::optional >> xml::attribute( "category", category_ );
     liquidInfos_.parentName_ = strName_.GetData();
     input >> xml::list( "effects", *this, &ADN_NBC_Data::NbcAgentInfos::ReadEffect );
@@ -277,10 +277,10 @@ void ADN_NBC_Data::NbcAgentInfos::ReadArchive( xml::xistream& input )
 // Name: NbcAgentInfos::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_NBC_Data::NbcAgentInfos::WriteArchive( xml::xostream& output )
+void ADN_NBC_Data::NbcAgentInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "agent" )
-           << xml::attribute( "name", strName_ )
+           << xml::attribute( "name", *this )
            << xml::attribute( "category", category_ )
            << xml::attribute( "id", nId_ );
     if( bLiquidPresent_.GetData() )
@@ -360,7 +360,7 @@ void ADN_NBC_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_NBC_Data::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_NBC_Data::WriteArchive( xml::xostream& output )
+void ADN_NBC_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vNbcAgent_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
@@ -378,7 +378,7 @@ void ADN_NBC_Data::WriteArchive( xml::xostream& output )
                 << xml::attribute( "reloading-time-modifier", rNbcSuitReloadSpeedMultiplier_ )
             << xml::end;
     output << xml::start( "agents" );
-    for( T_NbcAgentInfos_Vector::iterator itAgent = vNbcAgent_.begin(); itAgent != vNbcAgent_.end(); ++itAgent )
+    for( auto itAgent = vNbcAgent_.begin(); itAgent != vNbcAgent_.end(); ++itAgent )
         (*itAgent)->WriteArchive( output );
     output << xml::end;
     output << xml::end;

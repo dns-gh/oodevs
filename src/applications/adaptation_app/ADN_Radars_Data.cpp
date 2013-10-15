@@ -87,7 +87,7 @@ void ADN_Radars_Data::DetectTimes::ReadAcquisitionTime( xml::xistream& input, bo
 // Name: DetectTimes::WriteArchive
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq )
+void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq ) const
 {
     const std::string time = bHq ? "command-post-time" : "base-time";
     if( bDetectTime_.GetData() )
@@ -176,7 +176,7 @@ ADN_Radars_Data::RadarInfos* ADN_Radars_Data::RadarInfos::CreateCopy()
 void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToRadarType( type );
     if( nType_ == E_RadarType(-1 ) )
@@ -224,10 +224,10 @@ void ADN_Radars_Data::RadarInfos::ReadDetectableActivity( xml::xistream& input )
 // Name: RadarInfos::WriteArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
+void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "radar" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "type", nType_.Convert() )
             << xml::attribute( "action-range", rRange_ );
     if( bHasMinHeight_.GetData() )
@@ -323,7 +323,7 @@ void ADN_Radars_Data::ReadRadar( xml::xistream& input )
 // Name: ADN_Radars_Data::WriteArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::WriteArchive( xml::xostream& output )
+void ADN_Radars_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vRadars_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( tools::translate( "ADN_Radars_Data", "Invalid data on tab '%1', subtab '%2'" )

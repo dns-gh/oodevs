@@ -14,6 +14,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_Breakdowns_Data::idManager_;
@@ -23,7 +24,7 @@ tools::IdManager ADN_Breakdowns_Data::idManager_;
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0, true, "resource" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0, true )
     , nNbr_( 1 )
 {
     // NOTHING
@@ -47,20 +48,20 @@ ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::Create
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( input );
-    input >> xml::attribute( "quantity", nNbr_ );
+    input >> xml::attribute( "resource", *this )
+          >> xml::attribute( "quantity", nNbr_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RepairPartInfo::WriteArchive
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
+void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "part" );
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( output );
-    output << xml::attribute( "quantity", nNbr_ )
-        << xml::end;
+    output << xml::start( "part" )
+             << xml::attribute( "resource", *this )
+             << xml::attribute( "quantity", nNbr_ )
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +136,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
 void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 {
     std::string type;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", type )
           >> xml::attribute( "average-repairing-time", repairTime_ )
           >> xml::attribute( "variance", repairTimeVariance_ );
@@ -149,10 +150,10 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 // Name: BreakdownInfo::WriteArchive
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
+void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "breakdown" )
-           << xml::attribute( "name", strName_ )
+           << xml::attribute( "name", *this )
            << xml::attribute( "id", nId_ )
            << xml::attribute( "type", nType_.Convert() )
            << xml::attribute( "average-repairing-time", repairTime_ )
@@ -253,7 +254,7 @@ void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_Breakdown
 // Name: ADN_Breakdowns_Data::WriteArchive
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
+void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vBreakdowns_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

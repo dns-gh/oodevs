@@ -17,6 +17,7 @@
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 

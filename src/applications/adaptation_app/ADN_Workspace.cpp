@@ -539,6 +539,8 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
                 ( szOldWorkDir / *it ).Copy( tempDirectory.GetDirectory() / *it );
         }
 
+        ApplyOnData( boost::bind( &ADN_Data_ABC::FixConsistency, _1 ) );
+
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             progressIndicator_.Increment( tr( "Saving: %1..." ).arg( elements_[n]->GetName() ) );

@@ -15,36 +15,11 @@
 #include "ADN_Connector_StandardItem.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Languages_GUI.h"
+#include "ADN_WorkspaceElement.h"
 #include "excel/ExcelFormat.h"
 #include "clients_kernel/VariantPointer.h"
-#include "clients_gui/LocaleAwareSortFilterProxyModel.h"
 
 using namespace ExcelFormat;
-
-class CustomSortFilterProxyModel : public gui::LocaleAwareSortFilterProxyModel
-{
-public:
-    CustomSortFilterProxyModel( ADN_Table& parent )
-        : LocaleAwareSortFilterProxyModel( &parent )
-        , parent_( parent )
-    {}
-
-protected:
-    virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
-    {
-        ADN_StandardItem* lhs = static_cast< ADN_StandardItem* >( parent_.GetItemFromIndex( left ) );
-        ADN_StandardItem* rhs = static_cast< ADN_StandardItem* >( parent_.GetItemFromIndex( right ) );
-        if( !lhs || !rhs ||
-            ( lhs->GetType() != ADN_StandardItem::eString &&
-              lhs->GetType() != ADN_StandardItem::eLocalizedString &&
-              lhs->GetType() != ADN_StandardItem::ePtrInVector ) )
-            return QSortFilterProxyModel::lessThan( left, right );
-        return LocaleAwareSortFilterProxyModel::lessThan( left, right );
-    }
-
-private:
-    ADN_Table& parent_;
-};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::ADN_Table
@@ -96,7 +71,8 @@ void ADN_Table::Initialize( const QString& objectName )
 {
     setObjectName( objectName );
     setContextMenuPolicy( Qt::CustomContextMenu );
-    proxyModel_.reset( new CustomSortFilterProxyModel( *this ) );
+    proxyModel_.reset( new QSortFilterProxyModel( this ) );
+    proxyModel_->setSortLocaleAware( true );
     proxyModel_->setSourceModel( &dataModel_ );
     proxyModel_->setSortRole( gui::Roles::DataRole );
     setModel( proxyModel_.get() );
@@ -659,7 +635,7 @@ QString ADN_Table::GetToolTips( int nRow, int nCol ) const
 // Name: ADN_Table::Sort
 // Created: ABR 2012-11-16
 // -----------------------------------------------------------------------------
-void ADN_Table::Sort( int column, Qt::SortOrder order )
+void ADN_Table::Sort( int column /* = 0 */, Qt::SortOrder order /* = Qt::AscendingOrder */ )
 {
     proxyModel_->sort( column, order );
 }

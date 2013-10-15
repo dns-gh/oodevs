@@ -78,7 +78,7 @@ void ADN_Weapons_Data::ReadWeapon( xml::xistream& input )
 // Name: ADN_Weapons_Data::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::WriteArchive( xml::xostream& output )
+void ADN_Weapons_Data::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "weapons" );
     tools::SchemaWriter schemaWriter;

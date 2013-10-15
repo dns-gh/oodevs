@@ -39,7 +39,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadPosture( xml::xistream& input );
         void ReadPh( xml::xistream& input, const std::string& posture );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool bDirect_;
@@ -64,7 +64,7 @@ public:
 private:
     void ReadLauncher( xml::xistream& input );
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 private:
     T_LauncherInfos_Vector vLaunchers_;

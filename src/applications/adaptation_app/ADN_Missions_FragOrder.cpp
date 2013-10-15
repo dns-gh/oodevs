@@ -70,25 +70,8 @@ void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input )
           >> xml::list( "parameter", boost::bind( &ADN_Missions_ABC::ReadParameter, this, _1 ) );
 }
 
-namespace
+void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output ) const
 {
-    QString BuildDiaFragOrderType( const QString& name )
-    {
-        QStringList list = QStringList::split( ' ', name );
-        if( list.front() == "Pion" || list.front() == "Automate" || list.front() == "Population" )
-            list[0].append( "_" );
-        for( int i = 1; i < list.size() - 1; ++i )
-            if( list[i].length() > 1 && list[i] == list[i].upper() )
-                list[i].append( "_" );
-        return QString( "Rep_OrderConduite_%1" ).arg( list.join( "" ) );
-    }
-}
-
-void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output )
-{
-    if( diaType_.GetData().empty() )
-        diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toStdString();
-
     output << xml::start( "fragorder" );
     ADN_Missions_ABC::WriteArchive( output );
     output << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );

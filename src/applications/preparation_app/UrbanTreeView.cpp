@@ -51,6 +51,7 @@ UrbanTreeView::UrbanTreeView( const QString& objectName, kernel::Controllers& co
 {
     header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &UrbanTreeView::GetEntityPixmap, this, _1 ), this, 24 ) );
+    SetLessThanEntityFunctor( &tools::LessThanById );
     controllers_.Update( *this );
 }
 
@@ -307,20 +308,6 @@ void UrbanTreeView::ContextMenuRequested( const QPoint& where )
 bool UrbanTreeView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 {
     return entity.GetTypeName() != kernel::UrbanObject_ABC::typeName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanTreeView::LessThan
-// Created: JSR 2012-09-14
-// -----------------------------------------------------------------------------
-bool UrbanTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
-{
-    const kernel::UrbanObject_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( left );
-    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( right );
-    if( !entity1 || !entity2 )
-        return false;
-    valid = true;
-    return entity2->GetId() < entity1->GetId();
 }
 
 // -----------------------------------------------------------------------------

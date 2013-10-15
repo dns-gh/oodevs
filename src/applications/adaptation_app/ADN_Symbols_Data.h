@@ -116,7 +116,7 @@ private:
     void ReadArchive( xml::xistream& xis );
     void ReadInfra( xml::xistream& xis );
     void ReadRule( xml::xistream& xis );
-    void WriteArchive( xml::xostream& xos );
+    void WriteArchive( xml::xostream& xos ) const;
     //@}
 
 private:

@@ -352,10 +352,9 @@ void ADN_Missions_GUI::OnGenerate( bool changeTab /* = true */ )
 {
     ADN_RefWithLocalizedName* ref = static_cast< ADN_RefWithLocalizedName* >( listViews_[ GetCurrentType() ]->GetCurrentData() );
     assert( ref != 0 );
-    tools::Path missionPath = data_.GenerateMissionSheet( GetCurrentType(), ref->strName_.GetTranslation() );
+    data_.GenerateMissionSheet( GetCurrentType(), ref->strName_.GetTranslation() );
     if( changeTab )
         missionTabs_[ GetCurrentType() ]->setCurrentIndex( 2 );
-    missionViewers_[ GetCurrentType() ]->setText( missionPath.Normalize().ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------

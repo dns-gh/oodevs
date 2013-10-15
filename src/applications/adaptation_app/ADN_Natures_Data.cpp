@@ -102,7 +102,7 @@ void ADN_Natures_Data::ReadNature( xml::xistream& input )
     if( !id )
         id = idManager_.GetNextId();
     ADN_Natures_Data::NatureInfos* pNew = new ADN_Natures_Data::NatureInfos( id );
-    input >> xml::attribute( "type", pNew->strName_ );
+    input >> xml::attribute( "type", *pNew );
     vDotationNatures_.AddItem( pNew );
     idManager_.Lock( id );
 }
@@ -111,7 +111,7 @@ void ADN_Natures_Data::ReadNature( xml::xistream& input )
 // Name: ADN_Natures_Data::WriteArchive
 // Created: ABR 2013-07-11
 // -----------------------------------------------------------------------------
-void ADN_Natures_Data::WriteArchive( xml::xostream& output )
+void ADN_Natures_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vDotationNatures_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
@@ -124,7 +124,7 @@ void ADN_Natures_Data::WriteArchive( xml::xostream& output )
         if( ( *it )->strName_.GetData().empty() )
             throw MASA_EXCEPTION( tools::translate( "Categories_Data","Categories - Invalid resource nature" ).toStdString() );
         output << xml::start( "nature" )
-                 << xml::attribute( "type", ( *it )->strName_ )
+                 << xml::attribute( "type", **it )
                  << xml::attribute( "id", ( *it )->nId_ )
                << xml::end;
     }

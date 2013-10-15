@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "RichTreeView.h"
 #include "moc_RichTreeView.cpp"
-#include "LocaleAwareSortFilterProxyModel.h"
 #include "ObjectNameManager.h"
 #include "StandardModelVisitor_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -19,26 +18,34 @@ using namespace gui;
 
 namespace
 {
-    class CustomSortFilterProxyModel : public LocaleAwareSortFilterProxyModel
+    class CustomSortFilterProxyModel : public QSortFilterProxyModel
     {
     public:
         CustomSortFilterProxyModel( RichTreeView& parent )
-            : LocaleAwareSortFilterProxyModel( &parent )
+            : QSortFilterProxyModel( &parent )
             , parent_( parent )
-        {}
+        {
+            setSortLocaleAware( true );
+        }
+
+        void SetFunctor( const RichTreeView::T_LessThanFunctor& functor )
+        {
+            functor_ = functor;
+        }
 
     protected:
         virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
         {
             bool valid = false;
-            bool ret = parent_.LessThan( left, right, valid );
+            bool ret = functor_ && functor_( left, right, valid );
             if( valid )
                 return ret;
-            return LocaleAwareSortFilterProxyModel::lessThan( left, right );
+            return QSortFilterProxyModel::lessThan( left, right );
         }
 
     public:
         const RichTreeView& parent_;
+        RichTreeView::T_LessThanFunctor functor_;
     };
 
     class HeightDelegate : public QItemDelegate
@@ -74,6 +81,7 @@ RichTreeView::RichTreeView( const QString& objectName, QWidget* parent /*= 0*/, 
     proxyModel_->setFilterRole( Roles::FilterRole );
     proxyModel_->setFilterRegExp( StandardModel::showValue_ );
     proxyModel_->setDynamicSortFilter( true );
+    proxyModel_->sort( 0 );
 
     QPalette p = palette();
     p.setColor( QPalette::Inactive, QPalette::Highlight, Qt::lightGray );
@@ -155,15 +163,6 @@ bool RichTreeView::IsContextMenuBlocked() const
 void RichTreeView::CreateFilters( SearchTreeView_ABC& /*searchTreeView*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::LessThan
-// Created: JSR 2012-09-06
-// -----------------------------------------------------------------------------
-bool RichTreeView::LessThan( const QModelIndex& /*left*/, const QModelIndex& /*right*/, bool& /*valid*/ ) const
-{
-    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -307,4 +306,13 @@ void RichTreeView::startDrag( Qt::DropActions supportedActions )
     drag->setMimeData( data );
     if( supportedActions & dropAction_ )
         drag->exec( dropAction_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::SetLessThanFunctor
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+void RichTreeView::SetLessThanFunctor( const T_LessThanFunctor& functor )
+{
+    static_cast< CustomSortFilterProxyModel* >( proxyModel_ )->SetFunctor( functor );
 }

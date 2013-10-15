@@ -14,6 +14,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 tools::IdManager ADN_Crowds_Data::idManager_;
 
@@ -66,13 +67,13 @@ void ADN_Crowds_Data::FireEffectProtectionInfos::ReadArchive( xml::xistream& inp
 // Name: ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output )
+void ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output ) const
 {
     if( !GetCrossedElement() )
         return;
-    output << xml::start( "protection" );
-    ADN_CrossedRef< ADN_Armors_Data::ArmorInfos >::WriteArchive( output );
-    output      << xml::start( "unarmed" )
+    output << xml::start( "protection" )
+                << xml::attribute( "name", *this )
+                << xml::start( "unarmed" )
                     << xml::attribute( "destruction",                   rUnarmedDestruction_.GetData() /100.0 )
                     << xml::attribute( "repairable-with-evacuation",    rUnarmedFixableWithEvacuation_.GetData() /100.0 )
                     << xml::attribute( "repairable-without-evacuation", rUnarmedFixableWithoutEvacuation_.GetData() /100.0 )
@@ -218,7 +219,7 @@ void ADN_Crowds_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& output ) 
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true, "unit-size" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true )
     , rDensity_( 0. )
     , rMaxSpeed_( 0. )
 {
@@ -239,15 +240,15 @@ void ADN_Crowds_Data::SpeedEffectVolumeInfos::ReadArchive( xml::xistream& input 
 // Name: ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& output )
+void ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& output ) const
 {
     if( rDensity_ == 0. && rMaxSpeed_ == 0. )
         return;
     if( !GetCrossedElement() )
         return;
-    output << xml::start( "unit" );
-    ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >::WriteArchive( output );
-    output   << xml::attribute( "population-density", rDensity_  )
+    output << xml::start( "unit" )
+             << xml::attribute( "unit-size", *this )
+             << xml::attribute( "population-density", rDensity_  )
              << xml::attribute( "max-speed", rMaxSpeed_  )
            << xml::end;
 }
@@ -492,7 +493,7 @@ ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::CrowdsInfos::CreateCopy()
 void ADN_Crowds_Data::CrowdsInfos::ReadArchive( xml::xistream& input )
 {
     double rArmedIndividuals = 0.;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "concentration-density", rConcentrationDensity_ )
           >> xml::attribute( "moving-base-density", rMoveDensity_ )
           >> xml::attribute( "moving-speed", rMoveSpeed_ )
@@ -584,12 +585,12 @@ void ADN_Crowds_Data::CrowdsInfos::ReadUrbanEffect( xml::xistream& input )
 // Name: CrowdsInfos::CrowdsInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output )
+void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
 {
     repartition_.CheckNoError( strName_.GetData().c_str() );
 
     output << xml::start( "population" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "id", nId_ )
             << xml::attribute( "decisional-model", ptrModel_ )
             << xml::attribute( "concentration-density", rConcentrationDensity_ )
@@ -756,7 +757,7 @@ void ADN_Crowds_Data::ReadPopulation( xml::xistream& input )
 // Name: ADN_Crowds_Data::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::WriteArchive( xml::xostream& output )
+void ADN_Crowds_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vCrowds_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

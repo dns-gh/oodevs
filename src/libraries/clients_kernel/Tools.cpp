@@ -9,6 +9,9 @@
 
 #include "clients_kernel_pch.h"
 #include "Tools.h"
+#include "AutomatDecisions_ABC.h"
+#include "CommandPostAttributes_ABC.h"
+#include "Entity_ABC.h"
 #include "ENT/ENT_Tr.h"
 #pragma warning( push, 0 )
 #pragma warning( disable : 4127 )
@@ -596,4 +599,48 @@ QString tools::LimaTypeShortToXmlString( const QString& shortType )
         if( PhaseLines()[i].shortName_ == shortType )
             return PhaseLines()[i].xmlName_;
     return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::IsCommandPost
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+bool tools::IsCommandPost( const Entity_ABC& entity )
+{
+    if( const CommandPostAttributes_ABC* pAttributes = entity.Retrieve< CommandPostAttributes_ABC >() )
+        return pAttributes->IsCommandPost();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::IsEngaged
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+bool tools::IsEngaged( const Entity_ABC& entity )
+{
+    if( const AutomatDecisions_ABC* decisions = entity.Retrieve< AutomatDecisions_ABC >() )
+        return decisions->IsEmbraye();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::LessThanById
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+bool tools::LessThanById( const Entity_ABC& entity1, const Entity_ABC& entity2 )
+{
+    return entity1.GetId() < entity2.GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::LessThanByPC
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+bool tools::LessThanByPC( const Entity_ABC& entity1, const Entity_ABC& entity2 )
+{
+    if( IsCommandPost( entity1 ) )
+        return true;
+    if( IsCommandPost( entity2 ) )
+        return false;
+    return LessThanById( entity1, entity2 );
 }

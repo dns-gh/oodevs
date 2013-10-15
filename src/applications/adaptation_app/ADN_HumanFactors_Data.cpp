@@ -49,7 +49,7 @@ void ADN_HumanFactors_Data::ModifiersInfo::ReadArchive( xml::xistream& input )
 // Name: ModifiersInfo::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::ModifiersInfo::WriteArchive( xml::xostream& output )
+void ADN_HumanFactors_Data::ModifiersInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "modifier" )
             << xml::attribute( "state", strName_ )
@@ -90,7 +90,7 @@ void ADN_HumanFactors_Data::ThresholdsInfo::ReadArchive( xml::xistream& input )
 // Name: ThresholdsInfo::WriteArchive
 // Created: ABR 2011-12-08
 // -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::ThresholdsInfo::WriteArchive( xml::xostream& output )
+void ADN_HumanFactors_Data::ThresholdsInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::attribute( "first-threshold", firstThreshold_ )
            << xml::attribute( "second-threshold", secondThreshold_ );
@@ -209,7 +209,7 @@ void ADN_HumanFactors_Data::ReadModifier( xml::xistream& input )
 // Name: ADN_HumanFactors_Data::WriteArchive
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::WriteArchive( xml::xostream& output )
+void ADN_HumanFactors_Data::WriteArchive( xml::xostream& output ) const
 {
     output  << xml::start( "humans-factors" );
     tools::SchemaWriter schemaWriter;

@@ -34,7 +34,7 @@ public:
     //@{
     void CopyFrom( ADN_ExtinguisherAgentInfos& other );
     void ReadArchive( xml::xistream& );
-    void WriteArchive( xml::xostream&, const std::string& tag = "extinguisher-agent" );
+    void WriteArchive( xml::xostream&, const std::string& tag = "extinguisher-agent" ) const;
     //@}
 
 public:

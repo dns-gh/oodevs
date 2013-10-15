@@ -29,7 +29,7 @@ public:
         virtual ~AccommodationInfos();
 
         bool operator==( const std::string& str );
-        void WriteAccommodation( xml::xostream& output );
+        void WriteAccommodation( xml::xostream& output ) const;
         AccommodationInfos* CreateCopy();
 
     public:
@@ -52,7 +52,7 @@ public:
         virtual ~InfrastructureInfos();
 
         bool operator==( const std::string& str );
-        void WriteInfrastructure( xml::xostream& output );
+        void WriteInfrastructure( xml::xostream& output ) const;
         InfrastructureInfos* CreateCopy();
 
         typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
@@ -80,7 +80,7 @@ public:
         virtual ~UrbanMaterialInfos();
 
         bool operator==( const std::string& str );
-        void WriteMaterial( xml::xostream& output );
+        void WriteMaterial( xml::xostream& output ) const;
         UrbanMaterialInfos* CreateCopy();
 
     private:
@@ -110,7 +110,7 @@ public:
         virtual ~RoofShapeInfos();
 
         bool operator==( const std::string& str );
-        void WriteRoofShape( xml::xostream& output );
+        void WriteRoofShape( xml::xostream& output ) const;
         RoofShapeInfos* CreateCopy() { return new RoofShapeInfos(); }
     };
 
@@ -139,7 +139,7 @@ public:
 
         virtual ~UsageTemplateInfos();
 
-        void Write( xml::xostream& output );
+        void Write( xml::xostream& output ) const;
         UsageTemplateInfos* CreateCopy();
 
     public:
@@ -172,7 +172,7 @@ public:
         explicit UrbanTemplateInfos( xml::xistream& input );
         virtual ~UrbanTemplateInfos();
 
-        void Write( xml::xostream& output );
+        void Write( xml::xostream& output ) const;
         UrbanTemplateInfos* CreateCopy();
 
     private:
@@ -204,12 +204,13 @@ public:
 
     virtual void FilesNeeded( tools::Path::T_Paths& l ) const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
-    virtual void Save();
+    virtual void Save() const;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void ReadArchive( xml::xistream& input );
-    virtual void WriteArchive( xml::xostream& output );
+    bool FixConsistency();
+    virtual void WriteArchive( xml::xostream& output ) const;
     void ReadTemplates( xml::xistream& input );
-    void WriteTemplates( xml::xostream& output );
+    void WriteTemplates( xml::xostream& output ) const;
 
     T_UrbanMaterialInfos_Vector& GetMaterialsInfos();
     UrbanMaterialInfos* FindMaterial( const std::string& strName );

@@ -29,7 +29,8 @@ public:
     explicit ADN_Type_Tab_ABC( int w = 0, int h = 0 );
     virtual ~ADN_Type_Tab_ABC();
 
-    T& Get( int i, int j);
+    T& Get( int i, int j );
+    const T& Get( int i, int j ) const;
 
 };
 

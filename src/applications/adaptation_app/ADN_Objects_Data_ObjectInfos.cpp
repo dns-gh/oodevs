@@ -11,6 +11,7 @@
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_ConsistencyChecker.h"
+#include "ADN_WorkspaceElement.h"
 
 namespace
 {
@@ -146,7 +147,7 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
     for( int i = 0; i < 4; ++i )
         symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ], "graphics" ) );
 
-    xis >> xml::attribute( "name", strName_ )
+    xis >> xml::attribute( "name", *this )
         >> xml::attribute( "type", strType_ )
         >> xml::optional >> xml::attribute( "point-size", pointSize_ )
         >> xml::optional >> xml::attribute( "description", description_ )
@@ -164,17 +165,27 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data_ObjectInfos::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data_ObjectInfos::FixConsistency()
+{
+    if( strType_.GetData().empty() )
+        strType_ = GenerateNextType();
+    for( auto it = capacities_.begin(); it != capacities_.end(); ++it )
+        it->second->FixConsistency();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos::WriteArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
+void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "object" )
-        << xml::attribute( "name", strName_ );
+        << xml::attribute( "name", *this );
     if( pointSize_.GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );
-    if( strType_.GetData().empty() )
-        strType_ = GenerateNextType();
     xos << xml::attribute( "type", strType_ );
     if( !description_.GetData().empty() )
         xos << xml::attribute( "description", description_ );

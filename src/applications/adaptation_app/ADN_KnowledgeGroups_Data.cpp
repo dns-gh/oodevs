@@ -45,7 +45,7 @@ void ADN_KnowledgeGroups_Data::AgentGroupInfo::ReadArchive( xml::xistream& input
 // Name: ADN_KnowledgeGroups_Data::AgentGroupInfo::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_KnowledgeGroups_Data::AgentGroupInfo::WriteArchive( xml::xostream& output )
+void ADN_KnowledgeGroups_Data::AgentGroupInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "unit-knowledge" )
             << xml::attribute( "max-lifetime", maxLifetime_ );
@@ -82,7 +82,7 @@ void ADN_KnowledgeGroups_Data::PopulationGroupInfo::ReadArchive( xml::xistream& 
 // Name: ADN_KnowledgeGroups_Data::PopulationGroupInfo::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_KnowledgeGroups_Data::PopulationGroupInfo::WriteArchive( xml::xostream& output )
+void ADN_KnowledgeGroups_Data::PopulationGroupInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "population-knowledge" )
             << xml::attribute( "max-lifetime", maxLifetime_ )
@@ -123,7 +123,7 @@ ADN_KnowledgeGroups_Data::GroupInfo* ADN_KnowledgeGroups_Data::GroupInfo::Create
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::optional >> xml::attribute( "communication-delay", communicationDelay_ ); // LTO
     agentInfos_.ReadArchive( input );
     populationInfos_.ReadArchive( input );
@@ -133,10 +133,10 @@ void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( xml::xistream& input )
 // Name: GroupInfo::WriteArchive
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
-void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output )
+void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "knowledge-group" )
-           << xml::attribute( "name", strName_ );
+           << xml::attribute( "name", *this );
     if( communicationDelay_ != "0s" ) // LTO
         output << xml::attribute( "communication-delay", communicationDelay_ ); // LTO
     agentInfos_.WriteArchive( output );
@@ -199,7 +199,7 @@ void ADN_KnowledgeGroups_Data::ReadKnowledgeGroup( xml::xistream& input )
 // Name: ADN_KnowledgeGroups_Data::WriteArchive
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
-void ADN_KnowledgeGroups_Data::WriteArchive( xml::xostream& output )
+void ADN_KnowledgeGroups_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vGroups_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

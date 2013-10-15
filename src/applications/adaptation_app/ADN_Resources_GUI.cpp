@@ -516,7 +516,7 @@ ADN_Table* ADN_Resources_GUI::CreatePKTable()
         }
         nRow += nRowSize;
     }
-    pTable->Sort( 0, Qt::AscendingOrder );
+    pTable->Sort();
     return pTable;
 }
 

@@ -13,6 +13,7 @@
 #include "ADN_Sensors_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 namespace
 {

@@ -24,6 +24,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Weapons_Data_PhInfos.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data_WeaponInfos::ADN_Weapons_Data_WeaponInfos
@@ -154,7 +155,7 @@ void ADN_Weapons_Data_WeaponInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Weapons_Data_WeaponInfos::WriteArchive
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data_WeaponInfos::WriteArchive( xml::xostream& output )
+void ADN_Weapons_Data_WeaponInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "weapon-system" )
         << xml::attribute( "launcher", ptrLauncher_ )

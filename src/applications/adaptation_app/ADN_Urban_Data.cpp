@@ -12,6 +12,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include "clients_kernel/XmlTranslations.h"
@@ -63,7 +64,7 @@ void ADN_Urban_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 // Name: ADN_Urban_Data::Save
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::Save()
+void ADN_Urban_Data::Save() const
 {
     tools::Path::T_Paths fileList;
     FilesNeeded( fileList );
@@ -126,10 +127,21 @@ void ADN_Urban_Data::ReadArchive( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::FixConsistency
+// Created: ABR 2013-10-10
+// -----------------------------------------------------------------------------
+bool ADN_Urban_Data::FixConsistency()
+{
+    ADN_Data_ABC::FixConsistency();
+    templateTranslations_->MergeDuplicateTranslations();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::WriteArchive
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::WriteArchive( xml::xostream& output )
+void ADN_Urban_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vMaterials_.GetErrorStatus() == eError ||
         vRoofShapes_.GetErrorStatus() == eError ||
@@ -165,7 +177,7 @@ void ADN_Urban_Data::ReadTemplates( xml::xistream& input )
 // Name: ADN_Urban_Data::WriteTemplates
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::WriteTemplates( xml::xostream& output )
+void ADN_Urban_Data::WriteTemplates( xml::xostream& output ) const
 {
     output << xml::start( "templates" );
     tools::SchemaWriter schemaWriter;
@@ -220,10 +232,10 @@ void ADN_Urban_Data::WriteMaterials( xml::xostream& output ) const
 // Name: ADN_Urban_Data::WriteMaterial
 // Created: SLG 2010-07-05
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output )
+void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output ) const
 {
     output << xml::start( "material-composition-type" )
-           << xml::attribute( "name", strName_ )
+           << xml::attribute( "name", *this )
               << xml::start( "attritions" );
     for( auto it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
@@ -252,7 +264,7 @@ ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
     : vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos() )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "material-composition-types" ) );
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::start( "attritions" )
               >> xml::list( "attrition", *this, &ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition )
           >> xml::end;
@@ -369,10 +381,10 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
 // Name: ADN_Urban_Data::WriteAccommodation
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& output )
+void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& output ) const
 {
     output << xml::start( "accommodation" )
-           << xml::attribute( "role", strName_ )
+           << xml::attribute( "role", *this )
            << xml::attribute( "nominal-capacity", nominalCapacity_.GetData() )
            << xml::attribute( "max-capacity", maxCapacity_.GetData() )
            << xml::end;
@@ -399,7 +411,7 @@ ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input )
     , maxCapacity_    ( 0 )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "accomodations" ) );
-    input >> xml::attribute( "role", strName_ )
+    input >> xml::attribute( "role", *this )
           >> xml::attribute( "nominal-capacity", nominalCapacity_ )
           >> xml::attribute( "max-capacity", maxCapacity_ );
 }
@@ -461,10 +473,10 @@ void ADN_Urban_Data::WriteInfrastructures( xml::xostream& output ) const
 // Name: ADN_Urban_Data::AccommodationInfos::WriteInfrastructure
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& output )
+void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& output ) const
 {
     output << xml::start( "infrastructure" )
-        << xml::attribute( "name", strName_ );
+        << xml::attribute( "name", *this );
     output << xml::attribute( "symbol", pSymbol_ );
 
     if( bMedical_.GetData() )
@@ -495,7 +507,7 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
     , bMedical_( false )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "infrastructures" ) );
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "symbol", pSymbol_ )
           >> xml::optional >> xml::attribute( "medical", bMedical_ );
 }
@@ -585,7 +597,7 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
     BindExistenceTo( &ptrRoofShape_ );
     unsigned int red, green, blue;
     double alpha;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::start( "architecture" )
               >> xml::attribute( "floor-number", floor_ )
               >> xml::attribute( "height", height_ )
@@ -634,10 +646,10 @@ void ADN_Urban_Data::UrbanTemplateInfos::ReadUsage( xml::xistream& xis )
 // Name: ADN_Urban_Data::Write
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output )
+void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output ) const
 {
     output << xml::start( "template" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::start( "architecture" )
                    << xml::attribute( "floor-number", floor_ )
                    << xml::attribute( "height", height_ )
@@ -702,7 +714,7 @@ ADN_Urban_Data::RoofShapeInfos::RoofShapeInfos()
 ADN_Urban_Data::RoofShapeInfos::RoofShapeInfos( xml::xistream& input )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "roof-shapes" ) );
-    input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "name", *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -718,12 +730,12 @@ ADN_Urban_Data::RoofShapeInfos::~RoofShapeInfos()
 // Name: ADN_Urban_Data::WriteRoofShape
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output )
+void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output ) const
 {
     if( strName_.GetKey().empty() )
         throw MASA_EXCEPTION( tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).toStdString() );
     output << xml::start( "roof-shape-type" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
            << xml::end;
 }
 
@@ -732,7 +744,7 @@ void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output )
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true )
     , proportion_( 100 )
 {
     // NOTHING
@@ -743,10 +755,10 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true )
     , proportion_   ( static_cast< unsigned int >( input.attribute< double >( "proportion" ) * 100 ) )
 {
-    ADN_CrossedRef::ReadArchive( input );
+    input >> xml::attribute( "type", *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -754,7 +766,7 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( ADN_Urban_Data::AccommodationInfos& accomodation, ADN_Type_Int proportion )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), &accomodation, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), &accomodation )
     , proportion_   ( proportion.GetData() )
 {
     // NOTHING
@@ -773,12 +785,12 @@ ADN_Urban_Data::UsageTemplateInfos::~UsageTemplateInfos()
 // Name: ADN_Urban_Data::Write
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output )
+void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output ) const
 {
     double proportion = static_cast< double >( proportion_.GetData() ) / 100.f;
-    output << xml::start( "usage" );
-    ADN_CrossedRef::WriteArchive( output );
-    output << xml::attribute( "proportion", proportion )
+    output << xml::start( "usage" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "proportion", proportion )
            << xml::end;
 }
 

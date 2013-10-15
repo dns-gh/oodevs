@@ -76,7 +76,7 @@ void ADN_Launchers_Data::LauncherInfos::ReadPh( xml::xistream& input, const std:
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::LauncherInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::optional >> xml::attribute( "indirect-fire", bIndirect_ )
           >> xml::list( "ph-modifiers", *this, &ADN_Launchers_Data::LauncherInfos::ReadPosture );
 }
@@ -85,10 +85,10 @@ void ADN_Launchers_Data::LauncherInfos::ReadArchive( xml::xistream& input )
 // Name: LauncherInfos::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Launchers_Data::LauncherInfos::WriteArchive( xml::xostream& output )
+void ADN_Launchers_Data::LauncherInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "launcher" )
-           << xml::attribute( "name", strName_ );
+           << xml::attribute( "name", *this );
     if( bDirect_.GetData() == true )
         for( int iPostureTireur=0; iPostureTireur< eNbrUnitPosture;++iPostureTireur)
         {
@@ -179,7 +179,7 @@ void ADN_Launchers_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Launchers_Data::WriteArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
-void ADN_Launchers_Data::WriteArchive( xml::xostream& output )
+void ADN_Launchers_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vLaunchers_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
@@ -187,7 +187,7 @@ void ADN_Launchers_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "launchers" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Launchers" );
-    for( T_LauncherInfos_Vector::iterator it = vLaunchers_.begin(); it != vLaunchers_.end(); ++it )
+    for( auto it = vLaunchers_.begin(); it != vLaunchers_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }

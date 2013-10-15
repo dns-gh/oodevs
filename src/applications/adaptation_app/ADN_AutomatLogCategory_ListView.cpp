@@ -13,6 +13,7 @@
 #include "ADN_GridDelegate.h"
 #include "ADN_Automata_Data.h"
 #include "ADN_Rich_ListViewItem.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AutomatLogCategory_ListView constructor
@@ -36,7 +37,6 @@ ADN_AutomatLogCategory_ListView::ADN_AutomatLogCategory_ListView( ADN_Automata_D
     for( int i = 0; i < header()->count(); ++i )
         resizeColumnToContents( i );
     collapseAll();
-    proxyModel_->sort( 0, Qt::DescendingOrder );
 }
 
 // -----------------------------------------------------------------------------

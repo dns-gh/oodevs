@@ -15,6 +15,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Equipments_GUI.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 #include <Qt3Support/q3popupmenu.h>
 
 typedef ADN_Equipments_Data::EquipmentInfos ComposanteInfos;

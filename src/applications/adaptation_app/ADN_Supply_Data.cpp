@@ -17,6 +17,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -212,7 +213,7 @@ void ADN_Supply_Data::SupplyDataInfos::CheckDatabaseValidity( ADN_ConsistencyChe
 // Name: ADN_Supply_Data::SupplyDataInfos::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
+void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "supply" );
     tools::SchemaWriter schemaWriter;
@@ -220,7 +221,7 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
     if( ptrUnit_.GetData() != 0 && ptrUnit_.GetData()->eTypeId_.GetData() == eAgentTypePionLOGConvoi )
     {
         output  << xml::start( "convoys" )
-                    << xml::attribute( "unit-type", ptrUnit_.GetData()->strName_ )
+                    << xml::attribute( "unit-type", ptrUnit_ )
                     << xml::attribute( "mission", ptrSupplyMission_ );
         {
             output << xml::start( "type" )
@@ -314,7 +315,7 @@ void ADN_Supply_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Supply_Data::WriteArchive
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::WriteArchive( xml::xostream& output )
+void ADN_Supply_Data::WriteArchive( xml::xostream& output ) const
 {
     infos_.WriteArchive( output );
 }

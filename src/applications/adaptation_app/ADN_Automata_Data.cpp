@@ -13,6 +13,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
 
 tools::IdManager ADN_Automata_Data::idManager_;
@@ -22,7 +23,7 @@ tools::IdManager ADN_Automata_Data::idManager_;
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::UnitInfos::UnitInfos( const ADN_Units_Data::T_UnitInfos_Vector& vector, ADN_Units_Data::UnitInfos* element /* = 0 */ )
-    : ADN_CrossedRef( vector, element, true, "type" )
+    : ADN_CrossedRef( vector, element, true )
     , min_( 0 )
     , max_( -1 )
 {
@@ -47,8 +48,8 @@ ADN_Automata_Data::UnitInfos* ADN_Automata_Data::UnitInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef::ReadArchive( input );
-    input >> xml::optional >> xml::attribute( "min-occurs", min_ )
+    input >> xml::attribute( "type", *this )
+          >> xml::optional >> xml::attribute( "min-occurs", min_ )
           >> xml::optional >> xml::attribute( "max-occurs", max_ );
 }
 
@@ -56,10 +57,10 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // Name: UnitInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const UnitInfos* pc )
+void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const UnitInfos* pc ) const
 {
-    output << xml::start( "unit" );
-    ADN_CrossedRef::WriteArchive( output );
+    output << xml::start( "unit" )
+             << xml::attribute( "type", *this );
     if( min_.GetData() != 0 )
         output << xml::attribute( "min-occurs", min_ );
     if( max_.GetData() >= 0 )
@@ -156,7 +157,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 {
     std::string strType;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", strType )
           >> xml::attribute( "decisional-model", ptrModel_ )
           >> xml::optional >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
@@ -169,10 +170,10 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 // Name: AutomatonInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output )
+void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "automat" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "type", nAgentType_.Convert() )
             << xml::attribute( "decisional-model", ptrModel_ )
             << xml::attribute( "id", nId_ );
@@ -267,7 +268,7 @@ void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 // Name: ADN_Automata_Data::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::WriteArchive( xml::xostream& output )
+void ADN_Automata_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vAutomata_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

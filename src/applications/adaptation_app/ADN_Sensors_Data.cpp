@@ -17,6 +17,7 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "clients_kernel/XmlTranslations.h"
 #include "ENT/ENT_Tr.h"
 
@@ -58,17 +59,17 @@ ADN_Sensors_Data::LimitedToSensorsInfos* ADN_Sensors_Data::LimitedToSensorsInfos
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::LimitedToSensorsInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "name", *this );
 }
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive
 // Created: JSR 2010-03-16
 // LTO
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "sensor" )
-                << xml::attribute( "name", strName_ )
+                << xml::attribute( "name", *this )
            << xml::end;
 }
 
@@ -81,7 +82,7 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& outpu
 // Created: JDY 03-08-28
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos( ADN_Volumes_Data::VolumeInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), ptr, true )
     , rCoeff_( 0 )
 {
     // NOTHING
@@ -100,11 +101,11 @@ void ADN_Sensors_Data::ModificatorSizeInfos::ReadArchive( xml::xistream& input )
 // Name: ModificatorSizeInfos::WriteArchive
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "distance-modifier" );
-    ADN_CrossedRef< ADN_Volumes_Data::VolumeInfos >::WriteArchive( output );
-    output   << xml::attribute( "value", rCoeff_ )
+    output << xml::start( "distance-modifier" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }
 
@@ -136,7 +137,7 @@ void ADN_Sensors_Data::ModificatorIlluminationInfos::ReadArchive( xml::xistream&
 // Name: ModificatorIlluminationInfos::WriteArchive
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorIlluminationInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::ModificatorIlluminationInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "distance-modifier" )
             << xml::attribute( "type", ENT_Tr::ConvertFromLightingType( eType_ ) )
@@ -172,7 +173,7 @@ void ADN_Sensors_Data::ModificatorMeteoInfos::ReadArchive( xml::xistream& input 
 // Name: ModificatorMeteoInfos::WriteArchive
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorMeteoInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::ModificatorMeteoInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "distance-modifier" )
             << xml::attribute( "type", ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( eType_ ) ) )
@@ -208,7 +209,7 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::ReadArchive( xml::xistream& 
 // Name: ModificatorEnvironmentInfos::WriteArchive
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "distance-modifier" )
             << xml::attribute( "value", rCoeff_ )
@@ -225,7 +226,7 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // Created: SLG 2010-03-02
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true )
     , rCoeff_( 0 )
 {
     // NOTHING
@@ -244,11 +245,11 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::ReadArchive( xml::xistream& i
 // Name: ModificatorUrbanBlockInfos::WriteArchive
 // Created: SLG 2010-03-02
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "distance-modifier" );
-    ADN_CrossedRef< ADN_Urban_Data::UrbanMaterialInfos >::WriteArchive( output );
-    output   << xml::attribute( "value", rCoeff_ )
+    output << xml::start( "distance-modifier" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }
 
@@ -280,7 +281,7 @@ void ADN_Sensors_Data::ModificatorPostureInfos::ReadArchive( xml::xistream& inpu
 // Name: ModificatorPostureInfos::WriteArchive
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "distance-modifier" )
             << xml::attribute( "type", ADN_Tools::ComputePostureScriptName( eType_ ) )
@@ -297,7 +298,7 @@ void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& out
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::TargetInfos::TargetInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true )
     , rDistanceDetection_( 0 )
     , populationInfos_()
 {
@@ -370,7 +371,7 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
 // Name: TargetInfos::WriteArchive
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "object" )
              << xml::attribute( "type", GetCrossedElement() ? GetCrossedElement()->strType_.GetData() : "" )
@@ -393,7 +394,7 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 // Created: LGY 2012-12-03
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::DisasterInfos::DisasterInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0, true )
     , rDetectionThreshold_( 0)
 {
     // NOTHING
@@ -426,19 +427,19 @@ ADN_Sensors_Data::DisasterInfos* ADN_Sensors_Data::DisasterInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::DisasterInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Disasters_Data::DisasterInfos >::ReadArchive( input );
-    input >> xml::attribute( "detection-threshold", rDetectionThreshold_ );
+    input >> xml::attribute( "type", *this )
+          >> xml::attribute( "detection-threshold", rDetectionThreshold_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::WriteArchive
 // Created: LGY 2012-12-03
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::DisasterInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::DisasterInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "disaster" );
-    ADN_CrossedRef< ADN_Disasters_Data::DisasterInfos >::WriteArchive( output );
-    output     << xml::attribute( "detection-threshold", rDetectionThreshold_ )
+    output << xml::start( "disaster" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "detection-threshold", rDetectionThreshold_ )
            << xml::end;
 }
 
@@ -501,7 +502,7 @@ void ADN_Sensors_Data::PopulationInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Sensors_Data::PopulationInfos::WriteArchive
 // Created: SBO 2005-11-21
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::PopulationInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::PopulationInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "population-modifier" )
             << xml::attribute( "density", rDensity_ )
@@ -883,7 +884,7 @@ void ADN_Sensors_Data::SensorInfos::ReadDisaster( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "detection-delay", detectionDelay_ )
           >> xml::optional
           >> xml::attribute( "activation-on-request", activatedOnRequest_ )
@@ -894,10 +895,10 @@ void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 // Name: SensorInfos::WriteArchive
 // Created: APE 2004-11-24
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "sensor" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "detection-delay", detectionDelay_ );
     if( activatedOnRequest_.GetData() )
         output << xml::attribute( "activation-on-request", true );
@@ -1055,7 +1056,7 @@ void ADN_Sensors_Data::ALATInfos::ReadArchive( xml::xistream& input )
 // Name: ALATInfos::WriteArchive
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::ALATInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::ALATInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "alat-monitoring-times" );
     for( int n = 1; n < eNbrVisionObjects; ++n )
@@ -1100,7 +1101,7 @@ void ADN_Sensors_Data::CobraInfos::ReadArchive( xml::xistream& input )
 // Name: CobraInfos::WriteArchive
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::CobraInfos::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::CobraInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "cobra-radar" )
             << xml::attribute( "action-range", rRange_ )
@@ -1168,7 +1169,7 @@ void ADN_Sensors_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Sensors_Data::WriteArchive
 // Created: APE 2004-11-24
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
+void ADN_Sensors_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vSensors_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( tools::translate( "ADN_Sensors_Data", "Invalid data on tab '%1', subtab '%2'" )

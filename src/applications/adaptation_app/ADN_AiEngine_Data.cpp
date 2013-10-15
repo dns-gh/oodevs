@@ -138,7 +138,7 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_AiEngine_Data::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
+void ADN_AiEngine_Data::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "decisional" );
     tools::SchemaWriter schemaWriter;

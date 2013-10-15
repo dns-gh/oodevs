@@ -16,6 +16,7 @@
 #include "ADN_Tr.h"
 #include "ADN_Tools.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Radars_Data::RadarInfos RadarInfos;
 

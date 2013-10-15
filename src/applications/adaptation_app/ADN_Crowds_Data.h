@@ -36,7 +36,7 @@ public:
         virtual ~FireEffectProtectionInfos();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rUnarmedDestruction_;
@@ -128,7 +128,7 @@ public:
         virtual ~SpeedEffectVolumeInfos();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rDensity_;
@@ -203,7 +203,7 @@ public:
         void ReadAttritionEffect( xml::xistream& input );
         void ReadFireEffect( xml::xistream& input );
         void ReadUrbanEffect( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         using ADN_RefWithLocalizedName::CheckValidity;
         virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
 
@@ -253,7 +253,7 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadPopulation( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
 
 public:
     T_CrowdsInfosVector vCrowds_;

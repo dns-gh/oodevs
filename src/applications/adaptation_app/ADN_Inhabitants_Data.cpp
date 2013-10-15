@@ -12,6 +12,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -74,7 +75,7 @@ void ADN_Inhabitants_Data::EventInfos::ReadArchive( xml::xistream& input )
 // Name: EventInfos::WriteArchive
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output )
+void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "event" )
            << xml::attribute( "day", day_.Convert() )
@@ -89,7 +90,7 @@ void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output )
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_Data::InhabitantsInfosConsumption::InhabitantsInfosConsumption()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0, true )
     , consumption_( 0 )
 {
     // NOTHING
@@ -122,19 +123,19 @@ ADN_Inhabitants_Data::InhabitantsInfosConsumption* ADN_Inhabitants_Data::Inhabit
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::InhabitantsInfosConsumption::ReadArchive( xml::xistream& xis )
 {
-    ADN_CrossedRef< ADN_ResourceNetworks_Data::ResourceNetworkInfos >::ReadArchive( xis );
-    xis >> xml::attribute( "need", consumption_ );
+    xis >> xml::attribute( "type", *this )
+        >> xml::attribute( "need", consumption_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantsInfosConsumption::WriteArchive
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostream& xos )
+void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostream& xos ) const
 {
-    xos << xml::start( "resource" );
-    ADN_CrossedRef< ADN_ResourceNetworks_Data::ResourceNetworkInfos >::WriteArchive( xos );
-    xos   << xml::attribute( "need", consumption_ )
+    xos << xml::start( "resource" )
+          << xml::attribute( "type", *this )
+          << xml::attribute( "need", consumption_ )
         << xml::end;
 }
 
@@ -221,7 +222,7 @@ ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::InhabitantsInfos::
 void ADN_Inhabitants_Data::InhabitantsInfos::ReadArchive( xml::xistream& input )
 {
     std::string strModel;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "associated-crowd", strModel )
           >> xml::optional >> xml::attribute( "angry-crowd-mission", strAngryCrowdMission_ );
 
@@ -299,13 +300,13 @@ const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
 // Name: InhabitantsInfos::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output )
+void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output ) const
 {
     const std::string error = CheckErrors();
     if( error != "" )
         throw MASA_EXCEPTION( error );
     output << xml::start( "population" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "id", nId_ )
             << xml::attribute( "associated-crowd", ptrModel_ );
     if( !strAngryCrowdMission_.GetData().empty() )
@@ -429,7 +430,7 @@ void ADN_Inhabitants_Data::ReadPeople( xml::xistream& input )
 // Name: ADN_Inhabitants_Data::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output )
+void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vInhabitants_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

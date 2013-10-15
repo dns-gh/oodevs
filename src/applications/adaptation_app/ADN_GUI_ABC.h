@@ -10,9 +10,12 @@
 #ifndef __ADN_GUI_ABC_h_
 #define __ADN_GUI_ABC_h_
 
-#include "ADN_NavigationInfos.h"
 #include "ADN_Enums.h"
-#include "ADN_WorkspaceElement.h"
+
+namespace ADN_NavigationInfos
+{
+    struct UsedBy;
+}
 
 class ADN_MainWindow;
 class ADN_HtmlBuilder;

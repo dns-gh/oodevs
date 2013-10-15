@@ -38,7 +38,7 @@ public:
         DataInfos();
 
         void ReadArchive( xml::xistream& );
-        void WriteArchive( xml::xostream& );
+        void WriteArchive( xml::xostream& ) const;
 
         bool IsReadOnly();
         void DisableReadOnly();

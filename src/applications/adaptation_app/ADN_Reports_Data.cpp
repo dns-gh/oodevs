@@ -66,7 +66,7 @@ void ADN_Reports_Data::ReportParameterValue::ReadArchive( xml::xistream& input )
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportParameterValue::WriteArchive( xml::xostream& output, unsigned int id )
+void ADN_Reports_Data::ReportParameterValue::WriteArchive( xml::xostream& output, unsigned int id ) const
 {
     output << xml::start( "value" )
             << xml::attribute( "id", id )
@@ -146,7 +146,7 @@ void ADN_Reports_Data::ReportParameter::ReadParameterValue( xml::xistream& input
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportParameter::WriteArchive( xml::xostream& output )
+void ADN_Reports_Data::ReportParameter::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "parameter" )
            << xml::attribute( "type", type_.Convert() );
@@ -229,7 +229,7 @@ void ADN_Reports_Data::ReportInfo::ReadParameter( xml::xistream& input )
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output )
+void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "report" )
             << xml::attribute( "id", id_ )
@@ -298,7 +298,7 @@ void ADN_Reports_Data::ReadReport( xml::xistream& input )
 // Name: ADN_Reports_Data::WriteArchive
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::WriteArchive( xml::xostream& output )
+void ADN_Reports_Data::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "reports" );
     tools::SchemaWriter schemaWriter;

@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void WriteArchive( xml::xostream& );
+    virtual void WriteArchive( xml::xostream& ) const;
     ADN_MissionGenObjectTypes_Infos* CreateCopy();
     //@}
 

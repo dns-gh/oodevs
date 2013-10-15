@@ -16,6 +16,7 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
 
@@ -77,7 +78,7 @@ void ADN_Equipments_Data::AmbulanceInfos::ReadArchive( xml::xistream& input )
 // Name: AmbulanceInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::AmbulanceInfos::WriteArchive( const std::string& section, xml::xostream& output )
+void ADN_Equipments_Data::AmbulanceInfos::WriteArchive( const std::string& section, xml::xostream& output ) const
 {
     std::string woundedTransports;
     for( int n = 0; n < eNbrDoctorSkills; ++n )
@@ -182,7 +183,7 @@ void ADN_Equipments_Data::LogHealthInfos::ReadArchive( xml::xistream& input )
 // Name: LogHealthInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::LogHealthInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::LogHealthInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "health-functions" );
     if( bIsAmbulance_.GetData() )
@@ -266,7 +267,7 @@ void ADN_Equipments_Data::NTIInfos::ReadArchive( xml::xistream& input )
 // Name: NTIInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::NTIInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::NTIInfos::WriteArchive( xml::xostream& output ) const
 {
     if( ! bIsPresent_.GetData() )
         return;
@@ -368,7 +369,7 @@ void ADN_Equipments_Data::LogMaintenanceInfos::ReadArchive( xml::xistream& input
 // Name: LogMaintenanceInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "maintenance-functions" );
     if( bIsTower_.GetData() )
@@ -440,7 +441,7 @@ void ADN_Equipments_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
 // Name: LogSupplyInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::LogSupplyInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::LogSupplyInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "supply-functions" );
     if( bIsCarrier_.GetData() && ptr_.GetData() )
@@ -518,7 +519,7 @@ void ADN_Equipments_Data::LogInfos::ReadArchive( xml::xistream& input )
 // Name: LogInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::LogInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::LogInfos::WriteArchive( xml::xostream& output ) const
 {
     if( ! bHasHealthInfos_.GetData() && ! bHasMaintenanceInfos_.GetData() && ! bHasSupplyInfos_.GetData() )
         return;
@@ -549,7 +550,7 @@ bool ADN_Equipments_Data::LogInfos::IsRepairTypeValid() const
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::BreakdownInfos::BreakdownInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetBreakdowns(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetBreakdowns(), 0, true )
     , rPercentage_( 0 )
 {
     // NOTHING
@@ -573,19 +574,19 @@ ADN_Equipments_Data::BreakdownInfos* ADN_Equipments_Data::BreakdownInfos::Create
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::BreakdownInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Breakdowns_Data::BreakdownInfo >::ReadArchive( input );
-    input >> xml::attribute( "percentage", rPercentage_ );
+    input >> xml::attribute( "type", *this )
+          >> xml::attribute( "percentage", rPercentage_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::BreakdownInfos::WriteArchive( const std::string& origin, xml::xostream& output )
+void ADN_Equipments_Data::BreakdownInfos::WriteArchive( const std::string& origin, xml::xostream& output ) const
 {
-    output << xml::start( "breakdown" );
-    ADN_CrossedRef< ADN_Breakdowns_Data::BreakdownInfo >::WriteArchive( output );
-    output  << xml::attribute( "origin", origin )
+    output << xml::start( "breakdown" )
+            << xml::attribute( "type", *this )
+            << xml::attribute( "origin", origin )
             << xml::attribute( "percentage", rPercentage_ )
            << xml::end;
 }
@@ -665,7 +666,7 @@ void ADN_Equipments_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input
 // Name: BreakdownGroupInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output, const std::string& composante )
+void ADN_Equipments_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output, const std::string& composante ) const
 {
     double rSum = 0.0;
     for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
@@ -703,7 +704,7 @@ void ADN_Equipments_Data::SpeedInfos::ReadArchive( xml::xistream& input )
 // Name: SpeedInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::SpeedInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::SpeedInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "speed" )
             << xml::attribute( "terrain", ENT_Tr::ConvertFromLocation( nTypeTerrain_ ) )
@@ -718,7 +719,7 @@ void ADN_Equipments_Data::SpeedInfos::WriteArchive( xml::xostream& output )
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Equipments_Data::SensorInfos::SensorInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos(), 0, true )
     , rHeight_(0)
 {
     // NOTHING
@@ -742,19 +743,19 @@ ADN_Equipments_Data::SensorInfos* ADN_Equipments_Data::SensorInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Sensors_Data::SensorInfos >::ReadArchive( input );
-    input >> xml::attribute( "height", rHeight_ );
+    input >> xml::attribute( "type", *this )
+          >> xml::attribute( "height", rHeight_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SensorInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::SensorInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::SensorInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "sensor" );
-    ADN_CrossedRef< ADN_Sensors_Data::SensorInfos >::WriteArchive( output );
-    output  << xml::attribute( "height", rHeight_ )
+    output << xml::start( "sensor" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "height", rHeight_ )
            << xml::end;
 }
 
@@ -763,7 +764,7 @@ void ADN_Equipments_Data::SensorInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::RadarInfos::RadarInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_->vRadars_, 0 , true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_->vRadars_, 0 , true )
     , rHeight_( 10 )
 {
     // NOTHING
@@ -787,19 +788,19 @@ ADN_Equipments_Data::RadarInfos* ADN_Equipments_Data::RadarInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::RadarInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Radars_Data::RadarInfos >::ReadArchive( input );
-    input >> xml::optional >> xml::attribute( "height", rHeight_ );
+    input >> xml::attribute( "type", *this )
+          >> xml::optional >> xml::attribute( "height", rHeight_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RadarInfos::WriteArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::RadarInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::RadarInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "radar" );
-    ADN_CrossedRef< ADN_Radars_Data::RadarInfos >::WriteArchive( output );
-    output   << xml::attribute( "height", rHeight_ )
+    output << xml::start( "radar" )
+             << xml::attribute( "type", *this )
+             << xml::attribute( "height", rHeight_ )
            << xml::end;
 }
 
@@ -851,7 +852,7 @@ void ADN_Equipments_Data::WeaponInfos::ReadArchive( xml::xistream& input )
 // Name: WeaponInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::WeaponInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::WeaponInfos::WriteArchive( xml::xostream& output ) const
 {
     if( GetCrossedElement() )
     {
@@ -899,18 +900,18 @@ ADN_Equipments_Data::ActiveProtectionsInfos* ADN_Equipments_Data::ActiveProtecti
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_ActiveProtections_Data::ActiveProtectionsInfos >::ReadArchive( input );
+    input >> xml::attribute( "name", *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipments_Data::WriteArchive
 // Created: LDC 2010-01-12
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "protection" );
-    ADN_CrossedRef< ADN_ActiveProtections_Data::ActiveProtectionsInfos >::WriteArchive( output );
-    output << xml::end;
+    output << xml::start( "protection" )
+            << xml::attribute( "name", *this )
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -948,8 +949,8 @@ ADN_Equipments_Data::CategoryInfos* ADN_Equipments_Data::CategoryInfos::CreateCo
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::CategoryInfos::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( input );
-    input >> xml::attribute( "capacity", rNbr_ )
+    input >> xml::attribute( "name", *this )
+          >> xml::attribute( "capacity", rNbr_ )
           >> xml::attribute( "logistic-threshold", rLogThreshold_ )
           >> xml::optional >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
 }
@@ -958,13 +959,13 @@ void ADN_Equipments_Data::CategoryInfos::ReadArchive( xml::xistream& input )
 // Name: CategoryInfos::WriteArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::CategoryInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::CategoryInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "resource" );
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( output );
-    output  << xml::attribute( "capacity", rNbr_ )
-            << xml::attribute( "logistic-threshold", rLogThreshold_ )
-            << xml::attribute( "normalized-consumption", rNormalizedConsumption_ )
+    output << xml::start( "resource" )
+             << xml::attribute( "name", *this )
+             << xml::attribute( "capacity", rNbr_ )
+             << xml::attribute( "logistic-threshold", rLogThreshold_ )
+             << xml::attribute( "normalized-consumption", rNormalizedConsumption_ )
            << xml::end;
 }
 
@@ -1026,7 +1027,7 @@ void ADN_Equipments_Data::ResourceInfos::ReadArchive( xml::xistream& input, cons
 // Name: ResourceInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output ) const
 {
     for( uint n = 0; n < eNbrDotationFamily; ++n )
     {
@@ -1037,7 +1038,7 @@ void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output )
                 if( !entered )
                 {
                     output << xml::start( "category" )
-                            << xml::attribute( "name", ( *it )->ptrDotation_.GetData()->strName_ );
+                            << xml::attribute( "name", ( *it )->ptrDotation_ );
                     entered = true;
                 }
                 ( *it )->WriteArchive( output );
@@ -1052,7 +1053,7 @@ void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output )
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Equipments_Data::ObjectInfos::ObjectInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true )
     , initialBuildTime_( "-1s" )
     , initialDestructionTime_( "-1s" )
     , coeffBuildTime_( "-1s" )
@@ -1146,7 +1147,7 @@ void ADN_Equipments_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 // Name: ObjectInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ObjectInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ObjectInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "object" )
             << xml::attribute( "type", GetCrossedElement() ? GetCrossedElement()->strType_.GetData() : "" );
@@ -1202,8 +1203,8 @@ ADN_Equipments_Data::ConsumptionItem* ADN_Equipments_Data::ConsumptionItem::Crea
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::ConsumptionItem::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Equipments_Data::CategoryInfos >::ReadArchive( input );
-    input >> xml::attribute( "value", nQuantityUsedPerHour_ );
+    input >> xml::attribute( "name", *this )
+          >> xml::attribute( "value", nQuantityUsedPerHour_ );
 
     if( !GetCrossedElement() )
         return;
@@ -1219,13 +1220,17 @@ void ADN_Equipments_Data::ConsumptionItem::ReadArchive( xml::xistream& input )
 // Name: ConsumptionItem::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ConsumptionItem::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "resource" );
-    ADN_CrossedRef< ADN_Equipments_Data::CategoryInfos >::WriteArchive( output );
+    output << xml::start( "resource" )
+             << xml::attribute( "name", *this );
     ADN_Resources_Data::CategoryInfo* infos = GetCrossedElement() ? GetCrossedElement()->GetCrossedElement() : 0;
-    output << xml::attribute( "category", infos ? infos->parentResource_.strName_.GetData() : "" )
-            << xml::attribute( "value", nQuantityUsedPerHour_ )
+    if( infos )
+        output << xml::attribute( "category", infos->parentResource_.strName_.GetData() );
+    //else
+    //    output << xml::attribute( "category", "" );
+    //output << xml::attribute( "category", infos ? infos->parentResource_.strName_.GetData() : "" )
+    output << xml::attribute( "value", nQuantityUsedPerHour_ )
            << xml::end;
 }
 
@@ -1317,7 +1322,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::FillMissingConsumptions( T_Category
 // Name: ConsumptionsInfos::WriteArchive
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "consumptions" );
     for( int nType = 0; nType < eNbrConsumptionType; ++nType )
@@ -1657,7 +1662,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadObject( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "comment", strAdditionalComments_ )
           >> xml::optional >> xml::start( "operational-information" )
             >> xml::optional >> xml::attribute( "native-country", strNativeCountry_ )
@@ -1819,11 +1824,11 @@ void ADN_Equipments_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker
 // Name: EquipmentInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "equipment" )
                << xml::attribute( "comment", strAdditionalComments_ )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::attribute( "id", nId_ )
                << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
                << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
@@ -2018,7 +2023,7 @@ void ADN_Equipments_Data::ReadArchive( xml::xistream& input )
 // Name: ADN_Equipments_Data::WriteArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::WriteArchive( xml::xostream& output )
+void ADN_Equipments_Data::WriteArchive( xml::xostream& output ) const
 {
     if( vEquipments_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

@@ -38,7 +38,7 @@ public:
         //@{
         ResourceNetworkInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         //@}
 
     public:
@@ -76,7 +76,7 @@ private:
     //@{
     void ReadArchive( xml::xistream& input );
     void ReadResourceNetwork( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
     //@}
 
 private:

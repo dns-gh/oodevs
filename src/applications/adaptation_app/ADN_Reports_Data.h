@@ -37,7 +37,7 @@ public:
         ReportParameterValue* CreateCopy();
 
         void ReadArchive ( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, unsigned int id );
+        void WriteArchive( xml::xostream& output, unsigned int id ) const;
 
     public:
         ADN_Type_String name_;
@@ -57,7 +57,7 @@ public:
 
         void ReadArchive       ( xml::xistream& input );
         void ReadParameterValue( xml::xistream& input );
-        void WriteArchive      ( xml::xostream& output );
+        void WriteArchive      ( xml::xostream& output ) const;
 
     public:
         ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
@@ -82,7 +82,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadParameter( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Int id_;
@@ -112,7 +112,7 @@ private:
     //@{
     void ReadArchive( xml::xistream& input );
     void ReadReport( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
+    void WriteArchive( xml::xostream& output ) const;
     //@}
 
 private:

@@ -12,6 +12,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_Resources_Data.h"
+#include "ADN_WorkspaceElement.h"
 
 ADN_ConsistencyChecker::T_Parent::T_ConsistencyErrors ADN_ConsistencyChecker::loadingErrors_;
 

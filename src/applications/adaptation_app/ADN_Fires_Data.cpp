@@ -11,6 +11,7 @@
 #include "ADN_Fires_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include "clients_kernel/XmlTranslations.h"
 
@@ -81,7 +82,7 @@ void ADN_Fires_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Fires_Data::FireInjuryInfos::WriteArchive
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_Fires_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireInjuryInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "injuries" );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
@@ -155,10 +156,10 @@ void ADN_Fires_Data::FireSurfaceInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Fires_Data::FireSurfaceInfos::WriteArchive
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
-void ADN_Fires_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output ) const
 {
     output  << xml::start( "surface" )
-        << xml::attribute( "type", strName_ )
+        << xml::attribute( "type", *this )
                 << xml::attribute( "ignition-threshold", ignitionThreshold_ )
                 << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
             << xml::end;
@@ -233,7 +234,7 @@ ADN_Fires_Data::FireClassInfos* ADN_Fires_Data::FireClassInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Fires_Data::FireClassInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "initial-heat", initialHeat_ )
           >> xml::attribute( "max-heat", maxHeat_ )
           >> xml::attribute( "increase-rate", increaseRate_ )
@@ -316,10 +317,10 @@ void ADN_Fires_Data::FireClassInfos::ReadSurface( xml::xistream& input )
 // Name: ADN_Fires_Data::FireClassInfos::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_Fires_Data::FireClassInfos::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::FireClassInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "fire" )
-               << xml::attribute( "name", strName_ )
+               << xml::attribute( "name", *this )
                << xml::attribute( "initial-heat", initialHeat_ )
                << xml::attribute( "max-heat", maxHeat_ )
                << xml::attribute( "increase-rate", increaseRate_ )
@@ -406,7 +407,7 @@ void ADN_Fires_Data::ReadFireClass( xml::xistream& input )
 // Name: ADN_Fires_Data::WriteArchive
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_Fires_Data::WriteArchive( xml::xostream& output )
+void ADN_Fires_Data::WriteArchive( xml::xostream& output ) const
 {
     if( fireClasses_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );

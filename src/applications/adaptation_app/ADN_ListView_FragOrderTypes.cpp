@@ -18,6 +18,7 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Wizard.h"
 #include "ADN_WizardPage.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Missions_FragOrder FragOrder;
 

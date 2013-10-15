@@ -13,6 +13,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
 #include "ADN_Objects_Data.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 
 #include <boost/bind.hpp>
@@ -103,7 +104,7 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
 {
     std::string type;
     std::string max;
-    input >> xml::attribute( "name", strName_ )
+    input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", type )
           >> xml::optional >> xml::attribute( "optional", isOptional_ )
           >> xml::attribute( "dia-name", diaName_ )
@@ -255,14 +256,14 @@ namespace
     }
 }
 
-void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
+void ADN_Missions_Parameter::WriteArchive( xml::xostream& output ) const
 {
     std::string diaName = diaName_.GetData();
     if( diaName.empty() )
         diaName = GetFussedDiaName( strName_.GetData().c_str() ).toStdString();
 
     output << xml::start( "parameter" )
-            << xml::attribute( "name", strName_ )
+            << xml::attribute( "name", *this )
             << xml::attribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData() ) )
             << xml::attribute( "optional", isOptional_ )
             << xml::attribute( "dia-name", diaName );

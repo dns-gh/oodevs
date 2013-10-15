@@ -12,6 +12,7 @@
 #include "moc_ADN_SupplyUnitSelector.cpp"
 #include "ADN_Workspace.h"
 #include "ADN_Units_Data.h"
+#include "ADN_WorkspaceElement.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector::ADN_SupplyUnitSelector

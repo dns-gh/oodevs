@@ -129,4 +129,8 @@ private:
     //@}
 };
 
+std::ostream& operator<<( std::ostream& os, const ADN_Type_LocalizedString& type );
+xml::xostream& operator<<( xml::xostream& xos, const ADN_Type_LocalizedString& type );
+xml::xistream& operator>>( xml::xistream& xis, ADN_Type_LocalizedString& type );
+
 #endif // __ADN_Type_LocalizedString_h_

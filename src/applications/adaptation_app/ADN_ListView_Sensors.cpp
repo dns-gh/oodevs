@@ -17,6 +17,7 @@
 #include "ADN_Equipments_Data.h"
 #include "ADN_Sensors_DetectionAlgorithmPrevision.h"
 #include "ADN_Wizard.h"
+#include "ADN_WorkspaceElement.h"
 
 typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 

@@ -22,6 +22,7 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_Tr.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 
 typedef ADN_Resources_Data::ResourceInfos ResourceInfos;

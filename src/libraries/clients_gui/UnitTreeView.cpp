@@ -240,20 +240,6 @@ void UnitTreeView::FillAgentComposition( QStandardItem& parent, const kernel::Ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitTreeView::LessThan
-// Created: JSR 2012-09-21
-// -----------------------------------------------------------------------------
-bool UnitTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
-{
-    QStandardItem* leftItem = dataModel_.GetItemFromIndex( left );
-    QStandardItem* rightItem = dataModel_.GetItemFromIndex( right );
-    if( !leftItem || !rightItem )
-        return false;
-    valid = true;
-    return leftItem->text().localeAwareCompare( rightItem->text() ) > 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UnitTreeView::Select
 // Created: NPT 2012-11-13
 // -----------------------------------------------------------------------------
