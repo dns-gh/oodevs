@@ -84,12 +84,28 @@ QLocale tools::readLocale()
     return QLocale( QLocale::English, QLocale::UnitedStates );
 }
 
+namespace
+{
+
+std::string GetEnvLang()
+{
+    const char* lang = std::getenv( "MASA_LANG" );
+    if( lang && strlen(lang) >= 2 )
+        return std::string( lang, 2 );
+    return "";
+}
+
+} // namespace
+
 // -----------------------------------------------------------------------------
 // Name: Tools::readLang
 // Created: ABR 2012-07-13
 // -----------------------------------------------------------------------------
 std::string tools::readLang()
 {
+    const std::string lang = GetEnvLang();
+    if( !lang.empty() )
+        return lang;
     return tools::readLocale().name().left( 2 ).toStdString();
 }
 
@@ -99,8 +115,11 @@ std::string tools::readLang()
 // -----------------------------------------------------------------------------
 QTranslator* tools::AddTranslator( QApplication& application, const QLocale& locale, const char* t )
 {
+    std::string lang = GetEnvLang();
+    if( lang.empty() )
+        lang = locale.name().left( 2 ).toStdString();
     std::auto_ptr< QTranslator > trans( new QTranslator( &application ) );
-    const QString file = QString( "%1_%2" ).arg( t ).arg( locale.name().left( 2 ) );
+    const QString file = QString( "%1_%2" ).arg( t ).arg( lang.c_str() );
     if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
     {
         application.installTranslator( trans.get() );
