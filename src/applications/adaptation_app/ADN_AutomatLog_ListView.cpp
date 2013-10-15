@@ -14,6 +14,28 @@
 #include "ADN_Automata_Data.h"
 #include "ADN_Rich_ListViewItem.h"
 
+namespace
+{
+    bool AutomatLogLessThan( const QModelIndex& left, const QModelIndex& right, bool& valid, const gui::StandardModel& model )
+    {
+        QModelIndex mainLeft = model.GetMainModelIndex( left );
+        QModelIndex mainRight = model.GetMainModelIndex( right );
+        ADN_Rich_ListViewItem* leftItem = static_cast< ADN_Rich_ListViewItem* >( model.GetItemFromIndex( mainLeft ) );
+        ADN_Rich_ListViewItem* rightItem = static_cast< ADN_Rich_ListViewItem* >( model.GetItemFromIndex( mainRight ) );
+        if( leftItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_First || rightItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_Last )
+        {
+            valid = true;
+            return false;
+        }
+        if( leftItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_Last || rightItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_First )
+        {
+            valid = true;
+            return true;
+        }
+        return true;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_AutomatLog_ListView constructor
 // Created: APE 2005-04-04
@@ -28,6 +50,7 @@ ADN_AutomatLog_ListView::ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidg
     setItemDelegate( new ADN_GridDelegate( this ) );
     setRootIsDecorated( true );
     setAllColumnsShowFocus( true );
+    SetLessThanFunctor( boost::bind( &AutomatLogLessThan, _1, _2, _3, boost::cref( dataModel_ ) ) );
 
     BuildHeaders();
     BuildBody   ();
@@ -383,27 +406,4 @@ void ADN_AutomatLog_ListView::FillTotalItem( QStandardItem& item, const T_Catego
         pSubItem->setText( eColumnEngineStoppedConso, QString::number( it->second->rEngineStoppedQuantityUsedPerHour_ ) );
         pSubItem->setText( eColumnEngineStartedConso, QString::number( it->second->rEngineStartedQuantityUsedPerHour_ ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_AutomatLog_ListView::LessThan
-// Created: JSR 2012-10-03
-// -----------------------------------------------------------------------------
-bool ADN_AutomatLog_ListView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
-{
-    QModelIndex mainLeft = dataModel_.GetMainModelIndex( left );
-    QModelIndex mainRight = dataModel_.GetMainModelIndex( right );
-    ADN_Rich_ListViewItem* leftItem = static_cast< ADN_Rich_ListViewItem* >( dataModel_.GetItemFromIndex( mainLeft) );
-    ADN_Rich_ListViewItem* rightItem = static_cast< ADN_Rich_ListViewItem* >( dataModel_.GetItemFromIndex( mainRight) );
-    if( leftItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_First || rightItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_Last )
-    {
-        valid = true;
-        return false;
-    }
-    if( leftItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_Last || rightItem->GetSorting() == ADN_Rich_ListViewItem::eSortingConstraint_First )
-    {
-        valid = true;
-        return true;
-    }
-    return true;
 }

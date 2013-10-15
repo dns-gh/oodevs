@@ -15,21 +15,12 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/Tools.h"
 #include "preparation/ColorController.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
-
-namespace
-{
-    bool IsCommandPost( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::CommandPostAttributes_ABC* pAttributes = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
-            return pAttributes->IsCommandPost();
-        return false;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: AgentTemplateElement constructor
@@ -38,7 +29,7 @@ namespace
 AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::Agent_ABC& agent )
     : agents_( agents )
     , type_  ( agent.GetType() )
-    , cp_    ( IsCommandPost( agent ) )
+    , cp_    ( tools::IsCommandPost( agent ) )
     , name_  ( agent.GetName() )
 {
     const kernel::DictionaryExtensions& extensions = agent.Get< kernel::DictionaryExtensions >();

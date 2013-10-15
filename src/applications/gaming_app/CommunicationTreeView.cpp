@@ -27,8 +27,6 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/AutomatDecisions_ABC.h"
-#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/MagicActionType.h"
@@ -42,20 +40,6 @@
 
 namespace
 {
-    bool IsCommandPost( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::CommandPostAttributes_ABC* pAttributes = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
-            return pAttributes->IsCommandPost();
-        return false;
-    }
-
-    bool IsEngaged( const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::AutomatDecisions_ABC* decisions = entity.Retrieve< kernel::AutomatDecisions_ABC >() )
-            return decisions->IsEmbraye();
-        return false;
-    }
-
     bool IsKgDeactivated( const kernel::Entity_ABC& entity )
     {
         if( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
@@ -83,6 +67,7 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel:
 {
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &CommunicationTreeView::GetEntityPixmap, this, _1 ), this ) );
     setEditTriggers( 0 );
+    SetLessThanEntityFunctor( &tools::LessThanByPC );
     controllers_.Update( *this );
 }
 
@@ -102,31 +87,13 @@ CommunicationTreeView::~CommunicationTreeView()
 std::vector< const QPixmap* > CommunicationTreeView::GetEntityPixmap( const kernel::Entity_ABC& entity )
 {
     std::vector< const QPixmap* > ret;
-    if( IsCommandPost( entity ) )
+    if( tools::IsCommandPost( entity ) )
         ret.push_back( &commandPost_ );
-    if( IsEngaged( entity ) )
+    if( tools::IsEngaged( entity ) )
         ret.push_back( &lock_ );
     else if( IsKgDeactivated( entity ) )
         ret.push_back( &scisors_ );
     return ret;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationTreeView::LessThan
-// Created: JSR 2012-09-28
-// -----------------------------------------------------------------------------
-bool CommunicationTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
-{
-    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
-    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
-    if( !entity1 || !entity2 )
-        return false;
-    valid = true;
-    if( IsCommandPost( *entity1 ) )
-        return false;
-    if( IsCommandPost( *entity2 ) )
-        return true;
-    return entity2->GetId() < entity1->GetId();
 }
 
 // -----------------------------------------------------------------------------

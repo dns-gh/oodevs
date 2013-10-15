@@ -15,6 +15,7 @@
 
 #include "DragAndDropObserver_ABC.h"
 #include "StandardModel.h"
+#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -39,6 +40,11 @@ class RichTreeView : public QTreeView
    Q_OBJECT
 
 public:
+    //! @name Types
+    //@{
+    typedef boost::function< bool( const QModelIndex&, const QModelIndex&, bool& ) > T_LessThanFunctor;
+    //@}
+
     //! @name Constructors/Destructor
     //@{
     explicit RichTreeView( const QString& objectName, QWidget* parent = 0, kernel::Controllers* controllers = 0 );
@@ -64,7 +70,6 @@ public:
     //! @name Filters/Sort
     //@{
     virtual void CreateFilters( SearchTreeView_ABC& searchTreeView );
-    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     void ApplyFilter( StandardModel::T_FilterFunction func );
     //@}
 
@@ -80,6 +85,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void startDrag( Qt::DropActions supportedActions );
+    virtual void SetLessThanFunctor( const T_LessThanFunctor& functor );
     //@}
 
 protected:

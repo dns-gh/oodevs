@@ -48,7 +48,6 @@ protected:
     //@{
     virtual QStringList MimeTypes() const;
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
-    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 };
 

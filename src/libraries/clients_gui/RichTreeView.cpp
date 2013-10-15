@@ -28,11 +28,16 @@ namespace
             setSortLocaleAware( true );
         }
 
+        void SetFunctor( const RichTreeView::T_LessThanFunctor& functor )
+        {
+            functor_ = functor;
+        }
+
     protected:
         virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
         {
             bool valid = false;
-            bool ret = parent_.LessThan( left, right, valid );
+            bool ret = functor_ && functor_( left, right, valid );
             if( valid )
                 return ret;
             return QSortFilterProxyModel::lessThan( left, right );
@@ -40,6 +45,7 @@ namespace
 
     public:
         const RichTreeView& parent_;
+        RichTreeView::T_LessThanFunctor functor_;
     };
 
     class HeightDelegate : public QItemDelegate
@@ -157,15 +163,6 @@ bool RichTreeView::IsContextMenuBlocked() const
 void RichTreeView::CreateFilters( SearchTreeView_ABC& /*searchTreeView*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichTreeView::LessThan
-// Created: JSR 2012-09-06
-// -----------------------------------------------------------------------------
-bool RichTreeView::LessThan( const QModelIndex& /*left*/, const QModelIndex& /*right*/, bool& /*valid*/ ) const
-{
-    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -309,4 +306,13 @@ void RichTreeView::startDrag( Qt::DropActions supportedActions )
     drag->setMimeData( data );
     if( supportedActions & dropAction_ )
         drag->exec( dropAction_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::SetLessThanFunctor
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+void RichTreeView::SetLessThanFunctor( const T_LessThanFunctor& functor )
+{
+    static_cast< CustomSortFilterProxyModel* >( proxyModel_ )->SetFunctor( functor );
 }

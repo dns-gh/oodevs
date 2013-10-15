@@ -18,6 +18,11 @@
 #pragma warning( pop )
 #include <boost/date_time/posix_time/ptime.hpp>
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 // =============================================================================
 /** @class  Tools
     @brief  Crappy translation tools
@@ -39,6 +44,11 @@ namespace tools
     QString translate( const char* context, const char* what );
     QString findTranslation( const char* context, const char* what );
 
+    // We should really do something about our enum.
+    // I think that an enum base class with the following support would be very helpful:
+    //  - iteration (++ and -- operators)
+    //  - int cast operator (to avoid each static_cast< E_Something >( i ))
+    //  - string conversion (that contain both these conversions and those in ENT)
     QString ToString( kernel::E_TroopHealthState nState );
     QString ToString( kernel::E_PerceptionResult nResult );
     QString ToString( E_WeatherType weather );
@@ -85,6 +95,12 @@ namespace tools
     kernel::E_FuncLimaType  LimaTypeFromShortString ( const QString& type );
     kernel::E_FuncLimaType  LimaTypeFromXmlString   ( const QString& type );
     QString                 LimaTypeShortToXmlString( const QString& shortType );
+
+    bool IsCommandPost( const kernel::Entity_ABC& entity );
+    bool IsEngaged( const kernel::Entity_ABC& entity );
+
+    bool LessThanById( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
+    bool LessThanByPC( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
 }
 
 #endif // __Kernel_Tools_h_

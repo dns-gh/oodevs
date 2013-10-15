@@ -524,16 +524,6 @@ void ModelConsistencyChecker::CheckGhosts()
     }
 }
 
-namespace
-{
-    bool IsCommandPost( const Entity_ABC& entity )
-    {
-        if( const CommandPostAttributes_ABC* pAttributes = entity.Retrieve< CommandPostAttributes_ABC >() )
-            return pAttributes->IsCommandPost();
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::CheckCommandPosts
 // Created: JSR 2012-01-06
@@ -549,7 +539,7 @@ void ModelConsistencyChecker::CheckCommandPosts()
         unsigned int commandPostCount = 0;
         while( itChild.HasMoreElements() )
         {
-            if( IsCommandPost( itChild.NextElement() ) )
+            if( tools::IsCommandPost( itChild.NextElement() ) )
                 ++commandPostCount;
         }
         if( commandPostCount == 0 )

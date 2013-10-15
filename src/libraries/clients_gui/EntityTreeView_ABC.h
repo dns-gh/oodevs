@@ -45,6 +45,11 @@ class EntityTreeView_ABC : public RichTreeView
     Q_OBJECT
 
 public:
+    //! @name Types
+    //@{
+    typedef boost::function< bool( const kernel::Entity_ABC&, const kernel::Entity_ABC& ) > T_LessThanEntityFunctor;
+    //@}
+
     //! @name Constructors/Destructor
     //@{
     EntityTreeView_ABC( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
@@ -90,6 +95,7 @@ protected:
     virtual void ContextMenuRequested( const QPoint& /*where*/ ) {}
     virtual void ApplyProfileFilter();
     virtual bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
+    virtual void SetLessThanEntityFunctor( const T_LessThanEntityFunctor& functor );
     //@}
 
 protected slots:

@@ -285,3 +285,29 @@ void EntityTreeView_ABC::OnScrollToSelected()
         blockSignals( false );
     }
 }
+
+namespace
+{
+    bool ModelIndexToEntityWrapper( const QModelIndex& left,
+                                    const QModelIndex& right,
+                                    bool& valid,
+                                    const StandardModel& model,
+                                    EntityTreeView_ABC::T_LessThanEntityFunctor functor )
+    {
+        const kernel::Entity_ABC* entity1 = model.GetDataFromIndex< kernel::Entity_ABC >( left );
+        const kernel::Entity_ABC* entity2 = model.GetDataFromIndex< kernel::Entity_ABC >( right );
+        if( !entity1 || !entity2 )
+            return false;
+        valid = true;
+        return functor( *entity1, *entity2 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::SetLessThanEntityFunctor
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::SetLessThanEntityFunctor( const T_LessThanEntityFunctor& functor )
+{
+    SetLessThanFunctor( boost::bind( &ModelIndexToEntityWrapper, _1, _2, _3, boost::cref( dataModel_ ), functor ) );
+}

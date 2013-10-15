@@ -32,6 +32,7 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel:
     : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( objectName, controllers, profile, modelObserver, symbols, parent )
     , changeSuperiorDialog_( 0 )
 {
+    SetLessThanEntityFunctor( &tools::LessThanById );
     controllers_.Update( *this );
 }
 
@@ -42,20 +43,6 @@ CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel:
 CommunicationTreeView::~CommunicationTreeView()
 {
     controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationTreeView::LessThan
-// Created: JSR 2012-09-11
-// -----------------------------------------------------------------------------
-bool CommunicationTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
-{
-    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
-    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
-    if( !entity1 || !entity2 )
-        return false;
-    valid = true;
-    return entity1->GetId() < entity2->GetId();
 }
 
 // -----------------------------------------------------------------------------

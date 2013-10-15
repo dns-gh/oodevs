@@ -40,7 +40,6 @@ private:
                          ADN_Equipments_Data::ConsumptionItem& conso );
     void InsertCategory( QStandardItem&                         parent,
                          ADN_Equipments_Data::CategoryInfos&   category );
-    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 
 private:

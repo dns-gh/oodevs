@@ -13,6 +13,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 
@@ -23,6 +24,7 @@ using namespace gui;
 ObjectTreeView::ObjectTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
     : EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
 {
+    SetLessThanEntityFunctor( &tools::LessThanById );
     controllers.Update( *this );
 }
 
@@ -105,18 +107,4 @@ QStringList ObjectTreeView::MimeTypes() const
 bool ObjectTreeView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 {
     return entity.GetTypeName() != kernel::Object_ABC::typeName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectTreeView::LessThan
-// Created: JSR 2012-09-13
-// -----------------------------------------------------------------------------
-bool ObjectTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
-{
-    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
-    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
-    if( !entity1 || !entity2 )
-        return false;
-    valid = true;
-    return entity1->GetId() < entity2->GetId();
 }

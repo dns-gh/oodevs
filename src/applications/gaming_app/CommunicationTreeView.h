@@ -57,7 +57,6 @@ public:
     //! @name Operations
     //@{
     std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
-    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
     //@}
