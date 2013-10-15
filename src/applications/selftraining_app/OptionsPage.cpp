@@ -18,6 +18,8 @@
 #include "Config.h"
 #include "Launcher.h"
 #include "clients_gui/FileDialog.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/LanguageController.h"
 #include "clients_kernel/Tools.h"
 #include "tools/Language.h"
 #include <boost/foreach.hpp>
@@ -384,15 +386,9 @@ void OptionsPage::ApplyAction()
 {
     CreateDataDirectory();
     assert( hasChanged_ );
-    if( languageHasChanged_ )
-        app_.DeleteTranslators();
     Commit();
     if( languageHasChanged_ )
-    {
-        tools::Language::SetCurrent( selectedLanguage_.c_str() );
-        app_.CreateTranslators();
-        app_.InitializeLayoutDirection();
-    }
+        controllers_.languages_.ChangeLanguage( selectedLanguage_.c_str() );
     languageHasChanged_ = false;
     hasChanged_ = false;
 }
