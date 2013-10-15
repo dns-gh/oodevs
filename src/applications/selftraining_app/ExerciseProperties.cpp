@@ -28,7 +28,7 @@ namespace fc = frontend::commands;
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
 ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable )
-    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , parent_         ( granParent )
     , config_         ( config )
     , fileLoader_     ( fileLoader )

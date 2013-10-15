@@ -34,7 +34,7 @@ namespace frontend
 // -----------------------------------------------------------------------------
 ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers,
                             bool showBrief /* = true*/, bool showProfile /* =true*/, bool showParams /* = true*/, bool enableParams /* = true*/ )
-    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , controllers_      ( controllers )
     , filter_           ( 0 )
     , defaultFilter_    ( new frontend::LocalExerciseFilter() )

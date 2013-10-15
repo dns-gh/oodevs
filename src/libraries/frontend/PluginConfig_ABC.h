@@ -11,7 +11,7 @@
 #define __PluginConfig_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 
 namespace frontend
 {
@@ -22,13 +22,13 @@ namespace frontend
 */
 // Created: SBO 2009-12-09
 // =============================================================================
-class PluginConfig_ABC : public gui::LanguageChangeObserver_ABC< QWidget >
+class PluginConfig_ABC : public gui::WidgetLanguageObserver_ABC< QWidget >
                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PluginConfig_ABC( QWidget* parent ) : gui::LanguageChangeObserver_ABC< QWidget >( parent ) {}
+    explicit PluginConfig_ABC( QWidget* parent ) : gui::WidgetLanguageObserver_ABC< QWidget >( parent ) {}
     virtual ~PluginConfig_ABC() {}
     //@}
 

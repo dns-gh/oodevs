@@ -11,7 +11,7 @@
 #define __ExerciseProperties_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 #include <tools/Path.h>
 
 namespace frontend
@@ -36,7 +36,7 @@ namespace xml
 */
 // Created: SBO 2010-11-12
 // =============================================================================
-class ExerciseProperties : public gui::LanguageChangeObserver_ABC< QWidget >
+class ExerciseProperties : public gui::WidgetLanguageObserver_ABC< QWidget >
                          , private boost::noncopyable
 {
     Q_OBJECT;

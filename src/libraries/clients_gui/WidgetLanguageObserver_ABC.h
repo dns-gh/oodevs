@@ -7,33 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __gui_LanguageChangeObserver_ABC_h_
-#define __gui_LanguageChangeObserver_ABC_h_
+#ifndef __gui_WidgetLanguageObserver_ABC_h_
+#define __gui_WidgetLanguageObserver_ABC_h_
 
 namespace gui
 {
 
 // =============================================================================
-/** @class  LanguageChangeObserver_ABC
-    @brief  LanguageChangeObserver_ABC
+/** @class  WidgetLanguageObserver_ABC
+    @brief  WidgetLanguageObserver_ABC
 */
 // Created: ABR 2011-11-09
 // =============================================================================
 template< typename ParentType >
-class LanguageChangeObserver_ABC : public ParentType
+class WidgetLanguageObserver_ABC : public ParentType
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    LanguageChangeObserver_ABC() : ParentType() {}
+    WidgetLanguageObserver_ABC() : ParentType() {}
     template< typename T >
-    LanguageChangeObserver_ABC( T param ) : ParentType( param ) {}
+    WidgetLanguageObserver_ABC( T param ) : ParentType( param ) {}
     template< typename T1, typename T2 >
-    LanguageChangeObserver_ABC( T1 param1, T2 param2 ) : ParentType( param1, param2 ) {}
+    WidgetLanguageObserver_ABC( T1 param1, T2 param2 ) : ParentType( param1, param2 ) {}
     template< typename T1, typename T2, typename T3 >
-    LanguageChangeObserver_ABC( T1 param1, T2 param2, T3 param3 ) : ParentType( param1, param2, param3 ) {}
+    WidgetLanguageObserver_ABC( T1 param1, T2 param2, T3 param3 ) : ParentType( param1, param2, param3 ) {}
 
-    virtual ~LanguageChangeObserver_ABC() {}
+    virtual ~WidgetLanguageObserver_ABC() {}
     //@}
 
 public:
@@ -50,7 +50,7 @@ private:
 };
 
 template< typename ParentType >
-void LanguageChangeObserver_ABC< ParentType >::changeEvent( QEvent * event )
+void WidgetLanguageObserver_ABC< ParentType >::changeEvent( QEvent * event )
 {
     if( event->type() == QEvent::LanguageChange )
         OnLanguageChanged();
@@ -59,4 +59,4 @@ void LanguageChangeObserver_ABC< ParentType >::changeEvent( QEvent * event )
 
 }
 
-#endif // __gui_LanguageChangeObserver_ABC_h_
+#endif // __gui_WidgetLanguageObserver_ABC_h_

@@ -11,7 +11,7 @@
 #define __FileList_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 #include <QtGui/QGroupBox>
 #include <vector>
 #include <string>
@@ -23,12 +23,12 @@ class QPushButton;
 namespace frontend
 {
 
-class FileList : public gui::LanguageChangeObserver_ABC< QGroupBox >
+class FileList : public gui::WidgetLanguageObserver_ABC< QGroupBox >
                    , private boost::noncopyable
 {
     Q_OBJECT;
 public:
-    typedef gui::LanguageChangeObserver_ABC< QGroupBox > BaseClass;
+    typedef gui::WidgetLanguageObserver_ABC< QGroupBox > BaseClass;
     typedef std::vector<std::string> FileVec_T;
 
             FileList(const QString& title, QWidget* parent, const QString& caption, const QString& fileFilter);
