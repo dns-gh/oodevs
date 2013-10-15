@@ -94,6 +94,7 @@ namespace ADN_NavigationInfos
 namespace kernel
 {
     class Context;
+    class LanguageController;
 }
 
 namespace tools
@@ -167,6 +168,7 @@ public:
     bool IsDevMode() const;
 
     const ADN_GeneralConfig& GetConfig() const;
+    kernel::LanguageController& GetLanguageController();
     ADN_MainWindow& GetMainWindow() const;
     void SetMainWindowModified( bool isModified );
     void SetIsSwappingLanguage( bool isSwappingLanguage );
@@ -233,6 +235,7 @@ private:
     ADN_MainWindow& mainWindow_;
     ADN_ProgressBar& progressIndicator_;
     const ADN_GeneralConfig& config_;
+    std::auto_ptr< kernel::LanguageController > languageController_;
     std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
     std::auto_ptr< const tools::Loader_ABC > fileLoader_;
     std::auto_ptr< ADN_Project_Data > projectData_;

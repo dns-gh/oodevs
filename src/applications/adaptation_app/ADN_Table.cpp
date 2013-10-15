@@ -17,6 +17,7 @@
 #include "ADN_Languages_GUI.h"
 #include "ADN_WorkspaceElement.h"
 #include "excel/ExcelFormat.h"
+#include "clients_kernel/LanguageController.h"
 #include "clients_kernel/VariantPointer.h"
 
 using namespace ExcelFormat;
@@ -91,7 +92,8 @@ void ADN_Table::Initialize( const QString& objectName )
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), &delegate_, SLOT( OnItemChanged( QStandardItem* ) ) );
     connect( &delegate_, SIGNAL( CheckedStateChanged( const QStandardItem& ) ), this, SLOT( OnCheckedStateChanged( const QStandardItem& ) ) );
     connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( PrivateOnContextMenu( const QPoint& ) ) );
-    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( PostLanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
+
+    ADN_Workspace::GetWorkspace().GetLanguageController().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +103,7 @@ void ADN_Table::Initialize( const QString& objectName )
 ADN_Table::~ADN_Table()
 {
     delete pConnector_;
+    ADN_Workspace::GetWorkspace().GetLanguageController().Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

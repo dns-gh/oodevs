@@ -355,24 +355,6 @@ void ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const s
     fileStream.close();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_ABC::NeedsSaving
-// Created: NPT 2013-03-01
-// -----------------------------------------------------------------------------
-bool ADN_Missions_ABC::NeedsSaving()
-{
-    return needSheetSaving_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_ABC::SetNeedsSaving
-// Created: NPT 2013-03-01
-// -----------------------------------------------------------------------------
-void ADN_Missions_ABC::SetNeedsSaving( bool saving )
-{
-    needSheetSaving_ = saving;
-}
-
 namespace
 {
     bool IsAnImageExtension( const tools::Path& extension )

@@ -33,6 +33,7 @@
 #include "ADN_enums.h"
 #include "ADN_ExcludeRegExpValidator.h"
 #include "ADN_Languages_GUI.h"
+#include "clients_kernel/LanguageController.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/lexical_cast.hpp>
 
@@ -44,7 +45,7 @@ ADN_Missions_GUI::ADN_Missions_GUI( ADN_Missions_Data& data )
     : ADN_Tabbed_GUI_ABC( eMissions )
     , data_( data )
 {
-    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGui(), SIGNAL( PostLanguageChanged() ), this, SLOT( OnChangeMission() ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -376,6 +377,4 @@ void ADN_Missions_GUI::OnChangeMission()
     if( !mission )
         return;
     mission->CheckValidity();
-    if( mission->NeedsSaving() )
-        OnGenerate( false );
 }

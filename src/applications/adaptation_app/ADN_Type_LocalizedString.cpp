@@ -13,6 +13,7 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_WorkspaceElement.h"
 #include "clients_kernel/Context.h"
+#include "clients_kernel/LanguageController.h"
 #include "tools/Language.h"
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ ADN_Type_LocalizedString::ADN_Type_LocalizedString( const std::string& val )
 // -----------------------------------------------------------------------------
 ADN_Type_LocalizedString::~ADN_Type_LocalizedString()
 {
-    // NOTHING
+    ADN_Workspace::GetWorkspace().GetLanguageController().Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +53,7 @@ ADN_Type_LocalizedString::~ADN_Type_LocalizedString()
 void ADN_Type_LocalizedString::Initialize()
 {
     AddTranslationCheckers();
-    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
+    ADN_Workspace::GetWorkspace().GetLanguageController().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,12 +71,33 @@ void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Type_LocalizedString::OnLanguageChanged
+// Created: ABR 2013-07-12
+// -----------------------------------------------------------------------------
+void ADN_Type_LocalizedString::OnLanguageChanged()
+{
+    if( !translation_ )
+        return;
+    if( !ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() && translation_->Value( tools::Language::Current() ).empty() )
+    {
+        swappingLanguage_ = true;
+        emit DataChanged( ( void* ) &translation_->Key() );
+        swappingLanguage_ = false;
+    }
+    else
+    {
+        SetData( GetData() );
+    }
+    SetType( GetType() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Type_LocalizedString::GetData
 // Created: ABR 2013-07-12
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetData() const
 {
-    return ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() ? GetKey() : GetValue( tools::Language::Current() );
+    return GetValue( tools::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,20 +106,7 @@ const std::string& ADN_Type_LocalizedString::GetData() const
 // -----------------------------------------------------------------------------
 void ADN_Type_LocalizedString::SetData( const std::string& data )
 {
-    InitTranslation( data );
-    if( swappingLanguage_ )
-        return;
-    if( ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() && translation_.use_count() > 2 && data != translation_->Key() )
-    {
-        boost::shared_ptr< kernel::LocalizedString > newTranslation = context_->CreateNew( data );
-        newTranslation->CopyValues( *translation_ );
-        translation_ = newTranslation;
-    }
-    else if( ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() )
-        translation_->SetKey( data );
-    else
-        translation_->SetValue( tools::Language::Current(), data );
-    emit DataChanged( ( void* ) &data );
+    SetValue( tools::Language::Current(), data );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,10 +127,19 @@ const std::string& ADN_Type_LocalizedString::GetValue( const std::string& langua
 void ADN_Type_LocalizedString::SetValue( const std::string& language, const std::string& data )
 {
     InitTranslation( data );
-    if( ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language ) )
+    if( swappingLanguage_ )
+        return;
+    if( ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language ) && translation_.use_count() > 2 && data != translation_->Key() )
+    {
+        boost::shared_ptr< kernel::LocalizedString > newTranslation = context_->CreateNew( data );
+        newTranslation->CopyValues( *translation_ );
+        translation_ = newTranslation;
+    }
+    else if( ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language ) )
         translation_->SetKey( data );
     else
         translation_->SetValue( language, data );
+    emit DataChanged( ( void* ) &data );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,27 +239,6 @@ bool ADN_Type_LocalizedString::operator!=( const std::string& val ) const
 void ADN_Type_LocalizedString::Initialize( ADN_Connector_ABC& dest ) const
 {
     dest.SetData( ( void* ) &GetData() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_LocalizedString::OnLanguageChanged
-// Created: ABR 2013-07-12
-// -----------------------------------------------------------------------------
-void ADN_Type_LocalizedString::OnLanguageChanged()
-{
-    if( !translation_ )
-        return;
-    if( !ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() && translation_->Value( tools::Language::Current() ).empty() )
-    {
-        swappingLanguage_ = true;
-        emit DataChanged( ( void* ) &translation_->Key() );
-        swappingLanguage_ = false;
-    }
-    else
-    {
-        SetData( GetData() );
-    }
-    SetType( GetType() );
 }
 
 // -----------------------------------------------------------------------------

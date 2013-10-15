@@ -10,6 +10,8 @@
 #ifndef __ADN_ApplyButton_h_
 #define __ADN_ApplyButton_h_
 
+#include "tools/LanguageObserver_ABC.h"
+
 // =============================================================================
 /** @class  ADN_ApplyButton
     @brief  ADN_ApplyButton
@@ -17,6 +19,8 @@
 // Created: ABR 2013-07-16
 // =============================================================================
 class ADN_ApplyButton : public QPushButton
+                      , public tools::Observer_ABC
+                      , public tools::LanguageObserver_ABC
 {
     Q_OBJECT
 
@@ -43,7 +47,12 @@ private slots:
     //@{
     void OnClicked( bool );
     void OnTypeChanged( int newType );
-    void OnLanguageChanged();
+    //@}
+
+private:
+    //! @name LanguageObserver_ABC implementation
+    //@{
+    virtual void OnLanguageChanged();
     //@}
 };
 

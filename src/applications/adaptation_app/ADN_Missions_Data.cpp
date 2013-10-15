@@ -234,7 +234,6 @@ void ADN_Missions_Data::GenerateMissionSheet( int index, boost::shared_ptr< kern
     GetCssFile().Copy( GetTemporaryCssFile(), tools::Path::OverwriteIfExists );
     mission->WriteMissionSheet( tempDir, tools::Language::Current() );
     mission->missionSheetPath_.SetValue( tools::Language::Current(), ( tempDir / tools::Path::FromUTF8( mission->strName_.GetData() ) + ".html" ).ToUTF8() );
-    mission->SetNeedsSaving( true );
 }
 
 namespace

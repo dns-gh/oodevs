@@ -13,11 +13,12 @@
 #define __ADN_ListView_h_
 
 #include "ADN_Gfx_ABC.h"
-#include "clients_gui/RichTreeView.h"
-
 #include "ADN_Connector_ABC.h"
 #include "ADN_Enums.h"
 #include "ADN_NavigationInfos.h"
+#include "clients_gui/RichTreeView.h"
+#include "tools/LanguageObserver_ABC.h"
+#include <boost/function.hpp>
 
 namespace YExcel
 {
@@ -41,6 +42,8 @@ class ADN_ObjectCreator_ABC;
 // =============================================================================
 class ADN_ListView : public gui::RichTreeView
                    , public ADN_Gfx_ABC
+                   , public tools::Observer_ABC
+                   , public tools::LanguageObserver_ABC
 {
     Q_OBJECT
     friend ADN_Connector_ListView_ABC;
@@ -87,7 +90,6 @@ public slots:
     bool SetCurrentItem( const QString& itemName );
     void OnFilterChanged( const QString& );
     void OnFilterChanged( const QStringList& );
-    virtual void OnLanguageChanged();
 
 protected:
     void keyReleaseEvent( QKeyEvent* pEvent );
@@ -112,6 +114,7 @@ private:
     void FillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
     void FinishCreation( ADN_Ref_ABC* ref );
     QString ItemText( QStandardItem* item, int col ) const;
+    virtual void OnLanguageChanged();
 
 protected slots:
     virtual void ContextMenuNew();
@@ -137,7 +140,6 @@ protected:
     ADN_ObjectCreator_ABC*      pObjectCreator_;
     bool                        bDeletionEnabled_;
     bool                        bDeletionWarning_;
-    bool                        bEditionEnabled_;
     bool                        bPrinting_;
     QRect                       toolTipRect_;
     QSignalMapper                               usedByMapper_;

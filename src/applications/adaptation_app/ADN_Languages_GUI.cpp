@@ -13,6 +13,7 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_Languages_Dialog.h"
 #include "ADN_Workspace.h"
+#include "clients_kernel/LanguageController.h"
 #include "clients_Kernel/LocalizedString.h"
 #include "clients_Kernel/Tools.h"
 #include "tools/Languages.h"
@@ -188,11 +189,10 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::ChangeLanguage( const std::string& language )
 {
-    tools::Language::SetCurrent( language );
-    ADN_Workspace::GetWorkspace().SetIsSwappingLanguage( true );
-    emit LanguageChanged();
-    emit PostLanguageChanged();
-    ADN_Workspace::GetWorkspace().SetIsSwappingLanguage( false );
+    ADN_Workspace& workspace = ADN_Workspace::GetWorkspace();
+    workspace.SetIsSwappingLanguage( true );
+    workspace.GetLanguageController().ChangeLanguage( language );
+    workspace.SetIsSwappingLanguage( false );
 }
 
 // -----------------------------------------------------------------------------
