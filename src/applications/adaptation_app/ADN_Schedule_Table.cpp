@@ -58,8 +58,8 @@ void ADN_Schedule_Table::AddRow( int row, void* data )
         return;
 
     AddItem( row, 0, data, &pEventInfos->day_, days_, Qt::ItemIsEditable );
-    AddItem( row, 1, data, &pEventInfos->from_, ADN_StandardItem::eString, Qt::ItemIsEditable );
-    AddItem( row, 2, data, &pEventInfos->to_, ADN_StandardItem::eString, Qt::ItemIsEditable );
+    AddItem( row, 1, data, &pEventInfos->from_, ADN_StandardItem::eTime, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pEventInfos->to_, ADN_StandardItem::eTime, Qt::ItemIsEditable );
     AddItem( row, 3, data, &pEventInfos->ptrAccommodation_, Qt::ItemIsEditable );
 }
 

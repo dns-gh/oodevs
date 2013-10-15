@@ -11,15 +11,21 @@
 #include "ADN_TimeEdit.h"
 #include "moc_ADN_TimeEdit.cpp"
 #include "ADN_Connector_String.h"
+#include "ADN_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TimeEdit constructor
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
-ADN_TimeEdit::ADN_TimeEdit( QWidget* parent, const QString& format /* = "hh:mm"*/ )
+ADN_TimeEdit::ADN_TimeEdit( QWidget* parent )
     : QTimeEdit( parent )
-    , format_( format )
 {
+    // For now, the only ADN_TimeEdit that we use doesn't need seconds, so we
+    // remove them here and in ADN_Tools's locale time to xml time conversion
+    // functions.
+    // If seconds are needed someday, add an ADN_StandardItem's type to handle
+    // seconds, and add an option to this editor.
+    setDisplayFormat( ADN_Tools::GetLocalFormatWithoutSeconds() );
     setTime( QTime( 0, 0 ) );
     pConnector_ = new ADN_Connector_String< ADN_TimeEdit >( this );
     connect( this, SIGNAL( timeChanged( const QTime& ) ), this, SLOT( TimeChanged( const QTime& ) ) );
@@ -40,7 +46,7 @@ ADN_TimeEdit::~ADN_TimeEdit()
 // -----------------------------------------------------------------------------
 QString ADN_TimeEdit::text() const
 {
-    return time().toString( format_ );
+    return ADN_Tools::ConvertLocalTimeToXmlTime( time().toString( ADN_Tools::GetLocalFormatWithoutSeconds() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +58,7 @@ void ADN_TimeEdit::setText( const QString& text )
     if( text.isEmpty() )
         setTime( QTime( 0, 0 ) );
     else
-        setTime( QTime::fromString( text, format_ ) );
+        setTime( QTime::fromString( ADN_Tools::ConvertXmlTimeToLocalTime( text ), ADN_Tools::GetLocalFormatWithoutSeconds() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,5 +67,5 @@ void ADN_TimeEdit::setText( const QString& text )
 // -----------------------------------------------------------------------------
 void ADN_TimeEdit::TimeChanged( const QTime& time )
 {
-    static_cast< ADN_Connector_String< ADN_TimeEdit >* >( pConnector_ )->SetDataChanged( time.toString( format_ ) );
+    static_cast< ADN_Connector_String< ADN_TimeEdit >* >( pConnector_ )->SetDataChanged( ADN_Tools::ConvertLocalTimeToXmlTime( time.toString( ADN_Tools::GetLocalFormatWithoutSeconds() ) ) );
 }

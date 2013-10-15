@@ -172,6 +172,34 @@ namespace
     {
         return ( number  < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( number );
     }
+    const QString xmlFormat = "hh:mm";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tools::GetLocalFormatWithoutSeconds
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+QString ADN_Tools::GetLocalFormatWithoutSeconds()
+{
+    return QLocale().timeFormat().remove( QRegExp( "\\:ss|\\:s" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tools::ConvertLocalTimeToXmlTime
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+QString ADN_Tools::ConvertLocalTimeToXmlTime( const QString& localTime )
+{
+    return QTime::fromString( localTime, GetLocalFormatWithoutSeconds() ).toString( xmlFormat );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tools::ConvertXmlTimeToLocalTime
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+QString ADN_Tools::ConvertXmlTimeToLocalTime( const QString& xmlTime )
+{
+    return QTime::fromString( xmlTime, xmlFormat ).toString( GetLocalFormatWithoutSeconds() );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,4 +299,4 @@ void ADN_Tools::SetAutoClear( T_ConnectorVector& v, bool b )
             ( *itConnector )->SetAutoClear( b );
 }
 
-}
+} //! namespace ADN_Tools

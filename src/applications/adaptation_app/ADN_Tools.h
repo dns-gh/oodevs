@@ -128,8 +128,12 @@ namespace ADN_Tools
     E_MissionType ConvertEntityTypeToMissionType( E_EntityType type );
 
     // -----------------------------------------------------------------------------
-    // Delay conversions
+    // Delay & time conversions
     // -----------------------------------------------------------------------------
+    QString GetLocalFormatWithoutSeconds();
+    QString ConvertLocalTimeToXmlTime( const QString& localTime );
+    QString ConvertXmlTimeToLocalTime( const QString& xmlTime );
+
     QString BuildLongString( const std::string& hours, const std::string& minutes,
                              const std::string& seconds, const std::string& microseconds,
                              const std::string& decimalPoint );
