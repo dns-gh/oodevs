@@ -68,7 +68,7 @@ void ADN_Languages_MasterDialog::showEvent( QShowEvent* pEvent )
 
     model_.clear();
     QString english;
-    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
         if( it->GetCode() == "en" )
@@ -90,7 +90,7 @@ void ADN_Languages_MasterDialog::showEvent( QShowEvent* pEvent )
 void ADN_Languages_MasterDialog::accept()
 {
     const QString selectedLanguage = combo_->currentText();
-    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
     for( auto it = languages.begin(); it != languages.end(); ++it )
         if( it->GetName() == selectedLanguage.toStdString() )
         {

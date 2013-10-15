@@ -85,10 +85,10 @@ const Language& Languages::Get( const std::string& code ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Languages::GetLanguages
+// Name: Languages::GetVector
 // Created: ABR 2013-10-07
 // -----------------------------------------------------------------------------
-const LanguagesVector& Languages::GetLanguages() const
+const LanguagesVector& Languages::GetVector() const
 {
     return languages_;
 }

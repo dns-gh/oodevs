@@ -120,7 +120,7 @@ int ADN_Languages_Dialog::exec()
     availables_->clear();
     actives_->clear();
 
-    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetLanguages();
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
     for( auto itAll = languages.begin(); itAll != languages.end(); ++itAll )
         if( data_.IsMaster( itAll->GetCode() ) )
             master_->setText( itAll->GetName().c_str() );

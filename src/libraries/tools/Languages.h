@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     const Language& Get( const std::string& code ) const;
-    const LanguagesVector& GetLanguages() const;
+    const LanguagesVector& GetVector() const;
     //@}
 
 private:

@@ -21,7 +21,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LanguageController.h"
 #include "clients_kernel/Tools.h"
-#include "tools/Language.h"
+#include "tools/Languages.h"
 #include <boost/foreach.hpp>
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
@@ -81,16 +81,12 @@ void OptionsPage::SetSettingsLayout()
     languageLabel_ = new QLabel();
     languageLabel_->setFixedHeight( 25 );
     languageCombo_ = new QComboBox();
-    languages_[ "en" ] = tools::translate( "OptionsPage", "English" );
-    languages_[ "fr" ] = tools::translate( "OptionsPage", "French" );
-    languages_[ "es" ] = tools::translate( "OptionsPage", "Spanish" );
-    languages_[ "ar" ] = tools::translate( "OptionsPage", "Arabic" );
-    languages_[ "pt" ] = tools::translate( "OptionsPage", "Portuguese" );
-    BOOST_FOREACH( const T_Languages::value_type& lang, languages_ )
+
+    for( auto it = config_.GetLanguages().GetVector().begin(); it != config_.GetLanguages().GetVector().end(); ++it )
     {
-        languageCombo_->addItem( lang.second );
-        if( lang.first == selectedLanguage_ )
-            languageCombo_->setCurrentIndex( languageCombo_->findText( lang.second ) );
+        languageCombo_->addItem( it->GetName().c_str() );
+        if( it->GetCode() == selectedLanguage_ )
+            languageCombo_->setCurrentIndex( languageCombo_->findText( it->GetName().c_str() ) );
     }
     connect( languageCombo_, SIGNAL( activated( const QString& ) ), SLOT( OnChangeLanguage( const QString& ) ) );
 
@@ -194,14 +190,9 @@ void OptionsPage::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnChangeLanguage( const QString& lang )
 {
-    BOOST_FOREACH( const T_Languages::value_type& language, languages_ )
-    {
-        if( language.second == lang )
-        {
-            selectedLanguage_ = language.first;
-            break;
-        }
-    }
+    for( auto it = config_.GetLanguages().GetVector().begin(); it != config_.GetLanguages().GetVector().end(); ++it )
+        if( it->GetName() == lang.toStdString() )
+            selectedLanguage_ = it->GetCode();
     hasChanged_ = true;
     languageHasChanged_ = true;
     UpdateButton();
@@ -417,9 +408,7 @@ void OptionsPage::Reset()
 
     selectedLanguage_ = tools::Language::Current();
     selectedDataDir_ = config_.GetRootDir();
-
-    assert( languages_.find( selectedLanguage_ ) != languages_.end() );
-    languageCombo_->setCurrentIndex( languageCombo_->findText( languages_.find( selectedLanguage_ )->second ) );
+    languageCombo_->setCurrentIndex( languageCombo_->findText( config_.GetLanguages().Get( selectedLanguage_ ).GetName().c_str() ) );
     dataDirectory_->setText( selectedDataDir_.ToUTF8().c_str() );
 
     hasChanged_ = false;
