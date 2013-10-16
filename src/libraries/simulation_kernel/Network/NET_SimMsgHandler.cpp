@@ -160,34 +160,32 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
     MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
     MIL_EntityManager& manager = server.GetEntityManager();
     const auto type = msg.type();
-    if( type == sword::MagicAction::global_weather ||
-        type == sword::MagicAction::local_weather ||
-        type == sword::MagicAction::local_weather_destruction )
-        server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ctx, clientId );
-    else
+
+    client::MagicActionAck ack;
+    ack().set_error_code( sword::MagicActionAck::no_error );
+    try
     {
-        client::MagicActionAck ack;
-        ack().set_error_code( sword::MagicActionAck::no_error );
-        try
-        {
-            if( type == sword::MagicAction::create_knowledge_group )
-                manager.OnReceiveKnowledgeGroupCreation( msg, ack() );
-            else if( type == sword::MagicAction::create_fire_order_on_location )
-                manager.OnReceiveCreateFireOrderOnLocation( msg );
-            else if( type == sword::MagicAction::change_resource_network_properties )
-                manager.OnReceiveChangeResourceLinks( msg );
-            else if( type == sword::MagicAction::change_diplomacy )
-                manager.OnReceiveChangeDiplomacy( msg, ctx );
-            else if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
-                OnReceiveDebugError( msg.parameters() );
-        }
-        catch( const std::exception& e )
-        {
-            ack().set_error_code(sword::MagicActionAck::error_invalid_parameter );
-            ack().set_error_msg( tools::GetExceptionMsg( e ));
-        }
-        ack.Send( Publisher(), ctx, clientId );
+        if( type == sword::MagicAction::create_knowledge_group )
+            manager.OnReceiveKnowledgeGroupCreation( msg, ack() );
+        else if( type == sword::MagicAction::create_fire_order_on_location )
+            manager.OnReceiveCreateFireOrderOnLocation( msg );
+        else if( type == sword::MagicAction::change_resource_network_properties )
+            manager.OnReceiveChangeResourceLinks( msg );
+        else if( type == sword::MagicAction::change_diplomacy )
+            manager.OnReceiveChangeDiplomacy( msg, ctx );
+        if( type == sword::MagicAction::global_weather ||
+            type == sword::MagicAction::local_weather ||
+            type == sword::MagicAction::local_weather_destruction )
+            server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ack(), ctx );
+        else if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
+            OnReceiveDebugError( msg.parameters() );
     }
+    catch( const std::exception& e )
+    {
+        ack().set_error_code(sword::MagicActionAck::error_invalid_parameter );
+        ack().set_error_msg( tools::GetExceptionMsg( e ));
+    }
+    ack.Send( Publisher(), ctx, clientId );
 }
 
 namespace
