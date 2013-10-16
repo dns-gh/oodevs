@@ -54,7 +54,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( UnregisterKnowledgeGroup, 1 )
 
     MOCK_METHOD( InitializeDiplomacy, 1 )
-    MOCK_METHOD( OnReceiveChangeDiplomacy, 1 )
+    MOCK_METHOD( ChangeDiplomacy, 2 )
     MOCK_METHOD( ApplyOnKnowledgeGroup, 1 )
 
     MOCK_METHOD( GetID, 0 )
