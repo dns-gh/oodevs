@@ -14,7 +14,7 @@
 #include "Sendable.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "protocol/Protocol.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

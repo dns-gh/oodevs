@@ -10,7 +10,7 @@
 #ifndef __InfoConflictsTab_h_
 #define __InfoConflictsTab_h_
 
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

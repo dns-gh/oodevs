@@ -14,7 +14,7 @@
 #include "DecisionalState.h"
 #include "LogisticHierarchy.h"
 #include "protocol/SimulationSenders.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace sword
 {

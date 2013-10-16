@@ -10,8 +10,8 @@
 #ifndef __ScoreGaugeConfiguration_h_
 #define __ScoreGaugeConfiguration_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace indicators
 {

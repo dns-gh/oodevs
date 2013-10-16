@@ -13,8 +13,8 @@
 #include "PropertiesDictionary.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Creatable.h"
-#include "tools/Resolver.h"
-#include "boost/noncopyable.hpp"
+#include <tools/Resolver.h>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {

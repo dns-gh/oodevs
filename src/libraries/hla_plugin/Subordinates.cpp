@@ -11,9 +11,9 @@
 #include "Subordinates.h"
 #include "CallsignResolver_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
-#include "tools/Resolver.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Agent_ABC.h"
+#include <tools/Resolver.h>
 
 using namespace plugins::hla;
 

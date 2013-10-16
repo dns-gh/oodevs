@@ -10,7 +10,7 @@
 #ifndef __AccommodationTypes_h_
 #define __AccommodationTypes_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace tools

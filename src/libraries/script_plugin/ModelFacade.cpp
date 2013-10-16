@@ -10,9 +10,9 @@
 #include "script_plugin_pch.h"
 #include "ModelFacade.h"
 #include "AgentManipulator.h"
-#include "directia/brain/Brain.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Model_ABC.h"
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 

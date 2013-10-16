@@ -11,11 +11,11 @@
 #define __LogisticPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "ValuedComboBox.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -12,7 +12,7 @@
 
 #include "Sector.h"
 #include "clients_kernel/Types.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace sword
 {

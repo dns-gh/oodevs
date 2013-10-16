@@ -13,8 +13,8 @@
 #include "Extension_ABC.h"
 #include "Serializable_ABC.h"
 #include <boost/noncopyable.hpp>
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace xml
 {

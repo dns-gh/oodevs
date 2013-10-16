@@ -12,7 +12,7 @@
 
 #include "Knowledge_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace sword
 {

@@ -10,9 +10,9 @@
 #ifndef __ExerciseList_h_
 #define __ExerciseList_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_gui/LanguageChangeObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <tools/ElementObserver_ABC.h>
 
 namespace frontend
 {

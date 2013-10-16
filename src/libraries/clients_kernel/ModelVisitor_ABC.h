@@ -10,7 +10,7 @@
 #ifndef __ModelVisitor_ABC_h_
 #define __ModelVisitor_ABC_h_
 
-#include "tools/SortedInterfaceContainer.h"
+#include <tools/SortedInterfaceContainer.h>
 
 namespace kernel
 {

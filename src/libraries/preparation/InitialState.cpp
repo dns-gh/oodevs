@@ -23,7 +23,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/tools.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -222,7 +222,6 @@ void InitialState::Reset()
     crews_      = originalCrews_;
     resources_  = originalResources_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: InitialState::CleanUnsupportedState

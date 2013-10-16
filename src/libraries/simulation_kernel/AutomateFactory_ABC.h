@@ -10,7 +10,7 @@
 #ifndef __AutomateFactory_ABC_h_
 #define __AutomateFactory_ABC_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include "Entities/Automates/MIL_Automate.h"
 
 class MIL_AutomateType;

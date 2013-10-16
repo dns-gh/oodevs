@@ -10,9 +10,9 @@
 #ifndef __CreateFormationDialog_h_
 #define __CreateFormationDialog_h_
 
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include <tools/Observer_ABC.h>
 
 namespace actions
 {

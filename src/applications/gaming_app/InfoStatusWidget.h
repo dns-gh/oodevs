@@ -10,10 +10,10 @@
 #ifndef __InfoStatusWidget_h_
 #define __InfoStatusWidget_h_
 
-#include "tools/SelectionObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

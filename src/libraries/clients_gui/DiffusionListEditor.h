@@ -12,8 +12,8 @@
 
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/Resolver.h"
 #include "DiffusionListFunctors.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

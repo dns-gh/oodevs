@@ -30,7 +30,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
-#include "tools/iterator.h"
+#include <tools/Iterator.h>
 
 using namespace actions;
 

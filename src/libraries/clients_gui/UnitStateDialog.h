@@ -10,9 +10,9 @@
 #ifndef __gui_UnitStateDialog_h_
 #define __gui_UnitStateDialog_h_
 
-#include <boost/shared_ptr.hpp>
 #include "clients_kernel/SafePointer.h"
-#include "tools/SelectionObserver_ABC.h"
+#include <boost/shared_ptr.hpp>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

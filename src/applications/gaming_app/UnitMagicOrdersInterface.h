@@ -14,8 +14,8 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver.h>
 
 namespace kernel
 {

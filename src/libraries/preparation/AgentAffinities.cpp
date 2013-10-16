@@ -17,7 +17,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/DictionaryUpdated.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
 

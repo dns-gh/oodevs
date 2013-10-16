@@ -10,8 +10,8 @@
 #ifndef __Gui_StatusBar_h_
 #define __Gui_StatusBar_h_
 
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
+#include <tools/Observer_ABC.h>
 
 namespace kernel
 {

@@ -10,10 +10,10 @@
 #ifndef __Controller_h_
 #define __Controller_h_
 
-#include "tools/SortedInterfaceContainer.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/ControllerObserver_ABC.h"
-#include "tools/Observer_ABC.h"
+#include <tools/SortedInterfaceContainer.h>
+#include <tools/ElementObserver_ABC.h>
+#include <tools/ControllerObserver_ABC.h>
+#include <tools/Observer_ABC.h>
 
 namespace kernel
 {

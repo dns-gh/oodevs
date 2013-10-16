@@ -10,14 +10,14 @@
 #ifndef __EntityLayer_h_
 #define __EntityLayer_h_
 
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/RectangleSelectionHandler_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "Layer.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

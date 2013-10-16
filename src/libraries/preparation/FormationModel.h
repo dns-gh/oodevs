@@ -10,10 +10,10 @@
 #ifndef __FormationModel_h_
 #define __FormationModel_h_
 
-#include "tools/Resolver.h"
-#include "tools/ElementObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 #include "ENT/ENT_Tr_Gen.h"
+#include <tools/Resolver.h>
+#include <tools/ElementObserver_ABC.h>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {

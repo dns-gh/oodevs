@@ -12,8 +12,8 @@
 
 #include "OwnershipPolicy_ABC.h"
 #include "ClassListener_ABC.h"
-#include "geometry/Types.h"
 #include "tools/MessageObserver.h"
+#include <geometry/Types.h>
 #include <map>
 
 namespace sword

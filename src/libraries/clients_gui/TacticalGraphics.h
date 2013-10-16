@@ -10,7 +10,7 @@
 #ifndef __TacticalGraphics_h_
 #define __TacticalGraphics_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
 
 namespace kernel

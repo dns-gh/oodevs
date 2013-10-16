@@ -11,7 +11,7 @@
 #define __WeatherModel_h_
 
 #include "clients_kernel/Types.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <QtCore/qdatetime.h>
 
 namespace kernel

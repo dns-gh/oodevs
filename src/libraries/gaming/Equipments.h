@@ -12,7 +12,7 @@
 
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

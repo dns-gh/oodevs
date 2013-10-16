@@ -10,8 +10,8 @@
 #ifndef __EfficientRangeDialog_h_
 #define __EfficientRangeDialog_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -40,7 +40,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/Protocol.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <geometry/types.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/lambda/bind.hpp>

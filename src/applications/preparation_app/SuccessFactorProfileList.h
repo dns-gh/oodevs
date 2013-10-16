@@ -10,8 +10,8 @@
 #ifndef __SuccessFactorProfileList_h_
 #define __SuccessFactorProfileList_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/RichWidget.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

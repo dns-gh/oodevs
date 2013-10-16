@@ -10,7 +10,7 @@
 #ifndef __Gaming_UrbanModel_h_
 #define __Gaming_UrbanModel_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace sword

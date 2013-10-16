@@ -10,13 +10,13 @@
 #ifndef __ResourcesListView_ABC_h_
 #define __ResourcesListView_ABC_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Availability.h"
 #include "gaming/LogisticHelpers.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 #include <QtGui/qtreeview.h>
 
 namespace kernel

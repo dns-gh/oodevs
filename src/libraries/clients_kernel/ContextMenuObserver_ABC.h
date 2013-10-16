@@ -10,8 +10,8 @@
 #ifndef __ContextMenuObserver_ABC_h_
 #define __ContextMenuObserver_ABC_h_
 
-#include "tools/Observer_ABC.h"
 #include "ContextMenu.h"
+#include <tools/Observer_ABC.h>
 
 namespace kernel
 {

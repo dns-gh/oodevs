@@ -13,8 +13,8 @@
 #include "LogisticLink.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "tools/Resolver_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver_ABC.h>
+#include <tools/Resolver.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 

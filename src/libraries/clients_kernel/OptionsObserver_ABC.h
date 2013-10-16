@@ -10,8 +10,8 @@
 #ifndef __OptionsObserver_ABC_h_
 #define __OptionsObserver_ABC_h_
 
+#include <tools/Observer_ABC.h>
 #include <string>
-#include "tools/Observer_ABC.h"
 
 namespace kernel
 {

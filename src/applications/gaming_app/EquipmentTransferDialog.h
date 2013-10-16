@@ -12,7 +12,7 @@
 
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace gui
 {

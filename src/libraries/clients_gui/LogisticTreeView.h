@@ -11,7 +11,7 @@
 #define __gui_LogisticTreeView_h_
 
 #include "HierarchyTreeView_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

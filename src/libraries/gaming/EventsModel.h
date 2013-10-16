@@ -10,9 +10,9 @@
 #ifndef __EventsModel_h_
 #define __EventsModel_h_
 
-#include "tools/Resolver.h"
-#include <boost/noncopyable.hpp>
 #include "Event.h"
+#include <tools/Resolver.h>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {

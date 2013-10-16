@@ -11,7 +11,7 @@
 #define __UrbanFactory_h_
 
 #include "UrbanFactory_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

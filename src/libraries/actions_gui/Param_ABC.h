@@ -15,8 +15,8 @@
 #include "clients_gui/RichGroupBox.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/OrderParameter.h"
-#include "tools/Observer_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Observer_ABC.h>
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __ClientObjectsModel_h_
 #define __ClientObjectsModel_h_
 
-#include "tools/resolver.h"
+#include <tools/Resolver.h>
 
 namespace dispatcher
 {

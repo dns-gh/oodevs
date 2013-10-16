@@ -10,7 +10,7 @@
 #ifndef __LogisticsModel_h_
 #define __LogisticsModel_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

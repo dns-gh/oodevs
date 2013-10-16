@@ -10,9 +10,9 @@
 #ifndef __EventToolbar_h_
 #define __EventToolbar_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Observer_ABC.h"
 #include "clients_gui/RichToolBar.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Observer_ABC.h>
 
 #include <deque>
 

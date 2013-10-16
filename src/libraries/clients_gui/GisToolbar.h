@@ -15,8 +15,8 @@
 #include "RichWidget.h"
 #include "RichSpinBox.h"
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 #pragma warning( push, 0 )
 #include <QtGui/qtoolbar.h>

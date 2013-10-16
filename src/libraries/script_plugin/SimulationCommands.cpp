@@ -9,11 +9,11 @@
 
 #include "script_plugin_pch.h"
 #include "SimulationCommands.h"
-#include "directia/brain/Brain.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/SimulationSenders.h"
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;

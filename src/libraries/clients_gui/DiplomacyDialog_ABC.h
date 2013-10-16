@@ -10,9 +10,9 @@
 #ifndef __DiplomacyDialog_ABC_h_
 #define __DiplomacyDialog_ABC_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "ModalDialog.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

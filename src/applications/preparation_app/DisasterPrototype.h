@@ -11,7 +11,7 @@
 #define __DisasterPrototype_h_
 
 #include "clients_gui/DisasterPrototype_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

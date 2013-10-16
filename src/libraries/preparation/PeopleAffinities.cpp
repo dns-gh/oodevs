@@ -16,7 +16,7 @@
 #include "clients_kernel/tools.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

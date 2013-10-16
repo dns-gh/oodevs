@@ -11,7 +11,7 @@
 #define __AfterActionFunction_h_
 
 #include "IndicatorDefinition_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

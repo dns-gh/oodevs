@@ -10,7 +10,7 @@
 #ifndef __ProfilesModel_h_
 #define __ProfilesModel_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace xml
 {

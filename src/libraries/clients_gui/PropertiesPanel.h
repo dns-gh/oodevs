@@ -10,10 +10,10 @@
 #ifndef __gui_PropertiesPanel_h_
 #define __gui_PropertiesPanel_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

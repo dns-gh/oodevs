@@ -10,7 +10,7 @@
 #ifndef __LinkInterpreter_ABC_h_
 #define __LinkInterpreter_ABC_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 class Q3Url;
 

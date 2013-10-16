@@ -13,10 +13,10 @@
 #include "Localisation.h"
 #include "Agent_ABC.h"
 #include "DecisionalState.h"
-#include "tools/Resolver.h"
-#include "protocol/SimulationSenders.h"
-#include <map>
 #include "ENT/ENT_Tr_Gen.h"
+#include "protocol/SimulationSenders.h"
+#include <tools/Resolver.h>
+#include <map>
 
 namespace kernel
 {

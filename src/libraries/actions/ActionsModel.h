@@ -10,10 +10,10 @@
 #ifndef __ActionsModel_h_
 #define __ActionsModel_h_
 
-#include "tools/Resolver.h"
-#include <boost/noncopyable.hpp>
 #include "Action_ABC.h"
 #include "ActionFactory_ABC.h"
+#include <tools/Resolver.h>
+#include <boost/noncopyable.hpp>
 
 class Publisher_ABC;
 

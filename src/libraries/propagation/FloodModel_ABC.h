@@ -10,7 +10,7 @@
 #ifndef FLOOD_FLOOD_MODEL_ABC_H
 #define FLOOD_FLOOD_MODEL_ABC_H
 
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 #include <vector>
 #include <boost/noncopyable.hpp>
 

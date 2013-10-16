@@ -11,7 +11,7 @@
 #define __SimpleEntityCondition_h_
 
 #include "EventCondition.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace dispatcher
 {

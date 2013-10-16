@@ -12,7 +12,7 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace google
 {

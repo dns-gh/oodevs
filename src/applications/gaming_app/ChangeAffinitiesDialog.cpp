@@ -16,7 +16,7 @@
 #include "clients_kernel/tools.h"
 #include "clients_gui/DecimalSpinBoxAndSlider.h"
 #include "gaming/Affinities.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 #include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------

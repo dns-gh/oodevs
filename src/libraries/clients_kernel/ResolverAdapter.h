@@ -10,7 +10,7 @@
 #ifndef __ResolverAdapter_h_
 #define __ResolverAdapter_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

@@ -10,8 +10,8 @@
 #ifndef __IndicatorRequests_h_
 #define __IndicatorRequests_h_
 
-#include "tools/Iterator.h"
 #include "protocol/AarSenders.h"
+#include <tools/Iterator.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

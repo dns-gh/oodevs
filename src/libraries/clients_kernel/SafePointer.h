@@ -10,7 +10,7 @@
 #ifndef __SafePointer_h_
 #define __SafePointer_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

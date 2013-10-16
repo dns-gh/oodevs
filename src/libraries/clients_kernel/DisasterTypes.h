@@ -10,7 +10,7 @@
 #ifndef kernel_DisasterTypes_h
 #define kernel_DisasterTypes_h
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace tools
 {

@@ -13,8 +13,8 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __DrawingTypes_h_
 #define __DrawingTypes_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

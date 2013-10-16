@@ -10,10 +10,10 @@
 #ifndef __NotesModel_h_
 #define __NotesModel_h_
 
-#include "tools/Resolver.h"
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "protocol/MessengerSenders.h"
+#include <tools/Resolver.h>
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 class Note;
 class Services;

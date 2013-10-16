@@ -11,7 +11,7 @@
 #define __DictionaryType_h_
 
 #include "OptionalValue.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

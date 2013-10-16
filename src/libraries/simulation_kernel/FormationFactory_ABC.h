@@ -10,8 +10,8 @@
 #ifndef __FormationFactory_ABC_h_
 #define __FormationFactory_ABC_h_
 
-#include "tools/Resolver.h"
 #include "Entities/MIL_Formation.h"
+#include <tools/Resolver.h>
 
 class MIL_Army;
 

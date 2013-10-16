@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 #pragma warning( push, 0 )
 #include <QtGui/qlistwidget.h>

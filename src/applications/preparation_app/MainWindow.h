@@ -10,8 +10,8 @@
 #ifndef __MainWindow_h_
 #define __MainWindow_h_
 
-#include "tools/ControllerObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
+#include <tools/ControllerObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
 
 namespace kernel

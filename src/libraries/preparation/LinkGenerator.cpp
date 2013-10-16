@@ -15,7 +15,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------

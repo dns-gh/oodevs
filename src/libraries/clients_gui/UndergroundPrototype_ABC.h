@@ -11,8 +11,8 @@
 #define __UndergroundPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

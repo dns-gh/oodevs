@@ -10,11 +10,11 @@
 #include "clients_kernel_pch.h"
 #include "Options.h"
 #include "OptionsObserver_ABC.h"
-#include "tools/Observer_ABC.h"
 #include "OptionVariant.h"
 #include "TristateOption.h"
 #include "FourStateOption.h"
 #include "Settings_ABC.h"
+#include <tools/Observer_ABC.h>
 #include <algorithm>
 #include <QtCore/qstringlist.h>
 #include <boost/foreach.hpp>

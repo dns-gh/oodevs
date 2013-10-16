@@ -13,7 +13,7 @@
 #include "clients_gui/PropertyDialog.h"
 #include "clients_kernel/Resolver2.h"
 #include "clients_gui/ValueEditor.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

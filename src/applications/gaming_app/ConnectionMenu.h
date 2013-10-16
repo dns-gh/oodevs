@@ -10,7 +10,7 @@
 #ifndef __ConnectionMenu_h_
 #define __ConnectionMenu_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -13,7 +13,7 @@
 #include "Gradient.h"
 #include "Layer.h"
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 class TextureSet;
 class ElevationShader;

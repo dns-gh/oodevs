@@ -11,10 +11,10 @@
 #define __InhabitantPanel_h_
 
 #include "clients_gui/RichDockWidget.h"
-#include "tools/SelectionObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/LivingAreaVisitor_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/SelectionObserver_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

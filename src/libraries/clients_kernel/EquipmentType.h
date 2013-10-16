@@ -11,7 +11,7 @@
 #define __EquipmentType_h_
 
 #include <boost/noncopyable.hpp>
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace xml { class xistream; };
 

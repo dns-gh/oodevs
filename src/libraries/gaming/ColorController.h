@@ -11,7 +11,7 @@
 #define __ColorController_h_
 
 #include "clients_gui/ColorController.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

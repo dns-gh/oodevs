@@ -11,7 +11,7 @@
 #include "FiniteStateMachine.h"
 #include "Event.h"
 #include "Condition_ABC.h"
-#include "directia/brain/Brain.h"
+#include <directia/brain/Brain.h>
 #include <boost/bind.hpp>
 
 using namespace plugins::script;

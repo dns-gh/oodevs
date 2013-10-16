@@ -10,8 +10,8 @@
 #ifndef __ScoreDefinitions_h_
 #define __ScoreDefinitions_h_
 
-#include "tools/Resolver.h"
 #include "protocol/Aar.h"
+#include <tools/Resolver.h>
 
 namespace indicators
 {

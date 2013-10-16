@@ -14,7 +14,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Dotations_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

@@ -13,10 +13,10 @@
 #include "Param_ABC.h"
 #include "actions/Entity.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "InterfaceBuilder_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

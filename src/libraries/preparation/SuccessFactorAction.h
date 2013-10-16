@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorAction_h_
 #define __SuccessFactorAction_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

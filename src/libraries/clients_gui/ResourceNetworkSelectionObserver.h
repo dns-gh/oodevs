@@ -10,8 +10,8 @@
 #ifndef CLIENTS_GUI_RESOURCENETWORKSELECTIONOBSERVER_H__
 #define CLIENTS_GUI_RESOURCENETWORKSELECTIONOBSERVER_H__
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

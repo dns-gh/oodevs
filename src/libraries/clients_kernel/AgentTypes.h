@@ -10,8 +10,8 @@
 #ifndef __AgentTypes_h_
 #define __AgentTypes_h_
 
-#include "tools/Resolver.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace xml

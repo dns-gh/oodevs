@@ -12,7 +12,7 @@
 
 #include "ADN_SymbolWidget_ABC.h"
 #include "ADN_Symbols_Data.h"
-#include "geometry/types.h"
+#include <geometry/Types.h>
 #include <boost/function.hpp>
 
 // =============================================================================

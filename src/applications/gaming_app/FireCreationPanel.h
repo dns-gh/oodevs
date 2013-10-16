@@ -14,7 +14,7 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

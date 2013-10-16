@@ -18,7 +18,7 @@
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 using namespace gui;
 using namespace kernel;

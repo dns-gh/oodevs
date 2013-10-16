@@ -13,10 +13,10 @@
 #include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
-{    
+{
     class Agent_ABC;
     class AgentKnowledge_ABC;
     class Automat_ABC;

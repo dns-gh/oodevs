@@ -10,7 +10,7 @@
 #ifndef __AutomatType_h_
 #define __AutomatType_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 

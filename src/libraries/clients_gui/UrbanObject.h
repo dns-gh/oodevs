@@ -16,7 +16,7 @@
 #include "clients_kernel/HumanDefs.h"
 #include "clients_kernel/StructuralStateAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace sword
 {

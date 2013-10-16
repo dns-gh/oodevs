@@ -10,7 +10,7 @@
 #ifndef __ReportFactory_h_
 #define __ReportFactory_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/shared_ptr.hpp>
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>

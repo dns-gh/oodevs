@@ -9,8 +9,8 @@
 
 #include "clients_kernel_pch.h"
 #include "DetectionMap.h"
-#include "tools/InputBinaryStream.h"
 #include "tools/ExerciseConfig.h"
+#include <tools/InputBinaryStream.h>
 #include <boost/static_assert.hpp>
 
 using namespace kernel;

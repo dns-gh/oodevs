@@ -11,7 +11,7 @@
 #define aar_PowerIndicators_h
 
 #include <boost/noncopyable.hpp>
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace tools
 {

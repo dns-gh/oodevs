@@ -12,7 +12,7 @@
 
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/OptionalValue.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

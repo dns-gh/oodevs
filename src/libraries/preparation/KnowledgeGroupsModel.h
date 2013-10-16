@@ -10,9 +10,9 @@
 #ifndef __KnowledgeGroupsModel_h_
 #define __KnowledgeGroupsModel_h_
 
-#include "tools/Resolver.h"
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Resolver.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

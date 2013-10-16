@@ -10,8 +10,8 @@
 #ifndef __Menu_h_
 #define __Menu_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/RichWidget.h"
+#include <tools/ElementObserver_ABC.h>
 
 class QMainWindow;
 class QDialog;

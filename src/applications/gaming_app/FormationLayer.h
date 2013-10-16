@@ -11,7 +11,7 @@
 #define __FormationLayer_h_
 
 #include "clients_gui/FormationLayer.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace actions
 {

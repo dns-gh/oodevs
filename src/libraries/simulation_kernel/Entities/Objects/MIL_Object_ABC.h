@@ -17,8 +17,8 @@
 #include "ObjectCapacity_ABC.h"
 #include "ObjectAttribute_ABC.h"
 #include "simulation_terrain/TER_Object_ABC.h"
-#include "tools/Extendable.h"
 #include "Tools/MIL_IDManager.h"
+#include <tools/Extendable.h>
 #include <boost/shared_ptr.hpp>
 
 namespace google

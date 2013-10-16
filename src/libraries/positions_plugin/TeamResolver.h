@@ -10,7 +10,7 @@
 #ifndef __TeamResolver_h_
 #define __TeamResolver_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace sword

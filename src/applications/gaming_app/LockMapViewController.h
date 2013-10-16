@@ -12,8 +12,8 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
@@ -52,7 +52,7 @@ class LockMapViewController : public QObject
                             , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
     Q_OBJECT
-    
+
 public:
     //! @name Constructors/Destructor
     //@{

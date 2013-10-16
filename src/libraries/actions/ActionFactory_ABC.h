@@ -10,7 +10,7 @@
 #ifndef __actions_ActionFactory_ABC_h_
 #define __actions_ActionFactory_ABC_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <geometry/types.h>
 #include <boost/noncopyable.hpp>
 

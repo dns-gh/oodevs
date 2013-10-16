@@ -11,8 +11,8 @@
 #define __EventCondition_h_
 
 #include "BaseCondition.h"
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

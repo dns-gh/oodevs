@@ -11,7 +11,7 @@
 #define __TimelineActionItem_h_
 
 #include "TimelineItem_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

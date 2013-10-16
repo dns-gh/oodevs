@@ -11,8 +11,8 @@
 #include "IndicatorConditions.h"
 #include "EventCondition.h"
 #include "MiscEvents.h"
-#include "directia/brain/Brain.h"
 #include "dispatcher/Config.h"
+#include <directia/brain/Brain.h>
 #include <tools/Path.h>
 
 using namespace plugins::script;

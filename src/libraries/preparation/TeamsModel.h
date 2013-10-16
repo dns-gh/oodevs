@@ -10,8 +10,8 @@
 #ifndef __TeamsModel_h_
 #define __TeamsModel_h_
 
-#include "tools/Resolver.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Resolver.h>
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace xml

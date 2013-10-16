@@ -10,8 +10,8 @@
 #ifndef __ProfileSelection_h_
 #define __ProfileSelection_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

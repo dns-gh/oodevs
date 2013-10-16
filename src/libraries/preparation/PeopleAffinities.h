@@ -11,7 +11,7 @@
 #define __PeopleAffinities_h_
 
 #include "Affinities.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

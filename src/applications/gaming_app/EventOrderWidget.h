@@ -14,7 +14,7 @@
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace actions
 {

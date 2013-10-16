@@ -11,7 +11,7 @@
 #define __AgentLogSupply_h_
 
 #include "EquipmentAvailability.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace sword

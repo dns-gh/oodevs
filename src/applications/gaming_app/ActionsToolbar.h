@@ -10,9 +10,9 @@
 #ifndef __ActionsToolbar_h_
 #define __ActionsToolbar_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 #include "clients_kernel/ModesObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

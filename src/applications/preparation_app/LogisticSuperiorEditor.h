@@ -13,8 +13,8 @@
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_gui/ValueEditor.h"
 #include "clients_kernel/SubTypes.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

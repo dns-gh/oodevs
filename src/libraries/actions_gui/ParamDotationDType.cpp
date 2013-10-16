@@ -16,8 +16,8 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/Protocol.h"
-#include "tools/Iterator.h"
-#include "tools/Resolver.h"
+#include <tools/Iterator.h>
+#include <tools/Resolver.h>
 
 using namespace actions::gui;
 

@@ -16,7 +16,7 @@
 #include "LogisticHierarchyOwner_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 

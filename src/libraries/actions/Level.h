@@ -11,9 +11,9 @@
 #define __ActionParameterLevel_h_
 
 #include "Parameter.h"
-#include "tools/Resolver_ABC.h"
-#include <boost/function.hpp>
 #include "ENT/ENT_Tr_Gen.h"
+#include <tools/Resolver_ABC.h>
+#include <boost/function.hpp>
 
 namespace sword
 {

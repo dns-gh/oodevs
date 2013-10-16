@@ -13,7 +13,7 @@
 #include "clients_kernel/Availability.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

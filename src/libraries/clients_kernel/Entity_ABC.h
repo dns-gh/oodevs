@@ -10,12 +10,12 @@
 #ifndef __Entity_ABC_h_
 #define __Entity_ABC_h_
 
-#include "tools/Extendable.h"
-#include "tools/SortedInterfaceContainer.h"
 #include "GraphicalEntity_ABC.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
-#include "geometry/Types.h"
+#include <geometry/Types.h>
+#include <tools/Extendable.h>
+#include <tools/SortedInterfaceContainer.h>
 #include <boost/noncopyable.hpp>
 
 class QPoint;

@@ -9,8 +9,8 @@
 
 #include "script_plugin_pch.h"
 #include "PopulationManipulator.h"
-#include "directia/brain/Brain.h"
 #include "dispatcher/Population.h"
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;

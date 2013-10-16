@@ -10,8 +10,8 @@
 #ifndef __SIMControlToolbar_h_
 #define __SIMControlToolbar_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/RichToolBar.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __DecisionalModel_h_
 #define __DecisionalModel_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace xml { class xistream; };
 

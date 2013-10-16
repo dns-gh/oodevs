@@ -18,8 +18,8 @@
 #include "dispatcher/KnowledgeGroup_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include "tools/Resolver_ABC.h"
 #include "rpr/EntityType.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/foreach.hpp>
 #include <set>
 
@@ -39,7 +39,7 @@ public:
     bool CanBeCreated() const
     {
         return kind == UNKNOWN &&
-            hasTeam && 
+            hasTeam &&
             name.size() > 0;
     }
     void CreationSent() { kind = CREATION_PENDING; }
@@ -82,7 +82,7 @@ RemoteOrbatShaper::RemoteOrbatShaper( RemoteAgentSubject_ABC& agentSubject, Cont
     formationCreation_.Register( *this );
     automatCreation_.Register( *this );
     unitCreation_.Register( *this );
-    
+
     for( tools::Iterator< const dispatcher::KnowledgeGroup_ABC& > it = knowledgeGroups.CreateIterator(); it.HasMoreElements(); )
     {
         const dispatcher::KnowledgeGroup_ABC& group = it.NextElement();
@@ -108,7 +108,7 @@ RemoteOrbatShaper::~RemoteOrbatShaper()
 // -----------------------------------------------------------------------------
 void RemoteOrbatShaper::RemoteCreated(  const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    units_.insert( T_UnitsData::value_type( identifier, boost::shared_ptr<plugins::hla::RemoteOrbatShaper::UnitData>( new UnitData() ) ) );    
+    units_.insert( T_UnitsData::value_type( identifier, boost::shared_ptr<plugins::hla::RemoteOrbatShaper::UnitData>( new UnitData() ) ) );
     object.Register( *this );
 }
 
@@ -279,7 +279,7 @@ void RemoteOrbatShaper::Notify( const sword::UnitCreation& message, const std::s
 
 namespace
 {
-    void CreateAutomat( ContextHandler_ABC< sword::AutomatCreation >& automatCreation, unsigned long formation, 
+    void CreateAutomat( ContextHandler_ABC< sword::AutomatCreation >& automatCreation, unsigned long formation,
         unsigned long knowledgeGroup, unsigned long automatType, const std::string& name, const std::string& rtiId )
     {
         simulation::UnitMagicAction automatCreationMessage;
@@ -287,7 +287,7 @@ namespace
         automatCreationMessage().set_type( sword::UnitMagicAction::automat_creation );
         automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType );        // type
         automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_identifier(knowledgeGroup );      // knowledge group
-        automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_acharstr( name ); // name        
+        automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_acharstr( name ); // name
         sword::Extension* ext = automatCreationMessage().mutable_parameters()->add_elem()->add_value()->mutable_extensionlist();
         sword::Extension_Entry* entry = ext->add_entries(); // extension
         entry->set_name("RemoteEntity");
@@ -297,7 +297,7 @@ namespace
         entry->set_value( rtiId );
         automatCreation.Send( automatCreationMessage, rtiId );
     }
-    void CreateFormation( ContextHandler_ABC< sword::FormationCreation >& formationCreation, unsigned long side, 
+    void CreateFormation( ContextHandler_ABC< sword::FormationCreation >& formationCreation, unsigned long side,
         int level, const std::string& name, const std::string& rtiId )
     {
         simulation::UnitMagicAction message;
@@ -326,12 +326,12 @@ void RemoteOrbatShaper::CreateParent( const std::string& childId )
     T_UnitsData::const_iterator childIt( units_.find( childId ) );
     if( childIt->second->GetKind() == UnitData::UNKNOWN || childIt->second->parentRtiId.size() == 0 )
         return;
-    
+
     const std::string& parentId = childIt->second->parentRtiId;
     T_UnitsData::const_iterator parentIt( units_.find( parentId ) );
     if( units_.end() == parentIt )
         return;
-    
+
     if( !parentIt->second->CanBeCreated() )
         return;
 
@@ -388,8 +388,8 @@ namespace
 void RemoteOrbatShaper::MoveChild( const std::string& childId )
 {
     T_UnitsData::const_iterator childIt( units_.find( childId ) );
-    if( units_.end() == childIt || 
-        childIt->second->GetKind() == UnitData::UNKNOWN || childIt->second->GetKind() == UnitData::CREATION_PENDING || 
+    if( units_.end() == childIt ||
+        childIt->second->GetKind() == UnitData::UNKNOWN || childIt->second->GetKind() == UnitData::CREATION_PENDING ||
         childIt->second->parentRtiId.size() == 0 )
         return;
 
@@ -397,7 +397,7 @@ void RemoteOrbatShaper::MoveChild( const std::string& childId )
     T_UnitsData::const_iterator parentIt( units_.find( parentId ) );
     if( units_.end() == parentIt)
         return;
-        
+
     if( parentIt->second->GetKind() == UnitData::UNKNOWN  || parentIt->second->GetKind() == UnitData::CREATION_PENDING )
     {
         parentIt->second->AddPendingChild( childId );

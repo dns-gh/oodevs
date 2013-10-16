@@ -11,8 +11,8 @@
 #define __gui_UnitTreeView_h_
 
 #include "RichTreeView.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

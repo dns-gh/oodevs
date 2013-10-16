@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroupSelectionObserver_h_
 #define __KnowledgeGroupSelectionObserver_h_
 
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

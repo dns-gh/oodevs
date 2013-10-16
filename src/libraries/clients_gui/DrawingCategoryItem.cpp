@@ -13,7 +13,7 @@
 #include "DrawingTemplate.h"
 #include "DrawingCategory.h"
 #include "RichPushButton.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 
 using namespace gui;
 

@@ -14,7 +14,7 @@
 #include "clients_kernel/TeamSelectionObserver.h"
 #include "clients_kernel/SafePointer.h"
 #include "gaming/KnowledgeGroupSelectionObserver.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -12,7 +12,7 @@
 
 #include "clients_gui/ColorEditor_ABC.h"
 #include "clients_gui/ColorController.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/optional.hpp>
 
 namespace kernel

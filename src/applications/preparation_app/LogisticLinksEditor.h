@@ -10,9 +10,9 @@
 #ifndef __LogisticLinksEditor_h_
 #define __LogisticLinksEditor_h_
 
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/Observer_ABC.h>
 
 namespace kernel
 {

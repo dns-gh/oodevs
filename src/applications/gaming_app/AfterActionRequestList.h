@@ -10,7 +10,7 @@
 #ifndef __AfterActionRequestList_h_
 #define __AfterActionRequestList_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

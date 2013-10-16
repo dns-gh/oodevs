@@ -11,7 +11,7 @@
 #define __ResourceNetworkModel_h_
 
 #include "NodeProperties.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace resource

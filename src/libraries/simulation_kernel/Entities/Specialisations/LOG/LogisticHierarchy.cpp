@@ -15,7 +15,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "CheckPoints/SerializationTools.h"
-#include "tools/iterator.h"
+#include <tools/Iterator.h>
 #include <boost/serialization/deque.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>

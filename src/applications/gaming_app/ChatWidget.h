@@ -10,8 +10,8 @@
 #ifndef __ChatWidget_h_
 #define __ChatWidget_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "gaming/CommandHandler_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

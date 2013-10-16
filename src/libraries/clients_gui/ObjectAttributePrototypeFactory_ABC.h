@@ -10,7 +10,7 @@
 #ifndef __ObjectAttributePrototypeFactory_ABC_h_
 #define __ObjectAttributePrototypeFactory_ABC_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 class QWidget;
 

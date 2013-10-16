@@ -17,7 +17,7 @@
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Types.h"
 #include "protocol/Protocol.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {
@@ -85,7 +85,7 @@ public:
 
     kernel::Agent_ABC&      realAgent_;
     const kernel::Team_ABC* team_;
-    
+
     std::string fullSymbol_;
     std::string moveSymbol_;
     std::string staticSymbol_;

@@ -10,7 +10,7 @@
 #ifndef __Model_ABC_h_
 #define __Model_ABC_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

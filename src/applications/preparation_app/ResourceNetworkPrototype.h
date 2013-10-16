@@ -11,7 +11,7 @@
 #define __ResourceNetworkPrototype_h_
 
 #include "clients_gui/ResourceNetworkPrototype_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __ExtensionType_h_
 #define __ExtensionType_h_
 
-#include "tools/resolver.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

@@ -10,8 +10,8 @@
 #ifndef __TerrainFeatureSearcher_h_
 #define __TerrainFeatureSearcher_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

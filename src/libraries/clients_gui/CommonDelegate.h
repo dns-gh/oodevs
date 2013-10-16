@@ -11,7 +11,7 @@
 #define __gui_CommonDelegate_h_
 
 #include <boost/noncopyable.hpp>
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace gui
 {
@@ -175,7 +175,6 @@ protected:
             , gap_( gap )
             , precision_( precision )
             {}
-
 
         T   min_;
         T   max_;

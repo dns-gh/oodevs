@@ -10,8 +10,8 @@
 #ifndef __InhabitantFactory_ABC_h_
 #define __InhabitantFactory_ABC_h_
 
-#include "tools/Resolver.h"
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

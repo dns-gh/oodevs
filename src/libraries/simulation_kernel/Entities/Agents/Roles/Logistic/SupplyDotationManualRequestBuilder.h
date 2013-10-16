@@ -12,7 +12,7 @@
 
 #include "SupplyRequestBuilder_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/serialization/export.hpp>
 
 class AutomateFactory_ABC;
@@ -52,7 +52,6 @@ public:
 
     void serialize( MIL_CheckPointInArchive&, const unsigned int );
     void serialize( MIL_CheckPointOutArchive&, const unsigned int );
-
 
 protected:
     //! @name Operations

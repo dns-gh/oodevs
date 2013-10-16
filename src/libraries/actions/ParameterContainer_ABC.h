@@ -10,7 +10,7 @@
 #ifndef __ActionParameterContainer_ABC_h_
 #define __ActionParameterContainer_ABC_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace actions
 {

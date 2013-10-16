@@ -10,7 +10,7 @@
 #ifndef __UserProfileList_h_
 #define __UserProfileList_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

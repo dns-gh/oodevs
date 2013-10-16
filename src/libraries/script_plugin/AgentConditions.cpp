@@ -11,11 +11,11 @@
 #include "AgentConditions.h"
 #include "SimpleEntityCondition.h"
 #include "AgentEvents.h"
-#include "directia/brain/Brain.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;

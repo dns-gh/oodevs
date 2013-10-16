@@ -11,7 +11,7 @@
 #define __ActionParameterMaintenancePriorities_h_
 
 #include "Parameter.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace sword
 {

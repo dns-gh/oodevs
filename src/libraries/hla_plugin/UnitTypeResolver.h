@@ -13,7 +13,7 @@
 #include "UnitTypeResolver_ABC.h"
 #include "dispatcher/Logger_ABC.h"
 #include "rpr/EntityTypeResolver_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace plugins
 {
@@ -119,7 +119,7 @@ unsigned long UnitTypeResolver< T >::Resolve( const rpr::EntityType& type ) cons
 template< typename T >
 unsigned long UnitTypeResolver< T >::Resolve( const std::string& typeName ) const
 {
-    UnitType* type = agentTypeResolver_.Find( typeName ); 
+    UnitType* type = agentTypeResolver_.Find( typeName );
     if( type == 0 )
         return 0;
     return type->GetId();

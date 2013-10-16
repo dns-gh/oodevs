@@ -17,7 +17,7 @@
 #include "AutomatManipulator.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/Protocol.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <directia/brain/Brain.h>
 
 using namespace plugins::script;

@@ -12,7 +12,7 @@
 
 #include "KnowledgeGroup_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

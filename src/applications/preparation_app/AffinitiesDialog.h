@@ -12,7 +12,7 @@
 
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/SubTypes.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <map>
 #include <vector>
 #include <boost/tuple/tuple.hpp>

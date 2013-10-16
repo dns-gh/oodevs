@@ -11,7 +11,7 @@
 #define __AutomatsLayer_h_
 
 #include "clients_gui/AutomatsLayer.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

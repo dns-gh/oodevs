@@ -11,7 +11,7 @@
 #define __AutomatTacticalHierarchies_h_
 
 #include "clients_gui/MergingTacticalHierarchies.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace sword
 {

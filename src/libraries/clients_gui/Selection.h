@@ -10,9 +10,9 @@
 #ifndef gui_Selection_h
 #define gui_Selection_h
 
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/GraphicalEntity_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

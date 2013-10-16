@@ -10,8 +10,8 @@
 #ifndef __ClockEditDialog_h_
 #define __ClockEditDialog_h_
 
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

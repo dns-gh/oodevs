@@ -11,7 +11,7 @@
 #define __TeamsModel_h_
 
 #include "protocol/Simulation.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -11,8 +11,8 @@
 #include "ClientCommands.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/AuthenticatedLinkResolver_ABC.h"
-#include "directia/brain/Brain.h"
 #include "protocol/MessengerSenders.h"
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 

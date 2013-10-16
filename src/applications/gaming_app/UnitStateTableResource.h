@@ -12,8 +12,8 @@
 
 #include "clients_gui/UnitStateTableResource.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Observer_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Observer_ABC.h>
 
 namespace actions
 {

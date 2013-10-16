@@ -11,9 +11,9 @@
 #define __OptionMenu_h_
 
 #include "clients_kernel/Options.h"
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ContextMenu.h"
+#include <tools/Observer_ABC.h>
 
 namespace gui
 {

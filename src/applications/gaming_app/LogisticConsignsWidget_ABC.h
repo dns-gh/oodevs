@@ -10,10 +10,10 @@
 #ifndef __LogisticConsignsWidget_ABC_h_
 #define __LogisticConsignsWidget_ABC_h_
 
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/DisplayExtractor_ABC.h"
 #include "clients_kernel/Tools.h"
+#include <tools/SelectionObserver_ABC.h>
 
 // =============================================================================
 /** @class  __LogisticConsignsWidget_ABC_h_
@@ -33,7 +33,7 @@ public:
              LogisticConsignsWidget_ABC( QWidget* parent, kernel::DisplayExtractor_ABC& extractor );
     virtual ~LogisticConsignsWidget_ABC();
     //@}
-    
+
 public slots:
     //! @name Slots
     //@{

@@ -10,9 +10,9 @@
 #ifndef __ActionsScheduler_h_
 #define __ActionsScheduler_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "Simulation.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

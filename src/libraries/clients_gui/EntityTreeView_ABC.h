@@ -11,10 +11,10 @@
 #define __EntityTreeView_ABC_h_
 
 #include "RichTreeView.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Observer_ABC.h>
 
 namespace kernel
 {

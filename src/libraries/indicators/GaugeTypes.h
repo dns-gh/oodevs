@@ -11,7 +11,7 @@
 #define __GaugeTypes_h_
 
 #include "GaugeFactory_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #pragma warning( push, 0 )
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>

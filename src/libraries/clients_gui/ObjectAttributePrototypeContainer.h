@@ -10,8 +10,8 @@
 #ifndef __ObjectAttributePrototypeContainer_h_
 #define __ObjectAttributePrototypeContainer_h_
 
-#include "tools/Resolver.h"
 #include "ObjectAttributePrototypeFactory_ABC.h"
+#include <tools/Resolver.h>
 
 namespace boost
 {

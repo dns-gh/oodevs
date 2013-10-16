@@ -10,8 +10,8 @@
 #ifndef __UrbanBlockDetectionMap_h_
 #define __UrbanBlockDetectionMap_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 

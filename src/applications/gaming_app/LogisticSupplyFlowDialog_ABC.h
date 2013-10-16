@@ -13,9 +13,9 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_gui/ShapeHandler_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

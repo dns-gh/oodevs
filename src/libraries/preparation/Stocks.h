@@ -11,8 +11,8 @@
 #define __Stocks_h_
 
 #include "clients_kernel/Extension_ABC.h"
-#include "tools/Resolver.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

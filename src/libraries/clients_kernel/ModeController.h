@@ -12,8 +12,8 @@
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "Controllers.h"
-#include "tools/SortedInterfaceContainer.h"
-#include "tools/Observer_ABC.h"
+#include <tools/SortedInterfaceContainer.h>
+#include <tools/Observer_ABC.h>
 
 class QMainWindow;
 

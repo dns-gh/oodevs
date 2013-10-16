@@ -10,7 +10,7 @@
 #ifndef __AfterActionModel_h_
 #define __AfterActionModel_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace sword

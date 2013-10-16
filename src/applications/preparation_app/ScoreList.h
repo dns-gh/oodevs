@@ -10,7 +10,7 @@
 #ifndef __ScoreList_h_
 #define __ScoreList_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace actions
 {

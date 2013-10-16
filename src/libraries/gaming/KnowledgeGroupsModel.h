@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroupsModel_h_
 #define __KnowledgeGroupsModel_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

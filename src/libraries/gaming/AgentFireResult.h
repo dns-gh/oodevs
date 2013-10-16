@@ -12,7 +12,7 @@
 
 #include "Casualties.h"
 #include "clients_kernel/Types.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

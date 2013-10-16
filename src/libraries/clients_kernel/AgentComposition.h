@@ -10,7 +10,7 @@
 #ifndef __AgentComposition_h_
 #define __AgentComposition_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace xml { class xistream; };

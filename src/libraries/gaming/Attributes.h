@@ -17,8 +17,8 @@
 #include "clients_kernel/SubTypes.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/OptionalValue.h"
-#include "tools/Resolver_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include <tools/Resolver_ABC.h>
 
 namespace sword
 {
