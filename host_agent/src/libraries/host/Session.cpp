@@ -769,7 +769,7 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
     "                \"name\": \"simulation\","
     "                \"clock\": true,"
     "                \"sword\": {"
-    "                    \"address\": \"localhost:%2%\","
+    "                    \"address\": \"localhost:%2%\""
     "                }"
     "            }"
     "        }"
