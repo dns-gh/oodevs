@@ -19,11 +19,6 @@ namespace tools
 
 namespace frontend
 {
-    class Profile;
-}
-
-namespace frontend
-{
 // =============================================================================
 /** @class  StartTimeline
     @brief  StartTimeline
@@ -38,8 +33,7 @@ public:
     StartTimeline( const tools::GeneralConfig& config,
                    const tools::Path& exercise,
                    const tools::Path& session,
-                   int index,
-                   const Profile& profile );
+                   int index );
     virtual ~StartTimeline();
     //@}
 };
