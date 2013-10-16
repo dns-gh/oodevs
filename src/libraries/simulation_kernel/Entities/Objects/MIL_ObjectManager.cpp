@@ -436,8 +436,8 @@ void MIL_ObjectManager::SendFullState()
 // Name: MIL_ObjectManager::OnReceiveObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies,
-                                                    const propagation::FloodModel_ABC& floodModel )
+void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, unsigned int clientId,
+                                                    const tools::Resolver< MIL_Army_ABC >& armies, const propagation::FloodModel_ABC& floodModel )
 {
     sword::ObjectMagicActionAck_ErrorCode nErrorCode = sword::ObjectMagicActionAck::no_error;
 
@@ -478,9 +478,9 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
                 nErrorCode = sword::ObjectMagicActionAck::error_invalid_specific_attributes;
         }
     }
-    client::ObjectMagicActionAck asnReplyMsg;
-    asnReplyMsg().set_error_code( nErrorCode );
-    asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    client::ObjectMagicActionAck reply;
+    reply().set_error_code( nErrorCode );
+    reply.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

@@ -1511,9 +1511,9 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
 // Name: MIL_EntityManager::OnReceiveObjectMagicAction
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
-    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, *armyFactory_, *pFloodModel_ );
+    pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, clientId, *armyFactory_, *pFloodModel_ );
 }
 
 // -----------------------------------------------------------------------------

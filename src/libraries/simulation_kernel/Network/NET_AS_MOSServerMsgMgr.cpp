@@ -119,7 +119,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( msg.has_unit_magic_action() )
         manager.OnReceiveUnitMagicAction( msg.unit_magic_action(), nCtx, clientId );
     else if( msg.has_object_magic_action() )
-        manager.OnReceiveObjectMagicAction( msg.object_magic_action(), nCtx );
+        manager.OnReceiveObjectMagicAction( msg.object_magic_action(), nCtx, clientId  );
     else if( msg.has_burning_cell_request() )
         manager.OnReceiveBurningCellRequest( msg.burning_cell_request(), nCtx );
     else if( msg.has_magic_action() )

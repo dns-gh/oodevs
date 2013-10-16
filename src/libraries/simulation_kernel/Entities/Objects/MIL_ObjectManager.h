@@ -92,8 +92,8 @@ public:
     void FinalizeObjects( const propagation::FloodModel_ABC& floodModel );
     void SendCreation();
     void SendFullState();
-    void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies,
-                                     const propagation::FloodModel_ABC& floodModel );
+    void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, unsigned int clientId,
+                                     const tools::Resolver< MIL_Army_ABC >& armies, const propagation::FloodModel_ABC& floodModel );
     void OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx, unsigned int clientId );
     //@}
 

@@ -186,7 +186,7 @@ public:
     //! @name Network
     //@{
     void OnReceiveUnitMagicAction          ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
-    void OnReceiveObjectMagicAction        ( const sword::ObjectMagicAction&    message, unsigned int nCtx );
+    void OnReceiveObjectMagicAction        ( const sword::ObjectMagicAction&    message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveControlToggleVisionCones ( const sword::ControlEnableVisionCones& message );
     void OnReceiveUnitOrder                ( const sword::UnitOrder&            message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveAutomatOrder             ( const sword::AutomatOrder&         message, unsigned int nCtx, unsigned int clientId );
