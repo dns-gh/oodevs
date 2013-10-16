@@ -66,7 +66,7 @@ std::string WeatherToString( int e )
 struct EnumStringifier
 {
     const char* name;
-    boost::function< std::string( int ) > fn;
+    T_Stringifier fn;
 };
 
 template< typename E >
@@ -91,7 +91,7 @@ const size_t stringifiersCount = sizeof( stringifiers )/sizeof( *stringifiers );
 
 }  // namespace
 
-const boost::function< std::string( int ) >& kernel::GetEnumStringifier( const std::string& name )
+T_Stringifier kernel::GetEnumStringifier( const std::string& name )
 {
     for( size_t i = 0; i != stringifiersCount; ++i )
         if( stringifiers[i].name == name )
