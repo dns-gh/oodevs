@@ -10,9 +10,12 @@
 #include "clients_kernel_test_pch.h"
 
 #include "clients_kernel/MagicActionType.h"
-#include <clients_kernel/OrderParameter.h>
+#include "clients_kernel/OrderParameter.h"
+#include "protocol/Actions.h"
 
 #include <boost/assign/list_of.hpp>
+
+using namespace protocol;
 
 namespace
 {
@@ -83,4 +86,29 @@ BOOST_AUTO_TEST_CASE( TestMagicActionTypeParameters )
         }
         BOOST_CHECK( !it.HasMoreElements() );
     }
+}
+
+BOOST_AUTO_TEST_CASE( TestMagicActionTypeEnums )
+{
+    // Check all enums are mapped to stringifiers
+    std::set< std::string > listed;
+    for( size_t i = 0; i != mapping::enumsCount; ++i )
+    {
+        kernel::GetEnumStringifier( mapping::enums[i]->name );
+        listed.insert( mapping::enums[i]->name );
+    }
+
+    // Check referenced enums are listed in the enum list
+    std::set< std::string > referenced;
+    for( size_t i = 0; i != mapping::actionsCount; ++i )
+    {
+        const auto& action = mapping::actions[i];
+        for( size_t j = 0; j != action.paramsCount; ++j )
+        {
+            const auto& param = action.params[j];
+            if( param.enumeration )
+                referenced.insert( param.enumeration->name );
+        }
+    }
+    BOOST_CHECK( listed == referenced );
 }

@@ -11,9 +11,12 @@
 #define __MagicActionType_h_
 
 #include "OrderType.h"
+#include <boost/function.hpp>
 
 namespace kernel
 {
+
+const boost::function< std::string( int ) >& GetEnumStringifier( const std::string& name );
 
 // =============================================================================
 /** @class  MagicActionType
