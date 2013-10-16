@@ -10,7 +10,7 @@
 #include "Simulation.h"
 #include "ENT/ENT_Enums_Gen.h"
 
-#define COUNT_OF( name ) sizeof( name )/sizeof( *name )
+#define COUNT_OF( name ) sizeof( name )/sizeof( *( name ) )
 
 namespace protocol
 {
