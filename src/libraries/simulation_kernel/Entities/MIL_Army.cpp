@@ -38,6 +38,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Color.h"
+#include "Tools/MIL_MessageParameters.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Army )
@@ -616,36 +617,9 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& parameters )
+void MIL_Army::ChangeDiplomacy( MIL_Army_ABC& other, E_Diplomacy diplomacy )
 {
-    int party2 ( 0 );
-    if( parameters.elem( 1 ).value().Get( 0 ).has_identifier() )
-        party2 = parameters.elem( 1 ).value().Get( 0 ).identifier();
-    else if( parameters.elem( 1 ).value().Get( 0 ).has_party() )
-        party2 = parameters.elem( 1 ).value().Get( 0 ).party().id();
-
-    MIL_Army_ABC* pArmy2 = armyFactory_.Find( party2 );
-    if( !pArmy2 || *pArmy2 == *this )
-        throw MASA_EXCEPTION_ASN( sword::ChangeDiplomacyAck_ErrorCode, sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
-    E_Diplomacy nDiplomacy = eUnknown;
-    switch( parameters.elem( 2 ).value().Get( 0 ).enumeration() )
-    {
-    case sword::unknown:
-        nDiplomacy = eUnknown;
-        break;
-    case sword::friendly:
-        nDiplomacy = eFriend;
-        break;
-    case sword::enemy:
-        nDiplomacy = eEnemy;
-        break;
-    case sword::neutral:
-        nDiplomacy = eNeutral;
-        break;
-    default:
-        break;
-    }
-    diplomacies_[ pArmy2 ] = nDiplomacy;
+    diplomacies_[ &other ] = diplomacy;
 }
 
 // -----------------------------------------------------------------------------

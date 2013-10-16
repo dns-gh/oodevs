@@ -164,8 +164,6 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         type == sword::MagicAction::local_weather ||
         type == sword::MagicAction::local_weather_destruction )
         server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ctx, clientId );
-    else if( type == sword::MagicAction::change_diplomacy )
-        manager.OnReceiveChangeDiplomacy( msg, ctx, clientId );
     else
     {
         client::MagicActionAck ack;
@@ -178,6 +176,8 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
                 manager.OnReceiveCreateFireOrderOnLocation( msg );
             else if( type == sword::MagicAction::change_resource_network_properties )
                 manager.OnReceiveChangeResourceLinks( msg );
+            else if( type == sword::MagicAction::change_diplomacy )
+                manager.OnReceiveChangeDiplomacy( msg, ctx );
             else if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
                 OnReceiveDebugError( msg.parameters() );
         }

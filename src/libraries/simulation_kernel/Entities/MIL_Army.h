@@ -140,7 +140,7 @@ public:
     virtual void SendCreation() const;
     virtual void SendFullState() const;
     virtual void SendKnowledge() const;
-    virtual void OnReceiveChangeDiplomacy( const sword::MissionParameters& msg );
+    virtual void ChangeDiplomacy( MIL_Army_ABC& other, E_Diplomacy diplomacy );
     //@}
 
 private:

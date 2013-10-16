@@ -1536,43 +1536,44 @@ uint32_t GetPartyId( const sword::MissionParameters& params, int i )
     }
 }
 
+MIL_Army_ABC::E_Diplomacy GetDiplomacy( sword::EnumDiplomacy e )
+{
+    switch( e )
+    {
+        case sword::friendly: return MIL_Army_ABC::eFriend;
+        case sword::enemy: return MIL_Army_ABC::eEnemy;
+        case sword::neutral: return MIL_Army_ABC::eNeutral;
+    }
+    return MIL_Army_ABC::eUnknown;
+}
+
 } // namespace
 
-void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::OnReceiveChangeDiplomacy( const sword::MagicAction& message, unsigned int nCtx )
 {
-    client::MagicActionAck magicAck;
-    magicAck().set_error_code( MagicActionAck::no_error );
-    try
-    {
-        client::ChangeDiplomacyAck ack;
-        client::ChangeDiplomacy changeDiplomacyMes;
-        const auto& params = message.parameters();
-        protocol::CheckCount( params, 3 );
-        const uint32_t party1 = GetPartyId( params, 0 );
-        const uint32_t party2 = GetPartyId( params, 1 );
-        const sword::EnumDiplomacy value = GET_ENUMERATION( sword::EnumDiplomacy, params, 2 );
+    client::ChangeDiplomacyAck ack;
+    client::ChangeDiplomacy changeDiplomacyMes;
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 3 );
+    const uint32_t party1 = GetPartyId( params, 0 );
+    const uint32_t party2 = GetPartyId( params, 1 );
+    const sword::EnumDiplomacy value = GET_ENUMERATION( sword::EnumDiplomacy, params, 2 );
 
-        MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );
-        if( !pArmy1 )
-            throw MASA_BADPARAM_ASN( ChangeDiplomacyAck_ErrorCode, ChangeDiplomacyAck::error_invalid_party_diplomacy, STR( "invalid party identifier " << party1 ));
-        pArmy1->OnReceiveChangeDiplomacy( message.parameters() );
+    MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );
+    protocol::Check( pArmy1, STR( "invalid party indentifier " << party1 ) );
+    MIL_Army_ABC* pArmy2 = armyFactory_->Find( party2 );
+    protocol::Check( pArmy2, STR( "invalid party indentifier " << party2 ) );
+    pArmy1->ChangeDiplomacy( *pArmy2, GetDiplomacy( value ) );
 
-        changeDiplomacyMes().mutable_party1()->set_id( party1 );
-        changeDiplomacyMes().mutable_party2()->set_id( party2 );
-        changeDiplomacyMes().set_diplomacy( value );
-        changeDiplomacyMes.Send( NET_Publisher_ABC::Publisher(), nCtx );
-        ack().mutable_party1()->set_id( party1 );
-        ack().mutable_party2()->set_id( party2 );
-        ack().set_diplomacy( value );
-        ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
-        ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
-    }
-    catch( const std::exception& e )
-    {
-        magicAck().set_error_code( MagicActionAck::error_invalid_parameter );
-        magicAck().set_error_msg( tools::GetExceptionMsg( e ));
-    }
-    magicAck.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    changeDiplomacyMes().mutable_party1()->set_id( party1 );
+    changeDiplomacyMes().mutable_party2()->set_id( party2 );
+    changeDiplomacyMes().set_diplomacy( value );
+    changeDiplomacyMes.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack().mutable_party1()->set_id( party1 );
+    ack().mutable_party2()->set_id( party2 );
+    ack().set_diplomacy( value );
+    ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
