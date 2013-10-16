@@ -206,6 +206,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
         pTable->AddItem( nRow, 0, nRowSpan, 1, &automaton, strText );
         nRow += nRowSpan;
     }
+    automats.clear(); // force clear here so ADN_Type_Vector_ABC won't delete each automat
     return pTable;
 }
 
