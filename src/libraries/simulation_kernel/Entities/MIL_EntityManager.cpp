@@ -1895,70 +1895,54 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
 // Name: MIL_EntityManager::OnReceiveCreateFireOrderOnLocation
 // Created: ABR 2011-01-19
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& msg, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& msg )
 {
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
-    try
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
+        throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, 3 parameters expected" );
+
+    // Location
+    const MissionParameter& location = msg.parameters().elem( 0 );
+    if( location.value_size() != 1 || !( location.value().Get( 0 ).has_location()
+                || location.value().Get( 0 ).has_point() ) )
+        throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a location" );
+
+    // Ammo
+    const MissionParameter& ammo = msg.parameters().elem( 1 );
+    if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
+        throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a resource type" );
+
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory(
+            ammo.value().Get( 0 ).resourcetype().id() );
+    if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
+        throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a dotation category "
+                "identifier that can be used for indirect fire" );
+
+    // Iterations
+    const MissionParameter& iterations = msg.parameters().elem( 2 );
+    if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
+        throw MASA_BADPARAM_MAGICACTION("parameters[2] must be a real" );
+
+    const float value = iterations.value().Get( 0 ).areal();
+    if( value < 0.f )
+        throw MASA_BADPARAM_MAGICACTION( "parameters[2] must be a positive real number" );
+
+    unsigned int ammos = static_cast< unsigned int >(
+            pDotationCategory->ConvertToNbrAmmo( value ) );
+
+    MT_Vector2D targetPos;
+    if( location.value().Get( 0 ).has_location() )
+        MIL_Tools::ConvertCoordMosToSim(
+                location.value().Get( 0 ).location().coordinates().elem( 0 ), targetPos );
+    else if( location.value().Get( 0 ).has_point() )
     {
-        if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
-            throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, 3 parameters expected" );
-
-        // Location
-        const MissionParameter& location = msg.parameters().elem( 0 );
-        if( location.value_size() != 1 || !( location.value().Get( 0 ).has_location()
-                    || location.value().Get( 0 ).has_point() ) )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a location" );
-
-        // Ammo
-        const MissionParameter& ammo = msg.parameters().elem( 1 );
-        if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a resource type" );
-
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory(
-                ammo.value().Get( 0 ).resourcetype().id() );
-        if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a dotation category "
-                    "identifier that can be used for indirect fire" );
-
-        // Iterations
-        const MissionParameter& iterations = msg.parameters().elem( 2 );
-        if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
-            throw MASA_BADPARAM_MAGICACTION("parameters[2] must be a real" );
-
-        const float value = iterations.value().Get( 0 ).areal();
-        if( value < 0.f )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[2] must be a positive real number" );
-
-        unsigned int ammos = static_cast< unsigned int >(
-                pDotationCategory->ConvertToNbrAmmo( value ) );
-
-        MT_Vector2D targetPos;
-        if( location.value().Get( 0 ).has_location() )
-            MIL_Tools::ConvertCoordMosToSim(
-                    location.value().Get( 0 ).location().coordinates().elem( 0 ), targetPos );
-        else if( location.value().Get( 0 ).has_point() )
-        {
-            const sword::Point& point = location.value().Get( 0 ).point();
-            if( point.location().type() != sword::Location::point ||
-                    point.location().coordinates().elem_size() != 1 )
-                throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a point with one coordinate" );
-            MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), targetPos );
-        }
-        PHY_FireResults_Default fireResult;
-        pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
+        const sword::Point& point = location.value().Get( 0 ).point();
+        if( point.location().type() != sword::Location::point ||
+                point.location().coordinates().elem_size() != 1 )
+            throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a point with one coordinate" );
+        MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), targetPos );
     }
-    catch( const NET_AsnException< sword::MagicActionAck::ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-        ack().set_error_msg( e.what() );
-    }
-    catch( const std::exception& e )
-    {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
-        ack().set_error_msg( e.what() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    PHY_FireResults_Default fireResult;
+    pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
 }
 
 // -----------------------------------------------------------------------------

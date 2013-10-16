@@ -168,8 +168,6 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         manager.OnReceiveChangeDiplomacy( msg, ctx, clientId );
     else if( type == sword::MagicAction::change_resource_network_properties )
         manager.OnReceiveChangeResourceLinks( msg, ctx, clientId );
-    else if( type == sword::MagicAction::create_fire_order_on_location )
-        manager.OnReceiveCreateFireOrderOnLocation( msg, ctx, clientId );
     else
     {
         client::MagicActionAck ack;
@@ -178,6 +176,8 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         {
             if( type == sword::MagicAction::create_knowledge_group )
                 manager.OnReceiveKnowledgeGroupCreation( msg, ack() );
+            else if( type == sword::MagicAction::create_fire_order_on_location )
+                manager.OnReceiveCreateFireOrderOnLocation( msg );
             else if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
                 OnReceiveDebugError( msg.parameters() );
         }
