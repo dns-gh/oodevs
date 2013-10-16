@@ -84,7 +84,6 @@ int main( int /*argc*/, char* /*argv*/[] )
         }
 #endif
 
-
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
         HINSTANCE hInstance = GetModuleHandle( NULL );
@@ -100,10 +99,6 @@ int main( int /*argc*/, char* /*argv*/[] )
     catch( const xml::exception& e )
     {
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Simulation failure - Reason : '" << tools::GetExceptionMsg( e ) << "'" );
     }
     google::protobuf::ShutdownProtobufLibrary();
     app.reset();
