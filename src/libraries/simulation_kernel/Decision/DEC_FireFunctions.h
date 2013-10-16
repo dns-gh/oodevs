@@ -12,9 +12,11 @@
 #ifndef __DEC_FireFunctions_h_
 #define __DEC_FireFunctions_h_
 
-#include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Decision/DEC_Decision_ABC.h"
+#include <boost/shared_ptr.hpp>
 
+class DEC_Knowledge_Agent;
+class DEC_Decision_ABC;
+class MIL_Agent_ABC;
 class MIL_AgentPion;
 class PHY_DotationCategory;
 
