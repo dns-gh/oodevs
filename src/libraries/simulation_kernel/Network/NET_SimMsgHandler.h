@@ -1,16 +1,14 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-12 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Network/NET_AS_MOSServerMsgMgr.h $
-// $Author: Nld $
-// $Modtime: 22/03/05 16:53 $
-// $Revision: 7 $
-// $Workfile: NET_AS_MOSServerMsgMgr.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2013 Mathematiques Appliquees SA (MASA)
+//
+// *****************************************************************************
 
-#ifndef __NET_AS_MOSServerMsgMgr_h_
-#define __NET_AS_MOSServerMsgMgr_h_
+#ifndef __NET_SimMsgHandler_h_
+#define __NET_SimMsgHandler_h_
 
 #include "NET_Publisher_ABC.h"
 
@@ -30,15 +28,15 @@ class NET_Simulation_ABC;
 // Created: NLD 2002-07-12
 // Last Modified : JVT 02-10-10
 //=============================================================================
-class NET_AS_MOSServerMsgMgr : public NET_Publisher_ABC
-                             , private boost::noncopyable
+class NET_SimMsgHandler : public NET_Publisher_ABC
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation,
+             NET_SimMsgHandler( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation,
                     bool enableTestCommands );
-    virtual ~NET_AS_MOSServerMsgMgr();
+    virtual ~NET_SimMsgHandler();
     //@}
 
     //! @name Message sending
@@ -73,4 +71,4 @@ private:
     //@}
 };
 
-#endif // __NET_AS_MOSServerMsgMgr_h_
+#endif // __NET_SimMsgHandler_h_

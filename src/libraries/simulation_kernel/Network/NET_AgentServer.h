@@ -15,7 +15,7 @@
 
 class MIL_Config;
 class NET_Simulation_ABC;
-class NET_AS_MOSServerMsgMgr;
+class NET_SimMsgHandler;
 
 //=============================================================================
 // Created: NLD 2002-07-12
@@ -35,7 +35,7 @@ protected:
     virtual void ConnectionWarning  ( const std::string& address, const std::string& warning );
 
 private:
-    boost::scoped_ptr< NET_AS_MOSServerMsgMgr > manager_;
+    boost::scoped_ptr< NET_SimMsgHandler > manager_;
 };
 
 #endif // __NET_AgentServer_h_

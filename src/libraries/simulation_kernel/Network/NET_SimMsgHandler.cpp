@@ -1,16 +1,14 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-12 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Network/NET_AS_MOSServerMsgMgr.cpp $
-// $Author: Nld $
-// $Modtime: 10/06/05 10:19 $
-// $Revision: 16 $
-// $Workfile: NET_AS_MOSServerMsgMgr.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2013 Mathematiques Appliquees SA (MASA)
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "NET_AS_MOSServerMsgMgr.h"
+#include "NET_SimMsgHandler.h"
 #include "MIL_AgentServer.h"
 #include "NET_AgentServer.h"
 #include "NET_Simulation_ABC.h"
@@ -25,33 +23,33 @@
 #include "Tools/MIL_MessageParameters.h"
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr constructor
+// Name: NET_SimMsgHandler constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer,
+NET_SimMsgHandler::NET_SimMsgHandler( NET_AgentServer& agentServer,
         NET_Simulation_ABC& simulation, bool enableTestCommands)
     : agentServer_( agentServer )
     , simulation_ ( simulation )
     , enableTestCommands_( enableTestCommands )
 {
-    agentServer.RegisterMessage( *this, & NET_AS_MOSServerMsgMgr::OnReceiveClient );
-    agentServer.RegisterMessage( *this, & NET_AS_MOSServerMsgMgr::OnReceiveMiddle );
+    agentServer.RegisterMessage( *this, & NET_SimMsgHandler::OnReceiveClient );
+    agentServer.RegisterMessage( *this, & NET_SimMsgHandler::OnReceiveMiddle );
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr destructor
+// Name: NET_SimMsgHandler destructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AS_MOSServerMsgMgr::~NET_AS_MOSServerMsgMgr()
+NET_SimMsgHandler::~NET_SimMsgHandler()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::RemoveClient
+// Name: NET_SimMsgHandler::RemoveClient
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-bool NET_AS_MOSServerMsgMgr::RemoveClient( const std::string& client )
+bool NET_SimMsgHandler::RemoveClient( const std::string& client )
 {
     if( clients_.find( client ) != clients_.end() )
     {
@@ -62,20 +60,20 @@ bool NET_AS_MOSServerMsgMgr::RemoveClient( const std::string& client )
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::Send
+// Name: NET_SimMsgHandler::Send
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::Send( sword::SimToClient& wrapper )
+void NET_SimMsgHandler::Send( sword::SimToClient& wrapper )
 {
     for( auto it = clients_.begin(); it != clients_.end(); ++it )
         agentServer_.Send( *it, wrapper );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveClient
+// Name: NET_SimMsgHandler::OnReceiveClient
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const sword::ClientToSim& wrapper )
+void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const sword::ClientToSim& wrapper )
 {
     MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
     MIL_EntityManager& manager = server.GetEntityManager();
@@ -127,10 +125,10 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMiddle
+// Name: NET_SimMsgHandler::OnReceiveMiddle
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const sword::DispatcherToSim& wrapper )
+void NET_SimMsgHandler::OnReceiveMiddle( const std::string& from, const sword::DispatcherToSim& wrapper )
 {
     if( wrapper.message().has_control_client_announcement() )
         OnReceiveCtrlClientAnnouncement( from );
@@ -141,10 +139,10 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const swo
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement
+// Name: NET_SimMsgHandler::OnReceiveCtrlClientAnnouncement
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement( const std::string& from )
+void NET_SimMsgHandler::OnReceiveCtrlClientAnnouncement( const std::string& from )
 {
     MT_LOG_INFO_MSG( "Announcement from client " << from );
     // should allow only one connection so ...
@@ -156,7 +154,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement( const std::string&
     client::ControlSendCurrentStateEnd().Send( NET_Publisher_ABC::Publisher() );
 }
 
-void NET_AS_MOSServerMsgMgr::OnReceiveMagicAction( const sword::MagicAction& msg,
+void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         uint32_t ctx, uint32_t clientId )
 {
     MIL_AgentServer& server = MIL_AgentServer::GetWorkspace();
@@ -213,7 +211,7 @@ int RecursionOfDeath( int count, char* data )
 
 } // namespace
 
-void NET_AS_MOSServerMsgMgr::OnReceiveDebugError( const sword::MissionParameters& params )
+void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& params )
 {
     protocol::CheckCount( params, 2 );
     const std::string& command = protocol::GetString( params, 0 );
