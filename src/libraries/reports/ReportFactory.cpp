@@ -19,6 +19,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/Helpers.h"
 #include "protocol/Simulation.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/FileWrapper.h"
@@ -151,6 +152,19 @@ Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const sword
     return new Trace( agent, *time_, message );
 }
 
+namespace
+{
+    template< typename T >
+    boost::optional< std::string > FindType( typename T::value_type type )
+    {
+        const auto& map = typename T::data_;
+        for( size_t i = 0; i < typename T::size_; ++i )
+            if( map[i].type == type )
+                return map[i].name;
+        return boost::none;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
@@ -182,6 +196,10 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
     if( value.has_stage() )
         return QString( stages_->FindTranslation( value.stage().c_str() ).c_str() );
     if( value.has_phase_line_function() )
-        return QString( tools::ToString( E_FuncLimaType( value.phase_line_function() ) ) );
+    {
+        auto limaType = FindType< protocol::mapping::PhaseLineType >( static_cast< sword::PhaseLineOrder::Function >( value.phase_line_function() ) );
+        if( limaType != boost::none )
+            return QString( limaType->c_str() );
+    }
     throw MASA_EXCEPTION( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).toStdString() );
 }

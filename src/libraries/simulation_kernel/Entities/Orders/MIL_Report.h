@@ -279,8 +279,8 @@ template< typename T >
 void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_LimaFunction& limaFunction, const std::string& nParam )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
-    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::CreateLimaFunction( static_cast< int >( limaFunction.GetID() ) ) );
-    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter2( MIL_MissionParameterFactory::Create( nParam ) );
+    auto pParameter1 = MIL_MissionParameterFactory::CreateLimaFunction( static_cast< int >( limaFunction.GetID() ) );
+    auto pParameter2 = MIL_MissionParameterFactory::Create( nParam );
     parameters.push_back( pParameter1 );
     parameters.push_back( pParameter2 );
     PostEvent( receiver, nReport, parameters );

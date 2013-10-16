@@ -224,8 +224,9 @@ namespace
     }
 
     void WriteLimaFunction( xml::xostream& xos, const Value& src )
-    {       
-        WritePair( xos, "limafunction", static_cast< uint32_t >( src.phase_line_function() ) );
+    {
+        if( auto opt = FindType< mapping::PhaseLineType >( static_cast< PhaseLineOrder::Function >( src.phase_line_function() ) ) )
+            WritePair( xos, "limafunction", *opt );
     }
 
     void WriteNature( xml::xostream& xos, const Value& src )

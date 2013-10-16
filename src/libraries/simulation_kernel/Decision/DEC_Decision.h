@@ -186,6 +186,9 @@ protected:
     {
         pBrain_->RegisterMethod( name, function );
     }
+
+    virtual void PostStartMission() = 0;
+    virtual void PostStopMission() = 0;
     //@}
 
 private://! @name Helpers

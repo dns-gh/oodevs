@@ -177,13 +177,6 @@ public:
     }
     //@}
 
-protected:
-    //! @name Operations
-    //@{
-    virtual void PostStartMission() = 0;
-    virtual void PostStopMission() = 0;
-    //@}
-
 private:
     //! @name Helpers
     //@{

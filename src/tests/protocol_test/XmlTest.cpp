@@ -467,10 +467,10 @@ BOOST_FIXTURE_TEST_CASE( read_urban_knowledge_id, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_phase_line_function, Fixture )
 {
-    AddParameterValue( xos, "limafunction", 5 );
+    AddParameterValue( xos, "limafunction", "LC" );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
-    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).phase_line_function(), PhaseLineOrder_Function_blocking_line );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).phase_line_function(), PhaseLineOrder::coordination_line );
     CheckCycle( msg );
 }
 
