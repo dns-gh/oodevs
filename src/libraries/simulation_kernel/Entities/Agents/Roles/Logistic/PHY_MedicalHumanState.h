@@ -13,7 +13,6 @@
 #define __PHY_MedicalHumanState_h_
 
 #include "MIL.h"
-#include "Tools/MIL_IDManager.h"
 
 class Human_ABC;
 class PHY_MedicalConsign_ABC;
@@ -62,7 +61,7 @@ public:
 
     //! @name Operations
     //@{
-    void NotifyHumanChanged    (); // Called when the human state changed by PHY_Human
+    void NotifyHumanChanged    ();
     void NotifyHandledByMedical();
     bool GoBackToWar           ();
     void Cancel                ();
@@ -105,8 +104,6 @@ private:
     bool bHandledByMedical_;
     bool bEvacuatedByThirdParty_;
     //@}
-
-    static MIL_IDManager idManager_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_MedicalHumanState )

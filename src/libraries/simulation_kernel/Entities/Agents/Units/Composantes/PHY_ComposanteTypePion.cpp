@@ -18,7 +18,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"

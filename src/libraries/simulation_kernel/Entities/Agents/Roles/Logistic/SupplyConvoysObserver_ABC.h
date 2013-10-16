@@ -10,7 +10,10 @@
 #ifndef __SupplyConvoysObserver_ABC_h_
 #define __SupplyConvoysObserver_ABC_h_
 
-namespace logistic {
+#include <boost/noncopyable.hpp>
+
+namespace logistic
+{
     class SupplyConsign_ABC;
 
 // =============================================================================
@@ -19,7 +22,7 @@ namespace logistic {
 */
 // Created: NLD 2011-01-10
 // =============================================================================
-class SupplyConvoysObserver_ABC
+class SupplyConvoysObserver_ABC : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -30,11 +33,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyConvoyArriving( const boost::shared_ptr< const SupplyConsign_ABC >& consign ) = 0;
+    virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< const SupplyConsign_ABC >& consign ) = 0;
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyConvoysObserver_ABC_h_

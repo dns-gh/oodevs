@@ -112,7 +112,7 @@ protected:
 private:
     int nTimer_;
     E_State nState_;
-    unsigned currentStateEndTimeStep_; // Only used to send the information over the network
+    int32_t currentStateEndTimeStep_; // Only used to send the information over the network
     bool bHasChanged_;
     MIL_Agent_ABC* pMedical_;
 

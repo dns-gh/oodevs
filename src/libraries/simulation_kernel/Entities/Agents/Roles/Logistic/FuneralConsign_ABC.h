@@ -11,9 +11,9 @@
 #define __FuneralConsign_ABC_h_
 
 #include "SupplyConvoysObserver_ABC.h"
-#include <boost/enable_shared_from_this.hpp>
 
-namespace logistic {
+namespace logistic
+{
     class SupplyConsign_ABC;
 
 // =============================================================================
@@ -22,9 +22,7 @@ namespace logistic {
 */
 // Created: NLD 2011-08-24
 // =============================================================================
-class FuneralConsign_ABC : public boost::enable_shared_from_this< FuneralConsign_ABC >
-                         , public SupplyConvoysObserver_ABC
-                         , private boost::noncopyable
+class FuneralConsign_ABC : public SupplyConvoysObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -36,18 +34,14 @@ public:
     //! @name Operations
     //@{
     virtual bool Update() = 0;
-    virtual void Cancel() = 0;
     virtual bool IsFinished() const = 0;
-    //@}
 
-    //! @name Network - A refactorer
-    //@{
     virtual void SendChangedState() const = 0;
-    virtual void SendFullState   ( unsigned int context ) const = 0;
-    virtual void Clean           () = 0;
+    virtual void SendFullState( unsigned int context ) const = 0;
+    virtual void Clean() = 0;
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __FuneralConsign_ABC_h_

@@ -74,15 +74,11 @@ SupplyRequest::~SupplyRequest()
         supplierQuotas_->ReturnQuota( *dotationCategory_, requestedQuantity_ - suppliedQuantity_ );
 }
 
-// =============================================================================
-// Operations
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyRequest::AddResource
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-void SupplyRequest::AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity )
+void SupplyRequest::AddResource( const boost::shared_ptr< SupplyResource_ABC >& resource, const MIL_AgentPion& pion, double quantity )
 {
     assert( quantity > 0 );
     if( quantity <= 0 )

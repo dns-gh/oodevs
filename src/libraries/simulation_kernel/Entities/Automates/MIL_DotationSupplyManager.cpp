@@ -181,7 +181,7 @@ void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCa
 // -----------------------------------------------------------------------------
 bool MIL_DotationSupplyManager::HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory )
 {
-    return ( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) );
+    return bSupplyNeeded_ || IsSupplyInProgress( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +191,10 @@ bool MIL_DotationSupplyManager::HasDotationSupplyNeededNotified( const PHY_Dotat
 bool MIL_DotationSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const
 {
     return boost::find_if( scheduledSupplies_,
-            boost::bind( &logistic::SupplyConsign_ABC::IsSupplying, _1, boost::cref( dotationCategory ), boost::cref( *this ) ) )
+        [&]( const T_Supplies::value_type& consign )
+        {
+            return consign->IsSupplying( dotationCategory, *this );
+        } )
         != scheduledSupplies_.end();
 }
 
@@ -217,52 +220,52 @@ const MIL_AgentPion* MIL_DotationSupplyManager::GetPC() const
 // Name: MIL_DotationSupplyManager::OnSupplyScheduled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::OnSupplyScheduled( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_DotationSupplyManager::OnSupplyScheduled( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
-    scheduledSupplies_.insert( supplyConsign );
+    scheduledSupplies_.insert( consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::OnSupplyCanceled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::OnSupplyCanceled( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_DotationSupplyManager::OnSupplyCanceled( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementDotationsAnnule );
     bSupplyNeeded_ = true;
-    scheduledSupplies_.erase( supplyConsign );
+    scheduledSupplies_.erase( consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::OnSupplyDone
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::OnSupplyDone( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_DotationSupplyManager::OnSupplyDone( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementDotationsEffectue );
-    scheduledSupplies_.erase( supplyConsign );
+    scheduledSupplies_.erase( consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::OnSupplyConvoyArriving
 // Created: NLD 2011-09-13
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_DotationSupplyManager::OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
     if( logisticBase )
-        logisticBase->OnSupplyConvoyArriving( supplyConsign );
+        logisticBase->OnSupplyConvoyArriving( consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::OnSupplyConvoyLeaving
 // Created: NLD 2011-09-13
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_DotationSupplyManager::OnSupplyConvoyLeaving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
     if( logisticBase )
-        logisticBase->OnSupplyConvoyLeaving( supplyConsign );
+        logisticBase->OnSupplyConvoyLeaving( consign );
 }
 
 // -----------------------------------------------------------------------------

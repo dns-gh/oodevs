@@ -27,7 +27,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_HumanRank* > T_HumanRankMap;
-    typedef T_HumanRankMap::const_iterator              CIT_HumanRankMap;
     //@}
 
 public:

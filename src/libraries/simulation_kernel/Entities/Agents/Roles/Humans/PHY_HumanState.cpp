@@ -14,20 +14,19 @@
 #include "simulation_kernel/CheckPoints/MIL_CheckPointInArchive.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointOutArchive.h"
 
-namespace human
-{
+using namespace human;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanState Constructor
 // Created: ABR 2011-07-18
 // -----------------------------------------------------------------------------
 PHY_HumanState::PHY_HumanState()
-    : number_               ( 0 )
-    , rank_                 ( &PHY_HumanRank::officier_ )
-    , state_                ( &PHY_HumanWound::notWounded_ )
-    , location_             ( eHumanLocation_Battlefield )
-    , contaminated_         ( false )
-    , psyop_                ( false )
+    : number_      ( 0 )
+    , rank_        ( &PHY_HumanRank::officier_ )
+    , state_       ( &PHY_HumanWound::notWounded_ )
+    , location_    ( eHumanLocation_Battlefield )
+    , contaminated_( false )
+    , psyop_       ( false )
 {
     // NOTHING
 }
@@ -37,12 +36,12 @@ PHY_HumanState::PHY_HumanState()
 // Created: ABR 2011-07-18
 // -----------------------------------------------------------------------------
 PHY_HumanState::PHY_HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, E_HumanLocation location /*= eHumanLocation_Battlefield*/, bool contaminated /*= false*/, bool psyop /*= false*/ )
-    : number_               ( number )
-    , rank_                 ( &rank )
-    , state_                ( &state )
-    , location_             ( location )
-    , contaminated_         ( contaminated )
-    , psyop_                ( psyop )
+    : number_      ( number )
+    , rank_        ( &rank )
+    , state_       ( &state )
+    , location_    ( location )
+    , contaminated_( contaminated )
+    , psyop_       ( psyop )
 {
     // NOTHING
 }
@@ -106,6 +105,4 @@ void PHY_HumanState::Write( xml::xostream& xos ) const
     if( psyop_ )
         xos << xml::attribute( "psyop", psyop_ );
     xos << xml::end;
-}
-
 }

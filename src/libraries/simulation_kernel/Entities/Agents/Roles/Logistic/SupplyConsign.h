@@ -137,7 +137,7 @@ private:
     unsigned long id_;
     unsigned long creationTick_;
     SupplySupplier_ABC* supplier_;
-    MIL_Agent_ABC* provider_;
+    const MIL_Agent_ABC* provider_;
     E_State state_;
     unsigned int currentStateEndTimeStep_;
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;

@@ -17,6 +17,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 #include "Entities/Agents/Roles/Logistic/SupplySupplier_ABC.h"
 #include "Entities/Agents/Roles/Logistic/FuneralHandler_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -113,33 +114,33 @@ public:
 
     //! @name Medical
     //@{
-    PHY_MedicalHumanState* MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
-    PHY_MedicalHumanState* MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, Human_ABC& human ); // Releve
+    boost::shared_ptr< PHY_MedicalHumanState > MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
+    boost::shared_ptr< PHY_MedicalHumanState > MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, Human_ABC& human ); // Releve
     bool                   MedicalHandleHumanForCollection        ( PHY_MedicalHumanState& humanState );     // Ramassage
     PHY_RoleInterface_Medical*  MedicalReserveForSorting          ( PHY_MedicalCollectionAmbulance& ambulance );
     bool                   MedicalHandleHumanForHealing           ( PHY_MedicalHumanState& humanState );
     bool                   MedicalCanCollectionAmbulanceGo        ( const PHY_MedicalCollectionAmbulance& ambulance ) const;
 
     //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
-    PHY_RoleInterface_Medical* MedicalFindAlternativeEvacuationHandler( PHY_MedicalHumanState& humanState );
-    PHY_RoleInterface_Medical* MedicalFindAlternativeCollectionHandler( PHY_MedicalHumanState& humanState );
-    PHY_RoleInterface_Medical* MedicalFindAlternativeSortingHandler   ( PHY_MedicalHumanState& humanState );
-    PHY_RoleInterface_Medical* MedicalFindAlternativeHealingHandler   ( PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeEvacuationHandler( const PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeCollectionHandler( const PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeSortingHandler   ( const PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeHealingHandler   ( const PHY_MedicalHumanState& humanState );
     //@}
 
     //! @name Supply
     //@{
-    virtual void           SupplyHandleRequest                ( boost::shared_ptr < logistic::SupplyConsign_ABC > consign );
+    virtual void           SupplyHandleRequest                ( const boost::shared_ptr < logistic::SupplyConsign_ABC >& consign );
     virtual bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
     virtual bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_ComposanteTypePion& transporterType ) const;
     virtual bool           SupplyHasStock                     ( const PHY_DotationCategory& dotationCategory ) const;
     virtual Stock          SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
     virtual bool           SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
-    virtual MIL_AgentPion* SupplyCreateConvoyPion             ( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy );
+    virtual MIL_AgentPion* SupplyCreateConvoyPion             ( const MIL_AgentTypePion& type, const boost::shared_ptr< logistic::SupplyConvoyReal_ABC >& convoy );
     virtual void           SupplyDestroyConvoyPion            ( MIL_AgentPion& convoyPion );
 
-    virtual void           OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void           OnSupplyConvoyLeaving ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
+    virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
 
     virtual const MT_Vector2D& GetPosition() const;
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
@@ -156,7 +157,6 @@ public:
     virtual void AddSupplyConvoysObserver   ( logistic::SupplyConvoysObserver_ABC& observer );
     virtual void RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer );
 
-    virtual bool                            FuneralHandleConsign           ( boost::shared_ptr< logistic::FuneralConsign_ABC > consign );
     virtual const logistic::FuneralPackagingResource* FuneralGetNextPackagingResource( const logistic::FuneralPackagingResource* currentPackaging );
     //@}
 

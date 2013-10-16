@@ -22,9 +22,7 @@
 
 using namespace logistic;
 
-// =============================================================================
-// Constructor / destructor 
-// =============================================================================
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoyReal )
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal constructor
@@ -35,6 +33,7 @@ SupplyConvoyReal::SupplyConvoyReal( SupplyConvoyEventsObserver_ABC& eventsObserv
     , convoyPion_       ( 0 )
     , currentActionDone_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,8 +41,7 @@ SupplyConvoyReal::SupplyConvoyReal( SupplyConvoyEventsObserver_ABC& eventsObserv
 // Created: LDC 2013-01-14
 // -----------------------------------------------------------------------------
 SupplyConvoyReal::SupplyConvoyReal()
-    : SupplyConvoy      ()
-    , convoyPion_       ( 0 )
+    : convoyPion_       ( 0 )
     , currentActionDone_( false )
 {
     // NOTHING
@@ -283,11 +281,6 @@ bool SupplyConvoyReal::IsConvoyDestroyed() const
     return convoyPion_ && convoyPion_->IsMarkedForDestruction();
 }
 
-
-// =============================================================================
-// Network
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoy::MoveToTransportersProvider
 // Created: NLD 2011-08-01
@@ -300,12 +293,8 @@ void SupplyConvoyReal::Serialize( sword::UnitId& msg ) const
         msg.set_id( 0 );
 }
 
-// Serialization
-
-BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoyReal )
-
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > SupplyConvoyReal::serialize
+// Name: SupplyConvoyReal::serialize
 // Created: LDC 2013-01-14
 // -----------------------------------------------------------------------------
 template< typename Archive >

@@ -11,7 +11,19 @@
 #include "PHY_SupplyResourcesAlarms.h"
 #include "MT_Tools/MT_Logger.h"
 
-PHY_SupplyResourcesAlarms::T_LevelSet PHY_SupplyResourcesAlarms::convoyTransporterResourcesLevels_;
+namespace
+{
+    std::set< double > levels;
+
+    void ReadThreshold( xml::xistream& xis )
+    {
+        double ratio;
+        xis >> xml::attribute( "availability-threshold", ratio );
+        if( ratio < 0 || ratio > 100 )
+            throw MASA_EXCEPTION( xis.context() + "resource-availabilty-alert: availability-threshold not in [0..100]" );
+        levels.insert( ratio / 100 );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyResourcesAlarms::Initialize
@@ -19,26 +31,12 @@ PHY_SupplyResourcesAlarms::T_LevelSet PHY_SupplyResourcesAlarms::convoyTransport
 // -----------------------------------------------------------------------------
 void PHY_SupplyResourcesAlarms::Initialize( xml::xistream& xis )
 {
-    MT_LOG_INFO_MSG( "Initializing supply resources alarms" );
+    MT_LOG_INFO_MSG( "Initializing supply resource alarms" );
     xis >> xml::start( "supply" )
             >> xml::start( "resource-availability-alerts" )
-                >> xml::list( "resource-availability-alert", &PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert )
+                >> xml::list( "resource-availability-alert", &ReadThreshold )
             >> xml::end
         >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert
-// Created: ABL 2007-07-24
-// -----------------------------------------------------------------------------
-void PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert( xml::xistream& xis )
-{
-    double rRatio;
-    xis >> xml::attribute( "availability-threshold", rRatio );
-    if( rRatio < 0 || rRatio > 100 )
-        throw MASA_EXCEPTION( xis.context() + "resource-availabilty-alert: availability-threshold not in [0..100]" );
-    rRatio /= 100.;
-    convoyTransporterResourcesLevels_.insert( rRatio );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,29 +45,17 @@ void PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert( xml::xistream& xi
 // -----------------------------------------------------------------------------
 void PHY_SupplyResourcesAlarms::Terminate()
 {
-    convoyTransporterResourcesLevels_.clear();
+    levels.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyResourcesAlarms::IsLevelReached
+// Name: PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_SupplyResourcesAlarms::IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio )
+bool PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( double previous, double current )
 {
     for( auto it = levels.begin(); it != levels.end(); ++it )
-    {
-        if( rPreviousRatio > *it && rCurrentRatio <= *it )
+        if( previous > *it && current <= *it )
             return true;
-    }
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyResourcesAlarms::IsRepairerResourcesLevelReached
-// Created: NLD 2006-08-02
-// -----------------------------------------------------------------------------
-bool PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( double rPreviousRatio, double rCurrentRatio )
-{
-    return IsLevelReached( convoyTransporterResourcesLevels_, rPreviousRatio, rCurrentRatio );
-}
-

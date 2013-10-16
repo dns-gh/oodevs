@@ -15,7 +15,7 @@
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"

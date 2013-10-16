@@ -131,7 +131,7 @@ public:
     void CreateBreakdowns( const PHY_ComposanteTypePion& composanteType, unsigned int quantity, const PHY_BreakdownType* breakdown );
     void CreateWounds( unsigned int quantity, const PHY_HumanWound* pHumanWound );
     void ChangeEquipmentState( const PHY_ComposanteTypePion& composanteType, const sword::MissionParameter_Value& message );
-    void ChangeHumanState( const sword::MissionParameters& msg );
+    void ChangeHumanState( sword::MissionParameters msg );
     bool CanEvacuateCasualties() const;
     void CancelLogisticRequests();
     //@}

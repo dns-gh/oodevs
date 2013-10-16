@@ -145,7 +145,6 @@ public:
     unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound, bool psyop = false, bool contaminated = false );
     unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound );
     bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank&  newRank , const PHY_HumanWound& wound );
-    void ChangeHumanSize( unsigned int newHumanSize );
     void RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove );
     void OnNoAvailableHuman();
     //@}

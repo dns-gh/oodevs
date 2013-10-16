@@ -76,7 +76,7 @@ const PHY_HumanRank::T_HumanRankMap& PHY_HumanRank::GetHumanRanks()
 // -----------------------------------------------------------------------------
 const PHY_HumanRank* PHY_HumanRank::Find( const std::string& strName )
 {
-    CIT_HumanRankMap it = humanRanks_.find( strName );
+    auto it = humanRanks_.find( strName );
     return it == humanRanks_.end() ? 0 : it->second;
 }
 

@@ -31,29 +31,6 @@ public:
     //@{
     static bool IsConvoyTransporterResourcesLevelReached( double rPreviousRatio, double rCurrentRatio );
     //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::set< double >       T_LevelSet;
-    typedef T_LevelSet::const_iterator CIT_LevelSet;
-    //@}
-
-private:
-     PHY_SupplyResourcesAlarms();
-    virtual ~PHY_SupplyResourcesAlarms();
-
-    //! @name Tools
-    //@{
-    static bool IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio );
-    //@}
-    //! @name Helpers
-    //@{
-    static void ReadResourceAvailabilityAlert ( xml::xistream& xis );
-    //@}
-
-private:
-    static T_LevelSet convoyTransporterResourcesLevels_;
 };
 
 #endif // __PHY_SupplyResourcesAlarms_h_

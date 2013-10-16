@@ -13,6 +13,7 @@
 #define __PHY_RoleInterface_Medical_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class PHY_MedicalHumanState;
 class Human_ABC;
@@ -69,8 +70,8 @@ public:
     virtual void ChangePriorities( const T_AutomateVector& priorities ) = 0;
     virtual T_AutomateVector GetAutomatePriorities() const = 0;
 
-    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Imex
-    virtual PHY_MedicalHumanState* HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Releve
+    virtual boost::shared_ptr< PHY_MedicalHumanState > HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Imex
+    virtual boost::shared_ptr< PHY_MedicalHumanState > HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Releve
     virtual bool                   HandleHumanForEvacuation( PHY_MedicalHumanState& humanState ) = 0;
     virtual int GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const = 0;
     virtual bool HandleHumanForCollection( PHY_MedicalHumanState& humanState ) = 0; // Ramassage

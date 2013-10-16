@@ -40,8 +40,8 @@ MIL_Effect_Suicide::~MIL_Effect_Suicide()
 bool MIL_Effect_Suicide::Execute()
 {
     human::PHY_RoleInterface_Humans& humanRole = target_.GetRole< human::PHY_RoleInterface_Humans >();
-    const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    for( PHY_HumanRank::CIT_HumanRankMap it = ranks.begin(); it != ranks.end(); ++it )
+    const auto& ranks = PHY_HumanRank::GetHumanRanks();
+    for( auto it = ranks.begin(); it != ranks.end(); ++it )
         humanRole.ChangeHumansAvailability( *it->second, 0 );
 
     PHY_RolePion_Composantes& roleComposantes = target_.GetRole< PHY_RolePion_Composantes >();

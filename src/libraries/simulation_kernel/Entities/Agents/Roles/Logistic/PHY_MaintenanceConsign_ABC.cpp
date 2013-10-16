@@ -225,7 +225,7 @@ PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceConsign_ABC::GetPionMaintenance
+// Name: PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay
 // Created: NLD 2006-08-11
 // -----------------------------------------------------------------------------
  void PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay()

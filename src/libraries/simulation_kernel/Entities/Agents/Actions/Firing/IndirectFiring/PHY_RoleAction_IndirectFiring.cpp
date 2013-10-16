@@ -23,8 +23,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 
-using namespace firing;
-
 BOOST_CLASS_EXPORT_IMPLEMENT( firing::PHY_RoleAction_IndirectFiring )
 
 using namespace firing;

@@ -56,11 +56,11 @@ public:
 
     //! @name Events
     //@{
-    virtual void OnSupplyCanceled      ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyDone          ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyScheduled     ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyConvoyArriving( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyCanceled      ( const boost::shared_ptr< SupplyConsign_ABC >& consign ) = 0;
+    virtual void OnSupplyDone          ( const boost::shared_ptr< SupplyConsign_ABC >& consign ) = 0;
+    virtual void OnSupplyScheduled     ( const boost::shared_ptr< SupplyConsign_ABC >& consign ) = 0;
+    virtual void OnSupplyConvoyArriving( const boost::shared_ptr< SupplyConsign_ABC >& consign ) = 0;
+    virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< SupplyConsign_ABC >& consign ) = 0;
 
     virtual void NotifySuperiorNotAvailable( const T_Requesters& requesters ) = 0;
     virtual void NotifyStockNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) = 0;
@@ -69,7 +69,10 @@ public:
     //! @name Network
     //@{
     virtual void Serialize( sword::AutomatId& message ) const = 0;
-    template < typename Archive > void serialize( Archive&, const unsigned int ) {}
+
+    template < typename Archive >
+    void serialize( Archive&, const unsigned int )
+    {}
     //@}
 };
 

@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalEvacuationAmbulance )
 
@@ -29,9 +30,8 @@ PHY_MedicalEvacuationAmbulance::PHY_MedicalEvacuationAmbulance( PHY_RoleInterfac
     , pCompAmbulance_  ( &compAmbulance )
     , nState_          ( eWaiting )
     , nTimer_          ( 0 )
-    , rNbrHumanHandled_( 0. )
-    , consigns_        ()
-    , rInfoTimer_      ( 0. )
+    , rNbrHumanHandled_( 0 )
+    , rInfoTimer_      ( 0 )
 {
     pMedical_->StartUsingForLogistic( *pCompAmbulance_ );
 }
@@ -45,10 +45,10 @@ PHY_MedicalEvacuationAmbulance::PHY_MedicalEvacuationAmbulance()
     , pCompAmbulance_  ( 0 )
     , nState_          ( eWaiting )
     , nTimer_          ( 0 )
-    , rNbrHumanHandled_( 0. )
-    , consigns_        ()
-    , rInfoTimer_      ( 0. )
+    , rNbrHumanHandled_( 0 )
+    , rInfoTimer_      ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,6 @@ PHY_MedicalEvacuationAmbulance::~PHY_MedicalEvacuationAmbulance()
 {
     assert( pMedical_ );
     assert( pCompAmbulance_ );
-
     pMedical_->StopUsingForLogistic( *pCompAmbulance_ );
 }
 
@@ -99,9 +98,15 @@ bool PHY_MedicalEvacuationAmbulance::RegisterHuman( PHY_MedicalEvacuationConsign
 
     switch( nState_ )
     {
-        case eWaiting: break;
-        case eGoingTo: consign.EnterStateEvacuationGoingTo(); break;
-        case eLoading: consign.EnterStateEvacuationLoading(); rInfoTimer_ += 1. / pCompAmbulance_->GetType().GetNbrHumansLoadedForEvacuationPerTimeStep(); break;
+        case eWaiting:
+            break;
+        case eGoingTo:
+            consign.EnterStateEvacuationGoingTo();
+            break;
+        case eLoading:
+            consign.EnterStateEvacuationLoading();
+            rInfoTimer_ += 1 / pCompAmbulance_->GetType().GetNbrHumansLoadedForEvacuationPerTimeStep();
+            break;
         default:
             return false;
     }
@@ -115,9 +120,7 @@ bool PHY_MedicalEvacuationAmbulance::RegisterHuman( PHY_MedicalEvacuationConsign
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationAmbulance::UnregisterHuman( PHY_MedicalEvacuationConsign& consign )
 {
-    IT_ConsignVector itConsign = std::find( consigns_.begin(), consigns_.end(), &consign );
-    if( itConsign != consigns_.end() )
-        consigns_.erase( itConsign );
+    boost::remove_erase( consigns_, &consign );
     if( consigns_.empty() )
         EnterStateFinished();
 }
@@ -131,16 +134,14 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingTo()
     assert( !consigns_.empty() );
     assert( pMedical_ );
     assert( pCompAmbulance_ );
-
     MT_Vector2D vHumansBarycenter;
-    for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
     {
-        (**itConsign).EnterStateEvacuationGoingTo();
-        if( (**itConsign).HasValidHumanState() )
-            vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
+        (**it).EnterStateEvacuationGoingTo();
+        if( (**it).HasValidHumanState() )
+            vHumansBarycenter += (**it).GetHumanState().GetHumanPosition();
     }
     vHumansBarycenter /= static_cast< double >( consigns_.size() );
-
     nState_ = eGoingTo;
     nTimer_ = pCompAmbulance_->ApproximateTravelTime( pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition(), vHumansBarycenter );
 }
@@ -151,13 +152,12 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingTo()
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationAmbulance::EnterStateLoading()
 {
-    nState_           = eLoading;
-    nTimer_           = 0;
-    rNbrHumanHandled_ = 0.;
-
+    nState_ = eLoading;
+    nTimer_ = 0;
+    rNbrHumanHandled_ = 0;
     rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansLoadedForEvacuationPerTimeStep();
-    for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
-        (**itConsign).EnterStateEvacuationLoading();
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
+        (**it).EnterStateEvacuationLoading();
 }
 
 // -----------------------------------------------------------------------------
@@ -169,14 +169,10 @@ bool PHY_MedicalEvacuationAmbulance::DoLoading()
     assert( pCompAmbulance_ );
     -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansLoadedForEvacuationPerTimeStep();
-    CIT_ConsignVector itConsign;
-    for( itConsign = consigns_.begin(); itConsign != consigns_.end() && rNbrHumanHandled_ >= 1.; ++itConsign )
-    {
-        PHY_MedicalEvacuationConsign& consign = **itConsign;
-        if( consign.EnterStateEvacuationWaitingForFullLoading() )
-            rNbrHumanHandled_ -= 1.;
-    }
-    return itConsign == consigns_.end();
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
+        if( (**it).EnterStateEvacuationWaitingForFullLoading() &&  --rNbrHumanHandled_ < 1 )
+            return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,16 +184,14 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingFrom()
     assert( !consigns_.empty() );
     assert( pMedical_ );
     assert( pCompAmbulance_ );
-
     MT_Vector2D vHumansBarycenter;
-    for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
     {
-        (**itConsign).EnterStateEvacuationGoingFrom();
-        if( (**itConsign).HasValidHumanState() )
-            vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
+        (*it)->EnterStateEvacuationGoingFrom();
+        if( (*it)->HasValidHumanState() )
+            vHumansBarycenter += (*it)->GetHumanState().GetHumanPosition();
     }
     vHumansBarycenter /= static_cast< double >( consigns_.size() );
-
     nState_ = eGoingFrom;
     nTimer_ = pCompAmbulance_->ApproximateTravelTime( vHumansBarycenter, pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition() );
 }
@@ -208,12 +202,12 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingFrom()
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationAmbulance::EnterStateUnloading()
 {
-    nState_           = eUnloading;
-    nTimer_           = 0;
-    rNbrHumanHandled_ = 0.;
+    nState_ = eUnloading;
+    nTimer_ = 0;
+    rNbrHumanHandled_ = 0;
     rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansUnloadedForEvacuationPerTimeStep();
-    for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
-        (**itConsign).EnterStateEvacuationUnloading();
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
+        (**it).EnterStateEvacuationUnloading();
 }
 
 // -----------------------------------------------------------------------------
@@ -225,14 +219,15 @@ bool PHY_MedicalEvacuationAmbulance::DoUnloading()
     assert( pCompAmbulance_ );
     -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansUnloadedForEvacuationPerTimeStep();
-    while( rNbrHumanHandled_ >= 1. && !consigns_.empty() )
+    while( !consigns_.empty() )
     {
         PHY_MedicalEvacuationConsign& consign = *consigns_.back();
         consign.ChooseStateAfterEvacuation();
         consigns_.pop_back();
-        rNbrHumanHandled_ -= 1.;
+        if( --rNbrHumanHandled_ )
+            return false;
     }
-    return consigns_.empty();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -254,7 +249,6 @@ bool PHY_MedicalEvacuationAmbulance::Update()
 {
     if( --nTimer_ > 0 )
         return nState_ == eFinished;
-
     switch( nState_ )
     {
         case eWaiting   :                     EnterStateGoingTo  (); break;
@@ -270,7 +264,7 @@ bool PHY_MedicalEvacuationAmbulance::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalEvacuationAmbulance::GetNbrHumans
+// Name: PHY_MedicalEvacuationAmbulance::GetTimer
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 int PHY_MedicalEvacuationAmbulance::GetTimer() const
@@ -281,13 +275,13 @@ int PHY_MedicalEvacuationAmbulance::GetTimer() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalEvacuationAmbulance::GetNbrHumans
+// Name: PHY_MedicalEvacuationAmbulance::Cancel
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 void PHY_MedicalEvacuationAmbulance::Cancel()
 {
-    T_ConsignVector tmpConsigns = consigns_;
-    for( CIT_ConsignVector itConsign = tmpConsigns.begin(); itConsign != tmpConsigns.end(); ++itConsign )
-        (**itConsign).EnterStateWaitingForEvacuation();
+    T_Consigns consigns = consigns_;
+    for( auto it = consigns.begin(); it != consigns.end(); ++it )
+        (**it).EnterStateWaitingForEvacuation();
     EnterStateFinished();
 }

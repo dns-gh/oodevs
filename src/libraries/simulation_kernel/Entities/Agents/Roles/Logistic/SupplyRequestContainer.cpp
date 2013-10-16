@@ -22,7 +22,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "protocol/Protocol.h" // $$$$ LDC FIXME For serialization only...
 #include <boost/foreach.hpp>
 
 using namespace logistic;
@@ -31,7 +30,7 @@ using namespace logistic;
 // Name: SupplyRequestContainer constructor
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-SupplyRequestContainer::SupplyRequestContainer( boost::shared_ptr< SupplyRequestBuilder_ABC > builder )
+SupplyRequestContainer::SupplyRequestContainer( const boost::shared_ptr< SupplyRequestBuilder_ABC >& builder )
     : builder_             ( builder )
     , transportersProvider_( 0 )
     , convoyFactory_       ( 0 )
@@ -118,7 +117,7 @@ void SupplyRequestContainer::DeleteRequestsForRequester( MIL_AgentPion& pion )
 // Name: SupplyRequestContainer::AddResource
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::AddResource( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion, boost::shared_ptr< SupplyResource_ABC > resource, double quantity )
+void SupplyRequestContainer::AddResource( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion, const boost::shared_ptr< SupplyResource_ABC >& resource, double quantity )
 {
     boost::shared_ptr< SupplyRequest_ABC >& request = requests_[ &recipient ][ &resource->GetCategory() ];
     if( !request )
@@ -189,7 +188,7 @@ bool SupplyRequestContainer::Execute( SupplyRequestDispatcher_ABC& dispatcher )
 // -----------------------------------------------------------------------------
 bool SupplyRequestContainer::Update()
 {
-    for( T_Consigns::iterator it = consigns_.begin(); it != consigns_.end(); )
+    for( auto it = consigns_.begin(); it != consigns_.end(); )
     {
         if( it->second->IsFinished() )
             it = consigns_.erase( it );
@@ -205,7 +204,7 @@ bool SupplyRequestContainer::Update()
 // -----------------------------------------------------------------------------
 void SupplyRequestContainer::Clean()
 {
-    BOOST_FOREACH( const T_Consigns::value_type& data, consigns_ )
+    BOOST_FOREACH( const auto& data, consigns_ )
         data.second->Clean();
 }
 
@@ -261,7 +260,7 @@ void SupplyRequestContainer::SetPathToRecipient( SupplyRecipient_ABC& recipient,
 const T_PointVector& SupplyRequestContainer::GetPathToRecipient( SupplyRecipient_ABC& recipient ) const
 {
     static const T_PointVector default;
-    T_RecipientPaths::const_iterator it = recipientPaths_.find( &recipient );
+    auto it = recipientPaths_.find( &recipient );
     if( it == recipientPaths_.end() )
         return default;
     return it->second;
@@ -328,7 +327,7 @@ const SupplyConvoyFactory_ABC& SupplyRequestContainer::GetConvoyFactory() const
 // -----------------------------------------------------------------------------
 void SupplyRequestContainer::SendChangedState() const
 {
-    BOOST_FOREACH( const T_Consigns::value_type& data, consigns_ )
+    BOOST_FOREACH( const auto& data, consigns_ )
         data.second->SendChangedState();
 }
 
@@ -338,7 +337,7 @@ void SupplyRequestContainer::SendChangedState() const
 // -----------------------------------------------------------------------------
 void SupplyRequestContainer::SendFullState() const
 {
-    BOOST_FOREACH( const T_Consigns::value_type& data, consigns_ )
+    BOOST_FOREACH( const auto& data, consigns_ )
         data.second->SendFullState();
 }
 
@@ -382,7 +381,7 @@ void SupplyRequestContainer::serialize( MIL_CheckPointInArchive& archive, const 
         const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( nEqID );
         unsigned int value;
         archive >> value;
-        transporters_.push_back( std::pair< const PHY_ComposanteTypePion* , unsigned int >( type, value ) );
+        transporters_.push_back( std::make_pair( type, value ) );
     }
     archive >> recipientPaths_;
     archive >> transportersProviderPath_;
@@ -402,7 +401,7 @@ void SupplyRequestContainer::serialize( MIL_CheckPointOutArchive& archive, const
     archive << requestsSize;
     for( auto it = requests_.begin(); it != requests_.end(); ++it )
     {
-        T_Requests request = it->second;
+        const T_Requests& request = it->second;
         size_t requestSize = request.size();
         archive << it->first;
         archive << requestSize;

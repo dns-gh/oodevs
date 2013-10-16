@@ -17,6 +17,8 @@
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
+#include <boost/ptr_container/ptr_list.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
 
 namespace client
 {
@@ -78,8 +80,8 @@ public:
     virtual void ChangePriorities( const T_AutomateVector& priorities );
     virtual T_AutomateVector GetAutomatePriorities() const;
 
-    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
-    virtual PHY_MedicalHumanState* HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ); // Releve
+    virtual boost::shared_ptr< PHY_MedicalHumanState > HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
+    virtual boost::shared_ptr< PHY_MedicalHumanState > HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ); // Releve
     virtual bool                   HandleHumanForEvacuation( PHY_MedicalHumanState& humanState );
     virtual int GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const;
     virtual bool HandleHumanForCollection( PHY_MedicalHumanState& humanState );     // Ramassage
@@ -126,13 +128,13 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::multimap< unsigned int, PHY_MedicalEvacuationAmbulance* > T_EvacuationAmbulancesMMap;
+    typedef boost::ptr_multimap< unsigned int, PHY_MedicalEvacuationAmbulance > T_EvacuationAmbulancesMMap;
 
     typedef std::vector< const PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesSet;
 
-    typedef std::list< PHY_MedicalConsign_ABC* > T_MedicalConsignList;
+    typedef std::list< boost::shared_ptr< PHY_MedicalConsign_ABC > > T_MedicalConsignList;
 
-    typedef std::list< PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesList;
+    typedef boost::ptr_list< PHY_MedicalCollectionAmbulance > T_CollectionAmbulancesList;
 
     typedef std::vector< std::pair< const MIL_Automate*, T_MedicalConsignList > > T_MedicalConsigns;
 
@@ -145,8 +147,8 @@ private:
     //! @name Tools
     //@{
     void Initialize();
-    void InsertConsign( PHY_MedicalConsign_ABC& );
-    void InsertConsigns( const T_MedicalConsigns& );
+    void InsertConsign( const boost::shared_ptr< PHY_MedicalConsign_ABC >& consign );
+    void InsertConsigns( const T_MedicalConsigns& consigns );
 
     bool HasUsableEvacuationAmbulance( const Human_ABC& human ) const;
     bool HasUsableCollectionAmbulance( const Human_ABC& human ) const;

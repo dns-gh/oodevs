@@ -51,8 +51,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
-    : PHY_Composante_ABC()
-    , time_( time )
+    : time_( time )
     , pRole_( &role )
     , pState_( &PHY_ComposanteState::undamaged_ )
     , pType_( &type )
@@ -79,8 +78,7 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion()
-    : PHY_Composante_ABC()
-    , time_( MIL_Time_ABC::GetTime() )
+    : time_( MIL_Time_ABC::GetTime() )
     , pRole_( 0 )
     , pState_( 0 )
     , pType_( 0 )
@@ -1641,16 +1639,6 @@ void PHY_ComposantePion::ChangeHumanState( sword::MissionParameters& msg )
 {
     assert( pHumans_ );
     pHumans_->ChangeHumanState( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ChangeHumanSize
-// Created: ABR 2011-12-05
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::ChangeHumanSize( unsigned int newHumanSize )
-{
-    assert( pHumans_ );
-    return pHumans_->ChangeHumanSize( newHumanSize );
 }
 
 // -----------------------------------------------------------------------------

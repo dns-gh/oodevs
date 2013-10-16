@@ -78,7 +78,7 @@ public:
     virtual bool NeedEvacuation() const = 0; // NeedMedical() && pas encore pris en charge
     virtual void Evacuate( MIL_AutomateLOG& destinationTC2 ) = 0;
     virtual bool NeedMedical() const = 0;
-    virtual void SetMedicalState( PHY_MedicalHumanState* pMedicalState ) = 0;
+    virtual void SetMedicalState( const boost::shared_ptr< PHY_MedicalHumanState >& medicalState ) = 0;
 
     virtual void NotifyHandledByMedical() = 0;
     virtual bool NotifyBackToWar() = 0;

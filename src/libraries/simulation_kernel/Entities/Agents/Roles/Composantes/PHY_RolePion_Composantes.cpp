@@ -607,7 +607,7 @@ void PHY_RolePion_Composantes::Clean()
     bLoansChanged_            = false;
     bExternalMustChange_      = false;
     bOperationalStateChanged_ = false;
-    boost::for_each( maintenanceComposanteStates_, boost::mem_fn( &PHY_MaintenanceComposanteState::Clean ) );
+    boost::for_each( maintenanceComposanteStates_, std::mem_fn( &PHY_MaintenanceComposanteState::Clean ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1051,7 +1051,7 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendChangedState() const
 {
-    boost::for_each( maintenanceComposanteStates_, boost::mem_fn( &PHY_MaintenanceComposanteState::SendChangedState ) );
+    boost::for_each( maintenanceComposanteStates_, std::mem_fn( &PHY_MaintenanceComposanteState::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1818,7 +1818,7 @@ double  PHY_RolePion_Composantes::GetAttritionIndexComposante ( const PHY_Materi
 // -----------------------------------------------------------------------------
 std::size_t PHY_RolePion_Composantes::GetConvoyTransportersTotal() const
 {
-    auto convoyable = boost::mem_fn( &PHY_ComposantePion::CouldBePartOfConvoy );
+    auto convoyable = std::mem_fn( &PHY_ComposantePion::CouldBePartOfConvoy );
     std::size_t total = boost::count_if( composantes_, convoyable );
     for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
         total += boost::count_if( it->second, convoyable );
@@ -1946,7 +1946,7 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
     repartition.push_back( T_Repartition( &PHY_ComposanteState::maintenance_,                 message.list( 5 ).quantity() ) );
     repartition.push_back( T_Repartition( &PHY_ComposanteState::prisoner_,                    message.list( 6 ).quantity() ) );
 
-    std::vector< T_Repartition >::iterator stateIt = repartition.begin();
+    auto stateIt = repartition.begin();
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
@@ -1974,19 +1974,10 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
 // Name: PHY_RolePion_Composantes::ChangeHumanState
 // Created: ABR 2011-08-11
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters& msg )
+void PHY_RolePion_Composantes::ChangeHumanState( sword::MissionParameters msg )
 {
-    sword::MissionParameters copy = msg;
-    for( auto itCurrentComp = composantes_.begin(); itCurrentComp != composantes_.end(); ++itCurrentComp )
-        ( *itCurrentComp )->ChangeHumanState( copy );
-    int remaining = 0;
-    for( int i = 0 ; i < copy.elem( 0 ).value_size(); ++i )
-    {
-        const sword::MissionParameter_Value& elem = copy.elem( 0 ).value().Get( i );
-        remaining += static_cast< unsigned int >( elem.list( 0 ).quantity() );
-    }
-    if( remaining )
-        MT_LOG_WARNING_MSG( "Agent " << owner_->GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining." );
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        (*it)->ChangeHumanState( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1995,13 +1986,9 @@ void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters&
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::CanEvacuateCasualties() const
 {
-    for( auto itCurrentComp = composantes_.begin(); itCurrentComp != composantes_.end(); ++itCurrentComp )
-    {
-        const PHY_ComposantePion& composante = **itCurrentComp;
-        const PHY_ComposanteTypePion& compType = composante.GetType();
-        if( compType.CanEvacuateCasualties() )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( (*it)->GetType().CanEvacuateCasualties() )
             return true;
-    }
     return false;
 }
 

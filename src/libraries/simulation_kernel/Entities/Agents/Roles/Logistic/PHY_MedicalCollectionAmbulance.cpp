@@ -121,8 +121,12 @@ bool PHY_MedicalCollectionAmbulance::RegisterHuman( PHY_MedicalCollectionConsign
 
     switch( nState_ )
     {
-        case eWaiting: break;
-        case eLoading: consign.EnterStateCollectionLoading(); rInfoTimer_ += 1. / pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep(); break;
+        case eWaiting:
+            break;
+        case eLoading:
+            consign.EnterStateCollectionLoading();
+            rInfoTimer_ += 1 / pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep();
+            break;
         default:
             return false;
     }
@@ -145,19 +149,15 @@ void PHY_MedicalCollectionAmbulance::UnregisterHuman( PHY_MedicalCollectionConsi
         EnterStateFinished();
 }
 
-// =============================================================================
-//
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionAmbulance::EnterStateLoading
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 void PHY_MedicalCollectionAmbulance::EnterStateLoading()
 {
-    nState_           = eLoading;
-    nTimer_           = 0;
-    rNbrHumanHandled_ = 0.;
+    nState_ = eLoading;
+    nTimer_ = 0;
+    rNbrHumanHandled_ = 0;
     rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep();
     for( auto itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionLoading();

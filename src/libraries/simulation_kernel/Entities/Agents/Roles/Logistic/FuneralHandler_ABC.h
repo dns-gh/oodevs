@@ -10,15 +10,16 @@
 #ifndef __FuneralHandler_ABC_h_
 #define __FuneralHandler_ABC_h_
 
-namespace logistic {
+namespace logistic
+{
     class LogisticHierarchy_ABC;
     class FuneralConsign_ABC;
     class FuneralPackagingResource;
     class SupplyConvoysObserver_ABC;
 
 // =============================================================================
-/** @class  FuneralConsign_ABC
-    @brief  FuneralConsign_ABC
+/** @class  FuneralHandler_ABC
+    @brief  FuneralHandler_ABC
 */
 // Created: NLD 2011-08-24
 // =============================================================================
@@ -33,10 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual const MT_Vector2D&           GetPosition() const = 0;
+    virtual const MT_Vector2D& GetPosition() const = 0;
     virtual const LogisticHierarchy_ABC& GetLogisticHierarchy() const = 0;
 
-    virtual bool                            FuneralHandleConsign           ( boost::shared_ptr< FuneralConsign_ABC > consign ) = 0;
     virtual const FuneralPackagingResource* FuneralGetNextPackagingResource( const FuneralPackagingResource* currentPackaging ) = 0;
 
     virtual void AddSupplyConvoysObserver   ( SupplyConvoysObserver_ABC& observer ) = 0;
@@ -49,6 +49,6 @@ public:
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __FuneralHandler_ABC_h_

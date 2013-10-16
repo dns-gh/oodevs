@@ -29,7 +29,7 @@ MIL_LogMedicalPrioritiesParameter::MIL_LogMedicalPrioritiesParameter()
 // Name: MIL_LogMedicalPrioritiesParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_LogMedicalPrioritiesParameter::MIL_LogMedicalPrioritiesParameter( const sword::LogMedicalPriorities & asn )
+MIL_LogMedicalPrioritiesParameter::MIL_LogMedicalPrioritiesParameter( const sword::LogMedicalPriorities& asn )
 {
     priorities_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
@@ -87,15 +87,10 @@ namespace boost
 {
     namespace serialization
     {
-        typedef std::vector< const PHY_HumanWound* >      T_MedicalPriorityVector;
-        typedef T_MedicalPriorityVector::const_iterator CIT_MedicalPriorityVector;
+        typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
 
-        // =============================================================================
-        // T_MedicalPriorityVector
-        // =============================================================================
         template< typename Archive >
-        inline
-            void serialize( Archive& file, T_MedicalPriorityVector& vector, const unsigned int nVersion )
+        void serialize( Archive& file, T_MedicalPriorityVector& vector, const unsigned int nVersion )
         {
             split_free( file, vector, nVersion );
         }
@@ -104,16 +99,9 @@ namespace boost
         void save( Archive& file, const T_MedicalPriorityVector& vector, const unsigned int )
         {
             std::size_t size = vector.size();
-            for( auto it = vector.begin(); it != vector.end(); ++it )
-            {
-                if( !*it )
-                    --size;
-            }
             file << size;
             for( auto it = vector.begin(); it != vector.end(); ++it )
             {
-                if( !*it )
-                    continue;
                 unsigned id = (*it)->GetID();
                 file << id;
             }

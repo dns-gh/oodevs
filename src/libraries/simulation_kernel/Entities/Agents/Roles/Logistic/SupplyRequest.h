@@ -11,7 +11,6 @@
 #define __SupplyRequest_h_
 
 #include "SupplyRequest_ABC.h"
-#include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
 class MIL_CheckPointInArchive;
@@ -28,7 +27,6 @@ namespace logistic
 // Created: NLD 2011-01-10
 // =============================================================================
 class SupplyRequest : public SupplyRequest_ABC
-                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -40,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity );
-    virtual bool   AffectSupplier( SupplySupplier_ABC& supplier );
-    virtual bool   AffectSupplier( SupplyRecipient_ABC& recipient, boost::shared_ptr< LogisticLink_ABC > supplier );
+    virtual void AddResource( const boost::shared_ptr< SupplyResource_ABC >& resource, const MIL_AgentPion& pion, double quantity );
+    virtual bool AffectSupplier( SupplySupplier_ABC& supplier );
+    virtual bool AffectSupplier( SupplyRecipient_ABC& recipient, boost::shared_ptr< LogisticLink_ABC > supplier );
 
     virtual bool HasRequester( MIL_AgentPion& pion ) const;
     virtual bool HasRequesterDestroyed() const;

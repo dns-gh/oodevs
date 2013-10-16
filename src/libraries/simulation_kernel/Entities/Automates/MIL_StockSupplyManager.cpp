@@ -101,7 +101,7 @@ void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigne
 void MIL_StockSupplyManager::Update()
 {
     autoSupplyRequest_->Update();
-    boost::remove_erase_if( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Update ) );
+    boost::remove_erase_if( manualSupplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::Update ) );
     if( !bSupplyNeeded_ )
         return;
     MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
@@ -119,7 +119,7 @@ void MIL_StockSupplyManager::Update()
 void MIL_StockSupplyManager::Clean()
 {
     autoSupplyRequest_->Clean();
-    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Clean ) );
+    boost::for_each( manualSupplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::Clean ) );
     MIL_SupplyManager::Clean();
 }
 
@@ -221,52 +221,52 @@ const MIL_AgentPion* MIL_StockSupplyManager::GetPC() const
 // Name: MIL_StockSupplyManager::OnSupplyScheduled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyScheduled( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
-    scheduledSupplies_.push_back( supplyConsign );
+    scheduledSupplies_.push_back( consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnSupplyCanceled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyCanceled( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementStockAnnule );
     bSupplyNeeded_ = true;
-    boost::remove_erase( scheduledSupplies_, supplyConsign );
+    boost::remove_erase( scheduledSupplies_, consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnSupplyDone
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyDone( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyDone( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementStockEffectue );
-    boost::remove_erase( scheduledSupplies_, supplyConsign );
+    boost::remove_erase( scheduledSupplies_, consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnSupplyConvoyArriving
 // Created: NLD 2011-09-13
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
     if( logisticBase )
-        logisticBase->OnSupplyConvoyArriving( supplyConsign );
+        logisticBase->OnSupplyConvoyArriving( consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnSupplyConvoyLeaving
 // Created: NLD 2011-09-13
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyConvoyLeaving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
     if( logisticBase )
-        logisticBase->OnSupplyConvoyLeaving( supplyConsign );
+        logisticBase->OnSupplyConvoyLeaving( consign );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +310,7 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowPa
 void MIL_StockSupplyManager::SendChangedState() const
 {
     autoSupplyRequest_->SendChangedState();
-    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::SendChangedState ) );
+    boost::for_each( manualSupplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,5 +320,5 @@ void MIL_StockSupplyManager::SendChangedState() const
 void MIL_StockSupplyManager::SendFullState() const
 {
     autoSupplyRequest_->SendFullState();
-    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::SendFullState ) );
+    boost::for_each( manualSupplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::SendFullState ) );
 }

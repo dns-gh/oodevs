@@ -20,7 +20,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConsign.h"
-#include "Entities/Agents/Roles/Logistic/FuneralRequest.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h" 
@@ -39,7 +38,6 @@ PHY_Human::PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante
     , bMentalDiseased_( false )
     , bContamined_( false )
     , nLocation_( eHumanLocation_Battlefield )
-    , pMedicalState_( 0 )
     , nDeathTimeStep_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
@@ -75,7 +73,6 @@ PHY_Human::PHY_Human()
     , bMentalDiseased_( false )
     , bContamined_( false )
     , nLocation_( eHumanLocation_Battlefield )
-    , pMedicalState_( 0 )
     , nDeathTimeStep_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
@@ -150,11 +147,7 @@ void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
 void PHY_Human::CancelLogisticRequests()
 {
     CancelMedicalLogisticRequest();
-    if( funeralConsign_ )
-    {
-        funeralConsign_->Cancel();
-        funeralConsign_.reset();
-    }
+    funeralConsign_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -173,8 +166,7 @@ void PHY_Human::CancelMedicalLogisticRequest()
         else
             nLocation_ = eHumanLocation_Battlefield;
         pMedicalState_->Cancel();
-        delete pMedicalState_;
-        pMedicalState_ = 0;
+        pMedicalState_.reset();
         NotifyHumanChanged( oldHumanState );
     }
 }
@@ -466,7 +458,7 @@ void PHY_Human::Update()
     assert( pComposante_ );
     if( time_.GetCurrentTimeStep() >= nDeathTimeStep_ )
     {
-        const MIL_DecisionalReport& nReportID = GetReport( pMedicalState_ );
+        const MIL_DecisionalReport& nReportID = GetReport( pMedicalState_.get() );
         if( SetWound( PHY_HumanWound::killed_ ) )
         {
             MIL_Report::PostEvent( GetPion(), nReportID );
@@ -474,27 +466,15 @@ void PHY_Human::Update()
                 MIL_Report::PostEvent( GetPion(), report::eRC_DecesBlesse );
         }
     }
-
     if( !IsJammed() )
     {
-        // Logistic requests - $$$ A refactorer...
         if( NeedMedical() && !pMedicalState_ )
             const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
-
-        // Funeral
         if( IsDead() && !funeralConsign_ && GetPion().GetLogisticHierarchy().GetPrimarySuperior() )
-        {
-            boost::shared_ptr< logistic::FuneralRequest_ABC > request( new logistic::FuneralRequest( *this ) );
-            funeralConsign_.reset( new logistic::FuneralConsign( request ) );
-        }
-        else if( funeralConsign_ && ( !IsDead() || funeralConsign_->IsFinished() ) )
-        {
-            funeralConsign_->Cancel();
+            funeralConsign_.reset( new logistic::FuneralConsign( *this ) );
+        else if( !IsDead() || funeralConsign_ && funeralConsign_->IsFinished() )
             funeralConsign_.reset();
-        }
     }
-
-    //$$$ A déplacer dans une action logistique (ou un truc mieux ...)
     if( funeralConsign_ )
         funeralConsign_->Update();
 }
@@ -623,11 +603,11 @@ bool PHY_Human::NeedEvacuation() const
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::SetMedicalState
-// Created: MGd 2009-10-01
+// Created: MGD 2009-10-01
 // -----------------------------------------------------------------------------
-void PHY_Human::SetMedicalState( PHY_MedicalHumanState* pMedicalState )
+void PHY_Human::SetMedicalState( const boost::shared_ptr< PHY_MedicalHumanState >& medicalState )
 {
-    pMedicalState_ = pMedicalState;
+    pMedicalState_ = medicalState;
 }
 
 // -----------------------------------------------------------------------------

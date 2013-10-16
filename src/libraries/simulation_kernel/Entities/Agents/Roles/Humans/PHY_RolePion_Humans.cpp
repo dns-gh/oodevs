@@ -20,7 +20,7 @@
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -327,8 +327,7 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 )
 {
-    PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( *owner_, human );
-    human.SetMedicalState( pMedicalHumanState );
+    human.SetMedicalState( destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( *owner_, human ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -341,7 +340,7 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
     MIL_AutomateLOG* pTC2 = owner_->GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
     {
-        human.SetMedicalState( 0 );
+        human.SetMedicalState( boost::shared_ptr< PHY_MedicalHumanState >() );
         return;
     }
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
@@ -349,9 +348,7 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
     if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )
         MIL_Report::PostEvent( *owner_, report::eRC_DemandeEvacuationSanitaire );
     nTickRcMedicalQuerySent_ = nCurrentTick;
-
-    PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( *owner_, human );
-    human.SetMedicalState( pMedicalHumanState );
+    human.SetMedicalState( pTC2->MedicalHandleHumanForEvacuation( *owner_, human ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -373,6 +370,21 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& message ) co
         SendFullState( message );
 }
 
+namespace
+{
+    sword::EnumInjuriesSeriousness Convert( const PHY_HumanWound& wound )
+    {
+        const unsigned int stateId = wound.GetID();
+        if( stateId == PHY_HumanWound::woundedU1_.GetID() )
+            return sword::wounded_u1;
+        else if( stateId == PHY_HumanWound::woundedU2_.GetID() )
+            return sword::wounded_u2;
+        else if( stateId == PHY_HumanWound::woundedU3_.GetID() )
+            return sword::wounded_u3;
+        return sword::wounded_ue;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::SendFullState
 // Created: NLD 2004-09-07
@@ -384,7 +396,6 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
     {
         const PHY_HumanState& state = *it;
         sword::HumanDotations::HumanDotation& personnel = *message().mutable_human_dotations()->add_elem();
-
         // Quantity
         personnel.set_quantity( state.number_ );
         // Rank
@@ -400,14 +411,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
             personnel.set_state( sword::injured );
             sword::Injury* injury = personnel.add_injuries();
             injury->set_id( 0 );  // Never used but "required", default to 0.
-            if( stateId == PHY_HumanWound::woundedU1_.GetID() )
-                injury->set_seriousness( sword::wounded_u1 );
-            else if( stateId == PHY_HumanWound::woundedU2_.GetID() )
-                injury->set_seriousness( sword::wounded_u2 );
-            else if( stateId == PHY_HumanWound::woundedU3_.GetID() )
-                injury->set_seriousness( sword::wounded_u3 );
-            else if( stateId == PHY_HumanWound::woundedUE_.GetID() )
-                injury->set_seriousness( sword::wounded_ue );
+            injury->set_seriousness( Convert( *state.state_ ) );
         }
         // Location
         switch( state.location_ )
@@ -428,10 +432,8 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         personnel.set_location_deprecated(
                 protocol::RemapHumanLocation( personnel.location() ));
         // Psyop && contaminated
-        if( state.psyop_ )
-            personnel.set_mentally_wounded( true );
-        if( state.contaminated_ )
-            personnel.set_contaminated( true );
+        personnel.set_mentally_wounded( state.psyop_ );
+        personnel.set_contaminated( state.contaminated_ );
     }
 }
 
@@ -441,7 +443,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::SendChangedState() const
 {
-    boost::for_each( humansToUpdate_, boost::mem_fn( &Human_ABC::SendChangedState ) );
+    boost::for_each( humansToUpdate_, std::mem_fn( &Human_ABC::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -489,7 +491,7 @@ unsigned int PHY_RolePion_Humans::ReduceHumansAvailability( const PHY_HumanRank&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::CureAllHumans
+// Name: PHY_RolePion_Humans::HealAllHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::HealAllHumans( bool withLog )
@@ -506,14 +508,15 @@ void PHY_RolePion_Humans::HealAllHumans( bool withLog )
 void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 {
     const std::vector< Human_ABC* > humans = humansToUpdate_;
-    boost::for_each( humans, boost::mem_fn( &Human_ABC::Update ) ); // !!! Can erase the human from humansToUpdate_ = bullshit ...
+    boost::for_each( humans, std::mem_fn( &Human_ABC::Update ) ); // !!! Can erase the human from humansToUpdate_ = bullshit ...
     if( hasChanged_ )
     {
         owner_->Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanHasChanged );
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
-    else
-        RemoveUselessStates();
+    boost::remove_erase_if(
+        humansStates_,
+        []( const PHY_HumanState& s ) { return s.number_ <= 0; } );
 }
 
 // -----------------------------------------------------------------------------
@@ -523,7 +526,7 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 void PHY_RolePion_Humans::Clean()
 {
     hasChanged_ = false;
-    boost::for_each( humansToUpdate_, boost::mem_fn( &Human_ABC::Clean ) );
+    boost::for_each( humansToUpdate_, std::mem_fn( &Human_ABC::Clean ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -601,26 +604,6 @@ unsigned int PHY_RolePion_Humans::GetNumber() const
 {
     unsigned int result = 0;
     for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
-    {
-        const PHY_HumanState& state = *it;
-        result += state.number_;
-    }
+        result += it->number_;
     return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::RemoveUselessStates
-// Created: MMC 2013-03-08
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::RemoveUselessStates()
-{
-    for( auto it = humansStates_.begin(); it != humansStates_.end(); )
-    {
-        if( it->number_ <= 0 )
-        {
-            it = humansStates_.erase( it );
-        }
-        else
-            ++it;
-    }
 }

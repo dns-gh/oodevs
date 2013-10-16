@@ -46,6 +46,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
+#include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
@@ -142,10 +143,6 @@ void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
     file & supplyConsigns_;
 }
 
-// =============================================================================
-// INIT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::ReadLogisticLink
 // Created: NLD 2006-10-19
@@ -163,10 +160,6 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
     pLogisticHierarchy_->WriteODB( xos );
 }
-
-// =============================================================================
-// MAINTENANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MaintenanceHandleComposanteForTransport
@@ -227,7 +220,7 @@ PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransp
 // Name: MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human )
+boost::shared_ptr< PHY_MedicalHumanState > MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human )
 {
     MedicalThirdPartyEvacuationVisitor visitor( pion, human );
     Visit( visitor );
@@ -238,11 +231,11 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty(
 // Name: MIL_AutomateLOG::MedicalHandleHumanForEvacuation
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human )
+boost::shared_ptr< PHY_MedicalHumanState > MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human )
 {
     MedicalEvacuationVisitor visitor( human );
     Visit( visitor );
-    return visitor.selected_ ? visitor.selected_->HandleHumanForEvacuation( pion, human ) : 0;
+    return visitor.selected_ ? visitor.selected_->HandleHumanForEvacuation( pion, human ) : boost::shared_ptr< PHY_MedicalHumanState >();
 }
 
 // -----------------------------------------------------------------------------
@@ -301,7 +294,7 @@ bool MIL_AutomateLOG::MedicalCanCollectionAmbulanceGo( const PHY_MedicalCollecti
 // Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler( PHY_MedicalHumanState& humanState )
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler( const PHY_MedicalHumanState& humanState )
 {
     MedicalEvacuationVisitor visitor( humanState.GetHuman() );
     Visit( visitor );
@@ -309,10 +302,10 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeEvacuationHand
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Name: MIL_AutomateLOG::MedicalFindAlternativeCollectionHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeCollectionHandler( PHY_MedicalHumanState& humanState )
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeCollectionHandler( const PHY_MedicalHumanState& humanState )
 {
     MedicalCollectionVisitor visitor( humanState );
     Visit( visitor );
@@ -320,10 +313,10 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeCollectionHand
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Name: MIL_AutomateLOG::MedicalFindAlternativeSortingHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeSortingHandler( PHY_MedicalHumanState& )
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeSortingHandler( const PHY_MedicalHumanState& )
 {
     MedicalSortingVisitor visitor;
     Visit( visitor );
@@ -331,10 +324,10 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeSortingHandler
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Name: MIL_AutomateLOG::MedicalFindAlternativeHealingHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler( PHY_MedicalHumanState& humanState )
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler( const PHY_MedicalHumanState& humanState )
 {
     MedicalHealingVisitor visitor( humanState );
     Visit( visitor );
@@ -387,15 +380,11 @@ void MIL_AutomateLOG::NotifyQuotaExceeded( const PHY_DotationCategory& dotationC
     }
 }
 
-// =============================================================================
-// SUPPLY
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyHandleRequest
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::SupplyHandleRequest( boost::shared_ptr < logistic::SupplyConsign_ABC > consign )
+void MIL_AutomateLOG::SupplyHandleRequest( const boost::shared_ptr < logistic::SupplyConsign_ABC >& consign )
 {
     supplyConsigns_.push_back( consign );
 }
@@ -440,7 +429,7 @@ bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCat
 // Name: MIL_AutomateLOG::SupplyCreateConvoyPion
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy )
+MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion& type, const boost::shared_ptr< logistic::SupplyConvoyReal_ABC >& convoy )
 {
     // Search for the 'chief' automat
     MIL_Automate* pConvoyAutomate = pAssociatedAutomate_;
@@ -487,7 +476,6 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 {
     SupplyConvoyAvailabilityVisitor visitor( dotationCategory );
     Visit( visitor );
-
     pConvoyTransporter     = visitor.pConvoySelected_;
     pConvoyTransporterPion = visitor.selected_;
     return pConvoyTransporter != 0;
@@ -501,7 +489,6 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 {
     SupplyConvoyTransporterVisitor visitor( transporterType );
     Visit( visitor );
-
     pConvoyTransporter     = visitor.pConvoySelected_;
     pConvoyTransporterPion = visitor.selected_;
     return pConvoyTransporter != 0;
@@ -570,25 +557,23 @@ MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dota
 }
 
 // -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::OnSupplyConvoyArriving
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_AutomateLOG::OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     auto tmp = supplyConvoysObserver_;
-    std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, supplyConsign ) );
+    boost::for_each( tmp, boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::OnSupplyConvoyLeaving
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnSupplyConvoyLeaving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_AutomateLOG::OnSupplyConvoyLeaving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
     auto tmp = supplyConvoysObserver_;
-    std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, supplyConsign ) );
+    boost::for_each( tmp, boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -600,12 +585,8 @@ bool MIL_AutomateLOG::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase
     return &logisticBase == this;
 }
 
-// =============================================================================
-// Funeral
-// =============================================================================
-
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::AddSupplyConvoysObserver
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
@@ -614,7 +595,7 @@ void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::RemoveSupplyConvoysObserver
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
@@ -623,16 +604,7 @@ void MIL_AutomateLOG::RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserv
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
-// Created: NLD 2011-07-20
-// -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::FuneralHandleConsign( boost::shared_ptr< logistic::FuneralConsign_ABC > consign )
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::FuneralGetNextPackagingResource
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagingResource( const logistic::FuneralPackagingResource* currentPackaging )
@@ -646,13 +618,8 @@ const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagi
         visitor.selected_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, visitor.nextPackagingResource_->GetDotationCategory(), quantity );
         return visitor.nextPackagingResource_;
     }
-    else
-        return 0;
+    return 0;
 }
-
-// =============================================================================
-// Update
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::UpdateLogistic
@@ -660,8 +627,8 @@ const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagi
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::UpdateLogistic()
 {
-    boost::remove_erase_if( supplyConsigns_, boost::mem_fn( &logistic::SupplyConsign_ABC::Update ) );
-    boost::remove_erase_if( supplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Update ) );
+    boost::remove_erase_if( supplyConsigns_, std::mem_fn( &logistic::SupplyConsign_ABC::Update ) );
+    boost::remove_erase_if( supplyRequests_, std::mem_fn( &logistic::SupplyRequestContainer::Update ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -673,10 +640,6 @@ void MIL_AutomateLOG::Clean()
     BOOST_FOREACH( T_SupplyRequests::value_type& data, supplyRequests_ )
         data->Clean();
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SendFullState
@@ -717,8 +680,7 @@ unsigned int MIL_AutomateLOG::GetLogisticId() const
     assert( pAssociatedFormation_ || pAssociatedAutomate_ );
     if( pAssociatedFormation_ )
         return pAssociatedFormation_->GetID();
-    else // if( pAssociatedAutomate_ )
-        return pAssociatedAutomate_->GetID();
+    return pAssociatedAutomate_->GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -769,7 +731,7 @@ const PHY_LogisticLevel& MIL_AutomateLOG::GetLogisticLevel() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& MIL_AutomateLOG::GetPosition() const
 {
-    static MT_Vector2D none;
+    static const MT_Vector2D none;
     return GetPC() ? GetPC()->GetRole< PHY_RoleInterface_Location >().GetPosition() : none;
 }
 

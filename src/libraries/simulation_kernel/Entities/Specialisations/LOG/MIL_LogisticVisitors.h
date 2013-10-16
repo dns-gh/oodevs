@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_LogisticVisitor_h_
-#define __MIL_LogisticVisitor_h_
+#ifndef __MIL_LogisticVisitors_h_
+#define __MIL_LogisticVisitors_h_
 
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -18,7 +18,6 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConfig.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
@@ -28,6 +27,7 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include <boost/foreach.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 class MIL_AutomateLOG;
 
@@ -140,22 +140,23 @@ class MedicalThirdPartyEvacuationVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MedicalThirdPartyEvacuationVisitor( MIL_AgentPion& pion, Human_ABC& human )
-            : pion_  ( pion )
-            , human_ ( human )
-            , pState_( 0 )
-        {
-        }
+            : pion_ ( pion )
+            , human_( human )
+        {}
 
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
-            pState_ = (candidate!= 0 ? const_cast<PHY_RoleInterface_Medical*>(candidate)->HandleHumanEvacuatedByThirdParty( pion_, human_ ) : 0);
+            if( candidate )
+                pState_ = const_cast< PHY_RoleInterface_Medical* >( candidate )->HandleHumanEvacuatedByThirdParty( pion_, human_ );
+            else
+                pState_.reset();
         }
 
     public:
         MIL_AgentPion&         pion_;
         Human_ABC&             human_;
-        PHY_MedicalHumanState* pState_;
+        boost::shared_ptr< PHY_MedicalHumanState > pState_;
 };
 
 class MedicalEvacuationVisitor : public MIL_LogisticEntitiesVisitor
@@ -590,4 +591,4 @@ class FuneralPackagingResourceVisitor : public MIL_LogisticEntitiesVisitor
         std::vector< const logistic::FuneralPackagingResource* > packagingResourcesToSearchFor_;
 };
 
-#endif // __MIL_LogisticVisitor_h_
+#endif // __MIL_LogisticVisitors_h_
