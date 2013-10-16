@@ -70,8 +70,15 @@ boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )
 // -----------------------------------------------------------------------------
 QLocale tools::readLocale()
 {
-    QSettings settings( "MASA Group", "SWORD" );
-    QString locale = settings.value( "/Common/Language", "en" ).value< QString >();
+    QString locale;
+    const char* loc = std::getenv( "MASA_LOCALE" );
+    if( loc && strlen( loc ) > 0 )
+        locale = QString( loc );
+    else
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        locale = settings.value( "/Common/Language", "en" ).value< QString >();
+    }
 
     if( locale.count( "_" ) )
         return QLocale( locale );
