@@ -42,6 +42,7 @@ namespace
 // -----------------------------------------------------------------------------
 SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters )
     : id_                       ( idManager.GetId() )
+    , creationTick_             ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , supplier_                 ( &supplier )
     , provider_                 ( 0 )
     , state_                    ( eConvoyWaitingForTransporters )
@@ -60,6 +61,7 @@ SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParamet
 // -----------------------------------------------------------------------------
 SupplyConsign::SupplyConsign()
     : id_                       ( 0 )
+    , creationTick_             ( 0 ) 
     , supplier_                 ( 0 )
     , provider_                 ( 0 )
     , state_                    ( eConvoyWaitingForTransporters )
@@ -309,6 +311,10 @@ void SupplyConsign::SetState( E_State newState )
     }
 }
 
+// =============================================================================
+// FSM
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign::IsActionDone
 // Created: NLD 2005-12-14
@@ -523,7 +529,7 @@ void SupplyConsign::SendMsgCreation() const
 {
     client::LogSupplyHandlingCreation msg;
     msg().mutable_request()->set_id( id_ );
-    msg().set_tick( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ); //$$$ Huge shit
+    msg().set_tick( creationTick_ );
     supplier_->Serialize( *msg().mutable_supplier() );
     convoy_->GetTransportersProvider().Serialize( *msg().mutable_transporters_provider() );
     msg.Send( NET_Publisher_ABC::Publisher() );
@@ -666,6 +672,7 @@ void SupplyConsign::load( MIL_CheckPointInArchive& archive, const unsigned int )
     archive >> boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
     archive >> boost::serialization::base_object< SupplyConsign_ABC >( *this );
     archive >> id_;
+    archive >> creationTick_;
     archive >> supplier_;
     archive >> provider_;
     archive >> state_;
@@ -712,6 +719,7 @@ void SupplyConsign::save( MIL_CheckPointOutArchive& archive, const unsigned int 
     archive << boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
     archive << boost::serialization::base_object< SupplyConsign_ABC >( *this );
     archive << id_;
+    archive << creationTick_;
     archive << supplier_;
     archive << provider_;
     archive << state_;

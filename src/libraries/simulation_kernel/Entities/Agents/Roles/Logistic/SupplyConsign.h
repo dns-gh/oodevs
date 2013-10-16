@@ -135,6 +135,7 @@ private:
 
 private:
     unsigned long id_;
+    unsigned long creationTick_;
     SupplySupplier_ABC* supplier_;
     const MIL_Agent_ABC* provider_;
     E_State state_;

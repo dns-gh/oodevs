@@ -105,6 +105,7 @@ private:
 
 private:
     unsigned long id_;
+    unsigned long creationTick_;
     Human_ABC& human_;
     FuneralHandler_ABC* handler_;
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;
