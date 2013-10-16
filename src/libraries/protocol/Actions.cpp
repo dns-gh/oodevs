@@ -16,6 +16,9 @@ namespace protocol
 {
 namespace mapping
 {
+namespace
+{
+
 const int diplomacy_values[] =
 {
     sword::unknown,
@@ -95,6 +98,8 @@ const int identification_values[] =
 const ActionEnum identification_enum 
     = { "identification", identification_values, COUNT_OF( identification_values ) };
 
+}  // namespace
+
 const ActionEnum* enums[] =
 {
     &attitude_enum,
@@ -108,6 +113,10 @@ const ActionEnum* enums[] =
 };
 
 const size_t enumsCount = COUNT_OF( enums );
+
+namespace
+{
+
 const ActionParam automat_creation_params[] =
 {
     { "AutomatType", "identifier", 0 },
@@ -442,6 +451,7 @@ const ActionParam update_urban_params[] =
     { "StructuralState", "quantity", 0 },
 };
 
+}  // namespace
 #define ACTION( name ) { #name, name##_params, COUNT_OF( name##_params ) }
 
 const Action actions[] =
