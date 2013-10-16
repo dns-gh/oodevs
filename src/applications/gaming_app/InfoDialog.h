@@ -13,8 +13,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/SelectionObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 // =============================================================================
 /** @class  InfoDialog_Base

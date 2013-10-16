@@ -10,7 +10,7 @@
 #ifndef MockResolver_h
 #define MockResolver_h
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace tools
 {

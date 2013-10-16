@@ -11,7 +11,7 @@
 #define __StockAttribute_h_
 
 #include "clients_kernel/StockAttribute_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

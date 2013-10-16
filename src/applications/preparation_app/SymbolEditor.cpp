@@ -25,7 +25,7 @@
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/tools.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 #include <boost/foreach.hpp>
 #include <set>
 

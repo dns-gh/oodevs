@@ -12,9 +12,9 @@
 
 #include "InfoPanel_ABC.h"
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

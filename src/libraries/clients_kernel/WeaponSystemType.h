@@ -11,7 +11,7 @@
 #define __WeaponSystemType_h_
 
 #include "MT_Tools/MT_InterpolatedFunction.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

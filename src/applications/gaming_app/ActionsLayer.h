@@ -13,7 +13,7 @@
 #include "actions/Action_ABC.h"
 #include "clients_gui/Layer.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

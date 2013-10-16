@@ -10,11 +10,10 @@
 #ifndef __FirePlayer_h_
 #define __FirePlayer_h_
 
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 #include "clients_gui/SoundPanel.h"
-
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 #include <boost/thread/mutex.hpp>
 

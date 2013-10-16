@@ -11,11 +11,11 @@
 #include "NBCPrototype_ABC.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/VariantPointer.h"
-#include "tools/Iterator.h"
 #include "RichLabel.h"
 #include "Tools.h"
 #include "LoadableSpinBox.h"
 #include "SubObjectName.h"
+#include <tools/Iterator.h>
 
 using namespace kernel;
 using namespace gui;

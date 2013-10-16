@@ -13,8 +13,8 @@
 #include "Localisation.h"
 #include "Object_ABC.h"
 #include "ObjectAttributeContainer.h"
-#include "tools/Resolver.h"
 #include "protocol/SimulationSenders.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

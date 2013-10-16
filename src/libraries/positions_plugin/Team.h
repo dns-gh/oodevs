@@ -10,7 +10,7 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

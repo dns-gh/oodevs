@@ -10,7 +10,7 @@
 #ifndef __AgentFactory_ABC_h_
 #define __AgentFactory_ABC_h_
 
-#include "boost/noncopyable.hpp"
+#include <boost/noncopyable.hpp>
 
 class MIL_AgentPion;
 class MIL_AgentTypePion;

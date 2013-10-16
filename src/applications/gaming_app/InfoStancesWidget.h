@@ -10,9 +10,9 @@
 #ifndef __InfoStancesWidget_h_
 #define __InfoStancesWidget_h_
 
-#include "tools/SelectionObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/SelectionObserver_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

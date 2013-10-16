@@ -15,7 +15,7 @@
 #include "MIL_Agent_ABC.h"
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <map>
 
 namespace logistic

@@ -17,7 +17,7 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_Object_ABC.h"
 #include "Tools/MIL_IDManager.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/scoped_ptr.hpp>

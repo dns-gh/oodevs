@@ -11,8 +11,8 @@
 #define __WeatherPanel_h_
 
 #include "clients_gui/WeatherPanel.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/Types.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

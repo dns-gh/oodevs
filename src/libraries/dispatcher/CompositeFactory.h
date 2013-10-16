@@ -12,8 +12,8 @@
 
 #include "ExtensionFactory_ABC.h"
 #include "Factory_ABC.h"
-#include "tools/Extendable.h"
-#include "tools/SortedInterfaceContainer.h"
+#include <tools/Extendable.h>
+#include <tools/SortedInterfaceContainer.h>
 
 namespace dispatcher
 {

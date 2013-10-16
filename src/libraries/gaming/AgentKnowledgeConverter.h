@@ -11,7 +11,7 @@
 #define __AgentKnowledgeConverter_h_
 
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

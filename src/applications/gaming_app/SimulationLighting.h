@@ -12,7 +12,7 @@
 
 #include "clients_gui/LightingProxy.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

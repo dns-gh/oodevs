@@ -11,7 +11,7 @@
 #define __Population_ABC_h_
 
 #include "Entity_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

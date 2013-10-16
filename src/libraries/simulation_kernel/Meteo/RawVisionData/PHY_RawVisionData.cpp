@@ -13,7 +13,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/InputBinaryStream.h"
+#include <tools/InputBinaryStream.h>
 #include <tools/Path.h>
 
 const weather::Meteo* ElevationGrid::sCell::pGlobalMeteo_ = 0;

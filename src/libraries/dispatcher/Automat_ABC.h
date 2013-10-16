@@ -14,7 +14,7 @@
 #include "LogisticHierarchyOwner_ABC.h"
 #include "LogisticEntityOwner_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorList_h_
 #define __SuccessFactorList_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

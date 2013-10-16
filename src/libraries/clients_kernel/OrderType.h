@@ -10,7 +10,7 @@
 #ifndef __OrderType_h_
 #define __OrderType_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

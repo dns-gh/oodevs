@@ -15,7 +15,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( SupplyCapacity )

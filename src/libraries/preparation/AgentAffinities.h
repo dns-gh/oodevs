@@ -12,8 +12,8 @@
 
 #include "Affinities.h"
 #include "clients_kernel/SubTypes.h"
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

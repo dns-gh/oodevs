@@ -31,7 +31,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Point.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 
 using namespace kernel;
 using namespace gui;

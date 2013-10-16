@@ -11,7 +11,6 @@
 #define __DISPATCHER_LOGISTIC_ENTITY_ABC_H__
 
 #include "LogisticHierarchyOwner_ABC.h"
-//#include "LogisticHierarchy.h"
 
 namespace kernel
 {

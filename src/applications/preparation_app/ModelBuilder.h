@@ -10,10 +10,10 @@
 #ifndef __ModelBuilder_h_
 #define __ModelBuilder_h_
 
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

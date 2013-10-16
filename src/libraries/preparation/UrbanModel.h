@@ -14,7 +14,7 @@
 #include "spatialcontainer/SpatialContainer.h"
 #include "geostore/SpatialIndexer.h"
 #include <boost/noncopyable.hpp>
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace geostore
 {

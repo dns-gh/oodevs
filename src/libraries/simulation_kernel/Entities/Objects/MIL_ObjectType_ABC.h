@@ -10,8 +10,8 @@
 #ifndef __MIL_ObjectType_ABC_h_
 #define __MIL_ObjectType_ABC_h_
 
-#include "tools/Extendable.h"
 #include "simulation_kernel/Entities/Objects/ObjectCapacity_ABC.h"
+#include <tools/Extendable.h>
 
 // =============================================================================
 /** @class  MIL_ObjectType_ABC

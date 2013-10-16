@@ -12,8 +12,8 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "tools/ElementObserver_ABC.h"
 #include "Simulation.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/shared_array.hpp>
 #include <vector>
 

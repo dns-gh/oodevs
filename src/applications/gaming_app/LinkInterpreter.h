@@ -11,7 +11,7 @@
 #define __LinkInterpreter_h_
 
 #include "clients_gui/LinkInterpreter_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

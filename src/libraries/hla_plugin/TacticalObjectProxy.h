@@ -11,8 +11,8 @@
 #define plugins_hla_TACTICALOBJECTPROXY_H_
 
 #include "TacticalObject_ABC.h"
-#include "tools/SortedInterfaceContainer.h"
 #include "dispatcher/Observer.h"
+#include <tools/SortedInterfaceContainer.h>
 
 namespace dispatcher
 {

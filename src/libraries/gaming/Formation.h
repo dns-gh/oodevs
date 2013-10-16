@@ -14,7 +14,7 @@
 #include "clients_gui/EntityImplementation.h"
 #include "DrawableUnitContainer.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace sword
 {

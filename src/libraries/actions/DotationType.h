@@ -11,7 +11,7 @@
 #define __ActionParameterDotationType_h_
 
 #include "Parameter.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

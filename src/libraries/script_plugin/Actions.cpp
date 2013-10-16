@@ -14,7 +14,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/XmlAdapter.h"
-#include "directia/brain/Brain.h"
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
@@ -22,6 +21,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 
+#include <directia/brain/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.h>

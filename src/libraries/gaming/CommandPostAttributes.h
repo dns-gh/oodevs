@@ -12,7 +12,7 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace sword

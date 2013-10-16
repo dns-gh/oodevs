@@ -11,7 +11,7 @@
 #define __UrbanFactory_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include "geometry/Types.h"
+#include <geometry/Types.h>
 
 namespace xml
 {

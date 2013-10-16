@@ -10,9 +10,9 @@
 #ifndef SWORD_ROLEEXTENDER_ABC_H_
 #define SWORD_ROLEEXTENDER_ABC_H_
 
-#include "tools/TypeIdentificators.h"
-#include "tools/TypeMap.h"
-#include "tools/Extendable.h"
+#include <tools/TypeIdentificators.h>
+#include <tools/TypeMap.h>
+#include <tools/Extendable.h>
 
 class MIL_AgentPion;
 class Role_ABC;

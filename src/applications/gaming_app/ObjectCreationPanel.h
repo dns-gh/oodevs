@@ -11,7 +11,7 @@
 #define __ObjectCreationPanel_h_
 
 #include "clients_gui/InfoPanel_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace actions
 {

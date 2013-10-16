@@ -11,8 +11,8 @@
 #define __WatershedLayer_h_
 
 #include "Layer.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 class TextureSet;
 class ElevationShader;

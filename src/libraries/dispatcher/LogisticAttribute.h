@@ -11,7 +11,7 @@
 #define __LogisticAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace dispatcher

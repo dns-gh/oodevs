@@ -10,8 +10,8 @@
 #ifndef gui_AggregateToolbar_h
 #define gui_AggregateToolbar_h
 
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 #include <vector>
 
 namespace kernel

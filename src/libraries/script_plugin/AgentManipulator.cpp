@@ -9,7 +9,6 @@
 
 #include "script_plugin_pch.h"
 #include "AgentManipulator.h"
-#include "directia/brain/Brain.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentOrder.h"
 #include "dispatcher/Automat.h"
@@ -17,6 +16,7 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;

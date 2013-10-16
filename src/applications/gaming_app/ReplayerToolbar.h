@@ -11,8 +11,8 @@
 #define __ReplayerToolbar_h_
 
 #include "clients_gui/RichToolBar.h"
-#include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

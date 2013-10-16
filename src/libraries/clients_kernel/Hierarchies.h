@@ -10,8 +10,8 @@
 #ifndef __Hierarchies_h_
 #define __Hierarchies_h_
 
-#include "tools/Iterator.h"
 #include "Extension_ABC.h"
+#include <tools/Iterator.h>
 
 namespace kernel
 {

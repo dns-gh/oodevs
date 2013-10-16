@@ -10,9 +10,9 @@
 #ifndef __AgentsModel_h_
 #define __AgentsModel_h_
 
-#include "tools/Resolver.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
+#include <tools/Resolver.h>
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

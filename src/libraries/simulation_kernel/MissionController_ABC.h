@@ -10,7 +10,7 @@
 #ifndef __MissionController_ABC_h_
 #define __MissionController_ABC_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/shared_ptr.hpp>
 
 class MIL_Mission_ABC;

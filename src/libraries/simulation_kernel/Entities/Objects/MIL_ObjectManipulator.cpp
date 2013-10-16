@@ -46,9 +46,9 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "resource_network/ResourceNetworkModel.h"
-#include "tools/Iterator.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include <tools/Iterator.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator constructor

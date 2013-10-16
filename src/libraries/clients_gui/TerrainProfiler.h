@@ -12,7 +12,7 @@
 
 #include "RichDockWidget.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

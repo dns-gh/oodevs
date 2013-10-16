@@ -11,8 +11,8 @@
 #define __ActionParameterEntity_h_
 
 #include "Parameter.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/Controller.h"
+#include <tools/ElementObserver_ABC.h>
 #pragma warning( push )
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>

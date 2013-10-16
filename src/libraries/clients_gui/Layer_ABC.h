@@ -10,13 +10,13 @@
 #ifndef __Layer_ABC_h_
 #define __Layer_ABC_h_
 
-#include <graphics/MapLayer_ABC.h>
-#include <boost/noncopyable.hpp>
 #include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/GraphicalEntity_ABC.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include "clients_kernel/ContextMenu.h"
-#include "tools/Observer_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <graphics/MapLayer_ABC.h>
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {

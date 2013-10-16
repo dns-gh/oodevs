@@ -10,10 +10,10 @@
 #ifndef __OrbatToolbar_h_
 #define __OrbatToolbar_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

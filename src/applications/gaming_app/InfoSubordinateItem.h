@@ -10,7 +10,7 @@
 #ifndef __InfoSubordinateItem_h_
 #define __InfoSubordinateItem_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

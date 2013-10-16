@@ -11,8 +11,8 @@
 #include "ScriptConditions.h"
 #include "EventCondition.h"
 #include "MiscEvents.h"
-#include "tools/ElementObserver_ABC.h"
-#include "directia/brain/Brain.h"
+#include <tools/ElementObserver_ABC.h>
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 

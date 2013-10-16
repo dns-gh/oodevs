@@ -11,7 +11,7 @@
 #define __DirectFire_h_
 
 #include "Fire_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

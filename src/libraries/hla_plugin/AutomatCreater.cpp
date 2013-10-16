@@ -14,7 +14,7 @@
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/KnowledgeGroup_ABC.h"
 #include "dispatcher/Team_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
 

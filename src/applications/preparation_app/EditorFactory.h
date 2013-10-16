@@ -11,11 +11,11 @@
 #define __EditorFactory_h_
 
 #include "clients_gui/EditorFactory.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/SubTypes.h"
-#include "tools/Resolver.h"
 #include "preparation/EnumTypes.h"
+#include <tools/Resolver.h>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

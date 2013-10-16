@@ -10,7 +10,7 @@
 #ifndef __TacticalLinesModel_h_
 #define __TacticalLinesModel_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace dispatcher

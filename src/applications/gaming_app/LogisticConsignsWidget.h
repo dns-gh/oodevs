@@ -11,16 +11,15 @@
 #define __LogisticConsignsWidget_h_
 
 #include "LogisticConsignsWidget_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/SafePointer.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogConsignDisplayer_ABC.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/Simulation.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 #include <boost/bind.hpp>
-
 
 // =============================================================================
 /** @class  LogisticConsignsWidget
@@ -41,7 +40,7 @@ public:
              LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
     virtual ~LogisticConsignsWidget();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void DisplayConsign( const Consign& consign, QTreeWidgetItem* pCurrentItem );

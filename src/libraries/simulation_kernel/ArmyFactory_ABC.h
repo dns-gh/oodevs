@@ -10,7 +10,7 @@
 #ifndef __ArmyFactory_ABC_h_
 #define __ArmyFactory_ABC_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include "Entities/MIL_Army_ABC.h"
 
 namespace xml

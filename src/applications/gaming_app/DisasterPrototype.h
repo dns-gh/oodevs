@@ -11,8 +11,8 @@
 #define DisasterPrototype_h
 
 #include "clients_gui/DisasterPrototype_ABC.h"
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace tools
 {
@@ -71,6 +71,5 @@ private:
     actions::parameters::ParameterList*& attributesList_;
     //@}
 };
-
 
 #endif // DisasterPrototype_h

@@ -23,7 +23,7 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "protocol/Protocol.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <protocol/ServerPublisher_ABC.h>
 #include <xeumeuleu/xml.hpp>
 

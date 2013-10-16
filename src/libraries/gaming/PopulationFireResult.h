@@ -10,7 +10,7 @@
 #ifndef __PopulationFireResult_h_
 #define __PopulationFireResult_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

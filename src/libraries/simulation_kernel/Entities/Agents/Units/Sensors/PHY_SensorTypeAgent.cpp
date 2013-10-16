@@ -36,10 +36,10 @@
 #include "Tools/MIL_Tools.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
-#include "tools/Resolver.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
+#include <tools/Resolver.h>
 #include <boost/range/algorithm.hpp>
 
 namespace
@@ -611,7 +611,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 
     const double rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
     const double rTargetAltitude = MIL_Tools::GetAltitude( target.GetPosition() ) + 2;
-    return RayTrace( vSourcePos, rSourceAltitude, target.GetPosition(), rTargetAltitude, rDistanceMaxModificator ) == PHY_PerceptionLevel::notSeen_ ? 
+    return RayTrace( vSourcePos, rSourceAltitude, target.GetPosition(), rTargetAltitude, rDistanceMaxModificator ) == PHY_PerceptionLevel::notSeen_ ?
         PHY_PerceptionLevel::notSeen_ : PHY_PerceptionLevel::identified_;
 }
 
@@ -641,7 +641,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     target.GetLocation().ComputeNearestPoint( vSourcePos, targetPosition );
     const double rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
     const double rTargetAltitude = MIL_Tools::GetAltitude( targetPosition ) + 2;
-    return RayTrace( vSourcePos, rSourceAltitude, targetPosition, rTargetAltitude, rDistanceMaxModificator ) == PHY_PerceptionLevel::notSeen_ ? 
+    return RayTrace( vSourcePos, rSourceAltitude, targetPosition, rTargetAltitude, rDistanceMaxModificator ) == PHY_PerceptionLevel::notSeen_ ?
         PHY_PerceptionLevel::notSeen_ : PHY_PerceptionLevel::identified_;
 }
 

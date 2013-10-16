@@ -11,8 +11,8 @@
 #define __DrawerModel_h_
 
 #include "DashStyle.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace xml

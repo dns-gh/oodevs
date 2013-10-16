@@ -16,7 +16,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 
 using namespace actions::gui;
 
@@ -49,7 +49,7 @@ QWidget* ParamDotationTypeList::BuildInterface( const QString& objectName, QWidg
 {
     Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
-    
+
     group_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     list_ = new QTreeView( parent );
     list_->setRootIsDecorated( true );
@@ -98,7 +98,7 @@ void ParamDotationTypeList::Clicked( const QModelIndex& index )
 // -----------------------------------------------------------------------------
 void ParamDotationTypeList::AddItem( const QString& parent, const QString& child, unsigned int id )
 {
-    QList< QStandardItem* > parentItemList = model_.findItems( parent ); 
+    QList< QStandardItem* > parentItemList = model_.findItems( parent );
     QStandardItem* parentItem;
     if( parentItemList.isEmpty() )
     {

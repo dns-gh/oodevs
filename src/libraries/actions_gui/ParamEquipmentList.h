@@ -12,7 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 #pragma warning( push, 0 )
 #include <QtGui/qlistwidget.h>

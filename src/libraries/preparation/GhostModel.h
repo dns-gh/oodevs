@@ -10,9 +10,9 @@
 #ifndef __GhostModel_h_
 #define __GhostModel_h_
 
-#include "tools/Resolver.h"
-#include "tools/ElementObserver_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include <tools/Resolver.h>
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

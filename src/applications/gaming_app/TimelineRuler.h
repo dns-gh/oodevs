@@ -10,7 +10,7 @@
 #ifndef __TimelineRuler_h_
 #define __TimelineRuler_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -12,7 +12,7 @@
 
 #include "SupplyRequestBuilder_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/serialization/export.hpp>
 
 class MIL_Automate;

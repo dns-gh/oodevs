@@ -10,9 +10,9 @@
 #ifndef __AutomatCreationListener_h_
 #define __AutomatCreationListener_h_
 
-#include "geometry/types.h"
 #include "protocol/MsgsSimToClientListener.h"
-#include "tools/Resolver_ABC.h"
+#include <geometry/Types.h>
+#include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace actions

@@ -13,8 +13,8 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/UserRights.h"
 #include "protocol/AuthenticationSenders.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

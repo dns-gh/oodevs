@@ -11,7 +11,7 @@
 #define __InfoDock_h_
 
 #include "clients_gui/RichDockWidget.h"
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace actions
 {

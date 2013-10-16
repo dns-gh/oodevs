@@ -10,11 +10,11 @@
 #ifndef __InfoSummariesWidget_h_
 #define __InfoSummariesWidget_h_
 
-#include "tools/SelectionObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/StockAttribute_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __DotationsItem_h_
 #define __DotationsItem_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

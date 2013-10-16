@@ -11,7 +11,7 @@
 #define __ObjectKnowledgeConverter_h_
 
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

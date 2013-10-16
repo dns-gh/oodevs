@@ -11,7 +11,7 @@
 #define __BurnAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorsModel_h_
 #define __SuccessFactorsModel_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace tools
 {

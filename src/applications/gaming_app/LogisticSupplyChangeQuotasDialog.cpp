@@ -34,10 +34,10 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
-#include "tools/Iterator.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include <tools/Iterator.h>
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>

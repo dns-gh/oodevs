@@ -11,13 +11,13 @@
 #include "tools/FileWrapper.h"
 #include "tools/SessionConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
-#include "tools/Resolver.h"
 #include "tools/XmlStreamOperators.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/MissionType.h"
+#include <tools/Resolver.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace

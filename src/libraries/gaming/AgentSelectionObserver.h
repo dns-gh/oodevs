@@ -10,7 +10,7 @@
 #ifndef __AgentSelectionObserver_h_
 #define __AgentSelectionObserver_h_
 
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

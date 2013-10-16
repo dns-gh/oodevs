@@ -11,7 +11,7 @@
 #define __IndicatorPlot_h_
 
 #include "clients_gui/GQ_Plot.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

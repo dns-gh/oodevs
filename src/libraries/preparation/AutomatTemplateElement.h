@@ -11,8 +11,8 @@
 #define __AutomatTemplateElement_h_
 
 #include "TemplateElement_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Color_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
 #include <boost/optional/optional.hpp>
 

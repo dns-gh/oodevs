@@ -10,7 +10,7 @@
 #ifndef __ScoreSyntaxHighlighter_h_
 #define __ScoreSyntaxHighlighter_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

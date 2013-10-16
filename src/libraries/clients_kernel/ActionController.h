@@ -10,9 +10,6 @@
 #ifndef __ActionController_h_
 #define __ActionController_h_
 
-#include "tools/SortedInterfaceContainer.h"
-#include "tools/Observer_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "ActivationObserver_ABC.h"
 #include "ContextMenu.h"
 #include "ContextMenuObserver_ABC.h"
@@ -21,6 +18,9 @@
 #include "OverFlyingObserver_ABC.h"
 #include "GraphicalEntity_ABC.h"
 #include "Selectionners.h"
+#include <tools/SortedInterfaceContainer.h>
+#include <tools/Observer_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 #include <geometry/Types.h>
 

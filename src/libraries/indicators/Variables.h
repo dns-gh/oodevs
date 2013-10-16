@@ -10,7 +10,7 @@
 #ifndef __Variables_h_
 #define __Variables_h_
 
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 #include <boost/shared_ptr.hpp>
 
 namespace xml

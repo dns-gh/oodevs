@@ -10,7 +10,7 @@
 #ifndef __SupplyRecipientResourcesRequest_h_
 #define __SupplyRecipientResourcesRequest_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 class SupplyResourceRequest;
 

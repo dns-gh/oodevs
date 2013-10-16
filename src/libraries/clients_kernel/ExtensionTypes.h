@@ -10,10 +10,10 @@
 #ifndef __ExtensionTypes_h_
 #define __ExtensionTypes_h_
 
-#include "tools/Resolver.h"
 #include "AttributeType.h"
 #include "DictionaryType.h"
 #include "ExtensionType.h"
+#include <tools/Resolver.h>
 
 namespace tools
 {

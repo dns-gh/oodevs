@@ -10,7 +10,7 @@
 #ifndef __ClockWidget_h_
 #define __ClockWidget_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -10,7 +10,7 @@
 #ifndef __FilterDialogs_h_
 #define __FilterDialogs_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace tools
 {

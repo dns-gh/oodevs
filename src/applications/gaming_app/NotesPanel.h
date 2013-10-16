@@ -11,8 +11,8 @@
 #define __NotesPanel_h_
 
 #include "clients_gui/RichDockWidget.h"
-#include "tools/ElementObserver_ABC.h"
 #include "NoteDialog.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

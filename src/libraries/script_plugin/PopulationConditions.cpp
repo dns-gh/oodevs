@@ -14,12 +14,12 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "directia/brain/Brain.h"
 #include "dispatcher/Population.h"
 #include "dispatcher/PopulationConcentration.h"
 #include "dispatcher/PopulationFlow.h"
 #include "PopulationManipulator.h"
 #include "SimpleEntityCondition.h"
+#include <directia/brain/Brain.h>
 
 using namespace plugins::script;
 using namespace dispatcher;

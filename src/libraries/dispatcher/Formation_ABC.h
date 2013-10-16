@@ -13,7 +13,7 @@
 #include "Sendable.h"
 #include "LogisticEntityOwner_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace dispatcher
 {

@@ -11,9 +11,9 @@
 #define __HighlightColorModifier_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "ColorModifier_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -36,7 +36,7 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Units.h"
 #include "ENT/ENT_Tr.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 using namespace actions::gui;
 

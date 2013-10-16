@@ -10,8 +10,8 @@
 #ifndef __TimelineListView_h_
 #define __TimelineListView_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

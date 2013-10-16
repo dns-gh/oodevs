@@ -10,10 +10,10 @@
 #include "dispatcher_pch.h"
 #include "LogisticEntity.h"
 #include "LogisticEntityOwner_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/Resolver_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/bind.hpp>
 
 using namespace dispatcher;

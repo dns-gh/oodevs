@@ -19,9 +19,9 @@
 #include "tools/FileWrapper.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
-#include "directia/brain/Brain.h"
 #include "protocol/Protocol.h"
 #include "protocol/AuthenticationSenders.h"
+#include <directia/brain/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.h>

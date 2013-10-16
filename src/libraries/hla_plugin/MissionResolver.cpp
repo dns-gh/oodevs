@@ -9,9 +9,9 @@
 
 #include "hla_plugin_pch.h"
 #include "MissionResolver.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
+#include <tools/Resolver_ABC.h>
 
 using namespace plugins::hla;
 

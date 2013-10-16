@@ -12,8 +12,8 @@
 
 #include "MIL.h"
 #include "MIL_Entity_ABC.h"
-#include "tools/Resolver.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
+#include <tools/Resolver.h>
 #include <map>
 
 namespace xml

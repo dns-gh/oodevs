@@ -11,8 +11,8 @@
 #define __LogConsignSupply_h_
 
 #include "SimpleEntity.h"
-#include "tools/Resolver.h"
 #include "protocol/ClientSenders.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -11,8 +11,8 @@
 #define __NBCPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

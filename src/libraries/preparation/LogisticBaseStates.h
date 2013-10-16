@@ -10,12 +10,12 @@
 #ifndef __LogisticBaseStates_h__
 #define __LogisticBaseStates_h__
 
-#include "tools/Resolver.h"
 #include "LogisticHierarchiesBase.h"
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/EntityHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/SubTypes.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

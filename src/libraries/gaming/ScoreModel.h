@@ -10,9 +10,9 @@
 #ifndef __ScoreModel_h_
 #define __ScoreModel_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver.h"
 #include "protocol/AarSenders.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -14,7 +14,7 @@
 #include "tools/IdManager.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
-#include "tools/Iterator.h"
+#include <tools/Iterator.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;

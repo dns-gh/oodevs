@@ -14,8 +14,8 @@
 #include "LogisticHierarchyOwner_ABC.h"
 #include "LogisticHierarchy.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "tools/Resolver_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver_ABC.h>
+#include <tools/Resolver.h>
 
 namespace sword
 {

@@ -14,9 +14,9 @@
 #include "RichSpinBox.h"
 #include "SubObjectName.h"
 #include "clients_kernel/DotationType.h"
-#include "tools/Iterator.h"
 #include "Tools.h"
 #include "LoadableSpinBox.h"
+#include <tools/Iterator.h>
 #include <boost/foreach.hpp>
 
 using namespace gui;

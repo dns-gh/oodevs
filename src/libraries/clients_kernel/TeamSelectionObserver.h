@@ -10,7 +10,7 @@
 #ifndef __TeamSelectionObserver_h_
 #define __TeamSelectionObserver_h_
 
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

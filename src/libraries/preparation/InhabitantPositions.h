@@ -13,7 +13,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "InhabitantPositions_ABC.h"
-#include "geometry/types.h"
+#include <geometry/Types.h>
 #include <boost/tuple/tuple.hpp>
 #include <tools/ElementObserver_ABC.h>
 
@@ -56,7 +56,7 @@ public:
     //@{
     struct T_UrbanObject
     {
-        T_UrbanObject( unsigned long id, const std::string name, const kernel::UrbanObject_ABC& urban ) 
+        T_UrbanObject( unsigned long id, const std::string name, const kernel::UrbanObject_ABC& urban )
             : id_( id ), name_( name ), pUrban_( &urban ) {}
         unsigned long id_;
         std::string name_;

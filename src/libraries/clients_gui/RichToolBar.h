@@ -10,8 +10,8 @@
 #ifndef __gui_RichToolBar_h_
 #define __gui_RichToolBar_h_
 
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
+#include <tools/Observer_ABC.h>
 
 namespace kernel
 {

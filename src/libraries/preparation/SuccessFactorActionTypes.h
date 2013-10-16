@@ -10,7 +10,7 @@
 #ifndef __SuccessFactorActionTypes_h_
 #define __SuccessFactorActionTypes_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace tools
 {

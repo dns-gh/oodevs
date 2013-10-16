@@ -12,7 +12,7 @@
 
 #include "InfoPanel_ABC.h"
 #include "ValuedComboBox.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

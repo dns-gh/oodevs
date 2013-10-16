@@ -14,8 +14,8 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/SubTypes.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

@@ -11,7 +11,7 @@
 #define __ColorStrategy_h_
 
 #include "ColorStrategy_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace kernel

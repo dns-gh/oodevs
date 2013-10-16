@@ -10,7 +10,7 @@
 #ifndef __PopulationType_h_
 #define __PopulationType_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace xml { class xistream; };
 

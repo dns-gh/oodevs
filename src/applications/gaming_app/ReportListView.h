@@ -10,11 +10,11 @@
 #ifndef __ReportListView_h_
 #define __ReportListView_h_
 
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/ElementObserver_ABC.h"
 #include "gaming/AgentSelectionObserver.h"
 #include "reports/Report.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace gui
 {

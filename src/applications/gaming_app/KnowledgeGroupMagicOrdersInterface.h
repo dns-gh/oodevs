@@ -12,10 +12,10 @@
 #ifndef __KnowledgeGroupMagicOrdersInterface_h_
 #define __KnowledgeGroupMagicOrdersInterface_h_
 
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

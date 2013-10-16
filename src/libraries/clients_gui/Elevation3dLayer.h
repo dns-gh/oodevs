@@ -11,8 +11,8 @@
 #define __Elevation3dLayer_h_
 
 #include "Layer.h"
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <tools/ElementObserver_ABC.h>
 #include <graphics/ViewFrustum.h>
 
 class MultiTextureLayer;

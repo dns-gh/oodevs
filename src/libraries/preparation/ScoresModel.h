@@ -10,7 +10,7 @@
 #ifndef __ScoresModel_h_
 #define __ScoresModel_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

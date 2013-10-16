@@ -24,12 +24,12 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
-#include "geometry/Types.h"
 #include "geostore/Geostore.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
 #include "tools/IdManager.h"
 
+#include <geometry/Types.h>
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #include <QtGui/qmessagebox.h>

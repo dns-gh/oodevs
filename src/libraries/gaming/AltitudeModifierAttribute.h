@@ -11,7 +11,7 @@
 #define __AltitudeModifierAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

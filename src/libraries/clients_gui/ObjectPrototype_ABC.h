@@ -16,10 +16,10 @@
 #include "RichGroupBox.h"
 #include "RichPushButton.h"
 #include "ShapeHandler_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Observer_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Observer_ABC.h>
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

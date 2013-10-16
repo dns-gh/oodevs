@@ -12,10 +12,10 @@
 
 #include "LogisticStatusWidget_ABC.h"
 #include "gaming/LogisticLinks.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedComboBox.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

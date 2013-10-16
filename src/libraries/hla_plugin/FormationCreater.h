@@ -10,7 +10,7 @@
 #ifndef plugins_hla_FormationCreater_h
 #define plugins_hla_FormationCreater_h
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace dispatcher

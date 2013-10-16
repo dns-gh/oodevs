@@ -14,8 +14,8 @@
 
 #include "MIL.h"
 #include "MIL_EntityManager_ABC.h"
-#include "tools/Resolver.h"
 #include "propagation/ElevationGetter_ABC.h"
+#include <tools/Resolver.h>
 #include <map>
 
 namespace tools

@@ -10,9 +10,9 @@
 #ifndef __PopulationKnowledge_h_
 #define __PopulationKnowledge_h_
 
-#include "tools/Resolver.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "SimpleEntity.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

@@ -11,7 +11,7 @@
 #define __actions_ActionFactory_h_
 
 #include "ActionFactory_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace sword
 {

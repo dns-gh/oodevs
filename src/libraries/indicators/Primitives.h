@@ -10,7 +10,7 @@
 #ifndef __Primitives_h_
 #define __Primitives_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )

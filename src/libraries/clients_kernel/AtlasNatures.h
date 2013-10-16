@@ -10,7 +10,7 @@
 #ifndef __AtlasNatures_h_
 #define __AtlasNatures_h_
 
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

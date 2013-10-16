@@ -13,8 +13,8 @@
 #include "Controller.h"
 #include "ActionController.h"
 #include "ModeController.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "ContextMenuObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 using namespace kernel;
 

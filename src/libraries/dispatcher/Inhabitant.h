@@ -11,7 +11,7 @@
 #define __Inhabitant_h_
 
 #include "Inhabitant_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace sword
 {

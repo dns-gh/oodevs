@@ -10,8 +10,8 @@
 #ifndef __GradientPreferences_h_
 #define __GradientPreferences_h_
 
-#include "tools/Resolver.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

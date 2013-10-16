@@ -21,10 +21,10 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "tools/Iterator.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include <tools/Iterator.h>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>

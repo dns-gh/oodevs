@@ -10,8 +10,8 @@
 #ifndef __DrawingsModel_h_
 #define __DrawingsModel_h_
 
-#include "tools/Resolver.h"
 #include "dispatcher/Registrable_ABC.h"
+#include <tools/Resolver.h>
 #include <boost/optional.hpp>
 
 namespace dispatcher

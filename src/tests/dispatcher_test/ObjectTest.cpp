@@ -15,7 +15,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "dispatcher/Object.h"
 #include "protocol/ClientSenders.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -201,7 +201,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsCreatedWithExtensions, Fixture )
 
     MOCK_EXPECT( team.RegisterObject ).once();
     result.reset( new dispatcher::Object( model, message, types ) );
-    
+
     std::string extVal;
     BOOST_CHECK( result->GetExtension( "extension", extVal ) );
     BOOST_CHECK_EQUAL( extVal, "value" );

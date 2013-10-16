@@ -13,8 +13,8 @@
 #include "Gradient.h"
 #include "clients_kernel/HumanDefs.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Observer_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Observer_ABC.h>
 #include <boost/noncopyable.hpp>
 
 namespace kernel

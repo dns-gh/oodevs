@@ -13,7 +13,7 @@
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/SymbolVisitor_ABC.h"
 #include "clients_kernel/GhostPrototype.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

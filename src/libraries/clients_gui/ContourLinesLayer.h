@@ -12,9 +12,9 @@
 
 #include "Layer.h"
 #include "ContourLinesObserver.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/Types.h"
+#include <tools/ElementObserver_ABC.h>
 #include <tools/thread/ThreadPool.h>
 #include <boost/thread/mutex.hpp>
 

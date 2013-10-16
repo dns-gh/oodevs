@@ -11,9 +11,9 @@
 #define __Gui_ObjectPanel_h_
 
 #include "InfoPanel_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

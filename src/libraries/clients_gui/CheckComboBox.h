@@ -10,12 +10,12 @@
 #ifndef __gui_CheckComboBox_h_
 #define __gui_CheckComboBox_h_
 
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
 #include "ENT/ENT_Tr_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "RichLineEdit.h"
 #include "RichWidget.h"
+#include <tools/Resolver_ABC.h>
+#include <boost/noncopyable.hpp>
+#include <boost/function.hpp>
 
 namespace kernel
 {

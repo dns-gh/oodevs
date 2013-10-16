@@ -13,9 +13,9 @@
 #define __RoleContainer_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "tools/Extendable.h"
-#include "tools/InterfaceContainer.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include <tools/InterfaceContainer.h>
+#include <tools/Extendable.h>
 #include <boost/serialization/split_member.hpp>
 #include <boost/preprocessor.hpp>
 #include <boost/type_traits.hpp>

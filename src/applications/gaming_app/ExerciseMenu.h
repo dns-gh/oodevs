@@ -10,8 +10,8 @@
 #ifndef __ExerciseMenu_h_
 #define __ExerciseMenu_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/RichMenu.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

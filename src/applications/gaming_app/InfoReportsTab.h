@@ -10,7 +10,7 @@
 #ifndef __InfoReportsTab_h_
 #define __InfoReportsTab_h_
 
-#include "tools/SelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace gui
 {

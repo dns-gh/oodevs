@@ -9,9 +9,9 @@
 
 #include "hla_plugin_pch.h"
 #include "AutomatChecker.h"
-#include "tools/Resolver_ABC.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Automat_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 using namespace plugins::hla;
 

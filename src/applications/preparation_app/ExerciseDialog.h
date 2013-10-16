@@ -11,8 +11,8 @@
 #define __ExerciseDialog_h_
 
 #include "clients_gui/ValuedComboBox.h"
-#include "tools/ElementObserver_ABC.h"
 #include "preparation/Exercise.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace gui
 {

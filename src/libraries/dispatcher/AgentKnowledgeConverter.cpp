@@ -15,7 +15,7 @@
 #include "KnowledgeGroup_ABC.h"
 #include "Model_ABC.h"
 #include "PopulationKnowledge.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 using namespace dispatcher;
 

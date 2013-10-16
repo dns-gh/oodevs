@@ -10,8 +10,8 @@
 #ifndef __DISPATCHER_LOGISTIC_LINK_H__
 #define __DISPATCHER_LOGISTIC_LINK_H__
 
-#include "tools/Resolver_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver_ABC.h>
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
 namespace sword

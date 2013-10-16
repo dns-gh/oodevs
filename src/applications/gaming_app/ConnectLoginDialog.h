@@ -12,7 +12,7 @@
 
 #include "LoginDialog.h"
 #include "gaming/AvailableProfile.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

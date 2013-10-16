@@ -15,7 +15,7 @@
 #include "AgentListener_ABC.h"
 #include "ResponseObserver_ABC.h"
 #include "dispatcher/ExtensionFactory_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 #include <boost/shared_ptr.hpp>
 #include <map>
 

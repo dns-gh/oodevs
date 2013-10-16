@@ -10,12 +10,12 @@
 #ifndef __InhabitantCreationPanel_h_
 #define __InhabitantCreationPanel_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
-#include "tools/Resolver_ABC.h"
-#include "tools/Resolver.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_gui/ShapeHandler_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/Resolver_ABC.h>
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -11,7 +11,7 @@
 #define __WeatherLayer_h_
 
 #include "clients_gui/WeatherLayer.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -11,7 +11,7 @@
 #define __NodeProperties_h_
 
 #include "NodeElement.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 #include <boost/serialization/split_member.hpp>
 
 namespace google

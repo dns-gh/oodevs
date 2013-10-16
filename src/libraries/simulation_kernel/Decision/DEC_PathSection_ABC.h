@@ -13,10 +13,10 @@
 #define __DEC_PathSection_ABC_h_
 
 #include "DEC_Path.h"
-#include "tools/thread/Handler_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <pathfind/AStarManagementCallback_ABC.h>
+#include <tools/thread/Handler_ABC.h>
 
 class TerrainRule_ABC;
 

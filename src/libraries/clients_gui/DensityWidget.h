@@ -10,8 +10,8 @@
 #ifndef gui_DensityWidget_h
 #define gui_DensityWidget_h
 
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include <tools/Observer_ABC.h>
 
 namespace kernel
 {

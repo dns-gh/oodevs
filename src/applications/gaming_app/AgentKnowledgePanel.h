@@ -11,9 +11,9 @@
 #define __AgentKnowledgePanel_h_
 
 #include "clients_gui/InfoPanel_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "gaming/KnowledgeGroupSelectionObserver.h"
 #include "clients_kernel/SafePointer.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

@@ -11,8 +11,8 @@
 #define __Layer_h_
 
 #include "Layer_ABC.h"
-#include "tools/Observer_ABC.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
+#include <tools/Observer_ABC.h>
 
 class ViewFrustum;
 
@@ -89,7 +89,7 @@ public:
     //@}
 
     //! @name ReadOnly management // $$$$ ABR 2012-05-24: Move tools::ReadOnlyModable from Sword::tools to Tools::tools
-                                  // 
+                                  //
     //@{
     virtual bool IsReadOnly() const;
     void SetReadOnlyModes( int modes );

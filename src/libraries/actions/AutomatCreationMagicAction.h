@@ -11,7 +11,7 @@
 #define __AutomatCreationMagicAction_h_
 
 #include "UnitMagicAction.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

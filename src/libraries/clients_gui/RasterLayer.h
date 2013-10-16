@@ -11,7 +11,7 @@
 #define __RasterLayer_h_
 
 #include "Layer.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

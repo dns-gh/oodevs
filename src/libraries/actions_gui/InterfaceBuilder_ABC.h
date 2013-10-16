@@ -11,7 +11,7 @@
 #define __InterfaceBuilder_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

@@ -10,8 +10,8 @@
 #ifndef __ObjectTypes_h_
 #define __ObjectTypes_h_
 
-#include "tools/Resolver.h"
 #include "Resolver2.h"
+#include <tools/Resolver.h>
 
 namespace tools
 {

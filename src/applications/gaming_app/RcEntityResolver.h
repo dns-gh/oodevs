@@ -10,9 +10,9 @@
 #ifndef __RcEntityResolver_h_
 #define __RcEntityResolver_h_
 
-#include "tools/Resolver.h"
-#include "tools/ElementObserver_ABC.h"
 #include "reports/RcEntityResolver_ABC.h"
+#include <tools/Resolver.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

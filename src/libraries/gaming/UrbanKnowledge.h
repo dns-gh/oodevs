@@ -10,13 +10,13 @@
 #ifndef __UrbanKnowledge_h_
 #define __UrbanKnowledge_h_
 
-#include "tools/Resolver.h"
 #include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {

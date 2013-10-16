@@ -10,10 +10,10 @@
 #include "hla_plugin_pch.h"
 #include "ComponentTypes.h"
 #include "ComponentTypeVisitor_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/ComponentType.h"
+#include <tools/Resolver_ABC.h>
 
 using namespace plugins::hla;
 

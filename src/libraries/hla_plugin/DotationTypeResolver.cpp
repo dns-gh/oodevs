@@ -11,8 +11,8 @@
 #include "DotationTypeResolver.h"
 #include "rpr/EntityType.h"
 #include "rpr/EntityTypeResolver_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/DotationType.h"
+#include <tools/Resolver_ABC.h>
 
 using namespace plugins::hla;
 

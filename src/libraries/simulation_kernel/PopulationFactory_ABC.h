@@ -10,8 +10,8 @@
 #ifndef __PopulationFactory_ABC_h_
 #define __PopulationFactory_ABC_h_
 
-#include "tools/Resolver.h"
 #include "Entities/Populations/MIL_Population.h"
+#include <tools/Resolver.h>
 
 namespace xml
 {

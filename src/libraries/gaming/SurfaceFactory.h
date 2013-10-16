@@ -10,7 +10,7 @@
 #ifndef __SurfaceFactory_h_
 #define __SurfaceFactory_h_
 
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

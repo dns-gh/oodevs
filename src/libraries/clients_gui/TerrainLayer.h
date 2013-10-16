@@ -13,7 +13,7 @@
 #include "Layer.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 class RawShapeLayer;
 class NoVBOShapeLayer;

@@ -13,7 +13,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/OptionalValue.h"
-#include "tools/Resolver_ABC.h"
+#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {

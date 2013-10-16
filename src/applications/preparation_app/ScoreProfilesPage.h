@@ -10,7 +10,7 @@
 #ifndef __ScoreProfilesPage_h_
 #define __ScoreProfilesPage_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

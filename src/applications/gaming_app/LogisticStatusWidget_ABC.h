@@ -10,11 +10,11 @@
 #ifndef __LogisticStatusWidget_ABC_h_
 #define __LogisticStatusWidget_ABC_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_kernel/Entity_ABC.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

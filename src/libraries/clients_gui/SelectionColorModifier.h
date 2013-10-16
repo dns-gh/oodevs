@@ -11,9 +11,9 @@
 #define __SelectionColorModifier_h_
 
 #include "ColorModifier_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {

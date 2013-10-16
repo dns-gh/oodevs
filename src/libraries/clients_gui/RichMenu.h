@@ -10,11 +10,10 @@
 #ifndef __gui_RichMenu_h_
 #define __gui_RichMenu_h_
 
-#include <boost/noncopyable.hpp>
-
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
-#include "tools/Observer_ABC.h"
+#include <tools/Observer_ABC.h>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
