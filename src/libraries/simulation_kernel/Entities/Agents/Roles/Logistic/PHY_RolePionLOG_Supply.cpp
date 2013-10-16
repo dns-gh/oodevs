@@ -542,8 +542,6 @@ namespace
 {
     void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogSupplyEquimentAvailability& asn )
     {
-        if( data.empty() )
-            return;
         for( auto itData = data.begin(); itData != data.end(); ++itData )
         {
             sword::LogSupplyEquimentAvailability& data = *asn.add_elem();

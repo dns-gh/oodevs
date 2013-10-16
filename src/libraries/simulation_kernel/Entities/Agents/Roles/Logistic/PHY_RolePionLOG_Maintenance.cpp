@@ -617,8 +617,6 @@ namespace
 {
     void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogMaintenanceEquipmentAvailability& asn, const PHY_MaintenanceWorkRate* pWorkRate )
     {
-        if( data.empty() )
-            return;
         for( auto it = data.begin(); it != data.end(); ++it )
         {
             sword::LogMaintenanceEquipmentAvailability& data = *asn.add_elem();
