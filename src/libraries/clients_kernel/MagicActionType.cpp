@@ -219,13 +219,13 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "CloudCeiling", "numeric" );
         CreateOrderParameter( "CloudDensity", "numeric" );
         OrderParameter* precipitation = CreateOrderParameter( "Precipitation", "enumeration" );
-        precipitation->AddValue( 0, "PasDePrecipitation" );
-        precipitation->AddValue( 1, "TempeteDeSable"     );
-        precipitation->AddValue( 2, "Brouillard"         );
-        precipitation->AddValue( 3, "Crachin"            );
-        precipitation->AddValue( 4, "Pluie"              );
-        precipitation->AddValue( 5, "Neige"              );
-        precipitation->AddValue( 6, "Fumigene"           );
+        precipitation->AddValue( eWeatherType_None,      "PasDePrecipitation" );
+        precipitation->AddValue( eWeatherType_SandStorm, "TempeteDeSable"     );
+        precipitation->AddValue( eWeatherType_Fog,       "Brouillard"         );
+        precipitation->AddValue( eWeatherType_Drizzle,   "Crachin"            );
+        precipitation->AddValue( eWeatherType_Rain,      "Pluie"              );
+        precipitation->AddValue( eWeatherType_Snow,      "Neige"              );
+        precipitation->AddValue( eWeatherType_Smoke,     "Fumigene"           );
     }
     else if( name == "local_weather" )
     {
@@ -236,13 +236,13 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "CloudCeiling", "numeric" );
         CreateOrderParameter( "CloudDensity", "numeric" );
         OrderParameter* precipitation = CreateOrderParameter( "Precipitation", "enumeration" );
-        precipitation->AddValue( 0, "PasDePrecipitation" );
-        precipitation->AddValue( 1, "TempeteDeSable"     );
-        precipitation->AddValue( 2, "Brouillard"         );
-        precipitation->AddValue( 3, "Crachin"            );
-        precipitation->AddValue( 4, "Pluie"              );
-        precipitation->AddValue( 5, "Neige"              );
-        precipitation->AddValue( 6, "Fumigene"           );
+        precipitation->AddValue( eWeatherType_None,      "PasDePrecipitation" );
+        precipitation->AddValue( eWeatherType_SandStorm, "TempeteDeSable"     );
+        precipitation->AddValue( eWeatherType_Fog,       "Brouillard"         );
+        precipitation->AddValue( eWeatherType_Drizzle,   "Crachin"            );
+        precipitation->AddValue( eWeatherType_Rain,      "Pluie"              );
+        precipitation->AddValue( eWeatherType_Snow,      "Neige"              );
+        precipitation->AddValue( eWeatherType_Smoke,     "Fumigene"           );
         CreateOrderParameter( "StartTime", "datetime" );
         CreateOrderParameter( "EndTime", "datetime" );
         CreateOrderParameter( "Location", "location" );
