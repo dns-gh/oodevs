@@ -20,6 +20,7 @@
 #include "clients_gui/RichTreeView.h"
 #include <boost/algorithm/string.hpp>
 #include "tools/ExerciseConfig.h"
+#include "tools/Languages.h"
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseDialog constructor
@@ -54,11 +55,8 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         lang_ = new gui::ValuedComboBox< QString >( "lang" );
         hLayout->addWidget( lang_ );
 
-        lang_->AddItem( tr( "English" ), "en" );
-        lang_->AddItem( tr( "French" ), "fr" );
-        lang_->AddItem( tr( "Spanish" ), "es" );
-        lang_->AddItem( tr( "Arabic" ), "ar" );
-        lang_->AddItem( tr( "Portuguese" ), "pt" );
+        for( auto it = config.GetLanguages().GetVector().begin(); it != config.GetLanguages().GetVector().end(); ++it )
+            lang_->AddItem( it->GetName(), it->GetCode().c_str() );
 
         connect( lang_, SIGNAL( activated( int ) ), this, SLOT( OnChangeLang() ) );
         gui::RichPushButton* textFormat = new gui::RichPushButton( "source", tr( "source" ) );
