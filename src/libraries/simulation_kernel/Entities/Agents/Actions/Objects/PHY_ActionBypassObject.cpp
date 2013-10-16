@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionBypassObject.h"
 #include "PHY_RoleAction_Objects.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 

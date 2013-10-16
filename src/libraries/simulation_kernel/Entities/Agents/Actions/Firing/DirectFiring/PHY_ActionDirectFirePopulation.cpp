@@ -14,6 +14,7 @@
 #include "PHY_ActionDirectFirePopulation.h"
 
 #include "PHY_RoleAction_DirectFiring.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"

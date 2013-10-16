@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionMoveUnderground.h"
 #include "PHY_RoleAction_MovingUnderground.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"

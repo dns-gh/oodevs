@@ -14,6 +14,7 @@
 
 #include "PHY_ActionIndirectFire_ABC.h"
 
+class DEC_Knowledge_Agent;
 class MIL_Effect_IndirectFire;
 class MIL_EffectManager;
 

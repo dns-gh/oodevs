@@ -12,6 +12,7 @@
 
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
+class MIL_AgentPion;
 class PHY_RoleAction_MovingUnderground;
 
 // =============================================================================

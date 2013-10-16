@@ -11,11 +11,12 @@
 #define __PHY_DecisionCallbackAction_ABC_h_
 
 #include "PHY_Action_ABC.h"
-#include "Decision/DEC_Decision_ABC.h"
 #include <boost/shared_ptr.hpp>
 
+class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 class MIL_Entity_ABC;
+class MIL_AgentPion;
 
 // =============================================================================
 /** @class  PHY_DecisionCallbackAction_ABC

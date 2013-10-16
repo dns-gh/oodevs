@@ -16,6 +16,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 
+class PHY_DotationCategory;
 class PHY_RoleAction_Objects;
 class MIL_AgentPion;
 

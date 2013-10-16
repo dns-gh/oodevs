@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionUnloadCrowd.h"
 #include "PHY_RoleAction_CrowdTransport.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"

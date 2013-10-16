@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionIndirectFire_Knowledge.h"
 #include "PHY_RoleAction_IndirectFiring.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"

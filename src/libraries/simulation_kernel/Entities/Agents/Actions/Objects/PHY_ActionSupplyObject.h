@@ -17,6 +17,7 @@
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
+class PHY_DotationCategory;
 class PHY_RoleAction_Objects;
 class MIL_AgentPion;
 
