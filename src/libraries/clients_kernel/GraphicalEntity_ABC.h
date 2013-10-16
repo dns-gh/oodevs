@@ -10,6 +10,8 @@
 #ifndef __GraphicalEntity_ABC_h_
 #define __GraphicalEntity_ABC_h_
 
+#include <vector>
+
 class QPoint;
 class QString;
 class QPixmap;

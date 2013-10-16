@@ -10,9 +10,10 @@
 #ifndef __Resolver2_h_
 #define __Resolver2_h_
 
-#include <tools/Resolver_ABC.h>
 #include <tools/Exception.h>
 #include <tools/Iterator.h>
+#include <tools/Resolver_ABC.h>
+#include <map>
 #include <stdexcept>
 #include <sstream>
 
