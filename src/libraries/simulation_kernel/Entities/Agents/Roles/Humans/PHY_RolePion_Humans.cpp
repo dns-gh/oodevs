@@ -340,7 +340,7 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
     MIL_AutomateLOG* pTC2 = owner_->GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
     {
-        human.SetMedicalState( 0 );
+        human.SetMedicalState( boost::shared_ptr< PHY_MedicalHumanState >() );
         return;
     }
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent

@@ -80,8 +80,8 @@ public:
     virtual void ChangePriorities( const T_AutomateVector& priorities );
     virtual T_AutomateVector GetAutomatePriorities() const;
 
-    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
-    virtual PHY_MedicalHumanState* HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ); // Releve
+    virtual boost::shared_ptr< PHY_MedicalHumanState > HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
+    virtual boost::shared_ptr< PHY_MedicalHumanState > HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ); // Releve
     virtual bool                   HandleHumanForEvacuation( PHY_MedicalHumanState& humanState );
     virtual int GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const;
     virtual bool HandleHumanForCollection( PHY_MedicalHumanState& humanState );     // Ramassage

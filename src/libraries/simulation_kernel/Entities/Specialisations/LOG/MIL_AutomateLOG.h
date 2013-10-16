@@ -17,6 +17,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 #include "Entities/Agents/Roles/Logistic/SupplySupplier_ABC.h"
 #include "Entities/Agents/Roles/Logistic/FuneralHandler_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -113,8 +114,8 @@ public:
 
     //! @name Medical
     //@{
-    PHY_MedicalHumanState* MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
-    PHY_MedicalHumanState* MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, Human_ABC& human ); // Releve
+    boost::shared_ptr< PHY_MedicalHumanState > MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
+    boost::shared_ptr< PHY_MedicalHumanState > MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, Human_ABC& human ); // Releve
     bool                   MedicalHandleHumanForCollection        ( PHY_MedicalHumanState& humanState );     // Ramassage
     PHY_RoleInterface_Medical*  MedicalReserveForSorting          ( PHY_MedicalCollectionAmbulance& ambulance );
     bool                   MedicalHandleHumanForHealing           ( PHY_MedicalHumanState& humanState );

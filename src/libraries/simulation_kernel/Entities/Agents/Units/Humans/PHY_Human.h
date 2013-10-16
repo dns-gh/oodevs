@@ -46,37 +46,37 @@ public:
 
     //! @name Operations
     //@{
-    void Heal(); // 'Magic' Heal
-    bool SetRank( const PHY_HumanRank&  newRank ); // Force rank change
-    bool SetWound( const PHY_HumanWound& newWound ); // Don't test 'usability' or aggravation => force wound change
-    bool ApplyWound( const PHY_HumanWound& newWound ); // Test 'usability'
+    virtual void Heal(); // 'Magic' Heal
+    virtual bool SetRank( const PHY_HumanRank&  newRank ); // Force rank change
+    virtual bool SetWound( const PHY_HumanWound& newWound ); // Don't test 'usability' or aggravation => force wound change
+    virtual bool ApplyWound( const PHY_HumanWound& newWound ); // Test 'usability'
     virtual void ApplyContamination(); // NBC effects
-    void ApplyMentalDisease();
-    void ForceMentalDisease();
-    void CancelLogisticRequests();
-    void SetState( const PHY_HumanWound& newWound, bool mentalDisease, bool contaminated );
+    virtual void ApplyMentalDisease();
+    virtual void ForceMentalDisease();
+    virtual void CancelLogisticRequests();
+    virtual void SetState( const PHY_HumanWound& newWound, bool mentalDisease, bool contaminated );
     //@}
 
     //! @name Accessors
     //@{
-    const PHY_HumanRank& GetRank() const;
-    const PHY_HumanWound& GetWound() const;
-    E_HumanLocation GetLocation() const;
-    bool IsUsable() const;
-    bool IsDead() const;
-    bool IsSeriouslyPhysicallyWounded() const;
-    bool IsWounded() const;
-    bool IsContaminated() const;
-    bool IsMentalDiseased() const;
-    bool IsAnEmergency() const;
-    const MIL_Agent_ABC& GetPion() const;
+    virtual const PHY_HumanRank& GetRank() const;
+    virtual const PHY_HumanWound& GetWound() const;
+    virtual E_HumanLocation GetLocation() const;
+    virtual bool IsUsable() const;
+    virtual bool IsDead() const;
+    virtual bool IsSeriouslyPhysicallyWounded() const;
+    virtual bool IsWounded() const;
+    virtual bool IsContaminated() const;
+    virtual bool IsMentalDiseased() const;
+    virtual bool IsAnEmergency() const;
+    virtual const MIL_Agent_ABC& GetPion() const;
     //@}
 
     //! @name Main
     //@{
-    bool NeedUpdate() const;
-    void Update();
-    void Clean();
+    virtual bool NeedUpdate() const;
+    virtual void Update();
+    virtual void Clean();
     //@}
 
      //! @name Network
@@ -87,17 +87,17 @@ public:
 
     //! @name Medical logistic
     //@{
-    bool NeedEvacuation() const; // NeedMedical() && pas encore pris en charge
-    void Evacuate( MIL_AutomateLOG& destinationTC2 );
-    bool NeedMedical() const;
-    void SetMedicalState( PHY_MedicalHumanState* pMedicalState );
+    virtual bool NeedEvacuation() const; // NeedMedical() && pas encore pris en charge
+    virtual void Evacuate( MIL_AutomateLOG& destinationTC2 );
+    virtual bool NeedMedical() const;
+    virtual void SetMedicalState( const boost::shared_ptr< PHY_MedicalHumanState >& medicalState );
 
-    void NotifyHandledByMedical();
-    bool NotifyBackToWar();
-    void NotifyDiagnosed();
-    void HealMentalDisease();
-    void HealWound();
-    void HealContamination();
+    virtual void NotifyHandledByMedical();
+    virtual bool NotifyBackToWar();
+    virtual void NotifyDiagnosed();
+    virtual void HealMentalDisease();
+    virtual void HealWound();
+    virtual void HealContamination();
     //@}
 
     //! @name Funeral logistic
@@ -108,8 +108,8 @@ public:
 
     //! @name Composante maintenance
     //@{
-    void NotifyComposanteHandledByMaintenance();
-    void NotifyComposanteBackFromMaintenance ();
+    virtual void NotifyComposanteHandledByMaintenance();
+    virtual void NotifyComposanteBackFromMaintenance ();
     //@}
 
 private:
@@ -139,7 +139,7 @@ private:
     bool bMentalDiseased_;
     bool bContamined_;
     E_HumanLocation nLocation_;
-    PHY_MedicalHumanState* pMedicalState_;
+    boost::shared_ptr< PHY_MedicalHumanState > pMedicalState_;
     boost::shared_ptr< logistic::FuneralConsign_ABC > funeralConsign_;
     unsigned int nDeathTimeStep_;
 };

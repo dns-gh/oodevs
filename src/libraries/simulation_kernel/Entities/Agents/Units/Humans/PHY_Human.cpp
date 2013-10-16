@@ -37,7 +37,6 @@ PHY_Human::PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante
     , bMentalDiseased_( false )
     , bContamined_( false )
     , nLocation_( eHumanLocation_Battlefield )
-    , pMedicalState_( 0 )
     , nDeathTimeStep_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
@@ -73,7 +72,6 @@ PHY_Human::PHY_Human()
     , bMentalDiseased_( false )
     , bContamined_( false )
     , nLocation_( eHumanLocation_Battlefield )
-    , pMedicalState_( 0 )
     , nDeathTimeStep_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
@@ -167,8 +165,7 @@ void PHY_Human::CancelMedicalLogisticRequest()
         else
             nLocation_ = eHumanLocation_Battlefield;
         pMedicalState_->Cancel();
-        delete pMedicalState_;
-        pMedicalState_ = 0;
+        pMedicalState_.reset();
         NotifyHumanChanged( oldHumanState );
     }
 }
@@ -460,7 +457,7 @@ void PHY_Human::Update()
     assert( pComposante_ );
     if( time_.GetCurrentTimeStep() >= nDeathTimeStep_ )
     {
-        const MIL_DecisionalReport& nReportID = GetReport( pMedicalState_ );
+        const MIL_DecisionalReport& nReportID = GetReport( pMedicalState_.get() );
         if( SetWound( PHY_HumanWound::killed_ ) )
         {
             MIL_Report::PostEvent( GetPion(), nReportID );
@@ -607,10 +604,9 @@ bool PHY_Human::NeedEvacuation() const
 // Name: PHY_Human::SetMedicalState
 // Created: MGD 2009-10-01
 // -----------------------------------------------------------------------------
-void PHY_Human::SetMedicalState( PHY_MedicalHumanState* pMedicalState )
+void PHY_Human::SetMedicalState( const boost::shared_ptr< PHY_MedicalHumanState >& medicalState )
 {
-    delete pMedicalState_;
-    pMedicalState_ = pMedicalState;
+    pMedicalState_ = medicalState;
 }
 
 // -----------------------------------------------------------------------------

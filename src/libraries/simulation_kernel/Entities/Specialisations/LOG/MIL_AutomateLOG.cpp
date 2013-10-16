@@ -220,7 +220,7 @@ PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransp
 // Name: MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human )
+boost::shared_ptr< PHY_MedicalHumanState > MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human )
 {
     MedicalThirdPartyEvacuationVisitor visitor( pion, human );
     Visit( visitor );
@@ -231,11 +231,11 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty(
 // Name: MIL_AutomateLOG::MedicalHandleHumanForEvacuation
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human )
+boost::shared_ptr< PHY_MedicalHumanState > MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human )
 {
     MedicalEvacuationVisitor visitor( human );
     Visit( visitor );
-    return visitor.selected_ ? visitor.selected_->HandleHumanForEvacuation( pion, human ) : 0;
+    return visitor.selected_ ? visitor.selected_->HandleHumanForEvacuation( pion, human ) : boost::shared_ptr< PHY_MedicalHumanState >();
 }
 
 // -----------------------------------------------------------------------------

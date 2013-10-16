@@ -454,26 +454,26 @@ void PHY_RolePionLOG_Medical::InsertConsign( const boost::shared_ptr< PHY_Medica
 // Name: PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human )
+boost::shared_ptr< PHY_MedicalHumanState > PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human )
 {
     if( !bSystemEnabled_ )
-        return 0;
-    PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human, true ); // true is for 'evacuated by third party'
-    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( *pHumanState ) ) );
-    return pHumanState;
+        return boost::shared_ptr< PHY_MedicalHumanState >();
+    auto humanState = boost::make_shared< PHY_MedicalHumanState >( boost::ref( pion ), boost::ref( human ), true ); // true is for 'evacuated by third party'
+    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( *humanState ) ) );
+    return humanState;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::HandleHumanForEvacuation
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human )
+boost::shared_ptr< PHY_MedicalHumanState > PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human )
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
-        return 0;
-    PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human );
-    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( *pHumanState ) ) );
-    return pHumanState;
+        return boost::shared_ptr< PHY_MedicalHumanState >();
+    auto humanState = boost::make_shared< PHY_MedicalHumanState >( boost::ref( pion ), boost::ref( human ) );
+    InsertConsign( boost::make_shared< PHY_MedicalEvacuationConsign >( boost::ref( *owner_ ), boost::ref( *humanState ) ) );
+    return humanState;
 }
 
 // -----------------------------------------------------------------------------

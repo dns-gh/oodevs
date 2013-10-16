@@ -27,6 +27,7 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include <boost/foreach.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 class MIL_AutomateLOG;
 
@@ -139,22 +140,23 @@ class MedicalThirdPartyEvacuationVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MedicalThirdPartyEvacuationVisitor( MIL_AgentPion& pion, Human_ABC& human )
-            : pion_  ( pion )
-            , human_ ( human )
-            , pState_( 0 )
-        {
-        }
+            : pion_ ( pion )
+            , human_( human )
+        {}
 
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
-            pState_ = (candidate!= 0 ? const_cast<PHY_RoleInterface_Medical*>(candidate)->HandleHumanEvacuatedByThirdParty( pion_, human_ ) : 0);
+            if( candidate )
+                pState_ = const_cast< PHY_RoleInterface_Medical* >( candidate )->HandleHumanEvacuatedByThirdParty( pion_, human_ );
+            else
+                pState_.reset();
         }
 
     public:
         MIL_AgentPion&         pion_;
         Human_ABC&             human_;
-        PHY_MedicalHumanState* pState_;
+        boost::shared_ptr< PHY_MedicalHumanState > pState_;
 };
 
 class MedicalEvacuationVisitor : public MIL_LogisticEntitiesVisitor
