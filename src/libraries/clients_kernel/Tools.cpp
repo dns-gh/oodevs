@@ -67,8 +67,15 @@ boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )
 // -----------------------------------------------------------------------------
 QLocale tools::readLocale()
 {
-    QSettings settings( "MASA Group", "SWORD" );
-    QString locale = settings.value( "/Common/Language", "en" ).value< QString >();
+    QString locale;
+    const char* loc = std::getenv( "MASA_LOCALE" );
+    if( loc && strlen( loc ) > 0 )
+        locale = QString( loc );
+    else
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        locale = settings.value( "/Common/Language", "en" ).value< QString >();
+    }
 
     if( locale.count( "_" ) )
         return QLocale( locale );
@@ -84,28 +91,12 @@ QLocale tools::readLocale()
     return QLocale( QLocale::English, QLocale::UnitedStates );
 }
 
-namespace
-{
-
-std::string GetEnvLang()
-{
-    const char* lang = std::getenv( "MASA_LANG" );
-    if( lang && strlen(lang) >= 2 )
-        return std::string( lang, 2 );
-    return "";
-}
-
-} // namespace
-
 // -----------------------------------------------------------------------------
 // Name: Tools::readLang
 // Created: ABR 2012-07-13
 // -----------------------------------------------------------------------------
 std::string tools::readLang()
 {
-    const std::string lang = GetEnvLang();
-    if( !lang.empty() )
-        return lang;
     return tools::readLocale().name().left( 2 ).toStdString();
 }
 
@@ -115,11 +106,8 @@ std::string tools::readLang()
 // -----------------------------------------------------------------------------
 QTranslator* tools::AddTranslator( QApplication& application, const QLocale& locale, const char* t )
 {
-    std::string lang = GetEnvLang();
-    if( lang.empty() )
-        lang = locale.name().left( 2 ).toStdString();
     std::auto_ptr< QTranslator > trans( new QTranslator( &application ) );
-    const QString file = QString( "%1_%2" ).arg( t ).arg( lang.c_str() );
+    const QString file = QString( "%1_%2" ).arg( t ).arg( locale.name().left( 2 ) );
     if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
     {
         application.installTranslator( trans.get() );
