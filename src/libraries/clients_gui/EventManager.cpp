@@ -239,16 +239,7 @@ void EventManager::Select( const Decisions_ABC& decisions, E_MissionType type )
 // -----------------------------------------------------------------------------
 void EventManager::Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission )
 {
-    // Get entity
-    const kernel::Entity_ABC& entity = decisions.GetAgent();
-    // Get entity type
-    auto entityType = GetEntityType( entity );
-
-    // if type doesn't match with entity type
-    if( type != eMissionType_FragOrder && type != entityType )
-        type = entityType;
-
-    Select( decisions, entity, type, entityType, mission, 0 );
+    Select( decisions, type, mission, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,9 +249,7 @@ void EventManager::Select( const Decisions_ABC& decisions, E_MissionType type, c
 void EventManager::Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
                            const actions::Action_ABC* action )
 {
-    // Get entity
     const kernel::Entity_ABC& entity = decisions.GetAgent();
-    // Get entity type
     auto entityType = GetEntityType( entity );
 
     // if type doesn't match with entity type
@@ -290,7 +279,7 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
         FillCompatibleFragOrders( result, decisions.GetMissions(), decisions.GetCurrentMission(), planningMode_ );
     }
     else
-        FillCompatibleOrders< kernel::Mission >( result, decisions.GetMissions() );
+        FillCompatibleOrders( result, decisions.GetMissions() );
 
     std::string currentMission = mission;
     // Entity type unchanged && current mission set && unknown mission => invalid mission
@@ -300,9 +289,9 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
     // Reset current mission
     // current mission is empty || (entity type changed(except frag oder) && unknown mission) => select first mission
     if( ( currentMission.empty() || // no mission selected
-          ( lastMissionType != currentMissionType_ &&
+            lastMissionType != currentMissionType_ &&
             currentMissionType_ != eMissionType_FragOrder && lastMissionType != eMissionType_FragOrder &&
-            std::find( result.begin(), result.end(), mission ) == result.end() )
+            std::find( result.begin(), result.end(), mission ) == result.end()
           ) && !result.empty() )
         currentMission = result[ 0 ];
 

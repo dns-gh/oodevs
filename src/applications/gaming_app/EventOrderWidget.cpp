@@ -39,8 +39,6 @@
 #include <timeline/api.h>
 #include <boost/make_shared.hpp>
 
-#pragma warning( disable : 4355 )
-
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget constructor
 // Created: ABR 2013-05-30
@@ -147,10 +145,10 @@ void EventOrderWidget::Fill( const Event& event )
             entity = model_.agents_.tools::Resolver< kernel::Population_ABC >::Find( mission->GetEntityId() );
 
         target_ = entity;
-        targetLabel_->setText( ( target_ ) ? target_->GetName() : "---" );
+        targetLabel_->setText( target_ ? target_->GetName() : "---" );
 
         const actions::Action_ABC* action = eventAction.GetAction();
-        auto type = static_cast< E_MissionType >( eventAction.GetMissionType() );
+        auto type = eventAction.GetMissionType() ;
         if( const Decisions_ABC* decisions = GetTargetDecision() )
             manager_->Select( *decisions, type, order.GetName(), action );
         else
@@ -238,7 +236,7 @@ const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
 void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
 {
     target_ = entity;
-    targetLabel_->setText( ( target_ ) ? target_->GetName() : "---" );
+    targetLabel_->setText( target_ ? target_->GetName() : "---" );
 
     if( const Decisions_ABC* decisions = GetTargetDecision() )
     {

@@ -53,7 +53,7 @@ public:
              EventManager( EventBuilder_ABC& builder, const kernel::AgentTypes& agentTypes,
                            actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                            actions::gui::MissionInterface_ABC& missionInterface );
-    virtual ~EventManager();
+            ~EventManager();
     //@}
 
     //! @name Operations

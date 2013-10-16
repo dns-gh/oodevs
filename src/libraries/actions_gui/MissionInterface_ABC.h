@@ -10,8 +10,8 @@
 #ifndef __MissionInterface_ABC_h_
 #define __MissionInterface_ABC_h_
 
-#include <boost/noncopyable.hpp>
 #include "ENT/ENT_Tr.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -24,12 +24,13 @@ namespace timeline
     struct Event;
 }
 
-namespace actions {
+namespace actions
+{
     class ActionsModel;
     class Action_ABC;
-namespace gui {
+namespace gui
+{
     class InterfaceBuilder_ABC;
-
 // =============================================================================
 /** @class  MissionInterface_ABC
     @brief  MissionInterface_ABC

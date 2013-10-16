@@ -10,9 +10,9 @@
 #ifndef __EventBuilder_ABC_h_
 #define __EventBuilder_ABC_h_
 
+#include "ENT/ENT_Tr.h"
 #include <boost/noncopyable.hpp>
 #include <vector>
-#include "ENT/ENT_Tr.h"
 
 namespace gui
 {
