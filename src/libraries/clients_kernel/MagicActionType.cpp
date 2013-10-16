@@ -182,15 +182,20 @@ void MagicActionType::Initialize()
         perception->AddValue( sword::UnitIdentification::recognized, tools::ToString( eRecognition ).toStdString() );
         perception->AddValue( sword::UnitIdentification::identified, tools::ToString( eIdentification ).toStdString() );
     }
-     else if( name == "automat_log_supply_push_flow" || name == "formation_log_supply_push_flow" )
-    {
+    else if( name == "automat_log_supply_push_flow" )
         CreateOrderParameter( "Parameters", "pushflowparameters" );
-    }
-     else if( name == "automat_log_supply_pull_flow" || name == "formation_log_supply_pull_flow" )
-    {
+    else if( name == "formation_log_supply_push_flow" )
+        CreateOrderParameter( "Parameters", "pushflowparameters" );
+    else if( name == "automat_log_supply_pull_flow" )
         CreateOrderParameter( "Parameters", "pullflowparameters" );
+    else if( name == "formation_log_supply_pull_flow" )
+        CreateOrderParameter( "Parameters", "pullflowparameters" );
+    else if( name == "automat_log_supply_change_quotas" )
+    {
+        CreateOrderParameter( "Receiver", "identifier" );
+        CreateOrderParameter( "Dotations", "list" );
     }
-    else if( name == "automat_log_supply_change_quotas" || name == "formation_log_supply_change_quotas" )
+    else if( name == "formation_log_supply_change_quotas" )
     {
         CreateOrderParameter( "Receiver", "identifier" );
         CreateOrderParameter( "Dotations", "list" );
@@ -205,7 +210,7 @@ void MagicActionType::Initialize()
     }
     else if( name == "update_object" )
         CreateOrderParameter( "Attributes", "list" );
-    else if( name == "global_weather" || name == "local_weather" )
+    else if( name == "global_weather" )
     {
         CreateOrderParameter( "Temperature", "numeric" );
         CreateOrderParameter( "WindSpeed", "numeric" );
@@ -221,13 +226,27 @@ void MagicActionType::Initialize()
         precipitation->AddValue( 4, "Pluie"              );
         precipitation->AddValue( 5, "Neige"              );
         precipitation->AddValue( 6, "Fumigene"           );
-        if( name == "local_weather" )
-        {
-            CreateOrderParameter( "StartTime", "datetime" );
-            CreateOrderParameter( "EndTime", "datetime" );
-            CreateOrderParameter( "Location", "location" );
-            CreateOrderParameter( "ID", "identifier" );
-        }
+    }
+    else if( name == "local_weather" )
+    {
+        CreateOrderParameter( "Temperature", "numeric" );
+        CreateOrderParameter( "WindSpeed", "numeric" );
+        CreateOrderParameter( "WindDirection", "heading" );
+        CreateOrderParameter( "CloudFloor", "numeric" );
+        CreateOrderParameter( "CloudCeiling", "numeric" );
+        CreateOrderParameter( "CloudDensity", "numeric" );
+        OrderParameter* precipitation = CreateOrderParameter( "Precipitation", "enumeration" );
+        precipitation->AddValue( 0, "PasDePrecipitation" );
+        precipitation->AddValue( 1, "TempeteDeSable"     );
+        precipitation->AddValue( 2, "Brouillard"         );
+        precipitation->AddValue( 3, "Crachin"            );
+        precipitation->AddValue( 4, "Pluie"              );
+        precipitation->AddValue( 5, "Neige"              );
+        precipitation->AddValue( 6, "Fumigene"           );
+        CreateOrderParameter( "StartTime", "datetime" );
+        CreateOrderParameter( "EndTime", "datetime" );
+        CreateOrderParameter( "Location", "location" );
+        CreateOrderParameter( "ID", "identifier" );
     }
     else if( name == "local_weather_destruction" )
     {
