@@ -471,7 +471,7 @@ namespace
     public:
         //! @name Constructors/Destructor
         //@{
-        ADN_ObjectDetection_Table( const QString& objectName, void* data, QWidget* pParent = 0 )
+        ADN_ObjectDetection_Table( const QString& objectName, QWidget* pParent = 0 )
             : ADN_Table( objectName, pParent )
         {
             setAlternatingRowColors( false );
@@ -484,6 +484,10 @@ namespace
             horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
             horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
             horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+        }
+        virtual ~ADN_ObjectDetection_Table() {}
+        void AddHeader( void* data )
+        {
             AddItem( 0, 0, 2, 1, data, tools::translate( "ADN_Sensors_GUI", "Sensor" ) );
             AddItem( 0, 1, 2, 1, data, tools::translate( "ADN_Sensors_GUI", "Object" ) );
             AddItem( 0, 2, 2, 1, data, tools::translate( "ADN_Sensors_GUI", "Detection distance (m)" ) );
@@ -492,7 +496,6 @@ namespace
                 AddItem( 1, 3 + n, data, ENT_Tr::ConvertFromUnitPosture( static_cast< E_UnitPosture >( n ), ENT_Tr::eToTr ).c_str() );
             AddBoldGridCol( 3 );
         }
-        virtual ~ADN_ObjectDetection_Table() {}
         //@}
     };
 }
@@ -503,9 +506,10 @@ namespace
 // -----------------------------------------------------------------------------
 ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
 {
-    ADN_Table* pTable = new ADN_ObjectDetection_Table( std::string( std::string( strClassName_ ) + "_object-detection-consistency-table" ).c_str(), &data_.vSensors_ );
+    ADN_ObjectDetection_Table* pTable = new ADN_ObjectDetection_Table( std::string( std::string( strClassName_ ) + "_object-detection-consistency-table" ).c_str() );
     // Fill the table
-    int nRow = 2;
+    int headerRowsNumber = 2;
+    int nRow = headerRowsNumber;
     for( auto it = data_.vSensors_.begin(); it != data_.vSensors_.end(); ++it )
     {
         ADN_Sensors_Data::SensorInfos& sensor = **it;
@@ -513,16 +517,14 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
             continue;
 
         pTable->setNumRows( static_cast< int >( nRow + sensor.vTargets_.size() ) );
-        pTable->AddBoldGridRow( nRow );
-        pTable->AddItem( nRow, 0, static_cast< int >( sensor.vTargets_.size() ), 1, &sensor, sensor.strName_.GetData().c_str() );
+        QString sensorName( sensor.strName_.GetData().c_str() );
 
         int nSubRow = 0;
         for( auto it2 = sensor.vTargets_.begin(); it2 != sensor.vTargets_.end(); ++it2 )
         {
-            if( nSubRow > 0 )
-                pTable->AddItem( nRow + nSubRow, 0, &sensor, sensor.strName_.GetData().c_str() );
-            ADN_Sensors_Data::TargetInfos& target = **it2;
             int row = nRow + nSubRow;
+            pTable->AddItem( row, 0, &sensor, sensorName );
+            ADN_Sensors_Data::TargetInfos& target = **it2;
             pTable->AddItem( row, 1, &sensor, &target.strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
             pTable->GetDelegate().AddSpinBox( row, row, 2, 2, 0, std::numeric_limits< int >::max() );
             pTable->AddItem( row, 2, &sensor, &target.rDistanceDetection_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
@@ -535,6 +537,24 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
         nRow += static_cast< int >( sensor.vTargets_.size() );
     }
     pTable->Sort();
+    QString currentSensor;
+    int span = 1;
+    int newSensor = headerRowsNumber;
+    for( int i = headerRowsNumber; i < pTable->numRows(); ++i )
+    {
+        QString currentName = pTable->GetItem( i, 0 )->text();
+        if( currentSensor != currentName )
+        {
+            currentSensor = currentName;
+            span = 1;
+            newSensor = i;
+            pTable->AddBoldGridRow( i );
+        }
+        else
+            ++span;
+        pTable->setSpan( newSensor, 0, span, 1 );
+    }
+    pTable->AddHeader( &data_.vSensors_ );
     return pTable;
 }
 
