@@ -121,10 +121,10 @@ public:
     bool                   MedicalCanCollectionAmbulanceGo        ( const PHY_MedicalCollectionAmbulance& ambulance ) const;
 
     //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
-    PHY_RoleInterface_Medical* MedicalFindAlternativeEvacuationHandler( PHY_MedicalHumanState& humanState );
-    PHY_RoleInterface_Medical* MedicalFindAlternativeCollectionHandler( PHY_MedicalHumanState& humanState );
-    PHY_RoleInterface_Medical* MedicalFindAlternativeSortingHandler   ( PHY_MedicalHumanState& humanState );
-    PHY_RoleInterface_Medical* MedicalFindAlternativeHealingHandler   ( PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeEvacuationHandler( const PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeCollectionHandler( const PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeSortingHandler   ( const PHY_MedicalHumanState& humanState );
+    PHY_RoleInterface_Medical* MedicalFindAlternativeHealingHandler   ( const PHY_MedicalHumanState& humanState );
     //@}
 
     //! @name Supply

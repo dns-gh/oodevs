@@ -294,7 +294,7 @@ bool MIL_AutomateLOG::MedicalCanCollectionAmbulanceGo( const PHY_MedicalCollecti
 // Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler( PHY_MedicalHumanState& humanState )
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler( const PHY_MedicalHumanState& humanState )
 {
     MedicalEvacuationVisitor visitor( humanState.GetHuman() );
     Visit( visitor );
@@ -302,10 +302,10 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeEvacuationHand
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Name: MIL_AutomateLOG::MedicalFindAlternativeCollectionHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeCollectionHandler( PHY_MedicalHumanState& humanState )
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeCollectionHandler( const PHY_MedicalHumanState& humanState )
 {
     MedicalCollectionVisitor visitor( humanState );
     Visit( visitor );
@@ -313,10 +313,10 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeCollectionHand
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Name: MIL_AutomateLOG::MedicalFindAlternativeSortingHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeSortingHandler( PHY_MedicalHumanState& )
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeSortingHandler( const PHY_MedicalHumanState& )
 {
     MedicalSortingVisitor visitor;
     Visit( visitor );
@@ -324,10 +324,10 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeSortingHandler
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::MedicalFindAlternativeEvacuationHandler
+// Name: MIL_AutomateLOG::MedicalFindAlternativeHealingHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler( PHY_MedicalHumanState& humanState )
+PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler( const PHY_MedicalHumanState& humanState )
 {
     MedicalHealingVisitor visitor( humanState );
     Visit( visitor );
