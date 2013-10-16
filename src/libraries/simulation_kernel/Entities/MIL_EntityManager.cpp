@@ -1808,48 +1808,37 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message
 // Name: MIL_EntityManager::OnReceiveKnowledgeGroupCreation
 // Created: FHD 2009-12-15
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& message, sword::MagicActionAck& ack )
 {
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
-    try
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 2 );
+    const std::string typeStr = protocol::GetString( params, 1 );
+    const auto* type = MIL_KnowledgeGroupType::FindType( typeStr );
+    if( !type )
+        throw MASA_BADPARAM_MAGICACTION( "invalid knowledge group type: " << typeStr );
+    const uint32_t parentId = protocol::GetIdentifier( params, 0 );
+    boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( parentId );
+    boost::shared_ptr< MIL_KnowledgeGroup > group;
+    if( parent )
     {
-        const auto& params = message.parameters();
-        protocol::CheckCount( params, 2 );
-        const std::string typeStr = protocol::GetString( params, 1 );
-        const auto* type = MIL_KnowledgeGroupType::FindType( typeStr );
-        if( !type )
-            throw MASA_BADPARAM_MAGICACTION( "invalid knowledge group type: " << typeStr );
-        const uint32_t parentId = protocol::GetIdentifier( params, 0 );
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( parentId );
-        boost::shared_ptr< MIL_KnowledgeGroup > group;
-        if( parent )
-        {
-            group.reset( new MIL_KnowledgeGroup( *type, *parent ) );
-            parent->RegisterKnowledgeGroup( group );
-        }
-        else
-        {
-            MIL_Army_ABC* army = armyFactory_->Find( parentId );
-            if( ! army )
-                throw MASA_BADPARAM_MAGICACTION( "invalid party identifier: " << parentId );
-            group.reset( new MIL_KnowledgeGroup( *type, *army, false ) );
-            army->RegisterKnowledgeGroup( group );
-        }
-        if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = group->GetKnowledge() )
-        {
-            const MIL_Army_ABC::T_Objects& objects = group->GetArmy().GetObjects();
-            for( auto it = objects.begin(); it != objects.end(); ++it )
-                blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
-        }
-        ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+        group.reset( new MIL_KnowledgeGroup( *type, *parent ) );
+        parent->RegisterKnowledgeGroup( group );
     }
-    catch( const std::exception& e )
+    else
     {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
-        ack().set_error_msg( tools::GetExceptionMsg( e ));
+        MIL_Army_ABC* army = armyFactory_->Find( parentId );
+        if( ! army )
+            throw MASA_BADPARAM_MAGICACTION( "invalid party identifier: " << parentId );
+        group.reset( new MIL_KnowledgeGroup( *type, *army, false ) );
+        army->RegisterKnowledgeGroup( group );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = group->GetKnowledge() )
+    {
+        const MIL_Army_ABC::T_Objects& objects = group->GetArmy().GetObjects();
+        for( auto it = objects.begin(); it != objects.end(); ++it )
+            blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
+    }
+    ack.mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
 }
 
 // -----------------------------------------------------------------------------

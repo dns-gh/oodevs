@@ -40,6 +40,7 @@ namespace sword
     class UnitMagicActionAck;
     class KnowledgeMagicAction;
     class MagicAction;
+    class MagicActionAck;
     class MissionParameter_Value;
     class BurningCellRequest;
     class ParentEntity;
@@ -199,7 +200,7 @@ public:
     void OnReceiveChangeResourceLinks      ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveBurningCellRequest       ( const sword::BurningCellRequest&   message, unsigned int nCtx );
-    void OnReceiveKnowledgeGroupCreation   ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
+    void OnReceiveKnowledgeGroupCreation   ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
     //@}
 
     //! @name Population channeling

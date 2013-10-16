@@ -170,15 +170,15 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
         manager.OnReceiveChangeResourceLinks( msg, ctx, clientId );
     else if( type == sword::MagicAction::create_fire_order_on_location )
         manager.OnReceiveCreateFireOrderOnLocation( msg, ctx, clientId );
-    else if( type == sword::MagicAction::create_knowledge_group )
-        manager.OnReceiveKnowledgeGroupCreation( msg, ctx, clientId );
     else
     {
         client::MagicActionAck ack;
         ack().set_error_code( sword::MagicActionAck::no_error );
         try
         {
-            if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
+            if( type == sword::MagicAction::create_knowledge_group )
+                manager.OnReceiveKnowledgeGroupCreation( msg, ack() );
+            else if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
                 OnReceiveDebugError( msg.parameters() );
         }
         catch( const std::exception& e )
