@@ -739,7 +739,6 @@ namespace
 void WriteTimelineConfig( const UuidFactory_ABC& uuids,
                           const FileSystem_ABC& fs,
                           const Path& filename,
-                          const web::session::Profile& profile,
                           int port )
 {
     const std::string uuid = boost::lexical_cast< std::string >( uuids.Create() );
@@ -770,14 +769,12 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
     "                \"name\": \"simulation\","
     "                \"clock\": true,"
     "                \"sword\": {"
-    "                    \"address\": \"localhost:%2%\","
-    "                    \"username\": \"%3%\","
-    "                    \"password\": \"%4%\""
+    "                    \"address\": \"localhost:%2%\""
     "                }"
     "            }"
     "        }"
     "    }"
-    "}," ) % uuid % port % profile.username % profile.password ).str();
+    "}," ) % uuid % port ).str();
     output += attach;
 
     Tree start;
@@ -791,11 +788,10 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
 Session::T_Process StartTimeline( const SessionDependencies& deps,
                                   const Path& app,
                                   const Path& root,
-                                  const web::session::Profile& profile,
                                   int base )
 {
     const Path config = root / "timeline.run";
-    WriteTimelineConfig( deps.uuids, deps.fs, config, profile, base + DISPATCHER_PORT );
+    WriteTimelineConfig( deps.uuids, deps.fs, config, base + DISPATCHER_PORT );
     std::vector< std::string > options = boost::assign::list_of
         ( MakeOption( "port",  base + TIMELINE_PORT ) )
         ( MakeOption( "serve", base + TIMELINE_WEB_PORT ) )
@@ -844,11 +840,11 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
 
     runtime::Scoper kill_orphaned_process( boost::bind( &runtime::Process_ABC::Kill, ptr ) );
     T_Process time;
-    if( cfg_.timeline.enabled && !cfg_.profiles.empty() )
+    if( cfg_.timeline.enabled )
     {
         if( !deps_.ports.WaitConnected( lock, port_->Get() + DISPATCHER_PORT ) )
             return false;
-        if( !( time = StartTimeline( deps_, timeline, GetRoot(), *cfg_.profiles.begin(), port_->Get() + DISPATCHER_PORT ) ) )
+        if( !( time = StartTimeline( deps_, timeline, GetRoot(), port_->Get() + DISPATCHER_PORT ) ) )
             return false;
     }
 
