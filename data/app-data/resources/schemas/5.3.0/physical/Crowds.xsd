@@ -39,7 +39,6 @@
 						<xs:attribute name="armed-individuals" type="T_ZeroToOneDouble"/>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="translation-queries" type="T_TranslationQueries" minOccurs="0" maxOccurs="1"/>
 			</xs:sequence>
 			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>

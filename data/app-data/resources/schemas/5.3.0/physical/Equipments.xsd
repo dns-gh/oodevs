@@ -5,7 +5,6 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="equipment" type="T_Equipment" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:element name="translation-queries" type="T_TranslationQueries" minOccurs="0" maxOccurs="1"/>
 			</xs:sequence>
 			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
@@ -277,5 +276,4 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="translation-queries" type="T_TranslationQueries" minOccurs="0" maxOccurs="1"/>
 </xs:schema>
