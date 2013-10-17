@@ -166,7 +166,7 @@ void ADN_Missions_ABC::ReadMissionSheetParametersDescriptions( xml::xistream& xi
         >> type;
     FromXmlToWiki( xis, parameterData );
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
-        if( (*it)->strName_ == parameterName )
+        if( (*it)->strName_.GetValue( language ) == parameterName )
         {
             (*it)->description_.SetValue( language, parameterData );
             (*it)->description_.SetType( language, type );
