@@ -12,11 +12,14 @@
 #ifndef __PHY_MedicalCollectionAmbulance_h_
 #define __PHY_MedicalCollectionAmbulance_h_
 
-#include <boost/serialization/export.hpp>
+#include <boost/serialization/split_member.hpp>
+#include <boost/noncopyable.hpp>
 
 class PHY_ComposantePion;
 class PHY_MedicalCollectionConsign;
 class PHY_RoleInterface_Medical;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 // @class  PHY_MedicalCollectionAmbulance
@@ -29,12 +32,14 @@ public:
     //@{
      PHY_MedicalCollectionAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance );
      PHY_MedicalCollectionAmbulance();
-    virtual ~PHY_MedicalCollectionAmbulance();
+    ~PHY_MedicalCollectionAmbulance();
     //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -104,7 +109,5 @@ private:
     bool                        bSort_;
     //@}
 };
-
-BOOST_CLASS_EXPORT_KEY( PHY_MedicalCollectionAmbulance )
 
 #endif // __PHY_MedicalCollectionAmbulance_h_
