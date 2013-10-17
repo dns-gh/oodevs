@@ -897,6 +897,7 @@
         <update name="htmlhelp" version="4.74.8702"/>
         <update name="iconv"/>
         <update name="masalife/brain"/>
+        <update name="mapnik"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
         <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
