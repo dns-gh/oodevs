@@ -19,7 +19,8 @@ using namespace dispatcher;
 // Created: SBO 2011-05-19
 // -----------------------------------------------------------------------------
 FileLogger::FileLogger( const tools::Path& filename, const Config& config )
-    : log_( filename, config.GetDispatcherLogFiles(), config.GetDispatcherLogSize(), ! config.HasCheckpoint(), config.IsDispatcherLogInBytes() )
+    : log_( config.BuildSessionChildFile( filename ), config.GetDispatcherLogFiles(),
+        config.GetDispatcherLogSize(), ! config.HasCheckpoint(), config.IsDispatcherLogInBytes() )
 {
     // NOTHING
 }
