@@ -92,6 +92,7 @@ private:
     //! @name EventWidget_ABC implementation
     //@{
     virtual void Purge();
+    virtual void Reset();
     virtual void Fill( const Event& event );
     virtual void Commit( timeline::Event& event ) const;
     virtual void Trigger() const;
@@ -126,7 +127,6 @@ signals:
     //! @name Signals
     //@{
     void StartCreation( E_EventTypes type, const QDateTime& dateTime );
-    void SelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
     void EnableTriggerEvent( bool enable );
     //@}
 
@@ -142,7 +142,6 @@ private slots:
     void OnMissionTypeChanged( int index );
     void OnMissionChanged( int id );
     void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
-    void OnSelectEntity( const kernel::Entity_ABC& entity, E_MissionType type );
     void OnTargetRemoved();
 
     void ActivateMissionPanel();

@@ -103,7 +103,6 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
 
     // Connections
     connect( missionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC&, timeline::Event* ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC&, timeline::Event* ) ) );
-    connect( this, SIGNAL( SelectEntity( const kernel::Entity_ABC&, E_MissionType ) ), this, SLOT( OnSelectEntity( const kernel::Entity_ABC&, E_MissionType ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,11 +114,33 @@ EventOrderWidget::~EventOrderWidget()
     controllers_.Unregister( *this );
 }
 
+namespace
+{
+    void PurgeComboBox( gui::RichWarnWidget< QComboBox >& combo )
+    {
+        combo.blockSignals( true );
+        combo.clear();
+        combo.blockSignals( false );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::Purge
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Purge()
+{
+    selectedEntity_ = 0;
+    target_ = 0;
+    PurgeComboBox( *missionTypeCombo_ );
+    PurgeComboBox( *missionCombo_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::Purge
+// Created: ABR 2013-06-06
+// -----------------------------------------------------------------------------
+void EventOrderWidget::Reset()
 {
     selectedEntity_ = 0;
     SetTarget( 0 );
@@ -300,15 +321,6 @@ void EventOrderWidget::OnPlannedMission( const actions::Action_ABC& action, time
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::OnSelectMission
-// Created: ABR 2013-07-03
-// -----------------------------------------------------------------------------
-void EventOrderWidget::OnSelectEntity( const kernel::Entity_ABC& entity, E_MissionType /*type*/ )
-{
-    SetTarget( &entity );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventOrderWidget::OnTargetRemoved
 // Created: NPT 2013-07-30
 // -----------------------------------------------------------------------------
@@ -405,7 +417,7 @@ void EventOrderWidget::ActivateMissionPanel()
         return;
 
     emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
-    emit SelectEntity( *selectedEntity_, eMissionType_Pawn );
+    SetTarget( selectedEntity_ );
 }
 
 // -----------------------------------------------------------------------------

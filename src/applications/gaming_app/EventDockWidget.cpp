@@ -283,7 +283,7 @@ void EventDockWidget::OnDiscard()
     if( editing_ )
         Fill();
     else
-        currentWidget_->Purge();
+        currentWidget_->Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +377,13 @@ void EventDockWidget::NotifyContextMenu( const Event& event, kernel::ContextMenu
 void EventDockWidget::NotifyDeleted( const Event& event )
 {
     if( event_.get() && event_->GetEvent().uuid == event.GetEvent().uuid )
-        Purge();
+    {
+        topWidget_->Purge();
+        if( currentWidget_ )
+            currentWidget_->Reset();
+        bottomWidget_->Purge();
+        detailWidget_->Purge();
+    }
 }
 
 // -----------------------------------------------------------------------------
