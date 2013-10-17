@@ -287,7 +287,7 @@ void ADN_MainWindow::PurgeGUI()
     disconnect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), actionForward_, SLOT( setEnabled( bool ) ) );
     mainLayout_->removeWidget( mainTabWidget_.get() );
     mainTabWidget_.reset();
-    tools::Language::SetCurrent( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
+    tools::Language::SetCurrent( "" );
     // ObjectNameManager
     gui::ObjectNameManager::getInstance()->Purge();
 }
