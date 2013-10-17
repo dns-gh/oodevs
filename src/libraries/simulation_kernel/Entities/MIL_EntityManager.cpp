@@ -1909,7 +1909,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     }
     catch( const protocol::Exception& )
     {
-        point = protocol::GetSinglePoint( params, 0 );
+        point = protocol::GetPoint( params, 0 );
     }
 
     const uint32_t resourceType = protocol::GetResourceType( params, 1 );

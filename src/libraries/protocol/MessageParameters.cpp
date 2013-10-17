@@ -193,14 +193,9 @@ int protocol::GetEnumeration( const ::google::protobuf::EnumDescriptor* descript
     return value;
 }
 
-const sword::Point& protocol::GetPoint( const sword::MissionParameters& params, int i, int j, int k )
+const sword::CoordLatLong& protocol::GetPoint( const sword::MissionParameters& params, int i, int j, int k )
 {
-    return GetValue< Point >( params, i, j, k );
-}
-
-const sword::CoordLatLong& protocol::GetSinglePoint( const sword::MissionParameters& params, int i, int j, int k )
-{
-    const auto& point = protocol::GetPoint( params, i, j, k );
+    const auto& point = GetValue< Point >( params, i, j, k );
     const auto& coords = point.location().coordinates();
     protocol::Check( coords.elem_size() == 1,
             "point location must contain a single point" );
