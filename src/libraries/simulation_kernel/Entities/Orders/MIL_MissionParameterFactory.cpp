@@ -325,7 +325,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateT
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLimaFunction
 // Created: MMC 2013-10-14
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLimaFunction( int id )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLimaFunction( unsigned int id )
 {
     return boost::make_shared< MIL_LimaFunctionParameter >( sword::PhaseLineOrder::Function( id ) );
 }

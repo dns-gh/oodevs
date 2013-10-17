@@ -71,7 +71,6 @@ public:
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
-    virtual bool ToLimaFunction( const MIL_LimaFunction*& ) const;
     virtual bool ToResourceNetworkNode( boost::shared_ptr< DEC_ResourceNetwork >& ) const;
     virtual bool ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const;
     virtual bool ToResourceNetworkType( const PHY_ResourceNetworkType*& ) const;

@@ -65,7 +65,7 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePopulationKnowledge( DEC_Decision_ABC* caller, int knowledgeId );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const std::string& message );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateTir( int id );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateLimaFunction( int id );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateLimaFunction( unsigned int id );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePoint( const MT_Vector2D& point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateLocation( boost::shared_ptr< TER_Localisation > pLocation );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateUrbanBlock( MIL_UrbanObject_ABC* pUrbanblock );

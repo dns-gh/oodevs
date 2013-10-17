@@ -373,6 +373,7 @@
 			<xs:enumeration value="Stage"/>
 			<xs:enumeration value="IndirectFire"/>
 			<xs:enumeration value="EquipmentType"/>
+			<xs:enumeration value="LimaFunction"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_ReportParameterType">

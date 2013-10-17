@@ -56,7 +56,8 @@ void PHY_ActionRecoLima::Execute()
     previousAgentsPos_.swap( agentsPos_ );
     agentsPos_.clear();
     boost::function< void( DEC_Knowledge_Agent& ) > agentFunctor = boost::bind( &PHY_ActionRecoLima::CheckAgentKnowledgesNearLimas, this, _1 );
-    if( caller_.GetAutomate().IsEngaged() ? IsFirstInAutomatWithMission() : true )
+    const MIL_Automate& automat = caller_.GetAutomate();
+    if( !automat.IsEngaged() || ( automat.IsEngaged() && IsFirstInAutomatValidWithMission() ) )
     {
         caller_.GetKnowledgeGroup()->ApplyOnKnowledgesAgent( agentFunctor );
         CheckAgentsNearLimas( caller_.GetKnowledgeGroup()->GetAutomates() );
@@ -65,8 +66,11 @@ void PHY_ActionRecoLima::Execute()
             CheckAgentsNearLimas( (*it)->GetAutomates() );
         for( auto it = lineCrossedAgents_.begin(); it != lineCrossedAgents_.end(); ++it )
         {
-            if( caller_.GetAutomate().IsEngaged() )
-                MIL_Report::PostEvent( caller_.GetAutomate(), report::eRC_CrossedLima, limaType_, (*it)->GetName() );
+            if( automat.IsEngaged() )
+            {
+                if( automat.GetPionPC() && !automat.GetPionPC()->IsJammed() )
+                    MIL_Report::PostEvent( automat, report::eRC_CrossedLima, limaType_, (*it)->GetName() );
+            }
             else
                 MIL_Report::PostEvent( caller_, report::eRC_CrossedLima, limaType_, (*it)->GetName() );
         }
@@ -142,15 +146,15 @@ void PHY_ActionRecoLima::CheckAgentsNearLimas( const MIL_Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionRecoLima::ExecuteSuspended
+// Name: PHY_ActionRecoLima::IsFirstInAutomatValidWithMission
 // Created: MMC 2013-07-08
 // -----------------------------------------------------------------------------
-bool PHY_ActionRecoLima::IsFirstInAutomatWithMission()
+bool PHY_ActionRecoLima::IsFirstInAutomatValidWithMission()
 {
     auto pions = caller_.GetAutomate().GetPions();
     for( auto it = pions.begin(); it != pions.end(); ++it )
         if( caller_.GetOrderManager().GetMissionName() == (*it)->GetOrderManager().GetMissionName() )
-            return caller_.GetID() == (*it)->GetID();
+            return !caller_.IsJammed() && caller_.GetID() == (*it)->GetID();
     return false;
 }
 

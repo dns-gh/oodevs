@@ -53,16 +53,6 @@ bool MIL_LimaFunctionParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LimaFunctionParameter::ToId
-// Created: MMC 2013-10-14
-// -----------------------------------------------------------------------------
-bool MIL_LimaFunctionParameter::ToId( int& id ) const
-{
-    id = id_;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_LimaFunctionParameter::ToIndirectFire
 // Created: MMC 2013-10-14
 // -----------------------------------------------------------------------------

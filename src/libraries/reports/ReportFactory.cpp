@@ -154,11 +154,10 @@ Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const sword
 
 namespace
 {
-    template< typename T >
-    boost::optional< std::string > FindType( typename T::value_type type )
+    boost::optional< std::string > FindLimaType( protocol::mapping::PhaseLineType::value_type type )
     {
-        const auto& map = typename T::data_;
-        for( size_t i = 0; i < typename T::size_; ++i )
+        const auto& map = protocol::mapping::PhaseLineType::data_;
+        for( size_t i = 0; i < protocol::mapping::PhaseLineType::size_; ++i )
             if( map[i].type == type )
                 return map[i].name;
         return boost::none;
@@ -197,7 +196,7 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
         return QString( stages_->FindTranslation( value.stage().c_str() ).c_str() );
     if( value.has_phase_line_function() )
     {
-        auto limaType = FindType< protocol::mapping::PhaseLineType >( static_cast< sword::PhaseLineOrder::Function >( value.phase_line_function() ) );
+        auto limaType = FindLimaType( value.phase_line_function() );
         if( limaType != boost::none )
             return QString( limaType->c_str() );
     }

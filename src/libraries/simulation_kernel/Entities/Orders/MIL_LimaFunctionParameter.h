@@ -38,7 +38,6 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToId( int& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
