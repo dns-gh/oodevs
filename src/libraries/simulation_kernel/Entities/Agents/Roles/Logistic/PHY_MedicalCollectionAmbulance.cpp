@@ -13,13 +13,13 @@
 #include "PHY_MedicalCollectionAmbulance.h"
 #include "PHY_MedicalCollectionConsign.h"
 #include "PHY_MedicalHumanState.h"
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
-
-BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalCollectionAmbulance )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionAmbulance constructor
@@ -68,25 +68,30 @@ PHY_MedicalCollectionAmbulance::~PHY_MedicalCollectionAmbulance()
     pMedical_->StopUsingForLogistic( *pCompAmbulance_ );
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-// -----------------------------------------------------------------------------
-// Name: PHY_MedicalCollectionAmbulance::serialize
-// Created: JVT 2005-04-11
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_MedicalCollectionAmbulance::serialize( Archive& file, const unsigned int )
+void PHY_MedicalCollectionAmbulance::load( MIL_CheckPointInArchive& a, const unsigned int )
 {
-    file & pMedical_
-         & pCompAmbulance_
-         & consigns_
-         & nState_
-         & nTimer_
-         & bEmergencyAmbulance_
-         & rNbrHumanHandled_
-         & pDestinationArea_
-         & bSort_;
+    a & pMedical_
+      & pCompAmbulance_
+      & consigns_
+      & nState_
+      & nTimer_
+      & bEmergencyAmbulance_
+      & rNbrHumanHandled_
+      & pDestinationArea_
+      & bSort_;
+}
+
+void PHY_MedicalCollectionAmbulance::save( MIL_CheckPointOutArchive& a, const unsigned int ) const
+{
+    a & pMedical_
+      & pCompAmbulance_
+      & consigns_
+      & nState_
+      & nTimer_
+      & bEmergencyAmbulance_
+      & rNbrHumanHandled_
+      & pDestinationArea_
+      & bSort_;
 }
 
 // =============================================================================

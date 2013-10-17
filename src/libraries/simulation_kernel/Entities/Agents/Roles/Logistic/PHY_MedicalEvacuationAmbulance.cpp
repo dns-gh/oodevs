@@ -13,13 +13,13 @@
 #include "PHY_MedicalEvacuationAmbulance.h"
 #include "PHY_MedicalEvacuationConsign.h"
 #include "PHY_MedicalHumanState.h"
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include <boost/range/algorithm_ext/erase.hpp>
-
-BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalEvacuationAmbulance )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationAmbulance constructor
@@ -62,20 +62,26 @@ PHY_MedicalEvacuationAmbulance::~PHY_MedicalEvacuationAmbulance()
     pMedical_->StopUsingForLogistic( *pCompAmbulance_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MedicalEvacuationAmbulance::serialize
-// Created: JVT 2005-04-11
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_MedicalEvacuationAmbulance::serialize( Archive& file, const unsigned int )
+void PHY_MedicalEvacuationAmbulance::load( MIL_CheckPointInArchive& a, const unsigned int )
 {
-    file & pMedical_
-         & pCompAmbulance_
-         & consigns_
-         & nState_
-         & nTimer_
-         & rNbrHumanHandled_
-         & rInfoTimer_;
+    a & pMedical_
+      & pCompAmbulance_
+      & consigns_
+      & nState_
+      & nTimer_
+      & rNbrHumanHandled_
+      & rInfoTimer_;
+}
+
+void PHY_MedicalEvacuationAmbulance::save( MIL_CheckPointOutArchive& a, const unsigned int ) const
+{
+    a & pMedical_
+      & pCompAmbulance_
+      & consigns_
+      & nState_
+      & nTimer_
+      & rNbrHumanHandled_
+      & rInfoTimer_;
 }
 
 // -----------------------------------------------------------------------------
