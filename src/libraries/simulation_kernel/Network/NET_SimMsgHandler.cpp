@@ -173,7 +173,7 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
             manager.OnReceiveChangeResourceLinks( msg );
         else if( type == sword::MagicAction::change_diplomacy )
             manager.OnReceiveChangeDiplomacy( msg, ctx );
-        if( type == sword::MagicAction::global_weather ||
+        else if( type == sword::MagicAction::global_weather ||
             type == sword::MagicAction::local_weather ||
             type == sword::MagicAction::local_weather_destruction )
             server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ack(), ctx );

@@ -1813,7 +1813,7 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 {
     const auto& params = message.parameters();
     protocol::CheckCount( params, 2 );
-    const std::string typeStr = protocol::GetString( params, 1 );
+    const std::string& typeStr = protocol::GetString( params, 1 );
     const auto* type = MIL_KnowledgeGroupType::FindType( typeStr );
     if( !type )
         throw MASA_BADPARAM_MAGICACTION( "invalid knowledge group type: " << typeStr );
