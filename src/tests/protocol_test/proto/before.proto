@@ -22,7 +22,16 @@ message UintToIntMsg {
     required uint32 uint_to_int = 1;
 }
 
+enum ExternalEnum {
+    external0 = 42;
+}
+
+message EmbeddingEnum {
+    required ExternalEnum value = 1;
+}
+
 message Root {
     optional EnumNewValueMsg enum_new_value_msg = 1;
     optional UintToIntMsg uint_to_int_msg = 2;
+    optional EmbeddingEnum embedding_enum = 3;
 }

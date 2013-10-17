@@ -64,3 +64,12 @@ BOOST_AUTO_TEST_CASE( compat_turning_uint_into_int )
     BOOST_REQUIRE( decoded );
     BOOST_CHECK_EQUAL( uint32_t( -29 ), decoded->uint_to_int_msg().uint_to_int() );
 }
+
+BOOST_AUTO_TEST_CASE( compat_embedding_enum )
+{
+    after::Root msg;
+    msg.mutable_embedding_enum()->set_value( after::EmbeddingEnum::value0 );
+    auto decoded = EncodeDecode( msg );
+    BOOST_REQUIRE( decoded );
+    BOOST_CHECK_EQUAL( before::external0, decoded->embedding_enum().value() );
+}
