@@ -11,7 +11,11 @@
 #define __PHY_DecisionCallbackAction_ABC_h_
 
 #include "PHY_Action_ABC.h"
-#include <boost/shared_ptr.hpp>
+
+namespace boost
+{
+    template< typename T > class shared_ptr;
+}
 
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;

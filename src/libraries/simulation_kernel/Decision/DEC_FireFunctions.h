@@ -12,7 +12,10 @@
 #ifndef __DEC_FireFunctions_h_
 #define __DEC_FireFunctions_h_
 
-#include <boost/shared_ptr.hpp>
+namespace boost
+{
+    template< typename T > class shared_ptr;
+}
 
 class DEC_Knowledge_Agent;
 class DEC_Decision_ABC;
