@@ -157,7 +157,7 @@ void PHY_MeteoDataManager::UpdateGlobalWeather( const sword::MagicAction& msg )
 // Name: PHY_MeteoDataManager::ManageLocalWeather
 // Created: LGY 2013-06-16
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, client::MagicActionAck& ack )
+void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, sword::MagicActionAck& ack )
 {
     const auto& params = msg.parameters();
     uint32_t id = 0;
@@ -179,9 +179,9 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, cl
     }
     if( id )
     {
-        ack().mutable_result()->add_elem()->add_value()->set_identifier( id );
+        ack.mutable_result()->add_elem()->add_value()->set_identifier( id );
         // Published in 5.2, deprecated
-        ack().mutable_weather()->set_id( id );
+        ack.mutable_weather()->set_id( id );
     }
 }
 
@@ -207,42 +207,26 @@ void PHY_MeteoDataManager::RemoveLocalWeather( const sword::MagicAction& msg )
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned context, unsigned client )
+void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, sword::MagicActionAck& ack, unsigned int context )
 {
-    client::MagicActionAck ack;
-    try
+    auto& pub = NET_Publisher_ABC::Publisher();
+    if( msg.type() == sword::MagicAction::global_weather )
     {
-        auto& pub = NET_Publisher_ABC::Publisher();
-        ack().set_error_code( sword::MagicActionAck::no_error );
-        if( msg.type() == sword::MagicAction::global_weather )
-        {
-            UpdateGlobalWeather( msg );
-            client::ControlGlobalWeatherAck().Send( pub, context ); ///< deprecated
-        }
-        else if( msg.type() == sword::MagicAction::local_weather )
-        {
-            ManageLocalWeather( msg, ack );
-            client::ControlLocalWeatherAck().Send( pub, context ); ///< deprecated
-        }
-        else if( msg.type() == sword::MagicAction::local_weather_destruction )
-        {
-            RemoveLocalWeather( msg );
-            client::ControlLocalWeatherAck().Send( pub, context ); ///< deprecated
-        }
-        else
-            throw MASA_EXCEPTION( "unknown magic action" );
+        UpdateGlobalWeather( msg );
+        client::ControlGlobalWeatherAck().Send( pub, context ); ///< deprecated
     }
-    catch( const NET_AsnException< sword::MagicActionAck_ErrorCode >& e )
+    else if( msg.type() == sword::MagicAction::local_weather )
     {
-        ack().set_error_code( e.GetErrorID() );
-        ack().set_error_msg( e.what() );
+        ManageLocalWeather( msg, ack );
+        client::ControlLocalWeatherAck().Send( pub, context ); ///< deprecated
     }
-    catch( const std::exception& e )
+    else if( msg.type() == sword::MagicAction::local_weather_destruction )
     {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
-        ack().set_error_msg( tools::GetExceptionMsg( e ) );
+        RemoveLocalWeather( msg );
+        client::ControlLocalWeatherAck().Send( pub, context ); ///< deprecated
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), context, client );
+    else
+        throw MASA_EXCEPTION( "unknown magic action" );
 }
 
 // -----------------------------------------------------------------------------

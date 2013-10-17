@@ -1252,11 +1252,8 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParame
 {
     protocol::CheckCount( msg, 1 );
     const auto& point = protocol::GetPoint( msg, 0 );
-    protocol::Check( point.location().type() == sword::Location::point
-        && point.location().coordinates().elem_size() == 1,
-        "must be a point with one coordinate", 0 );
     MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
+    MIL_Tools::ConvertCoordMosToSim( point, vPosTmp );
    // merge all concentrations into new
     T_ConcentrationVector concentrations = concentrations_;
     for( IT_ConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )

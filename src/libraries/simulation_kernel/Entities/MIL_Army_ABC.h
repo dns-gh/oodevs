@@ -120,7 +120,7 @@ public:
     virtual void                UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup ) = 0;
 
     virtual void InitializeDiplomacy( xml::xistream& xis ) = 0;
-    virtual void OnReceiveChangeDiplomacy( const sword::MissionParameters& msg ) = 0;
+    virtual void ChangeDiplomacy( MIL_Army_ABC& other, E_Diplomacy diplomacy ) = 0;
     virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& ) = 0;
     //@}
 

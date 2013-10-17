@@ -35,6 +35,7 @@
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_RoofShapeType.h"
 #include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_MessageParameters.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/map.hpp>
@@ -487,25 +488,13 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 // Name: MIL_ObjectManager::OnReceiveChangeResourceLinks
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& message )
 {
-    sword::MagicActionAck_ErrorCode nErrorCode = sword::MagicActionAck::no_error;
     const sword::MissionParameters& params = message.parameters();
-    if( params.elem_size() > 1 && params.elem( 0 ).value_size() > 0 
-      && params.elem( 0 ).value().Get( 0 ).has_identifier() )
-    {        
-        unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
-        MIL_Object_ABC* object = Find( id );
-        if( object == 0 )
-            nErrorCode = sword::MagicActionAck::error_invalid_parameter;
-        else
-            nErrorCode = object->OnUpdateResourceLinks( params.elem( 1 ).value() );
-    }
-    else
-        nErrorCode = sword::MagicActionAck::error_invalid_parameter;
-    client::MagicActionAck asnReplyMsg;
-    asnReplyMsg().set_error_code( nErrorCode );
-    asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    const uint32_t id = protocol::GetIdentifier( params, 0 );
+    MIL_Object_ABC* object = Find( id );
+    protocol::Check( object, "object identifier cannot be resolved" );
+    object->OnUpdateResourceLinks( params.elem( 1 ).value() );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DecisionCallbackAction_ABC.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Entity_ABC.h"
 
 // -----------------------------------------------------------------------------

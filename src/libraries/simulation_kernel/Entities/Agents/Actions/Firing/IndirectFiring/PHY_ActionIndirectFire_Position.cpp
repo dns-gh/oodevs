@@ -13,6 +13,7 @@
 #include "PHY_ActionIndirectFire_Position.h"
 #include "PHY_RoleAction_IndirectFiring.h"
 #include "MIL_AgentServer.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"

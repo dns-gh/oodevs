@@ -1536,52 +1536,53 @@ uint32_t GetPartyId( const sword::MissionParameters& params, int i )
     }
 }
 
+MIL_Army_ABC::E_Diplomacy GetDiplomacy( sword::EnumDiplomacy e )
+{
+    switch( e )
+    {
+        case sword::friendly: return MIL_Army_ABC::eFriend;
+        case sword::enemy: return MIL_Army_ABC::eEnemy;
+        case sword::neutral: return MIL_Army_ABC::eNeutral;
+    }
+    return MIL_Army_ABC::eUnknown;
+}
+
 } // namespace
 
-void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::OnReceiveChangeDiplomacy( const sword::MagicAction& message, unsigned int nCtx )
 {
-    client::MagicActionAck magicAck;
-    magicAck().set_error_code( MagicActionAck::no_error );
-    try
-    {
-        client::ChangeDiplomacyAck ack;
-        client::ChangeDiplomacy changeDiplomacyMes;
-        const auto& params = message.parameters();
-        protocol::CheckCount( params, 3 );
-        const uint32_t party1 = GetPartyId( params, 0 );
-        const uint32_t party2 = GetPartyId( params, 1 );
-        const sword::EnumDiplomacy value = GET_ENUMERATION( sword::EnumDiplomacy, params, 2 );
+    client::ChangeDiplomacyAck ack;
+    client::ChangeDiplomacy changeDiplomacyMes;
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 3 );
+    const uint32_t party1 = GetPartyId( params, 0 );
+    const uint32_t party2 = GetPartyId( params, 1 );
+    const sword::EnumDiplomacy value = GET_ENUMERATION( sword::EnumDiplomacy, params, 2 );
 
-        MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );
-        if( !pArmy1 )
-            throw MASA_BADPARAM_ASN( ChangeDiplomacyAck_ErrorCode, ChangeDiplomacyAck::error_invalid_party_diplomacy, STR( "invalid party identifier " << party1 ));
-        pArmy1->OnReceiveChangeDiplomacy( message.parameters() );
+    MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );
+    protocol::Check( pArmy1, STR( "invalid party indentifier " << party1 ) );
+    MIL_Army_ABC* pArmy2 = armyFactory_->Find( party2 );
+    protocol::Check( pArmy2, STR( "invalid party indentifier " << party2 ) );
+    pArmy1->ChangeDiplomacy( *pArmy2, GetDiplomacy( value ) );
 
-        changeDiplomacyMes().mutable_party1()->set_id( party1 );
-        changeDiplomacyMes().mutable_party2()->set_id( party2 );
-        changeDiplomacyMes().set_diplomacy( value );
-        changeDiplomacyMes.Send( NET_Publisher_ABC::Publisher(), nCtx );
-        ack().mutable_party1()->set_id( party1 );
-        ack().mutable_party2()->set_id( party2 );
-        ack().set_diplomacy( value );
-        ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
-        ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
-    }
-    catch( const std::exception& e )
-    {
-        magicAck().set_error_code( MagicActionAck::error_invalid_parameter );
-        magicAck().set_error_msg( tools::GetExceptionMsg( e ));
-    }
-    magicAck.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    changeDiplomacyMes().mutable_party1()->set_id( party1 );
+    changeDiplomacyMes().mutable_party2()->set_id( party2 );
+    changeDiplomacyMes().set_diplomacy( value );
+    changeDiplomacyMes.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack().mutable_party1()->set_id( party1 );
+    ack().mutable_party2()->set_id( party2 );
+    ack().set_diplomacy( value );
+    ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveChangeResourceLinks
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message )
 {
-    pObjectManager_->OnReceiveChangeResourceLinks( message, nCtx, clientId );
+    pObjectManager_->OnReceiveChangeResourceLinks( message );
 }
 
 namespace
@@ -1808,48 +1809,37 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message
 // Name: MIL_EntityManager::OnReceiveKnowledgeGroupCreation
 // Created: FHD 2009-12-15
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& message, sword::MagicActionAck& ack )
 {
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
-    try
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 2 );
+    const std::string& typeStr = protocol::GetString( params, 1 );
+    const auto* type = MIL_KnowledgeGroupType::FindType( typeStr );
+    if( !type )
+        throw MASA_BADPARAM_MAGICACTION( "invalid knowledge group type: " << typeStr );
+    const uint32_t parentId = protocol::GetIdentifier( params, 0 );
+    boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( parentId );
+    boost::shared_ptr< MIL_KnowledgeGroup > group;
+    if( parent )
     {
-        const auto& params = message.parameters();
-        protocol::CheckCount( params, 2 );
-        const std::string typeStr = protocol::GetString( params, 1 );
-        const auto* type = MIL_KnowledgeGroupType::FindType( typeStr );
-        if( !type )
-            throw MASA_BADPARAM_MAGICACTION( "invalid knowledge group type: " << typeStr );
-        const uint32_t parentId = protocol::GetIdentifier( params, 0 );
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = FindKnowledgeGroup( parentId );
-        boost::shared_ptr< MIL_KnowledgeGroup > group;
-        if( parent )
-        {
-            group.reset( new MIL_KnowledgeGroup( *type, *parent ) );
-            parent->RegisterKnowledgeGroup( group );
-        }
-        else
-        {
-            MIL_Army_ABC* army = armyFactory_->Find( parentId );
-            if( ! army )
-                throw MASA_BADPARAM_MAGICACTION( "invalid party identifier: " << parentId );
-            group.reset( new MIL_KnowledgeGroup( *type, *army, false ) );
-            army->RegisterKnowledgeGroup( group );
-        }
-        if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = group->GetKnowledge() )
-        {
-            const MIL_Army_ABC::T_Objects& objects = group->GetArmy().GetObjects();
-            for( auto it = objects.begin(); it != objects.end(); ++it )
-                blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
-        }
-        ack().mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
+        group.reset( new MIL_KnowledgeGroup( *type, *parent ) );
+        parent->RegisterKnowledgeGroup( group );
     }
-    catch( const std::exception& e )
+    else
     {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
-        ack().set_error_msg( tools::GetExceptionMsg( e ));
+        MIL_Army_ABC* army = armyFactory_->Find( parentId );
+        if( ! army )
+            throw MASA_BADPARAM_MAGICACTION( "invalid party identifier: " << parentId );
+        group.reset( new MIL_KnowledgeGroup( *type, *army, false ) );
+        army->RegisterKnowledgeGroup( group );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    if( const DEC_KnowledgeBlackBoard_KnowledgeGroup* blackboard = group->GetKnowledge() )
+    {
+        const MIL_Army_ABC::T_Objects& objects = group->GetArmy().GetObjects();
+        for( auto it = objects.begin(); it != objects.end(); ++it )
+            blackboard->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *it->second );
+    }
+    ack.mutable_result()->add_elem()->add_value()->set_identifier( group->GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1906,70 +1896,36 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
 // Name: MIL_EntityManager::OnReceiveCreateFireOrderOnLocation
 // Created: ABR 2011-01-19
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& msg, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& msg )
 {
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
+    const auto& params = msg.parameters();
+    protocol::CheckCount( params, 3 );
+    sword::CoordLatLong point;
     try
     {
-        if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
-            throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, 3 parameters expected" );
-
-        // Location
-        const MissionParameter& location = msg.parameters().elem( 0 );
-        if( location.value_size() != 1 || !( location.value().Get( 0 ).has_location()
-                    || location.value().Get( 0 ).has_point() ) )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a location" );
-
-        // Ammo
-        const MissionParameter& ammo = msg.parameters().elem( 1 );
-        if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a resource type" );
-
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory(
-                ammo.value().Get( 0 ).resourcetype().id() );
-        if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a dotation category "
-                    "identifier that can be used for indirect fire" );
-
-        // Iterations
-        const MissionParameter& iterations = msg.parameters().elem( 2 );
-        if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
-            throw MASA_BADPARAM_MAGICACTION("parameters[2] must be a real" );
-
-        const float value = iterations.value().Get( 0 ).areal();
-        if( value < 0.f )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[2] must be a positive real number" );
-
-        unsigned int ammos = static_cast< unsigned int >(
-                pDotationCategory->ConvertToNbrAmmo( value ) );
-
-        MT_Vector2D targetPos;
-        if( location.value().Get( 0 ).has_location() )
-            MIL_Tools::ConvertCoordMosToSim(
-                    location.value().Get( 0 ).location().coordinates().elem( 0 ), targetPos );
-        else if( location.value().Get( 0 ).has_point() )
-        {
-            const sword::Point& point = location.value().Get( 0 ).point();
-            if( point.location().type() != sword::Location::point ||
-                    point.location().coordinates().elem_size() != 1 )
-                throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a point with one coordinate" );
-            MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), targetPos );
-        }
-        PHY_FireResults_Default fireResult;
-        pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
+        const auto points = protocol::GetLocation( params, 0 );
+        protocol::Check( points.size() == 1, "must be a point location", 0 );
+        point = points[0];
     }
-    catch( const NET_AsnException< sword::MagicActionAck::ErrorCode >& e )
+    catch( const protocol::Exception& )
     {
-        ack().set_error_code( e.GetErrorID() );
-        ack().set_error_msg( e.what() );
+        point = protocol::GetPoint( params, 0 );
     }
-    catch( const std::exception& e )
-    {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
-        ack().set_error_msg( e.what() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+
+    const uint32_t resourceType = protocol::GetResourceType( params, 1 );
+    const auto* pDotationCategory = PHY_DotationType::FindDotationCategory( resourceType );
+    protocol::Check( pDotationCategory && pDotationCategory->CanBeUsedForIndirectFire(),
+        "must be a dotation category identifier that can be used for indirect fire", 1 );
+
+    const float iterations = protocol::GetReal( params, 2 );
+    protocol::Check( iterations >= 0, "must be a positive real number", 2 );
+    const uint32_t ammos = static_cast< uint32_t >(
+            pDotationCategory->ConvertToNbrAmmo( iterations ) );
+
+    MT_Vector2D targetPos;
+    MIL_Tools::ConvertCoordMosToSim( point, targetPos );
+    PHY_FireResults_Default fireResult;
+    pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
 }
 
 // -----------------------------------------------------------------------------

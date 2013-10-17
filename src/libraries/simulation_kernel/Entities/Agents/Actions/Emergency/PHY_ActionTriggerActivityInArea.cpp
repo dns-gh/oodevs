@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionTriggerActivityInArea.h"
 #include "PHY_RoleAction_FolkInfluence.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 

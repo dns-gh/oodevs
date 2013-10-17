@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_ActionDirectFirePion.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionDirectFirePion constructor

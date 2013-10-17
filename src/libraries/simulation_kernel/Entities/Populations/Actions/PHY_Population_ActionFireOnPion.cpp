@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Population_ActionFireOnPion.h"
 #include "MIL_AgentServer.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"

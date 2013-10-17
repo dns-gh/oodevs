@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionMove.h"
 #include "PHY_RoleAction_Moving.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

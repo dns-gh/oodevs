@@ -14,8 +14,8 @@
 
 #include "PHY_FireResults_Population.h"
 #include "Entities/Actions/PHY_Action_ABC.h"
-#include "Decision/DEC_Decision_ABC.h"
 
+class DEC_Decision_ABC;
 class MIL_Agent_ABC;
 class MIL_Population;
 

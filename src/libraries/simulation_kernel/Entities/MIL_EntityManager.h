@@ -40,6 +40,7 @@ namespace sword
     class UnitMagicActionAck;
     class KnowledgeMagicAction;
     class MagicAction;
+    class MagicActionAck;
     class MissionParameter_Value;
     class BurningCellRequest;
     class ParentEntity;
@@ -195,11 +196,11 @@ public:
     void OnReceiveSetAutomateMode          ( const sword::SetAutomatMode&       message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveUnitCreationRequest      ( const sword::UnitCreationRequest&  message, unsigned int nCtx );
     void OnReceiveKnowledgeMagicAction     ( const sword::KnowledgeMagicAction& message, unsigned int nCtx, unsigned int clientId );
-    void OnReceiveChangeDiplomacy          ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
-    void OnReceiveChangeResourceLinks      ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
-    void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
+    void OnReceiveChangeDiplomacy          ( const sword::MagicAction&          message, unsigned int nCtx );
+    void OnReceiveChangeResourceLinks      ( const sword::MagicAction&          message );
+    void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message );
     void OnReceiveBurningCellRequest       ( const sword::BurningCellRequest&   message, unsigned int nCtx );
-    void OnReceiveKnowledgeGroupCreation   ( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
+    void OnReceiveKnowledgeGroupCreation   ( const sword::MagicAction&          message, sword::MagicActionAck& ack );
     //@}
 
     //! @name Population channeling

@@ -13,11 +13,6 @@
 #include "MIL.h"
 #include "meteo/MeteoManager_ABC.h"
 
-namespace client
-{
-    class MagicActionAck;
-}
-
 namespace sword
 {
     class MagicAction;
@@ -72,7 +67,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned context, unsigned client );
+    virtual void OnReceiveMsgMeteo( const sword::MagicAction& msg, sword::MagicActionAck& ack, unsigned context );
     //@}
 
     //! @name CheckPoints
@@ -96,7 +91,7 @@ private:
     void ReadPatchGlobal( xml::xistream& xis );
     void Load( xml::xistream& xis, MIL_Config& config );
     void UpdateGlobalWeather( const sword::MagicAction& msg );
-    void ManageLocalWeather( const sword::MagicAction& msg, client::MagicActionAck& ack );
+    void ManageLocalWeather( const sword::MagicAction& msg, sword::MagicActionAck& ack );
     void RemoveLocalWeather( const sword::MagicAction& msg );
     //@}
 

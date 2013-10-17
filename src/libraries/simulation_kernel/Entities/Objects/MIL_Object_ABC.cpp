@@ -33,6 +33,7 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Tools/MIL_MessageParameters.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
@@ -372,18 +373,9 @@ void MIL_Object_ABC::MarkForDestruction()
 // Name: MIL_Object_ABC::OnUpdateResourceLinks
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-sword::MagicActionAck_ErrorCode MIL_Object_ABC::OnUpdateResourceLinks( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list )
+void MIL_Object_ABC::OnUpdateResourceLinks( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list )
 {
     ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
-    if( !capacity )
-        return sword::MagicActionAck::error_invalid_parameter;
-    try
-    {
-        capacity->Update( list );
-    }
-    catch( const std::exception& )
-    {
-        return sword::MagicActionAck::error_invalid_parameter;
-    }
-    return sword::MagicActionAck::no_error;
+    protocol::Check( capacity, "object has no resource network capacity" );
+    capacity->Update( list );
 }

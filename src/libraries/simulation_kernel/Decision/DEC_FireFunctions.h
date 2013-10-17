@@ -12,9 +12,14 @@
 #ifndef __DEC_FireFunctions_h_
 #define __DEC_FireFunctions_h_
 
-#include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Decision/DEC_Decision_ABC.h"
+namespace boost
+{
+    template< typename T > class shared_ptr;
+}
 
+class DEC_Knowledge_Agent;
+class DEC_Decision_ABC;
+class MIL_Agent_ABC;
 class MIL_AgentPion;
 class PHY_DotationCategory;
 
