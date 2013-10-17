@@ -37,6 +37,7 @@ class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
 class MIL_Effect_IndirectFire;
 class MIL_MissionParameter_ABC;
+class MIL_LimaFunction;
 
 // =============================================================================
 /** @class  MIL_Report
@@ -82,6 +83,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const std::string& nParam );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, int nParam1, int nParam2, int nParam3 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_Effect_IndirectFire& flyingShell );
+    template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_LimaFunction& limaFunction, const std::string& nParam );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, int nParam2 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge );
@@ -266,6 +268,21 @@ void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nRepo
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateTir( static_cast< int >( flyingShell.GetFireID() ) ) );
     parameters.push_back( pParameter );
+    PostEvent( receiver, nReport, parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::PostEvent
+// Created: MMC 2013-10-14
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_LimaFunction& limaFunction, const std::string& nParam )
+{
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    auto pParameter1 = MIL_MissionParameterFactory::CreateLimaFunction( limaFunction.GetID() );
+    auto pParameter2 = MIL_MissionParameterFactory::Create( nParam );
+    parameters.push_back( pParameter1 );
+    parameters.push_back( pParameter2 );
     PostEvent( receiver, nReport, parameters );
 }
 

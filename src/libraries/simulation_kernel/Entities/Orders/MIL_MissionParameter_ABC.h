@@ -66,6 +66,7 @@ class DEC_Knowledge_Population;
 class DEC_ResourceNetwork;
 class MIL_UrbanObject_ABC;
 class DEC_Objective;
+class MIL_LimaFunction;
 class MIL_ParameterType_ABC;
 class MT_Vector2D;
 class PHY_DotationCategory;

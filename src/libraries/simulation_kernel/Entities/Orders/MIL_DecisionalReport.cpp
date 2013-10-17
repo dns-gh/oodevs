@@ -130,4 +130,5 @@ namespace report
     MAKE_REPORT( eRC_TransportedUnitCannotReceiveOrder )
     MAKE_REPORT( eRC_UrbanCollisionStarted )
     MAKE_REPORT( eRC_UrbanCollisionStopped )
+    MAKE_REPORT( eRC_CrossedLima )
 }

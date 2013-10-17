@@ -437,3 +437,21 @@ void DEC_PopulationDecision::ActivateBrainDebug( bool activate )
     bStateHasChanged_ = true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::PostStartMission
+// Created: MMC 2013-10-15
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::PostStartMission()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::PostStopMission
+// Created: MMC 2013-10-15
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::PostStopMission()
+{
+    // NOTHING
+}
+

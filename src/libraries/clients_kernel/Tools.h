@@ -52,8 +52,8 @@ namespace tools
     QString ToString( kernel::E_TroopHealthState nState );
     QString ToString( kernel::E_PerceptionResult nResult );
     QString ToString( E_WeatherType weather );
-    QString ToString( kernel::E_FuncLimaType nType );
-    QString ToShortString( kernel::E_FuncLimaType nType );
+    QString ToString( E_FuncLimaType nType );
+    QString ToShortString( E_FuncLimaType nType );
 
     QString ToString( E_PopulationAttitude nType );
     QString ToString( E_ObstacleActivation nType );
@@ -92,8 +92,8 @@ namespace tools
     E_NatureLevel           NatureLevelFromString   ( const std::string& type );
     E_LocationType          LocationFromString      ( const std::string& type );
 
-    kernel::E_FuncLimaType  LimaTypeFromShortString ( const QString& type );
-    kernel::E_FuncLimaType  LimaTypeFromXmlString   ( const QString& type );
+    E_FuncLimaType          LimaTypeFromShortString ( const QString& type );
+    E_FuncLimaType          LimaTypeFromXmlString   ( const QString& type );
     QString                 LimaTypeShortToXmlString( const QString& shortType );
 
     bool IsCommandPost( const kernel::Entity_ABC& entity );

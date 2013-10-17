@@ -364,6 +364,13 @@ namespace
         ReadId( dst, xis, &Value::mutable_urbanknowledge );
     }
 
+    void ReadLimaFunction( MissionParameter& dst, xml::xistream& xis )
+    {
+        if( const auto opt = ReadValue< std::string >( dst, xis ) )
+            if( const auto type = FindName< mapping::PhaseLineType >( *opt ) )
+                dst.add_value()->set_phase_line_function ( *type );
+    }
+
     typedef boost::function< void( Value&, xml::xistream& ) > T_ListOperand;
 
     template< typename T >
@@ -900,6 +907,7 @@ namespace
         { &ReadUnitKnowledgeId,       "agentknowledge" },
         { &ReadUrbanKnowledgeId,      "urbanknowledge" },
         { &ReadUrbanKnowledgeId,      "urbanblock" },
+        { &ReadLimaFunction,          "limafunction" },
         // obsolete fields
         { &Skip,                      "missionobjective" },
     };

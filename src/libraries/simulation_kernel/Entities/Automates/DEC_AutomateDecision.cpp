@@ -907,3 +907,20 @@ void DEC_AutomateDecision::ActivateBrainDebug( bool activate )
     bStateHasChanged_ = true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::PostStartMission
+// Created: MMC 2013-10-15
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::PostStartMission()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::PostStopMission
+// Created: MMC 2013-10-15
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::PostStopMission()
+{
+    // NOTHING
+}

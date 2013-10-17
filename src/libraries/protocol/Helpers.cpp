@@ -116,7 +116,7 @@ const size_t mapping::MagicAction::size_ = COUNT_OF( mapping::MagicAction::data_
 BOOST_STATIC_ASSERT( sword::MagicAction::Type_ARRAYSIZE == mapping::MagicAction::size_ );
 
 const mapping::PhaseLineType mapping::PhaseLineType::data_[] = {
-    { "LCA",  sword::PhaseLineOrder::attitude_change_line, },
+    { "LCA",  sword::PhaseLineOrder::attitude_change_line },
     { "LD",   sword::PhaseLineOrder::line_of_departure },
     { "LC",   sword::PhaseLineOrder::coordination_line },
     { "LI",   sword::PhaseLineOrder::denial_line },

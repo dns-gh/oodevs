@@ -177,6 +177,9 @@ protected:
 
     virtual void RegisterUserFunctions( sword::Brain& brain );
     virtual void RegisterUserArchetypeFunctions( sword::Brain& brain );
+
+    virtual void PostStartMission();
+    virtual void PostStopMission();
     //@}
 
 private:
@@ -252,6 +255,7 @@ private:
     boost::shared_ptr< DEC_Knowledge_Agent > eniEnCours_;
     std::string missionPrecedente_;
     float rTenir_;
+    std::vector< unsigned int > internalMissionActions_;
 
     MIL_AgentPion& pion_;
 };

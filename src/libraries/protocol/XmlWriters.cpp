@@ -223,6 +223,12 @@ namespace
         WritePair( xos, "urbanknowledge", src.urbanknowledge().id() );
     }
 
+    void WriteLimaFunction( xml::xostream& xos, const Value& src )
+    {
+        if( auto opt = FindType< mapping::PhaseLineType >( static_cast< PhaseLineOrder::Function >( src.phase_line_function() ) ) )
+            WritePair( xos, "limafunction", *opt );
+    }
+
     void WriteNature( xml::xostream& xos, const Value& src )
     {
         WritePair( xos, "natureatlas", src.nature().flags() );
@@ -554,6 +560,7 @@ namespace
         { &Value::has_resourcetype,             &WriteResourceType },
         { &Value::has_stage,                    &WriteStage },
         { &Value::has_urbanknowledge,           &WriteUrbanKnowledge },
+        { &Value::has_phase_line_function,      &WriteLimaFunction }
     };
 
     const struct { T_Has Has; T_Convert Write; } converters[] = {

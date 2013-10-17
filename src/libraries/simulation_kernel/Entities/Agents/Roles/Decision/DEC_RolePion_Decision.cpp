@@ -12,15 +12,18 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_RolePion_Decision.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include "Entities/Actions/PHY_ActionRecoLima.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Orders/MIL_LimaFunction.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
+#include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -1168,3 +1171,23 @@ void DEC_RolePion_Decision::ActivateBrainDebug( bool activate )
     NotifyHasChanged();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::PostStartMission
+// Created: MMC 2013-10-15
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::PostStartMission()
+{
+    internalMissionActions_.push_back( DEC_ActionFunctions::StartAction< PHY_ActionRecoLima, const MIL_LimaFunction& >( pion_, MIL_LimaFunction::LR_ ) );
+    internalMissionActions_.push_back( DEC_ActionFunctions::StartAction< PHY_ActionRecoLima, const MIL_LimaFunction& >( pion_, MIL_LimaFunction::LIA_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::PostStopMission
+// Created: MMC 2013-10-15
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::PostStopMission()
+{
+    for( auto it = internalMissionActions_.begin(); it != internalMissionActions_.end(); ++it )
+        DEC_ActionFunctions::StopAction( pion_, *it );
+    internalMissionActions_.clear();
+}

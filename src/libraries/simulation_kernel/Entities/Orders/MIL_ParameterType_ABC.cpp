@@ -72,6 +72,7 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType( std::string("ResourceNetworkNode"), eResourceNetworkNode );
     RegisterParameterType( std::string("ResourceNetworkType"), eResourceNetworkType );
     RegisterParameterType( std::string("Stage"), eStage );
+    RegisterParameterType( std::string("LimaFunction"), eLimaFunction );
 }
 
 // =============================================================================

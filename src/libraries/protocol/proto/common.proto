@@ -1172,6 +1172,8 @@ message MissionParameter {
         optional string                   stage                    = 51;
         //! A crowd identifier
         optional CrowdId                  crowd                    = 52;
+        //! A phase line function type
+        optional PhaseLineOrder.Function  phase_line_function      = 53;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;

@@ -119,6 +119,9 @@ protected:
             brain.GetScriptRef( "other" ) = pOther_;
     }
     virtual void RegisterUserArchetypeFunctions( sword::Brain& ) {}
+    virtual void PostStartMission() {}
+    virtual void PostStopMission() {}
+
 private:
     DEC_TestPopulationDecision* pOther_;
 };

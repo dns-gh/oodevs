@@ -296,6 +296,7 @@ void DEC_Decision< T >::ActivateOrder( const std::string& strBehavior, const boo
     refMission = pMission_;
     DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, pRefs_->initTaskParameter_, refMission, pMission_, isMasalife_ );
     pRefs_->startEvent_( strBehavior, refMission );
+    PostStartMission();
 }
 
 // -----------------------------------------------------------------------------
@@ -309,6 +310,7 @@ void DEC_Decision< T >::StopMission( const std::string& strBehavior )
     {
         pRefs_->stopEvents_( strBehavior );
         pMission_.reset();
+        PostStopMission();
     }
     catch( const std::exception& )
     {

@@ -38,6 +38,11 @@ public:
         DEC_Decision< T >::RegisterFunction( strFunctionName, function );
     }
     virtual void RegisterUserArchetypeFunctions ( sword::Brain& ) {}
+
+protected:
+    virtual void PostStartMission() {}
+    virtual void PostStopMission() {}
+
 private:
     std::auto_ptr< DEC_Model > model_;
 };

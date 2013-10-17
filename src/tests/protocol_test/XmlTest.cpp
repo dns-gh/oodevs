@@ -465,6 +465,15 @@ BOOST_FIXTURE_TEST_CASE( read_urban_knowledge_id, Fixture )
     CheckCycle( msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_phase_line_function, Fixture )
+{
+    AddParameterValue( xos, "limafunction", "LC" );
+    const auto msg = Read< MissionParameters >();
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).phase_line_function(), PhaseLineOrder::coordination_line );
+    CheckCycle( msg );
+}
+
 namespace
 {
     void CheckPlannedWork( const PlannedWork& work )
