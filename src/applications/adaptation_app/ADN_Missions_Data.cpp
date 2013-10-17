@@ -82,6 +82,7 @@ namespace
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::ADN_Missions_Data()
     : ADN_Data_ABC( eMissions )
+    , missionSheetPathContext_( boost::make_shared< kernel::Context >() )
 {
     // $$$$ ABR 2013-04-23: Must be in E_MissionType order
     AddMissionType( "units" );
@@ -595,6 +596,15 @@ void ADN_Missions_Data::CheckAndFixLoadingErrors() const
 const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetContext( E_MissionType type ) const
 {
     return missionSheetContexts_[ type ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetPathContext
+// Created: ABR 2013-10-17
+// -----------------------------------------------------------------------------
+const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetPathContext() const
+{
+    return missionSheetPathContext_;
 }
 
 // -----------------------------------------------------------------------------

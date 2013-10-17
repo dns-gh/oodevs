@@ -68,6 +68,7 @@ public:
     QStringList GetMissionsThatUse( E_MissionType type, ADN_Objects_Data_ObjectInfos& object );
 
     void GenerateMissionSheet( int index, boost::shared_ptr< kernel::LocalizedString > text );
+    const boost::shared_ptr< kernel::Context >& GetMissionSheetPathContext() const;
     const boost::shared_ptr< kernel::Context >& GetMissionSheetContext( E_MissionType type ) const;
     //@}
 
@@ -105,6 +106,7 @@ private:
 private:
     std::vector< std::pair< std::string, T_Mission_Vector > > missionsVector_;
     std::vector< boost::shared_ptr< kernel::Context > > missionSheetContexts_;
+    boost::shared_ptr< kernel::Context > missionSheetPathContext_;
 
 public:
     static tools::IdManager idManager_;

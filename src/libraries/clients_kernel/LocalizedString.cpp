@@ -203,6 +203,7 @@ const std::string& LocalizedString::Translate( const std::string& language ) con
     return key_;
 }
 
+// -----------------------------------------------------------------------------
 // Name: LocalizedString::SwapKey
 // Created: ABR 2013-10-04
 // -----------------------------------------------------------------------------
@@ -225,6 +226,7 @@ bool LocalizedString::SwapKey( const std::string& oldKey, const std::string& new
 // -----------------------------------------------------------------------------
 bool LocalizedString::IsUnfinished( const std::string& language ) const
 {
-    const TranslationText& text = values_.at( language );
-    return text.type_ == eTranslationType_Unfinished || text.value_.empty() && !key_.empty();
+    if( key_.empty() )
+        return false;
+    return values_.at( language ).type_ == eTranslationType_Unfinished;
 }

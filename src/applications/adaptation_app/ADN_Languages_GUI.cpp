@@ -12,7 +12,10 @@
 #include "moc_ADN_Languages_GUI.cpp"
 #include "ADN_Languages_Data.h"
 #include "ADN_Languages_Dialog.h"
+#include "ADN_Missions_Data.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
+#include "clients_kernel/Context.h"
 #include "clients_kernel/LanguageController.h"
 #include "clients_Kernel/LocalizedString.h"
 #include "clients_Kernel/Tools.h"
@@ -143,9 +146,9 @@ void ADN_Languages_GUI::OnLanguagesEdited()
         OnLanguageChanged();
     else
         UpdateMenu();
-
-    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
-                                               boost::bind( &kernel::LocalizedString::Initialize, _1, data_.GetActiveLanguages() ) ) ) );
+    boost::function< bool ( kernel::LocalizedString& ) > initializer = boost::bind( &kernel::LocalizedString::Initialize, _1, data_.GetActiveLanguages() );
+    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref( initializer ) ) );
+    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( initializer );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,8 +236,9 @@ void ADN_Languages_GUI::OnSwap()
                          "Proceed anyway?" ).arg( current ).arg( master ) ) )
         return;
 
-    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
-                                               boost::bind( &kernel::LocalizedString::SwapKey, _1, data_.Master(), tools::Language::Current() ) ) ) );
+    const boost::function< bool ( kernel::LocalizedString& ) > swapper = boost::bind( &kernel::LocalizedString::SwapKey, _1, data_.Master(), tools::Language::Current() ) ;
+    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref( swapper ) ) );
+    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( swapper );
 
     data_.SwapMaster();
     ChangeLanguage( data_.Master() );
