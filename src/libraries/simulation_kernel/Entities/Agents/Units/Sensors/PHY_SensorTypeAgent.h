@@ -66,7 +66,7 @@ public:
     const double IdentificationDistance   () const;
     const double ReconnoissanceDistance   () const;
     void ComputeDistances( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target, double& identification, double& recognition, double& detection ) const;
-    const double RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double sensorHeight ) const;
+    const double RayTrace( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double sensorHeight, bool posted ) const;
     //@}
 
 public:
@@ -90,18 +90,17 @@ private:
     //! @name Tools
     //@{
     PHY_RawVisionData::E_VisionObject ConvertObjectIdxToEnvironnement( unsigned int val );
-    unsigned int                              ConvertEnvironmentToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
+    unsigned int ConvertEnvironmentToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
 
-    const PHY_PerceptionLevel& RayTrace                 ( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator ) const;
-    double                   ComputeEnvironmentFactor( ElevationGrid::envBits nEnv ) const;
-    double                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rInitialCoef, bool bIsAroundBU ) const;
-    bool                       ComputeUrbanExtinction   ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ ) const;
-    bool                       ComputeGlobalUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ ) const;
-    const double             ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const PHY_PerceptionLevel& InterpretExtinction     ( double rExtinction ) const;
+    const PHY_PerceptionLevel& RayTrace( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator, bool posted ) const;
+    double ComputeEnvironmentFactor( ElevationGrid::envBits nEnv ) const;
+    double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rInitialCoef, bool bIsAroundBU ) const;
+    bool ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ, bool posted ) const;
+    const double ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const PHY_PerceptionLevel& InterpretExtinction( double rExtinction ) const;
 
-    double GetSourceFactor    ( const MIL_Agent_ABC&       source ) const;
-    double GetTargetFactor    ( const MIL_Agent_ABC&       target ) const;
+    double GetSourceFactor( const MIL_Agent_ABC& source ) const;
+    double GetTargetFactor( const MIL_Agent_ABC& target ) const;
 
     bool IsLimitedToSensors( const MIL_Agent_ABC& target ) const;
 

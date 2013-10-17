@@ -66,6 +66,12 @@ namespace
         environmentAssociation[ "Foret"  ] = PHY_RawVisionData::eVisionForest;
         environmentAssociation[ "Urbain" ] = PHY_RawVisionData::eVisionUrban;
     }
+
+    bool IsPosted( const MIL_Agent_ABC& source )
+    {
+        const PHY_Posture& currentPerceiverPosture = source.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
+        return &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -414,7 +420,7 @@ double PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& 
 // Name: PHY_SensorTypeAgent::ComputeUrbanExtinction
 // Created: SLG 2010-03-02
 // -----------------------------------------------------------------------------
-bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ ) const
+bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ, bool posted ) const
 {
     bool bIsAroundBU = false;
 
@@ -444,15 +450,16 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                 if( intersectPoints.size() == 1 )
                 {
                     if( footPrint.IsInside( vSource ) )
-                        intersectionDistance = vSource.Distance( *intersectPoints.begin() );
+                        intersectionDistance = posted ? 0 : vSource.Distance( *intersectPoints.begin() );
                     else if( footPrint.IsInside( vTarget ) )
                         intersectionDistance = vTarget.Distance( *intersectPoints.begin() );
                 }
                 else if( intersectPoints.empty() )
-                    intersectionDistance = vSource.Distance( vTarget );
+                    intersectionDistance = posted ? 0 : vSource.Distance( vTarget );
                 else
                     intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
-
+                if( intersectionDistance == 0 )
+                    continue;
                 double rDistanceModificator = urbanBlockFactors_[ materialCompositionType->GetId() ];
                 double occupationFactor = std::sqrt( pPhysical->GetOccupation() );
                 if( occupationFactor == 1. && rDistanceModificator <= epsilon )
@@ -466,7 +473,6 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
             }
         }
     }
-
     return bIsAroundBU;
 }
 
@@ -508,7 +514,7 @@ const double PHY_SensorTypeAgent::ReconnoissanceDistance() const
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: LMT 2010-07-02
 // -----------------------------------------------------------------------------
-const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const MT_Vector2D& vTarget, double sensorHeight ) const
+const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const MT_Vector2D& vTarget, double sensorHeight, bool posted ) const
 {
     if( vSource.Distance( vTarget ) > GetMaxDistance() )
         return 0.;
@@ -517,7 +523,7 @@ const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const M
     const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, MIL_Tools::GetAltitude( vTarget ) );
 
     double rVisionNRJ = rDetectionDist_;
-    bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );
+    bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, posted );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
     if( rVisionNRJ > 0 )
@@ -533,7 +539,7 @@ const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const M
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator, bool posted ) const
 {
     if( vSource.Distance( vTarget ) > GetMaxDistance() * rDistanceMaxModificator )
         return PHY_PerceptionLevel::notSeen_;
@@ -542,7 +548,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, rTargetAltitude );
 
     double rVisionNRJ = rDetectionDist_;
-    bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );
+    bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, posted );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
     if( rVisionNRJ > 0 )
@@ -566,7 +572,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
     const double     rTargetAltitude = MIL_Tools::GetAltitude( vTargetPos ) + 2;
 
-    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
+    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator, IsPosted( source ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -594,7 +600,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     const double      rSourceAltitude = MIL_Tools::GetAltitude( vSourcePos ) + source.GetRole< PHY_RoleInterface_Location >().GetHeight() + rSensorHeight;
     const double      rTargetAltitude = targetRole.GetAltitude() + 2;
 
-    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
+    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator, IsPosted( source ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -611,7 +617,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 
     const double rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
     const double rTargetAltitude = MIL_Tools::GetAltitude( target.GetPosition() ) + 2;
-    return RayTrace( vSourcePos, rSourceAltitude, target.GetPosition(), rTargetAltitude, rDistanceMaxModificator ) == PHY_PerceptionLevel::notSeen_ ?
+    return RayTrace( vSourcePos, rSourceAltitude, target.GetPosition(), rTargetAltitude, rDistanceMaxModificator, IsPosted( source ) ) == PHY_PerceptionLevel::notSeen_ ?
         PHY_PerceptionLevel::notSeen_ : PHY_PerceptionLevel::identified_;
 }
 
@@ -641,7 +647,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     target.GetLocation().ComputeNearestPoint( vSourcePos, targetPosition );
     const double rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
     const double rTargetAltitude = MIL_Tools::GetAltitude( targetPosition ) + 2;
-    return RayTrace( vSourcePos, rSourceAltitude, targetPosition, rTargetAltitude, rDistanceMaxModificator ) == PHY_PerceptionLevel::notSeen_ ?
+    return RayTrace( vSourcePos, rSourceAltitude, targetPosition, rTargetAltitude, rDistanceMaxModificator, IsPosted( source ) ) == PHY_PerceptionLevel::notSeen_ ?
         PHY_PerceptionLevel::notSeen_ : PHY_PerceptionLevel::identified_;
 }
 

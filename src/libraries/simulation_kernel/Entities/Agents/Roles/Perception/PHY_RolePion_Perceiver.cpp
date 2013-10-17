@@ -36,10 +36,12 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
@@ -1600,12 +1602,17 @@ namespace
             , point_    ( point )
             , target_   ( target )
             , energy_   ( 0 )
+        {
+            const PHY_Posture& currentPerceiverPosture = perceiver.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
+            posted_ = &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_;
+        }
+        ~SensorFunctor()
         {}
         void operator()( const PHY_Sensor& sensor )
         {
             const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
             if( sensorTypeAgent )
-                energy_ = std::max( energy_, sensorTypeAgent->RayTrace( point_, target_, sensor.GetHeight() ) );
+                energy_ = std::max( energy_, sensorTypeAgent->RayTrace( point_, target_, sensor.GetHeight(), posted_ ) );
         }
         double GetEnergy() const
         {
@@ -1616,6 +1623,7 @@ namespace
         const MT_Vector2D& point_;
         const MT_Vector2D& target_;
         double energy_;
+        bool posted_;
     };
 
     class Functor : public OnComponentFunctor_ABC
