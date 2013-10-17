@@ -197,8 +197,8 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
     if( value.has_phase_line_function() )
     {
         auto limaType = FindLimaType( value.phase_line_function() );
-        if( limaType != boost::none )
-            return QString( limaType->c_str() );
+        if( limaType )
+            return QString::fromStdString( *limaType );
     }
     throw MASA_EXCEPTION( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).toStdString() );
 }
