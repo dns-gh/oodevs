@@ -1898,50 +1898,32 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& msg )
 {
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
-        throw MASA_BADPARAM_MAGICACTION( "invalid parameters count, 3 parameters expected" );
+    const auto& params = msg.parameters();
+    protocol::CheckCount( params, 3 );
+    sword::CoordLatLong point;
+    try
+    {
+        const auto points = protocol::GetLocation( params, 0 );
+        protocol::Check( points.size() == 1, "parameters[0] must be a point location" );
+        point = points[0];
+    }
+    catch( const protocol::Exception& )
+    {
+        point = protocol::GetSinglePoint( params, 0 );
+    }
 
-    // Location
-    const MissionParameter& location = msg.parameters().elem( 0 );
-    if( location.value_size() != 1 || !( location.value().Get( 0 ).has_location()
-                || location.value().Get( 0 ).has_point() ) )
-        throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a location" );
+    const uint32_t resourceType = protocol::GetResourceType( params, 1 );
+    const auto* pDotationCategory = PHY_DotationType::FindDotationCategory( resourceType );
+    protocol::Check( pDotationCategory && pDotationCategory->CanBeUsedForIndirectFire(),
+        "parameters[1] must be a dotation category identifier that can be used for indirect fire" );
 
-    // Ammo
-    const MissionParameter& ammo = msg.parameters().elem( 1 );
-    if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
-        throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a resource type" );
-
-    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory(
-            ammo.value().Get( 0 ).resourcetype().id() );
-    if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-        throw MASA_BADPARAM_MAGICACTION( "parameters[1] must be a dotation category "
-                "identifier that can be used for indirect fire" );
-
-    // Iterations
-    const MissionParameter& iterations = msg.parameters().elem( 2 );
-    if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
-        throw MASA_BADPARAM_MAGICACTION("parameters[2] must be a real" );
-
-    const float value = iterations.value().Get( 0 ).areal();
-    if( value < 0.f )
-        throw MASA_BADPARAM_MAGICACTION( "parameters[2] must be a positive real number" );
-
-    unsigned int ammos = static_cast< unsigned int >(
-            pDotationCategory->ConvertToNbrAmmo( value ) );
+    const float iterations = protocol::GetReal( params, 2 );
+    protocol::Check( iterations >= 0, "parameters[2] must be a positive real number" );
+    const uint32_t ammos = static_cast< uint32_t >(
+            pDotationCategory->ConvertToNbrAmmo( iterations ) );
 
     MT_Vector2D targetPos;
-    if( location.value().Get( 0 ).has_location() )
-        MIL_Tools::ConvertCoordMosToSim(
-                location.value().Get( 0 ).location().coordinates().elem( 0 ), targetPos );
-    else if( location.value().Get( 0 ).has_point() )
-    {
-        const sword::Point& point = location.value().Get( 0 ).point();
-        if( point.location().type() != sword::Location::point ||
-                point.location().coordinates().elem_size() != 1 )
-            throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a point with one coordinate" );
-        MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), targetPos );
-    }
+    MIL_Tools::ConvertCoordMosToSim( point, targetPos );
     PHY_FireResults_Default fireResult;
     pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
 }

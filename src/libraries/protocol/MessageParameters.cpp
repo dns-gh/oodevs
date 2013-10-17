@@ -67,6 +67,7 @@ namespace
     MAKE_DESCRIPTOR2( Heading, int, heading, heading, "heading" );
     MAKE_DESCRIPTOR2( KnowledgeGroup, uint32_t, knowledgegroup, id, "knowledgegroup" );
     MAKE_DESCRIPTOR2( PartyId, uint32_t, party, id, "party id" );
+    MAKE_DESCRIPTOR2( ResourceType, uint32_t, resourcetype, id, "resourcetype id" );
     #undef MAKE_DESCRIPTOR2
 
     std::string GetIndex( int i, int j, int k )
@@ -197,6 +198,15 @@ const sword::Point& protocol::GetPoint( const sword::MissionParameters& params, 
     return GetValue< Point >( params, i, j, k );
 }
 
+const sword::CoordLatLong& protocol::GetSinglePoint( const sword::MissionParameters& params, int i, int j, int k )
+{
+    const auto& point = protocol::GetPoint( params, i, j, k );
+    const auto& coords = point.location().coordinates();
+    protocol::Check( coords.elem_size() == 1,
+            "point location must contain a single point" );
+    return coords.elem( 0 );
+}
+
 std::vector< sword::CoordLatLong > protocol::GetLocation(
         const sword::MissionParameters& params, int i )
 {
@@ -238,6 +248,11 @@ uint32_t protocol::GetFormationId( const sword::MissionParameters& params, int i
 uint32_t protocol::GetPartyId( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< PartyId >( params, i, j, k );
+}
+
+uint32_t protocol::GetResourceType( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< ResourceType >( params, i, j, k );
 }
 
 std::vector< protocol::Extension > protocol::GetExtensionList(
