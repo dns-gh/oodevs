@@ -443,26 +443,6 @@
 </source>
         <translation>Les fichiers suivants seront copiés dans le sous-répertoire scripts/resources de l&apos;exercice:</translation>
     </message>
-    <message>
-        <source>English</source>
-        <translation>English</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation>Français</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation>Español</translation>
-    </message>
-    <message>
-        <source>Arabic</source>
-        <translation>العربية</translation>
-    </message>
-    <message>
-        <source>Portuguese</source>
-        <translation>Português</translation>
-    </message>
 </context>
 <context>
     <name>FileToolbar</name>

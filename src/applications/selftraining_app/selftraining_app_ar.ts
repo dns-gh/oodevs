@@ -431,26 +431,6 @@ Do really you want to replace it ?</source>
         <translation type="unfinished">لا يمكن إنشاء الدليل &apos;%1&apos;، &apos;%2&apos; خطأ يحدث.</translation>
     </message>
     <message>
-        <source>English</source>
-        <translation>English</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation>Français</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation>Español</translation>
-    </message>
-    <message>
-        <source>Arabic</source>
-        <translation>العربية</translation>
-    </message>
-    <message>
-        <source>Portuguese</source>
-        <translation>Português</translation>
-    </message>
-    <message>
         <source>Administration</source>
         <translation type="unfinished">الإدارة</translation>
     </message>

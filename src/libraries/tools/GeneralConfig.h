@@ -15,6 +15,7 @@
 
 namespace tools
 {
+    class Languages;
 
 // =============================================================================
 /** @class  GeneralConfig
@@ -67,6 +68,8 @@ public:
     Path BuildPopulationChildFile( const Path& file ) const;
 
     virtual void Parse( int argc, char** argv );
+
+    const Languages& GetLanguages() const;
     //@}
 
 protected:
@@ -89,6 +92,8 @@ private:
 
     const Path terrainConfigFile_;
     const Path exerciseConfigFile_;
+
+    std::auto_ptr< const Languages > languages_;
     //@}
 };
 

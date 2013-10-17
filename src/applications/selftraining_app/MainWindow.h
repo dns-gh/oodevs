@@ -11,7 +11,7 @@
 #define __MainWindow_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 #include <QtGui/qmainwindow.h>
 #include <QtGui/qsystemtrayicon.h>
 
@@ -46,7 +46,7 @@ class SessionTray;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class MainWindow : public gui::LanguageChangeObserver_ABC< QMainWindow >
+class MainWindow : public gui::WidgetLanguageObserver_ABC< QMainWindow >
                  , private boost::noncopyable
 {
 

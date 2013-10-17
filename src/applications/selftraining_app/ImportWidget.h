@@ -11,7 +11,7 @@
 #define __ImportWidget_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 
 namespace tools
 {
@@ -24,7 +24,7 @@ namespace tools
 */
 // Created: JSR 2010-07-13
 // =============================================================================
-class ImportWidget : public gui::LanguageChangeObserver_ABC< QWidget >
+class ImportWidget : public gui::WidgetLanguageObserver_ABC< QWidget >
                    , private boost::noncopyable
 {
     Q_OBJECT

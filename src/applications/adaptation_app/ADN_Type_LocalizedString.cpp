@@ -13,7 +13,7 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_WorkspaceElement.h"
 #include "clients_kernel/Context.h"
-#include "clients_kernel/Language.h"
+#include "tools/Language.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_LocalizedString constructor
@@ -75,7 +75,7 @@ void ADN_Type_LocalizedString::InitTranslation( const std::string& data )
 // -----------------------------------------------------------------------------
 const std::string& ADN_Type_LocalizedString::GetData() const
 {
-    return ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() ? GetKey() : GetValue( kernel::Language::Current() );
+    return ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() ? GetKey() : GetValue( tools::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void ADN_Type_LocalizedString::SetData( const std::string& data )
     else if( ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() )
         translation_->SetKey( data );
     else
-        translation_->SetValue( kernel::Language::Current(), data );
+        translation_->SetValue( tools::Language::Current(), data );
     emit DataChanged( ( void* ) &data );
 }
 
@@ -149,7 +149,7 @@ void ADN_Type_LocalizedString::SetKey( const std::string& key )
 // -----------------------------------------------------------------------------
 kernel::E_TranslationType ADN_Type_LocalizedString::GetType() const
 {
-    return GetType( kernel::Language::Current() );
+    return GetType( tools::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ kernel::E_TranslationType ADN_Type_LocalizedString::GetType() const
 // -----------------------------------------------------------------------------
 void ADN_Type_LocalizedString::SetType( kernel::E_TranslationType type )
 {
-    SetType( kernel::Language::Current(), type );
+    SetType( tools::Language::Current(), type );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +231,7 @@ void ADN_Type_LocalizedString::OnLanguageChanged()
 {
     if( !translation_ )
         return;
-    if( !ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() && translation_->Value( kernel::Language::Current() ).empty() )
+    if( !ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() && translation_->Value( tools::Language::Current() ).empty() )
     {
         swappingLanguage_ = true;
         emit DataChanged( ( void* ) &translation_->Key() );

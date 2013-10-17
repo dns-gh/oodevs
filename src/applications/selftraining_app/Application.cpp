@@ -17,11 +17,13 @@
 #include "ProgressPage.h"
 #include "SessionTray.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/LanguageController.h"
 #include "clients_kernel/Tools.h"
 #include "frontend/LauncherClient.h"
 #include "frontend/ProcessList.h"
 #include "tools/NullFileLoaderObserver.h"
 #include "tools/DefaultLoader.h"
+#include "tools/Language.h"
 #include "tools/Win32/BugTrap.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -50,6 +52,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
     // GUI
     mainWindow_ = new MainWindow( *this, *config_, *fileLoader_, *controllers_, *launcherClient_ );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
+    controllers_->languages_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +61,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
 // -----------------------------------------------------------------------------
 Application::~Application()
 {
+    controllers_->languages_.Unregister( *this );
     launcher_.reset();
     if( timer_.get() )
         timer_->stop();
@@ -143,4 +147,15 @@ Launcher& Application::GetLauncher() const
 QWidget* Application::GetMainWindow()
 {
     return mainWindow_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::OnLanguageChanged
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+void Application::OnLanguageChanged()
+{
+    DeleteTranslators();
+    CreateTranslators();
+    InitializeLayoutDirection();
 }

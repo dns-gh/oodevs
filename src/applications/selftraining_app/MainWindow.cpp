@@ -27,7 +27,7 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
-    : gui::LanguageChangeObserver_ABC< QMainWindow >()
+    : gui::WidgetLanguageObserver_ABC< QMainWindow >()
     , interpreter_( new LinkInterpreter( this, controllers ) )
     , sessionTray_( 0 )
 {

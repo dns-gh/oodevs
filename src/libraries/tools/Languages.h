@@ -7,21 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef _kernel_Languages_h
-#define _kernel_Languages_h
+#ifndef _tools_Languages_h
+#define _tools_Languages_h
 
+#include "Language.h"
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-#include <vector>
 
 namespace tools
 {
     class Path;
-}
-
-namespace kernel
-{
-    class Language;
 
 // =============================================================================
 /** @class  Languages
@@ -32,11 +26,6 @@ namespace kernel
 class Languages : private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< boost::shared_ptr< kernel::Language > > T_Languages;
-    //@}
-
     //! @name Constructors/Destructor
     //@{
     explicit Languages( const tools::Path& xmlFile );
@@ -46,23 +35,25 @@ public:
 
     //! @name Operations
     //@{
-    const boost::shared_ptr< Language >& Get( const std::string& code ) const;
-    const T_Languages& GetLanguages() const;
+    const Language& Get( const std::string& code ) const;
+    const LanguagesVector& GetVector() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void EnsureCurrentIsPresent() const;
+    const Language* Find( const std::string& code ) const;
     void Read( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Languages languages_;
+    LanguagesVector languages_;
     //@}
 };
 
-} //! namespace kernel
+} //! namespace tools
 
-#endif // _kernel_Languages_h
+#endif // _tools_Languages_h

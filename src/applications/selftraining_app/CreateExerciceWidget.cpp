@@ -27,7 +27,7 @@ namespace fc = frontend::commands;
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
 CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : gui::LanguageChangeObserver_ABC< QGroupBox >( parent )
+    : gui::WidgetLanguageObserver_ABC< QGroupBox >( parent )
     , config_( config )
     , fileLoader_( fileLoader )
     , page_( page )

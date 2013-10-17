@@ -12,8 +12,7 @@
 #include "ADN_GeneralConfig.h"
 #include "ADN_Tools.h"
 #include "ADN_Project_Data.h"
-#include "clients_kernel/Language.h"
-#include "clients_kernel/Languages.h"
+#include "tools/Languages.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data constructor
@@ -21,7 +20,7 @@
 // -----------------------------------------------------------------------------
 ADN_Languages_Data::ADN_Languages_Data()
     : ADN_Data_ABC( eLanguages )
-    , allLanguages_( new kernel::Languages( ADN_Workspace::GetWorkspace().GetConfig().BuildResourceChildFile( "languages.xml" ) ) )
+    , allLanguages_( ADN_Workspace::GetWorkspace().GetConfig().GetLanguages() )
 {
     // NOTHING
 }
@@ -53,6 +52,7 @@ void ADN_Languages_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "languages" )
             >> xml::list( "language", *this, &ADN_Languages_Data::ReadLanguage )
           >> xml::end;
+    tools::Language::SetCurrent( master_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,9 +61,9 @@ void ADN_Languages_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::ReadLanguage( xml::xistream& input )
 {
-    const boost::shared_ptr< kernel::Language >& language = allLanguages_->Get( input.attribute( "code", "" ) );
+    const tools::Language& language = allLanguages_.Get( input.attribute( "code", "" ) );
     if( input.attribute( "master", false ) )
-        InternalSetMaster( language->GetCode() );
+        InternalSetMaster( language.GetCode() );
     else
         activeLanguages_.push_back( language );
 }
@@ -85,7 +85,7 @@ void ADN_Languages_Data::WriteArchive( xml::xostream& output ) const
                << xml::end;
     for( auto it = activeLanguages_.begin(); it != activeLanguages_.end(); ++it )
         output << xml::start( "language" )
-                 << xml::attribute( "code", ( *it )->GetCode() )
+                 << xml::attribute( "code", it->GetCode() )
                << xml::end;
     output << xml::end; //! languages
 }
@@ -109,13 +109,13 @@ void ADN_Languages_Data::SetMaster( const std::string& language )
         throw MASA_EXCEPTION( "Can't set master language with the actual master language" );
 
     for( auto it = activeLanguages_.begin(); it != activeLanguages_.end(); ++it )
-        if( ( *it )->GetCode() == language )
+        if( it->GetCode() == language )
         {
             activeLanguages_.erase( it );
             break;
         }
     if( !IsMasterEmpty() )
-        activeLanguages_.push_back( allLanguages_->Get( master_ ) );
+        activeLanguages_.push_back( allLanguages_.Get( master_ ) );
     InternalSetMaster( language );
 }
 
@@ -127,17 +127,17 @@ void ADN_Languages_Data::SwapMaster()
 {
     if( IsMasterEmpty() )
         throw MASA_EXCEPTION ( "Can't swap languages if master is empty" );
-    const std::string& current = kernel::Language::Current();
+    const std::string& current = tools::Language::Current();
     if( master_ == current )
         throw MASA_EXCEPTION( "Can't swap master language with the actual master language" );
 
     for( auto it = activeLanguages_.begin(); it != activeLanguages_.end(); ++it )
-        if( ( *it )->GetCode() == current )
+        if( it->GetCode() == current )
         {
             activeLanguages_.erase( it );
             break;
         }
-    activeLanguages_.push_back( allLanguages_->Get( master_ ) );
+    activeLanguages_.push_back( allLanguages_.Get( master_ ) );
     InternalSetMaster( current );
 }
 
@@ -148,7 +148,7 @@ void ADN_Languages_Data::SwapMaster()
 void ADN_Languages_Data::InternalSetMaster( const std::string& language )
 {
     if( IsCurrentMaster() )
-        kernel::Language::SetCurrent( language );
+        tools::Language::SetCurrent( language );
     master_ = language;
 }
 
@@ -176,23 +176,23 @@ bool ADN_Languages_Data::IsMasterEmpty() const
 // -----------------------------------------------------------------------------
 bool ADN_Languages_Data::IsCurrentMaster() const
 {
-    return IsMaster( kernel::Language::Current() );
+    return IsMaster( tools::Language::Current() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data::GetAllLanguages
 // Created: ABR 2013-10-07
 // -----------------------------------------------------------------------------
-const kernel::Languages& ADN_Languages_Data::GetAllLanguages() const
+const tools::Languages& ADN_Languages_Data::GetAllLanguages() const
 {
-    return *allLanguages_;
+    return allLanguages_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data::GetActiveLanguages
 // Created: ABR 2013-10-07
 // -----------------------------------------------------------------------------
-const kernel::Languages::T_Languages& ADN_Languages_Data::GetActiveLanguages() const
+const tools::LanguagesVector& ADN_Languages_Data::GetActiveLanguages() const
 {
     return activeLanguages_;
 }
@@ -212,7 +212,7 @@ void ADN_Languages_Data::PurgeActiveLanguages()
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::AddActiveLanguage( const std::string& language )
 {
-    activeLanguages_.push_back( allLanguages_->Get( language ) );
+    activeLanguages_.push_back( allLanguages_.Get( language ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +222,7 @@ void ADN_Languages_Data::AddActiveLanguage( const std::string& language )
 bool ADN_Languages_Data::HasActiveLanguage( const std::string& language ) const
 {
     for( auto it = activeLanguages_.begin(); it != activeLanguages_.end(); ++it )
-        if( ( *it )->GetCode() == language )
+        if( it->GetCode() == language )
             return true;
     return false;
 }
@@ -245,7 +245,7 @@ void ADN_Languages_Data::CleanLocalDirectories() const
         {
             bool found = false;
             for( auto itLanguage = activeLanguages_.begin(); !found && itLanguage != activeLanguages_.end(); ++itLanguage )
-                found = itLanguagePath->ToUTF8() == ( *itLanguage )->GetCode();
+                found = itLanguagePath->ToUTF8() == itLanguage->GetCode();
 
             if( !found )
                 ( *itLocalPath / *itLanguagePath ).RemoveAll();

@@ -12,6 +12,7 @@
 #include "Options.h"
 #include "Controller.h"
 #include "ActionController.h"
+#include "LanguageController.h"
 #include "ModeController.h"
 #include "ContextMenuObserver_ABC.h"
 #include <tools/SelectionObserver_ABC.h>
@@ -27,6 +28,7 @@ Controllers::Controllers()
     , controller_( *new Controller() )
     , actions_   ( *new ActionController() )
     , modes_     ( *new ModeController() )
+    , languages_ ( *new LanguageController() )
 {
     // NOTHING
 }
@@ -37,6 +39,7 @@ Controllers::Controllers()
 // -----------------------------------------------------------------------------
 Controllers::~Controllers()
 {
+    delete &languages_;
     delete &modes_;
     delete &actions_;
     delete &controller_;
@@ -49,6 +52,8 @@ Controllers::~Controllers()
 // -----------------------------------------------------------------------------
 void Controllers::Register( tools::Observer_ABC& observer )
 {
+    // We should delete this method and manually register only to the wanted controller.
+    // That why languages_ is not registered here.
     options_.Register( observer );
     controller_.Register( observer );
     actions_.Register( observer );

@@ -3,67 +3,58 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
-#include "Filter.h"
-#include "moc_Filter_ABC.cpp"
+#include "clients_kernel_pch.h"
+#include "LanguageController.h"
 #include "tools/Language.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
-// Name: Filter constructor
-// Created: ABR 2011-06-17
+// Name: LanguageController constructor
+// Created: ABR 2013-10-15
 // -----------------------------------------------------------------------------
-Filter::Filter()
-    : description_( tools::Language::Current() )
+LanguageController::LanguageController()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Filter constructor
-// Created: ABR 2011-09-29
+// Name: LanguageController destructor
+// Created: ABR 2013-10-15
 // -----------------------------------------------------------------------------
-Filter::Filter( xml::xistream& xis )
-    : description_( xis, tools::Language::Current() )
+LanguageController::~LanguageController()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Filter destructor
-// Created: ABR 2011-06-17
+// Name: LanguageController::Register
+// Created: ABR 2013-10-15
 // -----------------------------------------------------------------------------
-Filter::~Filter()
+void LanguageController::Register( tools::Observer_ABC& observer )
 {
-    // NOTHING
+    tools::SortedInterfaceContainer< tools::Observer_ABC >::Register( observer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Filter::GetName
-// Created: ABR 2011-06-17
+// Name: LanguageController::Unregister
+// Created: ABR 2013-10-15
 // -----------------------------------------------------------------------------
-const std::string Filter::GetName() const
+void LanguageController::Unregister( tools::Observer_ABC& observer )
 {
-    return description_.GetName();
+    tools::SortedInterfaceContainer< tools::Observer_ABC >::Unregister( observer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Filter::GetDescription
-// Created: ABR 2011-06-17
+// Name: LanguageController::ChangeLanguage
+// Created: ABR 2013-10-15
 // -----------------------------------------------------------------------------
-const std::string Filter::GetDescription() const
+void LanguageController::ChangeLanguage( const std::string& language )
 {
-    return description_.GetDescription();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Filter::NeedToReloadExercise
-// Created: ABR 2011-06-24
-// -----------------------------------------------------------------------------
-bool Filter::NeedToReloadExercise() const
-{
-    return false;
-}
+    tools::Language::SetCurrent( language );
+    Apply( &tools::LanguageObserver_ABC::OnLanguageChanged );
+};

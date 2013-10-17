@@ -14,8 +14,8 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_WorkspaceElement.h"
-#include "clients_kernel/Language.h"
 #include "clients_kernel/XmlTranslations.h"
+#include "tools/Language.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #pragma warning( push, 0 )
@@ -88,10 +88,10 @@ void ADN_Data_ABC::LoadTranslations( const tools::Path& xmlFile, kernel::XmlTran
     kernel::XmlTranslations* currentTranslation = ( translations ) ?  translations : translations_.get();
     if( currentTranslation && currentTranslation->LoadTranslationQueries( xmlFile ) )
     {
-        const kernel::Languages::T_Languages& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+        const tools::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
         currentTranslation->EvaluateTranslationQueries( xmlFile, languages );
         for( auto it = languages.cbegin(); it != languages.cend(); ++it )
-            currentTranslation->LoadTranslationFile( xmlFile, BuildLocalDirectory(), (*it)->GetCode() );
+            currentTranslation->LoadTranslationFile( xmlFile, BuildLocalDirectory(), it->GetCode() );
     }
 }
 

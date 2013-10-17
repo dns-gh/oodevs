@@ -33,7 +33,7 @@ namespace
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 Page_ABC::Page_ABC( QStackedWidget* pages, Page_ABC& previous, unsigned short flags )
-    : gui::LanguageChangeObserver_ABC< QWidget >( pages )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( pages )
     , pages_       ( pages )
     , previous_    ( previous )
     , backButton_  ( 0 )

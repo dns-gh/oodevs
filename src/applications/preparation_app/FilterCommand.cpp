@@ -18,6 +18,7 @@
 #include "frontend/ProcessWrapper.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/EnvHelpers.h"
+#include "tools/Language.h"
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -137,7 +138,7 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
     argument.value_ = ConvertArgumentVariable( argument.value_ );
     if( ::IsInputArgument( argument.value_ ) )
     {
-        kernel::XmlDescription description( xis, tools::readLang() );
+        kernel::XmlDescription description( xis, tools::Language::Current() );
         FilterInputArgument* inputArgument = new FilterInputArgument( config_, argument.value_, description, config_.GetExerciseDir( config_.GetExerciseName() ) );
         inputArguments_[ arguments_.size() ] = inputArgument;
         connect( inputArgument, SIGNAL( ValueChanged() ), this, SLOT( OnValueChanged() ) );

@@ -10,8 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "XmlTranslations.h"
 #include "Context.h"
-#include "Language.h"
-#include "Languages.h"
 #include "TranslationQuery.h"
 #include "Tools.h"
 #include "tools/FileWrapper.h"
@@ -95,14 +93,14 @@ void XmlTranslations::ReadTranslationQuery( xml::xistream& xis )
 // Name: XmlTranslations::EvaluateTranslationQueries
 // Created: ABR 2013-07-10
 // -----------------------------------------------------------------------------
-void XmlTranslations::EvaluateTranslationQueries( const tools::Path& xmlFile, const Languages::T_Languages& languages )
+void XmlTranslations::EvaluateTranslationQueries( const tools::Path& xmlFile, const tools::LanguagesVector& languages )
 {
     for( auto it = queries_.begin(); it != queries_.end(); ++it )
     {
         QStringList result = it->Evaluate( xmlFile );
         for( auto itKey = result.begin(); itKey != result.end(); ++itKey )
             for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
-                SetTranslation( it->GetContext(), itKey->toStdString(), ( *itLanguage )->GetCode(), "" );
+                SetTranslation( it->GetContext(), itKey->toStdString(), itLanguage->GetCode(), "" );
     }
 }
 
@@ -258,22 +256,23 @@ void XmlTranslations::MergeDuplicateTranslations()
 // Name: XmlTranslations::SaveTranslations
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
-void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const Languages::T_Languages& languages ) const
+void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const tools::LanguagesVector& languages ) const
 {
     if( contexts_.empty() )
         return;
     for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
     {
-        const tools::Path languageDirectory = localesDirectory / tools::Path::FromUTF8( ( *itLanguage )->GetCode() );
+        const std::string& languageCode = itLanguage->GetCode();
+        const tools::Path languageDirectory = localesDirectory / tools::Path::FromUTF8( languageCode );
         if( !languageDirectory.Exists() )
             languageDirectory.CreateDirectories();
 
-        const tools::Path translationPath = languageDirectory / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( ( *itLanguage )->GetCode() ) + ".ts";
+        const tools::Path translationPath = languageDirectory / xmlFile.BaseName() + "_" + tools::Path::FromUTF8( languageCode ) + ".ts";
         tools::Xofstream xos( translationPath );
         // $$$$ ABR 2013-07-10: TODO: Insert <!DOCTYPE TS> here when xeumeuleu will handle it
         xos << xml::start( "TS" )
             << xml::attribute( "version", "2.0" )
-            << xml::attribute( "language", ( *itLanguage )->GetCode() );
+            << xml::attribute( "language", languageCode );
         for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
         {
             if( itContext->second->empty() )
@@ -293,8 +292,8 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
                 xos << xml::start( "message" )
                     << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
                     << xml::start( "translation" )
-                    << ( *itTranslation )->Value( ( *itLanguage )->GetCode() )
-                    << ( *itTranslation )->Type( ( *itLanguage )->GetCode() )
+                    << ( *itTranslation )->Value( languageCode )
+                    << ( *itTranslation )->Type( languageCode )
                     << xml::end //! translation
                     << xml::end; //! message
             }

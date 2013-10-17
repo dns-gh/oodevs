@@ -13,9 +13,9 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_Languages_Dialog.h"
 #include "ADN_Workspace.h"
-#include "clients_kernel/Language.h"
 #include "clients_Kernel/LocalizedString.h"
 #include "clients_Kernel/Tools.h"
+#include "tools/Languages.h"
 
 namespace
 {
@@ -85,7 +85,7 @@ QString ADN_Languages_GUI::CreateMasterText() const
 {
     return data_.Master().empty()
         ? tr( "(master)" )
-        : QString( "%1 %2" ).arg( data_.GetAllLanguages().Get( data_.Master() )->GetName().c_str() ).arg( tr( "(master)" ) );
+        : QString( "%1 %2" ).arg( data_.GetAllLanguages().Get( data_.Master() ).GetName().c_str() ).arg( tr( "(master)" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ void ADN_Languages_GUI::BuildMenu()
     actions_.push_back( masterAction_ );
 
     for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
-        actions_.push_back( AddToMenu( ( *it )->GetName().c_str(), menu_, mapper_ ) );
+        actions_.push_back( AddToMenu( it->GetName().c_str(), menu_, mapper_ ) );
 
     swapSeparator_ = menu_->addSeparator();
     swapAction_ = menu_->addAction( tr( "Set current language as master" ), this, SLOT( OnSwap() ) );
@@ -172,9 +172,9 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
     }
     UpdateCurrentAction( language );
     for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
-        if( ( *it )->GetName() == language.toStdString() )
+        if( it->GetName() == language.toStdString() )
         {
-            ChangeLanguage( ( *it )->GetCode() );
+            ChangeLanguage( it->GetCode() );
             UpdateMenu();
             return;
         }
@@ -188,7 +188,7 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
 // -----------------------------------------------------------------------------
 void ADN_Languages_GUI::ChangeLanguage( const std::string& language )
 {
-    kernel::Language::SetCurrent( language );
+    tools::Language::SetCurrent( language );
     ADN_Workspace::GetWorkspace().SetIsSwappingLanguage( true );
     emit LanguageChanged();
     emit PostLanguageChanged();
@@ -221,20 +221,20 @@ void ADN_Languages_GUI::OnSwap()
 {
     if( data_.IsMasterEmpty() )
         throw MASA_EXCEPTION( "Not supposed to swap with an empty master" );
-    const QString& current = data_.GetAllLanguages().Get( kernel::Language::Current() )->GetName().c_str();
-    const QString& master = data_.GetAllLanguages().Get( data_.Master() )->GetName().c_str();
+    const QString& current = data_.GetAllLanguages().Get( tools::Language::Current() ).GetName().c_str();
+    const QString& master = data_.GetAllLanguages().Get( data_.Master() ).GetName().c_str();
 
     if( !Confirm( tr( "Are you sure you want to set the database master as '%1'?" ).arg( current ) ) )
         return;
     if( ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
-                                                   boost::bind( &kernel::LocalizedString::IsUnfinished, _1, kernel::Language::Current() ) ) ) )
+                                                   boost::bind( &kernel::LocalizedString::IsUnfinished, _1, tools::Language::Current() ) ) ) )
         && !Confirm( tr( "Some translations are empty or unfinished. If you continue you will have values in both "
                          "%1 and %2 as reference language, and may lost some unfinished translations. "
                          "Proceed anyway?" ).arg( current ).arg( master ) ) )
         return;
 
     ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
-                                               boost::bind( &kernel::LocalizedString::SwapKey, _1, data_.Master(), kernel::Language::Current() ) ) ) );
+                                               boost::bind( &kernel::LocalizedString::SwapKey, _1, data_.Master(), tools::Language::Current() ) ) ) );
 
     data_.SwapMaster();
     ChangeLanguage( data_.Master() );

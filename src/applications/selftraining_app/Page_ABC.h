@@ -11,7 +11,7 @@
 #define __Page_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 
 class QuitPage;
 
@@ -21,7 +21,7 @@ class QuitPage;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class Page_ABC : public gui::LanguageChangeObserver_ABC< QWidget >
+class Page_ABC : public gui::WidgetLanguageObserver_ABC< QWidget >
                , private boost::noncopyable
 {
     Q_OBJECT

@@ -11,6 +11,7 @@
 #define __Application_h_
 
 #include "clients_gui/Application_ABC.h"
+#include "tools/LanguageObserver_ABC.h"
 
 namespace frontend
 {
@@ -44,6 +45,8 @@ class QMainWindow;
 // Created: SBO 2008-02-21
 // =============================================================================
 class Application : public gui::Application_ABC
+                  , public tools::Observer_ABC
+                  , public tools::LanguageObserver_ABC
 {
     Q_OBJECT
 
@@ -75,6 +78,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual void OnLanguageChanged();
     virtual void InitializeStyle();
     //@}
 

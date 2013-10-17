@@ -11,7 +11,7 @@
 #define __SessionList_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 
 namespace tools
 {
@@ -25,7 +25,7 @@ namespace tools
 */
 // Created: SBO 2009-12-13
 // =============================================================================
-class SessionList : public gui::LanguageChangeObserver_ABC< QWidget >
+class SessionList : public gui::WidgetLanguageObserver_ABC< QWidget >
                   , private boost::noncopyable
 {
     Q_OBJECT;

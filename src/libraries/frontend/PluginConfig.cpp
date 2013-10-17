@@ -14,6 +14,7 @@
 #include "PluginSettingVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Language.h"
 #pragma warning( push, 0 )
 #include <Qt/qapplication.h>
 #include <QtCore/qsettings.h>
@@ -52,7 +53,7 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     , name_           ( xis.attribute< tools::Path >( "name" ) )
     , library_        ( tools::Path::FromUTF8( xis.has_attribute( "library" ) ? PLUGIN( xis.attribute< std::string >( "library", "" ) ) : "" ) )
     , version_        ( xis.attribute< std::string >( "version" ) )
-    , description_    ( xis, tools::readLang() )
+    , description_    ( xis, tools::Language::Current() )
 {
     box_ = new QGroupBox();
     QVBoxLayout* boxLayout = new QVBoxLayout( box_ );
@@ -93,7 +94,7 @@ void PluginConfig::OnLanguageChanged()
 {
     box_->setTitle( tools::translate( "PluginConfig", "Enable %1 plugin v%2 " ).arg( label_ ).arg( version_.c_str() ) );
 
-    const std::string currentLanguage = tools::readLang();
+    const std::string currentLanguage = tools::Language::Current();
     description_.SetCurrentLanguage( currentLanguage );
     box_->setToolTip( description_.GetDescription().c_str() );
 
@@ -195,7 +196,7 @@ void PluginConfig::ReadGroup( xml::xistream& xis, QWidget* parent )
     boxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
     parent->layout()->addWidget( box );
 
-    groupBoxs_[ box ] = new kernel::XmlDescription( xis, tools::readLang() );
+    groupBoxs_[ box ] = new kernel::XmlDescription( xis, tools::Language::Current() );
     boxLayout->setMargin( 5 );
 
     xis >> xml::start( "settings" )

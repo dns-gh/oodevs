@@ -103,11 +103,6 @@ private:
     void CreateDataDirectory();
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< std::string, QString > T_Languages;
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -121,7 +116,6 @@ private:
 
     //! @name Settings tab
     //@{
-    T_Languages  languages_;
     std::string  selectedLanguage_;
     tools::Path  selectedDataDir_;
     QLabel*      languageLabel_;
@@ -133,18 +127,10 @@ private:
     bool         languageHasChanged_;
     //@}
 
-    //! @name Import tab
+    //! @name Other tabs
     //@{
     ImportWidget* import_;
-    //@}
-
-    //! @name Export tab
-    //@{
     ExportWidget* export_;
-    //@}
-
-    //! @name Terrains/Models tab
-    //@{
     DataWidget* data_;
     //@}
 };

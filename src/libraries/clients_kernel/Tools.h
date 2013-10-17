@@ -37,9 +37,7 @@ namespace tools
     QDateTime BoostTimeToQTime( const boost::posix_time::ptime& btime );
     boost::posix_time::ptime QTimeToBoostTime( const QDateTime& qtime );
 
-    QLocale readLocale();
-    std::string readLang();
-    QTranslator* AddTranslator( QApplication& application, const QLocale& locale, const char* t );
+    QTranslator* AddTranslator( QApplication& application, const std::string& languageCode, const char* t );
 
     QString translate( const char* context, const char* what );
     QString findTranslation( const char* context, const char* what );

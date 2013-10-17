@@ -99,8 +99,7 @@ boost::shared_ptr<LogisticPlugin> CreateLogisticPlugin( const tools::Path& tempD
         tempDir / "maintenance",
         tempDir / "supply",
         tempDir / "funeral",
-        tempDir / "medical",
-        "en" ));
+        tempDir / "medical" ) );
 }
 
 typedef std::vector< std::string > T_Lines;

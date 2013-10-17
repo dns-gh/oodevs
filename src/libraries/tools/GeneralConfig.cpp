@@ -9,6 +9,7 @@
 
 #include "tools_pch.h"
 #include "GeneralConfig.h"
+#include "Languages.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
@@ -25,6 +26,7 @@ GeneralConfig::GeneralConfig( const Path& defaultRoot /* = "../"*/ )
     : CommandLineConfig_ABC()
     , terrainConfigFile_ ( "terrain.xml" )
     , exerciseConfigFile_( "exercise.xml" )
+    , languages_( new Languages( BuildResourceChildFile( "languages.xml" ) ) )
 {
     po::options_description desc( "General options" );
     desc.add_options()
@@ -310,4 +312,13 @@ Path GeneralConfig::BuildPluginDirectory( const Path& plugin ) const
     if( pluginsDir_.HasRootDirectory() )
         return pluginsDir_ / plugin;
     return pluginsDir_.Absolute() / plugin;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetLanguages
+// Created: ABR 2013-10-14
+// -----------------------------------------------------------------------------
+const Languages& GeneralConfig::GetLanguages() const
+{
+    return *languages_;
 }

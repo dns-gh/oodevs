@@ -17,6 +17,7 @@
 #include "frontend/CreateExercise.h"
 #include "frontend/Exercise_ABC.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Language.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -27,7 +28,7 @@ namespace fc = frontend::commands;
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
 ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable )
-    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , parent_         ( granParent )
     , config_         ( config )
     , fileLoader_     ( fileLoader )
@@ -196,7 +197,7 @@ void ExerciseProperties::ReadBriefingText( xml::xistream& xis )
     std::string lang, text;
     xis >> xml::attribute( "lang", lang )
         >> text;
-    if( lang == tools::readLang().c_str() )
+    if( lang == tools::Language::Current().c_str() )
     {
         briefingText_->setText( text.c_str() );
         briefingText_->show();

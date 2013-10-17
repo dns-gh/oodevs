@@ -23,7 +23,7 @@ namespace fc = frontend::commands;
 // Created: SBO 2009-12-13
 // -----------------------------------------------------------------------------
 SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , config_( config )
     , fileLoader_( fileLoader )
 {

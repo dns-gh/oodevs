@@ -29,7 +29,7 @@ namespace fc = frontend::commands;
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
 ImportWidget::ImportWidget( QWidget* parent, const tools::GeneralConfig& config )
-    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , config_        ( config )
     , isValidVersion_( false )
 {

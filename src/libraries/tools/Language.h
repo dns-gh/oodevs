@@ -7,10 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __Language_h_
-#define __Language_h_
+#ifndef _tools_Language_h_
+#define _tools_Language_h_
 
 #include <boost/noncopyable.hpp>
+#include <vector>
 
 namespace xml
 {
@@ -18,7 +19,7 @@ namespace xml
     class xostream;
 }
 
-namespace kernel
+namespace tools
 {
 
 // =============================================================================
@@ -27,12 +28,13 @@ namespace kernel
 */
 // Created: ABR 2013-07-09
 // =============================================================================
-class Language : private boost::noncopyable
+class Language
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
+             Language( const Language& );
     explicit Language( xml::xistream& xis );
     virtual ~Language();
     //@}
@@ -47,13 +49,14 @@ public:
     //@{
     static const std::string& Current();
     static void SetCurrent( const std::string& language );
+    static void InitFromRegistry();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string name_;
-    const std::string code_;
+    std::string name_;
+    std::string code_;
     //@}
 
     //! @name Static member data
@@ -62,6 +65,8 @@ private:
     //@}
 };
 
-} //! namespace kernel
+typedef std::vector< tools::Language > LanguagesVector;
 
-#endif // __Language_h_
+} //! namespace tools
+
+#endif // _tools_Language_h_

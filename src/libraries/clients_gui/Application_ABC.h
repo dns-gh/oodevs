@@ -42,22 +42,17 @@ public:
     virtual void CreateTranslators() = 0;
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void DeleteTranslators();
-    virtual void InitializeLayoutDirection();
-    void SetLocale();
-    //@}
-
 protected:
     //! @name Protected operations
     virtual void CheckLicense( const std::string& licenseName );
 
     virtual void Initialize();
-    virtual void InitializeBugTrap();
+    void InitializeBugTrap();
+    void InitializeLayoutDirection();
     virtual void InitializeStyle();
 
     void AddTranslator( const char* t );
+    void DeleteTranslators();
     //@}
 
     //! @name Accessors

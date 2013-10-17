@@ -11,7 +11,7 @@
 #define __CreateExerciceWidget_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 
 class ScenarioEditPage;
 
@@ -32,7 +32,7 @@ namespace tools
 */
 // Created: JSR 2010-07-13
 // =============================================================================
-class CreateExerciceWidget : public gui::LanguageChangeObserver_ABC< QGroupBox >
+class CreateExerciceWidget : public gui::WidgetLanguageObserver_ABC< QGroupBox >
                            , private boost::noncopyable
 {
     Q_OBJECT

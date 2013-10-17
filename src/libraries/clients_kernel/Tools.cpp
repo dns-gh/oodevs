@@ -65,52 +65,13 @@ boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::readLocale
-// Created: ABR 2012-07-11
-// -----------------------------------------------------------------------------
-QLocale tools::readLocale()
-{
-    QString locale;
-    const char* loc = std::getenv( "MASA_LOCALE" );
-    if( loc && strlen( loc ) > 0 )
-        locale = QString( loc );
-    else
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        locale = settings.value( "/Common/Language", "en" ).value< QString >();
-    }
-
-    if( locale.count( "_" ) )
-        return QLocale( locale );
-    else if( locale.count( "fr" ) )
-        return QLocale( QLocale::French, QLocale::France );
-    else if( locale.count( "es" ) )
-        return QLocale( QLocale::Spanish, QLocale::Spain );
-    else if( locale.count( "ar" ) )
-        return QLocale( QLocale::Arabic, QLocale::Algeria );
-    else if( locale.count( "pt" ) )
-        return QLocale( QLocale::Portuguese, QLocale::Brazil );
-
-    return QLocale( QLocale::English, QLocale::UnitedStates );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Tools::readLang
-// Created: ABR 2012-07-13
-// -----------------------------------------------------------------------------
-std::string tools::readLang()
-{
-    return tools::readLocale().name().left( 2 ).toStdString();
-}
-
-// -----------------------------------------------------------------------------
 // Name: tools::AddTranslator
 // Created: ABR 2012-07-11
 // -----------------------------------------------------------------------------
-QTranslator* tools::AddTranslator( QApplication& application, const QLocale& locale, const char* t )
+QTranslator* tools::AddTranslator( QApplication& application, const std::string& languageCode, const char* t )
 {
     std::auto_ptr< QTranslator > trans( new QTranslator( &application ) );
-    const QString file = QString( "%1_%2" ).arg( t ).arg( locale.name().left( 2 ) );
+    const QString file = QString( "%1_%2" ).arg( t ).arg( languageCode.c_str() );
     if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
     {
         application.installTranslator( trans.get() );

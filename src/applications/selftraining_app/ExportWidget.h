@@ -10,7 +10,7 @@
 #ifndef __ExportWidget_h_
 #define __ExportWidget_h_
 
-#include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <tools/ElementObserver_ABC.h>
 
@@ -43,7 +43,7 @@ class ExerciseListView;
 */
 // Created: JSR 2010-07-15
 // =============================================================================
-class ExportWidget : public gui::LanguageChangeObserver_ABC< QWidget >
+class ExportWidget : public gui::WidgetLanguageObserver_ABC< QWidget >
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
                    , private boost::noncopyable

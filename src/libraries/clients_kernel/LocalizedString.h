@@ -10,7 +10,7 @@
 #ifndef __LocalizedString_h_
 #define __LocalizedString_h_
 
-#include "Languages.h"
+#include "tools/Language.h"
 #include <boost/container/flat_map.hpp>
 #include <boost/noncopyable.hpp>
 
@@ -67,7 +67,7 @@ public:
     //@{
     void CopyValues( const LocalizedString& other );
     bool IsUnfinished( const std::string& language ) const;
-    bool Initialize( const Languages::T_Languages& languages );
+    bool Initialize( const tools::LanguagesVector& languages );
     bool SwapKey( const std::string& oldKey, const std::string& newKey );
     //@}
 

@@ -11,11 +11,11 @@
 #define __ADN_Languages_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "clients_kernel/Languages.h"
+#include "tools/Language.h"
 
-namespace kernel
+namespace tools
 {
-    class Language;
+    class Languages;
 }
 
 // =============================================================================
@@ -53,8 +53,8 @@ public:
     bool IsMasterEmpty() const;
     bool IsCurrentMaster() const;
 
-    const kernel::Languages& GetAllLanguages() const;
-    const kernel::Languages::T_Languages& GetActiveLanguages() const;
+    const tools::Languages& GetAllLanguages() const;
+    const tools::LanguagesVector& GetActiveLanguages() const;
     //@}
 
 private:
@@ -70,8 +70,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< const kernel::Languages > allLanguages_;
-    kernel::Languages::T_Languages activeLanguages_;
+    const tools::Languages& allLanguages_;
+    tools::LanguagesVector activeLanguages_;
     std::string master_;
     //@}
 };

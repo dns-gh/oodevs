@@ -34,7 +34,7 @@ namespace fc = frontend::commands;
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
 ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers )
-    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
+    : gui::WidgetLanguageObserver_ABC< QWidget >( parent )
     , config_     ( config )
     , fileLoader_ ( fileLoader )
     , controllers_( controllers )

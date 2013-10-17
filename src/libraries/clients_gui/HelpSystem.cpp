@@ -12,6 +12,7 @@
 #include "moc_HelpSystem.cpp"
 #include "Tools.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Language.h"
 #include <xeumeuleu/xml.hpp>
 #include <htmlhelp.h>
 
@@ -29,7 +30,7 @@ HelpSystem::HelpSystem( QWidget* root, const tools::Path& config )
     try
     {
         const std::string strGuide = tools::translate( "gui::HelpSystem", "Sword_General_User_Guide" ).toStdString();
-        tools::Path locale = tools::Path( tools::readLang().c_str() );
+        const tools::Path locale = tools::Path( tools::Language::Current().c_str() );
         helpFile_ = tools::GeneralConfig::BuildResourceChildFile( tools::Path( "help" ) / locale / tools::Path::FromUTF8( strGuide ) + ".pdf" );
         if( !helpFile_.Exists() )
             helpFile_ =  tools::GeneralConfig::BuildResourceChildFile( "help/en/Sword_General_User_Guide.pdf" );

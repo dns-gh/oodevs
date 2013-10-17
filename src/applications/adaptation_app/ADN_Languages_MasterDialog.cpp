@@ -13,8 +13,7 @@
 #include "ADN_Gui_Tools.h"
 #include "ADN_Languages_Data.h"
 #include "ADN_Workspace.h"
-#include "clients_kernel/Language.h"
-#include "clients_kernel/Languages.h"
+#include "tools/Languages.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Languages_MasterDialog constructor
@@ -69,14 +68,14 @@ void ADN_Languages_MasterDialog::showEvent( QShowEvent* pEvent )
 
     model_.clear();
     QString english;
-    const kernel::Languages::T_Languages& languages = data_.GetAllLanguages().GetLanguages();
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
-        if( ( *it )->GetCode() == "en" )
-            english = ( *it )->GetName().c_str();
+        if( it->GetCode() == "en" )
+            english = it->GetName().c_str();
         model_.appendRow( QList< QStandardItem* >()
-                          << new QStandardItem( ( *it )->GetName().c_str() )
-                          << new QStandardItem( ( *it )->GetCode().c_str() ) );
+                          << new QStandardItem( it->GetName().c_str() )
+                          << new QStandardItem( it->GetCode().c_str() ) );
     }
     model_.sort( 1 );
     if( !english.isEmpty() )
@@ -91,11 +90,11 @@ void ADN_Languages_MasterDialog::showEvent( QShowEvent* pEvent )
 void ADN_Languages_MasterDialog::accept()
 {
     const QString selectedLanguage = combo_->currentText();
-    const kernel::Languages::T_Languages& languages = data_.GetAllLanguages().GetLanguages();
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
     for( auto it = languages.begin(); it != languages.end(); ++it )
-        if( ( *it )->GetName() == selectedLanguage.toStdString() )
+        if( it->GetName() == selectedLanguage.toStdString() )
         {
-            data_.SetMaster( ( *it )->GetCode() );
+            data_.SetMaster( it->GetCode() );
             emit MasterChanged();
             ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
             QDialog::accept();
