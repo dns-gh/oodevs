@@ -471,16 +471,14 @@ integration.setAvailableDrones = function ( self )
     end
 end
 
--- Returns true if their is an available drone into the automat, false otherwise
+-- Returns true if there is an available drone into the automat, false otherwise
 integration.companyHasAvailableDrones = function( self )
     local integration = integration
     local listePions = integration.getUnitsWithoutHQCommunication()
     for _,pion in pairs( listePions or emptyTable ) do
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
-       if operationalLevel ~= 0 then
-            if not integration.isUAVDeployed( pion ) then
-                return true
-            end
+       if operationalLevel ~= 0 and not integration.isUAVDeployed( pion ) then
+            return true
         end
     end
     return false
