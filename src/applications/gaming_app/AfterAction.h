@@ -30,6 +30,7 @@ namespace tools
     class ExerciseConfig;
 }
 
+class AfterActionFunctionList;
 class AfterActionModel;
 class IndicatorPlotFactory;
 
@@ -50,6 +51,11 @@ public:
     virtual ~AfterAction();
     //@}
 
+    //! @name From QWidget
+    //@{
+    virtual void setVisible( bool visible );
+    //@}
+
 private slots:
     //! @name 
     //@{
@@ -62,6 +68,7 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     AfterActionModel& model_;
+    AfterActionFunctionList* functionList_;
     //@}
 };
 
