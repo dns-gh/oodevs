@@ -198,7 +198,7 @@ const sword::CoordLatLong& protocol::GetPoint( const sword::MissionParameters& p
     const auto& point = GetValue< Point >( params, i, j, k );
     const auto& coords = point.location().coordinates();
     protocol::Check( coords.elem_size() == 1,
-            "point location must contain a single point" );
+            "must contain a single point", i, j, k );
     return coords.elem( 0 );
 }
 

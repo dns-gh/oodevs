@@ -1904,7 +1904,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     try
     {
         const auto points = protocol::GetLocation( params, 0 );
-        protocol::Check( points.size() == 1, "parameters[0] must be a point location" );
+        protocol::Check( points.size() == 1, "must be a point location", 0 );
         point = points[0];
     }
     catch( const protocol::Exception& )
@@ -1915,10 +1915,10 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     const uint32_t resourceType = protocol::GetResourceType( params, 1 );
     const auto* pDotationCategory = PHY_DotationType::FindDotationCategory( resourceType );
     protocol::Check( pDotationCategory && pDotationCategory->CanBeUsedForIndirectFire(),
-        "parameters[1] must be a dotation category identifier that can be used for indirect fire" );
+        "must be a dotation category identifier that can be used for indirect fire", 1 );
 
     const float iterations = protocol::GetReal( params, 2 );
-    protocol::Check( iterations >= 0, "parameters[2] must be a positive real number" );
+    protocol::Check( iterations >= 0, "must be a positive real number", 2 );
     const uint32_t ammos = static_cast< uint32_t >(
             pDotationCategory->ConvertToNbrAmmo( iterations ) );
 
