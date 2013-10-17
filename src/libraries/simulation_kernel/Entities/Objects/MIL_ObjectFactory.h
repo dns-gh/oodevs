@@ -56,8 +56,7 @@ public:
     //@{
     void Initialize( xml::xistream& xis );
     MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, xml::xistream& xis, MIL_Army_ABC* army ) const;
-    MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, const sword::MissionParameters& asn, MIL_Army_ABC* army,
-                                  sword::ObjectMagicActionAck_ErrorCode& value ) const;
+    MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, const sword::MissionParameters& asn, MIL_Army_ABC* army ) const;
     MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
                                   bool activated, unsigned int externalIdentifier, unsigned int forcedId = 0u, double density = 0. ) const;
     MIL_Object_ABC* CreateObject( sword::Sink_ABC& sink, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const;

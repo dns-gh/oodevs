@@ -19,3 +19,15 @@ const DEC_Model_ABC* parameters::GetModel( const sword::MissionParameters& param
     protocol::Check( model, "must be a valid model", 0 );
     return model;
 }
+
+uint32_t parameters::GetPartyId( const sword::MissionParameters& params, int i )
+{
+    try
+    {
+        return protocol::GetPartyId( params, i );
+    }
+    catch( const protocol::Exception& )
+    {
+        return protocol::GetIdentifier( params, i );
+    }
+}

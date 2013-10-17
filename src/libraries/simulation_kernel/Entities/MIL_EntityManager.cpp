@@ -1520,24 +1520,6 @@ void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& mes
 // Name: MIL_EntityManager::OnReceiveChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-
-namespace
-{
-
-uint32_t GetPartyId( const sword::MissionParameters& params, int i )
-{
-    try
-    {
-        return protocol::GetPartyId( params, i );
-    }
-    catch( const protocol::Exception& )
-    {
-        return protocol::GetIdentifier( params, i );
-    }
-}
-
-} // namespace
-
 void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::MagicActionAck magicAck;
@@ -1548,8 +1530,8 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
         client::ChangeDiplomacy changeDiplomacyMes;
         const auto& params = message.parameters();
         protocol::CheckCount( params, 3 );
-        const uint32_t party1 = GetPartyId( params, 0 );
-        const uint32_t party2 = GetPartyId( params, 1 );
+        const uint32_t party1 = parameters::GetPartyId( params, 0 );
+        const uint32_t party2 = parameters::GetPartyId( params, 1 );
         const sword::EnumDiplomacy value = GET_ENUMERATION( sword::EnumDiplomacy, params, 2 );
 
         MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );

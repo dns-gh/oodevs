@@ -35,6 +35,8 @@
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_RoofShapeType.h"
 #include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_MessageParameters.h"
+#include "tools/NET_AsnException.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/map.hpp>
@@ -226,25 +228,24 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies,
-                                                                       const propagation::FloodModel_ABC& floodModel )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies,
+                                                 const propagation::FloodModel_ABC& floodModel )
 {
     if( !( message.elem_size() >= 4 && message.elem_size() <= 6 ) ) // type, location, name, team, attributes, extension
-        return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
+        throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_specific_attributes,
+                                 "invalid parameters count" );
 
     MIL_Army_ABC* pArmy = 0;
-    const sword::MissionParameter_Value& value = message.elem( 3 ).value( 0 );
-    if( ! ( value.has_identifier() || value.has_party() ) )
-        return sword::ObjectMagicActionAck::error_invalid_party;
-    unsigned int id = value.has_identifier() ? value.identifier() : value.party().id();
+
+    const uint32_t id = parameters::GetPartyId( message, 3 );
     if( id != 0 )
     {
         pArmy = armies.Find( id );
         if( !pArmy )
-            return sword::ObjectMagicActionAck::error_invalid_party;
+            throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_party,
+                                     "parameters[3], invalid party identifier" );
     }
-    sword::ObjectMagicActionAck_ErrorCode errorCode = sword::ObjectMagicActionAck::no_error;
-    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, message, pArmy, errorCode );
+    MIL_Object_ABC* pObject = factory_.CreateObject( sink_, message, pArmy );
     if( pObject )
     {
         if( FloodAttribute* flood = pObject->RetrieveAttribute< FloodAttribute >() )
@@ -265,7 +266,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
         }
     }
     RegisterObject( pObject );
-    return errorCode;
+    return pObject;
 }
 
 // -----------------------------------------------------------------------------
@@ -439,48 +440,66 @@ void MIL_ObjectManager::SendFullState()
 void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, unsigned int clientId,
                                                     const tools::Resolver< MIL_Army_ABC >& armies, const propagation::FloodModel_ABC& floodModel )
 {
-    sword::ObjectMagicActionAck_ErrorCode nErrorCode = sword::ObjectMagicActionAck::no_error;
-
-    if( msg.type() == sword::ObjectMagicAction::create )
-        nErrorCode = CreateObject( msg.parameters(), armies, floodModel );
-    else if( msg.type() == sword::ObjectMagicAction::destroy )
+    client::ObjectMagicActionAck ack;
+    ack().set_error_code( sword::ObjectMagicActionAck::no_error );
+    ack().set_error_msg( "" );
+    unsigned int id = 0u;
+    try
     {
-        MIL_Object_ABC* pObject = Find( msg.object().id() );
-        if( !pObject || pObject->Retrieve< CrowdCapacity >() )
-            nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
-        else
+        if( msg.type() == sword::ObjectMagicAction::create )
         {
-            MIL_Army_ABC* army = pObject->GetArmy();
-            if( army )
-            {
-                auto knowledges = army->GetKnowledgeGroups();
-                for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
-                {
-                    auto bbKg = it->second->GetKnowledge();
-                    if( bbKg )
-                        bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
-                }
-            }
-            ( *pObject )().Destroy();
+            MIL_Object_ABC* pObject = CreateObject( msg.parameters(), armies, floodModel );
+            if( pObject )
+                id = pObject->GetID();
         }
-    }
-    else if( msg.type() == sword::ObjectMagicAction::update )
-    {
-        MIL_Object_ABC* pObject = Find( msg.object().id() );
-        if( !pObject )
-            nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
-        else
+        else if( msg.type() == sword::ObjectMagicAction::destroy )
         {
-            const sword::MissionParameters& params = msg.parameters();
-            if( params.elem_size() && params.elem( 0 ).value_size() && params.elem( 0 ).value().Get( 0 ).list_size() )
-                nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
+            MIL_Object_ABC* pObject = Find( msg.object().id() );
+            if( !pObject || pObject->Retrieve< CrowdCapacity >() )
+                throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_object,
+                                         "invalid object identifier" );
             else
-                nErrorCode = sword::ObjectMagicActionAck::error_invalid_specific_attributes;
+            {
+                MIL_Army_ABC* army = pObject->GetArmy();
+                if( army )
+                {
+                    auto knowledges = army->GetKnowledgeGroups();
+                    for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+                    {
+                        auto bbKg = it->second->GetKnowledge();
+                        if( bbKg )
+                            bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
+                    }
+                }
+                id = pObject->GetID();
+                ( *pObject )().Destroy();
+            }
+        }
+        else if( msg.type() == sword::ObjectMagicAction::update )
+        {
+            MIL_Object_ABC* pObject = Find( msg.object().id() );
+            if( !pObject )
+                throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_object,
+                                         "invalid object identifier" );
+            else
+            {
+                id = pObject->GetID();
+                const sword::MissionParameters& params = msg.parameters();
+                if( params.elem_size() > 0 )
+                    pObject->OnUpdate( params );
+                else
+                    throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_specific_attributes,
+                                             "invalid specific attributes" );
+            }
         }
     }
-    client::ObjectMagicActionAck reply;
-    reply().set_error_code( nErrorCode );
-    reply.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    catch( const NET_AsnBadParam< sword::ObjectMagicActionAck::ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
+    }
+    ack().mutable_object()->set_id( id );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

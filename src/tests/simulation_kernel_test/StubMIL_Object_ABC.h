@@ -54,7 +54,7 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& /*group*/, const DEC_Knowledge_Object& /*object*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual const MIL_ObjectManipulator_ABC& operator()() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual MIL_ObjectManipulator_ABC& operator()() { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const sword::MissionParameter_Value& /*asn*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void OnUpdate( const sword::MissionParameter_Value& /*asn*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void SendCreation() const {}
     virtual void SendDestruction() const {}
     virtual void SendFullState() const {}
@@ -67,7 +67,7 @@ public:
     virtual void Instanciate( MIL_Object_ABC& /*object*/ ) const {}
     virtual void Finalize() {}
     virtual bool CanBeSeen() const { return true; }
-    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void OnUpdate( const sword::MissionParameters& ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual const std::string& GetName() const { return name_; };
     virtual void SetExtensions( const MIL_DictionaryExtensions& ) {}
     //@}

@@ -107,8 +107,8 @@ private:
 private:
     //! @name Tools
     //@{
-    sword::ObjectMagicActionAck_ErrorCode CreateObject( const sword::MissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies,
-                                                        const propagation::FloodModel_ABC& floodModel );
+    MIL_Object_ABC* CreateObject( const sword::MissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies,
+                                  const propagation::FloodModel_ABC& floodModel );
     //@}
 
 private:
