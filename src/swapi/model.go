@@ -178,6 +178,8 @@ var (
 		(*Model).handleUnitVisionCones,
 		(*Model).handleUrbanCreation,
 		(*Model).handleUrbanUpdate,
+		(*Model).handleObjectCreation,
+		(*Model).handleObjectDestruction,
 	}
 	authToClientHandlers = []func(model *Model, m *sword.AuthenticationToClient_Content) error{
 		(*Model).handleProfileCreation,
@@ -431,6 +433,18 @@ func (model *Model) GetTick() int32 {
 		tick = model.data.Tick
 	})
 	return tick
+}
+
+func (model *Model) GetObject(objectId uint32) *Object {
+	var o *Object
+	model.waitCommand(func(model *Model) {
+		object := model.data.FindObject(objectId)
+		if object != nil {
+			o = &Object{}
+			DeepCopy(o, object)
+		}
+	})
+	return o
 }
 
 func (model *Model) WaitUntilTick(tick int32) bool {

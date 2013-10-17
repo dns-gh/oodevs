@@ -123,6 +123,15 @@ func MakeFormation(value uint32) *sword.MissionParameter {
 		})
 }
 
+func MakeObject(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Object: &sword.ObjectId{
+				Id: proto.Uint32(value),
+			},
+		})
+}
+
 func MakeKnowledgeGroup(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
@@ -241,6 +250,13 @@ func MakeRectangleParam(from, to Point) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
 			Location: MakeRectangleLocation(from, to),
+		})
+}
+
+func MakeLocation(location *sword.Location) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Location: location,
 		})
 }
 

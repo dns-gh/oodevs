@@ -968,3 +968,32 @@ func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
 	}
 	return nil
 }
+
+func (model *Model) handleObjectCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetObjectCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	object := &Object{
+		Id:         mm.GetObject().GetId(),
+		ObjectType: mm.GetType().GetId(),
+		Name:       mm.GetName(),
+		PartyId:    mm.GetParty().GetId(),
+	}
+	if !model.data.addObject(object) {
+		return fmt.Errorf("cannot insert created object: %d", object.Id)
+	}
+	return nil
+}
+
+func (model *Model) handleObjectDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetObjectDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	if !model.data.removeObject(mm.GetObject().GetId()) {
+		return fmt.Errorf("cannot find object to destroy: %d",
+			mm.GetObject().GetId())
+	}
+	return nil
+}
