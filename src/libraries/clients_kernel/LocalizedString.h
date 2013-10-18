@@ -32,7 +32,7 @@ xml::xistream& operator>>( xml::xistream& xis, E_TranslationType& type );
 */
 // Created: ABR 2013-08-22
 // =============================================================================
-class LocalizedString : private boost::noncopyable
+class LocalizedString
 {
     //! @name Types
     //@{
@@ -73,6 +73,7 @@ public:
 
     //! @name Operators
     //@{
+    LocalizedString& operator=( const LocalizedString& other );
     bool operator==( const LocalizedString& other ) const;
     bool operator!=( const LocalizedString& other ) const;
     //@}
