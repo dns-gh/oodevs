@@ -464,6 +464,16 @@ namespace
             return false;
         return true;
     }
+    bool IsAValidFileToCopy( const tools::Path& filename, const ADN_Project_Data::DataInfos& infos )
+    {
+        // TODO: Add a method "Contains" to tools::Path
+        const std::string file = filename.Normalize().ToUTF8();
+        return file.find( infos.szLocalesDirectory_.Normalize().ToUTF8() ) == std::string::npos &&
+               file.find( infos.szUnitsMissionPath_.Normalize().ToUTF8() ) == std::string::npos &&
+               file.find( infos.szAutomataMissionPath_.Normalize().ToUTF8() ) == std::string::npos &&
+               file.find( infos.szCrowdsMissionPath_.Normalize().ToUTF8() ) == std::string::npos &&
+               file.find( infos.szFragOrdersMissionPath_.Normalize().ToUTF8() ) == std::string::npos;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -561,7 +571,7 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
 
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
-        szOldWorkDir.Copy( dirInfos.GetWorkingDirectory().GetData(), tools::Path::IgnoreIfExists );
+        szOldWorkDir.Copy( dirInfos.GetWorkingDirectory().GetData(), tools::Path::IgnoreIfExists, boost::bind( &IsAValidFileToCopy, _1, boost::cref( infos ) ) );
 
     // Unzip symbols.pak if not already in the working directory
     if( !( dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ ).Exists() )
