@@ -57,12 +57,6 @@ namespace
             mission->strName_ = name.toStdString();
         }
     }
-    tools::Path CreateMissionDirectory( const std::string& language, const tools::Path& basePath )
-    {
-        return ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language )
-            ? basePath
-            : basePath / ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLocalesDirectory_ / tools::Path::FromUTF8( language );
-    }
     void PurgePath( const tools::Path& path )
     {
         try
@@ -120,6 +114,17 @@ void ADN_Missions_Data::AddMissionType( const std::string& xmltag )
 tools::Path ADN_Missions_Data::GetMissionSheetsPath( int index )
 {
     return ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetLocalizedMissionSheetsPath
+// Created: ABR 2013-10-18
+// -----------------------------------------------------------------------------
+tools::Path ADN_Missions_Data::GetLocalizedMissionSheetsPath( const std::string& language, const tools::Path& basePath )
+{
+    return ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsMaster( language )
+        ? basePath
+        : basePath / ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLocalesDirectory_ / tools::Path::FromUTF8( language );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,12 +217,12 @@ void ADN_Missions_Data::DeleteMissionSheet( const tools::Path& filename )
 void ADN_Missions_Data::OnElementDeleted( boost::shared_ptr< kernel::LocalizedString > name, E_MissionType missionType )
 {
     const tools::Path missionPath = GetMissionSheetsPath( missionType );
-    DeleteMissionSheet( CreateMissionDirectory( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master(), missionPath ) / tools::Path::FromUTF8( name->Key() ) );
+    DeleteMissionSheet( GetLocalizedMissionSheetsPath( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master(), missionPath ) / tools::Path::FromUTF8( name->Key() ) );
     const tools::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
         const std::string& value = name->Value( it->GetCode() );
-        DeleteMissionSheet( CreateMissionDirectory( it->GetCode(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ) );
+        DeleteMissionSheet( GetLocalizedMissionSheetsPath( it->GetCode(), missionPath ) / tools::Path::FromUTF8( value.empty() ? name->Key() : value ) );
     }
 }
 
@@ -231,7 +236,7 @@ void ADN_Missions_Data::GenerateMissionSheet( int index, boost::shared_ptr< kern
     ADN_Missions_ABC* mission = FindMission( index, text->Key() );
     if( !mission )
         throw MASA_EXCEPTION( "Mission not found: " + text->Key() );
-    const tools::Path tempDir = CreateMissionDirectory( tools::Language::Current(), GetTemporaryPath( index ) );
+    const tools::Path tempDir = GetLocalizedMissionSheetsPath( tools::Language::Current(), GetTemporaryPath( index ) );
     GetCssFile().Copy( GetTemporaryCssFile(), tools::Path::OverwriteIfExists );
     mission->WriteMissionSheet( tempDir, tools::Language::Current() );
     mission->missionSheetPath_.SetValue( tools::Language::Current(), ( tempDir / tools::Path::FromUTF8( mission->strName_.GetData() ) + ".html" ).ToUTF8() );
@@ -310,7 +315,7 @@ namespace
         spNew->ReadArchive( xis );
         spNew->ReadMissionSheet( missionPath, ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
         for( auto it = languages.begin(); it != languages.end(); ++it )
-            spNew->ReadMissionSheet( CreateMissionDirectory( it->GetCode(), missionPath ), it->GetCode() );
+            spNew->ReadMissionSheet( ADN_Missions_Data::GetLocalizedMissionSheetsPath( it->GetCode(), missionPath ), it->GetCode() );
         missions.AddItem( spNew.release() );
     }
 }
@@ -331,13 +336,12 @@ namespace
 {
     void WriteMissionSheets( E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions, const std::string& language )
     {
-        const tools::Path missionDir = CreateMissionDirectory( language, ADN_Missions_Data::GetMissionSheetsPath( type ) );
+        const tools::Path missionDir = ADN_Missions_Data::GetLocalizedMissionSheetsPath( language, ADN_Missions_Data::GetMissionSheetsPath( type ) );
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->RenameDifferentNamedMissionSheet( missionDir, language );
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->WriteMissionSheet( missionDir, language );
     }
-
     void WriteMissions( xml::xostream& output, const std::string& name, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
         output << xml::start( name );

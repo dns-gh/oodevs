@@ -214,6 +214,11 @@ namespace
         return QMessageBox::Ok == QMessageBox::warning( 0, tools::translate( "ADN_Languages_GUI", "Warning" ),
                                                         text, QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape );
     }
+    bool SetFinished( kernel::LocalizedString& text, const std::string& language )
+    {
+        text.SetType( language, kernel::eTranslationType_None );
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -238,6 +243,7 @@ void ADN_Languages_GUI::OnSwap()
 
     const boost::function< bool ( kernel::LocalizedString& ) > swapper = boost::bind( &kernel::LocalizedString::SwapKey, _1, data_.Master(), tools::Language::Current() ) ;
     ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref( swapper ) ) );
+    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( boost::bind( &SetFinished, _1, tools::Language::Current() ) );
     ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( swapper );
 
     data_.SwapMaster();

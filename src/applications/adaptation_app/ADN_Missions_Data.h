@@ -76,6 +76,7 @@ public:
     //@{
     static tools::Path GetMissionSheetsPath();
     static tools::Path GetMissionSheetsPath( int index );
+    static tools::Path GetLocalizedMissionSheetsPath( const std::string& language, const tools::Path& basePath );
     static tools::Path GetMissionSheetsImagesPath( int index );
     static tools::Path GetCssFile();
 

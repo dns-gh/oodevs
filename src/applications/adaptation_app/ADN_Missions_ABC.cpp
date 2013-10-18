@@ -228,7 +228,7 @@ void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const tools::Path& miss
 {
     const std::string& newValue = strName_.GetValue( language );
     const std::string& oldValue = tools::Path::FromUTF8( missionSheetPath_.GetValue( language ) ).BaseName().ToUTF8();
-    if( !oldValue.empty() && newValue != oldValue )
+    if( newValue != oldValue )
     {
         const tools::Path newPath = missionDir / tools::Path::FromUTF8( newValue );
         const tools::Path oldPath = missionDir / tools::Path::FromUTF8( oldValue );
@@ -486,6 +486,39 @@ namespace
                 list[i].append( "_" );
         return list.join( "" );
     }
+    bool IsPresent( const std::string& text, const kernel::LocalizedString& localizedText, const tools::LanguagesVector& languages )
+    {
+        if( text == localizedText.Key() )
+            return true;
+        for( auto it = languages.begin(); it != languages.end(); ++it )
+            if( text == localizedText.Value( it->GetCode() ) )
+                return true;
+        return false;
+    }
+    void RemoveIfDeprecated( const std::string& htmlFile, const kernel::LocalizedString& actualPaths, const tools::LanguagesVector& languages )
+    {
+        if( !IsPresent( htmlFile, actualPaths, languages ) )
+        {
+            std::cout << "Removing  " << htmlFile << " cause not present in:"  << std::endl;
+            std::cout << "  " << actualPaths.Key() << std::endl;
+            for( auto it = languages.begin(); it != languages.end(); ++it )
+                std::cout << "  " << actualPaths.Value( it->GetCode() ) << std::endl;
+
+            tools::Path file = tools::Path::FromUTF8( htmlFile );
+            file.Remove();
+            file.ReplaceExtension( ".xml" );
+            file.Remove();
+        }
+    }
+    void RemoveDeprecatedMissionSheets( const tools::LanguagesVector& languages, const kernel::LocalizedString& oldPaths, const kernel::LocalizedString& actualPaths )
+    {
+        tools::Path newMissionSheetPath = tools::Path::FromUTF8( actualPaths.Key() ).Parent();
+        if( oldPaths.Key().find( newMissionSheetPath.ToUTF8() ) == std::string::npos )
+            return; // performing a save as, we don't want to delete original mission sheets
+        RemoveIfDeprecated( oldPaths.Key(), actualPaths, languages );
+        for( auto it = languages.begin(); it != languages.end(); ++it )
+            RemoveIfDeprecated( oldPaths.Value( it->GetCode() ), actualPaths, languages );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -497,10 +530,14 @@ void ADN_Missions_ABC::FixConsistency()
     if( diaType_.GetData().empty() )
         diaType_ = BuildDiaType( strName_.GetData().c_str(), type_ == eMissionType_FragOrder ).toStdString();
 
+    kernel::LocalizedString copy = *missionSheetPath_.GetTranslation();
     const tools::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
+    const tools::Path keyFilePath = ADN_Missions_Data::GetMissionSheetsPath( type_ ) / tools::Path::FromUTF8( strName_.GetKey() );
+    missionSheetPath_.SetKey( keyFilePath.ToUTF8() + ".html" );
     for( auto it = languages.begin(); it != languages.end(); ++it )
     {
-        const tools::Path filePath = ADN_Missions_Data::GetMissionSheetsPath( type_ ) / tools::Path::FromUTF8( strName_.GetValue( it->GetCode() ) );
+        const tools::Path filePath = ADN_Missions_Data::GetLocalizedMissionSheetsPath( it->GetCode(), ADN_Missions_Data::GetMissionSheetsPath( type_ ) ) / tools::Path::FromUTF8( strName_.GetValue( it->GetCode() ) );
         missionSheetPath_.SetValue( it->GetCode(), filePath.ToUTF8() + ".html" );
     }
+    RemoveDeprecatedMissionSheets( languages, copy, *missionSheetPath_.GetTranslation() );
 }
