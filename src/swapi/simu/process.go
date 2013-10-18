@@ -16,7 +16,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 	"swapi"
 	"sync"
 	"time"
@@ -130,7 +129,7 @@ func ListDmpFiles(path string) ([]string, error) {
 		return dmps, err
 	}
 	for _, d := range entries {
-		if strings.HasSuffix(d.Name(), ".dmp") {
+		if filepath.Ext(d.Name()) == ".dmp" {
 			dmps = append(dmps, filepath.Join(path, d.Name()))
 		}
 	}
