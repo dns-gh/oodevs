@@ -9,9 +9,12 @@
 package simtests
 
 import (
+	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"reflect"
+	"regexp"
 	"swapi"
+	"swapi/simu"
 	"sword"
 )
 
@@ -235,4 +238,44 @@ func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	c.Assert(group.PartyId, Equals, parent.PartyId)
 	c.Assert(group.ParentId, Equals, uint32(0))
 	c.Assert(group.Name, Not(IsNil))
+}
+
+func (s *TestSuite) TestTriggerError(c *C) {
+	triggerError := func(kind string) {
+		opts, session := makeOptsAndSession()
+		opts.TestCommands = true
+		opts.ExerciseName = ExCrossroadSmallEmpty
+		WriteSession(c, opts, session)
+		sim, err := simu.StartSim(opts)
+		c.Assert(err, IsNil) // failed to start the simulation
+		defer sim.Stop()
+
+		client := connectAndWait(c, sim, "admin", "")
+		err = client.TriggerError(kind)
+		c.Assert(err, ErrorMatches, "connection closed")
+
+		// A crash generates a .dmp file
+		dmps, err := simu.ListDmpFiles(opts.DebugDir)
+		c.Assert(err, IsNil)
+		c.Assert(dmps, HasLen, 1)
+
+		// And the sim.log should contain a stack trace related to the error
+		log, err := ioutil.ReadFile(opts.GetSimLogPath())
+		c.Assert(err, IsNil)
+		ref := "(simulation_app): (filename not available)"
+		reStack := regexp.MustCompile(
+			`(?s)Crash - stack trace.*` + regexp.QuoteMeta(ref))
+		c.Assert(reStack.FindSubmatch(log), NotNil)
+	}
+
+	kinds := []string{"null_pointer", "stack_overflow"}
+	for _, kind := range kinds {
+		triggerError(kind)
+	}
+
+	// The command is ignored if the simulation was not started with --test-commands
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	err := client.TriggerError("null_pointer")
+	c.Assert(err, IsNil)
 }

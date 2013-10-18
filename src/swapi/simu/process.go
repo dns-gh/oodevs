@@ -10,6 +10,7 @@ package simu
 
 import (
 	"errors"
+	"io/ioutil"
 	"log"
 	"net"
 	"os"
@@ -29,6 +30,8 @@ type SimOpts struct {
 	ExerciseName   string
 	CheckpointName string
 	DebugDir       string
+	// Enable simulation internal testing commands
+	TestCommands bool
 
 	// Network address:port of dispatcher server, default to session if empty.
 	DispatcherAddr string
@@ -113,8 +116,24 @@ func (o *SimOpts) WriteSession(session *Session) error {
 	if err != nil {
 		return err
 	}
-	o.SessionName = filepath.Base(filepath.Dir(sessionPath))
+	sessionDir := filepath.Dir(sessionPath)
+	o.DebugDir = filepath.Join(sessionDir, "debug")
+	o.SessionName = filepath.Base(sessionDir)
 	return nil
+}
+
+func ListDmpFiles(path string) ([]string, error) {
+	dmps := []string{}
+	entries, err := ioutil.ReadDir(path)
+	if err != nil {
+		return dmps, err
+	}
+	for _, d := range entries {
+		if filepath.Ext(d.Name()) == ".dmp" {
+			dmps = append(dmps, filepath.Join(path, d.Name()))
+		}
+	}
+	return dmps, nil
 }
 
 type SimProcess struct {
@@ -260,6 +279,9 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	}
 	if len(opts.DebugDir) > 0 {
 		args = append(args, "--debug-dir="+opts.DebugDir)
+	}
+	if opts.TestCommands {
+		args = append(args, "--test-commands")
 	}
 
 	cmd := exec.Command(opts.Executable, args...)

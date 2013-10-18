@@ -1317,3 +1317,9 @@ func (c *Client) UnloadUnitTest(tasker *sword.Tasker, params *sword.MissionParam
 func (c *Client) UnloadUnit(loader, loadee uint32) error {
 	return c.UnloadUnitTest(MakeUnitTasker(loader), MakeParameters(MakeAgent(loadee)))
 }
+
+func (c *Client) TriggerError(kind string) error {
+	params := MakeParameters(MakeString("trigger_error"), MakeString(kind))
+	msg := createMagicAction(params, sword.MagicAction_debug_internal)
+	return <-c.postSimRequest(msg, defaultMagicHandler)
+}

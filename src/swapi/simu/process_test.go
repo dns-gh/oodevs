@@ -17,7 +17,6 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
-	"strings"
 	"time"
 )
 
@@ -215,12 +214,9 @@ func (s *TestSuite) TestTimeOptions(c *C) {
 		defer sim.Stop()
 		sim.Wait(60 * time.Second)
 		c.Assert(sim.Success(), Equals, false)
-
-		entries, err := ioutil.ReadDir(opts.DebugDir)
+		dmps, err := ListDmpFiles(opts.DebugDir)
 		c.Assert(err, IsNil)
-		for _, d := range entries {
-			c.Assert(strings.HasSuffix(d.Name(), ".dmp"), Equals, false)
-		}
+		c.Assert(dmps, HasLen, 0)
 	}
 }
 
