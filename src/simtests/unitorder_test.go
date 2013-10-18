@@ -11,7 +11,6 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"swapi"
-	"sword"
 )
 
 const (
@@ -54,7 +53,7 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	_, err = client.SendUnitOrder(unit.Id, InvalidIdentifier, params)
 	c.Assert(err, IsSwordError, "error_invalid_mission")
 
-	checkParams := func(expected string, params ...*sword.MissionParameter) {
+	checkParams := func(expected string, params ...interface{}) {
 		missionParams := swapi.MakeParameters(params...)
 		order, err := client.SendUnitOrder(unit.Id, MissionMoveId, missionParams)
 		if len(expected) > 0 {

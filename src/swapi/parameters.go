@@ -18,13 +18,20 @@ const (
 	BoostTimeLayout = "20060102T150405"
 )
 
-func MakeParameters(args ...*sword.MissionParameter) *sword.MissionParameters {
+func MakeParameters(args ...interface{}) *sword.MissionParameters {
 	reply := &sword.MissionParameters{}
 	for _, arg := range args {
+		var value *sword.MissionParameter
 		if arg == nil {
-			arg = MakeNullValue()
+			value = MakeNullValue()
+		} else if v, ok := arg.(*sword.MissionParameter); ok {
+			value = v
+		} else if v, ok := arg.(string); ok {
+			value = MakeString(v)
+		} else if v, ok := arg.(float32); ok {
+			value = MakeFloat(v)
 		}
-		reply.Elem = append(reply.Elem, arg)
+		reply.Elem = append(reply.Elem, value)
 	}
 	return reply
 }
