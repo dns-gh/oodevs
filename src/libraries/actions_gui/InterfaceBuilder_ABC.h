@@ -10,8 +10,11 @@
 #ifndef __InterfaceBuilder_ABC_h_
 #define __InterfaceBuilder_ABC_h_
 
-#include <boost/noncopyable.hpp>
 #include <tools/Resolver.h>
+#include <boost/noncopyable.hpp>
+#pragma warning( push, 0 )
+#include <QtCore/QDateTime>
+#pragma warning( pop )
 
 namespace kernel
 {

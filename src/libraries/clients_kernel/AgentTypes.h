@@ -79,6 +79,7 @@ public:
     //@{
     void Load( const tools::ExerciseConfig& config );
     void Purge();
+    void ReadOrderTypes( xml::xistream& xis );
     //@}
 
 private:
@@ -94,7 +95,6 @@ private:
     void ReadSensors( xml::xistream& xis );
     void ReadAgents( xml::xistream& xis );
     void ReadAutomats( xml::xistream& xis );
-    void ReadOrderTypes( xml::xistream& xis );
     void ReadMagicOrderTypes( xml::xistream& xis );
     void ReadModels( xml::xistream& xis );
     void ReadPopulations( xml::xistream& xis );

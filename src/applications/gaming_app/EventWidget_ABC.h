@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
+    virtual void Reset();
     virtual void Update();
     virtual bool IsValid() const;
     virtual void Warn() const;
