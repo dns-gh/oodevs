@@ -344,11 +344,11 @@
     <name>Tristate</name>
     <message>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <source>On</source>
-        <translation>On</translation>
+        <translation>Activé</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -375,7 +375,7 @@
     </message>
     <message>
         <source>veh/h</source>
-        <translation>véh/s</translation>
+        <translation>véh/h</translation>
     </message>
     <message>
         <source>t</source>
