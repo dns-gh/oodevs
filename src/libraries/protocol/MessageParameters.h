@@ -44,9 +44,9 @@ namespace protocol
 
     void         Check( bool valid, const std::string& msg, int i = -1, int j = -1, int k = -1 );
     void         Check( const void* pointer, const std::string& msg, int i = -1, int j = -1, int k = -1 );
-    void         CheckCount( const sword::MissionParameters& params, int min, int max = 0 );
-    void         CheckCount( int i, const sword::MissionParameters& params, int min, int max = 0 );
-    void         CheckCount( int i, int j, const sword::MissionParameters& params, int min, int max = 0 );
+    int          CheckCount( const sword::MissionParameters& params, int min, int max = 0 );
+    int          CheckCount( int i, const sword::MissionParameters& params, int min, int max = 0 );
+    int          CheckCount( int i, int j, const sword::MissionParameters& params, int min, int max = 0 );
     int          GetCount( const sword::MissionParameters& params, int i = -1, int j = -1 );
 
     bool                               IsNull( const sword::MissionParameters& params, int i );

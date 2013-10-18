@@ -98,12 +98,12 @@ namespace
         return T::Get( *value );
     }
 
-    void CheckCount( int value, int min, int max )
+    int CheckCount( int value, int min, int max )
     {
         if( !max )
             max = min;
         if( value >= min && value <= max )
-            return;
+            return value;
         if( min == max )
             throw EXCEPTION( STR( "invalid number of parameters: want " << min << ", got " << value ) );
         throw EXCEPTION( STR( "invalid number of parameters: want between " << min << " and " << max << ", got " << value ) );
@@ -138,17 +138,17 @@ int protocol::GetCount( const sword::MissionParameters& params, int i, int j )
     return params.elem( i ).value( j ).list_size();
 }
 
-void protocol::CheckCount( const sword::MissionParameters& params, int min, int max )
+int protocol::CheckCount( const sword::MissionParameters& params, int min, int max )
 {
     return ::CheckCount( GetCount( params ), min, max );
 }
 
-void protocol::CheckCount( int i, const sword::MissionParameters& params, int min, int max )
+int protocol::CheckCount( int i, const sword::MissionParameters& params, int min, int max )
 {
     return ::CheckCount( GetCount( params, i ), min, max );
 }
 
-void protocol::CheckCount( int i, int j, const sword::MissionParameters& params, int min, int max )
+int protocol::CheckCount( int i, int j, const sword::MissionParameters& params, int min, int max )
 {
     return ::CheckCount( GetCount( params, i, j ), min, max );
 }

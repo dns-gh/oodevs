@@ -1275,8 +1275,7 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const sword::MissionPar
             throw MASA_BADUNIT_UNIT( "invalid party or formation: " << taskerId );
         army = &formation->GetArmy();
     }
-    const int count = protocol::GetCount( params );
-    protocol::CheckCount(params, 2, 4)
+    const int count = protocol::CheckCount( params, 2, 4 );
     const int level = static_cast< int >( protocol::GetReal( params, 0 ));
     const std::string& name = protocol::GetString( params, 1 );
     std::string logLevel = "";
