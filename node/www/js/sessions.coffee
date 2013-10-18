@@ -31,7 +31,7 @@ Handlebars.registerHelper "can_play", (data, options) ->
     if valid
         return options.fn this
     return options.inverse this
-    
+
 Handlebars.registerHelper "each_pair", (src, options) ->
     ret = ""
     for k, v of src
@@ -439,10 +439,8 @@ class SessionItemView extends Backbone.View
         data.can_link = data.status != "playing" || data.start_time
         data.sim_license = true
         data.replay_license = true
-        if licenses.attributes["sword-runtime"]?
-            data.sim_license = get_license_validity "sword-runtime", licenses.attributes
-        if licenses.attributes["sword-replayer"]?
-            data.replay_license = get_license_validity "sword-replayer", licenses.attributes
+        data.sim_license = check_license "sword-runtime", licenses
+        data.replay_license = check_license "sword-replayer", licenses
         $(@el).html session_template data
         $(@el).find(".link").click (evt) =>
             return if is_disabled evt
@@ -543,6 +541,9 @@ class SessionItemView extends Backbone.View
 
     replay: (evt) =>
         return if is_disabled evt
+        if !check_license "sword-replayer", licenses
+            $(@el).prepend license_error_template content: "Missing sword-replayer license"
+            return
         @toggle_load()
         ajax "/api/replay_session", id: @model.id,
             (item) =>
@@ -558,20 +559,16 @@ get_filters = ->
 get_search = ->
     $(".session_search .search-query").val()
 
-get_license_validity = (licensename, tree) ->
-    lic = tree[licensename]
-    if lic?
-        if lic.validity == "none" || lic.validity == "warning"
-            return false
-        else if lic.validity == "valid"
-            return true
-    return false
+check_license = (name, model) ->
+    lic = model.get name
+    return lic?.validity == "valid"
 
 class SessionListView extends Backbone.View
     el: $ "#sessions"
     delta_period: 5000
 
     initialize: ->
+        licenses.bind "add remove change", @render
         @model = new SessionList
         @model.bind "add",           @add
         @model.bind "remove",        @remove
@@ -587,12 +584,13 @@ class SessionListView extends Backbone.View
         $(@el).empty()
         for item in list.models
             @add item
-        if licenses.attributes["sword-runtime"]?
-            if !get_license_validity "sword-runtime", licenses.attributes
-                $(@el).prepend license_error_template content: "No sword-runtime license Uploaded"
-        if item.attributes.replay.root && licenses.attributes["sword-replayer"]?
-            if !get_license_validity "sword-replayer", licenses.attributes
-                $(@el).prepend license_error_template content: "No sword-replayer license Uploaded"
+        missings = []
+        for it in ["sword", "sword-runtime", "sword-dispatcher"]
+            unless check_license it, licenses
+                missings.push it
+        if missings.length
+            suffix = if missings.length > 1 then "s" else ""
+            $(@el).prepend license_error_template content: "Missing #{missings.join " & "} licence#{suffix}"
         return
 
     add: (item) =>
@@ -655,8 +653,6 @@ class SessionListView extends Backbone.View
         # update parent replay list
         root = get_replay_root @model, data
         if root?
-            if !get_license_validity "sword-replayer", licenses.attributes
-                $(@el).prepend license_error_template content: "No Sword-replayer license Uploaded"
             replay = $.extend {}, root.attributes.replay
             replay.list = [] unless _.isArray replay.list
             replay.list = _.union replay.list, [data.id]
@@ -716,13 +712,13 @@ class LicenseItem extends Backbone.Model
             success: (model, response, options) =>
                 @set response
                 setTimeout @delta, 5000
-            error: => 
+            error: =>
                 print_error "Unable to fetch licenses"
                 setTimeout @delta, 5000
 
+licenses = new LicenseItem
 exercise_view = new ExerciseListItemView
 session_view = new SessionListView
-licenses = new LicenseItem
 
 validate_input_session = (control, result, error) ->
     unless result
