@@ -1101,6 +1101,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
 
     try
     {
+        const auto& params = message.parameters();
         switch( message.type() )
         {
         case UnitMagicAction::move_to :
@@ -1156,7 +1157,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                 throw MASA_BADUNIT_UNIT( "invalid formation or automat: " << id );
             break;
         case UnitMagicAction::formation_creation :
-            ProcessFormationCreationRequest( message, id, nCtx, ack() );
+            ProcessFormationCreationRequest( params, id, nCtx, ack() );
             break;
         case UnitMagicAction::crowd_creation:
             try
@@ -1262,7 +1263,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 // Name: MIL_EntityManager::ProcessFormationCreationRequest
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message,
+void MIL_EntityManager::ProcessFormationCreationRequest( const sword::MissionParameters& params,
     unsigned int taskerId, unsigned int nCtx, sword::UnitMagicActionAck& ack )
 {
     MIL_Army_ABC* army = armyFactory_->Find( taskerId );
@@ -1274,7 +1275,6 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
             throw MASA_BADUNIT_UNIT( "invalid party or formation: " << taskerId );
         army = &formation->GetArmy();
     }
-    const auto& params = message.parameters();
     const int count = protocol::GetCount( params );
     protocol::Check( count >= 3 && count <= 4, "3 or 4 parameters expected" );
     const int level = static_cast< int >( protocol::GetReal( params, 0 ));

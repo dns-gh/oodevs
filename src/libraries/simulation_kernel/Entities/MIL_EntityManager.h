@@ -251,7 +251,7 @@ private:
     void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int taskerId );
     void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message );
     void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack );
-    void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, unsigned int taskerId, unsigned int nCtx, sword::UnitMagicActionAck& ack );
+    void ProcessFormationCreationRequest    ( const sword::MissionParameters& params, unsigned int taskerId, unsigned int nCtx, sword::UnitMagicActionAck& ack );
     void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, unsigned int parentId, unsigned int context, sword::UnitMagicActionAck& ack );
     void ProcessTransferEquipmentRequest    ( const sword::UnitMagicAction&      message, MIL_AgentPion& pion );
     void ProcessFormationChangeSuperior     ( const sword::UnitMagicAction&      message, unsigned int nCtx );
