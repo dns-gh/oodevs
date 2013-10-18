@@ -289,7 +289,22 @@
                 <arg value="@{dir}/physical.xml"/>
                 <arg value="-o"/>
                 <arg value="@{todir}/physical.xml"/>
-                <arg value="--silent"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="run-adaptation-swap">
+        <attribute name="dir"/>
+        <attribute name="todir"/>
+        <attribute name="language"/>
+        <sequential>
+            <exec taskname="adn" executable="${out.dir}/release/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+                <arg value="-i"/>
+                <arg value="@{dir}/physical.xml"/>
+                <arg value="-o"/>
+                <arg value="@{todir}/physical.xml"/>
+                <arg value="-s"/>
+                <arg value="@{language}"/>
             </exec>
         </sequential>
     </macrodef>
@@ -356,7 +371,45 @@
             </exec>
             <test-adaptation dir="@{todir}"/>
         </sequential>
-    </macrodef>
+    </macrodef>  
+
+    <macrodef name="test-adaptation-swap">
+        <attribute name="dir"/>
+        <attribute name="master"/>
+        <attribute name="language"/>
+        <attribute name="intermediate-dir" default="${out.dir}/test-adaptation-swap-intermediate"/>
+        <attribute name="final-dir" default="${out.dir}/test-adaptation-swap"/>
+        <attribute name="checksums" default="@{final-dir}.checksums"/>
+        <!-- <attribute name="excludes" default="*/@{sheets}/*.html"/> -->
+        <sequential>
+            <echo>Testing swap: @{dir}</echo>
+            <python taskname="checksum">
+                <arg value="checksum.py"/>
+                <arg value="write"/>
+                <arg value="@{dir}"/>
+                <arg value="@{checksums}"/>
+                <arg value="--exclude=@{excludes}"/>
+            </python>
+            <delete dir="@{intermediate-dir}"/>
+            <delete dir="@{final-dir}"/>
+            <run-adaptation-swap dir="@{dir}" todir="@{intermediate-dir}" language="@{language}"/>
+            <run-adaptation-swap dir="@{intermediate-dir}" todir="@{final-dir}" language="@{master}"/>
+            <python taskname="checksum">
+                <arg value="checksum.py"/>
+                <arg value="read"/>
+                <arg value="@{dir}"/>
+                <arg value="@{checksums}"/>
+                <arg value="--exclude=@{excludes}"/>
+            </python>
+            <python taskname="checksum">
+                <arg value="checksum.py"/>
+                <arg value="read"/>
+                <arg value="@{final-dir}"/>
+                <arg value="@{checksums}"/>
+                <arg value="--exclude=@{excludes}"/>
+            </python>
+        </sequential>
+    </macrodef>  
 
     <target name="adaptation_test" description="load, save then diff physical data">
         <test-adaptation-newbase/>
@@ -365,6 +418,7 @@
         -->
         <test-adaptation dir="${data.dir}/data/models/ada/physical/worldwide"/>
         <test-adaptation-unicode zipped-database="${data.dir}/tests/test_data_unicode/physical base with unicode.zip"/>
+        <test-adaptation-swap dir="${data.dir}/data/models/ada/physical/test" master="en" language="fr"/>
     </target>
 
     <macrodef name="test-exercise">
