@@ -241,7 +241,7 @@ func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 }
 
 func (s *TestSuite) TestTriggerError(c *C) {
-	triggerError := func(kind, match string) {
+	triggerError := func(kind string) {
 		opts, session := makeOptsAndSession()
 		opts.TestCommands = true
 		opts.ExerciseName = ExCrossroadSmallEmpty
@@ -262,17 +262,15 @@ func (s *TestSuite) TestTriggerError(c *C) {
 		// And the sim.log should contain a stack trace related to the error
 		log, err := ioutil.ReadFile(opts.GetSimLogPath())
 		c.Assert(err, IsNil)
+		ref := "(simulation_app): (filename not available)"
 		reStack := regexp.MustCompile(
-			`(?s)Crash - stack trace.*` + regexp.QuoteMeta(match))
+			`(?s)Crash - stack trace.*` + regexp.QuoteMeta(ref))
 		c.Assert(reStack.FindSubmatch(log), NotNil)
 	}
 
-	kinds := map[string]string{
-		"null_pointer": "NullPointerError",
-		"stack_overflow": "RecursionOfDeath",
-	}
-	for kind, match := range kinds {
-		triggerError(kind, match)
+	kinds := []string{"null_pointer", "stack_overflow"}
+	for _, kind := range kinds {
+		triggerError(kind)
 	}
 
 	// The command is ignored if the simulation was not started with --test-commands
