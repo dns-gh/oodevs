@@ -12,6 +12,7 @@
             <span class="control-group">
                 <span class="controls">
                     <select id="exercises"></select>
+                    <a title="Settings..." id="session_edit" class="btn"><i class="icon-cog"></i></a>
                     <a id="session_create" class="btn"><i class="icon-plus"></i> Add</a>
                 </span>
             </span>
@@ -149,11 +150,15 @@
                     <form class="modal-body tabbable form-horizontal">
                         {{#is_option status stopped=""}}
                         <ul class="nav nav-tabs">
+                            {{#unless is_default}}
                             <li class="active"><a href="#tab_general" data-toggle="tab"> General </a></li>
-                            <li><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
+                            {{/unless}}
+                            <li{{#if is_default}} class="active"{{/if}}><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
                             <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
                             <li><a href="#tab_rng" data-toggle="tab"> Random </a></li>
+                            {{#unless is_default}}
                             <li><a href="#tab_orbat" data-toggle="tab"> Orbat </a></li>
+                            {{/unless}}
                             <li><a href="#tab_logs" data-toggle="tab"> Logs </a></li>
                             <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
                             {{#if ui_plugins}}
@@ -162,9 +167,11 @@
                         </ul>
                         <div class="tab-content">
                             {{/is_option}}
+                            {{#unless is_default}}
                             <div class="tab-pane active" id="tab_general">[[ template "general_session_settings" . ]] </div>
+                            {{/unless}}
                             {{#is_option status stopped=""}}
-                            <div class="tab-pane" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
+                            <div class="tab-pane{{#if is_default}} active{{/if}}" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_orbat"> [[ template "orbat_session_settings" . ]] </div>

@@ -149,6 +149,7 @@ bind_ui_plugins = (ui) ->
 
 pop_settings = (ui, data) ->
     set_ui_plugins data
+    data.checkpoints.frequency = Math.ceil data.checkpoints.frequency / 60
     ui.html session_settings_template data
     bind_ui_plugins ui
     force_input_regexp /\d/, ui.find "input[type='number']:not([data-type='float'])"
@@ -221,12 +222,13 @@ validate_plugins = (ui, data) ->
 has_element = (ui, selector) ->
     return ui.has(selector).length
 
-validate_settings = (ui) ->
+validate_settings = (ui, is_default) ->
     data = {}
 
-    name = ui.find "#name"
-    return unless check_value ui, name, name.val().length, "tab_general", "Missing"
-    data.name = name.val()
+    unless is_default
+        name = ui.find "#name"
+        return unless check_value ui, name, name.val().length, "tab_general", "Missing"
+        data.name = name.val()
 
     if has_element ui, "#tab_checkpoints"
         next = data.checkpoints = {}
@@ -281,6 +283,7 @@ validate_settings = (ui) ->
     if has_element ui, "#tab_plugins"
         validate_plugins ui, data
 
+    data.checkpoints?.frequency *= 60
     return data
 
 class SessionItem extends Backbone.Model
@@ -522,12 +525,10 @@ class SessionItemView extends Backbone.View
     edit: (evt) =>
         return if is_disabled evt
         data = $.extend {}, @model.attributes
-        data.checkpoints.frequency = Math.ceil( data.checkpoints.frequency / 60 )
         [ui, mod] = pop_settings $("#settings"), data
         mod.find(".apply").click =>
-            data = validate_settings ui, @model
+            data = validate_settings ui
             return unless data?
-            data.checkpoints?.frequency *= 60
             data.id = @model.id
             mod.modal "hide"
             @model.save data,
@@ -721,6 +722,48 @@ class LicenseItem extends Backbone.Model
 licenses = new LicenseItem
 exercise_view = new ExerciseListItemView
 session_view = new SessionListView
+session_default = new SessionItem
+
+default_session_settings =
+    logs:
+        level:     "all"
+        rotate:    true
+        max_files: 5
+        max_size:  10
+        size_unit: "mbytes"
+    checkpoints:
+        enabled:   true
+        frequency: 3600
+        keep:      1
+    time:
+        end_tick: 0
+        factor:   10
+        paused:   false
+        step:     10
+    pathfind:
+        threads: 1
+    recorder:
+        frequency: 200
+    rng:
+        seed: 0
+        breakdown:
+            distribution: "linear"
+        fire:
+            distribution: "linear"
+        perception:
+            distribution: "linear"
+        wound:
+            distribution: "linear"
+    reports:
+        clean_frequency: 100
+    timeline:
+        enabled: false
+        port:    50066
+get_default_session_settings = ->
+    data = $.cookie "default_session_settings"
+    return default_session_settings unless data?
+    return JSON.parse data
+session_default.set get_default_session_settings()
 
 validate_input_session = (control, result, error) ->
     unless result
@@ -738,7 +781,8 @@ $("#session_create").click ->
     exercise = $ "#exercises"
     unless validate_input_session exercise, exercise.val()?, "Missing exercise"
         return
-    session_view.create name: name.val(), exercise: exercise.val(), license: licenses
+    data = name: name.val(), exercise: exercise.val(), license: licenses
+    session_view.create _.extend {}, session_default.attributes, data
     name.val ''
 
 $(".session_create_form").keypress (e) ->
@@ -759,3 +803,15 @@ $(".session_search input").keyup ->
 
 $(".session_search input").bind "input propertychange", ->
     session_view.set_search get_search()
+
+$("#session_edit").click ->
+    overrides =
+        is_default: true
+        status: "stopped"
+    [ui, mod] = pop_settings $("#settings"), _.extend {}, session_default.attributes, overrides
+    mod.find(".apply").click ->
+        data = validate_settings ui, true
+        return unless data?
+        session_default.set data
+        $.cookie "default_session_settings", JSON.stringify data
+        mod.modal "hide"
