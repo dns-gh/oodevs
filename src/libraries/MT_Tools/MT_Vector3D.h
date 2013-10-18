@@ -9,8 +9,8 @@
 //
 //*****************************************************************************
 
-#ifndef __MT_V3D_h_
-#define __MT_V3D_h_
+#ifndef __MT_Vector3D_h_
+#define __MT_Vector3D_h_
 
 #include "MT_Tools_Types.h"
 #include <vector>
@@ -19,75 +19,49 @@
 //=============================================================================
 // Created: FBD 02-03-01
 //=============================================================================
-
-template <class T>
-class MT_V3D
+class MT_Vector3D
 {
 public:
+    MT_Vector3D();                                  // Constructor : les valeurs XYZ sont mises a 0
+    MT_Vector3D( double rX, double rY, double rZ ); // Constructor : X Y Z ne ser<double> rien ce commentaire !!!!
+    MT_Vector3D( const MT_Vector3D& v );            // Constructor : Vector3D
 
-    explicit        MT_V3D( void );                                 // Constructor : les valeurs XYZ sont mises a 0
-                    MT_V3D( T rX, T rY, T rZ );                     // Constructor : X Y Z ne ser<T> rien ce commentaire !!!!
-                    MT_V3D( const MT_V3D<T>& v );                   // Constructor : Vector3D
-    virtual         ~MT_V3D( void );                                // Destructor :
-
-    T               SquareMagnitude( void ) const;                  // Retourne la magnitude au carré d'un vector 3D ( longeur )
-    T               Magnitude( void ) const;                        // Retourne la magnitude d'un vector 3D ( longeur )
-    T               Distance( const MT_V3D<T>& vPosDest ) const;    // Retourne la distance entre deux vector 3D
-    T               SquareDistance( const MT_V3D<T>& vPosDest ) const;
-    MT_V3D<T>       Normalized( void ) const;
-    MT_V3D<T>&      Normalize();
+    double          SquareMagnitude() const;                        // Retourne la magnitude au carré d'un vector 3D ( longeur )
+    double          Magnitude() const;                              // Retourne la magnitude d'un vector 3D ( longeur )
+    double          Distance( const MT_Vector3D& vPosDest ) const;  // Retourne la distance entre deux vector 3D
+    double          SquareDistance( const MT_Vector3D& vPosDest ) const;
+    MT_Vector3D     Normalized( void ) const;
+    MT_Vector3D&    Normalize();
     bool            IsZero() const;
     void            Reset();
 
-    MT_V3D<T>&  operator =( const MT_V3D<T>& v )            { rX_ = v.rX_; rY_ = v.rY_; rZ_ = v.rZ_; return *this; }
-    MT_V3D<T>&  operator +=( const MT_V3D<T>& v )           { rX_ += v.rX_; rY_ += v.rY_; rZ_ += v.rZ_; return *this; }
-    MT_V3D<T>&  operator -=( const MT_V3D<T>& v )           { rX_ -= v.rX_; rY_ -= v.rY_; rZ_ -= v.rZ_; return *this; }
-    MT_V3D<T>&  operator *=( T s )                          { rX_ *= s; rY_ *= s; rZ_ *= s; return *this; }
-    MT_V3D<T>&  operator /=( T s )                          { return *this *= ( 1.0f / s ); }
-    MT_V3D<T>   operator / ( T s )  const                   { return MT_V3D<T>( rX_ / s, rY_ / s, rZ_ / s ); }
-    bool        operator ==( const MT_V3D<T>& v ) const;
-    bool        operator !=( const MT_V3D<T>& v ) const;
-    T           operator []( int i ) const                  { return ( (T*)&rX_ )[i]; }
-    T&          operator []( int i )                        { return ( (T*)&rX_ )[i]; }
-    MT_V3D<T>   operator - ( void ) const                   { return MT_V3D<T>( -rX_, -rY_, -rZ_ ); }
-    bool        operator < ( const MT_V3D<T>& v ) const     { return ( rX_ != v.rX_ || rY_ != v.rY_ || rZ_ != v.rZ_ ); }// Attention < sert par defaut aux map et donc pas de distance pour l'operationr <
+    MT_Vector3D&    operator  =( const MT_Vector3D& v )       { rX_  = v.rX_; rY_  = v.rY_; rZ_  = v.rZ_; return *this; }
+    MT_Vector3D&    operator +=( const MT_Vector3D& v )       { rX_ += v.rX_; rY_ += v.rY_; rZ_ += v.rZ_; return *this; }
+    MT_Vector3D&    operator -=( const MT_Vector3D& v )       { rX_ -= v.rX_; rY_ -= v.rY_; rZ_ -= v.rZ_; return *this; }
+    MT_Vector3D&    operator *=( double s )                   { rX_ *= s; rY_ *= s; rZ_ *= s; return *this; }
+    MT_Vector3D&    operator /=( double s )                   { return *this *= 1 / s; }
+    MT_Vector3D     operator  /( double s )  const            { return MT_Vector3D( rX_ / s, rY_ / s, rZ_ / s ); }
+    MT_Vector3D     operator  -() const                       { return MT_Vector3D( -rX_, -rY_, -rZ_ ); }
+    bool            operator  <( const MT_Vector3D& v ) const { return rX_ != v.rX_ || rY_ != v.rY_ || rZ_ != v.rZ_; }// Attention < sert par defaut aux map et donc pas de distance pour l'operationr <
+    bool            operator ==( const MT_Vector3D& v ) const;
+    bool            operator !=( const MT_Vector3D& v ) const;
 
-
-    T               rX_;
-    T               rY_;
-    T               rZ_;
-
-private:
-
+    double rX_;
+    double rY_;
+    double rZ_;
 };
 
-template < class T >
-MT_V3D<T>   operator *( T rScalar, const MT_V3D<T>& v);
-template < class T >
-T               operator *( const MT_V3D<T>& v1, const MT_V3D<T>& v2 );
-template < class T >
-MT_V3D<T> operator *( const MT_V3D<T>& v, T rScalar );
-template < class T >
-MT_V3D<T>   operator +( const MT_V3D<T>& v1, const MT_V3D<T>& v2 );
-template < class T >
-MT_V3D<T>   operator -( const MT_V3D<T>& v1, const MT_V3D<T>& v2 );
-template < class T >
-bool        operator <( const MT_V3D<T>& v1, const MT_V3D<T>& v2 );
-template < class T >
-MT_V3D<T>       CrossProduct( const MT_V3D<T>& v1, const MT_V3D<T>& v2);
-template < class T >
-T                   DotProduct( const MT_V3D<T>& v1, const MT_V3D<T>& v2);
+MT_Vector3D operator   *( double rScalar, const MT_Vector3D& v );
+MT_Vector3D operator   *( const MT_Vector3D& v, double rScalar );
+double      operator   *( const MT_Vector3D& v1, const MT_Vector3D& v2 );
+MT_Vector3D operator   +( const MT_Vector3D& v1, const MT_Vector3D& v2 );
+MT_Vector3D operator   -( const MT_Vector3D& v1, const MT_Vector3D& v2 );
+bool        operator   <( const MT_Vector3D& v1, const MT_Vector3D& v2 );
+MT_Vector3D CrossProduct( const MT_Vector3D& v1, const MT_Vector3D& v2 );
+double      DotProduct  ( const MT_Vector3D& v1, const MT_Vector3D& v2 );
 
 #include "MT_Vector3D.inl"
 
-// Scipio types
-typedef MT_V3D<double>        MT_Vector3D;
+typedef std::vector< MT_Vector3D > T_Point3DVector;
 
-typedef std::vector< MT_Vector3D >                T_Point3DVector;
-typedef const T_Point3DVector                     CT_Point3DVector;
-typedef T_Point3DVector::iterator                 IT_Point3DVector;
-typedef T_Point3DVector::const_iterator           CIT_Point3DVector;
-typedef T_Point3DVector::reverse_iterator         RIT_Point3DVector;
-typedef T_Point3DVector::const_reverse_iterator   CRIT_Point3DVector;
-
-#endif // __MT_V3D_h_
+#endif // __MT_Vector3D_h_

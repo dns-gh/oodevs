@@ -48,16 +48,6 @@ MT_Vector2D::MT_Vector2D( const MT_Vector2D& v )
 }
 
 //-----------------------------------------------------------------------------
-// Name : MT_Vector2D destructor
-// Created: FBD 02-03-01
-//-----------------------------------------------------------------------------
-inline
-MT_Vector2D::~MT_Vector2D()
-{
-    // NOTHING
-}
-
-//-----------------------------------------------------------------------------
 // Name : MT_Vector2D::SquareMagnitude
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
@@ -65,7 +55,7 @@ MT_Vector2D::~MT_Vector2D()
 inline
 double MT_Vector2D::SquareMagnitude() const
 {
-    return rX_ * rX_ + rY_ * rY_; 
+    return rX_ * rX_ + rY_ * rY_;
 }
 
 //-----------------------------------------------------------------------------
@@ -119,7 +109,7 @@ bool MT_Vector2D::IsZero() const
 //-----------------------------------------------------------------------------
 inline
 MT_Vector2D MT_Vector2D::Normalized( ) const
-{ 
+{
     double rTmp = Magnitude();
     if( rTmp )
         return (*this) / rTmp;
@@ -138,7 +128,7 @@ MT_Vector2D& MT_Vector2D::Normalize()
     double rTmp = Magnitude();
     if( rTmp )
         return operator /= ( rTmp );
-    else        
+    else
         return *this;
 }
 
@@ -175,7 +165,6 @@ MT_Vector2D operator+ ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
     return MT_Vector2D( v1.rX_ + v2.rX_, v1.rY_ + v2.rY_ );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name : operator -
 // Created: FBD 02-03-01
@@ -189,14 +178,14 @@ MT_Vector2D operator- ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 
 //-----------------------------------------------------------------------------
 // Name : operator <
-//  Warning: Attention operator< sert par defaut aux map et donc pas de distance 
+//  Warning: Attention operator< sert par defaut aux map et donc pas de distance
 //    pour l'operation < en math
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
 bool operator <( const MT_Vector2D& v1, const MT_Vector2D& v2 )
-{ 
+{
     return (v1.rX_ < v2.rX_ ||
           !(v2.rX_ < v1.rX_) && v1.rY_ < v2.rY_);
 }
@@ -241,11 +230,11 @@ double Angle( const MT_Vector2D& v1, const MT_Vector2D& v2)
 {
     double rCosAngle = v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_;
     double rSinAngle = v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
-    
+
     double rTmp = v1.Magnitude() * v2.Magnitude();
     if( rTmp == 0. )
         return 0.;
-    
+
     rCosAngle /= rTmp;
 
     if( rCosAngle > 1. )
@@ -276,8 +265,8 @@ void MT_Vector2D::Reset()
 // Created: NLD 2002-11-29
 //-----------------------------------------------------------------------------
 inline
-bool MT_Vector2D::operator==( const MT_Vector2D& v ) const    
-{ 
+bool MT_Vector2D::operator==( const MT_Vector2D& v ) const
+{
     return MT_IsZero( rX_ - v.rX_ ) && MT_IsZero( rY_ - v.rY_ );
 }
 
@@ -286,8 +275,8 @@ bool MT_Vector2D::operator==( const MT_Vector2D& v ) const
 // Created: NLD 2002-11-29
 //-----------------------------------------------------------------------------
 inline
-bool MT_Vector2D::operator!=( const MT_Vector2D& v ) const    
-{ 
+bool MT_Vector2D::operator!=( const MT_Vector2D& v ) const
+{
     return !MT_IsZero( rX_ - v.rX_ ) || !MT_IsZero( rY_ - v.rY_ );
 }
 
@@ -330,7 +319,7 @@ MT_Vector2D& MT_Vector2D::Rotate90ClockWise()
 {
     double rTmp = rX_;
     rX_    = rY_;
-    rY_    = -rTmp; 
+    rY_    = -rTmp;
     return *this;
 }
 
@@ -353,7 +342,7 @@ MT_Vector2D& MT_Vector2D::Rotate90()
 {
     const double rTmp = rX_;
     rX_    = -rY_;
-    rY_    = rTmp; 
+    rY_    = rTmp;
     return *this;
 }
 
