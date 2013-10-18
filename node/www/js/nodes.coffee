@@ -226,6 +226,12 @@ class NodeListView extends Backbone.View
 node_view = new NodeListView
 node_default = new NodeItem
 
+set_default_node_settings = ->
+    data = $.cookie "default_node_settings"
+    return unless data?
+    node_default.set JSON.parse data
+set_default_node_settings()
+
 validate_input_node = (control, result) ->
     if !result
         group = control.parent().parent()
@@ -246,11 +252,13 @@ $("#node_create").click ->
     ident.val ''
 
 $("#node_edit").click ->
-    [ui, mod] = pop_settings $("#node_settings"), node_default.attributes
+    data = _.extend {}, node_default.attributes, is_default: true
+    [ui, mod] = pop_settings $("#node_settings"), data
     mod.find(".apply").click ->
-        data = validate_settings ui, node_default
+        data = validate_settings ui
         return unless data?
         node_default.set data
+        $.cookie "default_node_settings", JSON.stringify data
         mod.modal "hide"
 
 $(".create_form").keypress (e) ->

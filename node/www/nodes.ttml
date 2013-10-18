@@ -37,7 +37,9 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_general">
+                    {{#unless is_default}}
                     [[ template "input_text" sub "id" "name" "label" "Name" "value" "{{name}}" ]]
+                    {{/unless}}
                     [[ template "input_number" sub "id" "sessions_max_play" "label" "Max" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_play}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_play}}" "append" "Sessions" ]]
                     [[ template "input_number" sub "id" "sessions_max_parallel" "label" "Parallel" "prepend" 1 "prepend_value" "{{#is_positive sessions.max_parallel}} checked=\"checked\"{{/is_positive}}" "value" "{{sessions.max_parallel}}" "append" "Sessions" ]]
                     [[ template "input_checkbox" sub "id" "sessions_reset" "label" "Allow Session Reset" "value" "{{#bool sessions.reset }} checked=\"checked\"{{/bool}}" ]]
