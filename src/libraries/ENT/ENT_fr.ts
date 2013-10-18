@@ -955,5 +955,21 @@
         <source>In funeral system</source>
         <translation>Dans la chaîne mortuaire</translation>
     </message>
+    <message>
+        <source>Short range</source>
+        <translation>Courte portée</translation>
+    </message>
+    <message>
+        <source>Medium range</source>
+        <translation>Moyenne portée</translation>
+    </message>
+    <message>
+        <source>Long range</source>
+        <translation>Longue portée</translation>
+    </message>
+    <message>
+        <source>No ammunition</source>
+        <translation>Sans munitions</translation>
+    </message>
 </context>
 </TS>

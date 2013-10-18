@@ -466,4 +466,13 @@ enum E_MissionType
     eNbrMissionTypes        = 4
 };
 
+enum E_AviationRange
+{
+    eAviationRange_ShortRange   = 0,
+    eAviationRange_MediumRange  = 1,
+    eAviationRange_LongRange    = 2,
+    eAviationRange_NoAmmunition = 3,
+    eNbrAviationRanges          = 4
+};
+
 #endif // __ENT_Enums_Gen_h_

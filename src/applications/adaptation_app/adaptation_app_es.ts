@@ -986,6 +986,13 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Equipments_AviationResourceQuotas_GUI</name>
+    <message>
+        <source> (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipments_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
@@ -1511,6 +1518,10 @@ estacionado con motor encendido</translation>
     <message>
         <source>m</source>
         <translation type="unfinished">m</translation>
+    </message>
+    <message>
+        <source>Enforce resources quotas for aviation equipments</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6462,6 +6473,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid range type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid category &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

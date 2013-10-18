@@ -990,6 +990,13 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Equipments_AviationResourceQuotas_GUI</name>
+    <message>
+        <source> (%)</source>
+        <translation> (%)</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipments_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
@@ -1515,6 +1522,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>m</source>
         <translation>m</translation>
+    </message>
+    <message>
+        <source>Enforce resources quotas for aviation equipments</source>
+        <translation>Appliquer les quotas de dotations pour les équipements aériens</translation>
     </message>
 </context>
 <context>
@@ -6481,6 +6492,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation>Equipement - Type de terrain invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid range type &apos;%1&apos;</source>
+        <translation>Portée aérienne - Type de portée &apos;%1&apos; invalide</translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid category &apos;%1&apos;</source>
+        <translation>Portée aérienne - Catégorie &apos;%1&apos; invalide</translation>
     </message>
 </context>
 <context>

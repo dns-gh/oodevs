@@ -24,6 +24,7 @@
 #include "ADN_Equipments_ConsumptionsTable.h"
 #include "ADN_Equipments_BreakdownsTable.h"
 #include "ADN_Equipments_Resources_Tables.h"
+#include "ADN_Equipments_AviationResourceQuotas_GUI.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_DateEdit.h"
 #include "ADN_GroupBox.h"
@@ -48,6 +49,7 @@ ADN_Equipments_GUI::ADN_Equipments_GUI( ADN_Equipments_Data& data )
     , pWeapons_( 0 )
     , pActiveProtections_( 0 )
     , pResources_( 0 )
+    , pAviationResourceQuotas_( 0 )
 {
     // NOTHING
 }
@@ -189,9 +191,15 @@ void ADN_Equipments_GUI::Build()
     vInfosConnectors[ eActiveProtections ] = &pActiveProtections_->GetConnector();
 
     // Resources allocation & consumptions
-    Q3HGroupBox* pResourcesGroup = new Q3HGroupBox( tr( "Resources" ) );
-    pResourcesGroup->setMargin( 5 );
+    QGroupBox* pResourcesGroup = new QGroupBox( tr( "Resources" ) );
+    QVBoxLayout* pResourceLayout = new QVBoxLayout;
+    pResourcesGroup->setLayout( pResourceLayout );
+    pResourceLayout->setMargin( 5 );
     pResources_ = new ADN_Equipments_Resources_Tables( builder.GetChildName( "resources-tables" ), vInfosConnectors[ eDotations ], vInfosConnectors[ eDotationsAllocation ], vInfosConnectors[ eConsumptions ], pResourcesGroup );
+    ADN_GroupBox* pAviationQuotasBox = builder.AddGroupBox( pResourcesGroup, "has-aviation-quotas", tr( "Enforce resources quotas for aviation equipments" ), vInfosConnectors[ eHasAviationResourceQuotas ], 1 );
+    pAviationResourceQuotas_ = new ADN_Equipments_AviationResourceQuotas_GUI( "aviation-quotas-tab", vInfosConnectors[ eAviationResourceQuotas ], pAviationQuotasBox );
+    pResourceLayout->addWidget( pResources_ );
+    pResourceLayout->addWidget( pAviationQuotasBox );
 
     // Objects
     Q3HGroupBox* pObjectsGroup = new Q3HGroupBox( tr( "Objects" ) );
@@ -577,6 +585,8 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
         builder.CreateTableFrom( pResources_->GetAllocationTable() );
         builder.Section( tr("Consumptions") );
         builder.CreateTableFrom( pResources_->GetConsumptionTable() );
+        if( composante.bAviationResourcesQuotas_.GetData() )
+            builder.CreateTableFrom( *pAviationResourceQuotas_ );
         builder.Section( tr("Weapon systems") );
         builder.CreateTableFrom( *pWeapons_ );
         builder.Section( tr("Active protection") );

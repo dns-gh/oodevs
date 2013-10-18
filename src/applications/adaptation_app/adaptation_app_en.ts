@@ -986,6 +986,13 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Equipments_AviationResourceQuotas_GUI</name>
+    <message>
+        <source> (%)</source>
+        <translation> (%)</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipments_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
@@ -1507,6 +1514,10 @@ Parked engine running</translation>
     <message>
         <source>m</source>
         <translation type="unfinished">m</translation>
+    </message>
+    <message>
+        <source>Enforce resources quotas for aviation equipments</source>
+        <translation>Enforce resources quotas for aviation equipments</translation>
     </message>
 </context>
 <context>
@@ -6458,6 +6469,14 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation>Equipment - Invalid terrain type &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid range type &apos;%1&apos;</source>
+        <translation>Aviation range - Invalid range type &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid category &apos;%1&apos;</source>
+        <translation>Aviation range - Invalid category &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

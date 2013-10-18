@@ -24,6 +24,7 @@ class ADN_Equipments_RadarsListView;
 class ADN_Equipments_WeaponsListView;
 class ADN_Equipments_ActiveProtectionsListView;
 class ADN_Equipments_Resources_Tables;
+class ADN_Equipments_AviationResourceQuotas_GUI;
 class ADN_GuiBuilder;
 
 // =============================================================================
@@ -83,6 +84,8 @@ public:
         eDotations,
         eDotationsAllocation,
         eConsumptions,
+        eHasAviationResourceQuotas,
+        eAviationResourceQuotas,
         eObjects,
         eAttritionBreakdowns,
         eRandomBreakdowns,
@@ -205,6 +208,7 @@ private:
     ADN_Equipments_WeaponsListView* pWeapons_;
     ADN_Equipments_ActiveProtectionsListView* pActiveProtections_;
     ADN_Equipments_Resources_Tables* pResources_;
+    ADN_Equipments_AviationResourceQuotas_GUI* pAviationResourceQuotas_;
     //@}
 };
 
