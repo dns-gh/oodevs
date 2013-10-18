@@ -24,6 +24,21 @@
 
 Q_DECLARE_METATYPE( const AfterActionFunction* )
 
+namespace
+{
+    void DeleteLayout( QLayout* layout )
+    {
+        if( layout )
+            while( QLayoutItem* item = layout->takeAt( 0 ) )
+            {
+                delete item->widget();
+                DeleteLayout( item->layout() );
+                delete item;
+            }
+            delete layout;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList constructor
 // Created: AGE 2007-09-21
@@ -82,7 +97,6 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     layout->addWidget( request_ );
     connect( functions_, SIGNAL( currentIndexChanged( int ) ), SLOT( OnSelectionChange( int ) ) );
     connect( request_, SIGNAL( clicked() ), SLOT( Request() ) );
-    OnSelectionChange( 0 );
     controllers_.controller_.Register( *this );
 }
 
@@ -109,21 +123,6 @@ void AfterActionFunctionList::NotifyUpdated( const Simulation& simulation )
     duration_->setMaxValue( tickCount );
 }
 
-namespace
-{
-    void DeleteLayout( QLayout* layout )
-    {
-        if( layout )
-            while( QLayoutItem* item = layout->takeAt( 0 ) )
-            {
-                delete item->widget();
-                DeleteLayout( item->layout() );
-                delete item;
-            }
-        delete layout;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList::OnSelectionChange
 // Created: AGE 2007-09-24
@@ -132,9 +131,7 @@ void AfterActionFunctionList::OnSelectionChange( int index )
 {
     if( index == -1 )
         return;
-    std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &actions::gui::Param_ABC::RemoveFromController, _1 ) );
-    paramList_.clear();
-    DeleteLayout( parameters_->layout() );
+    ClearParameters();
     parameters_->setLayout( new QVBoxLayout );
     builder_.SetParamInterface( *this );
     builder_.SetParentObject( this );
@@ -266,6 +263,17 @@ void AfterActionFunctionList::CreateParameter( const AfterActionParameter& param
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::ClearParameters
+// Created: JSR 2013-10-17
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::ClearParameters()
+{
+    std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &actions::gui::Param_ABC::RemoveFromController, _1 ) );
+    paramList_.clear();
+    DeleteLayout( parameters_->layout() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList::Title
 // Created: ABR 2012-01-11
 // -----------------------------------------------------------------------------
@@ -284,4 +292,16 @@ int AfterActionFunctionList::GetIndex( actions::gui::Param_ABC* param ) const
         if( paramList_[ i ].get() == param )
             return static_cast< int >( i );
     return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::ActivateParameters
+// Created: JSR 2013-10-17
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::ActivateParameters( bool activate )
+{
+    if( activate )
+        OnSelectionChange( functions_->currentIndex() );
+    else
+        ClearParameters();
 }

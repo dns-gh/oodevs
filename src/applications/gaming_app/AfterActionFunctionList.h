@@ -57,6 +57,7 @@ public:
     //@{
     virtual QString Title() const;
     virtual int GetIndex( actions::gui::Param_ABC* param ) const;
+    void ActivateParameters( bool activate );
     //@}
 
 private slots:
@@ -72,6 +73,7 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     void CreateParameter( const AfterActionParameter& parameter );
     boost::shared_ptr< actions::gui::Param_ABC > CreateParameter( const std::string& type, const QString& name );
+    void ClearParameters();
     //@}
 
     //! @name Types

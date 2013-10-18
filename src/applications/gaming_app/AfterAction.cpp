@@ -45,8 +45,8 @@ AfterAction::AfterAction( QWidget* parent, kernel::Controllers& controllers, con
     toolbarLayout->addStretch();
 
     QTabWidget* functionsTab = new QTabWidget;
-    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab, controllers, model, interfaceBuilder );
-    functionsTab->addTab( list, tools::translate( "AfterAction", "Creation" ) );
+    functionList_ = new AfterActionFunctionList( functionsTab, controllers, model, interfaceBuilder );
+    functionsTab->addTab( functionList_, tools::translate( "AfterAction", "Creation" ) );
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab, controllers, plotFactory );
     functionsTab->addTab( requests, tools::translate( "AfterAction", "Requests" ) );
 
@@ -113,3 +113,13 @@ void AfterAction::OnSave()
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: AfterAction::setVisible
+// Created: JSR 2013-10-17
+// -----------------------------------------------------------------------------
+void AfterAction::setVisible( bool visible )
+{
+    if( visible != isVisible() )
+        functionList_->ActivateParameters( visible );
+    gui::RichDockWidget::setVisible( visible );
+}
