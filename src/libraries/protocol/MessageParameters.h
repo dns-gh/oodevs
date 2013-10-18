@@ -49,6 +49,7 @@ namespace protocol
     void         CheckCount( int i, int j, const sword::MissionParameters& params, int min, int max = 0 );
     int          GetCount( const sword::MissionParameters& params, int i = -1, int j = -1 );
 
+    bool                               IsNull( const sword::MissionParameters& params, int i );
     const std::string&                 GetString( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     bool                               GetBool( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     float                              GetReal( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );

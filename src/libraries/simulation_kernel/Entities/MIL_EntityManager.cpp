@@ -1276,10 +1276,12 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const sword::MissionPar
         army = &formation->GetArmy();
     }
     const int count = protocol::GetCount( params );
-    protocol::Check( count >= 3 && count <= 4, "3 or 4 parameters expected" );
+    protocol::CheckCount(params, 2, 4)
     const int level = static_cast< int >( protocol::GetReal( params, 0 ));
     const std::string& name = protocol::GetString( params, 1 );
-    const std::string logLevel = protocol::GetString( params, 2 );
+    std::string logLevel = "";
+    if( count > 2 && !protocol::IsNull( params, 2 ) )
+        logLevel = protocol::GetString( params, 2 );
     std::vector< protocol::Extension > extensions;
     if( count > 3 )
         extensions = protocol::GetExtensionList( params, 3 );
