@@ -50,6 +50,7 @@ public:
     void AddPage( E_WorkspaceElements element, QWidget& page, const QString& title );
     void AddTable( const QString& strTableName, ADN_Callback_ABC< ADN_Table* >* pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC< ADN_ListView* >* pCallback );
+    void SetPageVisible( E_WorkspaceElements target, bool visible );
 
     bool IsLoaded() const;
     void SetIsLoading( bool );
