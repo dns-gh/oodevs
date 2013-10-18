@@ -155,12 +155,12 @@ Handlebars.registerHelper "bool", (value, options) ->
         return options.fn this
     return options.inverse this
 
-display_error = (id, template, text) ->
+display_error = (id, template, text, no_timeout) ->
     ctl = $ "#" + id
     ctl.html template content: text
     ctl.show()
     $("html, body").animate scrollTop: 0, "fast"
-    setTimeout (-> ctl.hide()), 4000
+    setTimeout (-> ctl.hide()), 4000 unless no_timeout?
 
 text_compare = (lhs, rhs) ->
     lhs = lhs.toLowerCase()

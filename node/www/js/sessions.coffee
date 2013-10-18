@@ -9,7 +9,6 @@
 
 session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
-license_error_template = Handlebars.compile $("#session_error_template").html()
 session_settings_template = Handlebars.compile $("#session_settings_template").html()
 session_redirect_template = Handlebars.compile $("#session_redirect_template").html()
 
@@ -23,6 +22,9 @@ init_plugins()
 
 print_error = (text) ->
     display_error "session_error", session_error_template, text
+
+print_license_error = (text, no_timeout) ->
+    display_error "session_error", session_error_template, text, no_timeout
 
 Handlebars.registerHelper "can_play", (data, options) ->
     valid  = convert_to_boolean data.first_time
@@ -542,7 +544,7 @@ class SessionItemView extends Backbone.View
     replay: (evt) =>
         return if is_disabled evt
         if !check_license "sword-replayer", licenses
-            @$el.prepend license_error_template content: "Missing sword-replayer license"
+            print_license_error "Missing sword-replayer license"
             return
         @toggle_load()
         ajax "/api/replay_session", id: @model.id,
@@ -590,7 +592,7 @@ class SessionListView extends Backbone.View
                 missings.push it
         if missings.length
             suffix = if missings.length > 1 then "s" else ""
-            @$el.prepend license_error_template content: "Missing #{missings.join " & "} licence#{suffix}"
+            print_license_error "Missing #{missings.join " & "} licence#{suffix}", true
         return
 
     add: (item) =>
