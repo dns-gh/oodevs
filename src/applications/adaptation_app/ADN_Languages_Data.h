@@ -41,13 +41,16 @@ public:
     void AddActiveLanguage( const std::string& language );
     bool HasActiveLanguage( const std::string& language ) const;
     void CleanLocalDirectories() const;
+
+    void ChangeLanguage( const std::string& language ) const;
+    void InitializeLanguages() const;
+    void SwapMaster();
     //@}
 
     //! @name Accessors
     //@{
     const std::string& Master() const;
     void SetMaster( const std::string& language );
-    void SwapMaster();
 
     bool IsMaster( const std::string& language ) const;
     bool IsMasterEmpty() const;

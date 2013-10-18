@@ -152,6 +152,10 @@
         <source>New base creation and input/output file options cannot be used together.</source>
         <translation>Les options de création de base et d&apos;entrée/sortie ne peuvent pas être utilisées conjointement.</translation>
     </message>
+    <message>
+        <source>Swap language option needs both the input and the output file options.</source>
+        <translation>L&apos;option d&apos;échange de langue nécessite les options d&apos;entrée et de sortie.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ApplyButton</name>

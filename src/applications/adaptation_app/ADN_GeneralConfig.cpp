@@ -27,6 +27,7 @@ ADN_GeneralConfig::ADN_GeneralConfig( int argc, char** argv, const tools::Path& 
         ( "input,i" , po::value( &inputFile_  )->default_value( "" ), "specify root input file (physical.xml)" )
         ( "output,o", po::value( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
         ( "create,c", po::value( &newFile_    )->default_value( "" ), "specify root file for creating new base (physical.xml)" )
+        ( "swap,s", po::value( &swapLanguage_ )->default_value( "" ), "specify the language to swap with the master (input and output must be specified)" )
         ( "dev", "activate dev mode" )
         ( "noreadonly", "disable read-only protection" )
         ;
@@ -88,4 +89,13 @@ const tools::Path& ADN_GeneralConfig::GetOutputFile() const
 const tools::Path& ADN_GeneralConfig::GetNewFile() const
 {
     return newFile_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GeneralConfig::GetSwapLanguage
+// Created: ABR 2013-10-18
+// -----------------------------------------------------------------------------
+const std::string& ADN_GeneralConfig::GetSwapLanguage() const
+{
+    return swapLanguage_;
 }
