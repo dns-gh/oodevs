@@ -41,6 +41,7 @@ namespace sword
     class KnowledgeMagicAction;
     class MagicAction;
     class MagicActionAck;
+    class MissionParameters;
     class MissionParameter_Value;
     class BurningCellRequest;
     class ParentEntity;
