@@ -425,7 +425,7 @@ class SessionItemView extends Backbone.View
         return true
 
     render: =>
-        $(@el).empty()
+        @$el.empty()
         return if @is_skip_render @model
 
         data = $.extend {}, @model.attributes
@@ -441,8 +441,8 @@ class SessionItemView extends Backbone.View
         data.replay_license = true
         data.sim_license = check_license "sword-runtime", licenses
         data.replay_license = check_license "sword-replayer", licenses
-        $(@el).html session_template data
-        $(@el).find(".link").click (evt) =>
+        @$el.html session_template data
+        @$el.find(".link").click (evt) =>
             return if is_disabled evt
             next = "sword://#{location.host}/?protocol=#{window.location.protocol}&sid=#{$.cookie "sid"}&session=#{@model.id}"
             if convert_to_boolean $.cookie "redirect"
@@ -511,7 +511,7 @@ class SessionItemView extends Backbone.View
         @render()
 
     toggle_load: =>
-        toggle_spinner $(@el).find ".session_top_right .btn-group"
+        toggle_spinner @$el.find ".session_top_right .btn-group"
 
     set_search: (item) =>
         @search = item
@@ -542,7 +542,7 @@ class SessionItemView extends Backbone.View
     replay: (evt) =>
         return if is_disabled evt
         if !check_license "sword-replayer", licenses
-            $(@el).prepend license_error_template content: "Missing sword-replayer license"
+            @$el.prepend license_error_template content: "Missing sword-replayer license"
             return
         @toggle_load()
         ajax "/api/replay_session", id: @model.id,
@@ -581,7 +581,7 @@ class SessionListView extends Backbone.View
         setTimeout @delta, @delta_period
 
     reset: (list, options) =>
-        $(@el).empty()
+        @$el.empty()
         for item in list.models
             @add item
         missings = []
@@ -590,7 +590,7 @@ class SessionListView extends Backbone.View
                 missings.push it
         if missings.length
             suffix = if missings.length > 1 then "s" else ""
-            $(@el).prepend license_error_template content: "Missing #{missings.join " & "} licence#{suffix}"
+            @$el.prepend license_error_template content: "Missing #{missings.join " & "} licence#{suffix}"
         return
 
     add: (item) =>
@@ -600,7 +600,7 @@ class SessionListView extends Backbone.View
         if previous
             $(previous.el).after view.el
         else
-            $(@el).prepend view.el
+            @$el.prepend view.el
 
     remove: (item, list, index) =>
         $("#" + item.id).parent().remove()
@@ -682,9 +682,9 @@ class ExerciseListItemView extends Backbone.View
         setTimeout @delta, @delta_period
 
     render: =>
-        $(@el).children().remove().end()
+        @$el.children().remove().end()
         for it in @model.get "exercises"
-            $(@el).append "<option>" + it + "</option>"
+            @$el.append "<option>" + it + "</option>"
         return
 
     delta: =>
