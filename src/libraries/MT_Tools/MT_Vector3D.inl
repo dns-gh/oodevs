@@ -10,11 +10,11 @@
 //*****************************************************************************
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V3D constructor
+//  Name  :  MT_Vector3D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V3D<T>::MT_V3D()
+inline
+MT_Vector3D::MT_Vector3D()
 :   rX_( 0 )
 ,   rY_( 0 )
 ,   rZ_( 0 )
@@ -22,131 +22,109 @@ MT_V3D<T>::MT_V3D()
 
 }
 
-
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V3D constructor
+//  Name  :  MT_Vector3D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V3D<T>::MT_V3D( T rX, T rY, T rZ )
+inline
+MT_Vector3D::MT_Vector3D( double rX, double rY, double rZ )
 :   rX_( rX )
 ,   rY_( rY )
 ,   rZ_( rZ )
 {
 }
 
-
-
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V3D constructor
+//  Name  :  MT_Vector3D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V3D<T>::MT_V3D( const MT_V3D<T>& v )
+inline
+MT_Vector3D::MT_Vector3D( const MT_Vector3D& v )
 : rX_( v.rX_ )
 , rY_( v.rY_ )
 , rZ_( v.rZ_ )
 {
 }
 
-
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V3D destructor
-// Created: FBD 02-03-01
-//-----------------------------------------------------------------------------
-template <class T>
-MT_V3D<T>::~MT_V3D()
-{
-}
-
-//-----------------------------------------------------------------------------
-//  Name  :  MT_V3D::SquareMagnitude
+//  Name  :  MT_Vector3D::SquareMagnitude
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T MT_V3D<T>::SquareMagnitude() const
+double MT_Vector3D::SquareMagnitude() const
 {
     return rX_ * rX_ + rY_ * rY_ + rZ_ * rZ_;
 }
 
-
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V3D::Magnitude
+//  Name  :  MT_Vector3D::Magnitude
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T MT_V3D<T>::Magnitude() const
+double MT_Vector3D::Magnitude() const
 {
-    return (T)sqrt( SquareMagnitude() );
+    return sqrt( SquareMagnitude() );
 }
 
-
 //-----------------------------------------------------------------------------
-// Name: MT_V3D::SquareDistance
+// Name: MT_Vector3D::SquareDistance
 // Created: JVT 02-08-30
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T MT_V3D<T>::SquareDistance( const MT_V3D<T>& vPosDest ) const
+double MT_Vector3D::SquareDistance( const MT_Vector3D& vPosDest ) const
 {
     return (vPosDest.rX_ - rX_)*(vPosDest.rX_ - rX_) + (vPosDest.rY_ - rY_)*(vPosDest.rY_ - rY_) + (vPosDest.rZ_ - rZ_)*(vPosDest.rZ_ - rZ_);
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V3D::Distance
+//  Name  :  MT_Vector3D::Distance
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T MT_V3D<T>::Distance( const MT_V3D<T>& vPosDest ) const
+double MT_Vector3D::Distance( const MT_Vector3D& vPosDest ) const
 {
-    return (T)sqrt( SquareDistance( vPosDest) );
+    return sqrt( SquareDistance( vPosDest) );
 }
 
-
 //-----------------------------------------------------------------------------
-// Name: MT_V3D::IsZero
+// Name: MT_Vector3D::IsZero
 // Created: NLD 2002-11-29
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-bool MT_V3D<T>::IsZero() const
+bool MT_Vector3D::IsZero() const
 {
-    return rX_ == (T)0 && rY_ == (T)0 && rZ_ == (T)0;
+    return !rX_ && !rY_ && !rZ_;
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V3D::Normalized
+//  Name  :  MT_Vector3D::Normalized
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V3D<T> MT_V3D<T>::Normalized() const
+inline
+MT_Vector3D MT_Vector3D::Normalized() const
 {
     if( IsZero() )
-        return (*this);
+        return *this;
     else
-        return (*this) / Magnitude();
+        return *this / Magnitude();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector3D::Normalize
 // Created: JVT 02-12-06
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V3D<T>& MT_V3D<T>::Normalize()
+inline
+MT_Vector3D& MT_Vector3D::Normalize()
 {
     if( IsZero() )
-        return (*this);
+        return *this;
     else
         return operator /= ( Magnitude() );
 }
@@ -155,45 +133,40 @@ MT_V3D<T>& MT_V3D<T>::Normalize()
 //  Name  :  operator *
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V3D<T> operator* ( T rScalar, const MT_V3D<T>& v )
+MT_Vector3D operator *( double rScalar, const MT_Vector3D& v )
 {
-    return MT_V3D<T>( rScalar * v.rX_, rScalar * v.rY_, rScalar * v.rZ_ );
+    return MT_Vector3D( rScalar * v.rX_, rScalar * v.rY_, rScalar * v.rZ_ );
 }
 
 //-----------------------------------------------------------------------------
 //  Name  :  operator *
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V3D<T> operator* ( const MT_V3D<T>& v, T rScalar )
+MT_Vector3D operator *( const MT_Vector3D& v, double rScalar )
 {
-    return MT_V3D<T>( rScalar * v.rX_, rScalar * v.rY_, rScalar * v.rZ_ );
+    return MT_Vector3D( rScalar * v.rX_, rScalar * v.rY_, rScalar * v.rZ_ );
 }
 
 //-----------------------------------------------------------------------------
 //  Name  :  operator +
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V3D<T> operator+ ( const MT_V3D<T>& v1, const MT_V3D<T>& v2 )
+MT_Vector3D operator +( const MT_Vector3D& v1, const MT_Vector3D& v2 )
 {
-    return MT_V3D<T>( v1.rX_ + v2.rX_, v1.rY_ + v2.rY_, v1.rZ_ + v2.rZ_ );
+    return MT_Vector3D( v1.rX_ + v2.rX_, v1.rY_ + v2.rY_, v1.rZ_ + v2.rZ_ );
 }
-
 
 //-----------------------------------------------------------------------------
 //  Name  :  operator -
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V3D<T> operator- ( const MT_V3D<T>& v1, const MT_V3D<T>& v2 )
+MT_Vector3D operator -( const MT_Vector3D& v1, const MT_Vector3D& v2 )
 {
-  return MT_V3D<T>( v1.rX_ - v2.rX_, v1.rY_ - v2.rY_, v1.rZ_ - v2.rZ_ );
+  return MT_Vector3D( v1.rX_ - v2.rX_, v1.rY_ - v2.rY_, v1.rZ_ - v2.rZ_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -202,21 +175,18 @@ MT_V3D<T> operator- ( const MT_V3D<T>& v1, const MT_V3D<T>& v2 )
 //  pour l'operation < en math
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-bool operator <( const MT_V3D<T>& v1, const MT_V3D<T>& v2 )
+bool operator <( const MT_Vector3D& v1, const MT_Vector3D& v2 )
 {
-    return ( v1.rX_ != v2.rX_ || v1.rY_ != v2.rY_ || v1.rZ_ != v2.rZ_ );
+    return v1.rX_ != v2.rX_ || v1.rY_ != v2.rY_ || v1.rZ_ != v2.rZ_;
 }
-
 
 //-----------------------------------------------------------------------------
 //  Name  :  operator *
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T operator* ( const MT_V3D<T>& v1, const MT_V3D<T>& v2)
+double operator *( const MT_Vector3D& v1, const MT_Vector3D& v2)
 {
   return v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_ + v1.rZ_ * v2.rZ_;
 }
@@ -225,45 +195,40 @@ T operator* ( const MT_V3D<T>& v1, const MT_V3D<T>& v2)
 //  Name  :  CrossProduct
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V3D<T> CrossProduct( const MT_V3D<T>& v1, const MT_V3D<T>& v2 )
+MT_Vector3D CrossProduct( const MT_Vector3D& v1, const MT_Vector3D& v2 )
 {
-  return MT_V3D<T>( v1.rY_ * v2.rZ_ - v2.rY_ * v1.rZ_, v1.rZ_ * v2.rX_ - v2.rZ_ * v1.rX_, v1.rX_ * v2.rY_ - v2.rX_ * v1.rY_ );
+  return MT_Vector3D( v1.rY_ * v2.rZ_ - v2.rY_ * v1.rZ_, v1.rZ_ * v2.rX_ - v2.rZ_ * v1.rX_, v1.rX_ * v2.rY_ - v2.rX_ * v1.rY_ );
 }
 
 //-----------------------------------------------------------------------------
 //  Name  :  DotProduct
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T DotProduct( const MT_V3D<T>& v1, const MT_V3D<T>& v2 )
+double DotProduct( const MT_Vector3D& v1, const MT_Vector3D& v2 )
 {
   return v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_ + v1.rZ_ * v2.rZ_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector3D::Reset
 // Created: NLD 2002-11-29
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-void MT_V3D<T>::Reset()
+void MT_Vector3D::Reset()
 {
-    rX_ = (T)0;
-    rY_ = (T)0;
-    rZ_ = (T)0;
+    rX_ = 0;
+    rY_ = 0;
+    rZ_ = 0;
 }
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector3D::operator==
 // Created: NLD 2002-11-29
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-bool MT_V3D<T>::operator==( const MT_V3D<T>& v ) const
+bool MT_Vector3D::operator ==( const MT_Vector3D& v ) const
 {
     return MT_IsZero( rX_ - v.rX_ ) && MT_IsZero( rY_ - v.rY_ ) && MT_IsZero( rZ_ - v.rZ_ );
 }
@@ -272,9 +237,8 @@ bool MT_V3D<T>::operator==( const MT_V3D<T>& v ) const
 // Name: MT_Vector3D::operator!=
 // Created: NLD 2002-11-29
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-bool MT_V3D<T>::operator!=( const MT_V3D<T>& v ) const
+bool MT_Vector3D::operator !=( const MT_Vector3D& v ) const
 {
     return !MT_IsZero( rX_ - v.rX_ ) || !MT_IsZero( rY_ - v.rY_ ) || !MT_IsZero( rZ_ - v.rZ_ );
 }
