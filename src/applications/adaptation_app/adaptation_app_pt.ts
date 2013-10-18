@@ -5538,6 +5538,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Languages</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>LimaFunction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_LocalizedString</name>

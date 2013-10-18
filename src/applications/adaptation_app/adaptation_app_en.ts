@@ -5555,6 +5555,10 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Languages</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>LimaFunction</source>
+        <translation>Phase line function</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_LocalizedString</name>

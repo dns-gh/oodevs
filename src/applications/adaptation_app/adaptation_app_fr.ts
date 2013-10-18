@@ -5571,6 +5571,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Languages</source>
         <translation>Langues</translation>
     </message>
+    <message>
+        <source>LimaFunction</source>
+        <translation>Type de Lima</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_LocalizedString</name>

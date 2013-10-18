@@ -399,8 +399,9 @@ enum E_MissionParameterType
     eMissionParameterTypeResourceNetworkNode    = 26,
     eMissionParameterTypeResourceNetworkType    = 27,
     eMissionParameterTypeStage                  = 28,
+    eMissionParameterTypeLimaFunction           = 29,
 
-    eNbrMissionParameterType                    = 29
+    eNbrMissionParameterType                    = 30
 };
 
 enum E_ConstructorType
