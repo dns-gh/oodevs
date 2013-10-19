@@ -366,3 +366,12 @@ void FuneralConsign::Clean()
 {
     needNetworkUpdate_ = false;
 }
+
+void FuneralConsign::FinishSuccessfullyWithoutDelay()
+{
+    if( handler_ )
+        handler_->RemoveSupplyConvoysObserver( *this );
+    handler_ = 0;
+    convoy_.reset();
+    SetState( eFinished );
+}

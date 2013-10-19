@@ -51,6 +51,8 @@ public:
     //@{
     bool Update();
     bool IsFinished() const;
+
+    virtual void FinishSuccessfullyWithoutDelay();
     //@}
 
     //! @name Events

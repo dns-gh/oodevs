@@ -35,6 +35,8 @@ public:
     //@{
     virtual void OnSupplyConvoyArriving( const boost::shared_ptr< const SupplyConsign_ABC >& consign ) = 0;
     virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< const SupplyConsign_ABC >& consign ) = 0;
+
+    virtual void FinishSuccessfullyWithoutDelay() = 0;
     //@}
 };
 

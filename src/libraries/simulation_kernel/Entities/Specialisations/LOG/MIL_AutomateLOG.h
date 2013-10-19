@@ -149,6 +149,8 @@ public:
     void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
     void ResetConsignsForProvider( const MIL_AgentPion& pion );
     MIL_Automate*  GetStockAutomat                    ( const PHY_DotationCategory& dotationCategory, bool& deployed );
+
+    bool FinishAllHandlingsSuccessfullyWithoutDelay();
     //@}
 
     //! @name Funeral
