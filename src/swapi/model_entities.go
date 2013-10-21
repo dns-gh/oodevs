@@ -168,50 +168,28 @@ type HumanFactors struct {
 	Stress     sword.UnitAttributes_EnumUnitStress
 }
 
-type MaintenanceHandlingProvider struct {
-	Id    uint32
-	State sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus
-}
-
-type MaintenanceHandling struct {
-	Id       uint32
-	Provider *MaintenanceHandlingProvider
-}
-
-type MedicalHandlingProvider struct {
-	Id    uint32
-	State sword.LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus
-}
-
-type MedicalHandling struct {
-	Id       uint32
-	Provider *MedicalHandlingProvider
-}
-
 type Unit struct {
-	Id                   uint32
-	AutomatId            uint32
-	Name                 string
-	Pc                   bool
-	Position             Point
-	PathPoints           uint32
-	DebugBrain           bool
-	EquipmentDotations   map[uint32]*EquipmentDotation
-	LentEquipments       []*LentEquipment
-	BorrowedEquipments   []*BorrowedEquipment
-	PartySurrenderedTo   uint32
-	HumanDotations       []*HumanDotation
-	ResourceDotations    []*ResourceDotation
-	Posture              Posture
-	VisionCones          VisionCones
-	TransporterId        uint32
-	TransportedIds       []uint32
-	Adhesions            map[uint32]float32
-	HumanFactors         HumanFactors
-	RawOperationalState  int32
-	Neutralized          bool
-	MaintenanceHandlings map[uint32]*MaintenanceHandling
-	MedicalHandlings     map[uint32]*MedicalHandling
+	Id                  uint32
+	AutomatId           uint32
+	Name                string
+	Pc                  bool
+	Position            Point
+	PathPoints          uint32
+	DebugBrain          bool
+	EquipmentDotations  map[uint32]*EquipmentDotation
+	LentEquipments      []*LentEquipment
+	BorrowedEquipments  []*BorrowedEquipment
+	PartySurrenderedTo  uint32
+	HumanDotations      []*HumanDotation
+	ResourceDotations   []*ResourceDotation
+	Posture             Posture
+	VisionCones         VisionCones
+	TransporterId       uint32
+	TransportedIds      []uint32
+	Adhesions           map[uint32]float32
+	HumanFactors        HumanFactors
+	RawOperationalState int32
+	Neutralized         bool
 }
 
 type Automat struct {
@@ -411,6 +389,26 @@ type Order struct {
 	TaskerId    uint32
 }
 
+type MaintenanceHandlingProvider struct {
+	Id    uint32
+	State sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus
+}
+
+type MaintenanceHandling struct {
+	Id       uint32
+	Provider *MaintenanceHandlingProvider
+}
+
+type MedicalHandlingProvider struct {
+	Id    uint32
+	State sword.LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus
+}
+
+type MedicalHandling struct {
+	Id       uint32
+	Provider *MedicalHandlingProvider
+}
+
 type FuneralHandlingHandler struct {
 	Id    uint32
 	State sword.LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus
@@ -435,14 +433,16 @@ type SupplyHandling struct {
 }
 
 type ModelData struct {
-	Parties          map[uint32]*Party
-	Profiles         map[string]*Profile
-	GlobalWeather    Weather
-	LocalWeathers    map[uint32]*LocalWeather
-	Urbans           map[uint32]*Urban
-	Orders           map[uint32]*Order
-	FuneralHandlings map[uint32]*FuneralHandling
-	SupplyHandlings  map[uint32]*SupplyHandling
+	Parties              map[uint32]*Party
+	Profiles             map[string]*Profile
+	GlobalWeather        Weather
+	LocalWeathers        map[uint32]*LocalWeather
+	Urbans               map[uint32]*Urban
+	Orders               map[uint32]*Order
+	MaintenanceHandlings map[uint32]*MaintenanceHandling
+	MedicalHandlings     map[uint32]*MedicalHandling
+	FuneralHandlings     map[uint32]*FuneralHandling
+	SupplyHandlings      map[uint32]*SupplyHandling
 	// Available scores definitions
 	KnownScores map[string]struct{}
 	Scores      map[string]float32
@@ -453,15 +453,17 @@ type ModelData struct {
 
 func NewModelData() *ModelData {
 	return &ModelData{
-		Parties:          map[uint32]*Party{},
-		Profiles:         map[string]*Profile{},
-		LocalWeathers:    map[uint32]*LocalWeather{},
-		Urbans:           map[uint32]*Urban{},
-		Orders:           map[uint32]*Order{},
-		FuneralHandlings: map[uint32]*FuneralHandling{},
-		SupplyHandlings:  map[uint32]*SupplyHandling{},
-		KnownScores:      map[string]struct{}{},
-		Scores:           map[string]float32{},
+		Parties:              map[uint32]*Party{},
+		Profiles:             map[string]*Profile{},
+		LocalWeathers:        map[uint32]*LocalWeather{},
+		Urbans:               map[uint32]*Urban{},
+		Orders:               map[uint32]*Order{},
+		MaintenanceHandlings: map[uint32]*MaintenanceHandling{},
+		MedicalHandlings:     map[uint32]*MedicalHandling{},
+		FuneralHandlings:     map[uint32]*FuneralHandling{},
+		SupplyHandlings:      map[uint32]*SupplyHandling{},
+		KnownScores:          map[string]struct{}{},
+		Scores:               map[string]float32{},
 	}
 }
 

@@ -75,20 +75,18 @@ func (model *Model) handleUnitCreation(m *sword.SimToClient_Content) error {
 		return ErrSkipHandler
 	}
 	unit := &Unit{
-		Id:                   mm.GetUnit().GetId(),
-		AutomatId:            mm.GetAutomat().GetId(),
-		Name:                 mm.GetName(),
-		Pc:                   mm.GetPc(),
-		Position:             Point{},
-		PathPoints:           0,
-		DebugBrain:           false,
-		EquipmentDotations:   map[uint32]*EquipmentDotation{},
-		LentEquipments:       []*LentEquipment{},
-		BorrowedEquipments:   []*BorrowedEquipment{},
-		RawOperationalState:  100,
-		Neutralized:          false,
-		MaintenanceHandlings: map[uint32]*MaintenanceHandling{},
-		MedicalHandlings:     map[uint32]*MedicalHandling{},
+		Id:                  mm.GetUnit().GetId(),
+		AutomatId:           mm.GetAutomat().GetId(),
+		Name:                mm.GetName(),
+		Pc:                  mm.GetPc(),
+		Position:            Point{},
+		PathPoints:          0,
+		DebugBrain:          false,
+		EquipmentDotations:  map[uint32]*EquipmentDotation{},
+		LentEquipments:      []*LentEquipment{},
+		BorrowedEquipments:  []*BorrowedEquipment{},
+		RawOperationalState: 100,
+		Neutralized:         false,
 	}
 	if !model.data.addUnit(unit) {
 		return fmt.Errorf("cannot insert created unit: %d", unit.Id)
@@ -975,16 +973,11 @@ func (model *Model) handleLogMaintenanceHandlingCreation(m *sword.SimToClient_Co
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
-		return fmt.Errorf("cannot find unit for which maintenance handling must be created: %d",
-			mm.GetUnit().GetId())
-	}
 	id := mm.GetRequest().GetId()
-	if _, found := unit.MaintenanceHandlings[id]; found {
+	if _, found := model.data.MaintenanceHandlings[id]; found {
 		return fmt.Errorf("maintenance handling to create already exists: %d", id)
 	}
-	unit.MaintenanceHandlings[id] = &MaintenanceHandling{Id: id}
+	model.data.MaintenanceHandlings[id] = &MaintenanceHandling{Id: id}
 	return nil
 }
 
@@ -993,13 +986,8 @@ func (model *Model) handleLogMaintenanceHandlingUpdate(m *sword.SimToClient_Cont
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
-		return fmt.Errorf("cannot find unit for which maintenance handling must be updated: %d",
-			mm.GetUnit().GetId())
-	}
 	id := mm.GetRequest().GetId()
-	if h, ok := unit.MaintenanceHandlings[id]; ok {
+	if h, ok := model.data.MaintenanceHandlings[id]; ok {
 		h.Provider = &MaintenanceHandlingProvider{
 			Id:    mm.GetProvider().GetId(),
 			State: mm.GetState(),
@@ -1014,14 +1002,9 @@ func (model *Model) handleLogMaintenanceHandlingDestruction(m *sword.SimToClient
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
-		return fmt.Errorf("cannot find unit for which maintenance handling must be destroyed: %d",
-			mm.GetUnit().GetId())
-	}
 	id := mm.GetRequest().GetId()
-	if _, ok := unit.MaintenanceHandlings[id]; ok {
-		delete(unit.MaintenanceHandlings, id)
+	if _, ok := model.data.MaintenanceHandlings[id]; ok {
+		delete(model.data.MaintenanceHandlings, id)
 		return nil
 	}
 	return fmt.Errorf("cannot find maintenance handling to destroy: %d", id)
@@ -1032,16 +1015,11 @@ func (model *Model) handleLogMedicalHandlingCreation(m *sword.SimToClient_Conten
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
-		return fmt.Errorf("cannot find unit for which medical handling must be created: %d",
-			mm.GetUnit().GetId())
-	}
 	id := mm.GetRequest().GetId()
-	if _, found := unit.MedicalHandlings[id]; found {
+	if _, found := model.data.MedicalHandlings[id]; found {
 		return fmt.Errorf("medical handling to create already exists: %d", id)
 	}
-	unit.MedicalHandlings[id] = &MedicalHandling{Id: id}
+	model.data.MedicalHandlings[id] = &MedicalHandling{Id: id}
 	return nil
 }
 
@@ -1050,13 +1028,8 @@ func (model *Model) handleLogMedicalHandlingUpdate(m *sword.SimToClient_Content)
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
-		return fmt.Errorf("cannot find unit for which medical handling must be updated: %d",
-			mm.GetUnit().GetId())
-	}
 	id := mm.GetRequest().GetId()
-	if h, ok := unit.MedicalHandlings[id]; ok {
+	if h, ok := model.data.MedicalHandlings[id]; ok {
 		h.Provider = &MedicalHandlingProvider{
 			Id:    mm.GetProvider().GetId(),
 			State: mm.GetState(),
@@ -1071,14 +1044,9 @@ func (model *Model) handleLogMedicalHandlingDestruction(m *sword.SimToClient_Con
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
-		return fmt.Errorf("cannot find unit for which medical handling must be destroyed: %d",
-			mm.GetUnit().GetId())
-	}
 	id := mm.GetRequest().GetId()
-	if _, ok := unit.MedicalHandlings[id]; ok {
-		delete(unit.MedicalHandlings, id)
+	if _, ok := model.data.MedicalHandlings[id]; ok {
+		delete(model.data.MedicalHandlings, id)
 		return nil
 	}
 	return fmt.Errorf("cannot find medical handling to destroy: %d", id)

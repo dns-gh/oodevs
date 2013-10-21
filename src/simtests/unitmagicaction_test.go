@@ -2228,9 +2228,9 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 		Captured:      0,
 		Breakdowns:    nil,
 	}
-	unit := client.Model.GetData().FindUnit(unitId)
-	c.Assert(dotation, DeepEquals, *unit.EquipmentDotations[equipmentId])
-	c.Assert(unit.MaintenanceHandlings, HasLen, 0)
+	data := client.Model.GetData()
+	c.Assert(dotation, DeepEquals, *data.FindUnit(unitId).EquipmentDotations[equipmentId])
+	c.Assert(data.MaintenanceHandlings, HasLen, 0)
 	equipment := swapi.EquipmentDotation{
 		Available:     3,
 		Unavailable:   0,
@@ -2244,7 +2244,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	c.Assert(err, IsNil)
 	var handlingId uint32
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, h := range data.FindUnit(unitId).MaintenanceHandlings {
+		for _, h := range data.MaintenanceHandlings {
 			if h.Provider != nil {
 				handlingId = h.Id
 				return true
@@ -2252,21 +2252,22 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 		}
 		return false
 	})
-	maintenance := client.Model.GetData().FindUnit(unitId).MaintenanceHandlings[handlingId]
+	maintenance := client.Model.GetData().MaintenanceHandlings[handlingId]
 	c.Assert(maintenance.Provider.State, Equals, sword.LogMaintenanceHandlingUpdate_moving_to_supply)
 	c.Assert(maintenance.Provider.Id, Equals, uint32(24))
 	// finish handlings and check equipment repaired
 	err = client.LogFinishHandlings(24)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	unit = client.Model.GetData().FindUnit(unitId)
+	data = client.Model.GetData()
+	unit := data.FindUnit(unitId)
 	c.Assert(dotation, DeepEquals, *unit.EquipmentDotations[equipmentId])
-	c.Assert(unit.MaintenanceHandlings, HasLen, 0)
+	c.Assert(data.MaintenanceHandlings, HasLen, 0)
 
 	// medical
 	c.Assert(CheckHumanQuantity(unit.HumanDotations,
 		map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7}), Equals, true)
-	c.Assert(unit.MedicalHandlings, HasLen, 0)
+	c.Assert(data.MedicalHandlings, HasLen, 0)
 	human := swapi.HumanDotation{
 		Quantity:     1,
 		Rank:         eTrooper,
@@ -2278,7 +2279,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.ChangeHumanState(unitId, []*swapi.HumanDotation{&human})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, h := range data.FindUnit(unitId).MedicalHandlings {
+		for _, h := range data.MedicalHandlings {
 			if h.Provider != nil {
 				handlingId = h.Id
 				return true
@@ -2286,7 +2287,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 		}
 		return false
 	})
-	medical := client.Model.GetData().FindUnit(unitId).MedicalHandlings[handlingId]
+	medical := client.Model.GetData().MedicalHandlings[handlingId]
 	c.Assert(medical.Provider.State, Equals, sword.LogMedicalHandlingUpdate_waiting_for_evacuation)
 	c.Assert(medical.Provider.Id, Equals, uint32(24))
 	// finish handlings and check human healed
@@ -2296,15 +2297,15 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	unit = client.Model.GetData().FindUnit(unitId)
 	c.Assert(CheckHumanState(unit.HumanDotations, eTrooper, eHealthy, 6, 0), Equals, true)
 	c.Assert(CheckHumanState(unit.HumanDotations, eTrooper, eHealthy, 1, 0), Equals, true)
+	data = client.Model.GetData()
 	// this is a feature : healed humans do not go back on the field
-	c.Assert(unit.MedicalHandlings, HasLen, 1)
-	c.Assert(unit.MedicalHandlings[handlingId].Provider.State, Equals, sword.LogMedicalHandlingUpdate_finished)
+	c.Assert(data.MedicalHandlings, HasLen, 1)
+	c.Assert(data.MedicalHandlings[handlingId].Provider.State, Equals, sword.LogMedicalHandlingUpdate_finished)
 
 	// supply
 	c.Assert(client.Model.GetData().SupplyHandlings, HasLen, 0)
-	resources := unit.ResourceDotations
-	c.Assert(resources, NotNil)
-	c.Assert(resources[0], DeepEquals,
+	c.Assert(unit.ResourceDotations, NotNil)
+	c.Assert(unit.ResourceDotations[0], DeepEquals,
 		&swapi.ResourceDotation{
 			Type:      1,
 			Quantity:  3200,
