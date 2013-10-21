@@ -2086,13 +2086,13 @@ void MIL_AgentPion::OnChangePosture( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveFinishLogisticHandlings()
 {
-    if( CallRole( &PHY_RoleInterface_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay, false )
-        | CallRole( &PHY_RoleInterface_Medical::FinishAllHandlingsSuccessfullyWithoutDelay, false ) )
-        return;
-    throw MASA_BADPARAM_ASN(
-        sword::UnitActionAck_ErrorCode,
-        sword::UnitActionAck::error_invalid_unit,
-        "unit must have logistic handlings pending" );
+    bool handlings = CallRole( &PHY_RoleInterface_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay, false );
+    handlings = CallRole( &PHY_RoleInterface_Medical::FinishAllHandlingsSuccessfullyWithoutDelay, false ) || handlings;
+    if( ! handlings )
+        throw MASA_BADPARAM_ASN(
+            sword::UnitActionAck_ErrorCode,
+            sword::UnitActionAck::error_invalid_unit,
+            "unit must have logistic handlings pending" );
 }
 
 // -----------------------------------------------------------------------------
