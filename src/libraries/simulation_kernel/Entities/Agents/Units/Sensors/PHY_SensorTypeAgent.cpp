@@ -66,12 +66,6 @@ namespace
         environmentAssociation[ "Foret"  ] = PHY_RawVisionData::eVisionForest;
         environmentAssociation[ "Urbain" ] = PHY_RawVisionData::eVisionUrban;
     }
-
-    bool IsPosted( const MIL_Agent_ABC& source )
-    {
-        const PHY_Posture& currentPerceiverPosture = source.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
-        return &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_;
-    }
 }
 
 // -----------------------------------------------------------------------------

@@ -1602,9 +1602,8 @@ namespace
             , point_    ( point )
             , target_   ( target )
             , energy_   ( 0 )
+            , posted_   ( IsPosted( perceiver ) )
         {
-            const PHY_Posture& currentPerceiverPosture = perceiver.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
-            posted_ = &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_;
         }
         ~SensorFunctor()
         {}
@@ -1623,7 +1622,7 @@ namespace
         const MT_Vector2D& point_;
         const MT_Vector2D& target_;
         double energy_;
-        bool posted_;
+        const bool posted_;
     };
 
     class Functor : public OnComponentFunctor_ABC
