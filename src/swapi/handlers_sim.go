@@ -1007,6 +1007,12 @@ func (model *Model) handleObjectUpdate(m *sword.SimToClient_Content) error {
 		if obstacle := attributes.GetObstacle(); obstacle != nil {
 			object.Activated = obstacle.GetActivated()
 		}
+		if bypass := attributes.GetBypass(); bypass != nil {
+			object.Bypass = bypass.GetPercentage()
+		}
+		if altitude := attributes.GetAltitudeModifier(); altitude != nil {
+			object.Altitude = altitude.GetHeight()
+		}
 	}
 	return nil
 }

@@ -24,7 +24,7 @@ func (s *TestSuite) TestCreateEmptyObject(c *C) {
 
 	// Test invalid army identifier
 	_, err := client.CreateDefaultObject("invalid", 1245, location)
-	c.Assert(err, IsSwordError, "error_invalid_party")
+	c.Assert(err, IsSwordError, "error_invalid_object")
 
 	// Get a party identifier
 	party := data.FindPartyByName("party")
@@ -74,15 +74,13 @@ func (s *TestSuite) TestDestroyEmptyObject(c *C) {
 }
 
 func createObstacleAttributeParameter(activated bool, activation,
-	activity int32) *sword.MissionParameter {
-	return swapi.MakeParameter(
-		swapi.MakeList(
-			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_obstacle)), // attribute type
-			swapi.MakeIdentifier(0),                                        // unused parameter
-			swapi.MakeBoolean(activated),                                   // activated
-			swapi.MakeQuantity(activation),                                 // activation time
-			swapi.MakeQuantity(activity),                                   // activity time
-		),
+	activity int32) *sword.MissionParameter_Value {
+	return swapi.MakeList(
+		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_obstacle)), // attribute type
+		swapi.MakeIdentifier(0),                                        // unused parameter
+		swapi.MakeBoolean(activated),                                   // activated
+		swapi.MakeQuantity(activation),                                 // activation time
+		swapi.MakeQuantity(activity),                                   // activity time
 	)
 }
 
@@ -115,7 +113,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 
 	// Create mined area, activated by default
 	object, err = client.CreateObject("mined area (linear and destructible)",
-		party.Id, location, []*sword.MissionParameter{createObstacleAttributeParameter(true, 0, 0)})
+		party.Id, location, createObstacleAttributeParameter(true, 0, 0))
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 
@@ -126,7 +124,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 	// Create mined area, activated after a delay
 	delay := int32(120) // 120 seconds
 	object, err = client.CreateObject("mined area (linear and destructible)",
-		party.Id, location, []*sword.MissionParameter{createObstacleAttributeParameter(false, delay, 0)})
+		party.Id, location, createObstacleAttributeParameter(false, delay, 0))
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 	c.Assert(object.Activated, Equals, false)
@@ -144,7 +142,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 
 	// Create mined area, activated by default with an activity time
 	object, err = client.CreateObject("mined area (linear and destructible)",
-		party.Id, location, []*sword.MissionParameter{createObstacleAttributeParameter(true, 0, delay)})
+		party.Id, location, createObstacleAttributeParameter(true, 0, delay))
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 
@@ -182,14 +180,12 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 
 	// Create mined area, activated by default
 	delay := int32(120) // 120 seconds
-	params := swapi.MakeParameter(
-		swapi.MakeList(
-			swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_time_limit)), // attribute type
-			swapi.MakeQuantity(delay),                                        // activity time
-		),
+	params := swapi.MakeList(
+		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_time_limit)), // attribute type
+		swapi.MakeQuantity(delay),                                        // activity time
 	)
 	object, err := client.CreateObject("mined area (linear and destructible)",
-		party.Id, location, []*sword.MissionParameter{params})
+		party.Id, location, params)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 	tick := client.Model.GetData().Tick
@@ -204,4 +200,73 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 	})
 	// Check delay
 	c.Assert(CheckTime(client.Model.GetData().TickDuration, delay, tick), IsNil)
+}
+
+func (s *TestSuite) TestBypassAttribute(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	model := client.Model
+	data := model.GetData()
+	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
+
+	// Get a party identifier
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	// Create mined area by default
+	object, err := client.CreateDefaultObject("mined area (linear and destructible)",
+		party.Id, location)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+	c.Assert(object.Bypass, Equals, int32(0))
+
+	// Create mined area with bypass attribute(29%)
+	percentage := int32(29)
+	params := swapi.MakeList(
+		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_bypass)), // attribute type
+		swapi.MakeQuantity(percentage),                               // % of bypass
+	)
+	object, err = client.CreateObject("mined area (linear and destructible)",
+		party.Id, location, params)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+
+	// Check bypass
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindObject(object.Id).Bypass == percentage
+	})
+}
+
+func (s *TestSuite) TestAltitudeAttribute(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	model := client.Model
+	data := model.GetData()
+	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
+
+	// Get a party identifier
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	// Create mined area by default
+	object, err := client.CreateDefaultObject("dyke", party.Id, location)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+	c.Assert(object.Altitude, Equals, int32(0))
+
+	// Create dyke of 122m
+	altitude := int32(122)
+	params := swapi.MakeList(
+		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_altitude_modifier)), // attribute type
+		swapi.MakeQuantity(altitude),                                            // height
+	)
+	object, err = client.CreateObject("mined area (linear and destructible)",
+		party.Id, location, params)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+
+	// Check altitude
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindObject(object.Id).Altitude == altitude
+	})
 }

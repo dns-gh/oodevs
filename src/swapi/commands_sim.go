@@ -1355,15 +1355,15 @@ func createObjectMagicAction(objectId uint32, params *sword.MissionParameters,
 }
 
 func (c *Client) CreateObject(objectType string, partyId uint32,
-	location *sword.Location, attributes []*sword.MissionParameter) (*Object, error) {
-	params := []*sword.MissionParameter{
+	location *sword.Location, attributes ...*sword.MissionParameter_Value) (*Object, error) {
+	params := []interface{}{
 		MakeString(objectType),
 		MakeLocation(location),
-		MakeString("name"),
+		"name",
 		MakeParty(partyId),
 	}
 	if len(attributes) != 0 {
-		params = append(params, attributes...)
+		params = append(params, MakeParameter(attributes...))
 	}
 	msg := createObjectMagicAction(0, MakeParameters(params...),
 		sword.ObjectMagicAction_create)
@@ -1390,8 +1390,7 @@ func (c *Client) CreateObject(objectType string, partyId uint32,
 
 func (c *Client) CreateDefaultObject(objectType string, partyId uint32,
 	location *sword.Location) (*Object, error) {
-	return c.CreateObject(objectType, partyId, location,
-		[]*sword.MissionParameter{})
+	return c.CreateObject(objectType, partyId, location)
 }
 
 func (c *Client) DeleteObject(objectId uint32) error {

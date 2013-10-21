@@ -111,6 +111,8 @@ type Object struct {
 	Name       string
 	PartyId    uint32
 	Activated  bool
+	Bypass     int32
+	Altitude   int32
 }
 
 func NewObject(id, partyId uint32, objectType, name string) *Object {
