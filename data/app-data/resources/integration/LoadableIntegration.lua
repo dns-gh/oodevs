@@ -333,7 +333,6 @@ integration.isTransportingCrowd = function()
 end
 
 integration.isTransported = function( enemy )
-DEC_Trace("integration.istransported : "..tostring(DEC_ConnaissanceAgent_EstTransporte( enemy.source )))
     return DEC_ConnaissanceAgent_EstTransporte( enemy.source )
 end
 
