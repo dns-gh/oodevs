@@ -126,6 +126,7 @@ int ADN_App::Run()
     const tools::Path& inputFile = config_->GetInputFile();
     const tools::Path& outputFile = config_->GetOutputFile();
     const std::string& swapLanguage = config_->GetSwapLanguage();
+    const tools::Path& qtNamePath = config_->GetQtNamesPath();
     try
     {
         if( IsInvalidLicense() )
@@ -135,6 +136,8 @@ int ADN_App::Run()
             throw MASA_EXCEPTION( tools::translate( "ADN_App" , "New base creation and input/output file options cannot be used together." ).toStdString() );
         if( !swapLanguage.empty() && ( inputFile.IsEmpty() || outputFile.IsEmpty() ) )
             throw MASA_EXCEPTION( tools::translate( "ADN_App" , "Swap language option needs both the input and the output file options." ).toStdString() );
+        if( !qtNamePath.IsEmpty() && inputFile.IsEmpty() )
+            throw MASA_EXCEPTION( tools::translate( "ADN_App" , "Debug qt name path option needs the input file options." ).toStdString() );
         if( !newFile.IsEmpty() )
         {
             if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( newFile ) )
@@ -145,9 +148,14 @@ int ADN_App::Run()
         }
         if( !inputFile.IsEmpty() )
         {
-            if( outputFile.IsEmpty() )
+            if( outputFile.IsEmpty() && qtNamePath.IsEmpty() )
                 mainWindow_->showMaximized();
             ADN_Workspace::GetWorkspace().Load( inputFile, outputFile.IsEmpty() );
+            if( !qtNamePath.IsEmpty() )
+            {
+                CheckInterfaceComponentNaming( mainWindow_.get(), qtNamePath );
+                return EXIT_SUCCESS;
+            }
         }
         if( !outputFile.IsEmpty() )
         {

@@ -523,9 +523,11 @@
     <macrodef name="check-qt-names">
         <attribute name="app"/>
         <attribute name="outputfile"/>
+        <element name="elements" optional="true" implicit="true"/>
         <sequential>
-            <exec taskname="@{app}" executable="${out.dir}/release/@{app}.exe" dir="${run.dir}" failonerror="true">
+            <exec taskname="@{app}" executable="${out.dir}/release/@{app}.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="--debug-qt-names=@{outputfile}"/>
+                <elements/>
             </exec>
             <python>
                 <arg value="${root.dir}/build/checkqtnames.py"/>
@@ -537,6 +539,10 @@
 
     <target name="qt_name_test">
         <check-qt-names app="preparation_app" outputfile="${out.dir}/checkqtnames.txt"/>
+        <check-qt-names app="adaptation_app" outputfile="${out.dir}/checkqtnames.txt">
+            <arg value="-i"/>
+            <arg value="${data.dir}/data/models/ada/physical/test/physical.xml"/>
+        </check-qt-names>
     </target>
 
     <target name="app_test" description="check whether gui applications start properly">

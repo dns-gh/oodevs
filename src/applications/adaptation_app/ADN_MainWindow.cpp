@@ -60,6 +60,11 @@ namespace
         action->setShortcut( shortcut );
         return action;
     }
+    void AddActionToToolBar( QAction* action, QToolBar* toolbar )
+    {
+        toolbar->addAction( action );
+        toolbar->widgetForAction( action )->setObjectName( action->objectName() + "-button" );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -112,17 +117,19 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
 
     // Toolbar
     toolBar_ = new QToolBar( this );
+    toolBar_->setObjectName( "toolbar" );
     addToolBar( toolBar_ );
-    toolBar_->addAction( actionNew );
-    toolBar_->addAction( actionLoad );
-    toolBar_->addAction( actionSave_ );
-    toolBar_->addAction( actionSaveAs_ );
+    AddActionToToolBar( actionNew, toolBar_ );
+    AddActionToToolBar( actionLoad, toolBar_ );
+    AddActionToToolBar( actionSave_, toolBar_ );
+    AddActionToToolBar( actionSaveAs_, toolBar_ );
     toolBar_->addSeparator();
-    toolBar_->addAction( actionBack_ );
-    toolBar_->addAction( actionForward_ );
+    AddActionToToolBar( actionBack_, toolBar_ );
+    AddActionToToolBar( actionForward_, toolBar_ );
 
     // Menus
     QMenu* menuProject = new QMenu( tr("&Project"), this );
+    menuProject->setObjectName( "menu" );
     menuProject->addAction( actionNew );
     menuProject->addAction( actionLoad );
     menuProject->insertSeparator();
@@ -146,6 +153,7 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     menuHelp->insertSeparator();
     menuHelp->addAction( tr( "&About" ), this, SLOT( OnAbout() ), Qt::CTRL + Qt::Key_F1 );
 
+    menuBar()->setObjectName( "menubar" );
     menuBar()->addMenu( menuProject );
     menuBar()->addMenu( menuConsistencyTables_ );
     menuBar()->addMenu( menuLanguages_ );

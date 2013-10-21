@@ -205,6 +205,7 @@ ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfi
 //-----------------------------------------------------------------------------
 ADN_Workspace::~ADN_Workspace()
 {
+    mainWindow_.LoadStatusChanged( false );
     for( int n = 0; n < eNbrWorkspaceElements; n++ )
         elements_[ n ].reset();
 }

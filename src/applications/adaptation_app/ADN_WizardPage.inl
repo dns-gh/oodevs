@@ -56,7 +56,7 @@ void ADN_WizardPage< T >::Build()
     QWidget* optionalWidget = CreateOptionalField();
 
     // Buttons
-    QGroupBox* buttonGroupBox = new QGroupBox();
+    QGroupBox* buttonGroupBox = new gui::RichGroupBox( "button" );
     QVBoxLayout* buttonLayout = new QVBoxLayout( buttonGroupBox );
     buttonGroup_ = new QButtonGroup( buttonGroupBox );
     QRadioButton* newRadioButton = new QRadioButton();

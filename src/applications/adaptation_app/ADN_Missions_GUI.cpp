@@ -153,7 +153,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     }
 
     // Parameters
-    QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
+    QGroupBox* pParametersGroup = new gui::RichGroupBox( "parameters", tr( "Parameters" ) );
 
     builder.PushSubName( "parameters" );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( builder.GetChildName( "table" ), vInfosConnectors[ eParameters ], eMissionType );
@@ -199,7 +199,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         builder.PushSubName( "description-tab" );
 
         QPushButton* helpButton = new QPushButton( tr( "Show / Hide Help" ) );
-        helpPanel_[ eMissionType ] = new QGroupBox();
+        helpPanel_[ eMissionType ] = new gui::RichGroupBox( "help" );
         helpPanel_[ eMissionType ]->setStyleSheet( "QLabel { border : 1px ridge gray; }" );
         helpPanel_[ eMissionType ]->setVisible( false );
         helpPanel_[ eMissionType ]->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Minimum );
@@ -231,7 +231,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
 
         QVBoxLayout* descriptionLayout = new QVBoxLayout( descriptionTab );
 
-        QGroupBox* parameterGroupBox = new QGroupBox( tr( "Parameters" ) );
+        QGroupBox* parameterGroupBox = new gui::RichGroupBox( "parameters-descriptions", tr( "Parameters" ) );
         QHBoxLayout* parameterLayout = new QHBoxLayout( parameterGroupBox );
         ADN_ListView* parametersListView = builder.AddWidget< ADN_ListView_DescriptionParameter >( "parameters-list" );
         ADN_TextEdit_LocalizedString* parametersField = builder.AddWidget< ADN_TextEdit_LocalizedString >( "parameter" );
@@ -248,7 +248,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType );
         vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();
 
-        QGroupBox* attachmentGroupBox = new QGroupBox( tr( "Attachments" ) );
+        QGroupBox* attachmentGroupBox = new gui::RichGroupBox( "attachments", tr( "Attachments" ) );
         QVBoxLayout* attachmentLayout = new QVBoxLayout( attachmentGroupBox );
         attachmentLayout->addWidget( attachmentListView );
 

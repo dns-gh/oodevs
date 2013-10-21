@@ -92,7 +92,7 @@ void ADN_Equipments_GUI::Build()
     builder.AddCheckableField< ADN_EditLine_Double >( pInfoHolder, "max-slope", tr( "Max slope" ), vInfosConnectors[ eHasMaxSlope ], vInfosConnectors[ eMaxSlope ], tr( "%" ), eGreaterZero );
 
     // Troop/Crew groupbox
-    QGroupBox* pTroopGroupBox = new QGroupBox( tr( "Troop/Crew" ) );
+    QGroupBox* pTroopGroupBox = new gui::RichGroupBox( "troop-crew", tr( "Troop/Crew" ) );
 
     //troop transport
     builder.PushSubName( "troop-transport" );

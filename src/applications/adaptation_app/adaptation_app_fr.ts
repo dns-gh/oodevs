@@ -156,6 +156,10 @@
         <source>Swap language option needs both the input and the output file options.</source>
         <translation>L&apos;option d&apos;échange de langue nécessite les options d&apos;entrée et de sortie.</translation>
     </message>
+    <message>
+        <source>Debug qt name path option needs the input file options.</source>
+        <translation>L&apos;option de debug des noms qt nécessite l&apos;option d&apos;entrée.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ApplyButton</name>

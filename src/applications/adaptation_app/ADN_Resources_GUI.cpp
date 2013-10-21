@@ -175,7 +175,7 @@ void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
         pAttritionTables_[ nType ] = new ADN_Resources_AttritionTable( builder.GetChildName( "attritions-table" ), vConnectors[ eGenAttritions ], pDirectGroup );
         ADN_Resources_UrbanModifiersTable* pUrbanTable = new ADN_Resources_UrbanModifiersTable( builder.GetChildName( "urban-modifiers-table" ), vConnectors[ eGenUrbanAttritions ], pDirectGroup );
 
-        QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
+        QGroupBox* pAttritionVisualisation = new gui::RichGroupBox( "simulation", tr( "Simulation" ) );
         QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
         pArmorCombos_[ nType ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, "armor-plating", tr( "Armor-Plating" ), vConnectors[ eGenArmor ] );
         connect( pArmorCombos_[ nType ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
@@ -272,7 +272,7 @@ void ADN_Resources_GUI::BuildAmmunition()
     pAttritionTables_[ eDotationFamily_Munition ] = new ADN_Resources_AttritionTable( builder.GetChildName( "attritions-table" ), vConnectors[ eAttritions ], pDirectGroup );
     ADN_Resources_UrbanModifiersTable* pUrbanTable = new ADN_Resources_UrbanModifiersTable( builder.GetChildName( "urban-modifiers" ), vConnectors[ eUrbanAttritions ], pDirectGroup );
 
-    QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
+    QGroupBox* pAttritionVisualisation = new gui::RichGroupBox( "simulation", tr( "Simulation" ) );
     builder.PushSubName( "simulation" );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
     pArmorCombos_[ eDotationFamily_Munition ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, "armor-plating", tr( "Armor-Plating" ), vConnectors[ eArmor ] );

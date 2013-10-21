@@ -112,7 +112,10 @@ void ADN_Languages_GUI::BuildMenu()
     swapSeparator_ = menu_->addSeparator();
     swapAction_ = menu_->addAction( tr( "Set current language as master" ), this, SLOT( OnSwap() ) );
     menu_->addSeparator();
-    menu_->addAction( tr( "Edit..." ), dialog_.get(), SLOT( exec() ) );
+    QAction* action = new QAction( tr( "Edit..." ), menu_ );
+    action->setObjectName( "edit-language" );
+    connect( action, SIGNAL( triggered() ), dialog_.get(), SLOT( exec() ) );
+    menu_->addAction( action );
 }
 
 // -----------------------------------------------------------------------------

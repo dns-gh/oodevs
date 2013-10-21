@@ -65,7 +65,7 @@ void ADN_Breakdowns_GUI::Build()
     builder.AddField< ADN_TimeField >( pInfoHolder, "repair-duration-variance", tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
 
     // Parts
-    QGroupBox* pPartsGroup = new QGroupBox( tr( "Required parts" ) );
+    QGroupBox* pPartsGroup = new gui::RichGroupBox( "required-parts", tr( "Required parts" ) );
     QVBoxLayout* pPartsLayout = new QVBoxLayout( pPartsGroup );
     ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( builder.GetChildName( "parts-table" ), vInfosConnectors[ eParts ] );
     pPartsTable->SetGoToOnDoubleClick( ::eResources );

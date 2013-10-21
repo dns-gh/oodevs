@@ -203,7 +203,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     QLineEdit* identification = builder.AddField< ADN_EditLine_Double >( pDistancesGroupBox, "identification-range", tr( "Identification range" ), vConnectors[ eDistIdent ], tr( "m" ), eGreaterEqualZero );
 
     // Modificators (group 1)
-    QGroupBox* pAgentDetectionModifiersGroup = new QGroupBox( tr( "Terrain modifiers" ) );
+    QGroupBox* pAgentDetectionModifiersGroup = new gui::RichGroupBox( "terrain-modifiers", tr( "Terrain modifiers" ) );
 
     ADN_Sensors_Sizes_GUI* pComposantes = new ADN_Sensors_Sizes_GUI( builder.GetChildName( "size-modifiers" ), vConnectors[ eModifSizes ], pAgentDetectionModifiersGroup );
     ADN_Sensors_Meteos_GUI* pMeteos = new ADN_Sensors_Meteos_GUI( builder.GetChildName( "weather-modifiers" ), vConnectors[ eModifWeather ], pAgentDetectionModifiersGroup );
@@ -221,7 +221,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pAgentDetectionModifiersGroup->setLayout( pAgentDetectionModifiersLayout );
 
     // Modificators (group 2)
-    QGroupBox* pAgentDetectionModifiersGroup2 = new QGroupBox( tr( "Stance modifiers" ) );
+    QGroupBox* pAgentDetectionModifiersGroup2 = new gui::RichGroupBox( "stance-modifiers", tr( "Stance modifiers" ) );
 
     ADN_Sensors_Postures_GUI* pStance = new ADN_Sensors_Postures_GUI( tr( "Stance" ), builder.GetChildName( "posture-modifiers" ), vConnectors[ eModifStances ] );
     ADN_Sensors_Postures_GUI* pTargetStance = new ADN_Sensors_Postures_GUI( tr( "Target stance" ), builder.GetChildName( "target-posture-modifiers" ), vConnectors[ eModifTargetStances ] );
@@ -253,7 +253,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[ eTargets ] = &pTargetListView->GetConnector();
     T_ConnectorVector vTargetConnectors( eNbrObjGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    QGroupBox* pTargetParamsGroupBox = new QGroupBox( tr( "Parameters" ), pObjectParamGroupBox );
+    QGroupBox* pTargetParamsGroupBox = new gui::RichGroupBox( "parameters", tr( "Parameters" ), pObjectParamGroupBox );
 
     // Detection
     QWidget* pObjDetectionRangeHolder = builder.AddFieldHolder( pTargetParamsGroupBox );
@@ -295,7 +295,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[ eDisasters ] = &pDisastersListView->GetConnector();
     T_ConnectorVector vDisasterConnectors( eNbrDisasterElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    QGroupBox* pDisasterParamsGroupBox = new QGroupBox( tr( "Parameters" ), pCollisions );
+    QGroupBox* pDisasterParamsGroupBox = new gui::RichGroupBox( "disaster-parameters", tr( "Parameters" ), pCollisions );
     QWidget* pDisasterHolder = builder.AddFieldHolder( pDisasterParamsGroupBox );
     builder.AddField< ADN_EditLine_Double >( pDisasterHolder, "detection-threshold", tr( "Detection threshold" ), vDisasterConnectors[ eDetectionThreshold ], "", eGreaterEqualZero );
 

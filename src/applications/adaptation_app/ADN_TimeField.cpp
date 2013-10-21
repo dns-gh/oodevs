@@ -144,3 +144,13 @@ void ADN_TimeField::Warn( ADN_ErrorStatus, const QString& )
 {
     // NOTHING (For now)
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::setObjectName
+// Created: ABR 2013-10-21
+// -----------------------------------------------------------------------------
+void ADN_TimeField::setObjectName( const QString& name )
+{
+    QWidget::setObjectName( name );
+    pSpinBox_->setObjectName( name + "-spinbox" );
+}

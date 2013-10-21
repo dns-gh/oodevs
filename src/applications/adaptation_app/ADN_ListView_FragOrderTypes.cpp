@@ -84,7 +84,7 @@ namespace
     protected:
         virtual QWidget* CreateOptionalField()
         {
-            QGroupBox* result = new QGroupBox();
+            QGroupBox* result = new gui::RichGroupBox( "checkboxs-group" );
             QVBoxLayout* layout = new QVBoxLayout( result );
             addForAllUnits_ = new QCheckBox( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Units" ) );
             addForAllAutomata_ = new QCheckBox( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Automata" ) );

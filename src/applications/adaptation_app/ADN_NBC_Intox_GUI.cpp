@@ -71,7 +71,7 @@ ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent, const QString& objectNam
     setObjectName( objectName );
     ADN_GuiBuilder builder( objectName );
 
-    ADN_GroupBox* pIntoxGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Poisoning effect" ), this );
+    ADN_GroupBox* pIntoxGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Poisoning effect" ), this, "nbc-intox" );
     vInfosConnectors_[eIntoxPresent] = &pIntoxGroup->GetConnector();
 
     ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pIntoxGroup, builder, builder.GetChildName( "poisoning-effect" ) );

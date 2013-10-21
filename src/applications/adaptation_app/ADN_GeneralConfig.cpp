@@ -28,6 +28,7 @@ ADN_GeneralConfig::ADN_GeneralConfig( int argc, char** argv, const tools::Path& 
         ( "output,o", po::value( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
         ( "create,c", po::value( &newFile_    )->default_value( "" ), "specify root file for creating new base (physical.xml)" )
         ( "swap,s", po::value( &swapLanguage_ )->default_value( "" ), "specify the language to swap with the master (input and output must be specified)" )
+        ( "debug-qt-names", po::value( &qtNamesPath_ )->default_value( "" ), "Qt hierarchy names debug path" )
         ( "dev", "activate dev mode" )
         ( "noreadonly", "disable read-only protection" )
         ;
@@ -98,4 +99,13 @@ const tools::Path& ADN_GeneralConfig::GetNewFile() const
 const std::string& ADN_GeneralConfig::GetSwapLanguage() const
 {
     return swapLanguage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GeneralConfig::Config::GetQtNamesPath
+// Created: ABR 2013-10-21
+// -----------------------------------------------------------------------------
+const tools::Path& ADN_GeneralConfig::GetQtNamesPath() const
+{
+    return qtNamesPath_;
 }

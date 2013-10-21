@@ -70,7 +70,7 @@ void ADN_Automata_GUI::Build()
     builder.AddCheckableField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
     // Sub units
-    QGroupBox* pSubUnitsGroup = new QGroupBox( tr( "Sub-units" ) );
+    QGroupBox* pSubUnitsGroup = new gui::RichGroupBox( "sub-units", tr( "Sub-units" ) );
     QVBoxLayout* pSubUnitsLayout = new QVBoxLayout( pSubUnitsGroup );
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( builder.GetChildName( "sub-units-table" ), vInfosConnectors[eSubUnit], pSubUnitsGroup );
     pSubUnitsTable->SetGoToOnDoubleClick( ::eUnits );
