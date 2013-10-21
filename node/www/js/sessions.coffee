@@ -31,7 +31,7 @@ Handlebars.registerHelper "can_play", (data, options) ->
     if valid
         return options.fn this
     return options.inverse this
-    
+
 Handlebars.registerHelper "each_pair", (src, options) ->
     ret = ""
     for k, v of src
@@ -425,7 +425,7 @@ class SessionItemView extends Backbone.View
         return true
 
     render: =>
-        $(@el).empty()
+        @$el.empty()
         return if @is_skip_render @model
 
         data = $.extend {}, @model.attributes
@@ -443,8 +443,8 @@ class SessionItemView extends Backbone.View
             data.sim_license = get_license_validity "sword-runtime", licenses.attributes
         if licenses.attributes["sword-replayer"]?
             data.replay_license = get_license_validity "sword-replayer", licenses.attributes
-        $(@el).html session_template data
-        $(@el).find(".link").click (evt) =>
+        @$el.html session_template data
+        @$el.find(".link").click (evt) =>
             return if is_disabled evt
             next = "sword://#{location.host}/?protocol=#{window.location.protocol}&sid=#{$.cookie "sid"}&session=#{@model.id}"
             if convert_to_boolean $.cookie "redirect"
@@ -513,7 +513,7 @@ class SessionItemView extends Backbone.View
         @render()
 
     toggle_load: =>
-        toggle_spinner $(@el).find ".session_top_right .btn-group"
+        toggle_spinner @$el.find ".session_top_right .btn-group"
 
     set_search: (item) =>
         @search = item
@@ -584,15 +584,15 @@ class SessionListView extends Backbone.View
         setTimeout @delta, @delta_period
 
     reset: (list, options) =>
-        $(@el).empty()
+        @$el.empty()
         for item in list.models
             @add item
         if licenses.attributes["sword-runtime"]?
             if !get_license_validity "sword-runtime", licenses.attributes
-                $(@el).prepend license_error_template content: "No sword-runtime license Uploaded"
+                @$el.prepend license_error_template content: "No sword-runtime license Uploaded"
         if item.attributes.replay.root && licenses.attributes["sword-replayer"]?
             if !get_license_validity "sword-replayer", licenses.attributes
-                $(@el).prepend license_error_template content: "No sword-replayer license Uploaded"
+                @$el.prepend license_error_template content: "No sword-replayer license Uploaded"
         return
 
     add: (item) =>
@@ -602,7 +602,7 @@ class SessionListView extends Backbone.View
         if previous
             $(previous.el).after view.el
         else
-            $(@el).prepend view.el
+            @$el.prepend view.el
 
     remove: (item, list, index) =>
         $("#" + item.id).parent().remove()
@@ -656,7 +656,7 @@ class SessionListView extends Backbone.View
         root = get_replay_root @model, data
         if root?
             if !get_license_validity "sword-replayer", licenses.attributes
-                $(@el).prepend license_error_template content: "No Sword-replayer license Uploaded"
+                @$el.prepend license_error_template content: "No Sword-replayer license Uploaded"
             replay = $.extend {}, root.attributes.replay
             replay.list = [] unless _.isArray replay.list
             replay.list = _.union replay.list, [data.id]
@@ -686,9 +686,9 @@ class ExerciseListItemView extends Backbone.View
         setTimeout @delta, @delta_period
 
     render: =>
-        $(@el).children().remove().end()
+        @$el.children().remove().end()
         for it in @model.get "exercises"
-            $(@el).append "<option>" + it + "</option>"
+            @$el.append "<option>" + it + "</option>"
         return
 
     delta: =>
@@ -716,7 +716,7 @@ class LicenseItem extends Backbone.Model
             success: (model, response, options) =>
                 @set response
                 setTimeout @delta, 5000
-            error: => 
+            error: =>
                 print_error "Unable to fetch licenses"
                 setTimeout @delta, 5000
 

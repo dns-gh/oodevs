@@ -48,7 +48,7 @@ class LogView extends Backbone.View
         load_url uri
 
     render: =>
-        $(@el).empty()
+        @$el.empty()
         if !@log_list || !@log_list.length
             return
         for k, v in @log_list
@@ -61,7 +61,7 @@ class LogView extends Backbone.View
             log_text: @log_content
             has_log: @log_content != ""
             log_list: @log_list
-        $(@el).html log_template data
+        @$el.html log_template data
 
     download_logfile: (evt) =>
         el = evt.currentTarget

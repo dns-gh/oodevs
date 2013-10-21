@@ -37,13 +37,13 @@ class LicenseItemView extends Backbone.View
         @delta()
 
     render: =>
-        $(@el).empty()
+        @$el.empty()
         data = []
         for k, v of @model.attributes
             it = {}
             it.name = k
             it.validity = "success"
-            it.expiration = v.date            
+            it.expiration = v.date
             if v.validity == "none"
                 it.validity = "error"
                 it.expiration = "No license available"
@@ -52,16 +52,16 @@ class LicenseItemView extends Backbone.View
             if v.connections
                 it.connections = v.connections
             else
-               it.connections = "-" 
+               it.connections = "-"
             data.push it
-        $(@el).html license_template model: data
+        @$el.html license_template model: data
 
     delta: =>
         @model.fetch
             success: (model, response, options) =>
                 @model.set response
                 setTimeout @delta, 5000
-            error: => 
+            error: =>
                 print_error "Unable to fetch licenses"
                 setTimeout @delta, 5000
 
