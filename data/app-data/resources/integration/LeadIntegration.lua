@@ -936,9 +936,8 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
         Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = pionsEE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
 
         -- Management of support coordination.
-        -- meKnowledge.subordinatesToSlowDown contains subordinate that needs to wait their support.
-        meKnowledge.subordinatesToSlowDown = meKnowledge.subordinatesToSlowDown or {}
-        for subordinate, v in pairs( meKnowledge.subordinatesToSlowDown ) do
+        -- The 'meKnowledge.subordinatesToSlowDown' table contains subordinates that need to wait their support.
+        for subordinate in pairs( meKnowledge.subordinatesToSlowDown or emptyTable ) do 
             local sub = CreateKnowledge( integration.ontology.types.agent, subordinate )
             Activate( self.skill.links.issueSlowDownOrder , 1, { subordinate = sub } )
         end
