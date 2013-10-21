@@ -134,7 +134,7 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 
 func (c *Client) createUnit(automatId, unitType uint32, location Point,
 	name *string, pc *bool) (*Unit, error) {
-	params := []*sword.MissionParameter{
+	params := []interface{}{
 		MakeIdentifier(unitType),
 		MakePointParam(location),
 	}
@@ -338,7 +338,7 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 	if formationId != 0 {
 		tasker = MakeFormationTasker(formationId)
 	}
-	params := []*sword.MissionParameter{
+	params := []interface{}{
 		MakeString(crowdType),
 		MakePointParam(location),
 		MakeQuantity(healthy),
@@ -873,7 +873,7 @@ func (c *Client) ChangeAttitude(crowdId uint32, attitude int32) error {
 }
 
 func (c *Client) LogisticsChangeLinks(automatId uint32, superiors []uint32) error {
-	params := []*sword.MissionParameter{}
+	params := []interface{}{}
 	for _, s := range superiors {
 		params = append(params, MakeIdentifier(s))
 	}
@@ -883,7 +883,7 @@ func (c *Client) LogisticsChangeLinks(automatId uint32, superiors []uint32) erro
 }
 
 func (c *Client) LogisticsSupplyChangeQuotas(supplierId uint32, suppliedId uint32, quotas map[uint32]int32) error {
-	params := []*sword.MissionParameter{MakeIdentifier(supplierId)}
+	params := []interface{}{MakeIdentifier(supplierId)}
 	values := []*sword.MissionParameter_Value{}
 	for dotation, qty := range quotas {
 		values = append(values, MakeList(MakeIdentifier(dotation), MakeQuantity(qty)))

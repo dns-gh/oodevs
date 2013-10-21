@@ -174,6 +174,17 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	// Invalid formation parameters (empty)
 	_, err = client.CreateFormationTest(0, f1.Id, swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Logistic level is optional or null
+	tests := []*sword.MissionParameters{
+		swapi.MakeParameters(float32(1), "some name"),
+		swapi.MakeParameters(float32(1), "some name", nil),
+	}
+	for _, params := range tests {
+		f, err := client.CreateFormationTest(0, f1.Id, params)
+		c.Assert(err, IsNil)
+		c.Assert(f, NotNil)
+	}
 }
 
 func Nearby(pointA, pointB swapi.Point) bool {
