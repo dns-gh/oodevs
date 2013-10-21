@@ -231,10 +231,8 @@ PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() 
 void PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay()
 {
     if( pComposanteState_ )
-    {
         pComposanteState_->NotifyRepaired();
-        pComposanteState_ = 0;
-    }
+    pComposanteState_ = 0;
     EnterStateFinished();
 }
 
