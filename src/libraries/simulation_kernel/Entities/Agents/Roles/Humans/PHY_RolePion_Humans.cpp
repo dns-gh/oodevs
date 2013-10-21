@@ -377,9 +377,9 @@ namespace
         const unsigned int stateId = wound.GetID();
         if( stateId == PHY_HumanWound::woundedU1_.GetID() )
             return sword::wounded_u1;
-        else if( stateId == PHY_HumanWound::woundedU2_.GetID() )
+        if( stateId == PHY_HumanWound::woundedU2_.GetID() )
             return sword::wounded_u2;
-        else if( stateId == PHY_HumanWound::woundedU3_.GetID() )
+        if( stateId == PHY_HumanWound::woundedU3_.GetID() )
             return sword::wounded_u3;
         return sword::wounded_ue;
     }

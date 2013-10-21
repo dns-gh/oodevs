@@ -713,8 +713,6 @@ namespace
 {
     void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogMedicalEquipmentAvailability& asn )
     {
-        if( data.empty() )
-            return;
         for( auto itData = data.begin(); itData != data.end(); ++itData )
         {
             sword::LogMedicalEquipmentAvailability& data = *asn.add_elem();
@@ -868,15 +866,20 @@ void PHY_RolePionLOG_Medical::CancelReservationForSorting( const PHY_MedicalColl
 // Name: PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay
 // Created: NLD 2012-01-09
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
+bool PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
 {
     for( auto it = evacuationAmbulances_.begin(); it != evacuationAmbulances_.end(); ++it )
         it->second->Cancel();
     for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); ++it )
         it->Cancel();
+    bool handlings = false;
     for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
-        for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+        for( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+        {
             (*itConsign)->FinishSuccessfullyWithoutDelay();
+            handlings = true;
+        }
+    return handlings;
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 #ifndef __MIL_AgentPionLOG_ABC_h_
 #define __MIL_AgentPionLOG_ABC_h_
 
-#include "MIL_AutomateLOG.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 namespace xml

@@ -30,7 +30,7 @@
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
-#include "Entities/Agents/Roles/Logistic/FuneralConsign_ABC.h"
+#include "Entities/Agents/Roles/Logistic/SupplyConvoysObserver_ABC.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -562,8 +562,8 @@ MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dota
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
-    auto tmp = supplyConvoysObserver_;
-    boost::for_each( tmp, boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, consign ) );
+    const auto observers = supplyConvoysObserver_;
+    boost::for_each( observers, boost::bind( &logistic::SupplyConvoysObserver_ABC::OnSupplyConvoyArriving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -572,8 +572,8 @@ void MIL_AutomateLOG::OnSupplyConvoyArriving( const boost::shared_ptr< logistic:
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnSupplyConvoyLeaving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign )
 {
-    auto tmp = supplyConvoysObserver_;
-    boost::for_each( tmp, boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, consign ) );
+    const auto observers = supplyConvoysObserver_;
+    boost::for_each( observers, boost::bind( &logistic::SupplyConvoysObserver_ABC::OnSupplyConvoyLeaving, _1, consign ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -747,4 +747,14 @@ void MIL_AutomateLOG::Serialize( sword::ParentEntity& message ) const
         message.mutable_formation()->set_id( pAssociatedFormation_->GetID() );
     else
         message.mutable_automat()->set_id( 0 );
+}
+
+bool MIL_AutomateLOG::FinishAllHandlingsSuccessfullyWithoutDelay()
+{
+    boost::for_each( supplyConsigns_,
+        boost::mem_fn( &logistic::SupplyConsign_ABC::FinishSuccessfullyWithoutDelay ) );
+    const auto observers = supplyConvoysObserver_;
+    boost::for_each( observers,
+        boost::mem_fn( &logistic::SupplyConvoysObserver_ABC::FinishSuccessfullyWithoutDelay ) );
+    return ! supplyConsigns_.empty() || ! observers.empty();
 }

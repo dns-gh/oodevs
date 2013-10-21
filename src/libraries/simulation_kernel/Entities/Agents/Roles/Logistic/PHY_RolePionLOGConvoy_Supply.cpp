@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePionLOGConvoy_Supply.h"
+#include "SupplySupplier_ABC.h"
 #include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/Roles/Logistic/SupplyConvoyReal_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -225,6 +226,5 @@ void PHY_RolePionLOGConvoy_Supply::NotifyComposanteChanged( PHY_ComposantePion& 
 {
     if( !convoy_ || composante.GetState() != PHY_ComposanteState::dead_ )
         return;
-
     convoy_->NotifyTransporterDestroyed( composante );
 }

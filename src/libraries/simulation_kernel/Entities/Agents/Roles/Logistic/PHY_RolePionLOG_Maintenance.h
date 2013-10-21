@@ -75,7 +75,7 @@ public:
 
     virtual void NotifyComponentHasChanged();
 
-    virtual void FinishAllHandlingsSuccessfullyWithoutDelay();
+    virtual bool FinishAllHandlingsSuccessfullyWithoutDelay();
 
     void ClearMaintenanceConsigns();
     //@}

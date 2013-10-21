@@ -116,10 +116,6 @@ unsigned SupplyConvoyVirtual::MoveToTransportersProvider()
     return MoveTo( transportersProvider_->GetPosition() );
 }
 
-// =============================================================================
-// Network
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoy::Serialize
 // Created: NLD 2011-08-01

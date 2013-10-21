@@ -52,16 +52,17 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< HumanState > T_HumanStateVector;
+    typedef std::vector< HumanState > T_HumanStates;
     //@}
 
+private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
 
-    void Update( const T_HumanStateVector& differences );
-    void UpdateHumanState( T_HumanStateVector& states, const HumanState& state ) const;
+    void Update( const T_HumanStates& differences );
+    void UpdateHumanState( T_HumanStates& states, const HumanState& state ) const;
     void CleanHumanStates();
     //@}
 
@@ -69,7 +70,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    T_HumanStateVector elements_;
+    T_HumanStates elements_;
     //@}
 };
 

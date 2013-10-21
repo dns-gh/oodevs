@@ -60,7 +60,6 @@ class PHY_DotationCategory;
 class PHY_DotationType;
 class PHY_ComposantePion;
 class PHY_LogisticLevel;
-template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
 // @class  MIL_AutomateLOG
@@ -150,6 +149,8 @@ public:
     void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
     void ResetConsignsForProvider( const MIL_AgentPion& pion );
     MIL_Automate*  GetStockAutomat                    ( const PHY_DotationCategory& dotationCategory, bool& deployed );
+
+    bool FinishAllHandlingsSuccessfullyWithoutDelay();
     //@}
 
     //! @name Funeral

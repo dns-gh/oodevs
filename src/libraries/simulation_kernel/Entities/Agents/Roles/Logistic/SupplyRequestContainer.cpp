@@ -98,7 +98,7 @@ void SupplyRequestContainer::ResetConsign()
 // Name: SupplyRequestContainer::DeleteRequestsForRequester
 // Created: JSR 2013-03-01
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::DeleteRequestsForRequester( MIL_AgentPion& pion )
+void SupplyRequestContainer::DeleteRequestsForRequester( const MIL_AgentPion& pion )
 {
     for( auto it = requests_.begin(); it != requests_.end(); ++it )
     {

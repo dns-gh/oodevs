@@ -142,8 +142,7 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
 {
-    if( autoSupplyRequest_.get() )
-        autoSupplyRequest_->ResetConsignsForConvoyPion( pion );
+    autoSupplyRequest_->ResetConsignsForConvoyPion( pion );
     boost::remove_erase_if( scheduledSupplies_,
         boost::bind( &logistic::SupplyConsign_ABC::ResetConsignsForConvoyPion, _1, boost::cref( pion ) ) );
 }
@@ -154,8 +153,7 @@ void MIL_StockSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion& pi
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::ResetAutoConsignForProvider( const MIL_Agent_ABC& pion )
 {
-    if( autoSupplyRequest_.get() )
-        autoSupplyRequest_->ResetConsignsForProvider( pion );
+    autoSupplyRequest_->ResetConsignsForProvider( pion );
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )
         if( (*it)->ResetConsignsForProvider( pion ) )
             it = scheduledSupplies_.erase( it );
@@ -169,8 +167,7 @@ void MIL_StockSupplyManager::ResetAutoConsignForProvider( const MIL_Agent_ABC& p
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::ResetAllConsigns()
 {
-    if( autoSupplyRequest_.get() )
-        autoSupplyRequest_->ResetConsign();
+    autoSupplyRequest_->ResetConsign();
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
         (*it)->ResetConsign();
     scheduledSupplies_.clear();
@@ -196,7 +193,7 @@ bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dot
 // -----------------------------------------------------------------------------
 bool MIL_StockSupplyManager::HasStockSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
 {
-    return ( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) );
+    return bSupplyNeeded_ || IsSupplyInProgress( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------

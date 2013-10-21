@@ -56,7 +56,7 @@ public:
     virtual void ReserveStock() = 0;
     virtual void ReturnStockNotAssignedToConvoy() = 0;
 
-    virtual bool HasRequester( MIL_AgentPion& pion ) const = 0;
+    virtual bool HasRequester( const MIL_AgentPion& pion ) const = 0;
     virtual bool HasRequesterDestroyed() const = 0;
 
     virtual bool IsComplementary() const = 0;

@@ -446,15 +446,12 @@ PHY_RolePionLOG_Maintenance::T_MaintenancePriorityVector PHY_RolePionLOG_Mainten
 
 namespace
 {
-    struct sIsPriorityEqual
+    bool IsPriorityEqual( const boost::shared_ptr< PHY_MaintenanceConsign_ABC >& pConsign, const PHY_ComposanteTypePion* pCompType )
     {
-        bool operator() ( const boost::shared_ptr< PHY_MaintenanceConsign_ABC >& pConsign, const PHY_ComposanteTypePion* pCompType )
-        {
-            if( pConsign->IsFinished() )
-                return false;
-            return *pCompType == pConsign->GetComposanteType();
-        }
-    };
+        if( pConsign->IsFinished() )
+            return false;
+        return *pCompType == pConsign->GetComposanteType();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -482,7 +479,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( const boost::shared_ptr< PHY_Ma
     else
     {
         ++itPriority;
-        auto itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriority, sIsPriorityEqual() );
+        auto itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriority, &IsPriorityEqual );
         itTact->second.insert( itConsign.base(), consign );
     }
 }
@@ -620,8 +617,6 @@ namespace
 {
     void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogMaintenanceEquipmentAvailability& asn, const PHY_MaintenanceWorkRate* pWorkRate )
     {
-        if( data.empty() )
-            return;
         for( auto it = data.begin(); it != data.end(); ++it )
         {
             sword::LogMaintenanceEquipmentAvailability& data = *asn.add_elem();
@@ -735,11 +730,16 @@ void PHY_RolePionLOG_Maintenance::NotifyComponentHasChanged()
 // Name: PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay
 // Created: NLD 2012-01-09
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay()
+bool PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay()
 {
+    bool handlings = false;
     for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+        {
             (*itConsign)->FinishSuccessfullyWithoutDelay();
+            handlings = true;
+        }
+    return handlings;
 }
 
 // -----------------------------------------------------------------------------

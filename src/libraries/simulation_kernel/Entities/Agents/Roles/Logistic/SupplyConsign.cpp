@@ -51,6 +51,7 @@ SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParamet
     , currentRecipient_         ( 0 )
     , needNetworkUpdate_        ( true )
     , requestsNeedNetworkUpdate_( true )
+    , instant_                  ( false )
 {
     SendMsgCreation();
 }
@@ -69,6 +70,7 @@ SupplyConsign::SupplyConsign()
     , currentRecipient_         ( 0 )
     , needNetworkUpdate_        ( true )
     , requestsNeedNetworkUpdate_( true )
+    , instant_                  ( false )
 {
         // NOTHING
 }
@@ -157,14 +159,9 @@ void SupplyConsign::SupplyCurrentRecipient()
 {
     assert( !requestsQueued_.empty() );
     assert( currentRecipient_ == requestsQueued_.front().first );
-
-    currentRecipient_->OnSupplyDone( shared_from_this() ); //$$$ CRADE MUST BE CALL BEFORE convoy_->Supply() to allow recipient to reschedule supply immediately
+    currentRecipient_->OnSupplyDone( shared_from_this() ); //$$$ CRADE MUST BE CALLED BEFORE convoy_->Supply() to allow recipient to reschedule supply immediately
     BOOST_FOREACH( const auto& data, requestsQueued_.front().second )
-    {
-        boost::shared_ptr< SupplyRequest_ABC > request = data.second;
-        double quantitySupplied = request->Supply();
-        convoy_->Supply( *currentRecipient_, request->GetDotationCategory(), quantitySupplied );
-    }
+        convoy_->Supply( *currentRecipient_, data.second->GetDotationCategory(), data.second->Supply() );
     requestsQueued_.pop_front();
     requestsNeedNetworkUpdate_ = true;
 }
@@ -267,7 +264,6 @@ bool SupplyConsign::ResetConsignsForProvider( const MIL_Agent_ABC& pion )
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign::ResetConsign
 // Created: JSR 2013-02-14
@@ -292,9 +288,37 @@ void SupplyConsign::ResetConsign()
 bool SupplyConsign::GrantsNothing() const
 {
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
-        if( it->second != 0. )
+        if( it->second != 0 )
             return false;
     return true;
+}
+
+namespace
+{
+    struct Toggler : boost::noncopyable
+    {
+        explicit Toggler( bool& b )
+            : b_( b )
+        {
+            b_ = ! b_;
+        }
+        ~Toggler()
+        {
+            b_ = ! b_;
+        }
+        bool& b_;
+    };
+}
+
+void SupplyConsign::FinishSuccessfullyWithoutDelay()
+{
+    E_State state = eFinished;
+    while( state != state_ )
+    {
+        state = state_;
+        Toggler t( instant_ );
+        Update();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -321,6 +345,8 @@ void SupplyConsign::SetState( E_State newState )
 // -----------------------------------------------------------------------------
 bool SupplyConsign::IsActionDone( unsigned timeRemaining )
 {
+    if( instant_ )
+        return true;
     UpdateTimer( timeRemaining );
     return currentStateEndTimeStep_ != std::numeric_limits< unsigned >::max() && MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= currentStateEndTimeStep_;
 }
@@ -333,7 +359,6 @@ void SupplyConsign::SupplyAndProceedWithNextRecipient()
 {
     if( currentRecipient_ )
         SupplyCurrentRecipient();
-
     currentRecipient_ = GetCurrentSupplyRecipient();
     convoy_->SetCurrentSupplyRecipient( currentRecipient_ );
     if( !currentRecipient_ )
@@ -430,7 +455,7 @@ void SupplyConsign::DoConvoyMoveToTransportersProvider()
 {
     if( IsActionDone( convoy_->MoveToTransportersProvider() ) )
     {
-        SetState( eFinished ); 
+        SetState( eFinished );
         convoy_->GetTransportersProvider().OnSupplyConvoyArriving( shared_from_this() );
     }
 }

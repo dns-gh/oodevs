@@ -46,8 +46,6 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
-#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -709,7 +707,7 @@ bool MIL_AgentPion::IsJammed() const
 bool MIL_AgentPion::IsLogisticJammed() const
 {
     MIL_AutomateLOG* pTC2 = GetLogisticHierarchy().GetPrimarySuperior();
-    return ( pTC2 && pTC2->GetPC() && pTC2->GetPC()->IsJammed() );
+    return pTC2 && pTC2->GetPC() && pTC2->GetPC()->IsJammed();
 }
 
 // -----------------------------------------------------------------------------
@@ -728,7 +726,7 @@ bool MIL_AgentPion::HasBeenTeleported() const
 bool MIL_AgentPion::IsMasaLife() const
 {
     const DEC_RolePion_Decision* roleDec = RetrieveRole< DEC_RolePion_Decision >();
-    return ( roleDec && roleDec->GetModel().IsMasalife() );
+    return roleDec && roleDec->GetModel().IsMasalife();
 }
 
 // -----------------------------------------------------------------------------
@@ -895,7 +893,7 @@ void MIL_AgentPion::OnReceiveDestroyComponent()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::SpecializedDelete()
 {
-    // NOTHING, specific stuff for specialized units
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1704,10 +1702,6 @@ bool MIL_AgentPion::HasPath() const
     return !agentPaths_.empty();
 }
 
-// =============================================================================
-// Logistic
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::GetLogisticHierarchy
 // Created: NLD 2011-01-10
@@ -2092,8 +2086,13 @@ void MIL_AgentPion::OnChangePosture( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveFinishLogisticHandlings()
 {
-    CallRole( &PHY_RoleInterface_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay );
-    CallRole( &PHY_RoleInterface_Medical::FinishAllHandlingsSuccessfullyWithoutDelay );
+    bool handlings = CallRole( &PHY_RoleInterface_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay, false );
+    handlings = CallRole( &PHY_RoleInterface_Medical::FinishAllHandlingsSuccessfullyWithoutDelay, false ) || handlings;
+    if( ! handlings )
+        throw MASA_BADPARAM_ASN(
+            sword::UnitActionAck_ErrorCode,
+            sword::UnitActionAck::error_invalid_unit,
+            "unit must have logistic handlings pending" );
 }
 
 // -----------------------------------------------------------------------------

@@ -102,7 +102,7 @@ public:
     PHY_ComposantePion* GetAvailableDoctorForHealing( const Human_ABC& human ) const;
     bool HasUsableDoctorForHealing( const Human_ABC& human, bool bBypassPriorities = false ) const;
 
-    virtual void FinishAllHandlingsSuccessfullyWithoutDelay();
+    virtual bool FinishAllHandlingsSuccessfullyWithoutDelay();
     void ClearMedicalConsigns();
     //@}
 

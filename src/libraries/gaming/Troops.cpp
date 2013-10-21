@@ -44,7 +44,7 @@ void Troops::DoUpdate( const sword::UnitAttributes& message )
 {
     if( !message.has_human_dotations() )
         return;
-    T_HumanStateVector differences( elements_ );
+    T_HumanStates differences( elements_ );
     for( auto it = differences.begin(); it != differences.end(); ++it )
         it->quantity_ = -it->quantity_;
     for( int i = 0; i < message.human_dotations().elem_size(); ++i )
@@ -56,7 +56,7 @@ void Troops::DoUpdate( const sword::UnitAttributes& message )
 // Name: Troops::Update
 // Created: SBO 2007-04-11
 // -----------------------------------------------------------------------------
-void Troops::Update( const T_HumanStateVector& differences )
+void Troops::Update( const T_HumanStates& differences )
 {
     for( auto it = differences.begin(); it != differences.end(); ++it )
         UpdateHumanState( elements_, *it );
@@ -84,7 +84,7 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
     // remove troops from previous superior
     if( Troops* troops = currentSuperior->Retrieve< Troops >() )
     {
-        T_HumanStateVector differences( elements_ );
+        T_HumanStates differences( elements_ );
         for( auto it = differences.begin(); it != differences.end(); ++it )
             it->quantity_ = -it->quantity_;
         troops->Update( differences );
@@ -120,7 +120,7 @@ unsigned int Troops::GetTotalByRank( E_HumanRank rank ) const
 // Name: Troops::UpdateHumanState
 // Created: ABR 2011-07-28
 // -----------------------------------------------------------------------------
-void Troops::UpdateHumanState( T_HumanStateVector& states, const HumanState& state ) const
+void Troops::UpdateHumanState( T_HumanStates& states, const HumanState& state ) const
 {
     auto it = std::find( states.begin(), states.end(), state );
     if( it == states.end() )

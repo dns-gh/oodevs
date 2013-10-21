@@ -19,9 +19,9 @@ namespace tools
     template< typename T > class Iterator;
 }
 
-namespace logistic {
-
-class LogisticLink_ABC;
+namespace logistic
+{
+    class LogisticLink_ABC;
 
 // =============================================================================
 /** @class  LogisticHierarchy_ABC

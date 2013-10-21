@@ -135,7 +135,7 @@ void MIL_DotationSupplyManager::ResetAllConsigns()
 {
     supplyRequests_->ResetConsign();
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
-        const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsign();
+        (*it)->ResetConsign();
     scheduledSupplies_.clear();
 }
 
@@ -156,7 +156,7 @@ void MIL_DotationSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion&
 {
     supplyRequests_->ResetConsignsForConvoyPion( pion );
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )
-        if( const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsignsForConvoyPion( pion ) )
+        if( (*it)->ResetConsignsForConvoyPion( pion ) )
             it = scheduledSupplies_.erase( it );
         else
             ++it;
