@@ -307,7 +307,7 @@ void ADN_Resources_GUI::BuildAmmunition()
     Q3GroupBox* pEffects = new Q3GroupBox( 5, Qt::Horizontal, tr( "Effects" ), pIndirectGroup );
     {
         builder.PushSubName( "effects" );
-        buttonGroup_ = new QButtonGroup();
+        buttonGroup_ = new QButtonGroup( pEffects );
         buttonGroup_->setExclusive( false );
 
         CreateCheckbox( pEffects, vConnectors, builder, "explosive", tr( "Explosive" ), buttonGroup_, eExplosivePresent );

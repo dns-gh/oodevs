@@ -29,8 +29,7 @@ class ADN_BaseMultiPercentage : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_BaseMultiPercentage() {}
-    virtual ~ADN_BaseMultiPercentage() {}
+             ADN_BaseMultiPercentage( QObject* parent ) : QObject( parent ) {}
     //@}
 
 protected slots:
@@ -55,7 +54,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     ADN_MultiPercentage( Q3GroupBox* pParent, ADN_GuiBuilder& builder, const QString& objectName )
-        : parent_ ( pParent )
+        : ADN_BaseMultiPercentage( pParent )
+        , parent_ ( pParent )
         , builder_( builder )
         , warning_( 0 )
     {

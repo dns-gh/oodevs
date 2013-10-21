@@ -225,12 +225,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         helpButton->setFixedSize( helpButton->sizeHint() );
         connect( helpButton, SIGNAL( clicked() ), this, SLOT( OnHelpNeeded() ) );
 
-        QVBoxLayout* helpLayout = new QVBoxLayout();
-        helpLayout->addWidget( helpButton );
-        helpLayout->addWidget( helpPanel_[ eMissionType ] );
-
         QVBoxLayout* descriptionLayout = new QVBoxLayout( descriptionTab );
-
         QGroupBox* parameterGroupBox = new gui::RichGroupBox( "parameters-descriptions", tr( "Parameters" ) );
         QHBoxLayout* parameterLayout = new QHBoxLayout( parameterGroupBox );
         ADN_ListView* parametersListView = builder.AddWidget< ADN_ListView_DescriptionParameter >( "parameters-list" );

@@ -128,8 +128,8 @@ public:
 //-----------------------------------------------------------------------------
 ADN_Sensors_GUI::ADN_Sensors_GUI( ADN_Sensors_Data& data )
     : ADN_Tabbed_GUI_ABC( eSensors )
-    , data_      ( data )
-    , radarGui_  ( *new ADN_Radars_GUI( *data.radarData_ ) )
+    , data_( data )
+    , radarGui_( new ADN_Radars_GUI( *data.radarData_ ) )
 {
     // NOTHING
 }
@@ -399,9 +399,9 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_Double >( pCobraGroup, "range", tr( "Range" ), data_.GetCobraInfos().rRange_, tr( "m" ), eGreaterEqualZero );
 
     // Radar
-    radarGui_.Build();
-    QWidget* pRadarWidget = radarGui_.GetMainWidget();
-    vListViews_.push_back( radarGui_.GetListView() );
+    radarGui_->Build();
+    QWidget* pRadarWidget = radarGui_->GetMainWidget();
+    vListViews_.push_back( radarGui_->GetListView() );
 
     // -------------------------------------------------------------------------
     // Layouts

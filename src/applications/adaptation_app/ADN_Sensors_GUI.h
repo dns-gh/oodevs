@@ -107,7 +107,7 @@ private:
     //! @name Member data
     //@{
     ADN_Sensors_Data& data_;
-    ADN_Radars_GUI& radarGui_;
+    std::auto_ptr< ADN_Radars_GUI > radarGui_;
     //@}
 };
 
