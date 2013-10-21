@@ -293,7 +293,7 @@ class SessionItem extends Backbone.Model
         cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline", "logs"]
 
         if method == "create"
-            data = select_attributes model.attributes, _.union cfg_attributes, ["exercise", "license"]
+            data = select_attributes model.attributes, _.union cfg_attributes, ["exercise"]
             return pajax "/api/create_session", node: uuid,
                 data, options.success, options.error
 
@@ -444,8 +444,8 @@ class SessionItemView extends Backbone.View
         data.can_link = data.status != "playing" || data.start_time
         data.sim_license = true
         data.replay_license = true
-        data.sim_license = check_license "sword-runtime", licenses
-        data.replay_license = check_license "sword-replayer", licenses
+        data.sim_license = check_license "sword-runtime", licenses.model
+        data.replay_license = check_license "sword-replayer", licenses.model
         @$el.html session_template data
         @$el.find(".link").click (evt) =>
             return if is_disabled evt
@@ -544,7 +544,7 @@ class SessionItemView extends Backbone.View
 
     replay: (evt) =>
         return if is_disabled evt
-        if !check_license "sword-replayer", licenses
+        if !check_license "sword-replayer", licenses.model
             print_license_error "Missing sword-replayer license"
             return
         @toggle_load()
@@ -571,7 +571,6 @@ class SessionListView extends Backbone.View
     delta_period: 5000
 
     initialize: ->
-        licenses.bind "add remove change", @render
         @model = new SessionList
         @model.bind "add",           @add
         @model.bind "remove",        @remove
@@ -587,13 +586,6 @@ class SessionListView extends Backbone.View
         @$el.empty()
         for item in list.models
             @add item
-        missings = []
-        for it in ["sword", "sword-runtime", "sword-dispatcher"]
-            unless check_license it, licenses
-                missings.push it
-        if missings.length
-            suffix = if missings.length > 1 then "s" else ""
-            print_license_error "Missing #{missings.join " & "} licence#{suffix}", true
         return
 
     add: (item) =>
@@ -719,7 +711,21 @@ class LicenseItem extends Backbone.Model
                 print_error "Unable to fetch licenses"
                 setTimeout @delta, 5000
 
-licenses = new LicenseItem
+class LicenseView extends Backbone.View
+    initialize: ->
+        @model = new LicenseItem
+        @model.bind "add remove change", @render
+
+    render: =>
+        missings = []
+        for it in ["sword", "sword-runtime", "sword-dispatcher"]
+            unless check_license it, @model
+                missings.push it
+        if missings.length
+            suffix = if missings.length > 1 then "s" else ""
+            print_license_error "Missing #{missings.join " & "} licence#{suffix}", true
+
+licenses = new LicenseView
 exercise_view = new ExerciseListItemView
 session_view = new SessionListView
 session_default = new SessionItem
@@ -781,7 +787,7 @@ $("#session_create").click ->
     exercise = $ "#exercises"
     unless validate_input_session exercise, exercise.val()?, "Missing exercise"
         return
-    data = name: name.val(), exercise: exercise.val(), license: licenses
+    data = name: name.val(), exercise: exercise.val()
     session_view.create _.extend {}, session_default.attributes, data
     name.val ''
 
