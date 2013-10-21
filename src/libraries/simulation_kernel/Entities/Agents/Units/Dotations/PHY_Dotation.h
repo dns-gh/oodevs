@@ -68,7 +68,7 @@ public:
     bool   HasReachedSupplyThreshold() const;
     bool   NeedSupply               () const;
     double Supply                   ( double rValue );
-    void   ChangeValueUsingTC2      ( double rCapacityFactor, MIL_AutomateLOG& tc2 );
+    void   SetValueUsingTC2         ( double newValue, MIL_AutomateLOG& tc2 );
 
     void NotifyCaptured(); //$$$ a renommer et abstraire
     void NotifyReleased();

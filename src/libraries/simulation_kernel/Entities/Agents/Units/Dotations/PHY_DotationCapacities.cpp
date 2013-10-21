@@ -115,3 +115,15 @@ double PHY_DotationCapacities::GetDefaultLogisticThreshold( const PHY_DotationCa
         return it->second->GetDefaultThreshold();
     return -1;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacities::GetCapacity
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+double PHY_DotationCapacities::GetCapacity( const PHY_DotationCategory& category ) const
+{
+    auto it = dotationCapacities_.find( &category );
+    if( it != dotationCapacities_.end() )
+        return it->second->GetCapacity();
+    return 0;
+}

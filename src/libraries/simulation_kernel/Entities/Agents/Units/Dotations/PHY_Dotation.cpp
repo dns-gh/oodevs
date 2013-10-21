@@ -289,13 +289,12 @@ double PHY_Dotation::AddFireReservation( double rNbr )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Dotation::ChangeValueUsingTC2
-// Created: NLD 2005-03-17
+// Name: PHY_Dotation::SetValueUsingTC2
+// Created: JSR 2013-10-21
 // -----------------------------------------------------------------------------
-void PHY_Dotation::ChangeValueUsingTC2( double rCapacityFactor, MIL_AutomateLOG& tc2 )
+void PHY_Dotation::SetValueUsingTC2( double newValue, MIL_AutomateLOG& tc2 )
 {
-    //$$$ checker rFireReservation_ et rConsumptionReservation_
-    double rValueDiff = ( rCapacity_ * rCapacityFactor ) - rValue_;
+    double rValueDiff = newValue - rValue_;
     if( MT_IsZero( rValueDiff ) )
         return;
     assert( pCategory_ );

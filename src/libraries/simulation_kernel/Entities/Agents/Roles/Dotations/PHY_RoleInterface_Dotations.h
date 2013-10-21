@@ -12,6 +12,7 @@
 #ifndef __PHY_RoleInterface_Dotations_h_
 #define __PHY_RoleInterface_Dotations_h_
 
+#include "ENT/ENT_Enums_Gen.h"
 #include "MT_Tools/Role_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/serialization.hpp>
@@ -102,6 +103,11 @@ public:
     virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const = 0;  // Logistic
     virtual void Apply( boost::function< void( PHY_Dotation& ) > visitor ) const = 0;
     virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const = 0;
+    //@}
+
+    //! @name Logistic - Aviation resource quotas
+    //@{
+    virtual void EnforceAviationResources( E_AviationRange aviationRange ) const = 0;
     //@}
 
 private:

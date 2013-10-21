@@ -355,6 +355,19 @@ void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationTyp
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::EnforceAviationResources
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::EnforceAviationResources( E_AviationRange aviationRange ) const
+{
+    MIL_AutomateLOG* pTC2 = owner_->GetLogisticHierarchy().GetPrimarySuperior();
+    if( !pTC2 )
+        return;
+    assert( pDotations_ );
+    pDotations_->EnforceAviationResources( aviationRange, GetPion()->GetType().GetUnitType(), *pTC2 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::NotifySupplyNeeded
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------

@@ -12,15 +12,16 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoDotationClass.h"
 #include "MT_Tools/MT_Logger.h"
+#include "ENT/ENT_Enums_Gen.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , 0 );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", 1 );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", 2 );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , 3 );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::alr_       ( "ALR" , 4 );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eAmmunitionType_Obus );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eAmmunitionType_MissileSol );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eAmmunitionType_MissileAir );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eAmmunitionType_Mitraille );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::alr_       ( "ALR"       , eAmmunitionType_ALR );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 

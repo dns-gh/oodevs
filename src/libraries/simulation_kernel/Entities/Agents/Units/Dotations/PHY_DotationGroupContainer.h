@@ -10,6 +10,7 @@
 #ifndef __PHY_DotationGroupContainer_h_
 #define __PHY_DotationGroupContainer_h_
 
+#include "ENT/ENT_Enums_Gen.h"
 #include <tools/Map.h>
 #include <tools/Set.h>
 #include <boost/serialization/export.hpp>
@@ -110,6 +111,7 @@ public:
     bool HasSupplyNeededNotified     ( const PHY_DotationCategory& dotationCategory ) const;
     void Apply                       ( boost::function< void( PHY_Dotation& ) > visitor ) const;
     void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const;
+    void EnforceAviationResources    ( E_AviationRange aviationRange, const PHY_UnitType& unitType, MIL_AutomateLOG& tc2 );
     //@}
 
     //! @name Network

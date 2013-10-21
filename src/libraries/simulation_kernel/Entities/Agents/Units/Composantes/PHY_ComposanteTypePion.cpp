@@ -14,10 +14,12 @@
 #include "PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ActiveProtection.h"
+#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
@@ -34,6 +36,7 @@
 #include "Entities/Objects/MobilityCapacity.h"
 #include "Entities/Objects/ObjectTypeResolver_ABC.h"
 #include "PHY_ComposanteTypeObjectData.h"
+#include "ENT/ENT_Tr.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
@@ -163,6 +166,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     InitializeTransport       ( xis );
     InitializeObjects         ( xis, resolver );
     InitializeConsumptions    ( xis );
+    InitializeAviationQuotas  ( xis );
     InitializeLogistic        ( xis );
     InitializeBreakdownTypes  ( xis );
     InitializeProtections     ( xis );
@@ -503,18 +507,57 @@ void PHY_ComposanteTypePion::InitializeConsumptions( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::InitializeAviationQuotas
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::InitializeAviationQuotas( xml::xistream& xis )
+{
+    xis >> xml::optional >> xml::start( "aviation-quotas" )
+            >> xml::list( "aviation-quota", [ & ]( xml::xistream& xis )
+            {
+                E_AviationRange range = ENT_Tr::ConvertToAviationRange( xis.attribute< std::string >( "range" ) );
+                xis >> xml::list( "quota", *this, &PHY_ComposanteTypePion::ReadAviationQuotas, aviationResourceQuotas_[ range ] );
+            })
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::ReadConsumption
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadConsumption( xml::xistream& xis )
 {
     const PHY_ConsumptionType::T_ConsumptionTypeMap& consumptionTypes = PHY_ConsumptionType::GetConsumptionTypes();
-    std::string typeName;
-    xis >> xml::attribute( "status", typeName );
-
-    PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( typeName );
+    PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( xis.attribute< std::string >( "status" ) );
     const PHY_ConsumptionType& consumptionType = *it->second;
     consumptions_[ consumptionType.GetID() ] = new PHY_DotationConsumptions( consumptionType.GetName(), xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadAviationQuotas
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::ReadAviationQuotas( xml::xistream& xis, T_AviationResourceQuota& resourcesQuota )
+{
+    const std::string category = xis.attribute< std::string >( "category" );
+    unsigned int quota = xis.attribute< unsigned int >( "value" );
+    sAviationResourceQuota resourceQuota;
+    resourceQuota.quota_ = quota * 0.01;
+    const PHY_DotationType* type = PHY_DotationType::FindDotationType( category );
+    if( type ==  PHY_DotationType::carburant_ )
+        resourceQuota.dotationType_ = type;
+    else
+    {
+        const PHY_AmmoDotationClass* ammoDotationClass = PHY_AmmoDotationClass::Find( category );
+        if( ammoDotationClass )
+        {
+            resourceQuota.dotationType_ = PHY_DotationType::munition_;
+            resourceQuota.ammoClass_ = ammoDotationClass;
+        }
+        else
+            throw MASA_EXCEPTION( xis.context() + "Unknown aviation resource quota category '" + category + "'" );
+    }
+    resourcesQuota.push_back( resourceQuota );
 }
 
 // -----------------------------------------------------------------------------
@@ -1807,6 +1850,24 @@ void PHY_ComposanteTypePion::GetStockTransporterCapacity( double& rWeightMax, do
 const PHY_DotationNature* PHY_ComposanteTypePion::GetStockTransporterNature() const
 {
     return pStockTransporterNature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetAviationResourceQuota
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetAviationResourceQuota( E_AviationRange aviationRange, const PHY_DotationType* dotationType, const PHY_AmmoDotationClass* ammoClass ) const
+{
+    auto itQuotas = aviationResourceQuotas_.find( aviationRange );
+    if( itQuotas != aviationResourceQuotas_.end() )
+    {
+        for( auto it = itQuotas->second.begin(); it != itQuotas->second.end(); ++it )
+        {
+            if( it->dotationType_ == dotationType && it->ammoClass_ == ammoClass )
+                return it->quota_;
+        }
+    }
+    return -1;
 }
 
 // -----------------------------------------------------------------------------

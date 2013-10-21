@@ -443,6 +443,20 @@ void PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2( const PHY_Dotatio
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::EnforceAviationResources
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::EnforceAviationResources( E_AviationRange aviationRange, const PHY_UnitType& unitType, MIL_AutomateLOG& tc2 )
+{
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    {
+        const PHY_DotationType* dotationType = it->first;
+        if( dotationType == PHY_DotationType::munition_ || dotationType == PHY_DotationType::carburant_ )
+            it->second->EnforceAviationResources( aviationRange, unitType, tc2 );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::NotifyCaptured
 // Created: NLD 2005-02-28
 // -----------------------------------------------------------------------------
