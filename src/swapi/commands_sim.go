@@ -1354,14 +1354,18 @@ func createObjectMagicAction(objectId uint32, params *sword.MissionParameters,
 	}
 }
 
-func (c *Client) CreateObject(objectType, objectName string, partyId uint32,
-	location *sword.Location) (*Object, error) {
-	params := MakeParameters(MakeString(objectType),
+func (c *Client) CreateObject(objectType string, partyId uint32,
+	location *sword.Location, attributes []*sword.MissionParameter) (*Object, error) {
+	params := []*sword.MissionParameter{
+		MakeString(objectType),
 		MakeLocation(location),
-		MakeString(objectName),
+		MakeString("name"),
 		MakeParty(partyId),
-	)
-	msg := createObjectMagicAction(0, params,
+	}
+	if len(attributes) != 0 {
+		params = append(params, attributes...)
+	}
+	msg := createObjectMagicAction(0, MakeParameters(params...),
 		sword.ObjectMagicAction_create)
 	var created *Object
 	handler := func(msg *sword.SimToClient_Content) error {
@@ -1382,6 +1386,12 @@ func (c *Client) CreateObject(objectType, objectName string, partyId uint32,
 	}
 	err := <-c.postSimRequest(msg, handler)
 	return created, err
+}
+
+func (c *Client) CreateDefaultObject(objectType string, partyId uint32,
+	location *sword.Location) (*Object, error) {
+	return c.CreateObject(objectType, partyId, location,
+		[]*sword.MissionParameter{})
 }
 
 func (c *Client) DeleteObject(objectId uint32) error {

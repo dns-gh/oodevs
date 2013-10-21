@@ -144,6 +144,7 @@ var (
 		(*Model).handleAutomatOrder,
 		(*Model).handleChangeDiplomacy,
 		(*Model).handleControlBeginTick,
+		(*Model).handleControlInformation,
 		(*Model).handleControlGlobalWeather,
 		(*Model).handleControlLocalWeatherCreation,
 		(*Model).handleControlLocalWeatherDestruction,
@@ -164,6 +165,9 @@ var (
 		(*Model).handleKnowledgeGroupCreation,
 		(*Model).handleKnowledgeGroupUpdate,
 		(*Model).handleLogSupplyQuotas,
+		(*Model).handleObjectCreation,
+		(*Model).handleObjectDestruction,
+		(*Model).handleObjectUpdate,
 		(*Model).handleObjectKnowledgeCreation,
 		(*Model).handlePartyCreation,
 		(*Model).handlePopulationCreation,
@@ -178,8 +182,6 @@ var (
 		(*Model).handleUnitVisionCones,
 		(*Model).handleUrbanCreation,
 		(*Model).handleUrbanUpdate,
-		(*Model).handleObjectCreation,
-		(*Model).handleObjectDestruction,
 	}
 	authToClientHandlers = []func(model *Model, m *sword.AuthenticationToClient_Content) error{
 		(*Model).handleProfileCreation,

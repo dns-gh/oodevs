@@ -110,6 +110,17 @@ type Object struct {
 	ObjectType string
 	Name       string
 	PartyId    uint32
+	Activated  bool
+}
+
+func NewObject(id, partyId uint32, objectType, name string) *Object {
+	return &Object{
+		Id:         id,
+		ObjectType: objectType,
+		Name:       name,
+		PartyId:    partyId,
+		Activated:  false,
+	}
 }
 
 type EquipmentDotation struct {
@@ -409,8 +420,9 @@ type ModelData struct {
 	KnownScores map[string]struct{}
 	Scores      map[string]float32
 	// Tick and time of the most recent started tick
-	Tick int32
-	Time time.Time
+	Tick         int32
+	Time         time.Time
+	TickDuration int32
 }
 
 func NewModelData() *ModelData {
