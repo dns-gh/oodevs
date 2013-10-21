@@ -35,7 +35,7 @@ class PackageView extends Backbone.View
 
     reset: =>
         @model.clear()
-        $(@el).empty()
+        @$el.empty()
 
     toggle_load: (disable, load) =>
         @counter++
@@ -44,16 +44,18 @@ class PackageView extends Backbone.View
         toggle_spinner load if load?
 
     render: =>
-        $(@el).empty()
+        @$el.empty()
         return unless @model.attributes.name?
 
-        $(@el).html package_template @model.attributes
+        @$el.html package_template @model.attributes
+        briefings = @$el.find ".briefing_content"
+        briefings.find("style, meta").remove()
 
-        for it in $(@el).find ".action .more"
+        for it in @$el.find ".action .more"
             $(it).click ->
                 $("#briefing_" + $(@).parent().attr "data-rel").toggle "fast"
 
-        for it in $(@el).find ".name .error"
+        for it in @$el.find ".name .error"
             $(it).tooltip placement: "top"
 
         discard = $(".form-actions .discard")
@@ -82,7 +84,7 @@ class PackageView extends Backbone.View
             return if save.hasClass "disabled"
             list = []
             btns = []
-            for it in $(@el).find ".action .add, .action .update"
+            for it in @$el.find ".action .add, .action .update"
                 continue unless $(it).hasClass "active"
                 id = $(it).parent().attr "data-rel"
                 continue unless id?

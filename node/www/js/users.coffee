@@ -108,9 +108,9 @@ class UserItemView extends Backbone.View
         "click .edit"   : "edit"
 
     render: =>
-        $(@el).empty()
-        $(@el).attr "id", "id_" + @model.id
-        $(@el).html user_template @model.attributes
+        @$el.empty()
+        @$el.attr "id", "id_" + @model.id
+        @$el.html user_template @model.attributes
 
     delete: (evt) =>
         return if is_disabled evt
@@ -127,7 +127,7 @@ class UserItemView extends Backbone.View
 
     edit: (evt) =>
         return if is_disabled evt
-        other = $(@el).find(".delete").length
+        other = @$el.find(".delete").length
         data = $.extend {}, @model.attributes
         data.other = true if other
         [ui, mod] = pop_settings data
@@ -150,7 +150,7 @@ class UserItemView extends Backbone.View
                     print_error "Unable to update user " + @model.get "username"
 
     toggle_load: =>
-        toggle_spinner $(@el).find ".btn-group"
+        toggle_spinner @$el.find ".btn-group"
 
 class UserListView extends Backbone.View
     el: $ "#users"
@@ -164,7 +164,7 @@ class UserListView extends Backbone.View
         setTimeout @delta, 5000
 
     reset: (list, options) =>
-        $(@el).empty()
+        @$el.empty()
         for it in list.models
             @add it
         return
@@ -176,7 +176,7 @@ class UserListView extends Backbone.View
         if previous
             $(previous.el).after view.el
         else
-            $(@el).prepend view.el
+            @$el.prepend view.el
 
     remove: (item, list, index) =>
         $("#id_" + item.id).remove()

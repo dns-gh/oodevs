@@ -52,12 +52,14 @@ class PackageView extends Backbone.View
                 @enabled = true
 
     render: =>
-        $(@el).empty()
+        @$el.empty()
         return unless @model.attributes.items?
 
-        $(@el).html package_template @model.attributes
+        @$el.html package_template @model.attributes
+        briefings = @$el.find ".briefing_content"
+        briefings.find("style, meta").remove()
 
-        for it in $(@el).find ".package_header .remove_all a"
+        for it in @$el.find ".package_header .remove_all a"
             $(it).click =>
                 modal_confirm
                     message: "Are you sure you want to delete all packages?"
@@ -65,20 +67,20 @@ class PackageView extends Backbone.View
                     reject: "Cancel",
                     =>
                         items = []
-                        for btn in $(@el).find ".action .delete"
+                        for btn in @$el.find ".action .delete"
                             @enabled = false
                             @toggle_load btn
                             items.push btn
                         @delete_items items if items.length
 
-        for it in $(@el).find ".action .more"
+        for it in @$el.find ".action .more"
             $(it).click ->
                 $("#briefing_" + $(@).parent().attr "data-rel").toggle "fast"
 
-        for it in $(@el).find ".name .error"
+        for it in @$el.find ".name .error"
             $(it).tooltip placement: "top"
 
-        for it in $(@el).find ".action .delete"
+        for it in @$el.find ".action .delete"
             $(it).click it, (e) =>
                 modal_confirm
                     message: "Are you sure you want to delete this package?"

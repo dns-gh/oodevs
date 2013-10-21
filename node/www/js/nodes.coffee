@@ -125,12 +125,12 @@ class NodeItemView extends Backbone.View
         "click .edit": "edit"
 
     render: =>
-        is_open = $(@el).find(".collapse")?.hasClass "in"
-        $(@el).empty()
+        is_open = @$el.find(".collapse")?.hasClass "in"
+        @$el.empty()
         data = $.extend {}, @model.attributes
         data.data_size = bytes_to_size data.data_size, 2
         data.is_open = true if is_open
-        $(@el).html node_template data
+        @$el.html node_template data
 
     delete: =>
         ident = @model.get "ident"
@@ -176,7 +176,7 @@ class NodeItemView extends Backbone.View
                     print_error "Unable to update node " + @model.get "ident"
 
     toggle_load: =>
-        toggle_spinner $(@el).find ".btn-group"
+        toggle_spinner @$el.find ".btn-group"
 
 class NodeListView extends Backbone.View
     el: $( "#nodes" )
@@ -191,7 +191,7 @@ class NodeListView extends Backbone.View
         setTimeout @delta, 5000
 
     reset: (list, options) =>
-        $(@el).empty()
+        @$el.empty()
         for item in list.models
             @add item
         return
@@ -203,7 +203,7 @@ class NodeListView extends Backbone.View
         if previous
             $(previous.el).after view.el
         else
-            $(@el).prepend view.el
+            @$el.prepend view.el
 
     erase: (item, list, index) =>
         $("#id_" + item.id).parent().remove()
