@@ -210,8 +210,8 @@ type Unit struct {
 	HumanFactors         HumanFactors
 	RawOperationalState  int32
 	Neutralized          bool
-	MaintenanceHandlings []*MaintenanceHandling
-	MedicalHandlings     []*MedicalHandling
+	MaintenanceHandlings map[uint32]*MaintenanceHandling
+	MedicalHandlings     map[uint32]*MedicalHandling
 }
 
 type Automat struct {
@@ -441,8 +441,8 @@ type ModelData struct {
 	LocalWeathers    map[uint32]*LocalWeather
 	Urbans           map[uint32]*Urban
 	Orders           map[uint32]*Order
-	FuneralHandlings []*FuneralHandling
-	SupplyHandlings  []*SupplyHandling
+	FuneralHandlings map[uint32]*FuneralHandling
+	SupplyHandlings  map[uint32]*SupplyHandling
 	// Available scores definitions
 	KnownScores map[string]struct{}
 	Scores      map[string]float32
@@ -453,13 +453,15 @@ type ModelData struct {
 
 func NewModelData() *ModelData {
 	return &ModelData{
-		Parties:       map[uint32]*Party{},
-		Profiles:      map[string]*Profile{},
-		LocalWeathers: map[uint32]*LocalWeather{},
-		Urbans:        map[uint32]*Urban{},
-		Orders:        map[uint32]*Order{},
-		KnownScores:   map[string]struct{}{},
-		Scores:        map[string]float32{},
+		Parties:          map[uint32]*Party{},
+		Profiles:         map[string]*Profile{},
+		LocalWeathers:    map[uint32]*LocalWeather{},
+		Urbans:           map[uint32]*Urban{},
+		Orders:           map[uint32]*Order{},
+		FuneralHandlings: map[uint32]*FuneralHandling{},
+		SupplyHandlings:  map[uint32]*SupplyHandling{},
+		KnownScores:      map[string]struct{}{},
+		Scores:           map[string]float32{},
 	}
 }
 
