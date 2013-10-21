@@ -53,6 +53,8 @@ protected:
 
     void AddTranslator( const char* t );
     void DeleteTranslators();
+
+    void CheckInterfaceComponentNaming( QObject* root, const tools::Path& outpath ) const;
     //@}
 
     //! @name Accessors

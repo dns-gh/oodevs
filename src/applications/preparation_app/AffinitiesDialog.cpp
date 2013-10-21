@@ -30,6 +30,7 @@ AffinitiesDialog::AffinitiesDialog( const QString& objectName, QWidget* parent, 
     , pGrid_      ( 0 )
     , selected_   ( controllers )
 {
+    setObjectName( objectName );
     gui::SubObjectName subObject( objectName );
     setCaption( tools::translate( "AffinitiesDialog", "Change affinities" ) );
     resize( 320, 150 );

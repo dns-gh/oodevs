@@ -117,12 +117,13 @@ namespace
 
 // Created: LGY 2011-01-06
 // -----------------------------------------------------------------------------
-GradientButton::GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin /*= Qt::white*/, QColor end /*= Qt::black*/ )
+GradientButton::GradientButton( const QString& objectName, QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin /*= Qt::white*/, QColor end /*= Qt::black*/ )
     : Q3CanvasView( new GradientCanvas( parent, colors_ ), parent )
     , painter_     ( painter )
     , selected_    ( 0 )
     , disableState_( disableState )
 {
+    setObjectName( objectName );
     setFrameStyle( Q3Frame::Raised | Q3Frame::Box );
 
     setMargin( 5 );

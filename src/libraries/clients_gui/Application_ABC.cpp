@@ -175,3 +175,43 @@ void Application_ABC::DeleteTranslators()
         app_.removeTranslator( *it );
     translators_.clear();
 }
+
+namespace
+{
+
+    void CheckNamingHierarchy( std::ostream& out, QObject* parent, std::map< std::string, std::pair< unsigned int, unsigned int > >& map, const QString& parentPath )
+    {
+        if( !parent )
+            return;
+        for( auto it  = parent->children().begin(); it != parent->children().end(); ++it )
+        {
+            std::string className = ( *it )->metaObject()->className();
+            QString path = parentPath + "." + className.c_str();
+            bool hasName =  !( *it )->objectName().isEmpty();
+            out << hasName << "," << path << "," << parent->objectName() << std::endl;
+            if( hasName )
+                ++map[ className ].first;
+            else
+                ++map[ className ].second;
+
+            CheckNamingHierarchy( out, *it, map, path );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::CheckInterfaceComponentNaming
+// Created: NPT 2013-03-21
+// -----------------------------------------------------------------------------
+void Application_ABC::CheckInterfaceComponentNaming( QObject* root, const tools::Path& outpath ) const
+{
+    std::ostream* output = &std::cout;
+    std::fstream fp;
+    if( outpath != "-" )
+    {
+        fp.open( outpath.ToUnicode(), std::ios::out );
+        output = &fp;
+    }
+    std::map< std::string, std::pair< unsigned int, unsigned int > > map;
+    CheckNamingHierarchy( *output, root, map, "" );
+}

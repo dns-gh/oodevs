@@ -2,96 +2,88 @@ import sys, os, re
 
 def parseqtnames(path):
     for line in file(path):
-        named, name = line.split(None, 1)
+        line = line.strip()
+        if not line:
+            continue
+        named, name, parentname = line.split(',', 2)
         named = int(named)
         if not named:
-            yield name.strip()
+            yield name.strip(), parentname
 
-ignored = set([
-    'QBoxLayout',
-    'QVBoxLayout',
-    'QHBoxLayout',
-    'QTimer',
-    'QLabel',
-    'QProcess',
-    'Q3VBox',
-    'Q3HBox',
-    'QWidget',
-    'QGridLayout',
-    "QScrollBar",
-    "QSignalMapper",
-    "QScrollArea",
-    "QHeaderView",
-    "QProgressBar",
-    "Q3Canvas",
-    "LongNameEditor",
-    "gui::GQ_Plot",
-    "QShortcut",
-    "QFrame",
-    "LoadableField",
-    "gui::ButtonGroup",
-    "Q3ButtonGroup",
-    "Q3VButtonGroup",
-    "Q3HButtonGroup",
-    "LocationEditorBox",
-    "QObject",
-    "AffinitiesDialog",
-    "gui::Panels",
-    "QStatusBar",
-    "SuccessFactorList",
-    "UserProfileList",
-    "QSplitter",
-    "gui::OptionMenuBase",
-    "Q3PopupMenu",
+ignoredleaves = set([
+    "ADN_Graph",
     "FilterDialogs",
+    "LoadableField",
+    "LocationEditorBox",
+    "LongNameEditor",
+    "Menu",
+    "Q3ButtonGroup",
+    "Q3Canvas",
+    "Q3GroupBox",
+    "Q3HButtonGroup",
+    "Q3HGroupBox",
+    "Q3PopupMenu",
+    "Q3VButtonGroup",
+    "Q3VGroupBox",
+    "QComboBoxPrivateContainer",
+    "QFrame",
+    "QHeaderView",
+    "QMenu",
+    "QObject",
+    "QPropertyAnimation",
+    "QProgressBar",
+    "QScrollArea",
+    "QScrollBar",
+    "QShortcut",
+    "QSignalMapper",
+    "QSizeGrip",
+    "QSplitter",
+    "QStatusBar",
+    "QTableCornerButton",
+    "QToolBox",
+    "SuccessFactorList",
+    "SymbolSizeOptionChooser",
+    "UserProfileList",
     "gui::AggregateToolbar",
-    "gui::SearchTreeView_ABC",
+    "gui::ButtonGroup",
+    "gui::ConsistencyDialog_ABC",
+    "gui::DrawingCategoryItem",
+    "gui::ExpandableGroupBox",
+    "gui::GQ_Plot",
     "gui::HelpSystem",
     "gui::LocationEditorBox",
-    "gui::ExpandableGroupBox",
-    "QToolBox",
-    "gui::TerrainPicker",
-    "QSizeGrip",
-    "gui::SymbolIcons",
-    "SymbolSizeOptionChooser",
-    "gui::UnitPreviewIcon",
-    "gui::NumericLimitsEditor_ABC",
     "gui::NatureEditionCategory",
-    "gui::DrawingCategoryItem",
+    "gui::NumericLimitsEditor_ABC",
     "gui::ObjectPrototype_ABC",
-    "gui::ConsistencyDialog_ABC",
-    "Menu",
-    "QMenu",
+    "gui::OptionMenuBase",
+    "gui::Panels",
+    "gui::SearchTreeView_ABC",
+    "gui::SymbolIcons",
+    "gui::TerrainPicker",
+    "gui::UnitPreviewIcon",
+    'Q3HBox',
+    'Q3VBox',
+    'QBoxLayout',
+    'QGridLayout',
+    'QHBoxLayout',
+    'QLabel',
+    'QProcess',
+    'QTimer',
+    'QVBoxLayout',
+    'QWidget',
     ])
 
-ignoredescendants = set([
-    "QSpinBox",
-    "QLineEdit",
-    "QTextEdit",
-    "QComboBox",
-    "QCheckBox",
-    "QTabWidget",
-    "QTableWidget",
-    "QTableView",
-    "QListWidget",
-    "QListView",
-    "QToolButton",
-    "QPushButton",
-    "QRadioButton",
-    "QdateTimeEdit",
-    "QTimeEdit",
-    "QTreeWidget",
-    "Q3GroupBox",
-    "QGroupBox",
+ignorednodes = set([
+    "ADN_Graph",
+    "QComboBoxPrivateContainer",
     "QLabel",
-    "gui::GQ_Plot",
-    "gui::CheckComboBox",
-    "gui::RichLabel",
-    "gui::RichGroupBox",
     "QTabBar",
-    "gui::RichLineEdit",
+    "QTabWidget",
+    "QTextEdit",
+    "gui::GQ_Plot", # waiting to be refactored
+    "gui::RichLabel",
     ])
-reigndesc = '(' + '|'.join(re.escape(p) for p in ignoredescendants) + ')'
+reigndesc = '(' + '|'.join(re.escape(p) for p in ignorednodes) + ')'
 reigndesc = reigndesc + '\.'
 reigndesc = re.compile(reigndesc)
 
@@ -102,21 +94,20 @@ if __name__ == '__main__':
     path = sys.argv[1]
     leaves = set()
     unnamed = set()
-    for name in parseqtnames(path):
+    for name, parentname in parseqtnames(path):
         if reigndesc.search(name):
             continue
         leaf = name.rsplit('.', 1)[-1]
-        if leaf in ignored:
+        if leaf in ignoredleaves:
             continue
         if retype.search(name):
             continue
         leaves.add(leaf)
-        unnamed.add(name)
-
+        unnamed.add( name + " in " + parentname if len(parentname) > 0 else name)
     ret = 0
     if unnamed:
         w = sys.stderr.write
-        for name in sorted(unnamed):
+        for name in unnamed:
             w('error: ui element is unnamed: %s\n' % name)
         ret = 1
     sys.exit(ret)

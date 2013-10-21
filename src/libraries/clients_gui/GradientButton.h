@@ -32,7 +32,7 @@ class GradientButton : public Q3CanvasView
 public:
     //! @name Constructors/Destructor
     //@{
-             GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin = Qt::white, QColor end = Qt::black );
+             GradientButton( const QString& objectName, QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin = Qt::white, QColor end = Qt::black );
     virtual ~GradientButton();
     //@}
 

@@ -59,7 +59,7 @@ ScoreDialog::ScoreDialog( const QString& objectName, QWidget* parent, kernel::Co
     grid->setRowStretch( 0, 4 );
     {
         //score list
-        scores_ = new ScoreList( controllers, model, config, staticModel, tools, *builder_ );
+        scores_ = new ScoreList( controllers, model, config, staticModel, tools, *builder_, "score-list" );
         connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
         connect( scores_, SIGNAL( Show() ), SLOT( show() ) );
         connect( scores_, SIGNAL( Hide() ), SLOT( hide() ) );

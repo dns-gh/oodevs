@@ -69,7 +69,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreList( kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
-                        const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+                        const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder, const QString& objectName );
     virtual ~ScoreList();
     //@}
 

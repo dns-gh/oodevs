@@ -18,11 +18,11 @@ using namespace gui;
 // Name: RichBaseObject::RichBaseObject
 // Created: ABR 2013-06-07
 // -----------------------------------------------------------------------------
-RichBaseObject::RichBaseObject( RichWarnWidget_ABC& widget, QObject* parent /* = 0*/ )
+RichBaseObject::RichBaseObject( RichWarnWidget_ABC& widget, const QString& objectName, QObject* parent )
     : QObject( parent )
     , widget_( widget )
 {
-    // NOTHING
+    setObjectName( objectName );
 }
 
 // -----------------------------------------------------------------------------
