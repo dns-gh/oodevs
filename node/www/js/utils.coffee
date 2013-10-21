@@ -206,7 +206,7 @@ toggle_input_error = (el, txt, reset) ->
     root.addClass "error"
     if txt?
         msg = $ "<span class='help-inline'>" + txt + "</span>"
-        el.parent().children().last().after msg
+        root.find(".controls").append msg
     reset_error = ->
         msg.remove() if msg?
         root.removeClass "error"
