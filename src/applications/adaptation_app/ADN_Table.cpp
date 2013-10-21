@@ -45,7 +45,7 @@ ADN_Table::ADN_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* p
 {
     Initialize( objectName );
 
-    pConnector_ = new ADN_Connector_Table_ABC( *this );
+    pConnector_.reset( new ADN_Connector_Table_ABC( *this ) );
     pConnector_->Connect( &vector );
 }
 
@@ -60,8 +60,8 @@ ADN_Table::ADN_Table( const QString& objectName, ADN_Connector_ABC*& connector, 
 {
     Initialize( objectName );
 
-    pConnector_ = new ADN_Connector_Table_ABC( *this );
-    connector = pConnector_;
+    pConnector_.reset( new ADN_Connector_Table_ABC( *this ) );
+    connector = pConnector_.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ void ADN_Table::Initialize( const QString& objectName )
 // -----------------------------------------------------------------------------
 ADN_Table::~ADN_Table()
 {
-    delete pConnector_;
+    // NOTHING
     ADN_Workspace::GetWorkspace().GetLanguageController().Unregister( *this );
 }
 

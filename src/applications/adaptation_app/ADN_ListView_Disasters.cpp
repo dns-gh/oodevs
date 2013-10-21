@@ -25,7 +25,7 @@
 ADN_ListView_Disasters::ADN_ListView_Disasters( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_Disasters", ADN_Tr::ConvertFromWorkspaceElement( eDisasters ).c_str() )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Disasters_Data::DisasterInfos >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Disasters_Data::DisasterInfos >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -35,7 +35,7 @@ ADN_ListView_Disasters::ADN_ListView_Disasters( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_ListView_Disasters::~ADN_ListView_Disasters()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

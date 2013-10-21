@@ -33,10 +33,8 @@ typedef ADN_Sensors_Data::TargetInfos TargetInfos;
 ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Sensors_TargetsListView", tools::translate( "ADN_Sensors_TargetsListView", "Targets" ) )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<TargetInfos>(*this);
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< TargetInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +43,7 @@ ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Sensors_TargetsListView::~ADN_Sensors_TargetsListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +95,7 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
     {
         // Remove the weapon from the list.
         TargetInfos* pCurObject = (TargetInfos*)pCurData_;
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurObject );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurObject );
     }
     else if( nMenuResult > 1 )
     {
@@ -105,8 +103,8 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
         TargetInfos* pNewInfo = new TargetInfos();
         pNewInfo->SetCrossedElement( vObjects[ nMenuResult - 2 ] );
 
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
         if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }

@@ -25,8 +25,8 @@
 ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type( QWidget* parent)
     : ADN_ListView( parent, "Infrastructure", tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructure" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanMaterialInfos >( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Urban_Data::UrbanMaterialInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type( QW
 //-----------------------------------------------------------------------------
 ADN_ListView_UrbanInfrastructure_Type::~ADN_ListView_UrbanInfrastructure_Type()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

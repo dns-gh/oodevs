@@ -27,9 +27,8 @@ typedef ADN_Radars_Data::RadarInfos RadarInfos;
 ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Radars_ListView", tools::translate( "ADN_Radars_ListView", "Special sensors" ) )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<RadarInfos>(*this);
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< RadarInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +37,7 @@ ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Radars_ListView::~ADN_Radars_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -48,9 +48,8 @@ public:
 ADN_Crowds_SpeedEffect_Volume_ListView::ADN_Crowds_SpeedEffect_Volume_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Crowds_SpeedEffect_Volume_ListView", tools::translate( "ADN_Crowds_SpeedEffect_Volume_ListView", "Volumes" ) )
 {
-    // Connector creation
-    pConnector_ = new ADN_Sizes( *this );
-    this->SetDeletionEnabled( false );
+    pConnector_.reset( new ADN_Sizes( *this ) );
+    SetDeletionEnabled( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +58,7 @@ ADN_Crowds_SpeedEffect_Volume_ListView::ADN_Crowds_SpeedEffect_Volume_ListView( 
 // -----------------------------------------------------------------------------
 ADN_Crowds_SpeedEffect_Volume_ListView::~ADN_Crowds_SpeedEffect_Volume_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

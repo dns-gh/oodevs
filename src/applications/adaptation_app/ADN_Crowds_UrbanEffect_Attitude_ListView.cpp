@@ -23,9 +23,8 @@ typedef ADN_Crowds_Data::UrbanEffectInfos UrbanEffectInfos;
 ADN_Crowds_UrbanEffect_Attitude_ListView::ADN_Crowds_UrbanEffect_Attitude_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Crowds_UrbanEffect_Attitude_ListView", tools::translate( "ADN_Crowds_UrbanEffect_Attitude_ListView", "Attitudes" ) )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView< UrbanEffectInfos >( *this );
-    this->SetDeletionEnabled( false );
+    pConnector_.reset( new ADN_Connector_ListView< UrbanEffectInfos >( *this ) );
+    SetDeletionEnabled( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +33,7 @@ ADN_Crowds_UrbanEffect_Attitude_ListView::ADN_Crowds_UrbanEffect_Attitude_ListVi
 // -----------------------------------------------------------------------------
 ADN_Crowds_UrbanEffect_Attitude_ListView::~ADN_Crowds_UrbanEffect_Attitude_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

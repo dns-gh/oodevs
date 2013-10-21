@@ -30,9 +30,8 @@ ADN_ListView_Models::ADN_ListView_Models( QWidget* pParent, E_EntityType eEntity
     : ADN_ListView( pParent, "ADN_ListView_Models", ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str() )
     , eEntityType_( eEntityType )
 {
-    // Connector creation.
-    pConnector_ = new ADN_Connector_ListView<ModelInfos>( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView<ModelInfos>( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -41,7 +40,7 @@ ADN_ListView_Models::ADN_ListView_Models( QWidget* pParent, E_EntityType eEntity
 //-----------------------------------------------------------------------------
 ADN_ListView_Models::~ADN_ListView_Models()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

@@ -38,10 +38,8 @@ ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget* parent 
     : ADN_ListView( parent, "ADN_ListView_Orders" + usedWithMission, tools::translate( "ADN_ListView_Orders", "Frag orders") )
     , usedWithMission_ ( usedWithMission )
 {
-    // connector creation
-    pConnector_=new ADN_Connector_ListView< OrderInfos >(*this);
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< OrderInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +48,7 @@ ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget* parent 
 // -----------------------------------------------------------------------------
 ADN_ListView_Orders::~ADN_ListView_Orders()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -143,8 +141,8 @@ void ADN_ListView_Orders::CreateNewItem( int n )
                 pNewInfo->SetCrossedElement( fragOrder );
             }
         }
-        ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCList->AddItem( pNewInfo );
+        ADN_Connector_Vector_ABC& pCList = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCList.AddItem( pNewInfo );
         if( ADN_StandardItem* item = FindItem( pNewInfo ) )
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }
@@ -162,6 +160,6 @@ void ADN_ListView_Orders::RemoveCurrentItem()
     {
         // remove current data from list
         // take care cause pCurData_ can change!!
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurComposante );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurComposante );
     }
 }

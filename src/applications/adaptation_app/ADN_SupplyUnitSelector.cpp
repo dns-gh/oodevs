@@ -24,7 +24,7 @@ ADN_SupplyUnitSelector::ADN_SupplyUnitSelector( QWidget* pParent, const char* sz
     , pData_     ( 0 )
 {
     setText( tr( "Click here to select" ) );
-    pConnector_ = new ADN_SupplyUnitSelector_Connector( *this );
+    pConnector_.reset( new ADN_SupplyUnitSelector_Connector( *this ) );
     connect( this, SIGNAL( clicked() ), this, SLOT( OnButtonPressed() ) );
 }
 
@@ -34,7 +34,7 @@ ADN_SupplyUnitSelector::ADN_SupplyUnitSelector( QWidget* pParent, const char* sz
 // -----------------------------------------------------------------------------
 ADN_SupplyUnitSelector::~ADN_SupplyUnitSelector()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void ADN_SupplyUnitSelector::OnButtonPressed()
     {
         // Reteive the unit from the result, and use the connector to notify its selection.
         this->SetItem( (void*)nResult );
-        static_cast<ADN_SupplyUnitSelector_Connector*>(pConnector_)->NotifySelected( (void*)nResult );
+        static_cast< ADN_SupplyUnitSelector_Connector& >( *pConnector_ ).NotifySelected( (void*)nResult );
     }
 
     delete pPopup;
@@ -87,7 +87,7 @@ void ADN_SupplyUnitSelector::ItemRemoved( void* pItem )
         = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
 
     disconnect( &units, 0, this, SLOT( ItemRemoved( void* ) ) );
-    static_cast<ADN_SupplyUnitSelector_Connector*>(pConnector_)->NotifySelected( (void*)0 );
+    static_cast< ADN_SupplyUnitSelector_Connector& >( *pConnector_ ).NotifySelected( (void*)0 );
 }
 
 // -----------------------------------------------------------------------------

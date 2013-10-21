@@ -24,8 +24,8 @@
 ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type( QWidget* parent )
     : ADN_ListView( parent, "Material", tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanMaterialInfos >( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Urban_Data::UrbanMaterialInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type( QWidget* paren
 //-----------------------------------------------------------------------------
 ADN_ListView_UrbanMaterial_Type::~ADN_ListView_UrbanMaterial_Type()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

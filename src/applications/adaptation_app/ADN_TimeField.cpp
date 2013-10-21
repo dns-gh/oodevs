@@ -79,7 +79,7 @@ namespace
 ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
     : QWidget( pParent, szName )
 {
-    pConnector_ = new ADN_Connector_String< ADN_TimeField >( this );
+    pConnector_.reset( new ADN_Connector_String< ADN_TimeField >( this ) );
     // objects
     Q3HBoxLayout *pLayout = new Q3HBoxLayout( this );
     pLayout->setMargin( 0 );
@@ -104,7 +104,7 @@ ADN_TimeField::~ADN_TimeField()
 // -----------------------------------------------------------------------------
 void ADN_TimeField::OnValueChanged()
 {
-    static_cast< ADN_Connector_String< ADN_TimeField >* >( pConnector_ )->SetDataChanged( text() );
+    static_cast< ADN_Connector_String< ADN_TimeField >& >( *pConnector_ ).SetDataChanged( text() );
 }
 
 // -----------------------------------------------------------------------------

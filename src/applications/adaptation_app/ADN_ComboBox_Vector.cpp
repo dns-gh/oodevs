@@ -46,7 +46,7 @@ public:
 ADN_ComboBox_Vector::ADN_ComboBox_Vector( QWidget* pParent )
     : ADN_ComboBox( pParent )
 {
-    pConnector_ = new ADN_CBV_Connector( *this );
+    pConnector_.reset( new ADN_CBV_Connector( *this ) );
 }
 
 // -----------------------------------------------------------------------------

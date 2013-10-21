@@ -79,10 +79,8 @@ private:
 ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, const std::map< void*, unsigned int >& userIds )
     : ADN_ListView( 0, "ADNWeaponsPhSizeListView", tools::translate( "ADN_Weapons_PhSizeListView", "Target size" ) )
 {
-    this->setMaximumHeight( 300 );
-
-    // Connector creation.
-    pConnector_ = new ADN_CLV_PhSizes( *this, plot, userIds );
+    setMaximumHeight( 300 );
+    pConnector_.reset( new ADN_CLV_PhSizes( *this, plot, userIds ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +89,7 @@ ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, const std
 // -----------------------------------------------------------------------------
 ADN_Weapons_PhSizeListView::~ADN_Weapons_PhSizeListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

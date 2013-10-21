@@ -111,9 +111,9 @@ void ADN_Equipments_Sensors_GUI::CreateNewSensor( int nSensor )
 {
     SensorInfos* pNewInfo = new SensorInfos();
     pNewInfo->SetCrossedElement( ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos()[ nSensor ] );
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );
+    ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    pCTable.AddItem( pNewInfo );
+    pCTable.AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ void ADN_Equipments_Sensors_GUI::RemoveCurrentSensor()
     {
         // remove current data from list
         // take care cause pCurData_ can change!!
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurSensor );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurSensor );
     }
 }
 

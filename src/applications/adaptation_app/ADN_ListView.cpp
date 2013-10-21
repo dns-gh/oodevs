@@ -421,8 +421,8 @@ void ADN_ListView::FinishCreation( ADN_Ref_ABC* ref )
         return;
     }
 
-    ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCList->AddItem( ref );
+    ADN_Connector_Vector_ABC& pCList = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    pCList.AddItem( ref );
 
     selectionModel()->setCurrentIndex( dataModel_.indexFromItem( FindItem( ref ) ), QItemSelectionModel::ClearAndSelect );
 
@@ -449,7 +449,7 @@ bool ADN_ListView::ContextMenuDelete()
     else if( !DeletionWarning() )
         return false;
     // Remove the item from the list.
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
+    static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurrentData );
     ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     delete pCurrentData;
     return true;
@@ -895,7 +895,7 @@ void ADN_ListView::RemoveCurrentElement()
 {
     void* data = GetCurrentData();
     if( data )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( data );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( data );
 }
 
 // -----------------------------------------------------------------------------

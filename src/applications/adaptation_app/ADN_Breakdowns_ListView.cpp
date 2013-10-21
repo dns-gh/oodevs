@@ -26,8 +26,7 @@ typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
 ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Breakdowns_ListView", ADN_Tr::ConvertFromWorkspaceElement( eBreakdowns ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView< BreakdownInfo >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< BreakdownInfo >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -37,7 +36,7 @@ ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_ListView::~ADN_Breakdowns_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

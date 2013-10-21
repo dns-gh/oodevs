@@ -28,10 +28,8 @@ typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_Sensors", ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<SensorInfos>( *this );
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView<SensorInfos>( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -40,7 +38,7 @@ ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_ListView_Sensors::~ADN_ListView_Sensors()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

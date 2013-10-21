@@ -31,7 +31,7 @@ ADN_GraphData::ADN_GraphData( uint nUserID, GQ_Plot& plot )
 ADN_GraphData::~ADN_GraphData()
 {
     clear_owned_ptrs( graphValueList_ );
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

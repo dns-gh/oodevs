@@ -65,7 +65,7 @@ void ADN_Automata_SubUnitsTable::RemoveCurrentElement()
     AutomatUnitInfos* pCurPh = static_cast< AutomatUnitInfos* >( GetSelectedData() );
     if( pCurPh != 0 )
     {
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurPh );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurPh );
         emit ItemRemoved( pCurPh->GetCrossedElement()->strName_.GetData() );
     }
 }

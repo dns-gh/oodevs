@@ -64,16 +64,16 @@ void ADN_Template_Usages::OnContextMenu( const QPoint& point )
     {
         ADN_Urban_Data::UsageTemplateInfos* pCurrent = (ADN_Urban_Data::UsageTemplateInfos*)GetSelectedData();
         if( pCurrent != 0 )
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrent );
+            static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurrent );
     }
     else
     {
         ADN_Urban_Data::AccommodationInfos* pResult = accommodations[ nMenuResult - 2 ];
         ADN_Urban_Data::UsageTemplateInfos* pNewInfo = new ADN_Urban_Data::UsageTemplateInfos( *pResult, 0 );
 
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
+        pCTable.AddItem( 0 );
     }
 }
 

@@ -27,10 +27,8 @@ typedef ADN_NBC_Data::NbcAgentInfos NbcAgentInfos;
 ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent )
 : ADN_ListView( pParent, "ADN_NBC_NbcAgentListView", ADN_Tr::ConvertFromWorkspaceElement( eNBC ).c_str() )
 {
-    // connector creation
-    pConnector_ = new ADN_Connector_ListView<NbcAgentInfos>(*this);
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< NbcAgentInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +37,7 @@ ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_NBC_NbcAgentListView::~ADN_NBC_NbcAgentListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

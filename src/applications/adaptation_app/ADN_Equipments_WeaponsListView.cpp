@@ -29,11 +29,8 @@ ADN_Equipments_WeaponsListView::ADN_Equipments_WeaponsListView( QWidget* pParent
 {
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
-
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<WeaponInfos>(*this);
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< WeaponInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -42,7 +39,7 @@ ADN_Equipments_WeaponsListView::ADN_Equipments_WeaponsListView( QWidget* pParent
 //-----------------------------------------------------------------------------
 ADN_Equipments_WeaponsListView::~ADN_Equipments_WeaponsListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -84,7 +81,7 @@ void ADN_Equipments_WeaponsListView::OnContextMenu( const QPoint& pt )
     {
         // Remove the weapon from the list.
         WeaponInfos* pCurWeapon = (WeaponInfos*)pCurData_;
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurWeapon);
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem(pCurWeapon);
     }
     else if( nMenuResult > 1 )
     {
@@ -94,8 +91,8 @@ void ADN_Equipments_WeaponsListView::OnContextMenu( const QPoint& pt )
         // Add the weapon to the list.
         WeaponInfos* pNewInfo = new WeaponInfos( * vWeapons[nIndex] );
 
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
         if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }

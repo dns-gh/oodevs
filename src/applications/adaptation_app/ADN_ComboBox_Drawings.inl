@@ -21,7 +21,7 @@ inline ADN_ComboBox_Drawings< T >::ADN_ComboBox_Drawings( QWidget* pParent /* = 
 {
     setIconSize( QSize( iconSize, iconSize ) );
     setStyle( new gui::StandardIconProxyStyle( iconSize ) );
-    pConnector_ = new ADN_ComboBox_Drawings_Connector< T >( *this );
+    pConnector_.reset( new ADN_ComboBox_Drawings_Connector< T >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

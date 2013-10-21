@@ -28,9 +28,8 @@ typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfo
 ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ActiveProtectionsListView", ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<ActiveProtectionsInfos>( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView<ActiveProtectionsInfos>( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +38,7 @@ ADN_ActiveProtectionsListView::ADN_ActiveProtectionsListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_ActiveProtectionsListView::~ADN_ActiveProtectionsListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

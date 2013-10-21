@@ -29,8 +29,8 @@ typedef ADN_Volumes_Data::VolumeInfos VolumeInfos;
 ADN_ListView_Categories_Size::ADN_ListView_Categories_Size( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_Size", tools::translate( "ADN_ListView_Categories_Size", "Sizes" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< VolumeInfos >( *this );
-    this->SetDeletionEnabled( true, false );
+    pConnector_.reset( new ADN_Connector_ListView< VolumeInfos >( *this ) );
+    SetDeletionEnabled( true, false );
 }
 
 //-----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ ADN_ListView_Categories_Size::ADN_ListView_Categories_Size( QWidget* parent )
 //-----------------------------------------------------------------------------
 ADN_ListView_Categories_Size::~ADN_ListView_Categories_Size()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

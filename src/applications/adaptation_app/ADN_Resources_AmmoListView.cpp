@@ -34,9 +34,8 @@ typedef ADN_Resources_Data::CategoryInfo CategoryInfo;
 ADN_Resources_AmmoListView::ADN_Resources_AmmoListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Resources_AmmoListView", ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<AmmoCategoryInfo>( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView<AmmoCategoryInfo>( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ ADN_Resources_AmmoListView::ADN_Resources_AmmoListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Resources_AmmoListView::~ADN_Resources_AmmoListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

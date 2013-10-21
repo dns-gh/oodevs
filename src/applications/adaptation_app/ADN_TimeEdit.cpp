@@ -27,7 +27,7 @@ ADN_TimeEdit::ADN_TimeEdit( QWidget* parent )
     // seconds, and add an option to this editor.
     setDisplayFormat( ADN_Tools::GetLocalFormatWithoutSeconds() );
     setTime( QTime( 0, 0 ) );
-    pConnector_ = new ADN_Connector_String< ADN_TimeEdit >( this );
+    pConnector_.reset( new ADN_Connector_String< ADN_TimeEdit >( this ) );
     connect( this, SIGNAL( timeChanged( const QTime& ) ), this, SLOT( TimeChanged( const QTime& ) ) );
 }
 
@@ -37,7 +37,7 @@ ADN_TimeEdit::ADN_TimeEdit( QWidget* parent )
 // -----------------------------------------------------------------------------
 ADN_TimeEdit::~ADN_TimeEdit()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,5 +67,5 @@ void ADN_TimeEdit::setText( const QString& text )
 // -----------------------------------------------------------------------------
 void ADN_TimeEdit::TimeChanged( const QTime& time )
 {
-    static_cast< ADN_Connector_String< ADN_TimeEdit >* >( pConnector_ )->SetDataChanged( ADN_Tools::ConvertLocalTimeToXmlTime( time.toString( ADN_Tools::GetLocalFormatWithoutSeconds() ) ) );
+    static_cast< ADN_Connector_String< ADN_TimeEdit >& >( *pConnector_ ).SetDataChanged( ADN_Tools::ConvertLocalTimeToXmlTime( time.toString( ADN_Tools::GetLocalFormatWithoutSeconds() ) ) );
 }

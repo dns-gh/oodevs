@@ -47,8 +47,8 @@ namespace
 ADN_Equipments_Resources_ListView::ADN_Equipments_Resources_ListView( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* parent /* = 0 */ )
     : ADN_ListView( parent, objectName , tools::translate( "ADN_Equipments_Resources_ListView", "Resources" ) )
 {
-    pConnector_ = new ADN_Connector_ListView_Equipment_Resource( *this );
-    connector = pConnector_;
+    pConnector_.reset( new ADN_Connector_ListView_Equipment_Resource( *this ) );
+    connector = pConnector_.get();
 
     setAlternatingRowColors( true );
 
@@ -116,14 +116,11 @@ void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
 
     int nMenuResult = menu.exec(pt);
 
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    if( !pCTable )
-        return;
-
+    ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
     if( nMenuResult == 1 )
     {
         assert( pCurData_ != 0 );
-        pCTable->RemItem( pCurData_ );
+        pCTable.RemItem( pCurData_ );
     }
     else if( nMenuResult > 1 )
     {
@@ -133,8 +130,8 @@ void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
         pNewInfo->SetCrossedElement( &category );
         pNewInfo->rNbr_ = 1;
 
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
+        pCTable.AddItem( pNewInfo );
+        pCTable.AddItem( 0 );
 
         if( ADN_ListView* listView = ADN_Workspace::GetWorkspace().GetEquipments().GetGui().GetListView() )
             if( ADN_Equipments_Data::EquipmentInfos* infos = static_cast< ADN_Equipments_Data::EquipmentInfos* >( listView->GetCurrentData() ) )

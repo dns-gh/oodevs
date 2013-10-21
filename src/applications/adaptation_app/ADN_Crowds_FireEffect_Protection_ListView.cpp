@@ -48,9 +48,8 @@ public:
 ADN_Crowds_FireEffect_Protection_ListView::ADN_Crowds_FireEffect_Protection_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Crowds_FireEffect_Protection_ListView", tools::translate( "ADN_Crowds_FireEffect_Protection_ListView", "Protections" ) )
 {
-    // Connector creation
-    pConnector_ = new ADN_Protections( *this );
-    this->SetDeletionEnabled( false );
+    pConnector_.reset( new ADN_Protections( *this ) );
+    SetDeletionEnabled( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +58,7 @@ ADN_Crowds_FireEffect_Protection_ListView::ADN_Crowds_FireEffect_Protection_List
 // -----------------------------------------------------------------------------
 ADN_Crowds_FireEffect_Protection_ListView::~ADN_Crowds_FireEffect_Protection_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

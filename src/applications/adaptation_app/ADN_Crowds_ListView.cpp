@@ -26,9 +26,8 @@ typedef ADN_Crowds_Data::CrowdsInfos PopulationInfos;
 ADN_Crowds_ListView::ADN_Crowds_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Crowds_ListView", ADN_Tr::ConvertFromWorkspaceElement( eCrowds ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<PopulationInfos>(*this);
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< PopulationInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +36,7 @@ ADN_Crowds_ListView::ADN_Crowds_ListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Crowds_ListView::~ADN_Crowds_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

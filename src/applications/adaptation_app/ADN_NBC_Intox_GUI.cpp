@@ -86,7 +86,7 @@ ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent, const QString& objectNam
     QWidget* pHolder = builder.AddFieldHolder( this );
     builder.AddField< ADN_CheckBox >( pHolder, "contamination", tr( "Contamination" ), vInfosConnectors_[eContaminationPresent] );
 
-    pConnector_ = new ADN_NBC_Intox_Connector( vInfosConnectors_ );
+    pConnector_.reset( new ADN_NBC_Intox_Connector( vInfosConnectors_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,6 +95,6 @@ ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent, const QString& objectNam
 // -----------------------------------------------------------------------------
 ADN_NBC_Intox_GUI::~ADN_NBC_Intox_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 

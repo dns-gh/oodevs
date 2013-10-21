@@ -11,6 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Gfx_ABC.h"
+#include "ADN_Connector_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Gfx_ABC constructor
@@ -30,4 +31,31 @@ ADN_Gfx_ABC::ADN_Gfx_ABC( bool bAuto )
 ADN_Gfx_ABC::~ADN_Gfx_ABC()
 {
     // NOTHING
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Gfx_ABC::GetConnector
+// Created: JDY 03-07-10
+//-----------------------------------------------------------------------------
+ADN_Connector_ABC& ADN_Gfx_ABC::GetConnector()
+{
+    return *pConnector_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Gfx_ABC::SetAutoEnabled
+// Created: JDY 03-07-16
+//-----------------------------------------------------------------------------
+void ADN_Gfx_ABC::SetAutoEnabled( bool bAuto )
+{
+    bAutoEnabled_ = bAuto;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Gfx_ABC::IsAutoEnabled
+// Created: JDY 03-07-16
+//-----------------------------------------------------------------------------
+bool ADN_Gfx_ABC::IsAutoEnabled()
+{
+    return bAutoEnabled_;
 }

@@ -30,7 +30,7 @@ ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( QWidget* parent, ADN_M
     : ADN_ListView( parent, "ADN_ListView_FragOrderTypes", tr( "Fragmentary orders" ) )
     , orders_( orders )
 {
-    pConnector_ = new ADN_Connector_ListView< FragOrder >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< FragOrder >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -40,7 +40,7 @@ ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( QWidget* parent, ADN_M
 // -----------------------------------------------------------------------------
 ADN_ListView_FragOrderTypes::~ADN_ListView_FragOrderTypes()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

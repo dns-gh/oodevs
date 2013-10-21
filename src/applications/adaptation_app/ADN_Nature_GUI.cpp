@@ -22,7 +22,7 @@ ADN_Nature_GUI::ADN_Nature_GUI( QGridLayout* parent, int row /* = 0 */ )
     : NatureEditionWidget( parent, row )
     , ADN_Gfx_ABC()
 {
-    pConnector_ = new ADN_Connector_String< ADN_Nature_GUI >( this );
+    pConnector_.reset( new ADN_Connector_String< ADN_Nature_GUI >( this ) );
     connect( this, SIGNAL( textChanged( const QString& ) ), SLOT( OnTextChanged( const QString& ) ) );
 }
 
@@ -32,7 +32,7 @@ ADN_Nature_GUI::ADN_Nature_GUI( QGridLayout* parent, int row /* = 0 */ )
 // -----------------------------------------------------------------------------
 ADN_Nature_GUI::~ADN_Nature_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ ADN_Nature_GUI::~ADN_Nature_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Nature_GUI::OnTextChanged( const QString& value )
 {
-    static_cast< ADN_Connector_String< ADN_Nature_GUI >* >( pConnector_ )->SetDataChanged( value );
+    static_cast< ADN_Connector_String< ADN_Nature_GUI >& >( *pConnector_ ).SetDataChanged( value );
 }
 
 // -----------------------------------------------------------------------------

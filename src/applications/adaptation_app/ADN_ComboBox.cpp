@@ -111,9 +111,9 @@ void ADN_ComboBox::ItemSelected( int ndx )
     if( !fromView_ && !vItemsEnum_.empty() )
         ndx = vItemsEnum_.at( ndx );
     fromView_ = false;
-    if( pConnector_ )
+    if( pConnector_.get() )
     {
-        if( ADN_Connector_Combo_ABC* connectorCombo = dynamic_cast< ADN_Connector_Combo_ABC* >( pConnector_ ) )
+        if( ADN_Connector_Combo_ABC* connectorCombo = dynamic_cast< ADN_Connector_Combo_ABC* >( pConnector_.get() ) )
             pCurData_ = connectorCombo->SetNdxChanged( ndx );
     }
     else

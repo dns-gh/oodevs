@@ -59,12 +59,11 @@ public:
     explicit ADN_TextEdit( QWidget* parent = 0, const char * name = 0 )
         : ADN_TextEdit_ABC( parent,name )
     {
-        pConnector_ = new Connector( this );
-        assert( pConnector_ != 0 );
+        pConnector_.reset( new Connector( this ) );
     }
     virtual ~ADN_TextEdit()
     {
-        delete pConnector_;
+        // NOTHING
     }
 };
 

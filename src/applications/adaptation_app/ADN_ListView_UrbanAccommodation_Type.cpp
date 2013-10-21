@@ -25,8 +25,8 @@
 ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWidget* parent )
     : ADN_ListView( parent, "Activity", tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activity" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::AccommodationInfos >( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Urban_Data::AccommodationInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWid
 //-----------------------------------------------------------------------------
 ADN_ListView_UrbanAccommodation_Type::~ADN_ListView_UrbanAccommodation_Type()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

@@ -43,7 +43,7 @@ ADN_Supply_TrucksTimeTable::ADN_Supply_TrucksTimeTable( const QString& objectNam
     delegate_.AddDelayEditOnColumn( 1 );
     proxyModel_->setDynamicSortFilter( true );
     Sort();
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->AddItem( 0 );
+    static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,16 +76,16 @@ void ADN_Supply_TrucksTimeTable::OnContextMenu( const QPoint& pt )
         // Delete the current element.
         ConvoyInfo* pCurrentPart = (ConvoyInfo*)GetSelectedData();
         if( pCurrentPart != 0 )
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentPart );
+            static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurrentPart );
     }
     else
     {
         assert( nMenuResult == 0 );
         // Create a new element
         ConvoyInfo* pNewInfo = new ConvoyInfo( "1s" );
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
+        pCTable.AddItem( 0 );
     }
 }
 

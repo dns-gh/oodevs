@@ -30,8 +30,7 @@
 ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_Objects", ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView< ADN_Objects_Data_ObjectInfos >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Objects_Data_ObjectInfos >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -41,7 +40,7 @@ ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_ListView_Objects::~ADN_ListView_Objects()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 namespace

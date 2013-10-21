@@ -26,9 +26,8 @@ typedef ADN_ResourceNetworks_Data::ResourceNetworkInfos ResourceNetworkInfos;
 ADN_ListView_ResourceNetworks::ADN_ListView_ResourceNetworks( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_ResourceNetworks", ADN_Tr::ConvertFromWorkspaceElement( eResourceNetworks ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView< ResourceNetworkInfos >(*this);
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< ResourceNetworkInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +36,7 @@ ADN_ListView_ResourceNetworks::ADN_ListView_ResourceNetworks( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_ListView_ResourceNetworks::~ADN_ListView_ResourceNetworks()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

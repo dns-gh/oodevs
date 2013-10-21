@@ -142,9 +142,9 @@ void ADN_Equipments_Dotations_GUI::AddNewDotation( ADN_Resources_Data::CategoryI
     pNewInfo->SetCrossedElement( &category );
     pNewInfo->rNbr_ = 1;
 
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );
+    ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    pCTable.AddItem( pNewInfo );
+    pCTable.AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void ADN_Equipments_Dotations_GUI::AddNewDotation( ADN_Resources_Data::CategoryI
 void ADN_Equipments_Dotations_GUI::RemoveCurrentDotation()
 {
     assert( GetSelectedData() != 0 );
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetSelectedData() );
+    static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( GetSelectedData() );
 }
 
 // -----------------------------------------------------------------------------

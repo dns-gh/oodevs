@@ -29,8 +29,8 @@ typedef ADN_Armors_Data::ArmorInfos ArmorInfos;
 ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_Armor", tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< ArmorInfos >( *this );
-    this->SetDeletionEnabled( true, false );
+    pConnector_.reset( new ADN_Connector_ListView< ArmorInfos >( *this ) );
+    SetDeletionEnabled( true, false );
 }
 
 //-----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor( QWidget* parent )
 //-----------------------------------------------------------------------------
 ADN_ListView_Categories_Armor::~ADN_ListView_Categories_Armor()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

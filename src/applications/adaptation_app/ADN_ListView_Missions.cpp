@@ -31,10 +31,8 @@ ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget*
     , eEntityType_  ( eEntityType )
     , currentMissions_( 0 )
 {
-    // connector creation
-    pConnector_ = new ADN_Connector_ListView< MissionInfos >(*this);
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< MissionInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +41,7 @@ ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget*
 // -----------------------------------------------------------------------------
 ADN_ListView_Missions::~ADN_ListView_Missions()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

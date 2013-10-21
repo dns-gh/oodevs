@@ -317,10 +317,10 @@ void ADN_Weapons_GUI::Build()
     pGraph->XAxis().ShowSubTicks( 10 );
     pGraph->XAxis().ShowTicksValue( true );
 
-    ADN_GC_PhSize* pGraphConnector = builder.AddWidget< ADN_GC_PhSize, ADN_Graph& >( "ph-graph", *pGraph );
-    vInfosConnectors[ ePhsGraph ] = pGraphConnector;
+    graphConnector_.reset( new ADN_GC_PhSize( *pGraph ) );
+    vInfosConnectors[ ePhsGraph ] = graphConnector_.get();
 
-    ADN_Weapons_PhSizeListView* pPhSizeListView = builder.AddWidget< ADN_Weapons_PhSizeListView, GQ_Plot&, const std::map< void*, unsigned int >& >( "ph-size", *pGraph, pGraphConnector->GetUserIds() );
+    ADN_Weapons_PhSizeListView* pPhSizeListView = builder.AddWidget< ADN_Weapons_PhSizeListView, GQ_Plot&, const std::map< void*, unsigned int >& >( "ph-size", *pGraph, static_cast< ADN_GC_PhSize& >( *graphConnector_ ).GetUserIds() );
     vInfosConnectors[ ePhs ] = &pPhSizeListView->GetConnector();
     T_ConnectorVector vPhConnectors( eNbrPhSizeGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 

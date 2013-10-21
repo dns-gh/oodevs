@@ -31,7 +31,7 @@ ADN_GroupBox::ADN_GroupBox( QWidget * parent /* = 0*/, const char * name /* = 0*
 {
     this->setCheckable( true );
     this->setChecked( false );
-    pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
+    pConnector_.reset( new ADN_Connector_Bool<ADN_GroupBox>( this ) );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
@@ -45,7 +45,7 @@ ADN_GroupBox::ADN_GroupBox( const QString & title, QWidget * parent /* = 0*/, co
 {
     this->setCheckable( true );
     this->setChecked( false );
-    pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
+    pConnector_.reset( new ADN_Connector_Bool<ADN_GroupBox>( this ) );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
@@ -59,7 +59,7 @@ ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, QWidget * p
 {
     this->setCheckable( true );
     this->setChecked( false );
-    pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
+    pConnector_.reset( new ADN_Connector_Bool<ADN_GroupBox>( this ) );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
@@ -73,7 +73,7 @@ ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, const QStri
 {
     this->setCheckable( true );
     this->setChecked( false );
-    pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
+    pConnector_.reset( new ADN_Connector_Bool<ADN_GroupBox>( this ) );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
@@ -83,7 +83,7 @@ ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, const QStri
 // -----------------------------------------------------------------------------
 ADN_GroupBox::~ADN_GroupBox()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ ADN_GroupBox::~ADN_GroupBox()
 //-----------------------------------------------------------------------------
 void ADN_GroupBox::BoolChanged(bool b)
 {
-    static_cast<ADN_Connector_Bool<ADN_GroupBox>*>(pConnector_)->SetDataChanged(b);
+    static_cast< ADN_Connector_Bool< ADN_GroupBox >& >( *pConnector_ ).SetDataChanged( b );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ ADN_GroupBox2::ADN_GroupBox2( QWidget * parent /* = 0 */, const char * name /* =
 {
     this->setCheckable( true );
     this->setChecked( false );
-    pConnector_ = new ADN_Connector_Bool<ADN_GroupBox2>( this );
+    pConnector_.reset( new ADN_Connector_Bool<ADN_GroupBox2>( this ) );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
@@ -119,7 +119,7 @@ ADN_GroupBox2::ADN_GroupBox2( const QString & title, QWidget * parent /* = 0 */,
 {
     this->setCheckable( true );
     this->setChecked( false );
-    pConnector_ = new ADN_Connector_Bool<ADN_GroupBox2>( this );
+    pConnector_.reset( new ADN_Connector_Bool<ADN_GroupBox2>( this ) );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
@@ -129,7 +129,7 @@ ADN_GroupBox2::ADN_GroupBox2( const QString & title, QWidget * parent /* = 0 */,
 // -----------------------------------------------------------------------------
 ADN_GroupBox2::~ADN_GroupBox2()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -138,5 +138,5 @@ ADN_GroupBox2::~ADN_GroupBox2()
 // -----------------------------------------------------------------------------
 void ADN_GroupBox2::BoolChanged(bool b)
 {
-    static_cast<ADN_Connector_Bool<ADN_GroupBox2>*>(pConnector_)->SetDataChanged(b);
+    static_cast< ADN_Connector_Bool< ADN_GroupBox2 >& >( *pConnector_ ).SetDataChanged( b );
 }
