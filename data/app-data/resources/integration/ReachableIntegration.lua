@@ -188,7 +188,12 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
     if not pos2Pos then
         return 1
     end
-    local distanceMax = DEC_Detection_Distance and DEC_Detection_Distance() or 4000
+    local distanceMax 
+    if integration.isFlying() then -- distance scale is much bigger for flying agents
+        distanceMax = 20000
+    else
+        distanceMax = DEC_Detection_Distance and DEC_Detection_Distance() or 4000
+    end
     return LinearInterpolation( 1, 100, 10, distanceMax, false, integration.distance( pos1, pos2 ) )
 end
 
