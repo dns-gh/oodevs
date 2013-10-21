@@ -48,6 +48,8 @@ class PackageView extends Backbone.View
         return unless @model.attributes.name?
 
         $(@el).html package_template @model.attributes
+        briefings = @$el.find ".briefing_content"
+        briefings.find("style, meta").remove()
 
         for it in $(@el).find ".action .more"
             $(it).click ->
