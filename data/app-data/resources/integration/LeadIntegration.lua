@@ -929,33 +929,18 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
             proj = integration.advanceAlongAOR( entity.source ) 
             self.progressionInAOR[ entity ] = proj
         end
-    
-        local pionHasSupport, supportDistance
-        local maxsupportDistance = 1200
-        for _, pion in pairs( pionsSE ) do
-              supportDistance = integration.getSupportDistanceToCoordination( pion.source, 0.5 )
-              if supportDistance > maxsupportDistance then
-                  maxsupportDistance = supportDistance
-              end
-        end
-      
-        local automatePosition = meKnowledge:getPosition()
-        local inCity = integration.pointIsInCity(automatePosition)
-    
-        local largeurFuseau = fuseau:getWidth()
 
-        if inCity then
-          maxsupportDistance = maxsupportDistance/4
-        else
-          maxsupportDistance = maxsupportDistance/2
-        end
-       
-        -- Gestion de l'elongation intra echelon   
+        -- Gestion de l'elongation intra echelon
+        local largeurFuseau = fuseau:getWidth()
         Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = pionsPE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
         Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = pionsEE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
-        
-        -- Gestion de l'elongation inter echelon
-        Activate( self.skill.links.coordinationManager , 1, { enititesFromEchelon = fusionList( pionsPE, pionsSE ), progressionInAOR = self.progressionInAOR, distance = maxsupportDistance } )
+
+        -- Management of support coordination.
+        -- The 'meKnowledge.subordinatesToSlowDown' table contains subordinates that need to wait their support.
+        for subordinate in pairs( meKnowledge.subordinatesToSlowDown or emptyTable ) do 
+            local sub = CreateKnowledge( integration.ontology.types.agent, subordinate )
+            Activate( self.skill.links.issueSlowDownOrder , 1, { subordinate = sub } )
+        end
     end
 
     if not self.params.SECanBeFirst then
