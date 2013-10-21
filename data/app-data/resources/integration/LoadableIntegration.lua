@@ -61,6 +61,9 @@ integration.unloadFriendOrFoe = function( unit )
     if myself.loadedUnits then
         myself.loadedUnits[ unit ] = nil
     end
+    if myself.capturedUnits and #myself.capturedUnits > 0 then
+        myself.capturedUnits = removeFromList( unit, myself.capturedUnits ) -- remove from captured list
+    end
     if DEC_Prisonniers_EstEmbarque( unit.source ) then
         DEC_Prisonniers_Debarquer( unit.source )
         return true
@@ -101,6 +104,9 @@ end
 integration.unloadFriend = function( unit )
     if myself.loadedUnits then
         myself.loadedUnits[ unit ] = nil
+    end
+    if myself.capturedUnits and #myself.capturedUnits > 0 then
+        myself.capturedUnits = removeFromList( unit, myself.capturedUnits ) -- remove from captured list
     end
     DEC_Transport_DebarquerPionSansDelais( unit.source )
     return true
@@ -327,6 +333,7 @@ integration.isTransportingCrowd = function()
 end
 
 integration.isTransported = function( enemy )
+DEC_Trace("integration.istransported : "..tostring(DEC_ConnaissanceAgent_EstTransporte( enemy.source )))
     return DEC_ConnaissanceAgent_EstTransporte( enemy.source )
 end
 
