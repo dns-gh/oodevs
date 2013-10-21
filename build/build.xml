@@ -896,6 +896,7 @@
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="htmlhelp" version="4.74.8702"/>
         <update name="iconv"/>
+        <update name="mapnik"/>
         <update name="masalife/brain"/>
         <update name="mapnik"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
