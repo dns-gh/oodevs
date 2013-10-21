@@ -57,7 +57,8 @@ public:
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side ) = 0;
     virtual void NameChanged( const std::string& identifier, const std::string& name ) = 0;
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type ) = 0;
-    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number ) = 0;
+    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int available,
+                    unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages ) = 0;
     virtual void UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId ) = 0;
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign ) = 0;
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& embeddedUnits ) = 0;

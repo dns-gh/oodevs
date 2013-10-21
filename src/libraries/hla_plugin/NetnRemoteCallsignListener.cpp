@@ -143,7 +143,8 @@ void NetnRemoteCallsignListener::TypeChanged( const std::string& /*identifier*/,
 // Name: NetnRemoteCallsignListener::EquipmentUpdated
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void NetnRemoteCallsignListener::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void NetnRemoteCallsignListener::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*available*/,
+        unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

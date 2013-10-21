@@ -213,7 +213,8 @@ void RemoteAgentController::TypeChanged( const std::string& identifier, const rp
 // Name: RemoteAgentController::EquipmentUpdated
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void RemoteAgentController::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void RemoteAgentController::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& /*equipmentType*/, unsigned int /*available*/,
+                    unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     T_UnitCreations::const_iterator it( unitCreations_.find( identifier ) );
     if( unitCreations_.end() == it )

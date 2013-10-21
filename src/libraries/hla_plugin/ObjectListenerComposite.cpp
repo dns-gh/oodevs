@@ -85,9 +85,10 @@ void ObjectListenerComposite::TypeChanged( const std::string& identifier, const 
 // Name: ObjectListenerComposite::EquipmentUpdated
 // Created: AHC 2012-02-27
 // -----------------------------------------------------------------------------
-void ObjectListenerComposite::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number )
+void ObjectListenerComposite::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int available,
+        unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages )
 {
-    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::EquipmentUpdated, _1, identifier, boost::cref(equipmentType), number ) );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::EquipmentUpdated, _1, identifier, boost::cref(equipmentType), available, dead, lightDamages, heavyDamages ) );
 }
 
 // -----------------------------------------------------------------------------

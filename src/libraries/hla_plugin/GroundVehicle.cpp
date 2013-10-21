@@ -97,7 +97,8 @@ void GroundVehicle::FormationChanged( bool /*isOnRoad*/ )
 // Name: GroundVehicle::EquipmentChanged
 // Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void GroundVehicle::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
+void GroundVehicle::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/,
+        unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

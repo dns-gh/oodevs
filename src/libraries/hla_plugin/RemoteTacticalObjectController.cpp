@@ -205,7 +205,8 @@ void RemoteTacticalObjectController::TypeChanged( const std::string& identifier,
 // Name: RemoteTacticalObjectController::EquipmentUpdated
 // Created: AHC 2012-09-07
 // -----------------------------------------------------------------------------
-void RemoteTacticalObjectController::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void RemoteTacticalObjectController::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*available*/,
+            unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

@@ -135,7 +135,8 @@ void RemoteAgentResolver::TypeChanged( const std::string& /*identifier*/, const 
 // Name: RemoteAgentResolver::EquipmentUpdated
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void RemoteAgentResolver::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*available*/,
+                    unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

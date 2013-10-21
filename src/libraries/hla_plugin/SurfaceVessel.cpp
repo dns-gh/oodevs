@@ -30,7 +30,7 @@ namespace
    {
        type.Deserialize( deserializer );
        listener.TypeChanged( identifier, type );
-       listener.EquipmentUpdated( identifier, type, 1 );
+       listener.EquipmentUpdated( identifier, type, 1, 0, 0, 0 );
    }
 }
 
@@ -126,7 +126,8 @@ void SurfaceVessel::FormationChanged( bool /*isOnRoad*/ )
 // Name: SurfaceVessel::EquipmentChanged
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-void SurfaceVessel::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
+void SurfaceVessel::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/,
+        unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

@@ -74,7 +74,8 @@ private:
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type );
-    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number );
+    virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int available,
+            unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages );
     virtual void UniqueIdChanged( const std::string& identifier, const std::vector< char >& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );
@@ -273,7 +274,8 @@ void LocationOwnershipPolicy::OwnershipState::TypeChanged( const std::string& /*
 // Name: LocationOwnershipPolicy::OwnershipState::EquipmentUpdated
 // Created: AHC 2012-03-12
 // -----------------------------------------------------------------------------
-void LocationOwnershipPolicy::OwnershipState::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void LocationOwnershipPolicy::OwnershipState::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*available*/,
+            unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }

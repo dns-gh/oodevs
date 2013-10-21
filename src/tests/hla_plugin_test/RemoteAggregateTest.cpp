@@ -108,8 +108,8 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute
     firstSilentEntity.Serialize( serializer );
     secondSilentEntity.Serialize( serializer );
     mock::sequence s;
-    MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "1 2 3" ), 42u );
-    MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "4 5 6" ), 43u );
+    MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "1 2 3" ), 42u, 0u, 0u, 0u );
+    MOCK_EXPECT( listener.EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "4 5 6" ), 43u, 0u, 0u, 0u );
     {
         ::hla::Deserializer deserializer( Deserialize() );
         aggregate.Deserialize( "SilentEntities", deserializer );

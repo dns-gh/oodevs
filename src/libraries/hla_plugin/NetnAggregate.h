@@ -63,7 +63,8 @@ private:
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
-    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
+    virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available,
+            unsigned int dead, unsigned int lightDamages, unsigned int heavyDamages );
     virtual void EmbarkmentChanged( bool mounted );
     virtual void PlatformAdded( const std::string& name, unsigned int id );
     virtual void ChildrenChanged( const T_ChildrenIds& children );

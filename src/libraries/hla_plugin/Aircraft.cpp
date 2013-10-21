@@ -31,7 +31,7 @@ namespace
    {
        type.Deserialize( deserializer );
        listener.TypeChanged( identifier, type );
-       listener.EquipmentUpdated( identifier, type, 1 );
+       listener.EquipmentUpdated( identifier, type, 1, 0, 0, 0 );
    }
 }
 
@@ -127,7 +127,8 @@ void Aircraft::FormationChanged( bool /*isOnRoad*/ )
 // Name: Aircraft::EquipmentChanged
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-void Aircraft::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
+void Aircraft::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/,
+        unsigned int /*dead*/, unsigned int /*lightDamages*/, unsigned int /*heavyDamages*/ )
 {
     // NOTHING
 }
