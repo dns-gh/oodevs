@@ -24,12 +24,15 @@ func MakeParameters(args ...interface{}) *sword.MissionParameters {
 		var value *sword.MissionParameter
 		if arg == nil {
 			value = MakeNullValue()
-		} else if v, ok := arg.(*sword.MissionParameter); ok {
-			value = v
-		} else if v, ok := arg.(string); ok {
-			value = MakeString(v)
-		} else if v, ok := arg.(float32); ok {
-			value = MakeFloat(v)
+		} else {
+			switch v := arg.(type) {
+			case *sword.MissionParameter:
+				value = v
+			case string:
+				value = MakeString(v)
+			case float32:
+				value = MakeFloat(v)
+			}
 		}
 		reply.Elem = append(reply.Elem, value)
 	}
