@@ -66,8 +66,6 @@ type Model struct {
 
 func NewModel() *Model {
 	model := Model{
-		ready:       false,
-		condId:      0,
 		WaitTimeout: 60 * time.Second,
 		requests:    make(chan *ModelRequest, 128),
 		conds:       []*modelCond{},
