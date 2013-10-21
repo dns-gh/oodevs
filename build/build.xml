@@ -10,9 +10,8 @@
     <property name="licensepath" value="${run.dir}/license.dat"/>
 
     <target name="update">
-        <update name="gocheck"/>
         <update name="golang" version="1.1.1"/>
-        <update name="goprotobuf"/>
+        <update name="golibs"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="protobuf" version="2.3.0"/>
