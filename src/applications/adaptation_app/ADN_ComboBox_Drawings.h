@@ -34,6 +34,12 @@ public:
     //@{
     virtual void insertItem ( ADN_ComboBoxItem* item, int index = -1 );
     //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::auto_ptr< QStyle > style_;
+    //@}
 };
 
 // =============================================================================

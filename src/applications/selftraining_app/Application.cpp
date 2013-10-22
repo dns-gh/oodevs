@@ -87,7 +87,7 @@ void Application::CreateTranslators()
 // -----------------------------------------------------------------------------
 void Application::InitializeStyle()
 {
-    QApplication::setStyle( "windows" );
+    app_.setStyle( "windows" );
     QApplication::setDesktopSettingsAware( false );
 }
 

@@ -99,9 +99,8 @@ void Application_ABC::InitializeBugTrap()
 // -----------------------------------------------------------------------------
 void Application_ABC::InitializeStyle()
 {
-    app_.setStyle( new QCleanlooksStyle ); // $$$$ ABR 2012-07-12: Still needed ?
-    app_.setStyle( new gui::VerticalHeaderStyle( qApp->style() ) );
-
+    style_.reset( new gui::VerticalHeaderStyle() );
+    app_.setStyle( style_.get() );
     QFile file( "style.qss" );
     if( !file.open( QIODevice::Text | QFile::ReadOnly ) )
         QMessageBox::warning( 0, tools::translate( "Application", "Warning" ), "Style file missing. Loading default parameters." );

@@ -78,6 +78,7 @@ protected:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< QStyle >     style_;
     QString                     expiration_;
     bool                        invalidLicense_;
     QLocale                     locale_;
