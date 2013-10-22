@@ -330,7 +330,7 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	// Blast it
 	err = client.DeleteUnit(unit.Id)
 	c.Assert(err, IsNil)
-	c.Assert(model.GetData().FindUnit(unit.Id), IsNil)
+	c.Assert(model.GetUnit(unit.Id), IsNil)
 }
 
 func (s *TestSuite) TestCreateAutomat(c *C) {
@@ -592,7 +592,7 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 func CheckUnitSuperior(model *swapi.Model, c *C,
 	unitId, newAutomatId, oldAutomatId uint32) {
 	// Check AutomatId attribute in Unit
-	unit := model.GetData().FindUnit(unitId)
+	unit := model.GetUnit(unitId)
 	c.Assert(unit, NotNil)
 	c.Assert(unit.AutomatId, Equals, newAutomatId)
 
@@ -1419,7 +1419,7 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 		return len(data.FindUnit(u1.Id).ResourceDotations) > 1
 	})
 
-	u1 = client.Model.GetData().FindUnit(u1.Id)
+	u1 = client.Model.GetUnit(u1.Id)
 	firstDotation := u1.ResourceDotations[0]
 	secondDotation := u1.ResourceDotations[1]
 
@@ -1512,7 +1512,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		return len(data.FindUnit(u1.Id).EquipmentDotations) != 0
 	})
 
-	c.Assert(*client.Model.GetData().FindUnit(u1.Id).EquipmentDotations[equipmentId], DeepEquals, equipment)
+	c.Assert(*client.Model.GetUnit(u1.Id).EquipmentDotations[equipmentId], DeepEquals, equipment)
 
 	// Error: Invalid parameters count
 	err := client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{})
@@ -1735,14 +1735,14 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.FindUnit(u1.Id).Adhesions) != 0
 	})
-	newAdhesions := client.Model.GetData().FindUnit(u1.Id).Adhesions
+	newAdhesions := client.Model.GetUnit(u1.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
 	// No change adhesions if new adhesions are invalid
 	err = client.ChangeUnitAdhesions(u1.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: adhesion must be between -1 and 1`)
-	newAdhesions = client.Model.GetData().FindUnit(u1.Id).Adhesions
+	newAdhesions = client.Model.GetUnit(u1.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
 	// Partial change
@@ -1753,7 +1753,7 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 		updated := data.FindUnit(u1.Id)
 		return math.Abs(float64(updated.Adhesions[0]-0.5)) < 1e-5
 	})
-	newAdhesions = client.Model.GetData().FindUnit(u1.Id).Adhesions
+	newAdhesions = client.Model.GetUnit(u1.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 }
 
@@ -1928,7 +1928,7 @@ func (s *TestSuite) TestUnitRecoverTransportersWithDestroyedEquipments(c *C) {
 		Breakdowns:    nil,
 	}
 	// Transported has 3 equipments not loadable
-	c.Assert(*client.Model.GetData().FindUnit(transported.Id).EquipmentDotations[awayEquipmentId],
+	c.Assert(*client.Model.GetUnit(transported.Id).EquipmentDotations[awayEquipmentId],
 		DeepEquals, awayEquipment)
 
 	// Destroy 2 equipments not loadable
@@ -2284,7 +2284,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.LogFinishHandlings(24)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	unit = client.Model.GetData().FindUnit(unitId)
+	unit = client.Model.GetUnit(unitId)
 	c.Assert(CheckHumanState(unit.HumanDotations, eTrooper, eHealthy, 6, 0), Equals, true)
 	c.Assert(CheckHumanState(unit.HumanDotations, eTrooper, eHealthy, 1, 0), Equals, true)
 	data = client.Model.GetData()
@@ -2326,7 +2326,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.LogFinishHandlings(23)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	c.Assert(client.Model.GetData().FindUnit(unitId).ResourceDotations[0], DeepEquals,
+	c.Assert(client.Model.GetUnit(unitId).ResourceDotations[0], DeepEquals,
 		&swapi.ResourceDotation{
 			Type:      1,
 			Quantity:  3200,
@@ -2360,7 +2360,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.LogFinishHandlings(23)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	dotations := client.Model.GetData().FindUnit(unitId).HumanDotations
+	dotations := client.Model.GetUnit(unitId).HumanDotations
 	c.Assert(CheckHumanState(dotations, eTrooper, eHealthy, 6, 0), Equals, true)
 	c.Assert(CheckHumanState(dotations, eTrooper, eDead, 1, 0), Equals, true)
 	funerals := client.Model.GetData().FuneralHandlings
