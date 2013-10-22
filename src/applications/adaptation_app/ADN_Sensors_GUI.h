@@ -92,8 +92,8 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
 
-    ADN_Table* CreateAgentDetectionTable();
-    ADN_Table* CreateObjectDetectionTable();
+    QWidget* CreateAgentDetectionTable();
+    QWidget* CreateObjectDetectionTable();
     //@}
 
 private:

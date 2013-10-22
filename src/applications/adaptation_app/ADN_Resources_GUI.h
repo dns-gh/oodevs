@@ -130,7 +130,7 @@ public:
     //@{
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
-    ADN_Table* CreatePKTable();
+    QWidget* CreatePKTable();
     void ExportPKs( ADN_HtmlBuilder& builder, ADN_Resources_Data::AmmoCategoryInfo& infos );
     void UpdateGraph();
     void InitializeSimulationCombos();

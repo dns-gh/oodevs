@@ -187,7 +187,7 @@ private:
 
     QWidget* BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder );
 
-    ADN_Table* CreateComposanteSpeedsTable();
+    QWidget* CreateComposanteSpeedsTable();
     //@}
 
 private slots:

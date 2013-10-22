@@ -11,7 +11,6 @@
 #include "ADN_Sensors_GUI.h"
 #include "moc_ADN_Sensors_GUI.cpp"
 
-#include "ADN_Callback.h"
 #include "ADN_MainWindow.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_GroupBox.h"
@@ -425,7 +424,7 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
 // Name: ADN_Sensors_GUI::CreateAgentDetectionTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
+QWidget* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
     ADN_Volumes_Data::T_VolumeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos();
     ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos();
@@ -504,7 +503,7 @@ namespace
 // Name: ADN_Sensors_GUI::CreateObjectDetectionTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
+QWidget* ADN_Sensors_GUI::CreateObjectDetectionTable()
 {
     ADN_ObjectDetection_Table* pTable = new ADN_ObjectDetection_Table( std::string( std::string( strClassName_ ) + "_object-detection-consistency-table" ).c_str() );
     // Fill the table
@@ -564,6 +563,6 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Agent detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateAgentDetectionTable ) );
-    mainWindow.AddTable( tr( "Object detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateObjectDetectionTable ) );
+    mainWindow.AddTable( tr( "Agent detection" ), boost::bind( &ADN_Sensors_GUI::CreateAgentDetectionTable, this ) );
+    mainWindow.AddTable( tr( "Object detection" ), boost::bind( &ADN_Sensors_GUI::CreateObjectDetectionTable, this ) );
 }

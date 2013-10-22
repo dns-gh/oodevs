@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Resources_GUI.h"
 #include "moc_ADN_Resources_GUI.cpp"
-#include "ADN_Callback.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Resources_AmmoListView.h"
 #include "ADN_Resources_AttritionGraph.h"
@@ -486,7 +485,7 @@ void ADN_Resources_GUI::SimulationCombosActivated()
 // Name: ADN_Resources_GUI::CreatePKTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Resources_GUI::CreatePKTable()
+QWidget* ADN_Resources_GUI::CreatePKTable()
 {
     ADN_Armors_Data::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Armors_Data >( eArmors ).GetArmorsInfos();
 
@@ -526,7 +525,7 @@ ADN_Table* ADN_Resources_GUI::CreatePKTable()
 // -----------------------------------------------------------------------------
 void ADN_Resources_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback< ADN_Table*, ADN_Resources_GUI >( this, &ADN_Resources_GUI::CreatePKTable ) );
+    mainWindow.AddTable( tr( "PKs" ), boost::bind( &ADN_Resources_GUI::CreatePKTable, this ) );
 }
 
 // -----------------------------------------------------------------------------

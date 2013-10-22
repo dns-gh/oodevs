@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MainWindow.h"
 #include "moc_ADN_MainWindow.cpp"
-#include "ADN_Callback.h"
 #include "ADN_ConsistencyDialog.h"
 #include "ADN_Enums.h"
 #include "ADN_GeneralConfig.h"
@@ -453,7 +452,7 @@ void ADN_MainWindow::AddPage( E_WorkspaceElements element, QWidget& page, const 
 // Name: ADN_MainWindow::AddTable
 // Created: JSR 2012-11-07
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::AddTable( const QString& name, ADN_Callback_ABC< ADN_Table* >* pCallback )
+void ADN_MainWindow::AddTable( const QString& name, const T_ConsistencyCallBack& pCallback )
 {
     QAction* action = new QAction( name, this );
     QObject::connect( action, SIGNAL( triggered() ), consistencyMapper_.get(), SLOT( map() ) );
@@ -466,13 +465,13 @@ void ADN_MainWindow::AddTable( const QString& name, ADN_Callback_ABC< ADN_Table*
 // Name: ADN_MainWindow::AddListView
 // Created: SBO 2006-01-04
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::AddListView( const QString& name, ADN_Callback_ABC< ADN_ListView* >* pCallback )
+void ADN_MainWindow::AddListView( const QString& name, const T_ConsistencyCallBack& pCallback )
 {
     QAction* action = new QAction( name, this );
     QObject::connect( action, SIGNAL( triggered() ), consistencyMapper_.get(), SLOT( map() ) );
     consistencyMapper_->setMapping( action, name );
     menuConsistencyTables_->addAction( action );
-    consistencyListViews_[ name ] = pCallback;
+    consistencyLists_[ name ] = pCallback;
 }
 
 // -----------------------------------------------------------------------------
@@ -510,15 +509,14 @@ void ADN_MainWindow::OnAbout()
 namespace
 {
     template< typename Dialog, typename Element >
-    bool ShowConsistencyDialog( const QString& name, const std::map< QString, ADN_Callback_ABC< Element* >* >& map )
+    bool ShowConsistencyDialog( const QString& name, const std::map< QString, boost::function< QWidget*() > >& map )
     {
         auto it = map.find( name );
         if( it == map.end() )
             return false;
-        ADN_Callback_ABC< Element* >* callback = it->second;
-        Element* element = (*callback)();
+        QWidget* element = it->second();
         assert( element != 0 );
-        Dialog dialog( 0, name, *element );
+        Dialog dialog( 0, name, static_cast< Element& >( *element ) );
         dialog.exec();
         return true;
     }
@@ -530,8 +528,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::OnShowConsistencyTable( const QString& name ) const
 {
-    if( !ShowConsistencyDialog< ADN_TableDialog >( name, consistencyTables_ ) &&
-        !ShowConsistencyDialog< ADN_ListViewDialog >( name, consistencyListViews_ ) )
+    if( !ShowConsistencyDialog< ADN_TableDialog, ADN_Table >( name, consistencyTables_ ) &&
+        !ShowConsistencyDialog< ADN_ListViewDialog, ADN_ListView >( name, consistencyLists_ ) )
         throw MASA_EXCEPTION( "Invalid consistency table " + name.toStdString() );
 }
 

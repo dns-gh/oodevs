@@ -11,7 +11,6 @@
 #include "ADN_Weapons_GUI.h"
 #include "moc_ADN_Weapons_GUI.cpp"
 
-#include "ADN_Callback.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_Data_WeaponInfos.h"
@@ -395,7 +394,7 @@ void ADN_Weapons_GUI::Build()
 // Name: ADN_Weapons_GUI::CreateWeaponsTable
 // Created: APE 2005-03-29
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
+QWidget* ADN_Weapons_GUI::CreateWeaponsTable()
 {
     ADN_Weapon_Table* pTable = new ADN_Weapon_Table( std::string( strClassName_ + "_weapon-systems-consistency-table" ).c_str() );
     auto& weapons = data_.weapons_;
@@ -418,7 +417,7 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
 // Name: ADN_Weapons_GUI::CreatePHTable
 // Created: APE 2005-03-29
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Weapons_GUI::CreatePHTable()
+QWidget* ADN_Weapons_GUI::CreatePHTable()
 {
     // Compute the existing distances
     std::set< int > distancesSet;
@@ -479,8 +478,8 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Weapon systems" ), new ADN_Callback< ADN_Table*,ADN_Weapons_GUI >( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
-    mainWindow.AddTable( tr( "PHs" ), new ADN_Callback< ADN_Table*,ADN_Weapons_GUI >( this, &ADN_Weapons_GUI::CreatePHTable ) );
+    mainWindow.AddTable( tr( "Weapon systems" ), boost::bind( &ADN_Weapons_GUI::CreateWeaponsTable, this ) );
+    mainWindow.AddTable( tr( "PHs" ), boost::bind( &ADN_Weapons_GUI::CreatePHTable, this ) );
 }
 
 // -----------------------------------------------------------------------------

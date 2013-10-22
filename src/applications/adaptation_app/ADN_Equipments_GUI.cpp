@@ -11,7 +11,6 @@
 #include "ADN_Equipments_GUI.h"
 #include "moc_ADN_Equipments_GUI.cpp"
 #include "ADN_Equipments_Data.h"
-#include "ADN_Callback.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_ListView_Equipments.h"
 #include "ADN_Equipments_WeaponsListView.h"
@@ -489,7 +488,7 @@ namespace
 // Name: ADN_Equipments_GUI::CreateComposanteSpeedsTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Equipments_GUI::CreateComposanteSpeedsTable()
+QWidget* ADN_Equipments_GUI::CreateComposanteSpeedsTable()
 {
     ADN_Table* pTable = new ADN_Speeds_Table( std::string( std::string( strClassName_ ) + "composante-speeds-consistency-table" ).c_str() );
     pTable->setNumRows( static_cast< int >( data_.vEquipments_.size() ) );
@@ -515,7 +514,7 @@ ADN_Table* ADN_Equipments_GUI::CreateComposanteSpeedsTable()
 // -----------------------------------------------------------------------------
 void ADN_Equipments_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Equipment speeds" ), new ADN_Callback<ADN_Table*,ADN_Equipments_GUI>( this, & ADN_Equipments_GUI::CreateComposanteSpeedsTable ) );
+    mainWindow.AddTable( tr( "Equipment speeds" ), boost::bind( &ADN_Equipments_GUI::CreateComposanteSpeedsTable, this ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -71,8 +71,8 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
 
-    ADN_Table* CreateWeaponsTable();
-    ADN_Table* CreatePHTable();
+    QWidget* CreateWeaponsTable();
+    QWidget* CreatePHTable();
 
     void UpdateModifiers();
 
