@@ -172,9 +172,8 @@ void MagicActionType::Initialize()
             {
                 const int value = e.values[k];
                 const std::string s = stringifier( value );
-                if( s.empty() )
-                    continue;
-                param->AddValue( value, s );
+                if( !s.empty() )
+                    param->AddValue( value, s );
             }
         }
     }

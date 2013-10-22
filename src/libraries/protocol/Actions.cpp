@@ -12,6 +12,10 @@
 
 #define COUNT_OF( name ) sizeof( name )/sizeof( *( name ) )
 
+#define ENUM( name, ... )                                                               \
+    const int name##_values[] = { __VA_ARGS__ };                                        \
+    const ActionEnum name##_enum = { #name, name##_values, COUNT_OF( name##_values ) };
+
 namespace protocol
 {
 namespace mapping
@@ -19,84 +23,60 @@ namespace mapping
 namespace
 {
 
-const int diplomacy_values[] =
-{
+ENUM( diplomacy,
     sword::unknown,
     sword::friendly,
     sword::enemy,
-    sword::neutral,
-};
-const ActionEnum diplomacy_enum 
-    = { "diplomacy", diplomacy_values, COUNT_OF( diplomacy_values ) };
+    sword::neutral
+);
 
-const int tiredness_values[] =
-{
+ENUM( tiredness,
     eUnitTiredness_Normal,
     eUnitTiredness_Fatigue,
-    eUnitTiredness_Epuise,
-};
-const ActionEnum tiredness_enum 
-    = { "tiredness", tiredness_values, COUNT_OF( tiredness_values ) };
+    eUnitTiredness_Epuise
+);
 
-const int moral_values[] =
-{
+ENUM( moral,
     eUnitMorale_Fanatique,
     eUnitMorale_Bon,
     eUnitMorale_Moyen,
-    eUnitMorale_Mauvais,
-};
-const ActionEnum moral_enum 
-    = { "moral", moral_values, COUNT_OF( moral_values ) };
+    eUnitMorale_Mauvais
+);
 
-const int experience_values[] =
-{
+ENUM( experience,
     eUnitExperience_Veteran,
     eUnitExperience_Experimente,
-    eUnitExperience_Conscrit,
-};
-const ActionEnum experience_enum 
-    = { "experience", experience_values, COUNT_OF( experience_values ) };
+    eUnitExperience_Conscrit
+);
 
-const int stress_values[] =
-{
+ENUM( stress,
     eUnitStress_Calm,
     eUnitStress_Worried,
-    eUnitStress_Stressed,
-};
-const ActionEnum stress_enum 
-    = { "stress", stress_values, COUNT_OF( stress_values ) };
+    eUnitStress_Stressed
+);
 
-const int attitude_values[] =
-{
+ENUM( attitude,
     ePopulationAttitude_Calme,
     ePopulationAttitude_Agitee,
     ePopulationAttitude_Excitee,
-    ePopulationAttitude_Agressive,
-};
-const ActionEnum attitude_enum 
-    = { "attitude", attitude_values, COUNT_OF( attitude_values ) };
+    ePopulationAttitude_Agressive
+);
 
-const int weather_values[] =
-{
+ENUM( weather,
     eWeatherType_None,
     eWeatherType_SandStorm,
     eWeatherType_Fog,
     eWeatherType_Drizzle,
     eWeatherType_Rain,
     eWeatherType_Snow,
-    eWeatherType_Smoke,
-};
-const ActionEnum weather_enum 
-    = { "weather", weather_values, COUNT_OF( weather_values ) };
+    eWeatherType_Smoke
+);
 
-const int identification_values[] =
-{
+ENUM( identification,
     sword::UnitIdentification::detected,
     sword::UnitIdentification::recognized,
-    sword::UnitIdentification::identified,
-};
-const ActionEnum identification_enum 
-    = { "identification", identification_values, COUNT_OF( identification_values ) };
+    sword::UnitIdentification::identified
+);
 
 }  // namespace
 

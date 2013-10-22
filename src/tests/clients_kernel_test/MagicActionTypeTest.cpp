@@ -97,6 +97,7 @@ BOOST_AUTO_TEST_CASE( TestMagicActionTypeEnums )
         kernel::GetEnumStringifier( mapping::enums[i]->name );
         listed.insert( mapping::enums[i]->name );
     }
+    BOOST_CHECK_EQUAL( mapping::enumsCount, listed.size() );
 
     // Check referenced enums are listed in the enum list
     std::set< std::string > referenced;
@@ -110,5 +111,6 @@ BOOST_AUTO_TEST_CASE( TestMagicActionTypeEnums )
                 referenced.insert( param.enumeration->name );
         }
     }
-    BOOST_CHECK( listed == referenced );
+    BOOST_CHECK_EQUAL_COLLECTIONS( listed.begin(), listed.end(),
+            referenced.begin(), referenced.end() );
 }
