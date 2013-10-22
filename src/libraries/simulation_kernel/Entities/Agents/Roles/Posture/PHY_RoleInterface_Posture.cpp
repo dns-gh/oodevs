@@ -14,6 +14,9 @@
 
 bool IsPosted( const MIL_Agent_ABC& agent )
 {
-    const auto& posture = agent.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
-    return &posture == &PHY_Posture::poste_ || &posture == &PHY_Posture::posteAmenage_;
+    const auto* posture = agent.RetrieveRole< PHY_RoleInterface_Posture >();
+    if( !posture )
+        return false;
+    const auto& p = posture->GetCurrentPosture();
+    return &p == &PHY_Posture::poste_ || &p == &PHY_Posture::posteAmenage_;
 }
