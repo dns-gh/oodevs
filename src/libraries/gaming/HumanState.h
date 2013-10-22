@@ -42,10 +42,10 @@ public:
     bool operator==( const HumanState& other ) const;
     //@}
 
-public:
+private:
     //! @name Types
     //@{
-    typedef std::vector< std::pair< unsigned int, E_InjuriesSeriousness > > T_Injuries;
+    typedef std::vector< E_InjuriesSeriousness > T_Injuries;
     //@}
 
 public:
