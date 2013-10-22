@@ -2220,25 +2220,15 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	// maintenance
 	equipmentId := uint32(11)
 	dotation := swapi.EquipmentDotation{
-		Available:     4,
-		Unavailable:   0,
-		Repairable:    0,
-		OnSiteFixable: 0,
-		Repairing:     0,
-		Captured:      0,
-		Breakdowns:    nil,
+		Available: 4,
 	}
 	data := client.Model.GetData()
 	c.Assert(dotation, DeepEquals, *data.FindUnit(unitId).EquipmentDotations[equipmentId])
 	c.Assert(data.MaintenanceHandlings, HasLen, 0)
 	equipment := swapi.EquipmentDotation{
-		Available:     3,
-		Unavailable:   0,
-		Repairable:    1,
-		OnSiteFixable: 0,
-		Repairing:     0,
-		Captured:      0,
-		Breakdowns:    []int32{82},
+		Available:  3,
+		Repairable: 1,
+		Breakdowns: []int32{82},
 	}
 	err = client.ChangeEquipmentState(unitId, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, IsNil)
@@ -2313,7 +2303,6 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 		})
 	resource := swapi.ResourceDotation{
 		Type:      1,
-		Quantity:  0,
 		Threshold: 10,
 	}
 	err = client.ChangeDotation(unitId, []*swapi.ResourceDotation{&resource})
@@ -2348,12 +2337,9 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	// funeral
 	c.Assert(client.Model.GetData().FuneralHandlings, HasLen, 0)
 	human = swapi.HumanDotation{
-		Quantity:     1,
-		Rank:         eTrooper,
-		State:        eDead,
-		Injury:       0,
-		Psyop:        false,
-		Contaminated: false,
+		Quantity: 1,
+		Rank:     eTrooper,
+		State:    eDead,
 	}
 	err = client.ChangeHumanState(unitId, []*swapi.HumanDotation{&human})
 	c.Assert(err, IsNil)
