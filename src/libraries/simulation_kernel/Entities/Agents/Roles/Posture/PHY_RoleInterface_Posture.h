@@ -15,6 +15,7 @@
 #include "MT_Tools/Role_ABC.h"
 #include <boost/serialization/access.hpp>
 
+class MIL_Agent_ABC;
 class PHY_Posture;
 
 // =============================================================================
@@ -81,5 +82,7 @@ private:
     }
     //@}
 };
+
+bool IsPosted( const MIL_Agent_ABC& agent );
 
 #endif // __PHY_RoleInterface_Posture_h_

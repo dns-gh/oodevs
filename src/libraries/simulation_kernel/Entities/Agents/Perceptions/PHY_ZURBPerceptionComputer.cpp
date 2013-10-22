@@ -88,9 +88,8 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
 // -----------------------------------------------------------------------------
 void PHY_ZURBPerceptionComputer::ComputePerceptionPolygon( double distance, TER_Polygon& polygon ) const
 {
-    const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
     const MIL_UrbanObject_ABC* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    if( perceiverUrbanBlock && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) )
+    if( perceiverUrbanBlock && IsPosted( perceiver_ ) )
         MIL_Geometry::Scale( polygon, perceiverUrbanBlock->GetLocalisation().GetPoints(), distance );
     else
     {
