@@ -231,19 +231,13 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies,
                                                  const propagation::FloodModel_ABC& floodModel )
 {
-    if( !( message.elem_size() >= 4 && message.elem_size() <= 6 ) ) // type, location, name, team, attributes, extension
-        throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_specific_attributes,
-                                 "invalid parameters count" );
-
+    protocol::CheckCount( message, 4, 6 );
     MIL_Army_ABC* pArmy = 0;
-
     const uint32_t id = parameters::GetPartyId( message, 3 );
     if( id != 0 )
     {
         pArmy = armies.Find( id );
-        if( !pArmy )
-            throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_party,
-                                     "parameters[3], invalid party identifier" );
+        protocol::Check( pArmy, "invalid party identifier", 3 );
     }
     MIL_Object_ABC* pObject = factory_.CreateObject( sink_, message, pArmy );
     if( pObject )
@@ -485,11 +479,9 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
             {
                 id = pObject->GetID();
                 const sword::MissionParameters& params = msg.parameters();
-                if( params.elem_size() > 0 )
-                    pObject->OnUpdate( params );
-                else
-                    throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_specific_attributes,
-                                             "invalid specific attributes" );
+                const int count = protocol::GetCount( params, 1 );
+                protocol::Check( count > 0, "invalid specific attributes" );
+                pObject->OnUpdate( params );
             }
         }
     }
@@ -497,6 +489,11 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
     {
         ack().set_error_code( e.GetErrorID() );
         ack().set_error_msg( e.what() );
+    }
+    catch( const std::exception& e )
+    {
+        ack().set_error_code( sword::ObjectMagicActionAck::error_invalid_object );
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack().mutable_object()->set_id( id );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );

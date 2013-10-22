@@ -158,19 +158,17 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, xml::xis
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const sword::MissionParameters& message, MIL_Army_ABC* army ) const
 {
-    CIT_Prototypes it = prototypes_.find( protocol::GetString( message, 0 ) );
-    if( it == prototypes_.end() )
-        throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_object,
-                                 "parameters[0], invalid object type" );
+    auto it = prototypes_.find( protocol::GetString( message, 0 ) );
+    protocol::Check( it != prototypes_.end(), "is an invalid object type", 0 );
 
     TER_Localisation location;
     double rPointSize = it->second->GetPointSize();
-    if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value( 0 ).location(), location, rPointSize ) )
-        throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_object,
-                                 "parameters[1], invalid location" );
+    protocol::Check( NET_ASN_Tools::ReadLocation( protocol::GetLocation( message, 1 ),
+                     static_cast< TER_Localisation::E_LocationType >( protocol::GetLocationType( message, 1 ) ),
+                     location, rPointSize ), "is an invalid location", 1 );
 
     const MIL_ObjectBuilder_ABC& builder = *it->second;
-    Object* pObject = new Object( builder.GetType(), army, &location, 0u, message.elem( 2 ).value( 0 ).acharstr() );
+    Object* pObject = new Object( builder.GetType(), army, &location, 0u, protocol::GetString( message, 2 ) );
     builder.Build( *pObject, sink );
     try
     {

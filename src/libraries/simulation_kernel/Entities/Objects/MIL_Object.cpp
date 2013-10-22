@@ -355,7 +355,7 @@ void MIL_Object::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Object::OnUpdate( const sword::MissionParameters& params )
 {
-    auto size = params.elem( 0 ).value().size();
+    auto size = protocol::GetCount( params, 0 );
     for( auto i = 0; i < size; ++i )
     {
         const unsigned int actionId = protocol::GetIdentifier( params, 0, i, 0 );

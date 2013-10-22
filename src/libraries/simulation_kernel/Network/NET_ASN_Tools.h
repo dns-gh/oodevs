@@ -14,6 +14,7 @@
 
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 namespace sword
 {
@@ -92,6 +93,8 @@ public:
     static void ReadPoint( const sword::CoordLatLong& asn, MT_Vector2D& vPoint );
     static bool ReadPointList( const sword::PointList& asn, T_PointVector& pointVector );
     static bool ReadLocation( const sword::Location& asn, TER_Localisation& localisation, double rPointSize = 250. );
+    static bool ReadLocation( const std::vector< sword::CoordLatLong >& location, TER_Localisation::E_LocationType type,
+                              TER_Localisation& localisation, double rPointSize = 250. );
     static void ReadDirection( const sword::Heading& asn, MT_Vector2D& vDir );
     static void ReadGDH( const sword::DateTime& asn, unsigned int& realTimeSec );
     static void ReadTick( const sword::DateTime& asn, unsigned int& simTick );

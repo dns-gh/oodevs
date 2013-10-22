@@ -21,6 +21,7 @@ namespace sword
     class CoordLatLong;
     class MissionParameters;
     class Point;
+    enum Location_Geometry;
 }
 
 namespace google
@@ -56,6 +57,7 @@ namespace protocol
     int                                GetHeading( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     int                                GetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     std::vector< sword::CoordLatLong > GetLocation( const sword::MissionParameters& params, int i );
+    sword::Location_Geometry           GetLocationType( const sword::MissionParameters& params, int i );
     int                                GetEnumeration( const google::protobuf::EnumDescriptor* descriptor, const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     const sword::Point&                GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     uint32_t                           GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );

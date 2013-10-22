@@ -49,6 +49,25 @@ bool NET_ASN_Tools::ReadLocation( const Location& asnLocalisation, TER_Localisat
 }
 
 //-----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::ReadLocation
+// Created: LGY 2013-10-22
+//-----------------------------------------------------------------------------
+// static
+bool NET_ASN_Tools::ReadLocation( const std::vector< sword::CoordLatLong >& location, TER_Localisation::E_LocationType type,
+                                  TER_Localisation& localisation, double rPointSize )
+{
+    T_PointVector pointVector;
+    pointVector.reserve( location.size() );
+    for( auto i = 0; i < location.size(); ++i )
+    {
+        MT_Vector2D vPos;
+        NET_ASN_Tools::ReadPoint( location[i], vPos );
+        pointVector.push_back( vPos );
+    }
+    return localisation.Reset( type, pointVector, rPointSize );
+}
+
+//-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadPoint
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
