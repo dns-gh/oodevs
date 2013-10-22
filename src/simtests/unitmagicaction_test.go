@@ -1265,17 +1265,17 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 
 	// Error: Invalid parameters count
 	err := client.CreateWounds(u1.Id, map[int32]int32{})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: Quantity must be non-zero positive
 	err = client.CreateWounds(u1.Id, map[int32]int32{0: 0})
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be positive a non-zero positive number`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 	err = client.CreateWounds(u1.Id, map[int32]int32{0: -10})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Error: Invalid wound
 	err = client.CreateWounds(u1.Id, map[int32]int32{123: 10})
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] invalid, bad wound enumeration`)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Unit create wounds
 	// Magical action apply primarily to Tropper then WarrantOfficer and Officer
