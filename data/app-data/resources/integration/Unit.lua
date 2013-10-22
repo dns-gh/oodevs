@@ -176,7 +176,17 @@ local effects =
     local leadTaskEffects = leadTask:computeEffectsLevels()
     local ponderateTaskEffects = cloneEffects( individualTaskEffects )
     if not next( ponderateTaskEffects ) then return 0 end
-    leadTask:ponderateEffectsForCommandEfficiency( self, taskParams, threat, ponderateTaskEffects )
+    threat = threat or {}
+    if ponderateTaskEffects.threatResistanceEffectLevel ~= nil then
+        local resistance = 0
+        for _, threateningElement in ipairs( threat ) do
+            resistance = resistance + ( 100 - meKnowledge:computeEstimateAttritionOnMe( threateningElement ) )
+        end
+        ponderateTaskEffects.threatResistanceEffectLevel = ponderateTaskEffects.threatResistanceEffectLevel * resistance / 100
+    else
+        error( "Impossible to compute resistance under threats capability for the task "..leadTask.name, 2 )
+    end
+    
 
     local res, default = 0, 0
     for _, level in ipairs( effects ) do
