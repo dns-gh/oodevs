@@ -1003,19 +1003,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>IndicatorsReports</name>
-    <message>
-        <source>Warning</source>
-        <translation>Alerta</translation>
-    </message>
-    <message>
-        <source>The specified output file is the also the input template.
- Are you sure you want to overwrite the template file?</source>
-        <translation>El archivo de salida especificado es también el archivo de plantilla de entrada.
-¿Desea sobreescribir el archivo de plantilla?</translation>
-    </message>
-</context>
-<context>
     <name>InfoCompositionDialog</name>
     <message>
         <source>Composition</source>
