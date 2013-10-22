@@ -1075,15 +1075,9 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         break;
     case sword::UnitMagicAction::log_finish_handlings:
             if( ! pBrainLogistic_.get() )
-                throw MASA_BADPARAM_ASN(
-                    sword::UnitActionAck_ErrorCode,
-                    sword::UnitActionAck::error_invalid_unit,
-                    "automat must be a logistic base" );
+                throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
             if( ! pBrainLogistic_->FinishAllHandlingsSuccessfullyWithoutDelay() )
-                throw MASA_BADPARAM_ASN(
-                    sword::UnitActionAck_ErrorCode,
-                    sword::UnitActionAck::error_invalid_unit,
-                    "automat must have logistic handlings pending" );
+                throw MASA_BADUNIT_UNIT( "automat must have logistic handlings pending" );
         break;
     default:
         {
