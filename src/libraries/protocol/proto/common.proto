@@ -2160,6 +2160,13 @@ message UnitMagicAction {
         //!     if not set, reload the current brain model
         reload_brain                      = 43;
         //! No parameters, magically finish the current logistic actions
+        //! The tasker is set to a unit or automat.
+        //!     valid taskers are units or automats currently handling logistic
+        //!     requests.
+        //!     @see LogMaintenanceHandlingUpdate::provider
+        //!     @see LogMedicalHandlingUpdate::provider
+        //!     @see LogSupplyHandlingCreation::supplier
+        //!     @see LogFuneralHandlingUpdate::handling_unit
         log_finish_handlings              = 44;
         //! Changes the state of unit equipments.
         //! The tasker is set to target units.
