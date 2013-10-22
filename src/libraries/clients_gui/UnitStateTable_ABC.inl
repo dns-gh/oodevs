@@ -16,8 +16,8 @@ void UnitStateTable_ABC::AddItem( int row, int col, QString text, T value, Qt::I
 {
     QStandardItem* item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
-    item->setData( *new QVariant( value ), Qt::UserRole );
-    item->setData( *new QVariant( text ), Qt::DisplayRole );
+    item->setData( QVariant( value ), Qt::UserRole );
+    item->setData( QVariant( text ), Qt::DisplayRole );
     dataModel_.setItem( row, col, item );
 }
 
@@ -31,8 +31,8 @@ void UnitStateTable_ABC::SetData( int row, int col, QString text, T value )
     QStandardItem* item = dataModel_.item( row, col );
     if( item )
     {
-        item->setData( *new QVariant( value ), Qt::UserRole );
-        item->setData( *new QVariant( text ), Qt::DisplayRole );
+        item->setData( QVariant( value ), Qt::UserRole );
+        item->setData( QVariant( text ), Qt::DisplayRole );
     }
 }
 

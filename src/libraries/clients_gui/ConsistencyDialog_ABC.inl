@@ -51,11 +51,10 @@ void ConsistencyDialog< EnumError, TargetItem >::AddIcon( const TargetItem& targ
     bool isError = IsError( type );
     QStandardItem* item = new QStandardItem( qApp->style()->standardIcon( isError ? QStyle::SP_MessageBoxCritical : QStyle::SP_MessageBoxWarning ), "" );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( &targetItem ) );
-    item->setData( *variant, Qt::UserRole );
-    QVariant* errorType = new QVariant( type );
-    item->setData( *errorType, Qt::UserRole + 1 );
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( &targetItem ) );
+    item->setData( variant, Qt::UserRole );
+    item->setData( QVariant( type ), Qt::UserRole + 1 );
     item->setData( isError, Qt::UserRole + 2 );
     items.push_back( item );
 }
@@ -70,11 +69,10 @@ void ConsistencyDialog< EnumError, TargetItem >::AddItem( T data, QString text, 
 {
     QStandardItem* item = new QStandardItem( text );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( &targetItem ) );
-    item->setData( *variant, Qt::UserRole );
-    QVariant* errorType = new QVariant( type );
-    item->setData( *errorType, Qt::UserRole + 1 );
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( &targetItem ) );
+    item->setData( variant, Qt::UserRole );
+    item->setData( QVariant( type ), Qt::UserRole + 1 );
     item->setData( data, Qt::UserRole + 2 );
     item->setToolTip( text );
     items.push_back( item );

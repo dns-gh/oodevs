@@ -115,9 +115,9 @@ namespace
 {
     void AddVariantOnItem( QTreeWidgetItem* item, int role, const void* ptr )
     {
-        QVariant* variant = new QVariant();
-        variant->setValue( kernel::VariantPointer( ptr ) );
-        item->setData( 0, role, *variant );
+        QVariant variant;
+        variant.setValue( kernel::VariantPointer( ptr ) );
+        item->setData( 0, role, variant );
     }
 }
 

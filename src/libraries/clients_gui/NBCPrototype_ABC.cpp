@@ -79,9 +79,9 @@ namespace
     {
         QStandardItem* item = new QStandardItem( agent.GetName().c_str() );
         item->setEditable( false );
-        QVariant* variant = new QVariant();
-        variant->setValue( kernel::VariantPointer( &agent ) );
-        item->setData( *variant, Qt::UserRole );
+        QVariant variant;
+        variant.setValue( kernel::VariantPointer( &agent ) );
+        item->setData( variant, Qt::UserRole );
         return item;
     }
 }

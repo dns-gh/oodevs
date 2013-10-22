@@ -85,9 +85,9 @@ void ADN_WizardPage< T >::Build()
     for( auto it = existingItems_.begin(); it != existingItems_.end(); ++it, ++row )
     {
         QStandardItem* item = new QStandardItem( ( *it )->strName_.GetData().c_str() );
-        QVariant* variant = new QVariant();
-        variant->setValue( kernel::VariantPointer( *it ) );
-        item->setData( *variant, Qt::UserRole );
+        QVariant variant;
+        variant.setValue( kernel::VariantPointer( *it ) );
+        item->setData( variant, Qt::UserRole );
         model_->setItem( row, 0, item );
     }
     proxy_->sort( 0 );

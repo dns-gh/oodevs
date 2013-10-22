@@ -119,7 +119,7 @@ void LogisticStockEditor::NotifyUpdated( const ModelLoaded& )
 
         item = new QStandardItem();
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable );
-        item->setData( *new QVariant( 1 ), Qt::EditRole ); // default value : 1
+        item->setData( QVariant( 1 ), Qt::EditRole ); // default value : 1
         dataModel_->setItem( row, eDays, item );
         ++row;
     }

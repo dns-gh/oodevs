@@ -166,10 +166,10 @@ void RemoveBlocksDialog::AddItem( QList< QStandardItem* >& items, T sortElement,
     }
 
     // User role        = selection role
-    QVariant* variant = new QVariant();
+    QVariant variant;
     kernel::SafePointer< kernel::UrbanObject_ABC >* safePtr = new kernel::SafePointer< kernel::UrbanObject_ABC >( controllers_, &entity );
-    variant->setValue( kernel::VariantPointer( safePtr ) );
-    item->setData( *variant, Qt::UserRole );
+    variant.setValue( kernel::VariantPointer( safePtr ) );
+    item->setData( variant, Qt::UserRole );
 
     // User role + 2    = sort role
     item->setData( sortElement, Qt::UserRole + 2 );

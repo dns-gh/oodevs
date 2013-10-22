@@ -206,9 +206,9 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
         item->setTextAlignment( Qt::AlignRight );
 
     // Variant
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( data ) );
-    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
 
     // ADN Connection
     item->Connect( data );
@@ -234,9 +234,9 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
 
     // Variant
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( data ) );
-    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
 
     // ADN Connection
     item->Connect( data, &content );
@@ -262,9 +262,9 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypeP
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
 
     // Variant
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( data ) );
-    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_TypePtrInVector<> pointer
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_TypePtrInVector<> pointer
 
     // ADN Connection
     item->Connect( data );

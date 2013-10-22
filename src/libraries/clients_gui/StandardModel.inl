@@ -28,10 +28,10 @@ QStandardItem* StandardModel::AddChildItem( QStandardItem* root, int row, int co
         root = invisibleRootItem();
     QStandardItem* item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
-    item->setData( *new QVariant( showValue_ ), Roles::FilterRole );
-    item->setData( *new QVariant(), Roles::DataRole );
-    item->setData( *new QVariant(), Roles::SafeRole );
-    item->setData( *new QVariant(), Roles::MimeTypeRole );
+    item->setData( QVariant( showValue_ ), Roles::FilterRole );
+    item->setData( QVariant(), Roles::DataRole );
+    item->setData( QVariant(), Roles::SafeRole );
+    item->setData( QVariant(), Roles::MimeTypeRole );
     root->setChild( row, col, item );
     return item;
 }
@@ -54,8 +54,8 @@ inline
 QStandardItem* StandardModel::AddChildTextItem( QStandardItem* root, int row, int col, const QString& text, const QString& tooltip,  Qt::ItemFlags flags /*= 0*/ )
 {
     QStandardItem* item = AddChildItem( root, row, col, flags );
-    item->setData( *new QVariant( text ), Qt::DisplayRole );
-    item->setData( *new QVariant( tooltip ), Qt::ToolTipRole );
+    item->setData( QVariant( text ), Qt::DisplayRole );
+    item->setData( QVariant( tooltip ), Qt::ToolTipRole );
     return item;
 }
 
@@ -80,10 +80,10 @@ QStandardItem* StandardModel::AddChildDataItem( QStandardItem* root, int row, in
 {
     QStandardItem* item = AddChildTextItem( root, row, col, text, tooltip, flags );
 
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( &value ) );
-    item->setData( *variant, Roles::DataRole );
-    item->setData( *new QVariant( false ), Roles::SafeRole );
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( &value ) );
+    item->setData( variant, Roles::DataRole );
+    item->setData( QVariant( false ), Roles::SafeRole );
     item->setData( QString( typeid( T ).name() ), Roles::MimeTypeRole );
 
     return item;
@@ -112,11 +112,10 @@ QStandardItem* StandardModel::AddChildSafeItem( QStandardItem* root, int row, in
     QStandardItem* item = AddChildTextItem( root, row, col, text, tooltip, flags );
     if( controllers_ )
     {
-        QVariant* variant = new QVariant();
-
-        variant->setValue( kernel::VariantPointer( new kernel::SafePointer< T >( *controllers_, &value ) ) );
-        item->setData( *variant, Roles::DataRole );
-        item->setData( *new QVariant( true ), Roles::SafeRole );
+        QVariant variant;
+        variant.setValue( kernel::VariantPointer( new kernel::SafePointer< T >( *controllers_, &value ) ) );
+        item->setData( variant, Roles::DataRole );
+        item->setData( QVariant( true ), Roles::SafeRole );
         item->setData( QString( typeid( T ).name() ), Roles::MimeTypeRole );
     }
     return item;
