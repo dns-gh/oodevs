@@ -65,7 +65,6 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
     group_->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 
     baseList_ = new QListWidget( group_ );
-    baseList_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     baseList_->setSortingEnabled( true );
     baseList_->sortItems( Qt::AscendingOrder );
     tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
@@ -92,7 +91,6 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
     connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
 
     list_ = new QListWidget( group_ );
-    list_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     layout->addWidget( list_ );
     connect( list_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnRemove() ) );
 

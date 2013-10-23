@@ -54,14 +54,18 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     name_ = new QLineEdit;
     nameLayout->addWidget( new QLabel( tr( "Name:" ) ) );
     nameLayout->addWidget( name_ );
+
     functions_ = new QComboBox;
     QSortFilterProxyModel* proxy = new QSortFilterProxyModel( functions_ );
     proxy->setSourceModel( functions_->model() );
     functions_->model()->setParent( proxy );
     functions_->setModel( proxy );
+    functions_->setSizeAdjustPolicy( QComboBox::AdjustToMinimumContentsLength );
+
     QGroupBox* descriptionGroup = new QGroupBox( tr( "Description" ) );
     descriptionGroup->setLayout( new QVBoxLayout );
     description_ = new QLabel( "---" );
+    description_->setWordWrap( true );
     descriptionGroup->layout()->addWidget( description_ );
 
     QWidget* parametersWidget = new QWidget;
@@ -102,8 +106,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     scrollArea->setWidgetResizable( true );
     scrollArea->setWidget( parametersWidget );
     parametersLayout->addWidget( timeGroup_ );
-    parametersLayout->addWidget( parameters_ );
-    parametersLayout->addStretch();
+    parametersLayout->addWidget( parameters_, 1 );
     layout->addLayout( nameLayout );
     layout->addWidget( functions_ );
     layout->addWidget( descriptionGroup );
@@ -146,7 +149,8 @@ void AfterActionFunctionList::OnSelectionChange( int index )
     if( index == -1 )
         return;
     ClearParameters();
-    parameters_->setLayout( new QVBoxLayout );
+    QVBoxLayout* layout = new QVBoxLayout;
+    parameters_->setLayout( layout );
     builder_.SetParamInterface( *this );
     builder_.SetParentObject( this );
     const AfterActionFunction* function = 0;
@@ -164,6 +168,7 @@ void AfterActionFunctionList::OnSelectionChange( int index )
             }
         }
     }
+    layout->addStretch();
     parameters_->setVisible( function && function->Count() > 0 );
     QString comments = function ? function->GetComments() : QString();
     description_->setText( comments.isEmpty() ? QString( "---" ) : comments );
