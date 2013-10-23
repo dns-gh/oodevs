@@ -61,6 +61,7 @@ public:
 
     //! @name Accessors
     //@{
+    bool HasTranslations() const;
     bool HasDuplicateErrors() const;
     const boost::shared_ptr< Context >& GetContext( const std::string& context );
     const boost::shared_ptr< LocalizedString >& GetTranslation( const std::string& context, const std::string& key );
@@ -80,7 +81,7 @@ private:
     //! @name Member data
     //@{
     T_Contexts contexts_;
-    bool loadAllLanguages_;
+    bool hasTranslations_;
     //@}
 };
 

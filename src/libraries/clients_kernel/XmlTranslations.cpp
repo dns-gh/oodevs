@@ -25,6 +25,7 @@ using namespace kernel;
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
 XmlTranslations::XmlTranslations()
+    : hasTranslations_( false )
 {
     // NOTHING
 }
@@ -60,6 +61,7 @@ void XmlTranslations::LoadTranslationFile( const tools::Path& xmlFile, const too
         return;
     tools::Xifstream xis( translationPath );
     LoadTranslationXmlStream( xis, languageCode );
+    hasTranslations_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,8 +146,9 @@ void XmlTranslations::MergeDuplicateTranslations()
 // -----------------------------------------------------------------------------
 void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const tools::Path& localesDirectory, const tools::LanguagesVector& languages ) const
 {
-    if( contexts_.empty() )
+    if( !hasTranslations_ )
         return;
+
     for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
     {
         const std::string& languageCode = itLanguage->GetCode();
@@ -159,26 +162,27 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
         xos << xml::start( "TS" )
             << xml::attribute( "version", "2.0" )
             << xml::attribute( "language", languageCode );
-        for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
-        {
-            if( itContext->second->empty() )
-                continue;
-            xos << xml::start( "context" )
-                << xml::start( "name" ) << itContext->first << xml::end;
-            for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
+        if( !contexts_.empty() )
+            for( auto itContext = contexts_.begin(); itContext != contexts_.end(); ++itContext )
             {
-                if( ( *itTranslation )->Key().empty() )
+                if( itContext->second->empty() )
                     continue;
-                xos << xml::start( "message" )
-                    << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
-                    << xml::start( "translation" )
-                    << ( *itTranslation )->Value( languageCode )
-                    << ( *itTranslation )->Type( languageCode )
-                    << xml::end //! translation
-                    << xml::end; //! message
+                xos << xml::start( "context" )
+                    << xml::start( "name" ) << itContext->first << xml::end;
+                for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )
+                {
+                    if( ( *itTranslation )->Key().empty() )
+                        continue;
+                    xos << xml::start( "message" )
+                        << xml::start( "source" ) << ( *itTranslation )->Key() << xml::end
+                        << xml::start( "translation" )
+                        << ( *itTranslation )->Value( languageCode )
+                        << ( *itTranslation )->Type( languageCode )
+                        << xml::end //! translation
+                        << xml::end; //! message
+                }
+                xos << xml::end; //! context
             }
-            xos << xml::end; //! context
-        }
         xos << xml::end; //! ts
     }
 }
@@ -231,6 +235,7 @@ const boost::shared_ptr< LocalizedString >& XmlTranslations::GetTranslation( con
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< Context >& XmlTranslations::GetContext( const std::string& context )
 {
+    hasTranslations_ = true;
     if( contexts_.find( context ) == contexts_.end() )
         contexts_[ context ] = boost::make_shared< Context >();
     return contexts_.at( context );
@@ -248,4 +253,13 @@ bool XmlTranslations::HasDuplicateErrors() const
                 if( ( *lhs )->Key() == ( *rhs )->Key() && **lhs != **rhs )
                     return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlTranslations::HasTranslations
+// Created: ABR 2013-10-23
+// -----------------------------------------------------------------------------
+bool XmlTranslations::HasTranslations() const
+{
+    return hasTranslations_;
 }

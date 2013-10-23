@@ -96,7 +96,7 @@ void ADN_Urban_Data::Load( const tools::Loader_ABC& fileLoader )
         const tools::Path file = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / (*it);
         if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_ )
             LoadFile( fileLoader, file, boost::bind( &ADN_Urban_Data::ReadArchive, this, _1 ) );
-        if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_ )
+        else if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_ )
         {
             LoadTranslations( file, templateTranslations_.get() );
             fileLoader.LoadFile( file, boost::bind( &ADN_Urban_Data::ReadTemplates, this, _1 ) );
@@ -578,7 +578,7 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos()
     , ptrRoofShape_  ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetRoofShapesInfos(), 0 )
     , usages_        ( this )
 {
-    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "templates" ) );
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetTemplateContext( "templates" ) );
     BindExistenceTo( &ptrMaterial_ );
     BindExistenceTo( &ptrRoofShape_ );
 }
@@ -592,7 +592,7 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
     , ptrRoofShape_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetRoofShapesInfos(), 0 )
     , usages_      ( this )
 {
-    strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eUrban, "templates" ) );
+    strName_.SetContext( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetTemplateContext( "templates" ) );
     BindExistenceTo( &ptrMaterial_ );
     BindExistenceTo( &ptrRoofShape_ );
     unsigned int red, green, blue;
@@ -873,4 +873,24 @@ void ADN_Urban_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) co
     }
     for( auto it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
         ( *it )->pSymbol_.CheckValidity( checker, ( *it )->strName_.GetData(), eUrban, -1, tools::translate( "ADN_Urban_Data", "Infrastructure" ).toStdString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< kernel::Context >& ADN_Urban_Data::GetTemplateContext
+// Created: ABR 2013-10-23
+// -----------------------------------------------------------------------------
+const boost::shared_ptr< kernel::Context >& ADN_Urban_Data::GetTemplateContext( const std::string& context )
+{
+    return templateTranslations_->GetContext( context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::function< bool
+// Created: ABR 2013-10-23
+// -----------------------------------------------------------------------------
+bool ADN_Urban_Data::ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor ) const
+{
+    if( ADN_Data_ABC::ApplyOnTranslations( functor ) )
+        return true;
+    return templateTranslations_->ApplyOnTranslations( functor );
 }

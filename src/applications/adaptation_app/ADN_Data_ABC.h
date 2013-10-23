@@ -48,11 +48,11 @@ public:
     virtual void Initialize();
     virtual void Save() const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
-    virtual bool FixConsistency();
+    virtual bool FixConsistency() const;
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output ) const;
     virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );
-    virtual bool ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor );
+    virtual bool ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor ) const;
 
     virtual std::string GetInvalidDataErrorMsg() const;
     const boost::shared_ptr< kernel::Context >& GetContext( const std::string& context ) const;

@@ -226,6 +226,9 @@ public:
     QStringList GetUrbanTemplateThatUse( RoofShapeInfos& infos );
     QStringList GetUrbanTemplateThatUse( AccommodationInfos& infos );
 
+    virtual bool ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor ) const;
+    const boost::shared_ptr< kernel::Context >& GetTemplateContext( const std::string& context );
+
 private:
     //! @name Helpers
     //@{

@@ -615,7 +615,7 @@ const boost::shared_ptr< kernel::Context >& ADN_Missions_Data::GetMissionSheetPa
 // Name: ADN_Missions_Data::ApplyOnTranslations
 // Created: ABR 2013-10-08
 // -----------------------------------------------------------------------------
-bool ADN_Missions_Data::ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor )
+bool ADN_Missions_Data::ApplyOnTranslations( const boost::function< bool( kernel::LocalizedString& ) >& functor ) const
 {
     if( ADN_Data_ABC::ApplyOnTranslations( functor ) )
         return true;
