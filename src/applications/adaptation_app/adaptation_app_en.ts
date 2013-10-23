@@ -986,13 +986,6 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_AviationResourceQuotas_GUI</name>
-    <message>
-        <source> (%)</source>
-        <translation> (%)</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
@@ -1516,8 +1509,8 @@ Parked engine running</translation>
         <translation type="unfinished">m</translation>
     </message>
     <message>
-        <source>Enforce resources quotas for aviation equipments</source>
-        <translation>Enforce resources quotas for aviation equipments</translation>
+        <source>Enforce resource quotas for aviation equipments</source>
+        <translation>Enforce resource quotas for aviation equipments</translation>
     </message>
 </context>
 <context>

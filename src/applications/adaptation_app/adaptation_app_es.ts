@@ -986,13 +986,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_AviationResourceQuotas_GUI</name>
-    <message>
-        <source> (%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
@@ -1520,7 +1513,7 @@ estacionado con motor encendido</translation>
         <translation type="unfinished">m</translation>
     </message>
     <message>
-        <source>Enforce resources quotas for aviation equipments</source>
+        <source>Enforce resource quotas for aviation equipments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

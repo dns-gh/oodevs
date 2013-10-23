@@ -29,11 +29,10 @@ ADN_Equipments_AviationResourceQuotas_GUI::ADN_Equipments_AviationResourceQuotas
     QStringList horizontalHeaders;
     for( int i = 0; i < eNbrAmmunitionType + 1; ++i )
     {
-        const QString strPercent = tools::translate( "ADN_Equipments_AviationResourceQuotas_GUI", " (%)" );
         if( i == eNbrAmmunitionType )
-            horizontalHeaders.append( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Carburant ).c_str() + strPercent );
+            horizontalHeaders.append( ( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Carburant ) + " (%)" ).c_str() );
         else
-            horizontalHeaders.append( ENT_Tr::ConvertFromAmmunitionType( static_cast< E_AmmunitionType >( i ), ENT_Tr_ABC::eToTr ).c_str() + strPercent );
+            horizontalHeaders.append( ( ENT_Tr::ConvertFromAmmunitionType( static_cast< E_AmmunitionType >( i ), ENT_Tr_ABC::eToTr ) + " (%)" ).c_str() );
         delegate_.AddColorOnColumn( i, 0., 100. );
         delegate_.AddSpinBoxOnColumn( i );
     }
