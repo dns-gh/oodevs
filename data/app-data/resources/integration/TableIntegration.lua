@@ -97,7 +97,7 @@ end
 -- @param tableFrom : list of elements to copy
 copyTable =  function ( tableFrom ) 
     local tableTo = {}
-    for k,v in pairs( tableFrom ) do
+    for k,v in pairs( tableFrom or emptyTable ) do
         tableTo[k] = v
     end
     return tableTo
@@ -110,7 +110,7 @@ end
 -- @release 2013-05-23
 function tableSize ( table )
     local cpt = 0
-    for _,k in pairs( table ) do
+    for k in pairs( table or emptyTable ) do
       cpt = cpt + 1
     end
     return cpt
@@ -122,7 +122,7 @@ end
 -- @author NMI
 -- @release 2013-05-24
 function clearTable ( table )
-    for k in pairs ( table ) do
+    for k in pairs ( table or emptyTable ) do
         table[ k ] = nil
     end
 end
@@ -135,7 +135,7 @@ end
 -- @release 2013-09-02 
 integration.inverseTable = function ( tableFrom )
     local tableTo = {}
-    for k, v in pairs( tableFrom ) do
+    for k, v in pairs( tableFrom or emptyTable ) do
         tableTo[ v ] = tableTo[ v ] or {}
         tableTo[ v ][ #tableTo[ v ] + 1 ] = k
     end
