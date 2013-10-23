@@ -18,11 +18,9 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
-//#include <turtle/mock.hpp>
-//#include <xeumeuleu/xml.hpp>
-
 #include <tools/Exception.h>
+#include <tools/BoostTest.h>
 
-std::string BOOST_RESOLVE( const std::string& filename );
+extern tools::TestOptions testOptions;
 
 #endif // __clients_test_pch_h_

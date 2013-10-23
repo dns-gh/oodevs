@@ -15,6 +15,9 @@
 namespace kernel
 {
 
+typedef std::string (*T_Stringifier)( int );
+T_Stringifier GetEnumStringifier( const std::string& name );
+
 // =============================================================================
 /** @class  MagicActionType
     @brief  MagicActionType
