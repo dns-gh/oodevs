@@ -370,19 +370,7 @@ void SupplyRequestContainer::serialize( MIL_CheckPointInArchive& archive, const 
     }
     archive >> consigns_;
     archive >> transportersProvider_;
-    size_t transportersSize;
-    archive >> transportersSize;
-    for( size_t i = 0; i < transportersSize; ++i )
-    {
-        unsigned int equipment;
-        archive >> equipment;
-        sword::EquipmentType nEqID;
-        nEqID.set_id( equipment );
-        const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( nEqID );
-        unsigned int value;
-        archive >> value;
-        transporters_.push_back( std::make_pair( type, value ) );
-    }
+    archive >> transporters_;
     archive >> recipientPaths_;
     archive >> transportersProviderPath_;
     archive >> supplierPath_;
@@ -412,16 +400,9 @@ void SupplyRequestContainer::serialize( MIL_CheckPointOutArchive& archive, const
             archive << requestIt->second;
         }
     }
-    size_t transportersSize = transporters_.size();
     archive << consigns_;
     archive << transportersProvider_;
-    archive << transportersSize;
-    for( auto it = transporters_.begin(); it != transporters_.end(); ++it )
-    {
-        unsigned int id = it->first->GetMosID().id();
-        archive << id;
-        archive << it->second;
-    }
+    archive << transporters_;
     archive << recipientPaths_;
     archive << transportersProviderPath_;
     archive << supplierPath_;

@@ -157,48 +157,6 @@ PHY_RolePion_Composantes::~PHY_RolePion_Composantes()
         delete composantes_.front(); // removed from composantes_ by NotifyComposanteRemoved
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for(  auto it = map.begin(); it != map.end(); ++it )
-            {
-                sword::EquipmentType id = it->first->GetMosID();
-                int equipment = id.id();
-                file << equipment;
-                file << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const unsigned int )
-        {
-            std::size_t n;
-            file >> n;
-            while( n-- )
-            {
-                sword::EquipmentType nID;
-                int equipment;
-                file >> equipment;
-                nID.set_id( equipment );
-                file >> map[ PHY_ComposanteTypePion::Find( nID ) ];
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::serialize
 // Created: JVT 2005-04-01

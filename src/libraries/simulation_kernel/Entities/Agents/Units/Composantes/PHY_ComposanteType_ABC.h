@@ -23,6 +23,8 @@ class MIL_Agent_ABC;
 class PHY_DotationCategory;
 class PHY_Protection;
 class PHY_Volume;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 // @class  PHY_ComposanteType_ABC
@@ -55,5 +57,14 @@ private:
     const PHY_Volume*          pVolume_;
     sword::EquipmentType nMosID_;
 };
+
+namespace boost
+{
+namespace archive
+{
+    void save( MIL_CheckPointOutArchive& a, const PHY_ComposanteType_ABC* t );
+    void load( MIL_CheckPointInArchive& a, const PHY_ComposanteType_ABC*& t );
+}
+}
 
 #endif // __PHY_ComposanteType_ABC_h_

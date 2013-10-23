@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ComposanteType_ABC.h"
+#include "PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 
@@ -83,4 +84,19 @@ const PHY_Volume& PHY_ComposanteType_ABC::GetVolume() const
 const std::string& PHY_ComposanteType_ABC::GetName() const
 {
     return strName_;
+}
+
+void boost::archive::save( MIL_CheckPointOutArchive& a, const PHY_ComposanteType_ABC* t )
+{
+    int id = t ? t->GetMosID().id() : std::numeric_limits< int >::max();
+    a << id;
+}
+
+void boost::archive::load( MIL_CheckPointInArchive& a, const PHY_ComposanteType_ABC*& t )
+{
+    int id;
+    a >> id;
+    sword::EquipmentType type;
+    type.set_id( id );
+    t = PHY_ComposanteTypePion::Find( type );
 }

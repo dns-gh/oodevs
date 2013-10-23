@@ -398,4 +398,13 @@ private:
     static T_ComposanteTypeMap composantesTypes_;
 };
 
+namespace boost
+{
+namespace archive
+{
+    void save( MIL_CheckPointOutArchive& a, const PHY_ComposanteTypePion* t );
+    void load( MIL_CheckPointInArchive& a, const PHY_ComposanteTypePion*& t );
+}
+}
+
 #endif // __PHY_ComposanteType_h_
