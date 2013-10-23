@@ -539,23 +539,20 @@ void PHY_ComposanteTypePion::ReadConsumption( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadAviationQuotas( xml::xistream& xis, T_AviationResourceQuota& resourcesQuota )
 {
-    const std::string category = xis.attribute< std::string >( "category" );
-    unsigned int quota = xis.attribute< unsigned int >( "value" );
     sAviationResourceQuota resourceQuota;
+    unsigned int quota = xis.attribute< unsigned int >( "value" );
     resourceQuota.quota_ = quota * 0.01;
+    const std::string category = xis.attribute< std::string >( "category" );
     const PHY_DotationType* type = PHY_DotationType::FindDotationType( category );
     if( type ==  PHY_DotationType::carburant_ )
         resourceQuota.dotationType_ = type;
     else
     {
         const PHY_AmmoDotationClass* ammoDotationClass = PHY_AmmoDotationClass::Find( category );
-        if( ammoDotationClass )
-        {
-            resourceQuota.dotationType_ = PHY_DotationType::munition_;
-            resourceQuota.ammoClass_ = ammoDotationClass;
-        }
-        else
+        if( !ammoDotationClass )
             throw MASA_EXCEPTION( xis.context() + "Unknown aviation resource quota category '" + category + "'" );
+        resourceQuota.dotationType_ = PHY_DotationType::munition_;
+        resourceQuota.ammoClass_ = ammoDotationClass;
     }
     resourcesQuota.push_back( resourceQuota );
 }
