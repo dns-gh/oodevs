@@ -72,13 +72,10 @@ void HumanState::Update( const sword::HumanDotations_HumanDotation& message )
     psyop_        = message.has_mentally_wounded() ? message.mentally_wounded() : false;
     contaminated_ = message.has_contaminated() ? message.contaminated() : false;
     quantity_     = message.quantity();
-    assert( state_ == eHumanState_Injured && message.injuries_size() > 0 || state_ != eHumanState_Injured );
     injuries_.resize( message.injuries_size() );
     for( int i = 0; i < message.injuries_size(); ++i )
-    {
-        injuries_[ i ].first = message.injuries( i ).id();
-        injuries_[ i ].second = static_cast< E_InjuriesSeriousness >( message.injuries( i ).seriousness() );
-    }
+        injuries_[ i ] = static_cast< E_InjuriesSeriousness >( message.injuries( i ).seriousness() );
+    std::sort( injuries_.begin(), injuries_.end() );
 }
 
 // -----------------------------------------------------------------------------

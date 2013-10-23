@@ -94,7 +94,7 @@ bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
             for( unsigned int i = 0; i < troops.elements_.size(); ++i)
             {
                 const HumanState& human = troops.elements_[ i ];
-                E_InjuriesSeriousness seriousness = ( human.injuries_.size() ) ? human.injuries_[ 0 ].second : eInjuriesSeriousness_U1; // $$$$ ABR 2011-07-25: Waiting story 660
+                E_InjuriesSeriousness seriousness = human.injuries_.size() ? human.injuries_[ 0 ] : eInjuriesSeriousness_U1; // $$$$ ABR 2011-07-25: Waiting story 660
                 if( human.quantity_     == quantity &&
                     human.rank_         == GetEnumData< E_HumanRank >( row, eRank ) &&
                     human.state_        == GetEnumData< E_HumanState >( row, eState ) &&
@@ -127,7 +127,7 @@ void UnitStateTableCrew::Load( kernel::Entity_ABC& selected )
     for( unsigned int i = 0; i < troops.elements_.size(); ++i )
     {
         const HumanState& human = troops.elements_[ i ];
-        MergeLine( human.rank_, human.state_, ( human.injuries_.size() ) ? human.injuries_[ 0 ].second : eInjuriesSeriousness_U1, human.psyop_, human.contaminated_, human.quantity_, human.location_ );
+        MergeLine( human.rank_, human.state_, human.injuries_.size() ? human.injuries_[ 0 ] : eInjuriesSeriousness_U1, human.psyop_, human.contaminated_, human.quantity_, human.location_ );
     }
 }
 
