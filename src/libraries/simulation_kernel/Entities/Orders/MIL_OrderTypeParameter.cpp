@@ -27,7 +27,8 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
     , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
-        throw MASA_EXCEPTION( xis.context() + "Unknown parameter type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown parameter type: " +
+               xis.attribute< std::string >( "type" ) );
 }
 
 //-----------------------------------------------------------------------------

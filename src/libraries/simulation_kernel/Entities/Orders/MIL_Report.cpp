@@ -104,7 +104,7 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
     xis >> xml::attribute( "type", strType );
     const MIL_ParameterType_ABC* pParameter = MIL_ParameterType_ABC::Find( strType );
     if( !pParameter )
-        throw MASA_EXCEPTION( xis.context() + "Unknown parameter type" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown parameter type: " + strType );
     parameters_.push_back( pParameter );
 }
 
