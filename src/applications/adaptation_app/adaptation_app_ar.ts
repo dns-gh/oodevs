@@ -6228,6 +6228,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
         <translation type="unfinished">الأسلحة والذخيرة غير متوافقة (مباشر/غير مباشر). الرجاء تعديل الخيارات الخاصة بك.</translation>
     </message>
+    <message>
+        <source>Empty weapon or ammunition. Please ensure that both are filled.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_WeatherFireEffects_Table</name>

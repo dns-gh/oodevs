@@ -6259,6 +6259,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
         <translation>L&apos;arme et la munition ne sont pas compatibles (direct/indirect). Veuillez modifier vos choix.</translation>
     </message>
+    <message>
+        <source>Empty weapon or ammunition. Please ensure that both are filled.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_WeatherFireEffects_Table</name>

@@ -6245,6 +6245,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Empty weapon or ammunition. Please ensure that both are filled.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_WeatherFireEffects_Table</name>

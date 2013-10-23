@@ -80,10 +80,16 @@ bool ADN_Weapons_WizardPage::validatePage()
     std::string strAmmo = pComboAmmo_->currentText().toStdString();
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
-    assert( pLauncher != 0 );
     ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition );
     ADN_Resources_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
-    assert( pAmmo != 0 );
+    if( !pLauncher || !pAmmo )
+    {
+        QMessageBox::warning( this,
+            tools::translate( "ADN_Weapons_WizardPage", "Warning" ),
+            tools::translate( "ADN_Weapons_WizardPage", "Empty weapon or ammunition. Please ensure that both are filled." ),
+            QMessageBox::Ok, QMessageBox::NoButton );
+        return false;
+    }
     ADN_Resources_Data::AmmoCategoryInfo& ammo = dynamic_cast< ADN_Resources_Data::AmmoCategoryInfo& >( *pAmmo );
     if( ammo.bDirect_.GetData() != pLauncher->bDirect_.GetData() &&
         ammo.bIndirect_.GetData() != pLauncher->bIndirect_.GetData() )
