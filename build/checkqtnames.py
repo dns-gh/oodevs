@@ -8,7 +8,7 @@ def parseqtnames(path):
         named, name, parentname = line.split(',', 2)
         named = int(named)
         if not named:
-            yield name.strip(), parentname
+            yield name, parentname
 
 ignoredleaves = set([
     "ADN_Graph",

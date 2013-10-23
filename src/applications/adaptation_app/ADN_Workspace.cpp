@@ -253,6 +253,7 @@ void ADN_Workspace::Initialize()
 // -----------------------------------------------------------------------------
 void ADN_Workspace::Purge()
 {
+    SetMainWindowModified( false );
     mainWindow_.LoadStatusChanged( false );
     mainWindow_.SetIsLoading( true );
     progressIndicator_.SetMaximum( eNbrWorkspaceElements );

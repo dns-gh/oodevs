@@ -499,11 +499,6 @@ namespace
     {
         if( !IsPresent( htmlFile, actualPaths, languages ) )
         {
-            std::cout << "Removing  " << htmlFile << " cause not present in:"  << std::endl;
-            std::cout << "  " << actualPaths.Key() << std::endl;
-            for( auto it = languages.begin(); it != languages.end(); ++it )
-                std::cout << "  " << actualPaths.Value( it->GetCode() ) << std::endl;
-
             tools::Path file = tools::Path::FromUTF8( htmlFile );
             file.Remove();
             file.ReplaceExtension( ".xml" );

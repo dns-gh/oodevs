@@ -283,28 +283,14 @@
     <macrodef name="run-adaptation">
         <attribute name="dir"/>
         <attribute name="todir"/>
+        <element name="elements" optional="true" implicit="true"/>
         <sequential>
             <exec taskname="adn" executable="${out.dir}/release/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="-i"/>
                 <arg value="@{dir}/physical.xml"/>
                 <arg value="-o"/>
                 <arg value="@{todir}/physical.xml"/>
-            </exec>
-        </sequential>
-    </macrodef>
-
-    <macrodef name="run-adaptation-swap">
-        <attribute name="dir"/>
-        <attribute name="todir"/>
-        <attribute name="language"/>
-        <sequential>
-            <exec taskname="adn" executable="${out.dir}/release/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
-                <arg value="-i"/>
-                <arg value="@{dir}/physical.xml"/>
-                <arg value="-o"/>
-                <arg value="@{todir}/physical.xml"/>
-                <arg value="-s"/>
-                <arg value="@{language}"/>
+                <elements/>
             </exec>
         </sequential>
     </macrodef>
@@ -392,8 +378,14 @@
             </python>
             <delete dir="@{intermediate-dir}"/>
             <delete dir="@{final-dir}"/>
-            <run-adaptation-swap dir="@{dir}" todir="@{intermediate-dir}" language="@{language}"/>
-            <run-adaptation-swap dir="@{intermediate-dir}" todir="@{final-dir}" language="@{master}"/>
+            <run-adaptation dir="@{dir}" todir="@{intermediate-dir}">
+                <arg value="-s"/>
+                <arg value="@{language}"/>
+            </run-adaptation>
+            <run-adaptation dir="@{intermediate-dir}" todir="@{final-dir}">
+                <arg value="-s"/>
+                <arg value="@{master}"/>
+            </run-adaptation>
             <python taskname="checksum">
                 <arg value="checksum.py"/>
                 <arg value="read"/>
