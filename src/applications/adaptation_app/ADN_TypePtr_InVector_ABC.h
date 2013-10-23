@@ -85,13 +85,17 @@ private:
 template< typename T >
 std::ostream& operator<<( std::ostream& os, const ADN_TypePtr_InVector_ABC< T >& type )
 {
-    return os << *static_cast< T* >( type.GetData() );
+    if( type.GetData() )
+        return os << *static_cast< T* >( type.GetData() );
+    return os;
 }
 
 template< typename T >
 xml::xostream& operator<<( xml::xostream& xos, const ADN_TypePtr_InVector_ABC< T >& type )
 {
-    return xos << *static_cast< T* >( type.GetData() );
+    if( type.GetData() )
+        return xos << *static_cast< T* >( type.GetData() );
+    return xos;
 }
 template< typename T >
 xml::xistream& operator>>( xml::xistream& xis, ADN_TypePtr_InVector_ABC< T >& type )
