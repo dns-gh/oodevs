@@ -28,7 +28,7 @@ ADN_Languages_Data::ADN_Languages_Data()
     : ADN_Data_ABC( eLanguages )
     , allLanguages_( ADN_Workspace::GetWorkspace().GetConfig().GetLanguages() )
 {
-    // NOTHING
+    tools::Language::SetCurrent( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ ADN_Languages_Data::ADN_Languages_Data()
 // -----------------------------------------------------------------------------
 ADN_Languages_Data::~ADN_Languages_Data()
 {
-    // NOTHING
+    tools::Language::SetCurrent( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +58,6 @@ void ADN_Languages_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "languages" )
             >> xml::list( "language", *this, &ADN_Languages_Data::ReadLanguage )
           >> xml::end;
-    tools::Language::SetCurrent( master_ );
 }
 
 // -----------------------------------------------------------------------------
