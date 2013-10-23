@@ -55,6 +55,10 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     nameLayout->addWidget( new QLabel( tr( "Name:" ) ) );
     nameLayout->addWidget( name_ );
     functions_ = new QComboBox;
+    QSortFilterProxyModel* proxy = new QSortFilterProxyModel( functions_ );
+    proxy->setSourceModel( functions_->model() );
+    functions_->model()->setParent( proxy );
+    functions_->setModel( proxy );
     QGroupBox* descriptionGroup = new QGroupBox( tr( "Description" ) );
     descriptionGroup->setLayout( new QVBoxLayout );
     description_ = new QLabel( "---" );
@@ -82,8 +86,10 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     while( it.HasMoreElements() )
     {
         const AfterActionFunction& function = it.NextElement();
-        functions_->addItem( function.GetName(), QVariant::fromValue( &function ) );
+        functions_->addItem( function.GetDisplayName(), QVariant::fromValue( &function ) );
     }
+    functions_->model()->sort( 0 );
+    functions_->setCurrentIndex( 0 );
     parameters_ = new QGroupBox( tr( "Parameters" ) );
     request_ = new QPushButton( tr( "Create request" ) );
     QToolTip::add( request_, tr( "Send request" ) );

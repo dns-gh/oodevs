@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const;
+    QString GetDisplayName() const;
     QString GetComments() const;
     virtual std::string Commit( const T_Parameters& parameters ) const;
     //@}
@@ -54,6 +55,7 @@ private:
     //! @name Member data
     //@{
     QString name_;
+    QString displayName_;
     const std::string base_;
     QString comments_;
     //@}

@@ -219,7 +219,7 @@ void AfterActionRequestList::Display( const IndicatorRequest& request, QTreeWidg
         QPixmap() );
     item->setData( 1, Qt::UserRole, QVariant::fromValue( &request ) );
     item->setText( 1, request.GetDisplayName() );
-    item->setText( 2, request.GetName() );
+    item->setText( 2, request.GetDefinitionName() );
     item->setToolTip( 0, request.ErrorMessage() );
     item->setToolTip( 1, request.ErrorMessage() );
     item->setToolTip( 2, request.ErrorMessage() );
