@@ -19,7 +19,7 @@ struct ActionEnum
 {
     const char* name;
     const int* values;
-    int valuesCount;
+    size_t valuesCount;
 };
 
 struct ActionParam
