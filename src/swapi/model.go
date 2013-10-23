@@ -178,6 +178,18 @@ var (
 		(*Model).handleUnitVisionCones,
 		(*Model).handleUrbanCreation,
 		(*Model).handleUrbanUpdate,
+		(*Model).handleLogMaintenanceHandlingCreation,
+		(*Model).handleLogMaintenanceHandlingUpdate,
+		(*Model).handleLogMaintenanceHandlingDestruction,
+		(*Model).handleLogMedicalHandlingCreation,
+		(*Model).handleLogMedicalHandlingUpdate,
+		(*Model).handleLogMedicalHandlingDestruction,
+		(*Model).handleLogFuneralHandlingCreation,
+		(*Model).handleLogFuneralHandlingUpdate,
+		(*Model).handleLogFuneralHandlingDestruction,
+		(*Model).handleLogSupplyHandlingCreation,
+		(*Model).handleLogSupplyHandlingUpdate,
+		(*Model).handleLogSupplyHandlingDestruction,
 	}
 	authToClientHandlers = []func(model *Model, m *sword.AuthenticationToClient_Content) error{
 		(*Model).handleProfileCreation,

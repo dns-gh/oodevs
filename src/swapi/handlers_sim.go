@@ -944,8 +944,7 @@ func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	d := model.data
-	unit := d.FindUnit(mm.GetUnit().GetId())
+	unit := model.data.FindUnit(mm.GetUnit().GetId())
 	if unit == nil {
 		return fmt.Errorf("cannot find unit for which vision cones must be updated: %d",
 			mm.GetUnit().GetId())
@@ -967,4 +966,186 @@ func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
 				Headings: headings})
 	}
 	return nil
+}
+
+func (model *Model) handleLogMaintenanceHandlingCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetLogMaintenanceHandlingCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if _, found := model.data.MaintenanceHandlings[id]; found {
+		return fmt.Errorf("maintenance handling to create already exists: %d", id)
+	}
+	model.data.MaintenanceHandlings[id] = &MaintenanceHandling{Id: id}
+	return nil
+}
+
+func (model *Model) handleLogMaintenanceHandlingUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetLogMaintenanceHandlingUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if h, ok := model.data.MaintenanceHandlings[id]; ok {
+		h.Provider = &MaintenanceHandlingProvider{
+			Id:    mm.GetProvider().GetId(),
+			State: mm.GetState(),
+		}
+		return nil
+	}
+	return fmt.Errorf("cannot find maintenance handling to update: %d", id)
+}
+
+func (model *Model) handleLogMaintenanceHandlingDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetLogMaintenanceHandlingDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if _, ok := model.data.MaintenanceHandlings[id]; ok {
+		delete(model.data.MaintenanceHandlings, id)
+		return nil
+	}
+	return fmt.Errorf("cannot find maintenance handling to destroy: %d", id)
+}
+
+func (model *Model) handleLogMedicalHandlingCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetLogMedicalHandlingCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if _, found := model.data.MedicalHandlings[id]; found {
+		return fmt.Errorf("medical handling to create already exists: %d", id)
+	}
+	model.data.MedicalHandlings[id] = &MedicalHandling{Id: id}
+	return nil
+}
+
+func (model *Model) handleLogMedicalHandlingUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetLogMedicalHandlingUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if h, ok := model.data.MedicalHandlings[id]; ok {
+		h.Provider = &MedicalHandlingProvider{
+			Id:    mm.GetProvider().GetId(),
+			State: mm.GetState(),
+		}
+		return nil
+	}
+	return fmt.Errorf("cannot find medical handling to update: %d", id)
+}
+
+func (model *Model) handleLogMedicalHandlingDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetLogMedicalHandlingDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if _, ok := model.data.MedicalHandlings[id]; ok {
+		delete(model.data.MedicalHandlings, id)
+		return nil
+	}
+	return fmt.Errorf("cannot find medical handling to destroy: %d", id)
+}
+
+func (model *Model) handleLogFuneralHandlingCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetLogFuneralHandlingCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if _, found := model.data.FuneralHandlings[id]; found {
+		return fmt.Errorf("funeral handling to create already exists: %d", id)
+	}
+	model.data.FuneralHandlings[id] = &FuneralHandling{
+		Id:     mm.GetRequest().GetId(),
+		UnitId: mm.GetUnit().GetId(),
+	}
+	return nil
+}
+
+func GetParentEntityId(parentEntity *sword.ParentEntity) uint32 {
+	if parentEntity.GetAutomat() != nil {
+		return parentEntity.GetAutomat().GetId()
+	}
+	return parentEntity.GetFormation().GetId()
+}
+
+func (model *Model) handleLogFuneralHandlingUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetLogFuneralHandlingUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if h, ok := model.data.FuneralHandlings[id]; ok {
+		h.Handler = &FuneralHandlingHandler{
+			State: mm.GetState(),
+			Id:    GetParentEntityId(mm.GetHandlingUnit()),
+		}
+		return nil
+	}
+	return fmt.Errorf("cannot find funeral handling to update: %d", id)
+}
+
+func (model *Model) handleLogFuneralHandlingDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetLogFuneralHandlingDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if _, ok := model.data.FuneralHandlings[id]; ok {
+		delete(model.data.FuneralHandlings, id)
+		return nil
+	}
+	return fmt.Errorf("cannot find funeral handling to destroy: %d", id)
+}
+
+func (model *Model) handleLogSupplyHandlingCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyHandlingCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if _, found := model.data.SupplyHandlings[id]; found {
+		return fmt.Errorf("supply handling to create already exists: %d", id)
+	}
+	model.data.SupplyHandlings[id] = &SupplyHandling{
+		Id:         mm.GetRequest().GetId(),
+		SupplierId: GetParentEntityId(mm.GetSupplier()),
+		ProviderId: GetParentEntityId(mm.GetTransportersProvider()),
+	}
+	return nil
+}
+
+func (model *Model) handleLogSupplyHandlingUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyHandlingUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if h, ok := model.data.SupplyHandlings[id]; ok {
+		h.Convoy = &SupplyHandlingConvoy{
+			ConvoyerId: mm.GetConvoyer().GetId(),
+			State:      mm.GetState(),
+		}
+		return nil
+	}
+	return fmt.Errorf("cannot find supply handling to update: %d", id)
+}
+
+func (model *Model) handleLogSupplyHandlingDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyHandlingDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetRequest().GetId()
+	if _, ok := model.data.SupplyHandlings[id]; ok {
+		delete(model.data.SupplyHandlings, id)
+		return nil
+	}
+	return fmt.Errorf("cannot find supply handling to destroy: %d", id)
 }

@@ -234,7 +234,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	_, err := client.SendAutomatOrder(supplyAutomat.Id, MissionLogDeploy, params)
 	c.Assert(err, IsNil)
 
-	// One scout ammunitions are depleted, a convoy should be generated, with
+	// Once scout ammunitions are depleted, a convoy should be generated, with
 	// a pathfind, eventually.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, u := range data.ListUnits() {

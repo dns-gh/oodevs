@@ -15,7 +15,11 @@
               <unit command-post="false" id="14" name="ARMOR.MBT platoon" position="28RDS1987435741" type="ARMOR.MBT platoon"/>
             </automat>
             <automat engaged="true" id="23" knowledge-group="3" logistic-level="logistic-base" name="Logistic combat train [23]" symbol="symbols/sfgpuss" type="LOG.Logistic combat train">
-              <unit command-post="true" id="24" name="Logistic CT" position="28RDS0777321908" type="LOG.Logistic CT"/>
+              <unit command-post="true" id="24" name="Logistic CT" position="28RDS0777321908" type="LOG.Logistic CT">
+                <stocks>
+                  <resource name="12,7-mm Bullet" quantity="10000"/>
+                </stocks>
+              </unit>
             </automat>
             <automat engaged="true" id="31" knowledge-group="3" logistic-level="logistic-base" name="Logistic combat train [31]" symbol="symbols/sfgpuss" type="LOG.Logistic combat train">
               <unit command-post="true" id="32" name="Logistic CT" position="28RDS0777321908" type="LOG.Logistic CT"/>
