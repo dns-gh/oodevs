@@ -56,7 +56,7 @@ public:
     void SetDisplayName( const QString& name );
     void Save( xml::xostream& xos ) const;
 
-    QString GetName() const;
+    QString GetDefinitionName() const;
     QString GetDisplayName() const;
     unsigned int GetFirstTick() const;
     void Update( const sword::PlotResult& message );

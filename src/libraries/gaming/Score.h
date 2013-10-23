@@ -51,6 +51,7 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
+    virtual QString GetDisplayName() const;
     virtual std::string Commit( const T_Parameters& parameters ) const;
     //@}
 

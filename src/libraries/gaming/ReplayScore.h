@@ -37,12 +37,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ReplayScore( const ReplayScore& );            //!< Copy constructor
-    ReplayScore& operator=( const ReplayScore& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void UpdatePlots( const sword::Indicator& message );

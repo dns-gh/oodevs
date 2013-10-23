@@ -100,10 +100,11 @@ void IndicatorRequest::Commit() const
     const std::string request = definition_.Commit( parameters_ );
     message().set_identifier( reinterpret_cast< unsigned int >( this ) );
     message().set_request( request );
-    if( firstTick_ != 0 || duration_ != std::numeric_limits< unsigned int >::max() )
+    bool durationDefined = duration_ != std::numeric_limits< unsigned int >::max();
+    if( firstTick_ != 0 || durationDefined )
     {
         message().mutable_time_range()->set_begin_tick( firstTick_ );
-        message().mutable_time_range()->set_end_tick( firstTick_ + duration_ );
+        message().mutable_time_range()->set_end_tick( durationDefined ? firstTick_ + duration_ : duration_ );
     }
     message.Send( publisher_, 0 );
 }
@@ -191,12 +192,12 @@ void IndicatorRequest::Update( const sword::Indicator& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: IndicatorRequest::GetName
+// Name: IndicatorRequest::GetDefinitionName
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-QString IndicatorRequest::GetName() const
+QString IndicatorRequest::GetDefinitionName() const
 {
-    return definition_.GetName();
+    return definition_.GetDisplayName();
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +206,7 @@ QString IndicatorRequest::GetName() const
 // -----------------------------------------------------------------------------
 QString IndicatorRequest::GetDisplayName() const
 {
-    return displayName_.isEmpty() ? GetName() : displayName_;
+    return displayName_.isEmpty() ? GetDefinitionName() : displayName_;
 }
 
 // -----------------------------------------------------------------------------
