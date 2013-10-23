@@ -63,6 +63,10 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     descriptionGroup->setLayout( new QVBoxLayout );
     description_ = new QLabel( "---" );
     descriptionGroup->layout()->addWidget( description_ );
+
+    QWidget* parametersWidget = new QWidget;
+    QVBoxLayout* parametersLayout = new QVBoxLayout;
+    parametersWidget->setLayout( parametersLayout );
     timeGroup_ = new QGroupBox( tr( "Time range" ) );
     QVBoxLayout* timeLayout = new QVBoxLayout;
     timeGroup_->setLayout( timeLayout );
@@ -94,12 +98,16 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     request_ = new QPushButton( tr( "Create request" ) );
     QToolTip::add( request_, tr( "Send request" ) );
     setLayout( layout );
+    QScrollArea* scrollArea = new QScrollArea;
+    scrollArea->setWidgetResizable( true );
+    scrollArea->setWidget( parametersWidget );
+    parametersLayout->addWidget( timeGroup_ );
+    parametersLayout->addWidget( parameters_ );
+    parametersLayout->addStretch();
     layout->addLayout( nameLayout );
     layout->addWidget( functions_ );
     layout->addWidget( descriptionGroup );
-    layout->addWidget( timeGroup_ );
-    layout->addWidget( parameters_ );
-    layout->addStretch();
+    layout->addWidget( scrollArea );
     layout->addWidget( request_ );
     connect( functions_, SIGNAL( currentIndexChanged( int ) ), SLOT( OnSelectionChange( int ) ) );
     connect( request_, SIGNAL( clicked() ), SLOT( Request() ) );
