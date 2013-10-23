@@ -80,4 +80,24 @@ private:
     static T_ConsumptionTypeMap consumptionTypes_;
 };
 
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const PHY_ConsumptionType* t )
+    {
+        unsigned int id = t ? t->GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const PHY_ConsumptionType*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = PHY_ConsumptionType::FindConsumptionType( id );
+    }
+}
+}
+
 #endif // __PHY_ConsumptionType_h_
