@@ -60,6 +60,7 @@ void ADN_TextEdit_ABC::SetToolTip( const QString& toolTip )
 // -----------------------------------------------------------------------------
 void ADN_TextEdit_ABC::ChangeBackgroundColor( const QColor& color )
 {
+    const QTextCursor cursor = textCursor();
     blockSignals( true );
     QString str = toHtml();
     if( str.contains( "bgcolor=" ) )
@@ -68,6 +69,7 @@ void ADN_TextEdit_ABC::ChangeBackgroundColor( const QColor& color )
         str.replace( "<body", QString( "<body bgcolor=\"%1\"" ).arg( color.name() ) );
     setHtml( str );
     blockSignals( false );
+    setTextCursor( cursor );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,4 +120,13 @@ void ADN_TextEdit_ABC::Warn( ADN_ErrorStatus errorStatus, const QString& errorMe
     default:
         break;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_EditLine_ABC::ConnectWithRefValidity
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_TextEdit_ABC::ConnectWithRefValidity( const ADN_Ref_ABC& ref )
+{
+    connect( this, SIGNAL( textChanged() ), &ref, SLOT( CheckValidity() ) );
 }

@@ -83,12 +83,13 @@ void ADN_Missions_GUI::Build()
 
 namespace
 {
-    void AddTextEditField( QVBoxLayout* layout, const char* objectName, const QString& name, ADN_Connector_ABC*& pGuiConnector )
+    void AddTextEditField( const ADN_Ref_ABC& ref, QVBoxLayout* layout, const char* objectName, const QString& name, ADN_Connector_ABC*& pGuiConnector )
     {
         QLabel* label= new QLabel( name );
         ADN_TextEdit_LocalizedString* textEdit = new ADN_TextEdit_LocalizedString( 0 );
         textEdit->setObjectName( objectName );
         pGuiConnector = &textEdit->GetConnector();
+        textEdit->ConnectWithRefValidity( ref );
 
         ADN_ApplyButton* applyButton = new ADN_ApplyButton();
         applyButton->Connect( textEdit );
@@ -232,6 +233,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         ADN_TextEdit_LocalizedString* parametersField = builder.AddWidget< ADN_TextEdit_LocalizedString >( "parameter" );
         vInfosConnectors[ eDescriptionParameters ] = &parametersListView->GetConnector();
         vInfosConnectors[ eDescriptionParametersText ] = &parametersField->GetConnector();
+        parametersField->ConnectWithRefValidity( missions );
         ADN_ApplyButton* applyButton = new ADN_ApplyButton();
         applyButton->Connect( parametersField );
         connect( applyButton, SIGNAL( TypeChanged( int ) ), parametersListView, SLOT( Warn() ) );
@@ -250,12 +252,12 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         QPushButton* generateButton = builder.AddWidget< QPushButton >( "preview", tr( "Update Preview" ) );
         descriptionLayout->addWidget( helpButton );
         descriptionLayout->addWidget( helpPanel_[ eMissionType ] );
-        AddTextEditField( descriptionLayout, builder.GetChildName( "context" ), tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
+        AddTextEditField( missions, descriptionLayout, builder.GetChildName( "context" ), tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
         descriptionLayout->addWidget( parameterGroupBox );
-        AddTextEditField( descriptionLayout, builder.GetChildName( "visible-behavior" ), tr( "Visible behavior" ), vInfosConnectors[ eDescriptionBehavior ] );
-        AddTextEditField( descriptionLayout, builder.GetChildName( "specific-cases" ), tr( "Specific cases" ), vInfosConnectors[ eDescriptionSpecificCases ] );
-        AddTextEditField( descriptionLayout, builder.GetChildName( "comments" ), tr( "Comments" ), vInfosConnectors[ eDescriptionComments ] );
-        AddTextEditField( descriptionLayout, builder.GetChildName( "end-of-mission" ), tr( "End of mission" ), vInfosConnectors[ eDescriptionMissionEnd ] );
+        AddTextEditField( missions, descriptionLayout, builder.GetChildName( "visible-behavior" ), tr( "Visible behavior" ), vInfosConnectors[ eDescriptionBehavior ] );
+        AddTextEditField( missions, descriptionLayout, builder.GetChildName( "specific-cases" ), tr( "Specific cases" ), vInfosConnectors[ eDescriptionSpecificCases ] );
+        AddTextEditField( missions, descriptionLayout, builder.GetChildName( "comments" ), tr( "Comments" ), vInfosConnectors[ eDescriptionComments ] );
+        AddTextEditField( missions, descriptionLayout, builder.GetChildName( "end-of-mission" ), tr( "End of mission" ), vInfosConnectors[ eDescriptionMissionEnd ] );
         descriptionLayout->addWidget( attachmentGroupBox );
         descriptionLayout->addWidget( generateButton );
 

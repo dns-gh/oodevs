@@ -40,6 +40,7 @@ private slots:
     //! @name Slots
     //@{
     void TimeChanged( const QTime& time );
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
 };
 

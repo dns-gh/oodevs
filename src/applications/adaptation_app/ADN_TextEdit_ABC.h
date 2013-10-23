@@ -27,6 +27,7 @@ public:
     virtual ~ADN_TextEdit_ABC();
 
     void SetToolTip( const QString& toolTip );
+    void ConnectWithRefValidity( const ADN_Ref_ABC& ref );
 
 signals:
     void TypeChanged( int );

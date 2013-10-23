@@ -100,6 +100,9 @@ private slots:
     void AutoDeleteEx();
 
 private:
+    void UpdateErrorStatus( ADN_ErrorStatus newStatus );
+
+private:
     bool bConnecting_;
     bool bSlotsBlocked_;
     int  nRef_;

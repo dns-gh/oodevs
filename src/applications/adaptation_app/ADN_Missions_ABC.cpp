@@ -464,7 +464,7 @@ void ADN_Missions_ABC::CheckValidity()
     CheckTypeValidity( descriptionSpecific_ );
     CheckTypeValidity( descriptionComment_ );
     CheckTypeValidity( descriptionMissionEnd_ );
-    parameters_.CheckValidity();
+    CheckTypeValidity( parameters_ );
 }
 
 namespace

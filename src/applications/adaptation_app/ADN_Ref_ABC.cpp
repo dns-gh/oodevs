@@ -244,6 +244,17 @@ void ADN_Ref_ABC::CheckValidity( ADN_ConsistencyChecker& /*checker*/, const std:
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Ref_ABC::UpdateErrorStatus
+// Created: ABR 2013-10-23
+// -----------------------------------------------------------------------------
+void ADN_Ref_ABC::UpdateErrorStatus( ADN_ErrorStatus newStatus )
+{
+    ADN_ErrorStatus oldStatus = GetErrorStatus();
+    if( oldStatus != newStatus )
+        SetErrorStatus( std::max< ADN_ErrorStatus >( oldStatus, newStatus ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::SetErrorStatus
 // Created: ABR 2013-01-15
 // -----------------------------------------------------------------------------
@@ -259,9 +270,6 @@ void ADN_Ref_ABC::SetErrorStatus( ADN_ErrorStatus errorStatus, const QString& er
 // -----------------------------------------------------------------------------
 void ADN_Ref_ABC::CheckTypeValidity( ADN_Ref_ABC& type )
 {
-    ADN_ErrorStatus oldStatus = GetErrorStatus();
     type.CheckValidity();
-    ADN_ErrorStatus newStatus = type.GetErrorStatus();
-    if( oldStatus != newStatus )
-        SetErrorStatus( std::max< ADN_ErrorStatus >( oldStatus, newStatus ) );
+    UpdateErrorStatus( type.GetErrorStatus() );
 }

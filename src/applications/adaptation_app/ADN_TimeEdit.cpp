@@ -69,3 +69,12 @@ void ADN_TimeEdit::TimeChanged( const QTime& time )
 {
     static_cast< ADN_Connector_String< ADN_TimeEdit >& >( *pConnector_ ).SetDataChanged( ADN_Tools::ConvertLocalTimeToXmlTime( time.toString( ADN_Tools::GetLocalFormatWithoutSeconds() ) ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeEdit::Warn
+// Created: ABR 2013-10-23
+// -----------------------------------------------------------------------------
+void ADN_TimeEdit::Warn( ADN_ErrorStatus, const QString& )
+{
+    // NOTHING
+}
