@@ -98,7 +98,6 @@ func NewClient(address string) (*Client, error) {
 		Model:       NewModel(),
 		EnableModel: true,
 		PostTimeout: ClientTimeout,
-		clientId:    0,
 		link:        link,
 		handlers:    make(map[int32]MessageHandler),
 		timeouts:    make(map[int32]time.Time),

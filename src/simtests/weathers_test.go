@@ -25,11 +25,6 @@ func (s *TestSuite) TestControlGlobalWeather(c *C) {
 
 	// Check initial global meteo(weather.xml)
 	expected := swapi.Weather{Temperature: 20,
-		WindSpeed:     0,
-		WindDirection: 0,
-		CloudFloor:    0,
-		CloudCeil:     0,
-		CloudDensity:  0,
 		Precipitation: sword.WeatherAttributes_dry,
 		Lightning:     sword.WeatherAttributes_clear_day,
 	}

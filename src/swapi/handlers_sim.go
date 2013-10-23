@@ -79,14 +79,10 @@ func (model *Model) handleUnitCreation(m *sword.SimToClient_Content) error {
 		AutomatId:           mm.GetAutomat().GetId(),
 		Name:                mm.GetName(),
 		Pc:                  mm.GetPc(),
-		Position:            Point{},
-		PathPoints:          0,
-		DebugBrain:          false,
 		EquipmentDotations:  map[uint32]*EquipmentDotation{},
 		LentEquipments:      []*LentEquipment{},
 		BorrowedEquipments:  []*BorrowedEquipment{},
 		RawOperationalState: 100,
-		Neutralized:         false,
 	}
 	if !model.data.addUnit(unit) {
 		return fmt.Errorf("cannot insert created unit: %d", unit.Id)
